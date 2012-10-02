@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="el">
 <context>
-    <name/>
+    <name></name>
     <message>
         <source>Loading..</source>
         <translation type="obsolete">Φόρτωση..</translation>
@@ -308,8 +309,8 @@ Date: %1</source>
         <translation>Γραμμή εντολών</translation>
     </message>
     <message>
-        <source>Block '%1'</source>
-        <translation>Μπλοκ '%1'</translation>
+        <source>Block &apos;%1&apos;</source>
+        <translation>Μπλοκ &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -390,12 +391,12 @@ You can save your work now.</source>
         <translation type="obsolete">&amp;Καμπύλη</translation>
     </message>
     <message>
-        <source>Running script '%1'</source>
-        <translation>Εκτέλεση σεναρίου '%1'</translation>
+        <source>Running script &apos;%1&apos;</source>
+        <translation>Εκτέλεση σεναρίου &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Inserting block '%1'</source>
-        <translation>Εισαγωγή μπλοκ '%1'</translation>
+        <source>Inserting block &apos;%1&apos;</source>
+        <translation>Εισαγωγή μπλοκ &apos;%1&apos;</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -432,7 +433,7 @@ Auto-save disabled.</source>
         <translation>Βοήθεια</translation>
     </message>
     <message>
-        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
+        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation>Ατυχία, δεν βρέθηκαν αρχεία βοήθειας στο σύστημα αρχείων.</translation>
     </message>
     <message>
@@ -503,6 +504,14 @@ Auto-save disabled.</source>
         <source>Draw &amp;Order</source>
         <translation>&amp;Διάταξη σχεδίασης</translation>
     </message>
+    <message>
+        <source>New document from template: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Template aborted</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -561,7 +570,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation type="obsolete">Εξοδος απ'την εφαρμογή</translation>
+        <translation type="obsolete">Εξοδος απ&apos;την εφαρμογή</translation>
     </message>
     <message>
         <source>Zoom in</source>
@@ -1349,7 +1358,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Free</source>
-        <translation>&amp;Ελεύθερα</translation>
+        <translation type="obsolete">&amp;Ελεύθερα</translation>
     </message>
     <message>
         <source>Free positioning</source>
@@ -1397,7 +1406,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Center</source>
-        <translation>Κέ&amp;ντρο</translation>
+        <translation type="obsolete">Κέ&amp;ντρο</translation>
     </message>
     <message>
         <source>Snap to centers</source>
@@ -1409,7 +1418,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Middle</source>
-        <translation>&amp;Μέση</translation>
+        <translation type="obsolete">&amp;Μέση</translation>
     </message>
     <message>
         <source>Snap to middle points</source>
@@ -1421,7 +1430,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Distance from Endpoint</source>
-        <translation>&amp;Απόσταση από άκρο</translation>
+        <translation type="obsolete">&amp;Απόσταση από άκρο</translation>
     </message>
     <message>
         <source>Snap to points with a given distance to an endpoint</source>
@@ -1433,7 +1442,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Intersection</source>
-        <translation>&amp;Τομή</translation>
+        <translation type="obsolete">&amp;Τομή</translation>
     </message>
     <message>
         <source>Snap to intersection points</source>
@@ -1457,7 +1466,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Nothing</source>
-        <translation>&amp;Χωρίς περιορισμό</translation>
+        <translation type="obsolete">&amp;Χωρίς περιορισμό</translation>
     </message>
     <message>
         <source>No snap restriction</source>
@@ -1469,7 +1478,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Orthogonally</source>
-        <translation>Περιορισμός κά&amp;θετα</translation>
+        <translation type="obsolete">Περιορισμός κά&amp;θετα</translation>
     </message>
     <message>
         <source>Restrict snapping orthogonally</source>
@@ -1481,7 +1490,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Horizontally</source>
-        <translation>Περιορισμός ορι&amp;ζόντια</translation>
+        <translation type="obsolete">Περιορισμός ορι&amp;ζόντια</translation>
     </message>
     <message>
         <source>Restrict snapping horizontally</source>
@@ -1493,7 +1502,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation>Περιορισμός κατακό&amp;ρυφα</translation>
+        <translation type="obsolete">Περιορισμός κατακό&amp;ρυφα</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -2013,11 +2022,11 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Endpoint</source>
-        <translation>Ά&amp;κρο</translation>
+        <translation type="obsolete">Ά&amp;κρο</translation>
     </message>
     <message>
         <source>&amp;OnEntity</source>
-        <translation>Σε&amp;Οντότητα</translation>
+        <translation type="obsolete">Σε&amp;Οντότητα</translation>
     </message>
 </context>
 <context>
@@ -2103,27 +2112,27 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>Renaming Block</source>
         <translation>Μετονομασία μπλοκ</translation>
     </message>
     <message>
-        <source>Could not name block. A block named "%1" already exists.</source>
-        <translation>Δεν είναι δυνατή η ονομασία του μπλοκ. Ένα μπλοκ με όνομα "%1" υπάρχει ήδη.</translation>
+        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
+        <translation>Δεν είναι δυνατή η ονομασία του μπλοκ. Ένα μπλοκ με όνομα &quot;%1&quot; υπάρχει ήδη.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -2276,52 +2285,60 @@ in a separate window</source>
         <translation>Ομόκεντρα</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Circle inscribed in a triangle, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Circle inscribed in a triangle, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Σχεδίαση κύκλου εγγεγραμμένου σε τρίγωνο, &lt;span style=" font-style:italic;"&gt;δηλαδή&lt;/span&gt;, εφαπτόμενου σε 3 γραμμές&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Σχεδίαση κύκλου εγγεγραμμένου σε τρίγωνο, &lt;span style=&quot; font-style:italic;&quot;&gt;δηλαδή&lt;/span&gt;, εφαπτόμενου σε 3 γραμμές&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Σχεδίαση κύκλου εφαπτόμενου σε δύο κύκλους, δεδομένης της ακτίνας&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Σχεδίαση κύκλου εφαπτόμενου σε δύο κύκλους, δεδομένης της ακτίνας&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of three circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of three circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Σχεδίαση κύκλου εφαπτόμενου σε τρεις κύκλους&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Σχεδίαση κύκλου εφαπτόμενου σε τρεις κύκλους&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Σχεδίαση κύκλου εφαπτόμενου σε κύκλο, διερχόμενου από δύο δεδομένα σημεία&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Σχεδίαση κύκλου εφαπτόμενου σε κύκλο, διερχόμενου από δύο δεδομένα σημεία&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2398,16 +2415,16 @@ p, li { white-space: pre-wrap; }
         <translation>Σχεδίαση έλλειψης με άξονες στις x-/y-διευθύνσεις από τέσσερα σημεία πάνω στην έλλειψη</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Σχεδίαση έλλειψης εγγεγραμμένης σε τετράπλευρο, &lt;span style=" font-style:italic;"&gt;δηλαδή&lt;/span&gt;, εφαπτόμενης σε τέσσερις γραμμές&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Σχεδίαση έλλειψης εγγεγραμμένης σε τετράπλευρο, &lt;span style=&quot; font-style:italic;&quot;&gt;δηλαδή&lt;/span&gt;, εφαπτόμενης σε τέσσερις γραμμές&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Concentric</source>
@@ -2535,48 +2552,48 @@ p, li { white-space: pre-wrap; }
         <translation>Κύριο</translation>
     </message>
     <message>
-        <source>Show menu "Lines"</source>
-        <translation type="obsolete">Εμφάνιση μενού "Γραμμές"</translation>
+        <source>Show menu &quot;Lines&quot;</source>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Γραμμές&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Arcs"</source>
-        <translation type="obsolete">Εμφάνιση μενού "Τόξα"</translation>
+        <source>Show menu &quot;Arcs&quot;</source>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Τόξα&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Circles"</source>
-        <translation type="obsolete">Εμφάνιση μενού "Κύκλοι"</translation>
+        <source>Show menu &quot;Circles&quot;</source>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Κύκλοι&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Points"</source>
-        <translation type="obsolete">Εμφάνιση μενού "Σημεία"</translation>
+        <source>Show menu &quot;Points&quot;</source>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Σημεία&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Measure"</source>
-        <translation type="obsolete">Εμφάνιση μενού "Μέτρηση"</translation>
+        <source>Show menu &quot;Measure&quot;</source>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Μέτρηση&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Ellipses"</source>
-        <translation type="obsolete">Εμφάνιση μενού "Ελείψεις"</translation>
+        <source>Show menu &quot;Ellipses&quot;</source>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Ελείψεις&quot;</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
         <translation type="obsolete">Διαγραμίσεις / Γεμίσματα</translation>
     </message>
     <message>
-        <source>Show menu "Edit"</source>
-        <translation type="obsolete">Εμφάνιση μενού "Διόρθωση"</translation>
+        <source>Show menu &quot;Edit&quot;</source>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Διόρθωση&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Dimensions"</source>
-        <translation type="obsolete">Εμφάνιση μενού "Διαστάσεις"</translation>
+        <source>Show menu &quot;Dimensions&quot;</source>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Διαστάσεις&quot;</translation>
     </message>
     <message>
         <source>Texts</source>
         <translation type="obsolete">Κείμενα</translation>
     </message>
     <message>
-        <source>Show menu "Select"</source>
-        <translation type="obsolete">Εμφάνιση μενού "Επέλεξε"</translation>
+        <source>Show menu &quot;Select&quot;</source>
+        <translation type="obsolete">Εμφάνιση μενού &quot;Επέλεξε&quot;</translation>
     </message>
     <message>
         <source>Create Block</source>
@@ -2599,24 +2616,24 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Πολυγραμμές</translation>
     </message>
     <message>
-        <source>Show toolbar "Lines"</source>
-        <translation>Εμφάνιση γραμμής εργαλείων "Γραμμές"</translation>
+        <source>Show toolbar &quot;Lines&quot;</source>
+        <translation>Εμφάνιση γραμμής εργαλείων &quot;Γραμμές&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Arcs"</source>
-        <translation>Εμφάνιση γραμμής εργαλείων "Τόξα"</translation>
+        <source>Show toolbar &quot;Arcs&quot;</source>
+        <translation>Εμφάνιση γραμμής εργαλείων &quot;Τόξα&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Circles"</source>
-        <translation>Εμφάνιση γραμμής εργαλείων "Κύκλοι"</translation>
+        <source>Show toolbar &quot;Circles&quot;</source>
+        <translation>Εμφάνιση γραμμής εργαλείων &quot;Κύκλοι&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Ellipses"</source>
-        <translation>Εμφάνιση γραμμής εργαλείων "Ελλείψεις"</translation>
+        <source>Show toolbar &quot;Ellipses&quot;</source>
+        <translation>Εμφάνιση γραμμής εργαλείων &quot;Ελλείψεις&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Polylines"</source>
-        <translation>Εμφάνιση γραμμής εργαλείων "Πολυγραμμές"</translation>
+        <source>Show toolbar &quot;Polylines&quot;</source>
+        <translation>Εμφάνιση γραμμής εργαλείων &quot;Πολυγραμμές&quot;</translation>
     </message>
     <message>
         <source>Draw Splines</source>
@@ -2628,11 +2645,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Insert Text</source>
-        <translation>Εισαγωγή κειμένου</translation>
+        <translation type="obsolete">Εισαγωγή κειμένου</translation>
     </message>
     <message>
-        <source>Show toolbar "Dimensions"</source>
-        <translation>Εμφάνιση γραμμής εργαλείων "Διαστάσεις"</translation>
+        <source>Show toolbar &quot;Dimensions&quot;</source>
+        <translation>Εμφάνιση γραμμής εργαλείων &quot;Διαστάσεις&quot;</translation>
     </message>
     <message>
         <source>Create Hatch</source>
@@ -2643,16 +2660,20 @@ p, li { white-space: pre-wrap; }
         <translation>Εισαγωγή εικόνας</translation>
     </message>
     <message>
-        <source>Show toolbar "Modify"</source>
-        <translation>Εμφάνιση γραμμής εργαλείων "Τροποποίηση"</translation>
+        <source>Show toolbar &quot;Modify&quot;</source>
+        <translation>Εμφάνιση γραμμής εργαλείων &quot;Τροποποίηση&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Info"</source>
-        <translation>Εμφάνιση γραμμής εργαλείων "Πληροφορίες"</translation>
+        <source>Show toolbar &quot;Info&quot;</source>
+        <translation>Εμφάνιση γραμμής εργαλείων &quot;Πληροφορίες&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Select"</source>
-        <translation>Εμφάνιση γραμμής εργαλείων "Επιλογή"</translation>
+        <source>Show toolbar &quot;Select&quot;</source>
+        <translation>Εμφάνιση γραμμής εργαλείων &quot;Επιλογή&quot;</translation>
+    </message>
+    <message>
+        <source>Insert Multi-line Text</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3097,8 +3118,9 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Command history and output</source>
+        <translatorcomment>&quot;δεδομένα εξόδου&quot; ή &quot;έξοδος&quot;; &quot;έξοδος&quot; μπορεί να είναι μετάφραση και του &quot;exit&quot; και του &quot;output&quot;.</translatorcomment>
         <translation>Ιστορικό εντολών και δεδομένα εξόδου</translation>
-    <translatorcomment>"δεδομένα εξόδου" ή "έξοδος"; "έξοδος" μπορεί να είναι μετάφραση και του "exit" και του "output".</translatorcomment></message>
+    </message>
     <message>
         <source>Clear</source>
         <translation>Εκκαθάριση</translation>
@@ -3244,19 +3266,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+Ε</translation>
+        <translation type="obsolete">Alt+Ε</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
 </context>
 <context>
@@ -3271,19 +3293,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+E</translation>
+        <translation type="obsolete">Alt+E</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
 </context>
 <context>
@@ -3314,19 +3336,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+E</translation>
+        <translation type="obsolete">Alt+E</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
 </context>
 <context>
@@ -3349,19 +3371,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+E</translation>
+        <translation type="obsolete">Alt+E</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
 </context>
 <context>
@@ -3376,19 +3398,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+E</translation>
+        <translation type="obsolete">Alt+E</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -3443,19 +3465,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+E</translation>
+        <translation type="obsolete">Alt+E</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
 </context>
 <context>
@@ -3490,15 +3512,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+E</translation>
+        <translation type="obsolete">Alt+E</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
 </context>
 <context>
@@ -3549,19 +3571,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3571,12 +3597,12 @@ p, li { white-space: pre-wrap; }
         <translation>Καλώς ήλθατε</translation>
     </message>
     <message>
-        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size="+1"&gt;&lt;b&gt;Καλώς ήλθατε στο QCad&lt;/b&gt;
+        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Καλώς ήλθατε στο QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Παρακαλούμε να επιλέξετε τη μονάδα που θέλετε να χρησιμοποιείτε για τα νέα σχέδια και τη γλώσσα που προτιμάτε.&lt;br&gt;
@@ -3596,11 +3622,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>OK</source>
-        <translation>Εντάξει</translation>
+        <translation type="obsolete">Εντάξει</translation>
     </message>
     <message>
         <source>Enter</source>
-        <translation>Επικύρωση</translation>
+        <translation type="obsolete">Επικύρωση</translation>
     </message>
 </context>
 <context>
@@ -3651,15 +3677,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
     <message>
         <source>Scale X:</source>
@@ -3702,15 +3728,622 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgMText</name>
+    <message>
+        <source>MText</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Στρώση:</translation>
+    </message>
+    <message>
+        <source>Font</source>
+        <translation type="unfinished">Γραμματοσειρά</translation>
+    </message>
+    <message>
+        <source>&amp;Height:</source>
+        <translation type="unfinished">Ύ&amp;ψος:</translation>
+    </message>
+    <message>
+        <source>Line &amp;spacing:</source>
+        <translation type="unfinished">Διάκενο &amp;γραμμών:</translation>
+    </message>
+    <message>
+        <source>&amp;Default line spacing</source>
+        <translation type="unfinished">&amp;Προεπιλεγμένο διάκενο γραμμών</translation>
+    </message>
+    <message>
+        <source>Alt+D</source>
+        <translation type="unfinished">Alt+D</translation>
+    </message>
+    <message>
+        <source>Alignment</source>
+        <translation type="unfinished">Στοίχιση</translation>
+    </message>
+    <message>
+        <source>Top Right</source>
+        <translation type="unfinished">Πάνω δεξιά</translation>
+    </message>
+    <message>
+        <source>Top Left</source>
+        <translation type="unfinished">Πάνω αριστερά</translation>
+    </message>
+    <message>
+        <source>Middle Left</source>
+        <translation type="unfinished">Μέση αριστερά</translation>
+    </message>
+    <message>
+        <source>Middle Center</source>
+        <translation type="unfinished">Μέση κέντρο</translation>
+    </message>
+    <message>
+        <source>Middle Right</source>
+        <translation type="unfinished">Μέση δεξιά</translation>
+    </message>
+    <message>
+        <source>Bottom Left</source>
+        <translation type="unfinished">Κάτω αριστερά</translation>
+    </message>
+    <message>
+        <source>Bottom Right</source>
+        <translation type="unfinished">Κάτω δεξιά</translation>
+    </message>
+    <message>
+        <source>Bottom Center</source>
+        <translation type="unfinished">Κάτω κέντρο</translation>
+    </message>
+    <message>
+        <source>Top Center</source>
+        <translation type="unfinished">Πάνω κέντρο</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished">Γωνία</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Κείμενο:</translation>
+    </message>
+    <message>
+        <source>Clear Text</source>
+        <translation type="unfinished">Εκκαθάριση κειμένου</translation>
+    </message>
+    <message>
+        <source>Load Text From File</source>
+        <translation type="unfinished">Φόρτωση κειμένου από αρχείο</translation>
+    </message>
+    <message>
+        <source>Save Text To File</source>
+        <translation type="unfinished">Αποθήκευση κειμένου σε αρχείο</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Αντιγραφή</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Symbol</source>
+        <translation type="unfinished">Εισαγωγή συμβόλου</translation>
+    </message>
+    <message utf8="true">
+        <source>Diameter (ø)</source>
+        <translation type="unfinished">Διάμετρος (ø)</translation>
+    </message>
+    <message utf8="true">
+        <source>Degree (°)</source>
+        <translation type="unfinished">Μοίρα (°)</translation>
+    </message>
+    <message utf8="true">
+        <source>Plus / Minus (±)</source>
+        <translation type="unfinished">Συν / Πλην (±)</translation>
+    </message>
+    <message>
+        <source>At (@)</source>
+        <translation type="unfinished">Παπάκι (@)</translation>
+    </message>
+    <message>
+        <source>Hash (#)</source>
+        <translation type="unfinished">Δίεση (#)</translation>
+    </message>
+    <message>
+        <source>Dollar ($)</source>
+        <translation type="unfinished">Δολάριο ($)</translation>
+    </message>
+    <message utf8="true">
+        <source>Copyright (©)</source>
+        <translation type="unfinished">Copyright (©)</translation>
+    </message>
+    <message utf8="true">
+        <source>Registered (®)</source>
+        <translation type="unfinished">Registered (®)</translation>
+    </message>
+    <message utf8="true">
+        <source>Paragraph (§)</source>
+        <translation type="unfinished">Παράγραφος (§)</translation>
+    </message>
+    <message utf8="true">
+        <source>Pi (π)</source>
+        <translation type="unfinished">π (π)</translation>
+    </message>
+    <message utf8="true">
+        <source>Pound (£)</source>
+        <translation type="unfinished">Λίρα (£)</translation>
+    </message>
+    <message utf8="true">
+        <source>Yen (¥)</source>
+        <translation type="unfinished">Γιεν (¥)</translation>
+    </message>
+    <message utf8="true">
+        <source>Times (×)</source>
+        <translation type="unfinished">Επί (×)</translation>
+    </message>
+    <message utf8="true">
+        <source>Division (÷)</source>
+        <translation type="unfinished">Διαίρεση (÷)</translation>
+    </message>
+    <message>
+        <source>Insert Unicode</source>
+        <translation type="unfinished">Εισαγωγή unicode</translation>
+    </message>
+    <message>
+        <source>Page:</source>
+        <translation type="unfinished">Σελίδα:</translation>
+    </message>
+    <message>
+        <source>Char:</source>
+        <translation type="unfinished">Χαρ:</translation>
+    </message>
+    <message>
+        <source>[0000-007F] Basic Latin</source>
+        <translation type="unfinished">[0000-007F] Βασικό Λατινικό</translation>
+    </message>
+    <message>
+        <source>[0080-00FF] Latin-1 Supplementary</source>
+        <translation type="unfinished">[0080-00FF] Συμπληρωματικά Λατινικά-1</translation>
+    </message>
+    <message>
+        <source>[0100-017F] Latin Extended-A</source>
+        <translation type="unfinished">[0100-017F] Εκτεταμένα Λατινικά-Α</translation>
+    </message>
+    <message>
+        <source>[0180-024F] Latin Extended-B</source>
+        <translation type="unfinished">[0180-024F] Εκτεταμένα Λατινικά-Β</translation>
+    </message>
+    <message>
+        <source>[0250-02AF] IPA Extensions</source>
+        <translation type="unfinished">[0250-02AF] Επεκτάσεις IPA</translation>
+    </message>
+    <message>
+        <source>[02B0-02FF] Spacing Modifier Letters</source>
+        <translation type="unfinished">[02B0-02FF] Γράμματα τροποποίησης διαστημάτων</translation>
+    </message>
+    <message>
+        <source>[0300-036F] Combining Diacritical Marks</source>
+        <translation type="unfinished">[0300-036F] Διακριτικά σημεία συνδυασμών</translation>
+    </message>
+    <message>
+        <source>[0370-03FF] Greek and Coptic</source>
+        <translation type="unfinished">[0370-03FF] Ελληνικά και Κοπτικά</translation>
+    </message>
+    <message>
+        <source>[0400-04FF] Cyrillic</source>
+        <translation type="unfinished">[0400-04FF] Κυριλλικά</translation>
+    </message>
+    <message>
+        <source>[0500-052F] Cyrillic Supplementary</source>
+        <translation type="unfinished">[0500-052F] Κυριλλικά Συμπληρωματικά</translation>
+    </message>
+    <message>
+        <source>[0530-058F] Armenian</source>
+        <translation type="unfinished">[0530-058F] Αρμενικά</translation>
+    </message>
+    <message>
+        <source>[0590-05FF] Hebrew</source>
+        <translation type="unfinished">[0590-05FF] Εβραϊκά</translation>
+    </message>
+    <message>
+        <source>[0600-06FF] Arabic</source>
+        <translation type="unfinished">[0600-06FF] Αραβικά</translation>
+    </message>
+    <message>
+        <source>[0700-074F] Syriac</source>
+        <translation type="unfinished">[0700-074F] Συριακά</translation>
+    </message>
+    <message>
+        <source>[0780-07BF] Thaana</source>
+        <translation type="unfinished">[0780-07BF] Θάανα</translation>
+    </message>
+    <message>
+        <source>[0900-097F] Devanagari</source>
+        <translation type="unfinished">[0900-097F] Ντεβανάγκαρι</translation>
+    </message>
+    <message>
+        <source>[0980-09FF] Bengali</source>
+        <translation type="unfinished">[0980-09FF] Μπενγκάλι</translation>
+    </message>
+    <message>
+        <source>[0A00-0A7F] Gurmukhi</source>
+        <translation type="unfinished">[0A00-0A7F] Γκουρμούκι</translation>
+    </message>
+    <message>
+        <source>[0A80-0AFF] Gujarati</source>
+        <translation type="unfinished">[0A80-0AFF] Γκουτζαράτι</translation>
+    </message>
+    <message>
+        <source>[0B00-0B7F] Oriya</source>
+        <translation type="unfinished">[0B00-0B7F] Ορίγια</translation>
+    </message>
+    <message>
+        <source>[0B80-0BFF] Tamil</source>
+        <translation type="unfinished">[0B80-0BFF] Ταμίλ</translation>
+    </message>
+    <message>
+        <source>[0C00-0C7F] Telugu</source>
+        <translation type="unfinished">[0C00-0C7F] Τελούγκου</translation>
+    </message>
+    <message>
+        <source>[0C80-0CFF] Kannada</source>
+        <translation type="unfinished">[0C80-0CFF] Κανάντα</translation>
+    </message>
+    <message>
+        <source>[0D00-0D7F] Malayalam</source>
+        <translation type="unfinished">[0D00-0D7F] Μαλαγιάλαμ</translation>
+    </message>
+    <message>
+        <source>[0D80-0DFF] Sinhala</source>
+        <translation type="unfinished">[0D80-0DFF] Σινχάλα</translation>
+    </message>
+    <message>
+        <source>[0E00-0E7F] Thai</source>
+        <translation type="unfinished">[0E00-0E7F] Τάϊ</translation>
+    </message>
+    <message>
+        <source>[0E80-0EFF] Lao</source>
+        <translation type="unfinished">[0E80-0EFF] Λάο</translation>
+    </message>
+    <message>
+        <source>[0F00-0FFF] Tibetan</source>
+        <translation type="unfinished">[0F00-0FFF] Θιβετιανά</translation>
+    </message>
+    <message>
+        <source>[1000-109F] Myanmar</source>
+        <translation type="unfinished">[1000-109F] Μιανμάρ</translation>
+    </message>
+    <message>
+        <source>[10A0-10FF] Georgian</source>
+        <translation type="unfinished">[10A0-10FF] Γεωργιανά</translation>
+    </message>
+    <message>
+        <source>[1100-11FF] Hangul Jamo</source>
+        <translation type="unfinished">[1100-11FF] Χανγκίλ Τζάμο</translation>
+    </message>
+    <message>
+        <source>[1200-137F] Ethiopic</source>
+        <translation type="unfinished">[1200-137F] Αιθιοπικά</translation>
+    </message>
+    <message>
+        <source>[13A0-13FF] Cherokee</source>
+        <translation type="unfinished">[13A0-13FF] Τσερόκι</translation>
+    </message>
+    <message>
+        <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
+        <translation type="unfinished">[1400-167F] Ενοποιημένη Συλλαβική Ιθαγενών Καναδά</translation>
+    </message>
+    <message>
+        <source>[1680-169F] Ogham</source>
+        <translation type="unfinished">[1680-169F] Όγκχαμ</translation>
+    </message>
+    <message>
+        <source>[16A0-16FF] Runic</source>
+        <translation type="unfinished">[16A0-16FF] Ρουνικά</translation>
+    </message>
+    <message>
+        <source>[1700-171F] Tagalog</source>
+        <translation type="unfinished">[1700-171F] Ταγκαλόγκ</translation>
+    </message>
+    <message>
+        <source>[1720-173F] Hanunoo</source>
+        <translation type="unfinished">[1720-173F] Χανούνου</translation>
+    </message>
+    <message>
+        <source>[1740-175F] Buhid</source>
+        <translation type="unfinished">[1740-175F] Μπουχίντ</translation>
+    </message>
+    <message>
+        <source>[1760-177F] Tagbanwa</source>
+        <translation type="unfinished">[1760-177F] Ταγκμπάνουα</translation>
+    </message>
+    <message>
+        <source>[1780-17FF] Khmer</source>
+        <translation type="unfinished">[1780-17FF] Χμέρ</translation>
+    </message>
+    <message>
+        <source>[1800-18AF] Mongolian</source>
+        <translation type="unfinished">[1800-18AF] Μογγολικά</translation>
+    </message>
+    <message>
+        <source>[1E00-1EFF] Latin Extended Additional</source>
+        <translation type="unfinished">[1E00-1EFF] Εκτεταμένα Λατινικά Πρόσθετα</translation>
+    </message>
+    <message>
+        <source>[1F00-1FFF] Greek Extended</source>
+        <translation type="unfinished">[1F00-1FFF] Ελληνικά Πρόσθετα</translation>
+    </message>
+    <message>
+        <source>[2000-206F] General Punctuation</source>
+        <translation type="unfinished">[2000-206F] Γενική Στίξη</translation>
+    </message>
+    <message>
+        <source>[2070-209F] Superscripts and Subscripts</source>
+        <translation type="unfinished">[2070-209F] Εκθέτες και Δείκτες</translation>
+    </message>
+    <message>
+        <source>[20A0-20CF] Currency Symbols</source>
+        <translation type="unfinished">[20A0-20CF] Σύμβολα Νομισμάτων</translation>
+    </message>
+    <message>
+        <source>[20D0-20FF] Combining Marks for Symbols</source>
+        <translation type="unfinished">[20D0-20FF] Συνδυαζόμενα Διακριτικά Σημεία για Σύμβολα</translation>
+    </message>
+    <message>
+        <source>[2100-214F] Letterlike Symbols</source>
+        <translation type="unfinished">[2100-214F] Σύμβολα Μορφής Γραμμάτων</translation>
+    </message>
+    <message>
+        <source>[2150-218F] Number Forms</source>
+        <translation type="unfinished">[2150-218F] Αριθμητικές Μορφές</translation>
+    </message>
+    <message>
+        <source>[2190-21FF] Arrows</source>
+        <translation type="unfinished">[2190-21FF] Βέλη</translation>
+    </message>
+    <message>
+        <source>[2200-22FF] Mathematical Operators</source>
+        <translation type="unfinished">[2200-22FF] Μαθηματικά Σύμβολα</translation>
+    </message>
+    <message>
+        <source>[2300-23FF] Miscellaneous Technical</source>
+        <translation type="unfinished">[2300-23FF] Διάφορα Τεχνικά</translation>
+    </message>
+    <message>
+        <source>[2400-243F] Control Pictures</source>
+        <translation type="unfinished">[2400-243F] Εικόνες Ελέγχου</translation>
+    </message>
+    <message>
+        <source>[2440-245F] Optical Character Recognition</source>
+        <translation type="unfinished">[2440-245F] Οπτική αναγνώριση χαρακτήρων</translation>
+    </message>
+    <message>
+        <source>[2460-24FF] Enclosed Alphanumerics</source>
+        <translation type="unfinished">[2460-24FF] Εγκλεισμένα Αλφαριθμητικά</translation>
+    </message>
+    <message>
+        <source>[2500-257F] Box Drawing</source>
+        <translation type="unfinished">[2500-257F] Σχεδίαση κουτιού</translation>
+    </message>
+    <message>
+        <source>[2580-259F] Block Elements</source>
+        <translation type="unfinished">[2580-259F] Στοιχεία Μπλοκ</translation>
+    </message>
+    <message>
+        <source>[25A0-25FF] Geometric Shapes</source>
+        <translation type="unfinished">[25A0-25FF] Γεωμετρικά Σχήματα</translation>
+    </message>
+    <message>
+        <source>[2600-26FF] Miscellaneous Symbols</source>
+        <translation type="unfinished">[2600-26FF] Διάφορα σύμβολα</translation>
+    </message>
+    <message>
+        <source>[2700-27BF] Dingbats</source>
+        <translation type="unfinished">[2700-27BF] Τυπογραφικά</translation>
+    </message>
+    <message>
+        <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
+        <translation type="unfinished">[27C0-27EF] Διάφορα Μαθηματικά σύμβολα-Α</translation>
+    </message>
+    <message>
+        <source>[27F0-27FF] Supplemental Arrows-A</source>
+        <translation type="unfinished">[27F0-27FF] Συμπληρωματικά Βέλη-Α</translation>
+    </message>
+    <message>
+        <source>[2800-28FF] Braille Patterns</source>
+        <translation type="unfinished">[2800-28FF] Σύμβολα Μπράϊγ</translation>
+    </message>
+    <message>
+        <source>[2900-297F] Supplemental Arrows-B</source>
+        <translation type="unfinished">[2900-297F] Συμπληρωματικά Βέλη-Β</translation>
+    </message>
+    <message>
+        <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
+        <translation type="unfinished">[2980-29FF] Διάφορα Μαθηματικά σύμβολα-Β</translation>
+    </message>
+    <message>
+        <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
+        <translation type="unfinished">[2A00-2AFF] Συμπληρωματικοί Μαθηματικοί Τελεστές</translation>
+    </message>
+    <message>
+        <source>[2E80-2EFF] CJK Radicals Supplement</source>
+        <translation type="unfinished">[2E80-2EFF] Συμπληρωματικές Ρίζες Κιν-Ιαπ-Κορ</translation>
+    </message>
+    <message>
+        <source>[2F00-2FDF] Kangxi Radicals</source>
+        <translation type="unfinished">[2F00-2FDF] Ρίζες Κάνγχι</translation>
+    </message>
+    <message>
+        <source>[2FF0-2FFF] Ideographic Description Characters</source>
+        <translation type="unfinished">[2FF0-2FFF] Χαρακτήρες Περιγραφής Ιδεογραμμάτων</translation>
+    </message>
+    <message>
+        <source>[3000-303F] CJK Symbols and Punctuation</source>
+        <translation type="unfinished">[3000-303F] Σύμβολα και Στίξη Κιν-Ιαπ-Κορ</translation>
+    </message>
+    <message>
+        <source>[3040-309F] Hiragana</source>
+        <translation type="unfinished">[3040-309F] Χιραγκάνα</translation>
+    </message>
+    <message>
+        <source>[30A0-30FF] Katakana</source>
+        <translation type="unfinished">[30A0-30FF] Κατακάνα</translation>
+    </message>
+    <message>
+        <source>[3100-312F] Bopomofo</source>
+        <translation type="unfinished">[3100-312F] Μποπομόφο</translation>
+    </message>
+    <message>
+        <source>[3130-318F] Hangul Compatibility Jamo</source>
+        <translation type="unfinished">[3130-318F] Τζάμο με συμβατότητα Χανγκίλ</translation>
+    </message>
+    <message>
+        <source>[3190-319F] Kanbun</source>
+        <translation type="unfinished">[3190-319F] Κανμπούν</translation>
+    </message>
+    <message>
+        <source>[31A0-31BF] Bopomofo Extended</source>
+        <translation type="unfinished">[31A0-31BF] Εκτεταμένη Μποπομόφο</translation>
+    </message>
+    <message>
+        <source>[3200-32FF] Enclosed CJK Letters and Months</source>
+        <translation type="unfinished">[3200-32FF] Περικλειόμενα Γράμματα και Μήνες Κιν-Ιαπ-Κορ</translation>
+    </message>
+    <message>
+        <source>[3300-33FF] CJK Compatibility</source>
+        <translation type="unfinished">[3300-33FF] Συμβατότητας Κιν-Ιαπ-Κορ</translation>
+    </message>
+    <message>
+        <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
+        <translation type="unfinished">[3400-4DBF] Επέκταση Α Ενοποιημένων Ιδεογραμμάτων Κιν-Ιαπ-Κορ</translation>
+    </message>
+    <message>
+        <source>[4E00-9FAF] CJK Unified Ideographs</source>
+        <translation type="unfinished">[4E00-9FAF] Ενοποιημένα Ιδεογράμματα Κιν-Ιαπ-Κορ</translation>
+    </message>
+    <message>
+        <source>[A000-A48F] Yi Syllables</source>
+        <translation type="unfinished">[A000-A48F] Συλλαβές Γι</translation>
+    </message>
+    <message>
+        <source>[A490-A4CF] Yi Radicals</source>
+        <translation type="unfinished">[A490-A4CF] Ρίζες Γι</translation>
+    </message>
+    <message>
+        <source>[AC00-D7AF] Hangul Syllables</source>
+        <translation type="unfinished">[AC00-D7AF] Συλλαβές Χανγκίλ</translation>
+    </message>
+    <message>
+        <source>[D800-DBFF] High Surrogates</source>
+        <translation type="unfinished">[D800-DBFF] Υψηλοί Υποκαταστάτες</translation>
+    </message>
+    <message>
+        <source>[DC00-DFFF] Low Surrogate Area</source>
+        <translation type="unfinished">[DC00-DFFF] Χαμηλοί Υποκαταστάτες</translation>
+    </message>
+    <message>
+        <source>[E000-F8FF] Private Use Area</source>
+        <translation type="unfinished">[E000-F8FF] Περιοχή Ιδιωτικής Χρήσης</translation>
+    </message>
+    <message>
+        <source>[F900-FAFF] CJK Compatibility Ideographs</source>
+        <translation type="unfinished">[F900-FAFF] Ιδεογράμματα Συμβατότητας Κιν-Ιαπ-Κορ</translation>
+    </message>
+    <message>
+        <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
+        <translation type="unfinished">[FB00-FB4F] Φόρμες Αλφαβητικής Παρουσίασης</translation>
+    </message>
+    <message>
+        <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
+        <translation type="unfinished">[FB50-FDFF] Φόρμες Αραβικής Παρουσίασης-Α</translation>
+    </message>
+    <message>
+        <source>[FE00-FE0F] Variation Selectors</source>
+        <translation type="unfinished">[FE00-FE0F] Επιλογείς Παραλλαγών</translation>
+    </message>
+    <message>
+        <source>[FE20-FE2F] Combining Half Marks</source>
+        <translation type="unfinished">[FE20-FE2F] Σημεία μισών συνδυασμών</translation>
+    </message>
+    <message>
+        <source>[FE30-FE4F] CJK Compatibility Forms</source>
+        <translation type="unfinished">[FE30-FE4F] Φόρμες Συμβατότητας Κιν-Ιαπ-Κορ</translation>
+    </message>
+    <message>
+        <source>[FE50-FE6F] Small Form Variants</source>
+        <translation type="unfinished">[FE50-FE6F] Παραλλαγές Μικρών Φορμών</translation>
+    </message>
+    <message>
+        <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
+        <translation type="unfinished">[FE70-FEFF] Φόρμες Αραβικής Παρουσίασης-Β</translation>
+    </message>
+    <message>
+        <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
+        <translation type="unfinished">[FF00-FFEF] Φόρμες μισού και πλήρους πλάτους</translation>
+    </message>
+    <message>
+        <source>[FFF0-FFFF] Specials</source>
+        <translation type="unfinished">[FFF0-FFFF] Ειδικά</translation>
+    </message>
+    <message>
+        <source>[10300-1032F] Old Italic</source>
+        <translation type="unfinished">[10300-1032F] Αρχαία Ιταλικά</translation>
+    </message>
+    <message>
+        <source>[10330-1034F] Gothic</source>
+        <translation type="unfinished">[10330-1034F] Γοτθικά</translation>
+    </message>
+    <message>
+        <source>[10400-1044F] Deseret</source>
+        <translation type="unfinished">[10400-1044F] Ντεσερέτ</translation>
+    </message>
+    <message>
+        <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
+        <translation type="unfinished">[1D000-1D0FF] Βυζαντινά Μουσικά Σύμβολα</translation>
+    </message>
+    <message>
+        <source>[1D100-1D1FF] Musical Symbols</source>
+        <translation type="unfinished">[1D100-1D1FF] Μουσικά Σύμβολα</translation>
+    </message>
+    <message>
+        <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
+        <translation type="unfinished">[1D400-1D7FF] Μαθηματικά αλφαριθμητικά σύμβολα</translation>
+    </message>
+    <message>
+        <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
+        <translation type="unfinished">[20000-2A6DF] Επέκταση Β Ενοποιημένων Ιδεογραμμάτων Κιν-Ιαπ-Κορ</translation>
+    </message>
+    <message>
+        <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
+        <translation type="unfinished">[2F800-2FA1F] Συμπλήρωμα Ιδεογραμμάτων Συμβατότητας Κιν-Ιαπ-Κορ</translation>
+    </message>
+    <message>
+        <source>[E0000-E007F] Tags</source>
+        <translation type="unfinished">[E0000-E007F] Ετικέτες</translation>
+    </message>
+    <message>
+        <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
+        <translation type="unfinished">[F0000-FFFFD] Συμπληρωματικά Ιδιωτικής Χρήσης-Α</translation>
+    </message>
+    <message>
+        <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
+        <translation type="unfinished">[100000-10FFFD] Συμπληρωματικά Ιδιωτικής Χρήσης-Β</translation>
     </message>
 </context>
 <context>
@@ -3725,7 +4358,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -3745,11 +4378,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
     <message>
         <source>...</source>
@@ -3768,7 +4401,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -3792,15 +4425,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+E</translation>
+        <translation type="obsolete">Alt+E</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
     <message>
         <source>...</source>
@@ -3823,7 +4456,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -3831,11 +4464,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
     <message>
         <source>&amp;Angle (a):</source>
@@ -3926,7 +4559,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Paper Format</source>
@@ -3961,7 +4594,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>Βαθμοί</translation>
     </message>
     <message>
-        <source>Surveyor's units</source>
+        <source>Surveyor&apos;s units</source>
         <translation>Τοπογραφικές μονάδες</translation>
     </message>
     <message>
@@ -3969,8 +4602,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>Επιλογές</translation>
     </message>
     <message>
-        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
-        <translation>Για τους τύπους μήκους 'Μηχανικό' και 'Αρχιτεκτονικό', η μονάδα πρέπει τεθεί σε ίντσα.</translation>
+        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <translation>Για τους τύπους μήκους &apos;Μηχανικό&apos; και &apos;Αρχιτεκτονικό&apos;, η μονάδα πρέπει τεθεί σε ίντσα.</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
@@ -4042,15 +4675,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+E</translation>
+        <translation type="obsolete">Alt+E</translation>
     </message>
     <message>
         <source>Grid</source>
@@ -4166,12 +4799,14 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Tick size:</source>
+        <translatorcomment>tick -&gt; τικ μάλλον προσωρινά. &quot;σημάδι&quot; ίσως; Χρησιμοποιείται αντί για βέλος σε διαστάσεις και μοιάζει με &quot;/&quot;.</translatorcomment>
         <translation>Μέγεθος τικ:</translation>
-    <translatorcomment>tick -&gt; τικ μάλλον προσωρινά. "σημάδι" ίσως; Χρησιμοποιείται αντί για βέλος σε διαστάσεις και μοιάζει με "/".</translatorcomment></message>
+    </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translatorcomment>tick -&gt; τικ</translatorcomment>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Μέγεθος τικ διάστασης. Αν τεθεί 0, θα απενεργοποιήσει το τικ διάστασης. Το βέλος διάστασης δεν θα σχεδιαστεί, όταν το τικ διάστασης είναι ενεργοποιημένο.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    <translatorcomment>tick -&gt; τικ</translatorcomment></message>
+    </message>
     <message>
         <source>0</source>
         <translation>0</translation>
@@ -4221,7 +4856,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Language</source>
@@ -4293,15 +4928,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+E</translation>
+        <translation type="obsolete">Alt+E</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
     <message>
         <source>Colors</source>
@@ -4495,6 +5130,10 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>Auto backup</source>
         <translation>Αυτόματη λήψη εφεδρικών αρχείων</translation>
     </message>
+    <message>
+        <source>Template:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgOptionsVariables</name>
@@ -4535,15 +5174,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
 </context>
 <context>
@@ -4566,19 +5205,19 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
 </context>
 <context>
@@ -4593,15 +5232,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>&amp;Ακύρωση</translation>
+        <translation type="obsolete">&amp;Ακύρωση</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -4640,7 +5279,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -4648,7 +5287,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -4695,15 +5334,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>&amp;Ακύρωση</translation>
+        <translation type="obsolete">&amp;Ακύρωση</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
     <message>
         <source>&amp;Factor (f):</source>
@@ -4735,12 +5374,14 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Scale by the same factor at both x- and y- directions</source>
+        <translatorcomment>scale (v.) -&gt; εφαρμογή κλίμακας;</translatorcomment>
         <translation>Εφαρμογή κλίμακας κατά τον ίδιο παράγοντα στις x- και y- διευθύνσεις</translation>
-    <translatorcomment>scale (v.) -&gt; εφαρμογή κλίμακας;</translatorcomment></message>
+    </message>
     <message>
         <source>Isotropic Scaling</source>
+        <translatorcomment>scale (v.) -&gt; εφαρμογή κλίμακας;</translatorcomment>
         <translation>Ισοτροπική εφαρμογή κλίμακας</translation>
-    <translatorcomment>scale (v.) -&gt; εφαρμογή κλίμακας;</translatorcomment></message>
+    </message>
     <message>
         <source>X</source>
         <translation>X</translation>
@@ -4841,7 +5482,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Font</source>
-        <translation>Γραμματοσειρά</translation>
+        <translation type="obsolete">Γραμματοσειρά</translation>
     </message>
     <message>
         <source>Alignment</source>
@@ -4885,11 +5526,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Γωνία</translation>
+        <translation type="obsolete">Γωνία</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Insert Symbol</source>
@@ -5401,11 +6042,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Line &amp;spacing:</source>
-        <translation>Διάκενο &amp;γραμμών:</translation>
+        <translation type="obsolete">Διάκενο &amp;γραμμών:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
-        <translation>&amp;Προεπιλεγμένο διάκενο γραμμών</translation>
+        <translation type="obsolete">&amp;Προεπιλεγμένο διάκενο γραμμών</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -5413,15 +6054,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
     <message>
         <source>Alt+D</source>
-        <translation>Alt+D</translation>
+        <translation type="obsolete">Alt+D</translation>
     </message>
     <message utf8="true">
         <source>Registered (®)</source>
@@ -5431,20 +6072,72 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>Yen (¥)</source>
         <translation>Γιεν (¥)</translation>
     </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Στρώση:</translation>
+    </message>
+    <message>
+        <source>Font settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Γωνία:</translation>
+    </message>
+    <message>
+        <source>Oblique:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Baseline Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Baseline Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Baseline Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aligned</source>
+        <translation type="unfinished">Στοιχισμένη</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">Μέση</translation>
+    </message>
 </context>
 <context>
     <name>QG_ExitDialog</name>
     <message>
         <source>&amp;Save</source>
-        <translation>Α&amp;ποθήκευση</translation>
+        <translation type="obsolete">Α&amp;ποθήκευση</translation>
     </message>
     <message>
         <source>Save &amp;As..</source>
-        <translation>Αποθήκευση &amp;ως..</translation>
+        <translation type="obsolete">Αποθήκευση &amp;ως..</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>&amp;Ακύρωση</translation>
+        <translation type="obsolete">&amp;Ακύρωση</translation>
     </message>
     <message>
         <source>No Text supplied.</source>
@@ -5460,7 +6153,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>C&amp;lose</source>
-        <translation>&amp;Κλείσιμο</translation>
+        <translation type="obsolete">&amp;Κλείσιμο</translation>
     </message>
     <message>
         <source>Alt+L</source>
@@ -5469,6 +6162,10 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>again Still No Text supplied.</source>
         <translation>ξανά δεν δόθηκε κείμενο.</translation>
+    </message>
+    <message>
+        <source>Save As...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5562,6 +6259,14 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>Scale Factor</source>
         <translation>Συντελεστής κλίμακας</translation>
     </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ImageOptionsDialog</name>
@@ -5603,19 +6308,19 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+Ε</translation>
+        <translation type="obsolete">Alt+Ε</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
     <message>
         <source>Resolution:</source>
@@ -5784,7 +6489,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="obsolete">Ακύρωση</translation>
     </message>
     <message>
         <source>Default Pen</source>
@@ -5792,15 +6497,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Εντάξει</translation>
+        <translation type="obsolete">&amp;Εντάξει</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+E</translation>
+        <translation type="obsolete">Alt+E</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Διαφυγή</translation>
+        <translation type="obsolete">Διαφυγή</translation>
     </message>
     <message>
         <source>A Help Layer has entities of infinite straight lines intended to be used for geometric construction.
@@ -6186,11 +6891,26 @@ The contents of a Help Layer should not appear in printout.</source>
     </message>
 </context>
 <context>
+    <name>QG_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Επιλογές κειμένου</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Κείμενο:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Γωνία:</translation>
+    </message>
+</context>
+<context>
     <name>QG_ModifyOffsetOptions</name>
     <message>
         <source>Modify Offset Options</source>
         <translation>Επιλογές τροποποίησης αναπαραγωγής</translation>
-    <translatorcomment/></message>
+    </message>
     <message>
         <source>Distance:</source>
         <translation>Απόσταση:</translation>
@@ -6384,28 +7104,28 @@ The contents of a Help Layer should not appear in printout.</source>
         <translation>Ολικό μήκος</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Αριθμός επιλεγμένων οντοτήτων&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Αριθμός επιλεγμένων οντοτήτων&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Ολικό μήκος των επιλεγμένων οντοτήτων&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Ολικό μήκος των επιλεγμένων οντοτήτων&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -6432,7 +7152,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Number of equidistant division points</source>
         <translation>Αριθμός ισαπεχόντων σημείων διαίρεσης</translation>
-    <translatorcomment/></message>
+    </message>
 </context>
 <context>
     <name>QG_SnapToolBar</name>
@@ -6707,12 +7427,12 @@ p, li { white-space: pre-wrap; }
         <translation>Αφαίρεση στρώσης</translation>
     </message>
     <message>
-        <source>Layer "%1" and all entities on it will be removed.</source>
-        <translation>Η στρώση "%1" και όλες οι οντότητες πάνω σε αυτή θα αφαιρεθούν.</translation>
+        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
+        <translation>Η στρώση &quot;%1&quot; και όλες οι οντότητες πάνω σε αυτή θα αφαιρεθούν.</translation>
     </message>
     <message>
-        <source>Layer "%1" can never be removed.</source>
-        <translation>Η στρώση "%1" δεν είναι δυνατό να αφαιρεθεί ποτέ.</translation>
+        <source>Layer &quot;%1&quot; can never be removed.</source>
+        <translation>Η στρώση &quot;%1&quot; δεν είναι δυνατό να αφαιρεθεί ποτέ.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -6723,16 +7443,16 @@ p, li { white-space: pre-wrap; }
         <translation>Αφαίρεση μπλοκ</translation>
     </message>
     <message>
-        <source>Block "%1" and all its entities will be removed.</source>
-        <translation>Το μπλοκ "%1" και όλες οι οντότητες πάνω σε αυτό θα αφαιρεθούν.</translation>
+        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
+        <translation>Το μπλοκ &quot;%1&quot; και όλες οι οντότητες πάνω σε αυτό θα αφαιρεθούν.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Ιδιότητες στρώσης</translation>
     </message>
     <message>
-        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
-        <translation>Η στρώση με όνομα "%1" υπάρχει ήδη. Παρακαλούμε να καθορίσετε διαφορετικό όνομα.</translation>
+        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
+        <translation>Η στρώση με όνομα &quot;%1&quot; υπάρχει ήδη. Παρακαλούμε να καθορίσετε διαφορετικό όνομα.</translation>
     </message>
 </context>
 <context>
@@ -7173,8 +7893,8 @@ Do you want to replace it?</source>
         <translation>&amp;Εισαγωγή μπλοκ</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -7795,7 +8515,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify an arc/circle</source>
-        <translation>Καθορίστε ένα τόξο/κύκλο</translation>
+        <translation type="obsolete">Καθορίστε ένα τόξο/κύκλο</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7816,6 +8536,10 @@ Do you want to replace it?</source>
     <message>
         <source>Select the center of the tangent circle</source>
         <translation>Επιλέξτε το κέντρο του εφαπτόμενου κύκλου</translation>
+    </message>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7843,6 +8567,37 @@ Do you want to replace it?</source>
     <message>
         <source>Select the center of the tangent circle</source>
         <translation>Επιλέξτε το κέντρο του εφαπτόμενου κύκλου</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2_1P</name>
+    <message>
+        <source>Common Tangential Circle 1 Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Specify the another arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify a point on the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished">Επιλέξτε το κέντρο του εφαπτόμενου κύκλου</translation>
     </message>
 </context>
 <context>
@@ -8121,12 +8876,16 @@ Do you want to replace it?</source>
         <translation type="obsolete">Εισαγωγή Εικόνας (Bitmap)</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Insert &amp;Image</source>
         <translation>Εισαγωγή &amp;εικόνας</translation>
+    </message>
+    <message>
+        <source>Enter dpi:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8484,8 +9243,8 @@ Do you want to replace it?</source>
         <translation type="obsolete">Καθορισμός κέντρου</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Specify a corner</source>
@@ -8789,6 +9548,29 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawMText</name>
+    <message>
+        <source>&amp;MText</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify insertion point</source>
+        <translation type="unfinished">Καθορίστε το σημείο εισαγωγής</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Ακύρωση</translation>
+    </message>
+    <message>
+        <source>Enter text:</source>
+        <translation type="unfinished">Εισάγετε κείμενο:</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <source>Points</source>
@@ -8919,6 +9701,10 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>Επιστροφή</translation>
     </message>
+    <message>
+        <source>Specify second point</source>
+        <translation type="unfinished">Καθορίστε το δεύτερο σημείο</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionEditCopy</name>
@@ -9026,6 +9812,13 @@ Do you want to replace it?</source>
     <message>
         <source>Creates a new drawing</source>
         <translation type="obsolete">Δημιουργία νέου σχεδίου</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionFileNewTemplate</name>
+    <message>
+        <source>New From &amp;Template</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9187,7 +9980,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Distance: %1</source>
-        <translation>Απόσταση: %1</translation>
+        <translation type="obsolete">Απόσταση: %1</translation>
     </message>
     <message>
         <source>Specify first point of distance</source>
@@ -9204,6 +9997,10 @@ Do you want to replace it?</source>
     <message>
         <source>Back</source>
         <translation>Επιστροφή</translation>
+    </message>
+    <message>
+        <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5 </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9439,16 +10236,16 @@ Do you want to replace it?</source>
         <translation>Εισάγετε γωνία:</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>Εισάγετε συντελεστή:</translation>
     </message>
     <message>
-        <source>Cannot open file '%1'</source>
-        <translation>Δεν είναι δυνατό το άνοιγμα του αρχείου '%1'</translation>
+        <source>Cannot open file &apos;%1&apos;</source>
+        <translation>Δεν είναι δυνατό το άνοιγμα του αρχείου &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -10152,7 +10949,7 @@ Do you want to replace it?</source>
         <translation>&amp;Προσθήκη κόμβου</translation>
     </message>
     <message>
-        <source>Add polyline's node</source>
+        <source>Add polyline&apos;s node</source>
         <translation>Προσθήκη κόμβου πολυγραμμής</translation>
     </message>
     <message>
@@ -10176,7 +10973,7 @@ Do you want to replace it?</source>
         <translation>Καθορίστε την πολυγραμμή για προσθήκη κόμβων</translation>
     </message>
     <message>
-        <source>Specify adding node's point</source>
+        <source>Specify adding node&apos;s point</source>
         <translation>Καθορίστε το σημείο του κόμβου προς προσθήκη</translation>
     </message>
 </context>
@@ -10191,7 +10988,7 @@ Do you want to replace it?</source>
         <translation>Προ&amp;σάρτηση κόμβου</translation>
     </message>
     <message>
-        <source>Append polyline's node</source>
+        <source>Append polyline&apos;s node</source>
         <translation>Προσάρτηση κόμβου πολυγραμμής</translation>
     </message>
     <message>
@@ -10246,7 +11043,7 @@ Do you want to replace it?</source>
         <translation>&amp;Διαγραφή κόμβου</translation>
     </message>
     <message>
-        <source>Delete polyline's node</source>
+        <source>Delete polyline&apos;s node</source>
         <translation>Διαγραφή κόμβου πολυγραμμής</translation>
     </message>
     <message>
@@ -10270,7 +11067,7 @@ Do you want to replace it?</source>
         <translation>Καθορίστε την πολυγραμμή για διαγραφή κόμβου</translation>
     </message>
     <message>
-        <source>Specify deleting node's point</source>
+        <source>Specify deleting node&apos;s point</source>
         <translation>Καθορίστε το σημείο του κόμβου προς διαγραφή</translation>
     </message>
 </context>
@@ -10398,7 +11195,7 @@ Do you want to replace it?</source>
         <translation>&amp;Διευθέτηση τμημάτων</translation>
     </message>
     <message>
-        <source>Trim polyline's segments</source>
+        <source>Trim polyline&apos;s segments</source>
         <translation>Διευθέτηση τμημάτων πολυγραμμής</translation>
     </message>
     <message>
@@ -10956,7 +11753,7 @@ Do you want to replace it?</source>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation/>
+        <translation></translation>
     </message>
     <message>
         <source>redo</source>
@@ -11028,7 +11825,7 @@ Do you want to replace it?</source>
     <message>
         <source>c</source>
         <comment>columns</comment>
-        <translation/>
+        <translation></translation>
     </message>
     <message>
         <source>r</source>
@@ -11105,7 +11902,7 @@ Do you want to replace it?</source>
     <message>
         <source>o</source>
         <comment>offset</comment>
-        <translation/>
+        <translation></translation>
     </message>
     <message>
         <source>parallel</source>
@@ -11149,12 +11946,12 @@ Do you want to replace it?</source>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation/>
+        <translation></translation>
     </message>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation/>
+        <translation></translation>
     </message>
     <message>
         <source>num</source>
@@ -11281,7 +12078,7 @@ Do you want to replace it?</source>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation/>
+        <translation></translation>
     </message>
     <message>
         <source>za</source>
@@ -11439,12 +12236,12 @@ Do you want to replace it?</source>
     <message>
         <source>tn</source>
         <comment>Deselect all</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ch</source>
         <comment>modify - bevel (chamfer)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>mt</source>
@@ -11454,61 +12251,61 @@ Do you want to replace it?</source>
     <message>
         <source>xt</source>
         <comment>modify - trim (extend)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rm</source>
         <comment>modify - trim</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>mv</source>
         <comment>modify - move</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>mi</source>
         <comment>modify - mirror</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>oo</source>
         <comment>modify - undo (oops)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>uu</source>
         <comment>modify - redo</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>xp</source>
         <comment>modify - explode</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dimregen</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>po</source>
@@ -11520,11 +12317,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>l</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>a</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ci</source>
@@ -11551,11 +12348,11 @@ Do you want to replace it?</source>
     <message>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>r</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>polyline</source>
@@ -11569,7 +12366,7 @@ Do you want to replace it?</source>
     <message>
         <source>tm</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>da</source>
@@ -11593,55 +12390,55 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>tm</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>xt</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rm</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>mv</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ch</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>mi</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ro</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sz</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ss</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>er</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>oo</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>uu</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>xp</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>os</source>
@@ -11661,7 +12458,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>sn</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sm</source>
@@ -11673,15 +12470,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>tn</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>kill</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>k</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>back</source>
@@ -11690,7 +12487,7 @@ Do you want to replace it?</source>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>li</source>
@@ -11698,7 +12495,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>pl</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>pa</source>
@@ -11710,7 +12507,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>rect</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>redraw</source>
@@ -11722,7 +12519,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>zw</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>za</source>
@@ -11734,11 +12531,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>zv</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>u</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>os</source>
@@ -11747,39 +12544,39 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>sc</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sd</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sd</source>
         <comment>snap - distance</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sf</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sf</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sa</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sa</source>
         <comment>Select all</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>number</source>
@@ -11799,7 +12596,7 @@ Do you want to replace it?</source>
     <message>
         <source>r</source>
         <comment>reversed</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>row</source>
@@ -11808,7 +12605,7 @@ Do you want to replace it?</source>
     <message>
         <source>r</source>
         <comment>row</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Command not found: %1</source>
@@ -11817,6 +12614,14 @@ Do you want to replace it?</source>
     <message>
         <source>Accepted keycode: %1</source>
         <translation>Δεκτός κωδικός πλήκτρου: %1</translation>
+    </message>
+    <message>
+        <source>mtext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dpi</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

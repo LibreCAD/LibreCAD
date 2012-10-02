@@ -502,6 +502,14 @@ Az automatikus mentés kikapcsolva.</translation>
         <source>Draw &amp;Order</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New document from template: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Template aborted</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -1532,7 +1540,7 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>&amp;Free</source>
-        <translation>&amp;Szabadkézi</translation>
+        <translation type="obsolete">&amp;Szabadkézi</translation>
     </message>
     <message>
         <source>Free positioning</source>
@@ -1580,7 +1588,7 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>&amp;Center</source>
-        <translation>&amp;Közép</translation>
+        <translation type="obsolete">&amp;Közép</translation>
     </message>
     <message>
         <source>Snap to centers</source>
@@ -1592,7 +1600,7 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>&amp;Middle</source>
-        <translation>&amp;Felező</translation>
+        <translation type="obsolete">&amp;Felező</translation>
     </message>
     <message>
         <source>Snap to middle points</source>
@@ -1604,7 +1612,7 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>&amp;Distance from Endpoint</source>
-        <translation>Vé&amp;gétől távolságra</translation>
+        <translation type="obsolete">Vé&amp;gétől távolságra</translation>
     </message>
     <message>
         <source>Snap to points with a given distance to an endpoint</source>
@@ -1616,7 +1624,7 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>&amp;Intersection</source>
-        <translation>&amp;Metszéspont</translation>
+        <translation type="obsolete">&amp;Metszéspont</translation>
     </message>
     <message>
         <source>Snap to intersection points</source>
@@ -1640,7 +1648,7 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>Restrict &amp;Nothing</source>
-        <translation>&amp;Nincs korlátozás</translation>
+        <translation type="obsolete">&amp;Nincs korlátozás</translation>
     </message>
     <message>
         <source>No snap restriction</source>
@@ -1652,7 +1660,7 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>Restrict &amp;Orthogonally</source>
-        <translation>&amp;Merőleges korlátozás</translation>
+        <translation type="obsolete">&amp;Merőleges korlátozás</translation>
     </message>
     <message>
         <source>Restrict snapping orthogonally</source>
@@ -1664,7 +1672,7 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>Restrict &amp;Horizontally</source>
-        <translation>&amp;Vízszintes korlátozás</translation>
+        <translation type="obsolete">&amp;Vízszintes korlátozás</translation>
     </message>
     <message>
         <source>Restrict snapping horizontally</source>
@@ -1676,7 +1684,7 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation>&amp;Függőleges korlátozás</translation>
+        <translation type="obsolete">&amp;Függőleges korlátozás</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -2052,11 +2060,11 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>&amp;Endpoint</source>
-        <translation>&amp;Végpont</translation>
+        <translation type="obsolete">&amp;Végpont</translation>
     </message>
     <message>
         <source>&amp;OnEntity</source>
-        <translation>&amp;Elemen</translation>
+        <translation type="obsolete">&amp;Elemen</translation>
     </message>
 </context>
 <context>
@@ -2146,7 +2154,7 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>Renaming Block</source>
@@ -2158,15 +2166,15 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -2360,6 +2368,14 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2671,7 +2687,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Insert Text</source>
-        <translation>Szöveg beillesztése</translation>
+        <translation type="obsolete">Szöveg beillesztése</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Dimensions&quot;</source>
@@ -2696,6 +2712,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Show toolbar &quot;Select&quot;</source>
         <translation>&quot;Kijelölés&quot; eszköztár mutatása</translation>
+    </message>
+    <message>
+        <source>Insert Multi-line Text</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3291,19 +3311,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -3322,19 +3342,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -3369,19 +3389,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -3404,19 +3424,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -3431,19 +3451,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -3502,19 +3522,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -3549,7 +3569,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -3557,11 +3577,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
 </context>
 <context>
@@ -3612,19 +3632,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation type="unfinished">Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation type="obsolete">Esc</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3661,11 +3685,11 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation type="obsolete">OK</translation>
     </message>
     <message>
         <source>Enter</source>
-        <translation>Belépés</translation>
+        <translation type="obsolete">Belépés</translation>
     </message>
 </context>
 <context>
@@ -3716,15 +3740,15 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Scale X:</source>
@@ -3771,15 +3795,622 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgMText</name>
+    <message>
+        <source>MText</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Fólia:</translation>
+    </message>
+    <message>
+        <source>Font</source>
+        <translation type="unfinished">Betűkészlet</translation>
+    </message>
+    <message>
+        <source>&amp;Height:</source>
+        <translation type="unfinished">&amp;Magasság:</translation>
+    </message>
+    <message>
+        <source>Line &amp;spacing:</source>
+        <translation type="unfinished">&amp;Sortáv:</translation>
+    </message>
+    <message>
+        <source>&amp;Default line spacing</source>
+        <translation type="unfinished">&amp;Eredeti sortáv</translation>
+    </message>
+    <message>
+        <source>Alt+D</source>
+        <translation type="unfinished">Alt+D</translation>
+    </message>
+    <message>
+        <source>Alignment</source>
+        <translation type="unfinished">Igazítás</translation>
+    </message>
+    <message>
+        <source>Top Right</source>
+        <translation type="unfinished">Jobb felső</translation>
+    </message>
+    <message>
+        <source>Top Left</source>
+        <translation type="unfinished">Bal felső</translation>
+    </message>
+    <message>
+        <source>Middle Left</source>
+        <translation type="unfinished">Balra középen</translation>
+    </message>
+    <message>
+        <source>Middle Center</source>
+        <translation type="unfinished">Középen</translation>
+    </message>
+    <message>
+        <source>Middle Right</source>
+        <translation type="unfinished">Jobbra középen</translation>
+    </message>
+    <message>
+        <source>Bottom Left</source>
+        <translation type="unfinished">Bal alsó</translation>
+    </message>
+    <message>
+        <source>Bottom Right</source>
+        <translation type="unfinished">Jobb alsó</translation>
+    </message>
+    <message>
+        <source>Bottom Center</source>
+        <translation type="unfinished">Alsó közép</translation>
+    </message>
+    <message>
+        <source>Top Center</source>
+        <translation type="unfinished">Felső közép</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished">Szög</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Szöveg:</translation>
+    </message>
+    <message>
+        <source>Clear Text</source>
+        <translation type="unfinished">Törlés</translation>
+    </message>
+    <message>
+        <source>Load Text From File</source>
+        <translation type="unfinished">Betöltés fájlból</translation>
+    </message>
+    <message>
+        <source>Save Text To File</source>
+        <translation type="unfinished">Mentés fájlba</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="unfinished">Kivágás</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Másolás</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished">Beillesztés</translation>
+    </message>
+    <message>
+        <source>Insert Symbol</source>
+        <translation type="unfinished">Szimbólum beszúrás</translation>
+    </message>
+    <message utf8="true">
+        <source>Diameter (ø)</source>
+        <translation type="unfinished">Átmérő (Ø)</translation>
+    </message>
+    <message utf8="true">
+        <source>Degree (°)</source>
+        <translation type="unfinished">Fok (°)</translation>
+    </message>
+    <message utf8="true">
+        <source>Plus / Minus (±)</source>
+        <translation type="unfinished">Plusz-minusz (±)</translation>
+    </message>
+    <message>
+        <source>At (@)</source>
+        <translation type="unfinished">Kukac (@)</translation>
+    </message>
+    <message>
+        <source>Hash (#)</source>
+        <translation type="unfinished">Kereszt (#)</translation>
+    </message>
+    <message>
+        <source>Dollar ($)</source>
+        <translation type="unfinished">Dollár ($)</translation>
+    </message>
+    <message utf8="true">
+        <source>Copyright (©)</source>
+        <translation type="unfinished">Copyright (©)</translation>
+    </message>
+    <message utf8="true">
+        <source>Registered (®)</source>
+        <translation type="unfinished">Védjegy (®)</translation>
+    </message>
+    <message utf8="true">
+        <source>Paragraph (§)</source>
+        <translation type="unfinished">Paragrafus (§)</translation>
+    </message>
+    <message utf8="true">
+        <source>Pi (π)</source>
+        <translation type="unfinished">Pi (π)</translation>
+    </message>
+    <message utf8="true">
+        <source>Pound (£)</source>
+        <translation type="unfinished">Font (£)</translation>
+    </message>
+    <message utf8="true">
+        <source>Yen (¥)</source>
+        <translation type="unfinished">Yen (¥)</translation>
+    </message>
+    <message utf8="true">
+        <source>Times (×)</source>
+        <translation type="unfinished">Szorzó (×)</translation>
+    </message>
+    <message utf8="true">
+        <source>Division (÷)</source>
+        <translation type="unfinished">Osztó (÷)</translation>
+    </message>
+    <message>
+        <source>Insert Unicode</source>
+        <translation type="unfinished">Unicode beszúrás</translation>
+    </message>
+    <message>
+        <source>Page:</source>
+        <translation type="unfinished">Lap:</translation>
+    </message>
+    <message>
+        <source>Char:</source>
+        <translation type="unfinished">Betű:</translation>
+    </message>
+    <message>
+        <source>[0000-007F] Basic Latin</source>
+        <translation type="unfinished">(0000-007F) Alap latin</translation>
+    </message>
+    <message>
+        <source>[0080-00FF] Latin-1 Supplementary</source>
+        <translation type="unfinished">(0080-00FF) Latin-1 kiegészítő</translation>
+    </message>
+    <message>
+        <source>[0100-017F] Latin Extended-A</source>
+        <translation type="unfinished">(0100-017F) Latin bővített-A</translation>
+    </message>
+    <message>
+        <source>[0180-024F] Latin Extended-B</source>
+        <translation type="unfinished">(0180-024F) Latin bővített-B</translation>
+    </message>
+    <message>
+        <source>[0250-02AF] IPA Extensions</source>
+        <translation type="unfinished">(0250-02AF) IPA kiegészítések</translation>
+    </message>
+    <message>
+        <source>[02B0-02FF] Spacing Modifier Letters</source>
+        <translation type="unfinished">(02B0-02FF) Szóköz módosítók</translation>
+    </message>
+    <message>
+        <source>[0300-036F] Combining Diacritical Marks</source>
+        <translation type="unfinished">(0300-036F) Diakritikus jelek kombinációi</translation>
+    </message>
+    <message>
+        <source>[0370-03FF] Greek and Coptic</source>
+        <translation type="unfinished">(0370-03FF) Görög és Kopt</translation>
+    </message>
+    <message>
+        <source>[0400-04FF] Cyrillic</source>
+        <translation type="unfinished">(0400-04FF) Cirill</translation>
+    </message>
+    <message>
+        <source>[0500-052F] Cyrillic Supplementary</source>
+        <translation type="unfinished">(0500-052F) Cirill kiegészítések</translation>
+    </message>
+    <message>
+        <source>[0530-058F] Armenian</source>
+        <translation type="unfinished">(0530-058F) Örmény</translation>
+    </message>
+    <message>
+        <source>[0590-05FF] Hebrew</source>
+        <translation type="unfinished">(0590-05FF) Héber</translation>
+    </message>
+    <message>
+        <source>[0600-06FF] Arabic</source>
+        <translation type="unfinished">(0600-06FF) Arab</translation>
+    </message>
+    <message>
+        <source>[0700-074F] Syriac</source>
+        <translation type="unfinished">(0700-074F) Szíriai</translation>
+    </message>
+    <message>
+        <source>[0780-07BF] Thaana</source>
+        <translation type="unfinished">(0780-07BF) Thaana</translation>
+    </message>
+    <message>
+        <source>[0900-097F] Devanagari</source>
+        <translation type="unfinished">(0900-097F) Devanagari</translation>
+    </message>
+    <message>
+        <source>[0980-09FF] Bengali</source>
+        <translation type="unfinished">(0980-09FF) Bengáli</translation>
+    </message>
+    <message>
+        <source>[0A00-0A7F] Gurmukhi</source>
+        <translation type="unfinished">(0A00-0A7F) Gurmukhi</translation>
+    </message>
+    <message>
+        <source>[0A80-0AFF] Gujarati</source>
+        <translation type="unfinished">(0A80-0AFF) Gujarati</translation>
+    </message>
+    <message>
+        <source>[0B00-0B7F] Oriya</source>
+        <translation type="unfinished">(0B00-0B7F) Oriya</translation>
+    </message>
+    <message>
+        <source>[0B80-0BFF] Tamil</source>
+        <translation type="unfinished">(0B80-0BFF) Tamil</translation>
+    </message>
+    <message>
+        <source>[0C00-0C7F] Telugu</source>
+        <translation type="unfinished">(0C00-0C7F) Telugu</translation>
+    </message>
+    <message>
+        <source>[0C80-0CFF] Kannada</source>
+        <translation type="unfinished">(0C80-0CFF) Kanadai</translation>
+    </message>
+    <message>
+        <source>[0D00-0D7F] Malayalam</source>
+        <translation type="unfinished">(0D00-0D7F) Maláj</translation>
+    </message>
+    <message>
+        <source>[0D80-0DFF] Sinhala</source>
+        <translation type="unfinished">(0D80-0DFF) Sinhala</translation>
+    </message>
+    <message>
+        <source>[0E00-0E7F] Thai</source>
+        <translation type="unfinished">(0E00-0E7F) Thai</translation>
+    </message>
+    <message>
+        <source>[0E80-0EFF] Lao</source>
+        <translation type="unfinished">(0E80-0EFF) Lao</translation>
+    </message>
+    <message>
+        <source>[0F00-0FFF] Tibetan</source>
+        <translation type="unfinished">(0F00-0FFF) Tibeti</translation>
+    </message>
+    <message>
+        <source>[1000-109F] Myanmar</source>
+        <translation type="unfinished">(1000-109F) Myanmar</translation>
+    </message>
+    <message>
+        <source>[10A0-10FF] Georgian</source>
+        <translation type="unfinished">(10A0-10FF) Grúz</translation>
+    </message>
+    <message>
+        <source>[1100-11FF] Hangul Jamo</source>
+        <translation type="unfinished">(1100-11FF) Hangul Jamo</translation>
+    </message>
+    <message>
+        <source>[1200-137F] Ethiopic</source>
+        <translation type="unfinished">(1200-137F) Etióp</translation>
+    </message>
+    <message>
+        <source>[13A0-13FF] Cherokee</source>
+        <translation type="unfinished">(13A0-13FF) Cherokee</translation>
+    </message>
+    <message>
+        <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
+        <translation type="unfinished">(1400-167F) Kanadai szótagok</translation>
+    </message>
+    <message>
+        <source>[1680-169F] Ogham</source>
+        <translation type="unfinished">(1680-169F) Ogham</translation>
+    </message>
+    <message>
+        <source>[16A0-16FF] Runic</source>
+        <translation type="unfinished">(16A0-16FF) Runic</translation>
+    </message>
+    <message>
+        <source>[1700-171F] Tagalog</source>
+        <translation type="unfinished">(1700-171F) Tagalog</translation>
+    </message>
+    <message>
+        <source>[1720-173F] Hanunoo</source>
+        <translation type="unfinished">(1720-173F) Hanunoo</translation>
+    </message>
+    <message>
+        <source>[1740-175F] Buhid</source>
+        <translation type="unfinished">(1740-175F) Buhid</translation>
+    </message>
+    <message>
+        <source>[1760-177F] Tagbanwa</source>
+        <translation type="unfinished">(1760-177F) Tagbanwa</translation>
+    </message>
+    <message>
+        <source>[1780-17FF] Khmer</source>
+        <translation type="unfinished">(1780-17FF) Khmer</translation>
+    </message>
+    <message>
+        <source>[1800-18AF] Mongolian</source>
+        <translation type="unfinished">(1800-18AF) Mongol</translation>
+    </message>
+    <message>
+        <source>[1E00-1EFF] Latin Extended Additional</source>
+        <translation type="unfinished">(1E00-1EFF) Latin újabb bővített</translation>
+    </message>
+    <message>
+        <source>[1F00-1FFF] Greek Extended</source>
+        <translation type="unfinished">(1F00-1FFF) Görög kiterjesztett</translation>
+    </message>
+    <message>
+        <source>[2000-206F] General Punctuation</source>
+        <translation type="unfinished">(2000-206F) Általános írásjelek</translation>
+    </message>
+    <message>
+        <source>[2070-209F] Superscripts and Subscripts</source>
+        <translation type="unfinished">(2070-209F) Alsó, felső indexek</translation>
+    </message>
+    <message>
+        <source>[20A0-20CF] Currency Symbols</source>
+        <translation type="unfinished">(20A0-20CF) Pénzjelek</translation>
+    </message>
+    <message>
+        <source>[20D0-20FF] Combining Marks for Symbols</source>
+        <translation type="unfinished">(20D0-20FF) Márkajelek és szimbólumok</translation>
+    </message>
+    <message>
+        <source>[2100-214F] Letterlike Symbols</source>
+        <translation type="unfinished">(2100-214F) Betűszetü szimbólumok</translation>
+    </message>
+    <message>
+        <source>[2150-218F] Number Forms</source>
+        <translation type="unfinished">(2150-218F) Szám formátumok</translation>
+    </message>
+    <message>
+        <source>[2190-21FF] Arrows</source>
+        <translation type="unfinished">(2190-21FF) Nyilak</translation>
+    </message>
+    <message>
+        <source>[2200-22FF] Mathematical Operators</source>
+        <translation type="unfinished">(2200-22FF) Matematikai operátorok</translation>
+    </message>
+    <message>
+        <source>[2300-23FF] Miscellaneous Technical</source>
+        <translation type="unfinished">(2300-23FF) Különleges technikai jelek</translation>
+    </message>
+    <message>
+        <source>[2400-243F] Control Pictures</source>
+        <translation type="unfinished">(2400-243F) Irányító jelek</translation>
+    </message>
+    <message>
+        <source>[2440-245F] Optical Character Recognition</source>
+        <translation type="unfinished">(2440-245F) Optikai Karakter Felismerés</translation>
+    </message>
+    <message>
+        <source>[2460-24FF] Enclosed Alphanumerics</source>
+        <translation type="unfinished">(2460-24FF) Zárt alfanumerikus</translation>
+    </message>
+    <message>
+        <source>[2500-257F] Box Drawing</source>
+        <translation type="unfinished">(2500-257F) Keret rajzoló</translation>
+    </message>
+    <message>
+        <source>[2580-259F] Block Elements</source>
+        <translation type="unfinished">(2580-259F) Blokk elemek</translation>
+    </message>
+    <message>
+        <source>[25A0-25FF] Geometric Shapes</source>
+        <translation type="unfinished">(25A0-25FF) Geometriai alakzatok</translation>
+    </message>
+    <message>
+        <source>[2600-26FF] Miscellaneous Symbols</source>
+        <translation type="unfinished">(2600-26FF) Különleges jelek</translation>
+    </message>
+    <message>
+        <source>[2700-27BF] Dingbats</source>
+        <translation type="unfinished">(2700-27BF) Dingbat</translation>
+    </message>
+    <message>
+        <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
+        <translation type="unfinished">(27C0-27EF) Különleges matematikai jelek A</translation>
+    </message>
+    <message>
+        <source>[27F0-27FF] Supplemental Arrows-A</source>
+        <translation type="unfinished">(27F0-27FF) Kiegészítő nyilak A</translation>
+    </message>
+    <message>
+        <source>[2800-28FF] Braille Patterns</source>
+        <translation type="unfinished">(2800-28FF) Braille minták</translation>
+    </message>
+    <message>
+        <source>[2900-297F] Supplemental Arrows-B</source>
+        <translation type="unfinished">(2900-297F) Kiegészítő nyilak B</translation>
+    </message>
+    <message>
+        <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
+        <translation type="unfinished">(2980-29FF) Különleges matematikai jelek B</translation>
+    </message>
+    <message>
+        <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
+        <translation type="unfinished">(2A00-2AFF) Kiegészítő matematikai operátorok</translation>
+    </message>
+    <message>
+        <source>[2E80-2EFF] CJK Radicals Supplement</source>
+        <translation type="unfinished">(2E80-2EFF) CJK gyökös kiegészítők</translation>
+    </message>
+    <message>
+        <source>[2F00-2FDF] Kangxi Radicals</source>
+        <translation type="unfinished">(2F00-2FDF) Kangxi gyökök</translation>
+    </message>
+    <message>
+        <source>[2FF0-2FFF] Ideographic Description Characters</source>
+        <translation type="unfinished">(2FF0-2FFF) Ideográfiai leíró jelek</translation>
+    </message>
+    <message>
+        <source>[3000-303F] CJK Symbols and Punctuation</source>
+        <translation type="unfinished">(3000-303F) CJK szimbólumok és írásjelek</translation>
+    </message>
+    <message>
+        <source>[3040-309F] Hiragana</source>
+        <translation type="unfinished">(3040-309F) Hiragana</translation>
+    </message>
+    <message>
+        <source>[30A0-30FF] Katakana</source>
+        <translation type="unfinished">(30A0-30FF) Katakana</translation>
+    </message>
+    <message>
+        <source>[3100-312F] Bopomofo</source>
+        <translation type="unfinished">(3100-312F) Bopomofo</translation>
+    </message>
+    <message>
+        <source>[3130-318F] Hangul Compatibility Jamo</source>
+        <translation type="unfinished">(3130-318F) Hangul kompatibilis Jamo</translation>
+    </message>
+    <message>
+        <source>[3190-319F] Kanbun</source>
+        <translation type="unfinished">(3190-319F) Kanbun</translation>
+    </message>
+    <message>
+        <source>[31A0-31BF] Bopomofo Extended</source>
+        <translation type="unfinished">(31A0-31BF) Bopomofo kiterjesztett</translation>
+    </message>
+    <message>
+        <source>[3200-32FF] Enclosed CJK Letters and Months</source>
+        <translation type="unfinished">(3200-32FF) Zárt CJK betűk és hónapok</translation>
+    </message>
+    <message>
+        <source>[3300-33FF] CJK Compatibility</source>
+        <translation type="unfinished">(3300-33FF) CJK kompatibilitás</translation>
+    </message>
+    <message>
+        <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
+        <translation type="unfinished">(3400-4DBF) CJK egységes ideográfiai kiegészítés A</translation>
+    </message>
+    <message>
+        <source>[4E00-9FAF] CJK Unified Ideographs</source>
+        <translation type="unfinished">(4E00-9FAF) CJK egységes ideográfiák</translation>
+    </message>
+    <message>
+        <source>[A000-A48F] Yi Syllables</source>
+        <translation type="unfinished">(A000-A48F) Yi szótagok</translation>
+    </message>
+    <message>
+        <source>[A490-A4CF] Yi Radicals</source>
+        <translation type="unfinished">(A490-A4CF) Yi gyökjelek</translation>
+    </message>
+    <message>
+        <source>[AC00-D7AF] Hangul Syllables</source>
+        <translation type="unfinished">(AC00-D7AF) Hangul szótagok</translation>
+    </message>
+    <message>
+        <source>[D800-DBFF] High Surrogates</source>
+        <translation type="unfinished">(D800-DBFF) Felső ékezetek</translation>
+    </message>
+    <message>
+        <source>[DC00-DFFF] Low Surrogate Area</source>
+        <translation type="unfinished">(DC00-DFFF) Alsó ékezetek helye</translation>
+    </message>
+    <message>
+        <source>[E000-F8FF] Private Use Area</source>
+        <translation type="unfinished">(E000-F8FF) Saját használatú terület</translation>
+    </message>
+    <message>
+        <source>[F900-FAFF] CJK Compatibility Ideographs</source>
+        <translation type="unfinished">(F900-FAFF) CJK kompatibilis ideográfiák</translation>
+    </message>
+    <message>
+        <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
+        <translation type="unfinished">(FB00-FB4F) Betűrendes bemutatók</translation>
+    </message>
+    <message>
+        <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
+        <translation type="unfinished">(FB50-FDFF) Arab betűrendek A</translation>
+    </message>
+    <message>
+        <source>[FE00-FE0F] Variation Selectors</source>
+        <translation type="unfinished">(FE00-FE0F) Kiválasztó jelek</translation>
+    </message>
+    <message>
+        <source>[FE20-FE2F] Combining Half Marks</source>
+        <translation type="unfinished">(FE20-FE2F) Összevont féljelek</translation>
+    </message>
+    <message>
+        <source>[FE30-FE4F] CJK Compatibility Forms</source>
+        <translation type="unfinished">(FE30-FE4F) CJK komtabilis jelek</translation>
+    </message>
+    <message>
+        <source>[FE50-FE6F] Small Form Variants</source>
+        <translation type="unfinished">(FE50-FE6F) Kisbetűs változatok</translation>
+    </message>
+    <message>
+        <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
+        <translation type="unfinished">(FE70-FEFF) Arab betűrendek B</translation>
+    </message>
+    <message>
+        <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
+        <translation type="unfinished">(FF00-FFEF) Fél- és teljes szélességű jelek</translation>
+    </message>
+    <message>
+        <source>[FFF0-FFFF] Specials</source>
+        <translation type="unfinished">(FFF0-FFFF) Különlegességek</translation>
+    </message>
+    <message>
+        <source>[10300-1032F] Old Italic</source>
+        <translation type="unfinished">(10300-1032F) Régi dőlt</translation>
+    </message>
+    <message>
+        <source>[10330-1034F] Gothic</source>
+        <translation type="unfinished">(10330-1034F) Gótikus</translation>
+    </message>
+    <message>
+        <source>[10400-1044F] Deseret</source>
+        <translation type="unfinished">(10400-1044F) Deseret</translation>
+    </message>
+    <message>
+        <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
+        <translation type="unfinished">(1D000-1D0FF) Bizánci zenei jelek</translation>
+    </message>
+    <message>
+        <source>[1D100-1D1FF] Musical Symbols</source>
+        <translation type="unfinished">(1D100-1D1FF) Zenei jelek</translation>
+    </message>
+    <message>
+        <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
+        <translation type="unfinished">(1D400-1D7FF) Matematikai betűjelek</translation>
+    </message>
+    <message>
+        <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
+        <translation type="unfinished">(20000-2A6DF) CJK egységes ideográfiai kiegészítés B</translation>
+    </message>
+    <message>
+        <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
+        <translation type="unfinished">(2F800-2FA1F) CJK kompatibilis ideográfiák kiegészítése</translation>
+    </message>
+    <message>
+        <source>[E0000-E007F] Tags</source>
+        <translation type="unfinished">(E0000-E007F) Határolók</translation>
+    </message>
+    <message>
+        <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
+        <translation type="unfinished">(F0000-FFFFD) Kiegészítő saját terület A</translation>
+    </message>
+    <message>
+        <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
+        <translation type="unfinished">(100000-10FFFD) Kiegészítő saját terület B</translation>
     </message>
 </context>
 <context>
@@ -3814,7 +4445,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -3834,11 +4465,11 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>...</source>
@@ -3881,7 +4512,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -3905,15 +4536,15 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>...</source>
@@ -3940,7 +4571,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>Angle (a):</source>
@@ -3972,11 +4603,11 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>&amp;Angle (a):</source>
@@ -4123,7 +4754,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -4227,15 +4858,15 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Grid</source>
@@ -4466,7 +5097,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -4550,15 +5181,15 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>#000000</source>
@@ -4716,6 +5347,10 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
         <source>Auto backup</source>
         <translation>Automatikus mentés</translation>
     </message>
+    <message>
+        <source>Template:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgOptionsVariables</name>
@@ -4764,15 +5399,15 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -4795,19 +5430,19 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -4854,15 +5489,15 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>&amp;Mégsem</translation>
+        <translation type="obsolete">&amp;Mégsem</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -4905,7 +5540,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -4941,7 +5576,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -5020,15 +5655,15 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>&amp;Mégsem</translation>
+        <translation type="obsolete">&amp;Mégsem</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>&amp;Factor (f):</source>
@@ -5166,7 +5801,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Font</source>
-        <translation>Betűkészlet</translation>
+        <translation type="obsolete">Betűkészlet</translation>
     </message>
     <message>
         <source>Height:</source>
@@ -5222,11 +5857,11 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Szög</translation>
+        <translation type="obsolete">Szög</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -5742,11 +6377,11 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Line &amp;spacing:</source>
-        <translation>&amp;Sortáv:</translation>
+        <translation type="obsolete">&amp;Sortáv:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
-        <translation>&amp;Eredeti sortáv</translation>
+        <translation type="obsolete">&amp;Eredeti sortáv</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -5754,15 +6389,67 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Alt+D</source>
-        <translation>Alt+D</translation>
+        <translation type="obsolete">Alt+D</translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Fólia:</translation>
+    </message>
+    <message>
+        <source>Font settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Szög:</translation>
+    </message>
+    <message>
+        <source>Oblique:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Baseline Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Baseline Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Baseline Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aligned</source>
+        <translation type="unfinished">Hossz</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">Felező</translation>
     </message>
 </context>
 <context>
@@ -5781,15 +6468,15 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation>Menté&amp;s</translation>
+        <translation type="obsolete">Menté&amp;s</translation>
     </message>
     <message>
         <source>Save &amp;As..</source>
-        <translation>Me&amp;ntés másként..</translation>
+        <translation type="obsolete">Me&amp;ntés másként..</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>&amp;Mégsem</translation>
+        <translation type="obsolete">&amp;Mégsem</translation>
     </message>
     <message>
         <source>Alt+C</source>
@@ -5813,7 +6500,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>C&amp;lose</source>
-        <translation>&amp;Bezárás</translation>
+        <translation type="obsolete">&amp;Bezárás</translation>
     </message>
     <message>
         <source>Alt+L</source>
@@ -5822,6 +6509,10 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     <message>
         <source>again Still No Text supplied.</source>
         <translation>Újból nem lett megadva szöveg</translation>
+    </message>
+    <message>
+        <source>Save As...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5915,6 +6606,14 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
         <source>Scale Factor</source>
         <translation>Átméretezés</translation>
     </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ImageOptionsDialog</name>
@@ -5956,7 +6655,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -5964,15 +6663,15 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Resolution:</source>
@@ -6145,7 +6844,7 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>Default Pen</source>
@@ -6153,15 +6852,15 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>A Help Layer has entities of infinite straight lines intended to be used for geometric construction.
@@ -6543,6 +7242,21 @@ The contents of a Help Layer should not appear in printout.</source>
     <message>
         <source>Border (large)</source>
         <translation>Határ (nagy)</translation>
+    </message>
+</context>
+<context>
+    <name>QG_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Szöveg beállítása</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Szöveg:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Szög:</translation>
     </message>
 </context>
 <context>
@@ -8142,10 +8856,6 @@ Lecseréli?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specify an arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation type="unfinished">Mégsem</translation>
     </message>
@@ -8163,6 +8873,10 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify a line/arc/circle</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8187,6 +8901,37 @@ Lecseréli?</translation>
     <message>
         <source>Back</source>
         <translation type="unfinished">Vissza</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2_1P</name>
+    <message>
+        <source>Common Tangential Circle 1 Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>Specify the another arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
+    </message>
+    <message>
+        <source>Specify a point on the tangent circle</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -8474,6 +9219,10 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Insert &amp;Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter dpi:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9153,6 +9902,29 @@ Lecseréli?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawMText</name>
+    <message>
+        <source>&amp;MText</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify insertion point</source>
+        <translation type="unfinished">Adja meg a beszúrás helyét</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Mégsem</translation>
+    </message>
+    <message>
+        <source>Enter text:</source>
+        <translation type="unfinished">Szöveg:</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Vissza</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <source>Specify location</source>
@@ -9283,6 +10055,10 @@ Lecseréli?</translation>
         <source>Draw Text Entities</source>
         <translation type="obsolete">Szöveg elhelyezése a rajzon</translation>
     </message>
+    <message>
+        <source>Specify second point</source>
+        <translation type="unfinished">Második pont</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionEditCopy</name>
@@ -9390,6 +10166,13 @@ Lecseréli?</translation>
     <message>
         <source>Creates a new drawing</source>
         <translation type="obsolete">Új rajz létrehozása</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionFileNewTemplate</name>
+    <message>
+        <source>New From &amp;Template</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9539,7 +10322,7 @@ Lecseréli?</translation>
     <name>RS_ActionInfoDist</name>
     <message>
         <source>Distance: %1</source>
-        <translation>Távolság: %1</translation>
+        <translation type="obsolete">Távolság: %1</translation>
     </message>
     <message>
         <source>Specify first point of distance</source>
@@ -9568,6 +10351,10 @@ Lecseréli?</translation>
     <message>
         <source>Measures the distance between two points</source>
         <translation type="obsolete">Két pont közötti távolság mérése</translation>
+    </message>
+    <message>
+        <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5 </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12235,6 +13022,14 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Accepted keycode: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mtext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dpi</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

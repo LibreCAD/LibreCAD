@@ -359,6 +359,14 @@ Auto-save disabled.</source>
         <source>Draw &amp;Order</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New document from template: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Template aborted</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -383,39 +391,7 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Free</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Grid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Middle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Distance from Endpoint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Intersection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restrict &amp;Nothing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restrict &amp;Orthogonally</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restrict &amp;Horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -460,18 +436,6 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Endpoint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OnEntity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restrict &amp;Vertically</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -549,27 +513,11 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Renaming Block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -747,6 +695,14 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -989,10 +945,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Insert Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Show toolbar &quot;Dimensions&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1014,6 +966,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Show toolbar &quot;Select&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Multi-line Text</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1521,22 +1477,6 @@ p, li { white-space: pre-wrap; }
         <source>Reversed</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgAttributes</name>
@@ -1546,22 +1486,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1591,22 +1515,6 @@ p, li { white-space: pre-wrap; }
         <source>Center (x):</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgDimLinear</name>
@@ -1626,43 +1534,11 @@ p, li { white-space: pre-wrap; }
         <source>Angle:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgDimension</name>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1716,22 +1592,6 @@ p, li { white-space: pre-wrap; }
         <source>Reversed</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgHatch</name>
@@ -1761,18 +1621,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Enable Preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1823,19 +1671,7 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
+        <source>DPI</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1863,14 +1699,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Command Language:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1917,18 +1745,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Scale X:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1967,16 +1783,611 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>Start point (x):</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>QG_DlgMText</name>
     <message>
-        <source>Cancel</source>
+        <source>MText</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;OK</source>
+        <source>Layer:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Esc</source>
+        <source>Font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Height:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line &amp;spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Default line spacing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alignment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Middle Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Middle Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Middle Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load Text From File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Text To File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Diameter (ø)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Degree (°)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Plus / Minus (±)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>At (@)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hash (#)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dollar ($)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Copyright (©)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Registered (®)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Paragraph (§)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Pi (π)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Pound (£)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Yen (¥)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Times (×)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Division (÷)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Unicode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Page:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Char:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0000-007F] Basic Latin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0080-00FF] Latin-1 Supplementary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0100-017F] Latin Extended-A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0180-024F] Latin Extended-B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0250-02AF] IPA Extensions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[02B0-02FF] Spacing Modifier Letters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0300-036F] Combining Diacritical Marks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0370-03FF] Greek and Coptic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0400-04FF] Cyrillic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0500-052F] Cyrillic Supplementary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0530-058F] Armenian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0590-05FF] Hebrew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0600-06FF] Arabic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0700-074F] Syriac</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0780-07BF] Thaana</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0900-097F] Devanagari</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0980-09FF] Bengali</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0A00-0A7F] Gurmukhi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0A80-0AFF] Gujarati</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0B00-0B7F] Oriya</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0B80-0BFF] Tamil</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0C00-0C7F] Telugu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0C80-0CFF] Kannada</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0D00-0D7F] Malayalam</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0D80-0DFF] Sinhala</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0E00-0E7F] Thai</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0E80-0EFF] Lao</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[0F00-0FFF] Tibetan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1000-109F] Myanmar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[10A0-10FF] Georgian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1100-11FF] Hangul Jamo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1200-137F] Ethiopic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[13A0-13FF] Cherokee</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1680-169F] Ogham</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[16A0-16FF] Runic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1700-171F] Tagalog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1720-173F] Hanunoo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1740-175F] Buhid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1760-177F] Tagbanwa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1780-17FF] Khmer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1800-18AF] Mongolian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1E00-1EFF] Latin Extended Additional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1F00-1FFF] Greek Extended</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2000-206F] General Punctuation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2070-209F] Superscripts and Subscripts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[20A0-20CF] Currency Symbols</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[20D0-20FF] Combining Marks for Symbols</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2100-214F] Letterlike Symbols</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2150-218F] Number Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2190-21FF] Arrows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2200-22FF] Mathematical Operators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2300-23FF] Miscellaneous Technical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2400-243F] Control Pictures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2440-245F] Optical Character Recognition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2460-24FF] Enclosed Alphanumerics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2500-257F] Box Drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2580-259F] Block Elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[25A0-25FF] Geometric Shapes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2600-26FF] Miscellaneous Symbols</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2700-27BF] Dingbats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[27F0-27FF] Supplemental Arrows-A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2800-28FF] Braille Patterns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2900-297F] Supplemental Arrows-B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2E80-2EFF] CJK Radicals Supplement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2F00-2FDF] Kangxi Radicals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2FF0-2FFF] Ideographic Description Characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[3000-303F] CJK Symbols and Punctuation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[3040-309F] Hiragana</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[30A0-30FF] Katakana</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[3100-312F] Bopomofo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[3130-318F] Hangul Compatibility Jamo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[3190-319F] Kanbun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[31A0-31BF] Bopomofo Extended</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[3200-32FF] Enclosed CJK Letters and Months</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[3300-33FF] CJK Compatibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[4E00-9FAF] CJK Unified Ideographs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[A000-A48F] Yi Syllables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[A490-A4CF] Yi Radicals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[AC00-D7AF] Hangul Syllables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[D800-DBFF] High Surrogates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[DC00-DFFF] Low Surrogate Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[E000-F8FF] Private Use Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[F900-FAFF] CJK Compatibility Ideographs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[FE00-FE0F] Variation Selectors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[FE20-FE2F] Combining Half Marks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[FE30-FE4F] CJK Compatibility Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[FE50-FE6F] Small Form Variants</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[FFF0-FFFF] Specials</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[10300-1032F] Old Italic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[10330-1034F] Gothic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[10400-1044F] Deseret</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1D100-1D1FF] Musical Symbols</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[E0000-E007F] Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1988,10 +2399,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Number of copies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2011,14 +2418,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2027,10 +2426,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <name>QG_DlgMove</name>
     <message>
         <source>Number of copies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2054,18 +2449,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2085,19 +2468,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Number of copies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2185,10 +2556,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>angular</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2301,18 +2668,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;Dimensions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2479,10 +2834,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2544,18 +2895,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;Unit:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2718,6 +3057,10 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>Auto backup</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Template:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgPoint</name>
@@ -2741,18 +3084,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>Position (x):</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgPolyline</name>
@@ -2772,22 +3103,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgRotate</name>
@@ -2797,18 +3112,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Number of copies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2847,15 +3150,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Number of copies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2899,18 +3194,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Number of copies</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3044,10 +3327,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Font</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Alignment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3085,14 +3364,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Top Center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3604,50 +3875,70 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Line &amp;spacing:</source>
+        <source>Layer:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Default line spacing</source>
+        <source>Font settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
+        <source>Angle:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Esc</source>
+        <source>Oblique:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Alt+D</source>
+        <source>Width factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Baseline Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Baseline Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Baseline Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aligned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Middle</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_ExitDialog</name>
     <message>
-        <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save &amp;As..</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>QCad</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>C&amp;lose</source>
+        <source>again Still No Text supplied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>again Still No Text supplied.</source>
+        <source>Save As...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3734,6 +4025,14 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>Scale Factor</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ImageOptionsDialog</name>
@@ -3771,22 +4070,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Black</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3955,23 +4238,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Default Pen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Esc</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4349,6 +4616,21 @@ The contents of a Help Layer should not appear in printout.</source>
     </message>
     <message>
         <source>- Unchanged -</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5716,10 +5998,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specify an arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5737,6 +6015,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify a line/arc/circle</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5760,6 +6042,37 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2_1P</name>
+    <message>
+        <source>Common Tangential Circle 1 Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the another arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify a point on the tangent circle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6008,6 +6321,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Insert &amp;Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter dpi:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6421,6 +6738,29 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawMText</name>
+    <message>
+        <source>&amp;MText</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify insertion point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter text:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <source>&amp;Points</source>
@@ -6527,6 +6867,10 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Specify second point</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionEditCopy</name>
@@ -6585,6 +6929,13 @@ Do you want to replace it?</source>
     <name>RS_ActionFileNew</name>
     <message>
         <source>&amp;New</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionFileNewTemplate</name>
+    <message>
+        <source>New From &amp;Template</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6682,10 +7033,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Distance: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Specify first point of distance</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6699,6 +7046,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5 </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8705,6 +9056,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Accepted keycode: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mtext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dpi</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

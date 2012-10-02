@@ -445,6 +445,14 @@ Auto-save disabled.</source>
         <source>Draw &amp;Order</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New document from template: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Template aborted</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -479,7 +487,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Free</source>
-        <translation>ਮੁਕਤ(&amp;F)</translation>
+        <translation type="obsolete">ਮੁਕਤ(&amp;F)</translation>
     </message>
     <message>
         <source>Free positioning</source>
@@ -527,7 +535,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Center</source>
-        <translation>ਕੇਂਦਰ(&amp;C)</translation>
+        <translation type="obsolete">ਕੇਂਦਰ(&amp;C)</translation>
     </message>
     <message>
         <source>Snap to centers</source>
@@ -539,7 +547,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Middle</source>
-        <translation>ਮੱਧ(&amp;M)</translation>
+        <translation type="obsolete">ਮੱਧ(&amp;M)</translation>
     </message>
     <message>
         <source>Snap to middle points</source>
@@ -551,7 +559,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Distance from Endpoint</source>
-        <translation>ਅੰਤ ਬਿੰਦੂ ਤੋਂ ਦੂਰੀ(&amp;D)</translation>
+        <translation type="obsolete">ਅੰਤ ਬਿੰਦੂ ਤੋਂ ਦੂਰੀ(&amp;D)</translation>
     </message>
     <message>
         <source>Snap to points with a given distance to an endpoint</source>
@@ -563,7 +571,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Intersection</source>
-        <translation>ਕਾਟ-ਬਿੰਦੂ(&amp;I)</translation>
+        <translation type="obsolete">ਕਾਟ-ਬਿੰਦੂ(&amp;I)</translation>
     </message>
     <message>
         <source>Snap to intersection points</source>
@@ -575,7 +583,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Nothing</source>
-        <translation>ਪਾਬੰਦੀ ਕੁਝ ਨਹੀਂ(&amp;N)</translation>
+        <translation type="obsolete">ਪਾਬੰਦੀ ਕੁਝ ਨਹੀਂ(&amp;N)</translation>
     </message>
     <message>
         <source>No snap restriction</source>
@@ -587,7 +595,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Orthogonally</source>
-        <translation>ਅਰਥੋਗਨਲੀ ਪਾਬੰਦੀ(&amp;O)</translation>
+        <translation type="obsolete">ਅਰਥੋਗਨਲੀ ਪਾਬੰਦੀ(&amp;O)</translation>
     </message>
     <message>
         <source>Restrict snapping orthogonally</source>
@@ -599,7 +607,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Horizontally</source>
-        <translation>ਖਿਤਿਜੀ ਪਾਬੰਦੀ(&amp;H)</translation>
+        <translation type="obsolete">ਖਿਤਿਜੀ ਪਾਬੰਦੀ(&amp;H)</translation>
     </message>
     <message>
         <source>Restrict snapping horizontally</source>
@@ -611,7 +619,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation>ਲੰਬਕਾਰੀ ਪਾਬੰਦੀ(&amp;V)</translation>
+        <translation type="obsolete">ਲੰਬਕਾਰੀ ਪਾਬੰਦੀ(&amp;V)</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
@@ -733,14 +741,6 @@ Auto-save disabled.</source>
         <source>&amp;Selection pointer</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>&amp;Endpoint</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;OnEntity</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QG_ArcOptions</name>
@@ -825,7 +825,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>Renaming Block</source>
@@ -837,15 +837,15 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -1027,6 +1027,14 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1325,10 +1333,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished">ਬਿੰਦੂ ਖਿੱਚੋ</translation>
     </message>
     <message>
-        <source>Insert Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Show toolbar &quot;Dimensions&quot;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1350,6 +1354,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Show toolbar &quot;Select&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Multi-line Text</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1938,19 +1946,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -1965,19 +1973,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -2008,19 +2016,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -2043,19 +2051,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -2066,19 +2074,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -2133,19 +2141,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -2180,15 +2188,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
 </context>
 <context>
@@ -2239,19 +2247,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation type="unfinished">Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation type="obsolete">Esc</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2286,11 +2298,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>OK</source>
-        <translation>ਠੀਕ ਹੈ</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ</translation>
     </message>
     <message>
         <source>Enter</source>
-        <translation>Enter</translation>
+        <translation type="obsolete">Enter</translation>
     </message>
 </context>
 <context>
@@ -2341,15 +2353,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Scale X:</source>
@@ -2392,15 +2404,622 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgMText</name>
+    <message>
+        <source>MText</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">ਪਰਤ:</translation>
+    </message>
+    <message>
+        <source>Font</source>
+        <translation type="unfinished">ਫੋਂਟ</translation>
+    </message>
+    <message>
+        <source>&amp;Height:</source>
+        <translation type="unfinished">ਉਚਾਈ(&amp;H):</translation>
+    </message>
+    <message>
+        <source>Line &amp;spacing:</source>
+        <translation type="unfinished">ਰੇਖਾ ਖਾਲੀ ਥਾਂ(&amp;s):</translation>
+    </message>
+    <message>
+        <source>&amp;Default line spacing</source>
+        <translation type="unfinished">ਮੂਲ ਰੇਖਾ ਖਾਲੀ ਥਾਂ(&amp;D)</translation>
+    </message>
+    <message>
+        <source>Alt+D</source>
+        <translation type="unfinished">Alt+D</translation>
+    </message>
+    <message>
+        <source>Alignment</source>
+        <translation type="unfinished">ਇਕਸਾਰ</translation>
+    </message>
+    <message>
+        <source>Top Right</source>
+        <translation type="unfinished">ਉਪਰ ਸੱਜੇ</translation>
+    </message>
+    <message>
+        <source>Top Left</source>
+        <translation type="unfinished">ਉੱਪਰੇ ਖੱਬੇ</translation>
+    </message>
+    <message>
+        <source>Middle Left</source>
+        <translation type="unfinished">ਮੱਧ ਖੱਬੇ</translation>
+    </message>
+    <message>
+        <source>Middle Center</source>
+        <translation type="unfinished">ਮੱਧ ਕੇਂਦਰ</translation>
+    </message>
+    <message>
+        <source>Middle Right</source>
+        <translation type="unfinished">ਮੱਧ ਸੱਜਾ</translation>
+    </message>
+    <message>
+        <source>Bottom Left</source>
+        <translation type="unfinished">ਹੇਠਾਂ ਖੱਬੇ</translation>
+    </message>
+    <message>
+        <source>Bottom Right</source>
+        <translation type="unfinished">ਹੇਠਾਂ ਸੱਜੇ</translation>
+    </message>
+    <message>
+        <source>Bottom Center</source>
+        <translation type="unfinished">ਮੱਧ ਕੇਂਦਰ</translation>
+    </message>
+    <message>
+        <source>Top Center</source>
+        <translation type="unfinished">ਉੱਪਰ ਕੇਂਦਰ</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished">ਕੋਣ</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">ਪਾਠ:</translation>
+    </message>
+    <message>
+        <source>Clear Text</source>
+        <translation type="unfinished">ਪਾਠ ਸਾਫ਼</translation>
+    </message>
+    <message>
+        <source>Load Text From File</source>
+        <translation type="unfinished">ਫਾਇਲ ਤੋਂ ਪਾਠ ਲੋਡ</translation>
+    </message>
+    <message>
+        <source>Save Text To File</source>
+        <translation type="unfinished">ਪਾਠ ਫਾਇਲ ਵਿੱਚ ਸੰਭਾਲੋ</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="unfinished">ਕੱਟੋ</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">ਨਕਲ</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished">ਚੇਪੋ</translation>
+    </message>
+    <message>
+        <source>Insert Symbol</source>
+        <translation type="unfinished">ਨਿਸ਼ਾਨ ਸ਼ਾਮਿਲ</translation>
+    </message>
+    <message utf8="true">
+        <source>Diameter (ø)</source>
+        <translation type="unfinished">ਵਿਆਸ (ø)</translation>
+    </message>
+    <message utf8="true">
+        <source>Degree (°)</source>
+        <translation type="unfinished">ਡਿਗਰੀ (°)</translation>
+    </message>
+    <message utf8="true">
+        <source>Plus / Minus (±)</source>
+        <translation type="unfinished">ਜੋੜ / ਘਟਾਓ (±)</translation>
+    </message>
+    <message>
+        <source>At (@)</source>
+        <translation type="unfinished">At (@)</translation>
+    </message>
+    <message>
+        <source>Hash (#)</source>
+        <translation type="unfinished">ਹੈਂਸ਼ (#)</translation>
+    </message>
+    <message>
+        <source>Dollar ($)</source>
+        <translation type="unfinished">ਡਾਲਰ ($)</translation>
+    </message>
+    <message utf8="true">
+        <source>Copyright (©)</source>
+        <translation type="unfinished">ਕਾਪੀਰਾਈਟ (©)</translation>
+    </message>
+    <message utf8="true">
+        <source>Registered (®)</source>
+        <translation type="unfinished">ਰਜਿਸਟਰਡ (®)</translation>
+    </message>
+    <message utf8="true">
+        <source>Paragraph (§)</source>
+        <translation type="unfinished">ਪੈਰਾ (§)</translation>
+    </message>
+    <message utf8="true">
+        <source>Pi (π)</source>
+        <translation type="unfinished">ਪਾਈ (π)</translation>
+    </message>
+    <message utf8="true">
+        <source>Pound (£)</source>
+        <translation type="unfinished">ਪਾਊਂਡ (£)</translation>
+    </message>
+    <message utf8="true">
+        <source>Yen (¥)</source>
+        <translation type="unfinished">ਯੇਨ (¥)</translation>
+    </message>
+    <message utf8="true">
+        <source>Times (×)</source>
+        <translation type="unfinished">ਗੁਣਾ (×)</translation>
+    </message>
+    <message utf8="true">
+        <source>Division (÷)</source>
+        <translation type="unfinished">ਭਾਗ (÷)</translation>
+    </message>
+    <message>
+        <source>Insert Unicode</source>
+        <translation type="unfinished">ਯੂਨੀਕੋਡ ਸ਼ਾਮਿਲ</translation>
+    </message>
+    <message>
+        <source>Page:</source>
+        <translation type="unfinished">ਸਫ਼ਾ:</translation>
+    </message>
+    <message>
+        <source>Char:</source>
+        <translation type="unfinished">ਅੱਖਰ:</translation>
+    </message>
+    <message>
+        <source>[0000-007F] Basic Latin</source>
+        <translation type="unfinished">[0000-007F] ਮੂਲ ਲੈਟਿਨ</translation>
+    </message>
+    <message>
+        <source>[0080-00FF] Latin-1 Supplementary</source>
+        <translation type="unfinished">[0080-00FF] ਲੈਟਿਨ-1 ਹੋਰ</translation>
+    </message>
+    <message>
+        <source>[0100-017F] Latin Extended-A</source>
+        <translation type="unfinished">[0100-017F] Latin Extended-A</translation>
+    </message>
+    <message>
+        <source>[0180-024F] Latin Extended-B</source>
+        <translation type="unfinished">[0180-024F] Latin Extended-B</translation>
+    </message>
+    <message>
+        <source>[0250-02AF] IPA Extensions</source>
+        <translation type="unfinished">[0250-02AF] IPA Extensions</translation>
+    </message>
+    <message>
+        <source>[02B0-02FF] Spacing Modifier Letters</source>
+        <translation type="unfinished">[02B0-02FF] Spacing Modifier Letters</translation>
+    </message>
+    <message>
+        <source>[0300-036F] Combining Diacritical Marks</source>
+        <translation type="unfinished">[0300-036F] Combining Diacritical Marks</translation>
+    </message>
+    <message>
+        <source>[0370-03FF] Greek and Coptic</source>
+        <translation type="unfinished">[0370-03FF] Greek and Coptic</translation>
+    </message>
+    <message>
+        <source>[0400-04FF] Cyrillic</source>
+        <translation type="unfinished">[0400-04FF] Cyrillic</translation>
+    </message>
+    <message>
+        <source>[0500-052F] Cyrillic Supplementary</source>
+        <translation type="unfinished">[0500-052F] Cyrillic Supplementary</translation>
+    </message>
+    <message>
+        <source>[0530-058F] Armenian</source>
+        <translation type="unfinished">[0530-058F] Armenian</translation>
+    </message>
+    <message>
+        <source>[0590-05FF] Hebrew</source>
+        <translation type="unfinished">[0590-05FF] Hebrew</translation>
+    </message>
+    <message>
+        <source>[0600-06FF] Arabic</source>
+        <translation type="unfinished">[0600-06FF] Arabic</translation>
+    </message>
+    <message>
+        <source>[0700-074F] Syriac</source>
+        <translation type="unfinished">[0700-074F] Syriac</translation>
+    </message>
+    <message>
+        <source>[0780-07BF] Thaana</source>
+        <translation type="unfinished">[0780-07BF] Thaana</translation>
+    </message>
+    <message>
+        <source>[0900-097F] Devanagari</source>
+        <translation type="unfinished">[0900-097F] ਦੇਵਨਾਗਰੀ</translation>
+    </message>
+    <message>
+        <source>[0980-09FF] Bengali</source>
+        <translation type="unfinished">[0980-09FF] ਬੰਗਾਲੀ</translation>
+    </message>
+    <message>
+        <source>[0A00-0A7F] Gurmukhi</source>
+        <translation type="unfinished">[0A00-0A7F] ਗੁਰਮੁਖੀ</translation>
+    </message>
+    <message>
+        <source>[0A80-0AFF] Gujarati</source>
+        <translation type="unfinished"> [0A80-0AFF] ਗੁਜਰਾਤੀ</translation>
+    </message>
+    <message>
+        <source>[0B00-0B7F] Oriya</source>
+        <translation type="unfinished">[0B00-0B7F] ਉੜੀਆ</translation>
+    </message>
+    <message>
+        <source>[0B80-0BFF] Tamil</source>
+        <translation type="unfinished">[0B80-0BFF] ਤਾਮਿਲ</translation>
+    </message>
+    <message>
+        <source>[0C00-0C7F] Telugu</source>
+        <translation type="unfinished">[0C00-0C7F] ਤੇਲਗੂ</translation>
+    </message>
+    <message>
+        <source>[0C80-0CFF] Kannada</source>
+        <translation type="unfinished">[0C80-0CFF] ਕੰਨੜ</translation>
+    </message>
+    <message>
+        <source>[0D00-0D7F] Malayalam</source>
+        <translation type="unfinished">[0D00-0D7F] ਮਲਿਆਲਮ</translation>
+    </message>
+    <message>
+        <source>[0D80-0DFF] Sinhala</source>
+        <translation type="unfinished">[0D80-0DFF] Sinhala</translation>
+    </message>
+    <message>
+        <source>[0E00-0E7F] Thai</source>
+        <translation type="unfinished">[0E00-0E7F] Thai</translation>
+    </message>
+    <message>
+        <source>[0E80-0EFF] Lao</source>
+        <translation type="unfinished">[0E80-0EFF] Lao</translation>
+    </message>
+    <message>
+        <source>[0F00-0FFF] Tibetan</source>
+        <translation type="unfinished">[0F00-0FFF] Tibetan</translation>
+    </message>
+    <message>
+        <source>[1000-109F] Myanmar</source>
+        <translation type="unfinished">[1000-109F] Myanmar</translation>
+    </message>
+    <message>
+        <source>[10A0-10FF] Georgian</source>
+        <translation type="unfinished">[10A0-10FF] Georgian</translation>
+    </message>
+    <message>
+        <source>[1100-11FF] Hangul Jamo</source>
+        <translation type="unfinished">[1100-11FF] Hangul Jamo</translation>
+    </message>
+    <message>
+        <source>[1200-137F] Ethiopic</source>
+        <translation type="unfinished">[1200-137F] Ethiopic</translation>
+    </message>
+    <message>
+        <source>[13A0-13FF] Cherokee</source>
+        <translation type="unfinished">[13A0-13FF] Cherokee</translation>
+    </message>
+    <message>
+        <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
+        <translation type="unfinished">[1400-167F] Unified Canadian Aboriginal Syllabic</translation>
+    </message>
+    <message>
+        <source>[1680-169F] Ogham</source>
+        <translation type="unfinished">[1680-169F] Ogham</translation>
+    </message>
+    <message>
+        <source>[16A0-16FF] Runic</source>
+        <translation type="unfinished">[16A0-16FF] Runic</translation>
+    </message>
+    <message>
+        <source>[1700-171F] Tagalog</source>
+        <translation type="unfinished">[1700-171F] Tagalog</translation>
+    </message>
+    <message>
+        <source>[1720-173F] Hanunoo</source>
+        <translation type="unfinished">[1720-173F] Hanunoo</translation>
+    </message>
+    <message>
+        <source>[1740-175F] Buhid</source>
+        <translation type="unfinished">[1740-175F] Buhid</translation>
+    </message>
+    <message>
+        <source>[1760-177F] Tagbanwa</source>
+        <translation type="unfinished">[1760-177F] Tagbanwa</translation>
+    </message>
+    <message>
+        <source>[1780-17FF] Khmer</source>
+        <translation type="unfinished">[1780-17FF] Khmer</translation>
+    </message>
+    <message>
+        <source>[1800-18AF] Mongolian</source>
+        <translation type="unfinished">[1800-18AF] Mongolian</translation>
+    </message>
+    <message>
+        <source>[1E00-1EFF] Latin Extended Additional</source>
+        <translation type="unfinished">[1E00-1EFF] Latin Extended Additional</translation>
+    </message>
+    <message>
+        <source>[1F00-1FFF] Greek Extended</source>
+        <translation type="unfinished">[1F00-1FFF] Greek Extended</translation>
+    </message>
+    <message>
+        <source>[2000-206F] General Punctuation</source>
+        <translation type="unfinished">[2000-206F] ਆਮ ਵਿਰਾਮ ਚਿੰਨ</translation>
+    </message>
+    <message>
+        <source>[2070-209F] Superscripts and Subscripts</source>
+        <translation type="unfinished">[2070-209F] Superscripts and Subscripts</translation>
+    </message>
+    <message>
+        <source>[20A0-20CF] Currency Symbols</source>
+        <translation type="unfinished">[20A0-20CF] Currency Symbols</translation>
+    </message>
+    <message>
+        <source>[20D0-20FF] Combining Marks for Symbols</source>
+        <translation type="unfinished">[20D0-20FF] Combining Marks for Symbols</translation>
+    </message>
+    <message>
+        <source>[2100-214F] Letterlike Symbols</source>
+        <translation type="unfinished">[2100-214F] Letterlike Symbols</translation>
+    </message>
+    <message>
+        <source>[2150-218F] Number Forms</source>
+        <translation type="unfinished">[2150-218F] ਨੰਬਰ ਫਾਰਮ</translation>
+    </message>
+    <message>
+        <source>[2190-21FF] Arrows</source>
+        <translation type="unfinished">[2190-21FF] ਤੀਰ</translation>
+    </message>
+    <message>
+        <source>[2200-22FF] Mathematical Operators</source>
+        <translation type="unfinished">[2200-22FF]  ਗਣਿਤ ਓਪਰੇਟਰ</translation>
+    </message>
+    <message>
+        <source>[2300-23FF] Miscellaneous Technical</source>
+        <translation type="unfinished">[2300-23FF] ਫੁਟਕਲ ਤਕਨੀਕੀ</translation>
+    </message>
+    <message>
+        <source>[2400-243F] Control Pictures</source>
+        <translation type="unfinished">[2400-243F] ਕੰਟਰੋਲ ਤਸਵੀਰਾਂ</translation>
+    </message>
+    <message>
+        <source>[2440-245F] Optical Character Recognition</source>
+        <translation type="unfinished">[2440-245F] Optical Character Recognition</translation>
+    </message>
+    <message>
+        <source>[2460-24FF] Enclosed Alphanumerics</source>
+        <translation type="unfinished">[2460-24FF] Enclosed Alphanumerics</translation>
+    </message>
+    <message>
+        <source>[2500-257F] Box Drawing</source>
+        <translation type="unfinished">[2500-257F] Box Drawing</translation>
+    </message>
+    <message>
+        <source>[2580-259F] Block Elements</source>
+        <translation type="unfinished">[2580-259F] Block Elements</translation>
+    </message>
+    <message>
+        <source>[25A0-25FF] Geometric Shapes</source>
+        <translation type="unfinished">[25A0-25FF] ਜੁਮੈਟਰੀ ਸ਼ਕਲਾਂ</translation>
+    </message>
+    <message>
+        <source>[2600-26FF] Miscellaneous Symbols</source>
+        <translation type="unfinished">[2600-26FF] ਫੁਟਕਲ ਨਿਸ਼ਾਨ</translation>
+    </message>
+    <message>
+        <source>[2700-27BF] Dingbats</source>
+        <translation type="unfinished">[2700-27BF] Dingbats</translation>
+    </message>
+    <message>
+        <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
+        <translation type="unfinished">[27C0-27EF] Miscellaneous Mathematical Symbols-A</translation>
+    </message>
+    <message>
+        <source>[27F0-27FF] Supplemental Arrows-A</source>
+        <translation type="unfinished">[27F0-27FF] Supplemental Arrows-A</translation>
+    </message>
+    <message>
+        <source>[2800-28FF] Braille Patterns</source>
+        <translation type="unfinished">[2800-28FF] Braille Patterns</translation>
+    </message>
+    <message>
+        <source>[2900-297F] Supplemental Arrows-B</source>
+        <translation type="unfinished">[2900-297F] Supplemental Arrows-B</translation>
+    </message>
+    <message>
+        <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
+        <translation type="unfinished">[2980-29FF] Miscellaneous Mathematical Symbols-B</translation>
+    </message>
+    <message>
+        <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
+        <translation type="unfinished">[2A00-2AFF] Supplemental Mathematical Operators</translation>
+    </message>
+    <message>
+        <source>[2E80-2EFF] CJK Radicals Supplement</source>
+        <translation type="unfinished">[2E80-2EFF] CJK Radicals Supplemen</translation>
+    </message>
+    <message>
+        <source>[2F00-2FDF] Kangxi Radicals</source>
+        <translation type="unfinished">[2F00-2FDF] Kangxi Radicals</translation>
+    </message>
+    <message>
+        <source>[2FF0-2FFF] Ideographic Description Characters</source>
+        <translation type="unfinished">[2FF0-2FFF] Ideographic Description Characters</translation>
+    </message>
+    <message>
+        <source>[3000-303F] CJK Symbols and Punctuation</source>
+        <translation type="unfinished">[3000-303F] CJK Symbols and Punctuation</translation>
+    </message>
+    <message>
+        <source>[3040-309F] Hiragana</source>
+        <translation type="unfinished">[3040-309F] Hiragana</translation>
+    </message>
+    <message>
+        <source>[30A0-30FF] Katakana</source>
+        <translation type="unfinished">[30A0-30FF] Katakana</translation>
+    </message>
+    <message>
+        <source>[3100-312F] Bopomofo</source>
+        <translation type="unfinished">[3100-312F] Bopomofo</translation>
+    </message>
+    <message>
+        <source>[3130-318F] Hangul Compatibility Jamo</source>
+        <translation type="unfinished">[3130-318F] Hangul Compatibility Jamo</translation>
+    </message>
+    <message>
+        <source>[3190-319F] Kanbun</source>
+        <translation type="unfinished">[3190-319F] Kanbun</translation>
+    </message>
+    <message>
+        <source>[31A0-31BF] Bopomofo Extended</source>
+        <translation type="unfinished">[31A0-31BF] Bopomofo Extended</translation>
+    </message>
+    <message>
+        <source>[3200-32FF] Enclosed CJK Letters and Months</source>
+        <translation type="unfinished">[3200-32FF] Enclosed CJK Letters and Months</translation>
+    </message>
+    <message>
+        <source>[3300-33FF] CJK Compatibility</source>
+        <translation type="unfinished">[3300-33FF] CJK Compatibility</translation>
+    </message>
+    <message>
+        <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
+        <translation type="unfinished">[3400-4DBF] CJK Unified Ideographs Extension A</translation>
+    </message>
+    <message>
+        <source>[4E00-9FAF] CJK Unified Ideographs</source>
+        <translation type="unfinished">[4E00-9FAF] CJK Unified Ideographs</translation>
+    </message>
+    <message>
+        <source>[A000-A48F] Yi Syllables</source>
+        <translation type="unfinished">[A000-A48F] Yi Syllables</translation>
+    </message>
+    <message>
+        <source>[A490-A4CF] Yi Radicals</source>
+        <translation type="unfinished">[A490-A4CF] Yi Radicals</translation>
+    </message>
+    <message>
+        <source>[AC00-D7AF] Hangul Syllables</source>
+        <translation type="unfinished">[AC00-D7AF] Hangul Syllables</translation>
+    </message>
+    <message>
+        <source>[D800-DBFF] High Surrogates</source>
+        <translation type="unfinished">[D800-DBFF] High Surrogates</translation>
+    </message>
+    <message>
+        <source>[DC00-DFFF] Low Surrogate Area</source>
+        <translation type="unfinished">[DC00-DFFF] Low Surrogate Area</translation>
+    </message>
+    <message>
+        <source>[E000-F8FF] Private Use Area</source>
+        <translation type="unfinished">[E000-F8FF] Private Use Area</translation>
+    </message>
+    <message>
+        <source>[F900-FAFF] CJK Compatibility Ideographs</source>
+        <translation type="unfinished">F900-FAFF] CJK Compatibility Ideographs</translation>
+    </message>
+    <message>
+        <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
+        <translation type="unfinished">[FB00-FB4F] Alphabetic Presentation Forms</translation>
+    </message>
+    <message>
+        <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
+        <translation type="unfinished">[FB50-FDFF] Arabic Presentation Forms-A</translation>
+    </message>
+    <message>
+        <source>[FE00-FE0F] Variation Selectors</source>
+        <translation type="unfinished">[FE00-FE0F] Variation Selectors</translation>
+    </message>
+    <message>
+        <source>[FE20-FE2F] Combining Half Marks</source>
+        <translation type="unfinished">[FE20-FE2F]Combining Half Marks</translation>
+    </message>
+    <message>
+        <source>[FE30-FE4F] CJK Compatibility Forms</source>
+        <translation type="unfinished">[FE30-FE4F] CJK Compatibility Forms</translation>
+    </message>
+    <message>
+        <source>[FE50-FE6F] Small Form Variants</source>
+        <translation type="unfinished">[FE50-FE6F] Small Form Variants</translation>
+    </message>
+    <message>
+        <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
+        <translation type="unfinished">[FE70-FEFF] Arabic Presentation Forms-B</translation>
+    </message>
+    <message>
+        <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
+        <translation type="unfinished">[FF00-FFEF] Halfwidth and Fullwidth Forms</translation>
+    </message>
+    <message>
+        <source>[FFF0-FFFF] Specials</source>
+        <translation type="unfinished">[FFF0-FFFF] Specials</translation>
+    </message>
+    <message>
+        <source>[10300-1032F] Old Italic</source>
+        <translation type="unfinished">[10300-1032F] Old Italic</translation>
+    </message>
+    <message>
+        <source>[10330-1034F] Gothic</source>
+        <translation type="unfinished">[10330-1034F] Gothic</translation>
+    </message>
+    <message>
+        <source>[10400-1044F] Deseret</source>
+        <translation type="unfinished">[10400-1044F] Deseret</translation>
+    </message>
+    <message>
+        <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
+        <translation type="unfinished">[1D000-1D0FF] Byzantine Musical Symbols</translation>
+    </message>
+    <message>
+        <source>[1D100-1D1FF] Musical Symbols</source>
+        <translation type="unfinished">[1D100-1D1FF] Musical Symbols</translation>
+    </message>
+    <message>
+        <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
+        <translation type="unfinished">[1D400-1D7FF] Mathematical Alphanumeric Symbols</translation>
+    </message>
+    <message>
+        <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
+        <translation type="unfinished">[20000-2A6DF] CJK Unified Ideographs Extension B</translation>
+    </message>
+    <message>
+        <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
+        <translation type="unfinished">[2F800-2FA1F] CJK Compatibility Ideographs Supplement</translation>
+    </message>
+    <message>
+        <source>[E0000-E007F] Tags</source>
+        <translation type="unfinished">[E0000-E007F] ਟੈਗ</translation>
+    </message>
+    <message>
+        <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
+        <translation type="unfinished">[F0000-FFFFD] Supplementary Private Use Area-A</translation>
+    </message>
+    <message>
+        <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
+        <translation type="unfinished">[100000-10FFFD] Supplementary Private Use Area-B</translation>
     </message>
 </context>
 <context>
@@ -2415,7 +3034,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -2435,11 +3054,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>...</source>
@@ -2458,7 +3077,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -2482,15 +3101,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>...</source>
@@ -2513,7 +3132,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -2521,11 +3140,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>&amp;Angle (a):</source>
@@ -2616,7 +3235,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Paper Format</source>
@@ -2732,15 +3351,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Grid Settings</source>
@@ -2907,7 +3526,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Language</source>
@@ -2975,15 +3594,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Colors</source>
@@ -3157,6 +3776,10 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>Auto backup</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Template:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgOptionsVariables</name>
@@ -3201,15 +3824,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -3232,19 +3855,19 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation type="unfinished">Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -3259,15 +3882,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ(&amp;C)</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ(&amp;C)</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -3306,7 +3929,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -3314,7 +3937,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -3361,15 +3984,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ(&amp;C)</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ(&amp;C)</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>&amp;Factor (f):</source>
@@ -3507,7 +4130,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Font</source>
-        <translation>ਫੋਂਟ</translation>
+        <translation type="obsolete">ਫੋਂਟ</translation>
     </message>
     <message>
         <source>Alignment</source>
@@ -3551,11 +4174,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Angle</source>
-        <translation>ਕੋਣ</translation>
+        <translation type="obsolete">ਕੋਣ</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Insert Symbol</source>
@@ -4067,38 +4690,90 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Line &amp;spacing:</source>
-        <translation>ਰੇਖਾ ਖਾਲੀ ਥਾਂ(&amp;s):</translation>
+        <translation type="obsolete">ਰੇਖਾ ਖਾਲੀ ਥਾਂ(&amp;s):</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
-        <translation>ਮੂਲ ਰੇਖਾ ਖਾਲੀ ਥਾਂ(&amp;D)</translation>
+        <translation type="obsolete">ਮੂਲ ਰੇਖਾ ਖਾਲੀ ਥਾਂ(&amp;D)</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Alt+D</source>
-        <translation>Alt+D</translation>
+        <translation type="obsolete">Alt+D</translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">ਪਰਤ:</translation>
+    </message>
+    <message>
+        <source>Font settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">ਕੋਣ:</translation>
+    </message>
+    <message>
+        <source>Oblique:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Baseline Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Baseline Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Baseline Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aligned</source>
+        <translation type="unfinished">ਇਕਸਾਰ</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">ਮੱਧ</translation>
     </message>
 </context>
 <context>
     <name>QG_ExitDialog</name>
     <message>
         <source>&amp;Save</source>
-        <translation>ਸੰਭਾਲੋ(&amp;S)</translation>
+        <translation type="obsolete">ਸੰਭਾਲੋ(&amp;S)</translation>
     </message>
     <message>
         <source>Save &amp;As..</source>
-        <translation>ਏਦਾਂ ਸੰਭਾਲੋ(&amp;A)..</translation>
+        <translation type="obsolete">ਏਦਾਂ ਸੰਭਾਲੋ(&amp;A)..</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ(&amp;C)</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ(&amp;C)</translation>
     </message>
     <message>
         <source>No Text supplied.</source>
@@ -4110,10 +4785,14 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>C&amp;lose</source>
-        <translation>ਬੰਦ ਕਰੋ(&amp;l)</translation>
+        <translation type="obsolete">ਬੰਦ ਕਰੋ(&amp;l)</translation>
     </message>
     <message>
         <source>again Still No Text supplied.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save As...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4204,6 +4883,14 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>Scale Factor</source>
         <translation>ਪੈਮਾਨਾ ਫੈਕਟਰ</translation>
     </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ImageOptionsDialog</name>
@@ -4245,19 +4932,19 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Resolution:</source>
@@ -4426,7 +5113,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>Default Pen</source>
@@ -4434,15 +5121,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>A Help Layer has entities of infinite straight lines intended to be used for geometric construction.
@@ -4824,6 +5511,21 @@ The contents of a Help Layer should not appear in printout.</source>
     <message>
         <source>- Unchanged -</source>
         <translation>- ਨਾ-ਤਬਦੀਲ -</translation>
+    </message>
+</context>
+<context>
+    <name>QG_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">ਪਾਠ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">ਪਾਠ:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">ਕੋਣ:</translation>
     </message>
 </context>
 <context>
@@ -6423,10 +7125,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specify an arc/circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation type="unfinished">ਰੱਦ ਕਰੋ</translation>
     </message>
@@ -6444,6 +7142,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify a line/arc/circle</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6468,6 +7170,37 @@ Do you want to replace it?</source>
     <message>
         <source>Back</source>
         <translation type="unfinished">ਪਿੱਛੇ</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2_1P</name>
+    <message>
+        <source>Common Tangential Circle 1 Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">ਰੱਦ ਕਰੋ</translation>
+    </message>
+    <message>
+        <source>Specify the another arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">ਪਿੱਛੇ</translation>
+    </message>
+    <message>
+        <source>Specify a point on the tangent circle</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
@@ -6755,6 +7488,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Insert &amp;Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter dpi:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7383,6 +8120,29 @@ Do you want to replace it?</source>
     </message>
 </context>
 <context>
+    <name>RS_ActionDrawMText</name>
+    <message>
+        <source>&amp;MText</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify insertion point</source>
+        <translation type="unfinished">ਸ਼ਾਮਿਲ ਬਿੰਦੂ ਦਿਓ</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">ਰੱਦ ਕਰੋ</translation>
+    </message>
+    <message>
+        <source>Enter text:</source>
+        <translation type="unfinished">ਪਾਠ ਦਿਓ:</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">ਪਿੱਛੇ</translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <source>Points</source>
@@ -7513,6 +8273,10 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>ਪਿੱਛੇ</translation>
     </message>
+    <message>
+        <source>Specify second point</source>
+        <translation type="unfinished">ਦੂਜਾ ਬਿੰਦੂ ਦਿਓ</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionEditCopy</name>
@@ -7620,6 +8384,13 @@ Do you want to replace it?</source>
     <message>
         <source>Creates a new drawing</source>
         <translation type="obsolete">ਨਵੀਂ ਡਰਾਇੰਗ ਬਣਾਓ</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionFileNewTemplate</name>
+    <message>
+        <source>New From &amp;Template</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7781,7 +8552,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Distance: %1</source>
-        <translation>ਦੂਰੀ: %1</translation>
+        <translation type="obsolete">ਦੂਰੀ: %1</translation>
     </message>
     <message>
         <source>Specify first point of distance</source>
@@ -7798,6 +8569,10 @@ Do you want to replace it?</source>
     <message>
         <source>Back</source>
         <translation>ਪਿੱਛੇ</translation>
+    </message>
+    <message>
+        <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5 </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10626,6 +11401,14 @@ parallel</translation>
     </message>
     <message>
         <source>Accepted keycode: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mtext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dpi</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
