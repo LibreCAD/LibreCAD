@@ -112,42 +112,42 @@ RS_SnapMode QG_SnapToolBar::getSnaps ( void )
 
 void QG_SnapToolBar::init()
 {
-    snapFree = new QAction(QIcon(":/extui/snapfree.png"), "Free Snap", this);
+    snapFree = new QAction(QIcon(":/extui/snapfree.png"), tr("Free Snap"), this);
     snapFree->setCheckable(true);
     connect(snapFree, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     m_vSnapActions<<snapFree;
     this->addAction(snapFree);
-    snapGrid = new QAction(QIcon(":/extui/snapgrid.png"), "Snap on grid", this);
+    snapGrid = new QAction(QIcon(":/extui/snapgrid.png"), tr("Snap on grid"), this);
     snapGrid->setCheckable(true);
     connect(snapGrid, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     m_vSnapActions<<snapGrid;
     this->addAction(snapGrid);
-    snapEnd = new QAction(QIcon(":/extui/snapendpoint.png"), "Snap on Endpoints", this);
+    snapEnd = new QAction(QIcon(":/extui/snapendpoint.png"), tr("Snap on Endpoints"), this);
     snapEnd->setCheckable(true);
     connect(snapEnd, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     m_vSnapActions<<snapEnd;
     this->addAction(snapEnd);
-    snapOnEntity = new QAction(QIcon(":/extui/snaponentity.png"), "Snap on Entity", this);
+    snapOnEntity = new QAction(QIcon(":/extui/snaponentity.png"), tr("Snap on Entity"), this);
     snapOnEntity->setCheckable(true);
     connect(snapOnEntity, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     m_vSnapActions<<snapOnEntity;
     this->addAction(snapOnEntity);
-    snapCenter = new QAction(QIcon(":/extui/snapcenter.png"), "Snap Center", this);
+    snapCenter = new QAction(QIcon(":/extui/snapcenter.png"), tr("Snap Center"), this);
     snapCenter->setCheckable(true);
     connect(snapCenter, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     m_vSnapActions<<snapCenter;
     this->addAction(snapCenter);
-    snapMiddle = new QAction(QIcon(":/extui/snapmiddle.png"), "Snap Middle", this);
+    snapMiddle = new QAction(QIcon(":/extui/snapmiddle.png"), tr("Snap Middle"), this);
     snapMiddle->setCheckable(true);
     connect(snapMiddle, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     m_vSnapActions<<snapMiddle;
     this->addAction(snapMiddle);
-    snapDistance = new QAction(QIcon(":/extui/snapdist.png"), "Snap Distance", this);
+    snapDistance = new QAction(QIcon(":/extui/snapdist.png"), tr("Snap Distance"), this);
     snapDistance ->setCheckable(true);
     connect(snapDistance, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     m_vSnapActions<<snapDistance;
     this->addAction(snapDistance);
-    snapIntersection = new QAction(QIcon(":/extui/snapintersection.png"), "Snap Intersection", this);
+    snapIntersection = new QAction(QIcon(":/extui/snapintersection.png"), tr("Snap Intersection"), this);
     snapIntersection->setCheckable(true);
     connect(snapIntersection, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     m_vSnapActions<<snapIntersection;
@@ -166,40 +166,40 @@ void QG_SnapToolBar::init()
     this->addAction(restrictOrthoagonal);
     */
     restrictHorizontal = new QAction(QIcon(":/extui/restricthorizontal.png"),
-                                     "Restrict Horizontal", this);
+                                     tr("Restrict Horizontal"), this);
     restrictHorizontal->setCheckable(true);
     connect(restrictHorizontal, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     m_vSnapActions<<restrictHorizontal;
     this->addAction(restrictHorizontal);
     restrictVertical = new QAction(QIcon(":/extui/restrictvertical.png"),
-                                   "Restrict Vertical", this);
+                                   tr("Restrict Vertical"), this);
     restrictVertical->setCheckable(true);
     connect(restrictVertical, SIGNAL(triggered()), this, SLOT(actionTriggered()));
     m_vSnapActions<<restrictVertical;
     this->addAction(restrictVertical);
 
     restrictOrthogonal = new QAction(QIcon(":/extui/restrictorthogonal.png"),
-                                   "Restrict Orthogonal", this);
+                                   tr("Restrict Orthogonal"), this);
     restrictOrthogonal->setCheckable(true);
     connect(restrictOrthogonal, SIGNAL(triggered(bool)), this,
             SLOT(slotRestrictOrthogonal(bool)));
     m_vSnapActions<<restrictOrthogonal;
 
     restrictNothing = new QAction(QIcon(":/extui/restrictnothing.png"),
-                                   "Restrict Nothing", this);
+                                   tr("Restrict Nothing"), this);
     restrictNothing->setCheckable(true);
     connect(restrictNothing, SIGNAL(triggered(bool)), this,
             SLOT(slotRestrictNothing(bool)));
     m_vSnapActions<<restrictNothing;
 
     this->addSeparator();
-    bRelZero = new QAction(QIcon(":/extui/relzeromove.png"), "Set relative zero position", this);
+    bRelZero = new QAction(QIcon(":/extui/relzeromove.png"), tr("Set relative zero position"), this);
     bRelZero->setCheckable(false);
     connect(bRelZero, SIGNAL(triggered()), actionHandler, SLOT(slotSetRelativeZero()));
     m_vSnapActions<<bRelZero;
     //connect(bRelZero, SIGNAL(triggered()), this, SLOT(slotSetRelativeZero()));
     this->addAction(bRelZero);
-    bLockRelZero = new QAction(QIcon(":/extui/relzerolock.png"), "Lock relative zero position", this);
+    bLockRelZero = new QAction(QIcon(":/extui/relzerolock.png"), tr("Lock relative zero position"), this);
     bLockRelZero->setCheckable(true);
     connect(bLockRelZero, SIGNAL(toggled(bool)),actionHandler, SLOT(slotLockRelativeZero(bool)));
     m_vSnapActions<<bLockRelZero;
