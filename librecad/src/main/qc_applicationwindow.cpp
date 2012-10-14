@@ -3025,7 +3025,7 @@ void QC_ApplicationWindow::slotFileExport() {
     if (w!=NULL) {
 
         // read default settings:
-        RS_SETTINGS->beginGroup("/Paths");
+        RS_SETTINGS->beginGroup("/Export");
         QString defDir = RS_SETTINGS->readEntry("/ExportImage", RS_SYSTEM->getHomeDir());
         QString defFilter = RS_SETTINGS->readEntry("/ExportImageFilter",
                                                      QString("%1 (%2)(*.%2)").arg(QG_DialogFactory::extToFormat("png")).arg("png"));
@@ -3078,7 +3078,7 @@ void QC_ApplicationWindow::slotFileExport() {
 
         // store new default settings:
         if (!cancel) {
-            RS_SETTINGS->beginGroup("/Paths");
+            RS_SETTINGS->beginGroup("/Export");
             RS_SETTINGS->writeEntry("/ExportImage", QFileInfo(fn).absolutePath());
             RS_SETTINGS->writeEntry("/ExportImageFilter",
                                     fileDlg.selectedFilter());
@@ -3120,7 +3120,7 @@ void QC_ApplicationWindow::slotFileExport() {
 
 
 /**
- * Exports the drawing as a bitmap.
+ * Exports the drawing as a bitmap or another picture format.
  *
  * @param name File name.
  * @param format File format (e.g. "png")

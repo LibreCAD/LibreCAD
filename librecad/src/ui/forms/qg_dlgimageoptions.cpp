@@ -63,37 +63,65 @@ void QG_ImageOptionsDialog::languageChange()
 
 void QG_ImageOptionsDialog::init() {
     graphicSize = RS_Vector(0.0,0.0);
-    updateEnabled = true;
+    updateEnabled = false;
+    useResolution = true;
 
-    RS_SETTINGS->beginGroup("/ExportImage");
-    leWidth->setText(RS_SETTINGS->readEntry("/Width", "640"));
-    leHeight->setText(RS_SETTINGS->readEntry("/Height", "480"));
+    RS_SETTINGS->beginGroup("/Export");
+    if (RS_SETTINGS->readEntry("/UseResolution", "1")=="1") {
+        cbResolution->setCurrentIndex(cbResolution->findText(QString("%1").arg(RS_SETTINGS->readEntry("/Resolution","1"))));
+	}
+    else {
+		leWidth->setText(RS_SETTINGS->readEntry("/Width", "640"));
+        leHeight->setText(RS_SETTINGS->readEntry("/Height", "480"));
+    }
     if (RS_SETTINGS->readEntry("/BlackBackground", "0")=="1") {
         rbBlack->setChecked(true);
+        rbWhite->setChecked(false);
     }
-    if (RS_SETTINGS->readEntry("/Blackwhite", "0")=="1") {
+    else {
+    	rbBlack->setChecked(false);
+		rbWhite->setChecked(true);
+    }
+    if (RS_SETTINGS->readEntry("/BlackWhite", "1")=="1") {
         rbBlackWhite->setChecked(true);
+        rbColoured->setChecked(false);
+    }
+    else {
+    	rbBlackWhite->setChecked(false);
+    	rbColoured->setChecked(true);
     }
     leLeftRight->setText(RS_SETTINGS->readEntry("/BorderLeftRight", "5"));
     leTopBottom->setText(RS_SETTINGS->readEntry("/BorderTopBottom", "5"));
-    if (RS_SETTINGS->readEntry("/BorderSameSize", "0")=="1") {
+    if (RS_SETTINGS->readEntry("/BorderSameSize", "1")=="1") {
         cbSameBorders->setChecked(true);
         sameBordersChanged();
     }
     RS_SETTINGS->endGroup();
+
+    updateEnabled = true;
 }
 
 void QG_ImageOptionsDialog::setGraphicSize(const RS_Vector& s) {
     graphicSize = s;
-    sizeChanged();
+    if(!useResolution){
+        sizeChanged();
+    }
+    else {
+        resolutionChanged();
+    }
 }
 
 void QG_ImageOptionsDialog::ok() {
-    RS_SETTINGS->beginGroup("/ExportImage");
+    RS_SETTINGS->beginGroup("/Export");
+    RS_SETTINGS->writeEntry("/UseResolution", (int)useResolution);
+    RS_SETTINGS->writeEntry("/Resolution", cbResolution->currentText());
     RS_SETTINGS->writeEntry("/Width", leWidth->text());
     RS_SETTINGS->writeEntry("/Height", leHeight->text());
+    RS_SETTINGS->writeEntry("/BorderLeftRight", leLeftRight->text());
+    RS_SETTINGS->writeEntry("/BorderTopBottom", leTopBottom->text());
+    RS_SETTINGS->writeEntry("/BorderSameSize", (int)cbSameBorders->isChecked());
     RS_SETTINGS->writeEntry("/BlackBackground", (int)rbBlack->isChecked());
-    RS_SETTINGS->writeEntry("/Blackwhite", (int)rbBlackWhite->isChecked());
+    RS_SETTINGS->writeEntry("/BlackWhite", (int)rbBlackWhite->isChecked());
     RS_SETTINGS->endGroup();
 
     accept();
@@ -117,25 +145,27 @@ void QG_ImageOptionsDialog::borderChanged() {
 
 void QG_ImageOptionsDialog::sizeChanged() {
     if (updateEnabled) {
-    updateEnabled = false;
-    cbResolution->setItemText(cbResolution->currentIndex(), "auto");
-    updateEnabled = true;
+		updateEnabled = false;
+        useResolution = false;
+		cbResolution->setCurrentIndex(cbResolution->findText("auto"));
+		updateEnabled = true;
     }
 }
 
 void  QG_ImageOptionsDialog::resolutionChanged() {
     if (updateEnabled) {
-    updateEnabled = false;
-    bool ok = false;
-    double res = RS_Math::eval(cbResolution->currentText(), &ok);
-    if (!ok) {
-        res = 1.0;
-    }
-    int w = RS_Math::round(res * graphicSize.x);
-    int h = RS_Math::round(res * graphicSize.y);
-    leWidth->setText(QString("%1").arg(w));
-    leHeight->setText(QString("%1").arg(h));
-    updateEnabled = true;
+		updateEnabled = false;
+		bool ok = false;
+		double res = RS_Math::eval(cbResolution->currentText(), &ok);
+		if (!ok) {
+			res = 1.0;
+		}
+		int w = RS_Math::round(res * graphicSize.x);
+		int h = RS_Math::round(res * graphicSize.y);
+        useResolution = true;
+		leWidth->setText(QString("%1").arg(w));
+		leHeight->setText(QString("%1").arg(h));
+		updateEnabled = true;
     }
 }
 
