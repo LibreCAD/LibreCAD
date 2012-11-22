@@ -2710,7 +2710,7 @@ bool RS_Modification::round(const RS_Vector& coord,
         entity2 = (RS_AtomicEntity*)baseContainer->entityAt(entity2->getParent()->findEntity(entity2));
 
         isPolyline = true;
-        isClosedPolyline = ((RS_Polyline*)entity1)->isClosed();
+        isClosedPolyline = ((RS_Polyline*)entity1->getParent())->isClosed();
     }
 
     // create 2 tmp parallels
@@ -2831,7 +2831,7 @@ bool RS_Modification::round(const RS_Vector& coord,
             insertAfter1 = (idx1<idx2);
         }
         else {
-            insertAfter1 = ((idx1<idx2 && idx1!=0) ||
+            insertAfter1 = ((idx1<idx2) ||
                             (idx2==0 && idx1==(int)baseContainer->count()-1));
         }
 
