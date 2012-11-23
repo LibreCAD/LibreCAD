@@ -50,7 +50,7 @@ QAction* RS_ActionZoomRedraw::createGUIAction(RS2::ActionType /*type*/, QObject*
 #else
         action->setIcon(QIcon(":/actions/zoomredraw.png"));
 #endif
-        action->setShortcut(QKeySequence::Cut);
+        action->setShortcut(QKeySequence::Refresh);
 	//action->zetStatusTip(tr("Redraw"));
 	
     return action;
