@@ -2831,7 +2831,7 @@ bool RS_Modification::round(const RS_Vector& coord,
             insertAfter1 = (idx1<idx2);
         }
         else {
-            insertAfter1 = ((idx1<idx2) ||
+            insertAfter1 = ((idx1<idx2 && idx1!=0) ||(idx1==0 && idx2==1) ||
                             (idx2==0 && idx1==(int)baseContainer->count()-1));
         }
 
