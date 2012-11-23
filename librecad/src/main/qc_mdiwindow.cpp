@@ -439,6 +439,7 @@ bool QC_MDIWindow::slotFileSave(bool &cancelled, bool isAutoSave) {
     cancelled = false;
 
     if (document!=NULL) {
+        document->setGraphicView(graphicView);
         if (isAutoSave) {
             // Autosave filename is always supposed to be present.
             // Autosave does not change the cursor.
@@ -477,6 +478,7 @@ bool QC_MDIWindow::slotFileSaveAs(bool &cancelled) {
     QString fn = dlg.getSaveFile(&t);
     if (document!=NULL && !fn.isEmpty()) {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
+        document->setGraphicView(graphicView);
         ret = document->saveAs(fn, t);
         QApplication::restoreOverrideCursor();
     } else {
