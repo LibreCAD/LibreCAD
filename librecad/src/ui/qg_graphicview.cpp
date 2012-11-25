@@ -758,7 +758,8 @@ void QG_GraphicView::paintEvent(QPaintEvent *) {
         drawLayer2((RS_Painter*)&painter2);
         painter2.setDrawSelectedOnly(true);
         drawLayer2((RS_Painter*)&painter2);
-        setDraftMode(false);
+        //removed to solve bug #3470573
+//        setDraftMode(false);
                 painter2.end();
         }
 
