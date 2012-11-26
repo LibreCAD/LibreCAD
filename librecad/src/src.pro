@@ -10,7 +10,7 @@ DEFINES += QC_VERSION="\"master\""
 DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 DEFINES += HAS_BOOST=1
 
-SCMREVISION="2.0.0alpha4"
+SCMREVISION="2.0.0beta1"
 
 # uncomment USEQTDIALOG=1 to use QFileDialog instead "native" FileDialog
 # KDE returns the first filter that match the pattern "*.dxf" instead the selected
