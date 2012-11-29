@@ -261,6 +261,7 @@ void QC_ApplicationWindow::loadPlugins() {
                         QAction *actpl = new QAction(loc.menuEntryActionName, plugin);
                         actpl->setData(loc.menuEntryActionName);
                         connect(actpl, SIGNAL(triggered()), this, SLOT(execPlug()));
+                        connect(this, SIGNAL(windowsChanged(bool)), actpl, SLOT(setEnabled(bool)));
                         QMenu *atMenu = findMenu("/"+loc.menuEntryPoint, menuBar()->children(), "");
                         if (atMenu) {
                             atMenu->addAction(actpl);
