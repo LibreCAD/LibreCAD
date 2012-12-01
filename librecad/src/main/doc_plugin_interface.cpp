@@ -31,6 +31,7 @@
 #include <QFileInfo>
 #include "rs_graphicview.h"
 #include "rs_actioninterface.h"
+#include "rs_eventhandler.h"
 #include "rs_actionselect.h"
 #include "rs_mtext.h"
 #include "rs_text.h"
@@ -995,9 +996,12 @@ bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& m
             ev.processEvents ();
         }
     }
-//    QList<Plug_Entity *> *se = new QList<Plug_Entity *>();
-    a->getSelected(sel);
-    status = true;
+//    check if a are cancelled by the user issue #349
+    RS_EventHandler* eh = gView->getEventHandler();
+    if (eh!=NULL && eh->isValid(a) ) {
+        a->getSelected(sel);
+        status = true;
+    }
     gView->killAllActions();
     return status;
 
