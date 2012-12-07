@@ -1008,11 +1008,11 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
             writer->writeDouble(34, dd->getDef2Point().z);
             if (ent->eType == DRW::DIMLINEAR) {
                 DRW_DimLinear * dl = (DRW_DimLinear*)ent;
-                writer->writeString(100, "AcDbRotatedDimension");
                 if (dl->getAngle() != 0)
                     writer->writeDouble(50, dl->getAngle());
                 if (dl->getOblique() != 0)
                     writer->writeDouble(52, dl->getOblique());
+                writer->writeString(100, "AcDbRotatedDimension");
             }
             break; }
         case DRW::DIMRADIAL: {
