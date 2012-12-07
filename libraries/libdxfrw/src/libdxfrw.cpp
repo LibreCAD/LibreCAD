@@ -1885,6 +1885,7 @@ bool dxfRW::processLayer() {
             DBG(sectionstr); DBG("\n");
             if (sectionstr == "LAYER") {
                 reading = true;
+                layer.reset();
             } else if (sectionstr == "ENDTAB") {
                 return true;  //found ENDTAB terminate
             }

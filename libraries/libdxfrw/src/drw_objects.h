@@ -212,7 +212,9 @@ private:
 */
 class DRW_Layer : public DRW_TableEntry {
 public:
-    DRW_Layer() {
+    DRW_Layer() { reset();}
+
+    void reset() {
         tType = DRW::LAYER;
         lineType = "CONTINUOUS";
         color = 7; // default BYLAYER (256)

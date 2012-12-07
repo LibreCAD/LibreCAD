@@ -1605,6 +1605,7 @@ void RS_FilterDXFRW::writeLayers(){
     DRW_Layer lay;
     RS_LayerList* ll = graphic->getLayerList();
     for (unsigned int i = 0; i < ll->count(); i++) {
+        lay.reset();
         RS_Layer* l = ll->at(i);
         RS_Pen pen = l->getPen();
         lay.name = l->getName().toUtf8().data();
