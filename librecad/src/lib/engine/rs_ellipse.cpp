@@ -139,6 +139,8 @@ RS_VectorSolutions RS_Ellipse::getRefPoints() {
     }
     ret.push_back(data.center);
     ret.appendTo(getFoci());
+    ret.push_back(getMajorPoint());
+    ret.push_back(getMinorPoint());
     return ret;
 }
 
@@ -1321,17 +1323,78 @@ double RS_Ellipse::getDirection2() const {
 }
 
 void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-    RS_Vector startpoint = getStartpoint();
-    RS_Vector endpoint = getEndpoint();
+    if(isArc()){
+        RS_Vector startpoint = getStartpoint();
+        RS_Vector endpoint = getEndpoint();
 
-//    if (ref.distanceTo(startpoint)<1.0e-4) {
-    if ((ref-startpoint).squared()<1.0e-8) {
-        moveStartpoint(startpoint+offset);
+        //    if (ref.distanceTo(startpoint)<1.0e-4) {
+        if ((ref-startpoint).squared()<1.0e-8) {
+            moveStartpoint(startpoint+offset);
+            correctAngles();//avoid extra 2.*M_PI in angles
+            return;
+        }
+        if ((ref-endpoint).squared()<1.0e-8) {
+            moveEndpoint(endpoint+offset);
+            correctAngles();//avoid extra 2.*M_PI in angles
+            return;
+        }
     }
-    if ((ref-endpoint).squared()<1.0e-8) {
-        moveEndpoint(endpoint+offset);
+    if ((ref-getCenter()).squared()<1.0e-8) {
+        //move center
+        setCenter(getCenter()+offset);
+        return;
     }
-    correctAngles();//avoid extra 2.*M_PI in angles
+    auto&& foci=getFoci();
+    for(size_t i=0; i< 2 ; i++){
+        if ((ref-foci.at(i)).squared()<1.0e-8) {
+            auto&& focusNew=foci.at(i) + offset;
+            //move focus
+            auto&& center = getCenter() + offset*0.5;
+            RS_Vector majorP;
+            if(getMajorP().dotP( foci.at(i) - getCenter()) >= 0.){
+                majorP = focusNew - center;
+            }else{
+                majorP = center - focusNew;
+            }
+            double d=getMajorP().magnitude();
+            double c=0.5*focusNew.distanceTo(foci.at(1-i));
+            double k=majorP.magnitude();
+            if(k<RS_TOLERANCE2 || d < RS_TOLERANCE ||
+                    c >= d - RS_TOLERANCE) return;
+            //            DEBUG_HEADER();
+            //            std::cout<<__FUNCTION__<<" : moving focus";
+            majorP *= d/k;
+            setCenter(center);
+            setMajorP(majorP);
+            setRatio(sqrt(d*d-c*c)/d);
+            correctAngles();//avoid extra 2.*M_PI in angles
+            return;
+        }
+    }
+
+    //move major/minor points
+    if ((ref-getMajorPoint()).squared()<1.0e-8) {
+        RS_Vector majorP=getMajorP()+offset;
+        double r=majorP.magnitude();
+        if(r<RS_TOLERANCE) return;
+        double ratio = getRatio()*getMajorRadius()/r;
+        setMajorP(majorP);
+        setRatio(ratio);
+        return;
+    }
+    if ((ref-getMinorPoint()).squared()<1.0e-8) {
+        RS_Vector minorP=getMinorPoint() + offset;
+        double r2=getMajorP().squared();
+        if(r2<RS_TOLERANCE2) return;
+         RS_Vector projected= getCenter() +
+                getMajorP()*getMajorP().dotP(minorP-getCenter())/r2;
+        double r=(minorP - projected).magnitude();
+        if(r<RS_TOLERANCE) return;
+        double ratio = getRatio()*r/getMinorRadius();
+        setRatio(ratio);
+        return;
+    }
+
 }
 
 /** whether the entity's bounding box intersects with visible portion of graphic view

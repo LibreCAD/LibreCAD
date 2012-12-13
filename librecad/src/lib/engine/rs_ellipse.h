@@ -239,6 +239,15 @@ public:
         return data.majorP.magnitude();
     }
 
+    /** @return the point by major minor radius directions */
+    RS_Vector getMajorPoint() const{
+        return data.center + data.majorP;
+    }
+    RS_Vector getMinorPoint() const{
+        return data.center +
+                RS_Vector(-data.majorP.y, data.majorP.x)*data.ratio;
+    }
+
     /** @return The minor radius of this ellipse */
     double getMinorRadius() const {
         return data.majorP.magnitude()*data.ratio;
