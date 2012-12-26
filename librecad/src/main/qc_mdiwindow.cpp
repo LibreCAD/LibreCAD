@@ -342,7 +342,7 @@ bool QC_MDIWindow::slotFileNewTemplate(const QString& fileName, RS2::FormatType 
         RS_DEBUG->print("QC_MDIWindow::slotFileNewTemplate: failed");
 
     RS_DEBUG->print("QC_MDIWindow::slotFileNewTemplate end");
-    return true;
+    return ret;
 }
 
 
