@@ -9,7 +9,7 @@ TEMPLATE = subdirs
 SUBDIRS     =
 
 win32 {
-    # ttf2lff needs  to be download, instructions follow
+        SUBDIRS += ttf2lff
 }
 unix {
     macx {
