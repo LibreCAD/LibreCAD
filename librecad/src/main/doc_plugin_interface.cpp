@@ -119,15 +119,17 @@ enum RS2::LineWidth convLTW::str2lw(QString w){
 convLTW Converter;
 
 
-Plugin_Entity::Plugin_Entity(RS_Entity* ent) {
+Plugin_Entity::Plugin_Entity(RS_Entity* ent, Doc_plugin_interface* d) {
     entity = ent;
     hasContainer = true;
+    dpi = d;
 }
 
 /*RS_EntityContainer* parent,
                  const RS_LineData& d*/
 Plugin_Entity::Plugin_Entity(RS_EntityContainer* parent, enum DPI::ETYPE type){
     hasContainer = false;
+    dpi = NULL;
     entity = NULL;
     switch (type) {
     case DPI::POINT:
@@ -351,14 +353,18 @@ void Plugin_Entity::getData(QHash<int, QVariant> *data){
 
 void Plugin_Entity::updateData(QHash<int, QVariant> *data){
     if (entity == NULL) return;
+    RS_Entity *ec= entity;
+    if(hasContainer && dpi!=NULL) {
+        ec = entity->clone();
+    }
     QHash<int, QVariant> hash = *data;
     QString str;
     RS_Vector vec;
-    RS_Pen epen = entity->getPen();
+    RS_Pen epen = ec->getPen();
 //    double num;
     if (hash.contains(DPI::LAYER)) {
         str = (hash.take(DPI::LAYER)).toString();
-        entity->setLayer(str);
+        ec->setLayer(str);
     }
     if (hash.contains(DPI::LTYPE)) {
         str = (hash.take(DPI::LTYPE)).toString();
@@ -372,41 +378,41 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
         QColor color = hash.take(DPI::COLOR).value<QColor>();
         epen.setColor(color);
     }
-    entity->setPen(epen);
+    ec->setPen(epen);
 
-    RS2::EntityType et = entity->rtti();
+    RS2::EntityType et = ec->rtti();
     switch (et) {
     //atomicEntity
     case RS2::EntityLine: {
-        vec = static_cast<RS_Line*>(entity)->getStartpoint();
+        vec = static_cast<RS_Line*>(ec)->getStartpoint();
         if (hash.contains(DPI::STARTX)) {
             vec.x = (hash.take(DPI::STARTX)).toDouble();
         }
         if (hash.contains(DPI::STARTY)) {
             vec.y = (hash.take(DPI::STARTY)).toDouble();
         }
-        static_cast<RS_Line*>(entity)->setStartpoint(vec);
-        vec = static_cast<RS_Line*>(entity)->getEndpoint();
+        static_cast<RS_Line*>(ec)->setStartpoint(vec);
+        vec = static_cast<RS_Line*>(ec)->getEndpoint();
         if (hash.contains(DPI::ENDX)) {
             vec.x = (hash.take(DPI::ENDX)).toDouble();
         }
         if (hash.contains(DPI::ENDY)) {
             vec.y = (hash.take(DPI::ENDY)).toDouble();
         }
-        static_cast<RS_Line*>(entity)->setEndpoint(vec);
+        static_cast<RS_Line*>(ec)->setEndpoint(vec);
         break;}
     case RS2::EntityPoint: {
-        vec = static_cast<RS_Point*>(entity)->getPos();
+        vec = static_cast<RS_Point*>(ec)->getPos();
         if (hash.contains(DPI::STARTX)) {
             vec.x = (hash.take(DPI::STARTX)).toDouble();
         }
         if (hash.contains(DPI::STARTY)) {
             vec.y = (hash.take(DPI::STARTY)).toDouble();
         }
-        static_cast<RS_Point*>(entity)->setPos(vec);
+        static_cast<RS_Point*>(ec)->setPos(vec);
         break; }
     case RS2::EntityArc: {
-        RS_Arc *arc = static_cast<RS_Arc*>(entity);
+        RS_Arc *arc = static_cast<RS_Arc*>(ec);
         vec = arc->getCenter();
         if (hash.contains(DPI::STARTX)) {
             vec.x = (hash.take(DPI::STARTX)).toDouble();
@@ -427,7 +433,7 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
         }
         break;}
     case RS2::EntityCircle: {
-        RS_Circle *cir = static_cast<RS_Circle*>(entity);
+        RS_Circle *cir = static_cast<RS_Circle*>(ec);
         vec = cir->getCenter();
         if (hash.contains(DPI::STARTX)) {
             vec.x = (hash.take(DPI::STARTX)).toDouble();
@@ -441,7 +447,7 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
         }
         break;}
     case RS2::EntityEllipse: {
-        RS_Ellipse *ellipse = static_cast<RS_Ellipse*>(entity);
+        RS_Ellipse *ellipse = static_cast<RS_Ellipse*>(ec);
         vec = ellipse->getCenter();
         if (hash.contains(DPI::STARTX)) {
             vec.x = (hash.take(DPI::STARTX)).toDouble();
@@ -480,7 +486,7 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
         //Unused ?
         break;
     case RS2::EntityImage: {
-        RS_Image *img = static_cast<RS_Image*>(entity);
+        RS_Image *img = static_cast<RS_Image*>(ec);
         vec = img->getInsertionPoint();
         if (hash.contains(DPI::STARTX)) {
             vec.x = (hash.take(DPI::STARTX)).toDouble();
@@ -522,7 +528,7 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
     case RS2::EntityInsert: {
         break;}
     case RS2::EntityMText: {
-        RS_MText *txt = static_cast<RS_MText*>(entity);
+        RS_MText *txt = static_cast<RS_MText*>(ec);
         bool move = false;
         vec = txt->getInsertionPoint();
         if (hash.contains(DPI::STARTX)) {
@@ -546,7 +552,7 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
         }
         break;}
     case RS2::EntityText: {
-        RS_Text *txt = static_cast<RS_Text*>(entity);
+        RS_Text *txt = static_cast<RS_Text*>(ec);
         bool move = false;
         vec = txt->getInsertionPoint();
         if (hash.contains(DPI::STARTX)) {
@@ -574,7 +580,7 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
     case RS2::EntitySpline:
         break;
     case RS2::EntityPolyline: {
-        RS_Polyline *pl = static_cast<RS_Polyline*>(entity);
+        RS_Polyline *pl = static_cast<RS_Polyline*>(ec);
         if (hash.take(DPI::CLOSEPOLY).toBool()) {
             pl->setClosed(true);
         }else{
@@ -599,7 +605,9 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
     default:
         break;
     }
-    entity->update();
+    ec->update();
+    if(hasContainer && dpi!=NULL)
+        this->dpi->updateEntity(entity, ec);
 }
 
 void Plugin_Entity::getPolylineData(QList<Plug_VertexData> *data){
@@ -681,11 +689,17 @@ void Plugin_Entity::scale(QPointF center, QPointF factor){
 }
 
 
-Doc_plugin_interface::Doc_plugin_interface(RS_Graphic *d, RS_GraphicView* gv, QWidget* parent)
-{
+Doc_plugin_interface::Doc_plugin_interface(RS_Graphic *d, RS_GraphicView* gv, QWidget* parent){
     doc =d;
     gView =gv;
     main = parent;
+    haveUndo = false;
+}
+
+Doc_plugin_interface::~Doc_plugin_interface(){
+    if (haveUndo) {
+        doc->endUndoCycle();
+    }
 }
 
 void Doc_plugin_interface::updateView(){
@@ -696,112 +710,146 @@ void Doc_plugin_interface::updateView(){
 void Doc_plugin_interface::addPoint(QPointF *start){
 
     RS_Vector v1(start->x(), start->y());
-    if (doc==NULL) {
-        RS_DEBUG->print("Doc_plugin_interface::addLine: currentContainer is NULL");
-    }
-
-    RS_Point* entity = new RS_Point(doc, RS_PointData(v1));
-//    setEntityAttributes(entity, attributes);
-    doc->addEntity(entity);
+    if (doc!=NULL) {
+        RS_Point* entity = new RS_Point(doc, RS_PointData(v1));
+        doc->addEntity(entity);
+        if (!haveUndo) {
+            doc->startUndoCycle();
+            haveUndo = true;
+        }
+        doc->addUndoable(entity);
+    } else
+        RS_DEBUG->print("Doc_plugin_interface::addPoint: currentContainer is NULL");
 }
 
 void Doc_plugin_interface::addLine(QPointF *start, QPointF *end){
 
     RS_Vector v1(start->x(), start->y());
     RS_Vector v2(end->x(), end->y());
-    if (doc==NULL) {
+    if (doc!=NULL) {
+        RS_Line* entity = new RS_Line(doc, RS_LineData(v1, v2));
+        doc->addEntity(entity);
+        if (!haveUndo) {
+            doc->startUndoCycle();
+            haveUndo = true;
+        }
+        doc->addUndoable(entity);
+    } else
         RS_DEBUG->print("Doc_plugin_interface::addLine: currentContainer is NULL");
-    }
-
-    RS_Line* entity = new RS_Line(doc, RS_LineData(v1, v2));
-//    setEntityAttributes(entity, attributes);
-    doc->addEntity(entity);
 }
 
 void Doc_plugin_interface::addMText(QString txt, QString sty, QPointF *start,
             double height, double angle, DPI::HAlign ha,  DPI::VAlign va){
 
     RS_Vector v1(start->x(), start->y());
-    if (doc==NULL) {
-        RS_DEBUG->print("Doc_plugin_interface::addLine: currentContainer is NULL");
-    }
-    double width = 100.0;
+    if (doc!=NULL) {
+        double width = 100.0;
 
-    RS_MTextData::VAlign valign = static_cast <RS_MTextData::VAlign>(va);
-    RS_MTextData::HAlign halign = static_cast <RS_MTextData::HAlign>(ha);
-    RS_MTextData d(v1, height, width, valign, halign,
+        RS_MTextData::VAlign valign = static_cast <RS_MTextData::VAlign>(va);
+        RS_MTextData::HAlign halign = static_cast <RS_MTextData::HAlign>(ha);
+        RS_MTextData d(v1, height, width, valign, halign,
                   RS_MTextData::ByStyle, RS_MTextData::Exact, 0.0,
                   txt, sty, angle, RS2::Update);
-    RS_MText* entity = new RS_MText(doc, d);
+        RS_MText* entity = new RS_MText(doc, d);
 
-//    setEntityAttributes(entity, attributes);
-    doc->addEntity(entity);
+        doc->addEntity(entity);
+        if (!haveUndo) {
+            doc->startUndoCycle();
+            haveUndo = true;
+        }
+        doc->addUndoable(entity);
+    } else
+        RS_DEBUG->print("Doc_plugin_interface::addMtext: currentContainer is NULL");
 }
 
 void Doc_plugin_interface::addText(QString txt, QString sty, QPointF *start,
             double height, double angle, DPI::HAlign ha,  DPI::VAlign va){
 
     RS_Vector v1(start->x(), start->y());
-    if (doc==NULL) {
-        RS_DEBUG->print("Doc_plugin_interface::addLine: currentContainer is NULL");
-    }
-    double width = 1.0;
+    if (doc!=NULL) {
+        double width = 1.0;
 
-    RS_TextData::VAlign valign = static_cast <RS_TextData::VAlign>(va);
-    RS_TextData::HAlign halign = static_cast <RS_TextData::HAlign>(ha);
-    RS_TextData d(v1, v1, height, width, valign, halign,
+        RS_TextData::VAlign valign = static_cast <RS_TextData::VAlign>(va);
+        RS_TextData::HAlign halign = static_cast <RS_TextData::HAlign>(ha);
+        RS_TextData d(v1, v1, height, width, valign, halign,
                   RS_TextData::None, txt, sty, angle, RS2::Update);
-    RS_Text* entity = new RS_Text(doc, d);
+        RS_Text* entity = new RS_Text(doc, d);
 
-//    setEntityAttributes(entity, attributes);
-    doc->addEntity(entity);
+        doc->addEntity(entity);
+        if (!haveUndo) {
+            doc->startUndoCycle();
+            haveUndo = true;
+        }
+        doc->addUndoable(entity);
+    } else
+        RS_DEBUG->print("Doc_plugin_interface::addText: currentContainer is NULL");
 }
 
 void Doc_plugin_interface::addCircle(QPointF *start, qreal radius){
-    RS_DEBUG->print("RS_FilterDXF::addCircle");
+    if (doc!=NULL) {
+        RS_Vector v(start->x(), start->y());
+        RS_CircleData d(v, radius);
+        RS_Circle* entity = new RS_Circle(doc, d);
 
-    RS_Vector v(start->x(), start->y());
-    RS_CircleData d(v, radius);
-    RS_Circle* entity = new RS_Circle(doc, d);
-//    setEntityAttributes(entity, attributes);
-    doc->addEntity(entity);
+        doc->addEntity(entity);
+        if (!haveUndo) {
+            doc->startUndoCycle();
+            haveUndo = true;
+        }
+        doc->addUndoable(entity);
+    } else
+        RS_DEBUG->print("Doc_plugin_interface::addCircle: currentContainer is NULL");
 }
+
 void Doc_plugin_interface::addArc(QPointF *start, qreal radius, qreal a1, qreal a2){
-    RS_Vector v(start->x(), start->y());
-    RS_ArcData d(v, radius,
+    if (doc!=NULL) {
+        RS_Vector v(start->x(), start->y());
+        RS_ArcData d(v, radius,
                  a1/ARAD,
                  a2/ARAD,
                  false);
-    RS_Arc* entity = new RS_Arc(doc, d);
-//    setEntityAttributes(entity, attributes);
-    doc->addEntity(entity);
+        RS_Arc* entity = new RS_Arc(doc, d);
+        doc->addEntity(entity);
+        if (!haveUndo) {
+            doc->startUndoCycle();
+            haveUndo = true;
+        }
+        doc->addUndoable(entity);
+    } else
+        RS_DEBUG->print("Doc_plugin_interface::addArc: currentContainer is NULL");
 }
+
 void Doc_plugin_interface::addEllipse(QPointF *start, QPointF *end, qreal ratio, qreal a1, qreal a2){
+    if (doc!=NULL) {
+        RS_Vector v1(start->x(), start->y());
+        RS_Vector v2(end->x(), end->y());
 
-/*    RS_Vector v1(data.cx, data.cy);
-    RS_Vector v2(data.mx, data.my);*/
-    RS_Vector v1(start->x(), start->y());
-    RS_Vector v2(end->x(), end->y());
-
-    RS_EllipseData ed(v1, v2, ratio,
+        RS_EllipseData ed(v1, v2, ratio,
                       a1, a2, false);
-    RS_Ellipse* entity = new RS_Ellipse(doc, ed);
-//    setEntityAttributes(entity, attributes);
+        RS_Ellipse* entity = new RS_Ellipse(doc, ed);
 
-    doc->addEntity(entity);
+        doc->addEntity(entity);
+        if (!haveUndo) {
+            doc->startUndoCycle();
+            haveUndo = true;
+        }
+        doc->addUndoable(entity);
+    } else
+        RS_DEBUG->print("Doc_plugin_interface::addEllipse: currentContainer is NULL");
 }
 
 void Doc_plugin_interface::addImage(int handle, QPointF *start, QPointF *uvr, QPointF *vvr,
                                     int w, int h, QString name, int br, int con, int fade){
-    RS_Vector ip(start->x(), start->y());
-    RS_Vector uv(uvr->x(), uvr->y());
-    RS_Vector vv(vvr->x(), vvr->y());
-    RS_Vector size(w, h);
+    if (doc!=NULL) {
+        RS_Vector ip(start->x(), start->y());
+        RS_Vector uv(uvr->x(), uvr->y());
+        RS_Vector vv(vvr->x(), vvr->y());
+        RS_Vector size(w, h);
 
-    RS_Image* image =
-        new RS_Image(
-            doc,
-            RS_ImageData(handle /*QString(data.ref.c_str()).toInt(NULL, 16)*/,
+        RS_Image* image =
+            new RS_Image(
+                doc,
+                RS_ImageData(handle /*QString(data.ref.c_str()).toInt(NULL, 16)*/,
                          ip, uv, vv,
                          size,
                          name,
@@ -809,21 +857,35 @@ void Doc_plugin_interface::addImage(int handle, QPointF *start, QPointF *uvr, QP
                          con,
                          fade));
 
-//    setEntityAttributes(image, attributes);
-    doc->addEntity(image);
+        doc->addEntity(image);
+        if (!haveUndo) {
+            doc->startUndoCycle();
+            haveUndo = true;
+        }
+        doc->addUndoable(image);
+    } else
+        RS_DEBUG->print("Doc_plugin_interface::addImage: currentContainer is NULL");
 }
 
 void Doc_plugin_interface::addInsert(QString name, QPointF ins, QPointF scale, qreal rot){
-    RS_Vector ip(ins.x(), ins.y());
-    RS_Vector sp(scale.x(), scale.y());
+    if (doc!=NULL) {
+        RS_Vector ip(ins.x(), ins.y());
+        RS_Vector sp(scale.x(), scale.y());
 
-    RS_InsertData id(name, ip, sp, rot, 1, 1, RS_Vector(0.0, 0.0));
-    RS_Insert* entity = new RS_Insert(doc, id);
-//    setEntityAttributes(entity, attributes);
+        RS_InsertData id(name, ip, sp, rot, 1, 1, RS_Vector(0.0, 0.0));
+        RS_Insert* entity = new RS_Insert(doc, id);
 
-    doc->addEntity(entity);
+        doc->addEntity(entity);
+        if (!haveUndo) {
+            doc->startUndoCycle();
+            haveUndo = true;
+        }
+        doc->addUndoable(entity);
+    } else
+        RS_DEBUG->print("Doc_plugin_interface::addInsert: currentContainer is NULL");
 }
 
+/*TODO RLZ: add undo support in this method*/
 QString Doc_plugin_interface::addBlockfromFromdisk(QString fullName){
     if (fullName.isEmpty() || doc==NULL)
         return NULL;
@@ -878,11 +940,21 @@ QString Doc_plugin_interface::addBlockfromFromdisk(QString fullName){
 }
 
 void Doc_plugin_interface::addEntity(Plug_Entity *handle){
-    RS_Entity *ent = (reinterpret_cast<Plugin_Entity*>(handle))->getEnt();
-    if (ent != NULL)
-        doc->addEntity(ent);
+    if (doc!=NULL) {
+        RS_Entity *ent = (reinterpret_cast<Plugin_Entity*>(handle))->getEnt();
+        if (ent != NULL) {
+            doc->addEntity(ent);
+            if (!haveUndo) {
+                doc->startUndoCycle();
+                haveUndo = true;
+            }
+            doc->addUndoable(ent);
+        }
+    } else
+        RS_DEBUG->print("Doc_plugin_interface::addEntity: currentContainer is NULL");
 }
 
+/*newEntity not added into graphic, then not needed undo support*/
 Plug_Entity *Doc_plugin_interface::newEntity( enum DPI::ETYPE type){
     Plugin_Entity *e = new Plugin_Entity(doc, type);
     if( !(e->isValid()) ) {
@@ -892,20 +964,37 @@ Plug_Entity *Doc_plugin_interface::newEntity( enum DPI::ETYPE type){
     return  reinterpret_cast<Plug_Entity*>(e);
 }
 
+/*TODO RLZ: add undo support in this method*/
 void Doc_plugin_interface::removeEntity(Plug_Entity *ent){
     RS_Entity *e = (reinterpret_cast<Plugin_Entity*>(ent))->getEnt();
-    if (doc!=NULL) {
-        doc->startUndoCycle();
-        if (e!=NULL) {
-            e->setSelected(false);
-            e->changeUndoState();
-            doc->addUndoable(e);
+    if (doc!=NULL && e!=NULL) {
+        if (!haveUndo) {
+            doc->startUndoCycle();
+            haveUndo = true;
         }
-        doc->endUndoCycle();
+        e->setSelected(false);
+        e->changeUndoState();
+        doc->addUndoable(e);
+
         gView->redraw(RS2::RedrawDrawing);
     }
 }
 
+void Doc_plugin_interface::updateEntity(RS_Entity *org, RS_Entity *newe){
+    if (doc!=NULL) {
+            if (!haveUndo) {
+                doc->startUndoCycle();
+                haveUndo = true;
+            }
+            doc->addEntity(newe);
+            doc->addUndoable(newe);
+            doc->addUndoable(org);
+            org->setUndoState(true);
+    } else
+        RS_DEBUG->print("Doc_plugin_interface::addEntity: currentContainer is NULL");
+}
+
+/*TODO RLZ: add undo support in the remaining methods*/
 void Doc_plugin_interface::setLayer(QString name){
     RS_Layer *lay = new RS_Layer(name);
     doc->addLayer(lay);
@@ -977,7 +1066,7 @@ Plug_Entity *Doc_plugin_interface::getEnt(const QString& mesage){
             ev.processEvents ();
         }
     }
-    Plug_Entity *e = reinterpret_cast<Plug_Entity*>(a->getSelected());
+    Plug_Entity *e = reinterpret_cast<Plug_Entity*>(a->getSelected(this));
     gView->killAllActions();
     return e;
 }
@@ -999,7 +1088,7 @@ bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& m
 //    check if a are cancelled by the user issue #349
     RS_EventHandler* eh = gView->getEventHandler();
     if (eh!=NULL && eh->isValid(a) ) {
-        a->getSelected(sel);
+        a->getSelected(sel, this);
         status = true;
     }
     gView->killAllActions();
