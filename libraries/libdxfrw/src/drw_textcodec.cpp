@@ -1,6 +1,7 @@
 #include "drw_textcodec.h"
 #include <sstream>
 #include <iomanip>
+#include <algorithm>
 #include "drw_base.h"
 #include "drw_cptables.h"
 #include "drw_cptable932.h"
@@ -412,11 +413,9 @@ std::string DRW_Conv932Table::toUtf8(std::string *s) {
 }
 
 std::string DRW_TextCodec::correctCodePage(const std::string& s) {
-    std::string cp;
-    std::stringstream ss;
-    ss << std::uppercase  << s;
-    ss >> cp;
-
+    //stringstream cause crash in OS/X, bug#3597944
+    std::string cp=s;
+    transform(cp.begin(), cp.end(), cp.begin(), toupper);
     //Latin/Thai
     if (cp=="ANSI_874" || cp=="CP874" || cp=="ISO8859-11" || cp=="TIS-620") {
         return "ANSI_874";
