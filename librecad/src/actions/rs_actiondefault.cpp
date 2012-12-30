@@ -145,8 +145,10 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
                     RS_DEBUG->print("RS_ActionDefault::mouseMoveEvent: "
                                     "moving entity");
                     setStatus(Moving);
-                    v1 = en->getNearestRef(v1);
-                    graphicView->moveRelativeZero(v1);
+                    RS_Vector vp= en->getNearestRef(v1);
+                    if(vp.valid) v1=vp;
+
+                    //graphicView->moveRelativeZero(v1);
                 }
 
                 // no entity found. start area selection:
