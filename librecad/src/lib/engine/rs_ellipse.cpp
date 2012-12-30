@@ -1404,21 +1404,21 @@ bool RS_Ellipse::isVisibleInWindow(RS_GraphicView* view) const
 {
     RS_Vector vpMin(view->toGraph(0,view->getHeight()));
     RS_Vector vpMax(view->toGraph(view->getWidth(),0));
+    //viewport
     QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
     QVector<RS_Vector> vps;
     for(unsigned short i=0;i<4;i++){
         const QPointF& vp(visualBox.at(i));
         vps<<RS_Vector(vp.x(),vp.y());
     }
+    //check for intersection points with viewport
     for(unsigned short i=0;i<4;i++){
         RS_Line line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));
         RS_Ellipse e0(NULL, getData());
         if( RS_Information::getIntersection(&e0, &line, true).size()>0) return true;
     }
-    if( getCenter().isInWindowOrdered(vpMin,vpMax)==false) return false;
-    double d2=getMajorP().squared();
-    if(getRatio()<1.) d2 *= getRatio()*getRatio();
-    return (vpMin-getCenter()).squared() > d2 ;
+    //is startpoint within viewport
+    return getEllipsePoint(getAngle1()).isInWindowOrdered(vpMin,vpMax);
 }
 
 /** return the equation of the entity
