@@ -1390,6 +1390,18 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
             data.vars[it.key().toStdString()] =curr;
             ++it;
     }
+    RS_Vector v = graphic->getMin();
+    curr = new DRW_Variant();
+    curr->addCoord(new DRW_Coord());
+    curr->setCoordX(v.x);
+    curr->setCoordY(v.y);
+    data.vars["$EXTMIN"] =curr;
+    v = graphic->getMax();
+    curr = new DRW_Variant();
+    curr->addCoord(new DRW_Coord());
+    curr->setCoordX(v.x);
+    curr->setCoordY(v.y);
+    data.vars["$EXTMAX"] =curr;
 }
 
 void RS_FilterDXFRW::writeLTypes(){
