@@ -1420,7 +1420,7 @@ void QC_ApplicationWindow::initMenuBar() {
 void QC_ApplicationWindow::initToolBar() {
     RS_DEBUG->print("QC_ApplicationWindow::initToolBar()");
 
-        QSizePolicy toolBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+        QSizePolicy toolBarPolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 
     fileToolBar = new QToolBar( "File Operations", this);
         fileToolBar->setSizePolicy(toolBarPolicy);
