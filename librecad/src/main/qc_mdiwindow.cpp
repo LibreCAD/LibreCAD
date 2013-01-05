@@ -68,7 +68,7 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc,
     id = idCounter++;
     //childWindows.setAutoDelete(false);
     parentWindow = NULL;
-
+    setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     if (document!=NULL) {
         if (document->getLayerList()!=NULL) {
             // Link the graphic view to the layer widget
