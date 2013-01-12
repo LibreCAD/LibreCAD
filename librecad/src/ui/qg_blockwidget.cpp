@@ -71,7 +71,8 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
         return;
     }
     for (int i=0; i<bl->count(); ++i) {
-        listBlock.append(bl->at(i));
+        if ( !bl->at(i)->isUndone() )
+            listBlock.append(bl->at(i));
     }
     qSort ( listBlock.begin(), listBlock.end(), blockLessThan );
 //called to force redraw
