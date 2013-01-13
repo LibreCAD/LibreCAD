@@ -27,6 +27,10 @@
 #include "qg_filedialog.h"
 
 #include <QMessageBox>
+#ifdef Q_OS_LINUX
+    #include <QDialogButtonBox>
+    #include <QStyle>
+#endif
 
 #include "rs_settings.h"
 #include "rs_system.h"
@@ -34,8 +38,6 @@
 #if QT_VERSION < 0x040400
 #include "emu_qt44.h"
 #endif
-
-//#define USEQTDIALOG 1
 
 void QG_FileDialog::getType(const QString filter) {
     if (filter== fLff) {
@@ -63,8 +65,14 @@ QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f, FileType type)
                             :QFileDialog(parent, f)
 {
 #if QT_VERSION >= 0x040500
-#ifdef USEQTDIALOG
-    setOption ( QFileDialog::DontUseNativeDialog, true );
+//# check if system are linux+KDE to use QFileDialog instead "native" FileDialog
+//# KDE returns the first filter that match the pattern "*.dxf" instead the selected
+#ifdef Q_OS_LINUX
+    QDialogButtonBox::ButtonLayout layoutPolicy = QDialogButtonBox::ButtonLayout(this->style()->styleHint(QStyle::SH_DialogButtonLayout, 0, this));
+    if (layoutPolicy == QDialogButtonBox::KdeLayout)
+        setOption ( QFileDialog::DontUseNativeDialog, true );
+    else
+        setOption ( QFileDialog::DontUseNativeDialog, false );
 #else
     setOption ( QFileDialog::DontUseNativeDialog, false );
 #endif

@@ -12,10 +12,6 @@ DEFINES += HAS_BOOST=1
 
 SCMREVISION="2.0.0beta1"
 
-# uncomment USEQTDIALOG=1 to use QFileDialog instead "native" FileDialog
-# KDE returns the first filter that match the pattern "*.dxf" instead the selected
-# DEFINES += USEQTDIALOG=1
-
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
 # Use common project definitions.
