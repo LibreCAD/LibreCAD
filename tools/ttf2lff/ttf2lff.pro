@@ -72,8 +72,8 @@ win32 {
         INCLUDEPATH += "$${FREETYPE_DIR}/include/freetype2"
         LIBS += -L"$${FREETYPE_DIR}/lib" -lfreetype
             TARGET=../../../windows/ttf2lff
-    message(ttf2lff using includes in $${INCLUDEPATH}.)
-    message(ttf2lff using libs in $${LIBS}.)
+        message(ttf2lff using includes in $${INCLUDEPATH}.)
+        message(ttf2lff using libs in $${LIBS}.)
     }
 }
 
