@@ -1261,8 +1261,10 @@ void RS_FilterDXFRW::writeBlockRecords(){
     RS_Block *blk;
     for (uint i = 0; i < graphic->countBlocks(); i++) {
         blk = graphic->blockAt(i);
-        RS_DEBUG->print("writing block record: %s", (const char*)blk->getName().toLocal8Bit());
-        dxf->writeBlockRecord(blk->getName().toUtf8().data());
+        if (!blk->isUndone()){
+            RS_DEBUG->print("writing block record: %s", (const char*)blk->getName().toLocal8Bit());
+            dxf->writeBlockRecord(blk->getName().toUtf8().data());
+        }
     }
 }
 
@@ -1328,19 +1330,21 @@ void RS_FilterDXFRW::writeBlocks() {
 
     for (uint i = 0; i < graphic->countBlocks(); i++) {
         blk = graphic->blockAt(i);
-        RS_DEBUG->print("writing block: %s", (const char*)blk->getName().toLocal8Bit());
+        if (!blk->isUndone()) {
+            RS_DEBUG->print("writing block: %s", (const char*)blk->getName().toLocal8Bit());
 
-        DRW_Block block;
-        block.name = blk->getName().toUtf8().data();
-        block.basePoint.x = blk->getBasePoint().x;
-        block.basePoint.y = blk->getBasePoint().y;
+            DRW_Block block;
+            block.name = blk->getName().toUtf8().data();
+            block.basePoint.x = blk->getBasePoint().x;
+            block.basePoint.y = blk->getBasePoint().y;
 #ifndef  RS_VECTOR2D
-        block.basePoint.z = blk->getBasePoint().z;
+            block.basePoint.z = blk->getBasePoint().z;
 #endif
-        dxf->writeBlock(&block);
-        for (RS_Entity* e=blk->firstEntity(RS2::ResolveNone);
-                e!=NULL; e=blk->nextEntity(RS2::ResolveNone)) {
-            writeEntity(e);
+            dxf->writeBlock(&block);
+            for (RS_Entity* e=blk->firstEntity(RS2::ResolveNone);
+                 e!=NULL; e=blk->nextEntity(RS2::ResolveNone)) {
+                writeEntity(e);
+            }
         }
     }
 }

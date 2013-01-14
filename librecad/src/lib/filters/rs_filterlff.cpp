@@ -192,7 +192,7 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 
             RS_DEBUG->print("block: %d", i);
 
-            if (blk!=NULL) {
+            if (blk!=NULL && !blk->isUndone()) {
                 RS_DEBUG->print("002a: %s",
                                 (blk->getName().toLocal8Bit().data()));
 
