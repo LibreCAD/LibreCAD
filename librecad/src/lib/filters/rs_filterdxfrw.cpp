@@ -1980,8 +1980,8 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
         if (s->isClosed()) {
             pol.flags = 1;
         } else {
-            pol.addVertex( DRW_Vertex(e->getEndpoint().x,
-                                      e->getEndpoint().y, 0.0, 0.0));
+            pol.addVertex( DRW_Vertex(s->getEndpoint().x,
+                                      s->getEndpoint().y, 0.0, 0.0));
         }
         getEntityAttributes(&pol, s);
         dxf->writePolyline(&pol);
