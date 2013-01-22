@@ -479,7 +479,7 @@ bool QC_MDIWindow::slotFileSaveAs(bool &cancelled) {
     if (document!=NULL && !fn.isEmpty()) {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         document->setGraphicView(graphicView);
-        ret = document->saveAs(fn, t);
+        ret = document->saveAs(fn, t, true);
         QApplication::restoreOverrideCursor();
     } else {
         // cancel is not an error - returns true

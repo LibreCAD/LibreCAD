@@ -411,7 +411,11 @@ bool RS_Graphic::save(bool isAutoSave)
  *	Author(s):		..., Claude Sylvain
  *	Created:			?
  *	Last modified:	13 July 2011
- *	Parameters:
+ *	Parameters:         QString: name to save
+ *                      RS2::FormatType: format to save
+ *                      bool:
+ *                          false: do not save if not needed
+ *                          true: force to save (when called for save as...
  *
  *	Returns:			bool:
  *							false:	Operation failed.
@@ -420,7 +424,7 @@ bool RS_Graphic::save(bool isAutoSave)
  * Notes:			Backup the drawing file (if necessary).
  */
 
-bool RS_Graphic::saveAs(const QString &filename, RS2::FormatType type)
+bool RS_Graphic::saveAs(const QString &filename, RS2::FormatType type, bool force)
 {
         bool	ret	= false;		/*	Set to "failed" by default. */
 
@@ -451,7 +455,7 @@ bool RS_Graphic::saveAs(const QString &filename, RS2::FormatType type)
                  *	  drawing file name, make LibreCAD think that drawing file
                  *	  has been modified, to make sure the drawing file saved.
                  *	*/
-                if (!fn_is_same)
+                if (!fn_is_same || force)
                         setModified(true);
 
                 ret	= save();		//	Save file.

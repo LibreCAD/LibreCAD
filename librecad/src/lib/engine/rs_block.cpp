@@ -88,10 +88,10 @@ bool RS_Block::save(bool isAutoSave) {
 }
 
 
-bool RS_Block::saveAs(const QString& filename, RS2::FormatType type) {
+bool RS_Block::saveAs(const QString& filename, RS2::FormatType type, bool force) {
     RS_Graphic* g = getGraphic();
     if (g!=NULL) {
-        return g->saveAs(filename, type);
+        return g->saveAs(filename, type, force);
     } else {
         return false;
     }
