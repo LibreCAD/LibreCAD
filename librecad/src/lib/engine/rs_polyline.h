@@ -153,6 +153,9 @@ public:
 
     virtual RS_Entity* addVertex(const RS_Vector& v,
                 double bulge=0.0, bool prepend=false);
+
+    void appendVertexs(const QList< QPair<RS_Vector*, double> > vl);
+
         virtual void setNextBulge(double bulge) {
                 nextBulge = bulge;
         }

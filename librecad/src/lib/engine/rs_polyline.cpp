@@ -136,6 +136,39 @@ RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend
 }
 
 
+/**
+ * Appends a vertex list from the endpoint of the last segment
+ * sets the startpoint to the first point if not exist.
+ *
+ * The very first vertex added with this method is the startpoint if not exists.
+ *
+ * @param vl list of vertexs coordinate to be added
+ * @param Pair are RS_Vector of coord and the bulge of the arc or 0 for a line segment (see DXF documentation)
+ *
+ * @return None
+ */
+void RS_Polyline::appendVertexs(const QList< QPair<RS_Vector*, double> > vl) {
+    RS_Entity* entity=NULL;
+    //static double nextBulge = 0.0;
+    if (vl.isEmpty()) return;
+    int idx = 0;
+    // very first vertex:
+    if (!data.startpoint.valid) {
+        data.startpoint = data.endpoint = *(vl.at(idx).first);
+        nextBulge = vl.at(idx++).second;
+    }
+
+    // consequent vertices:
+    for (; idx< vl.size();idx++){
+        entity = createVertex(*(vl.at(idx).first), nextBulge, false);
+        data.endpoint = entity->getEndpoint();
+        RS_EntityContainer::addEntity(entity);
+        nextBulge = vl.at(idx).second;
+    }
+
+    endPolyline();
+}
+
 
 /**
  * Creates a vertex from the endpoint of the last element or

@@ -426,11 +426,15 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
     RS_Polyline *polyline = new RS_Polyline(currentContainer, d);
     setEntityAttributes(polyline, &data);
 
+    QList< QPair<RS_Vector*, double> > verList;
     for (unsigned int i=0; i<data.vertlist.size(); i++) {
         DRW_Vertex2D *vert = data.vertlist.at(i);
-        RS_Vector v(vert->x, vert->y);
-        polyline->addVertex(v, vert->bulge);
+        RS_Vector *v = new RS_Vector(vert->x, vert->y);
+        verList.append(qMakePair(v, vert->bulge));
     }
+    polyline->appendVertexs(verList);
+    while (!verList.isEmpty())
+         delete verList.takeFirst().first;
 
     currentContainer->addEntity(polyline);
 }
@@ -452,11 +456,16 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
                       data.flags&0x1);
     RS_Polyline *polyline = new RS_Polyline(currentContainer, d);
     setEntityAttributes(polyline, &data);
+
+    QList< QPair<RS_Vector*, double> > verList;
     for (unsigned int i=0; i<data.vertlist.size(); i++) {
         DRW_Vertex *vert = data.vertlist.at(i);
-        RS_Vector v(vert->basePoint.x, vert->basePoint.y);
-        polyline->addVertex(v, vert->bulge);
+        RS_Vector *v = new RS_Vector(vert->basePoint.x, vert->basePoint.y);
+        verList.append(qMakePair(v, vert->bulge));
     }
+    polyline->appendVertexs(verList);
+    while (!verList.isEmpty())
+         delete verList.takeFirst().first;
 
     currentContainer->addEntity(polyline);
 }
