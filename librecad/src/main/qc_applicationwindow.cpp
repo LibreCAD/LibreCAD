@@ -3290,6 +3290,9 @@ void QC_ApplicationWindow::slotFileClosing() {
     layerWidget->setLayerList(NULL, false);
     blockWidget->setBlockList(NULL);
     coordinateWidget->setGraphic(NULL);
+    QC_MDIWindow* w = getMDIWindow();
+    if(w!=NULL)
+        openedFiles.removeAll(w->getDocument()->getFilename());
 }
 
 
