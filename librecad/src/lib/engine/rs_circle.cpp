@@ -637,7 +637,8 @@ void RS_Circle::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
 
 void RS_Circle::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.center.scale(center, factor);
-    data.radius *= factor.x;
+    //radius allways is positive
+    data.radius *= fabs(factor.x);
     scaleBorders(center,factor);
 //    calculateBorders();
 }

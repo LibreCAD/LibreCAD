@@ -143,15 +143,15 @@ void RS_Insert::update() {
 
                 // Move:
 //                                RS_DEBUG->print("RS_Insert::update: move 1");
-                                if (fabs(data.scaleFactor.x)>1.0e-6 &&
-                                    fabs(data.scaleFactor.y)>1.0e-6) {
-                        ne->move(data.insertionPoint +
+                if (fabs(data.scaleFactor.x)>1.0e-6 &&
+                        fabs(data.scaleFactor.y)>1.0e-6) {
+                    ne->move(data.insertionPoint +
                              RS_Vector(data.spacing.x/data.scaleFactor.x*c,
-                                           data.spacing.y/data.scaleFactor.y*r));
-                                }
-                                else {
-                        ne->move(data.insertionPoint);
-                                }
+                                       data.spacing.y/data.scaleFactor.y*r));
+                }
+                else {
+                    ne->move(data.insertionPoint);
+                }
                 // Move because of block base point:
 //                                RS_DEBUG->print("RS_Insert::update: move 2");
                 ne->move(blk->getBasePoint()*-1);
