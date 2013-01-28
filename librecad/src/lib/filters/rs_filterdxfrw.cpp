@@ -2544,7 +2544,7 @@ void RS_FilterDXFRW::writeImage(RS_Image * i) {
     image.contrast = i->getContrast();
     image.fade = i->getFade();
 
-    DRW_ImageDef *imgDef = dxf->writeImage(&image, i->getFile().toStdString());
+    DRW_ImageDef *imgDef = dxf->writeImage(&image, i->getFile().toUtf8().data());
     if (imgDef != NULL) {
         imgDef->loaded = 1;
         imgDef->u = i->getData().size.x;
