@@ -1331,7 +1331,9 @@ void RS_FilterDXFRW::writeBlocks() {
             RS_EntityContainer *ct = (RS_EntityContainer *)it.key();
             for (RS_Entity* e=ct->firstEntity(RS2::ResolveNone);
                     e!=NULL; e=ct->nextEntity(RS2::ResolveNone)) {
-                writeEntity(e);
+                if ( !(e->getFlag(RS2::FlagUndone)) ) {
+                    writeEntity(e);
+                }
             }
             ++it;
         }
@@ -1352,7 +1354,9 @@ void RS_FilterDXFRW::writeBlocks() {
             dxf->writeBlock(&block);
             for (RS_Entity* e=blk->firstEntity(RS2::ResolveNone);
                  e!=NULL; e=blk->nextEntity(RS2::ResolveNone)) {
-                writeEntity(e);
+                if ( !(e->getFlag(RS2::FlagUndone)) ) {
+                    writeEntity(e);
+                }
             }
         }
     }
