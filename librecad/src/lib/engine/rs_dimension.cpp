@@ -267,9 +267,11 @@ if(dimtsz < 0.01) {
         do {
             sol1 = RS_Information::getIntersection(dimensionLine, &(l[inters++]), true);
         } while (!sol1.hasValid() && inters < 4);
-        do {
-            sol2 = RS_Information::getIntersection(dimensionLine, &(l[inters++]), true);
-        } while (!sol2.hasValid() && inters < 4);
+        if (!sol1.hasValid()) {
+            do {
+                sol2 = RS_Information::getIntersection(dimensionLine, &(l[inters++]), true);
+            } while (!sol2.hasValid() && inters < 4);
+        }
         //are text intersecting dimensionLine?
         if (sol1.hasValid() && sol2.hasValid()) {
             //yes, split dimension line
