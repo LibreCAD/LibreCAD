@@ -16,6 +16,7 @@
 #include <QMouseEvent>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QCheckBox>
 #if QT_VERSION >= 0x040400
 #include <QFormLayout>
 #endif
@@ -45,6 +46,7 @@ QString AsciiFile::name() const
 void AsciiFile::execComm(Document_Interface *doc,
                              QWidget *parent, QString cmd)
 {
+    Q_UNUSED(cmd);
     dibPunto pdt(parent);
     int result = pdt.exec();
     if (result == QDialog::Accepted)
@@ -168,7 +170,8 @@ void imgLabel::mouseReleaseEvent(QMouseEvent *event)
 pointBox::pointBox(const QString & title, const QString & label, QWidget * parent ) :
     QGroupBox(title, parent)
 {
-    rb = new QRadioButton(label);
+    rb = new QCheckBox(label);
+    rb->setTristate (false );
     vbox = new QVBoxLayout;
     vbox->addWidget(rb);
     QLabel *but = new QLabel(tr("Layer:"));
@@ -245,9 +248,12 @@ dibPunto::dibPunto(QWidget *parent) :  QDialog(parent)
     formatedit = new QComboBox();
     txtformats << tr("Space Separator") << tr("Tab Separator") << tr("Comma Separator") << tr("*.odb for Psion 2");
     formatedit->addItems(txtformats);
+    connectPoints = new QCheckBox(tr("Connect points"));
+
     QHBoxLayout *loformat = new QHBoxLayout;
     loformat->addWidget(formatlabel);
     loformat->addWidget(formatedit);
+    loformat->addWidget(connectPoints);
     mainLayout->addLayout(loformat, 0, 1);
 
     pt2d = new pointBox(tr("2D Point"),tr("Draw 2D Point"));
@@ -378,10 +384,41 @@ void dibPunto::procesFile(Document_Interface *doc)
         drawNumber();
     if (ptcode->checkOn() == true)
         drawCode();
+    if ( connectPoints->isChecked() )
+        drawLine();
 
     currDoc->setLayer(currlay);
     currDoc = NULL;
 
+}
+
+void dibPunto::drawLine()
+{
+    QPointF prevP, nextP;
+    QString layer = pt2d->getLayer();
+    int i;
+    if (layer.isEmpty())
+        currDoc->setLayer("0");
+    else
+        currDoc->setLayer(pt2d->getLayer());
+
+    for (i = 0; i < dataList.size(); ++i) {
+        pointData *pd = dataList.at(i);
+        if (!pd->x.isEmpty() && !pd->y.isEmpty()){
+            prevP.setX(pd->x.toDouble());
+            prevP.setY(pd->y.toDouble());
+            break;
+        }
+    }
+    for (; i < dataList.size(); ++i) {
+        pointData *pd = dataList.at(i);
+        if (!pd->x.isEmpty() && !pd->y.isEmpty()){
+            nextP.setX(pd->x.toDouble());
+            nextP.setY(pd->y.toDouble());
+            currDoc->addLine(&prevP, &nextP);
+            prevP = nextP;
+        }
+    }
 }
 
 void dibPunto::draw2D()
@@ -567,7 +604,7 @@ void dibPunto::procesfileNormal(QFile* file, QString sep)
     while (!file->atEnd()) {
         QString line = file->readLine();
         line.remove ( line.size()-1, 1);
-        data = line.split(sep);
+        data = line.split(sep, QString::SkipEmptyParts);
         pd = new pointData;
         int i = 0;
         int j = data.size();

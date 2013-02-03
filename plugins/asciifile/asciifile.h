@@ -17,7 +17,7 @@
 #include <QFile>
 #include <QLabel>
 #include <QGroupBox>
-#include <QRadioButton>
+#include <QCheckBox>
 #include <QLineEdit>
 #include <QComboBox>
 #include <QDialog>
@@ -64,6 +64,7 @@ private:
     void writeSettings();
     void procesfileODB(QFile* file, QString sep);
     void procesfileNormal(QFile* file, QString sep);
+    void drawLine();
     void draw2D();
     void draw3D();
     void drawNumber();
@@ -82,6 +83,7 @@ private:
     textBox *ptcode;
     QLineEdit *fileedit;
     QComboBox *formatedit;
+    QCheckBox *connectPoints;
     QList<pointData*> dataList;
 
     Document_Interface *currDoc;
@@ -126,7 +128,7 @@ public:
     QString getLayer() { return layedit->text();}
     void setLayer(QString l) { layedit->setText(l);}
 private:
-    QRadioButton *rb;
+    QCheckBox *rb;
     QLineEdit *layedit;
     QVBoxLayout *vbox;
 };
