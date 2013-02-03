@@ -63,7 +63,7 @@ private:
     void readSettings();
     void writeSettings();
     void procesfileODB(QFile* file, QString sep);
-    void procesfileNormal(QFile* file, QString sep);
+    void procesfileNormal(QFile* file, QString sep, QString::SplitBehavior skip = QString::KeepEmptyParts);
     void drawLine();
     void draw2D();
     void draw3D();

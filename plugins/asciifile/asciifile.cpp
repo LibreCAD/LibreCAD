@@ -246,7 +246,7 @@ dibPunto::dibPunto(QWidget *parent) :  QDialog(parent)
 
     QLabel *formatlabel = new QLabel(tr("Format:"));
     formatedit = new QComboBox();
-    txtformats << tr("Space Separator") << tr("Tab Separator") << tr("Comma Separator") << tr("*.odb for Psion 2");
+    txtformats << tr("Space Separator") << tr("Tab Separator") << tr("Comma Separator") << tr("Space in Columns") << tr("*.odb for Psion 2");
     formatedit->addItems(txtformats);
     connectPoints = new QCheckBox(tr("Connect points"));
 
@@ -346,9 +346,14 @@ void dibPunto::procesFile(Document_Interface *doc)
     currDoc = doc;
 
 //Warning, can change ading or reordering "formatedit"
+    QString::SplitBehavior skip = QString::KeepEmptyParts;
     switch (formatedit->currentIndex()) {
     case 0:
         sep = " ";
+        break;
+    case 3:
+        sep = " ";
+        skip = QString::SkipEmptyParts;
         break;
     case 2:
         sep = ",";
@@ -370,7 +375,7 @@ void dibPunto::procesFile(Document_Interface *doc)
     if (formatedit->currentIndex() == 3)
         procesfileODB(&infile, sep);
     else
-        procesfileNormal(&infile, sep);
+        procesfileNormal(&infile, sep, skip);
     infile.close ();
     QString currlay = currDoc->getCurrentLayer();
 
@@ -596,7 +601,7 @@ void dibPunto::procesfileODB(QFile* file, QString sep)
     }
 
 }
-void dibPunto::procesfileNormal(QFile* file, QString sep)
+void dibPunto::procesfileNormal(QFile* file, QString sep, QString::SplitBehavior skip)
 {
     //    QString outname, sep;
     QStringList data;
@@ -604,7 +609,7 @@ void dibPunto::procesfileNormal(QFile* file, QString sep)
     while (!file->atEnd()) {
         QString line = file->readLine();
         line.remove ( line.size()-1, 1);
-        data = line.split(sep, QString::SkipEmptyParts);
+        data = line.split(sep, skip);
         pd = new pointData;
         int i = 0;
         int j = data.size();
