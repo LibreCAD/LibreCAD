@@ -101,6 +101,8 @@
 #include "qg_polylineequidistantoptions.h"
 #include "qg_layerwidget.h"
 #include "qg_mainwindowinterface.h"
+#include "rs_actionprintpreview.h"
+#include <QDebug>
 
 #if QT_VERSION < 0x040400
 #include "emu_qt44.h"
@@ -806,10 +808,10 @@ void QG_DialogFactory::requestPrintPreviewOptions(RS_ActionInterface* action,
     if (optionWidget!=NULL ) {
         if (printPreviewOptions==NULL) {
             printPreviewOptions = new QG_PrintPreviewOptions();
-
+            printPreviewOptions ->setAction(action, false);
             optionWidget->addWidget(printPreviewOptions);
         }
-        printPreviewOptions ->setAction(action, update);
+        if(update) printPreviewOptions ->setAction(action, update);
         printPreviewOptions->show();
     }
 
