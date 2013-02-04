@@ -996,8 +996,13 @@ void Doc_plugin_interface::updateEntity(RS_Entity *org, RS_Entity *newe){
 
 /*TODO RLZ: add undo support in the remaining methods*/
 void Doc_plugin_interface::setLayer(QString name){
-    RS_Layer *lay = new RS_Layer(name);
-    doc->addLayer(lay);
+    RS_LayerList* listLay = doc->getLayerList();
+    RS_Layer *lay = listLay->find(name);
+    if (lay == NULL) {
+        lay = new RS_Layer(name);
+        doc->addLayer(lay);
+    }
+    listLay->activate(lay, true);
 }
 
 QString Doc_plugin_interface::getCurrentLayer(){

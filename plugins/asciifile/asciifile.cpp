@@ -371,8 +371,8 @@ void dibPunto::procesFile(Document_Interface *doc)
          return;
     }
 
-//Warning, can change ading or reordering "formatedit"
-    if (formatedit->currentIndex() == 3)
+//Warning, can change adding or reordering "formatedit"
+    if (formatedit->currentIndex() == 4)
         procesfileODB(&infile, sep);
     else
         procesfileNormal(&infile, sep, skip);
@@ -389,10 +389,12 @@ void dibPunto::procesFile(Document_Interface *doc)
         drawNumber();
     if (ptcode->checkOn() == true)
         drawCode();
+
+    currDoc->setLayer(currlay);
+    /* draw lines in current layer */
     if ( connectPoints->isChecked() )
         drawLine();
 
-    currDoc->setLayer(currlay);
     currDoc = NULL;
 
 }
@@ -400,12 +402,7 @@ void dibPunto::procesFile(Document_Interface *doc)
 void dibPunto::drawLine()
 {
     QPointF prevP, nextP;
-    QString layer = pt2d->getLayer();
     int i;
-    if (layer.isEmpty())
-        currDoc->setLayer("0");
-    else
-        currDoc->setLayer(pt2d->getLayer());
 
     for (i = 0; i < dataList.size(); ++i) {
         pointData *pd = dataList.at(i);
@@ -641,6 +638,7 @@ void dibPunto::readSettings()
     str = settings.value("lastfile").toString();
     fileedit->setText(str);
     formatedit->setCurrentIndex( settings.value("format", 0).toInt() );
+    connectPoints->setChecked( settings.value("connectpoints", false).toBool() );
     pt2d->setCheck( settings.value("draw2d", false).toBool() );
     str = settings.value("layer2d").toString();
     pt2d->setLayer(str);
@@ -684,6 +682,7 @@ void dibPunto::writeSettings()
     settings.setValue("drawelev", ptelev->checkOn());
     settings.setValue("drawnumber", ptnumber->checkOn());
     settings.setValue("drawcode", ptcode->checkOn());
+    settings.setValue("connectpoints", connectPoints->isChecked());
     settings.setValue("layer2d", pt2d->getLayer());
     settings.setValue("layer3d", pt3d->getLayer());
     settings.setValue("layerelev", ptelev->getLayer());
