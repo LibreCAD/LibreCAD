@@ -106,13 +106,7 @@ public:
         diameter = d;
     }
 
-    static bool isDimensionAction(RS2::ActionType type) {
-        return (type==RS2::ActionDimAligned ||
-                type==RS2::ActionDimLinear ||
-                type==RS2::ActionDimAngular ||
-                type==RS2::ActionDimDiametric ||
-                type==RS2::ActionDimRadial);
-    }
+    static bool isDimensionAction(RS2::ActionType type);
 
 protected:
     /**
