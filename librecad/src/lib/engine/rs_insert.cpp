@@ -29,6 +29,7 @@
 
 #include "rs_block.h"
 #include "rs_graphic.h"
+#include "rs_layer.h"
 
 /**
  * @param parent The graphic this block belongs to.
@@ -136,6 +137,9 @@ void RS_Insert::update() {
                     ne = e->clone();
                 ne->initId();
                 ne->setUpdateEnabled(false);
+                // if entity layer are 0 set to insert layer to allow "1 layer control" bug ID #3602152
+                if (ne->getLayer()->getName() == "0")
+                    ne->setLayer(this->getLayer());
                 ne->setParent(this);
                 ne->setVisible(getFlag(RS2::FlagVisible));
 
