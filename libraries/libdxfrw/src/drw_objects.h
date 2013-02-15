@@ -380,6 +380,7 @@ private:
     string comments;
     string name;
     DRW_Variant *curr;
+    int version; //to use on read
 };
 
 namespace DRW {

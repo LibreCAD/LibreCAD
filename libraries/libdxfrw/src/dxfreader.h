@@ -40,6 +40,7 @@ public:
     int getInt32() {return intData;}
     int getInt64() {return int64;}
     bool getBool() {return intData;}
+    int getVersion(){return decoder.getVersion();}
     void setVersion(std::string *v){decoder.setVersion(v);}
     void setCodePage(std::string *c){decoder.setCodePage(c);}
     std::string getCodePage(){ return decoder.getCodePage();}

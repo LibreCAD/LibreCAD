@@ -12,6 +12,7 @@ public:
     ~DRW_TextCodec();
     std::string fromUtf8(std::string s);
     std::string toUtf8(std::string s);
+    int getVersion(){return version;}
     void setVersion(std::string *v);
     void setCodePage(std::string *c);
     std::string getCodePage(){return cp;}
