@@ -171,6 +171,7 @@ public:
     bool hasValid() const;
     void set(int i, const RS_Vector& v);
     void push_back(const RS_Vector& v);
+    void removeAt(const int i);
     RS_VectorSolutions appendTo(const RS_VectorSolutions& v);
     void setTangent(bool t);
     bool isTangent() const;

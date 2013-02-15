@@ -832,6 +832,12 @@ QList<RS_Vector> RS_VectorSolutions::getList() const {
 void RS_VectorSolutions::push_back(const RS_Vector& v) {
         vector.push_back(v);
 }
+
+void RS_VectorSolutions::removeAt(const int i){
+    if (vector.size()> i)
+        vector.removeAt(i);
+}
+
 RS_VectorSolutions RS_VectorSolutions::appendTo(const RS_VectorSolutions& v) {
     vector += v.getList();
     return *this;

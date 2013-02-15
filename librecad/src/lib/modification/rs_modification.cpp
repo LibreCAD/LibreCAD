@@ -2041,6 +2041,17 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
             }
         }
     }
+//if intersection are in start or end point can't trim/extend in this point, remove from solution. sf.net #3537053
+    if (trimEntity->rtti()==RS2::EntityLine){
+        RS_Line *lin = (RS_Line *)trimEntity;
+        for (unsigned int i=0; i< sol.size(); i++) {
+            RS_Vector v = sol.at(i);
+            if (v == lin->getStartpoint())
+                sol.removeAt(i);
+            else if (v == lin->getEndpoint())
+                sol.removeAt(i);
+        }
+    }
 
     if (sol.hasValid()==false) {
         return false;
