@@ -270,6 +270,10 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     // dimension text height:
     RS2::Unit unit = (RS2::Unit)cbUnit->currentIndex();
 
+    // dimension general scale:
+    double dimscale = graphic->getVariableDouble("$DIMSCALE", 1.0);
+    cbDimScale->setEditText(QString("%1").arg(dimscale));
+
     double dimtxt = graphic->getVariableDouble("$DIMTXT",
                                                RS_Units::convert(2.5, RS2::Millimeter, unit));
     //RLZ    cbDimTextHeight->setCurrentText(QString("%1").arg(dimtxt));
@@ -411,13 +415,26 @@ void QG_DlgOptionsDrawing::validate() {
             graphic->addVariable("$DIMGAP",newValue , 40);
         }
         ok1 = ok1 || ok2;
+        oldValue=graphic->getVariableDouble("$DIMSCALE",1);
+        newValue=RS_Math::eval(cbDimScale->currentText(),&ok2);
+        ok2 &= (fabs(oldValue-newValue)>RS_TOLERANCE);
+        if(ok2){
+            graphic->addVariable("$DIMSCALE",newValue , 40);
+        }
+        ok1 = ok1 || ok2;
+
         graphic->addVariable("$DIMASZ",
                              RS_Math::eval(cbDimAsz->currentText()), 40);
+        //dimension tick size, 0 for no tick
         graphic->addVariable("$DIMTSZ",
                              RS_Math::eval(cbDimTsz->currentText()), 40);
-//dimension tick size, 0 for no tick
-        //DIMTSZ
+        //DIMTIH, dimension text, horizontal or aligned
         graphic->addVariable("$DIMTIH", cbDimTih->currentIndex(), 70);
+        //DIMSCALE, general escale for dimensions
+        double dimScale = RS_Math::eval(cbDimScale->currentText());
+        if (dimScale<0 || dimScale == 0)
+            dimScale = 1.0;
+        graphic->addVariable("$DIMSCALE", dimScale, 40);
         // splines:
         graphic->addVariable("$SPLINESEGS",
                              (int)RS_Math::eval(cbSplineSegs->currentText()), 70);
@@ -649,6 +666,7 @@ void QG_DlgOptionsDrawing::updateUnitLabels() {
     lDimUnit3->setText(sign);
     lDimUnit4->setText(sign);
     lDimUnit5->setText(sign);
+    lDimUnit6->setText(sign);
     //have to update paper size when unit changes
     updatePaperSize();
 }

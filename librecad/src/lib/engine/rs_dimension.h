@@ -190,6 +190,7 @@ public:
         return data.angle;
     }
 
+    double getGeneralScale();
     double getArrowSize();
     double getTickSize();
     double getExtensionLineExtension();

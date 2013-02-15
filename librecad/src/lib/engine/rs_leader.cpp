@@ -88,7 +88,7 @@ void RS_Leader::update() {
             RS_Solid* s = new RS_Solid(this, RS_SolidData());
             s->shapeArrow(p1,
                           p2.angleTo(p1),
-                          getGraphicVariableDouble("$DIMASZ", 2.5));
+                          getGraphicVariableDouble("$DIMASZ", 2.5)* getGraphicVariableDouble("$DIMSCALE", 1.0));
             s->setPen(RS_Pen(RS2::FlagInvalid));
             s->setLayer(NULL);
             RS_EntityContainer::addEntity(s);
