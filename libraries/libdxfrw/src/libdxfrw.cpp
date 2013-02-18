@@ -1861,6 +1861,7 @@ bool dxfRW::processLType() {
             DBG(sectionstr); DBG("\n");
             if (sectionstr == "LTYPE") {
                 reading = true;
+                ltype.reset();
             } else if (sectionstr == "ENDTAB") {
                 return true;  //found ENDTAB terminate
             }
@@ -1910,6 +1911,7 @@ bool dxfRW::processDimStyle() {
             DBG(sectionstr); DBG("\n");
             if (sectionstr == "DIMSTYLE") {
                 reading = true;
+                dimSty.reset();
             } else if (sectionstr == "ENDTAB") {
                 return true;  //found ENDTAB terminate
             }
@@ -1934,6 +1936,7 @@ bool dxfRW::processTextStyle(){
             DBG(sectionstr); DBG("\n");
             if (sectionstr == "STYLE") {
                 reading = true;
+                TxtSty.reset();
             } else if (sectionstr == "ENDTAB") {
                 return true;  //found ENDTAB terminate
             }
@@ -1958,6 +1961,7 @@ bool dxfRW::processVports(){
             DBG(sectionstr); DBG("\n");
             if (sectionstr == "VPORT") {
                 reading = true;
+                vp.reset();
             } else if (sectionstr == "ENDTAB") {
                 return true;  //found ENDTAB terminate
             }

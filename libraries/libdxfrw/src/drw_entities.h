@@ -567,10 +567,10 @@ class DRW_Polyline : public DRW_Point {
 public:
     DRW_Polyline() {
         eType = DRW::POLYLINE;
-        flags = defstawidth = defendwidth = 0;
-        basePoint.x = basePoint.y = curvetype = 0;
-        vertexcount = facecount = 0;
-        smoothM = smoothN = 0;
+        defstawidth = defendwidth = 0.0;
+        basePoint.x = basePoint.y = 0.0;
+        flags = vertexcount = facecount = 0;
+        smoothM = smoothN = curvetype = 0;
     }
     ~DRW_Polyline() {
         while (!vertlist.empty()) {
@@ -616,9 +616,9 @@ class DRW_Spline : public DRW_Entity {
 public:
     DRW_Spline() {
         eType = DRW::SPLINE;
-        flags = nknots = ncontrol = 0;
-        nfit = ex = ey = 0;
-        ez = 1;
+        flags = nknots = ncontrol = nfit = 0;
+        ex = ey = 0.0;
+        ez = 1.0;
         tolknot = tolcontrol = tolfit = 0.0000001;
 
     }
@@ -705,9 +705,9 @@ class DRW_Hatch : public DRW_Point {
 public:
     DRW_Hatch() {
         eType = DRW::HATCH;
-        loopsnum = angle = scale = 0;
-        hstyle = basePoint.x = basePoint.y = 0;
-        basePoint.z = associative = 0;
+        angle = scale = 0.0;
+        basePoint.x = basePoint.y = basePoint.z = 0.0;
+        loopsnum = hstyle = associative = 0;
         solid = hpattern = 1;
         deflines = doubleflag = 0;
         loop = NULL;
@@ -835,8 +835,9 @@ class DRW_Dimension : public DRW_Entity {
 public:
     DRW_Dimension() {
         eType = DRW::DIMENSION;
-        linesty = linefactor = extPoint.z = 1;
-        angle = oblique = rot = 0;
+        linesty = 1;
+        linefactor = extPoint.z = 1.0;
+        angle = oblique = rot = 0.0;
         align = 5;
         style = "STANDARD";
         defPoint.z = extPoint.x = extPoint.y = 0;
@@ -866,6 +867,7 @@ public:
         circlePoint = d.circlePoint;
         length = d.length;
     }
+    virtual ~DRW_Dimension() {}
 
     void parseCode(int code, dxfReader *reader);
     virtual void applyExtrusion(){}
@@ -1110,9 +1112,10 @@ public:
     DRW_Leader() {
         eType = DRW::LEADER;
         flag = 3;
-        hookflag = vertnum = 0;
-        leadertype = extrusionPoint.x = extrusionPoint.y = 0;
-        arrow = extrusionPoint.z = 1;
+        hookflag = vertnum = leadertype = 0;
+        extrusionPoint.x = extrusionPoint.y = 0.0;
+        arrow = 1;
+        extrusionPoint.z = 1.0;
     }
     ~DRW_Leader() {
         while (!vertexlist.empty()) {

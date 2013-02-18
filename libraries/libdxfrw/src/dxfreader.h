@@ -38,8 +38,8 @@ public:
     std::string getUtf8String() {return decoder.toUtf8(strData);}
     double getDouble() {return doubleData;}
     int getInt32() {return intData;}
-    int getInt64() {return int64;}
-    bool getBool() {return intData;}
+    unsigned long long int getInt64() {return int64;}
+    bool getBool() { return (intData==0) ? false : true;}
     int getVersion(){return decoder.getVersion();}
     void setVersion(std::string *v){decoder.setVersion(v);}
     void setCodePage(std::string *c){decoder.setCodePage(c);}

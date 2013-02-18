@@ -265,7 +265,7 @@ void DRW_Solid::parseCode(int code, dxfReader *reader){
 void DRW_3Dface::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 70:
-        invisibleflag = reader->getDouble();
+        invisibleflag = reader->getInt32();
         break;
     default:
         DRW_Trace::parseCode(code, reader);
