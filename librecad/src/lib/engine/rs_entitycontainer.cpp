@@ -1113,11 +1113,11 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
          en = const_cast<RS_EntityContainer*>(this)->nextEntity()) {
 
         if (en->isVisible()
-                && en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
+                //&& en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
                 //&& en->rtti() != RS2::EntityPoint         /**Point*/
                 //&& en->getParent()->rtti() != RS2::EntitySpline
-                && en->getParent()->rtti() != RS2::EntityMText        /**< Text 15*/
-                && en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
+                //&& en->getParent()->rtti() != RS2::EntityMText        /**< Text 15*/
+                //&& en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
                 && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
                 && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
                 && en->getParent()->rtti() != RS2::EntityDimRadial    /**< Radial Dimension */
@@ -1164,13 +1164,13 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
          en = const_cast<RS_EntityContainer*>(this)->nextEntity()) {
 
 
-        if (/*en->isVisible()
-                &&*/ en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
+        if (/*en->isVisible()*/
+                //&& en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
                 //&& en->rtti() != RS2::EntityPoint         /**Point*/
                 //&& en->getParent()->rtti() != RS2::EntitySpline
-                && en->getParent()->rtti() != RS2::EntityMText        /**< Text 15*/
-                && en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
-                && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
+                //&& en->getParent()->rtti() != RS2::EntityMText        /**< Text 15*/
+                //&& en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
+                /*&&*/ en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
                 && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
                 && en->getParent()->rtti() != RS2::EntityDimRadial    /**< Radial Dimension */
                 && en->getParent()->rtti() != RS2::EntityDimDiametric /**< Diametric Dimension */
@@ -1292,12 +1292,12 @@ RS_Vector RS_EntityContainer::getNearestMiddle(const RS_Vector& coord,
     for (RS_Entity* en =const_cast<RS_EntityContainer*>(this)-> firstEntity(RS2::ResolveAll);
          en != NULL;
          en =const_cast<RS_EntityContainer*>(this)-> nextEntity(RS2::ResolveAll)) {
-
         if (en->isVisible() && ! en->isContainer()) {
             if (
                     en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
                     //|| en->rtti() == RS2::EntityPoint         /**Point*/
                     || en->getParent()->rtti() == RS2::EntitySpline
+                    || en->getParent()->rtti() == RS2::EntityFontChar     /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */

@@ -368,6 +368,13 @@ void RS_Text::update() {
 }
 
 
+RS_Vector RS_Text::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
+    if (dist!=NULL) {
+        *dist = data.insertionPoint.distanceTo(coord);
+    }
+    return data.insertionPoint;
+}
+
 
 RS_VectorSolutions RS_Text::getRefPoints() {
         RS_VectorSolutions ret(data.insertionPoint, data.secondPoint);
