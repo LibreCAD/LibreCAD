@@ -33,7 +33,7 @@ class LC_List : public QObject, QC_PluginInterface
 
 private:
     QString getStrData(Plug_Entity *ent);
-
+    Document_Interface *d;
 };
 
 class lc_Listdlg : public QDialog
