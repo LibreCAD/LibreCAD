@@ -837,6 +837,25 @@ RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
     }
         break;
 
+    case RS2::ResolveAllButTexts: {
+        subContainer=NULL;
+        if (!entities.isEmpty()) {
+            entIdx = 0;
+            e = entities.first();
+        }
+        if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText) {
+            subContainer = (RS_EntityContainer*)e;
+            e = ((RS_EntityContainer*)e)->firstEntity(level);
+            // emtpy container:
+            if (e==NULL) {
+                subContainer = NULL;
+                e = nextEntity(level);
+            }
+        }
+        return e;
+    }
+        break;
+
     case RS2::ResolveAll: {
         subContainer=NULL;
         if (!entities.isEmpty()) {
@@ -890,6 +909,18 @@ RS_Entity* RS_EntityContainer::lastEntity(RS2::ResolveLevel level) {
     }
         break;
 
+    case RS2::ResolveAllButTexts: {
+        if (!entities.isEmpty())
+            e = entities.last();
+        subContainer = NULL;
+        if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText) {
+            subContainer = (RS_EntityContainer*)e;
+            e = ((RS_EntityContainer*)e)->lastEntity(level);
+        }
+        return e;
+    }
+        break;
+
     case RS2::ResolveAll: {
         if (!entities.isEmpty())
             e = entities.last();
@@ -936,6 +967,33 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
                 e = entities.at(entIdx);
         }
         if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
+            subContainer = (RS_EntityContainer*)e;
+            e = ((RS_EntityContainer*)e)->firstEntity(level);
+            // emtpy container:
+            if (e==NULL) {
+                subContainer = NULL;
+                e = nextEntity(level);
+            }
+        }
+        return e;
+    }
+        break;
+
+    case RS2::ResolveAllButTexts: {
+        RS_Entity* e=NULL;
+        if (subContainer!=NULL) {
+            e = subContainer->nextEntity(level);
+            if (e!=NULL) {
+                return e;
+            } else {
+                if ( entIdx < entities.size() )
+                    e = entities.at(entIdx);
+            }
+        } else {
+            if ( entIdx < entities.size() )
+                e = entities.at(entIdx);
+        }
+        if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
             // emtpy container:
@@ -1010,6 +1068,32 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
                 e = entities.at(entIdx);
         }
         if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
+            subContainer = (RS_EntityContainer*)e;
+            e = ((RS_EntityContainer*)e)->lastEntity(level);
+            // emtpy container:
+            if (e==NULL) {
+                subContainer = NULL;
+                e = prevEntity(level);
+            }
+        }
+        return e;
+    }
+
+    case RS2::ResolveAllButTexts: {
+        RS_Entity* e=NULL;
+        if (subContainer!=NULL) {
+            e = subContainer->prevEntity(level);
+            if (e!=NULL) {
+                return e;
+            } else {
+                if (entIdx >= 0)
+                    e = entities.at(entIdx);
+            }
+        } else {
+            if (entIdx >= 0)
+                e = entities.at(entIdx);
+        }
+        if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->lastEntity(level);
             // emtpy container:
@@ -1234,36 +1318,28 @@ RS_Vector RS_EntityContainer::getNearestPointOnEntity(const RS_Vector& coord,
 
 RS_Vector RS_EntityContainer::getNearestCenter(const RS_Vector& coord,
                                                double* dist) {
-
     double minDist = RS_MAXDOUBLE;  // minimum measured distance
-    double curDist = RS_MAXDOUBLE;                 // currently measured distance
-    RS_Vector closestPoint;         // closest found endpoint
+    double curDist = RS_MAXDOUBLE;  // currently measured distance
+    RS_Vector closestPoint(false);  // closest found endpoint
     RS_Vector point;                // endpoint found
-    //std::cout<<"RS_EntityContainer::getNearestMiddle() middlePoints="<<middlePoints<<std::endl;
 
-    for (RS_Entity* en =const_cast<RS_EntityContainer*>(this)-> firstEntity(RS2::ResolveAll);
+    for (RS_Entity* en = const_cast<RS_EntityContainer*>(this)->firstEntity();
          en != NULL;
-         en =const_cast<RS_EntityContainer*>(this)-> nextEntity(RS2::ResolveAll)) {
+         en = const_cast<RS_EntityContainer*>(this)->nextEntity()) {
 
-        if (en->isVisible() && ! en->isContainer()) {
-            if (
-                    en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
-                    //|| en->rtti() == RS2::EntityPoint         /**Point*/
-                    || en->getParent()->rtti() == RS2::EntitySpline
-                    || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
-                    || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
-                    || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
-                    ){//no middle point for Spline, Insert, text, Dim
-                continue;
-            }
-            //std::cout<<"en->rtti()="<<en->rtti()<<"  en->getParent()->rtti()="<< en->getParent()->rtti() <<std::endl;
+        if (en->isVisible()
+                && en->getParent()->rtti() != RS2::EntitySpline
+                && en->getParent()->rtti() != RS2::EntityMText        /**< Text 16*/
+                && en->getParent()->rtti() != RS2::EntityText         /**< Text 17*/
+                && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimRadial    /**< Radial Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimDiametric /**< Diametric Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimAngular   /**< Angular Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimLeader    /**< Leader Dimension */
+                ){//no center point for spline, text, Dim
             point = en->getNearestCenter(coord, &curDist);
-            if (curDist<minDist) {
+            if (point.valid && curDist<minDist) {
                 closestPoint = point;
                 minDist = curDist;
             }
@@ -1282,36 +1358,28 @@ RS_Vector RS_EntityContainer::getNearestMiddle(const RS_Vector& coord,
                                                double* dist,
                                                int middlePoints
                                                ) const{
-
     double minDist = RS_MAXDOUBLE;  // minimum measured distance
-    double curDist = RS_MAXDOUBLE;                 // currently measured distance
-    RS_Vector closestPoint;         // closest found endpoint
+    double curDist = RS_MAXDOUBLE;  // currently measured distance
+    RS_Vector closestPoint(false);  // closest found endpoint
     RS_Vector point;                // endpoint found
-    //std::cout<<"RS_EntityContainer::getNearestMiddle() middlePoints="<<middlePoints<<std::endl;
 
-    for (RS_Entity* en =const_cast<RS_EntityContainer*>(this)-> firstEntity(RS2::ResolveAll);
+    for (RS_Entity* en = const_cast<RS_EntityContainer*>(this)->firstEntity();
          en != NULL;
-         en =const_cast<RS_EntityContainer*>(this)-> nextEntity(RS2::ResolveAll)) {
-        if (en->isVisible() && ! en->isContainer()) {
-            if (
-                    en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
-                    //|| en->rtti() == RS2::EntityPoint         /**Point*/
-                    || en->getParent()->rtti() == RS2::EntitySpline
-                    || en->getParent()->rtti() == RS2::EntityFontChar     /**< Text 15*/
-                    || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
-                    || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
-                    || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
-                    ){//no middle point for Spline, Insert, text, Dim
-                continue;
-            }
-            //std::cout<<"en->rtti()="<<en->rtti()<<"  en->getParent()->rtti()="<< en->getParent()->rtti() <<std::endl;
+         en = const_cast<RS_EntityContainer*>(this)->nextEntity()) {
+
+        if (en->isVisible()
+                && en->getParent()->rtti() != RS2::EntitySpline
+                && en->getParent()->rtti() != RS2::EntityMText        /**< Text 16*/
+                && en->getParent()->rtti() != RS2::EntityText         /**< Text 17*/
+                && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimRadial    /**< Radial Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimDiametric /**< Diametric Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimAngular   /**< Angular Dimension */
+                && en->getParent()->rtti() != RS2::EntityDimLeader    /**< Leader Dimension */
+                ){//no midle point for spline, text, Dim
             point = en->getNearestMiddle(coord, &curDist, middlePoints);
-            if (curDist<minDist) {
+            if (point.valid && curDist<minDist) {
                 closestPoint = point;
                 minDist = curDist;
             }
@@ -1351,23 +1419,22 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord,
                                                      double* dist) {
 
     double minDist = RS_MAXDOUBLE;  // minimum measured distance
-    double curDist;                 // currently measured distance
-    RS_Vector closestPoint(false); // closest found endpoint
+    double curDist = RS_MAXDOUBLE;  // currently measured distance
+    RS_Vector closestPoint(false);  // closest found endpoint
     RS_Vector point;                // endpoint found
     RS_VectorSolutions sol;
     RS_Entity* closestEntity;
 
-    closestEntity = getNearestEntity(coord, NULL, RS2::ResolveAll);
+    closestEntity = getNearestEntity(coord, NULL, RS2::ResolveAllButTexts);
 
     if (closestEntity!=NULL) {
-        for (RS_Entity* en = firstEntity(RS2::ResolveAll);
+        for (RS_Entity* en = firstEntity(RS2::ResolveAllButTexts);
              en != NULL;
-             en = nextEntity(RS2::ResolveAll)) {
+             en = nextEntity(RS2::ResolveAllButTexts)) {
             if (
                     !en->isVisible()
                     || en == closestEntity
                     || en->rtti() == RS2::EntityPoint         /**Point*/
-                    || en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
                     || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
                     || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
@@ -1376,7 +1443,7 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord,
                     || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
                     || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
                     || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
-                    ){//do not do intersection for point for Spline, Insert, text, Dim
+                    ){//do not do intersection for point, text, Dim
                 continue;
             }
 
@@ -1390,26 +1457,12 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord,
                 minDist=curDist;
             }
 
-            //                for (int i=0; i<4; i++) {
-            //                    point = sol.get(i);
-            //                    if (point.valid) {
-            //                        curDist = coord.distanceTo(point);
-
-            //                        if (curDist<minDist) {
-            //                            closestPoint = point;
-            //                            minDist = curDist;
-            //                            if (dist!=NULL) {
-            //                                *dist = curDist;
-            //                            }
-            //                        }
-            //                    }
-            //                }
         }
-        //}
     }
     if(dist!=NULL && closestPoint.valid) {
         *dist=minDist;
     }
+
     return closestPoint;
 }
 

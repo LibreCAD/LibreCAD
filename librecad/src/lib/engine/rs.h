@@ -535,10 +535,14 @@ public:
     enum ResolveLevel {
         /** Groups are not resolved */
         ResolveNone,
-                /**
-                 * Resolve all but not Inserts.
-                 */
-                ResolveAllButInserts,
+        /**
+        * Resolve all but not Inserts.
+        */
+        ResolveAllButInserts,
+        /**
+         * Resolve all but not Text or MText.
+         */
+        ResolveAllButTexts,
         /**
          * all Entity Containers are resolved
          * (including Texts, Polylines, ...)
