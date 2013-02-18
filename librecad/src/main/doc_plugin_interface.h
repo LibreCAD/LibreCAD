@@ -106,6 +106,7 @@ public:
     bool getInt(int *num, const QString& mesage, const QString& title);
     bool getReal(qreal *num, const QString& mesage, const QString& title);
     bool getString(QString *txt, const QString& mesage, const QString& title);
+    QString realToStr(const qreal num, const int units = 0, const int prec = 0);
 
 private:
     RS_Graphic *doc;

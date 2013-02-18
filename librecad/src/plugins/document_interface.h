@@ -366,6 +366,16 @@ public:
     virtual bool getReal(qreal *num, const QString& mesage = "", const QString& title = "") = 0;
     virtual bool getString(QString *txt, const QString& mesage = "", const QString& title = "") = 0;
 
+    //! Convert real to string.
+    /*! Convert a real number to string using indicated units format & precision. If omitted
+    * are the current drawing units & precision are used.
+    * \param num Number to convert.
+    * \param units Units format to use. current configured=0, Scientific=1,
+    * Decimal=2, Engineering=3, Architectural=4, Fractional=5.
+    * \param prec number of decimals added in the string.
+    * \return a string with the converted number.
+    */
+    virtual QString realToStr(const qreal num, const int units = 0, const int prec = 0) = 0;
 };
 
 

@@ -1160,3 +1160,34 @@ bool Doc_plugin_interface::getString(QString *txt, const QString& mesage, const 
     }
     return ok;
 }
+
+QString Doc_plugin_interface::realToStr(const qreal num, const int units, const int prec){
+    RS2::LinearFormat lf;
+    int pr = prec;
+    if (pr == 0)
+        pr = doc->getLinearPrecision();
+
+    switch (units){
+    case 0:
+        lf = doc->getLinearFormat();
+        break;
+    case 1:
+        lf = RS2::Scientific;
+        break;
+    case 3:
+        lf = RS2::Engineering;
+        break;
+    case 4:
+        lf = RS2::Architectural;
+        break;
+    case 5:
+        lf = RS2::Fractional;
+        break;
+    default:
+        lf = RS2::Decimal;
+    }
+
+    QString msg = RS_Units::formatLinear(num,RS2::None,lf,pr);
+    return msg;
+}
+
