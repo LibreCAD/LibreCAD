@@ -41,12 +41,12 @@ http://www.librecad.org/2010/10/debian-64-bit-and-ubuntu-compile-how-to/
 For git see also:
 http://librecad.org/cms/home/from-source/linux.html
 
-NOTE 1: On systems (Ubuntu??) You might need to run qmake-qt4 instead of just qmake
+NOTE 1: On systems like fedora (& Ubuntu??) You might need to run qmake-qt4 instead of just qmake
 
 Windows Users
 -------------
 
-- Download a copy of Qt SDK < 4.8.0, 4.7.4 for example from http://qt.nokia.com/downloads/ 
+- Download a copy of Qt SDK < 5.0.0, 4.8.4 for example from http://qt-project.org/downloads 
 
 - Download boost 1.48 from https://sourceforge.net/projects/boost/files/boost/1.48.0/
 - unzip into C:\boost\1_48_0 (in this directory you will find boost root directory, INSTALL, index, Jamroot etc.. etc).
@@ -58,7 +58,7 @@ Windows Users
 Notes: At this point you will have the following directory structure: C:\muparser\muparser_v2_2_2\. If you prefer to keep muParser in other locations, you should specify the directiory location with a custom.pro file in LibreCAD source folder, for example, the following setting is equivalent to the default muparser path in common.pro:
 `MUPARSER_DIR = /muparser/muparser_v2_2_2`
 
-- Start Qt Desktop using "Qt 4.8.0 for Desktop (MinGW)" shortcut.
+- Start Qt Desktop using "Qt 4.8.4 for Desktop (MinGW)" shortcut.
 - In Qt Desktop console, navigate to muParser build directory (C:\muparser\muparser_v2_2_2\build\), then type the following command to built muParser library:
   `mingw32-make -fmakefile.mingw`
 
