@@ -99,6 +99,19 @@ bool dxfReader::readRec(int *codeData, bool skip) {
 
     return (filestr->good());
 }
+int dxfReader::getHandleString(){
+    int res;
+#if defined(__APPLE__)
+    int Succeeded = sscanf ( strData.c_str(), "%x", &res );
+    if ( !Succeeded || Succeeded == EOF )
+        res = 0;
+#else
+    std::istringstream Convert(strData);
+    if ( !(Convert >> std::hex >>res) )
+        res = 0;
+#endif
+    return res;
+}
 
 bool dxfReaderBinary::readCode(int *code) {
     unsigned short *int16p;

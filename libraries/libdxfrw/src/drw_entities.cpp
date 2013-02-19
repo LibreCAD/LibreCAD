@@ -55,10 +55,10 @@ void DRW_Entity::extrudePoint(DRW_Coord extPoint, DRW_Coord *point){
 void DRW_Entity::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 5:
-        handle = reader->getString();
+        handle = reader->getHandleString();
         break;
     case 330:
-        handleBlock = reader->getString();
+        handleBlock = reader->getHandleString();
         break;
     case 8:
         layer = reader->getUtf8String();

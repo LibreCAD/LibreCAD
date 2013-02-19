@@ -57,11 +57,11 @@ protected:
     void parseCode(int code, dxfReader *reader);
 
 public:
-    enum DRW::TTYPE tType;  /*!< enum: entity type, code 0 */
-    string handle;                       /*!< entity identifier, code 5 */
-    string handleBlock;              /*!< Soft-pointer ID/handle to owner BLOCK_RECORD object, code 330 */
+    enum DRW::TTYPE tType;     /*!< enum: entity type, code 0 */
+    int handle;                /*!< entity identifier, code 5 */
+    int handleBlock;           /*!< Soft-pointer ID/handle to owner BLOCK_RECORD object, code 330 */
     UTF8STRING name;           /*!< entry name, code 2 */
-    int flags;                               /*!< Flags relevant to entry, code 70 */
+    int flags;                 /*!< Flags relevant to entry, code 70 */
 };
 
 

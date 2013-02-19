@@ -148,8 +148,8 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
 }
 
 bool dxfRW::writeEntity(DRW_Entity *ent) {
-    ent->handle = toHexStr(++entCount);
-    writer->writeString(5, ent->handle);
+    ent->handle = ++entCount;
+    writer->writeString(5, toHexStr(ent->handle));
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbEntity");
     }
