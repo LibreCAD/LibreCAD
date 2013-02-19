@@ -108,6 +108,8 @@ public:
     bool getString(QString *txt, const QString& mesage, const QString& title);
     QString realToStr(const qreal num, const int units = 0, const int prec = 0);
 
+    /*metod to handle undo in Plugin_Entity*/
+    bool addToUndo(RS_Entity* current, RS_Entity* modified);
 private:
     RS_Graphic *doc;
     RS_GraphicView *gView;

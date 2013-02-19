@@ -676,18 +676,42 @@ void Plugin_Entity::updatePolylineData(QList<Plug_VertexData> *data){
 }
 
 void Plugin_Entity::move(QPointF offset){
-    entity->move( RS_Vector(offset.x(), offset.y()) );
+    RS_Entity *ne = entity->clone();
+    ne->move( RS_Vector(offset.x(), offset.y()) );
+    bool ok = dpi->addToUndo(entity, ne);
+    //if doc interface fails to handle for undo only modify original entity
+    if (!ok){
+        entity->move( RS_Vector(offset.x(), offset.y()) );
+        delete ne;
+    } else
+        this->entity = ne;
 }
 
 void Plugin_Entity::rotate(QPointF center, double angle){
-    entity->rotate( RS_Vector(center.x(), center.y()) , angle);
+    RS_Entity *ne = entity->clone();
+    ne->rotate( RS_Vector(center.x(), center.y()) , angle);
+    bool ok = dpi->addToUndo(entity, ne);
+    //if doc interface fails to handle for undo only modify original entity
+    if (!ok){
+        entity->rotate( RS_Vector(center.x(), center.y()) , angle);
+        delete ne;
+    } else
+        this->entity = ne;
 }
 
 void Plugin_Entity::scale(QPointF center, QPointF factor){
-    entity->scale( RS_Vector(center.x(), center.y()),
+    RS_Entity *ne = entity->clone();
+    ne->scale( RS_Vector(center.x(), center.y()),
                 RS_Vector(factor.x(), factor.y()) );
+    bool ok = dpi->addToUndo(entity, ne);
+    //if doc interface fails to handle for undo only modify original entity
+    if (!ok){
+        entity->scale( RS_Vector(center.x(), center.y()),
+                    RS_Vector(factor.x(), factor.y()) );
+        delete ne;
+    } else
+        this->entity = ne;
 }
-
 
 Doc_plugin_interface::Doc_plugin_interface(RS_Graphic *d, RS_GraphicView* gv, QWidget* parent){
     doc =d;
@@ -700,6 +724,24 @@ Doc_plugin_interface::~Doc_plugin_interface(){
     if (haveUndo) {
         doc->endUndoCycle();
     }
+}
+
+bool Doc_plugin_interface::addToUndo(RS_Entity* current, RS_Entity* modified){
+    if (doc!=NULL) {
+        doc->addEntity(modified);
+        if (!haveUndo) {
+            doc->startUndoCycle();
+            haveUndo = true;
+        }
+        if (current->isSelected())
+            current->setSelected(false);
+        current->changeUndoState();
+        doc->addUndoable(current);
+        doc->addUndoable(modified);
+        return true;
+    } else
+        RS_DEBUG->print("Doc_plugin_interface::addToUndo: currentContainer is NULL");
+    return false;
 }
 
 void Doc_plugin_interface::updateView(){
