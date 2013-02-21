@@ -38,22 +38,12 @@
  */
 class QC_ActionGetPoint : public RS_PreviewActionInterface {
 	Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetReferencePoint,    /**< Setting the reference point. */
-        SetTargetPoint       /**< Setting the target point. */
-    };
 
 public:
     QC_ActionGetPoint(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
     ~QC_ActionGetPoint() {}
 
-    virtual void init(int status=0);
-	
     virtual void trigger();
 	
     virtual void mouseMoveEvent(QMouseEvent* e);
@@ -63,7 +53,6 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
 
     void getPoint(QPointF *point);
     void setBasepoint(QPointF* basepoint);
@@ -75,6 +64,7 @@ private:
     RS_Vector referencePoint;
     RS_Vector targetPoint;
     bool completed;
+    bool setTargetPoint;
     QString mesage;
 };
 

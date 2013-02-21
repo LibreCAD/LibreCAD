@@ -959,7 +959,7 @@ QString Doc_plugin_interface::addBlockfromFromdisk(QString fullName){
             return NULL;
         }
         RS_LayerList* ll = g.getLayerList();
-        for (int i = 0; i<ll->count(); i++){
+        for (unsigned int i = 0; i<ll->count(); i++){
             RS_Layer* nl = ll->at(i)->clone();
             doc->addLayer(nl);
         }
@@ -968,7 +968,7 @@ QString Doc_plugin_interface::addBlockfromFromdisk(QString fullName){
             RS_Block* nb = (RS_Block*)bl->at(i)->clone();
             doc->addBlock(nb);
         }
-        for (int i = 0; i<g.count(); i++){
+        for (unsigned int i = 0; i<g.count(); i++){
             RS_Entity* e = g.entityAt(i)->clone();
             e->reparent(b);
             b->addEntity(e);
@@ -1087,9 +1087,8 @@ bool Doc_plugin_interface::getPoint(QPointF *point, const QString& mesage, QPoin
         gView->setCurrentAction(a);
         if (base) a->setBasepoint(base);
         QEventLoop ev;
-        while (gView->getCurrentAction() ==a)
-        {
-            ev.processEvents (QEventLoop::ExcludeSocketNotifiers);
+        while ( !a->isCompleted()) {
+            ev.processEvents ();
         }
         if (a->isCompleted() ){
         a->getPoint(point);

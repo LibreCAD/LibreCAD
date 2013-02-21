@@ -38,12 +38,7 @@ QC_ActionGetPoint::QC_ActionGetPoint(RS_EntityContainer& container,
                            container, graphicView) {
     completed = false;
     mesage = tr("Specify a point");
-
-}
-
-
-void QC_ActionGetPoint::init(int status) {
-    RS_ActionInterface::init(status);
+    setTargetPoint = false;
 }
 
 
@@ -51,21 +46,15 @@ void QC_ActionGetPoint::trigger() {
 
     RS_DEBUG->print("QC_ActionGetPoint::trigger()");
     completed = true;
+    updateMouseButtonHints();
 }
 
 
 void QC_ActionGetPoint::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("QC_ActionGetPoint::mouseMoveEvent begin");
-    if (getStatus()==SetReferencePoint ||
-            getStatus()==SetTargetPoint) {
 
         RS_Vector mouse = snapPoint(e);
-        switch (getStatus()) {
-        case SetReferencePoint:
-            targetPoint = mouse;
-            break;
-
-        case SetTargetPoint:
+        if(setTargetPoint){
             if (referencePoint.valid) {
                 targetPoint = mouse;
                 deletePreview();
@@ -77,12 +66,9 @@ void QC_ActionGetPoint::mouseMoveEvent(QMouseEvent* e) {
                 drawPreview();
                 preview->addSelectionFrom(*container);
             }
-            break;
-
-        default:
-            break;
+        } else {
+            targetPoint = mouse;
         }
-    }
 
     RS_DEBUG->print("QC_ActionGetPoint::mouseMoveEvent end");
 }
@@ -94,7 +80,6 @@ void QC_ActionGetPoint::mouseReleaseEvent(QMouseEvent* e) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
-        deletePreview();
         init(getStatus()-1);
     }
 }
@@ -107,31 +92,17 @@ void QC_ActionGetPoint::coordinateEvent(RS_CoordinateEvent* e) {
 
     RS_Vector pos = e->getCoordinate();
 
-    switch (getStatus()) {
-    case SetReferencePoint:
-    case SetTargetPoint:
         targetPoint = pos;
         graphicView->moveRelativeZero(targetPoint);
         trigger();
-        finish();
-        break;
-
-    default:
-        break;
-    }
 }
 
 
 void QC_ActionGetPoint::updateMouseButtonHints() {
-    switch (getStatus()) {
-    case SetReferencePoint:
-    case SetTargetPoint:
+    if (!completed)
         RS_DIALOGFACTORY->updateMouseWidget(mesage, tr("Cancel"));
-        break;
-    default:
+    else
         RS_DIALOGFACTORY->updateMouseWidget("", "");
-        break;
-    }
 }
 
 
@@ -140,24 +111,10 @@ void QC_ActionGetPoint::updateMouseCursor() {
 }
 
 
-void QC_ActionGetPoint::updateToolBar() {
-    switch (getStatus()) {
-    case SetReferencePoint:
-    case SetTargetPoint:
-        //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-        break;
-    default:
-        RS_DIALOGFACTORY->requestPreviousMenu();
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
-        break;
-    }
-}
-
-
 void QC_ActionGetPoint::setBasepoint(QPointF* basepoint){
     referencePoint.x = basepoint->x();
     referencePoint.y = basepoint->y();
-    setStatus(SetTargetPoint);
+    setTargetPoint = true;
 }
 
 
