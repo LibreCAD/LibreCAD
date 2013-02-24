@@ -180,20 +180,11 @@ double RS_Math::correctAngle(double a) {
  * @return The angle that needs to be added to a1 to reach a2.
  *         Always positive and less than 2*pi.
  */
-double RS_Math::getAngleDifference(double a1, double a2) {
-    double ret;
-    ret=M_PI + remainder(a2 -a1 -M_PI, 2*M_PI);
-
-    //    if (a1>=a2) {
-    //        a2+=2*M_PI;
-    //    }
-    //    ret = a2-a1;
-
-    if (ret>=2*M_PI) {
-        ret=0.0;
-    }
-
-    return ret;
+double RS_Math::getAngleDifference(double a1, double a2, bool reversed) {
+    if(reversed)
+        return M_PI + remainder(a1 -a2 -M_PI, 2*M_PI);
+    else
+        return M_PI + remainder(a2 -a1 -M_PI, 2*M_PI);
 }
 
 

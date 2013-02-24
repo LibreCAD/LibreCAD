@@ -80,7 +80,7 @@ public:
                                double a1, double a2,
                                bool reversed);
     static double correctAngle(double a);
-    static double getAngleDifference(double a1, double a2);
+    static double getAngleDifference(double a1, double a2, bool reversed = false);
     static double makeAngleReadable(double angle, bool readable=true,
                                     bool* corrected=NULL);
     static bool isAngleReadable(double angle);
