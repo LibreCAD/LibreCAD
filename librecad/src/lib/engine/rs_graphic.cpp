@@ -75,6 +75,9 @@ blockList(true),paperScaleFixed(false)
                     RS_Units::convert(2.5, RS2::Millimeter, unit), 40);
     }
     addVariable("$DIMTIH", 0, 70);
+    //initialize printer vars bug #3602444
+    setPaperScale(getPaperScale());
+    setPaperInsertionBase(getPaperInsertionBase());
 
     setModified(false);
 }
