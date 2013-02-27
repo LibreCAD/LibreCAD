@@ -213,6 +213,7 @@ void Plugin_Entity::getData(QHash<int, QVariant> *data){
     data->insert(DPI::LTYPE, Converter.lt2str(entity->getPen().getLineType()) );
     data->insert(DPI::LWIDTH, Converter.lw2str(entity->getPen().getWidth()) );
     data->insert(DPI::COLOR, entity->getPen().getColor() );
+    data->insert(DPI::VISIBLE, (entity->isVisible()) ? 1 : 0 );
     switch (et) {
     //atomicEntity
     case RS2::EntityLine: {
@@ -1078,6 +1079,40 @@ bool Doc_plugin_interface::deleteLayer(QString name){
     return false;
 }
 
+void Doc_plugin_interface::getCurrentLayerProperties(QColor *c, DPI::LineWidth *w, DPI::LineType *t){
+    RS_Pen pen = doc->getActiveLayer()->getPen();
+    RS_Color col = pen.getColor();
+    c->setRgb(col.red(), col.green(), col.blue());
+    *w = static_cast<DPI::LineWidth>(pen.getWidth());
+    *t = static_cast<DPI::LineType>(pen.getLineType());
+}
+
+void Doc_plugin_interface::getCurrentLayerProperties(QColor *c, QString *w, QString *t){
+    RS_Pen pen = doc->getActiveLayer()->getPen();
+    RS_Color col = pen.getColor();
+    c->setRgb(col.red(), col.green(), col.blue());
+    w->clear();
+    w->append(Converter.lw2str(pen.getWidth()));
+    t->clear();
+    t->append(Converter.lt2str(pen.getLineType()));
+}
+
+void Doc_plugin_interface::setCurrentLayerProperties(QColor c, DPI::LineWidth w, DPI::LineType t){
+    RS_Layer* layer = doc->getActiveLayer();
+    if (layer != NULL) {
+        RS_Pen pen(RS_Color(c), static_cast<RS2::LineWidth>(w), static_cast<RS2::LineType>(t));
+        layer->setPen(pen);
+    }
+}
+
+void Doc_plugin_interface::setCurrentLayerProperties(QColor c, QString w, QString t){
+    RS_Layer* layer = doc->getActiveLayer();
+    if (layer != NULL) {
+        RS_Pen pen(RS_Color(c), Converter.str2lw(w), Converter.str2lt(t));
+        layer->setPen(pen);
+    }
+}
+
 bool Doc_plugin_interface::getPoint(QPointF *point, const QString& mesage, QPointF *base){
     bool status = false;
     QC_ActionGetPoint* a = new QC_ActionGetPoint(*doc, *gView);
@@ -1140,6 +1175,49 @@ bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& m
     gView->killAllActions();
     return status;
 
+}
+
+bool Doc_plugin_interface::getAllEntities(QList<Plug_Entity *> *sel, bool visible){
+    bool status = false;
+
+    for (RS_Entity* e= doc->firstEntity(RS2::ResolveNone);
+            e!=NULL; e= doc->nextEntity(RS2::ResolveNone)) {
+
+        if (e->isVisible() || !visible) {
+            Plugin_Entity *pe = new Plugin_Entity(e, this);
+            sel->append(reinterpret_cast<Plug_Entity*>(pe));
+        }
+    }
+    status = true;
+    return status;
+}
+
+bool Doc_plugin_interface::getVariableInt(const QString& key, int *num){
+    if( (*num = doc->getVariableInt(key, 0)) )
+        return true;
+    else
+        return false;
+}
+
+bool Doc_plugin_interface::getVariableDouble(const QString& key, double *num){
+    if( (*num = doc->getVariableDouble(key, 0.0)) )
+        return true;
+    else
+        return false;
+}
+
+bool Doc_plugin_interface::addVariable(const QString& key, int value, int code){
+    doc->addVariable(key, value, code);
+    if (key.startsWith("$DIM"))
+        doc->updateDimensions(true);
+    return true;
+}
+
+bool Doc_plugin_interface::addVariable(const QString& key, double value, int code){
+   doc->addVariable(key, value, code);
+   if (key.startsWith("$DIM"))
+       doc->updateDimensions(true);
+   return true;
 }
 
 bool Doc_plugin_interface::getInt(int *num, const QString& mesage, const QString& title){

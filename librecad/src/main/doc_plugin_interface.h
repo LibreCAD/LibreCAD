@@ -99,9 +99,20 @@ public:
     QStringList getAllBlocks();
     bool deleteLayer(QString name);
 
+    void getCurrentLayerProperties(QColor *c, DPI::LineWidth *w, DPI::LineType *t);
+    void getCurrentLayerProperties(QColor *c, QString *w, QString *t);
+    void setCurrentLayerProperties(QColor c, DPI::LineWidth w, DPI::LineType t);
+    void setCurrentLayerProperties(QColor c, QString w, QString t);
+
     bool getPoint(QPointF *point, const QString& mesage, QPointF *base);
     Plug_Entity *getEnt(const QString& mesage);
     bool getSelect(QList<Plug_Entity *> *sel, const QString& mesage);
+    bool getAllEntities(QList<Plug_Entity *> *sel, bool visible = false);
+
+    bool getVariableInt(const QString& key, int *num);
+    bool getVariableDouble(const QString& key, double *num);
+    bool addVariable(const QString& key, int value, int code=70);
+    bool addVariable(const QString& key, double value, int code=40);
 
     bool getInt(int *num, const QString& mesage, const QString& title);
     bool getReal(qreal *num, const QString& mesage, const QString& title);
