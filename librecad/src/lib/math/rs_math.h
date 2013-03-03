@@ -32,6 +32,7 @@
 #define _MT
 #endif
 
+#include <cfloat>
 #include <cmath>
 #include <complex>
 #include <errno.h>
