@@ -924,6 +924,7 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
     std::vector<double> ce(0,0.);
 
     for(size_t i0=0;i0<roots.size();i0++){
+//    DEBUG_HEADER();
 //                std::cout<<"y="<<roots[i0]<<std::endl;
         /*
           Collect[Eliminate[{ a*x^2 + b*x*y+c*y^2+d*x+e*y+f==0,g*x^2+h*x*y+i*y^2+j*x+k*y+l==0},x],y]
@@ -932,6 +933,8 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
         ce[0]=a;
         ce[1]=b*roots[i0]+d;
         ce[2]=c*roots[i0]*roots[i0]+e*roots[i0]+f;
+//    DEBUG_HEADER();
+//                std::cout<<"("<<ce[0]<<")*x^2 + ("<<ce[1]<<")*x + ("<<ce[2]<<") == 0"<<std::endl;
         if(fabs(ce[0])<1e-75 && fabs(ce[1])<1e-75) {
             ce[0]=g;
             ce[1]=h*roots[i0]+j;
@@ -956,7 +959,8 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
         RS_Vector vp(-ce[2]/ce[1],roots[i0]);
         if(simultaneousQuadraticVerify(m,vp)) ret.push_back(vp);
     }
-    //    std::cout<<"ret="<<ret<<std::endl;
+//    DEBUG_HEADER();
+//        std::cout<<"ret="<<ret<<std::endl;
     return ret;
 }
 
@@ -1010,7 +1014,7 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverMixed(const std::vector<s
         roots=quadraticSolver(ce2);
     }
     if(roots.size()==0)  return RS_VectorSolutions();
-    for(int i=0;i<roots.size();i++){
+    for(size_t i=0;i<roots.size();i++){
         ret.push_back(RS_Vector(-(b*roots.at(i)+c)/a,roots.at(i)));
     }
 
@@ -1042,9 +1046,26 @@ bool RS_Math::simultaneousQuadraticVerify(const std::vector<std::vector<double> 
     auto& j=m[1][3];
     auto& k=m[1][4];
     auto& l=m[1][5];
-//        std::cout<<"verifying: fabs(a*x2 + b*x*y+c*y2+d*x+e*y+f)="<<fabs(a*x2 + b*x*y+c*y2+d*x+e*y+f)<<std::endl;
-//        std::cout<<"verifying: fabs(g*x2+h*x*y+i*y2+j*x+k*y+l)="<< fabs(g*x2+h*x*y+i*y2+j*x+k*y+l)<<std::endl;
-    return fabs(a*x2 + b*x*y+c*y2+d*x+e*y+f)<1e4*RS_TOLERANCE
-            &&  fabs(g*x2+h*x*y+i*y2+j*x+k*y+l)<1e4*RS_TOLERANCE;
+    /**
+      * tolerance test for bug#3606099
+      * verifying the equations to floating point tolerance by terms
+      */
+    QVector<double> terms0={ a*x2, b*x*y, c*y2, d*x, e*y, f, g*x2, h*x*y, i*y2, j*x, k*y, l};
+    double amax0=fabs(terms0[0]), amax1=fabs(terms0[6]);
+    double sum0=0., sum1=0.;
+    for(int i=0; i<6; i++) {
+        if(amax0<fabs(terms0[i])) amax0=fabs(terms0[i]);
+        sum0 += terms0[i];
+    }
+    for(int i=6; i<12; i++) {
+        if(amax1<fabs(terms0[i])) amax1=fabs(terms0[i]);
+        sum1 += terms0[i];
+    }
+
+//    DEBUG_HEADER();
+//        std::cout<<"verifying: fabs(a*x2 + b*x*y+c*y2+d*x+e*y+f)/maxterm="<<fabs(sum0)/amax0<<" required to be smaller than "<<sqrt(6.)*sqrt(DBL_EPSILON)<<std::endl;
+//        std::cout<<"verifying: fabs(g*x2+h*x*y+i*y2+j*x+k*y+l)/maxterm="<< fabs(sum1)/amax1<<std::endl;
+    return fabs(sum0)/amax0<2.*sqrt(6.)*sqrt(DBL_EPSILON)
+            &&  fabs(sum1)/amax1<2.*sqrt(6.)*sqrt(DBL_EPSILON);
 }
 //EOF
