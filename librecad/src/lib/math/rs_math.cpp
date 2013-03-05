@@ -1050,7 +1050,7 @@ bool RS_Math::simultaneousQuadraticVerify(const std::vector<std::vector<double> 
       * tolerance test for bug#3606099
       * verifying the equations to floating point tolerance by terms
       */
-    QVector<double> terms0={ a*x2, b*x*y, c*y2, d*x, e*y, f, g*x2, h*x*y, i*y2, j*x, k*y, l};
+    double terms0[12]={ a*x2, b*x*y, c*y2, d*x, e*y, f, g*x2, h*x*y, i*y2, j*x, k*y, l};
     double amax0=fabs(terms0[0]), amax1=fabs(terms0[6]);
     double sum0=0., sum1=0.;
     for(int i=0; i<6; i++) {
