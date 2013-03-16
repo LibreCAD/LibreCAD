@@ -432,19 +432,17 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     RS_StaticGraphicView gv(128,128, &painter);
     RS_Graphic graphic;
     if (graphic.open(dxfPath, RS2::FormatUnknown)) {
-        for (RS_Entity* e=graphic.firstEntity(RS2::ResolveAll);
-                e!=NULL; e=graphic.nextEntity(RS2::ResolveAll)) {
-            RS_Pen pen = e->getPen();
-            pen.setColor(Qt::black);
-            e->setPen(pen);
-        }
-
         gv.setContainer(&graphic);
         gv.zoomAuto(false);
         // gv.drawEntity(&graphic, true);
 
         for (RS_Entity* e=graphic.firstEntity(RS2::ResolveAll);
                 e!=NULL; e=graphic.nextEntity(RS2::ResolveAll)) {
+            if (e->rtti() != RS2::EntityHatch){
+                RS_Pen pen = e->getPen();
+                pen.setColor(Qt::black);
+                e->setPen(pen);
+            }
             gv.drawEntity(&painter, e);
         }
 
