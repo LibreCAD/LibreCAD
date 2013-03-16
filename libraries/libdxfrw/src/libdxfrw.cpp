@@ -590,8 +590,8 @@ bool dxfRW::writeArc(DRW_Arc *ent) {
 }
 
 bool dxfRW::writeEllipse(DRW_Ellipse *ent){
-    if (ent->staparam == ent->endparam)
-        ent->endparam = 6.28318530718; //2*M_PI;
+    //verify axis/ratio and params for full ellipse
+    ent->correctAxis();
     if (version > DRW::AC1009) {
         writer->writeString(0, "ELLIPSE");
         writeEntity(ent);
@@ -884,13 +884,14 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
                     case DRW::ELLIPSE: {
                         writer->writeInt16(72, 3);
                         DRW_Ellipse* a = (DRW_Ellipse*)loop->objlist.at(j);
+                        a->correctAxis();
                         writer->writeDouble(10, a->basePoint.x);
                         writer->writeDouble(20, a->basePoint.y);
                         writer->writeDouble(11, a->secPoint.x);
                         writer->writeDouble(21, a->secPoint.y);
                         writer->writeDouble(40, a->ratio);
-                        writer->writeDouble(50, a->staparam);
-                        writer->writeDouble(51, a->endparam);
+                        writer->writeDouble(50, a->staparam*ARAD);
+                        writer->writeDouble(51, a->endparam*ARAD);
                         writer->writeInt16(73, a->isccw);
                         break; }
                     case DRW::SPLINE:

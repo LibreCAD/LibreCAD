@@ -997,14 +997,32 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                 }
                 case DRW::ELLIPSE: {
                     DRW_Ellipse *e2 = (DRW_Ellipse *)ent;
-                    double ang1 = RS_Math::deg2rad(e2->staparam);
-                    double ang2 = RS_Math::deg2rad(e2->endparam);
+                    double ang1 = e2->staparam;
+                    double ang2 = e2->endparam;
                     if ( fabs(ang2 - 6.28318530718) < 1.0e-10 && fabs(ang1) < 1.0e-10 )
                         ang2 = 0.0;
+                    else { //convert angle to parameter
+                        ang1 = atan(tan(ang1)/e2->ratio);
+                        ang2 = atan(tan(ang2)/e2->ratio);
+                        if (ang1 < 0){//quadrant 2 & 4
+                            ang1 +=M_PI;
+                            if (e2->staparam > M_PI) //quadrant 4
+                                ang1 +=M_PI;
+                        } else if (e2->staparam > M_PI){//3 quadrant
+                            ang1 +=M_PI;
+                        }
+                        if (ang2 < 0){//quadrant 2 & 4
+                            ang2 +=M_PI;
+                            if (e2->endparam > M_PI) //quadrant 4
+                                ang2 +=M_PI;
+                        } else if (e2->endparam > M_PI){//3 quadrant
+                            ang2 +=M_PI;
+                        }
+                    }
                     e = new RS_Ellipse(hatchLoop,
                                        RS_EllipseData(RS_Vector(e2->basePoint.x, e2->basePoint.y),
                                                       RS_Vector(e2->secPoint.x, e2->secPoint.y),
-                                                      e2->ratio, ang1, ang2, e2->isccw));
+                                                      e2->ratio, ang1, ang2, !e2->isccw));
                     break;
                 }
                 default:
@@ -2057,6 +2075,7 @@ void RS_FilterDXFRW::writeEllipse(RS_Ellipse* s) {
         el.staparam = s->getAngle1();
         el.endparam = s->getAngle2();
     }
+
     dxf->writeEllipse(&el);
 }
 
@@ -2478,16 +2497,14 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
                     ell->secPoint.x = el->getMajorP().x;
                     ell->secPoint.y = el->getMajorP().y;
                     ell->ratio = el->getRatio();
-                    ell->staparam = RS_Math::rad2deg(el->getAngle1());
-                    ell->endparam = RS_Math::rad2deg(el->getAngle2());
-                    ell->isccw = el->isReversed();
-                    if (!el->isReversed()) {
-                        ell->staparam = RS_Math::rad2deg(el->getAngle1());
-                        ell->endparam = RS_Math::rad2deg(el->getAngle2());
-                    } else {
-                        ell->staparam = RS_Math::rad2deg(2*M_PI-el->getAngle1());
-                        ell->endparam = RS_Math::rad2deg(2*M_PI-el->getAngle2());
-                    }
+                    double rot = el->getMajorP().angle();
+                    double startAng = el->getCenter().angleTo(el->getStartpoint()) - rot;
+                    double endAng = el->getCenter().angleTo(el->getEndpoint()) - rot;
+                    if (startAng < 0) startAng = M_PI*2 + startAng;
+                    if (endAng < 0) endAng = M_PI*2 + endAng;
+                    ell->staparam = startAng;
+                    ell->endparam = endAng;
+                    ell->isccw = !el->isReversed();
                     lData->objlist.push_back(ell);
                 }
             }

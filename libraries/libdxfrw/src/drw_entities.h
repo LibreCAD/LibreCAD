@@ -261,6 +261,7 @@ public:
 
     void parseCode(int code, dxfReader *reader);
     void toPolyline(DRW_Polyline *pol);
+    void correctAxis();
 public:
     double ratio;           /*!< ratio, code 40 */
     double staparam;        /*!< start parameter, code 41, 0.0 for full ellipse*/
