@@ -93,6 +93,7 @@ public:
         lWeight = -1; // default BYLAYER (-1)
         space = 0; // default ModelSpace (0)
         haveExtrusion = false;
+        color24 = -1; //default -1 not set
     }
 
     DRW_Entity(const DRW_Entity& d) {

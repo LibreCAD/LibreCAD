@@ -1231,6 +1231,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
 #endif
 
     // set version for DXF filter:
+    exactColor = false;
     DRW::Version exportVersion;
     if (type==RS2::FormatDXFRW12) {
         exportVersion = DRW::AC1009;
@@ -1244,9 +1245,11 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
     } else if (type==RS2::FormatDXFRW2004) {
         exportVersion = DRW::AC1018;
         version = 1018;
+        exactColor = true;
     } else {
         exportVersion = DRW::AC1021;
         version = 1021;
+        exactColor = true;
     }
 
     dxf = new dxfRW(QFile::encodeName(file));
@@ -1651,12 +1654,14 @@ void RS_FilterDXFRW::writeLTypes(){
 void RS_FilterDXFRW::writeLayers(){
     DRW_Layer lay;
     RS_LayerList* ll = graphic->getLayerList();
+    int exact_rgb;
     for (unsigned int i = 0; i < ll->count(); i++) {
         lay.reset();
         RS_Layer* l = ll->at(i);
         RS_Pen pen = l->getPen();
         lay.name = l->getName().toUtf8().data();
-        lay.color = colorToNumber(pen.getColor());
+        lay.color = colorToNumber(pen.getColor(), &exact_rgb);
+        lay.color24 = exact_rgb;
         lay.lWeight = widthToNumber(pen.getWidth());
         lay.lineType = lineTypeToName(pen.getLineType()).toStdString();
         lay.plotF = ! l->isHelpLayer(); // a help layer should not appear in print
@@ -2658,7 +2663,12 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
     entity->setLayer(layName);
 
     // Color:
-    pen.setColor(numberToColor(attrib->color));
+    if (attrib->color24 >= 0)
+        pen.setColor(RS_Color(attrib->color24 >> 16,
+                              attrib->color24 >> 16 & 0xFF,
+                              attrib->color24 & 0xFF));
+    else
+        pen.setColor(numberToColor(attrib->color));
 
     // Linetype:
     pen.setLineType(nameToLineType( QString::fromUtf8(attrib->lineType.c_str()) ));
@@ -2690,7 +2700,8 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entit
     RS_Pen pen = entity->getPen(false);
 
     // Color:
-    int color = colorToNumber(pen.getColor());
+    int exact_rgb;
+    int color = colorToNumber(pen.getColor(), &exact_rgb);
     //printf("Color is: %s -> %d\n", pen.getColor().name().toLatin1().data(), color);
 
     // Linetype:
@@ -2701,6 +2712,7 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entit
 
     ent->layer = toDxfString(layerName).toUtf8().data();
     ent->color = color;
+    ent->color24 = exact_rgb;
     ent->lWeight = width;
     ent->lineType = lineType.toUtf8().data();
 }
@@ -2712,8 +2724,15 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entit
  */
 RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Layer* att) const {
 
-    RS_Pen pen(numberToColor(att->color),
-               numberToWidth(att->lWeight),
+    RS_Color col;
+    if (att->color24 >= 0)
+        col = RS_Color(att->color24 >> 16,
+                              att->color24 >> 16 & 0xFF,
+                              att->color24 & 0xFF);
+    else
+        col = numberToColor(att->color);
+
+    RS_Pen pen(col, numberToWidth(att->lWeight),
                nameToLineType(QString::fromUtf8(att->lineType.c_str())) );
     return pen;
 }
@@ -2725,78 +2744,22 @@ RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Layer* att) const {
  * Please refer to the dxflib documentation for details.
  *
  * @param num Color number.
- * @param comp Compatibility with older QCad versions (1.5.3 and older)
  */
-RS_Color RS_FilterDXFRW::numberToColor(int num, bool comp) {
-    // Compatibility with QCad 1.5.3 and older:
-    if (comp) {
-        switch(num) {
-        case 0:
-            return Qt::black;
-            break;
-        case 1:
-            return Qt::darkBlue;
-            break;
-        case 2:
-            return Qt::darkGreen;
-            break;
-        case 3:
-            return Qt::darkCyan;
-            break;
-        case 4:
-            return Qt::darkRed;
-            break;
-        case 5:
-            return Qt::darkMagenta;
-            break;
-        case 6:
-            return Qt::darkYellow;
-            break;
-        case 7:
-            return Qt::lightGray;
-            break;
-        case 8:
-            return Qt::darkGray;
-            break;
-        case 9:
-            return Qt::blue;
-            break;
-        case 10:
-            return Qt::green;
-            break;
-        case 11:
-            return Qt::cyan;
-            break;
-        case 12:
-            return Qt::red;
-            break;
-        case 13:
-            return Qt::magenta;
-            break;
-        case 14:
-            return Qt::yellow;
-            break;
-        case 15:
-            return Qt::black;
-            break;
-        default:
-            break;
-        }
-    } else {
+RS_Color RS_FilterDXFRW::numberToColor(int num) {
         if (num==0) {
             return RS_Color(RS2::FlagByBlock);
         } else if (num==256) {
             return RS_Color(RS2::FlagByLayer);
         } else if (num<=255 && num>=0) {
-            return RS_Color((int)(DRW::dxfColors[num][0]*255),
-                            (int)(DRW::dxfColors[num][1]*255),
-                            (int)(DRW::dxfColors[num][2]*255));
+            return RS_Color(DRW::dxfColors[num][0],
+                            DRW::dxfColors[num][1],
+                            DRW::dxfColors[num][2]);
         } else {
             RS_DEBUG->print(RS_Debug::D_WARNING,
                                 "RS_FilterDXF::numberToColor: Invalid color number given.");
             return RS_Color(RS2::FlagByLayer);
         }
-    }
+
     return RS_Color();
 }
 
@@ -2806,10 +2769,11 @@ RS_Color RS_FilterDXFRW::numberToColor(int num, bool comp) {
  * Converts a color into a color number in the DXF palette.
  * The color that fits best is chosen.
  */
-int RS_FilterDXFRW::colorToNumber(const RS_Color& col) {
+int RS_FilterDXFRW::colorToNumber(const RS_Color& col, int *rgb) {
 
     //printf("Searching color for %s\n", col.name().toLatin1().data());
 
+    *rgb = -1;
     // Special color BYBLOCK:
     if (col.getFlag(RS2::FlagByBlock)) {
         return 0;
@@ -2833,9 +2797,9 @@ int RS_FilterDXFRW::colorToNumber(const RS_Color& col) {
 
         // Run through the whole table and compare
         for (int i=1; i<=255; i++) {
-            int d = abs(col.red()-(int)(DRW::dxfColors[i][0]*255))
-                    + abs(col.green()-(int)(DRW::dxfColors[i][1]*255))
-                    + abs(col.blue()-(int)(DRW::dxfColors[i][2]*255));
+            int d = abs(col.red()-DRW::dxfColors[i][0])
+                    + abs(col.green()-DRW::dxfColors[i][1])
+                    + abs(col.blue()-DRW::dxfColors[i][2]);
 
             if (d<diff) {
                 /*
@@ -2852,6 +2816,10 @@ int RS_FilterDXFRW::colorToNumber(const RS_Color& col) {
             }
         }
         //printf("  Found: %d, diff: %d\n", num, diff);
+        if(diff != 0) {
+            *rgb = 0;
+            *rgb = col.red()<<16 | col.green()<<8 | col.blue();
+        }
         return num;
     }
 }

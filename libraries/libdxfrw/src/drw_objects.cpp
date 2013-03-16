@@ -327,6 +327,9 @@ void DRW_Layer::parseCode(int code, dxfReader *reader){
     case 347:
         handlePlotM = reader->getString();
         break;
+    case 420:
+        color24 = reader->getInt32();
+        break;
     default:
         DRW_TableEntry::parseCode(code, reader);
         break;

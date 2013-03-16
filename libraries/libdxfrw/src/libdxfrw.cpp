@@ -163,6 +163,9 @@ bool dxfRW::writeEntity(DRW_Entity *ent) {
         writer->writeUtf8Caps(6, ent->lineType);
     }
     writer->writeInt16(62, ent->color);
+    if (version > DRW::AC1015 && ent->color24 >= 0) {
+        writer->writeInt32(420, ent->color24);
+    }
     if (version > DRW::AC1014) {
         writer->writeInt16(370, ent->lWeight);
     }
@@ -228,6 +231,9 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
     }
     writer->writeInt16(70, ent->flags);
     writer->writeInt16(62, ent->color);
+    if (version > DRW::AC1015 && ent->color24 >= 0) {
+        writer->writeInt32(420, ent->color24);
+    }
     if (version > DRW::AC1009) {
         writer->writeUtf8String(6, ent->lineType);
         if (! ent->plotF)
