@@ -19,6 +19,9 @@ class LC_Align : public QObject, QC_PluginInterface
 {
     Q_OBJECT
      Q_INTERFACES(QC_PluginInterface)
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.librecad.align" FILE	"align.json")
+#endif
 
  public:
     virtual PluginCapabilities getCapabilities() const;

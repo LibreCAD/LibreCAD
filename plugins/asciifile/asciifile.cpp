@@ -702,4 +702,6 @@ void dibPunto::writeSettings()
     settings.setValue("positioncode", ptcode->getPosition());
  }
 
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(asciifile, AsciiFile);
+#endif
