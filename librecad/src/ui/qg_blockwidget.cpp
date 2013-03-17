@@ -65,9 +65,10 @@ bool blockLessThan(const RS_Block *s1, const RS_Block *s2) {
 }
 
 void QG_BlockModel::setBlockList(RS_BlockList* bl) {
-    listBlock.clear();
+	beginResetModel();//called to force redraw
+	listBlock.clear();
     if (bl == NULL){
-        reset();
+		endResetModel();
         return;
     }
     for (int i=0; i<bl->count(); ++i) {
@@ -75,8 +76,7 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
             listBlock.append(bl->at(i));
     }
     qSort ( listBlock.begin(), listBlock.end(), blockLessThan );
-//called to force redraw
-    reset();
+	endResetModel();
 }
 
 
@@ -117,7 +117,7 @@ QVariant QG_BlockModel::data ( const QModelIndex & index, int role ) const {
  * Constructor.
  */
 QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
-                               const char* name, Qt::WFlags f)
+                               const char* name, Qt::WindowFlags f)
         : QWidget(parent, f) {
 
     setObjectName(name);

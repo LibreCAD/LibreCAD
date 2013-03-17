@@ -48,9 +48,13 @@
 #endif
 
 #include <fstream>
-
+#if QT_VERSION >= 0x050000
+#include <QtPrintSupport/QPrinter>
+#include <QtPrintSupport/QPrintDialog>
+#else
 #include <QPrinter>
 #include <QPrintDialog>
+#endif
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTimer>
@@ -94,6 +98,11 @@
 #include "qc_plugininterface.h"
 #include "rs_commands.h"
 
+
+#if QT_VERSION >= 0x050000
+#define	selectedFilter		selectedNameFilter
+#define	setFilters			setNameFilters
+#endif
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
 
@@ -198,7 +207,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_SETTINGS->endGroup();
 
     // Disable menu and toolbar items
-    emit windowsChanged(FALSE);
+    emit windowsChanged(false);
 
     RS_COMMANDS->updateAlias();
     //plugin load
@@ -1027,9 +1036,6 @@ void QC_ApplicationWindow::initActions(void)
     subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawCircleTan2, actionHandler);
-    subMenu->addAction(action);
-    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
-    action = actionFactory.createAction(RS2::ActionDrawCircleTan2_1P, actionHandler);
     subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawCircleTan3, actionHandler);
@@ -3219,7 +3225,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
         QImage img = picture->toImage();
         // RVT_PORT iio.setImage(img);
         iio.setFileName(name);
-        iio.setFormat(format.toAscii());
+        iio.setFormat(format.toLatin1());
         // RVT_PORT if (iio.write()) {
         if (iio.write(img)) {
             ret = true;
@@ -3946,7 +3952,7 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                 lay = e->getLayer()->getName();
             }
             dumpFile
-            << "<td>Layer: " << lay.toAscii().data() << "</td>"
+            << "<td>Layer: " << lay.toLatin1().data() << "</td>"
             << "<td>Width: " << (int)e->getPen(false).getWidth() << "</td>"
             << "<td>Parent: " << e->getParent()->getId() << "</td>"
             << "</tr></table>";
@@ -4084,10 +4090,10 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                     << d->getExtensionPoint2()
                     << "</td>"
                     << "<td>Text: "
-                    << d->getText().toAscii().data()
+                    << d->getText().toLatin1().data()
                     << "</td>"
                     << "<td>Label: "
-                    << d->getLabel().toAscii().data()
+                    << d->getLabel().toLatin1().data()
                     << "</td>"
                     << "</tr></table>";
                 }

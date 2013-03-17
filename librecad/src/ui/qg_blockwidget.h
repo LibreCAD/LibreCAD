@@ -76,7 +76,7 @@ class QG_BlockWidget: public QWidget, public RS_BlockListListener {
 
 public:
     QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
-                   const char* name=0, Qt::WFlags f = 0);
+                   const char* name=0, Qt::WindowFlags f = 0);
     ~QG_BlockWidget();
 
     void setBlockList(RS_BlockList* blockList) {

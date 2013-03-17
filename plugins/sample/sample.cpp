@@ -38,7 +38,8 @@ void LC_Sample::execComm(Document_Interface *doc,
                              QWidget *parent, QString cmd)
 {
     Q_UNUSED(doc);
-    lc_Sampledlg pdt(parent);
+	Q_UNUSED(cmd);
+	lc_Sampledlg pdt(parent);
     int result =  pdt.exec();
     if (result == QDialog::Accepted)
         pdt.procesAction(doc);
@@ -174,4 +175,6 @@ void lc_Sampledlg::writeSettings()
     settings.setValue("endy", endyedit->text());
  }
 
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(lc_sample, LC_Sample);
+#endif
