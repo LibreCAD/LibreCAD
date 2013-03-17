@@ -67,15 +67,18 @@ bool layerLessThan(const RS_Layer *s1, const RS_Layer *s2) {
 }
 
 void QG_LayerModel::setLayerList(RS_LayerList* ll) {
+	beginResetModel();//called to force redraw
     listLayer.clear();
     if (ll == NULL)
-        return;
+	{
+		endResetModel();
+		return;
+	}
     for (uint i=0; i < ll->count(); ++i) {
         listLayer.append(ll->at(i));
     }
     qSort ( listLayer.begin(), listLayer.end(), layerLessThan );
-//called to force redraw
-    reset();
+	endResetModel();
 }
 
 
@@ -134,7 +137,7 @@ QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
  * Constructor.
  */
 QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
-                               const char* name, Qt::WFlags f)
+                               const char* name, Qt::WindowFlags f)
         : QWidget(parent, f) {
 
     setObjectName(name);

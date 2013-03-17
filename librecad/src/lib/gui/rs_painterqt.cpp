@@ -396,7 +396,7 @@ void RS_PainterQt::drawImg(QImage& img, const RS_Vector& pos,
 
     // Render smooth only at close zooms
     if (factor.x < 1 || factor.y < 1) {
-       RS_PainterQt::setRenderHint(SmoothPixmapTransform , TRUE);
+	   RS_PainterQt::setRenderHint(SmoothPixmapTransform , true);
     }
     else {
       RS_PainterQt::setRenderHint(SmoothPixmapTransform);

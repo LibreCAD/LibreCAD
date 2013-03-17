@@ -205,7 +205,7 @@ RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList) {
             layer_name = "noname";
         }
         newLayerName = QString(layer_name);
-        while(layerList->find(newLayerName) > 0) {
+		while(layerList->find(newLayerName) != NULL) {
             newLayerName = QString("%1%2").arg(layer_name).arg(i);
         }
     }
@@ -319,7 +319,7 @@ RS_Layer* QG_DialogFactory::requestEditLayerDialog(RS_LayerList* layerList) {
         QG_LayerDialog dlg(parent, QMessageBox::tr("Layer Dialog"));
         dlg.setLayer(layer);
         dlg.setLayerList(layerList);
-        dlg.setEditLayer(TRUE);
+        dlg.setEditLayer(true);
         if (dlg.exec()) {
             dlg.updateLayer();
         } else {
@@ -637,7 +637,11 @@ QString QG_DialogFactory::requestImageOpenDialog() {
     if (!cancel) {
         RS_SETTINGS->beginGroup("/Paths");
         RS_SETTINGS->writeEntry("/OpenImage", QFileInfo(fn).absolutePath());
-        RS_SETTINGS->writeEntry("/ImageFilter", fileDlg.selectedFilter());
+#if QT_VERSION >= 0x050000
+		RS_SETTINGS->writeEntry("/ImageFilter", fileDlg.selectedNameFilter());
+#else
+		RS_SETTINGS->writeEntry("/ImageFilter", fileDlg.selectedFilter());
+#endif
         RS_SETTINGS->endGroup();
     }
 
