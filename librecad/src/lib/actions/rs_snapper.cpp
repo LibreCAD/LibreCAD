@@ -502,13 +502,16 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
 //                    std::cout<<"RS_Snapper::catchEntity(): parent->rtti()="<<parent->rtti()<<" enType= "<<enType<<std::endl;
                 if(parent->rtti() == enType) {
                     matchFound=true;
+                    ec.addEntity(en);
                     break;
                 }
                 parent=parent->getParent();
             }
             if(matchFound==false) continue;
         }
-        ec.addEntity(en);
+        if (en->rtti() == enType){
+            ec.addEntity(en);
+        }
     }
     if (ec.count() == 0 ) return NULL;
     double dist(0.);
@@ -568,9 +571,9 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, RS2::EntityType enType,
 
 RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, const QVector<RS2::EntityType>& enTypeList,
                                    RS2::ResolveLevel level) {
-    RS_Entity** pten = NULL;
+    RS_Entity* pten = NULL;
     RS_Vector coord(RS_Vector(graphicView->toGraphX(e->x()), graphicView->toGraphY(e->y())));
-    switch(enTypeList.size()<1) {
+    switch(enTypeList.size()) {
     case 0:
         return catchEntity(coord, level);
     default:
@@ -586,13 +589,13 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, const QVector<RS2::EntityType
             }
         }
         if(ec.count()>0){
-            ec.getDistanceToPoint(coord, pten, RS2::ResolveNone);
+            ec.getDistanceToPoint(coord, &pten, RS2::ResolveNone);
+            return pten;
         }
-        return *pten;
     }
 
     }
-
+    return NULL;
 }
 
 /**

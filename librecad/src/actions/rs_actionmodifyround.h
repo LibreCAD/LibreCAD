@@ -101,6 +101,7 @@ private:
 	RS_RoundData data;
 	/** Last status before entering angle. */
 	Status lastStatus;
+    QVector<RS2::EntityType> eType;
 };
 
 #endif
