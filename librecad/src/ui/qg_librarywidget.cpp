@@ -377,6 +377,8 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     // the thumbnail must be created in the user's home.
 #if QT_VERSION < 0x040400
     QString iconCacheLocation = emu_qt44_storageLocationData() + QDir::separator() + "iconCache" + QDir::separator();
+#elif QT_VERSION >= 0x050000
+    QString iconCacheLocation=QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QDir::separator() + "iconCache" + QDir::separator();
 #else
     QString iconCacheLocation=QDesktopServices::storageLocation(QDesktopServices::DataLocation) + QDir::separator() + "iconCache" + QDir::separator();
 #endif
