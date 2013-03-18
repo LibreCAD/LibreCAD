@@ -198,7 +198,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_SETTINGS->endGroup();
 
     // Disable menu and toolbar items
-    emit windowsChanged(FALSE);
+    emit windowsChanged(false);
 
     RS_COMMANDS->updateAlias();
     //plugin load
