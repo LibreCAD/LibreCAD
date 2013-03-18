@@ -54,6 +54,11 @@ QSplashScreen *splash;
 # define QC_SPLASH_TXTCOL Qt::black
 #endif
 
+#if QT_VERSION >= 0x050000
+#define	convertSeparators	toNativeSeparators
+#endif
+
+
 // for image mime resources from png files
 extern void QINITIMAGES_LIBRECAD();
 
@@ -95,11 +100,20 @@ int main(int argc, char** argv) {
 //	qInitImages_librecad();
 #endif
 
-        for (int i=0; i<app.argc(); i++) {
-                if (QString("--debug") == app.argv()[i]) {
-                RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
-                }
-        }
+#if QT_VERSION >= 0x050000
+	for (int i=0; i<argc; i++) {
+		if (QString("--debug") == argv[i]) {
+			RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
+		}
+	}
+#else
+	for (int i=0; i<app.argc(); i++) {
+		if (QString("--debug") == app.argv()[i]) {
+			RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
+		}
+	}
+#endif
+
 
         QFileInfo prgInfo( QFile::decodeName(argv[0]) );
         QString prgDir(prgInfo.absolutePath());

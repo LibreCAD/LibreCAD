@@ -33,7 +33,8 @@ void LC_SameProp::execComm(Document_Interface *doc,
                              QWidget *parent, QString cmd)
 {
     Q_UNUSED(parent);
-    QHash<int, QVariant> data, moddata;
+	Q_UNUSED(cmd);
+	QHash<int, QVariant> data, moddata;
     QList<Plug_Entity *> obj;
     QVariant lay, col, ltype, lwidth;
     Plug_Entity *ent, *modent;
@@ -64,4 +65,6 @@ void LC_SameProp::execComm(Document_Interface *doc,
 }
 
 
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(lc_sameprop, LC_SameProp);
+#endif

@@ -513,8 +513,6 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     case RS2::ActionDrawCircleParallel:
     case RS2::ActionDrawCircleInscribe:
     case RS2::ActionDrawCircleTan2:
-    case RS2::ActionDrawCircleTan2_1P:
-    case RS2::ActionDrawCircleTan1_2P:
         showToolBar(RS2::ToolBarCircles, false);
        if(tbCircles != NULL){
            tbCircles->showCadToolBar(actionType);
