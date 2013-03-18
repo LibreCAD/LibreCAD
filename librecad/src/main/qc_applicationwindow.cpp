@@ -28,6 +28,7 @@
 #include <QMenuBar>
 #include <QDockWidget>
 
+
 #if QT_VERSION < 0x040400
 #include <QtAssistant/QAssistantClient>
 #include <QTime>
@@ -94,6 +95,12 @@
 #include "qc_plugininterface.h"
 #include "rs_commands.h"
 
+#if QT_VERSION >= 0x050000
+/* QString::toAscii() no longer exists in Qt5*/
+# ifndef toAscii
+#  define toLatin1
+# endif
+#endif
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
 
