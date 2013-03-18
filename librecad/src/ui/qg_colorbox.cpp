@@ -101,8 +101,8 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     addColor(Qt::darkBlue,tr("Dark Blue"));
     addColor(Qt::magenta,tr("Magenta"));
     addColor(Qt::darkMagenta,tr("Dark Magenta"));
-    addItem(QIcon(":/ui/color07.png"), tr("Black / White"),Qt::black);
-    //colorIndexBlack=findData(Qt::black); //record the number for special color black/white
+    addItem(QIcon(":/ui/color07.png"), tr("Black / White"),QColor(Qt::black));
+    //colorIndexBlack=findData(QColor(Qt::black)); //record the number for special color black/white
     //std::cout<<"colorIndexBlack="<<colorIndexBlack<<std::endl;
     addColor(Qt::gray,tr("Gray"));
     addColor(Qt::darkGray,tr("Dark Gray"));
@@ -118,7 +118,7 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     if (showUnchanged || showByLayer ) {
         setCurrentIndex(0);
     } else {
-        setCurrentIndex(findData(Qt::black)); //default to Qt::black
+        setCurrentIndex(findData(QColor(Qt::black))); //default to Qt::black
     }
 
     slotColorChanged(currentIndex());
@@ -148,7 +148,7 @@ void QG_ColorBox::setColor(const RS_Color& color) {
 		}
 	}
         if(cIndex == count() - 1) {
-       	    cIndex=findData(Qt::black); //default to Qt::black
+       	    cIndex=findData(QColor(Qt::black)); //default to Qt::black
         }
     }
     setCurrentIndex(cIndex);
@@ -169,7 +169,7 @@ void QG_ColorBox::addColor(Qt::GlobalColor color, QString text)
     int h = pixmap.height();
     QPainter painter(&pixmap);
     painter.fillRect(1, 1, w-2, h-2, color);
-    addItem(QIcon(pixmap),text,color);
+    addItem(QIcon(pixmap),text,QColor(color));
 }
 
 /**
