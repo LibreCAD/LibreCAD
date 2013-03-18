@@ -189,7 +189,7 @@ public:
         length = 0.0;
         pathIdx = 0;
 /*        color = 256; // default BYLAYER (256)
-        plotF = true; // default TRUE (plot yes)
+        plotF = true; // default true (plot yes)
         lWeight = -1; // default BYLAYER (-1)*/
 //        align = 65; //always 65
     }
@@ -222,7 +222,7 @@ public:
         tType = DRW::LAYER;
         lineType = "CONTINUOUS";
         color = 7; // default BYLAYER (256)
-        plotF = true; // default TRUE (plot yes)
+        plotF = true; // default true (plot yes)
         lWeight = -3; // default BYDEFAULT (-3)
         color24 = -1; //default -1 not set
     }

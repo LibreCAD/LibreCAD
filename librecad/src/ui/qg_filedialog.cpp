@@ -39,6 +39,12 @@
 #include "emu_qt44.h"
 #endif
 
+#if QT_VERSION >= 0x050000
+#define	convertSeparators	toNativeSeparators
+#define	selectedFilter		selectedNameFilter
+#define	setFilters			setNameFilters
+#endif
+
 void QG_FileDialog::getType(const QString filter) {
     if (filter== fLff) {
         ftype = RS2::FormatLFF;
@@ -156,17 +162,16 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
             fn = fl[0];
         }
         fn = QDir::convertSeparators( QFileInfo(fn).absoluteFilePath() );
-
         if (type!=NULL) {
-                getType(selectedFilter());
-                *type = ftype;
+				getType(selectedFilter());
+				*type = ftype;
         }
 
     // store new default settings:
         RS_SETTINGS->beginGroup("/Paths");
         RS_SETTINGS->writeEntry("/Open", QFileInfo(fn).absolutePath());
-        RS_SETTINGS->writeEntry("/OpenFilter", selectedFilter());
-        RS_SETTINGS->endGroup();
+		RS_SETTINGS->writeEntry("/OpenFilter", selectedFilter());
+		RS_SETTINGS->endGroup();
     }
 
     RS_DEBUG->print("QG_FileDialog::getOpenFileName: fileName: %s", fn.toLatin1().data());
@@ -216,8 +221,8 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
     setWindowTitle(tr("Save %1 As").arg(name));
     setFileMode(QFileDialog::AnyFile);
     setDirectory(defDir);
-    setFilters(filters);
-    selectNameFilter(fDxfrw2007);
+	setFilters(filters);
+	selectNameFilter(fDxfrw2007);
     selectFile(fn);
     auto&& ext=getExtension(ftype);
     if(ext.size()==4){
@@ -235,10 +240,18 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
         return QString("");
 
     QFileInfo fi = QFileInfo( fl[0] );
-    fn = QDir::convertSeparators( fi.absoluteFilePath() );
+#if QT_VERSION >= 0x050000
+	fn = QDir::toNativeSeparators( fi.absoluteFilePath() );
+#else
+	fn = QDir::convertSeparators( fi.absoluteFilePath() );
+#endif
 
-    getType(selectedFilter());
-    if (type!=NULL)
+#if QT_VERSION >= 0x050000
+	getType(selectedNameFilter());
+#else
+	getType(selectedFilter());
+#endif
+	if (type!=NULL)
         *type = ftype;
 
     // append default extension:
@@ -291,13 +304,20 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
     filters.append("Font (*.cxf)");
     filters.append("JWW (*.jww)");
 
-    fileDlg->setFilters(filters);
+#if QT_VERSION >= 0x050000
+	fileDlg->setNameFilters(filters);
+#else
+	fileDlg->setFilters(filters);
+#endif
     fileDlg->setFileMode(QFileDialog::AnyFile);
     fileDlg->setWindowTitle(QObject::tr("Save Drawing As"));
     fileDlg->setDirectory(defDir);
     fileDlg->setAcceptMode(QFileDialog::AcceptSave);
-    fileDlg->selectFilter(defFilter);
-
+#if QT_VERSION >= 0x050000
+	fileDlg->selectNameFilter(defFilter);
+#else
+	fileDlg->selectFilter(defFilter);
+#endif
     // run dialog:
     do {
         // accepted:
@@ -305,7 +325,11 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
             QStringList fl = fileDlg->selectedFiles();
             if (!fl.isEmpty())
                 fn = fl[0];
-            fn = QDir::convertSeparators( QFileInfo(fn).absoluteFilePath() );
+#if QT_VERSION >= 0x050000
+			fn = QDir::toNativeSeparators( QFileInfo(fn).absoluteFilePath() );
+#else
+			fn = QDir::convertSeparators( QFileInfo(fn).absoluteFilePath() );
+#endif
             cancel = false;
 
             // append default extension:
@@ -333,6 +357,7 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
                 } else if (fileDlg->selectedNameFilter()=="Drawing Exchange DXF R14 (*.dxf)") {
                     *type = RS2::FormatDXFRW14;
                 } else if (fileDlg->selectedNameFilter()=="Drawing Exchange DXF R12 (*.dxf)") {
+
                     *type = RS2::FormatDXFRW12;
                 } else if (fileDlg->selectedNameFilter()=="JWW (*.jww)") {
                     *type = RS2::FormatJWW;

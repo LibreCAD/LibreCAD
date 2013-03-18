@@ -179,14 +179,6 @@ void QG_CadToolBarCircles::restoreAction()
         actionHandler->slotDrawCircleTan3();
         return;
     }
-    if(bCircleTan2_1P->isChecked()){
-        actionHandler->slotDrawCircleTan2_1P();
-        return;
-    }
-    if(bCircleTan1_2P->isChecked()){
-        actionHandler->slotDrawCircleTan1_2P();
-        return;
-    }
     //clear all action
     bHidden->setChecked(true);
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();

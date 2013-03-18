@@ -283,9 +283,9 @@ typedef unsigned long	      int32;
 typedef unsigned int	      int32;
 #endif
 
-#ifndef FALSE
-#  define FALSE		0
-#  define TRUE		1
+#ifndef false
+#  define false		0
+#  define true		1
 #endif
 
 #define ByteCopy( a, b, c )	memcpy( b, a, c )
@@ -515,16 +515,16 @@ SHPOpenLL( const char * pszLayer, const char * pszAccess, SAHooks *psHooks )
 /* -------------------------------------------------------------------- */
     i = 1;
     if( *((uchar *) &i) == 1 )
-        bBigEndian = FALSE;
+        bBigEndian = false;
     else
-        bBigEndian = TRUE;
+        bBigEndian = true;
 
 /* -------------------------------------------------------------------- */
 /*	Initialize the info structure.					*/
 /* -------------------------------------------------------------------- */
     psSHP = (SHPHandle) calloc(sizeof(SHPInfo),1);
 
-    psSHP->bUpdated = FALSE;
+    psSHP->bUpdated = false;
     memcpy( &(psSHP->sHooks), psHooks, sizeof(SAHooks) );
 
 /* -------------------------------------------------------------------- */
@@ -870,9 +870,9 @@ SHPCreateLL( const char * pszLayer, int nShapeType, SAHooks *psHooks )
 /* -------------------------------------------------------------------- */
     i = 1;
     if( *((uchar *) &i) == 1 )
-        bBigEndian = FALSE;
+        bBigEndian = false;
     else
-        bBigEndian = TRUE;
+        bBigEndian = true;
 
 /* -------------------------------------------------------------------- */
 /*	Compute the base (layer) name.  If there is any extension	*/
@@ -1058,7 +1058,7 @@ SHPCreateObject( int nSHPType, int nShapeId, int nParts,
     psObject = (SHPObject *) calloc(1,sizeof(SHPObject));
     psObject->nSHPType = nSHPType;
     psObject->nShapeId = nShapeId;
-    psObject->bMeasureIsUsed = FALSE;
+    psObject->bMeasureIsUsed = false;
 
 /* -------------------------------------------------------------------- */
 /*	Establish whether this shape type has M, and Z values.		*/
@@ -1068,8 +1068,8 @@ SHPCreateObject( int nSHPType, int nShapeId, int nParts,
         || nSHPType == SHPT_POLYGONM
         || nSHPType == SHPT_MULTIPOINTM )
     {
-        bHasM = TRUE;
-        bHasZ = FALSE;
+        bHasM = true;
+        bHasZ = false;
     }
     else if( nSHPType == SHPT_ARCZ
              || nSHPType == SHPT_POINTZ
@@ -1077,13 +1077,13 @@ SHPCreateObject( int nSHPType, int nShapeId, int nParts,
              || nSHPType == SHPT_MULTIPOINTZ
              || nSHPType == SHPT_MULTIPATCH )
     {
-        bHasM = TRUE;
-        bHasZ = TRUE;
+        bHasM = true;
+        bHasZ = true;
     }
     else
     {
-        bHasM = FALSE;
-        bHasZ = FALSE;
+        bHasM = false;
+        bHasZ = false;
     }
 
 /* -------------------------------------------------------------------- */
@@ -1142,7 +1142,7 @@ SHPCreateObject( int nSHPType, int nShapeId, int nParts,
                 psObject->padfM[i] = padfM[i];
         }
         if( padfM != NULL && bHasM )
-            psObject->bMeasureIsUsed = TRUE;
+            psObject->bMeasureIsUsed = true;
     }
 
 /* -------------------------------------------------------------------- */
@@ -1187,7 +1187,7 @@ SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
     uchar	*pabyRec;
     int32	i32;
 
-    psSHP->bUpdated = TRUE;
+    psSHP->bUpdated = true;
 
 /* -------------------------------------------------------------------- */
 /*      Ensure that shape object matches the type of the file it is     */
@@ -1457,7 +1457,7 @@ SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
     else
     {
         /* unknown type */
-        assert( FALSE );
+        assert( false );
     }
 
 /* -------------------------------------------------------------------- */
@@ -1654,7 +1654,7 @@ SHPReadObject( SHPHandle psSHP, int hEntity )
 /* -------------------------------------------------------------------- */
     psShape = (SHPObject *) calloc(1,sizeof(SHPObject));
     psShape->nShapeId = hEntity;
-    psShape->bMeasureIsUsed = FALSE;
+    psShape->bMeasureIsUsed = false;
 
     if ( 8 + 4 > nEntitySize )
     {
@@ -1714,6 +1714,7 @@ SHPReadObject( SHPHandle psSHP, int hEntity )
         if( bBigEndian ) SwapWord( 4, &nPoints );
         if( bBigEndian ) SwapWord( 4, &nParts );
 
+		/* nPoints and nParts are unsigned => always larger than 0 */
         if (nPoints < 0 || nParts < 0 ||
             nPoints > 50 * 1000 * 1000 || nParts > 10 * 1000 * 1000)
         {
@@ -1886,7 +1887,7 @@ SHPReadObject( SHPHandle psSHP, int hEntity )
                         psSHP->pabyRec + nOffset + 16 + i*8, 8 );
                 if( bBigEndian ) SwapWord( 8, psShape->padfM + i );
             }
-            psShape->bMeasureIsUsed = TRUE;
+            psShape->bMeasureIsUsed = true;
         }
     }
 
@@ -2022,7 +2023,7 @@ SHPReadObject( SHPHandle psSHP, int hEntity )
                         psSHP->pabyRec + nOffset + 16 + i*8, 8 );
                 if( bBigEndian ) SwapWord( 8, psShape->padfM + i );
             }
-            psShape->bMeasureIsUsed = TRUE;
+            psShape->bMeasureIsUsed = true;
         }
     }
 
@@ -2081,7 +2082,7 @@ SHPReadObject( SHPHandle psSHP, int hEntity )
             memcpy( psShape->padfM, psSHP->pabyRec + nOffset, 8 );
         
             if( bBigEndian ) SwapWord( 8, psShape->padfM );
-            psShape->bMeasureIsUsed = TRUE;
+            psShape->bMeasureIsUsed = true;
         }
 
 /* -------------------------------------------------------------------- */
@@ -2226,7 +2227,9 @@ int SHPAPI_CALL
 SHPRewindObject( SHPHandle hSHP, SHPObject * psObject )
 
 {
-    int  iOpRing, bAltered = 0;
+	Q_UNUSED(hSHP);
+
+	int  iOpRing, bAltered = 0;
 
 /* -------------------------------------------------------------------- */
 /*      Do nothing if this is not a polygon object.                     */
@@ -2264,7 +2267,7 @@ SHPRewindObject( SHPHandle hSHP, SHPObject * psObject )
         dfTestY = ( psObject->padfY[psObject->panPartStart[iOpRing]]
                     + psObject->padfY[psObject->panPartStart[iOpRing] + 1] ) / 2;
 
-        bInner = FALSE;
+        bInner = false;
         for( iCheckRing = 0; iCheckRing < psObject->nParts; iCheckRing++ )
         {
             int iEdge;

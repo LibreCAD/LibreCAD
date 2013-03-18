@@ -449,7 +449,12 @@ bool RS_System::createPaths(const QString& directory) {
  * @return Application data directory.
  */
 QString RS_System::getAppDataDir() {
-    QString appData = QDesktopServices::storageLocation(QDesktopServices::DataLocation) ;
+	QString appData =
+#if QT_VERSION >= 0x050000
+			QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+#else
+			QDesktopServices::storageLocation(QDesktopServices::DataLocation) ;
+#endif
     QDir dir(appData);
     if (!dir.exists()) {
         if (!dir.mkpath(appData))
