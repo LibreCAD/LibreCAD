@@ -117,7 +117,7 @@ QVariant QG_BlockModel::data ( const QModelIndex & index, int role ) const {
  * Constructor.
  */
 QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
-                               const char* name, Qt::WFlags f)
+                               const char* name, Qt::WindowFlags f)
         : QWidget(parent, f) {
 
     setObjectName(name);

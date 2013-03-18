@@ -50,7 +50,7 @@
 /**
  * Constructor.
  */
-QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WFlags f)
+QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlags f)
         : QWidget(parent, f), RS_GraphicView() {
 
     setObjectName(name);
