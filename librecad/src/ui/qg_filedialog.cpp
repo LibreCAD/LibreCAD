@@ -155,7 +155,7 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
         if (!fl.isEmpty()) {
             fn = fl[0];
         }
-        fn = QDir::convertSeparators( QFileInfo(fn).absoluteFilePath() );
+        fn = QDir::toNativeSeparators( QFileInfo(fn).absoluteFilePath() );
 
         if (type!=NULL) {
                 getType(selectedFilter());
@@ -235,7 +235,7 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
         return QString("");
 
     QFileInfo fi = QFileInfo( fl[0] );
-    fn = QDir::convertSeparators( fi.absoluteFilePath() );
+    fn = QDir::toNativeSeparators( fi.absoluteFilePath() );
 
     getType(selectedFilter());
     if (type!=NULL)
@@ -305,7 +305,7 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
             QStringList fl = fileDlg->selectedFiles();
             if (!fl.isEmpty())
                 fn = fl[0];
-            fn = QDir::convertSeparators( QFileInfo(fn).absoluteFilePath() );
+            fn = QDir::toNativeSeparators( QFileInfo(fn).absoluteFilePath() );
             cancel = false;
 
             // append default extension:
@@ -455,7 +455,7 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
         QStringList fl = fileDlg->selectedFiles();
         if (!fl.isEmpty())
             fn = fl[0];
-        fn = QDir::convertSeparators( QFileInfo(fn).absoluteFilePath() );
+        fn = QDir::toNativeSeparators( QFileInfo(fn).absoluteFilePath() );
         if (type!=NULL) {
             if (fileDlg->selectedNameFilter()==fDxf1) {
                 *type = RS2::FormatDXF1;
