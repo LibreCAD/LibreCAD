@@ -430,8 +430,9 @@ std::vector<double> RS_Math::quadraticSolver(const std::vector<double>& ce)
 {
     std::vector<double> ans(0,0.);
     if(ce.size() != 2) return ans;
+    double d1 = 0.25*ce[0]*ce[0];
     double discriminant=0.25*ce[0]*ce[0]-ce[1];
-    if (discriminant >= 0.){
+    if ( discriminant > -(DBL_EPSILON)*qMax(d1, qAbs(ce[1]) ) ) {
         ans.push_back(-0.5*ce[0] + sqrt(discriminant));
         ans.push_back(-ce[0] - ans[0]);
     }
