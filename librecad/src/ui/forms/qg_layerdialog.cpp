@@ -84,7 +84,7 @@ void QG_LayerDialog::updateLayer() {
 
 void QG_LayerDialog::validate() {
 	if (layerList != NULL && 
-                (editLayer == FALSE || layerName != leName->text())) {
+                (editLayer == false || layerName != leName->text())) {
                 RS_Layer* l = layerList->find(leName->text());
 		if (l != NULL) {
 			QMessageBox::information(parentWidget(),
@@ -112,7 +112,7 @@ void QG_LayerDialog::init(){
 	layer = NULL;
 	layerList = NULL;
 	layerName = "";
-	editLayer = FALSE;
+	editLayer = false;
 }
 
 void QG_LayerDialog::setEditLayer( bool el ){

@@ -319,7 +319,7 @@ RS_Layer* QG_DialogFactory::requestEditLayerDialog(RS_LayerList* layerList) {
         QG_LayerDialog dlg(parent, QMessageBox::tr("Layer Dialog"));
         dlg.setLayer(layer);
         dlg.setLayerList(layerList);
-        dlg.setEditLayer(TRUE);
+        dlg.setEditLayer(true);
         if (dlg.exec()) {
             dlg.updateLayer();
         } else {
