@@ -134,7 +134,7 @@ QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
  * Constructor.
  */
 QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
-                               const char* name, Qt::WFlags f)
+                               const char* name, Qt::WindowFlags f)
         : QWidget(parent, f) {
 
     setObjectName(name);
