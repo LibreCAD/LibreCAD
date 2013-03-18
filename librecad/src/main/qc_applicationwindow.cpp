@@ -3226,7 +3226,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
         QImage img = picture->toImage();
         // RVT_PORT iio.setImage(img);
         iio.setFileName(name);
-        iio.setFormat(format.toAscii());
+        iio.setFormat(format.toLatin1());
         // RVT_PORT if (iio.write()) {
         if (iio.write(img)) {
             ret = true;
@@ -3953,7 +3953,7 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                 lay = e->getLayer()->getName();
             }
             dumpFile
-            << "<td>Layer: " << lay.toAscii().data() << "</td>"
+            << "<td>Layer: " << lay.toLatin1().data() << "</td>"
             << "<td>Width: " << (int)e->getPen(false).getWidth() << "</td>"
             << "<td>Parent: " << e->getParent()->getId() << "</td>"
             << "</tr></table>";
@@ -4091,10 +4091,10 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                     << d->getExtensionPoint2()
                     << "</td>"
                     << "<td>Text: "
-                    << d->getText().toAscii().data()
+                    << d->getText().toLatin1().data()
                     << "</td>"
                     << "<td>Label: "
-                    << d->getLabel().toAscii().data()
+                    << d->getLabel().toLatin1().data()
                     << "</td>"
                     << "</tr></table>";
                 }

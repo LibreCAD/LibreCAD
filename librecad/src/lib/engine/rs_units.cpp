@@ -1401,7 +1401,7 @@ void RS_Units::test() {
             s = RS_Units::formatLinear(v, RS2::Inch, RS2::Architectural,
                                        prec, true);
                         // RVT_PORT changed  << s to s.ascii()
-            std::cout << "prec: " << prec << " v: " << v << " s: " << s.toAscii().data() << "\n";
+            std::cout << "prec: " << prec << " v: " << v << " s: " << s.toLatin1().data() << "\n";
         }
     }
 
