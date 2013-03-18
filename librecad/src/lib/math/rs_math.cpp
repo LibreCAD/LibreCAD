@@ -430,10 +430,16 @@ std::vector<double> RS_Math::quadraticSolver(const std::vector<double>& ce)
 {
     std::vector<double> ans(0,0.);
     if(ce.size() != 2) return ans;
-    double discriminant=0.25*ce[0]*ce[0]-ce[1];
-    if (discriminant >= 0.){
-        ans.push_back(-0.5*ce[0] + sqrt(discriminant));
-        ans.push_back(-ce[0] - ans[0]);
+    double b = 0.25*ce[0]*ce[0];
+    double discriminant=b-ce[1];
+    if (discriminant >= - RS_TOLERANCE*qMax(fabs(b), fabs(ce[1])) ){
+        b =  sqrt(fabs(discriminant));
+        double a=-0.5*ce[0];
+        if( b >= RS_TOLERANCE*fabs(a) ) {
+            ans.push_back(a + b);
+            ans.push_back(a - b);
+        }else
+            ans.push_back(a);
     }
     return ans;
 }
@@ -939,6 +945,9 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
             ce[0]=g;
             ce[1]=h*roots[i0]+j;
             ce[2]=i*roots[i0]*roots[i0]+k*roots[i0]+f;
+//            DEBUG_HEADER();
+//            std::cout<<"("<<ce[0]<<")*x^2 + ("<<ce[1]<<")*x + ("<<ce[2]<<") == 0"<<std::endl;
+
         }
         if(fabs(ce[0])<1e-75 && fabs(ce[1])<1e-75) continue;
 
@@ -946,10 +955,11 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
             std::vector<double> ce2(2,0.);
             ce2[0]=ce[1]/ce[0];
             ce2[1]=ce[2]/ce[0];
+//                DEBUG_HEADER();
 //                        std::cout<<"x^2 +("<<ce2[0]<<")*x+("<<ce2[1]<<")==0"<<std::endl;
             auto&& xRoots=quadraticSolver(ce2);
             for(size_t j0=0;j0<xRoots.size();j0++){
-
+//                DEBUG_HEADER();
 //                std::cout<<"x="<<xRoots[j0]<<std::endl;
                 RS_Vector vp(xRoots[j0],roots[i0]);
                 if(simultaneousQuadraticVerify(m,vp)) ret.push_back(vp);
@@ -1063,6 +1073,7 @@ bool RS_Math::simultaneousQuadraticVerify(const std::vector<std::vector<double> 
     }
 
 //    DEBUG_HEADER();
+//    std::cout<<"verifying: x="<<x<<"\ty="<<y<<std::endl;
 //        std::cout<<"verifying: fabs(a*x2 + b*x*y+c*y2+d*x+e*y+f)/maxterm="<<fabs(sum0)/amax0<<" required to be smaller than "<<sqrt(6.)*sqrt(DBL_EPSILON)<<std::endl;
 //        std::cout<<"verifying: fabs(g*x2+h*x*y+i*y2+j*x+k*y+l)/maxterm="<< fabs(sum1)/amax1<<std::endl;
     return fabs(sum0)/amax0<2.*sqrt(6.)*sqrt(DBL_EPSILON)
