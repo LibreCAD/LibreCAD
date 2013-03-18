@@ -26,14 +26,19 @@
 
 #include "qc_mdiwindow.h"
 
-#include <QPrinter>
+#if QT_VERSION >= 0x050000
+# include <QtPrintSupport/QPrinter>
+# include <QtPrintSupport/QPrintDialog>
+#else
+# include <QPrinter>
+# include <QPrintDialog>
+#endif 
 //Added by qt3to4:
 #include <QCloseEvent>
 
 #include <QMainWindow>
 #include <QCursor>
 #include <QMessageBox>
-#include <QPrintDialog>
 #include <QFileInfo>
 #include <QMdiArea>
 #include <QPainter>
