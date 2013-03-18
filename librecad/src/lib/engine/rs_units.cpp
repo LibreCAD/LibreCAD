@@ -32,6 +32,13 @@
 #include "rs_math.h"
 #include "rs_debug.h"
 
+#if QT_VERSION >= 0x050000
+/* QString::toAscii() no longer exists in Qt5*/
+# ifndef toAscii
+#  define toLatin1
+# endif
+#endif
+
 /**
  * Converts a DXF integer () to a Unit enum.
  */

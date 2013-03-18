@@ -45,6 +45,13 @@
 
 #include <qtextcodec.h>
 
+#if QT_VERSION >= 0x050000
+/* QString::toAscii() no longer exists in Qt5*/
+# ifndef toAscii
+#  define toLatin1
+# endif
+#endif
+
 /**
  * Default constructor.
  *
