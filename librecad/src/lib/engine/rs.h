@@ -28,7 +28,12 @@
 #define RS_H
 
 #include <qnamespace.h>
-#include <qprinter.h>
+#include <qglobal.h>
+#if QT_VERSION >= 0x050000
+# include <QtPrintSupport/QPrinter>
+#else
+# include <qprinter.h>
+#endif 
 
 #define RS_TEST
 

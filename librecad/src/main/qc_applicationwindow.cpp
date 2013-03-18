@@ -49,8 +49,15 @@
 
 #include <fstream>
 
-#include <QPrinter>
-#include <QPrintDialog>
+
+#if QT_VERSION >= 0x050000
+# include <QtPrintSupport/QPrinter>
+# include <QtPrintSupport/QPrintDialog>
+#else
+# include <QPrinter>
+# include <QPrintDialog>
+#endif 
+
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTimer>
