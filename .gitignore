@@ -62,3 +62,4 @@ scripts/PWD
 #vim files
 *.swp
 *.orig
+custom.pro
