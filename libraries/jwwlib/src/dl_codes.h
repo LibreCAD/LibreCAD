@@ -36,14 +36,18 @@
 #endif // _MSC_VER > 1000
 
 #if defined(__OS2__)||defined(__EMX__)||defined(_WIN32)
-#define strcasecmp(s,t) stricmp(s,t)
+# ifndef strcasecmp
+#  define strcasecmp(s,t) stricmp(s,t)
+# endif
 #endif
 
 
 #ifdef _WIN32
-#undef M_PI
-#define M_PI   3.14159265358979323846
-#pragma warning(disable : 4800)
+# undef M_PI
+# define M_PI   3.14159265358979323846
+# ifdef _MSC_VER
+#  pragma warning(disable : 4800)
+# endif
 #endif
 
 #ifndef M_PI
