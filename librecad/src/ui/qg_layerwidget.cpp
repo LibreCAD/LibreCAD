@@ -74,13 +74,14 @@ void QG_LayerModel::setLayerList(RS_LayerList* ll) {
     beginResetModel();
 #endif
     listLayer.clear();
-    if (ll == NULL)
+    if (ll == NULL) {
 #if QT_VERSION >= 0x040600
         endResetModel();
 #else
         reset();
 #endif
-	
+        return;
+    }
     for (uint i=0; i < ll->count(); ++i) {
         listLayer.append(ll->at(i));
     }
