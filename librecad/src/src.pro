@@ -21,10 +21,19 @@ include(../../common.pro)
 #uncomment to use 2D rs_vector instead of 3D
 #DEFINES += RS_VECTOR2D=1
 
-CONFIG += qt \
-    warn_on \
-    link_prl \
-    help verbose
+greaterThan( QT_MAJOR_VERSION, 4 ) {
+    # in Qt5 help is deprecated in CONFIG
+    CONFIG += qt \
+        warn_on \
+        link_prl \
+        verbose
+    QT += widgets printsupport help
+} else {
+    CONFIG += qt \
+        warn_on \
+        link_prl \
+        help verbose
+}
 
 PRE_TARGETDEPS += ../../generated/lib/libdxfrw.a
 PRE_TARGETDEPS += ../../generated/lib/libjwwlib.a
@@ -41,14 +50,14 @@ unix {
         DEFINES += QC_APPDIR="\"LibreCAD\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
         RC_FILE = ../res/main/librecad.icns
-        QMAKE_POST_LINK = cd ../.. && scripts/postprocess-osx.sh
+        QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-osx.sh
     }
     else {
         TARGET = librecad
         DEFINES += QC_APPDIR="\"librecad\""
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_librecad"
         RC_FILE = ../res/main/librecad.icns
-        QMAKE_POST_LINK = cd ../.. && scripts/postprocess-unix.sh
+        QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-unix.sh
     }
 }
 win32 {
@@ -57,7 +66,7 @@ win32 {
     DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
 
     RC_FILE = ../res/main/librecad.rc
-    QMAKE_POST_LINK = ..\\..\\scripts\\postprocess-win.bat
+    QMAKE_POST_LINK = $$_PRO_FILE_PWD_\\..\\..\\scripts\\postprocess-win.bat
 }
 
 # Additional libraries to load
@@ -858,8 +867,10 @@ contains(DEFINES, EMU_C99) {
 # If Qt 4.3 or Qt 4.4 is used, add the respective workaround
 # source files and defines.
 
+contains(QT_MAJOR_VERSION, 4){
+
 contains(QT_MINOR_VERSION, 0)|contains(QT_MINOR_VERSION, 1)|contains(QT_MINOR_VERSION, 2) {
-    error(Qt version $$[QT_VERSION] is too old, should be version 4.3 or newer.)
+    error("Qt version $$[QT_VERSION] is too old, should be version 4.3 or newer.")
 }
 
 contains(QT_MINOR_VERSION, 3) {
@@ -881,6 +892,8 @@ contains(QT_MINOR_VERSION, 5)|contains(QT_MINOR_VERSION, 6)|contains(QT_MINOR_VE
     !build_pass:verbose:message(Using Qt version $$[QT_VERSION].)
 }
 
+# QT_MAJOR_VERSION = 4
+} 
 
 RESOURCES += ../res/main/main.qrc
 
