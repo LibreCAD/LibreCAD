@@ -67,15 +67,30 @@ bool layerLessThan(const RS_Layer *s1, const RS_Layer *s2) {
 }
 
 void QG_LayerModel::setLayerList(RS_LayerList* ll) {
+	/* since 4.6 the recomended way is to use begin/endResetModel()
+	 * TNick <nicu.tofan@gmail.com>
+	 */
+#if QT_VERSION >= 0x040600
+    beginResetModel();
+#endif
     listLayer.clear();
     if (ll == NULL)
-        return;
+#if QT_VERSION >= 0x040600
+        endResetModel();
+#else
+        reset();
+#endif
+	
     for (uint i=0; i < ll->count(); ++i) {
         listLayer.append(ll->at(i));
     }
     qSort ( listLayer.begin(), listLayer.end(), layerLessThan );
 //called to force redraw
+#if QT_VERSION >= 0x040600
+    endResetModel();
+#else
     reset();
+#endif
 }
 
 

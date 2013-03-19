@@ -65,9 +65,19 @@ bool blockLessThan(const RS_Block *s1, const RS_Block *s2) {
 }
 
 void QG_BlockModel::setBlockList(RS_BlockList* bl) {
+	/* since 4.6 the recomended way is to use begin/endResetModel()
+	 * TNick <nicu.tofan@gmail.com>
+	 */
+#if QT_VERSION >= 0x040600
+    beginResetModel();
+#endif
     listBlock.clear();
     if (bl == NULL){
+#if QT_VERSION >= 0x040600
+        endResetModel();
+#else
         reset();
+#endif
         return;
     }
     for (int i=0; i<bl->count(); ++i) {
@@ -76,7 +86,11 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
     }
     qSort ( listBlock.begin(), listBlock.end(), blockLessThan );
 //called to force redraw
+#if QT_VERSION >= 0x040600
+    endResetModel();
+#else
     reset();
+#endif
 }
 
 
