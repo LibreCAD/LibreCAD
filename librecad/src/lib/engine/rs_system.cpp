@@ -532,7 +532,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 
 #ifdef Q_OS_MAC
 #if QT_VERSION >= 0x050000
-         dirList.append(QStandardPaths::storageLocation(QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
+         dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #else
         dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #endif
@@ -540,7 +540,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 		
 #ifdef Q_OS_WIN32
 #if QT_VERSION >= 0x050000
-        dirList.append(QStandardPaths::storageLocation(QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
+        dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #else
         dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #endif
