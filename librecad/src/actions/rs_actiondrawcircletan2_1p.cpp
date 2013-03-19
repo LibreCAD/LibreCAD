@@ -144,7 +144,7 @@ bool RS_ActionDrawCircleTan2_1P::getCenters()
 
     auto&& list=LC_Quadratic::getIntersection(lc0,lc1);
     centers.clean();
-    for(int i=0;i<list.size();i++){
+    for(unsigned int i=0;i<list.size();i++){
         auto&& vp=list.get(i);
         auto&& ds=vp.distanceTo(point)-RS_TOLERANCE;
         bool validBranch(true);
