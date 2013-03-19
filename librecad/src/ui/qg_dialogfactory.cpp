@@ -108,6 +108,16 @@
 #include "emu_qt44.h"
 #endif
 
+#if QT_VERSION >= 0x040400
+/* starting with Qt 4.4 the name of the function changed; as the target
+ * of the project is Qt 4.3, we need too keep the old name, too
+ *
+ *	TNick <nicu.tofan@gmail.com>
+ */
+# define  selectedFilter	    selectedNameFilter
+# define  setFilters            setNameFilters
+#endif
+
 //QG_DialogFactory* QG_DialogFactory::uniqueInstance = NULL;
 
 /**
