@@ -670,7 +670,7 @@ bool RS_Modification::splitPolyline(RS_Polyline& polyline,
     container->addEntity(pl2);
     //container->removeEntity(&polyline);
     polyline.changeUndoState();
-
+	Q_UNUSED( arc ); /* TNick: set but not used */
     return true;
 }
 
