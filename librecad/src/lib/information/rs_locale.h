@@ -38,6 +38,14 @@ class RS_Locale :public QLocale {
 public:
     RS_Locale();
     RS_Locale(const QString &_canonical);
+	/* without virtual destructor => warning: deleting object of polymorphic  
+	 * class type 'RS_Locale' which has non-virtual destructor might cause 
+	 * undefined behaviour [-Wdelete-non-virtual-dtor]
+	 * 
+	 * TNick <nicu.tofan@gmail.com>
+	 */
+	virtual ~RS_Locale(){}
+	
 
     virtual void setCanonical(const QString &_canonical);
     virtual void setDirection(RS2::TextLocaleDirection direction);
