@@ -216,7 +216,11 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
     setWindowTitle(tr("Save %1 As").arg(name));
     setFileMode(QFileDialog::AnyFile);
     setDirectory(defDir);
-    setFilters(filters);
+#if QT_VERSION < 0x040400
+    emu_qt44_QFileDialog_setNameFilters(this, filters);
+#else
+    setNameFilters(filters);
+#endif
     selectNameFilter(fDxfrw2007);
     selectFile(fn);
     auto&& ext=getExtension(ftype);
@@ -291,7 +295,11 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
     filters.append("Font (*.cxf)");
     filters.append("JWW (*.jww)");
 
-    fileDlg->setFilters(filters);
+#if QT_VERSION < 0x040400
+    emu_qt44_QFileDialog_setNameFilters(fileDlg, filters);
+#else
+    fileDlg->setNameFilters(filters);
+#endif
     fileDlg->setFileMode(QFileDialog::AnyFile);
     fileDlg->setWindowTitle(QObject::tr("Save Drawing As"));
     fileDlg->setDirectory(defDir);

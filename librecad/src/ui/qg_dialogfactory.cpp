@@ -474,7 +474,11 @@ QString QG_DialogFactory::requestFileSaveAsDialog() {
 
     filters.append("Drawing Exchange (*.dxf)");
     filters.append("Font (*.cxf)");
-    fileDlg.setFilters(filters);
+#if QT_VERSION < 0x040400
+    emu_qt44_QFileDialog_setNameFilters(fileDlg, filters);
+#else
+    fileDlg.setNameFilters(filters);
+#endif
     fileDlg.setMode(QFileDialog::AnyFile);
     fileDlg.setCaption(tr("Save Drawing As"));
     fileDlg.setDir(defDir);

@@ -3068,7 +3068,11 @@ void QC_ApplicationWindow::slotFileExport() {
 
         // set dialog options: filters, mode, accept, directory, filename
         QFileDialog fileDlg(this, "Export as");
-        fileDlg.setFilters(filters);
+#if QT_VERSION < 0x040400
+        emu_qt44_QFileDialog_setNameFilters(fileDlg, filters);
+#else
+        fileDlg.setNameFilters(filters);
+#endif
         fileDlg.setFileMode(QFileDialog::AnyFile);
         fileDlg.selectNameFilter(defFilter);
         fileDlg.setAcceptMode(QFileDialog::AcceptSave);
