@@ -641,7 +641,11 @@ QString QG_DialogFactory::requestImageOpenDialog() {
     if (!cancel) {
         RS_SETTINGS->beginGroup("/Paths");
         RS_SETTINGS->writeEntry("/OpenImage", QFileInfo(fn).absolutePath());
-        RS_SETTINGS->writeEntry("/ImageFilter", fileDlg.selectedFilter());
+#if QT_VERSION < 0x040400
+        RS_SETTINGS->writeEntry("/ImageFilter", emu_qt44_QFileDialog_selectedNameFilter(fileDlg));
+#else
+        RS_SETTINGS->writeEntry("/ImageFilter", fileDlg.selectedNameFilter());
+#endif
         RS_SETTINGS->endGroup();
     }
 

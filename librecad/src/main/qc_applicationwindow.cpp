@@ -3095,12 +3095,21 @@ void QC_ApplicationWindow::slotFileExport() {
         if (!cancel) {
             RS_SETTINGS->beginGroup("/Export");
             RS_SETTINGS->writeEntry("/ExportImage", QFileInfo(fn).absolutePath());
+#if QT_VERSION < 0x040400
             RS_SETTINGS->writeEntry("/ExportImageFilter",
-                                    fileDlg.selectedFilter());
+                                    emu_qt44_QFileDialog_selectedNameFilter(fileDlg) );
+#else
+            RS_SETTINGS->writeEntry("/ExportImageFilter",
+                                    fileDlg.selectedNameFilter());
+#endif
             RS_SETTINGS->endGroup();
 
             // find out extension:
-            QString filter = fileDlg.selectedFilter();
+#if QT_VERSION < 0x040400
+            QString filter = emu_qt44_QFileDialog_selectedNameFilter(fileDlg);
+#else
+            QString filter = fileDlg.selectedNameFilter();
+#endif
             QString format = "";
             int i = filter.indexOf("(*.");
             if (i!=-1) {

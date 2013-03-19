@@ -22,6 +22,9 @@ inline void emu_qt44_QFileDialog_setNameFilter(QFileDialog& fd, const QString &s
 inline void emu_qt44_QFileDialog_setNameFilters(QFileDialog& fd, const QStringList &sl)
 { fd.setFilters(sl); }
 
+inline QString emu_qt44_QFileDialog_selectedNameFilter(QFileDialog& fd)
+{ fd.selectedFilter(); }
+
 inline void emu_qt44_QPrinter_setPaperSize(QPrinter &p, QPrinter::PageSize s)
 { p.setPageSize(s); }
 
