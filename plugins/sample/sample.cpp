@@ -38,6 +38,7 @@ void LC_Sample::execComm(Document_Interface *doc,
                              QWidget *parent, QString cmd)
 {
     Q_UNUSED(doc);
+    Q_UNUSED(cmd);
     lc_Sampledlg pdt(parent);
     int result =  pdt.exec();
     if (result == QDialog::Accepted)
