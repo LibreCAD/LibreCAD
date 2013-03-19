@@ -32,7 +32,9 @@
 #endif // _MSC_VER > 1000
 
 #if defined(__OS2__)||defined(__EMX__)||defined(_WIN32)
-#define strcasecmp(s,t) stricmp(s,t)
+# ifndef strcasecmp
+#  define strcasecmp(s,t) stricmp(s,t)
+# endif
 #endif
 
 #include <iostream>
