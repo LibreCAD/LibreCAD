@@ -208,5 +208,5 @@ void QG_DlgHatch::updatePreview(RS_Pattern* ) {
     }
 
     gvPreview->zoomAuto();
-
+	Q_UNUSED( prevSize ); // the variable is set but never used
 }
