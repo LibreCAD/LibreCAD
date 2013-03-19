@@ -95,8 +95,8 @@ int main(int argc, char** argv) {
 //	qInitImages_librecad();
 #endif
 
-        for (int i=0; i<app.argc(); i++) {
-                if (QString("--debug") == app.argv()[i]) {
+        for (int i=0; i<argc; i++) {
+                if (QString("--debug") == argv[i]) {
                 RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
                 }
         }
