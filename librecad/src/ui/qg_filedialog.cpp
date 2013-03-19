@@ -316,7 +316,11 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
     fileDlg->setWindowTitle(QObject::tr("Save Drawing As"));
     fileDlg->setDirectory(defDir);
     fileDlg->setAcceptMode(QFileDialog::AcceptSave);
-    fileDlg->selectFilter(defFilter);
+#if QT_VERSION < 0x040400
+	emu_qt44_QFileDialog_selectNameFilter(fileDlg, defFilter);
+#else
+	fileDlg->selectNameFilter(defFilter);
+#endif
 
     // run dialog:
     do {
