@@ -63,3 +63,4 @@ scripts/PWD
 *.swp
 *.orig
 custom.pro
+*.user
