@@ -14,7 +14,9 @@ public:
     std::string toUtf8(std::string s);
     int getVersion(){return version;}
     void setVersion(std::string *v);
+    void setVersion(int v){version = v;}
     void setCodePage(std::string *c);
+    void setCodePage(std::string c){setCodePage(&c);}
     std::string getCodePage(){return cp;}
 
 private:

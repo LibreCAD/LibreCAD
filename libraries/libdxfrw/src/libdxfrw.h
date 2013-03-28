@@ -26,7 +26,14 @@ class dxfRW {
 public:
     dxfRW(const char* name);
     ~dxfRW();
-    //read: return 0 if all ok
+    /// reads the file specified in constructor
+    /*!
+     * An interface must be provided. It is used by the class to signal various
+     * components being added.
+     * @param interface_ the interface to use
+     * @param ext should the extrusion be applied to convert in 2D?
+     * @return true for success
+     */
     bool read(DRW_Interface *interface_, bool ext);
     void setBinary(bool b) {binary = b;}
 

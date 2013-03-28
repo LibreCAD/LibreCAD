@@ -70,9 +70,7 @@ void DRW_Entity::parseCode(int code, dxfReader *reader){
         color = reader->getInt32();
         break;
     case 370:
-//        lWeight = (DRW::LWEIGHT)reader->getInt32();
-//RLZ: TODO as integer or enum??
-        lWeight = reader->getInt32();
+        lWeight = DRW_LW_Conv::dxfInt2lineWidth(reader->getInt32());
         break;
     case 48:
         ltypeScale = reader->getDouble();
@@ -386,6 +384,9 @@ void DRW_LWPolyline::parseCode(int code, dxfReader *reader){
         break;
     case 38:
         elevation = reader->getDouble();
+        break;
+    case 39:
+        thickness = reader->getDouble();
         break;
     case 43:
         width = reader->getDouble();

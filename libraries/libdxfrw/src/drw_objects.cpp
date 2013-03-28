@@ -319,7 +319,7 @@ void DRW_Layer::parseCode(int code, dxfReader *reader){
         plotF = reader->getBool();
         break;
     case 370:
-        lWeight = reader->getInt32();
+        lWeight = DRW_LW_Conv::dxfInt2lineWidth(reader->getInt32());
         break;
     case 390:
         handlePlotS = reader->getString();

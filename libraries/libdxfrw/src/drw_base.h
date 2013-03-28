@@ -186,6 +186,118 @@ private:
 };
 
 
+//! Class to convert between line width and integer
+/*!
+*  Class to convert between line width and integer
+*  verifing valid values, if value is not valid
+*  returns widthDefault.
+*  @author Rallaz
+*/
+class DRW_LW_Conv{
+public:
+    enum lineWidth {
+        width00 = 0,       /*!< 0.00mm */
+        width01 = 1,       /*!< 0.05mm */
+        width02 = 2,       /*!< 0.09mm */
+        width03 = 3,       /*!< 0.13mm */
+        width04 = 4,       /*!< 0.15mm */
+        width05 = 5,       /*!< 0.18mm */
+        width06 = 6,       /*!< 0.20mm */
+        width07 = 7,       /*!< 0.25mm */
+        width08 = 8,       /*!< 0.30mm */
+        width09 = 9,       /*!< 0.35mm */
+        width10 = 10,      /*!< 0.40mm */
+        width11 = 11,      /*!< 0.50mm */
+        width12 = 12,      /*!< 0.53mm */
+        width13 = 13,      /*!< 0.60mm */
+        width14 = 14,      /*!< 0.70mm */
+        width15 = 15,      /*!< 0.80mm */
+        width16 = 16,      /*!< 0.90mm */
+        width17 = 17,      /*!< 1.00mm */
+        width18 = 18,      /*!< 1.06mm */
+        width19 = 19,      /*!< 1.20mm */
+        width20 = 20,      /*!< 1.40mm */
+        width21 = 21,      /*!< 1.58mm */
+        width22 = 22,      /*!< 2.00mm */
+        width23 = 23,      /*!< 2.11mm */
+        widthByLayer = 29, /*!< by layer (dxf -1) */
+        widthByBlock = 30, /*!< by block (dxf -2) */
+        widthDefault = 31  /*!< by default (dxf -3) */
+    };
+
+    static int lineWidth2int(enum lineWidth lw){
+        return static_cast<int> (lw);
+    }
+
+    static enum lineWidth dxfInt2lineWidth(int i){
+        if (i<0) {
+            if (i==-1)
+                return widthByLayer;
+            else if (i==-2)
+                return widthByBlock;
+            else if (i==-3)
+                return widthDefault;
+        } else if (i<3) {
+            return width00;
+        } else if (i<7) {
+            return width01;
+        } else if (i<11) {
+            return width02;
+        } else if (i<14) {
+            return width03;
+        } else if (i<16) {
+            return width04;
+        } else if (i<19) {
+            return width05;
+        } else if (i<22) {
+            return width06;
+        } else if (i<27) {
+            return width07;
+        } else if (i<32) {
+            return width08;
+        } else if (i<37) {
+            return width09;
+        } else if (i<45) {
+            return width10;
+        } else if (i<52) {
+            return width11;
+        } else if (i<57) {
+            return width12;
+        } else if (i<65) {
+            return width13;
+        } else if (i<75) {
+            return width14;
+        } else if (i<85) {
+            return width15;
+        } else if (i<95) {
+            return width16;
+        } else if (i<103) {
+            return width17;
+        } else if (i<112) {
+            return width18;
+        } else if (i<130) {
+            return width19;
+        } else if (i<149) {
+            return width20;
+        } else if (i<180) {
+            return width21;
+        } else if (i<205) {
+            return width22;
+        } else {
+            return width23;
+        }
+        //default by default
+        return widthDefault;
+    }
+
+    static enum lineWidth dwgInt2lineWidth(int i){
+        if ( (i>-1 && i<24) || (i>28 && i<32) ) {
+            return static_cast<lineWidth> (i);
+        }
+        //default by default
+        return widthDefault;
+    }
+};
 
 #endif
 

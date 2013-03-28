@@ -2707,7 +2707,7 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
                               attrib->color24 >> 16 & 0xFF,
                               attrib->color24 & 0xFF));
     else
-        pen.setColor(numberToColor(attrib->color));
+    pen.setColor(numberToColor(attrib->color));
 
     // Linetype:
     pen.setLineType(nameToLineType( QString::fromUtf8(attrib->lineType.c_str()) ));
@@ -2747,7 +2747,7 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entit
     QString lineType = lineTypeToName(pen.getLineType());
 
     // Width:
-    int width = widthToNumber(pen.getWidth());
+    DRW_LW_Conv::lineWidth width = widthToNumber(pen.getWidth());
 
     ent->layer = toDxfString(layerName).toUtf8().data();
     ent->color = color;
@@ -3092,97 +3092,190 @@ QString RS_FilterDXFRW::lineTypeToName(RS2::LineType lineType) {
 
 
 /**
- * Converts a line width number (e.g. 1) into a RS2::LineWidth.
+ * Converts a DRW_LW_Conv::lineWidth into a RS2::LineWidth.
  */
-RS2::LineWidth RS_FilterDXFRW::numberToWidth(int num) {
-    switch (num) {
-    case -1:
+RS2::LineWidth RS_FilterDXFRW::numberToWidth(DRW_LW_Conv::lineWidth lw) {
+    switch (lw) {
+    case DRW_LW_Conv::widthByLayer:
         return RS2::WidthByLayer;
         break;
-    case -2:
+    case DRW_LW_Conv::widthByBlock:
         return RS2::WidthByBlock;
         break;
-    case -3:
+    case DRW_LW_Conv::widthDefault:
         return RS2::WidthDefault;
         break;
+    case DRW_LW_Conv::width00:
+        return RS2::Width00;
+        break;
+    case DRW_LW_Conv::width01:
+        return RS2::Width01;
+        break;
+    case DRW_LW_Conv::width02:
+        return RS2::Width02;
+        break;
+    case DRW_LW_Conv::width03:
+        return RS2::Width03;
+        break;
+    case DRW_LW_Conv::width04:
+        return RS2::Width04;
+        break;
+    case DRW_LW_Conv::width05:
+        return RS2::Width05;
+        break;
+    case DRW_LW_Conv::width06:
+        return RS2::Width06;
+        break;
+    case DRW_LW_Conv::width07:
+        return RS2::Width07;
+        break;
+    case DRW_LW_Conv::width08:
+        return RS2::Width08;
+        break;
+    case DRW_LW_Conv::width09:
+        return RS2::Width09;
+        break;
+    case DRW_LW_Conv::width10:
+        return RS2::Width10;
+        break;
+    case DRW_LW_Conv::width11:
+        return RS2::Width11;
+        break;
+    case DRW_LW_Conv::width12:
+        return RS2::Width12;
+        break;
+    case DRW_LW_Conv::width13:
+        return RS2::Width13;
+        break;
+    case DRW_LW_Conv::width14:
+        return RS2::Width14;
+        break;
+    case DRW_LW_Conv::width15:
+        return RS2::Width15;
+        break;
+    case DRW_LW_Conv::width16:
+        return RS2::Width16;
+        break;
+    case DRW_LW_Conv::width17:
+        return RS2::Width17;
+        break;
+    case DRW_LW_Conv::width18:
+        return RS2::Width18;
+        break;
+    case DRW_LW_Conv::width19:
+        return RS2::Width19;
+        break;
+    case DRW_LW_Conv::width20:
+        return RS2::Width20;
+        break;
+    case DRW_LW_Conv::width21:
+        return RS2::Width21;
+        break;
+    case DRW_LW_Conv::width22:
+        return RS2::Width22;
+        break;
+    case DRW_LW_Conv::width23:
+        return RS2::Width23;
+        break;
     default:
-        if (num<3) {
-                return RS2::Width00;
-        } else if (num<7) {
-            return RS2::Width01;
-        } else if (num<11) {
-            return RS2::Width02;
-        } else if (num<14) {
-            return RS2::Width03;
-        } else if (num<16) {
-            return RS2::Width04;
-        } else if (num<19) {
-            return RS2::Width05;
-        } else if (num<22) {
-            return RS2::Width06;
-        } else if (num<27) {
-            return RS2::Width07;
-        } else if (num<32) {
-            return RS2::Width08;
-        } else if (num<37) {
-            return RS2::Width09;
-        } else if (num<45) {
-            return RS2::Width10;
-        } else if (num<52) {
-            return RS2::Width11;
-        } else if (num<57) {
-            return RS2::Width12;
-        } else if (num<65) {
-            return RS2::Width13;
-        } else if (num<75) {
-            return RS2::Width14;
-        } else if (num<85) {
-            return RS2::Width15;
-        } else if (num<95) {
-            return RS2::Width16;
-        } else if (num<103) {
-            return RS2::Width17;
-        } else if (num<112) {
-            return RS2::Width18;
-        } else if (num<130) {
-            return RS2::Width19;
-        } else if (num<149) {
-            return RS2::Width20;
-        } else if (num<180) {
-            return RS2::Width21;
-        } else if (num<205) {
-            return RS2::Width22;
-        } else {
-            return RS2::Width23;
-        }
         break;
     }
-    return (RS2::LineWidth)num;
+    return RS2::WidthDefault;
 }
 
 
 
 /**
- * Converts a RS2::LineWidth into an int width.
+ * Converts a RS2::LineWidth into an DRW_LW_Conv::lineWidth.
  */
-int RS_FilterDXFRW::widthToNumber(RS2::LineWidth width) {
+DRW_LW_Conv::lineWidth RS_FilterDXFRW::widthToNumber(RS2::LineWidth width) {
     switch (width) {
     case RS2::WidthByLayer:
-        return -1;
+        return DRW_LW_Conv::widthByLayer;
         break;
     case RS2::WidthByBlock:
-        return -2;
+        return DRW_LW_Conv::widthByBlock;
         break;
     case RS2::WidthDefault:
-        return -3;
+        return DRW_LW_Conv::widthDefault;
+        break;
+    case RS2::Width00:
+        return DRW_LW_Conv::width00;
+        break;
+    case RS2::Width01:
+        return DRW_LW_Conv::width01;
+        break;
+    case RS2::Width02:
+        return DRW_LW_Conv::width02;
+        break;
+    case RS2::Width03:
+        return DRW_LW_Conv::width03;
+        break;
+    case RS2::Width04:
+        return DRW_LW_Conv::width04;
+        break;
+    case RS2::Width05:
+        return DRW_LW_Conv::width05;
+        break;
+    case RS2::Width06:
+        return DRW_LW_Conv::width06;
+        break;
+    case RS2::Width07:
+        return DRW_LW_Conv::width07;
+        break;
+    case RS2::Width08:
+        return DRW_LW_Conv::width08;
+        break;
+    case RS2::Width09:
+        return DRW_LW_Conv::width09;
+        break;
+    case RS2::Width10:
+        return DRW_LW_Conv::width10;
+        break;
+    case RS2::Width11:
+        return DRW_LW_Conv::width11;
+        break;
+    case RS2::Width12:
+        return DRW_LW_Conv::width12;
+        break;
+    case RS2::Width13:
+        return DRW_LW_Conv::width13;
+        break;
+    case RS2::Width14:
+        return DRW_LW_Conv::width14;
+        break;
+    case RS2::Width15:
+        return DRW_LW_Conv::width15;
+        break;
+    case RS2::Width16:
+        return DRW_LW_Conv::width16;
+        break;
+    case RS2::Width17:
+        return DRW_LW_Conv::width17;
+        break;
+    case RS2::Width18:
+        return DRW_LW_Conv::width18;
+        break;
+    case RS2::Width19:
+        return DRW_LW_Conv::width19;
+        break;
+    case RS2::Width20:
+        return DRW_LW_Conv::width20;
+        break;
+    case RS2::Width21:
+        return DRW_LW_Conv::width21;
+        break;
+    case RS2::Width22:
+        return DRW_LW_Conv::width22;
+        break;
+    case RS2::Width23:
+        return DRW_LW_Conv::width23;
         break;
     default:
-        return (int)width;
         break;
     }
-    return (int)width;
+    return DRW_LW_Conv::widthDefault;
 }
-
 
 
 /**

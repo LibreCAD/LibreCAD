@@ -64,7 +64,7 @@ public:
 #else
         return (t==RS2::FormatDXFRW);
 #endif
-    }
+        }
         
     virtual bool canExport(const QString &/*fileName*/, RS2::FormatType t) const {
         return (t==RS2::FormatDXFRW || t==RS2::FormatDXFRW2004 || t==RS2::FormatDXFRW2000
@@ -169,11 +169,11 @@ public:
     static QString lineTypeToName(RS2::LineType lineType);
     //static QString lineTypeToDescription(RS2::LineType lineType);
 
-    static RS2::LineWidth numberToWidth(int num);
-    static int widthToNumber(RS2::LineWidth width);
+    static RS2::LineWidth numberToWidth(DRW_LW_Conv::lineWidth lw);
+    static DRW_LW_Conv::lineWidth widthToNumber(RS2::LineWidth width);
 
-    static RS2::AngleFormat numberToAngleFormat(int num);
-    static int angleFormatToNumber(RS2::AngleFormat af);
+        static RS2::AngleFormat numberToAngleFormat(int num);
+        static int angleFormatToNumber(RS2::AngleFormat af);
 
 	static RS2::Unit numberToUnit(int num);
 	static int unitToNumber(RS2::Unit unit);

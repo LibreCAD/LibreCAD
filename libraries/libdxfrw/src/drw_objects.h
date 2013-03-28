@@ -52,6 +52,9 @@ public:
         tType = DRW::UNKNOWNT;
         flags = 0;
     }
+    virtual~DRW_TableEntry() {}
+
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf);
 
 protected:
     void parseCode(int code, dxfReader *reader);
@@ -223,7 +226,7 @@ public:
         lineType = "CONTINUOUS";
         color = 7; // default BYLAYER (256)
         plotF = true; // default TRUE (plot yes)
-        lWeight = -3; // default BYDEFAULT (-3)
+        lWeight = DRW_LW_Conv::widthDefault; // default BYDEFAULT (dxf -3, dwg 31)
         color24 = -1; //default -1 not set
     }
 
@@ -234,7 +237,7 @@ public:
     int color;                 /*!< layer color, code 62 */
     int color24;               /*!< 24-bit color, code 420 */
     bool plotF;                 /*!< Plot flag, code 290 */
-    int lWeight;               /*!< layer lineweight, code 370 */
+    enum DRW_LW_Conv::lineWidth lWeight; /*!< layer lineweight, code 370 */
     string handlePlotS;        /*!< Hard-pointer ID/handle of plotstyle, code 390 */
     string handlePlotM;        /*!< Hard-pointer ID/handle of materialstyle, code 347 */
 };
