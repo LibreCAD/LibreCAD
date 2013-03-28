@@ -115,6 +115,9 @@ public:
         FormatDXFRW2000,           /**< DXF format. v2000. */
         FormatDXFRW14,           /**< DXF format. v14. */
         FormatDXFRW12,           /**< DXF format. v12. */
+#ifdef DWGSUPPORT
+        FormatDWG,           /**< DWG format. */
+#endif
         FormatLFF,           /**< LibreCAD Font File format. */
         FormatCXF,           /**< CAM Expert Font format. */
         FormatJWW,           /**< JWW Format type */

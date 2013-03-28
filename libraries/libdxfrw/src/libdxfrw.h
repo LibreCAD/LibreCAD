@@ -18,7 +18,6 @@
 #include "drw_objects.h"
 #include "drw_interface.h"
 
-#define DRW_VERSION     "0.5.7"
 
 class dxfReader;
 class dxfWriter;
@@ -62,6 +61,7 @@ public:
     bool writeDimension(DRW_Dimension *ent);
 
 private:
+    /// used by read() to parse the content of the file
     bool processDxf();
     bool processHeader();
     bool processTables();

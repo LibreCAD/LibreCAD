@@ -40,6 +40,7 @@
 #include "rs_dimdiametric.h"
 #include "rs_dimradial.h"
 #include "rs_layer.h"
+#include "rs_leader.h"
 
 
 /**
@@ -560,7 +561,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     break;
                                 case 39:  // Thickness
                                     //if(currentLayer) currentLayer->setWidth(dxfLine.toInt());
-                                    pen.setWidth(RS_FilterDXFRW::numberToWidth(dxfLine.toInt()));
+                                    pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
                                     pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
@@ -615,7 +616,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     vy1 = dxfLine.toDouble();
                                     break;
                                 case 39:  // Thickness
-                                    pen.setWidth(RS_FilterDXFRW::numberToWidth(dxfLine.toInt()));
+                                    pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
                                     pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
@@ -675,7 +676,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     vy2 = dxfLine.toDouble();
                                     break;
                                 case 39:  // Thickness
-                                    pen.setWidth(RS_FilterDXFRW::numberToWidth(dxfLine.toInt()));
+                                    pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
                                     pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
@@ -741,7 +742,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     va2 = RS_Math::correctAngle(dxfLine.toDouble()/ARAD);
                                     break;
                                 case 39:  // Thickness
-                                    pen.setWidth(RS_FilterDXFRW::numberToWidth(dxfLine.toInt()));
+                                    pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
                                     pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
@@ -798,7 +799,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     vcr = dxfLine.toDouble();
                                     break;
                                 case 39:  // Thickness
-                                    pen.setWidth(RS_FilterDXFRW::numberToWidth(dxfLine.toInt()));
+                                    pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
                                     pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
@@ -1028,7 +1029,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     }
                                     break;
                                 case 39:  // Thickness
-                                    pen.setWidth(RS_FilterDXFRW::numberToWidth(dxfLine.toInt()));
+                                    pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
                                     pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
@@ -1158,7 +1159,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     typ = dxfLine.toInt();
                                     break;
                                 case 39:  // Thickness
-                                    pen.setWidth(RS_FilterDXFRW::numberToWidth(dxfLine.toInt()));
+                                    pen.setWidth(numberToWidth(dxfLine.toInt()));
                                     break;
                                 case 62:  // Color
                                     pen.setColor(RS_FilterDXFRW::numberToColor(dxfLine.toInt()));
@@ -1880,6 +1881,98 @@ bool RS_FilterDXF1::mtCompFloat(double _v1, double _v2, double _tol) {
         return true;
     else
         return false;
+}
+
+/**
+ * Converts a line width number (e.g. 1) into a RS2::LineWidth.
+ */
+RS2::LineWidth RS_FilterDXF1::numberToWidth(int num) {
+    switch (num) {
+    case -1:
+        return RS2::WidthByLayer;
+        break;
+    case -2:
+        return RS2::WidthByBlock;
+        break;
+    case -3:
+        return RS2::WidthDefault;
+        break;
+    default:
+        if (num<3) {
+            return RS2::Width00;
+        } else if (num<7) {
+            return RS2::Width01;
+        } else if (num<11) {
+            return RS2::Width02;
+        } else if (num<14) {
+            return RS2::Width03;
+        } else if (num<16) {
+            return RS2::Width04;
+        } else if (num<19) {
+            return RS2::Width05;
+        } else if (num<22) {
+            return RS2::Width06;
+        } else if (num<27) {
+            return RS2::Width07;
+        } else if (num<32) {
+            return RS2::Width08;
+        } else if (num<37) {
+            return RS2::Width09;
+        } else if (num<45) {
+            return RS2::Width10;
+        } else if (num<52) {
+            return RS2::Width11;
+        } else if (num<57) {
+            return RS2::Width12;
+        } else if (num<65) {
+            return RS2::Width13;
+        } else if (num<75) {
+            return RS2::Width14;
+        } else if (num<85) {
+            return RS2::Width15;
+        } else if (num<95) {
+            return RS2::Width16;
+        } else if (num<103) {
+            return RS2::Width17;
+        } else if (num<112) {
+            return RS2::Width18;
+        } else if (num<130) {
+            return RS2::Width19;
+        } else if (num<149) {
+            return RS2::Width20;
+        } else if (num<180) {
+            return RS2::Width21;
+        } else if (num<205) {
+            return RS2::Width22;
+        } else {
+            return RS2::Width23;
+        }
+        break;
+    }
+    return (RS2::LineWidth)num;
+}
+
+
+
+/**
+ * Converts a RS2::LineWidth into an int width.
+ */
+int RS_FilterDXF1::widthToNumber(RS2::LineWidth width) {
+    switch (width) {
+    case RS2::WidthByLayer:
+        return -1;
+        break;
+    case RS2::WidthByBlock:
+        return -2;
+        break;
+    case RS2::WidthDefault:
+        return -3;
+        break;
+    default:
+        return (int)width;
+        break;
+    }
+    return (int)width;
 }
 
 

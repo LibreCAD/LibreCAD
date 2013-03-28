@@ -105,6 +105,8 @@ public:
     bool     mtCompFloat(double _v1, double _v2, double _tol=1.0e-6);
 
     static RS_FilterInterface* createFilter(){return new RS_FilterDXF1();}
+    static RS2::LineWidth numberToWidth(int num);
+    static int widthToNumber(RS2::LineWidth width);
 
 protected:
     /** Pointer to the graphic we currently operate on. */

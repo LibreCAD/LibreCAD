@@ -10,6 +10,8 @@ DEFINES += QC_VERSION="\"master\""
 DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 DEFINES += HAS_BOOST=1
 
+DEFINES -= DWGSUPPORT
+
 SCMREVISION="2.0.0beta1"
 
 # Store intermedia stuff somewhere else
