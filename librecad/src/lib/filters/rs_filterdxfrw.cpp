@@ -97,6 +97,9 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
     RS_DEBUG->print("RS_FilterDXFRW::fileImport");
 
     RS_DEBUG->print("DXFRW Filter: importing file '%s'...", (const char*)QFile::encodeName(file));
+#ifndef DWGSUPPORT
+    Q_UNUSED(type)
+#endif
 
     graphic = &g;
     currentContainer = graphic;
@@ -395,8 +398,8 @@ void RS_FilterDXFRW::addArc(const DRW_Arc& data) {
     RS_DEBUG->print("RS_FilterDXF::addArc");
     RS_Vector v(data.basePoint.x, data.basePoint.y);
     RS_ArcData d(v, data.radious,
-                 data.staangle/ARAD,
-                 data.endangle/ARAD,
+                 data.staangle,
+                 data.endangle,
                  false);
     RS_Arc* entity = new RS_Arc(currentContainer, d);
     setEntityAttributes(entity, &data);
@@ -1012,7 +1015,7 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                 }
                 case DRW::ARC: {
                     DRW_Arc *e2 = (DRW_Arc *)ent;
-                    if (e2->isccw && e2->staangle<1.0e-6 && e2->endangle>360-1.0e-6) {
+                    if (e2->isccw && e2->staangle<1.0e-6 && e2->endangle>RS_Math::deg2rad(360)-1.0e-6) {
                         e = new RS_Circle(hatchLoop,
                                           RS_CircleData(RS_Vector(e2->basePoint.x, e2->basePoint.y),
                                                         e2->radious));
@@ -1021,14 +1024,14 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                         if (e2->isccw) {
                             e = new RS_Arc(hatchLoop,
                                         RS_ArcData(RS_Vector(e2->basePoint.x, e2->basePoint.y), e2->radious,
-                                                   RS_Math::correctAngle(RS_Math::deg2rad(e2->staangle)),
-                                                   RS_Math::correctAngle(RS_Math::deg2rad(e2->endangle)),
+                                                   RS_Math::correctAngle(e2->staangle),
+                                                   RS_Math::correctAngle(e2->endangle),
                                                    false));
                         } else {
                             e = new RS_Arc(hatchLoop,
                                         RS_ArcData(RS_Vector(e2->basePoint.x, e2->basePoint.y), e2->radious,
-                                                   RS_Math::correctAngle(2*M_PI-RS_Math::deg2rad(e2->staangle)),
-                                                   RS_Math::correctAngle(2*M_PI-RS_Math::deg2rad(e2->endangle)),
+                                                   RS_Math::correctAngle(2*M_PI-e2->staangle),
+                                                   RS_Math::correctAngle(2*M_PI-e2->endangle),
                                                    true));
                         }
                     }
@@ -1929,11 +1932,11 @@ void RS_FilterDXFRW::writeArc(RS_Arc* a) {
     arc.basePoint.y = a->getCenter().y;
     arc.radious = a->getRadius();
     if (a->isReversed()) {
-        arc.staangle = a->getAngle2()*ARAD;
-        arc.endangle = a->getAngle1()*ARAD;
+        arc.staangle = a->getAngle2();
+        arc.endangle = a->getAngle1();
     } else {
-        arc.staangle = a->getAngle1()*ARAD;
-        arc.endangle = a->getAngle2()*ARAD;
+        arc.staangle = a->getAngle1();
+        arc.endangle = a->getAngle2();
     }
     dxfW->writeArc(&arc);
 }
@@ -2514,12 +2517,12 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
                     arc->basePoint.y = ar->getCenter().y;
                     arc->radious = ar->getRadius();
                     if (!ar->isReversed()) {
-                        arc->staangle = RS_Math::rad2deg(ar->getAngle1());
-                        arc->endangle = RS_Math::rad2deg(ar->getAngle2());
+                        arc->staangle = ar->getAngle1();
+                        arc->endangle = ar->getAngle2();
                         arc->isccw = true;
                     } else {
-                        arc->staangle = RS_Math::rad2deg(2*M_PI-ar->getAngle1());
-                        arc->endangle = RS_Math::rad2deg(2*M_PI-ar->getAngle2());
+                        arc->staangle = 2*M_PI-ar->getAngle1();
+                        arc->endangle = 2*M_PI-ar->getAngle2();
                         arc->isccw = false;
                     }
                     lData->objlist.push_back(arc);

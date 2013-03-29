@@ -229,8 +229,8 @@ public:
     void parseCode(int code, dxfReader *reader);
 
 public:
-    double staangle;               /*!< x coordinate, code 50 */
-    double endangle;               /*!< x coordinate, code 51 */
+    double staangle;            /*!< start angle, code 50 in radians*/
+    double endangle;            /*!< end angle, code 51 in radians */
     int isccw;                  /*!< is counter clockwise arc?, only used in hatch, code 73 */
 };
 
@@ -379,8 +379,8 @@ class DRW_LWPolyline : public DRW_Entity {
 public:
     DRW_LWPolyline() {
         eType = DRW::LWPOLYLINE;
-        thickness = width = 0.0;
-        elevation = flags = 0;
+        elevation = thickness = width = 0.0;
+        flags = 0;
         extPoint.x = extPoint.y = 0;
         extPoint.z = 1;
         vertex = NULL;

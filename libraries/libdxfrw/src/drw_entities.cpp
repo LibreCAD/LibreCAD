@@ -160,10 +160,10 @@ void DRW_Circle::parseCode(int code, dxfReader *reader){
 void DRW_Arc::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 50:
-        staangle = reader->getDouble();
+        staangle = reader->getDouble()/ ARAD;
         break;
     case 51:
-        endangle = reader->getDouble();
+        endangle = reader->getDouble()/ ARAD;
         break;
     default:
         DRW_Circle::parseCode(code, reader);
@@ -601,11 +601,11 @@ void DRW_Hatch::parseCode(int code, dxfReader *reader){
         if (plvert) plvert ->bulge = reader->getDouble();
         break;
     case 50:
-        if (arc) arc->staangle = reader->getDouble();
+        if (arc) arc->staangle = reader->getDouble()/ARAD;
         else if (ellipse) ellipse->staparam = reader->getDouble()/ARAD;
         break;
     case 51:
-        if (arc) arc->endangle = reader->getDouble();
+        if (arc) arc->endangle = reader->getDouble()/ARAD;
         else if (ellipse) ellipse->endparam = reader->getDouble()/ARAD;
         break;
     case 52:

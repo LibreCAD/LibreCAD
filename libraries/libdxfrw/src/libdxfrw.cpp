@@ -590,8 +590,8 @@ bool dxfRW::writeArc(DRW_Arc *ent) {
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbArc");
     }
-    writer->writeDouble(50, ent->staangle);
-    writer->writeDouble(51, ent->endangle);
+    writer->writeDouble(50, ent->staangle*ARAD);
+    writer->writeDouble(51, ent->endangle*ARAD);
     return true;
 }
 
@@ -697,6 +697,10 @@ bool dxfRW::writeLWPolyline(DRW_LWPolyline *ent){
         writer->writeInt32(90, ent->vertexnum);
         writer->writeInt16(70, ent->flags);
         writer->writeDouble(43, ent->width);
+        if (ent->elevation != 0)
+            writer->writeDouble(38, ent->elevation);
+        if (ent->thickness != 0)
+            writer->writeDouble(39, ent->thickness);
         for (int i = 0;  i< ent->vertexnum; i++){
             DRW_Vertex2D *v = ent->vertlist.at(i);
             writer->writeDouble(10, v->x);
@@ -883,8 +887,8 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
                         writer->writeDouble(10, a->basePoint.x);
                         writer->writeDouble(20, a->basePoint.y);
                         writer->writeDouble(40, a->radious);
-                        writer->writeDouble(50, a->staangle);
-                        writer->writeDouble(51, a->endangle);
+                        writer->writeDouble(50, a->staangle*ARAD);
+                        writer->writeDouble(51, a->endangle*ARAD);
                         writer->writeInt16(73, a->isccw);
                         break; }
                     case DRW::ELLIPSE: {

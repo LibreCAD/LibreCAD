@@ -54,8 +54,6 @@ public:
     }
     virtual~DRW_TableEntry() {}
 
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf);
-
 protected:
     void parseCode(int code, dxfReader *reader);
 
