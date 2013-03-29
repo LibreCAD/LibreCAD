@@ -127,12 +127,11 @@ void RS_ActionDrawCircleTan2_1P::trigger() {
         circle->setHighlighted(false);
     graphicView->redraw(RS2::RedrawDrawing);
     circles.clear();
-    //    drawSnapper();
 
-    setStatus(SetCircle1);
 
     RS_DEBUG->print("RS_ActionDrawCircleTan2_1P::trigger():"
                     " entity added: %d", c->getId());
+    init(SetCircle1);
 }
 
 
