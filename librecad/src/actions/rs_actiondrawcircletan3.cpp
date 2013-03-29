@@ -393,16 +393,16 @@ void RS_ActionDrawCircleTan3::updateMouseButtonHints() {
     if (RS_DIALOGFACTORY!=NULL) {
         switch (getStatus()) {
         case SetCircle1:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first arc/circle"),
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first line/arc/circle"),
                                                 tr("Cancel"));
             break;
 
         case SetCircle2:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the second arc/circle"),
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the second line/arc/circle"),
                                                 tr("Back"));
             break;
         case SetCircle3:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the third arc/circle"),
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the third line/arc/circle"),
                                                 tr("Back"));
             break;
 
