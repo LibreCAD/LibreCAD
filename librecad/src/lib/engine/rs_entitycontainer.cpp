@@ -1706,7 +1706,7 @@ bool RS_EntityContainer::optimizeContours() {
         } 					//workaround if next is NULL
     }
 //    DEBUG_HEADER();
-    if( vpEnd.squaredTo(vpStart)>1e-8) {
+    if(vpEnd.valid && vpEnd.squaredTo(vpStart)>1e-8) {
 //        std::cout<<"ds2="<<vpEnd.squaredTo(vpStart)<<std::endl;
         closed=false;
     }
