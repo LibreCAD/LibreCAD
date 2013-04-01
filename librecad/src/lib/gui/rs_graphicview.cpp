@@ -49,6 +49,7 @@
 RS_GraphicView::RS_GraphicView()
     : background(), foreground(),
       savedViews(16), savedViewIndex(0),savedViewCount(0),previousViewTime(QDateTime::currentDateTime())
+    ,m_bIsCleanUp(false)
 {
     drawingMode = RS2::ModeFull;
     printing = false;
@@ -114,6 +115,7 @@ RS_GraphicView::~RS_GraphicView() {
  * Must be called by any derrived class in the destructor.
  */
 void RS_GraphicView::cleanUp() {
+    m_bIsCleanUp=true;
     //delete eventHandler;
     delete eventHandler;
 }
