@@ -144,13 +144,14 @@ RS2::FormatType RS_FileIO::detectFormat(const QString& file) {
             int c=0;
             while (!ts.atEnd() && ++c<100) {
                 line = ts.readLine();
-                if (line=="$ACADVER") {
+                if (line=="$ACADVER" || line=="ENTITIES") {
                     type = RS2::FormatDXFRW;
+                    break;
                 }
                 // very simple reduced DXF:
-                if (line=="ENTITIES" && c<10) {
-                    type = RS2::FormatDXFRW;
-                }
+//                if (line=="ENTITIES" && c<10) {
+//                    type = RS2::FormatDXFRW;
+//                }
             }
             f.close();
         }
