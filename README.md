@@ -75,5 +75,8 @@ After that install QT and a new gcc, at mimimum you properly need gcc 44
 Install a version of Qt < 4.8.0, 4.7.4 for example
 `sudo port install gcc46 qt4-creator-mac qt4-mac boost`
 
+Select the right compiler
+port select --set gcc mp-gcc46
+
 When installed run to build a makefile
 `qmake librecad.pro -r -spec mkspec/macports`
