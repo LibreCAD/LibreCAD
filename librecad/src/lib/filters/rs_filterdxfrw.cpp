@@ -1707,6 +1707,8 @@ void RS_FilterDXFRW::writeLayers(){
         lay.color24 = exact_rgb;
         lay.lWeight = widthToNumber(pen.getWidth());
         lay.lineType = lineTypeToName(pen.getLineType()).toStdString();
+        lay.flags = l->isFrozen() ? 0x01 : 0x00;
+        if (l->isLocked()) lay.flags |=0x04;
         lay.plotF = ! l->isHelpLayer(); // a help layer should not appear in print
         if (!lay.plotF)
             RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::writeLayers: layer %s saved as help layer", lay.name.c_str());
