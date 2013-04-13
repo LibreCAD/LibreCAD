@@ -250,10 +250,9 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
 bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
     writer->writeString(0, "STYLE");
     if (!dimstyleStd) {
-        std::string name;
-        std::stringstream ss;
-        ss << std::uppercase << ent->name;
-        ss >> name;
+        //stringstream cause crash in OS/X, bug#3597944
+        std::string name=ent->name;
+        transform(name.begin(), name.end(), name.begin(), toupper);
         if (name == "STANDARD")
             dimstyleStd = true;
     }

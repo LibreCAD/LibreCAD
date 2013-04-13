@@ -181,9 +181,15 @@ std::string DRW_Converter::encodeText(std::string stmp){
 std::string DRW_Converter::decodeText(int c){
     std::string res = "\\U+";
     std::string num;
+#if defined(__APPLE__)
+    char str [16];
+    sprintf ( str, "%04X", c );
+    num = str;
+#else
     std::stringstream ss;
     ss << std::uppercase << std::setfill('0') << std::setw(4) << std::hex << c;
     ss >> num;
+#endif
     res += num;
     return res;
 }
