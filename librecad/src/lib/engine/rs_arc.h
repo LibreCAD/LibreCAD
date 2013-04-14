@@ -154,6 +154,10 @@ public:
     void setAngle2(double a2) {
         data.angle2 = a2;
     }
+    /** get angle relative arc center*/
+    double getArcAngle(const RS_Vector& vp) {
+        return (vp - data.center).angle();
+    }
     /**
      * @return Direction 1. The angle at which the arc starts at
      * the startpoint.
@@ -214,7 +218,8 @@ public:
 
     virtual RS2::Ending getTrimPoint(const RS_Vector& coord,
                                      const RS_Vector& trimPoint);
-    virtual RS_Vector prepareTrim(const RS_Vector& coord,
+    /** choose an intersection to trim to based on mouse point */
+    virtual RS_Vector prepareTrim(const RS_Vector& mousePoint,
                                   const RS_VectorSolutions& trimSol);
 
     virtual void reverse();
