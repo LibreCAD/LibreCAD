@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <QAction>
+#include <limits.h>
 #include "qc_applicationwindow.h"
 #include "rs_graphicview.h"
 
@@ -858,7 +859,6 @@ void RS_GraphicView::zoomWindow(RS_Vector v1, RS_Vector v2,
                                 bool keepAspectRatio) {
 
 
-    saveView();
 
     double zoomX=480.0;    // Zoom for X-Axis
     double zoomY=640.0;    // Zoom for Y-Axis   (Set smaller one)
@@ -903,6 +903,14 @@ void RS_GraphicView::zoomWindow(RS_Vector v1, RS_Vector v2,
     int pixTop   =(int)(v2.y*zoomY);
     int pixRight =(int)(v2.x*zoomX);
     int pixBottom=(int)(v1.y*zoomY);
+    if(  pixLeft == INT_MIN || pixLeft== INT_MAX ||
+         pixRight == INT_MIN || pixRight== INT_MAX ||
+         pixTop == INT_MIN || pixTop== INT_MAX ||
+         pixBottom == INT_MIN || pixBottom== INT_MAX ) {
+        RS_DIALOGFACTORY->commandMessage("Requested zooming factor out of range. Zooming not changed");
+        return;
+    }
+    saveView();
 
     // Set new offset for zero point:
     offsetX = - pixLeft + (getWidth() -pixRight +pixLeft)/2;
