@@ -637,7 +637,10 @@ void RS_Arc::trimEndpoint(const RS_Vector& pos) {
     calculateBorders();
 }
 
-
+/**
+  *@ trimCoord, mouse point
+  *@  trimPoint, trim to this point
+  */
 RS2::Ending RS_Arc::getTrimPoint(const RS_Vector& trimCoord,
                                  const RS_Vector& trimPoint) {
 
@@ -645,10 +648,12 @@ RS2::Ending RS_Arc::getTrimPoint(const RS_Vector& trimCoord,
     double angMouse = data.center.angleTo(trimCoord);
     double angTrim = data.center.angleTo(trimPoint);
 
-    if( RS_Math::isAngleBetween(angTrim, data.angle1, angMouse, isReversed())) {
-        return RS2::EndingStart;
-    } else {
+    if( RS_Math::isAngleBetween(angMouse , data.angle1, angTrim, isReversed())) {
+
         return RS2::EndingEnd;
+    } else {
+
+        return RS2::EndingStart;
     }
 }
 
