@@ -2535,7 +2535,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
                     arc->basePoint.y = ci->getCenter().y;
                     arc->radious = ci->getRadius();
                     arc->staangle = 0.0;
-                    arc->endangle = 360.0; //2*M_PI;
+                    arc->endangle = 2*M_PI; //2*M_PI;
                     arc->isccw = true;
                     lData->objlist.push_back(arc);
                 } else if (ed->rtti()==RS2::EntityEllipse) {
