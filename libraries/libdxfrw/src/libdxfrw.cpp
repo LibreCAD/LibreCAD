@@ -1272,7 +1272,9 @@ bool dxfRW::writeBlock(DRW_Block *bk){
             writer->writeString(100, "AcDbEntity");
         }
         writer->writeString(8, "0");
-        writer->writeString(100, "AcDbBlockEnd");
+        if (version > DRW::AC1009) {
+            writer->writeString(100, "AcDbBlockEnd");
+        }
     }
     writingBlock = true;
     writer->writeString(0, "BLOCK");
@@ -1285,10 +1287,10 @@ bool dxfRW::writeBlock(DRW_Block *bk){
         writer->writeString(100, "AcDbEntity");
     }
     writer->writeString(8, "0");
-    writer->writeString(100, "AcDbBlockBegin");
-    if (version > DRW::AC1009)
+    if (version > DRW::AC1009) {
+        writer->writeString(100, "AcDbBlockBegin");
         writer->writeUtf8String(2, bk->name);
-    else
+    } else
         writer->writeUtf8Caps(2, bk->name);
     writer->writeInt16(70, bk->flags);
     writer->writeDouble(10, bk->basePoint.x);
@@ -1557,7 +1559,7 @@ bool dxfRW::writeBlocks() {
         writer->writeString(100, "AcDbBlockBegin");
         writer->writeString(2, "*Model_Space");
     } else
-        writer->writeString(2, "*MODEL_SPACE");
+        writer->writeString(2, "$MODEL_SPACE");
     writer->writeInt16(70, 0);
     writer->writeDouble(10, 0.0);
     writer->writeDouble(20, 0.0);
@@ -1565,7 +1567,7 @@ bool dxfRW::writeBlocks() {
     if (version > DRW::AC1009)
         writer->writeString(3, "*Model_Space");
     else
-        writer->writeString(3, "*MODEL_SPACE");
+        writer->writeString(3, "$MODEL_SPACE");
     writer->writeString(1, "");
     writer->writeString(0, "ENDBLK");
     if (version > DRW::AC1009) {
@@ -1592,7 +1594,7 @@ bool dxfRW::writeBlocks() {
         writer->writeString(100, "AcDbBlockBegin");
         writer->writeString(2, "*Paper_Space");
     } else
-        writer->writeString(2, "*PAPER_SPACE");
+        writer->writeString(2, "$PAPER_SPACE");
     writer->writeInt16(70, 0);
     writer->writeDouble(10, 0.0);
     writer->writeDouble(20, 0.0);
@@ -1600,7 +1602,7 @@ bool dxfRW::writeBlocks() {
     if (version > DRW::AC1009)
         writer->writeString(3, "*Paper_Space");
     else
-        writer->writeString(3, "*PAPER_SPACE");
+        writer->writeString(3, "$PAPER_SPACE");
     writer->writeString(1, "");
     writer->writeString(0, "ENDBLK");
     if (version > DRW::AC1009) {

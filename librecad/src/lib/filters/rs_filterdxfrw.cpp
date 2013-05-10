@@ -1368,12 +1368,12 @@ void RS_FilterDXFRW::writeBlocks() {
                 case RS2::EntityDimRadial:
                 case RS2::EntityDimDiametric:
                 case RS2::EntityDimLeader:
-                    prefix = "*D" + ++dimNum;
+                    prefix = "*D" + QString::number(++dimNum);
                     noNameBlock[e] = prefix;
                     break;
                 case RS2::EntityHatch:
                     if ( !((RS_Hatch*)e)->isSolid() ) {
-                        prefix = "*U" + ++hatchNum;
+                        prefix = "*U" + QString::number(++hatchNum);
                         noNameBlock[e] = prefix;
                     }
                     break;
@@ -1391,6 +1391,7 @@ void RS_FilterDXFRW::writeBlocks() {
     #ifndef  RS_VECTOR2D
             block.basePoint.z = 0.0;
     #endif
+            block.flags = 1;//flag for unnamed block
             dxfW->writeBlock(&block);
             RS_EntityContainer *ct = (RS_EntityContainer *)it.key();
             for (RS_Entity* e=ct->firstEntity(RS2::ResolveNone);
