@@ -776,7 +776,7 @@ RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data) {
         lss = RS_MTextData::Exact;
     }
 
-    t = QString::fromUtf8(data->getText().c_str());
+    t = toNativeString(QString::fromUtf8( data->getText().c_str() ));
 
     if (sty.isEmpty()) {
         sty = dimStyle;
@@ -3307,6 +3307,7 @@ QString RS_FilterDXFRW::toDxfString(const QString& str) {
                 break;
                 // diameter:
             case 0x2205://RLZ: Empty_set, diameter is 0x2300 need to add in all fonts
+            case 0x2300:
                 res+="%%C";
                 break;
                 // degree:
@@ -3370,7 +3371,7 @@ QString RS_FilterDXFRW::toNativeString(const QString& data) {
     // Space:
     res = res.replace(QRegExp("\\\\~"), " ");
     // diameter:
-    res = res.replace(QRegExp("%%[cC]"), QChar(0x2205));//RLZ: Empty_set, diameter is 0x2300 need to add in all fonts
+    res = res.replace(QRegExp("%%[cC]"), QChar(0x2300));//RLZ: Empty_set is 0x2205, diameter is 0x2300 need to add in all fonts
     // degree:
     res = res.replace(QRegExp("%%[dD]"), QChar(0x00B0));
     // plus/minus
