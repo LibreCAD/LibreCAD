@@ -951,13 +951,15 @@ void RS_FilterDXFRW::addLeader(const DRW_Leader *data) {
     RS_Leader* leader = new RS_Leader(currentContainer, d);
     setEntityAttributes(leader, data);
 
-    currentContainer->addEntity(leader);
-
     for (unsigned int i=0; i<data->vertexlist.size(); i++) {
         DRW_Coord *vert = data->vertexlist.at(i);
         RS_Vector v(vert->x, vert->y);
         leader->addVertex(v);
     }
+
+    leader->update();
+    currentContainer->addEntity(leader);
+
 }
 
 

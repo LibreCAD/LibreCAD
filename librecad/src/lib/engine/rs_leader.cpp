@@ -94,6 +94,7 @@ void RS_Leader::update() {
             RS_EntityContainer::addEntity(s);
         }
     }
+    calculateBorders();
 }
 
 
