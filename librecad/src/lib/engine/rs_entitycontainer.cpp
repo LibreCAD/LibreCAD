@@ -1695,7 +1695,7 @@ bool RS_EntityContainer::optimizeContours() {
             RS_Entity* eTmp = next->clone();
             if(vpEnd.squaredTo(next->getStartpoint())>1e-8)
                 eTmp->revertDirection();
-            vpEnd=eTmp->getEndpoint();
+            vpEnd=( vpEnd.squaredTo(next->getStartpoint()) > vpEnd.squaredTo(next->getEndpoint()) )? next->getStartpoint():next->getEndpoint();
             tmp.addEntity(eTmp);
         	removeEntity(next);
         } else { 			//workaround if next is NULL
