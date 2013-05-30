@@ -34,7 +34,10 @@
 RS_ActionInfoDist2::RS_ActionInfoDist2(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Info Dist2",
-                           container, graphicView) {}
+                           container, graphicView)
+        ,entity(NULL)
+        ,point(false)
+{}
 
 
 QAction* RS_ActionInfoDist2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
@@ -46,9 +49,11 @@ QAction* RS_ActionInfoDist2::createGUIAction(RS2::ActionType /*type*/, QObject* 
 }
 
 RS_ActionInfoDist2::~RS_ActionInfoDist2() {
-    if( entity!=NULL && entity->isHighlighted()){
-        entity->setHighlighted(false);
-        graphicView->redraw(RS2::RedrawDrawing);
+    if(graphicView != NULL && graphicView->isCleanUp()==false){
+        if( entity!=NULL && entity->isHighlighted()){
+            entity->setHighlighted(false);
+            graphicView->redraw(RS2::RedrawDrawing);
+        }
     }
 }
 
@@ -76,15 +81,17 @@ void RS_ActionInfoDist2::trigger() {
 
 void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionInfoDist2::mouseMoveEvent begin");
-     RS_Vector&& mouse=snapPoint(e);
 
     switch (getStatus()) {
     case SetEntity:
+         suspend();
         //entity = catchEntity(e);
+        deleteSnapper();
         break;
 
     case SetPoint:
         if (entity!=NULL) {
+             RS_Vector&& mouse=snapPoint(e);
             point = mouse;
         }
         break;
