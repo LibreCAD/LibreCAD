@@ -1679,7 +1679,7 @@ bool RS_EntityContainer::optimizeContours() {
         double dist(0.);
 //        std::cout<<" count()="<<count()<<std::endl;
         getNearestEndpoint(vpEnd,&dist,&next);
-        if(dist>1e-4) {
+        if(dist>1e-8) {
             if(vpEnd.squaredTo(vpStart)<1e-8){
                 RS_Entity* e2=entityAt(0);
                 tmp.addEntity(e2->clone());
