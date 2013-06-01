@@ -159,7 +159,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
         double bulge = 0.0;
         RS_Entity* en;
         RS_Entity* prevEntity = entities.last();
-        RS_Entity* currEntity;
+        RS_Entity* currEntity=NULL;
         for (int i = 0; i < entities.size(); ++i) {
             en = entities.at(i);
             RS_Vector v(false);

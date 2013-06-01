@@ -640,7 +640,7 @@ void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
         }
         //    std::cout<<" RS_GraphicView::zoomAuto("<<axis<<","<<keepAspectRatio<<")"<<std::endl;
 
-        double fx, fy;
+        double fx=1., fy=1.;
         unsigned short fFlags=0;
 
         if (sx>RS_TOLERANCE) {
