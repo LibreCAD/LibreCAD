@@ -101,7 +101,7 @@ Section "Install Section" SecInstall
 ;QtXml4.dll
 ;QtXmlPatterns4.dll
   SetOutPath "$INSTDIR"
-  File /r "..\..\..\build-librecad-Desktop_Qt_5_0_2_MinGW_32bit-Release\windows\*.*"
+  File /r "..\..\..\LibreCAD-Release\windows\*.*"
 ;C:\Users\dli.TAMAGGO\cygwin\home\dli\github\build-librecad-Desktop_Qt_5_0_2_MinGW_32bit-Release
   File "C:\Qt\Qt5.0.2\Tools\MinGW\bin\libgcc_s_sjlj-1.dll"
   File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\icu*.dll"
