@@ -6,6 +6,7 @@ cd ../..
 mkdir LibreCAD-Release
 cd LibreCAD-Release
 qmake.exe ../LibreCAD/librecad.pro -r -spec win32-g++
+mingw32-make.exe clean
 mingw32-make.exe 
 cd ../LibreCAD/scripts/postprocess-windows
 makensis.exe /X"SetCompressor /FINAL lzma" nsis-5.0.nsi
