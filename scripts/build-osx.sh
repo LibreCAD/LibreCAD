@@ -6,6 +6,6 @@
 
 # the LibreCAD source folder 
 cd ../
-qmake librecad.pro -r -spec mkspecs/macports
+qmake librecad.pro -r -spec mkspec/macports
 make -j4
 macdeployqt LibreCAD.app -verbose=2 -dmg
