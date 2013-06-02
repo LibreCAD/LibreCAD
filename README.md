@@ -18,6 +18,13 @@ qmake librecad.pro
 make
 ```
 
+After successful compiling, the executible is generated:
+
+Linux: unix/librecad
+OS/X: LibreCAD.app/Contents/MacOS/LibreCAD
+
+A sample building script for OS/X is included as scripts/build-osx.sh. This script file also generates a LibreCAD.dmg.
+
 Ubuntu/Debian users
 -------------------
 
@@ -26,7 +33,7 @@ Install the qt4 SDK by executing the following commands:
 
 ```
 $ sudo apt-get install g++ gcc make git-core libqt4-dev qt4-qmake \
-libqt4-help qt4-dev-tools libboost-all-dev libmuparser-dev
+libqt4-help qt4-dev-tools libboost-all-dev libmuparser-dev libfreetype6-dev
 ```
 
 Alternatively, you make sure you have deb-src lines enabled in your sources.list file, and run,
@@ -46,16 +53,23 @@ NOTE 1: On systems like fedora (& Ubuntu??) You might need to run qmake-qt4 inst
 Windows Users
 -------------
 
-- Download a copy of Qt SDK < 5.0.0, 4.8.4 for example from http://qt-project.org/downloads 
+Building steps are also given at our wiki page:
 
-- Download boost 1.48 from https://sourceforge.net/projects/boost/files/boost/1.48.0/
-- unzip into C:\boost\1_48_0 (in this directory you will find boost root directory, INSTALL, index, Jamroot etc.. etc).
+http://wiki.librecad.org/index.php/LibreCAD_Installation_from_Source
 
-- Download muParser 2.2.2 from http://sourceforge.net/projects/muparser/files/muparser/Version\ 2.2.2/muparser_v2_2_2.zip
+A sample build batch file is included as scripts/build-windows.bat. If successful, this building script generates a Windows installer file using NSIS(http://nsis.sourceforge.net/Main_Page). 
+
+- Download a copy of Qt SDK,  4.8.4 for example from http://qt-project.org/downloads 
+
+- Download boost, from https://sourceforge.net/projects/boost/files/boost/
+- unzip into C:\boost\, for example C:\boost\1_53_0 (in this directory you will find boost root directory, INSTALL, index, Jamroot etc.. etc).
+
+- Download muParser 2.2.2 or later from http://sourceforge.net/projects/muparser/files/muparser/
 - Create a directory named "muparser" in `C:\`
 - Unzip muparser_v2_2_2.zip into `C:\muparser\`
 
-Notes: At this point you will have the following directory structure: C:\muparser\muparser_v2_2_2\. If you prefer to keep muParser in other locations, you should specify the directiory location with a custom.pro file in LibreCAD source folder, for example, the following setting is equivalent to the default muparser path in common.pro:
+Notes: At this point you will have the following directory structure: C:\muparser\muparser_v2_2_2\ (assuming you are using muparser-2.2.2). If you prefer to keep muParser in other locations, you should specify the directiory location with a custom.pro file in LibreCAD source folder, for example, the following setting is equivalent to the default muparser path in common.pro:
+
 `MUPARSER_DIR = /muparser/muparser_v2_2_2`
 
 - Start Qt Desktop using "Qt 4.8.4 for Desktop (MinGW)" shortcut.
