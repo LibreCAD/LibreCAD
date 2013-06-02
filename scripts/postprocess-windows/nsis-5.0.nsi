@@ -78,66 +78,49 @@ ${EndIf}
 
 FunctionEnd
 
+!define Qt_Dir "C:\Qt"
+!define Qt_Version "5.0.2"
+
 ;--------------------------------
 ;Installer Sections
 
 Section "Install Section" SecInstall
-;imageformats/qgif4.dll
-;imageformats/qjpeg4.dll
-;sceneformats/qsceneai4.dll
-;QtWebKit/qmldir
-;QtWebKit/qmlwebkitplugin.dll
-;application.exe
-;Qt3D.dll
-;Qt3DQuick.dll
-;QtCore4.dll
-;QtDeclarative.dll
-;QtGui4.dll
-;QtNetwork4.dll
-;QtOpenGL4.dll
-;QtScript4.dll
-;QtScriptTools4.dll
-;QtWebKit4.dll
-;QtXml4.dll
-;QtXmlPatterns4.dll
   SetOutPath "$INSTDIR"
   File /r "..\..\..\LibreCAD-Release\windows\*.*"
-;C:\Users\dli.TAMAGGO\cygwin\home\dli\github\build-librecad-Desktop_Qt_5_0_2_MinGW_32bit-Release
-  File "C:\Qt\Qt5.0.2\Tools\MinGW\bin\libgcc_s_sjlj-1.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\icu*.dll"
-  File "C:\Qt\Qt5.0.2\Tools\MinGW\bin\libwinpthread-1.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\libstdc++-6.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\libEGL.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\libGLESv2.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\D3DCompiler_43.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\Qt5Clucene.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\Qt5Core.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\Qt5Core.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\Qt5Declarative.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\Qt5Gui.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\Qt5Help.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\Qt5Network.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\Qt5OpenGL.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\Qt5PrintSupport.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\Qt5Script.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\Qt5Svg.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\Qt5Sql.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\Qt5Widgets.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\Qt5Xml.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\bin\Qt5XmlPatterns.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\Tools\MinGW\bin\libgcc_s_sjlj-1.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\icu*.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\Tools\MinGW\bin\libwinpthread-1.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\libstdc++-6.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\libEGL.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\libGLESv2.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\D3DCompiler_43.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Clucene.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Core.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Declarative.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Gui.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Help.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Network.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5OpenGL.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5PrintSupport.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Script.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Svg.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Sql.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Widgets.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Xml.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5XmlPatterns.dll"
   SetOutPath "$INSTDIR\platforms"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\plugins\platforms\qminimal.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\plugins\platforms\qwindows.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\platforms\qminimal.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\platforms\qwindows.dll"
   SetOutPath "$INSTDIR\sqldrivers"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\plugins\sqldrivers\qsqlite.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\sqldrivers\qsqlite.dll"
   SetOutPath "$INSTDIR\imageformats"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\plugins\imageformats\qgif.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\plugins\imageformats\qjpeg.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\plugins\imageformats\qtiff.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\plugins\imageformats\qmng.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\plugins\imageformats\qsvg.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\plugins\imageformats\qtga.dll"
-  File "C:\Qt\Qt5.0.2\5.0.2\mingw47_32\plugins\imageformats\qwbmp.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qgif.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qjpeg.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qtiff.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qmng.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qsvg.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qtga.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qwbmp.dll"
 
   ;Store installation folder
   WriteRegStr HKCU "Software\LibreCAD" "" $INSTDIR
