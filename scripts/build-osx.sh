@@ -8,4 +8,5 @@
 cd ../
 qmake librecad.pro -r -spec mkspec/macports
 make -j4
+rm -f LibreCAD.dmg
 macdeployqt LibreCAD.app -verbose=2 -dmg
