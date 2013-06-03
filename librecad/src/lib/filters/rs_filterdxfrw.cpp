@@ -776,7 +776,7 @@ RS_DimensionData RS_FilterDXFRW::convDimensionData(const  DRW_Dimension* data) {
         lss = RS_MTextData::Exact;
     }
 
-    t = QString::fromUtf8(data->getText().c_str());
+    t = toNativeString(QString::fromUtf8( data->getText().c_str() ));
 
     if (sty.isEmpty()) {
         sty = dimStyle;
@@ -951,13 +951,15 @@ void RS_FilterDXFRW::addLeader(const DRW_Leader *data) {
     RS_Leader* leader = new RS_Leader(currentContainer, d);
     setEntityAttributes(leader, data);
 
-    currentContainer->addEntity(leader);
-
     for (unsigned int i=0; i<data->vertexlist.size(); i++) {
         DRW_Coord *vert = data->vertexlist.at(i);
         RS_Vector v(vert->x, vert->y);
         leader->addVertex(v);
     }
+
+    leader->update();
+    currentContainer->addEntity(leader);
+
 }
 
 
@@ -1368,12 +1370,12 @@ void RS_FilterDXFRW::writeBlocks() {
                 case RS2::EntityDimRadial:
                 case RS2::EntityDimDiametric:
                 case RS2::EntityDimLeader:
-                    prefix = "*D" + ++dimNum;
+                    prefix = "*D" + QString::number(++dimNum);
                     noNameBlock[e] = prefix;
                     break;
                 case RS2::EntityHatch:
                     if ( !((RS_Hatch*)e)->isSolid() ) {
-                        prefix = "*U" + ++hatchNum;
+                        prefix = "*U" + QString::number(++hatchNum);
                         noNameBlock[e] = prefix;
                     }
                     break;
@@ -1391,6 +1393,7 @@ void RS_FilterDXFRW::writeBlocks() {
     #ifndef  RS_VECTOR2D
             block.basePoint.z = 0.0;
     #endif
+            block.flags = 1;//flag for unnamed block
             dxfW->writeBlock(&block);
             RS_EntityContainer *ct = (RS_EntityContainer *)it.key();
             for (RS_Entity* e=ct->firstEntity(RS2::ResolveNone);
@@ -2535,7 +2538,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
                     arc->basePoint.y = ci->getCenter().y;
                     arc->radious = ci->getRadius();
                     arc->staangle = 0.0;
-                    arc->endangle = 360.0; //2*M_PI;
+                    arc->endangle = 2*M_PI; //2*M_PI;
                     arc->isccw = true;
                     lData->objlist.push_back(arc);
                 } else if (ed->rtti()==RS2::EntityEllipse) {
@@ -3306,6 +3309,7 @@ QString RS_FilterDXFRW::toDxfString(const QString& str) {
                 break;
                 // diameter:
             case 0x2205://RLZ: Empty_set, diameter is 0x2300 need to add in all fonts
+            case 0x2300:
                 res+="%%C";
                 break;
                 // degree:
@@ -3369,7 +3373,7 @@ QString RS_FilterDXFRW::toNativeString(const QString& data) {
     // Space:
     res = res.replace(QRegExp("\\\\~"), " ");
     // diameter:
-    res = res.replace(QRegExp("%%[cC]"), QChar(0x2205));//RLZ: Empty_set, diameter is 0x2300 need to add in all fonts
+    res = res.replace(QRegExp("%%[cC]"), QChar(0x2300));//RLZ: Empty_set is 0x2205, diameter is 0x2300 need to add in all fonts
     // degree:
     res = res.replace(QRegExp("%%[dD]"), QChar(0x00B0));
     // plus/minus

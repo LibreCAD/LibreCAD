@@ -12,7 +12,7 @@ DEFINES += HAS_BOOST=1
 
 DEFINES -= DWGSUPPORT
 
-SCMREVISION="2.0.0beta5"
+SCMREVISION="2.0.0rc1"
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad

@@ -206,7 +206,7 @@ RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList) {
         }
         newLayerName = QString(layer_name);
         while(layerList->find(newLayerName) != NULL) {
-            newLayerName = QString("%1%2").arg(layer_name).arg(i);
+            newLayerName = QString("%1%2").arg(layer_name).arg(i++);
         }
     }
 

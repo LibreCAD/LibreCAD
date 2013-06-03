@@ -78,32 +78,49 @@ ${EndIf}
 
 FunctionEnd
 
+!define Qt_Dir "C:\Qt"
+!define Qt_Version "5.0.2"
+
 ;--------------------------------
 ;Installer Sections
 
 Section "Install Section" SecInstall
-
   SetOutPath "$INSTDIR"
-  File /r "..\..\windows\*.*"
-  File "C:\QtSDK\mingw\bin\libgcc_s_dw2-1.dll"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\bin\mingwm10.dll"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\bin\QtCore4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\bin\QtGui4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\bin\QtXml4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\bin\QtHelp4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\bin\QtSql4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\bin\QtClucene4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\bin\QtNetwork4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\bin\QtSvg4.dll"
+  File /r "..\..\..\LibreCAD-Release\windows\*.*"
+  File "${Qt_Dir}\Qt${Qt_Version}\Tools\MinGW\bin\libgcc_s_sjlj-1.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\icu*.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\Tools\MinGW\bin\libwinpthread-1.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\libstdc++-6.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\libEGL.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\libGLESv2.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\D3DCompiler_43.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Clucene.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Core.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Declarative.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Gui.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Help.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Network.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5OpenGL.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5PrintSupport.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Script.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Svg.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Sql.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Widgets.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5Xml.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\Qt5XmlPatterns.dll"
+  SetOutPath "$INSTDIR\platforms"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\platforms\qminimal.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\platforms\qwindows.dll"
   SetOutPath "$INSTDIR\sqldrivers"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\plugins\sqldrivers\qsqlite4.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\sqldrivers\qsqlite.dll"
   SetOutPath "$INSTDIR\imageformats"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\plugins\imageformats\qgif4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\plugins\imageformats\qjpeg4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\plugins\imageformats\qtiff4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\plugins\imageformats\qmng4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\plugins\imageformats\qsvg4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\plugins\imageformats\qtga4.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qgif.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qjpeg.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qtiff.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qmng.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qsvg.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qtga.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qwbmp.dll"
 
   ;Store installation folder
   WriteRegStr HKCU "Software\LibreCAD" "" $INSTDIR

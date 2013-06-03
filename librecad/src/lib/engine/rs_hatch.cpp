@@ -262,7 +262,7 @@ void RS_Hatch::update() {
         RS_Vector startPoint;
         RS_Vector endPoint;
         RS_Vector center = RS_Vector(false);
-        bool reversed;
+        bool reversed=false;
 
         switch(e->rtti()){
         case RS2::EntityLine:
