@@ -16,6 +16,7 @@ Makefile
 .deps
 .libs
 generated/*
+clean
 
 # Unix generated directories (except Apple)
 unix/
@@ -33,6 +34,7 @@ windows/
 *.ilk
 *.rc
 *.bak
+custom-windows.bat
 # Win/qmake generated project files
 #*.vcproj
 #*.sln
