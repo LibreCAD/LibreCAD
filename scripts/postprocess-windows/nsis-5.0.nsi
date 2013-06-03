@@ -113,6 +113,8 @@ Section "Install Section" SecInstall
   File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\platforms\qwindows.dll"
   SetOutPath "$INSTDIR\sqldrivers"
   File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\sqldrivers\qsqlite.dll"
+  SetOutPath "$INSTDIR\printsupport"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\printsupport\windowsprintersupport.dll"
   SetOutPath "$INSTDIR\imageformats"
   File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qgif.dll"
   File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qjpeg.dll"
