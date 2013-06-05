@@ -93,11 +93,23 @@ install macports from http://www.macports.org/
 
 After that install QT and a new gcc, at mimimum you properly need gcc 44
 
-Install a version of Qt < 4.8.0, 4.7.4 for example
-`sudo port install gcc46 qt4-creator-mac qt4-mac boost`
+Install a version of Qt, boost and muparser, for example
+`$ sudo port install gcc46 qt4-creator-mac qt4-mac boost muparser`
 
-Select the right compiler
-port select --set gcc mp-gcc46
+Select the right compiler, as LibreCAD doesn't build with the default llvm-gcc42,
+`$ sudo port select --set gcc mp-gcc46`
 
-When installed run to build a makefile
-`qmake librecad.pro -r -spec mkspec/macports`
+When installed run to build a makefile in the LibreCAD source folder,
+`$ qmake librecad.pro -r -spec mkspec/macports`
+
+If the previous step is successful, you can build LibreCAD by,
+`$ make -j4'
+
+After a successful build, the generated executible of LibreCAD can be found as LibreCAD.app/Contents/MacOS/LibreCAD.
+
+Alternatively, you may try the building script comes with LibreCAD at scripts/build-osx.sh
+`$ cd scripts/`
+`$ ./build-osx.sh`
+
+
+
