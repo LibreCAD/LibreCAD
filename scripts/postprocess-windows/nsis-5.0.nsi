@@ -14,7 +14,7 @@
 
   ;Name and file
   Name "LibreCAD"
-  OutFile "LibreCAD-Installer.exe"
+  OutFile "../../generated/LibreCAD-Installer.exe"
 
   ;Default installation folder
   InstallDir "$PROGRAMFILES\LibreCAD"
@@ -86,7 +86,7 @@ FunctionEnd
 
 Section "Install Section" SecInstall
   SetOutPath "$INSTDIR"
-  File /r "..\..\..\LibreCAD-Release\windows\*.*"
+  File /r "..\..\windows\*.*"
   File "${Qt_Dir}\Qt${Qt_Version}\Tools\MinGW\bin\libgcc_s_sjlj-1.dll"
   File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\bin\icu*.dll"
   File "${Qt_Dir}\Qt${Qt_Version}\Tools\MinGW\bin\libwinpthread-1.dll"
@@ -165,4 +165,5 @@ Section "Uninstall"
   DeleteRegKey /ifempty HKCU "Software\LibreCAD"
 
 SectionEnd
+
 
