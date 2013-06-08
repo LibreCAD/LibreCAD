@@ -42,8 +42,9 @@ public:
     /**
      * Action States.
      */
-    enum Status {
-        SetTargetPoint,    /**< Setting the reference point. */
+	enum Status {
+		SetUndefined = -1, /**< Setting undefined for initialisation. */
+		SetTargetPoint = 0,/**< Setting the reference point. */
 		SetAngle,          /**< Setting angle in the command line. */
 		SetFactor,         /**< Setting factor in the command line. */
 		SetColumns,        /**< Setting columns in the command line. */
