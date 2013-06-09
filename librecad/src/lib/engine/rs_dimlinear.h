@@ -36,9 +36,14 @@
 class RS_DimLinearData {
 public:
     /**
-     * Default constructor. Leaves the data object uninitialized.
+	 * Default constructor
      */
-    RS_DimLinearData() {}
+	RS_DimLinearData():
+		extensionPoint1(false),
+		extensionPoint2(false),
+		angle(0.0),
+		oblique(0.0)
+	{}
 
     /**
      * Constructor with initialisation.

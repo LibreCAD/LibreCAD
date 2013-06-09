@@ -38,7 +38,10 @@ public:
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-    RS_DimRadialData() {}
+	RS_DimRadialData():
+		definitionPoint(false),
+		leader(0.0)
+	{}
 
     /**
      * Constructor with initialisation.

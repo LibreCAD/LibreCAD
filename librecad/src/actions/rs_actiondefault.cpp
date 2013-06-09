@@ -41,7 +41,11 @@
 RS_ActionDefault::RS_ActionDefault(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView)
     : RS_PreviewActionInterface("Default",
-                                container, graphicView) {
+								container, graphicView),
+	v1(false),
+	v2(false),
+	restrBak(RS2::RestrictNothing)
+{
 
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault: OK");

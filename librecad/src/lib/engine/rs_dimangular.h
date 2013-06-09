@@ -36,9 +36,14 @@
 class RS_DimAngularData {
 public:
     /**
-     * Default constructor. Leaves the data object uninitialized.
+	 * Default constructor
      */
-    RS_DimAngularData() {}
+	RS_DimAngularData():
+		definitionPoint1(false),
+		definitionPoint2(false),
+		definitionPoint3(false),
+		definitionPoint4(false)
+	{}
 
     /**
      * Constructor with initialisation.
