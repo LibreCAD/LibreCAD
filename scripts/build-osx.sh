@@ -6,8 +6,7 @@
 
 # the LibreCAD source folder 
 
-SCRIPT="$(realpath "$0")"
-SCRIPTPATH="$(dirname "${SCRIPT}")"
+SCRIPTPATH="$(dirname "$0")"
 
 cd "${SCRIPTPATH}"/..
 qmake librecad.pro -r -spec mkspec/macports
