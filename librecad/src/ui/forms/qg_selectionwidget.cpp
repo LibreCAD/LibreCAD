@@ -72,7 +72,9 @@ void QG_SelectionWidget::init() {
     RS_SETTINGS->endGroup();
 
     lEntities->setFont(QFont("Helvetica", fsize));
-    lLabel->setFont(QFont("Helvetica", fsize));
+	lLabel->setFont(QFont("Helvetica", fsize));
+	lLabelLength->setFont(QFont("Helvetica", fsize));
+	lTotalLength->setFont(QFont("Helvetica", fsize));
 }
 
 void QG_SelectionWidget::setNumber(int n) {
