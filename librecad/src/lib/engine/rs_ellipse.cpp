@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <QVector>
+#include <QDebug>
 #include "rs_ellipse.h"
 
 #include "rs_graphic.h"
@@ -590,7 +591,7 @@ bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
     if(sol.getNumber()<3) return false; //need one center and 3 points on ellipse
     QVector<QVector<double> > mt;
     int mSize(sol.getNumber() -1);
-    if( (sol.get(mSize) - sol.get(mSize-1)).squared() < RS_TOLERANCE*RS_TOLERANCE ) {
+    if( (sol.get(mSize) - sol.get(mSize-1)).squared() < RS_TOLERANCE15 ) {
         //remove the last point
         mSize--;
     }
@@ -607,14 +608,14 @@ bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
             mt[i][2]=1.;
         }
         if ( ! RS_Math::linearSolver(mt,dn) ) return false;
-        if( dn[0]<RS_TOLERANCE*RS_TOLERANCE || dn[1]<RS_TOLERANCE*RS_TOLERANCE) return false;
+        if( dn[0]<RS_TOLERANCE15 || dn[1]<RS_TOLERANCE15) return false;
         setMajorP(RS_Vector(1./sqrt(dn[0]),0.));
         setRatio(sqrt(dn[0]/dn[1]));
         setAngle1(0.);
         setAngle2(0.);
         setCenter(sol.get(0));
         return true;
-        break;
+
     case 3:
         for(int i=0;i<mSize;i++){//form the linear equation
             mt[i].resize(mSize+1);
@@ -1478,7 +1479,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
         auto&& vpIts=RS_Information::getIntersection(
                     static_cast<RS_Entity*>(this), &line, true);
         if( vpIts.size()==0) continue;
-        foreach(RS_Vector vp, vpIts.getList()){
+        foreach(RS_Vector vp, vpIts.getVector()){
             auto&& ap1=getTangentDirection(vp).angle();
             auto&& ap2=line.getTangentDirection(vp).angle();
             //ignore tangent points, because the arc doesn't cross over

@@ -29,7 +29,7 @@
 #define RS_VECTOR_H
 
 #include <iostream>
-#include <QList>
+#include <QVector>
 #include "rs.h"
 
 /**
@@ -168,6 +168,7 @@ public:
     {
         return vector.size();
     }
+    void resize(size_t n);
     bool hasValid() const;
     void set(int i, const RS_Vector& v);
     void push_back(const RS_Vector& v);
@@ -179,7 +180,7 @@ public:
                          double* dist=NULL, int* index=NULL) const;
     double getClosestDistance(const RS_Vector& coord,
                               int counts = -1); //default to search all
-    QList<RS_Vector> getList() const;
+    QVector<RS_Vector> getVector() const;
     void rotate(const double& ang);
     void rotate(const RS_Vector& angleVector);
     void rotate(const RS_Vector& center, const double& ang);
@@ -197,7 +198,7 @@ public:
                                       const RS_VectorSolutions& s);
 
 private:
-    QList<RS_Vector> vector;
+    QVector<RS_Vector> vector;
     bool tangent;
 };
 

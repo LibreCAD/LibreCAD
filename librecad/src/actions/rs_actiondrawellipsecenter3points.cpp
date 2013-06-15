@@ -101,7 +101,8 @@ void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent* e) {
     //    RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::mouseMoveEvent begin");
     RS_Vector mouse = snapPoint(e);
     if(getStatus() == SetCenter) return;
-    points.set(getStatus(),mouse);
+    points.resize(getStatus());
+    points.push_back(mouse);
     if(preparePreview()) {
         switch(getStatus()) {
 

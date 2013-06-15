@@ -56,6 +56,7 @@
 //tolerance
 #define RS_TOLERANCE 1.0e-10
 //squared tolerance
+#define RS_TOLERANCE15 1.5e-15
 #define RS_TOLERANCE2 1.0e-20
 #define RS_TOLERANCE_ANGLE 1.0e-8
 

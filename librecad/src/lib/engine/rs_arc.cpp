@@ -840,7 +840,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
                     &line,
                     true);
         if( vpIts.size()==0) continue;
-        foreach(RS_Vector vp, vpIts.getList()){
+        foreach(RS_Vector vp, vpIts.getVector()){
             auto&& ap1=getTangentDirection(vp).angle();
             auto&& ap2=line.getTangentDirection(vp).angle();
             //ignore tangent points, because the arc doesn't cross over

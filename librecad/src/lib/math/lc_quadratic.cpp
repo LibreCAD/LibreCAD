@@ -380,7 +380,7 @@ LC_Quadratic LC_Quadratic::flipXY(void) const
 RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const LC_Quadratic& l2)
 {
     RS_VectorSolutions ret;
-    if( (l1.isValid()==false || l2.isValid()) == false ) {
+    if( l1.isValid()==false || l2.isValid()==false ) {
 //        DEBUG_HEADER();
 //        std::cout<<l1<<std::endl;
 //        std::cout<<l2<<std::endl;

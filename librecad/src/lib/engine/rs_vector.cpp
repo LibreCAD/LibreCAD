@@ -825,7 +825,11 @@ bool RS_VectorSolutions::hasValid() const {
     return false;
 }
 
-QList<RS_Vector> RS_VectorSolutions::getList() const {
+void RS_VectorSolutions::resize(size_t n){
+    vector.resize(n);
+}
+
+QVector<RS_Vector> RS_VectorSolutions::getVector() const {
     return vector;
 }
 
@@ -835,11 +839,11 @@ void RS_VectorSolutions::push_back(const RS_Vector& v) {
 
 void RS_VectorSolutions::removeAt(const int i){
     if (vector.size()> i)
-        vector.removeAt(i);
+        vector.remove(i);
 }
 
 RS_VectorSolutions RS_VectorSolutions::appendTo(const RS_VectorSolutions& v) {
-    vector += v.getList();
+    vector += v.getVector();
     return *this;
 }
 
