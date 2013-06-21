@@ -2235,13 +2235,14 @@ void RS_FilterDXFRW::writeMText(RS_MText* t) {
         else if (t->getDrawingDirection() == RS_MTextData::TopToBottom)
             text->alignH = (DRW_Text::HAlign)3;
         else text->alignH = (DRW_Text::HAlign)5;
-        if (t->getLineSpacingFactor() == RS_MTextData::AtLeast)
+		if (t->getLineSpacingStyle() == RS_MTextData::AtLeast)
             text->alignV = (DRW_Text::VAlign)1;
         else text->alignV = (DRW_Text::VAlign)2;
 
         text->text = toDxfString(t->getText()).toUtf8().data();
         //        text->widthscale =t->getWidth();
         text->widthscale =t->getUsedTextWidth(); //getSize().x;
+		txt2.interlin = t->getLineSpacingFactor();
 
         dxfW->writeMText((DRW_MText*)text);
     }
