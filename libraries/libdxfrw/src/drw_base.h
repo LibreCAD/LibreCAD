@@ -156,10 +156,10 @@ public:
     }
     enum TYPE type;
 
-    void addString(UTF8STRING s) {data = s; content.s = &data; setType(STRING);}
-    void addInt(int i) {content.i = i; setType(INTEGER);}
-    void addDouble(double d) {content.d = d; setType(DOUBLE);}
-    void addCoord(DRW_Coord *v) {content.v = v; setType(COORD);}
+    void addString(UTF8STRING s) {setType(STRING); data = s; content.s = &data;}
+    void addInt(int i) {setType(INTEGER); content.i = i;}
+    void addDouble(double d) {setType(DOUBLE); content.d = d;}
+    void addCoord(DRW_Coord *v) {setType(COORD); content.v = v;}
     void setType(enum TYPE t) { if (type == COORD) delete content.v; type = t;}
     void setCoordX(double d) { if (type == COORD) content.v->x = d;}
     void setCoordY(double d) { if (type == COORD) content.v->y = d;}
