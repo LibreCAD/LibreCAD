@@ -123,6 +123,8 @@ Section "Install Section" SecInstall
   File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qsvg.dll"
   File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qtga.dll"
   File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\plugins\imageformats\qwbmp.dll"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\translations\qt_??.qm"
+  File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\translations\qt_??_??.qm"
 
   ;Store installation folder
   WriteRegStr HKCU "Software\LibreCAD" "" $INSTDIR
