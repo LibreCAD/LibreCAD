@@ -27,6 +27,7 @@
 #include "rs_actionprintpreview.h"
 
 #include <QAction>
+#include <QDebug>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
@@ -216,12 +217,12 @@ void RS_ActionPrintPreview::fit() {
     }
 }
 
-bool RS_ActionPrintPreview::setScale(double f) {
+bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
     if (graphic!=NULL) {
         if( fabs(f - graphic->getPaperScale()) < RS_TOLERANCE ) return false;
         graphic->setPaperScale(f);
         graphic->centerToPage();
-        graphicView->zoomPage();
+        if(autoZoom) graphicView->zoomPage();
         graphicView->redraw();
         return true;
     }

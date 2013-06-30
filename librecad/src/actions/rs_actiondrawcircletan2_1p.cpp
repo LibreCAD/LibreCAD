@@ -127,12 +127,11 @@ void RS_ActionDrawCircleTan2_1P::trigger() {
         circle->setHighlighted(false);
     graphicView->redraw(RS2::RedrawDrawing);
     circles.clear();
-    //    drawSnapper();
 
-    setStatus(SetCircle1);
 
     RS_DEBUG->print("RS_ActionDrawCircleTan2_1P::trigger():"
                     " entity added: %d", c->getId());
+    init(SetCircle1);
 }
 
 
@@ -144,7 +143,7 @@ bool RS_ActionDrawCircleTan2_1P::getCenters()
 
     auto&& list=LC_Quadratic::getIntersection(lc0,lc1);
     centers.clean();
-    for(int i=0;i<list.size();i++){
+    for(unsigned int i=0;i<list.size();i++){
         auto&& vp=list.get(i);
         auto&& ds=vp.distanceTo(point)-RS_TOLERANCE;
         bool validBranch(true);

@@ -29,9 +29,9 @@
 
 #include "rs_previewactioninterface.h"
 #include "rs_modification.h"
-#include "document_interface.h"
 
  class Plugin_Entity;
+ class Doc_plugin_interface;
 
 /**
  * This action class can handle user events to select entities from plugin.
@@ -70,7 +70,7 @@ public:
 
     void setMesage(QString msg);
     bool isCompleted(){return completed;}
-    Plugin_Entity *getSelected();
+    Plugin_Entity *getSelected(Doc_plugin_interface* d);
 
 private:
     bool completed;

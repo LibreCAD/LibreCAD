@@ -12,7 +12,7 @@
 //Table 932 one byte are
 //from 0xA1 -> 0xFF61
 //to   0xDF .> 0xFF9F
-static const int DRW_Table932[] = {
+static const int DRW_Table932[1] = {
 };
 
 //Table 932 lead byte

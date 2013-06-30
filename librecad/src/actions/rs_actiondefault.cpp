@@ -41,7 +41,11 @@
 RS_ActionDefault::RS_ActionDefault(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView)
     : RS_PreviewActionInterface("Default",
-                                container, graphicView) {
+								container, graphicView),
+	v1(false),
+	v2(false),
+	restrBak(RS2::RestrictNothing)
+{
 
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault: OK");
@@ -145,8 +149,10 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
                     RS_DEBUG->print("RS_ActionDefault::mouseMoveEvent: "
                                     "moving entity");
                     setStatus(Moving);
-                    v1 = en->getNearestRef(v1);
-                    graphicView->moveRelativeZero(v1);
+                    RS_Vector vp= en->getNearestRef(v1);
+                    if(vp.valid) v1=vp;
+
+                    //graphicView->moveRelativeZero(v1);
                 }
 
                 // no entity found. start area selection:

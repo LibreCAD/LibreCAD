@@ -29,6 +29,7 @@
 
 #include "rs_block.h"
 #include "rs_graphic.h"
+#include "rs_layer.h"
 
 /**
  * @param parent The graphic this block belongs to.
@@ -136,6 +137,10 @@ void RS_Insert::update() {
                     ne = e->clone();
                 ne->initId();
                 ne->setUpdateEnabled(false);
+                // if entity layer are 0 set to insert layer to allow "1 layer control" bug ID #3602152
+                RS_Layer *l= ne->getLayer();//special fontchar block don't have
+                if (l != NULL && ne->getLayer()->getName() == "0")
+                    ne->setLayer(this->getLayer());
                 ne->setParent(this);
                 ne->setVisible(getFlag(RS2::FlagVisible));
 
@@ -143,15 +148,15 @@ void RS_Insert::update() {
 
                 // Move:
 //                                RS_DEBUG->print("RS_Insert::update: move 1");
-                                if (fabs(data.scaleFactor.x)>1.0e-6 &&
-                                    fabs(data.scaleFactor.y)>1.0e-6) {
-                        ne->move(data.insertionPoint +
+                if (fabs(data.scaleFactor.x)>1.0e-6 &&
+                        fabs(data.scaleFactor.y)>1.0e-6) {
+                    ne->move(data.insertionPoint +
                              RS_Vector(data.spacing.x/data.scaleFactor.x*c,
-                                           data.spacing.y/data.scaleFactor.y*r));
-                                }
-                                else {
-                        ne->move(data.insertionPoint);
-                                }
+                                       data.spacing.y/data.scaleFactor.y*r));
+                }
+                else {
+                    ne->move(data.insertionPoint);
+                }
                 // Move because of block base point:
 //                                RS_DEBUG->print("RS_Insert::update: move 2");
                 ne->move(blk->getBasePoint()*-1);

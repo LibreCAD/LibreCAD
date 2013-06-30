@@ -17,7 +17,7 @@
 #include <QFile>
 #include <QLabel>
 #include <QGroupBox>
-#include <QRadioButton>
+#include <QCheckBox>
 #include <QLineEdit>
 #include <QComboBox>
 #include <QDialog>
@@ -33,6 +33,9 @@ class AsciiFile : public QObject, QC_PluginInterface
 {
     Q_OBJECT
      Q_INTERFACES(QC_PluginInterface)
+#if QT_VERSION >= 0x050000
+     Q_PLUGIN_METADATA(IID "org.librecad.asciifile" FILE  "asciifile.json")
+#endif
 
  public:
      virtual PluginCapabilities getCapabilities() const;
@@ -63,7 +66,8 @@ private:
     void readSettings();
     void writeSettings();
     void procesfileODB(QFile* file, QString sep);
-    void procesfileNormal(QFile* file, QString sep);
+    void procesfileNormal(QFile* file, QString sep, QString::SplitBehavior skip = QString::KeepEmptyParts);
+    void drawLine();
     void draw2D();
     void draw3D();
     void drawNumber();
@@ -82,6 +86,7 @@ private:
     textBox *ptcode;
     QLineEdit *fileedit;
     QComboBox *formatedit;
+    QCheckBox *connectPoints;
     QList<pointData*> dataList;
 
     Document_Interface *currDoc;
@@ -126,7 +131,7 @@ public:
     QString getLayer() { return layedit->text();}
     void setLayer(QString l) { layedit->setText(l);}
 private:
-    QRadioButton *rb;
+    QCheckBox *rb;
     QLineEdit *layedit;
     QVBoxLayout *vbox;
 };

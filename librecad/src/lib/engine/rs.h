@@ -28,7 +28,12 @@
 #define RS_H
 
 #include <qnamespace.h>
-#include <qprinter.h>
+#include <qglobal.h>
+#if QT_VERSION >= 0x050000
+# include <QtPrintSupport/QPrinter>
+#else
+# include <qprinter.h>
+#endif 
 
 #define RS_TEST
 
@@ -110,6 +115,9 @@ public:
         FormatDXFRW2000,           /**< DXF format. v2000. */
         FormatDXFRW14,           /**< DXF format. v14. */
         FormatDXFRW12,           /**< DXF format. v12. */
+#ifdef DWGSUPPORT
+        FormatDWG,           /**< DWG format. */
+#endif
         FormatLFF,           /**< LibreCAD Font File format. */
         FormatCXF,           /**< CAM Expert Font format. */
         FormatJWW,           /**< JWW Format type */
@@ -535,10 +543,14 @@ public:
     enum ResolveLevel {
         /** Groups are not resolved */
         ResolveNone,
-                /**
-                 * Resolve all but not Inserts.
-                 */
-                ResolveAllButInserts,
+        /**
+        * Resolve all but not Inserts.
+        */
+        ResolveAllButInserts,
+        /**
+         * Resolve all but not Text or MText.
+         */
+        ResolveAllButTexts,
         /**
          * all Entity Containers are resolved
          * (including Texts, Polylines, ...)

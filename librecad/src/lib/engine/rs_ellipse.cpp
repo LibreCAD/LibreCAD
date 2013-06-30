@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <QVector>
+#include <QDebug>
 #include "rs_ellipse.h"
 
 #include "rs_graphic.h"
@@ -139,6 +140,8 @@ RS_VectorSolutions RS_Ellipse::getRefPoints() {
     }
     ret.push_back(data.center);
     ret.appendTo(getFoci());
+    ret.push_back(getMajorPoint());
+    ret.push_back(getMinorPoint());
     return ret;
 }
 
@@ -588,7 +591,7 @@ bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
     if(sol.getNumber()<3) return false; //need one center and 3 points on ellipse
     QVector<QVector<double> > mt;
     int mSize(sol.getNumber() -1);
-    if( (sol.get(mSize) - sol.get(mSize-1)).squared() < RS_TOLERANCE*RS_TOLERANCE ) {
+    if( (sol.get(mSize) - sol.get(mSize-1)).squared() < RS_TOLERANCE15 ) {
         //remove the last point
         mSize--;
     }
@@ -605,14 +608,14 @@ bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
             mt[i][2]=1.;
         }
         if ( ! RS_Math::linearSolver(mt,dn) ) return false;
-        if( dn[0]<RS_TOLERANCE*RS_TOLERANCE || dn[1]<RS_TOLERANCE*RS_TOLERANCE) return false;
+        if( dn[0]<RS_TOLERANCE15 || dn[1]<RS_TOLERANCE15) return false;
         setMajorP(RS_Vector(1./sqrt(dn[0]),0.));
         setRatio(sqrt(dn[0]/dn[1]));
         setAngle1(0.);
         setAngle2(0.);
         setCenter(sol.get(0));
         return true;
-        break;
+
     case 3:
         for(int i=0;i<mSize;i++){//form the linear equation
             mt[i].resize(mSize+1);
@@ -946,7 +949,7 @@ RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
         return RS_Vector(false);
     }
     RS_Vector direction=normal.getEndpoint() - normal.getStartpoint();
-    if (direction.squared()< RS_TOLERANCE*RS_TOLERANCE) {
+	if (direction.squared()< RS_TOLERANCE15) {
         //undefined direction
         return RS_Vector(false);
     }
@@ -1076,7 +1079,7 @@ RS2::Ending RS_Ellipse::getTrimPoint(const RS_Vector& trimCoord,
 
     //double angEl = getEllipseAngle(trimPoint);
     double angM = getEllipseAngle(trimCoord);
-    if (RS_Math::getAngleDifference(angM, data.angle1) > RS_Math::getAngleDifference(data.angle2,angM)) {
+    if (RS_Math::getAngleDifference(angM, data.angle1,isReversed()) > RS_Math::getAngleDifference(data.angle2,angM,isReversed())) {
         return RS2::EndingStart;
     } else {
         return RS2::EndingEnd;
@@ -1321,17 +1324,78 @@ double RS_Ellipse::getDirection2() const {
 }
 
 void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-    RS_Vector startpoint = getStartpoint();
-    RS_Vector endpoint = getEndpoint();
+    if(isArc()){
+        RS_Vector startpoint = getStartpoint();
+        RS_Vector endpoint = getEndpoint();
 
-//    if (ref.distanceTo(startpoint)<1.0e-4) {
-    if ((ref-startpoint).squared()<1.0e-8) {
-        moveStartpoint(startpoint+offset);
+        //    if (ref.distanceTo(startpoint)<1.0e-4) {
+        if ((ref-startpoint).squared()<1.0e-8) {
+            moveStartpoint(startpoint+offset);
+            correctAngles();//avoid extra 2.*M_PI in angles
+            return;
+        }
+        if ((ref-endpoint).squared()<1.0e-8) {
+            moveEndpoint(endpoint+offset);
+            correctAngles();//avoid extra 2.*M_PI in angles
+            return;
+        }
     }
-    if ((ref-endpoint).squared()<1.0e-8) {
-        moveEndpoint(endpoint+offset);
+    if ((ref-getCenter()).squared()<1.0e-8) {
+        //move center
+        setCenter(getCenter()+offset);
+        return;
     }
-    correctAngles();//avoid extra 2.*M_PI in angles
+    auto&& foci=getFoci();
+    for(size_t i=0; i< 2 ; i++){
+        if ((ref-foci.at(i)).squared()<1.0e-8) {
+            auto&& focusNew=foci.at(i) + offset;
+            //move focus
+            auto&& center = getCenter() + offset*0.5;
+            RS_Vector majorP;
+            if(getMajorP().dotP( foci.at(i) - getCenter()) >= 0.){
+                majorP = focusNew - center;
+            }else{
+                majorP = center - focusNew;
+            }
+            double d=getMajorP().magnitude();
+            double c=0.5*focusNew.distanceTo(foci.at(1-i));
+            double k=majorP.magnitude();
+            if(k<RS_TOLERANCE2 || d < RS_TOLERANCE ||
+                    c >= d - RS_TOLERANCE) return;
+            //            DEBUG_HEADER();
+            //            std::cout<<__FUNCTION__<<" : moving focus";
+            majorP *= d/k;
+            setCenter(center);
+            setMajorP(majorP);
+            setRatio(sqrt(d*d-c*c)/d);
+            correctAngles();//avoid extra 2.*M_PI in angles
+            return;
+        }
+    }
+
+    //move major/minor points
+    if ((ref-getMajorPoint()).squared()<1.0e-8) {
+        RS_Vector majorP=getMajorP()+offset;
+        double r=majorP.magnitude();
+        if(r<RS_TOLERANCE) return;
+        double ratio = getRatio()*getMajorRadius()/r;
+        setMajorP(majorP);
+        setRatio(ratio);
+        return;
+    }
+    if ((ref-getMinorPoint()).squared()<1.0e-8) {
+        RS_Vector minorP=getMinorPoint() + offset;
+        double r2=getMajorP().squared();
+        if(r2<RS_TOLERANCE2) return;
+         RS_Vector projected= getCenter() +
+                getMajorP()*getMajorP().dotP(minorP-getCenter())/r2;
+        double r=(minorP - projected).magnitude();
+        if(r<RS_TOLERANCE) return;
+        double ratio = getRatio()*r/getMinorRadius();
+        setRatio(ratio);
+        return;
+    }
+
 }
 
 /** whether the entity's bounding box intersects with visible portion of graphic view
@@ -1341,21 +1405,21 @@ bool RS_Ellipse::isVisibleInWindow(RS_GraphicView* view) const
 {
     RS_Vector vpMin(view->toGraph(0,view->getHeight()));
     RS_Vector vpMax(view->toGraph(view->getWidth(),0));
+    //viewport
     QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
     QVector<RS_Vector> vps;
     for(unsigned short i=0;i<4;i++){
         const QPointF& vp(visualBox.at(i));
         vps<<RS_Vector(vp.x(),vp.y());
     }
+    //check for intersection points with viewport
     for(unsigned short i=0;i<4;i++){
         RS_Line line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));
         RS_Ellipse e0(NULL, getData());
         if( RS_Information::getIntersection(&e0, &line, true).size()>0) return true;
     }
-    if( getCenter().isInWindowOrdered(vpMin,vpMax)==false) return false;
-    double d2=getMajorP().squared();
-    if(getRatio()<1.) d2 *= getRatio()*getRatio();
-    return (vpMin-getCenter()).squared() > d2 ;
+    //is startpoint within viewport
+    return getEllipsePoint(getAngle1()).isInWindowOrdered(vpMin,vpMax);
 }
 
 /** return the equation of the entity
@@ -1415,7 +1479,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
         auto&& vpIts=RS_Information::getIntersection(
                     static_cast<RS_Entity*>(this), &line, true);
         if( vpIts.size()==0) continue;
-        foreach(RS_Vector vp, vpIts.getList()){
+        foreach(RS_Vector vp, vpIts.getVector()){
             auto&& ap1=getTangentDirection(vp).angle();
             auto&& ap2=line.getTangentDirection(vp).angle();
             //ignore tangent points, because the arc doesn't cross over

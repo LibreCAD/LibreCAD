@@ -101,6 +101,8 @@
 #include "qg_polylineequidistantoptions.h"
 #include "qg_layerwidget.h"
 #include "qg_mainwindowinterface.h"
+#include "rs_actionprintpreview.h"
+#include <QDebug>
 
 #if QT_VERSION < 0x040400
 #include "emu_qt44.h"
@@ -203,8 +205,8 @@ RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList) {
             layer_name = "noname";
         }
         newLayerName = QString(layer_name);
-        while(layerList->find(newLayerName) > 0) {
-            newLayerName = QString("%1%2").arg(layer_name).arg(i);
+        while(layerList->find(newLayerName) != NULL) {
+            newLayerName = QString("%1%2").arg(layer_name).arg(i++);
         }
     }
 
@@ -317,7 +319,7 @@ RS_Layer* QG_DialogFactory::requestEditLayerDialog(RS_LayerList* layerList) {
         QG_LayerDialog dlg(parent, QMessageBox::tr("Layer Dialog"));
         dlg.setLayer(layer);
         dlg.setLayerList(layerList);
-        dlg.setEditLayer(TRUE);
+        dlg.setEditLayer(true);
         if (dlg.exec()) {
             dlg.updateLayer();
         } else {
@@ -472,7 +474,11 @@ QString QG_DialogFactory::requestFileSaveAsDialog() {
 
     filters.append("Drawing Exchange (*.dxf)");
     filters.append("Font (*.cxf)");
-    fileDlg.setFilters(filters);
+#if QT_VERSION < 0x040400
+    emu_qt44_QFileDialog_setNameFilters(fileDlg, filters);
+#else
+    fileDlg.setNameFilters(filters);
+#endif
     fileDlg.setMode(QFileDialog::AnyFile);
     fileDlg.setCaption(tr("Save Drawing As"));
     fileDlg.setDir(defDir);
@@ -635,7 +641,11 @@ QString QG_DialogFactory::requestImageOpenDialog() {
     if (!cancel) {
         RS_SETTINGS->beginGroup("/Paths");
         RS_SETTINGS->writeEntry("/OpenImage", QFileInfo(fn).absolutePath());
-        RS_SETTINGS->writeEntry("/ImageFilter", fileDlg.selectedFilter());
+#if QT_VERSION < 0x040400
+        RS_SETTINGS->writeEntry("/ImageFilter", emu_qt44_QFileDialog_selectedNameFilter(fileDlg));
+#else
+        RS_SETTINGS->writeEntry("/ImageFilter", fileDlg.selectedNameFilter());
+#endif
         RS_SETTINGS->endGroup();
     }
 
@@ -741,6 +751,8 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         break;
 
     case RS2::ActionDimLinear:
+    case RS2::ActionDimLinearVer:
+    case RS2::ActionDimLinearHor:
         requestDimensionOptions(action, on, update);
         if (((RS_ActionDimLinear*)action)->hasFixedAngle()==false) {
             requestDimLinearOptions(action, on, update);
@@ -806,10 +818,10 @@ void QG_DialogFactory::requestPrintPreviewOptions(RS_ActionInterface* action,
     if (optionWidget!=NULL ) {
         if (printPreviewOptions==NULL) {
             printPreviewOptions = new QG_PrintPreviewOptions();
-
+            printPreviewOptions ->setAction(action, false);
             optionWidget->addWidget(printPreviewOptions);
         }
-        printPreviewOptions ->setAction(action, update);
+        if(update) printPreviewOptions ->setAction(action, update);
         printPreviewOptions->show();
     }
 

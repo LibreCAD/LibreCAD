@@ -16,6 +16,7 @@
 #include <QMouseEvent>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QCheckBox>
 #if QT_VERSION >= 0x040400
 #include <QFormLayout>
 #endif
@@ -45,6 +46,7 @@ QString AsciiFile::name() const
 void AsciiFile::execComm(Document_Interface *doc,
                              QWidget *parent, QString cmd)
 {
+    Q_UNUSED(cmd);
     dibPunto pdt(parent);
     int result = pdt.exec();
     if (result == QDialog::Accepted)
@@ -168,7 +170,8 @@ void imgLabel::mouseReleaseEvent(QMouseEvent *event)
 pointBox::pointBox(const QString & title, const QString & label, QWidget * parent ) :
     QGroupBox(title, parent)
 {
-    rb = new QRadioButton(label);
+    rb = new QCheckBox(label);
+    rb->setTristate (false );
     vbox = new QVBoxLayout;
     vbox->addWidget(rb);
     QLabel *but = new QLabel(tr("Layer:"));
@@ -243,11 +246,14 @@ dibPunto::dibPunto(QWidget *parent) :  QDialog(parent)
 
     QLabel *formatlabel = new QLabel(tr("Format:"));
     formatedit = new QComboBox();
-    txtformats << tr("Space Separator") << tr("Tab Separator") << tr("Comma Separator") << tr("*.odb for Psion 2");
+    txtformats << tr("Space Separator") << tr("Tab Separator") << tr("Comma Separator") << tr("Space in Columns") << tr("*.odb for Psion 2");
     formatedit->addItems(txtformats);
+    connectPoints = new QCheckBox(tr("Connect points"));
+
     QHBoxLayout *loformat = new QHBoxLayout;
     loformat->addWidget(formatlabel);
     loformat->addWidget(formatedit);
+    loformat->addWidget(connectPoints);
     mainLayout->addLayout(loformat, 0, 1);
 
     pt2d = new pointBox(tr("2D Point"),tr("Draw 2D Point"));
@@ -340,9 +346,14 @@ void dibPunto::procesFile(Document_Interface *doc)
     currDoc = doc;
 
 //Warning, can change ading or reordering "formatedit"
+    QString::SplitBehavior skip = QString::KeepEmptyParts;
     switch (formatedit->currentIndex()) {
     case 0:
         sep = " ";
+        break;
+    case 3:
+        sep = " ";
+        skip = QString::SkipEmptyParts;
         break;
     case 2:
         sep = ",";
@@ -360,11 +371,11 @@ void dibPunto::procesFile(Document_Interface *doc)
          return;
     }
 
-//Warning, can change ading or reordering "formatedit"
-    if (formatedit->currentIndex() == 3)
+//Warning, can change adding or reordering "formatedit"
+    if (formatedit->currentIndex() == 4)
         procesfileODB(&infile, sep);
     else
-        procesfileNormal(&infile, sep);
+        procesfileNormal(&infile, sep, skip);
     infile.close ();
     QString currlay = currDoc->getCurrentLayer();
 
@@ -380,8 +391,36 @@ void dibPunto::procesFile(Document_Interface *doc)
         drawCode();
 
     currDoc->setLayer(currlay);
+    /* draw lines in current layer */
+    if ( connectPoints->isChecked() )
+        drawLine();
+
     currDoc = NULL;
 
+}
+
+void dibPunto::drawLine()
+{
+    QPointF prevP, nextP;
+    int i;
+
+    for (i = 0; i < dataList.size(); ++i) {
+        pointData *pd = dataList.at(i);
+        if (!pd->x.isEmpty() && !pd->y.isEmpty()){
+            prevP.setX(pd->x.toDouble());
+            prevP.setY(pd->y.toDouble());
+            break;
+        }
+    }
+    for (; i < dataList.size(); ++i) {
+        pointData *pd = dataList.at(i);
+        if (!pd->x.isEmpty() && !pd->y.isEmpty()){
+            nextP.setX(pd->x.toDouble());
+            nextP.setY(pd->y.toDouble());
+            currDoc->addLine(&prevP, &nextP);
+            prevP = nextP;
+        }
+    }
 }
 
 void dibPunto::draw2D()
@@ -559,7 +598,7 @@ void dibPunto::procesfileODB(QFile* file, QString sep)
     }
 
 }
-void dibPunto::procesfileNormal(QFile* file, QString sep)
+void dibPunto::procesfileNormal(QFile* file, QString sep, QString::SplitBehavior skip)
 {
     //    QString outname, sep;
     QStringList data;
@@ -567,7 +606,7 @@ void dibPunto::procesfileNormal(QFile* file, QString sep)
     while (!file->atEnd()) {
         QString line = file->readLine();
         line.remove ( line.size()-1, 1);
-        data = line.split(sep);
+        data = line.split(sep, skip);
         pd = new pointData;
         int i = 0;
         int j = data.size();
@@ -599,6 +638,7 @@ void dibPunto::readSettings()
     str = settings.value("lastfile").toString();
     fileedit->setText(str);
     formatedit->setCurrentIndex( settings.value("format", 0).toInt() );
+    connectPoints->setChecked( settings.value("connectpoints", false).toBool() );
     pt2d->setCheck( settings.value("draw2d", false).toBool() );
     str = settings.value("layer2d").toString();
     pt2d->setLayer(str);
@@ -642,6 +682,7 @@ void dibPunto::writeSettings()
     settings.setValue("drawelev", ptelev->checkOn());
     settings.setValue("drawnumber", ptnumber->checkOn());
     settings.setValue("drawcode", ptcode->checkOn());
+    settings.setValue("connectpoints", connectPoints->isChecked());
     settings.setValue("layer2d", pt2d->getLayer());
     settings.setValue("layer3d", pt3d->getLayer());
     settings.setValue("layerelev", ptelev->getLayer());
@@ -661,4 +702,6 @@ void dibPunto::writeSettings()
     settings.setValue("positioncode", ptcode->getPosition());
  }
 
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(asciifile, AsciiFile);
+#endif

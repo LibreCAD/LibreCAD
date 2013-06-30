@@ -96,14 +96,19 @@ void RS_DimRadial::update(bool autoText) {
     //updateCreateDimensionLine(data.definitionPoint, edata.definitionPoint,
     //false, true);
 
+    // general scale (DIMSCALE)
+    double dimscale = getGeneralScale();
+
     RS_Vector p1 = data.definitionPoint;
     RS_Vector p2 = edata.definitionPoint;
     double angle = p1.angleTo(p2);
 
     // text height (DIMTXT)
-    double dimtxt = getTextHeight();
+    double dimtxt = getTextHeight()*dimscale;
     // text distance to line (DIMGAP)
-    double dimgap = getDimensionLineGap();
+    double dimgap = getDimensionLineGap()*dimscale;
+    // arrow size:
+    double arrowSize = getArrowSize()*dimscale;
 
     // length of dimension line:
     double length = p1.distanceTo(p2);
@@ -125,11 +130,11 @@ void RS_DimRadial::update(bool autoText) {
     double textWidth = text->getSize().x;
 
     // do we have to put the arrow / text outside of the arc?
-    bool outsideArrow = (length<getArrowSize()*2+textWidth);
+    bool outsideArrow = (length<arrowSize*2+textWidth);
     double arrowAngle;
 
     if (outsideArrow) {
-        length += getArrowSize()*2 + textWidth;
+        length += arrowSize*2 + textWidth;
         arrowAngle = angle+M_PI;
     } else {
         arrowAngle = angle;
@@ -142,7 +147,7 @@ void RS_DimRadial::update(bool autoText) {
     arrow = new RS_Solid(this, sd);
     arrow->shapeArrow(p2,
                       arrowAngle,
-                      getArrowSize());
+                      arrowSize);
     arrow->setPen(RS_Pen(RS2::FlagInvalid));
     arrow->setLayer(NULL);
     addEntity(arrow);
@@ -181,7 +186,7 @@ void RS_DimRadial::update(bool autoText) {
         textPos = data.middleOfText;
     } else {
         if (outsideArrow) {
-            textPos.setPolar(length-textWidth/2.0-getArrowSize(), angle);
+            textPos.setPolar(length-textWidth/2.0-arrowSize, angle);
         } else {
             textPos.setPolar(length/2.0, angle);
         }

@@ -82,7 +82,7 @@ class QG_LayerWidget: public QWidget, public RS_LayerListListener {
 
 public:
     QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
-                   const char* name=0, Qt::WFlags f = 0);
+                   const char* name=0, Qt::WindowFlags f = 0);
     ~QG_LayerWidget();
 
     void setLayerList(RS_LayerList* layerList, bool showByBlock);

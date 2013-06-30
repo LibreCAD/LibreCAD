@@ -362,7 +362,26 @@ RS_Vector RS_Line::prepareTrim(const RS_Vector& trimCoord,
 //prepare trimming for multiple intersections
     if ( ! trimSol.hasValid()) return(RS_Vector(false));
     if ( trimSol.getNumber() == 1 ) return(trimSol.get(0));
-    return trimSol.getClosest(trimCoord,NULL,0);
+    auto&& vp0=trimSol.getClosest(trimCoord,NULL,0);
+
+    double dr2=trimCoord.squaredTo(vp0);
+    //the trim point found is closer to mouse location (trimCoord) than both end points, return this trim point
+    if(dr2 < trimCoord.squaredTo(getStartpoint()) && dr2 < trimCoord.squaredTo(getEndpoint())) return vp0;
+    //the closer endpoint to trimCoord
+    RS_Vector vp1=(trimCoord.squaredTo(getStartpoint()) <= trimCoord.squaredTo(getEndpoint()))?getStartpoint():getEndpoint();
+
+    //searching for intersection in the direction of the closer end point
+    auto&& dvp1=vp1 - trimCoord;
+    RS_VectorSolutions sol1;
+    for(size_t i=0; i<trimSol.size(); i++){
+        auto&& dvp2=trimSol.at(i) - trimCoord;
+        if( RS_Vector::dotP(dvp1, dvp2) > RS_TOLERANCE) sol1.push_back(trimSol.at(i));
+    }
+    //if found intersection in direction, return the closest to trimCoord from it
+    if(sol1.size()) return sol1.getClosest(trimCoord,NULL,0);
+
+    //no intersection by direction, return previously found closest intersection
+    return vp0;
 }
 
 RS2::Ending RS_Line::getTrimPoint(const RS_Vector& trimCoord,

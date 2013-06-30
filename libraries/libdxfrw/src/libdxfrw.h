@@ -18,7 +18,6 @@
 #include "drw_objects.h"
 #include "drw_interface.h"
 
-#define DRW_VERSION     "0.5.4"
 
 class dxfReader;
 class dxfWriter;
@@ -27,7 +26,14 @@ class dxfRW {
 public:
     dxfRW(const char* name);
     ~dxfRW();
-    //read: return 0 if all ok
+    /// reads the file specified in constructor
+    /*!
+     * An interface must be provided. It is used by the class to signal various
+     * components being added.
+     * @param interface_ the interface to use
+     * @param ext should the extrusion be applied to convert in 2D?
+     * @return true for success
+     */
     bool read(DRW_Interface *interface_, bool ext);
     void setBinary(bool b) {binary = b;}
 
@@ -62,6 +68,7 @@ public:
     bool writeDimension(DRW_Dimension *ent);
 
 private:
+    /// used by read() to parse the content of the file
     bool processDxf();
     bool processHeader();
     bool processTables();
@@ -105,6 +112,7 @@ private:
     bool writeTables();
     bool writeBlocks();
     bool writeObjects();
+    std::string toHexStr(int n);
 
 private:
     DRW::Version version;

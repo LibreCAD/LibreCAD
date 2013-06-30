@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_ellipse.h"
 
 /**
- * Draw ellipse by foci and a point on ellipse
+ * Draw ellipse by center and 3 points on ellipse
  *
  * @author Dongxu Li
  */
@@ -38,10 +38,10 @@ public:
      * Action States.
      */
     enum Status {
-        SetCenter,   //  Setting the Center.  */
-        SetPoint1,   //  Setting the First Point.  */
-        SetPoint2,   //  Setting the Second Point.  */
-        SetPoint3   //  Setting the Third Point.  */
+        SetCenter=0,   //  Setting the Center.  */
+        SetPoint1=1,   //  Setting the First Point.  */
+        SetPoint2=2,   //  Setting the Second Point.  */
+        SetPoint3=3   //  Setting the Third Point.  */
     };
 
 public:

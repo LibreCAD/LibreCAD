@@ -62,6 +62,9 @@ void RS_ActionBlocksRemove::trigger() {
         }
 
         if (block!=NULL) {
+            if (document!=NULL) {
+                document->startUndoCycle();
+            }
 
             for (int i = 0; i < containerList.size(); ++i) {
 
@@ -76,8 +79,9 @@ void RS_ActionBlocksRemove::trigger() {
 
                         if (e->rtti()==RS2::EntityInsert) {
                             RS_Insert* ins = (RS_Insert*)e;
-                            if (ins->getName()==block->getName()) {
-                                cont->removeEntity(ins);
+                            if (ins->getName()==block->getName() && !ins->isUndone()) {
+                                document->addUndoable(ins);
+                                ins->setUndoState(true);
                                 done = false;
                                 break;
                             }
@@ -91,10 +95,13 @@ void RS_ActionBlocksRemove::trigger() {
                     RS_DIALOGFACTORY->closeEditBlockWindow(block);
             }
 
-            // Now remove the block from the block list:
-            graphic->removeBlock(block);
+            // Now remove the block from the block list, but do not delete:
+            block->setUndoState(true);
+            document->addUndoable(block);
+            document->endUndoCycle();
+            graphic->addBlockNotification();
             graphic->updateInserts();
-                        graphicView->redraw(RS2::RedrawDrawing);
+            graphicView->redraw(RS2::RedrawDrawing);
 
         }
     }

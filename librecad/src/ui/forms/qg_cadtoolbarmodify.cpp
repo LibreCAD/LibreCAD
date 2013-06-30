@@ -78,7 +78,12 @@ void QG_CadToolBarModify::init() {
     buttonList.push_back(bDelete);
     buttonList.push_back(bExplode);
     buttonList.push_back(bExplodeText);
-    buttonList.push_back(bEntityText);
+    /** disable "Modify Text" for bug: https://sourceforge.net/p/librecad/bugs/415/ */
+//    buttonList.push_back(bEntityText);
+   if(bEntityText) {
+       bEntityText->hide();
+       bEntityText->setDisabled(true);
+   }
     buttonList.push_back(bOffset);
     //add a bHidden button
     bHidden=new QToolButton(buttonList.at(0)->parentWidget());
@@ -308,10 +313,10 @@ void QG_CadToolBarModify::restoreAction() {
         actionHandler->slotModifyExplodeText();
         return;
     }
-    if ( bEntityText ->isChecked() ) {
-        actionHandler->slotModifyExplodeText();
-        return;
-    }
+//    if ( bEntityText ->isChecked() ) {
+//        actionHandler->slotModifyExplodeText();
+//        return;
+//    }
     if ( bOffset ->isChecked() ) {
         actionHandler->slotModifyOffset();
         return;
@@ -393,8 +398,10 @@ void QG_CadToolBarModify::showCadToolBar(RS2::ActionType actionType) {
     case RS2::ActionModifyOffset:
         bOffset->setChecked(true);
         return;
-//    case RS2::ActionModifyOffsetNoSelect:
-        default:
+//    case RS2::ActionModifyExplodeText:
+//        bEntityText->setChecked(true);
+        //    case RS2::ActionModifyOffsetNoSelect:
+    default:
         bHidden->setChecked(true);
         return;
     }

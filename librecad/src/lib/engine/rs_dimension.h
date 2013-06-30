@@ -37,9 +37,19 @@
 class RS_DimensionData : public RS_Flags {
 public:
     /**
-     * Default constructor. Leaves the data object uninitialized.
+	 * Default constructor
      */
-    RS_DimensionData() {}
+	RS_DimensionData():
+		definitionPoint(false),
+		middleOfText(false),
+		valign(RS_MTextData::VABottom),
+		halign(RS_MTextData::HALeft),
+		lineSpacingStyle(RS_MTextData::Exact),
+		lineSpacingFactor(0.0),
+		text(""),
+		style(""),
+		angle(0.0)
+	{}
 
     /**
      * Constructor with initialisation.
@@ -190,6 +200,7 @@ public:
         return data.angle;
     }
 
+    double getGeneralScale();
     double getArrowSize();
     double getTickSize();
     double getExtensionLineExtension();

@@ -24,6 +24,10 @@
 #ifdef __APPLE__
     #include <sys/types.h>
 #endif
+#ifdef __WIN32__
+    #define uint unsigned int
+    #include <time.h>
+#endif
 #include <iostream>
 #include <math.h>
 #include <ft2build.h>
@@ -181,7 +185,7 @@ int cubicTo(FT_Vector* /*control1*/, FT_Vector* /*control2*/, FT_Vector* to, voi
 
 
 /**
- * Converts one single glyph (character, sign) into CXF.
+ * Converts one single glyph (character, sign) into LFF.
  */
 FT_Error convertGlyph(FT_ULong charcode) {
     FT_Error error;
@@ -250,7 +254,7 @@ int main(int argc, char* argv[]) {
 
     // handle arguments:
     if (argc<2) {
-        std::cout << "Usage: ttf2cxf <options> <ttf file> <cxf file>\n";
+        std::cout << "Usage: ttf2lff <options> <ttf file> <lff file>\n";
         std::cout << "  ttf file: An existing True Type Font file\n";
         std::cout << "  lff file: The LFF font file to create\n";
         std::cout << "options are:\n";

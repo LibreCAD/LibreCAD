@@ -24,10 +24,10 @@
 void DRW_TableEntry::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 5:
-        handle = reader->getString();
+        handle = reader->getHandleString();
         break;
     case 330:
-        handleBlock = reader->getString();
+        handleBlock = reader->getHandleString();
         break;
     case 2:
         name = reader->getUtf8String();
@@ -48,7 +48,7 @@ void DRW_TableEntry::parseCode(int code, dxfReader *reader){
 void DRW_Dimstyle::parseCode(int code, dxfReader *reader){
     switch (code) {
     case 105:
-        handle = reader->getString();
+        handle = reader->getHandleString();
         break;
     case 3:
         dimpost = reader->getUtf8String();
@@ -319,13 +319,16 @@ void DRW_Layer::parseCode(int code, dxfReader *reader){
         plotF = reader->getBool();
         break;
     case 370:
-        lWeight = reader->getInt32();
+        lWeight = DRW_LW_Conv::dxfInt2lineWidth(reader->getInt32());
         break;
     case 390:
         handlePlotS = reader->getString();
         break;
     case 347:
         handlePlotM = reader->getString();
+        break;
+    case 420:
+        color24 = reader->getInt32();
         break;
     default:
         DRW_TableEntry::parseCode(code, reader);
@@ -527,12 +530,16 @@ void DRW_Header::parseCode(int code, dxfReader *reader){
     case 9:
         curr = new DRW_Variant();
         name = reader->getString();
+        if (version < DRW::AC1015 && name == "$DIMUNIT")
+            name="$DIMLUNIT";
         vars[name]=curr;
         break;
     case 1:
         curr->addString(reader->getUtf8String());
-        if (name =="$ACADVER")
+        if (name =="$ACADVER") {
             reader->setVersion(curr->content.s);
+            version = reader->getVersion();
+        }
         curr->code = code;
         break;
     case 2:
@@ -729,6 +736,11 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         writer->writeDouble(40, varDouble);
     else
         writer->writeDouble(40, 2.5);
+    writer->writeString(9, "$DIMSCALE");
+    if (getDouble("$DIMSCALE", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 1.0);
     writer->writeString(9, "$DIMEXO");
     if (getDouble("$DIMEXO", &varDouble))
         writer->writeDouble(40, varDouble);
@@ -760,6 +772,21 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
             writer->writeInt16(70, varInt);
         else
             writer->writeInt16(70, 0);
+    }
+    //verify if exist "$DIMLUNIT" or obsolete "$DIMUNIT" (pre v2000)
+    if ( !getInt("$DIMLUNIT", &varInt) ){
+        if (!getInt("$DIMUNIT", &varInt))
+            varInt = 2;
+    }
+    //verify valid values from 1 to 6
+    if (varInt<1 || varInt>6)
+        varInt = 2;
+    if (ver > DRW::AC1014) {
+        writer->writeString(9, "$DIMLUNIT");
+        writer->writeInt16(70, varInt);
+    } else {
+        writer->writeString(9, "$DIMUNIT");
+        writer->writeInt16(70, varInt);
     }
     writer->writeString(9, "$DIMSTYLE");
     if (getStr("$DIMSTYLE", &varStr))

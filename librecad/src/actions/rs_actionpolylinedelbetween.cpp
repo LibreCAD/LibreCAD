@@ -137,7 +137,7 @@ void RS_ActionPolylineDelBetween::mouseReleaseEvent(QMouseEvent* e) {
                         if (delEntity==NULL) {
                                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
                         } else if (!nodePoint1.valid) {
-                                RS_DIALOGFACTORY->commandMessage(tr("Deletinging point is invalid."));
+                                RS_DIALOGFACTORY->commandMessage(tr("Deleting point is invalid."));
                         } else if (!delEntity->isPointOnEntity(nodePoint1)) {
                                 RS_DIALOGFACTORY->commandMessage(
                                         tr("Deleting point is not on entity."));

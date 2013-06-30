@@ -79,8 +79,8 @@ void QC_ActionGetEnt::mouseReleaseEvent(QMouseEvent* e) {
 /**
  * Add selected entity from 'container' to the selection.
  */
-Plugin_Entity *QC_ActionGetEnt::getSelected() {
-    Plugin_Entity *pe = new Plugin_Entity(en);
+Plugin_Entity *QC_ActionGetEnt::getSelected(Doc_plugin_interface* d) {
+    Plugin_Entity *pe = new Plugin_Entity(en, d);
     return pe;
 }
 

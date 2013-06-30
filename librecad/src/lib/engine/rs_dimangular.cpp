@@ -238,18 +238,22 @@ void RS_DimAngular::update(bool /*autoText*/) {
 
     clear();
 
-        if (isUndone()) {
-                return;
-        }
+    if (isUndone()) {
+        return;
+    }
 
+    // general scale (DIMSCALE)
+    double dimscale = getGeneralScale();
     // distance from entities (DIMEXO)
-    double dimexo = getExtensionLineOffset();
+    double dimexo = getExtensionLineOffset()*dimscale;
     // extension line extension (DIMEXE)
-    double dimexe = getExtensionLineExtension();
+    double dimexe = getExtensionLineExtension()*dimscale;
     // text height (DIMTXT)
-    double dimtxt = getTextHeight();
+    double dimtxt = getTextHeight()*dimscale;
     // text distance to line (DIMGAP)
-    double dimgap = getDimensionLineGap();
+    double dimgap = getDimensionLineGap()*dimscale;
+    // arrow size:
+    double arrowSize = getArrowSize()*dimscale;
 
     // find out center:
     RS_Vector center = getCenter();
@@ -307,13 +311,13 @@ void RS_DimAngular::update(bool /*autoText*/) {
     double distance = arc->getLength();
 
     // do we have to put the arrows outside of the arc?
-    bool outsideArrows = (distance<getArrowSize()*2);
+    bool outsideArrows = (distance<arrowSize*2);
 
     // arrow angles:
     double arrowAngle1, arrowAngle2;
     double arrowAng;
         if (rad>1.0e-6) {
-                arrowAng = getArrowSize() / rad;
+                arrowAng = arrowSize / rad;
         }
         else {
                 arrowAng = 0.0;
@@ -349,7 +353,7 @@ void RS_DimAngular::update(bool /*autoText*/) {
     arrow = new RS_Solid(this, sd);
     arrow->shapeArrow(arc->getStartpoint(),
                       arrowAngle1,
-                      getArrowSize());
+                      arrowSize);
     arrow->setPen(RS_Pen(RS2::FlagInvalid));
     arrow->setLayer(NULL);
     addEntity(arrow);
@@ -358,7 +362,7 @@ void RS_DimAngular::update(bool /*autoText*/) {
     arrow = new RS_Solid(this, sd);
     arrow->shapeArrow(arc->getEndpoint(),
                       arrowAngle2,
-                      getArrowSize());
+                      arrowSize);
     arrow->setPen(RS_Pen(RS2::FlagInvalid));
     arrow->setLayer(NULL);
     addEntity(arrow);

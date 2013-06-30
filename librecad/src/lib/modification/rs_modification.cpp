@@ -257,28 +257,15 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref,
         RS_CLIPBOARD->addEntity(c);
 
         copyLayers(e);
-        copyBlocks(e);
+        //call copyBlocks only if entity are insert
+        if (e->rtti()==RS2::EntityInsert) {
+            copyBlocks(e);
+        }
 
         // set layer to the layer clone:
         RS_Layer* l = e->getLayer();
         if (l!=NULL) {
             c->setLayer(l->getName());
-        }
-
-        // make sure all sub entities point to layers of the clipboard
-        if (c->isContainer()) {
-            RS_EntityContainer* ec = (RS_EntityContainer*)c;
-
-            for (RS_Entity* e2 = ec->firstEntity(RS2::ResolveAll); e2!=NULL;
-                    e2 = ec->nextEntity(RS2::ResolveAll)) {
-
-                //RS_Entity* e2 = ec->entityAt(i);
-                RS_Layer* l2 = e2->getLayer();
-
-                if (l2!=NULL) {
-                    e2->setLayer(l2->getName());
-                }
-            }
         }
 
         if (cut) {
@@ -302,19 +289,16 @@ void RS_Modification::copyLayers(RS_Entity* e) {
         return;
     }
 
-    // add layer(s) of the entity if it's not an insert
-    //  (inserts are on layer '0'):
-    if (e->rtti()!=RS2::EntityInsert) {
-        RS_Layer* l = e->getLayer();
-        if (l!=NULL) {
-            if (!RS_CLIPBOARD->hasLayer(l->getName())) {
-                RS_CLIPBOARD->addLayer(l->clone());
-            }
+    // add layer(s) of the entity insert can also be into any layer:
+    RS_Layer* l = e->getLayer();
+    if (l!=NULL) {
+        if (!RS_CLIPBOARD->hasLayer(l->getName())) {
+            RS_CLIPBOARD->addLayer(l->clone());
         }
     }
 
     // special handling of inserts:
-    else {
+    if (e->rtti()==RS2::EntityInsert) {
         // insert: add layer(s) of subentities:
         RS_Block* b = ((RS_Insert*)e)->getBlockForInsert();
         if (b!=NULL) {
@@ -347,12 +331,13 @@ void RS_Modification::copyBlocks(RS_Entity* e) {
             if (!RS_CLIPBOARD->hasBlock(b->getName())) {
                 RS_CLIPBOARD->addBlock((RS_Block*)b->clone());
             }
-
+            //find insert into insert
             for (RS_Entity* e2=b->firstEntity(); e2!=NULL;
                     e2=b->nextEntity()) {
-                //for (uint i=0; i<b->count(); ++i) {
-                //RS_Entity* e2 = b->entityAt(i);
-                copyBlocks(e2);
+                //call copyBlocks only if entity are insert
+                if (e->rtti()==RS2::EntityInsert) {
+                    copyBlocks(e2);
+                }
             }
         }
     }
@@ -407,7 +392,9 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
         graphic->activateLayer(layer);
     }
 
-    // insert blocks:
+    //hash to store pairs af block name & newname even if it is the same
+    QHash<QString, QString>blocksDict;
+    // find block names and rename if it exist:
     if (graphic!=NULL) {
         for(uint i=0; i<source->countBlocks(); ++i) {
             RS_Block* b = source->blockAt(i);
@@ -422,6 +409,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
                         newName = b->getName();
                     i++;
                 }
+                blocksDict[b->getName()] = newName;
                 if (b->getName() !=newName) {
                     RS_DIALOGFACTORY->commandMessage( QString(
                            QObject::tr("Block %1 already exist, renamed to: %2")).arg(b->getName()).arg(newName));
@@ -430,6 +418,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
             }
         }
 
+        //add new blocks with new names
         for(uint i=0; i<source->countBlocks(); ++i) {
             RS_Block* b = source->blockAt(i);
             if (b!=NULL) {
@@ -439,17 +428,22 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
                     //  (they already scale with their block)
                     for(uint i2=0; i2<bc->count(); ++i2) {
                         RS_Entity* e = bc->entityAt(i2);
-                        if (e!=NULL && e->rtti()!=RS2::EntityInsert) {
-                            e->scale(bc->getBasePoint(),
-                                     RS_Vector(factor, factor));
-                        } else {
-                            RS_Insert *in = (RS_Insert*)e;
-                            in->setName( in->getBlockForInsert()->getName() );
-                            RS_Vector ip = in->getInsertionPoint();
-                            ip.scale(bc->getBasePoint(),
-                                     RS_Vector(factor, factor));
-                            in->setInsertionPoint(ip);
-                            e->update();
+                        if (e!=NULL) {
+                            if (e->rtti()==RS2::EntityInsert) {
+                                RS_Insert *in = (RS_Insert*)e;
+                                QString bkName = in->getName();
+                                if (blocksDict.contains(bkName))
+                                    bkName = blocksDict.value(bkName);
+                                in->setName( bkName );
+                                RS_Vector ip = in->getInsertionPoint();
+                                ip.scale(bc->getBasePoint(),
+                                         RS_Vector(factor, factor));
+                                in->setInsertionPoint(ip);
+                                e->update();
+                            } else {
+                                e->scale(bc->getBasePoint(),
+                                         RS_Vector(factor, factor));
+                            }
                         }
                     }
                     //reparent after rename inserts
@@ -470,9 +464,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
             if (blkList!=NULL) {
                 blockName = blkList->newName(data.blockName);
 
-                RS_Block* blk =
-                    new RS_Block(graphic,
-                                 RS_BlockData(blockName,
+                RS_Block* blk =  new RS_Block(graphic, RS_BlockData(blockName,
                                               RS_Vector(0.0,0.0), false));
                 graphic->addBlock(blk);
 
@@ -501,7 +493,10 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
             // don't adjust insert factor - block was already adjusted to unit
             if (e2->rtti()==RS2::EntityInsert) {
                 RS_Insert *in = (RS_Insert*)e2;
-                RS_Block *bk = in->getBlockForInsert();
+                QString bkName = in->getName();
+                if (blocksDict.contains(bkName))
+                    bkName = blocksDict.value(bkName);
+                RS_Block *bk = source->findBlock(bkName);
                 //if block not found create a new empty block
                 if (bk == NULL) {
                     QString noBlockName= "noname0";
@@ -675,7 +670,7 @@ bool RS_Modification::splitPolyline(RS_Polyline& polyline,
     container->addEntity(pl2);
     //container->removeEntity(&polyline);
     polyline.changeUndoState();
-
+	Q_UNUSED( arc ); /* TNick: set but not used */
     return true;
 }
 
@@ -2041,6 +2036,17 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
             }
         }
     }
+//if intersection are in start or end point can't trim/extend in this point, remove from solution. sf.net #3537053
+    if (trimEntity->rtti()==RS2::EntityLine){
+        RS_Line *lin = (RS_Line *)trimEntity;
+        for (unsigned int i=0; i< sol.size(); i++) {
+            RS_Vector v = sol.at(i);
+            if (v == lin->getStartpoint())
+                sol.removeAt(i);
+            else if (v == lin->getEndpoint())
+                sol.removeAt(i);
+        }
+    }
 
     if (sol.hasValid()==false) {
         return false;
@@ -2710,7 +2716,7 @@ bool RS_Modification::round(const RS_Vector& coord,
         entity2 = (RS_AtomicEntity*)baseContainer->entityAt(entity2->getParent()->findEntity(entity2));
 
         isPolyline = true;
-        isClosedPolyline = ((RS_Polyline*)entity1)->isClosed();
+        isClosedPolyline = ((RS_Polyline*)entity1->getParent())->isClosed();
     }
 
     // create 2 tmp parallels
@@ -2831,7 +2837,7 @@ bool RS_Modification::round(const RS_Vector& coord,
             insertAfter1 = (idx1<idx2);
         }
         else {
-            insertAfter1 = ((idx1<idx2 && idx1!=0) ||
+            insertAfter1 = ((idx1<idx2 && idx1!=0) ||(idx1==0 && idx2==1) ||
                             (idx2==0 && idx1==(int)baseContainer->count()-1));
         }
 

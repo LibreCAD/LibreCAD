@@ -18,9 +18,7 @@
 #include "drw_textcodec.h"
 #include "dxfreader.h"
 #include "dxfwriter.h"
-
-
-using namespace std;
+#include <assert.h>
 
 #ifdef DRW_DBG
 #include <iostream> //for debug
@@ -53,11 +51,14 @@ dxfRW::~dxfRW(){
 }
 
 bool dxfRW::read(DRW_Interface *interface_, bool ext){
+    assert(fileName.empty() == false);
     bool isOk = false;
     applyExt = ext;
-    ifstream filestr;
+    std::ifstream filestr;
+    if ( interface_ == NULL )
+                return isOk;
     DBG("dxfRW::read 1def\n");
-    filestr.open (fileName.c_str(), ios_base::in | ios::binary);
+    filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
     if (!filestr.is_open())
         return isOk;
     if (!filestr.good())
@@ -72,15 +73,15 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
     iface = interface_;
     DBG("dxfRW::read 2\n");
     if (strcmp(line, line2) == 0) {
-        filestr.open (fileName.c_str(), ios_base::in | ios::binary);
+        filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
         binary = true;
         //skip sentinel
-        filestr.seekg (22, ios::beg);
+        filestr.seekg (22, std::ios::beg);
         reader = new dxfReaderBinary(&filestr);
         DBG("dxfRW::read binary file\n");
     } else {
         binary = false;
-        filestr.open (fileName.c_str(), ios_base::in);
+        filestr.open (fileName.c_str(), std::ios_base::in);
         reader = new dxfReaderAscii(&filestr);
     }
 
@@ -93,18 +94,18 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
 
 bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
     bool isOk = false;
-    ofstream filestr;
+    std::ofstream filestr;
     version = ver;
     binary = bin;
     iface = interface_;
     if (binary) {
-        filestr.open (fileName.c_str(), ios_base::out | ios::binary | ios::trunc);
+        filestr.open (fileName.c_str(), std::ios_base::out | std::ios::binary | std::ios::trunc);
         //write sentinel
         filestr << "AutoCAD Binary DXF\r\n" << (char)26 << '\0';
         writer = new dxfWriterBinary(&filestr);
         DBG("dxfRW::read binary file\n");
     } else {
-        filestr.open (fileName.c_str(), ios_base::out | ios::trunc);
+        filestr.open (fileName.c_str(), std::ios_base::out | std::ios::trunc);
         writer = new dxfWriterAscii(&filestr);
         std::string comm = std::string("dxfrw ") + std::string(DRW_VERSION);
         writer->writeString(999, comm);
@@ -148,10 +149,8 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
 }
 
 bool dxfRW::writeEntity(DRW_Entity *ent) {
-    char buffer[5];
-    sprintf(buffer, "%X", ++entCount);
-    ent->handle = buffer;
-    writer->writeString(5, buffer);
+    ent->handle = ++entCount;
+    writer->writeString(5, toHexStr(ent->handle));
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbEntity");
     }
@@ -165,14 +164,16 @@ bool dxfRW::writeEntity(DRW_Entity *ent) {
         writer->writeUtf8Caps(6, ent->lineType);
     }
     writer->writeInt16(62, ent->color);
+    if (version > DRW::AC1015 && ent->color24 >= 0) {
+        writer->writeInt32(420, ent->color24);
+    }
     if (version > DRW::AC1014) {
-        writer->writeInt16(370, ent->lWeight);
+        writer->writeInt16(370, DRW_LW_Conv::lineWidth2dxfInt(ent->lWeight));
     }
     return true;
 }
 
 bool dxfRW::writeLineType(DRW_LType *ent){
-    char buffer[5];
     string strname = ent->name;
 
     transform(strname.begin(), strname.end(), strname.begin(),::toupper);
@@ -182,8 +183,7 @@ bool dxfRW::writeLineType(DRW_LType *ent){
     }
     writer->writeString(0, "LTYPE");
     if (version > DRW::AC1009) {
-        sprintf(buffer, "%X", ++entCount);
-        writer->writeString(5, buffer);
+        writer->writeString(5, toHexStr(++entCount));
         if (version > DRW::AC1012) {
             writer->writeString(330, "5");
         }
@@ -209,7 +209,6 @@ bool dxfRW::writeLineType(DRW_LType *ent){
 }
 
 bool dxfRW::writeLayer(DRW_Layer *ent){
-    char buffer[5];
     writer->writeString(0, "LAYER");
     if (!wlayer0 && ent->name == "0") {
         wlayer0 = true;
@@ -218,8 +217,7 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
         }
     } else {
         if (version > DRW::AC1009) {
-            sprintf(buffer, "%X", ++entCount);
-            writer->writeString(5, buffer);
+            writer->writeString(5, toHexStr(++entCount));
         }
     }
     if (version > DRW::AC1012) {
@@ -234,11 +232,14 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
     }
     writer->writeInt16(70, ent->flags);
     writer->writeInt16(62, ent->color);
+    if (version > DRW::AC1015 && ent->color24 >= 0) {
+        writer->writeInt32(420, ent->color24);
+    }
     if (version > DRW::AC1009) {
         writer->writeUtf8String(6, ent->lineType);
         if (! ent->plotF)
             writer->writeBool(290, ent->plotF);
-        writer->writeInt16(370, ent->lWeight);
+        writer->writeInt16(370, DRW_LW_Conv::lineWidth2dxfInt(ent->lWeight));
         writer->writeString(390, "F");
     } else
         writer->writeUtf8Caps(6, ent->lineType);
@@ -247,19 +248,16 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
 }
 
 bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
-    char buffer[5];
     writer->writeString(0, "STYLE");
     if (!dimstyleStd) {
-        std::string name;
-        std::stringstream ss;
-        ss << std::uppercase << ent->name;
-        ss >> name;
+        //stringstream cause crash in OS/X, bug#3597944
+        std::string name=ent->name;
+        transform(name.begin(), name.end(), name.begin(), toupper);
         if (name == "STANDARD")
             dimstyleStd = true;
     }
     if (version > DRW::AC1009) {
-        sprintf(buffer, "%X", ++entCount);
-        writer->writeString(5, buffer);
+        writer->writeString(5, toHexStr(++entCount));
     }
 
     if (version > DRW::AC1012) {
@@ -291,15 +289,13 @@ bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
 }
 
 bool dxfRW::writeVport(DRW_Vport *ent){
-    char buffer[5];
     if (!dimstyleStd) {
         ent->name = "*ACTIVE";
         dimstyleStd = true;
     }
     writer->writeString(0, "VPORT");
     if (version > DRW::AC1009) {
-        sprintf(buffer, "%X", ++entCount);
-        writer->writeString(5, buffer);
+        writer->writeString(5, toHexStr(++entCount));
         if (version > DRW::AC1012)
             writer->writeString(330, "2");
         writer->writeString(100, "AcDbSymbolTableRecord");
@@ -371,7 +367,6 @@ bool dxfRW::writeVport(DRW_Vport *ent){
 }
 
 bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
-    char buffer[5];
     writer->writeString(0, "DIMSTYLE");
     if (!dimstyleStd) {
         std::string name = ent->name;
@@ -380,8 +375,7 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
             dimstyleStd = true;
     }
     if (version > DRW::AC1009) {
-        sprintf(buffer, "%X", ++entCount);
-        writer->writeString(105, buffer);
+        writer->writeString(105, toHexStr(++entCount));
     }
 
     if (version > DRW::AC1012) {
@@ -596,14 +590,14 @@ bool dxfRW::writeArc(DRW_Arc *ent) {
     if (version > DRW::AC1009) {
         writer->writeString(100, "AcDbArc");
     }
-    writer->writeDouble(50, ent->staangle);
-    writer->writeDouble(51, ent->endangle);
+    writer->writeDouble(50, ent->staangle*ARAD);
+    writer->writeDouble(51, ent->endangle*ARAD);
     return true;
 }
 
 bool dxfRW::writeEllipse(DRW_Ellipse *ent){
-    if (ent->staparam == ent->endparam)
-        ent->endparam = 6.28318530718; //2*M_PI;
+    //verify axis/ratio and params for full ellipse
+    ent->correctAxis();
     if (version > DRW::AC1009) {
         writer->writeString(0, "ELLIPSE");
         writeEntity(ent);
@@ -703,6 +697,10 @@ bool dxfRW::writeLWPolyline(DRW_LWPolyline *ent){
         writer->writeInt32(90, ent->vertexnum);
         writer->writeInt16(70, ent->flags);
         writer->writeDouble(43, ent->width);
+        if (ent->elevation != 0)
+            writer->writeDouble(38, ent->elevation);
+        if (ent->thickness != 0)
+            writer->writeDouble(39, ent->thickness);
         for (int i = 0;  i< ent->vertexnum; i++){
             DRW_Vertex2D *v = ent->vertlist.at(i);
             writer->writeDouble(10, v->x);
@@ -889,20 +887,21 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
                         writer->writeDouble(10, a->basePoint.x);
                         writer->writeDouble(20, a->basePoint.y);
                         writer->writeDouble(40, a->radious);
-                        writer->writeDouble(50, a->staangle);
-                        writer->writeDouble(51, a->endangle);
+                        writer->writeDouble(50, a->staangle*ARAD);
+                        writer->writeDouble(51, a->endangle*ARAD);
                         writer->writeInt16(73, a->isccw);
                         break; }
                     case DRW::ELLIPSE: {
                         writer->writeInt16(72, 3);
                         DRW_Ellipse* a = (DRW_Ellipse*)loop->objlist.at(j);
+                        a->correctAxis();
                         writer->writeDouble(10, a->basePoint.x);
                         writer->writeDouble(20, a->basePoint.y);
                         writer->writeDouble(11, a->secPoint.x);
                         writer->writeDouble(21, a->secPoint.y);
                         writer->writeDouble(40, a->ratio);
-                        writer->writeDouble(50, a->staparam);
-                        writer->writeDouble(51, a->endparam);
+                        writer->writeDouble(50, a->staparam*ARAD);
+                        writer->writeDouble(51, a->endparam*ARAD);
                         writer->writeInt16(73, a->isccw);
                         break; }
                     case DRW::SPLINE:
@@ -927,7 +926,7 @@ bool dxfRW::writeHatch(DRW_Hatch *ent){
 /*        if (ent->deflines > 0){
             writer->writeInt16(78, ent->deflines);
         }*/
-        writer->writeInt16(98, 0);
+        writer->writeInt32(98, 0);
     } else {
         //RLZ: TODO verify in acad12
     }
@@ -1008,11 +1007,11 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
             writer->writeDouble(34, dd->getDef2Point().z);
             if (ent->eType == DRW::DIMLINEAR) {
                 DRW_DimLinear * dl = (DRW_DimLinear*)ent;
-                writer->writeString(100, "AcDbRotatedDimension");
                 if (dl->getAngle() != 0)
                     writer->writeDouble(50, dl->getAngle());
                 if (dl->getOblique() != 0)
                     writer->writeDouble(52, dl->getOblique());
+                writer->writeString(100, "AcDbRotatedDimension");
             }
             break; }
         case DRW::DIMRADIAL: {
@@ -1204,15 +1203,13 @@ DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
                 continue;
             }
         }
-        char buffer[5];
         if (id == NULL) {
             id = new DRW_ImageDef();
             imageDef.push_back(id);
-            sprintf(buffer, "%X", ++entCount);
-            id->handle = buffer;
+            id->handle = toHexStr(++entCount);
         }
         id->name = name;
-        sprintf(buffer, "%X", ++entCount);
+        std::string idReactor = toHexStr(++entCount);
 
         writer->writeString(0, "IMAGE");
         writeEntity(ent);
@@ -1234,8 +1231,8 @@ DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
         writer->writeInt16(281, ent->brightness);
         writer->writeInt16(282, ent->contrast);
         writer->writeInt16(283, ent->fade);
-        writer->writeString(360, buffer);
-        id->reactors[buffer] = ent->handle;
+        writer->writeString(360, idReactor);
+        id->reactors[idReactor] = ent->handle;
         return id;
     }
     return NULL; //not exist in acad 12
@@ -1244,9 +1241,7 @@ DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
 bool dxfRW::writeBlockRecord(std::string name){
     if (version > DRW::AC1009) {
         writer->writeString(0, "BLOCK_RECORD");
-        char buffer[5];
-        sprintf(buffer, "%X", ++entCount);
-        writer->writeString(5, buffer);
+        writer->writeString(5, toHexStr(++entCount));
 
         blockMap[name] = entCount;
         entCount = 2+entCount;//reserve 2 for BLOCK & ENDBLOCK
@@ -1267,38 +1262,35 @@ bool dxfRW::writeBlockRecord(std::string name){
 }
 
 bool dxfRW::writeBlock(DRW_Block *bk){
-    char buffer[5];
     if (writingBlock) {
         writer->writeString(0, "ENDBLK");
         if (version > DRW::AC1009) {
-            sprintf(buffer, "%X", currHandle+2);
-            writer->writeString(5, buffer);
+            writer->writeString(5, toHexStr(currHandle+2));
             if (version > DRW::AC1014) {
-                sprintf(buffer, "%X", currHandle);
-                writer->writeString(330, buffer);
+                writer->writeString(330, toHexStr(currHandle));
             }
             writer->writeString(100, "AcDbEntity");
         }
         writer->writeString(8, "0");
-        writer->writeString(100, "AcDbBlockEnd");
+        if (version > DRW::AC1009) {
+            writer->writeString(100, "AcDbBlockEnd");
+        }
     }
     writingBlock = true;
     writer->writeString(0, "BLOCK");
     if (version > DRW::AC1009) {
         currHandle = (*(blockMap.find(bk->name))).second;
-        sprintf(buffer, "%X", currHandle+1);
-        writer->writeString(5, buffer);
+        writer->writeString(5, toHexStr(currHandle+1));
         if (version > DRW::AC1014) {
-            sprintf(buffer, "%X", currHandle);
-            writer->writeString(330, buffer);
+            writer->writeString(330, toHexStr(currHandle));
         }
         writer->writeString(100, "AcDbEntity");
     }
     writer->writeString(8, "0");
-    writer->writeString(100, "AcDbBlockBegin");
-    if (version > DRW::AC1009)
+    if (version > DRW::AC1009) {
+        writer->writeString(100, "AcDbBlockBegin");
         writer->writeUtf8String(2, bk->name);
-    else
+    } else
         writer->writeUtf8Caps(2, bk->name);
     writer->writeInt16(70, bk->flags);
     writer->writeDouble(10, bk->basePoint.x);
@@ -1567,7 +1559,7 @@ bool dxfRW::writeBlocks() {
         writer->writeString(100, "AcDbBlockBegin");
         writer->writeString(2, "*Model_Space");
     } else
-        writer->writeString(2, "*MODEL_SPACE");
+        writer->writeString(2, "$MODEL_SPACE");
     writer->writeInt16(70, 0);
     writer->writeDouble(10, 0.0);
     writer->writeDouble(20, 0.0);
@@ -1575,7 +1567,7 @@ bool dxfRW::writeBlocks() {
     if (version > DRW::AC1009)
         writer->writeString(3, "*Model_Space");
     else
-        writer->writeString(3, "*MODEL_SPACE");
+        writer->writeString(3, "$MODEL_SPACE");
     writer->writeString(1, "");
     writer->writeString(0, "ENDBLK");
     if (version > DRW::AC1009) {
@@ -1602,7 +1594,7 @@ bool dxfRW::writeBlocks() {
         writer->writeString(100, "AcDbBlockBegin");
         writer->writeString(2, "*Paper_Space");
     } else
-        writer->writeString(2, "*PAPER_SPACE");
+        writer->writeString(2, "$PAPER_SPACE");
     writer->writeInt16(70, 0);
     writer->writeDouble(10, 0.0);
     writer->writeDouble(20, 0.0);
@@ -1610,7 +1602,7 @@ bool dxfRW::writeBlocks() {
     if (version > DRW::AC1009)
         writer->writeString(3, "*Paper_Space");
     else
-        writer->writeString(3, "*PAPER_SPACE");
+        writer->writeString(3, "$PAPER_SPACE");
     writer->writeString(1, "");
     writer->writeString(0, "ENDBLK");
     if (version > DRW::AC1009) {
@@ -1629,13 +1621,10 @@ bool dxfRW::writeBlocks() {
         writingBlock = false;
         writer->writeString(0, "ENDBLK");
         if (version > DRW::AC1009) {
-            char buffer[5];
-            sprintf(buffer, "%X", currHandle+2);
-            writer->writeString(5, buffer);
+            writer->writeString(5, toHexStr(currHandle+2));
 //            writer->writeString(5, "1D");
             if (version > DRW::AC1014) {
-                sprintf(buffer, "%X", currHandle);
-                writer->writeString(330, buffer);
+                writer->writeString(330, toHexStr(currHandle));
             }
             writer->writeString(100, "AcDbEntity");
         }
@@ -1648,7 +1637,7 @@ bool dxfRW::writeBlocks() {
 
 bool dxfRW::writeObjects() {
     writer->writeString(0, "DICTIONARY");
-    char buffer[5];
+    std::string imgDictH;
     writer->writeString(5, "C");
     if (version > DRW::AC1014) {
         writer->writeString(330, "0");
@@ -1658,9 +1647,9 @@ bool dxfRW::writeObjects() {
     writer->writeString(3, "ACAD_GROUP");
     writer->writeString(350, "D");
     if (imageDef.size() != 0) {
-        sprintf(buffer, "%X", ++entCount);
         writer->writeString(3, "ACAD_IMAGE_DICT");
-        writer->writeString(350, buffer);
+        imgDictH = toHexStr(++entCount);
+        writer->writeString(350, imgDictH);
     }
     writer->writeString(0, "DICTIONARY");
     writer->writeString(5, "D");
@@ -1670,7 +1659,7 @@ bool dxfRW::writeObjects() {
 //write IMAGEDEF_REACTOR
     for (unsigned int i=0; i<imageDef.size(); i++) {
         DRW_ImageDef *id = imageDef.at(i);
-        map<string, string>::iterator it;
+        std::map<string, string>::iterator it;
         for ( it=id->reactors.begin() ; it != id->reactors.end(); it++ ) {
             writer->writeString(0, "IMAGEDEF_REACTOR");
             writer->writeString(5, (*it).first);
@@ -1682,7 +1671,7 @@ bool dxfRW::writeObjects() {
     }
     if (imageDef.size() != 0) {
         writer->writeString(0, "DICTIONARY");
-        writer->writeString(5, buffer);
+        writer->writeString(5, imgDictH);
         writer->writeString(330, "C");
         writer->writeString(100, "AcDbDictionary");
         writer->writeInt16(281, 1);
@@ -1703,7 +1692,7 @@ bool dxfRW::writeObjects() {
 //            writer->writeString(330, "0"); handle to DICTIONARY
         }
         writer->writeString(102, "{ACAD_REACTORS");
-        map<string, string>::iterator it;
+        std::map<string, string>::iterator it;
         for ( it=id->reactors.begin() ; it != id->reactors.end(); it++ ) {
             writer->writeString(330, (*it).first);
         }
@@ -1861,6 +1850,7 @@ bool dxfRW::processLType() {
             DBG(sectionstr); DBG("\n");
             if (sectionstr == "LTYPE") {
                 reading = true;
+                ltype.reset();
             } else if (sectionstr == "ENDTAB") {
                 return true;  //found ENDTAB terminate
             }
@@ -1885,6 +1875,7 @@ bool dxfRW::processLayer() {
             DBG(sectionstr); DBG("\n");
             if (sectionstr == "LAYER") {
                 reading = true;
+                layer.reset();
             } else if (sectionstr == "ENDTAB") {
                 return true;  //found ENDTAB terminate
             }
@@ -1909,6 +1900,7 @@ bool dxfRW::processDimStyle() {
             DBG(sectionstr); DBG("\n");
             if (sectionstr == "DIMSTYLE") {
                 reading = true;
+                dimSty.reset();
             } else if (sectionstr == "ENDTAB") {
                 return true;  //found ENDTAB terminate
             }
@@ -1933,6 +1925,7 @@ bool dxfRW::processTextStyle(){
             DBG(sectionstr); DBG("\n");
             if (sectionstr == "STYLE") {
                 reading = true;
+                TxtSty.reset();
             } else if (sectionstr == "ENDTAB") {
                 return true;  //found ENDTAB terminate
             }
@@ -1957,6 +1950,7 @@ bool dxfRW::processVports(){
             DBG(sectionstr); DBG("\n");
             if (sectionstr == "VPORT") {
                 reading = true;
+                vp.reset();
             } else if (sectionstr == "ENDTAB") {
                 return true;  //found ENDTAB terminate
             }
@@ -2652,4 +2646,19 @@ bool dxfRW::processImageDef() {
         }
     }
     return true;
+}
+
+/** utility function
+ * convert a int to string in hex
+ **/
+std::string dxfRW::toHexStr(int n){
+#if defined(__APPLE__)
+    char buffer[5];
+    sprintf(buffer, "%X", n);
+    return std::string(buffer);
+#else
+    std::ostringstream Convert;
+    Convert << std::uppercase << std::hex << n;
+    return Convert.str();
+#endif
 }

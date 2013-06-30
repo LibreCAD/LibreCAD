@@ -132,7 +132,7 @@ public:
     /**
      * Reimplementation from RS_Document. Does nothing.
      */
-    virtual bool saveAs(const QString& filename, RS2::FormatType type);
+    virtual bool saveAs(const QString& filename, RS2::FormatType type, bool force = false);
 
     /**
      * Reimplementation from RS_Document. Does nothing.

@@ -23,57 +23,7 @@
       <string>Bitmap Size</string>
      </property>
      <layout class="QGridLayout">
-      <item row="0" column="0">
-       <widget class="QLabel" name="lWidth">
-        <property name="text">
-         <string>Width:</string>
-        </property>
-        <property name="wordWrap">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="lHeight">
-        <property name="text">
-         <string>Height:</string>
-        </property>
-        <property name="wordWrap">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0" colspan="2">
-       <spacer name="vspacer2">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Expanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>31</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="leHeight">
-        <property name="text">
-         <string>480</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="leWidth">
-        <property name="text">
-         <string>640</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
+      <item row="2" column="1">
        <widget class="QLabel" name="lResolution">
         <property name="text">
          <string>Resolution:</string>
@@ -83,7 +33,7 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
+      <item row="2" column="2">
        <widget class="QComboBox" name="cbResolution">
         <property name="editable">
          <bool>true</bool>
@@ -174,6 +124,69 @@
          </property>
         </item>
        </widget>
+      </item>
+      <item row="7" column="0" colspan="3">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLabel" name="lWidth">
+        <property name="text">
+         <string>Width:</string>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QLabel" name="lHeight">
+        <property name="text">
+         <string>Height:</string>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="2">
+       <widget class="QLineEdit" name="leHeight">
+        <property name="text">
+         <string>480</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QLineEdit" name="leWidth">
+        <property name="text">
+         <string>640</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="3">
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Expanding</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </widget>
@@ -357,7 +370,6 @@
  <tabstops>
   <tabstop>leWidth</tabstop>
   <tabstop>leHeight</tabstop>
-  <tabstop>cbResolution</tabstop>
   <tabstop>rbWhite</tabstop>
  </tabstops>
  <resources/>

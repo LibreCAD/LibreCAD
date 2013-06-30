@@ -36,9 +36,12 @@
 class RS_DimAlignedData {
 public:
     /**
-     * Default constructor. Leaves the data object uninitialized.
+	 * Default constructor
      */
-    RS_DimAlignedData() {}
+	RS_DimAlignedData():
+		extensionPoint1(false),
+		extensionPoint2(false)
+	{}
 
     /**
      * Constructor with initialisation.

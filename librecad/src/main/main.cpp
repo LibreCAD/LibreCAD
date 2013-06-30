@@ -95,8 +95,8 @@ int main(int argc, char** argv) {
 //	qInitImages_librecad();
 #endif
 
-        for (int i=0; i<app.argc(); i++) {
-                if (QString("--debug") == app.argv()[i]) {
+        for (int i=0; i<argc; i++) {
+                if (QString("--debug") == argv[i]) {
                 RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
                 }
         }
@@ -235,7 +235,7 @@ int main(int argc, char** argv) {
 #ifdef QSPLASHSCREEN_H
                         if (splash) {
                                 splash->showMessage(QObject::tr("Loading File %1..")
-                                        .arg(QDir::convertSeparators(*it)),
+                                        .arg(QDir::toNativeSeparators(*it)),
                                 Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
                                 qApp->processEvents();
                         }
@@ -294,7 +294,7 @@ QStringList handleArgs(int argc, char** argv) {
 
         for (int i=1; i<argc; i++) {
                 if (QString(argv[i]).startsWith("-")==false) {
-                        QString fname = QDir::convertSeparators(
+                        QString fname = QDir::toNativeSeparators(
                                 QFileInfo(QFile::decodeName(argv[i])).absoluteFilePath() );
                         ret.append(fname);
                 }

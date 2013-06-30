@@ -145,7 +145,7 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
     {
         int j=SetPoint4;
         evalid=false;
-        if( (points.get(j) - points.get(j-1)).squared() <RS_TOLERANCE*RS_TOLERANCE){
+		if( (points.get(j) - points.get(j-1)).squared() <RS_TOLERANCE15){
             RS_Circle c(preview,cData);
             valid= c.createFrom3P(points);
             if(valid){
@@ -202,7 +202,7 @@ void RS_ActionDrawEllipse4Points::coordinateEvent(RS_CoordinateEvent* e) {
         if( preparePreview()) {
             graphicView->moveRelativeZero(mouse);
             if(getStatus() == SetPoint4 ||
-                    (points.get(getStatus()) - points.get(getStatus()-1)).squared() <RS_TOLERANCE*RS_TOLERANCE) {
+					(points.get(getStatus()) - points.get(getStatus()-1)).squared() <RS_TOLERANCE15) {
                 //also draw the entity, if clicked on the same point twice
                 trigger();
             }else{

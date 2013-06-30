@@ -31,6 +31,8 @@
 #include "document_interface.h"
 #include "rs_graphic.h"
 
+class Doc_plugin_interface;
+
 class convLTW
 {
 public:
@@ -47,7 +49,7 @@ private:
 class Plugin_Entity
 {
 public:
-    Plugin_Entity(RS_Entity* ent);
+    Plugin_Entity(RS_Entity* ent, Doc_plugin_interface* d);
     Plugin_Entity(RS_EntityContainer* parent, enum DPI::ETYPE type);
     virtual ~Plugin_Entity();
     bool isValid(){if (entity) return true; else return false;}
@@ -63,14 +65,14 @@ public:
 private:
     RS_Entity* entity;
     bool hasContainer;
+    Doc_plugin_interface* dpi;
 };
 
 class Doc_plugin_interface : public Document_Interface
-
 {
 public:
     Doc_plugin_interface(RS_Graphic *d, RS_GraphicView* gv, QWidget* parent);
-//    ~Doc_plugin_interface(){};
+    ~Doc_plugin_interface();
     void updateView();
     void addPoint(QPointF *start);
     void addLine(QPointF *start, QPointF *end);
@@ -89,6 +91,7 @@ public:
     void addEntity(Plug_Entity *handle);
     Plug_Entity *newEntity( enum DPI::ETYPE type);
     void removeEntity(Plug_Entity *ent);
+    void updateEntity(RS_Entity *org, RS_Entity *newe);
 
     void setLayer(QString name);
     QString getCurrentLayer();
@@ -96,18 +99,33 @@ public:
     QStringList getAllBlocks();
     bool deleteLayer(QString name);
 
+    void getCurrentLayerProperties(QColor *c, DPI::LineWidth *w, DPI::LineType *t);
+    void getCurrentLayerProperties(QColor *c, QString *w, QString *t);
+    void setCurrentLayerProperties(QColor c, DPI::LineWidth w, DPI::LineType t);
+    void setCurrentLayerProperties(QColor c, QString w, QString t);
+
     bool getPoint(QPointF *point, const QString& mesage, QPointF *base);
     Plug_Entity *getEnt(const QString& mesage);
     bool getSelect(QList<Plug_Entity *> *sel, const QString& mesage);
+    bool getAllEntities(QList<Plug_Entity *> *sel, bool visible = false);
+
+    bool getVariableInt(const QString& key, int *num);
+    bool getVariableDouble(const QString& key, double *num);
+    bool addVariable(const QString& key, int value, int code=70);
+    bool addVariable(const QString& key, double value, int code=40);
 
     bool getInt(int *num, const QString& mesage, const QString& title);
     bool getReal(qreal *num, const QString& mesage, const QString& title);
     bool getString(QString *txt, const QString& mesage, const QString& title);
+    QString realToStr(const qreal num, const int units = 0, const int prec = 0);
 
+    /*metod to handle undo in Plugin_Entity*/
+    bool addToUndo(RS_Entity* current, RS_Entity* modified);
 private:
     RS_Graphic *doc;
     RS_GraphicView *gView;
     QWidget* main;
+    bool haveUndo;
 };
 
 /*void addArc(QPointF *start);			->Without start

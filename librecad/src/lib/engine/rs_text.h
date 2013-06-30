@@ -249,6 +249,11 @@ public:
 //		return -1.0;
 //	}
 
+    /**
+     * @return The insertion point as endpoint.
+     */
+    virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
+                                         double* dist = NULL)const;
     virtual RS_VectorSolutions getRefPoints();
     virtual RS_Vector getNearestRef(const RS_Vector& coord,
                                     double* dist = NULL);

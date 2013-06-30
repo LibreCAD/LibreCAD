@@ -38,9 +38,12 @@
 class RS_ConstructionLineData {
 public:
     /**
-     * Default constructor. Leaves the data object uninitialized.
+	 * Default constructor
      */
-    RS_ConstructionLineData() {}
+	RS_ConstructionLineData():
+		point1(false),
+		point2(false)
+	{}
 
     RS_ConstructionLineData(const RS_Vector& point1,
                             const RS_Vector& point2) {

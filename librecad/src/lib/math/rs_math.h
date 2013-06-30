@@ -32,6 +32,7 @@
 #define _MT
 #endif
 
+#include <cfloat>
 #include <cmath>
 #include <complex>
 #include <errno.h>
@@ -55,6 +56,7 @@
 //tolerance
 #define RS_TOLERANCE 1.0e-10
 //squared tolerance
+#define RS_TOLERANCE15 1.5e-15
 #define RS_TOLERANCE2 1.0e-20
 #define RS_TOLERANCE_ANGLE 1.0e-8
 
@@ -80,7 +82,7 @@ public:
                                double a1, double a2,
                                bool reversed);
     static double correctAngle(double a);
-    static double getAngleDifference(double a1, double a2);
+    static double getAngleDifference(double a1, double a2, bool reversed = false);
     static double makeAngleReadable(double angle, bool readable=true,
                                     bool* corrected=NULL);
     static bool isAngleReadable(double angle);

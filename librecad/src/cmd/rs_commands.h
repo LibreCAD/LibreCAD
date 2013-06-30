@@ -30,6 +30,7 @@
 #define RS_COMMANDS_H
 
 #include <QMultiHash>
+#include <QObject>
 
 #include "rs.h"
 

@@ -121,6 +121,10 @@ RS2::FormatType RS_FileIO::detectFormat(const QString& file) {
         type = RS2::FormatLFF;
     } else if (ext=="cxf") {
         type = RS2::FormatCXF;
+#ifdef DWGSUPPORT
+    } else if (ext=="dwg") {
+        type = RS2::FormatDWG;
+#endif
     } else if (ext=="dxf") {
         type = RS2::FormatDXF1;
         QFile f(file);
@@ -140,13 +144,14 @@ RS2::FormatType RS_FileIO::detectFormat(const QString& file) {
             int c=0;
             while (!ts.atEnd() && ++c<100) {
                 line = ts.readLine();
-                if (line=="$ACADVER") {
+                if (line=="$ACADVER" || line=="ENTITIES") {
                     type = RS2::FormatDXFRW;
+                    break;
                 }
                 // very simple reduced DXF:
-                if (line=="ENTITIES" && c<10) {
-                    type = RS2::FormatDXFRW;
-                }
+//                if (line=="ENTITIES" && c<10) {
+//                    type = RS2::FormatDXFRW;
+//                }
             }
             f.close();
         }

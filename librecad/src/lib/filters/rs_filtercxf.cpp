@@ -178,11 +178,11 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                 RS_DEBUG->print("006a");
                 a = QString(*it2);
                 RS_DEBUG->print("006b");
-                RS_DEBUG->print("string is: %s", a.toAscii().data());
+                RS_DEBUG->print("string is: %s", a.toLatin1().data());
                 RS_DEBUG->print("006b0");
                 fprintf(fp, "# Author:            ");
                 RS_DEBUG->print("006b1");
-                fprintf(fp, "%s\n", a.toAscii().data());
+                fprintf(fp, "%s\n", a.toLatin1().data());
                 //fout << "# Author:            " << a.ascii() << "\n";
             }
             RS_DEBUG->print("007");
@@ -198,7 +198,7 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
             RS_DEBUG->print("block: %d", i);
             RS_DEBUG->print("001");
 
-            if (blk!=NULL) {
+            if (blk!=NULL && !blk->isUndone()) {
                 RS_DEBUG->print("002");
                 RS_DEBUG->print("002a: %s",
                                 (blk->getName().toLocal8Bit().data()));

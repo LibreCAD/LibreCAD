@@ -56,6 +56,7 @@ protected slots:
 private:
     RS_Vector graphicSize;
     bool updateEnabled;
+    bool useResolution;
 
     void init();
 

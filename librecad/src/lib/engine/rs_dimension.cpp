@@ -107,16 +107,20 @@ void RS_Dimension::setLabel(const QString& l) {
 void RS_Dimension::updateCreateDimensionLine(const RS_Vector& p1,
         const RS_Vector& p2, bool arrow1, bool arrow2, bool forceAutoText) {
 
+    // general scale (DIMSCALE)
+    double dimscale = getGeneralScale();
     // text height (DIMTXT)
-    double dimtxt = getTextHeight();
+    double dimtxt = getTextHeight()*dimscale;
     // text distance to line (DIMGAP)
-    double dimgap = getDimensionLineGap();
+    double dimgap = getDimensionLineGap()*dimscale;
 
     // length of dimension line:
     double distance = p1.distanceTo(p2);
+    // arrow size:
+    double arrowSize = getArrowSize()*dimscale;
 
     // do we have to put the arrows outside of the line?
-    bool outsideArrows = (distance<getArrowSize()*2.5);
+    bool outsideArrows = (distance<arrowSize*2.5);
 
     // arrow angles:
     double arrowAngle1, arrowAngle2;
@@ -136,11 +140,11 @@ void RS_Dimension::updateCreateDimensionLine(const RS_Vector& p1,
 
         // extend dimension line outside arrows
         RS_Vector dir;
-        dir.setPolar(getArrowSize()*2, arrowAngle2);
+        dir.setPolar(arrowSize*2, arrowAngle2);
         dimensionLine->setStartpoint(p1 + dir);
         dimensionLine->setEndpoint(p2 - dir);
     }
-double dimtsz=getTickSize();
+double dimtsz=getTickSize()*dimscale;
 if(dimtsz < 0.01) {
     //display arrow
     // Arrows:
@@ -152,7 +156,7 @@ if(dimtsz < 0.01) {
         arrow = new RS_Solid(this, sd);
         arrow->shapeArrow(p1,
                           arrowAngle1,
-                          getArrowSize());
+                          arrowSize);
         arrow->setPen(RS_Pen(RS2::FlagInvalid));
         arrow->setLayer(NULL);
         addEntity(arrow);
@@ -163,7 +167,7 @@ if(dimtsz < 0.01) {
         arrow = new RS_Solid(this, sd);
         arrow->shapeArrow(p2,
                           arrowAngle2,
-                          getArrowSize());
+                          arrowSize);
         arrow->setPen(RS_Pen(RS2::FlagInvalid));
         arrow->setLayer(NULL);
         addEntity(arrow);
@@ -267,9 +271,12 @@ if(dimtsz < 0.01) {
         do {
             sol1 = RS_Information::getIntersection(dimensionLine, &(l[inters++]), true);
         } while (!sol1.hasValid() && inters < 4);
-        do {
-            sol2 = RS_Information::getIntersection(dimensionLine, &(l[inters++]), true);
-        } while (!sol2.hasValid() && inters < 4);
+//        if (sol1.hasValid() && inters < 4) {
+        if (inters < 4) {
+            do {
+                sol2 = RS_Information::getIntersection(dimensionLine, &(l[inters++]), true);
+            } while (!sol2.hasValid() && inters < 4);
+        }
         //are text intersecting dimensionLine?
         if (sol1.hasValid() && sol2.hasValid()) {
             //yes, split dimension line
@@ -291,6 +298,12 @@ if(dimtsz < 0.01) {
 }
 
 
+/**
+ * @return general scale for dimensions.
+ */
+double RS_Dimension::getGeneralScale() {
+    return getGraphicVariable("$DIMSCALE", 1.0, 40);
+}
 
 /**
  * @return arrow size in drawing units.

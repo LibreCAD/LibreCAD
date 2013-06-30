@@ -111,14 +111,16 @@ void RS_DimLinear::update(bool autoText) {
 
     clear();
 
-        if (isUndone()) {
-                return;
-        }
+    if (isUndone()) {
+        return;
+    }
 
+    // general scale (DIMSCALE)
+    double dimscale = getGeneralScale();
     // distance from entities (DIMEXO)
-    double dimexo = getExtensionLineOffset();
+    double dimexo = getExtensionLineOffset()*dimscale;
     // extension line extension (DIMEXE)
-    double dimexe = getExtensionLineExtension();
+    double dimexe = getExtensionLineExtension()*dimscale;
 
     RS_LineData ld;
     double extAngle = edata.angle + (M_PI/2.0);

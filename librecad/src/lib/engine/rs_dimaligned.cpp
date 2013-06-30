@@ -101,14 +101,16 @@ void RS_DimAligned::update(bool autoText) {
 
     clear();
 
-        if (isUndone()) {
-                return;
-        }
+    if (isUndone()) {
+        return;
+    }
 
+    // general scale (DIMSCALE)
+    double dimscale = getGeneralScale();
     // distance from entities (DIMEXO)
-    double dimexo = getExtensionLineOffset();
+    double dimexo = getExtensionLineOffset()*dimscale;
     // definition line definition (DIMEXE)
-    double dimexe = getExtensionLineExtension();
+    double dimexe = getExtensionLineExtension()*dimscale;
     // text height (DIMTXT)
     //double dimtxt = getTextHeight();
     // text distance to line (DIMGAP)

@@ -29,7 +29,9 @@
 
 #include "rs_previewactioninterface.h"
 #include "rs_modification.h"
-#include "document_interface.h"
+
+class Plug_Entity;
+class Doc_plugin_interface;
 
 
 /**
@@ -63,7 +65,7 @@ public:
 
     void setMesage(QString msg);
     bool isCompleted(){return completed;}
-    void getSelected(QList<Plug_Entity *> *se);
+    void getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d);
 
 private:
     bool completed;

@@ -9,7 +9,7 @@
 #define NOTFOUND949 0x003F
 
 //Table 949 one byte
-static const int DRW_Table949[] = {
+static const int DRW_Table949[1] = {
 };
 
 //Table 949 lead byte

@@ -39,7 +39,11 @@
 RS_ActionBlocksInsert::RS_ActionBlocksInsert(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Blocks Insert",
-                           container, graphicView) {}
+                           container, graphicView) {
+    block = NULL;
+    reset();    // init data Member
+    lastStatus = SetUndefined;
+}
 
 
 

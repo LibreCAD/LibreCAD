@@ -172,34 +172,32 @@ void QG_DlgHatch::updatePreview(RS_Pattern* ) {
 
     QString patName = cbPattern->currentText();
     bool isSolid = cbSolid->isChecked();
-    double prevSize;
-    //double scale = RS_Math::eval(leScale->text(), 1.0);
+    double scale = RS_Math::eval(leScale->text(), 1.0);
     double angle = RS_Math::deg2rad(RS_Math::eval(leAngle->text(), 0.0));
+    double prevSize = 1.0;
     if (pattern!=NULL) {
-        prevSize = pattern->getSize().x*10;
-    } else {
-        prevSize = 10.0;
+        prevSize = pattern->getSize().x;
     }
 
     preview->clear();
 
     RS_Hatch* prevHatch = new RS_Hatch(preview,
-                                       RS_HatchData(isSolid, 0.2, angle, patName));
+                                       RS_HatchData(isSolid, scale, angle, patName));
     prevHatch->setPen(hatch->getPen());
 
     RS_EntityContainer* loop = new RS_EntityContainer(prevHatch);
     loop->setPen(RS_Pen(RS2::FlagInvalid));
     loop->addEntity(new RS_Line(loop,
                                 RS_LineData(RS_Vector(0.0,0.0),
-                                            RS_Vector(10.0,0.0))));
+                                            RS_Vector(prevSize,0.0))));
     loop->addEntity(new RS_Line(loop,
-                                RS_LineData(RS_Vector(10.0,0.0),
-                                            RS_Vector(10.0,10.0))));
+                                RS_LineData(RS_Vector(prevSize,0.0),
+                                            RS_Vector(prevSize,prevSize))));
     loop->addEntity(new RS_Line(loop,
-                                RS_LineData(RS_Vector(10.0,10.0),
-                                            RS_Vector(0.0,10.0))));
+                                RS_LineData(RS_Vector(prevSize,prevSize),
+                                            RS_Vector(0.0,prevSize))));
     loop->addEntity(new RS_Line(loop,
-                                RS_LineData(RS_Vector(0.0,10.0),
+                                RS_LineData(RS_Vector(0.0,prevSize),
                                             RS_Vector(0.0,0.0))));
     prevHatch->addEntity(loop);
     preview->addEntity(prevHatch);
@@ -208,5 +206,4 @@ void QG_DlgHatch::updatePreview(RS_Pattern* ) {
     }
 
     gvPreview->zoomAuto();
-
 }

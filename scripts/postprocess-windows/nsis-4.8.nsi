@@ -88,8 +88,6 @@ Section "Install Section" SecInstall
   File "C:\QtSDK\mingw\bin\libgcc_s_dw2-1.dll"
   File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\bin\mingwm10.dll"
   File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\bin\QtCore4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\bin\Qt3Support4.dll"
-  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\bin\QtCore4.dll"
   File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\bin\QtGui4.dll"
   File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\bin\QtXml4.dll"
   File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\bin\QtHelp4.dll"
@@ -105,6 +103,7 @@ Section "Install Section" SecInstall
   File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\plugins\imageformats\qtiff4.dll"
   File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\plugins\imageformats\qmng4.dll"
   File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\plugins\imageformats\qsvg4.dll"
+  File "C:\QtSDK\Desktop\Qt\4.8.0\mingw\plugins\imageformats\qtga4.dll"
 
   ;Store installation folder
   WriteRegStr HKCU "Software\LibreCAD" "" $INSTDIR

@@ -1284,7 +1284,8 @@ bool RS_FilterJWW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 
                 for (uint i=0; i<graphic->countBlocks(); ++i) {
                         RS_Block* blk = graphic->blockAt(i);
-                        jww.writeBlockRecord(*dw,
+                        if (!blk->isUndone())
+                            jww.writeBlockRecord(*dw,
                                 std::string((const char*)blk->getName().toLocal8Bit().data()));
                         /*
                         // v2.0.4.9..:
@@ -1330,7 +1331,8 @@ bool RS_FilterJWW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                 // Careful: other blocks with * / $ exist
                 //if (blk->getName().at(0)!='*' &&
                 //		blk->getName().at(0)!='$') {
-                writeBlock(*dw, blk);
+                if (!blk->isUndone())
+                    writeBlock(*dw, blk);
                 //}
         }
         dw->sectionEnd();
@@ -3018,7 +3020,7 @@ QString RS_FilterJWW::toNativeString(const char* data, const QString& encoding) 
      *	  the string through a textcoder.
      *	--------------------------------------------------------------------- */
     if (!res.contains("\\U+")) {
-        QTextCodec *codec = QTextCodec::codecForName(encoding.toAscii());
+        QTextCodec *codec = QTextCodec::codecForName(encoding.toLatin1());
         if (codec)
             res = codec->toUnicode(data);
     }

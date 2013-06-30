@@ -493,6 +493,13 @@ double RS_MText::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
 }
 
 
+RS_Vector RS_MText::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
+    if (dist!=NULL) {
+        *dist = data.insertionPoint.distanceTo(coord);
+    }
+    return data.insertionPoint;
+}
+
 
 RS_VectorSolutions RS_MText::getRefPoints() {
         RS_VectorSolutions ret(data.insertionPoint);

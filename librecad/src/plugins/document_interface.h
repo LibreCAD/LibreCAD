@@ -29,6 +29,7 @@
 #include <QPointF>
 #include <QHash>
 #include <QString>
+#include <QColor>
 
 namespace DPI {
     //! Vertical alignments.
@@ -101,11 +102,67 @@ namespace DPI {
         LTSCALE=48,     /*!< line type scale (not in LibreCAD) */
         STARTANGLE=50,  /*!< double: arc start angle or rotation angle for insert and text */
         ENDANGLE=51,    /*!< double: arc end angle */
+        VISIBLE=60,     /*!< int: 1 visible, 0 invisible (reversed from dxf spec, but more logic*/
         COLOR=62,       /*!< QColor: entity color */
         CLOSEPOLY=70,   /*!< int: closed polyline 0=open, 1=closed */
         TXTALIGNH=72,   /*!< enum: horizontal alignment for text */
         TXTALIGNV=73,   /*!< enum: vertical alignment for text */
         REVERSED=291 /*!< bool: true if arc is reversed (clockwise) */
+    };
+
+    enum LineWidth {
+        Width00 = 0,       /**< Width 1.  (0.00mm) */
+        Width01 = 5,       /**< Width 2.  (0.05mm) */
+        Width02 = 9,       /**< Width 3.  (0.09mm) */
+        Width03 = 13,      /**< Width 4.  (0.13mm) */
+        Width04 = 15,      /**< Width 5.  (0.15mm) */
+        Width05 = 18,      /**< Width 6.  (0.18mm) */
+        Width06 = 20,      /**< Width 7.  (0.20mm) */
+        Width07 = 25,      /**< Width 8.  (0.25mm) */
+        Width08 = 30,      /**< Width 9.  (0.30mm) */
+        Width09 = 35,      /**< Width 10. (0.35mm) */
+        Width10 = 40,      /**< Width 11. (0.40mm) */
+        Width11 = 50,      /**< Width 12. (0.50mm) */
+        Width12 = 53,      /**< Width 13. (0.53mm) */
+        Width13 = 60,      /**< Width 14. (0.60mm) */
+        Width14 = 70,      /**< Width 15. (0.70mm) */
+        Width15 = 80,      /**< Width 16. (0.80mm) */
+        Width16 = 90,      /**< Width 17. (0.90mm) */
+        Width17 = 100,     /**< Width 18. (1.00mm) */
+        Width18 = 106,     /**< Width 19. (1.06mm) */
+        Width19 = 120,     /**< Width 20. (1.20mm) */
+        Width20 = 140,     /**< Width 21. (1.40mm) */
+        Width21 = 158,     /**< Width 22. (1.58mm) */
+        Width22 = 200,     /**< Width 23. (2.00mm) */
+        Width23 = 211,     /**< Width 24. (2.11mm) */
+        WidthByLayer = -1, /**< Line width defined by layer not entity. */
+        WidthByBlock = -2, /**< Line width defined by block not entity. */
+        WidthDefault = -3  /**< Line width defaults to the predefined line width. */
+    };
+
+    enum LineType {
+        NoPen = 0,            /**< No line at all. */
+        SolidLine = 1,        /**< Normal line. */
+        DotLine = 2,          /**< Dotted line. */
+        DotLine2 = 3,         /**< Dotted line small. */
+        DotLineX2 = 4,        /**< Dotted line large. */
+        DashLine = 5,         /**< Dashed line. */
+        DashLine2 = 6,        /**< Dashed line small. */
+        DashLineX2 = 7,       /**< Dashed line large. */
+        DashDotLine = 8,      /**< Alternate dots and dashes. */
+        DashDotLine2 = 9,     /**< Alternate dots and dashes small. */
+        DashDotLineX2 = 10,   /**< Alternate dots and dashes large. */
+        DivideLine = 11,      /**< dash, dot, dot. */
+        DivideLine2 = 12,     /**< dash, dot, dot small. */
+        DivideLineX2 = 13,    /**< dash, dot, dot large. */
+        CenterLine = 14,      /**< dash, small dash. */
+        CenterLine2 = 15,     /**< dash, small dash small. */
+        CenterLineX2 = 16,    /**< dash, small dash large. */
+        BorderLine = 17,      /**< dash, dash, dot. */
+        BorderLine2 = 18,     /**< dash, dash, dot small. */
+        BorderLineX2 = 19,    /**< dash, dash, dot large. */
+        LineByLayer = -1,     /**< Line type defined by layer not entity */
+        LineByBlock = -2      /**< Line type defined by block not entity */
     };
 
 }
@@ -332,6 +389,10 @@ public:
     */
     virtual bool deleteLayer(QString name) = 0;
 
+    virtual void getCurrentLayerProperties(QColor *c, DPI::LineWidth *w, DPI::LineType *t) = 0;
+    virtual void getCurrentLayerProperties(QColor *c, QString *w, QString *t) = 0;
+    virtual void setCurrentLayerProperties(QColor c, DPI::LineWidth w, DPI::LineType t) = 0;
+    virtual void setCurrentLayerProperties(QColor c, QString w, QString t) = 0;
 
     //! Gets a point.
     /*! Prompt message or an default message to the user asking for a point.
@@ -355,17 +416,41 @@ public:
     //! Gets a entities selection.
     /*! Prompt message or an default message to the user asking for a selection.
     * You can delete all, the Plug_Entity and the returned QList wen no more needed.
-    * \param sel a QList of poiters to Plug_Entity handled the selected entites.
+    * \param sel a QList of poiters to Plug_Entity handled the selected entities.
     * \param mesage an optional QString with prompt message.
     * \return true if succes.
     * \return false if fail, i.e. user cancel.
     */
     virtual bool getSelect(QList<Plug_Entity *> *sel, const QString& mesage = "") = 0;
 
+    //! Gets all entities in document.
+    /*! You can delete all, the Plug_Entity and the returned QList wen no more needed.
+    * \param sel a QList of poiters to Plug_Entity handled the selected entities.
+    * \param visible default fo false, do not select entities in hidden layers.
+    * \return true if succes.
+    * \return false if fail, i.e. user cancel.
+    */
+    virtual bool getAllEntities(QList<Plug_Entity *> *sel, bool visible = false) = 0;
+
+    virtual bool getVariableInt(const QString& key, int *num) = 0;
+    virtual bool getVariableDouble(const QString& key, double *num) = 0;
+    virtual bool addVariable(const QString& key, int value, int code=70) = 0;
+    virtual bool addVariable(const QString& key, double value, int code=40) = 0;
+
     virtual bool getInt(int *num, const QString& mesage = "", const QString& title = "") = 0;
     virtual bool getReal(qreal *num, const QString& mesage = "", const QString& title = "") = 0;
     virtual bool getString(QString *txt, const QString& mesage = "", const QString& title = "") = 0;
 
+    //! Convert real to string.
+    /*! Convert a real number to string using indicated units format & precision. If omitted
+    * are the current drawing units & precision are used.
+    * \param num Number to convert.
+    * \param units Units format to use. current configured=0, Scientific=1,
+    * Decimal=2, Engineering=3, Architectural=4, Fractional=5.
+    * \param prec number of decimals added in the string.
+    * \return a string with the converted number.
+    */
+    virtual QString realToStr(const qreal num, const int units = 0, const int prec = 0) = 0;
 };
 
 

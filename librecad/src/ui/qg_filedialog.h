@@ -62,6 +62,9 @@ private:
     QString fDxfrw14;
     QString fDxfrw12;
     QString fDxfrw;
+#ifdef DWGSUPPORT
+    QString fDwg;
+#endif
     QString fDxf1;
     QString fLff;
     QString fCxf;

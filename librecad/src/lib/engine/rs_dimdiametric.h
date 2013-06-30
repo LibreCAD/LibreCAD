@@ -36,9 +36,12 @@
 class RS_DimDiametricData {
 public:
     /**
-     * Default constructor. Leaves the data object uninitialized.
+	 * Default constructor
      */
-    RS_DimDiametricData() {}
+	RS_DimDiametricData():
+		definitionPoint(false),
+		leader(0.0)
+	{}
 
     /**
      * Constructor with initialisation.

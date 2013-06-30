@@ -29,6 +29,7 @@
 #include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_graphic.h"
 
 /**
  * Constructor.
@@ -98,6 +99,9 @@ void RS_ActionEditUndo::trigger() {
         }
     }
 
+    if (graphic!=NULL) {
+        graphic->addBlockNotification();
+    }
     document->updateInserts();
 
     graphicView->redraw(RS2::RedrawDrawing);

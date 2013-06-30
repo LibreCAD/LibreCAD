@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_actiondrawcircletan3.h"
 
 #include <QAction>
+#include <QDebug>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
@@ -174,6 +175,8 @@ bool RS_ActionDrawCircleTan3::getData(){
         for(size_t j=0;j<sol.size();j++){
             circles[i]->getNearestPointOnEntity(sol[j],false,&d);
             RS_CircleData data(sol[j],d);
+//            DEBUG_HEADER();
+//            std::cout<<sol[j]<<" r="<<d<<std::endl;
             if(circles[(i+1)%3]->isTangent(data)==false) continue;
             if(circles[(i+2)%3]->isTangent(data)==false) continue;
 
@@ -247,6 +250,8 @@ void RS_ActionDrawCircleTan3::mouseReleaseEvent(QMouseEvent* e) {
         case SetCircle2:
         case SetCircle3: {
             RS_Entity*  en = catchCircle(e);
+//            DEBUG_HEADER();
+//            qDebug()<<"en="<<en;
             if (en==NULL) return;
             circles.resize(getStatus());
 //            for(int i=0;i<circles.size();i++){
@@ -388,16 +393,16 @@ void RS_ActionDrawCircleTan3::updateMouseButtonHints() {
     if (RS_DIALOGFACTORY!=NULL) {
         switch (getStatus()) {
         case SetCircle1:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first arc/circle"),
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first line/arc/circle"),
                                                 tr("Cancel"));
             break;
 
         case SetCircle2:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the second arc/circle"),
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the second line/arc/circle"),
                                                 tr("Back"));
             break;
         case SetCircle3:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the third arc/circle"),
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the third line/arc/circle"),
                                                 tr("Back"));
             break;
 

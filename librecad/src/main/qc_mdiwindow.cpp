@@ -26,14 +26,19 @@
 
 #include "qc_mdiwindow.h"
 
-#include <QPrinter>
+#if QT_VERSION >= 0x050000
+# include <QtPrintSupport/QPrinter>
+# include <QtPrintSupport/QPrintDialog>
+#else
+# include <QPrinter>
+# include <QPrintDialog>
+#endif 
 //Added by qt3to4:
 #include <QCloseEvent>
 
 #include <QMainWindow>
 #include <QCursor>
 #include <QMessageBox>
-#include <QPrintDialog>
 #include <QFileInfo>
 #include <QMdiArea>
 #include <QPainter>
@@ -68,7 +73,7 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc,
     id = idCounter++;
     //childWindows.setAutoDelete(false);
     parentWindow = NULL;
-
+    setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
     if (document!=NULL) {
         if (document->getLayerList()!=NULL) {
             // Link the graphic view to the layer widget
@@ -342,7 +347,7 @@ bool QC_MDIWindow::slotFileNewTemplate(const QString& fileName, RS2::FormatType 
         RS_DEBUG->print("QC_MDIWindow::slotFileNewTemplate: failed");
 
     RS_DEBUG->print("QC_MDIWindow::slotFileNewTemplate end");
-    return true;
+    return ret;
 }
 
 
@@ -439,6 +444,7 @@ bool QC_MDIWindow::slotFileSave(bool &cancelled, bool isAutoSave) {
     cancelled = false;
 
     if (document!=NULL) {
+        document->setGraphicView(graphicView);
         if (isAutoSave) {
             // Autosave filename is always supposed to be present.
             // Autosave does not change the cursor.
@@ -477,7 +483,8 @@ bool QC_MDIWindow::slotFileSaveAs(bool &cancelled) {
     QString fn = dlg.getSaveFile(&t);
     if (document!=NULL && !fn.isEmpty()) {
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
-        ret = document->saveAs(fn, t);
+        document->setGraphicView(graphicView);
+        ret = document->saveAs(fn, t, true);
         QApplication::restoreOverrideCursor();
     } else {
         // cancel is not an error - returns true

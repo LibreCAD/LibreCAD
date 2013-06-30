@@ -49,8 +49,15 @@
 
 #include <fstream>
 
-#include <QPrinter>
-#include <QPrintDialog>
+
+#if QT_VERSION >= 0x050000
+# include <QtPrintSupport/QPrinter>
+# include <QtPrintSupport/QPrintDialog>
+#else
+# include <QPrinter>
+# include <QPrintDialog>
+#endif 
+
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTimer>
@@ -198,7 +205,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_SETTINGS->endGroup();
 
     // Disable menu and toolbar items
-    emit windowsChanged(FALSE);
+    emit windowsChanged(false);
 
     RS_COMMANDS->updateAlias();
     //plugin load
@@ -261,6 +268,7 @@ void QC_ApplicationWindow::loadPlugins() {
                         QAction *actpl = new QAction(loc.menuEntryActionName, plugin);
                         actpl->setData(loc.menuEntryActionName);
                         connect(actpl, SIGNAL(triggered()), this, SLOT(execPlug()));
+                        connect(this, SIGNAL(windowsChanged(bool)), actpl, SLOT(setEnabled(bool)));
                         QMenu *atMenu = findMenu("/"+loc.menuEntryPoint, menuBar()->children(), "");
                         if (atMenu) {
                             atMenu->addAction(actpl);
@@ -1028,6 +1036,9 @@ void QC_ApplicationWindow::initActions(void)
     action = actionFactory.createAction(RS2::ActionDrawCircleTan2, actionHandler);
     subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionDrawCircleTan2_1P, actionHandler);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawCircleTan3, actionHandler);
     subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -1578,7 +1589,7 @@ void QC_ApplicationWindow::initToolBar() {
     RS_DEBUG->print("QC_ApplicationWindow::initToolBar()");
 
 
-        QSizePolicy toolBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
+        QSizePolicy toolBarPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
         fileToolBar = new QToolBar( "File Operations", this);
         fileToolBar->setSizePolicy(toolBarPolicy);
@@ -1611,7 +1622,7 @@ void QC_ApplicationWindow::initToolBar() {
 
 
     optionWidget = new QToolBar("Tool Options", this);
-        QSizePolicy optionWidgetBarPolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+        QSizePolicy optionWidgetBarPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 //        optionWidget->setMinimumSize(440,30);
         optionWidget->setSizePolicy(optionWidgetBarPolicy);
         optionWidget->setObjectName ( "ToolTB" );
@@ -2987,10 +2998,9 @@ void QC_ApplicationWindow::slotFileSaveAs() {
 void QC_ApplicationWindow::slotFileAutoSave() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileAutoSave()");
 
-    statusBar()->showMessage(tr("Auto-saving drawing..."));
+    statusBar()->showMessage(tr("Auto-saving drawing..."), 2000);
 
     QC_MDIWindow* w = getMDIWindow();
-    QString name;
     if (w!=NULL) {
         bool cancelled;
         if (w->slotFileSave(cancelled, true)) {
@@ -3006,6 +3016,7 @@ void QC_ApplicationWindow::slotFileAutoSave() {
                                         "Auto-save disabled.")
                                      .arg(w->getDocument()->getAutoSaveFilename()),
                                      QMessageBox::Ok);
+            statusBar()->showMessage(tr("Auto-saving failed"), 2000);
         }
     }
 }
@@ -3025,7 +3036,7 @@ void QC_ApplicationWindow::slotFileExport() {
     if (w!=NULL) {
 
         // read default settings:
-        RS_SETTINGS->beginGroup("/Paths");
+        RS_SETTINGS->beginGroup("/Export");
         QString defDir = RS_SETTINGS->readEntry("/ExportImage", RS_SYSTEM->getHomeDir());
         QString defFilter = RS_SETTINGS->readEntry("/ExportImageFilter",
                                                      QString("%1 (%2)(*.%2)").arg(QG_DialogFactory::extToFormat("png")).arg("png"));
@@ -3057,7 +3068,11 @@ void QC_ApplicationWindow::slotFileExport() {
 
         // set dialog options: filters, mode, accept, directory, filename
         QFileDialog fileDlg(this, "Export as");
-        fileDlg.setFilters(filters);
+#if QT_VERSION < 0x040400
+        emu_qt44_QFileDialog_setNameFilters(fileDlg, filters);
+#else
+        fileDlg.setNameFilters(filters);
+#endif
         fileDlg.setFileMode(QFileDialog::AnyFile);
         fileDlg.selectNameFilter(defFilter);
         fileDlg.setAcceptMode(QFileDialog::AcceptSave);
@@ -3078,14 +3093,23 @@ void QC_ApplicationWindow::slotFileExport() {
 
         // store new default settings:
         if (!cancel) {
-            RS_SETTINGS->beginGroup("/Paths");
+            RS_SETTINGS->beginGroup("/Export");
             RS_SETTINGS->writeEntry("/ExportImage", QFileInfo(fn).absolutePath());
+#if QT_VERSION < 0x040400
             RS_SETTINGS->writeEntry("/ExportImageFilter",
-                                    fileDlg.selectedFilter());
+                                    emu_qt44_QFileDialog_selectedNameFilter(fileDlg) );
+#else
+            RS_SETTINGS->writeEntry("/ExportImageFilter",
+                                    fileDlg.selectedNameFilter());
+#endif
             RS_SETTINGS->endGroup();
 
             // find out extension:
-            QString filter = fileDlg.selectedFilter();
+#if QT_VERSION < 0x040400
+            QString filter = emu_qt44_QFileDialog_selectedNameFilter(fileDlg);
+#else
+            QString filter = fileDlg.selectedNameFilter();
+#endif
             QString format = "";
             int i = filter.indexOf("(*.");
             if (i!=-1) {
@@ -3120,7 +3144,7 @@ void QC_ApplicationWindow::slotFileExport() {
 
 
 /**
- * Exports the drawing as a bitmap.
+ * Exports the drawing as a bitmap or another picture format.
  *
  * @param name File name.
  * @param format File format (e.g. "png")
@@ -3215,7 +3239,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
         QImage img = picture->toImage();
         // RVT_PORT iio.setImage(img);
         iio.setFileName(name);
-        iio.setFormat(format.toAscii());
+        iio.setFormat(format.toLatin1());
         // RVT_PORT if (iio.write()) {
         if (iio.write(img)) {
             ret = true;
@@ -3289,6 +3313,9 @@ void QC_ApplicationWindow::slotFileClosing() {
     layerWidget->setLayerList(NULL, false);
     blockWidget->setBlockList(NULL);
     coordinateWidget->setGraphic(NULL);
+    QC_MDIWindow* w = getMDIWindow();
+    if(w!=NULL)
+        openedFiles.removeAll(w->getDocument()->getFilename());
 }
 
 
@@ -3939,7 +3966,7 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                 lay = e->getLayer()->getName();
             }
             dumpFile
-            << "<td>Layer: " << lay.toAscii().data() << "</td>"
+            << "<td>Layer: " << lay.toLatin1().data() << "</td>"
             << "<td>Width: " << (int)e->getPen(false).getWidth() << "</td>"
             << "<td>Parent: " << e->getParent()->getId() << "</td>"
             << "</tr></table>";
@@ -4077,10 +4104,10 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
                     << d->getExtensionPoint2()
                     << "</td>"
                     << "<td>Text: "
-                    << d->getText().toAscii().data()
+                    << d->getText().toLatin1().data()
                     << "</td>"
                     << "<td>Label: "
-                    << d->getLabel().toAscii().data()
+                    << d->getLabel().toLatin1().data()
                     << "</td>"
                     << "</tr></table>";
                 }

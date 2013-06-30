@@ -433,6 +433,10 @@ public:
         void setDraftMode(bool dm) {
                 draftMode=dm;
         }
+        virtual bool isCleanUp(void) const
+        {
+            return m_bIsCleanUp;
+        }
 
         virtual RS_EntityContainer* getOverlayContainer(RS2::OverlayGraphics position);
 
@@ -512,6 +516,8 @@ private:
 
         // Map that will be used for overlaying additional items on top of the main CAD drawing
         QMap<int, RS_EntityContainer *> overlayEntities;
+        /** if true, graphicView is under cleanup */
+        bool m_bIsCleanUp;
 
 };
 

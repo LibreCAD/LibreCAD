@@ -50,7 +50,7 @@
 /**
  * Constructor.
  */
-QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WFlags f)
+QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlags f)
         : QWidget(parent, f), RS_GraphicView() {
 
     setObjectName(name);
@@ -758,7 +758,8 @@ void QG_GraphicView::paintEvent(QPaintEvent *) {
         drawLayer2((RS_Painter*)&painter2);
         painter2.setDrawSelectedOnly(true);
         drawLayer2((RS_Painter*)&painter2);
-        setDraftMode(false);
+        //removed to solve bug #3470573
+//        setDraftMode(false);
                 painter2.end();
         }
 

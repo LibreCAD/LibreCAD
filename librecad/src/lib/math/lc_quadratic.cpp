@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <QDebug>
 #include "rs_math.h"
 #include "rs_information.h"
 #include "lc_quadratic.h"
@@ -209,6 +210,8 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
     ,m_vLinear(2)
     ,m_bValid(false)
 {
+//    DEBUG_HEADER();
+
     if(circle0->rtti() != RS2::EntityArc &&
             circle0->rtti() != RS2::EntityCircle&&
             circle0->rtti() != RS2::EntityLine) return;
@@ -268,10 +271,12 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
         return;
     }
     //two circles
-    double f=(circle0->getCenter()-circle1->getCenter()).magnitude()*0.5;
-    double a=(circle0->getRadius()+circle1->getRadius())*0.5;
-    double c=fabs(circle0->getRadius()-circle1->getRadius())*0.5;
 
+    double f=(circle0->getCenter()-circle1->getCenter()).magnitude()*0.5;
+    double a=fabs(circle0->getRadius()+circle1->getRadius())*0.5;
+    double c=fabs(circle0->getRadius()-circle1->getRadius())*0.5;
+//    DEBUG_HEADER();
+//    qDebug()<<"circle center to center distance="<<2.*f<<"\ttotal radius="<<2.*a;
     if(a<RS_TOLERANCE) return;
     RS_Vector&& center=(circle0->getCenter()+circle1->getCenter())*0.5;
     double angle=center.angleTo(circle0->getCenter());
@@ -287,10 +292,12 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
         m_bIsQuadratic=lc0.isQuadratic();
         m_bValid=lc0.isValid();
         m_dConst=lc0.m_dConst;
+//        DEBUG_HEADER();
+//        std::cout<<"ellipse: "<<*this;
         return;
     }
 
-       DEBUG_HEADER();
+//       DEBUG_HEADER();
 //hyperbola
     double b2= f*f - c*c;
     m_bValid=true;
@@ -373,12 +380,18 @@ LC_Quadratic LC_Quadratic::flipXY(void) const
 RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const LC_Quadratic& l2)
 {
     RS_VectorSolutions ret;
-    if( (l1.isValid() && l2.isValid()) == false ) return ret;
+    if( l1.isValid()==false || l2.isValid()==false ) {
+//        DEBUG_HEADER();
+//        std::cout<<l1<<std::endl;
+//        std::cout<<l2<<std::endl;
+        return ret;
+    }
     auto p1=&l1;
     auto p2=&l2;
     if(p1->isQuadratic()==false){
         std::swap(p1,p2);
     }
+//    DEBUG_HEADER();
 //    std::cout<<*p1<<std::endl;
 //    std::cout<<*p2<<std::endl;
     if(p1->isQuadratic()==false){
@@ -427,7 +440,7 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
     std::vector<std::vector<double> >  ce(0);
     ce.push_back(p1->getCoefficients());
     ce.push_back(p2->getCoefficients());
-//DEBUG_HEADER();)
+//DEBUG_HEADER();
 //std::cout<<*p1<<std::endl;
 //std::cout<<*p2<<std::endl;
     return RS_Math::simultaneousQuadraticSolverFull(ce);

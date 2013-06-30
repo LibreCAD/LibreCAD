@@ -68,7 +68,7 @@ public:
 
     virtual void newDoc();
     virtual bool save(bool isAutoSave = false);
-    virtual bool saveAs(const QString& filename, RS2::FormatType type);
+    virtual bool saveAs(const QString& filename, RS2::FormatType type, bool force = false);
     virtual bool open(const QString& filename, RS2::FormatType type);
     bool loadTemplate(const QString &filename, RS2::FormatType type);
 

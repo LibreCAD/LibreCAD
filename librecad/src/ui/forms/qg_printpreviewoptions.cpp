@@ -27,6 +27,7 @@
 #include "rs_settings.h"
 
 #include "rs_actionprintpreview.h"
+#include <QDebug>
 
 /*
  *  Constructs a QG_PrintPreviewOptions as a child of 'parent', with the
@@ -121,6 +122,7 @@ void QG_PrintPreviewOptions::setScaleFixed(bool fixed)
 }
 
 void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
+
     if (a!=NULL && a->rtti()==RS2::ActionPrintPreview) {
         action = static_cast<RS_ActionPrintPreview*>(a);
         /** fixed scale **/
@@ -148,6 +150,7 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
                 setScaleFixed(false);
             }
         }else{
+            double f=action->getScale();
             bool btmp=updateDisabled;
             updateDisabled = true;
             cbScale->setDuplicatesEnabled(false);
@@ -158,8 +161,7 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
                 cbScale->insertItems(0,metricScales);
             }
             defaultScales=cbScale->count();
-            updateScaleBox();
-
+            updateScaleBox(f);
             updateDisabled = btmp;
             setScaleFixed(updateDisabled);
         }
@@ -208,7 +210,7 @@ void QG_PrintPreviewOptions::fit() {
 
 void QG_PrintPreviewOptions::scale(const double& factor) {
     double&& f=fabs(factor); // do we need negative factor at all?
-    if(action->setScale(f)){
+    if(action->setScale(f, false)){
         //        std::cout<<"QG_PrintPreviewOptions::scale(const QString& s): line: "<<__LINE__<<" s="<<factor<<std::endl;
         updateScaleBox(f);
     }
@@ -256,7 +258,7 @@ void QG_PrintPreviewOptions::scale(const QString& s0) {
 //        }
 //        return;
 //    }
-    if(action->setScale(factor)){
+    if(action->setScale(factor, false)){
         //        std::cout<<"QG_PrintPreviewOptions::scale(const QString& s): line: "<<__LINE__<<" s="<<factor<<std::endl;
         updateScaleBox(factor);
     }

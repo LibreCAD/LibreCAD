@@ -91,13 +91,19 @@ void RS_ActionDimension::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-//void RS_ActionDimension::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
+bool RS_ActionDimension::isDimensionAction(RS2::ActionType type) {
+    switch(type){
+    case RS2::ActionDimAligned:
+    case RS2::ActionDimLinear:
+    case RS2::ActionDimLinearVer:
+    case RS2::ActionDimLinearHor:
+    case RS2::ActionDimAngular:
+    case RS2::ActionDimDiametric:
+    case RS2::ActionDimRadial:
+        return true;
+    default:
+        return false;
+    }
+}
 
 // EOF

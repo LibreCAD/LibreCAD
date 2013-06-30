@@ -29,7 +29,6 @@
 #include <qapplication.h>
 #include <QTextCodec>
 #include <QTranslator>
-#include <QDesktopServices>
 #include <QFileInfo>
 #include "rs_settings.h"
 #include "rs_system.h"
@@ -37,6 +36,12 @@
 
 #if QT_VERSION < 0x040400
 #include "emu_qt44.h"
+#endif
+
+#if QT_VERSION >= 0x050000
+#include <QStandardPaths>
+#else
+#include <QDesktopServices>
 #endif
 
 RS_System* RS_System::uniqueInstance = NULL;
@@ -449,7 +454,12 @@ bool RS_System::createPaths(const QString& directory) {
  * @return Application data directory.
  */
 QString RS_System::getAppDataDir() {
-    QString appData = QDesktopServices::storageLocation(QDesktopServices::DataLocation) ;
+    QString appData = 
+#if QT_VERSION >= 0x050000
+        QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+#else
+        QDesktopServices::storageLocation(QDesktopServices::DataLocation) ;
+#endif 
     QDir dir(appData);
     if (!dir.exists()) {
         if (!dir.mkpath(appData))
@@ -518,13 +528,24 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
         dirList.append(emu_qt44_storageLocationDocuments() + "/" + 
                        appDirName + "/" + 
                        subDirectory);
-#else
+#else // QT_VERSION > 0x040400 or _MSC_VER not defined (!) 
+
 #ifdef Q_OS_MAC
+#if QT_VERSION >= 0x050000
+         dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
+#else
         dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #endif
+#endif // Q_OS_MAC
+		
 #ifdef Q_OS_WIN32
+#if QT_VERSION >= 0x050000
+        dirList.append(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
+#else
         dirList.append(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #endif
+#endif // Q_OS_WIN32
+		
     // Unix home directory, it's old style but some people might have stuff there.
     dirList.append(getHomeDir() + "/." + appDirName + "/" + subDirectory);
 #endif // QT_VERSION < 0x040400 && defined(_MSC_VER)

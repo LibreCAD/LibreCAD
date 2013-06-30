@@ -42,6 +42,9 @@ RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
     entity2 = NULL;
     coord1 = RS_Vector(false);
     coord2 = RS_Vector(false);
+    eType.reserve(6);
+    eType << RS2::EntityLine << RS2::EntityPolyline << RS2::EntityArc <<
+             RS2::EntityCircle << RS2::EntityEllipse << RS2::EntitySpline;
 }
 
 QAction* RS_ActionModifyRound::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
@@ -98,7 +101,7 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyRound::mouseMoveEvent begin");
 
     RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
-    RS_Entity* se = catchEntity(e, RS2::ResolveAll);
+    RS_Entity* se = catchEntity(e, eType, RS2::ResolveAll);
 
     switch (getStatus()) {
     case SetEntity1:
@@ -151,7 +154,7 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionModifyRound::mouseReleaseEvent(QMouseEvent* e) {
     RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
-    RS_Entity* se = catchEntity(e, RS2::ResolveAll);
+    RS_Entity* se = catchEntity(e, eType, RS2::ResolveAll);
 
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {

@@ -273,6 +273,22 @@
    </hints>
   </connection>
   <connection>
+   <sender>leScale</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>QG_DlgHatch</receiver>
+   <slot>updatePreview()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>cbEnablePreview</sender>
    <signal>toggled(bool)</signal>
    <receiver>QG_DlgHatch</receiver>
