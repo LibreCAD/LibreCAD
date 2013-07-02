@@ -422,7 +422,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     std::vector<double> roots(0,0.);
 
     //need to handle a=b
-    if(a0 > RS_TOLERANCE*RS_TOLERANCE ) { // a != b , ellipse
+    if(a0 > RS_TOLERANCE2 ) { // a != b , ellipse
         ce[0]=-2.*twoax/twoa2b2;
         ce[1]= (twoax*twoax+twoby*twoby)/a0-1.;
         ce[2]= - ce[0];
@@ -563,10 +563,10 @@ bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
     }
     if ( ! RS_Math::linearSolver(mt,dn)) return false;
     double d(1.+0.25*(dn[1]*dn[1]/dn[0]+dn[3]*dn[3]/dn[2]));
-    if(fabs(dn[0])<RS_TOLERANCE*RS_TOLERANCE
-            ||fabs(dn[2])<RS_TOLERANCE*RS_TOLERANCE
-            ||d/dn[0]<RS_TOLERANCE*RS_TOLERANCE
-            ||d/dn[2]<RS_TOLERANCE*RS_TOLERANCE
+    if(fabs(dn[0])<RS_TOLERANCE2
+            ||fabs(dn[2])<RS_TOLERANCE2
+            ||d/dn[0]<RS_TOLERANCE2
+            ||d/dn[2]<RS_TOLERANCE2
             ) {
         //ellipse not defined
         return false;
@@ -641,7 +641,7 @@ bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
   *@Author: Dongxu Li
   */
 bool RS_Ellipse::createFromQuadratic(const QVector<double>& dn){
-    if(fabs(dn[0]) <RS_TOLERANCE*RS_TOLERANCE || fabs(dn[2])<RS_TOLERANCE*RS_TOLERANCE) return false; //invalid quadratic form
+    if(fabs(dn[0]) <RS_TOLERANCE2 || fabs(dn[2])<RS_TOLERANCE2) return false; //invalid quadratic form
     //eigenvalue and eigen vectors of quadratic form
     // (dn[0] 0.5*dn[1])
     // (0.5*dn[1] dn[2])
@@ -651,10 +651,8 @@ bool RS_Ellipse::createFromQuadratic(const QVector<double>& dn){
     //        std::cout<<"s="<<s<<std::endl;
     double lambda1(0.5*(s+dn[0]+dn[2]));
     double lambda2(0.5*(-s+dn[0]+dn[2]));
-    //        std::cout<<"lambda1="<<lambda1<<std::endl;
-    //        std::cout<<"lambda2="<<lambda2<<std::endl;
-    if(lambda1<RS_TOLERANCE*RS_TOLERANCE) return false;
-    if(lambda2<RS_TOLERANCE*RS_TOLERANCE) return false;
+//            std::cout<<"lambda1="<<lambda1<<"\tlambda2="<<lambda2<<std::endl;
+    if(lambda1<RS_TOLERANCE15 || lambda2<RS_TOLERANCE15) return false;
     RS_Vector majorP(-dn[1]/(s+d),1.);
     majorP /= sqrt(majorP.squared()*lambda2);
 //    ratio=sqrt(lambda2/lambda1);
@@ -824,13 +822,13 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
         //        double angle(center.angleTo(tangent[0]));
         RS_Vector majorP(tangent[0]);
         double dx(majorP.magnitude());
-        if(dx<RS_TOLERANCE*RS_TOLERANCE) return false; //refuse to return zero size ellipse
+        if(dx<RS_TOLERANCE2) return false; //refuse to return zero size ellipse
         angleVector.set(majorP.x/dx,-majorP.y/dx);
         for(int i=0;i<tangent.size();i++)tangent[i].rotate(angleVector);
 
         RS_Vector minorP(tangent[2]);
         double dy2(minorP.squared());
-        if(fabs(minorP.y)<RS_TOLERANCE || dy2<RS_TOLERANCE*RS_TOLERANCE) return false; //refuse to return zero size ellipse
+        if(fabs(minorP.y)<RS_TOLERANCE || dy2<RS_TOLERANCE2) return false; //refuse to return zero size ellipse
         // y'= y
         // x'= x-y/tan
         // reverse scale
@@ -1436,7 +1434,7 @@ LC_Quadratic RS_Ellipse::getQuadratic() const
     std::vector<double> ce(6,0.);
     ce[0]=data.majorP.squared();
     ce[2]= data.ratio*data.ratio*ce[0];
-    if(ce[0]<RS_TOLERANCE*RS_TOLERANCE || ce[2]<RS_TOLERANCE*RS_TOLERANCE){
+    if(ce[0]<RS_TOLERANCE2 || ce[2]<RS_TOLERANCE2){
         return LC_Quadratic();
     }
     ce[0]=1./ce[0];

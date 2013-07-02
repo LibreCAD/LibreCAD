@@ -115,7 +115,7 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent* e) {
         break;
     case setReferencePoint:
         pos -= data.center;
-        if ( pos.squared()< RS_TOLERANCE*RS_TOLERANCE ) {
+        if ( pos.squared()< RS_TOLERANCE2 ) {
             data.angle = 0.;//angle not well defined, go direct to dialog
             setStatus(ShowDialog);
             if (RS_DIALOGFACTORY->requestRotateDialog(data)) {
@@ -129,7 +129,7 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent* e) {
         break;
     case setTargetPoint:
         pos -= data.center;
-        if ( pos.squared()< RS_TOLERANCE*RS_TOLERANCE ) {
+        if ( pos.squared()< RS_TOLERANCE2 ) {
             data.angle = 0.;//angle not well defined
         } else {
             data.angle = RS_Math::correctAngle(pos.angle() - data.angle);

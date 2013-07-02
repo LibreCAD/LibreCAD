@@ -256,7 +256,7 @@ void RS_ActionDrawCircleTan3::mouseReleaseEvent(QMouseEvent* e) {
             circles.resize(getStatus());
 //            for(int i=0;i<circles.size();i++){
 //                if(
-//                        (circles.at(i)->getCenter() - en->getCenter()).squared() < RS_TOLERANCE*RS_TOLERANCE
+//                        (circles.at(i)->getCenter() - en->getCenter()).squared() < RS_TOLERANCE2
 //                        && fabs( circles.at(i)->getRadius() - en->getRadius())<RS_TOLERANCE
 //                        ) return;
 //            }

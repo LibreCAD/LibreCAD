@@ -461,7 +461,7 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
     //        RS_Vector direction(en->getTangentDirection(vp));
     //        RS_Vector vp1(-direction.y,direction.x);//normal direction
     //        double a2(vp1.squared());
-    //        if(a2<RS_TOLERANCE*RS_TOLERANCE) return false;
+    //        if(a2<RS_TOLERANCE2) return false;
     //        vp1 *= distance/sqrt(a2);
     //        move(vp1);
     //        return true;
@@ -476,8 +476,8 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
     //fixme, this is too ugly
     for(i=indexNearest-1;i>=0;i--){
         RS_VectorSolutions sol0=RS_Information::getIntersection(pnew->entityAt(previousIndex),entityAt(i),true);
-        RS_VectorSolutions sol1;
-        double dmax(1.e6*RS_TOLERANCE*RS_TOLERANCE);
+//        RS_VectorSolutions sol1;
+        double dmax(RS_TOLERANCE15);
         RS_Vector trimP(false);
         for(int j=0;j<sol0.getNumber();j++){
 
@@ -502,8 +502,8 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
     previousIndex=indexNearest;
     for(i=indexNearest+1;i<length;i++){
         RS_VectorSolutions sol0=RS_Information::getIntersection(pnew->entityAt(previousIndex),entityAt(i),true);
-        RS_VectorSolutions sol1;
-        double dmax(1.e3*RS_TOLERANCE);
+//        RS_VectorSolutions sol1;
+        double dmax(RS_TOLERANCE15);
         RS_Vector trimP(false);
         for(int j=0;j<sol0.getNumber();j++){
             double d0( (sol0.get(j) - pnew->entityAt(previousIndex)->getEndpoint()).squared());//potential bug, need to trim better

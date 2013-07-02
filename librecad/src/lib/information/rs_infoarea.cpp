@@ -84,7 +84,7 @@ void RS_InfoArea::reset() {
 bool RS_InfoArea::duplicated(const RS_Vector& p){
     if(thePoints.size()<1) return false;
     for(int i=0;i<thePoints.size();i++){
-        if( (thePoints.at(i)-p).squared() < RS_TOLERANCE*RS_TOLERANCE) {
+        if( (thePoints.at(i)-p).squared() < RS_TOLERANCE2) {
             return true;
         }
     }

@@ -124,7 +124,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
     RS_Vector direction = data.endpoint-data.startpoint;
     RS_Vector vpc=coord-data.startpoint;
     double a=direction.squared();
-    if( a < RS_TOLERANCE*RS_TOLERANCE) {
+    if( a < RS_TOLERANCE2) {
         //line too short
         vpc=getMiddlePoint();
     }else{

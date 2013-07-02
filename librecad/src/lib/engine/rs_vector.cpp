@@ -427,7 +427,7 @@ RS_Vector RS_Vector::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPo
     RS_Vector direction(axisPoint2-axisPoint1);
     double a= direction.squared();
     RS_Vector ret(false);
-    if(a<RS_TOLERANCE*RS_TOLERANCE) {
+    if(a<RS_TOLERANCE2) {
         return ret;
     }
     ret= axisPoint1 + direction* dotP(*this - axisPoint1,direction)/a; //projection point

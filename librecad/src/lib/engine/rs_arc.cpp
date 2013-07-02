@@ -67,7 +67,7 @@ bool RS_Arc::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
         double ra2=vra.squared()*0.5;
         double rb2=vrb.squared()*0.5;
         double crossp=vra.x * vrb.y - vra.y * vrb.x;
-        if (fabs(crossp)< RS_TOLERANCE*RS_TOLERANCE) {
+        if (fabs(crossp)< RS_TOLERANCE2) {
                 RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Arc::createFrom3P(): "
                         "Cannot create a arc with radius 0.0.");
                 return false;
@@ -278,7 +278,7 @@ RS_Vector RS_Arc::getNearestEndpoint(const RS_Vector& coord, double* dist) const
 RS_VectorSolutions RS_Arc::getTangentPoint(const RS_Vector& point) const {
     RS_VectorSolutions ret;
     double r2(getRadius()*getRadius());
-    if(r2<RS_TOLERANCE*RS_TOLERANCE) return ret; //circle too small
+    if(r2<RS_TOLERANCE2) return ret; //circle too small
     RS_Vector vp(point-getCenter());
     double c2(vp.squared());
     if(c2<r2-getRadius()*2.*RS_TOLERANCE) {
@@ -291,7 +291,7 @@ RS_VectorSolutions RS_Arc::getTangentPoint(const RS_Vector& point) const {
         vp1*=getRadius()*sqrt(c2-r2)/c2;
         vp *= r2/c2;
         vp += getCenter();
-        if(vp1.squared()>RS_TOLERANCE*RS_TOLERANCE) {
+        if(vp1.squared()>RS_TOLERANCE2) {
             ret.push_back(vp+vp1);
             ret.push_back(vp-vp1);
             return ret;

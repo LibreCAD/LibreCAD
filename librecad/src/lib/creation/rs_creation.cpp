@@ -595,7 +595,7 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
     RS_Vector direction(normal->getEndpoint() - vp);
     RS_Vector vpt(t0 - vp);
     double a=direction.squared();
-    if( a <RS_TOLERANCE*RS_TOLERANCE) {
+    if( a <RS_TOLERANCE2) {
         return NULL;//undefined direction
     } else {
         //find projection on the normal line
@@ -628,7 +628,7 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
                                      const RS_Vector& point,
                                      RS_Entity* circle) {
     RS_Line* ret = NULL;
-    RS_Vector circleCenter;
+    //RS_Vector circleCenter;
 
     // check given entities:
     if (circle==NULL || !point.valid ||
@@ -644,7 +644,7 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
     if(sol.getNumber()==0) return NULL;
     RS_Vector vp2(sol.getClosest(coord));
     RS_LineData d;
-    if( (vp2-point).squared() > RS_TOLERANCE*RS_TOLERANCE ) {
+    if( (vp2-point).squared() > RS_TOLERANCE2 ) {
         d=RS_LineData(vp2,point);
     }else{//the given point is a tangential point
         d=RS_LineData(point+circle->getTangentDirection(point),point);

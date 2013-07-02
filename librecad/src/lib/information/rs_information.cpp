@@ -341,7 +341,7 @@ RS_VectorSolutions RS_Information::getIntersectionLineArc(RS_Line* line,
     RS_Vector c = arc->getCenter();
     double r = arc->getRadius();
     RS_Vector delta = p - c;
-    if (d2<RS_TOLERANCE*RS_TOLERANCE) {
+    if (d2<RS_TOLERANCE2) {
         //line too short, still check the whether the line touches the arc
         if ( fabs(delta.squared() - r*r) < 2.*RS_TOLERANCE*r ){
             return RS_VectorSolutions(line->getMiddlePoint());
@@ -499,8 +499,8 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
         return ret;
     }
     if (
-        (e1->getCenter() - e2 ->getCenter()).squared() < RS_TOLERANCE*RS_TOLERANCE &&
-        (e1->getMajorP() - e2 ->getMajorP()).squared() < RS_TOLERANCE*RS_TOLERANCE &&
+        (e1->getCenter() - e2 ->getCenter()).squared() < RS_TOLERANCE2 &&
+        (e1->getMajorP() - e2 ->getMajorP()).squared() < RS_TOLERANCE2 &&
         fabs(e1->getRatio() - e2 ->getRatio()) < RS_TOLERANCE
     ) { // overlapped ellipses, do not do overlap
         return ret;
@@ -643,7 +643,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseLine(RS_Line* line,
     if(rx<RS_TOLERANCE) {
         //zero radius ellipse
         RS_Vector vp(line->getNearestPointOnEntity(ellipse->getCenter(), true));
-        if((vp-ellipse->getCenter()).squared() <RS_TOLERANCE*RS_TOLERANCE){
+        if((vp-ellipse->getCenter()).squared() <RS_TOLERANCE2){
             //center on line
             ret.push_back(vp);
         }
@@ -678,7 +678,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseLine(RS_Line* line,
 
     ret.push_back(a1.lerp(a2,t_a+t_b));
     RS_Vector vp(a1.lerp(a2,t_a-t_b));
-    if ( (ret.get(0)-vp).squared()>RS_TOLERANCE*RS_TOLERANCE) {
+    if ( (ret.get(0)-vp).squared()>RS_TOLERANCE2) {
         ret.push_back(vp);
     }
     angleVector.y *= -1.;
