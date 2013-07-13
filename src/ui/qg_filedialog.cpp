@@ -48,8 +48,14 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
     RS_SETTINGS->beginGroup("/Paths");
     QString defDir = RS_SETTINGS->readEntry("/Save",
                                               RS_SYSTEM->getHomeDir());
-    QString defFilter = RS_SETTINGS->readEntry("/SaveFilter",
-                                                 "Drawing Exchange DXF 2000 (*.dxf)");
+    const QString fltDXF="Drawing Exchange DXF 2000 (*.dxf)";
+    QString defFilter = RS_SETTINGS->readEntry("/SaveFilter", fltDXF);
+    /**
+    * bug 421, we allow default to dxf to avoid loss of data
+    * TODO, support default filter again */
+    if(defFilter.contains("(*.dxf)", Qt::CaseInsensitive)==false)
+        defFilter=fltDXF;
+
     //QString defFilter = "Drawing Exchange (*.dxf)";
     RS_SETTINGS->endGroup();
 
@@ -60,7 +66,7 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
     bool cancel = false;
     QString fn = "";
 
-    filters.append("Drawing Exchange DXF 2000 (*.dxf)");
+    filters.append(fltDXF);
     filters.append("LFF Font (*.lff)");
     filters.append("Drawing Exchange DXF R12 (*.dxf)");
     filters.append("Font (*.cxf)");
