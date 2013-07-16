@@ -29,9 +29,13 @@
 #ifndef RS_ELLIPSE_H
 #define RS_ELLIPSE_H
 
+// Workaround for Qt bug: https://bugreports.qt-project.org/browse/QTBUG-22829
+// TODO: the Q_MOC_RUN detection shouldn't be necessary after this Qt bug is resolved
+#ifndef Q_MOC_RUN
 #include <boost/version.hpp>
 #include <boost/math/tools/roots.hpp>
 #include <boost/math/special_functions/ellint_2.hpp>
+#endif
 
 class LC_Quadratic;
 #include "rs_atomicentity.h"

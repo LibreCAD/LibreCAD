@@ -35,6 +35,8 @@ unix {
         exists (/usr/X11/include/ft2build.h) {HAS_SDK=X11}
         exists (/Developer/SDKs/MacOSX10.6.sdk/usr/X11/include/*) {HAS_SDK=10.6}
         exists (/Developer/SDKs/MacOSX10.7.sdk/usr/X11/include/*) {HAS_SDK=10.7}
+        exists (/opt/local/include/ft2build.h) {HAS_SDK=MacPorts}
+
         contains (HAS_SDK, none) {error(Freetype headers not found)}
 
         contains (HAS_SDK , 10.6) {
@@ -55,7 +57,11 @@ unix {
                 INCLUDEPATH += /usr/X11/include/freetype2
                 LIBS+= -L/usr/X11/lib/
         }
-
+        contains (HAS_SDK , MacPorts) {
+                INCLUDEPATH +=  /opt/local/include/
+                INCLUDEPATH +=  /opt/local/include/freetype2
+                LIBS+= -L /opt/local/lib
+	}
     } else {
         INCLUDEPATH += /usr/include/freetype2
     }
