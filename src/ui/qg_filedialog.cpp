@@ -28,6 +28,7 @@
 
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QDebug>
 
 #include "rs_settings.h"
 #include "rs_system.h"
@@ -150,7 +151,9 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
     if (!cancel) {
         RS_SETTINGS->beginGroup("/Paths");
         RS_SETTINGS->writeEntry("/Save", QFileInfo(fn).absolutePath());
-        //RS_SETTINGS->writeEntry("/SaveFilter", fileDlg->selectedFilter());
+        QString fltr=fileDlg->selectedFilter();
+        if(fltr.contains("(*.dxf)", Qt::CaseInsensitive))
+            RS_SETTINGS->writeEntry("/SaveFilter", fltr);
         RS_SETTINGS->endGroup();
     }
 
