@@ -126,6 +126,7 @@ Section "Install Section" SecInstall
   SetOutPath "$INSTDIR\resources\qm"
   File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\translations\qt_??.qm"
   File "${Qt_Dir}\Qt${Qt_Version}\${Qt_Version}\mingw47_32\translations\qt_??_??.qm"
+  SetOutPath "$INSTDIR"
 
   ;Store installation folder
   WriteRegStr HKCU "Software\LibreCAD" "" $INSTDIR
@@ -160,6 +161,7 @@ Section "Uninstall"
   ;ADD YOUR OWN FILES HERE...
 
   Delete "$INSTDIR\Uninstall.exe"
+  Delete "$DESKTOP\LibreCAD.lnk"
   RMDir /r "$SMPROGRAMS\LibreCAD\"
   RMDir /r $INSTDIR
 
