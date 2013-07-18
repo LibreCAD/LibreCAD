@@ -83,7 +83,7 @@ void RS_ActionInfoAngle::trigger() {
                 if(angle<0.){
                     QString str2;
                     str2.setNum(angle+360.); //positive value
-                    str += QString(" or %1%2").arg(str2).arg(QChar(0xB0));
+                    str += QString(tr(" or %1%2")).arg(str2).arg(QChar(0xB0));
                 }
                 RS_DIALOGFACTORY->commandMessage(tr("Angle: %1").arg(str));
             }
