@@ -43,6 +43,7 @@ dxfRW::dxfRW(const char* name){
     reader = NULL;
     writer = NULL;
     applyExt = false;
+    elParts = 128; //parts munber when convert ellipse to polyline
 }
 dxfRW::~dxfRW(){
     if (reader != NULL)
@@ -616,7 +617,7 @@ bool dxfRW::writeEllipse(DRW_Ellipse *ent){
     } else {
         DRW_Polyline pol;
         //RLZ: copy properties
-        ent->toPolyline(&pol);
+        ent->toPolyline(&pol, elParts);
         writePolyline(&pol);
     }
     return true;
@@ -2091,6 +2092,8 @@ bool dxfRW::processEllipse() {
         case 0: {
             nextentity = reader->getString();
             DBG(nextentity); DBG("\n");
+            if (applyExt)
+                ellipse.applyExtrusion();
             iface->addEllipse(ellipse);
             return true;  //found new entity or ENDSEC, terminate
         }
