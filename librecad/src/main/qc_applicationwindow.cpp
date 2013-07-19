@@ -627,7 +627,7 @@ void QC_ApplicationWindow::initActions(void)
     menu = menuBar()->addMenu(tr("&File"));
     menu->setObjectName("File");
     tb = fileToolBar;
-    tb->setWindowTitle("File");
+    tb->setWindowTitle(tr("File"));
 
     action = actionFactory.createAction(RS2::ActionFileNew, this);
     menu->addAction(action);
@@ -689,7 +689,7 @@ void QC_ApplicationWindow::initActions(void)
     menu = menuBar()->addMenu(tr("&Edit"));
     menu->setObjectName("Edit");
     tb = editToolBar;
-    tb->setWindowTitle("Edit");
+    tb->setWindowTitle(tr("Edit"));
 
     action = actionFactory.createAction(RS2::ActionEditKillAllActions, actionHandler);
     tb->addAction(action);
@@ -760,7 +760,7 @@ void QC_ApplicationWindow::initActions(void)
     menu = menuBar()->addMenu(tr("&View"));
     menu->setObjectName("View");
     tb = zoomToolBar;
-    tb->setWindowTitle("View");
+    tb->setWindowTitle(tr("View"));
 
     action = actionFactory.createAction(RS2::ActionViewGrid, this);
     menu->addAction(action);
@@ -1603,7 +1603,7 @@ void QC_ApplicationWindow::initToolBar() {
         zoomToolBar->setSizePolicy(toolBarPolicy);
         zoomToolBar->setObjectName ( "ZoomTB" );
 
-        penToolBar = new QG_PenToolBar("Pen Selection", this);
+        penToolBar = new QG_PenToolBar(tr("Pen Selection"), this);
         penToolBar->setSizePolicy(toolBarPolicy);
         penToolBar->setObjectName ( "PenTB" );
 
@@ -1611,7 +1611,7 @@ void QC_ApplicationWindow::initToolBar() {
             this, SLOT(slotPenChanged(RS_Pen)));
 
     //Add snap toolbar
-    snapToolBar = new QG_SnapToolBar("Snap Selection",actionHandler, this);
+    snapToolBar = new QG_SnapToolBar(tr("Snap Selection"),actionHandler, this);
     snapToolBar->setSizePolicy(toolBarPolicy);
     snapToolBar->setObjectName ( "SnapTB" );
 
@@ -1621,7 +1621,7 @@ void QC_ApplicationWindow::initToolBar() {
     this->addToolBar(snapToolBar);
 
 
-    optionWidget = new QToolBar("Tool Options", this);
+    optionWidget = new QToolBar(tr("Tool Options"), this);
         QSizePolicy optionWidgetBarPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 //        optionWidget->setMinimumSize(440,30);
         optionWidget->setSizePolicy(optionWidgetBarPolicy);
@@ -1632,7 +1632,7 @@ void QC_ApplicationWindow::initToolBar() {
     //addDockWindow(optionWidget, DockTop, true);
 
     // CAD toolbar left:
-    QToolBar* t = new QToolBar("CAD Tools", this);
+    QToolBar* t = new QToolBar(tr("CAD Tools"), this);
 
     t->setMinimumSize(66,400);
         QSizePolicy policy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
