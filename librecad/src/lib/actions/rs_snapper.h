@@ -76,6 +76,7 @@ public:
       * @returns A refrence to itself.
       */
     RS_SnapMode &clear(void) {
+        snapFree     = false;
         snapGrid     = false;
         snapEndpoint     = false;
         snapMiddle       = false;
@@ -95,6 +96,7 @@ public:
      * @returns A refrence to itself.
      */
     RS_SnapMode &hardReset(void) {
+        snapFree     = false;
         snapGrid     = false;
         snapEndpoint     = false;
         snapMiddle       = false;

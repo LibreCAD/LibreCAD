@@ -652,9 +652,9 @@ public:
      */
     enum SnapRestriction {
         RestrictNothing,        /**< No restriction to snap mode */
-        RestrictOrthogonal,     /**< Restrict to 90,180,270,0 degrees */
         RestrictHorizontal,     /**< Restrict to 0,180 degrees */
-        RestrictVertical        /**< Restrict to 90,270 degrees */
+        RestrictVertical,       /**< Restrict to 90,270 degrees */
+        RestrictOrthogonal      /**< Restrict to 90,180,270,0 degrees */
     };
 
     /**
