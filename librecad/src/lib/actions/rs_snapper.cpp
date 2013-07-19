@@ -767,6 +767,8 @@ RS_SnapMode RS_Snapper::intToSnapMode(unsigned int ret)
     ret >>= 1;
     s.snapGrid =ret & binaryOne;
     ret >>= 1;
+    s.snapFree =ret & binaryOne;
+    ret >>= 1;
     switch (ret) {
     case 1:
             s.restriction=RS2::RestrictHorizontal;
