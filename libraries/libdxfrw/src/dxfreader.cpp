@@ -233,9 +233,18 @@ bool dxfReaderAscii::readInt64() {
 bool dxfReaderAscii::readDouble() {
     std::string text;
     if (readString(&text)){
+#if defined(__APPLE__)
+	int succeeded=sscanf( & (text[0]), "%lg", &doubleData);
+        if(succeeded != 1) {
+            DBG("dxfReaderAscii::readDouble(): reading double error: ");
+            DBG(text);
+            DBG('\n');
+        }
+#else
         std::istringstream sd(text);
         sd >> doubleData;
-        DBG(doubleData); DBG("\n");
+        DBG(doubleData); DBG('\n');
+#endif
         return true;
     } else
         return false;
