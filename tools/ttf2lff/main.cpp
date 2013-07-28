@@ -65,7 +65,7 @@ static const FT_Outline_Funcs funcs
 
 std::string clearZeros(double num/*, int precision*/){
     char numLine [precision+5];
-    sprintf(numLine, numFormat, num);
+    snprintf(numLine,precision+5, numFormat, num);
     std::string str = numLine;
     int i = str.length()- 1;
     while (str.at(i) == '0' && i>1) {
@@ -342,7 +342,7 @@ int main(int argc, char* argv[]) {
         exit(2);
     }
 
-    sprintf(numFormat,"%%.%if", precision);
+    snprintf(numFormat,8,"%%.%if", precision);
 
     // write font header
     fprintf(fpLff, "# Format:            LibreCAD Font 1\n");

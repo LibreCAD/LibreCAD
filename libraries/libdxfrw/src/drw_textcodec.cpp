@@ -183,7 +183,7 @@ std::string DRW_Converter::decodeText(int c){
     std::string num;
 #if defined(__APPLE__)
     char str [16];
-    sprintf ( str, "%04X", c );
+    snprintf ( str, 16, "%04X", c );
     num = str;
 #else
     std::stringstream ss;
