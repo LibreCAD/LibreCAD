@@ -553,7 +553,7 @@ public:
 			ifstr >> bt;
 			if( bt != 0xFF ){
 				ifstr.read(buf,bt);
-				buf[bt] = (char)NULL;
+				buf[bt] = '\0';
 				m_strFontName = buf;
 #ifdef	DATA_DUMP
 cout << "MojiData1:" << m_strFontName << endl;
@@ -562,7 +562,7 @@ cout << "MojiData1:" << m_strFontName << endl;
 			{
 				ifstr >> wd;
 				ifstr.read(buf,wd);
-				buf[wd] = (char)NULL;
+				buf[wd] = '\0';
 				m_strFontName = buf;
 #ifdef	DATA_DUMP
 cout << "MojiData2:" << m_strFontName << endl;
@@ -571,7 +571,7 @@ cout << "MojiData2:" << m_strFontName << endl;
 			ifstr >> bt;
 			if( bt != 0xFF ){
 				ifstr.read(buf,bt);
-				buf[bt] = (char)NULL;
+				buf[bt] = '\0';
 				m_string = buf;
 #ifdef	DATA_DUMP
 cout << "MojiData3:"  << m_string << endl;
@@ -580,7 +580,7 @@ cout << "MojiData3:"  << m_string << endl;
 			{
 				ifstr >> wd;
 				ifstr.read(buf,wd);
-				buf[wd] = (char)NULL;
+				buf[wd] = '\0';
 				m_string = buf;
 #ifdef	DATA_DUMP
 cout << "MojiData4:"  << m_string << endl;
@@ -839,7 +839,7 @@ public:
 		ifstr >> bt;
 		if( bt != 0xFF ){
 			ifstr.read(buf,bt);
-			buf[bt] = (char)NULL;
+			buf[bt] = '\0';
 			m_strName = buf;
 #ifdef	DATA_DUMP
 cout << "MojiData1:"  << m_strName << endl;
@@ -848,7 +848,7 @@ cout << "MojiData1:"  << m_strName << endl;
 		{
 			ifstr >> wd;
 			ifstr.read(buf,wd);
-			buf[wd] = (char)NULL;
+			buf[wd] = '\0';
 			m_strName = buf;
 #ifdef	DATA_DUMP
 cout << "MojiData1:"  << m_strName << endl;
