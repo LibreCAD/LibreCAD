@@ -107,6 +107,12 @@ public:
     virtual void layerToggled(RS_Layer*) {
         update();
     }
+    virtual void layerToggledLock(RS_Layer*) {
+        update();
+    }
+    virtual void layerToggledPrint(RS_Layer*) {
+        update();
+    }
 
     QLineEdit* getMatchLayerName() {
         return matchLayerName;

@@ -39,7 +39,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 RS_ActionLayersTogglePrint::RS_ActionLayersTogglePrint(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_ActionInterface("Toggle Layer Visibility",
+        :RS_ActionInterface("Toggle Layer Printing",
                     container, graphicView) {}
 
 
@@ -54,11 +54,11 @@ QAction* RS_ActionLayersTogglePrint::createGUIAction(RS2::ActionType /*type*/, Q
 }
 
 void RS_ActionLayersTogglePrint::trigger() {
-    RS_DEBUG->print("toggle layer");
+    RS_DEBUG->print("toggle layer printing");
     if (graphic!=NULL) {
         RS_Layer* layer = graphic->getActiveLayer();
         if (layer!=NULL) {
-            layer->setHelpLayer(!layer->isHelpLayer());
+            graphic->toggleLayerPrint( layer);
 
             // deselect entities on locked layer:
             for (RS_Entity* e=container->firstEntity(); e!=NULL;

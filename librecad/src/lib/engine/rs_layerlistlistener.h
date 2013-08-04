@@ -60,9 +60,19 @@ public:
     virtual void layerEdited(RS_Layer*) {}
 
     /**
-     * Called when a layer's visibility is toggled. 
+     * Called when a layer's visibility is toggled.
      */
     virtual void layerToggled(RS_Layer*) {}
+
+    /**
+     * Called when a layer's lock attribute is toggled.
+     */
+    virtual void layerToggledLock(RS_Layer*) {}
+
+    /**
+     * Called when a layer's printing attribute is toggled.
+     */
+    virtual void layerToggledPrint(RS_Layer*) {}
 }
 ;
 

@@ -69,7 +69,7 @@ RS_Snapper(container, graphicView) {
 
     //this->cursor = cursor;
     //setSnapMode(graphicView.getDefaultSnapMode());
-actionType=RS2::ActionNone;
+    actionType=RS2::ActionNone;
 
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\": OK", name);
 }

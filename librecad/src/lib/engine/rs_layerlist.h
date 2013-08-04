@@ -75,6 +75,7 @@ public:
     void toggle(const QString& name);
     void toggle(RS_Layer* layer);
     void toggleLock(RS_Layer* layer);
+    void togglePrint(RS_Layer* layer);
     void freezeAll(bool freeze);
 
     //! sets the layerWidget pointer in RS_LayerListClass
@@ -98,18 +99,18 @@ public:
 
     void addListener(RS_LayerListListener* listener);
     void removeListener(RS_LayerListListener* listener);
-	
-	/**
-	 * Sets the layer lists modified status to 'm'.
-	 */
-	void setModified(bool m) {
-		modified = m;
-	}
-	
-	/**
-	 * @retval true The layer list has been modified.
-	 * @retval false The layer list has not been modified.
-	 */
+
+    /**
+     * Sets the layer lists modified status to 'm'.
+     */
+    void setModified(bool m) {
+        modified = m;
+    }
+
+    /**
+     * @retval true The layer list has been modified.
+     * @retval false The layer list has not been modified.
+     */
     virtual bool isModified() const {
         return modified;
     }

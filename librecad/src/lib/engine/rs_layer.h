@@ -169,6 +169,13 @@ public:
     }
 
     /**
+     * Toggles printing of this layer on / off.
+     */
+    void togglePrint() {
+        data.helpLayer = !data.helpLayer;
+    }
+
+    /**
      * Locks/Unlocks this layer.
      *
      * @param l true: lock, false: unlock

@@ -97,18 +97,18 @@ public:
 
     void addListener(RS_BlockListListener* listener);
     void removeListener(RS_BlockListListener* listener);
-	
-	/**
-	 * Sets the layer lists modified status to 'm'.
-	 */
-	void setModified(bool m) {
-		modified = m;
-	}
-	
-	/**
-	 * @retval true The layer list has been modified.
-	 * @retval false The layer list has not been modified.
-	 */
+
+    /**
+     * Sets the layer lists modified status to 'm'.
+     */
+    void setModified(bool m) {
+        modified = m;
+    }
+
+    /**
+     * @retval true The layer list has been modified.
+     * @retval false The layer list has not been modified.
+     */
     virtual bool isModified() const {
         return modified;
     }
