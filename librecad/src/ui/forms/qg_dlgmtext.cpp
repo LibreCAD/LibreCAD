@@ -88,7 +88,7 @@ void QG_DlgMText::updateUniCharComboBox(int) {
     cbUniChar->clear();
     for (int c=min; c<=max; c++) {
         char buf[5];
-        sprintf(buf, "%04X", c);
+        snprintf(buf,5, "%04X", c);
         cbUniChar->addItem(QString("[%1] %2").arg(buf).arg(QChar(c)));
     }
 }
