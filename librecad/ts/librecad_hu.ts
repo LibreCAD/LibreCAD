@@ -72,7 +72,7 @@
     </message>
     <message>
         <source>File</source>
-        <translation type="obsolete">Fájl</translation>
+        <translation type="unfinished">Fájl</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
@@ -80,7 +80,7 @@
     </message>
     <message>
         <source>Edit</source>
-        <translation type="obsolete">Szerkesztés</translation>
+        <translation type="unfinished">Szerkesztés</translation>
     </message>
     <message>
         <source>Vie&amp;ws</source>
@@ -104,7 +104,7 @@
     </message>
     <message>
         <source>View</source>
-        <translation type="obsolete">Nézet</translation>
+        <translation type="unfinished">Nézet</translation>
     </message>
     <message>
         <source>&amp;Select</source>
@@ -168,7 +168,7 @@
     </message>
     <message>
         <source>Tool Options</source>
-        <translation type="obsolete">Eszköz beállításai</translation>
+        <translation type="unfinished">Eszköz beállításai</translation>
     </message>
     <message>
         <source>About</source>
@@ -512,6 +512,22 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>Auto-saving failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CAD Tools</source>
+        <translation type="unfinished">CAD Eszközök</translation>
+    </message>
+    <message>
+        <source>Export as</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6615,6 +6631,10 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
         <source>dwg Drawing %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ImageOptions</name>
@@ -10397,6 +10417,10 @@ Lecseréli?</translation>
     <message>
         <source>Angle: %1</source>
         <translation>Szög: %1</translation>
+    </message>
+    <message>
+        <source> or %1%2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

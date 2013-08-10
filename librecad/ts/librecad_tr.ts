@@ -57,7 +57,7 @@
     </message>
     <message>
         <source>File</source>
-        <translation type="obsolete">Dosya</translation>
+        <translation type="unfinished">Dosya</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
@@ -65,7 +65,7 @@
     </message>
     <message>
         <source>Edit</source>
-        <translation type="obsolete">Düzenle</translation>
+        <translation type="unfinished">Düzenle</translation>
     </message>
     <message>
         <source>Vie&amp;ws</source>
@@ -89,7 +89,7 @@
     </message>
     <message>
         <source>View</source>
-        <translation type="obsolete">Görüntüle</translation>
+        <translation type="unfinished">Görüntüle</translation>
     </message>
     <message>
         <source>&amp;Select</source>
@@ -149,7 +149,7 @@
     </message>
     <message>
         <source>Tool Options</source>
-        <translation type="obsolete">Araç Seçenekleri</translation>
+        <translation type="unfinished">Araç Seçenekleri</translation>
     </message>
     <message>
         <source>About</source>
@@ -473,6 +473,22 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Auto-saving failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CAD Tools</source>
+        <translation type="unfinished">CAD Araçları</translation>
+    </message>
+    <message>
+        <source>Export as</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4922,6 +4938,10 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
         <source>dwg Drawing %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ImageOptions</name>
@@ -8663,6 +8683,10 @@ Do you want to replace it?</source>
     <message>
         <source>Angle: %1</source>
         <translation type="unfinished">Açı: %1 %2 {1?}</translation>
+    </message>
+    <message>
+        <source> or %1%2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

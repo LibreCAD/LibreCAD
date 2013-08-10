@@ -216,11 +216,11 @@
     </message>
     <message>
         <source>File</source>
-        <translation type="obsolete">Soubor</translation>
+        <translation type="unfinished">Soubor</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="obsolete">Úpravy</translation>
+        <translation type="unfinished">Úpravy</translation>
     </message>
     <message>
         <source>Vie&amp;ws</source>
@@ -232,7 +232,7 @@
     </message>
     <message>
         <source>View</source>
-        <translation type="obsolete">Zobrazit</translation>
+        <translation type="unfinished">Zobrazit</translation>
     </message>
     <message>
         <source>Pen</source>
@@ -240,7 +240,7 @@
     </message>
     <message>
         <source>Tool Options</source>
-        <translation type="obsolete">Vlastnosti nástroje</translation>
+        <translation type="unfinished">Vlastnosti nástroje</translation>
     </message>
     <message>
         <source>Layer List</source>
@@ -503,6 +503,22 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Auto-saving failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CAD Tools</source>
+        <translation type="unfinished">Nástroje CADu</translation>
+    </message>
+    <message>
+        <source>Export as</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6224,6 +6240,10 @@ Toto nastavení můžete později změnit v menu Nastavení QCADu.</translation>
         <source>dwg Drawing %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ImageOptions</name>
@@ -9986,6 +10006,10 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>Angle: %1</source>
         <translation type="unfinished">Úhel: %1</translation>
+    </message>
+    <message>
+        <source> or %1%2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

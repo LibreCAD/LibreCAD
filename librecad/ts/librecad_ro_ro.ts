@@ -46,7 +46,7 @@
     </message>
     <message>
         <source>Focus on Command Line</source>
-        <translation>Cursor in linia de comanda</translation>
+        <translation type="obsolete">Cursor in linia de comanda</translation>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
@@ -62,7 +62,7 @@
     </message>
     <message>
         <source>&amp;Point</source>
-        <translation>&amp;Punct</translation>
+        <translation type="obsolete">&amp;Punct</translation>
     </message>
     <message>
         <source>&amp;Line</source>
@@ -114,7 +114,7 @@
     </message>
     <message>
         <source>About the application</source>
-        <translation>Despre aplicatie</translation>
+        <translation type="obsolete">Despre aplicatie</translation>
     </message>
     <message>
         <source>&amp;Scripts</source>
@@ -182,11 +182,11 @@
     </message>
     <message>
         <source>Vie&amp;ws</source>
-        <translation>Ved&amp;eri</translation>
+        <translation type="obsolete">Ved&amp;eri</translation>
     </message>
     <message>
         <source>Tool&amp;bars</source>
-        <translation>&amp;Bare de instrumente</translation>
+        <translation type="obsolete">&amp;Bare de instrumente</translation>
     </message>
     <message>
         <source>View</source>
@@ -194,7 +194,7 @@
     </message>
     <message>
         <source>Pen</source>
-        <translation>Creion</translation>
+        <translation type="obsolete">Creion</translation>
     </message>
     <message>
         <source>Tool Options</source>
@@ -282,7 +282,7 @@ Va rog verificati permisiunile.</translation>
     </message>
     <message>
         <source>Launch the online manual</source>
-        <translation>Dechideti manualul online</translation>
+        <translation type="obsolete">Dechideti manualul online</translation>
     </message>
     <message>
         <source>&amp;Manual</source>
@@ -290,11 +290,11 @@ Va rog verificati permisiunile.</translation>
     </message>
     <message>
         <source>&amp;CAM</source>
-        <translation>&amp;CAM</translation>
+        <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
         <source>Simulation Controls</source>
-        <translation>Controale de simulare</translation>
+        <translation type="obsolete">Controale de simulare</translation>
     </message>
     <message>
         <source>None</source>
@@ -302,7 +302,7 @@ Va rog verificati permisiunile.</translation>
     </message>
     <message>
         <source>Version: %1 %2</source>
-        <translation>Versiune: %1 %2</translation>
+        <translation type="obsolete">Versiune: %1 %2</translation>
     </message>
     <message>
         <source>Modules: %1</source>
@@ -310,11 +310,11 @@ Va rog verificati permisiunile.</translation>
     </message>
     <message>
         <source>&amp;About %1</source>
-        <translation>&amp;Despre %1</translation>
+        <translation type="obsolete">&amp;Despre %1</translation>
     </message>
     <message>
         <source>Date: %1</source>
-        <translation>Data: %1</translation>
+        <translation type="obsolete">Data: %1</translation>
     </message>
     <message>
         <source>This is a %1 version which terminates
@@ -323,7 +323,7 @@ not intended for production use. Please buy
 a full version of the application from
 %2.
 You can save your work now.</source>
-        <translation>Aceasta este versiunea %1 care se opreste
+        <translation type="obsolete">Aceasta este versiunea %1 care se opreste
 automat dupa 10min. Aceasta aplicatie nu este
 reealizata pentru folosirea in productie. Va rugam cumparati
 versiunea completa a aplicatiei de la
@@ -336,7 +336,7 @@ Acum puteti sa va salvati lucrul.</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation>&amp;Curba</translation>
+        <translation type="obsolete">&amp;Curba</translation>
     </message>
     <message>
         <source>Running script &apos;%1&apos;</source>
@@ -352,7 +352,7 @@ Acum puteti sa va salvati lucrul.</translation>
     </message>
     <message>
         <source>CTRL+M</source>
-        <translation>CTRL+M</translation>
+        <translation type="obsolete">CTRL+M</translation>
     </message>
     <message>
         <source>Insert Image</source>
@@ -378,7 +378,7 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>SVN Revision: %1</source>
-        <translation>Versiune SVN : %1</translation>
+        <translation type="obsolete">Versiune SVN : %1</translation>
     </message>
     <message>
         <source>Help</source>
@@ -390,7 +390,7 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>&amp;Plugins</source>
-        <translation>&amp;Plugins</translation>
+        <translation type="obsolete">&amp;Plugins</translation>
     </message>
     <message>
         <source>Import</source>
@@ -426,7 +426,7 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
-        <translation>Va rugam faceti o donatie la LibreCAD pentru a sustine dezvoltarea aplicatiei si pentru a ajuta la mentinerea site-ului web.</translation>
+        <translation type="obsolete">Va rugam faceti o donatie la LibreCAD pentru a sustine dezvoltarea aplicatiei si pentru a ajuta la mentinerea site-ului web.</translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
@@ -460,6 +460,38 @@ Autosalvare dezactivata.</translation>
         <source>Ta&amp;b mode</source>
         <translation>Modul Ta&amp;b</translation>
     </message>
+    <message>
+        <source>Draw &amp;Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CAD Tools</source>
+        <translation type="unfinished">Instrumente CAD</translation>
+    </message>
+    <message>
+        <source>New document from template: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Template aborted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-saving failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -485,23 +517,23 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>Quits the application</source>
-        <translation>Inchidere aplicatie</translation>
+        <translation type="obsolete">Inchidere aplicatie</translation>
     </message>
     <message>
         <source>Free</source>
-        <translation>Gratuit</translation>
+        <translation type="obsolete">Gratuit</translation>
     </message>
     <message>
         <source>&amp;Free</source>
-        <translation>&amp;Liber</translation>
+        <translation type="obsolete">&amp;Liber</translation>
     </message>
     <message>
         <source>Free positioning</source>
-        <translation>Pozitionare libera</translation>
+        <translation type="obsolete">Pozitionare libera</translation>
     </message>
     <message>
         <source>Grid</source>
-        <translation>Grila</translation>
+        <translation type="obsolete">Grila</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
@@ -509,159 +541,159 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>Grid positioning</source>
-        <translation>Pozitionare grila</translation>
+        <translation type="obsolete">Pozitionare grila</translation>
     </message>
     <message>
         <source>Endpoints</source>
-        <translation>Extremitati</translation>
+        <translation type="obsolete">Extremitati</translation>
     </message>
     <message>
         <source>&amp;Endpoints</source>
-        <translation>&amp;Extremitati</translation>
+        <translation type="obsolete">&amp;Extremitati</translation>
     </message>
     <message>
         <source>Snap to endpoints</source>
-        <translation>Salt la extremitati</translation>
+        <translation type="obsolete">Salt la extremitati</translation>
     </message>
     <message>
         <source>On Entity</source>
-        <translation>La entitate</translation>
+        <translation type="obsolete">La entitate</translation>
     </message>
     <message>
         <source>&amp;On Entity</source>
-        <translation>L&amp;a entitate</translation>
+        <translation type="obsolete">L&amp;a entitate</translation>
     </message>
     <message>
         <source>Snap to nearest point on entity</source>
-        <translation>Salt la cel mai apropiat punct pe entitate</translation>
+        <translation type="obsolete">Salt la cel mai apropiat punct pe entitate</translation>
     </message>
     <message>
         <source>Center</source>
-        <translation>Centru</translation>
+        <translation type="obsolete">Centru</translation>
     </message>
     <message>
         <source>&amp;Center</source>
-        <translation>&amp;Centru</translation>
+        <translation type="obsolete">&amp;Centru</translation>
     </message>
     <message>
         <source>Snap to centers</source>
-        <translation>Salt la centru</translation>
+        <translation type="obsolete">Salt la centru</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Mijloc</translation>
+        <translation type="obsolete">Mijloc</translation>
     </message>
     <message>
         <source>&amp;Middle</source>
-        <translation>&amp;Mijloc</translation>
+        <translation type="obsolete">&amp;Mijloc</translation>
     </message>
     <message>
         <source>Snap to middle points</source>
-        <translation>Slat la punctele de mijloc</translation>
+        <translation type="obsolete">Slat la punctele de mijloc</translation>
     </message>
     <message>
         <source>Distance from Endpoint</source>
-        <translation>Distanta de la extremitate</translation>
+        <translation type="obsolete">Distanta de la extremitate</translation>
     </message>
     <message>
         <source>&amp;Distance from Endpoint</source>
-        <translation>&amp;Distanta de la extremitate</translation>
+        <translation type="obsolete">&amp;Distanta de la extremitate</translation>
     </message>
     <message>
         <source>Snap to points with a given distance to an endpoint</source>
-        <translation>Salt la punctele care se afla la o distanta data de extremitate</translation>
+        <translation type="obsolete">Salt la punctele care se afla la o distanta data de extremitate</translation>
     </message>
     <message>
         <source>Intersection</source>
-        <translation>Intersectie</translation>
+        <translation type="obsolete">Intersectie</translation>
     </message>
     <message>
         <source>&amp;Intersection</source>
-        <translation>&amp;Intersectie</translation>
+        <translation type="obsolete">&amp;Intersectie</translation>
     </message>
     <message>
         <source>Snap to intersection points</source>
-        <translation>Salt la punctele de intersectie</translation>
+        <translation type="obsolete">Salt la punctele de intersectie</translation>
     </message>
     <message>
         <source>Restrict Nothing</source>
-        <translation>Nicio restrictie</translation>
+        <translation type="obsolete">Nicio restrictie</translation>
     </message>
     <message>
         <source>Restrict &amp;Nothing</source>
-        <translation>&amp;Nicio Restrictie</translation>
+        <translation type="obsolete">&amp;Nicio Restrictie</translation>
     </message>
     <message>
         <source>No snap restriction</source>
-        <translation>Nicio restrictie de salt</translation>
+        <translation type="obsolete">Nicio restrictie de salt</translation>
     </message>
     <message>
         <source>Restrict Orthogonally</source>
-        <translation>Restrictie Ortogonala</translation>
+        <translation type="obsolete">Restrictie Ortogonala</translation>
     </message>
     <message>
         <source>Restrict &amp;Orthogonally</source>
-        <translation>Restrictie &amp;Ortogonala</translation>
+        <translation type="obsolete">Restrictie &amp;Ortogonala</translation>
     </message>
     <message>
         <source>Restrict snapping orthogonally</source>
-        <translation>Restrictie ortogonala la salt</translation>
+        <translation type="obsolete">Restrictie ortogonala la salt</translation>
     </message>
     <message>
         <source>Restrict Horizontally</source>
-        <translation>Restrictie orizontala</translation>
+        <translation type="obsolete">Restrictie orizontala</translation>
     </message>
     <message>
         <source>Restrict &amp;Horizontally</source>
-        <translation>Restrictie &amp;Orizontala</translation>
+        <translation type="obsolete">Restrictie &amp;Orizontala</translation>
     </message>
     <message>
         <source>Restrict snapping horizontally</source>
-        <translation>Restrictie la salt pe orizontala</translation>
+        <translation type="obsolete">Restrictie la salt pe orizontala</translation>
     </message>
     <message>
         <source>Restrict Vertically</source>
-        <translation>Restrictie verticala</translation>
+        <translation type="obsolete">Restrictie verticala</translation>
     </message>
     <message>
         <source>Restrict &amp;Vertically</source>
-        <translation>Restrictie &amp;Verticala</translation>
+        <translation type="obsolete">Restrictie &amp;Verticala</translation>
     </message>
     <message>
         <source>Restrict snapping vertically</source>
-        <translation>Restrictie de salt pe verticala</translation>
+        <translation type="obsolete">Restrictie de salt pe verticala</translation>
     </message>
     <message>
         <source>General Application Preferences</source>
-        <translation>Preferinte generale</translation>
+        <translation type="obsolete">Preferinte generale</translation>
     </message>
     <message>
         <source>Closes the current drawing</source>
-        <translation>Inchidere desen curent</translation>
+        <translation type="obsolete">Inchidere desen curent</translation>
     </message>
     <message>
         <source>Prints out the current drawing</source>
-        <translation>Listare desen curent</translation>
+        <translation type="obsolete">Listare desen curent</translation>
     </message>
     <message>
         <source>Close Drawing</source>
-        <translation>Inchidere desen</translation>
+        <translation type="obsolete">Inchidere desen</translation>
     </message>
     <message>
         <source>Print Drawing</source>
-        <translation>Listare desen</translation>
+        <translation type="obsolete">Listare desen</translation>
     </message>
     <message>
         <source>Export Drawing</source>
-        <translation>Export desen</translation>
+        <translation type="obsolete">Export desen</translation>
     </message>
     <message>
         <source>Exports the current drawing as bitmap</source>
-        <translation>Exporta desenul curent in format bitmap</translation>
+        <translation type="obsolete">Exporta desenul curent in format bitmap</translation>
     </message>
     <message>
         <source>Application</source>
-        <translation>Aplicatie</translation>
+        <translation type="obsolete">Aplicatie</translation>
     </message>
     <message>
         <source>&amp;Application Preferences</source>
@@ -669,11 +701,11 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>Enables/disables the grid</source>
-        <translation>Activeaza/dezactiveaza grila</translation>
+        <translation type="obsolete">Activeaza/dezactiveaza grila</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation>Bara de stare</translation>
+        <translation type="obsolete">Bara de stare</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
@@ -681,11 +713,11 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>Enables/disables the statusbar</source>
-        <translation>Afiseaza/Ascunde bara de stare</translation>
+        <translation type="obsolete">Afiseaza/Ascunde bara de stare</translation>
     </message>
     <message>
         <source>Draft</source>
-        <translation>Schita</translation>
+        <translation type="obsolete">Schita</translation>
     </message>
     <message>
         <source>&amp;Draft</source>
@@ -693,7 +725,7 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>Enables/disables the draft mode</source>
-        <translation>Activeaza/Dezactiveaza modul schita</translation>
+        <translation type="obsolete">Activeaza/Dezactiveaza modul schita</translation>
     </message>
     <message>
         <source>Open IDE</source>
@@ -701,11 +733,11 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>&amp;Open IDE</source>
-        <translation>&amp;Deschidere IDE</translation>
+        <translation type="obsolete">&amp;Deschidere IDE</translation>
     </message>
     <message>
         <source>Opens the integrated development environment for scripting</source>
-        <translation>Deschide mediul de dezvoltare integrat pentru script</translation>
+        <translation type="obsolete">Deschide mediul de dezvoltare integrat pentru script</translation>
     </message>
     <message>
         <source>Run Script..</source>
@@ -713,11 +745,11 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>&amp;Run Script..</source>
-        <translation>&amp;Rulare Script..</translation>
+        <translation type="obsolete">&amp;Rulare Script..</translation>
     </message>
     <message>
         <source>Runs a script</source>
-        <translation>Ruleaza un script</translation>
+        <translation type="obsolete">Ruleaza un script</translation>
     </message>
     <message>
         <source>&amp;Preferences</source>
@@ -733,7 +765,7 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Inchidere</translation>
+        <translation type="obsolete">Inchidere</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -745,11 +777,11 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>Restrict&amp;Vertically</source>
-        <translation>Restrictie pe &amp;Verticala</translation>
+        <translation type="obsolete">Restrictie pe &amp;Verticala</translation>
     </message>
     <message>
         <source>&amp;back</source>
-        <translation>&amp;inapoi</translation>
+        <translation type="obsolete">&amp;inapoi</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
@@ -757,11 +789,11 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>&amp;Endpoint</source>
-        <translation>&amp;Punct de capat</translation>
+        <translation type="obsolete">&amp;Punct de capat</translation>
     </message>
     <message>
         <source>&amp;OnEntity</source>
-        <translation>&amp;Dupa entitate</translation>
+        <translation type="obsolete">&amp;Dupa entitate</translation>
     </message>
 </context>
 <context>
@@ -776,7 +808,7 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation>Sens trigonometric</translation>
+        <translation type="obsolete">Sens trigonometric</translation>
     </message>
     <message>
         <source>Counterclockwise</source>
@@ -791,7 +823,7 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Raza:</translation>
+        <translation type="obsolete">Raza:</translation>
     </message>
     <message>
         <source>Radius of the tangential arc</source>
@@ -847,7 +879,7 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Renaming Block</source>
@@ -859,22 +891,22 @@ Autosalvare dezactivata.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
 </context>
 <context>
     <name>QG_BlockWidget</name>
     <message>
         <source>Add a block</source>
-        <translation>Adaugare Bloc</translation>
+        <translation type="obsolete">Adaugare Bloc</translation>
     </message>
     <message>
         <source>Remove the active block</source>
@@ -941,6 +973,18 @@ intr-o fereastra noua</translation>
     <message>
         <source>&amp;Create New Block</source>
         <translation>&amp;Creare bloc nou</translation>
+    </message>
+    <message>
+        <source>Create Block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add an empty block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>save the active block to a file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1018,6 +1062,38 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Desenare cerc inscris intr-un triunghi, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential la 3 linii&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1234,47 +1310,47 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Show menu &quot;Lines&quot;</source>
-        <translation>Afisare meniu &quot;Linii&quot;</translation>
+        <translation type="obsolete">Afisare meniu &quot;Linii&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Arcs&quot;</source>
-        <translation>Afisare meniu &quot;Arce&quot;</translation>
+        <translation type="obsolete">Afisare meniu &quot;Arce&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Circles&quot;</source>
-        <translation>Afisare meniu &quot;Cercuri&quot;</translation>
+        <translation type="obsolete">Afisare meniu &quot;Cercuri&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Points&quot;</source>
-        <translation>Afisare meniu &quot;Puncte&quot;</translation>
+        <translation type="obsolete">Afisare meniu &quot;Puncte&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Measure&quot;</source>
-        <translation>Afisare meniu &quot;Masurare&quot;</translation>
+        <translation type="obsolete">Afisare meniu &quot;Masurare&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Ellipses&quot;</source>
-        <translation>Afisare meniu &quot;Elipse&quot;</translation>
+        <translation type="obsolete">Afisare meniu &quot;Elipse&quot;</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
-        <translation>Hasururi / Umplere solida</translation>
+        <translation type="obsolete">Hasururi / Umplere solida</translation>
     </message>
     <message>
         <source>Show menu &quot;Edit&quot;</source>
-        <translation>Afisare meniu &quot;Editare&quot;</translation>
+        <translation type="obsolete">Afisare meniu &quot;Editare&quot;</translation>
     </message>
     <message>
         <source>Show menu &quot;Dimensions&quot;</source>
-        <translation>Afisare meniu &quot;Dimensiuni&quot;</translation>
+        <translation type="obsolete">Afisare meniu &quot;Dimensiuni&quot;</translation>
     </message>
     <message>
         <source>Texts</source>
-        <translation>Texte</translation>
+        <translation type="obsolete">Texte</translation>
     </message>
     <message>
         <source>Show menu &quot;Select&quot;</source>
-        <translation>Afisare meniu &quot;Selectie&quot;</translation>
+        <translation type="obsolete">Afisare meniu &quot;Selectie&quot;</translation>
     </message>
     <message>
         <source>Create Block</source>
@@ -1282,23 +1358,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Raster Image</source>
-        <translation>Imagine</translation>
+        <translation type="obsolete">Imagine</translation>
     </message>
     <message>
         <source>Show menu &quot;Splines&quot;</source>
-        <translation>Afisare meniu &quot;Curbe&quot;</translation>
+        <translation type="obsolete">Afisare meniu &quot;Curbe&quot;</translation>
     </message>
     <message>
         <source>Points</source>
-        <translation>Puncte</translation>
+        <translation type="obsolete">Puncte</translation>
     </message>
     <message>
         <source>Splines</source>
-        <translation>Curbe</translation>
+        <translation type="obsolete">Curbe</translation>
     </message>
     <message>
         <source>Polylines</source>
-        <translation>Polilinii</translation>
+        <translation type="obsolete">Polilinii</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Lines&quot;</source>
@@ -1330,7 +1406,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Insert Text</source>
-        <translation>Inserare text</translation>
+        <translation type="obsolete">Inserare text</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Dimensions&quot;</source>
@@ -1356,6 +1432,10 @@ p, li { white-space: pre-wrap; }
         <source>Show toolbar &quot;Select&quot;</source>
         <translation>Afisarea barei de instrumente &quot;Selectie&quot;</translation>
     </message>
+    <message>
+        <source>Insert Multi-line Text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_CadToolBarModify</name>
@@ -1378,7 +1458,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Move</source>
-        <translation>Deplasare</translation>
+        <translation type="obsolete">Deplasare</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
@@ -1418,7 +1498,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Rotate around two centers</source>
-        <translation>Rotire in jurul a doua centre</translation>
+        <translation type="obsolete">Rotire in jurul a doua centre</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
@@ -1578,71 +1658,71 @@ p, li { white-space: pre-wrap; }
     <name>QG_CadToolBarSnap</name>
     <message>
         <source>Snap</source>
-        <translation>Salt</translation>
+        <translation type="obsolete">Salt</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Revenire la meniul principal</translation>
+        <translation type="obsolete">Revenire la meniul principal</translation>
     </message>
     <message>
         <source>Snap to grid</source>
-        <translation>Salt la grila</translation>
+        <translation type="obsolete">Salt la grila</translation>
     </message>
     <message>
         <source>Free positioning</source>
-        <translation>Pozitionare libera</translation>
+        <translation type="obsolete">Pozitionare libera</translation>
     </message>
     <message>
         <source>Snap to Endpoints</source>
-        <translation>Salt la extremitati</translation>
+        <translation type="obsolete">Salt la extremitati</translation>
     </message>
     <message>
         <source>Snap to closest point on entity</source>
-        <translation>Salt la cel mai apropiat punct al entitatii</translation>
+        <translation type="obsolete">Salt la cel mai apropiat punct al entitatii</translation>
     </message>
     <message>
         <source>Snap to center points</source>
-        <translation>Salt la punctele de centru</translation>
+        <translation type="obsolete">Salt la punctele de centru</translation>
     </message>
     <message>
         <source>Snap to middle points</source>
-        <translation>Salt la punctele de mijloc</translation>
+        <translation type="obsolete">Salt la punctele de mijloc</translation>
     </message>
     <message>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>Salt la un punct cu o distanta data de capat</translation>
+        <translation type="obsolete">Salt la un punct cu o distanta data de capat</translation>
     </message>
     <message>
         <source>Snap to intersections automatically</source>
-        <translation>Salt automat la intersectii</translation>
+        <translation type="obsolete">Salt automat la intersectii</translation>
     </message>
     <message>
         <source>No Restriction</source>
-        <translation>Fara restrictii</translation>
+        <translation type="obsolete">Fara restrictii</translation>
     </message>
     <message>
         <source>Orthogonal Restriction</source>
-        <translation>Restrictie ortogonala</translation>
+        <translation type="obsolete">Restrictie ortogonala</translation>
     </message>
     <message>
         <source>Horizontal Restriction</source>
-        <translation>Restrictie orizontala</translation>
+        <translation type="obsolete">Restrictie orizontala</translation>
     </message>
     <message>
         <source>Vertical Restriction</source>
-        <translation>Restrictie verticala</translation>
+        <translation type="obsolete">Restrictie verticala</translation>
     </message>
     <message>
         <source>Move relative Zero</source>
-        <translation>Mutare la zero relativ</translation>
+        <translation type="obsolete">Mutare la zero relativ</translation>
     </message>
     <message>
         <source>Lock relative Zero</source>
-        <translation>Blocare zero relativ</translation>
+        <translation type="obsolete">Blocare zero relativ</translation>
     </message>
     <message>
         <source>Snap to intersections manually</source>
-        <translation>Salt manual la intersectii</translation>
+        <translation type="obsolete">Salt manual la intersectii</translation>
     </message>
 </context>
 <context>
@@ -1669,6 +1749,25 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Radius:</source>
         <translation>Raza:</translation>
+    </message>
+</context>
+<context>
+    <name>QG_CircleTan2Options</name>
+    <message>
+        <source>Circle Tangential2 Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Raza:</translation>
+    </message>
+    <message>
+        <source>Radius of tangential circle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1755,6 +1854,13 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_CommandEdit</name>
+    <message>
+        <source>clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_CommandWidget</name>
     <message>
         <source>Command Line</source>
@@ -1771,6 +1877,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Command history and output</source>
         <translation>Istoric comenzi si valori iesire</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1913,19 +2023,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
 </context>
 <context>
@@ -1940,19 +2050,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
 </context>
 <context>
@@ -1983,19 +2093,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
 </context>
 <context>
@@ -2018,26 +2128,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgDimension</name>
     <message>
         <source>Aligned Dimension</source>
-        <translation>Aliniere dimensiuni</translation>
+        <translation type="obsolete">Aliniere dimensiuni</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -2045,19 +2155,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -2112,19 +2222,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
 </context>
 <context>
@@ -2159,15 +2269,66 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgImage</name>
+    <message>
+        <source>Image</source>
+        <translation type="unfinished">Imagine</translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Strat:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometrie</translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation type="unfinished">Latime:</translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation type="unfinished">Inaltime:</translation>
+    </message>
+    <message>
+        <source>insert (x):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale:</source>
+        <translation type="unfinished">Scara de marire:</translation>
+    </message>
+    <message>
+        <source>Size (px):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>insert (y):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2202,11 +2363,11 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation type="obsolete">OK</translation>
     </message>
     <message>
         <source>Enter</source>
-        <translation>Continuare</translation>
+        <translation type="obsolete">Continuare</translation>
     </message>
 </context>
 <context>
@@ -2233,7 +2394,7 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Scale:</source>
-        <translation>Scara de marire:</translation>
+        <translation type="obsolete">Scara de marire:</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -2257,15 +2418,23 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
+    </message>
+    <message>
+        <source>Scale X:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale Y:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2300,15 +2469,622 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgMText</name>
+    <message>
+        <source>MText</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Strat:</translation>
+    </message>
+    <message>
+        <source>Font</source>
+        <translation type="unfinished">Tip litera</translation>
+    </message>
+    <message>
+        <source>&amp;Height:</source>
+        <translation type="unfinished">&amp;Inaltime:</translation>
+    </message>
+    <message>
+        <source>Line &amp;spacing:</source>
+        <translation type="unfinished">&amp;Spatierea liniilor:</translation>
+    </message>
+    <message>
+        <source>&amp;Default line spacing</source>
+        <translation type="unfinished">Spatierea &amp;implicita a liniilor</translation>
+    </message>
+    <message>
+        <source>Alt+D</source>
+        <translation type="unfinished">Alt+D</translation>
+    </message>
+    <message>
+        <source>Alignment</source>
+        <translation type="unfinished">Aliniere</translation>
+    </message>
+    <message>
+        <source>Top Right</source>
+        <translation type="unfinished">Sus dreapta</translation>
+    </message>
+    <message>
+        <source>Top Left</source>
+        <translation type="unfinished">Sus stanga</translation>
+    </message>
+    <message>
+        <source>Middle Left</source>
+        <translation type="unfinished">Mijloc stanga</translation>
+    </message>
+    <message>
+        <source>Middle Center</source>
+        <translation type="unfinished">Mijloc centru</translation>
+    </message>
+    <message>
+        <source>Middle Right</source>
+        <translation type="unfinished">Mijloc dreapta</translation>
+    </message>
+    <message>
+        <source>Bottom Left</source>
+        <translation type="unfinished">Jos stanga</translation>
+    </message>
+    <message>
+        <source>Bottom Right</source>
+        <translation type="unfinished">Jos dreapta</translation>
+    </message>
+    <message>
+        <source>Bottom Center</source>
+        <translation type="unfinished">Jos centru</translation>
+    </message>
+    <message>
+        <source>Top Center</source>
+        <translation type="unfinished">Sus centru</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Text:</translation>
+    </message>
+    <message>
+        <source>Clear Text</source>
+        <translation type="unfinished">Stergere text</translation>
+    </message>
+    <message>
+        <source>Load Text From File</source>
+        <translation type="unfinished">Incarcare text din fisier</translation>
+    </message>
+    <message>
+        <source>Save Text To File</source>
+        <translation type="unfinished">Salvare text in fisier</translation>
+    </message>
+    <message>
+        <source>Cut</source>
+        <translation type="unfinished">Decupare</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished">Copiere</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished">Lipire</translation>
+    </message>
+    <message>
+        <source>Insert Symbol</source>
+        <translation type="unfinished">Inserare Simbol</translation>
+    </message>
+    <message utf8="true">
+        <source>Diameter (ø)</source>
+        <translation type="unfinished">Diametru (ø)</translation>
+    </message>
+    <message utf8="true">
+        <source>Degree (°)</source>
+        <translation type="unfinished">Grade (°)</translation>
+    </message>
+    <message utf8="true">
+        <source>Plus / Minus (±)</source>
+        <translation type="unfinished">Plus / Minus (±)</translation>
+    </message>
+    <message>
+        <source>At (@)</source>
+        <translation type="unfinished">Arond (@)</translation>
+    </message>
+    <message>
+        <source>Hash (#)</source>
+        <translation type="unfinished">Diez (#)</translation>
+    </message>
+    <message>
+        <source>Dollar ($)</source>
+        <translation type="unfinished">Dolar ($)</translation>
+    </message>
+    <message utf8="true">
+        <source>Copyright (©)</source>
+        <translation type="unfinished">Copyright (©)</translation>
+    </message>
+    <message utf8="true">
+        <source>Registered (®)</source>
+        <translation type="unfinished">Inregistrat (®)</translation>
+    </message>
+    <message utf8="true">
+        <source>Paragraph (§)</source>
+        <translation type="unfinished">Paragraf (§)</translation>
+    </message>
+    <message utf8="true">
+        <source>Pi (π)</source>
+        <translation type="unfinished">Pi (π)</translation>
+    </message>
+    <message utf8="true">
+        <source>Pound (£)</source>
+        <translation type="unfinished">Lira (£)</translation>
+    </message>
+    <message utf8="true">
+        <source>Yen (¥)</source>
+        <translation type="unfinished">Yen (¥)</translation>
+    </message>
+    <message utf8="true">
+        <source>Times (×)</source>
+        <translation type="unfinished">Ori (×)</translation>
+    </message>
+    <message utf8="true">
+        <source>Division (÷)</source>
+        <translation type="unfinished">Impartire (÷)</translation>
+    </message>
+    <message>
+        <source>Insert Unicode</source>
+        <translation type="unfinished">Inserare Unicod</translation>
+    </message>
+    <message>
+        <source>Page:</source>
+        <translation type="unfinished">Pagina:</translation>
+    </message>
+    <message>
+        <source>Char:</source>
+        <translation type="unfinished">Caracter:</translation>
+    </message>
+    <message>
+        <source>[0000-007F] Basic Latin</source>
+        <translation type="unfinished">[0000-007F] Latin de Baza</translation>
+    </message>
+    <message>
+        <source>[0080-00FF] Latin-1 Supplementary</source>
+        <translation type="unfinished">[0080-00FF] Latin-1 Suplimentar</translation>
+    </message>
+    <message>
+        <source>[0100-017F] Latin Extended-A</source>
+        <translation type="unfinished">[0100-017F] Latin Extins-A</translation>
+    </message>
+    <message>
+        <source>[0180-024F] Latin Extended-B</source>
+        <translation type="unfinished">[0180-024F] Latin Extins-B</translation>
+    </message>
+    <message>
+        <source>[0250-02AF] IPA Extensions</source>
+        <translation type="unfinished">[0250-02AF] Extensii IPA</translation>
+    </message>
+    <message>
+        <source>[02B0-02FF] Spacing Modifier Letters</source>
+        <translation type="unfinished">[02B0-02FF] Caractere cu spatiere modificata</translation>
+    </message>
+    <message>
+        <source>[0300-036F] Combining Diacritical Marks</source>
+        <translation type="unfinished">[0300-036F] Caractere de punctuatie</translation>
+    </message>
+    <message>
+        <source>[0370-03FF] Greek and Coptic</source>
+        <translation type="unfinished">[0370-03FF] Grec si Copt</translation>
+    </message>
+    <message>
+        <source>[0400-04FF] Cyrillic</source>
+        <translation type="unfinished">[0400-04FF] Chirilic</translation>
+    </message>
+    <message>
+        <source>[0500-052F] Cyrillic Supplementary</source>
+        <translation type="unfinished">[0500-052F] Chirilic suplimentar</translation>
+    </message>
+    <message>
+        <source>[0530-058F] Armenian</source>
+        <translation type="unfinished">[0530-058F] Armean</translation>
+    </message>
+    <message>
+        <source>[0590-05FF] Hebrew</source>
+        <translation type="unfinished">[0590-05FF] Ebraic</translation>
+    </message>
+    <message>
+        <source>[0600-06FF] Arabic</source>
+        <translation type="unfinished">[0600-06FF] Arab</translation>
+    </message>
+    <message>
+        <source>[0700-074F] Syriac</source>
+        <translation type="unfinished">[0700-074F] Sirian</translation>
+    </message>
+    <message>
+        <source>[0780-07BF] Thaana</source>
+        <translation type="unfinished">[0780-07BF] Thaana</translation>
+    </message>
+    <message>
+        <source>[0900-097F] Devanagari</source>
+        <translation type="unfinished">[0900-097F] Devanagari</translation>
+    </message>
+    <message>
+        <source>[0980-09FF] Bengali</source>
+        <translation type="unfinished">[0980-09FF] Bengali</translation>
+    </message>
+    <message>
+        <source>[0A00-0A7F] Gurmukhi</source>
+        <translation type="unfinished">[0A00-0A7F] Gurmukhi</translation>
+    </message>
+    <message>
+        <source>[0A80-0AFF] Gujarati</source>
+        <translation type="unfinished">[0A80-0AFF] Gujarati</translation>
+    </message>
+    <message>
+        <source>[0B00-0B7F] Oriya</source>
+        <translation type="unfinished">[0B00-0B7F] Oriya</translation>
+    </message>
+    <message>
+        <source>[0B80-0BFF] Tamil</source>
+        <translation type="unfinished">[0B80-0BFF] Tamil</translation>
+    </message>
+    <message>
+        <source>[0C00-0C7F] Telugu</source>
+        <translation type="unfinished">[0C00-0C7F] Telugu</translation>
+    </message>
+    <message>
+        <source>[0C80-0CFF] Kannada</source>
+        <translation type="unfinished">[0C80-0CFF] Kannada</translation>
+    </message>
+    <message>
+        <source>[0D00-0D7F] Malayalam</source>
+        <translation type="unfinished">[0D00-0D7F] Malayalam</translation>
+    </message>
+    <message>
+        <source>[0D80-0DFF] Sinhala</source>
+        <translation type="unfinished">[0D80-0DFF] Sinhala</translation>
+    </message>
+    <message>
+        <source>[0E00-0E7F] Thai</source>
+        <translation type="unfinished">[0E00-0E7F] Thai</translation>
+    </message>
+    <message>
+        <source>[0E80-0EFF] Lao</source>
+        <translation type="unfinished">[0E80-0EFF] Lao</translation>
+    </message>
+    <message>
+        <source>[0F00-0FFF] Tibetan</source>
+        <translation type="unfinished">[0F00-0FFF] Tibetan</translation>
+    </message>
+    <message>
+        <source>[1000-109F] Myanmar</source>
+        <translation type="unfinished">[1000-109F] Myanmar</translation>
+    </message>
+    <message>
+        <source>[10A0-10FF] Georgian</source>
+        <translation type="unfinished">[10A0-10FF] Georgien</translation>
+    </message>
+    <message>
+        <source>[1100-11FF] Hangul Jamo</source>
+        <translation type="unfinished">[1100-11FF] Hangul Jamo</translation>
+    </message>
+    <message>
+        <source>[1200-137F] Ethiopic</source>
+        <translation type="unfinished">[1200-137F] Etiopian</translation>
+    </message>
+    <message>
+        <source>[13A0-13FF] Cherokee</source>
+        <translation type="unfinished">[13A0-13FF] Cherokee</translation>
+    </message>
+    <message>
+        <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
+        <translation type="unfinished">[1400-167F] Unificat Canadian Aborigian Silabic</translation>
+    </message>
+    <message>
+        <source>[1680-169F] Ogham</source>
+        <translation type="unfinished">[1680-169F] Ogham</translation>
+    </message>
+    <message>
+        <source>[16A0-16FF] Runic</source>
+        <translation type="unfinished">[16A0-16FF] Runic</translation>
+    </message>
+    <message>
+        <source>[1700-171F] Tagalog</source>
+        <translation type="unfinished">[1700-171F] Tagalog</translation>
+    </message>
+    <message>
+        <source>[1720-173F] Hanunoo</source>
+        <translation type="unfinished">[1720-173F] Hanunoo</translation>
+    </message>
+    <message>
+        <source>[1740-175F] Buhid</source>
+        <translation type="unfinished">[1740-175F] Buhid</translation>
+    </message>
+    <message>
+        <source>[1760-177F] Tagbanwa</source>
+        <translation type="unfinished">[1760-177F] Tagbanwa</translation>
+    </message>
+    <message>
+        <source>[1780-17FF] Khmer</source>
+        <translation type="unfinished">[1780-17FF] Khmer</translation>
+    </message>
+    <message>
+        <source>[1800-18AF] Mongolian</source>
+        <translation type="unfinished">[1800-18AF] Mongol</translation>
+    </message>
+    <message>
+        <source>[1E00-1EFF] Latin Extended Additional</source>
+        <translation type="unfinished">[1E00-1EFF] Latin Extins Aditional</translation>
+    </message>
+    <message>
+        <source>[1F00-1FFF] Greek Extended</source>
+        <translation type="unfinished">[1F00-1FFF] Grec Extins</translation>
+    </message>
+    <message>
+        <source>[2000-206F] General Punctuation</source>
+        <translation type="unfinished">[2000-206F] Punctuate generala</translation>
+    </message>
+    <message>
+        <source>[2070-209F] Superscripts and Subscripts</source>
+        <translation type="unfinished">[2070-209F] Exponenti si indici</translation>
+    </message>
+    <message>
+        <source>[20A0-20CF] Currency Symbols</source>
+        <translation type="unfinished">[20A0-20CF] Simboluri monede</translation>
+    </message>
+    <message>
+        <source>[20D0-20FF] Combining Marks for Symbols</source>
+        <translation type="unfinished">[20D0-20FF] Marcaje combinate pentru simboluri</translation>
+    </message>
+    <message>
+        <source>[2100-214F] Letterlike Symbols</source>
+        <translation type="unfinished">[2100-214F] Simboluri litera</translation>
+    </message>
+    <message>
+        <source>[2150-218F] Number Forms</source>
+        <translation type="unfinished">[2150-218F] Numere pentru formulare</translation>
+    </message>
+    <message>
+        <source>[2190-21FF] Arrows</source>
+        <translation type="unfinished">[2190-21FF] Sageti</translation>
+    </message>
+    <message>
+        <source>[2200-22FF] Mathematical Operators</source>
+        <translation type="unfinished">[2200-22FF] Operatori matematici</translation>
+    </message>
+    <message>
+        <source>[2300-23FF] Miscellaneous Technical</source>
+        <translation type="unfinished">[2300-23FF] Simboluri tehnice diverse</translation>
+    </message>
+    <message>
+        <source>[2400-243F] Control Pictures</source>
+        <translation type="unfinished">[2400-243F] Caractere pentru control imagini</translation>
+    </message>
+    <message>
+        <source>[2440-245F] Optical Character Recognition</source>
+        <translation type="unfinished">[2440-245F] Recunoasterea optica a caracterelor</translation>
+    </message>
+    <message>
+        <source>[2460-24FF] Enclosed Alphanumerics</source>
+        <translation type="unfinished">[2460-24FF] Caractere alfanumerice incercuite</translation>
+    </message>
+    <message>
+        <source>[2500-257F] Box Drawing</source>
+        <translation type="unfinished">[2500-257F] Borduri</translation>
+    </message>
+    <message>
+        <source>[2580-259F] Block Elements</source>
+        <translation type="unfinished">[2580-259F] Elemente de bordura</translation>
+    </message>
+    <message>
+        <source>[25A0-25FF] Geometric Shapes</source>
+        <translation type="unfinished">[25A0-25FF] Forme geometrice</translation>
+    </message>
+    <message>
+        <source>[2600-26FF] Miscellaneous Symbols</source>
+        <translation type="unfinished">[2600-26FF] Simboluri diverse</translation>
+    </message>
+    <message>
+        <source>[2700-27BF] Dingbats</source>
+        <translation type="unfinished">[2700-27BF] Dingbats</translation>
+    </message>
+    <message>
+        <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
+        <translation type="unfinished">[27C0-27EF] Simboluri matematice diverse-A</translation>
+    </message>
+    <message>
+        <source>[27F0-27FF] Supplemental Arrows-A</source>
+        <translation type="unfinished">[27F0-27FF] Sageti suplimentare-A</translation>
+    </message>
+    <message>
+        <source>[2800-28FF] Braille Patterns</source>
+        <translation type="unfinished">[2800-28FF] Simboluri Braille</translation>
+    </message>
+    <message>
+        <source>[2900-297F] Supplemental Arrows-B</source>
+        <translation type="unfinished">[2900-297F] Sageti suplimentare-B</translation>
+    </message>
+    <message>
+        <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
+        <translation type="unfinished">[2980-29FF] Simboluri matematice diverse-B</translation>
+    </message>
+    <message>
+        <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
+        <translation type="unfinished">[2A00-2AFF] Operatori matematici suplimentari</translation>
+    </message>
+    <message>
+        <source>[2E80-2EFF] CJK Radicals Supplement</source>
+        <translation type="unfinished">[2E80-2EFF] Radicali suplimentari CJC</translation>
+    </message>
+    <message>
+        <source>[2F00-2FDF] Kangxi Radicals</source>
+        <translation type="unfinished">[2F00-2FDF] Radicali Kangxi</translation>
+    </message>
+    <message>
+        <source>[2FF0-2FFF] Ideographic Description Characters</source>
+        <translation type="unfinished">[2FF0-2FFF] Caractere pentru descreiere ideofonografica</translation>
+    </message>
+    <message>
+        <source>[3000-303F] CJK Symbols and Punctuation</source>
+        <translation type="unfinished">[3000-303F] Simboluri si punctuatie CJK</translation>
+    </message>
+    <message>
+        <source>[3040-309F] Hiragana</source>
+        <translation type="unfinished">[3040-309F] Hiragana</translation>
+    </message>
+    <message>
+        <source>[30A0-30FF] Katakana</source>
+        <translation type="unfinished">[30A0-30FF] Katakana</translation>
+    </message>
+    <message>
+        <source>[3100-312F] Bopomofo</source>
+        <translation type="unfinished">[3100-312F] Bopomofo</translation>
+    </message>
+    <message>
+        <source>[3130-318F] Hangul Compatibility Jamo</source>
+        <translation type="unfinished">[3130-318F] Hangul Compatibility Jamo</translation>
+    </message>
+    <message>
+        <source>[3190-319F] Kanbun</source>
+        <translation type="unfinished">[3190-319F] Kanbun</translation>
+    </message>
+    <message>
+        <source>[31A0-31BF] Bopomofo Extended</source>
+        <translation type="unfinished">[31A0-31BF] Bopomofo Extins</translation>
+    </message>
+    <message>
+        <source>[3200-32FF] Enclosed CJK Letters and Months</source>
+        <translation type="unfinished">[3200-32FF] Litere CJK incercuite si semiincercuite</translation>
+    </message>
+    <message>
+        <source>[3300-33FF] CJK Compatibility</source>
+        <translation type="unfinished">[3300-33FF] Compatibilitate CJC</translation>
+    </message>
+    <message>
+        <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
+        <translation type="unfinished">[3400-4DBF] Supliment A pentru ideofonogramele unificate CJC</translation>
+    </message>
+    <message>
+        <source>[4E00-9FAF] CJK Unified Ideographs</source>
+        <translation type="unfinished">[4E00-9FAF] Ideofonograme unificate CJC</translation>
+    </message>
+    <message>
+        <source>[A000-A48F] Yi Syllables</source>
+        <translation type="unfinished">[A000-A48F] Silabe Yi</translation>
+    </message>
+    <message>
+        <source>[A490-A4CF] Yi Radicals</source>
+        <translation type="unfinished">[A490-A4CF] Radicali Yi</translation>
+    </message>
+    <message>
+        <source>[AC00-D7AF] Hangul Syllables</source>
+        <translation type="unfinished">[AC00-D7AF] Silabe Hangul</translation>
+    </message>
+    <message>
+        <source>[D800-DBFF] High Surrogates</source>
+        <translation type="unfinished">[D800-DBFF] Caractere plasate in jumatatea de sus</translation>
+    </message>
+    <message>
+        <source>[DC00-DFFF] Low Surrogate Area</source>
+        <translation type="unfinished">[DC00-DFFF] Caractere plasate in jumatatea de jos</translation>
+    </message>
+    <message>
+        <source>[E000-F8FF] Private Use Area</source>
+        <translation type="unfinished">[E000-F8FF] Zona de folosire privata</translation>
+    </message>
+    <message>
+        <source>[F900-FAFF] CJK Compatibility Ideographs</source>
+        <translation type="unfinished">[F900-FAFF] Ideograme compatibile CJC</translation>
+    </message>
+    <message>
+        <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
+        <translation type="unfinished">[FB00-FB4F] Forme de prezentare alfabetica</translation>
+    </message>
+    <message>
+        <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
+        <translation type="unfinished">[FB50-FDFF] Forme arabe de prezentare A</translation>
+    </message>
+    <message>
+        <source>[FE00-FE0F] Variation Selectors</source>
+        <translation type="unfinished">[FE00-FE0F] Selectori de variatie</translation>
+    </message>
+    <message>
+        <source>[FE20-FE2F] Combining Half Marks</source>
+        <translation type="unfinished">[FE20-FE2F] Combinatii jumatati de marcatori</translation>
+    </message>
+    <message>
+        <source>[FE30-FE4F] CJK Compatibility Forms</source>
+        <translation type="unfinished">[FE30-FE4F] Forme compatibile CJC</translation>
+    </message>
+    <message>
+        <source>[FE50-FE6F] Small Form Variants</source>
+        <translation type="unfinished">[FE50-FE6F] Varianti de forma mica</translation>
+    </message>
+    <message>
+        <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
+        <translation type="unfinished">[FB50-FDFF] Forme arabe de prezentare B</translation>
+    </message>
+    <message>
+        <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
+        <translation type="unfinished">[FF00-FFEF] Forme pe jumatate de latime sau marime normala</translation>
+    </message>
+    <message>
+        <source>[FFF0-FFFF] Specials</source>
+        <translation type="unfinished">[FFF0-FFFF] Caractere speciale</translation>
+    </message>
+    <message>
+        <source>[10300-1032F] Old Italic</source>
+        <translation type="unfinished">[10300-1032F] Inclinat arhaic</translation>
+    </message>
+    <message>
+        <source>[10330-1034F] Gothic</source>
+        <translation type="unfinished">[10330-1034F] Gotic</translation>
+    </message>
+    <message>
+        <source>[10400-1044F] Deseret</source>
+        <translation type="unfinished">[10400-1044F] Deseret</translation>
+    </message>
+    <message>
+        <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
+        <translation type="unfinished">[1D000-1D0FF] Simboluri muzicale bizantine</translation>
+    </message>
+    <message>
+        <source>[1D100-1D1FF] Musical Symbols</source>
+        <translation type="unfinished">[1D100-1D1FF] Simboluri muzicale</translation>
+    </message>
+    <message>
+        <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
+        <translation type="unfinished">[1D400-1D7FF] Simboluri alfanumerice matematice</translation>
+    </message>
+    <message>
+        <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
+        <translation type="unfinished">[20000-2A6DF] Ideograme unificate CJC - Supliment B</translation>
+    </message>
+    <message>
+        <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
+        <translation type="unfinished">[2F800-2FA1F] Ideograme compatibile CJC - Supliment</translation>
+    </message>
+    <message>
+        <source>[E0000-E007F] Tags</source>
+        <translation type="unfinished">[E0000-E007F] Etichete</translation>
+    </message>
+    <message>
+        <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
+        <translation type="unfinished">[F0000-FFFFD] Zona suplimentara A pentru folosire privata</translation>
+    </message>
+    <message>
+        <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
+        <translation type="unfinished">[100000-10FFFD] Zona suplimentara B pentru folosire privata</translation>
     </message>
 </context>
 <context>
@@ -2323,7 +3099,7 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -2343,11 +3119,11 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
     <message>
         <source>...</source>
@@ -2358,7 +3134,7 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     <name>QG_DlgMove</name>
     <message>
         <source>Moving Options</source>
-        <translation>Optiuni mutare</translation>
+        <translation type="obsolete">Optiuni mutare</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -2366,7 +3142,7 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -2390,15 +3166,15 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
     <message>
         <source>...</source>
@@ -2421,7 +3197,7 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -2429,11 +3205,11 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
     <message>
         <source>&amp;Angle (a):</source>
@@ -2524,7 +3300,7 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Paper Format</source>
@@ -2640,15 +3416,15 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Grid Settings</source>
@@ -2770,6 +3546,46 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
         <source>0</source>
         <translation>0</translation>
     </message>
+    <message>
+        <source>General Scale:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0.5</source>
+        <translation type="unfinished">0.5</translation>
+    </message>
+    <message>
+        <source>1.0</source>
+        <translation type="unfinished">1.0</translation>
+    </message>
+    <message>
+        <source>2.0</source>
+        <translation type="unfinished">2.0</translation>
+    </message>
+    <message>
+        <source>5.0</source>
+        <translation type="unfinished">5.0</translation>
+    </message>
+    <message>
+        <source>Alignment:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignement.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dimension Aligned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Horizontal</source>
+        <translation type="unfinished">Orizontal</translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgOptionsGeneral</name>
@@ -2799,7 +3615,7 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Language</source>
@@ -2867,15 +3683,15 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
     <message>
         <source>Colors</source>
@@ -2947,11 +3763,11 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>#ffffff</source>
-        <translation>#ffffff</translation>
+        <translation type="obsolete">#ffffff</translation>
     </message>
     <message>
         <source>#c0c0c0</source>
-        <translation>#c0c0c0</translation>
+        <translation type="obsolete">#c0c0c0</translation>
     </message>
     <message>
         <source>#808080</source>
@@ -2967,7 +3783,7 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>#a54747</source>
-        <translation>#a54747</translation>
+        <translation type="obsolete">#a54747</translation>
     </message>
     <message>
         <source>#739373</source>
@@ -2979,7 +3795,7 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Minimal Grid Spacing:</source>
-        <translation>Spatiere minima a grilei:</translation>
+        <translation type="obsolete">Spatiere minima a grilei:</translation>
     </message>
     <message>
         <source>4</source>
@@ -3015,7 +3831,7 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Time between automatc saving of thedocument in minutes.</source>
-        <translation>Interval de timp in minute intre salvarile automate ale documentului.</translation>
+        <translation type="obsolete">Interval de timp in minute intre salvarile automate ale documentului.</translation>
     </message>
     <message>
         <source>Auto save time:</source>
@@ -3057,40 +3873,44 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
         <source>Auto backup</source>
         <translation>Copie de siguranta automata</translation>
     </message>
+    <message>
+        <source>Template:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>Drawing Variables</source>
-        <translation>Variabile de desenare</translation>
+        <translation type="obsolete">Variabile de desenare</translation>
     </message>
     <message>
         <source>Variable</source>
-        <translation>Variabile</translation>
+        <translation type="obsolete">Variabile</translation>
     </message>
     <message>
         <source>Code</source>
-        <translation>Cod</translation>
+        <translation type="obsolete">Cod</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Valoare</translation>
+        <translation type="obsolete">Valoare</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
 </context>
 <context>
@@ -3117,15 +3937,15 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
 </context>
 <context>
@@ -3148,19 +3968,19 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
 </context>
 <context>
@@ -3175,15 +3995,15 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>&amp;Renuntare</translation>
+        <translation type="obsolete">&amp;Renuntare</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -3222,7 +4042,7 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -3230,7 +4050,7 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
@@ -3277,19 +4097,19 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>&amp;Renuntare</translation>
+        <translation type="obsolete">&amp;Renuntare</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
     <message>
         <source>&amp;Factor (f):</source>
-        <translation>&amp;Factor (f):</translation>
+        <translation type="obsolete">&amp;Factor (f):</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
@@ -3423,7 +4243,7 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Font</source>
-        <translation>Tip litera</translation>
+        <translation type="obsolete">Tip litera</translation>
     </message>
     <message>
         <source>Alignment</source>
@@ -3467,11 +4287,11 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Angle</source>
-        <translation>Unghi</translation>
+        <translation type="obsolete">Unghi</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Insert Symbol</source>
@@ -3967,23 +4787,23 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Line &amp;spacing:</source>
-        <translation>&amp;Spatierea liniilor:</translation>
+        <translation type="obsolete">&amp;Spatierea liniilor:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
-        <translation>Spatierea &amp;implicita a liniilor</translation>
+        <translation type="obsolete">Spatierea &amp;implicita a liniilor</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
     <message>
         <source>Alt+D</source>
-        <translation>Alt+D</translation>
+        <translation type="obsolete">Alt+D</translation>
     </message>
     <message utf8="true">
         <source>Copyright (©)</source>
@@ -4001,24 +4821,76 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
         <source>Yen (¥)</source>
         <translation>Yen (¥)</translation>
     </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Strat:</translation>
+    </message>
+    <message>
+        <source>Font settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Oblique:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Baseline Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+    <message>
+        <source>Baseline Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Baseline Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aligned</source>
+        <translation type="unfinished">Aliniat</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">Mijloc</translation>
+    </message>
 </context>
 <context>
     <name>QG_ExitDialog</name>
     <message>
         <source>&amp;Save</source>
-        <translation>&amp;Salvare</translation>
+        <translation type="obsolete">&amp;Salvare</translation>
     </message>
     <message>
         <source>Save &amp;As..</source>
-        <translation>S&amp;alvare ca..</translation>
+        <translation type="obsolete">S&amp;alvare ca..</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
-        <translation>&amp;Renuntare</translation>
+        <translation type="obsolete">&amp;Renuntare</translation>
     </message>
     <message>
         <source>No Text supplied.</source>
-        <translation>Niciun text specificat.</translation>
+        <translation type="obsolete">Niciun text specificat.</translation>
     </message>
     <message>
         <source>QCad</source>
@@ -4026,11 +4898,15 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>C&amp;lose</source>
-        <translation>&amp;Inchidere</translation>
+        <translation type="obsolete">&amp;Inchidere</translation>
     </message>
     <message>
         <source>again Still No Text supplied.</source>
         <translation>Nu ati specificat niciun text.</translation>
+    </message>
+    <message>
+        <source>Save As...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4041,11 +4917,11 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>New Drawing Exchange DXF 2000 %1</source>
-        <translation>Desen nou in format Exchange DXF 2000 %1</translation>
+        <translation type="obsolete">Desen nou in format Exchange DXF 2000 %1</translation>
     </message>
     <message>
         <source>New Drawing Exchange %1</source>
-        <translation>Desen nou Exchange 2000 %1</translation>
+        <translation type="obsolete">Desen nou Exchange 2000 %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF R12 %1</source>
@@ -4073,11 +4949,49 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Open Drawing</source>
-        <translation>Deschidere desen</translation>
+        <translation type="obsolete">Deschidere desen</translation>
     </message>
     <message>
         <source>Save Drawing As</source>
-        <translation>Salvare desen ca</translation>
+        <translation type="obsolete">Salvare desen ca</translation>
+    </message>
+    <message>
+        <source>Drawing Exchange DXF 2007 %1</source>
+        <translation type="unfinished">Desen in format Exchange DXF 2007 %1</translation>
+    </message>
+    <message>
+        <source>Drawing Exchange DXF 2004 %1</source>
+        <translation type="unfinished">Desen in format Exchange DXF 2004 %1</translation>
+    </message>
+    <message>
+        <source>Drawing Exchange DXF R14 %1</source>
+        <translation type="unfinished">Desen in format Exchange DXF R14 %1</translation>
+    </message>
+    <message>
+        <source>dwg Drawing %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Block</source>
+        <comment>block file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Drawing</source>
+        <comment>drawing file</comment>
+        <translation type="unfinished">Desen</translation>
+    </message>
+    <message>
+        <source>Open %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save %1 As</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4101,6 +5015,14 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     <message>
         <source>Scale Factor</source>
         <translation>Factor de marire</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4143,19 +5065,19 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
     <message>
         <source>Resolution:</source>
@@ -4229,6 +5151,34 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
         <source>1200</source>
         <translation>1200</translation>
     </message>
+    <message>
+        <source>Colouring</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Black / White</source>
+        <translation type="unfinished">Alb / Negru</translation>
+    </message>
+    <message>
+        <source>Coloured</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Borders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top / Bottom - Border:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left / Right - Border:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>set same size</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_InsertOptions</name>
@@ -4296,7 +5246,7 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Default Pen</source>
@@ -4304,15 +5254,15 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
     <message>
         <source>A Help Layer has entities of infinite straight lines intended to be used for geometric construction.
@@ -4375,6 +5325,10 @@ Continutul stratului de ajutor nu apare la listare.</translation>
         <source>&amp;Toggle Visibility</source>
         <translation>&amp;Vizibilitate Strat curent</translation>
     </message>
+    <message>
+        <source>Looking for matching layer names</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_LibraryInsertOptions</name>
@@ -4403,7 +5357,7 @@ Continutul stratului de ajutor nu apare la listare.</translation>
     <name>QG_LibraryWidget</name>
     <message>
         <source>Library Browser</source>
-        <translation>Explorare Biblioteci</translation>
+        <translation type="obsolete">Explorare Biblioteci</translation>
     </message>
     <message>
         <source>Directories</source>
@@ -4694,6 +5648,21 @@ Continutul stratului de ajutor nu apare la listare.</translation>
     </message>
 </context>
 <context>
+    <name>QG_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Optiuni pentru text</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Text:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_ModifyOffsetOptions</name>
     <message>
         <source>Modify Offset Options</source>
@@ -4839,11 +5808,19 @@ Continutul stratului de ajutor nu apare la listare.</translation>
     </message>
     <message>
         <source>Paper scale factor larger than 1.0e6</source>
-        <translation>Factor de marire a paginii mai mare ca 1.0e6</translation>
+        <translation type="obsolete">Factor de marire a paginii mai mare ca 1.0e6</translation>
     </message>
     <message>
         <source>Paper scale factor smaller than 1.0e-6</source>
-        <translation>Factor de marire a paginii mai mic decat 1.0e6</translation>
+        <translation type="obsolete">Factor de marire a paginii mai mic decat 1.0e6</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fixed</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4873,7 +5850,7 @@ Continutul stratului de ajutor nu apare la listare.</translation>
     </message>
     <message>
         <source>Selected Entities:</source>
-        <translation>Entitati selectate:</translation>
+        <translation type="obsolete">Entitati selectate:</translation>
     </message>
     <message>
         <source>0</source>
@@ -4992,6 +5969,62 @@ p, li { white-space: pre-wrap; }
         <source>Lock relative Zero</source>
         <translation>Blocare zero relativ</translation>
     </message>
+    <message>
+        <source>Free Snap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap on grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap on Endpoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap on Entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Middle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Distance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Intersection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restrict Horizontal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restrict Vertical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restrict Orthogonal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restrict Nothing</source>
+        <translation type="unfinished">Nicio restrictie</translation>
+    </message>
+    <message>
+        <source>Set relative zero position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock relative zero position</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_SplineOptions</name>
@@ -5051,7 +6084,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Amount:</source>
-        <translation>Valoare:</translation>
+        <translation type="obsolete">Valoare:</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -5253,15 +6286,15 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation>Da</translation>
+        <translation type="obsolete">Da</translation>
     </message>
     <message>
         <source>No</source>
-        <translation>Nu</translation>
+        <translation type="obsolete">Nu</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Open Drawing</source>
@@ -5309,7 +6342,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation>Toate fisierele de tip imagine (%1)</translation>
+        <translation type="obsolete">Toate fisierele de tip imagine (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -5417,7 +6450,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Export Image</source>
-        <translation>Export Imagine</translation>
+        <translation type="obsolete">Export Imagine</translation>
     </message>
     <message>
         <source>Loading..</source>
@@ -5425,7 +6458,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Loading Library Paths..</source>
-        <translation>Incarcare cale biblioteca..</translation>
+        <translation type="obsolete">Incarcare cale biblioteca..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
@@ -5469,14 +6502,110 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>New Drawing Exchange %1</source>
-        <translation>Fisier nou de tip Drawing Exchange %1</translation>
+        <translation type="obsolete">Fisier nou de tip Drawing Exchange %1</translation>
+    </message>
+    <message>
+        <source>Opened dwg file version %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unknown error opening dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>can&apos;t open this dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unsupported dwg version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading file header in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading header vars in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading classes in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading offsets in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading tables in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading entities in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scalable Vector Graphics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SGI Black &amp; White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Encapsulated PostScript</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Encapsulated PostScript Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Encapsulated PostScript Interchange</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Windows Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JPEG 2000</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ZSoft Paintbrush</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PC Paint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SGI-Bilddatei</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Targa Image File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tagged Image File Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Old Drawing Exchange %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dwg Drawing %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
     <message>
         <source>Add Block</source>
-        <translation>Adaugare Bloc</translation>
+        <translation type="obsolete">Adaugare Bloc</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
@@ -5487,7 +6616,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionBlocksAttributes</name>
     <message>
         <source>Rename Block</source>
-        <translation>Redenumire Bloc</translation>
+        <translation type="obsolete">Redenumire Bloc</translation>
     </message>
     <message>
         <source>&amp;Rename Block</source>
@@ -5495,7 +6624,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Rename Block and all Inserts</source>
-        <translation>Redenumirea tuturor Blocurilor si a Obiectelor inserate</translation>
+        <translation type="obsolete">Redenumirea tuturor Blocurilor si a Obiectelor inserate</translation>
     </message>
 </context>
 <context>
@@ -5510,7 +6639,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Create Block</source>
-        <translation>Creare Bloc</translation>
+        <translation type="obsolete">Creare Bloc</translation>
     </message>
     <message>
         <source>&amp;Create Block</source>
@@ -5521,7 +6650,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionBlocksEdit</name>
     <message>
         <source>Edit Block</source>
-        <translation>Editare Bloc</translation>
+        <translation type="obsolete">Editare Bloc</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
@@ -5532,15 +6661,15 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionBlocksExplode</name>
     <message>
         <source>Explode</source>
-        <translation>Explodare</translation>
+        <translation type="obsolete">Explodare</translation>
     </message>
     <message>
         <source>&amp;Explode</source>
-        <translation>&amp;Explodare</translation>
+        <translation type="obsolete">&amp;Explodare</translation>
     </message>
     <message>
         <source>Explode Blocks and other Entity Groups</source>
-        <translation>Explodare Blocuri si alte Obiecte Grupate</translation>
+        <translation type="obsolete">Explodare Blocuri si alte Obiecte Grupate</translation>
     </message>
     <message>
         <source>Ex&amp;plode</source>
@@ -5551,27 +6680,27 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionBlocksFreezeAll</name>
     <message>
         <source>Freeze all</source>
-        <translation>Blocare toate</translation>
+        <translation type="obsolete">Blocare toate</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Blocare toate</translation>
+        <translation type="obsolete">&amp;Blocare toate</translation>
     </message>
     <message>
         <source>Freeze all blocks</source>
-        <translation>Blocarea tuturor blocurilor</translation>
+        <translation type="obsolete">Blocarea tuturor blocurilor</translation>
     </message>
     <message>
         <source>Defreeze all</source>
-        <translation>Deblocare toate</translation>
+        <translation type="obsolete">Deblocare toate</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Deblocare toate</translation>
+        <translation type="obsolete">&amp;Deblocare toate</translation>
     </message>
     <message>
         <source>Defreeze all blocks</source>
-        <translation>Deblocarea tuturor blocurilor</translation>
+        <translation type="obsolete">Deblocarea tuturor blocurilor</translation>
     </message>
     <message>
         <source>&amp;Hide all</source>
@@ -5622,7 +6751,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Insert Block</source>
-        <translation>Inserati Blocul</translation>
+        <translation type="obsolete">Inserati Blocul</translation>
     </message>
     <message>
         <source>&amp;Insert Block</source>
@@ -5637,7 +6766,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionBlocksRemove</name>
     <message>
         <source>Remove Block</source>
-        <translation>Stergere Bloc</translation>
+        <translation type="obsolete">Stergere Bloc</translation>
     </message>
     <message>
         <source>&amp;Remove Block</source>
@@ -5645,18 +6774,29 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
 </context>
 <context>
+    <name>RS_ActionBlocksSave</name>
+    <message>
+        <source>&amp;Save Block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No block activated to save</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block Visibility</source>
-        <translation>Comutare vizibilitate Bloc</translation>
+        <translation type="obsolete">Comutare vizibilitate Bloc</translation>
     </message>
     <message>
         <source>&amp;Toggle Block</source>
-        <translation>Comu&amp;tare Bloc</translation>
+        <translation type="obsolete">Comu&amp;tare Bloc</translation>
     </message>
     <message>
         <source>Toggle Block</source>
-        <translation>Comutare Bloc</translation>
+        <translation type="obsolete">Comutare Bloc</translation>
     </message>
     <message>
         <source>Toggle Block &amp;Visibility</source>
@@ -5702,7 +6842,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Aligned</source>
-        <translation>Aliniat</translation>
+        <translation type="obsolete">Aliniat</translation>
     </message>
     <message>
         <source>&amp;Aligned</source>
@@ -5710,7 +6850,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Aligned Dimension</source>
-        <translation>Cotare aliniata</translation>
+        <translation type="obsolete">Cotare aliniata</translation>
     </message>
 </context>
 <context>
@@ -5737,7 +6877,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Angular</source>
-        <translation>Unghiular</translation>
+        <translation type="obsolete">Unghiular</translation>
     </message>
     <message>
         <source>&amp;Angular</source>
@@ -5745,7 +6885,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Angular Dimension</source>
-        <translation>Cota unghiulara</translation>
+        <translation type="obsolete">Cota unghiulara</translation>
     </message>
 </context>
 <context>
@@ -5776,7 +6916,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Diametric</source>
-        <translation>Diametru</translation>
+        <translation type="obsolete">Diametru</translation>
     </message>
     <message>
         <source>&amp;Diametric</source>
@@ -5784,7 +6924,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Diametric Dimension</source>
-        <translation>Cota diametru</translation>
+        <translation type="obsolete">Cota diametru</translation>
     </message>
 </context>
 <context>
@@ -5807,7 +6947,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Leader</source>
-        <translation>Reper</translation>
+        <translation type="obsolete">Reper</translation>
     </message>
     <message>
         <source>&amp;Leader</source>
@@ -5815,7 +6955,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Leader Dimension</source>
-        <translation>Cota Reper</translation>
+        <translation type="obsolete">Cota Reper</translation>
     </message>
 </context>
 <context>
@@ -5854,7 +6994,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Linear</source>
-        <translation>Liniar</translation>
+        <translation type="obsolete">Liniar</translation>
     </message>
     <message>
         <source>&amp;Linear</source>
@@ -5862,11 +7002,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Linear Dimension</source>
-        <translation>Cotare Liniara</translation>
+        <translation type="obsolete">Cotare Liniara</translation>
     </message>
     <message>
         <source>Horizontal</source>
-        <translation>Orizontal</translation>
+        <translation type="obsolete">Orizontal</translation>
     </message>
     <message>
         <source>&amp;Horizontal</source>
@@ -5874,11 +7014,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Horizontal Dimension</source>
-        <translation>Cotare Orizontala</translation>
+        <translation type="obsolete">Cotare Orizontala</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation>Vertical</translation>
+        <translation type="obsolete">Vertical</translation>
     </message>
     <message>
         <source>&amp;Vertical</source>
@@ -5886,7 +7026,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Vertical Dimension</source>
-        <translation>Cotare Verticala</translation>
+        <translation type="obsolete">Cotare Verticala</translation>
     </message>
 </context>
 <context>
@@ -5917,7 +7057,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Radial</source>
-        <translation>Radial</translation>
+        <translation type="obsolete">Radial</translation>
     </message>
     <message>
         <source>&amp;Radial</source>
@@ -5925,7 +7065,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Radial Dimension</source>
-        <translation>Cotare Radiala</translation>
+        <translation type="obsolete">Cotare Radiala</translation>
     </message>
 </context>
 <context>
@@ -5972,7 +7112,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Arc: Center, Point, Angles</source>
-        <translation>Arc : Centru, Punct, Unghiuri</translation>
+        <translation type="obsolete">Arc : Centru, Punct, Unghiuri</translation>
     </message>
     <message>
         <source>&amp;Center, Point, Angles</source>
@@ -5980,7 +7120,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Draw arcs</source>
-        <translation>Desenare arce de cerc</translation>
+        <translation type="obsolete">Desenare arce de cerc</translation>
     </message>
 </context>
 <context>
@@ -6011,7 +7151,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Arc: 3 Points</source>
-        <translation>Arc : 3 Puncte</translation>
+        <translation type="obsolete">Arc : 3 Puncte</translation>
     </message>
     <message>
         <source>&amp;3 Points</source>
@@ -6019,14 +7159,14 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Draw arcs with 3 points</source>
-        <translation>Deseneaza arce cu 3 puncte</translation>
+        <translation type="obsolete">Deseneaza arce cu 3 puncte</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArcTangential</name>
     <message>
         <source>Arc: Tangential</source>
-        <translation>Arc : tangential</translation>
+        <translation type="obsolete">Arc : tangential</translation>
     </message>
     <message>
         <source>Specify base entity</source>
@@ -6077,7 +7217,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Circle: Center, Point</source>
-        <translation>Cerc: Centru, Punct</translation>
+        <translation type="obsolete">Cerc: Centru, Punct</translation>
     </message>
     <message>
         <source>Center, &amp;Point</source>
@@ -6085,7 +7225,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Draw circles with center and point</source>
-        <translation>Desenare cercuri cu centru si punct</translation>
+        <translation type="obsolete">Desenare cercuri cu centru si punct</translation>
     </message>
 </context>
 <context>
@@ -6112,7 +7252,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Circle: 2 Points</source>
-        <translation>Cerc: 2 Puncte</translation>
+        <translation type="obsolete">Cerc: 2 Puncte</translation>
     </message>
     <message>
         <source>2 Points</source>
@@ -6120,7 +7260,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Draw circles with 2 points</source>
-        <translation>Desenare cercuri cu ajutorul a doua puncte</translation>
+        <translation type="obsolete">Desenare cercuri cu ajutorul a doua puncte</translation>
     </message>
 </context>
 <context>
@@ -6151,7 +7291,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Circle: 3 Points</source>
-        <translation>Cerc : 3 Puncte</translation>
+        <translation type="obsolete">Cerc : 3 Puncte</translation>
     </message>
     <message>
         <source>3 Points</source>
@@ -6159,7 +7299,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Draw circles with 3 points</source>
-        <translation>Desenare cercuri cu ajutorul a 3 puncte</translation>
+        <translation type="obsolete">Desenare cercuri cu ajutorul a 3 puncte</translation>
     </message>
 </context>
 <context>
@@ -6186,7 +7326,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Circle: Center, Radius</source>
-        <translation>Cerc: Centru, Raza</translation>
+        <translation type="obsolete">Cerc: Centru, Raza</translation>
     </message>
     <message>
         <source>Center, &amp;Radius</source>
@@ -6194,7 +7334,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Draw circles with center and radius</source>
-        <translation>Desenare cercuri cu centru si raza</translation>
+        <translation type="obsolete">Desenare cercuri cu centru si raza</translation>
     </message>
 </context>
 <context>
@@ -6222,6 +7362,126 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <source>Specify the third line</source>
         <translation>Specificati a treia linie</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan1_2P</name>
+    <message>
+        <source>Circle Tangential 2 P&amp;oints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Renuntare</translation>
+    </message>
+    <message>
+        <source>Specify the first point on the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Inapoi</translation>
+    </message>
+    <message>
+        <source>Specify the second point on the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2</name>
+    <message>
+        <source>Circle Tangential &amp;2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the first line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Renuntare</translation>
+    </message>
+    <message>
+        <source>Specify the second line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Inapoi</translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan2_1P</name>
+    <message>
+        <source>Common Tangential Circle 1 Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify a line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Renuntare</translation>
+    </message>
+    <message>
+        <source>Specify the another arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Inapoi</translation>
+    </message>
+    <message>
+        <source>Specify a point on the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawCircleTan3</name>
+    <message>
+        <source>Circle Tangential &amp;3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the first line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Renuntare</translation>
+    </message>
+    <message>
+        <source>Specify the second line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Inapoi</translation>
+    </message>
+    <message>
+        <source>Specify the third line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6291,19 +7551,19 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Ellipse Arc with Axis</source>
-        <translation>Arc de Elipsa cu Axe</translation>
+        <translation type="obsolete">Arc de Elipsa cu Axe</translation>
     </message>
     <message>
         <source>&amp;Ellipse Arc (Axis)</source>
-        <translation>Arc de &amp;Elipsa (Axe)</translation>
+        <translation type="obsolete">Arc de &amp;Elipsa (Axe)</translation>
     </message>
     <message>
         <source>Draw Ellipse Arcs</source>
-        <translation>Desenare arce de elipsa</translation>
+        <translation type="obsolete">Desenare arce de elipsa</translation>
     </message>
     <message>
         <source>Ellipse with Axis</source>
-        <translation>Elipsa cu axe</translation>
+        <translation type="obsolete">Elipsa cu axe</translation>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
@@ -6311,7 +7571,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Draw Ellipses</source>
-        <translation>Desenare Elipsa</translation>
+        <translation type="obsolete">Desenare Elipsa</translation>
     </message>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
@@ -6415,7 +7675,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionDrawHatch</name>
     <message>
         <source>Hatch</source>
-        <translation>Hasur</translation>
+        <translation type="obsolete">Hasur</translation>
     </message>
     <message>
         <source>&amp;Hatch</source>
@@ -6423,7 +7683,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Draw Hatches and Solid Fills</source>
-        <translation>Desenare Hasururi si Sabloane de Umplere</translation>
+        <translation type="obsolete">Desenare Hasururi si Sabloane de Umplere</translation>
     </message>
     <message>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
@@ -6458,15 +7718,15 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Image</source>
-        <translation>Imagine</translation>
+        <translation type="obsolete">Imagine</translation>
     </message>
     <message>
         <source>&amp;Image</source>
-        <translation>&amp;Imagine</translation>
+        <translation type="obsolete">&amp;Imagine</translation>
     </message>
     <message>
         <source>Insert Image (Bitmap)</source>
-        <translation>Inserati Imaginea (Bitmap)</translation>
+        <translation type="obsolete">Inserati Imaginea (Bitmap)</translation>
     </message>
     <message>
         <source></source>
@@ -6475,6 +7735,10 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <source>Insert &amp;Image</source>
         <translation>Inserati &amp;Imaginea</translation>
+    </message>
+    <message>
+        <source>Enter dpi:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6501,7 +7765,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>Nu se poate inchide secventa de linii: nu au fost definite suficiente entitati.</translation>
+        <translation type="obsolete">Nu se poate inchide secventa de linii: nu au fost definite suficiente entitati.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
@@ -6509,7 +7773,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Line: 2 Points</source>
-        <translation>Linie : 2 puncte</translation>
+        <translation type="obsolete">Linie : 2 puncte</translation>
     </message>
     <message>
         <source>&amp;2 Points</source>
@@ -6517,7 +7781,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Draw lines</source>
-        <translation>Desenare linii</translation>
+        <translation type="obsolete">Desenare linii</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
@@ -6556,7 +7820,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Line: Angle</source>
-        <translation>Linie: Unghi</translation>
+        <translation type="obsolete">Linie: Unghi</translation>
     </message>
     <message>
         <source>&amp;Angle</source>
@@ -6564,11 +7828,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Draw lines with a given angle</source>
-        <translation>Desenare Linii cu un unghi dat</translation>
+        <translation type="obsolete">Desenare Linii cu un unghi dat</translation>
     </message>
     <message>
         <source>Line: Horizontal</source>
-        <translation>Linie: Orizontal</translation>
+        <translation type="obsolete">Linie: Orizontal</translation>
     </message>
     <message>
         <source>&amp;Horizontal</source>
@@ -6576,19 +7840,19 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Draw horizontal lines</source>
-        <translation>Desenare Linii orizontale</translation>
+        <translation type="obsolete">Desenare Linii orizontale</translation>
     </message>
     <message>
         <source>hor./vert. line</source>
-        <translation>Linie orizontala/verticala</translation>
+        <translation type="obsolete">Linie orizontala/verticala</translation>
     </message>
     <message>
         <source>H&amp;orizontal / Vertical</source>
-        <translation>&amp;Orizontal / Vertical</translation>
+        <translation type="obsolete">&amp;Orizontal / Vertical</translation>
     </message>
     <message>
         <source>Draw horizontal/vertical lines</source>
-        <translation>Desenare Linii orizontale/verticale</translation>
+        <translation type="obsolete">Desenare Linii orizontale/verticale</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -6631,11 +7895,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>&amp;Bisector</source>
-        <translation>&amp;Bisectoare</translation>
+        <translation type="obsolete">&amp;Bisectoare</translation>
     </message>
     <message>
         <source>Draw bisectors</source>
-        <translation>Desenare Bisectoare</translation>
+        <translation type="obsolete">Desenare Bisectoare</translation>
     </message>
 </context>
 <context>
@@ -6650,7 +7914,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Line: Freehand</source>
-        <translation>Linie: Freehand</translation>
+        <translation type="obsolete">Linie: Freehand</translation>
     </message>
     <message>
         <source>&amp;Freehand Line</source>
@@ -6658,7 +7922,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Draw freehand lines</source>
-        <translation>Desenare linii de tip Freehand</translation>
+        <translation type="obsolete">Desenare linii de tip Freehand</translation>
     </message>
 </context>
 <context>
@@ -6681,15 +7945,15 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>hor./vert. line</source>
-        <translation>Linie orizontala/verticala</translation>
+        <translation type="obsolete">Linie orizontala/verticala</translation>
     </message>
     <message>
         <source>H&amp;orizontal / Vertical</source>
-        <translation>&amp;Orizontal / Vertical</translation>
+        <translation type="obsolete">&amp;Orizontal / Vertical</translation>
     </message>
     <message>
         <source>Draw horizontal/vertical lines</source>
-        <translation>Desenare Linii orizontale/verticale</translation>
+        <translation type="obsolete">Desenare Linii orizontale/verticale</translation>
     </message>
     <message>
         <source>Vertical</source>
@@ -6735,15 +7999,15 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Parallel</source>
-        <translation>Paralel</translation>
+        <translation type="obsolete">Paralel</translation>
     </message>
     <message>
         <source>Para&amp;llel</source>
-        <translation>Pa&amp;ralel</translation>
+        <translation type="obsolete">Pa&amp;ralel</translation>
     </message>
     <message>
         <source>Draw parallels to existing lines, arcs, circles</source>
-        <translation>Deseneaza paralele la liniile, arcele, cercurile existente</translation>
+        <translation type="obsolete">Deseneaza paralele la liniile, arcele, cercurile existente</translation>
     </message>
     <message>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
@@ -6755,7 +8019,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Concentric</translation>
+        <translation type="obsolete">Concentric</translation>
     </message>
     <message>
         <source>&amp;Concentric</source>
@@ -6774,11 +8038,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Par&amp;allel through point</source>
-        <translation>Par&amp;alel prin punctul</translation>
+        <translation type="obsolete">Par&amp;alel prin punctul</translation>
     </message>
     <message>
         <source>Draw parallel through a given point</source>
-        <translation>Deseneaza paralele prin punctul dat</translation>
+        <translation type="obsolete">Deseneaza paralele prin punctul dat</translation>
     </message>
     <message>
         <source>Select entity</source>
@@ -6813,19 +8077,19 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
         <source>Polygon</source>
-        <translation>Poligon</translation>
+        <translation type="obsolete">Poligon</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>Pol&amp;igon (Centru, Colt)</translation>
+        <translation type="obsolete">Pol&amp;igon (Centru, Colt)</translation>
     </message>
     <message>
         <source>Draw polygon with center and corner</source>
-        <translation>Desenare poligon indicand centrul si un colt</translation>
+        <translation type="obsolete">Desenare poligon indicand centrul si un colt</translation>
     </message>
     <message>
         <source>Specify center</source>
-        <translation>Specificati centrul</translation>
+        <translation type="obsolete">Specificati centrul</translation>
     </message>
     <message>
         <source></source>
@@ -6833,62 +8097,62 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Specify a corner</source>
-        <translation>Specificati un colt</translation>
+        <translation type="obsolete">Specificati un colt</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation>Introduceti un numar:</translation>
+        <translation type="obsolete">Introduceti un numar:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Numar incorect. Incercati un numar intre 1 si 9999</translation>
+        <translation type="obsolete">Numar incorect. Incercati un numar intre 1 si 9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>Expresie incorecta</translation>
+        <translation type="obsolete">Expresie incorecta</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygon2</name>
     <message>
         <source>Polygon</source>
-        <translation>Poligon</translation>
+        <translation type="obsolete">Poligon</translation>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>Pol&amp;igon (Colt, Colt)</translation>
+        <translation type="obsolete">Pol&amp;igon (Colt, Colt)</translation>
     </message>
     <message>
         <source>Draw polygon with two corners</source>
-        <translation>Desenare poligon cu ajutorul a doua colturi</translation>
+        <translation type="obsolete">Desenare poligon cu ajutorul a doua colturi</translation>
     </message>
     <message>
         <source>Specify first corner</source>
-        <translation>Specificati primul colt</translation>
+        <translation type="obsolete">Specificati primul colt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation>Specificati al doilea colt</translation>
+        <translation type="obsolete">Specificati al doilea colt</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Inapoi</translation>
+        <translation type="obsolete">Inapoi</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Numar:</translation>
+        <translation type="obsolete">Numar:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Numar incorect. Incercati un numar intre 1 si 9999</translation>
+        <translation type="obsolete">Numar incorect. Incercati un numar intre 1 si 9999</translation>
     </message>
     <message>
         <source>Not a valid expression.</source>
-        <translation>Expresie incorecta.</translation>
+        <translation type="obsolete">Expresie incorecta.</translation>
     </message>
 </context>
 <context>
@@ -6957,35 +8221,35 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionDrawLinePolyline</name>
     <message>
         <source>Draw polylines</source>
-        <translation>Desenare poligoane</translation>
+        <translation type="obsolete">Desenare poligoane</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation>Specificati primul punct</translation>
+        <translation type="obsolete">Specificati primul punct</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation>Specificati urmatorul punct sau [%1]</translation>
+        <translation type="obsolete">Specificati urmatorul punct sau [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation>Inapoi</translation>
+        <translation type="obsolete">Inapoi</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation>Specificati urmatorul punct</translation>
+        <translation type="obsolete">Specificati urmatorul punct</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>Nu se poate inchide secventa de linii: nu au fost definite suficiente entitati.</translation>
+        <translation type="obsolete">Nu se poate inchide secventa de linii: nu au fost definite suficiente entitati.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Nu se poate anula: nu au fost definite suficiente entitati.</translation>
+        <translation type="obsolete">Nu se poate anula: nu au fost definite suficiente entitati.</translation>
     </message>
 </context>
 <context>
@@ -6996,11 +8260,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>&amp;Rectangle</source>
-        <translation>&amp;Dreptunghi</translation>
+        <translation type="obsolete">&amp;Dreptunghi</translation>
     </message>
     <message>
         <source>Draw rectangles</source>
-        <translation>Desenare Dreptunghiuri</translation>
+        <translation type="obsolete">Desenare Dreptunghiuri</translation>
     </message>
     <message>
         <source>Specify first corner</source>
@@ -7027,11 +8291,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>R&amp;elative angle</source>
-        <translation>Unghi r&amp;elativ</translation>
+        <translation type="obsolete">Unghi r&amp;elativ</translation>
     </message>
     <message>
         <source>Draw line with relative angle</source>
-        <translation>Desenare Linie cu unghi relativ</translation>
+        <translation type="obsolete">Desenare Linie cu unghi relativ</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -7059,11 +8323,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>&amp;Orthogonal</source>
-        <translation>&amp;Ortogonal</translation>
+        <translation type="obsolete">&amp;Ortogonal</translation>
     </message>
     <message>
         <source>Draw orthogonal line</source>
-        <translation>Desenare Linie perpendiculara</translation>
+        <translation type="obsolete">Desenare Linie perpendiculara</translation>
     </message>
 </context>
 <context>
@@ -7074,11 +8338,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>&amp;Tangent (P,C)</source>
-        <translation>&amp;Tangenta (Pt,C)</translation>
+        <translation type="obsolete">&amp;Tangenta (Pt,C)</translation>
     </message>
     <message>
         <source>Draw tangent (point, circle)</source>
-        <translation>Desenare tangenta (punct, cerc)</translation>
+        <translation type="obsolete">Desenare tangenta (punct, cerc)</translation>
     </message>
     <message>
         <source>Specify point</source>
@@ -7105,15 +8369,15 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Tan&amp;gent (C,C)</source>
-        <translation>Tan&amp;genta (C,C)</translation>
+        <translation type="obsolete">Tan&amp;genta (C,C)</translation>
     </message>
     <message>
         <source>Draw tangent (circle, circle)</source>
-        <translation>Desenare tangenta (cerc, cerc)</translation>
+        <translation type="obsolete">Desenare tangenta (cerc, cerc)</translation>
     </message>
     <message>
         <source>Select first circle or arc</source>
-        <translation>Selectati primul cerc sau arc de cerc</translation>
+        <translation type="obsolete">Selectati primul cerc sau arc de cerc</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7121,18 +8385,49 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Select second circle or arc</source>
-        <translation>Selectati al doilea cerc sau arc de cerc</translation>
+        <translation type="obsolete">Selectati al doilea cerc sau arc de cerc</translation>
     </message>
     <message>
         <source>Back</source>
         <translation>Inapoi</translation>
+    </message>
+    <message>
+        <source>Select first circle or ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select second circle or ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionDrawMText</name>
+    <message>
+        <source>&amp;MText</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify insertion point</source>
+        <translation type="unfinished">Specificati punctul de inserare</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Renuntare</translation>
+    </message>
+    <message>
+        <source>Enter text:</source>
+        <translation type="unfinished">introduceti textul:</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Inapoi</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <source>Points</source>
-        <translation>Puncte</translation>
+        <translation type="obsolete">Puncte</translation>
     </message>
     <message>
         <source>&amp;Points</source>
@@ -7140,7 +8435,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Draw Points</source>
-        <translation>Desenare puncte</translation>
+        <translation type="obsolete">Desenare puncte</translation>
     </message>
     <message>
         <source>Specify location</source>
@@ -7187,7 +8482,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Undo disallowed due a fatal bug somewhere. Sorry.</source>
-        <translation>Anulare nepermisa datorita unei erori fatale. Ne pare rau.</translation>
+        <translation type="obsolete">Anulare nepermisa datorita unei erori fatale. Ne pare rau.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
@@ -7198,7 +8493,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionDrawSpline</name>
     <message>
         <source>Spline</source>
-        <translation>Curba</translation>
+        <translation type="obsolete">Curba</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
@@ -7206,7 +8501,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Draw splines</source>
-        <translation>Desenare linii curbe</translation>
+        <translation type="obsolete">Desenare linii curbe</translation>
     </message>
     <message>
         <source>Specify first control point</source>
@@ -7237,7 +8532,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionDrawText</name>
     <message>
         <source>Text</source>
-        <translation>Text</translation>
+        <translation type="obsolete">Text</translation>
     </message>
     <message>
         <source>&amp;Text</source>
@@ -7245,7 +8540,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Draw Text Entities</source>
-        <translation>Desenare entitati de tip text</translation>
+        <translation type="obsolete">Desenare entitati de tip text</translation>
     </message>
     <message>
         <source>Specify insertion point</source>
@@ -7263,12 +8558,16 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <source>Back</source>
         <translation>Inapoi</translation>
     </message>
+    <message>
+        <source>Specify second point</source>
+        <translation type="unfinished">Specificati al doilea punct</translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionEditCopy</name>
     <message>
         <source>Copy</source>
-        <translation>Copiere</translation>
+        <translation type="obsolete">Copiere</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -7276,11 +8575,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Copies entities to the clipboard</source>
-        <translation>Copie entitatile in clipboard</translation>
+        <translation type="obsolete">Copie entitatile in clipboard</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Decupare</translation>
+        <translation type="obsolete">Decupare</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
@@ -7288,7 +8587,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Cuts entities  to the clipboard</source>
-        <translation>Decupeaza entitatile la clipboard</translation>
+        <translation type="obsolete">Decupeaza entitatile la clipboard</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -7303,7 +8602,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionEditPaste</name>
     <message>
         <source>Paste</source>
-        <translation>Lipire</translation>
+        <translation type="obsolete">Lipire</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -7311,7 +8610,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Pastes the clipboard contents</source>
-        <translation>Lipeste obiectele din clipboard</translation>
+        <translation type="obsolete">Lipeste obiectele din clipboard</translation>
     </message>
     <message>
         <source>Set reference point</source>
@@ -7326,7 +8625,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionEditUndo</name>
     <message>
         <source>Undo</source>
-        <translation>Anulare</translation>
+        <translation type="obsolete">Anulare</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -7334,11 +8633,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Undoes last action</source>
-        <translation>Anularea ultimei actiuni</translation>
+        <translation type="obsolete">Anularea ultimei actiuni</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Refacere</translation>
+        <translation type="obsolete">Refacere</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -7346,7 +8645,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Redoes last action</source>
-        <translation>Refacerea ultimei actiuni</translation>
+        <translation type="obsolete">Refacerea ultimei actiuni</translation>
     </message>
     <message>
         <source>Nothing to undo!</source>
@@ -7361,7 +8660,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionFileNew</name>
     <message>
         <source>New Drawing</source>
-        <translation>Desen nou</translation>
+        <translation type="obsolete">Desen nou</translation>
     </message>
     <message>
         <source>&amp;New</source>
@@ -7369,18 +8668,25 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Creates a new drawing</source>
-        <translation>Creare desen nou</translation>
+        <translation type="obsolete">Creare desen nou</translation>
     </message>
     <message>
         <source>&amp;New...</source>
-        <translation>&amp;Nou...</translation>
+        <translation type="obsolete">&amp;Nou...</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionFileNewTemplate</name>
+    <message>
+        <source>New From &amp;Template</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileOpen</name>
     <message>
         <source>Open Drawing</source>
-        <translation>Deschidere desen</translation>
+        <translation type="obsolete">Deschidere desen</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
@@ -7388,14 +8694,14 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Opens an existing drawing</source>
-        <translation>Deschide un desen existent</translation>
+        <translation type="obsolete">Deschide un desen existent</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileSave</name>
     <message>
         <source>Save Drawing</source>
-        <translation>Salvare desen</translation>
+        <translation type="obsolete">Salvare desen</translation>
     </message>
     <message>
         <source>&amp;Save</source>
@@ -7403,14 +8709,14 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Saves the current drawing</source>
-        <translation>Salvarea desenului curent</translation>
+        <translation type="obsolete">Salvarea desenului curent</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileSaveAs</name>
     <message>
         <source>Save Drawing As</source>
-        <translation>Salvarea desenului ca</translation>
+        <translation type="obsolete">Salvarea desenului ca</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
@@ -7418,26 +8724,26 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Saves the current drawing under a new filename</source>
-        <translation>Salveaza desenul curent cu un nume nou</translation>
+        <translation type="obsolete">Salveaza desenul curent cu un nume nou</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Angle between two lines</source>
-        <translation>Unghi format de doua linii</translation>
+        <translation type="obsolete">Unghi format de doua linii</translation>
     </message>
     <message>
         <source>&amp;Angle between two lines</source>
-        <translation>&amp;Unghi format de doua linii</translation>
+        <translation type="obsolete">&amp;Unghi format de doua linii</translation>
     </message>
     <message>
         <source>Measures the angle between two lines</source>
-        <translation>Masoara unghiul format de doua linii</translation>
+        <translation type="obsolete">Masoara unghiul format de doua linii</translation>
     </message>
     <message>
         <source>Angle: %1%2</source>
-        <translation>Unghi: %1%2</translation>
+        <translation type="obsolete">Unghi: %1%2</translation>
     </message>
     <message>
         <source>Lines are parallel</source>
@@ -7467,20 +8773,24 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <source>Angle: %1</source>
         <translation>Unghi: %1</translation>
     </message>
+    <message>
+        <source> or %1%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Polygonal Area</source>
-        <translation>Suprafata poligonala</translation>
+        <translation type="obsolete">Suprafata poligonala</translation>
     </message>
     <message>
         <source>&amp;Polygonal Area</source>
-        <translation>Suprafata &amp;poligonala</translation>
+        <translation type="obsolete">Suprafata &amp;poligonala</translation>
     </message>
     <message>
         <source>Measures the area of a polygon</source>
-        <translation>Masoara suprafata poligonului</translation>
+        <translation type="obsolete">Masoara suprafata poligonului</translation>
     </message>
     <message>
         <source>Area: %1</source>
@@ -7508,7 +8818,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Terminate</source>
-        <translation>Terminat</translation>
+        <translation type="obsolete">Terminat</translation>
     </message>
     <message>
         <source>Polygonal &amp;Area</source>
@@ -7523,7 +8833,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionInfoDist</name>
     <message>
         <source>Distance Point to Point</source>
-        <translation>Distanta de la un Punct la alt Punct</translation>
+        <translation type="obsolete">Distanta de la un Punct la alt Punct</translation>
     </message>
     <message>
         <source>&amp;Distance Point to Point</source>
@@ -7531,11 +8841,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Measures the distance between two points</source>
-        <translation>Masoara distanta dintre doua puncte</translation>
+        <translation type="obsolete">Masoara distanta dintre doua puncte</translation>
     </message>
     <message>
         <source>Distance: %1</source>
-        <translation>Distanta: %1</translation>
+        <translation type="obsolete">Distanta: %1</translation>
     </message>
     <message>
         <source>Specify first point of distance</source>
@@ -7553,12 +8863,16 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <source>Back</source>
         <translation>Inapoi</translation>
     </message>
+    <message>
+        <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5 </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
     <message>
         <source>Distance Entity to Point</source>
-        <translation>Distanta de la Entitate la Punct</translation>
+        <translation type="obsolete">Distanta de la Entitate la Punct</translation>
     </message>
     <message>
         <source>&amp;Distance Entity to Point</source>
@@ -7566,7 +8880,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Measures the distance between an entity and a point</source>
-        <translation>Masoara distanta dintre o entitate si un punct</translation>
+        <translation type="obsolete">Masoara distanta dintre o entitate si un punct</translation>
     </message>
     <message>
         <source>Distance: %1</source>
@@ -7597,11 +8911,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>&amp;Point inside contour</source>
-        <translation>&amp;Punct in interiorul conturului</translation>
+        <translation type="obsolete">&amp;Punct in interiorul conturului</translation>
     </message>
     <message>
         <source>Checks if a given point is inside the selected contour</source>
-        <translation>Verifica daca punctul se afla in interiorul conturului selectat</translation>
+        <translation type="obsolete">Verifica daca punctul se afla in interiorul conturului selectat</translation>
     </message>
     <message>
         <source>Point is inside selected contour.</source>
@@ -7624,7 +8938,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionInfoTotalLength</name>
     <message>
         <source>Total length of selected entities</source>
-        <translation>Lungimea totala a obiectelor selectate</translation>
+        <translation type="obsolete">Lungimea totala a obiectelor selectate</translation>
     </message>
     <message>
         <source>&amp;Total length of selected entities</source>
@@ -7632,7 +8946,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Measures the total length of all selected entities</source>
-        <translation>Masoara lungimea totala a obiectelor selectate</translation>
+        <translation type="obsolete">Masoara lungimea totala a obiectelor selectate</translation>
     </message>
     <message>
         <source>Total Length of selected entities: %1</source>
@@ -7647,7 +8961,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>Add Layer</source>
-        <translation>Adaugare strat</translation>
+        <translation type="obsolete">Adaugare strat</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
@@ -7658,7 +8972,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionLayersEdit</name>
     <message>
         <source>Edit Layer</source>
-        <translation>Editare Strat</translation>
+        <translation type="obsolete">Editare Strat</translation>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
@@ -7669,27 +8983,27 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionLayersFreezeAll</name>
     <message>
         <source>Freeze all</source>
-        <translation>Blocare toate</translation>
+        <translation type="obsolete">Blocare toate</translation>
     </message>
     <message>
         <source>&amp;Freeze all</source>
-        <translation>&amp;Blocare toate</translation>
+        <translation type="obsolete">&amp;Blocare toate</translation>
     </message>
     <message>
         <source>Freeze all layers</source>
-        <translation>Blocarea tuturor straturilor</translation>
+        <translation type="obsolete">Blocarea tuturor straturilor</translation>
     </message>
     <message>
         <source>Defreeze all</source>
-        <translation>Deblocare toate</translation>
+        <translation type="obsolete">Deblocare toate</translation>
     </message>
     <message>
         <source>&amp;Defreeze all</source>
-        <translation>&amp;Deblocare toate</translation>
+        <translation type="obsolete">&amp;Deblocare toate</translation>
     </message>
     <message>
         <source>Defreeze all layers</source>
-        <translation>Blocarea tuturor straturilor</translation>
+        <translation type="obsolete">Blocarea tuturor straturilor</translation>
     </message>
     <message>
         <source>&amp;Hide all</source>
@@ -7704,7 +9018,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>Remove Layer</source>
-        <translation>Stergere strat</translation>
+        <translation type="obsolete">Stergere strat</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
@@ -7715,15 +9029,15 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Lock</source>
-        <translation>Comutare blocare Strat</translation>
+        <translation type="obsolete">Comutare blocare Strat</translation>
     </message>
     <message>
         <source>&amp;Toggle Lock</source>
-        <translation>Comu&amp;tare blocare</translation>
+        <translation type="obsolete">Comu&amp;tare blocare</translation>
     </message>
     <message>
         <source>Toggle Lock</source>
-        <translation>Comutare blocare</translation>
+        <translation type="obsolete">Comutare blocare</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
@@ -7741,15 +9055,15 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionLayersToggleView</name>
     <message>
         <source>Toggle Layer Visibility</source>
-        <translation>Comutare vizibilitate Strat</translation>
+        <translation type="obsolete">Comutare vizibilitate Strat</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer</source>
-        <translation>Comu&amp;tare Bloc</translation>
+        <translation type="obsolete">Comu&amp;tare Bloc</translation>
     </message>
     <message>
         <source>Toggle Layer</source>
-        <translation>Comutare Strat</translation>
+        <translation type="obsolete">Comutare Strat</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer Visibility</source>
@@ -7764,11 +9078,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>&amp;Insert Library Object</source>
-        <translation>&amp;Inserare Obiect din Biblioteca</translation>
+        <translation type="obsolete">&amp;Inserare Obiect din Biblioteca</translation>
     </message>
     <message>
         <source>Inserts an Object from the part library.</source>
-        <translation>Insereaza un Obiect din Biblioteca.</translation>
+        <translation type="obsolete">Insereaza un Obiect din Biblioteca.</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -7803,7 +9117,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionLockRelativeZero</name>
     <message>
         <source>(Un-)Lock Relative Zero</source>
-        <translation>(De-)blocare Zero Relativ</translation>
+        <translation type="obsolete">(De-)blocare Zero Relativ</translation>
     </message>
     <message>
         <source>(Un-)&amp;Lock Relative Zero</source>
@@ -7811,14 +9125,14 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>(Un-)Lock relative Zero</source>
-        <translation>(De-)blocare Zero relativ</translation>
+        <translation type="obsolete">(De-)blocare Zero relativ</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyAttributes</name>
     <message>
         <source>Attributes</source>
-        <translation>Atribute</translation>
+        <translation type="obsolete">Atribute</translation>
     </message>
     <message>
         <source>&amp;Attributes</source>
@@ -7826,14 +9140,14 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Modify Entity Attributes</source>
-        <translation>Modificarea atributelor Entitatii</translation>
+        <translation type="obsolete">Modificarea atributelor Entitatii</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyBevel</name>
     <message>
         <source>Bevel</source>
-        <translation>Tesitura</translation>
+        <translation type="obsolete">Tesitura</translation>
     </message>
     <message>
         <source>&amp;Bevel</source>
@@ -7841,7 +9155,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Bevel Entities</source>
-        <translation>Entitati pentru tesire</translation>
+        <translation type="obsolete">Entitati pentru tesire</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -7876,15 +9190,15 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionModifyCut</name>
     <message>
         <source>Cut</source>
-        <translation>Decupare</translation>
+        <translation type="obsolete">Decupare</translation>
     </message>
     <message>
         <source>&amp;Cut</source>
-        <translation>&amp;Decupare</translation>
+        <translation type="obsolete">&amp;Decupare</translation>
     </message>
     <message>
         <source>Cut Entities</source>
-        <translation>Decupare entitati</translation>
+        <translation type="obsolete">Decupare entitati</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -7892,7 +9206,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Entity must be a line, arc or circle.</source>
-        <translation>Entitatea trebuie sa fie un obiect de tip linie, arc sau cerc.</translation>
+        <translation type="obsolete">Entitatea trebuie sa fie un obiect de tip linie, arc sau cerc.</translation>
     </message>
     <message>
         <source>Cutting point is invalid.</source>
@@ -7931,7 +9245,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionModifyDelete</name>
     <message>
         <source>Delete</source>
-        <translation>Stergere</translation>
+        <translation type="obsolete">Stergere</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
@@ -7939,7 +9253,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Delete Entities</source>
-        <translation>Stergere Entitati</translation>
+        <translation type="obsolete">Stergere Entitati</translation>
     </message>
 </context>
 <context>
@@ -7950,7 +9264,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>&amp;Delete Freehand</source>
-        <translation>&amp;Stergere linii de tip Freehand</translation>
+        <translation type="obsolete">&amp;Stergere linii de tip Freehand</translation>
     </message>
     <message>
         <source>Specify first break point on a polyline</source>
@@ -8005,7 +9319,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionModifyDeleteQuick</name>
     <message>
         <source>Delete selected</source>
-        <translation>Stergerea entitatilor selectate</translation>
+        <translation type="obsolete">Stergerea entitatilor selectate</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
@@ -8013,7 +9327,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Delete selected entities</source>
-        <translation>Stergerea entitatilor selectate</translation>
+        <translation type="obsolete">Stergerea entitatilor selectate</translation>
     </message>
     <message>
         <source>Pick entity to delete</source>
@@ -8028,7 +9342,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionModifyEntity</name>
     <message>
         <source>Properties</source>
-        <translation>Proprietati</translation>
+        <translation type="obsolete">Proprietati</translation>
     </message>
     <message>
         <source>&amp;Properties</source>
@@ -8036,14 +9350,14 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Modify Entity Properties</source>
-        <translation>Modificarea Proprietatilor Entitatii</translation>
+        <translation type="obsolete">Modificarea Proprietatilor Entitatii</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyExplodeText</name>
     <message>
         <source>Explode Text</source>
-        <translation>Text Explodat</translation>
+        <translation type="obsolete">Text Explodat</translation>
     </message>
     <message>
         <source>&amp;Explode Text into Letters</source>
@@ -8051,14 +9365,14 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Explodes Text Entities into single Letters</source>
-        <translation>Explodeaza Textul in Litere</translation>
+        <translation type="obsolete">Explodeaza Textul in Litere</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMirror</name>
     <message>
         <source>Mirror</source>
-        <translation>Simetric</translation>
+        <translation type="obsolete">Simetric</translation>
     </message>
     <message>
         <source>&amp;Mirror</source>
@@ -8066,7 +9380,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Mirror Entities</source>
-        <translation>Entitati simetrice</translation>
+        <translation type="obsolete">Entitati simetrice</translation>
     </message>
     <message>
         <source>Specify first point of mirror line</source>
@@ -8089,7 +9403,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionModifyMove</name>
     <message>
         <source>Move / Copy</source>
-        <translation>Mutare / Copiere</translation>
+        <translation type="obsolete">Mutare / Copiere</translation>
     </message>
     <message>
         <source>&amp;Move / Copy</source>
@@ -8097,7 +9411,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Move or copy entities one or multiple times</source>
-        <translation>Muta sau copie entitatile o data sau de mai multe ori</translation>
+        <translation type="obsolete">Muta sau copie entitatile o data sau de mai multe ori</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -8124,7 +9438,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionModifyMoveRotate</name>
     <message>
         <source>Move and Rotate</source>
-        <translation>Deplasare si rotire</translation>
+        <translation type="obsolete">Deplasare si rotire</translation>
     </message>
     <message>
         <source>M&amp;ove and Rotate</source>
@@ -8132,7 +9446,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Move and Rotate Entities</source>
-        <translation>Deplasare si rotire entitati</translation>
+        <translation type="obsolete">Deplasare si rotire entitati</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -8178,7 +9492,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionModifyRotate</name>
     <message>
         <source>Rotate</source>
-        <translation>Rotire</translation>
+        <translation type="obsolete">Rotire</translation>
     </message>
     <message>
         <source>&amp;Rotate</source>
@@ -8186,7 +9500,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Rotate Entities</source>
-        <translation>Rotire entitati</translation>
+        <translation type="obsolete">Rotire entitati</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -8209,7 +9523,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionModifyRotate2</name>
     <message>
         <source>Rotate Two</source>
-        <translation>Rotire dubla</translation>
+        <translation type="obsolete">Rotire dubla</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
@@ -8217,7 +9531,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Rotate Entities around two centers</source>
-        <translation>Rotirea entitatilor in jurul a doua centre</translation>
+        <translation type="obsolete">Rotirea entitatilor in jurul a doua centre</translation>
     </message>
     <message>
         <source>Specify absolute reference point</source>
@@ -8240,7 +9554,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionModifyRound</name>
     <message>
         <source>Round</source>
-        <translation>Rotunjire</translation>
+        <translation type="obsolete">Rotunjire</translation>
     </message>
     <message>
         <source>&amp;Round</source>
@@ -8248,7 +9562,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Round Entities</source>
-        <translation>Rotunjire entitati</translation>
+        <translation type="obsolete">Rotunjire entitati</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -8279,7 +9593,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionModifyScale</name>
     <message>
         <source>Scale</source>
-        <translation>Redimensionare</translation>
+        <translation type="obsolete">Redimensionare</translation>
     </message>
     <message>
         <source>&amp;Scale</source>
@@ -8287,7 +9601,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Scale Entities</source>
-        <translation>Redimensionare entitati</translation>
+        <translation type="obsolete">Redimensionare entitati</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -8302,7 +9616,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionModifyStretch</name>
     <message>
         <source>Stretch</source>
-        <translation>Deformare</translation>
+        <translation type="obsolete">Deformare</translation>
     </message>
     <message>
         <source>&amp;Stretch</source>
@@ -8310,7 +9624,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Stretch Entities</source>
-        <translation>Deformare entitati</translation>
+        <translation type="obsolete">Deformare entitati</translation>
     </message>
     <message>
         <source>Specify first corner</source>
@@ -8341,7 +9655,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionModifyTrim</name>
     <message>
         <source>Trim</source>
-        <translation>Taiere</translation>
+        <translation type="obsolete">Taiere</translation>
     </message>
     <message>
         <source>&amp;Trim</source>
@@ -8349,11 +9663,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Trim Entities</source>
-        <translation>Taiere entitati</translation>
+        <translation type="obsolete">Taiere entitati</translation>
     </message>
     <message>
         <source>Trim Two</source>
-        <translation>Taiere doua entitati</translation>
+        <translation type="obsolete">Taiere doua entitati</translation>
     </message>
     <message>
         <source>&amp;Trim Two</source>
@@ -8361,7 +9675,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Trim two Entities</source>
-        <translation>Taiere doua entitati</translation>
+        <translation type="obsolete">Taiere doua entitati</translation>
     </message>
     <message>
         <source>Select first trim entity</source>
@@ -8392,7 +9706,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
         <source>Lengthen</source>
-        <translation>Lungime</translation>
+        <translation type="obsolete">Lungime</translation>
     </message>
     <message>
         <source>&amp;Lengthen</source>
@@ -8400,7 +9714,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Lengthen by a given amount</source>
-        <translation>Lungime cu o valoare indicata</translation>
+        <translation type="obsolete">Lungime cu o valoare indicata</translation>
     </message>
     <message>
         <source>No entity found. </source>
@@ -8431,7 +9745,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionOptionsDrawing</name>
     <message>
         <source>Drawing</source>
-        <translation>Desen</translation>
+        <translation type="obsolete">Desen</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
@@ -8439,7 +9753,50 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Settings for the current Drawing</source>
-        <translation>Setari pentru Desenul curent</translation>
+        <translation type="obsolete">Setari pentru Desenul curent</translation>
+    </message>
+</context>
+<context>
+    <name>RS_ActionOrder</name>
+    <message>
+        <source>move to bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>set to bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lower after entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lower over entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>raise over entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>move to top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>set to top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Entity found.</source>
+        <translation type="unfinished">Nu am gasit nicio entitate.</translation>
+    </message>
+    <message>
+        <source>Choose entity for order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Renuntare</translation>
     </message>
 </context>
 <context>
@@ -8556,11 +9913,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
-        <translation>Punctul adaugat este incorect.</translation>
+        <translation type="obsolete">Punctul adaugat este incorect.</translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation>Punctul adaugat nu se afla pe entitate.</translation>
+        <translation type="obsolete">Punctul adaugat nu se afla pe entitate.</translation>
     </message>
     <message>
         <source>Specify polyline to delete node</source>
@@ -8577,6 +9934,14 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <source>Back</source>
         <translation>Inapoi</translation>
+    </message>
+    <message>
+        <source>Deleting point is invalid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting point is not on entity.</source>
+        <translation type="unfinished">Punctul de sters nu se afla pe entitate.</translation>
     </message>
 </context>
 <context>
@@ -8629,6 +9994,10 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <source>Specify second node</source>
         <translation>Specificati al doilea nod</translation>
     </message>
+    <message>
+        <source>Deleting point is invalid.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
@@ -8673,7 +10042,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Entity must be a line or arc.</source>
-        <translation>Entitatea trebuie sa fie un obiect de tip linie sau arc.</translation>
+        <translation type="obsolete">Entitatea trebuie sa fie un obiect de tip linie sau arc.</translation>
     </message>
     <message>
         <source>Choose one of the segments on the original polyline</source>
@@ -8743,7 +10112,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionPrintPreview</name>
     <message>
         <source>Print Preview</source>
-        <translation>Previzualizare listare</translation>
+        <translation type="obsolete">Previzualizare listare</translation>
     </message>
     <message>
         <source>Print Pre&amp;view</source>
@@ -8751,11 +10120,15 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Shows a preview of a print</source>
-        <translation>Afiseaza previzualizarea listarii</translation>
+        <translation type="obsolete">Afiseaza previzualizarea listarii</translation>
     </message>
     <message>
         <source>Scale ratio too large. Keep the old scale</source>
-        <translation>Factor de marire prea mare. Reveniti la factorul anterior</translation>
+        <translation type="obsolete">Factor de marire prea mare. Reveniti la factorul anterior</translation>
+    </message>
+    <message>
+        <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8824,12 +10197,20 @@ Doriti sa il inlocuiti cu acesta?</translation>
         <source>Select to create offset</source>
         <translation>Selectati pentru creare deplasare (offset)</translation>
     </message>
+    <message>
+        <source>Select entities to order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select to explode block</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionSelectAll</name>
     <message>
         <source>Select All</source>
-        <translation>Selectie toate</translation>
+        <translation type="obsolete">Selectie toate</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
@@ -8837,11 +10218,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Selects all Entities</source>
-        <translation>Selectarea tuturor obiectelor</translation>
+        <translation type="obsolete">Selectarea tuturor obiectelor</translation>
     </message>
     <message>
         <source>Deselect all</source>
-        <translation>Deselectie toate</translation>
+        <translation type="obsolete">Deselectie toate</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
@@ -8849,7 +10230,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Deselects all Entities</source>
-        <translation>Deselectia tuturor obiectelor</translation>
+        <translation type="obsolete">Deselectia tuturor obiectelor</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
@@ -8860,7 +10241,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionSelectContour</name>
     <message>
         <source>(De-)Select Contour</source>
-        <translation>(De-)selectie contur</translation>
+        <translation type="obsolete">(De-)selectie contur</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
@@ -8868,7 +10249,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>(De-)Selects connected entities</source>
-        <translation>(De-)selectie obiecte conectate</translation>
+        <translation type="obsolete">(De-)selectie obiecte conectate</translation>
     </message>
     <message>
         <source>Entity must be an Atomic Entity.</source>
@@ -8883,11 +10264,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>In&amp;tersected Entities</source>
-        <translation>Entitati in&amp;tersectate</translation>
+        <translation type="obsolete">Entitati in&amp;tersectate</translation>
     </message>
     <message>
         <source>Selects all entities intersected by a line</source>
-        <translation>Selecteaza toate entitatile intersectate de o linie</translation>
+        <translation type="obsolete">Selecteaza toate entitatile intersectate de o linie</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
@@ -8895,11 +10276,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Deselect Inte&amp;rsected Entities</source>
-        <translation>Deselectie entitati inte&amp;rsectate</translation>
+        <translation type="obsolete">Deselectie entitati inte&amp;rsectate</translation>
     </message>
     <message>
         <source>Deselects all entities intersected by a line</source>
-        <translation>Deselecteaza toate entitatile intersectate de o linie</translation>
+        <translation type="obsolete">Deselecteaza toate entitatile intersectate de o linie</translation>
     </message>
     <message>
         <source>Choose first point of intersection line</source>
@@ -8926,11 +10307,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>&amp;Invert Selection</source>
-        <translation>&amp;Inversare selectie</translation>
+        <translation type="obsolete">&amp;Inversare selectie</translation>
     </message>
     <message>
         <source>Inverts the current selection</source>
-        <translation>Inverseaza selectia curenta</translation>
+        <translation type="obsolete">Inverseaza selectia curenta</translation>
     </message>
 </context>
 <context>
@@ -8941,7 +10322,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>(De-)Selects layers</source>
-        <translation>(De-)selectie straturi</translation>
+        <translation type="obsolete">(De-)selectie straturi</translation>
     </message>
 </context>
 <context>
@@ -8952,11 +10333,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>(De-)&amp;Select Entity</source>
-        <translation>(De-)&amp;selectie entitate</translation>
+        <translation type="obsolete">(De-)&amp;selectie entitate</translation>
     </message>
     <message>
         <source>Selects single Entities</source>
-        <translation>Selectarea unei singure entitati</translation>
+        <translation type="obsolete">Selectarea unei singure entitati</translation>
     </message>
 </context>
 <context>
@@ -8967,11 +10348,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Select &amp;Window</source>
-        <translation>Selectie &amp;fereastra</translation>
+        <translation type="obsolete">Selectie &amp;fereastra</translation>
     </message>
     <message>
         <source>Selects all Entities in a given Window</source>
-        <translation>Selecteaza toate entitatile in fereastra aleasa</translation>
+        <translation type="obsolete">Selecteaza toate entitatile in fereastra aleasa</translation>
     </message>
     <message>
         <source>Deselect Window</source>
@@ -8979,15 +10360,15 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Deselect &amp;Window</source>
-        <translation>Deselectie &amp;fereastra</translation>
+        <translation type="obsolete">Deselectie &amp;fereastra</translation>
     </message>
     <message>
         <source>Deselects all Entities in a given Window</source>
-        <translation>Deselecteaza toate entitatile din fereastra aleasa</translation>
+        <translation type="obsolete">Deselecteaza toate entitatile din fereastra aleasa</translation>
     </message>
     <message>
         <source>Choose first edge</source>
-        <translation>Alegeti primul capat</translation>
+        <translation type="obsolete">Alegeti primul capat</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9010,15 +10391,15 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionSetRelativeZero</name>
     <message>
         <source>Set Relative Zero</source>
-        <translation>Setare zero relativ</translation>
+        <translation type="obsolete">Setare zero relativ</translation>
     </message>
     <message>
         <source>&amp;Set Relative Zero</source>
-        <translation>&amp;Setare zero relativ</translation>
+        <translation type="obsolete">&amp;Setare zero relativ</translation>
     </message>
     <message>
         <source>Set position of the Relative Zero point</source>
-        <translation>Setare pozitiei pentru punctul zero relativ</translation>
+        <translation type="obsolete">Setare pozitiei pentru punctul zero relativ</translation>
     </message>
     <message>
         <source>Set relative Zero</source>
@@ -9037,7 +10418,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
         <source>Intersection Manually</source>
-        <translation>Intersectie Manuala</translation>
+        <translation type="obsolete">Intersectie Manuala</translation>
     </message>
     <message>
         <source>I&amp;ntersection Manually</source>
@@ -9045,7 +10426,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Snap to intersection points manually</source>
-        <translation>Salt la punctele de intersectie manual</translation>
+        <translation type="obsolete">Salt la punctele de intersectie manual</translation>
     </message>
     <message>
         <source>Select first entity</source>
@@ -9068,11 +10449,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>&amp;Regenerate Dimension Entities</source>
-        <translation>&amp;Regenerarea Cotarii Entitatilor</translation>
+        <translation type="obsolete">&amp;Regenerarea Cotarii Entitatilor</translation>
     </message>
     <message>
         <source>Regenerates all Dimension Entities</source>
-        <translation>Regenerarea tuturor Dimensiunilor Entitatilor</translation>
+        <translation type="obsolete">Regenerarea tuturor Dimensiunilor Entitatilor</translation>
     </message>
     <message>
         <source>Regenerated %1 dimension entities</source>
@@ -9087,7 +10468,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionZoomAuto</name>
     <message>
         <source>Auto Zoom</source>
-        <translation>Zoom Auto</translation>
+        <translation type="obsolete">Zoom Auto</translation>
     </message>
     <message>
         <source>&amp;Auto Zoom</source>
@@ -9095,14 +10476,14 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Zooms automatic</source>
-        <translation>Zoom automat</translation>
+        <translation type="obsolete">Zoom automat</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomIn</name>
     <message>
         <source>Zoom in</source>
-        <translation>Marire</translation>
+        <translation type="obsolete">Marire</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
@@ -9110,11 +10491,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Zooms in</source>
-        <translation>Mareste</translation>
+        <translation type="obsolete">Mareste</translation>
     </message>
     <message>
         <source>Zoom out</source>
-        <translation>Micsorare</translation>
+        <translation type="obsolete">Micsorare</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
@@ -9122,22 +10503,22 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Zooms out</source>
-        <translation>Micsoreaza</translation>
+        <translation type="obsolete">Micsoreaza</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomPan</name>
     <message>
         <source>Pan Zoom</source>
-        <translation>Deplasare Panoramica</translation>
+        <translation type="obsolete">Deplasare Panoramica</translation>
     </message>
     <message>
         <source>&amp;Pan Zoom</source>
-        <translation>Deplasare &amp;Panoramica</translation>
+        <translation type="obsolete">Deplasare &amp;Panoramica</translation>
     </message>
     <message>
         <source>Realtime Panning</source>
-        <translation>Panoramic in timp real</translation>
+        <translation type="obsolete">Panoramic in timp real</translation>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
@@ -9160,15 +10541,15 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionZoomPrevious</name>
     <message>
         <source>Previous View</source>
-        <translation>Vedere anterioara</translation>
+        <translation type="obsolete">Vedere anterioara</translation>
     </message>
     <message>
         <source>&amp;Previous View</source>
-        <translation>Vedere &amp;anterioara</translation>
+        <translation type="obsolete">Vedere &amp;anterioara</translation>
     </message>
     <message>
         <source>Shows previous view</source>
-        <translation>Afiseaza vederea anterioara</translation>
+        <translation type="obsolete">Afiseaza vederea anterioara</translation>
     </message>
     <message>
         <source>Previous &amp;View</source>
@@ -9179,7 +10560,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionZoomRedraw</name>
     <message>
         <source>Redraw</source>
-        <translation>Redesenare</translation>
+        <translation type="obsolete">Redesenare</translation>
     </message>
     <message>
         <source>&amp;Redraw</source>
@@ -9190,7 +10571,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <name>RS_ActionZoomWindow</name>
     <message>
         <source>Window Zoom</source>
-        <translation>Zoom Fereastra</translation>
+        <translation type="obsolete">Zoom Fereastra</translation>
     </message>
     <message>
         <source>&amp;Window Zoom</source>
@@ -9198,7 +10579,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Zooms in a window</source>
-        <translation>Zooms in fereastra</translation>
+        <translation type="obsolete">Zooms in fereastra</translation>
     </message>
     <message>
         <source>Specify first edge</source>
@@ -9309,7 +10690,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <source>r</source>
         <comment>rows</comment>
-        <translation>r</translation>
+        <translation type="obsolete">r</translation>
     </message>
     <message>
         <source>columnspacing</source>
@@ -9353,17 +10734,17 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <source>reversed</source>
         <comment>reversed arc</comment>
-        <translation>inversat</translation>
+        <translation type="obsolete">inversat</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>reversed arc</comment>
-        <translation>inv</translation>
+        <translation type="obsolete">inv</translation>
     </message>
     <message>
         <source>r</source>
         <comment>reversed arc</comment>
-        <translation>i</translation>
+        <translation type="obsolete">i</translation>
     </message>
     <message>
         <source>point</source>
@@ -9372,7 +10753,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <source>po</source>
         <comment>point</comment>
-        <translation>po</translation>
+        <translation type="obsolete">po</translation>
     </message>
     <message>
         <source>offset</source>
@@ -9450,7 +10831,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <source>par</source>
         <comment>parallel</comment>
-        <translation>par</translation>
+        <translation type="obsolete">par</translation>
     </message>
     <message>
         <source>length1</source>
@@ -9537,7 +10918,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <source>ci</source>
         <comment>circle</comment>
-        <translation>ce</translation>
+        <translation type="obsolete">ce</translation>
     </message>
     <message>
         <source>zw</source>
@@ -9557,52 +10938,52 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <source>li</source>
         <comment>line</comment>
-        <translation>li</translation>
+        <translation type="obsolete">li</translation>
     </message>
     <message>
         <source>re</source>
         <comment>rectangle</comment>
-        <translation>re</translation>
+        <translation type="obsolete">re</translation>
     </message>
     <message>
         <source>rp</source>
         <comment>regular polygon</comment>
-        <translation>rp</translation>
+        <translation type="obsolete">rp</translation>
     </message>
     <message>
         <source>c2</source>
         <comment>2 point circle</comment>
-        <translation>c2</translation>
+        <translation type="obsolete">c2</translation>
     </message>
     <message>
         <source>c3</source>
         <comment>3 point circle</comment>
-        <translation>c3</translation>
+        <translation type="obsolete">c3</translation>
     </message>
     <message>
         <source>ar</source>
         <comment>arc</comment>
-        <translation>ar</translation>
+        <translation type="obsolete">ar</translation>
     </message>
     <message>
         <source>a3</source>
         <comment>3 point arc</comment>
-        <translation>a3</translation>
+        <translation type="obsolete">a3</translation>
     </message>
     <message>
         <source>ep</source>
         <comment>ellipse</comment>
-        <translation>ep</translation>
+        <translation type="obsolete">ep</translation>
     </message>
     <message>
         <source>tx</source>
         <comment>text</comment>
-        <translation>tx</translation>
+        <translation type="obsolete">tx</translation>
     </message>
     <message>
         <source>mt</source>
         <comment>text</comment>
-        <translation>mt</translation>
+        <translation type="obsolete">mt</translation>
     </message>
     <message>
         <source>da</source>
@@ -9632,22 +11013,22 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <source>rd</source>
         <comment>redraw</comment>
-        <translation>rd</translation>
+        <translation type="obsolete">rd</translation>
     </message>
     <message>
         <source>zi</source>
         <comment>zoom - in</comment>
-        <translation>zi</translation>
+        <translation type="obsolete">zi</translation>
     </message>
     <message>
         <source>zo</source>
         <comment>zoom - out</comment>
-        <translation>zo</translation>
+        <translation type="obsolete">zo</translation>
     </message>
     <message>
         <source>os</source>
         <comment>snap - none</comment>
-        <translation>os</translation>
+        <translation type="obsolete">os</translation>
     </message>
     <message>
         <source>sg</source>
@@ -9667,7 +11048,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <source>sn</source>
         <comment>snap - center</comment>
-        <translation>sn</translation>
+        <translation type="obsolete">sn</translation>
     </message>
     <message>
         <source>sm</source>
@@ -9687,12 +11068,12 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <source>fr*</source>
         <comment>layers - freeze all</comment>
-        <translation>fr*</translation>
+        <translation type="obsolete">fr*</translation>
     </message>
     <message>
         <source>th*</source>
         <comment>layers - defreeze all</comment>
-        <translation>th*</translation>
+        <translation type="obsolete">th*</translation>
     </message>
     <message>
         <source>tn</source>
@@ -9762,7 +11143,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <source>ex</source>
         <comment>modify - explode</comment>
-        <translation>ex</translation>
+        <translation type="obsolete">ex</translation>
     </message>
     <message>
         <source>dimregen</source>
@@ -9774,7 +11155,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>ln</source>
-        <translation>ln</translation>
+        <translation type="obsolete">ln</translation>
     </message>
     <message>
         <source>l</source>
@@ -10081,6 +11462,14 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <source>Accepted keycode: %1</source>
         <translation>Cod cheie acceptat: %1</translation>
+    </message>
+    <message>
+        <source>mtext</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dpi</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

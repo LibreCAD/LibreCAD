@@ -216,11 +216,11 @@
     </message>
     <message>
         <source>File</source>
-        <translation type="obsolete">File</translation>
+        <translation type="unfinished">File</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="obsolete">Modifica</translation>
+        <translation type="unfinished">Modifica</translation>
     </message>
     <message>
         <source>Vie&amp;ws</source>
@@ -232,7 +232,7 @@
     </message>
     <message>
         <source>View</source>
-        <translation type="obsolete">Visualizza</translation>
+        <translation type="unfinished">Visualizza</translation>
     </message>
     <message>
         <source>Pen</source>
@@ -240,7 +240,7 @@
     </message>
     <message>
         <source>Tool Options</source>
-        <translation type="obsolete">Opzioni Strumento</translation>
+        <translation type="unfinished">Opzioni Strumento</translation>
     </message>
     <message>
         <source>Layer List</source>
@@ -510,6 +510,22 @@ Salvataggio automatico disattivato</translation>
     </message>
     <message>
         <source>Auto-saving failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CAD Tools</source>
+        <translation type="unfinished">Strumenti CAD</translation>
+    </message>
+    <message>
+        <source>Export as</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6260,6 +6276,10 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
         <source>dwg Drawing %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ImageOptions</name>
@@ -10042,6 +10062,10 @@ Do you want to replace it?</source>
     <message>
         <source>Angle: %1</source>
         <translation type="unfinished">Angolo: %1</translation>
+    </message>
+    <message>
+        <source> or %1%2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -216,11 +216,11 @@
     </message>
     <message>
         <source>File</source>
-        <translation type="obsolete">Súbor</translation>
+        <translation type="unfinished">Súbor</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="obsolete">Úpravy</translation>
+        <translation type="unfinished">Úpravy</translation>
     </message>
     <message>
         <source>Vie&amp;ws</source>
@@ -232,7 +232,7 @@
     </message>
     <message>
         <source>View</source>
-        <translation type="obsolete">Pohľad</translation>
+        <translation type="unfinished">Pohľad</translation>
     </message>
     <message>
         <source>Pen</source>
@@ -240,7 +240,7 @@
     </message>
     <message>
         <source>Tool Options</source>
-        <translation type="obsolete">Nastavenia doplnkov</translation>
+        <translation type="unfinished">Nastavenia doplnkov</translation>
     </message>
     <message>
         <source>Layer List</source>
@@ -503,6 +503,22 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Auto-saving failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CAD Tools</source>
+        <translation type="unfinished">CAD nástroje</translation>
+    </message>
+    <message>
+        <source>Export as</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5220,6 +5236,10 @@ Tieto nastavenia môžete neskôr zmeniť v dialógovom okne Nastavenia.</transl
         <source>dwg Drawing %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ImageOptions</name>
@@ -8974,6 +8994,10 @@ Chcete ho nahradiť?</translation>
     <message>
         <source>Angle: %1</source>
         <translation type="unfinished">Uhol: %1</translation>
+    </message>
+    <message>
+        <source> or %1%2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

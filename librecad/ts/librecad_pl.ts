@@ -186,11 +186,11 @@
     </message>
     <message>
         <source>File</source>
-        <translation type="obsolete">Plik</translation>
+        <translation type="unfinished">Plik</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="obsolete">Edycja</translation>
+        <translation type="unfinished">Edycja</translation>
     </message>
     <message>
         <source>Vie&amp;ws</source>
@@ -202,7 +202,7 @@
     </message>
     <message>
         <source>View</source>
-        <translation type="obsolete">Widok</translation>
+        <translation type="unfinished">Widok</translation>
     </message>
     <message>
         <source>Pen</source>
@@ -210,7 +210,7 @@
     </message>
     <message>
         <source>Tool Options</source>
-        <translation type="obsolete">Opcje narzędzi</translation>
+        <translation type="unfinished">Opcje narzędzi</translation>
     </message>
     <message>
         <source>Layer List</source>
@@ -515,6 +515,22 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>Auto-saving failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CAD Tools</source>
+        <translation type="unfinished">Narzędzia CAD</translation>
+    </message>
+    <message>
+        <source>Export as</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6268,6 +6284,10 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
         <source>dwg Drawing %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ImageOptions</name>
@@ -10058,6 +10078,10 @@ Czy chcesz zastąpić?</translation>
     <message>
         <source>Angle: %1</source>
         <translation>Kąt: %1</translation>
+    </message>
+    <message>
+        <source> or %1%2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

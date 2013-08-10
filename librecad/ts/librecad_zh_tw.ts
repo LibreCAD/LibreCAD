@@ -206,6 +206,26 @@
         <translation>除錯(&amp;B)</translation>
     </message>
     <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1606"/>
+        <source>Pen Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1614"/>
+        <source>Snap Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1624"/>
+        <source>Tool Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1635"/>
+        <source>CAD Tools</source>
+        <translation type="unfinished">CAD 工具</translation>
+    </message>
+    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1796"/>
         <source>Layer List</source>
         <translation>圖層清單</translation>
@@ -361,8 +381,23 @@ Please check the permissions.</source>
         <translation>以新檔名儲存繪圖...</translation>
     </message>
     <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="630"/>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="692"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="728"/>
         <source>Draw &amp;Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="763"/>
+        <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -395,6 +430,11 @@ Auto-save disabled.</source>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3032"/>
         <source>Exporting drawing...</source>
         <translation>正在匯出繪圖...</translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3070"/>
+        <source>Export as</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3134"/>
@@ -5732,6 +5772,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/ui/qg_filedialog.cpp" line="228"/>
+        <source>Untitled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/qg_filedialog.cpp" line="239"/>
         <source>Save %1 As</source>
         <translation type="unfinished"></translation>
@@ -9750,6 +9795,11 @@ Do you want to replace it?</source>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="50"/>
         <source>An&amp;gle between two lines</source>
         <translation>兩線之間角度 (&amp;g)</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actioninfoangle.cpp" line="86"/>
+        <source> or %1%2</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actioninfoangle.cpp" line="88"/>
