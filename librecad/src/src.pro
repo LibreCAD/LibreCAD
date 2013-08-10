@@ -939,6 +939,7 @@ TRANSLATIONS = ../ts/librecad_ca.ts \
     ../ts/librecad_pl.ts \
     ../ts/librecad_pt_br.ts \
     ../ts/librecad_pt_pt.ts \
+    ../ts/librecad_ro_ro.ts \
     ../ts/librecad_ru.ts \
     ../ts/librecad_sk.ts \
     ../ts/librecad_sq_al.ts \

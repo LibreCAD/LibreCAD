@@ -373,6 +373,7 @@ void RS_System::initAllLanguagesList() {
 void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/) {
     static QTranslator* tQt = NULL;
     static QTranslator* tLibreCAD = NULL;
+    static QTranslator* tPlugIns = NULL;
 
     //make translation filenames case insensitive, #276
     QString langLower("");
@@ -397,12 +398,18 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
         qApp->removeTranslator(tLibreCAD);
         delete tLibreCAD;
     }
+    if( tPlugIns != NULL) {
+        qApp->removeTranslator(tPlugIns);
+        delete tPlugIns;
+    }
     if( tQt != NULL) {
         qApp->removeTranslator(tQt);
         delete tQt;
     }
     QString langFileLower = "librecad_" + langLower + ".qm",
             langFileUpper = "librecad_" + langUpper + ".qm",
+            langPlugInsLower = "plugins_" + langLower + ".qm",
+            langPlugInsUpper = "plugins_" + langUpper + ".qm",
             langQtLower = "qt_" + langLower + ".qm",
             langQtUpper = "qt_" + langUpper + ".qm";
     QTranslator* t = new QTranslator(0);
@@ -421,6 +428,17 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
             }
         }
 
+        // load PlugIns translations
+        if( NULL == tPlugIns) {
+            if(	t->load(langPlugInsLower, *it)==true
+                    || (  ! langUpper.isEmpty()
+                          &&	t->load(langPlugInsUpper, *it)==true)) {
+                tPlugIns = t;
+                qApp->installTranslator(tPlugIns);
+                t = new QTranslator(0);
+            }
+        }
+
         // load Qt standard dialog translations
         if( NULL == tQt) {
             if( t->load(langQtLower, *it)==true
@@ -431,7 +449,7 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
                 t = new QTranslator(0);
             }
         }
-        if( NULL != tLibreCAD && NULL != tQt) {
+        if( NULL != tLibreCAD && NULL != tPlugIns && NULL != tQt) {
             break;
         }
     }
