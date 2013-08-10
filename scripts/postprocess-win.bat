@@ -8,7 +8,8 @@ set PWD=%PWD%\..\..
 
 
 set RESOURCEDIR=%PWD%\windows\resources
-set TSDIR=%PWD%\librecad\ts
+set TSDIRLC=%PWD%\librecad\ts
+set TSDIRPI=%PWD%\plugins\ts
 set DOCDIR=%PWD%\librecad\support\doc
 
 REM Generate Help Files
@@ -37,9 +38,15 @@ copy "librecad\support\library\templates\*.dxf" "%RESOURCEDIR%\library\templates
 REM Generate translations
 echo "Generating Translations"
 lrelease librecad\src\src.pro
+lrelease plugins\plugins.pro
 mkdir "%RESOURCEDIR%\qm"
 
-cd "%TSDIR%"
+cd "%TSDIRLC%"
+for /f %%F in ('dir /b *.qm') do (
+        copy "%%F" "%RESOURCEDIR%\qm\%%F"
+)
+
+cd "%TSDIRPI%"
 for /f %%F in ('dir /b *.qm') do (
         copy "%%F" "%RESOURCEDIR%\qm\%%F"
 )

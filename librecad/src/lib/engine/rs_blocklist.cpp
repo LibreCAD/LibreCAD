@@ -278,6 +278,8 @@ void RS_BlockList::toggle(RS_Block* block) {
     }
 
     block->toggle();
+    // TODO LordOfBikes: when block attributes are saved, activate this
+    //setModified(true);
 
     // Notify listeners:
     for (int i=0; i<blockListListeners.size(); ++i) {
@@ -299,6 +301,8 @@ void RS_BlockList::freezeAll(bool freeze) {
     for (int l=0; l<count(); l++) {
         at(l)->freeze(freeze);
     }
+    // TODO LordOfBikes: when block attributes are saved, activate this
+    //setModified(true);
 
     for (int i=0; i<blockListListeners.size(); ++i) {
         RS_BlockListListener* l = blockListListeners.at(i);

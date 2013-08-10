@@ -1,15 +1,8 @@
-
-set Qt_DIR=C:\Qt\Qt5.0.2\5.0.2
-set NSIS_DIR=C:\Program Files (x86)\NSIS
-
-if exist custom-windows.bat call custom-windows.bat
-
-set PATH=%Qt_DIR%\mingw47_32\bin;%Qt_DIR%\..\Tools\MinGW\bin;%NSIS_DIR%\Bin;%PATH%
+call set-windows-env.bat
 
 cd ..
 qmake.exe librecad.pro -r -spec win32-g++
 mingw32-make.exe clean
 mingw32-make.exe 
-cd ./scripts/postprocess-windows
-makensis.exe /X"SetCompressor /FINAL lzma" nsis-5.0.nsi
-
+cd .\scripts
+call build-win-setup.bat

@@ -251,7 +251,7 @@ RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& coord,
         RS_Vector direction = data.corner[next]-data.corner[i];
         RS_Vector vpc=coord-data.corner[i];
         double a=direction.squared();
-        if( a < RS_TOLERANCE*RS_TOLERANCE) {
+        if( a < RS_TOLERANCE2) {
             //line too short
             vpc=data.corner[i];
         }else{

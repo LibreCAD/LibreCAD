@@ -225,7 +225,7 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
 
     // when defFilter is added the below should use the default extension.
     // generate an untitled name
-    QString fn = "Untitled";
+    QString fn = tr("Untitled");
     if(QFile::exists( defDir + fn + getExtension( ftype ) ))
     {
         int fileCount = 1;

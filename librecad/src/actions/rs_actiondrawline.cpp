@@ -193,7 +193,7 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
         break;
 
     case SetEndpoint:
-        if((mouse-data.startpoint).squared() > RS_TOLERANCE*RS_TOLERANCE) {
+        if((mouse-data.startpoint).squared() > RS_TOLERANCE2) {
             //refuse zero length lines
             data.endpoint = mouse;
             addHistory(mouse);
@@ -358,7 +358,7 @@ void RS_ActionDrawLine::updateMouseCursor() {
 //}
 
 void RS_ActionDrawLine::close() {
-    if (historyIndex>2 && start.valid && (data.startpoint - start).squared() > RS_TOLERANCE*RS_TOLERANCE ) {
+    if (historyIndex>2 && start.valid && (data.startpoint - start).squared() > RS_TOLERANCE2 ) {
         data.endpoint = start;
         addHistory(data.endpoint);
         trigger();

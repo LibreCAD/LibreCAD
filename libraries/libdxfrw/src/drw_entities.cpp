@@ -188,6 +188,18 @@ void DRW_Ellipse::parseCode(int code, dxfReader *reader){
     }
 }
 
+void DRW_Ellipse::applyExtrusion(){
+    if (haveExtrusion) {
+        calculateAxis(extPoint);
+        extrudePoint(extPoint, &secPoint);
+        double intialparam = staparam;
+        if (extPoint.z < 0.){
+            staparam = M_PIx2 - endparam;
+            endparam = M_PIx2 - intialparam;
+        }
+    }
+}
+
 //if ratio > 1 minor axis are greather than major axis, correct it
 void DRW_Ellipse::correctAxis(){
     bool complete = false;
@@ -214,21 +226,23 @@ void DRW_Ellipse::correctAxis(){
     }
 }
 
-void DRW_Ellipse::toPolyline(DRW_Polyline *pol){
+//parts are the number of vertex to split polyline, default 128
+void DRW_Ellipse::toPolyline(DRW_Polyline *pol, int parts){
     double radMajor, radMinor, cosRot, sinRot, incAngle, curAngle;
     double cosCurr, sinCurr;
     radMajor = sqrt(secPoint.x*secPoint.x + secPoint.y*secPoint.y);
     radMinor = radMajor*ratio;
+    //calculate sin & cos of included angle
     incAngle = atan2(secPoint.y, secPoint.x);
     cosRot = cos(incAngle);
     sinRot = sin(incAngle);
-    incAngle = M_PI/64;
+    incAngle = M_PIx2 / parts;
     curAngle = staparam;
     int i = curAngle/incAngle;
     do {
         if (curAngle > endparam) {
             curAngle = endparam;
-            i = 130;
+            i = parts+2;
         }
         cosCurr = cos(curAngle);
         sinCurr = sin(curAngle);
@@ -236,7 +250,7 @@ void DRW_Ellipse::toPolyline(DRW_Polyline *pol){
         double y = basePoint.y + (cosCurr*sinRot*radMajor) + (sinCurr*cosRot*radMinor);
         pol->addVertex( DRW_Vertex(x, y, 0.0, 0.0));
         curAngle = (++i)*incAngle;
-    } while (i<128);
+    } while (i<parts);
     if ( fabs(endparam - staparam - M_PIx2) < 1.0e-10){
         pol->flags = 1;
     }
@@ -244,6 +258,7 @@ void DRW_Ellipse::toPolyline(DRW_Polyline *pol){
     pol->lineType = this->lineType;
     pol->color = this->color;
     pol->lWeight = this->lWeight;
+    pol->extPoint = this->extPoint;
 }
 
 void DRW_Trace::applyExtrusion(){

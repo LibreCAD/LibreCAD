@@ -66,6 +66,7 @@ public:
     DRW_ImageDef *writeImage(DRW_Image *ent, std::string name);
     bool writeLeader(DRW_Leader *ent);
     bool writeDimension(DRW_Dimension *ent);
+    void setEllipseParts(int parts){elParts = parts;} /*!< set parts munber when convert ellipse to polyline */
 
 private:
     /// used by read() to parse the content of the file
@@ -130,6 +131,7 @@ private:
     bool dimstyleStd;
     bool applyExt;
     bool writingBlock;
+    int elParts;  /*!< parts munber when convert ellipse to polyline */
     std::map<std::string,int> blockMap;
     std::vector<DRW_ImageDef*> imageDef;  /*!< imageDef list */
 

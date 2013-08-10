@@ -111,6 +111,9 @@ public:
     void toggleLayerLock(RS_Layer* layer) {
                 layerList.toggleLock(layer);
         }
+    void toggleLayerPrint(RS_Layer* layer) {
+                layerList.togglePrint(layer);
+        }
     void freezeAllLayers(bool freeze) {
                 layerList.freezeAll(freeze);
         }

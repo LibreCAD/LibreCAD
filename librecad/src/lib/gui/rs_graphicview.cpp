@@ -1266,8 +1266,8 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
     if (!e->isVisible()) {
         return;
     }
-    if( isPrintPreview() ) {
-        //do not draw help layer on print preview
+    if( isPrintPreview() || isPrinting() ) {
+        //do not draw help layer on print preview or print
             if(e->isHelpLayer()) return;
     }
 

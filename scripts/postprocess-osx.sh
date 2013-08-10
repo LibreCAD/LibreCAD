@@ -2,7 +2,8 @@
 
 THISDIR="`pwd`"
 RESOURCEDIR="`pwd`/LibreCAD.app/Contents"
-TSDIR="`pwd`/librecad/ts"
+TSDIRLC="`pwd`/librecad/ts"
+TSDIRPI="`pwd`/plugins/ts"
 DOCDIR="`pwd`/librecad/support/doc"
 
 # Generate Help Files
@@ -25,10 +26,17 @@ cp -r /opt/local/share/qt4/plugins/sqldrivers $RESOURCEDIR/PlugIns/sqldrivers
 
 # Generate translations
 lrelease librecad/src/src.pro
+lrelease plugins/plugins.pro
 mkdir -p $RESOURCEDIR/Resources/qm
  
 # Go into translations directory
-cd "$TSDIR"
+cd "$TSDIRLC"
+for tf in *.qm
+do
+	cp $tf $RESOURCEDIR/Resources/qm/$tf
+done
+
+cd "$TSDIRPI"
 for tf in *.qm
 do
 	cp $tf $RESOURCEDIR/Resources/qm/$tf

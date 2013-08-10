@@ -138,7 +138,7 @@ bool RS_Circle::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
         double ra2=vra.squared()*0.5;
         double rb2=vrb.squared()*0.5;
         double crossp=vra.x * vrb.y - vra.y * vrb.x;
-        if (fabs(crossp)< RS_TOLERANCE*RS_TOLERANCE) {
+        if (fabs(crossp)< RS_TOLERANCE2) {
                 RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
                         "Cannot create a circle with radius 0.0.");
                 return false;
@@ -154,14 +154,14 @@ bool RS_Circle::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
 bool RS_Circle::createFrom3P(const RS_VectorSolutions& sol) {
     if(sol.getNumber() < 2) return false;
     if(sol.getNumber() == 2) return createFrom2P(sol.get(0),sol.get(1));
-    if((sol.get(1)-sol.get(2)).squared() < RS_TOLERANCE*RS_TOLERANCE)
+    if((sol.get(1)-sol.get(2)).squared() < RS_TOLERANCE2)
         return createFrom2P(sol.get(0),sol.get(1));
     RS_Vector vra(sol.get(1) - sol.get(0));
     RS_Vector vrb(sol.get(2) - sol.get(0));
     double ra2=vra.squared()*0.5;
     double rb2=vrb.squared()*0.5;
     double crossp=vra.x * vrb.y - vra.y * vrb.x;
-    if (fabs(crossp)< RS_TOLERANCE*RS_TOLERANCE) {
+    if (fabs(crossp)< RS_TOLERANCE2) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
                         "Cannot create a circle with radius 0.0.");
         return false;
@@ -234,7 +234,7 @@ bool RS_Circle::createInscribe(const RS_Vector& coord, const QVector<RS_Line*>& 
     RS_Vector vp1(sol.get(0));
     RS_Vector dvp(vp1-vp0);
     double a(dvp.squared());
-    if( a< RS_TOLERANCE*RS_TOLERANCE) return false; //three lines share a common intersecting point
+    if( a< RS_TOLERANCE2) return false; //three lines share a common intersecting point
     RS_Vector vp(coord - vp0);
     vp -= dvp*(RS_Vector::dotP(dvp,vp)/a); //normal component
     RS_Vector vl0(tri[0]->getEndpoint() - tri[0]->getStartpoint());
@@ -390,7 +390,7 @@ QList<RS_Circle> RS_Circle::solveAppolloniusSingle(const QList<RS_Circle>& circl
     mat[0][1]=centers[2].y - centers[0].y;
     mat[1][0]=centers[2].x - centers[1].x;
     mat[1][1]=centers[2].y - centers[1].y;
-    if(fabs(mat[0][0]*mat[1][1] - mat[0][1]*mat[1][0])<RS_TOLERANCE*RS_TOLERANCE){
+    if(fabs(mat[0][0]*mat[1][1] - mat[0][1]*mat[1][0])<RS_TOLERANCE2){
 //        DEBUG_HEADER();
 //        std::cout<<"The provided circles are in a line, not common tangent circle"<<std::endl;
         size_t i0=0;
@@ -505,7 +505,7 @@ RS_Vector RS_Circle::getNearestPointOnEntity(const RS_Vector& coord,
 RS_VectorSolutions RS_Circle::getTangentPoint(const RS_Vector& point) const {
     RS_VectorSolutions ret;
     double r2(getRadius()*getRadius());
-    if(r2<RS_TOLERANCE*RS_TOLERANCE) return ret; //circle too small
+    if(r2<RS_TOLERANCE2) return ret; //circle too small
     RS_Vector vp(point-getCenter());
     double c2(vp.squared());
     if(c2<r2-getRadius()*2.*RS_TOLERANCE) {
@@ -518,7 +518,7 @@ RS_VectorSolutions RS_Circle::getTangentPoint(const RS_Vector& point) const {
         vp1*=getRadius()*sqrt(c2-r2)/c2;
         vp *= r2/c2;
         vp += getCenter();
-        if(vp1.squared()>RS_TOLERANCE*RS_TOLERANCE) {
+        if(vp1.squared()>RS_TOLERANCE2) {
             ret.push_back(vp+vp1);
             ret.push_back(vp-vp1);
             return ret;

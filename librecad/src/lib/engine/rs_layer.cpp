@@ -36,9 +36,9 @@ RS_Layer::RS_Layer(const QString& name) {
     data.pen.setLineType(RS2::SolidLine);
     data.pen.setWidth(RS2::Width00);
     data.pen.setColor(Qt::black);
-	data.frozen = false;
-        data.locked = false;
-        data.helpLayer = false;
+    data.frozen = false;
+    data.locked = false;
+    data.helpLayer = false;
 }
 
 

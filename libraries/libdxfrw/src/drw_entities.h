@@ -249,7 +249,8 @@ public:
     }
 
     void parseCode(int code, dxfReader *reader);
-    void toPolyline(DRW_Polyline *pol);
+    void toPolyline(DRW_Polyline *pol, int parts = 128);
+    virtual void applyExtrusion();
     void correctAxis();
 public:
     double ratio;           /*!< ratio, code 40 */

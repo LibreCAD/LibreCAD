@@ -728,10 +728,10 @@ bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>&
     //    std::cout<<"dn="<<dn<<std::endl;
     //    data.center.set(-0.5*dn(1)/dn(0),-0.5*dn(3)/dn(2)); // center
     //    double d(1.+0.25*(dn(1)*dn(1)/dn(0)+dn(3)*dn(3)/dn(2)));
-    //    if(fabs(dn(0))<RS_TOLERANCE*RS_TOLERANCE
-    //            ||fabs(dn(2))<RS_TOLERANCE*RS_TOLERANCE
-    //            ||d/dn(0)<RS_TOLERANCE*RS_TOLERANCE
-    //            ||d/dn(2)<RS_TOLERANCE*RS_TOLERANCE
+    //    if(fabs(dn(0))<RS_TOLERANCE2
+    //            ||fabs(dn(2))<RS_TOLERANCE2
+    //            ||d/dn(0)<RS_TOLERANCE2
+    //            ||d/dn(2)<RS_TOLERANCE2
     //            ) {
     //        //ellipse not defined
     //        return false;
@@ -751,7 +751,7 @@ bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>&
                 cmax=fabs(mt0[j][i]);
             }
         }
-        if(cmax<RS_TOLERANCE*RS_TOLERANCE) return false; //singular matrix
+        if(cmax<RS_TOLERANCE2) return false; //singular matrix
         if(imax != i) {//move the line with largest absolute value at column i to row i, to avoid division by zero
             std::swap(mt0[i],mt0[imax]);
             //            for(int j=i;j<=mSize;j++) {
