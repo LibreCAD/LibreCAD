@@ -17,7 +17,7 @@ SUBDIRS     = \
         importshp \
         sample
 
-TRANSLATIONS = ./ts/plugin_ca.ts \
+TRANSLATIONS = ./ts/plugins_ca.ts \
     ./ts/plugins_cs.ts \
     ./ts/plugins_et.ts \
     ./ts/plugins_en.ts \
