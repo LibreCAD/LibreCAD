@@ -1,10 +1,13 @@
-win32 {
-    include(settings_windows.pro)
-}
+
 unix {
     macx {
-        include(settings_macx.pro)
+        INSTALLDIR = ../../
     } else {
-        include(settings_linux.pro)
+        INSTALLDIR = ../../unix
     }
 }
+
+win32 {
+    INSTALLDIR = ../../windows
+}
+

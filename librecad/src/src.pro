@@ -17,8 +17,9 @@ SCMREVISION="2.0.0rc1"
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
 # Use common project definitions.
-include(../../settings.pro)
 include(../../common.pro)
+include(../../muparser.pri)
+include(../../boost.pri)
 
 #uncomment to use 2D rs_vector instead of 3D
 #DEFINES += RS_VECTOR2D=1
@@ -72,9 +73,7 @@ win32 {
 # Additional libraries to load
 LIBS += -L../../generated/lib  \
     -ldxfrw \
-    -ljwwlib \
-    -lmuparser
-
+    -ljwwlib
 
 DEPENDPATH += \
     ../../libraries/libdxfrw/src \

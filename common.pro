@@ -2,6 +2,8 @@
 # include user-defined things in every qmake project
 exists( custom.pro ):include( custom.pro )
 
+include( settings.pro )
+
 # Store intermedia stuff somewhere else
 isEmpty(GENERATED_DIR){
  GENERATED_DIR = generated
@@ -21,32 +23,6 @@ win32 {
 } else {
     COPY = cp
 }
-
-
-# Boost
-exists($${BOOST_DIR}){
-    INCLUDEPATH += "$${BOOST_DIR}"
-    LIBS += -L"$${BOOST_LIBDIR}" $${BOOST_LIBS}
-    HEADERS += "$${BOOST_DIR}"
-}
-
-!exists($${BOOST_DIR}) {
-   # error(Boost was not found, please install boost!)
-}
-message(Using boost libraries in $${BOOST_DIR}.)
-
-
-# muParser
-# ********
-
-exists($${MUPARSER_DIR}){
-    INCLUDEPATH += "$${MUPARSER_DIR}"/include
-    LIBS += -L"$${MUPARSER_DIR}"/lib
-}else{
-   message("muParser was not found, please install muParser!")
-}
-message("Using muParser libraries in $${MUPARSER_DIR}.")
-
 
 # Windows compiler settings
 win32 {
