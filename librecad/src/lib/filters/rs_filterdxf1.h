@@ -83,7 +83,7 @@ public:
     void    setBuf(char* _buf) {
         fBuf=_buf;
     }
-    void    setFSize(uint _s) {
+    void    setFSize(unsigned _s) {
         fSize=_s;
     }
     void    copyBufFrom(const char* _buf);
@@ -114,7 +114,7 @@ protected:
     FILE*   fPointer;         // File pointer
     char*   fBuf;             // Filebuffer
     int     fBufP;            // Filebuffer-Pointer (walks through 'fBuf')
-    uint    fSize;            // Filesize
+    unsigned    fSize;            // Filesize
     bool    dosFile;          // File is in DOS-format
     int       numElements;
     QString name;

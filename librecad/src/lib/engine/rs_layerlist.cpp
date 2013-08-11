@@ -352,7 +352,7 @@ void RS_LayerList::togglePrint(RS_Layer* layer) {
  */
 void RS_LayerList::freezeAll(bool freeze) {
 
-    for (uint l=0; l<count(); l++) {
+    for (unsigned l=0; l<count(); l++) {
         if (at(l)->isVisibleInLayerList()) {
              at(l)->freeze(freeze);
          }
@@ -399,7 +399,7 @@ void RS_LayerList::removeListener(RS_LayerListListener* listener) {
 std::ostream& operator << (std::ostream& os, RS_LayerList& l) {
 
     os << "Layerlist: \n";
-    for (uint i=0; i<l.count(); i++) {
+    for (unsigned i=0; i<l.count(); i++) {
         os << *(l.at(i)) << "\n";
     }
 

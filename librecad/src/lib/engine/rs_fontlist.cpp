@@ -100,7 +100,7 @@ void RS_FontList::removeFont(RS_Font* font) {
     if (i != -1)
         delete fonts.takeAt(i);
 
-    //for (uint i=0; i<fontListListeners.count(); ++i) {
+    //for (unsigned i=0; i<fontListListeners.count(); ++i) {
     //    RS_FontListListener* l = fontListListeners.at(i);
     //    l->fontRemoved(font);
     //}

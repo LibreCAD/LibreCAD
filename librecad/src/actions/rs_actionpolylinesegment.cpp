@@ -125,7 +125,7 @@ bool RS_ActionPolylineSegment::convertPolyline(RS_Entity* selectedEntity) {
     RS_Vector end = selectedEntity->getEndpoint();
     completed.append(selectedEntity);
 //get list with useful entities
-    for (uint i=0; i<container->count(); ++i) {
+    for (unsigned i=0; i<container->count(); ++i) {
         RS_Entity* e1 = container->entityAt(i);
         if (e1->isLocked() || !e1->isVisible() || e1 == selectedEntity) continue;
         if (e1->rtti()==RS2::EntityLine || e1->rtti()==RS2::EntityArc

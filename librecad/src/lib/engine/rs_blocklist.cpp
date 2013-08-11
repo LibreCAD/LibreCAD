@@ -78,7 +78,7 @@ void RS_BlockList::activate(RS_Block* block) {
     activeBlock = block;
 
     /*
-       for (uint i=0; i<blockListListeners.count(); ++i) {
+       for (unsigned i=0; i<blockListListeners.count(); ++i) {
            RS_BlockListListener* l = blockListListeners.at(i);
     	if (l!=NULL) {
            	l->blockActivated(activeBlock);
@@ -208,7 +208,7 @@ bool RS_BlockList::rename(RS_Block* block, const QString& name) {
 void RS_BlockList::editBlock(RS_Block* block, const RS_Block& source) {
 	*block = source;
 	
-	for (uint i=0; i<blockListListeners.count(); ++i) {
+    for (unsigned i=0; i<blockListListeners.count(); ++i) {
 		RS_BlockListListener* l = blockListListeners.at(i);
  
 		l->blockEdited(block);
@@ -322,7 +322,7 @@ void RS_BlockList::toggleBlock(const QString& name) {
 	block->toggle();
 	
     // Notify listeners:
-	for (uint i=0; i<blockListListeners.count(); ++i) {
+    for (unsigned i=0; i<blockListListeners.count(); ++i) {
 		RS_BlockListListener* l = blockListListeners.at(i);
  
 		l->blockToggled(block);

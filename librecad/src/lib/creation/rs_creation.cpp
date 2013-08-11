@@ -1218,7 +1218,7 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData& data,
     for (RS_Entity* e=container->firstEntity();
          e!=NULL;
          e=container->nextEntity()) {
-        //for (uint i=0; i<container->count(); ++i) {
+        //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
 
         if (e!=NULL && e->isSelected()) {

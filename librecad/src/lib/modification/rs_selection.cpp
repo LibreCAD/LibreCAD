@@ -82,7 +82,7 @@ void RS_Selection::selectAll(bool select) {
     for (RS_Entity* e=container->firstEntity();
              e!=NULL;
              e=container->nextEntity()) {
-    //for (uint i=0; i<container->count(); ++i) {
+    //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
 
         if (e!=NULL && e->isVisible()) {
@@ -108,7 +108,7 @@ void RS_Selection::invertSelection() {
 
     for (RS_Entity* e=container->firstEntity(); e!=NULL;
             e=container->nextEntity()) {
-    //for (uint i=0; i<container->count(); ++i) {
+    //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
 
         if (e!=NULL && e->isVisible()) {
@@ -158,7 +158,7 @@ void RS_Selection::selectIntersected(const RS_Vector& v1, const RS_Vector& v2,
 
     for (RS_Entity* e=container->firstEntity(); e!=NULL;
             e=container->nextEntity()) {
-    //for (uint i=0; i<container->count(); ++i) {
+    //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
 
         if (e!=NULL && e->isVisible()) {
@@ -242,7 +242,7 @@ void RS_Selection::selectContour(RS_Entity* e) {
 
         for (RS_Entity* en=container->firstEntity(); en!=NULL;
                 en=container->nextEntity()) {
-        //for (uint i=0; i<container->count(); ++i) {
+        //for (unsigned i=0; i<container->count(); ++i) {
             //RS_Entity* en = container->entityAt(i);
 
             if (en!=NULL && en->isVisible() && 

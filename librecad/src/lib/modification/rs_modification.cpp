@@ -122,7 +122,7 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data) {
 
     for (RS_Entity* e=container->firstEntity(); e!=NULL;
             e=container->nextEntity()) {
-        //for (uint i=0; i<container->count(); ++i) {
+        //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
         if (e!=NULL && e->isSelected()) {
             RS_Entity* ec = e->clone();
@@ -207,7 +207,7 @@ void RS_Modification::copy(const RS_Vector& ref, const bool cut) {
     // copy entities / layers / blocks
     for (RS_Entity* e=container->firstEntity(); e!=NULL;
             e=container->nextEntity()) {
-        //for (uint i=0; i<container->count(); ++i) {
+        //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
 
         if (e!=NULL && e->isSelected()) {
@@ -304,7 +304,7 @@ void RS_Modification::copyLayers(RS_Entity* e) {
         if (b!=NULL) {
             for (RS_Entity* e2=b->firstEntity(); e2!=NULL;
                     e2=b->nextEntity()) {
-                //for (uint i=0; i<b->count(); ++i) {
+                //for (unsigned i=0; i<b->count(); ++i) {
                 //RS_Entity* e2 = b->entityAt(i);
                 copyLayers(e2);
             }
@@ -381,7 +381,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     // insert layers:
     if (graphic!=NULL) {
         RS_Layer* layer = graphic->getActiveLayer();
-        for(uint i=0; i<source->countLayers(); ++i) {
+        for(unsigned i=0; i<source->countLayers(); ++i) {
             RS_Layer* l = source->layerAt(i);
             if (l!=NULL) {
                 if (graphic->findLayer(l->getName())==NULL) {
@@ -396,7 +396,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     QHash<QString, QString>blocksDict;
     // find block names and rename if it exist:
     if (graphic!=NULL) {
-        for(uint i=0; i<source->countBlocks(); ++i) {
+        for(unsigned i=0; i<source->countBlocks(); ++i) {
             RS_Block* b = source->blockAt(i);
             if (b!=NULL) {
                 QString newName = b->getName();
@@ -419,14 +419,14 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
         }
 
         //add new blocks with new names
-        for(uint i=0; i<source->countBlocks(); ++i) {
+        for(unsigned i=0; i<source->countBlocks(); ++i) {
             RS_Block* b = source->blockAt(i);
             if (b!=NULL) {
                     RS_Block* bc = (RS_Block*)b->clone();
                     //bc->scale(bc->getBasePoint(), RS_Vector(factor, factor));
                     // scale block but don't scale inserts in block
                     //  (they already scale with their block)
-                    for(uint i2=0; i2<bc->count(); ++i2) {
+                    for(unsigned i2=0; i2<bc->count(); ++i2) {
                         RS_Entity* e = bc->entityAt(i2);
                         if (e!=NULL) {
                             if (e->rtti()==RS2::EntityInsert) {
@@ -1442,7 +1442,7 @@ bool RS_Modification::move(RS_MoveData& data) {
             num<=data.number || (data.number==0 && num<=1);
             num++) {
         // too slow:
-        //for (uint i=0; i<container->count(); ++i) {
+        //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
         for (RS_Entity* e=container->firstEntity();
                 e!=NULL;
@@ -1504,7 +1504,7 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
             num<=data.number || (data.number==0 && num<=1);
             num++) {
         // too slow:
-        //for (uint i=0; i<container->count(); ++i) {
+        //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
         for (RS_Entity* e=container->firstEntity();
                 e!=NULL;
@@ -1571,7 +1571,7 @@ bool RS_Modification::rotate(RS_RotateData& data) {
         for (RS_Entity* e=container->firstEntity();
                 e!=NULL;
                 e=container->nextEntity()) {
-            //for (uint i=0; i<container->count(); ++i) {
+            //for (unsigned i=0; i<container->count(); ++i) {
             //RS_Entity* e = container->entityAt(i);
 
             if (e!=NULL && e->isSelected()) {
@@ -1671,7 +1671,7 @@ bool RS_Modification::scale(RS_ScaleData& data) {
             //for (RS_Entity* e=container->firstEntity();
             //        e!=NULL;
             //        e=container->nextEntity()) {
-            //for (uint i=0; i<container->count(); ++i) {
+            //for (unsigned i=0; i<container->count(); ++i) {
             //RS_Entity* e = container->entityAt(i);
             if (e!=NULL ) {
                 RS_Entity* ec = e->clone();
@@ -1731,7 +1731,7 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
         for (RS_Entity* e=container->firstEntity();
                 e!=NULL;
                 e=container->nextEntity()) {
-            //for (uint i=0; i<container->count(); ++i) {
+            //for (unsigned i=0; i<container->count(); ++i) {
             //RS_Entity* e = container->entityAt(i);
 
             if (e!=NULL && e->isSelected()) {
@@ -1792,7 +1792,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
         for (RS_Entity* e=container->firstEntity();
                 e!=NULL;
                 e=container->nextEntity()) {
-            //for (uint i=0; i<container->count(); ++i) {
+            //for (unsigned i=0; i<container->count(); ++i) {
             //RS_Entity* e = container->entityAt(i);
 
             if (e!=NULL && e->isSelected()) {
@@ -1856,7 +1856,7 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
         for (RS_Entity* e=container->firstEntity();
                 e!=NULL;
                 e=container->nextEntity()) {
-            //for (uint i=0; i<container->count(); ++i) {
+            //for (unsigned i=0; i<container->count(); ++i) {
             //RS_Entity* e = container->entityAt(i);
 
             if (e!=NULL && e->isSelected()) {
@@ -1906,7 +1906,7 @@ void RS_Modification::deselectOriginals(bool remove
             e!=NULL;
             e=container->nextEntity()) {
 
-        //for (uint i=0; i<container->count(); ++i) {
+        //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
 
         if (e!=NULL) {
@@ -2919,7 +2919,7 @@ bool RS_Modification::explode() {
     for (RS_Entity* e=container->firstEntity();
             e!=NULL;
             e=container->nextEntity()) {
-        //for (uint i=0; i<container->count(); ++i) {
+        //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
 
         if (e!=NULL && e->isSelected()) {
@@ -2930,7 +2930,7 @@ bool RS_Modification::explode() {
                 //ec->setSelected(false);
 
                 // iterate and explode container:
-                //for (uint i2=0; i2<ec->count(); ++i2) {
+                //for (unsigned i2=0; i2<ec->count(); ++i2) {
                 //    RS_Entity* e2 = ec->entityAt(i2);
                 RS2::ResolveLevel rl;
                 bool resolvePen;

@@ -99,7 +99,7 @@ void RS_ScriptList::removeScript(RS_Script* script) {
 #endif
 
 
-    //for (uint i=0; i<scriptListListeners.count(); ++i) {
+    //for (unsigned i=0; i<scriptListListeners.count(); ++i) {
     //    RS_ScriptListListener* l = scriptListListeners.at(i);
     //    l->scriptRemoved(script);
     //}

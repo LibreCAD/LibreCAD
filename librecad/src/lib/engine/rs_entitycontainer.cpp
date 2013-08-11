@@ -1626,7 +1626,7 @@ bool RS_EntityContainer::optimizeContours() {
 
     /** accept all full circles **/
     QList<RS_Entity*> enList;
-    for (uint ci=0; ci<count(); ++ci) {
+    for (unsigned ci=0; ci<count(); ++ci) {
         RS_Entity* e1=entityAt(ci);
         if (!e1->isEdge() || e1->isContainer() ) {
             enList<<e1;

@@ -25,11 +25,11 @@
     #include <sys/types.h>
 #endif
 #ifdef __WIN32__
-    #define uint unsigned int
+//    #define uint unsigned int
     #include <time.h>
 #endif
 #include <iostream>
-#include <math.h>
+#include <cmath>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include FT_OUTLINE_H
@@ -207,7 +207,7 @@ FT_Error convertGlyph(FT_ULong charcode) {
 
     // write glyph header
     if (fpLff!=NULL) {
-        fprintf(fpLff, "\n[#%04X]\n", (uint)charcode);
+        fprintf(fpLff, "\n[#%04X]\n", (unsigned)charcode);
     }
 
     // trace outline of the glyph
@@ -366,7 +366,7 @@ int main(int argc, char* argv[]) {
     fprintf(fpLff, "# License:           %s\n", license.c_str());
     fprintf(fpLff, "\n");
 
-    uint first;
+    unsigned first;
     FT_Get_First_Char(face, &first);
 
     FT_ULong  charcode;
