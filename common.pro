@@ -28,9 +28,8 @@ win32 {
 win32 {
     QMAKE_CXXFLAGS += -U__STRICT_ANSI__
     QMAKE_CFLAGS_THREAD -= -mthreads
+    QMAKE_CXXFLAGS_THREAD -= -mthreads
     QMAKE_LFLAGS_THREAD -= -mthreads
-    QMAKE_C++FLAGS_THREAD -= -mthreads
-    QMAKE_L++FLAGS_THREAD -= -mthreads
     #qt version check for mingw
     win32-g++ {
         contains(QT_VERSION, ^4\\.8\\.[0-4]) {
