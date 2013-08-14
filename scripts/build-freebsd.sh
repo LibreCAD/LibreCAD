@@ -1,6 +1,6 @@
 #!/bin/sh
 
-## copyright(C), 2013 Tamas TAVESZ(ice at down.royalcomp.hu), 2013
+# Copyright abandoned 2013 Tamas TEVESZ <ice@extreme.hu>
 # 
 # this script builds LibreCAD on FreeBSD
 # The following ports must be installed:
@@ -9,34 +9,65 @@
 # graphics/qt4-svg databases/qt4-sql(?) textproc/qt4-clucene(?)
 # devel/boost-libs math/muparser
 # 
-# and one of
-# lang/gcc46 lang/gcc47 lang/gcc48
+# lang/gcc46 or lang/gcc47 or lang/gcc48 or lang/gcc49 or
+# lang/clang33 and devel/llvm33 and devel/libc++
 
-SCRIPTPATH="$( dirname "$0" )"
+scriptpath="$( readlink -f "${0}" )"
+scriptpath="${scriptpath%/*}"
 
-if [ -z "${cver}" ]
+if [ -z "${use_cxx}" ]
 then
 	if [ "$( which g++46 )" ]
 	then
-		cver=46
-	elif [ "$( which 47 )" ]
+		use_cxx="g++46"
+	elif [ "$( which g++47 )" ]
 	then
-		cver=47
-	elif [ "$( which 48 )" ]
+		use_cxx="g++47"
+	elif [ "$( which g++48 )" ]
 	then
-		cver=48
+		use_cxx="g++48"
+	elif [ "$( which g++49 )" ]
+	then
+		use_cxx="g++49"
+	elif [ "$( which clang++33 )" ]
+	then
+		use_cxx="clang++33"
 	else
-		# XXX: investigate clang*
-		echo "No supported cver found. Install one of lang/gcc4{6,7,8}" >&1
+		echo "No supported compiler found. Install one of lang/{gcc4{6,7,8},clang33}" >&2
 		exit 1
 	fi
+elif [ -z "$( which ${use_cxx} )" ]
+then
+	echo "Selected compiler ${use_cxx} not found" >&2
+	exit 1
 fi
 
-# Hackety hack to find the correct libstdc++
-# XXX: Wonder how other apps do this...
-rpath="$( g++${cver} -print-search-dirs | sed -n '/^libraries: /{s!^libraries: !!;s![:=]\(/.[^:=]*\).*!\1!;s!/gcc/.*!!;p;q;}' )"
+rpath=
+spec=
+cxxflags=
 
-cd "${SCRIPTPATH}"/..
-qmake-qt4 librecad.pro -r -spec freebsd-g++${cver} QMAKE_RPATHDIR="${rpath}"
+case "${use_cxx}" in
+	'g++'*)
+		use_gcc=${use_cxx#'g++'}
+		spec="freebsd-g++${use_gcc}"
+		if [ "${use_gcc}" = "49" ]
+		then
+			spec="mkspec/${spec}"
+		fi
+		rpath="$( make -C /usr/ports/lang/gcc${use_gcc} -V LOCALBASE )"/lib/gcc${use_gcc}
+	;;
+	'clang++33')
+		if [ ! -e "$( make -C /usr/ports/lang/clang33 -V LOCALBASE )"/lib/libc++.so ]
+		then
+			echo "Install devel/libc++" >&2
+			exit 1
+		fi
+		spec='mkspec/freebsd-clang33'
+		cxxflags='-stdlib=libc++'
+	;;
+esac
+
+cd "${scriptpath}/.."
+qmake-qt4 librecad.pro -spec ${spec} ${rpath:+QMAKE_RPATHDIR="${rpath}"} ${cxxflags:+QMAKE_CXXFLAGS="${cxxflags}"}
 make -j$( sysctl -n hw.ncpu )
 
