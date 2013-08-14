@@ -358,7 +358,7 @@ int main(int argc, char* argv[]) {
     char buffer [12];
     time ( &rawtime );
     timeinfo = localtime ( &rawtime );
-    strftime (buffer,80,"%Y-%m-%d",timeinfo);
+    strftime (buffer,sizeof(buffer),"%Y-%m-%d",timeinfo);
 
     fprintf(fpLff, "# Created:           %s\n", buffer);
     fprintf(fpLff, "# Last modified:     %s\n", buffer);
