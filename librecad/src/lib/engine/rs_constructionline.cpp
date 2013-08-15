@@ -142,11 +142,11 @@ LC_Quadratic RS_ConstructionLine::getQuadratic() const
     RS_Vector normal(-dvp.y,dvp.x);
     ce[0]=normal.x;
     ce[1]=normal.y;
-    ce[2]=- normal.dotP(data.point2);
+    ce[2]= -normal.dotP(data.point2);
     return LC_Quadratic(ce);
 }
 
-RS_Vector RS_ConstructionLine::getMiddlePoint(){
+RS_Vector RS_ConstructionLine::getMiddlePoint() const{
     return RS_Vector(false);
 }
 RS_Vector RS_ConstructionLine::getNearestMiddle(const RS_Vector& /*coord*/,

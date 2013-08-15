@@ -512,7 +512,9 @@ public:
     virtual void scale(const RS_Vector& center, const double& factor) {
         scale(center, RS_Vector(factor, factor));
     }
-
+    virtual void scale(const RS_Vector& factor) {
+        scale(RS_Vector(0.,0.), factor);
+    }
     /**
      * Implementations must mirror the entity by the given axis.
      */
