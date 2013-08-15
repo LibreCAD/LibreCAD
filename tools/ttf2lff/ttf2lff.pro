@@ -4,7 +4,10 @@
 #
 #-------------------------------------------------
 
-QT -= core gui
+include(../../common.pro)
+include(../../freetype.pri)
+
+QT = core
 CONFIG += console
 CONFIG -= app_bundle
 
@@ -12,9 +15,6 @@ TEMPLATE = app
 DEFINES += VERSION="\"0.0.0.2\""
 
 GENERATED_DIR = ../../generated/tools/ttf2lff
-include(../../common.pro)
-include(../../freetype.pri)
-
 SOURCES += main.cpp
 
 unix {
