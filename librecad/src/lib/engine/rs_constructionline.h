@@ -126,7 +126,7 @@ for linear:
 m0 x + m1 y + m2 =0
 **/
     virtual LC_Quadratic getQuadratic() const;
-    virtual RS_Vector getMiddlePoint(void);
+    virtual RS_Vector getMiddlePoint(void) const;
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL)const;
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
