@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 include(../../common.pro)
-include(../../freetype.pri)
+include(./freetype.pri)
 
 QT = core
 CONFIG += console

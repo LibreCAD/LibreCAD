@@ -124,21 +124,26 @@ unix {
 
 win32 {
 
-    !exists("$$(BOOST_DIR)"){
+    isEmpty( BOOST_DIR ) {
+        # BOOST_DIR was not set in customer.pro
         BOOST_DIR = /boost/boost_1_53_0
-        BOOST_LIBDIR = /boost/boost_1_53_0
-    } else {
-        BOOST_DIR = $$(BOOST_DIR)
-        BOOST_LIBDIR = $$(BOOST_DIR)
+        BOOST_LIBDIR = "$$(BOOST_DIR)"
+    }
+    !exists("$$BOOST_DIR") {
+        # check env for BOOST_DIR
+        exists("$$(BOOST_DIR)"){
+            BOOST_DIR = "$$(BOOST_DIR)"
+            BOOST_LIBDIR = "$$(BOOST_DIR)"
+        }
     }
 
-    exists($${BOOST_DIR}) {
-        INCLUDEPATH += "$${BOOST_DIR}"
-        LIBS += -L"$${BOOST_LIBDIR}" $${BOOST_LIBS}
-        HEADERS += "$${BOOST_DIR}"
-        message("Using Boost includes from $${BOOST_DIR}, libraries from $${BOOST_LIBDIR}")
+    exists("$$BOOST_DIR") {
+        INCLUDEPATH += "$$BOOST_DIR"
+        LIBS += -L"$$BOOST_LIBDIR" $$BOOST_LIBS
+        HEADERS += "$$BOOST_DIR"
+        message("Using Boost includes from $${BOOST_DIR}, libraries from $${BOOST_LIBDIR}.")
     } else {
-        error(Boost was not found, please install Boost!)
+        error("Boost was not found in $${BOOST_DIR}, please install Boost or check settings in custom.pro!")
     }
 
 }
