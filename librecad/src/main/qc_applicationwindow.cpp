@@ -3823,12 +3823,25 @@ void QC_ApplicationWindow::slotHelpAbout() {
 
     QMessageBox box(this);
     box.setWindowTitle(tr("About..."));
+    /**
+     * Compiler macro list in Qt source tree
+     * Src/qtbase/src/corelib/global/qcompilerdetection.h
+     */
+
     box.setText(       QString("<p><font size=\"2\">") +
                        "<h2>"+ XSTR(QC_APPNAME)+ "</h2>" +
                        tr("Version: %1").arg(XSTR(QC_VERSION)) + "<br>" +
 #ifdef QC_SCMREVISION
                        tr("SCM Revision: %1").arg(XSTR(QC_SCMREVISION)) + "<br>" +
 #endif
+#if defined(Q_CC_CLANG)
+                       tr("Compiler: Clang %1.%2.%3").arg(__clang_major__).arg(__clang_minor__).arg(__clang_patchlevel__) + "<br>" +
+#elif defined(Q_CC_GNU)
+                       tr("Compiler: GNU GCC %1.%2.%3").arg(__GNUC__).arg(__GNUC_MINOR__).arg(__GNUC_PATCHLEVEL__) + "<br>" +
+#elif defined(Q_CC_MSVC)
+                       tr("Compiler: Microsoft Visual C++<br>") +
+#endif
+                       tr("Qt Version: %1").arg(qVersion()) + "<br>" +
                        tr("Compiled on: %1").arg(__DATE__) + "<br>" +
                        "Portions (c) 2011 by R. van Twisk" + "<br>" +
                        tr("Program Icons Supplied by") +"<br>&nbsp;&nbsp;&nbsp;Pablo: LibreCAD Argentine<br/>" +
