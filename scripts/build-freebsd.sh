@@ -69,5 +69,9 @@ esac
 
 cd "${scriptpath}/.."
 qmake-qt4 librecad.pro -spec ${spec} ${rpath:+QMAKE_RPATHDIR="${rpath}"} ${cxxflags:+QMAKE_CXXFLAGS="${cxxflags}"}
-make -j$( sysctl -n hw.ncpu )
+NCPU="$(sysctl -n hw.ncpu)"
+echo "NCPU=${NCPU}"
+[ -z "${NCPU}" ] && NCPU=4
+echo "NCPU=${NCPU}"
+make -j"${NCPU}"
 
