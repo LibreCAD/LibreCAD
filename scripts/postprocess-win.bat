@@ -20,12 +20,12 @@ cd "%PWD%"
 
 REM Postprocess for windows
 echo " Copying fonts and patterns"
-mkdir "%RESOURCEDIR%\fonts"
-mkdir "%RESOURCEDIR%\patterns"
-mkdir "%RESOURCEDIR%\library"
-mkdir "%RESOURCEDIR%\doc"
-mkdir "%RESOURCEDIR%\library\misc"
-mkdir "%RESOURCEDIR%\library\templates"
+if not exist "%RESOURCEDIR%\fonts\" (mkdir "%RESOURCEDIR%\fonts")
+if not exist "%RESOURCEDIR%\patterns\" (mkdir "%RESOURCEDIR%\patterns")
+if not exist "%RESOURCEDIR%\library\" (mkdir "%RESOURCEDIR%\library")
+if not exist "%RESOURCEDIR%\doc\" (mkdir "%RESOURCEDIR%\doc")
+if not exist "%RESOURCEDIR%\library\misc\" (mkdir "%RESOURCEDIR%\library\misc")
+if not exist "%RESOURCEDIR%\library\templates\" (mkdir "%RESOURCEDIR%\library\templates")
 
 copy "librecad\support\patterns\*.dxf" "%RESOURCEDIR%\patterns"
 copy "librecad\support\fonts\*.lff" "%RESOURCEDIR%\fonts"
@@ -39,7 +39,7 @@ REM Generate translations
 echo "Generating Translations"
 lrelease librecad\src\src.pro
 lrelease plugins\plugins.pro
-mkdir "%RESOURCEDIR%\qm"
+if not exist "%RESOURCEDIR%\qm\" (mkdir "%RESOURCEDIR%\qm")
 
 cd "%TSDIRLC%"
 for /f %%F in ('dir /b *.qm') do (
