@@ -401,7 +401,7 @@ int main(int argc, char* argv[]) {
     fprintf(fpLff, "# WordSpacing:       %s\n", clearZeros(wordSpacing).c_str());
     fprintf(fpLff, "# LineSpacingFactor: %s\n", clearZeros(lineSpacingFactor).c_str());
 
-    datestamp = QDate::currentDate().toString("yyyy-MM-dd").toAscii().constData();
+    datestamp = QDate::currentDate().toString("yyyy-MM-dd").toLatin1().constData();
 
     fprintf(fpLff, "# Created:           %s\n", datestamp.c_str());
     fprintf(fpLff, "# Last modified:     %s\n", datestamp.c_str());

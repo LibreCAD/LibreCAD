@@ -69,5 +69,4 @@ esac
 
 cd "${scriptpath}/.."
 qmake-qt4 librecad.pro -spec ${spec} ${rpath:+QMAKE_RPATHDIR="${rpath}"} ${cxxflags:+QMAKE_CXXFLAGS="${cxxflags}"}
-make -j$( sysctl -n hw.ncpu )
-
+make -j$( /sbin/sysctl -n hw.ncpu )
