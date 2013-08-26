@@ -467,42 +467,62 @@ Auto-save disabled.</source>
         <translation>Rreth...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3828"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3833"/>
         <source>Version: %1</source>
         <translation>Versioni: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3830"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3835"/>
         <source>SCM Revision: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3832"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3838"/>
+        <source>Compiler: Clang %1.%2.%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3840"/>
+        <source>Compiler: GNU GCC %1.%2.%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3842"/>
+        <source>Compiler: Microsoft Visual C++&lt;br&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3844"/>
+        <source>Qt Version: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3845"/>
         <source>Compiled on: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3834"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3847"/>
         <source>Program Icons Supplied by</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3835"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3848"/>
         <source>Splash and Logo supplied by</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3837"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3850"/>
         <source>Modules: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3839"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3852"/>
         <source>Main Website : </source>
         <translation>Faqja Web Kryesore :</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3844"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3857"/>
         <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -511,12 +531,12 @@ Auto-save disabled.</source>
         <translation type="obsolete">Të lutem dhuro për LibreCAD&apos;in në mënyrë që të ndihmosh në mirëmbajtjen e kodit programor dhe faqes së saj web.</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3909"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3922"/>
         <source>Help</source>
         <translation>Ndihmë</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3917"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3930"/>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation type="unfinished"></translation>
     </message>
