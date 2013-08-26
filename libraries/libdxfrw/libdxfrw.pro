@@ -17,7 +17,7 @@ DLL_NAME = dxfrw
 TARGET = $$DLL_NAME
 
 GENERATED_DIR = ../../generated/lib/libdxfrw
-# Use common.priject definitions.
+# Use common project definitions.
 include(../../common.pri)
 
 # DEFINES += DRW_DBG

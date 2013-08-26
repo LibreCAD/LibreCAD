@@ -17,7 +17,7 @@ DLL_NAME = jwwlib
 TARGET = $$DLL_NAME
 
 GENERATED_DIR = ../../generated/lib/jwwlib
-# Use common.priject definitions.
+# Use common project definitions.
 include(../../common.pri)
 
 #INCLUDEPATH += \

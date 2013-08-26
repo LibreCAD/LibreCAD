@@ -11,7 +11,7 @@ VERSION = 1.0.0
 PLUGIN_NAME=importshp
 
 GENERATED_DIR = ../../generated/plugin/importshp
-# Use common.priject definitions.
+# Use common project definitions.
 include(../../common.pri)
 
 # For plugins

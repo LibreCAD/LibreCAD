@@ -12,7 +12,7 @@ PLUGIN_NAME=align
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/plugin/align
-# Use common.priject definitions.
+# Use common project definitions.
 include(../../common.pri)
 
 # For plugins
