@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="de">
 <context>
@@ -559,19 +558,19 @@ Automatisches speichern wurde deaktiviert.</translation>
     </message>
     <message>
         <source>Pen Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswahl Stift</translation>
     </message>
     <message>
         <source>Snap Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswahl Fangen</translation>
     </message>
     <message>
         <source>CAD Tools</source>
-        <translation type="unfinished">CAD Werkzeuge</translation>
+        <translation>CAD Werkzeuge</translation>
     </message>
     <message>
         <source>Export as</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren als</translation>
     </message>
 </context>
 <context>
@@ -6695,7 +6694,7 @@ Sie können diese Einstellungen auch später im Optionen Dialog von QCad ändern
     </message>
     <message>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbenannt</translation>
     </message>
 </context>
 <context>
@@ -10623,7 +10622,7 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source> or %1%2</source>
-        <translation type="unfinished"></translation>
+        <translation> oder %1%2</translation>
     </message>
 </context>
 <context>
