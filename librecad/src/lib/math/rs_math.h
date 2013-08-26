@@ -60,7 +60,7 @@
 #define RS_TOLERANCE2 1.0e-20
 #define RS_TOLERANCE_ANGLE 1.0e-8
 
-typedef unsigned int uint;
+//typedef unsigned int uint;
 
 
 /**

@@ -102,10 +102,10 @@ public:
 //    RS_Block* findLetter(const QString& name) {
 //		return letterList.find(name);
 //	}
-    uint countLetters() {
+    unsigned countLetters() {
         return letterList.count();
     }
-    RS_Block* letterAt(uint i) {
+    RS_Block* letterAt(unsigned i) {
 		return letterList.at(i);
 	}
 

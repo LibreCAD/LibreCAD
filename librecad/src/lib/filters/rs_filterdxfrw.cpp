@@ -1162,7 +1162,7 @@ void RS_FilterDXFRW::linkImage(const DRW_ImageDef *data) {
     }
 
     // update images in blocks:
-    for (uint i=0; i<graphic->countBlocks(); ++i) {
+    for (unsigned i=0; i<graphic->countBlocks(); ++i) {
         RS_Block* b = graphic->blockAt(i);
         for (RS_Entity* e=b->firstEntity(RS2::ResolveNone);
                 e!=NULL; e=b->nextEntity(RS2::ResolveNone)) {
@@ -1334,7 +1334,7 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
  */
 void RS_FilterDXFRW::writeBlockRecords(){
     RS_Block *blk;
-    for (uint i = 0; i < graphic->countBlocks(); i++) {
+    for (unsigned i = 0; i < graphic->countBlocks(); i++) {
         blk = graphic->blockAt(i);
         if (!blk->isUndone()){
             RS_DEBUG->print("writing block record: %s", (const char*)blk->getName().toLocal8Bit());
@@ -1350,7 +1350,7 @@ void RS_FilterDXFRW::writeBlocks() {
         int dimNum = 0, hatchNum= 0;
         QString prefix, sufix;
         //check for existing *D?? or  *U??
-        for (uint i = 0; i < graphic->countBlocks(); i++) {
+        for (unsigned i = 0; i < graphic->countBlocks(); i++) {
             blk = graphic->blockAt(i);
             prefix = blk->getName().left(2).toUpper();
             sufix = blk->getName().mid(2);
@@ -1406,7 +1406,7 @@ void RS_FilterDXFRW::writeBlocks() {
         }
     } //end version R12
 
-    for (uint i = 0; i < graphic->countBlocks(); i++) {
+    for (unsigned i = 0; i < graphic->countBlocks(); i++) {
         blk = graphic->blockAt(i);
         if (!blk->isUndone()) {
             RS_DEBUG->print("writing block: %s", (const char*)blk->getName().toLocal8Bit());
@@ -1744,7 +1744,7 @@ void RS_FilterDXFRW::writeTextstyles(){
     }
     //Find fonts used by text entities in blocks
     RS_Block *blk;
-    for (uint i = 0; i < graphic->countBlocks(); i++) {
+    for (unsigned i = 0; i < graphic->countBlocks(); i++) {
         blk = graphic->blockAt(i);
         for (RS_Entity *e = blk->firstEntity(RS2::ResolveNone);
              e != NULL; e = blk->nextEntity(RS2::ResolveNone)) {

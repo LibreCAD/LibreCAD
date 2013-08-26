@@ -58,7 +58,7 @@ void RS_VariableDict::clear() {
 /*void RS_VariableDict::activateBlock(RS_Block* block) {
 	activeBlock = block;
 	
-	for (uint i=0; i<blockListListeners.count(); ++i) {
+    for (unsigned i=0; i<blockListListeners.count(); ++i) {
 		RS_VariableDictListener* l = blockListListeners.at(i);
  
 		l->blockActivated(activeBlock);
@@ -259,7 +259,7 @@ double RS_VariableDict::getDouble(const QString& key,
  */
 /*
 void RS_VariableDict::addBlockNotification() {
-    for (uint i=0; i<blockListListeners.count(); ++i) {
+    for (unsigned i=0; i<blockListListeners.count(); ++i) {
         RS_VariableDictListener* l = blockListListeners.at(i);
         l->blockAdded(NULL);
     }

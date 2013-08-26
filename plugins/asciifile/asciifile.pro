@@ -12,7 +12,7 @@ PLUGIN_NAME=asciifile
 
 GENERATED_DIR = ../../generated/plugin/asciifile
 # Use common project definitions.
-include(../../common.pro)
+include(../../common.pri)
 
 # For plugins
 INCLUDEPATH    += ../../librecad/src/plugins

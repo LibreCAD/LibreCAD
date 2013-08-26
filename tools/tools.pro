@@ -4,27 +4,21 @@
 #
 #-------------------------------------------------
 
+exists( ../custom.pro ):include( ../custom.pro )
+
 TEMPLATE = subdirs
 
-SUBDIRS     =
+unix {
+    SUBDIRS = ttf2lff
+}
 
 win32 {
-#set this line with your freetype installation to build ttf2lff
-#download it from http://gnuwin32.sourceforge.net/packages/freetype.htm
-    FREETYPE_DIR = /Qt/freetype
-    exists($${FREETYPE_DIR}/include/ft2build.h){
-        SUBDIRS += ttf2lff
-        message(freetype found building ttf2lff tool.)
+    !isEmpty( FREETYPE_DIR ) {
+        SUBDIRS = ttf2lff
+        message( "FREETYPE_DIR is set, building ttf2lff")
+    }
+    else {
+        message( "FREETYPE_DIR is not set, ignoring ttf2lff")
     }
 }
-unix {
-    macx {
-        SUBDIRS += ttf2lff
-    } else {
-        SUBDIRS += ttf2lff
-    }
-}
-
-
-
 

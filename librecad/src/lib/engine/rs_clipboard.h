@@ -82,10 +82,10 @@ public:
 
 	void addEntity(RS_Entity* e);
 
-	uint count() {
+    unsigned count() {
 		return graphic.count();
 	}
-	RS_Entity* entityAt(uint i) {
+    RS_Entity* entityAt(unsigned i) {
 		return graphic.entityAt(i);
 	}
 	RS_Entity* firstEntity() {

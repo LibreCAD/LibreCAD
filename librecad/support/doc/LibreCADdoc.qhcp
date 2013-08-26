@@ -2,7 +2,7 @@
 <QHelpCollectionProject version="1.0">
     <assistant>
         <title>LibreCAD Manual</title>
-        <applicationIcon>img/librecadicon.png</applicationIcon>
+        <applicationIcon>img/librecadlogo.png</applicationIcon>
         <startPage>qthelp://LibreCAD.org/librecad/index.html</startPage>
         <aboutMenuText>
             <text>About LibreCAD Manual</text>

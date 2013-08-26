@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Little script to clean out the generated and makefiles
 rm -rf `find . -type f -name Makefile`

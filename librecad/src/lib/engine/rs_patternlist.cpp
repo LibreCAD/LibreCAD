@@ -98,7 +98,7 @@ void RS_PatternList::removePattern(RS_Pattern* pattern) {
 #endif
 
 
-    //for (uint i=0; i<patternListListeners.count(); ++i) {
+    //for (unsigned i=0; i<patternListListeners.count(); ++i) {
     //    RS_PatternListListener* l = patternListListeners.at(i);
     //    l->patternRemoved(pattern);
     //}

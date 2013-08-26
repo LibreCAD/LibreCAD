@@ -82,7 +82,7 @@ void QG_LayerModel::setLayerList(RS_LayerList* ll) {
 #endif
         return;
     }
-    for (uint i=0; i < ll->count(); ++i) {
+    for (unsigned i=0; i < ll->count(); ++i) {
         listLayer.append(ll->at(i));
     }
     qSort ( listLayer.begin(), listLayer.end(), layerLessThan );

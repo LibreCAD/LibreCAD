@@ -57,6 +57,31 @@ http://librecad.org/cms/home/from-source/linux.html
 
 NOTE 1: On systems like fedora (& Ubuntu??) You might need to run qmake-qt4 instead of just qmake
 
+FreeBSD users
+-------------
+
+Make sure you have the following ports installed:
+
+```
+x11-toolkits/qt4-gui devel/qt4-linguist devel/qt4-help-tools graphics/qt4-svg devel/boost-libs math/muparser
+```
+
+LibreCAD requires a C++11-capable compiler to build, Currently this means that one of
+
+```
+lang/gcc46, lang/gcc47, lang/gcc48 or lang/gcc49
+```
+
+must be used.
+
+Once these pre-requisites are satisfied, run the provided
+
+```
+scripts/build-freebsd.sh
+```
+
+See the script itself for some more options. Clang 3.3 can not currently build LibreCAD.
+
 Windows Users
 -------------
 

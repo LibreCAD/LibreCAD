@@ -106,7 +106,7 @@ double RS_DimAngular::getAngle() {
 /**
  * @return Center of the measured dimension.
  */
-RS_Vector RS_DimAngular::getCenter() {
+RS_Vector RS_DimAngular::getCenter() const {
     RS_ConstructionLine l1(NULL, RS_ConstructionLineData(edata.definitionPoint1,
                            edata.definitionPoint2));
     RS_ConstructionLine l2(NULL, RS_ConstructionLineData(edata.definitionPoint3,

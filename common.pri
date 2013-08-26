@@ -2,6 +2,8 @@
 # include user-defined things in every qmake project
 exists( custom.pro ):include( custom.pro )
 
+include( settings.pro )
+
 # Store intermedia stuff somewhere else
 isEmpty(GENERATED_DIR){
  GENERATED_DIR = generated
@@ -22,39 +24,12 @@ win32 {
     COPY = cp
 }
 
-
-# Boost
-exists($${BOOST_DIR}){
-    INCLUDEPATH += "$${BOOST_DIR}"
-    LIBS += -L"$${BOOST_LIBDIR}" $${BOOST_LIBS}
-    HEADERS += "$${BOOST_DIR}"
-}
-
-!exists($${BOOST_DIR}) {
-   # error(Boost was not found, please install boost!)
-}
-message(Using boost libraries in $${BOOST_DIR}.)
-
-
-# muParser
-# ********
-
-exists($${MUPARSER_DIR}){
-    INCLUDEPATH += "$${MUPARSER_DIR}"/include
-    LIBS += -L"$${MUPARSER_DIR}"/lib
-}else{
-   message("muParser was not found, please install muParser!")
-}
-message("Using muParser libraries in $${MUPARSER_DIR}.")
-
-
 # Windows compiler settings
 win32 {
     QMAKE_CXXFLAGS += -U__STRICT_ANSI__
     QMAKE_CFLAGS_THREAD -= -mthreads
+    QMAKE_CXXFLAGS_THREAD -= -mthreads
     QMAKE_LFLAGS_THREAD -= -mthreads
-    QMAKE_C++FLAGS_THREAD -= -mthreads
-    QMAKE_L++FLAGS_THREAD -= -mthreads
     #qt version check for mingw
     win32-g++ {
         contains(QT_VERSION, ^4\\.8\\.[0-4]) {

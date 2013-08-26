@@ -18,8 +18,7 @@ TARGET = $$DLL_NAME
 
 GENERATED_DIR = ../../generated/lib/jwwlib
 # Use common project definitions.
-include(../../settings.pro)
-include(../../common.pro)
+include(../../common.pri)
 
 #INCLUDEPATH += \
 #    ../dxflib/src

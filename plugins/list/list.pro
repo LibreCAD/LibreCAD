@@ -12,7 +12,7 @@ PLUGIN_NAME=list
 
 GENERATED_DIR = ../../generated/plugin/list
 # Use common project definitions.
-include(../../common.pro)
+include(../../common.pri)
 
 # For plugins
 INCLUDEPATH    += ../../librecad/src/plugins

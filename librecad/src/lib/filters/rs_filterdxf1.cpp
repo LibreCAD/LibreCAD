@@ -893,7 +893,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                     RS_MTextData::HAlign vhalign=RS_MTextData::HALeft;
                     // alignment (0=left, 1=center, 2=right)
                     //int   vattachement=7;   // 1=top left, 2, 3, 4, 5, 6, 7, 8, 9=bottom right
-                    //uint  vfl=0;            // special flags
+                    //unsigned  vfl=0;            // special flags
 //RLZ: unused                    bool  codeSeven=false;  // Have we found a code seven?
 
                     vtextStyle[0] = '\0';
