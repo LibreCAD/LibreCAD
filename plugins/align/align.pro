@@ -12,8 +12,8 @@ PLUGIN_NAME=align
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/plugin/align
-# Use common project definitions.
-include(../../common.pro)
+# Use common.priject definitions.
+include(../../common.pri)
 
 # For plugins
 INCLUDEPATH    += ../../librecad/src/plugins

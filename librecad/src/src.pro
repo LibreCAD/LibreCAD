@@ -16,8 +16,8 @@ SCMREVISION="2.0.0rc1"
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
-# Use common project definitions.
-include(../../common.pro)
+# Use common.priject definitions.
+include(../../common.pri)
 include(./muparser.pri)
 include(./boost.pri)
 

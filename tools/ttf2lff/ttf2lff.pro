@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-include(../../common.pro)
+include(../../common.pri)
 include(./freetype.pri)
 
 QT = core

@@ -11,8 +11,8 @@ VERSION = 1.0.0
 PLUGIN_NAME=asciifile
 
 GENERATED_DIR = ../../generated/plugin/asciifile
-# Use common project definitions.
-include(../../common.pro)
+# Use common.priject definitions.
+include(../../common.pri)
 
 # For plugins
 INCLUDEPATH    += ../../librecad/src/plugins

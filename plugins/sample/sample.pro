@@ -11,8 +11,8 @@ VERSION = 1.0.1
 PLUGIN_NAME=sample
 
 GENERATED_DIR = ../../generated/plugin/sample
-# Use common project definitions.
-include(../../common.pro)
+# Use common.priject definitions.
+include(../../common.pri)
 
 # For plugins
 INCLUDEPATH    += ../../librecad/src/plugins
