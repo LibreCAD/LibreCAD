@@ -60,9 +60,12 @@ unix {
     defineReplace( findBoostDirIn ) {
 
         boostDirs = $$ARGS
+            message( findBoostDirIn in $${boostDirs} )
 
         for( boostDir, boostDirs ) {
-            checkBoostIncDir( $${boostDir}/include ) : checkBoostLibDir( $${boostDir}/lib ) {
+#FIXME: library check not work in 64bits location are /usr/lib64
+#            checkBoostIncDir( $${boostDir}/include ) : checkBoostLibDir( $${boostDir}/lib ) {
+            checkBoostIncDir( $${boostDir}/include ) {
                 return( $${boostDir} )
             }
         }
