@@ -25,6 +25,7 @@
 **********************************************************************/
 
 
+#include <QDebug>
 #include "rs_entitycontainer.h"
 
 #include "rs_debug.h"
@@ -837,6 +838,7 @@ RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
     }
         break;
 
+    case RS2::ResolveAllButTextImage:
     case RS2::ResolveAllButTexts: {
         subContainer=NULL;
         if (!entities.isEmpty()) {
@@ -908,7 +910,7 @@ RS_Entity* RS_EntityContainer::lastEntity(RS2::ResolveLevel level) {
         return e;
     }
         break;
-
+    case RS2::ResolveAllButTextImage:
     case RS2::ResolveAllButTexts: {
         if (!entities.isEmpty())
             e = entities.last();
@@ -980,6 +982,7 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
     }
         break;
 
+    case RS2::ResolveAllButTextImage:
     case RS2::ResolveAllButTexts: {
         RS_Entity* e=NULL;
         if (subContainer!=NULL) {
@@ -995,7 +998,7 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
             if ( entIdx < entities.size() )
                 e = entities.at(entIdx);
         }
-        if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText) {
+        if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText ) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
             // emtpy container:
@@ -1081,6 +1084,7 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
         return e;
     }
 
+    case RS2::ResolveAllButTextImage:
     case RS2::ResolveAllButTexts: {
         RS_Entity* e=NULL;
         if (subContainer!=NULL) {
@@ -1427,12 +1431,12 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord,
     RS_VectorSolutions sol;
     RS_Entity* closestEntity;
 
-    closestEntity = getNearestEntity(coord, NULL, RS2::ResolveAllButTexts);
+    closestEntity = getNearestEntity(coord, NULL, RS2::ResolveAllButTextImage);
 
     if (closestEntity!=NULL) {
-        for (RS_Entity* en = firstEntity(RS2::ResolveAllButTexts);
+        for (RS_Entity* en = firstEntity(RS2::ResolveAllButTextImage);
              en != NULL;
-             en = nextEntity(RS2::ResolveAllButTexts)) {
+             en = nextEntity(RS2::ResolveAllButTextImage)) {
             if (
                     !en->isVisible()
                     || en == closestEntity
@@ -1445,6 +1449,7 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord,
                     || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
                     || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
                     || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
+                    || en->getParent()->rtti() == RS2::EntityImage    /**< Leader Dimension */
                     ){//do not do intersection for point, text, Dim
                 continue;
             }
@@ -1547,6 +1552,8 @@ double RS_EntityContainer::getDistanceToPoint(const RS_Vector& coord,
         if (e->isVisible()) {
             RS_DEBUG->print("entity: getDistanceToPoint");
             RS_DEBUG->print("entity: %d", e->rtti());
+            // bug#426, need to ignore Images to find nearest intersections
+            if(level==RS2::ResolveAllButTextImage && e->rtti()==RS2::EntityImage) continue;
             curDist = e->getDistanceToPoint(coord, &subEntity, level, solidDist);
 
             RS_DEBUG->print("entity: getDistanceToPoint: OK");

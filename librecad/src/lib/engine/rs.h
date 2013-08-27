@@ -552,6 +552,10 @@ public:
          */
         ResolveAllButTexts,
         /**
+         * Resolve no text or images, added as a quick fix for bug#422
+         */
+        ResolveAllButTextImage,
+        /**
          * all Entity Containers are resolved
          * (including Texts, Polylines, ...)
          */
