@@ -7,7 +7,7 @@
 include(../../common.pri)
 include(./freetype.pri)
 
-QT = core
+QT -= core gui svg
 CONFIG += console
 CONFIG -= app_bundle
 

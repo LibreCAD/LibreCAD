@@ -36,8 +36,6 @@
 #include FT_OUTLINE_H
 #include FT_GLYPH_H
 
-#include <QtCore/QDateTime>
-
 FT_Library library;
 FT_Face face;
 double prevx;
@@ -286,7 +284,6 @@ int main(int argc, char* argv[]) {
     double lineSpacingFactor = 1.0;
     std::string author = "Unknown";
     std::string license = "Unknown";
-    std::string datestamp;
     precision = 6;
     int i;
     int ret;
@@ -401,10 +398,15 @@ int main(int argc, char* argv[]) {
     fprintf(fpLff, "# WordSpacing:       %s\n", clearZeros(wordSpacing).c_str());
     fprintf(fpLff, "# LineSpacingFactor: %s\n", clearZeros(lineSpacingFactor).c_str());
 
-    datestamp = QDate::currentDate().toString("yyyy-MM-dd").toLatin1().constData();
+    time_t rawtime;
+    struct tm * timeinfo;
+    char buffer [12];
+    time ( &rawtime );
+    timeinfo = localtime ( &rawtime );
+    strftime (buffer,sizeof(buffer),"%Y-%m-%d",timeinfo);
 
-    fprintf(fpLff, "# Created:           %s\n", datestamp.c_str());
-    fprintf(fpLff, "# Last modified:     %s\n", datestamp.c_str());
+    fprintf(fpLff, "# Created:           %s\n", buffer);
+    fprintf(fpLff, "# Last modified:     %s\n", buffer);
     fprintf(fpLff, "# Author:            %s\n", author.c_str());
     fprintf(fpLff, "# License:           %s\n", license.c_str());
     fprintf(fpLff, "\n");
