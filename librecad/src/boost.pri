@@ -19,6 +19,11 @@ unix {
 
         boostLibDir = $${1}
 
+        # If no Boost libs are used, always succeed
+        isEmpty( BOOST_LIBS ) {
+            return( true )
+        }
+
         exists( $${boostLibDir}/libboost_* ) {
             return( true )
         }
@@ -59,13 +64,10 @@ unix {
 
     defineReplace( findBoostDirIn ) {
 
-        boostDirs = $$ARGS
-            message( findBoostDirIn in $${boostDirs} )
+        boostDirs = $${ARGS}
 
         for( boostDir, boostDirs ) {
-#FIXME: library check not work in 64bits location are /usr/lib64
-#            checkBoostIncDir( $${boostDir}/include ) : checkBoostLibDir( $${boostDir}/lib ) {
-            checkBoostIncDir( $${boostDir}/include ) {
+            checkBoostIncDir( $${boostDir}/include ) : checkBoostLibDir( $${boostDir}/lib ) {
                 return( $${boostDir} )
             }
         }
