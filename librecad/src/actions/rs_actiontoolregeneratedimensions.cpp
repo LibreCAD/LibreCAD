@@ -72,7 +72,7 @@ void RS_ActionToolRegenerateDimensions::trigger() {
 			if (((RS_Dimension*)e)->getLabel()==";;") {
 				((RS_Dimension*)e)->setLabel("");
 			}
-            ((RS_Dimension*)e)->update(true);
+            ((RS_Dimension*)e)->updateDim(true);
         }
     }
 

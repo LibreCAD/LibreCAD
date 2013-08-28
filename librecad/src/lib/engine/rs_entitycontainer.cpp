@@ -697,7 +697,7 @@ void RS_EntityContainer::updateDimensions(bool autoText) {
         e = entities.at(i);
         if (RS_Information::isDimension(e->rtti())) {
             // update and reposition label:
-            ((RS_Dimension*)e)->update(autoText);
+            ((RS_Dimension*)e)->updateDim(autoText);
         } else if (e->isContainer()) {
             ((RS_EntityContainer*)e)->updateDimensions(autoText);
         }

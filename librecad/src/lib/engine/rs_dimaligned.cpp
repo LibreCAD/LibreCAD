@@ -95,7 +95,7 @@ QString RS_DimAligned::getMeasuredLabel() {
  *
  * @param autoText Automatically reposition the text label
  */
-void RS_DimAligned::update(bool autoText) {
+void RS_DimAligned::updateDim(bool autoText) {
 
     RS_DEBUG->print("RS_DimAligned::update");
 
@@ -246,7 +246,7 @@ void RS_DimAligned::stretch(const RS_Vector& firstCorner,
                 v.setPolar(len, ang2);
                 data.definitionPoint = edata.extensionPoint2 + v;
         }
-        update(true);
+        updateDim(true);
 }
 
 
@@ -269,11 +269,11 @@ void RS_DimAligned::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
                 RS_Vector v;
                 v.setPolar(d, a);
         data.definitionPoint = edata.extensionPoint2 + v;
-                update(true);
+                updateDim(true);
     }
         else if (ref.distanceTo(data.middleOfText)<1.0e-4) {
         data.middleOfText.move(offset);
-                update(false);
+                updateDim(false);
     }
         else if (ref.distanceTo(edata.extensionPoint1)<1.0e-4) {
                 double a1 = edata.extensionPoint2.angleTo(edata.extensionPoint1);
@@ -284,7 +284,7 @@ void RS_DimAligned::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
                 if (fabs(d1)>1.0e-4) {
                         scale(edata.extensionPoint2, RS_Vector(d2/d1, d2/d1));
                 }
-                update(true);
+                updateDim(true);
     }
         else if (ref.distanceTo(edata.extensionPoint2)<1.0e-4) {
                 double a1 = edata.extensionPoint1.angleTo(edata.extensionPoint2);
@@ -295,7 +295,7 @@ void RS_DimAligned::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
                 if (fabs(d1)>1.0e-4) {
                         scale(edata.extensionPoint1, RS_Vector(d2/d1, d2/d1));
                 }
-                update(true);
+                updateDim(true);
     }
 }
 

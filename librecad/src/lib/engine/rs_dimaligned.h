@@ -112,7 +112,7 @@ public:
 
     virtual QString getMeasuredLabel();
 
-    virtual void update(bool autoText=false);
+    virtual void updateDim(bool autoText=false);
 
     RS_Vector getExtensionPoint1() {
         return edata.extensionPoint1;

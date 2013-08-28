@@ -105,7 +105,7 @@ bool RS_DimLinear::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector
  *
  * @param autoText Automatically reposition the text label
  */
-void RS_DimLinear::update(bool autoText) {
+void RS_DimLinear::updateDim(bool autoText) {
 
     RS_DEBUG->print("RS_DimLinear::update");
 
@@ -288,7 +288,7 @@ void RS_DimLinear::stretch(const RS_Vector& firstCorner,
         data.definitionPoint = edata.extensionPoint2 + v;
                 */
     }
-    update(true);
+    updateDim(true);
 }
 
 
@@ -297,19 +297,19 @@ void RS_DimLinear::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 
     if (ref.distanceTo(data.definitionPoint)<1.0e-4) {
         data.definitionPoint += offset;
-                update(true);
+                updateDim(true);
     }
         else if (ref.distanceTo(data.middleOfText)<1.0e-4) {
         data.middleOfText += offset;
-                update(false);
+                updateDim(false);
     }
         else if (ref.distanceTo(edata.extensionPoint1)<1.0e-4) {
         edata.extensionPoint1 += offset;
-                update(true);
+                updateDim(true);
     }
         else if (ref.distanceTo(edata.extensionPoint2)<1.0e-4) {
         edata.extensionPoint2 += offset;
-                update(true);
+                updateDim(true);
     }
 }
 

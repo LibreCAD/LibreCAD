@@ -232,7 +232,7 @@ return true;
  *
  * @param autoText Automatically reposition the text label
  */
-void RS_DimAngular::update(bool /*autoText*/) {
+void RS_DimAngular::updateDim(bool /*autoText*/) {
 
     RS_DEBUG->print("RS_DimAngular::update");
 
