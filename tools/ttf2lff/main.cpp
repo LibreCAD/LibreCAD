@@ -355,79 +355,78 @@ int main(int argc, char* argv[]) {
     if (error) {
         std::cerr << "FT_Init_FreeType: " << FT_StrError(error) << std::endl;
         ret = 1;
-        goto out;
+    }
+    else {
+        // load ttf font
+        error = FT_New_Face(library,
+                            fTtf.c_str(),
+                            0,
+                            &face);
+        if (error) {
+            std::cerr << "FT_New_Face: " << fTtf << ": " << FT_StrError(error) << std::endl;
+            ret = 1;
+        }
+        else {
+            std::cout << "Family:    " << face->family_name << "\n";
+            std::cout << "Height:    " << face->height << "\n";
+            std::cout << "Ascender:  " << face->ascender << "\n";
+            std::cout << "Descender: " << face->descender << "\n";
+            name = face->family_name;
+
+            // find out height by tracing 'A'
+            yMax = -1000;
+            convertGlyph(65);
+            factor = 1.0/(1.0/9.0*yMax);
+
+            std::cout << "Factor:    " << factor << "\n";
+
+            // write font file:
+            fpLff = fopen(fLff.c_str(), "wt");
+            if (fpLff==NULL) {
+                std::cerr << "Can not open " << fLff.c_str() << ": " << strerror(errno) << std::endl;
+                ret = 2;
+            }
+            else {
+                snprintf(numFormat,8,"%%.%if", precision);
+
+                // write font header
+                fprintf(fpLff, "# Format:            LibreCAD Font 1\n");
+                fprintf(fpLff, "# Creator:           ttf2lff\n");
+                fprintf(fpLff, "# Version:           1\n");
+                fprintf(fpLff, "# Name:              %s\n", name.c_str());
+                fprintf(fpLff, "# LetterSpacing:     %s\n", clearZeros(letterSpacing).c_str());
+                fprintf(fpLff, "# WordSpacing:       %s\n", clearZeros(wordSpacing).c_str());
+                fprintf(fpLff, "# LineSpacingFactor: %s\n", clearZeros(lineSpacingFactor).c_str());
+
+                time_t rawtime;
+                struct tm * timeinfo;
+                char buffer [12];
+                time ( &rawtime );
+                timeinfo = localtime ( &rawtime );
+                strftime (buffer,sizeof(buffer),"%Y-%m-%d",timeinfo);
+
+                fprintf(fpLff, "# Created:           %s\n", buffer);
+                fprintf(fpLff, "# Last modified:     %s\n", buffer);
+                fprintf(fpLff, "# Author:            %s\n", author.c_str());
+                fprintf(fpLff, "# License:           %s\n", license.c_str());
+                fprintf(fpLff, "\n");
+
+                unsigned first;
+                FT_Get_First_Char(face, &first);
+
+                FT_ULong  charcode;
+                FT_UInt   gindex;
+
+                // iterate through glyphs
+                charcode = FT_Get_First_Char( face, &gindex );
+                while (gindex != 0) {
+                    convertGlyph(charcode);
+                    charcode = FT_Get_Next_Char(face, charcode, &gindex);
+                }
+            }
+        }
     }
 
-    // load ttf font
-    error = FT_New_Face(library,
-                        fTtf.c_str(),
-                        0,
-                        &face);
-    if (error) {
-        std::cerr << "FT_New_Face: " << fTtf << ": " << FT_StrError(error) << std::endl;
-        ret = 1;
-        goto out;
-    }
-
-    std::cout << "Family:    " << face->family_name << "\n";
-    std::cout << "Height:    " << face->height << "\n";
-    std::cout << "Ascender:  " << face->ascender << "\n";
-    std::cout << "Descender: " << face->descender << "\n";
-    name = face->family_name;
-
-    // find out height by tracing 'A'
-    yMax = -1000;
-    convertGlyph(65);
-    factor = 1.0/(1.0/9.0*yMax);
-
-    std::cout << "Factor:    " << factor << "\n";
-
-    // write font file:
-    fpLff = fopen(fLff.c_str(), "wt");
-    if (fpLff==NULL) {
-        std::cerr << "Can not open " << fLff.c_str() << ": " << strerror(errno) << std::endl;
-        ret = 2;
-        goto out;
-    }
-
-    snprintf(numFormat,8,"%%.%if", precision);
-
-    // write font header
-    fprintf(fpLff, "# Format:            LibreCAD Font 1\n");
-    fprintf(fpLff, "# Creator:           ttf2lff\n");
-    fprintf(fpLff, "# Version:           1\n");
-    fprintf(fpLff, "# Name:              %s\n", name.c_str());
-    fprintf(fpLff, "# LetterSpacing:     %s\n", clearZeros(letterSpacing).c_str());
-    fprintf(fpLff, "# WordSpacing:       %s\n", clearZeros(wordSpacing).c_str());
-    fprintf(fpLff, "# LineSpacingFactor: %s\n", clearZeros(lineSpacingFactor).c_str());
-
-    time_t rawtime;
-    struct tm * timeinfo;
-    char buffer [12];
-    time ( &rawtime );
-    timeinfo = localtime ( &rawtime );
-    strftime (buffer,sizeof(buffer),"%Y-%m-%d",timeinfo);
-
-    fprintf(fpLff, "# Created:           %s\n", buffer);
-    fprintf(fpLff, "# Last modified:     %s\n", buffer);
-    fprintf(fpLff, "# Author:            %s\n", author.c_str());
-    fprintf(fpLff, "# License:           %s\n", license.c_str());
-    fprintf(fpLff, "\n");
-
-    unsigned first;
-    FT_Get_First_Char(face, &first);
-
-    FT_ULong  charcode;
-    FT_UInt   gindex;
-
-    // iterate through glyphs
-    charcode = FT_Get_First_Char( face, &gindex );
-    while (gindex != 0) {
-        convertGlyph(charcode);
-        charcode = FT_Get_Next_Char(face, charcode, &gindex);
-    }
-
-out:
     if (face) {
         FT_Done_Face(face);
     }
