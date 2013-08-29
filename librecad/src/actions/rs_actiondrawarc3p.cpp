@@ -226,7 +226,7 @@ void RS_ActionDrawArc3P::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetPoint1:
         RS_DIALOGFACTORY->updateMouseWidget(
-            tr("Specify startpoint or [Center]"),
+            tr("Specify startpoint or [center]"),
             tr("Cancel"));
         break;
     case SetPoint2:

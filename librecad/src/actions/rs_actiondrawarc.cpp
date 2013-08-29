@@ -377,7 +377,7 @@ void RS_ActionDrawArc::updateMouseButtonHints() {
             break;
         case SetAngle2:
             RS_DIALOGFACTORY->updateMouseWidget(
-                tr("Specify end angle or [Angle/chord Length]"),
+                tr("Specify end angle or [angle/chord length]"),
                 tr("Back"));
             break;
         case SetIncAngle:
