@@ -9,6 +9,9 @@
 SCRIPTPATH="$(dirname "$0")"
 
 cd "${SCRIPTPATH}"/..
+# have to clean up any existing binary files to avoid crashes of bug#422
+rm -rf LibreCAD.app
+
 qmake librecad.pro -r -spec mkspec/macports
 make -j4
 rm -f LibreCAD.dmg
