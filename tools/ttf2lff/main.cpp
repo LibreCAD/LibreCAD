@@ -24,6 +24,9 @@
 #ifdef __APPLE__
     #include <sys/types.h>
 #endif
+#ifdef __WIN32__
+    #include <time.h>
+#endif
 
 #include <iostream>
 #include <cmath>
