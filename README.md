@@ -39,8 +39,8 @@ Make sure you have the Qt version 4 development packages installed by
 running the following commands:
 
 ```
-$ sudo apt-get install g++ gcc make git-core libqt4-dev qt4-qmake \
-libqt4-help qt4-dev-tools libboost-all-dev libmuparser-dev libfreetype6-dev
+$ sudo apt-get install g++ gcc make git-core libqt4-dev qt4-qmake libqt4-help \
+qt4-dev-tools libboost-all-dev libmuparser-dev libfreetype6-dev pkg-config
 ```
 
 Alternatively, you make sure you have deb-src lines enabled in your sources.list file, and run,
