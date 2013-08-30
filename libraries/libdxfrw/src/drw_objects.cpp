@@ -898,10 +898,13 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
             writer->writeDouble(40, 0.0);
     }
     std::map<std::string,DRW_Variant *>::const_iterator it;
+    /** disable output to stderr of unused keys
+     *TODO: find a way to allow output with --debug option
     for ( it=vars.begin() ; it != vars.end(); it++ ){
 //        QString key = QString::fromStdString((*it).first);
         std::cerr << (*it).first << std::endl;
     }
+    */
 
 }
 
