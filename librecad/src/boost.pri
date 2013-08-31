@@ -129,27 +129,20 @@ unix {
 
 win32 {
 
-    isEmpty( BOOST_DIR ) {
-        # BOOST_DIR was not set in customer.pro
-        BOOST_DIR = /boost/boost_1_53_0
-        BOOST_LIBDIR = "$$(BOOST_DIR)"
-    }
-    !exists("$$BOOST_DIR") {
-        # check env for BOOST_DIR
-        exists("$$(BOOST_DIR)"){
-            BOOST_DIR = "$$(BOOST_DIR)"
-            BOOST_LIBDIR = "$$(BOOST_DIR)"
-        }
+    exists( "$$(BOOST_DIR)" ) {			# Is it set in the environment?
+        BOOST_DIR = "$$(BOOST_DIR)"		# Yes, use
+    } else:isEmpty( BOOST_DIR ) {		# Is it set in custom.pro?
+        BOOST_DIR = "/boost/boost_1_53_0"	# No, hardcode
     }
 
-    exists("$$BOOST_DIR") {
-        INCLUDEPATH += "$$BOOST_DIR"
-        LIBS += -L"$$BOOST_LIBDIR" $$BOOST_LIBS
-        HEADERS += "$$BOOST_DIR"
-        message("Using Boost includes from $${BOOST_DIR}, libraries from $${BOOST_LIBDIR}.")
-    } else {
-        error("Boost was not found in $${BOOST_DIR}, please install Boost or check settings in custom.pro!")
+    !exists( "$${BOOST_DIR}/boost/version.hpp" ) {
+        error( "Can not find Boost installation in $${BOOST_DIR}" )
     }
+
+    BOOST_INCDIR = "$${BOOST_DIR}"
+
+    INCLUDEPATH += "$${BOOST_INCDIR}"
+    HEADERS += "$${BOOST_INCDIR}"
 
 }
 
