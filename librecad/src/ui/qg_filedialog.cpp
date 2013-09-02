@@ -218,7 +218,11 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
     // setup filters
     QStringList filters;
 
+#ifdef JWW_WRITE_SUPPORT
     filters << fDxfrw2007 << fDxfrw2004 << fDxfrw2000 << fDxfrw14 << fDxfrw12 << fLff << fCxf << fJww;
+#else
+    filters << fDxfrw2007 << fDxfrw2004 << fDxfrw2000 << fDxfrw14 << fDxfrw12 << fLff << fCxf;
+#endif
 
     ftype = RS2::FormatDXFRW;
     RS_DEBUG->print("defFilter: %s", fDxfrw2007.toLatin1().data());
