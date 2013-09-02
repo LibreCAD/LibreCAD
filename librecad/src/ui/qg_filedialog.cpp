@@ -219,7 +219,7 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
     QStringList filters;
 
 #ifdef JWW_WRITE_SUPPORT
-    filters << fDxfrw2007 << fDxfrw2004 << fDxfrw2000 << fDxfrw14 << fDxfrw12 << fLff << fCxf << fJww;
+    filters << fDxfrw2007 << fDxfrw2004 << fDxfrw2000 << fDxfrw14 << fDxfrw12 << fJww << fLff << fCxf;
 #else
     filters << fDxfrw2007 << fDxfrw2004 << fDxfrw2000 << fDxfrw14 << fDxfrw12 << fLff << fCxf;
 #endif
