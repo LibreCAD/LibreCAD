@@ -344,9 +344,9 @@ void dibSHP::procesFile(Document_Interface *doc)
             case SHPT_ARC:
             case SHPT_ARCM:
             case SHPT_ARCZ:
+            case SHPT_POLYGON:
                 readPolyline(dh, i);
                 break;
-            case SHPT_POLYGON:
             case SHPT_POLYGONM:
             case SHPT_POLYGONZ:
                 readPolylineC(dh, i);
