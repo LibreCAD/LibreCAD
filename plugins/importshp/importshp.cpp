@@ -37,7 +37,7 @@ PluginCapabilities ImportShp::getCapabilities() const
 
 QString ImportShp::name() const
 {
-    return (tr("ESRI Shapefile"));
+    return (tr("Import ESRI Shapefile"));
 }
 
 void ImportShp::execComm(Document_Interface *doc,
@@ -53,6 +53,7 @@ void ImportShp::execComm(Document_Interface *doc,
 /*****************************/
 dibSHP::dibSHP(QWidget *parent) :  QDialog(parent)
 {
+    setWindowTitle(tr("Import ESRI Shapefile"));
     QVBoxLayout *mainLayout = new QVBoxLayout;
 
     QPushButton *filebut = new QPushButton(tr("File..."));

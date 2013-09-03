@@ -232,6 +232,7 @@ textBox::~textBox()
 dibPunto::dibPunto(QWidget *parent) :  QDialog(parent)
 {
 //    setParent(parent);
+    setWindowTitle(tr("Read ascii points"));
     QStringList txtformats;
 
     QGridLayout *mainLayout = new QGridLayout;
