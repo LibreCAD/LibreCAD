@@ -131,8 +131,8 @@ public:
     }
 
     /**
-  * Sets the converted flag
-  */
+     * Sets the converted flag
+     */
     void setConverted(bool c) {
         data.converted = c;
     }
