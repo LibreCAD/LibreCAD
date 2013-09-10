@@ -72,7 +72,7 @@ RS_VectorSolutions RS_DimAligned::getRefPoints() {
  * measurement of this dimension.
  */
 QString RS_DimAligned::getMeasuredLabel() {
-    double dist = edata.extensionPoint1.distanceTo(edata.extensionPoint2);
+    double dist = edata.extensionPoint1.distanceTo(edata.extensionPoint2) * getGeneralFactor();
 
         RS_Graphic* graphic = getGraphic();
 

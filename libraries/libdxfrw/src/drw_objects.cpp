@@ -736,6 +736,11 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         writer->writeDouble(40, varDouble);
     else
         writer->writeDouble(40, 2.5);
+    writer->writeString(9, "$DIMLFAC");
+    if (getDouble("$DIMLFAC", &varDouble))
+        writer->writeDouble(40, varDouble);
+    else
+        writer->writeDouble(40, 1.0);
     writer->writeString(9, "$DIMSCALE");
     if (getDouble("$DIMSCALE", &varDouble))
         writer->writeDouble(40, varDouble);

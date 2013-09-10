@@ -74,7 +74,7 @@ QString RS_DimLinear::getMeasuredLabel() {
     RS_Vector dimP2 = dimLine.getNearestPointOnEntity(edata.extensionPoint2);
 
     // Definitive dimension line:
-    double dist = dimP1.distanceTo(dimP2);
+    double dist = dimP1.distanceTo(dimP2) * getGeneralFactor();
 
         RS_Graphic* graphic = getGraphic();
 

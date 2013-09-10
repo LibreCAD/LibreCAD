@@ -53,7 +53,7 @@ RS_DimRadial::RS_DimRadial(RS_EntityContainer* parent,
 QString RS_DimRadial::getMeasuredLabel() {
 
     // Definitive dimension line:
-    double dist = data.definitionPoint.distanceTo(edata.definitionPoint);
+    double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
 
     RS_Graphic* graphic = getGraphic();
 

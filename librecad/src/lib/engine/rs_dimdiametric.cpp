@@ -56,7 +56,7 @@ RS_DimDiametric::RS_DimDiametric(RS_EntityContainer* parent,
 QString RS_DimDiametric::getMeasuredLabel() {
 
     // Definitive dimension line:
-    double dist = data.definitionPoint.distanceTo(edata.definitionPoint);
+    double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
 
         RS_Graphic* graphic = getGraphic();
 

@@ -204,6 +204,7 @@ public:
         return data.angle;
     }
 
+    double getGeneralFactor();
     double getGeneralScale();
     double getArrowSize();
     double getTickSize();
