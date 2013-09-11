@@ -75,7 +75,6 @@ extern void QINITIMAGES_LIBRECAD();
 int main(int argc, char** argv) {
 
     RS_DEBUG->setLevel(RS_Debug::D_WARNING);
-        RS_DEBUG->print("param 0: %s", argv[0]);
 
         QCoreApplication::setApplicationName(XSTR(QC_APPNAME));
 #if QT_VERSION < 0x040400
@@ -95,11 +94,72 @@ int main(int argc, char** argv) {
 //	qInitImages_librecad();
 #endif
 
+        const char *lpDebugSwitch = "--debug";
+        size_t      iDebugSwitchLen = strlen(lpDebugSwitch);
         for (int i=0; i<argc; i++) {
-                if (QString("--debug") == argv[i]) {
-                RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
+            if ( ! strncmp( lpDebugSwitch, argv[i], iDebugSwitchLen)) {
+                // to control the level of debugging output use --debug with level 0-6, e.g. --debug3
+                // for a list of debug levels use --debug?
+                // if no level follows, the debugging level is set
+                if( strlen( argv[i]) > iDebugSwitchLen) {
+                    switch( argv[i][iDebugSwitchLen]) {
+                    case '?' :
+                        RS_DEBUG->print( RS_Debug::D_NOTHING, "possible debug levels:");
+                        RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Nothing", RS_Debug::D_NOTHING);
+                        RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Critical", RS_Debug::D_CRITICAL);
+                        RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Error", RS_Debug::D_ERROR);
+                        RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Warning", RS_Debug::D_WARNING);
+                        RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Notice", RS_Debug::D_NOTICE);
+                        RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Informational", RS_Debug::D_INFORMATIONAL);
+                        RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Debugging", RS_Debug::D_DEBUGGING);
+                        return 0;
+
+                    case '0' + RS_Debug::D_NOTHING :
+                        RS_DEBUG->setLevel( RS_Debug::D_NOTHING);
+                        ++i;
+                        break;
+
+                    case '0' + RS_Debug::D_CRITICAL :
+                        RS_DEBUG->setLevel( RS_Debug::D_CRITICAL);
+                        ++i;
+                        break;
+
+                    case '0' + RS_Debug::D_ERROR :
+                        RS_DEBUG->setLevel( RS_Debug::D_ERROR);
+                        ++i;
+                        break;
+
+                    case '0' + RS_Debug::D_WARNING :
+                        RS_DEBUG->setLevel( RS_Debug::D_WARNING);
+                        ++i;
+                        break;
+
+                    case '0' + RS_Debug::D_NOTICE :
+                        RS_DEBUG->setLevel( RS_Debug::D_NOTICE);
+                        ++i;
+                        break;
+
+                    case '0' + RS_Debug::D_INFORMATIONAL :
+                        RS_DEBUG->setLevel( RS_Debug::D_INFORMATIONAL);
+                        ++i;
+                        break;
+
+                    case '0' + RS_Debug::D_DEBUGGING :
+                        RS_DEBUG->setLevel( RS_Debug::D_DEBUGGING);
+                        ++i;
+                        break;
+
+                    default :
+                        RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
+                        break;
+                    }
                 }
+                else {
+                    RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
+                }
+            }
         }
+        RS_DEBUG->print("param 0: %s", argv[0]);
 
         QFileInfo prgInfo( QFile::decodeName(argv[0]) );
         QString prgDir(prgInfo.absolutePath());
