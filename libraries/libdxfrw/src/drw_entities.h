@@ -21,8 +21,6 @@
 class dxfReader;
 class DRW_Polyline;
 
-using std::string;
-
 namespace DRW {
 
    //! Entity's type.
@@ -119,7 +117,7 @@ public:
     double ltypeScale;         /*!< linetype scale, code 48 */
     bool visible;              /*!< entity visibility, code 60 */
     int color24;               /*!< 24-bit color, code 420 */
-    string colorName;          /*!< color name, code 430 */
+    std::string colorName;     /*!< color name, code 430 */
     int space;                 /*!< space indicator 0 = model, 1 paper, code 67*/
     bool haveExtrusion;        /*!< set to true if the entity have extrusion*/
 private:
@@ -803,7 +801,7 @@ public:
     void parseCode(int code, dxfReader *reader);
 
 public:
-    string ref;                /*!< Hard reference to imagedef object, code 340 */
+    std::string ref;           /*!< Hard reference to imagedef object, code 340 */
     double vx;                 /*!< V-vector of single pixel, x coordinate, code 12 */
     double vy;                 /*!< V-vector of single pixel, y coordinate, code 22 */
     double vz;                 /*!< V-vector of single pixel, z coordinate, code 32 */
@@ -813,7 +811,7 @@ public:
     int clip;                  /*!< Clipping state, code 280, 0=off 1=on */
     int brightness;            /*!< Brightness value, code 281, (0-100) default 50 */
     int contrast;              /*!< Brightness value, code 282, (0-100) default 50 */
-    int fade;                   /*!< Brightness value, code 283, (0-100) default 0 */
+    int fade;                  /*!< Brightness value, code 283, (0-100) default 0 */
 
 };
 
@@ -868,14 +866,14 @@ public:
     void setDefPoint(const DRW_Coord p) {defPoint =p;}
     DRW_Coord getTextPoint() const {return textPoint;}    /*!< Middle point of text, code 11, 21 & 31 */
     void setTextPoint(const DRW_Coord p) {textPoint =p;}
-    string getStyle() const {return style;}               /*!< Dimension style, code 3 */
-    void setStyle(const string s) {style = s;}
+    std::string getStyle() const {return style;}          /*!< Dimension style, code 3 */
+    void setStyle(const std::string s) {style = s;}
     int getAlign() const { return align;}                 /*!< attachment point, code 71 */
     void setAlign(const int a) { align = a;}
     int getTextLineStyle() const { return linesty;}       /*!< Dimension text line spacing style, code 72, default 1 */
     void setTextLineStyle(const int l) { linesty = l;}
-    string getText() const {return text;}                 /*!< Dimension text explicitly entered by the user, code 1 */
-    void setText(const string t) {text = t;}
+    std::string getText() const {return text;}            /*!< Dimension text explicitly entered by the user, code 1 */
+    void setText(const std::string t) {text = t;}
     double getTextLineFactor() const { return linefactor;} /*!< Dimension text line spacing factor, code 41, default 1? */
     void setTextLineFactor(const double l) { linefactor = l;}
     double getDir() const { return rot;}                  /*!< rotation angle of the dimension text, code 53 (optional) default 0 */
@@ -883,8 +881,8 @@ public:
 
     DRW_Coord getExtrusion(){return extPoint;}            /*!< extrusion, code 210, 220 & 230 */
     void setExtrusion(const DRW_Coord p) {extPoint =p;}
-    string getName(){return name;}                        /*!< Name of the block that contains the entities, code 2 */
-    void setName(const string s) {name = s;}
+    std::string getName(){return name;}                   /*!< Name of the block that contains the entities, code 2 */
+    void setName(const std::string s) {name = s;}
 //    int getType(){ return type;}                      /*!< Dimension type, code 70 */
 
 protected:
@@ -907,7 +905,7 @@ protected:
 public:
     int type;                  /*!< Dimension type, code 70 */
 private:
-    string name;               /*!< Name of the block that contains the entities, code 2 */
+    std::string name;               /*!< Name of the block that contains the entities, code 2 */
     DRW_Coord defPoint;      /*!<  definition point, code 10, 20 & 30 (WCS) */
     DRW_Coord textPoint;     /*!< Middle point of text, code 11, 21 & 31 (OCS) */
     UTF8STRING text;               /*!< Dimension text explicitly entered by the user, code 1 */
@@ -1119,7 +1117,7 @@ public:
     void parseCode(int code, dxfReader *reader);
 
 public:
-    UTF8STRING style;              /*!< Dimension style name, code 3 */
+    UTF8STRING style;          /*!< Dimension style name, code 3 */
     int arrow;                 /*!< Arrowhead flag, code 71, 0=Disabled; 1=Enabled */
     int leadertype;            /*!< Leader path type, code 72, 0=Straight line segments; 1=Spline */
     int flag;                  /*!< Leader creation flag, code 73, default 3 */
@@ -1129,7 +1127,7 @@ public:
     double textwidth;          /*!< Text annotation width, code 41 */
     int vertnum;               /*!< Number of vertices, code 76 */
     int coloruse;              /*!< Color to use if leader's DIMCLRD = BYBLOCK, code 77 */
-    string handle;             /*!< Hard reference to associated annotation, code 340 */
+    std::string handle;        /*!< Hard reference to associated annotation, code 340 */
     DRW_Coord extrusionPoint;  /*!< Normal vector, code 210, 220 & 230 */
     DRW_Coord horizdir;        /*!< "Horizontal" direction for leader, code 211, 221 & 231 */
     DRW_Coord offsetblock;     /*!< Offset of last leader vertex from block, code 212, 222 & 232 */

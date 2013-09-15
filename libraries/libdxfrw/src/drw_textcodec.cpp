@@ -149,7 +149,7 @@ std::string DRW_ConvTable::fromUtf8(std::string *s) {
 
 std::string DRW_ConvTable::toUtf8(std::string *s) {
     std::string res;
-    string::iterator it;
+    std::string::iterator it;
     for ( it=s->begin() ; it < s->end(); it++ ) {
         unsigned char c = *it;
         if (c < 0x80) {
@@ -290,7 +290,7 @@ std::string DRW_ConvDBCSTable::fromUtf8(std::string *s) {
 
 std::string DRW_ConvDBCSTable::toUtf8(std::string *s) {
     std::string res;
-    string::iterator it;
+    std::string::iterator it;
     for ( it=s->begin() ; it < s->end(); it++ ) {
         bool notFound = true;
         unsigned char c = *it;
@@ -376,7 +376,7 @@ std::string DRW_Conv932Table::fromUtf8(std::string *s) {
 
 std::string DRW_Conv932Table::toUtf8(std::string *s) {
     std::string res;
-    string::iterator it;
+    std::string::iterator it;
     for ( it=s->begin() ; it < s->end(); it++ ) {
         bool notFound = true;
         unsigned char c = *it;

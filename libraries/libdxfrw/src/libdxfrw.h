@@ -125,7 +125,7 @@ private:
     DRW_Interface *iface;
     DRW_Header header;
 //    int section;
-    string nextentity;
+    std::string nextentity;
     int entCount;
     bool wlayer0;
     bool dimstyleStd;

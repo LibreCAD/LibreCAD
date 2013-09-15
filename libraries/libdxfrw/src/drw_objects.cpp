@@ -519,7 +519,7 @@ void DRW_ImageDef::parseCode(int code, dxfReader *reader){
     }
 }
 
-void DRW_Header::addComment(string c){
+void DRW_Header::addComment(std::string c){
     if (!comments.empty())
         comments += '\n';
     comments += c;
@@ -914,7 +914,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
 #endif
 }
 
-bool DRW_Header::getDouble(string key, double *varDouble){
+bool DRW_Header::getDouble(std::string key, double *varDouble){
     bool result = false;
     std::map<std::string,DRW_Variant *>::iterator it;
     it=vars.find( key);
@@ -929,7 +929,7 @@ bool DRW_Header::getDouble(string key, double *varDouble){
     return result;
 }
 
-bool DRW_Header::getInt(string key, int *varInt){
+bool DRW_Header::getInt(std::string key, int *varInt){
     bool result = false;
     std::map<std::string,DRW_Variant *>::iterator it;
     it=vars.find( key);
@@ -944,7 +944,7 @@ bool DRW_Header::getInt(string key, int *varInt){
     return result;
 }
 
-bool DRW_Header::getStr(string key, std::string *varStr){
+bool DRW_Header::getStr(std::string key, std::string *varStr){
     bool result = false;
     std::map<std::string,DRW_Variant *>::iterator it;
     it=vars.find( key);
@@ -959,7 +959,7 @@ bool DRW_Header::getStr(string key, std::string *varStr){
     return result;
 }
 
-bool DRW_Header::getCoord(string key, DRW_Coord *varCoord){
+bool DRW_Header::getCoord(std::string key, DRW_Coord *varCoord){
     bool result = false;
     std::map<std::string,DRW_Variant *>::iterator it;
     it=vars.find( key);
