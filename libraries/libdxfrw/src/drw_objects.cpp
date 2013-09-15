@@ -655,6 +655,9 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
     writer->writeString(1, varStr);
     writer->setVersion(&varStr);
 
+    getStr("$ACADVER", &varStr);
+    getStr("$ACADMAINTVER", &varStr);
+
     if (ver > DRW::AC1012) {
         writer->writeString(9, "$HANDSEED");
 //RLZ        dxfHex(5, 0xFFFF);
@@ -902,15 +905,13 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         else
             writer->writeDouble(40, 0.0);
     }
+#ifdef DRW_DBG
     std::map<std::string,DRW_Variant *>::const_iterator it;
-    /** disable output to stderr of unused keys
-     *TODO: find a way to allow output with --debug option
     for ( it=vars.begin() ; it != vars.end(); it++ ){
 //        QString key = QString::fromStdString((*it).first);
         std::cerr << (*it).first << std::endl;
     }
-    */
-
+#endif
 }
 
 bool DRW_Header::getDouble(string key, double *varDouble){
