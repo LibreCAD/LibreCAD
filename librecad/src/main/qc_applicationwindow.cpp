@@ -3927,7 +3927,7 @@ void QC_ApplicationWindow::slotHelpManual() {
             connect(helpEngine->contentWidget(), SIGNAL(linkActivated(const QUrl &)), helpBrowser, SLOT(setSource(const QUrl &)));
             addDockWidget(Qt::TopDockWidgetArea, helpWindow);
         } else {
-            QMessageBox::information(this, "Helpfiles not found", tr("Bugger, I couldn't find the helpfiles on the filesystem."));
+            QMessageBox::information(this, tr("Help files not found"), tr("Bugger, I couldn't find the helpfiles on the filesystem."));
         }
 
     }
