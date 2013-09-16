@@ -2713,7 +2713,7 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
     // Color:
     if (attrib->color24 >= 0)
         pen.setColor(RS_Color(attrib->color24 >> 16,
-                              attrib->color24 >> 16 & 0xFF,
+                              attrib->color24 >> 8 & 0xFF,
                               attrib->color24 & 0xFF));
     else
     pen.setColor(numberToColor(attrib->color));

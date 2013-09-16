@@ -52,7 +52,7 @@ protected:
     std::ifstream *filestr;
     std::string strData;
     double doubleData;
-    signed short intData; //16 bits integer
+    signed int intData; //32 bits integer
     unsigned long long int int64; //64 bits integer
 private:
     DRW_TextCodec decoder;
