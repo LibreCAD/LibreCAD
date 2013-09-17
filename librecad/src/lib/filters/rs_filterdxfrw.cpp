@@ -2775,7 +2775,7 @@ RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Layer* att) const {
     RS_Color col;
     if (att->color24 >= 0)
         col = RS_Color(att->color24 >> 16,
-                              att->color24 >> 16 & 0xFF,
+                              att->color24 >> 8 & 0xFF,
                               att->color24 & 0xFF);
     else
         col = numberToColor(att->color);
