@@ -708,22 +708,21 @@ void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& patternO
 
 
 void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-    RS_Vector v1(data.radius, 0.0);
-    RS_Vector v2(0.0, data.radius);
     if(ref.distanceTo(data.center)<1.0e-4){
         data.center += offset;
         return;
     }
-
-    if (ref.distanceTo(data.center + v1)<1.0e-4) {
-        data.radius = data.center.distanceTo(data.center + v1 + offset);
-    } else if (ref.distanceTo(data.center + v2)<1.0e-4) {
-        data.radius = data.center.distanceTo(data.center + v2 + offset);
-    } else if (ref.distanceTo(data.center - v1)<1.0e-4) {
-        data.radius = data.center.distanceTo(data.center - v1 + offset);
-    } else if (ref.distanceTo(data.center - v2)<1.0e-4) {
-        data.radius = data.center.distanceTo(data.center - v2 + offset);
-    }
+    RS_Vector v1(data.radius, 0.0);
+    RS_VectorSolutions sol;
+    sol.push_back(data.center + v1);
+    sol.push_back(data.center - v1);
+    v1.set(0., data.radius);
+    sol.push_back(data.center + v1);
+    sol.push_back(data.center - v1);
+    double dist;
+    v1=sol.getClosest(ref,&dist);
+    if(dist>1.0e-4) return;
+    data.radius = data.center.distanceTo(v1 + offset);
 }
 
 
