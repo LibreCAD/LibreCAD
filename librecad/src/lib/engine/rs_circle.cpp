@@ -710,6 +710,10 @@ void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& patternO
 void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     RS_Vector v1(data.radius, 0.0);
     RS_Vector v2(0.0, data.radius);
+    if(ref.distanceTo(data.center)<1.0e-4){
+        data.center += offset;
+        return;
+    }
 
     if (ref.distanceTo(data.center + v1)<1.0e-4) {
         data.radius = data.center.distanceTo(data.center + v1 + offset);
