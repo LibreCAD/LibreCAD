@@ -176,6 +176,7 @@ void QG_DlgHatch::updatePreview(RS_Pattern* ) {
     double angle = RS_Math::deg2rad(RS_Math::eval(leAngle->text(), 0.0));
     double prevSize = 1.0;
     if (pattern!=NULL) {
+        pattern->calculateBorders();
         prevSize = pattern->getSize().x;
     }
 
