@@ -812,6 +812,7 @@ void RS_FilterDXFRW::addDimAlign(const DRW_DimAligned *data) {
     RS_DimAligned* entity = new RS_DimAligned(currentContainer,
                             dimensionData, d);
     setEntityAttributes(entity, data);
+    entity->updateDimPoint();
     entity->update();
     currentContainer->addEntity(entity);
 }

@@ -122,6 +122,12 @@ public:
         return edata.extensionPoint2;
     }
 
+    /**
+     * Recalculate the original Dimension Point to remove Dim oblique angle.
+     * @author Rallaz
+     */
+    void updateDimPoint();
+
     virtual void move(const RS_Vector& offset);
     virtual void rotate(const RS_Vector& center, const double& angle);
     virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
