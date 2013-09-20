@@ -265,6 +265,26 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
                 continue;
             }
         }
+        RS_Entity   *lpLine = NULL,
+                    *lpCircle = NULL;
+        if( RS2::EntityLine == e1->rtti() && RS2::EntityCircle == e2->rtti()) {
+            lpLine = e1;
+            lpCircle = e2;
+        }
+        else if( RS2::EntityCircle == e1->rtti() && RS2::EntityLine == e2->rtti()) {
+            lpLine = e2;
+            lpCircle = e1;
+        }
+        if( NULL != lpLine && NULL != lpCircle) {
+            double dist = 0.0;
+            RS_Vector nearest = lpLine->getNearestPointOnEntity( lpCircle->getCenter(), false, &dist);
+
+            // special case: line touches circle tangent
+            if( nearest.valid && fabs( dist - lpCircle->getRadius()) < 1.0e-4) {
+                ret.set(i,nearest);
+                ret2.setTangent(true);
+            }
+        }
         ret2.push_back(ret.get(i));
     }
 
