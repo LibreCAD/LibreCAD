@@ -714,8 +714,9 @@ void Plugin_Entity::scale(QPointF center, QPointF factor){
         this->entity = ne;
 }
 
-Doc_plugin_interface::Doc_plugin_interface(RS_Graphic *d, RS_GraphicView* gv, QWidget* parent){
+Doc_plugin_interface::Doc_plugin_interface(RS_Document *d, RS_GraphicView* gv, QWidget* parent){
     doc =d;
+    docGr =doc->getGraphic();
     gView =gv;
     main = parent;
     haveUndo = false;
@@ -962,19 +963,19 @@ QString Doc_plugin_interface::addBlockfromFromdisk(QString fullName){
         RS_LayerList* ll = g.getLayerList();
         for (unsigned int i = 0; i<ll->count(); i++){
             RS_Layer* nl = ll->at(i)->clone();
-            doc->addLayer(nl);
+            docGr->addLayer(nl);
         }
         RS_BlockList* bl = g.getBlockList();
         for (int i = 0; i<bl->count(); i++){
             RS_Block* nb = (RS_Block*)bl->at(i)->clone();
-            doc->addBlock(nb);
+            docGr->addBlock(nb);
         }
         for (unsigned int i = 0; i<g.count(); i++){
             RS_Entity* e = g.entityAt(i)->clone();
             e->reparent(b);
             b->addEntity(e);
         }
-        doc->addBlock(b);
+        docGr->addBlock(b);
         return name;
 
     } else {
@@ -1043,13 +1044,13 @@ void Doc_plugin_interface::setLayer(QString name){
     RS_Layer *lay = listLay->find(name);
     if (lay == NULL) {
         lay = new RS_Layer(name);
-        doc->addLayer(lay);
+        docGr->addLayer(lay);
     }
     listLay->activate(lay, true);
 }
 
 QString Doc_plugin_interface::getCurrentLayer(){
-    return doc->getActiveLayer()->getName();
+    return docGr->getActiveLayer()->getName();
 }
 
 QStringList Doc_plugin_interface::getAllLayer(){
@@ -1071,16 +1072,16 @@ QStringList Doc_plugin_interface::getAllBlocks(){
 }
 
 bool Doc_plugin_interface::deleteLayer(QString name){
-    RS_Layer* layer = doc->findLayer(name);
+    RS_Layer* layer = docGr->findLayer(name);
     if (layer != NULL) {
-        doc->removeLayer(layer);
+        docGr->removeLayer(layer);
         return true;
     }
     return false;
 }
 
 void Doc_plugin_interface::getCurrentLayerProperties(QColor *c, DPI::LineWidth *w, DPI::LineType *t){
-    RS_Pen pen = doc->getActiveLayer()->getPen();
+    RS_Pen pen = docGr->getActiveLayer()->getPen();
     RS_Color col = pen.getColor();
     c->setRgb(col.red(), col.green(), col.blue());
     *w = static_cast<DPI::LineWidth>(pen.getWidth());
@@ -1088,7 +1089,7 @@ void Doc_plugin_interface::getCurrentLayerProperties(QColor *c, DPI::LineWidth *
 }
 
 void Doc_plugin_interface::getCurrentLayerProperties(QColor *c, QString *w, QString *t){
-    RS_Pen pen = doc->getActiveLayer()->getPen();
+    RS_Pen pen = docGr->getActiveLayer()->getPen();
     RS_Color col = pen.getColor();
     c->setRgb(col.red(), col.green(), col.blue());
     w->clear();
@@ -1098,7 +1099,7 @@ void Doc_plugin_interface::getCurrentLayerProperties(QColor *c, QString *w, QStr
 }
 
 void Doc_plugin_interface::setCurrentLayerProperties(QColor c, DPI::LineWidth w, DPI::LineType t){
-    RS_Layer* layer = doc->getActiveLayer();
+    RS_Layer* layer = docGr->getActiveLayer();
     if (layer != NULL) {
         RS_Pen pen(RS_Color(c), static_cast<RS2::LineWidth>(w), static_cast<RS2::LineType>(t));
         layer->setPen(pen);
@@ -1106,7 +1107,7 @@ void Doc_plugin_interface::setCurrentLayerProperties(QColor c, DPI::LineWidth w,
 }
 
 void Doc_plugin_interface::setCurrentLayerProperties(QColor c, QString w, QString t){
-    RS_Layer* layer = doc->getActiveLayer();
+    RS_Layer* layer = docGr->getActiveLayer();
     if (layer != NULL) {
         RS_Pen pen(RS_Color(c), Converter.str2lw(w), Converter.str2lt(t));
         layer->setPen(pen);
@@ -1193,28 +1194,28 @@ bool Doc_plugin_interface::getAllEntities(QList<Plug_Entity *> *sel, bool visibl
 }
 
 bool Doc_plugin_interface::getVariableInt(const QString& key, int *num){
-    if( (*num = doc->getVariableInt(key, 0)) )
+    if( (*num = docGr->getVariableInt(key, 0)) )
         return true;
     else
         return false;
 }
 
 bool Doc_plugin_interface::getVariableDouble(const QString& key, double *num){
-    if( (*num = doc->getVariableDouble(key, 0.0)) )
+    if( (*num = docGr->getVariableDouble(key, 0.0)) )
         return true;
     else
         return false;
 }
 
 bool Doc_plugin_interface::addVariable(const QString& key, int value, int code){
-    doc->addVariable(key, value, code);
+    docGr->addVariable(key, value, code);
     if (key.startsWith("$DIM"))
         doc->updateDimensions(true);
     return true;
 }
 
 bool Doc_plugin_interface::addVariable(const QString& key, double value, int code){
-   doc->addVariable(key, value, code);
+   docGr->addVariable(key, value, code);
    if (key.startsWith("$DIM"))
        doc->updateDimensions(true);
    return true;
@@ -1284,11 +1285,11 @@ QString Doc_plugin_interface::realToStr(const qreal num, const int units, const 
     RS2::LinearFormat lf;
     int pr = prec;
     if (pr == 0)
-        pr = doc->getLinearPrecision();
+        pr = docGr->getLinearPrecision();
 
     switch (units){
     case 0:
-        lf = doc->getLinearFormat();
+        lf = docGr->getLinearFormat();
         break;
     case 1:
         lf = RS2::Scientific;

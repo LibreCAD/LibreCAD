@@ -71,7 +71,7 @@ private:
 class Doc_plugin_interface : public Document_Interface
 {
 public:
-    Doc_plugin_interface(RS_Graphic *d, RS_GraphicView* gv, QWidget* parent);
+    Doc_plugin_interface(RS_Document *d, RS_GraphicView* gv, QWidget* parent);
     ~Doc_plugin_interface();
     void updateView();
     void addPoint(QPointF *start);
@@ -122,7 +122,8 @@ public:
     /*metod to handle undo in Plugin_Entity*/
     bool addToUndo(RS_Entity* current, RS_Entity* modified);
 private:
-    RS_Graphic *doc;
+    RS_Document *doc;
+    RS_Graphic *docGr;
     RS_GraphicView *gView;
     QWidget* main;
     bool haveUndo;

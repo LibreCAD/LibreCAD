@@ -309,7 +309,7 @@ void QC_ApplicationWindow::execPlug() {
     QC_PluginInterface *plugin = qobject_cast<QC_PluginInterface *>(action->parent());
 //get actual drawing
     QC_MDIWindow* w = getMDIWindow();
-    RS_Graphic* currdoc = static_cast<RS_Graphic*>(w->getDocument());
+    RS_Document* currdoc = w->getDocument();
 //create document interface instance
     Doc_plugin_interface pligundoc(currdoc, w->getGraphicView(), this);
 //execute plugin
