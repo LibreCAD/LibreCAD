@@ -334,7 +334,7 @@ LC_Quadratic RS_Line::getQuadratic() const
     RS_Vector normal(-dvp.y,dvp.x);
     ce[0]=normal.x;
     ce[1]=normal.y;
-    ce[2]=- normal.dotP(data.endpoint);
+    ce[2]= -normal.dotP(data.endpoint);
     return LC_Quadratic(ce);
 }
 

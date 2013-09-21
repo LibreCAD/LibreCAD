@@ -205,7 +205,7 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
         RS_Entity* e2, bool onEntities) {
 
     RS_VectorSolutions ret;
-    double tol = 1.0e-4;
+    const double tol = 1.0e-4;
 
     if (e1==NULL || e2==NULL ) {
         RS_DEBUG->print("RS_Information::getIntersection() for NULL entities");
@@ -251,12 +251,13 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
     ret=LC_Quadratic::getIntersection(qf1,qf2);
     RS_VectorSolutions ret2;
     for(int i=0;i<ret.getNumber();i++) {
+        RS_Vector&& vp=ret.get(i);
         if ( ! ret.get(i).valid) continue;
         if (onEntities==true) {
             //ignore intersections not on entity
             if (!(
-                        (e1->isHelpLayer(true) || e1->isPointOnEntity(ret.get(i), tol)) &&
-                        (e2->isHelpLayer(true) || e2->isPointOnEntity(ret.get(i), tol))
+                        (e1->isHelpLayer(true) || e1->isPointOnEntity(vp, tol)) &&
+                        (e2->isHelpLayer(true) || e2->isPointOnEntity(vp, tol))
                         )
                     ) {
 //                std::cout<<"Ignored intersection "<<ret.get(i)<<std::endl;
@@ -265,27 +266,34 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
                 continue;
             }
         }
-        RS_Entity   *lpLine = NULL,
-                    *lpCircle = NULL;
-        if( RS2::EntityLine == e1->rtti() && RS2::EntityCircle == e2->rtti()) {
-            lpLine = e1;
-            lpCircle = e2;
-        }
-        else if( RS2::EntityCircle == e1->rtti() && RS2::EntityLine == e2->rtti()) {
-            lpLine = e2;
-            lpCircle = e1;
-        }
-        if( NULL != lpLine && NULL != lpCircle) {
-            double dist = 0.0;
-            RS_Vector nearest = lpLine->getNearestPointOnEntity( lpCircle->getCenter(), false, &dist);
+        // need to test whether the intersection is tangential
+        RS_Vector&& direction1=e1->getTangentDirection(vp);
+        RS_Vector&& direction2=e2->getTangentDirection(vp);
+        if( direction1.valid && direction2.valid && fabs(fabs(direction1.dotP(direction2)) - sqrt(direction1.squared()*direction2.squared())) < sqrt(tol)*tol )
+            ret2.setTangent(true);
+        //TODO, make the following tangential test, nearest test work for all entity types
 
-            // special case: line touches circle tangent
-            if( nearest.valid && fabs( dist - lpCircle->getRadius()) < 1.0e-4) {
-                ret.set(i,nearest);
-                ret2.setTangent(true);
-            }
-        }
-        ret2.push_back(ret.get(i));
+//        RS_Entity   *lpLine = NULL,
+//                    *lpCircle = NULL;
+//        if( RS2::EntityLine == e1->rtti() && RS2::EntityCircle == e2->rtti()) {
+//            lpLine = e1;
+//            lpCircle = e2;
+//        }
+//        else if( RS2::EntityCircle == e1->rtti() && RS2::EntityLine == e2->rtti()) {
+//            lpLine = e2;
+//            lpCircle = e1;
+//        }
+//        if( NULL != lpLine && NULL != lpCircle) {
+//            double dist = 0.0;
+//            RS_Vector nearest = lpLine->getNearestPointOnEntity( lpCircle->getCenter(), false, &dist);
+
+//            // special case: line touches circle tangent
+//            if( nearest.valid && fabs( dist - lpCircle->getRadius()) < tol) {
+//                ret.set(i,nearest);
+//                ret2.setTangent(true);
+//            }
+//        }
+        ret2.push_back(vp);
     }
 
     return ret2;
