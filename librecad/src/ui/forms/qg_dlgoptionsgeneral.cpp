@@ -113,54 +113,18 @@ void QG_DlgOptionsGeneral::init() {
     QString minGridSpacing = RS_SETTINGS->readEntry("/MinGridSpacing", "10");
     cbMinGridSpacing->setCurrentIndex( cbMinGridSpacing->findText(minGridSpacing) );
 
-    int idx;
     // preview:
-    QString maxPreview = RS_SETTINGS->readEntry("/MaxPreview", "100");
-    idx= cbMaxPreview->findText(maxPreview) ;
-    if(idx<0) {
-            //not found in combobox, prepend it
-        idx = 0;
-        cbMaxPreview->insertItem( idx,maxPreview);
-    }
-    cbMaxPreview->setCurrentIndex(idx);
+	initComboBox(cbMaxPreview, RS_SETTINGS->readEntry("/MaxPreview", "100"));
 
     // colors:
-    QString backgroundColor = RS_SETTINGS->readEntry("/BackgroundColor", "Black");
-    idx = cbBackgroundColor->findText(backgroundColor);
-    //backgroundColor not present in combobox, prepend it
-    if( idx < 0) {
-        idx =0;
-        cbBackgroundColor->insertItem(idx, backgroundColor);
-    }
-    cbBackgroundColor->setCurrentIndex( idx );
-    QString gridColor = RS_SETTINGS->readEntry("/GridColor", "Gray");
-    idx = cbGridColor->findText(gridColor);
-    if( idx < 0) {
-        idx =0;
-        cbGridColor->insertItem(idx, gridColor);
-    }
-    cbGridColor->setCurrentIndex(idx);
-    QString metaGridColor = RS_SETTINGS->readEntry("/MetaGridColor", "#404040");
-    idx = cbMetaGridColor->findText(metaGridColor);
-    if( idx < 0) {
-        idx =0;
-        cbMetaGridColor->insertItem(idx, metaGridColor);
-    }
-    cbMetaGridColor->setCurrentIndex( idx );
-    QString selectedColor = RS_SETTINGS->readEntry("/SelectedColor", "#a54747");
-    idx = cbSelectedColor->findText(selectedColor);
-    if( idx < 0) {
-        idx =0;
-        cbSelectedColor->insertItem(idx, selectedColor);
-    }
-    cbSelectedColor->setCurrentIndex( idx );
-    QString highlightedColor = RS_SETTINGS->readEntry("/HighlightedColor", "#739373");
-    idx = cbHighlightedColor->findText(highlightedColor);
-    if( idx < 0) {
-        idx =0;
-        cbHighlightedColor->insertItem(idx, highlightedColor);
-    }
-    cbHighlightedColor->setCurrentIndex( idx );
+	initComboBox(cbBackgroundColor, RS_SETTINGS->readEntry("/BackgroundColor", "Black"));
+	initComboBox(cbGridColor, RS_SETTINGS->readEntry("/GridColor", "Gray"));
+	initComboBox(cbMetaGridColor, RS_SETTINGS->readEntry("/MetaGridColor", "#404040"));
+	initComboBox(cbSelectedColor, RS_SETTINGS->readEntry("/SelectedColor", "#a54747"));
+	initComboBox(cbHighlightedColor, RS_SETTINGS->readEntry("/HighlightedColor", "#739373"));
+	initComboBox(cbStartHandleColor, RS_SETTINGS->readEntry("/StartHandleColor", "#00FFFF"));
+	initComboBox(cbHandleColor, RS_SETTINGS->readEntry("/HandleColor", "#0000FF"));
+	initComboBox(cbEndHandleColor, RS_SETTINGS->readEntry("/EndHandleColor", "#0000FF"));
 
     // font size:
     QString sizeStatus = RS_SETTINGS->readEntry("/StatusBarFontSize", "9");
@@ -202,12 +166,22 @@ void QG_DlgOptionsGeneral::init() {
     restartNeeded = false;
 }
 
+void QG_DlgOptionsGeneral::initComboBox(QComboBox* cb, QString text) {
+	int idx = cb->findText(text);
+	if( idx < 0) {
+		idx =0;
+		cb->insertItem(idx, text);
+	}
+	cb->setCurrentIndex( idx );
+}
+
 void QG_DlgOptionsGeneral::destroy() {
 }
 
 void QG_DlgOptionsGeneral::setRestartNeeded() {
     restartNeeded = true;
 }
+
 void QG_DlgOptionsGeneral::setTemplateFile() {
     RS2::FormatType type = RS2::FormatDXFRW;
     QG_FileDialog dlg(this);
@@ -220,26 +194,19 @@ void QG_DlgOptionsGeneral::ok() {
     RS_SETTINGS->beginGroup("/Appearance");
     RS_SETTINGS->writeEntry("/Language",cbLanguage->itemData(cbLanguage->currentIndex()));
     RS_SETTINGS->writeEntry("/LanguageCmd",cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
-    RS_SETTINGS->writeEntry("/ShowCrosshairs",
-                            QString("%1").arg((int)cbShowCrosshairs->isChecked()));
-    RS_SETTINGS->writeEntry("/ScaleGrid",
-                            QString("%1").arg((int)cbScaleGrid->isChecked()));
-    RS_SETTINGS->writeEntry("/MinGridSpacing",
-                            cbMinGridSpacing->currentText());
-    RS_SETTINGS->writeEntry("/MaxPreview",
-                            cbMaxPreview->currentText());
-    RS_SETTINGS->writeEntry("/BackgroundColor",
-                            cbBackgroundColor->currentText());
-    RS_SETTINGS->writeEntry("/GridColor",
-                            cbGridColor->currentText());
-    RS_SETTINGS->writeEntry("/MetaGridColor",
-                            cbMetaGridColor->currentText());
-    RS_SETTINGS->writeEntry("/SelectedColor",
-                            cbSelectedColor->currentText());
-    RS_SETTINGS->writeEntry("/HighlightedColor",
-                            cbHighlightedColor->currentText());
-    RS_SETTINGS->writeEntry("/StatusBarFontSize",
-                            cbSizeStatus->currentText());
+	RS_SETTINGS->writeEntry("/ShowCrosshairs", QString("%1").arg((int)cbShowCrosshairs->isChecked()));
+	RS_SETTINGS->writeEntry("/ScaleGrid", QString("%1").arg((int)cbScaleGrid->isChecked()));
+	RS_SETTINGS->writeEntry("/MinGridSpacing", cbMinGridSpacing->currentText());
+	RS_SETTINGS->writeEntry("/MaxPreview", cbMaxPreview->currentText());
+	RS_SETTINGS->writeEntry("/BackgroundColor", cbBackgroundColor->currentText());
+	RS_SETTINGS->writeEntry("/GridColor", cbGridColor->currentText());
+	RS_SETTINGS->writeEntry("/MetaGridColor", cbMetaGridColor->currentText());
+	RS_SETTINGS->writeEntry("/SelectedColor", cbSelectedColor->currentText());
+	RS_SETTINGS->writeEntry("/HighlightedColor", cbHighlightedColor->currentText());
+	RS_SETTINGS->writeEntry("/StartHandleColor", cbStartHandleColor->currentText());
+	RS_SETTINGS->writeEntry("/HandleColor", cbHandleColor->currentText());
+	RS_SETTINGS->writeEntry("/EndHandleColor", cbEndHandleColor->currentText());
+	RS_SETTINGS->writeEntry("/StatusBarFontSize", cbSizeStatus->currentText());
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Paths");
