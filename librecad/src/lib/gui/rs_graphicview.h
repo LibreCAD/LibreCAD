@@ -175,6 +175,27 @@ public:
                 highlightedColor = c;
         }
 
+		/**
+		 * Sets the color for the first handle (start vertex)
+		 */
+		void setStartHandleColor(const RS_Color& c) {
+				startHandleColor = c;
+		}
+
+		/**
+		 * Sets the color for handles, that are neither start nor end vertices
+		 */
+		void setHandleColor(const RS_Color& c) {
+				handleColor = c;
+		}
+
+		/**
+		 * Sets the color for the last handle (end vertex)
+		 */
+		void setEndHandleColor(const RS_Color& c) {
+				endHandleColor = c;
+		}
+
     /**
      * This virtual method can be overwritten to set the mouse
      * cursor to the given type.
@@ -462,6 +483,12 @@ protected:
     RS_Color selectedColor;
     /** highlighted color */
     RS_Color highlightedColor;
+	/** Start handle color */
+	RS_Color startHandleColor;
+	/** Intermediate (not start/end vertex) handle color */
+	RS_Color handleColor;
+	/** End handle color */
+	RS_Color endHandleColor;
     /** Grid */
     RS_Grid* grid;
     /**

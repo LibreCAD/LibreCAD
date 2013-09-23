@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>645</width>
-    <height>404</height>
+    <width>643</width>
+    <height>550</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -49,6 +49,9 @@
             </property>
            </widget>
           </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="cbLanguageCmd"/>
+          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="lLanguageCmd">
             <property name="text">
@@ -62,224 +65,18 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="cbLanguageCmd"/>
-          </item>
           <item row="0" column="1">
            <widget class="QComboBox" name="cbLanguage"/>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="0" column="1" rowspan="2">
-        <widget class="QGroupBox" name="bgColors">
-         <property name="title">
-          <string>Colors</string>
-         </property>
-         <layout class="QGridLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="lBackground">
-            <property name="text">
-             <string>Backgr&amp;ound:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbBackgroundColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="lGridColor">
-            <property name="text">
-             <string>G&amp;rid Color:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbGridColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="cbBackgroundColor">
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>#FFFFFF</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>#C0C0C0</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>#808080</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="cbGridColor">
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string>#C0C0C0</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>#FFFFFF</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>#808080</string>
-             </property>
-            </item>
-           </widget>
-          </item>
           <item row="2" column="0">
-           <widget class="QLabel" name="lMetaGridColor">
-            <property name="text">
-             <string>&amp;Meta Grid Color:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbMetaGridColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QComboBox" name="cbMetaGridColor">
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string>#404040</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>#000000</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>#FFFFFF</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>#C0C0C0</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>#808080</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="lSelectedColor">
-            <property name="text">
-             <string>S&amp;elected Color:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbMetaGridColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QComboBox" name="cbSelectedColor">
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string>#A54747</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QComboBox" name="cbHighlightedColor">
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string>#739373</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="lHighlightedColor">
-            <property name="text">
-             <string>&amp;Highlighted Color:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbMetaGridColor</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <spacer name="spacer7">
+           <spacer name="verticalSpacer_2">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
             </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Expanding</enum>
-            </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>21</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="5" column="1">
-           <spacer name="spacer8">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Expanding</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>21</width>
-              <height>20</height>
+              <width>20</width>
+              <height>40</height>
              </size>
             </property>
            </spacer>
@@ -293,16 +90,6 @@
           <string>Fontsize</string>
          </property>
          <layout class="QGridLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="lSizeStatus">
-            <property name="text">
-             <string>Statusbar:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="1">
            <widget class="QComboBox" name="cbSizeStatus">
             <property name="editable">
@@ -386,6 +173,16 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="lSizeStatus">
+            <property name="text">
+             <string>Statusbar:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -592,6 +389,286 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="0" column="1" rowspan="2">
+        <widget class="QGroupBox" name="bgColors">
+         <property name="title">
+          <string>Colors</string>
+         </property>
+         <layout class="QGridLayout">
+          <item row="3" column="1">
+           <widget class="QComboBox" name="cbSelectedColor">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>#A54747</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QComboBox" name="cbStartHandleColor">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>#00FFFF</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#0000FF</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#FFFF00</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#FF00FF</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="lStartHandleColor">
+            <property name="text">
+             <string>St&amp;art Handle Color:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbStartHandleColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lGridColor">
+            <property name="text">
+             <string>G&amp;rid Color:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbGridColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="cbGridColor">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>#C0C0C0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#FFFFFF</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#000000</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#808080</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="cbBackgroundColor">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>#000000</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#FFFFFF</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#C0C0C0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#808080</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="lMetaGridColor">
+            <property name="text">
+             <string>&amp;Meta Grid Color:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbMetaGridColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="lSelectedColor">
+            <property name="text">
+             <string>S&amp;elected Color:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbMetaGridColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="lHighlightedColor">
+            <property name="text">
+             <string>&amp;Highlighted Color:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbMetaGridColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QComboBox" name="cbHighlightedColor">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>#739373</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="lBackground">
+            <property name="text">
+             <string>Backgr&amp;ound:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbBackgroundColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="cbMetaGridColor">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>#404040</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#000000</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#FFFFFF</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#C0C0C0</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#808080</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QComboBox" name="cbHandleColor">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>#0000FF</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QComboBox" name="cbEndHandleColor">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>#0000FF</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#FFFF00</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#00FFFF</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>#FF00FF</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>&amp;Handle Color:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbHandleColor</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>&amp;End Handle Color:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbEndHandleColor</cstring>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -883,13 +960,21 @@
   <tabstop>cbMetaGridColor</tabstop>
   <tabstop>cbSelectedColor</tabstop>
   <tabstop>cbHighlightedColor</tabstop>
+  <tabstop>cbStartHandleColor</tabstop>
+  <tabstop>cbHandleColor</tabstop>
+  <tabstop>cbEndHandleColor</tabstop>
   <tabstop>cbSizeStatus</tabstop>
-  <tabstop>lePathTranslations</tabstop>
-  <tabstop>lePathHatch</tabstop>
-  <tabstop>lePathFonts</tabstop>
-  <tabstop>lePathScripts</tabstop>
+  <tabstop>buttonBox</tabstop>
   <tabstop>lePathLibrary</tabstop>
   <tabstop>cbUnit</tabstop>
+  <tabstop>lePathScripts</tabstop>
+  <tabstop>lePathFonts</tabstop>
+  <tabstop>leTemplate</tabstop>
+  <tabstop>btTemplate</tabstop>
+  <tabstop>cbAutoSaveTime</tabstop>
+  <tabstop>cbAutoBackup</tabstop>
+  <tabstop>lePathTranslations</tabstop>
+  <tabstop>lePathHatch</tabstop>
  </tabstops>
  <resources>
   <include location="../../../res/extui/extui.qrc"/>
