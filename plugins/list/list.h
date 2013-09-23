@@ -49,8 +49,8 @@ public:
     void setText(QString text);
 
 public slots:
-//    void procesAction(QStringList *commandList);
-//    void procesAction(Document_Interface *doc);
+//    void processAction(QStringList *commandList);
+//    void processAction(Document_Interface *doc);
 //    void checkAccept();
 
 protected:

@@ -42,7 +42,7 @@ void LC_Sample::execComm(Document_Interface *doc,
     lc_Sampledlg pdt(parent);
     int result =  pdt.exec();
     if (result == QDialog::Accepted)
-        pdt.procesAction(doc);
+        pdt.processAction(doc);
 }
 
 
@@ -112,7 +112,7 @@ bool lc_Sampledlg::failGUI(QString *msg)
 }
 
 
-void lc_Sampledlg::procesAction(Document_Interface *doc)
+void lc_Sampledlg::processAction(Document_Interface *doc)
 {
     Q_UNUSED(doc);
     QPointF start, end;
@@ -129,7 +129,7 @@ void lc_Sampledlg::checkAccept()
 
     errmsg.clear();
     if (failGUI(&errmsg)) {
-        QMessageBox::critical ( this, "Sample plugin", errmsg );
+        QMessageBox::critical ( this, tr("Sample plugin"), errmsg );
         errmsg.clear();
         return;
     }
