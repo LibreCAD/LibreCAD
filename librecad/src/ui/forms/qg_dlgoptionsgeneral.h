@@ -48,6 +48,8 @@ private:
     bool restartNeeded;
 
     void init();
+	void initComboBox(QComboBox* cb, QString text);
+
     void destroy();
 
 };
