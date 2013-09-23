@@ -321,6 +321,11 @@
         <translation>警告：檔案已開啟：</translation>
     </message>
     <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3935"/>
+        <source>Help files not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2667"/>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2834"/>
         <source>Cannot open the file
@@ -371,27 +376,27 @@ Please check the permissions.</source>
 請檢查檔案權限。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3838"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3843"/>
         <source>Compiler: Clang %1.%2.%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3840"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3845"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3842"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3847"/>
         <source>Compiler: Microsoft Visual C++&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3844"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3849"/>
         <source>Qt Version: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3857"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3862"/>
         <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation>請考慮捐贈給LibreCAD以幫助保持源代碼和網站。</translation>
     </message>
@@ -497,22 +502,22 @@ Auto-save disabled.</source>
         <translation>退出程式...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3819"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3824"/>
         <source>None</source>
         <translation>無</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3825"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3830"/>
         <source>About...</source>
         <translation>關於...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3833"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3838"/>
         <source>Version: %1</source>
         <translation>版本: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3835"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3840"/>
         <source>SCM Revision: %1</source>
         <translation>SCM 版本: %1</translation>
     </message>
@@ -525,17 +530,17 @@ Auto-save disabled.</source>
         <translation type="obsolete">SVN 修訂: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3845"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3850"/>
         <source>Compiled on: %1</source>
         <translation>編譯: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3847"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3852"/>
         <source>Program Icons Supplied by</source>
         <translation>程式圖示提供</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3848"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3853"/>
         <source>Splash and Logo supplied by</source>
         <translation>登入畫面與標誌提供</translation>
     </message>
@@ -544,12 +549,12 @@ Auto-save disabled.</source>
         <translation type="obsolete">日期: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3850"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3855"/>
         <source>Modules: %1</source>
         <translation>模組: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3852"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3857"/>
         <source>Main Website : </source>
         <translation>主網站：</translation>
     </message>
@@ -558,12 +563,12 @@ Auto-save disabled.</source>
         <translation type="obsolete">請捐贈 LibreCAD，以幫助維持源碼與其網站。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3922"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3927"/>
         <source>Help</source>
         <translation>求助</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3930"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3935"/>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation>報錯，我在檔案系統上無法找到說明文件。</translation>
     </message>
@@ -1863,7 +1868,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../src/ui/qg_colorbox.cpp" line="85"/>
-        <location filename="../src/ui/qg_colorbox.cpp" line="190"/>
+        <location filename="../src/ui/qg_colorbox.cpp" line="191"/>
         <source>By Layer</source>
         <translation>依圖層</translation>
     </message>
@@ -1985,7 +1990,12 @@ p, li { white-space: pre-wrap; }
         <translation>指令：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_commandwidget.ui" line="108"/>
+        <location filename="../src/ui/forms/qg_commandwidget.ui" line="104"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;type in coordinates or commands&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_commandwidget.ui" line="111"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3753,279 +3763,332 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>格點(&amp;G)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="430"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="424"/>
         <source>Grid Settings</source>
         <translation>格點設定</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="436"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="430"/>
         <source>Show Grid</source>
         <translation>顯示格點</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="479"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="562"/>
         <source>Crosshair</source>
         <translation>光標</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="498"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="496"/>
         <source>Left crosshair with isometric grid</source>
         <translation>等軸測格點左向光標</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="501"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="499"/>
         <source>Left</source>
         <translation>左向</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="520"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="518"/>
         <source>Top crosshair with isometric grid</source>
         <translation>等軸測格點頂向光標</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="523"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="521"/>
         <source>Top</source>
         <translation>頂向</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="542"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="540"/>
         <source>Right crosshair with isometric grid</source>
         <translation>等軸測格點右向光標</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="545"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="543"/>
         <source>Right</source>
         <translation>右向光標</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="555"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="437"/>
         <source>Use orthogonal grid</source>
         <translation>採用正交格點</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="558"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="440"/>
         <source>Orthogonal Grid</source>
         <translation>正交格點</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="568"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="450"/>
         <source>Use isometric grid</source>
         <translation>採用等軸測格點</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="571"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="453"/>
         <source>Isometric Grid</source>
         <translation>等軸測格點</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="590"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="583"/>
         <source>X Spacing:</source>
         <translation>X 間隔：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="610"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="664"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="603"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="645"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="262"/>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="265"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="384"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="389"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="388"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="393"/>
         <source>auto</source>
         <translation>自動</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="615"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="669"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="608"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="650"/>
         <source>0.01</source>
         <translation>0.01</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="620"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="674"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="714"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="613"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="655"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="728"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="816"/>
         <source>0.1</source>
         <translation>0.1</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="625"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="679"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="756"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="798"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="840"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="882"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="924"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="974"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="618"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="660"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="743"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="831"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="868"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="910"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="952"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="994"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1036"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1086"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="630"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="684"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="623"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="665"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="758"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="846"/>
         <source>10</source>
         <translation>10</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="644"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="631"/>
         <source>Y Spacing:</source>
         <translation>Y 間隔：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="691"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="702"/>
         <source>&amp;Dimensions</source>
         <translation>標註(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="697"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="796"/>
         <source>General Scale:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="707"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="718"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="719"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="738"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="826"/>
         <source>0.5</source>
         <translation type="unfinished">0.5</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="724"/>
         <source>1.0</source>
-        <translation type="unfinished">1.0</translation>
+        <translation type="obsolete">1.0</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="729"/>
         <source>2.0</source>
-        <translation type="unfinished">2.0</translation>
+        <translation type="obsolete">2.0</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="734"/>
         <source>5.0</source>
-        <translation type="unfinished">5.0</translation>
+        <translation type="obsolete">5.0</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="742"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="854"/>
         <source>Text Height:</source>
         <translation>文字高度：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="774"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="816"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="858"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="900"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="942"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="992"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="886"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="928"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="970"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1012"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1054"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1104"/>
         <source>units</source>
         <translation>單位</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="761"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="803"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="845"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="887"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="929"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="979"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1103"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="748"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="836"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="873"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="915"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="957"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="999"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1041"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1091"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1215"/>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="766"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="808"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="850"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="892"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="934"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="984"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="753"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="841"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="878"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="920"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="962"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1004"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1046"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1096"/>
         <source>5</source>
         <translation>5</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="784"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="896"/>
         <source>Extension line extension:</source>
         <translation>延伸線延伸：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="910"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1022"/>
         <source>Arrow size:</source>
         <translation>箭頭大小：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="868"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="980"/>
         <source>Dimension line gap:</source>
         <translation>標註線間隔：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="826"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="708"/>
+        <source>General Factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="733"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="821"/>
+        <source>0.2</source>
+        <translation type="unfinished">0.2</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="763"/>
+        <source>20</source>
+        <translation type="unfinished">20</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="768"/>
+        <source>50</source>
+        <translation type="unfinished">50</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="773"/>
+        <source>100</source>
+        <translation type="unfinished">100</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="778"/>
+        <source>200</source>
+        <translation type="unfinished">200</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="783"/>
+        <source>500</source>
+        <translation type="unfinished">500</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="788"/>
+        <source>1000</source>
+        <translation type="unfinished">1000</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="806"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="938"/>
         <source>Extension line offset:</source>
         <translation>延伸線偏移：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="952"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1064"/>
         <source>Tick size:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="962"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1074"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="969"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1081"/>
         <source>0</source>
         <translation type="unfinished">0</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1002"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1114"/>
         <source>Alignment:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1012"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1124"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignement.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1019"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1131"/>
         <source>Dimension Aligned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1024"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1136"/>
         <source>Horizontal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1081"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1193"/>
         <source>Splines</source>
         <translation>雲形線</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1089"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1201"/>
         <source>Number of line segments per spline patch:</source>
         <translation>每條雲形線路徑的線段數量：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1108"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1220"/>
         <source>4</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1113"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1225"/>
         <source>8</source>
         <translation>8</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1118"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1230"/>
         <source>16</source>
         <translation>16</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1123"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1235"/>
         <source>32</source>
         <translation>32</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1128"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1240"/>
         <source>64</source>
         <translation>64</translation>
     </message>
@@ -4096,12 +4159,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>測量單位</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="340"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="344"/>
         <source>Options</source>
         <translation>選項</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="341"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="345"/>
         <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
         <translation>若長度格式為「工程」和「建築」，此單位必須設為英吋。</translation>
     </message>
@@ -4129,29 +4192,29 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>圖形介面語言(&amp;G)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="55"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="58"/>
         <source>&amp;Command Language:</source>
         <translation>指令語言(&amp;C)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="77"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="396"/>
         <source>Colors</source>
         <translation>顏色</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="83"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="569"/>
         <source>Backgr&amp;ound:</source>
         <translation>背景(&amp;O)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="96"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="451"/>
         <source>G&amp;rid Color:</source>
         <translation>格點顏色(&amp;R)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="113"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="150"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="185"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="478"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="495"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="591"/>
         <source>#000000</source>
         <translation>#000000</translation>
     </message>
@@ -4164,24 +4227,24 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">#c0c0c0</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="128"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="155"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="200"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="483"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="510"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="606"/>
         <source>#808080</source>
         <translation>#808080</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="163"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="518"/>
         <source>&amp;Meta Grid Color:</source>
         <translation>格點變化顏色(&amp;M)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="180"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="586"/>
         <source>#404040</source>
         <translation>#404040</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="208"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="531"/>
         <source>S&amp;elected Color:</source>
         <translation>選取顏色(&amp;E)：</translation>
     </message>
@@ -4190,231 +4253,271 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">#a54747</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="118"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="145"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="190"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="473"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="500"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="596"/>
         <source>#FFFFFF</source>
         <translation>#FFFFFF</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="123"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="140"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="195"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="468"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="505"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="601"/>
         <source>#C0C0C0</source>
         <translation>#C0C0C0</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="225"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="406"/>
         <source>#A54747</source>
         <translation>#A54747</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="237"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="561"/>
         <source>#739373</source>
         <translation>#739373</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="245"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="544"/>
         <source>&amp;Highlighted Color:</source>
         <translation>亮顯顏色(&amp;H)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="293"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="90"/>
         <source>Fontsize</source>
         <translation>字體大小</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="299"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="180"/>
         <source>Statusbar:</source>
         <translation>狀態列：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="313"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="531"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="100"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="328"/>
         <source>5</source>
         <translation>5</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="318"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="536"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="105"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="333"/>
         <source>6</source>
         <translation>6</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="323"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="110"/>
         <source>7</source>
         <translation>7</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="328"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="541"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="115"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="338"/>
         <source>8</source>
         <translation>8</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="333"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="120"/>
         <source>9</source>
         <translation>9</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="338"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="546"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="125"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="343"/>
         <source>10</source>
         <translation>10</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="343"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="130"/>
         <source>11</source>
         <translation>11</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="348"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="135"/>
         <source>12</source>
         <translation>12</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="353"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="140"/>
         <source>14</source>
         <translation>14</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="396"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="193"/>
         <source>Graphic View</source>
         <translation>圖形檢視</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="402"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="199"/>
         <source>&amp;Show large crosshairs</source>
         <translation>顯示十字準星(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="405"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="202"/>
         <source>Alt+S</source>
         <translation>Alt+S</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="412"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="209"/>
         <source>A&amp;utomatically scale grid</source>
         <translation>自動縮放格點(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="415"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="212"/>
         <source>Alt+U</source>
         <translation>Alt+U</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="454"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="251"/>
         <source>Number of p&amp;review entities:</source>
         <translation>預覽的物件數量(&amp;R)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="471"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="521"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="268"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="318"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="476"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="273"/>
         <source>50</source>
         <translation>50</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="481"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="278"/>
         <source>100</source>
         <translation>100</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="486"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="283"/>
         <source>200</source>
         <translation>200</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="491"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="288"/>
         <source>400</source>
         <translation>400</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="496"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="293"/>
         <source>800</source>
         <translation>800</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="504"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="301"/>
         <source>Minimal Grid Spacing (px):</source>
         <translation>最小格點間隔 (px)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="526"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="323"/>
         <source>4</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="551"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="348"/>
         <source>15</source>
         <translation>15</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="556"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="353"/>
         <source>20</source>
         <translation>20</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="600"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="418"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="640"/>
+        <source>#00FFFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="423"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="618"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="630"/>
+        <source>#0000FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="428"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="635"/>
+        <source>#FFFF00</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="433"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="645"/>
+        <source>#FF00FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="441"/>
+        <source>St&amp;art Handle Color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="653"/>
+        <source>&amp;Handle Color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="663"/>
+        <source>&amp;End Handle Color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="677"/>
         <source>&amp;Paths</source>
         <translation>路徑(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="606"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="683"/>
         <source>Translations:</source>
         <translation>翻譯：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="616"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="693"/>
         <source>Hatch Patterns:</source>
         <translation>剖面線樣式：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="626"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="703"/>
         <source>Fonts:</source>
         <translation>字型：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="636"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="713"/>
         <source>Scripts:</source>
         <translation>腳本：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="646"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="723"/>
         <source>Part Libraries:</source>
         <translation>構件函式庫：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="656"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="733"/>
         <source>Template:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="725"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="802"/>
         <source>&amp;Defaults</source>
         <translation>預設值(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="743"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="820"/>
         <source>Defaults for new drawings</source>
         <translation>預設為新圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="755"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="832"/>
         <source>&amp;Unit:</source>
         <translation>單位(&amp;U)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="768"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="845"/>
         <source>Drawing unit.</source>
         <translation>繪圖單位</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="819"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="896"/>
         <source>Program Defaults</source>
         <translation>程式預設值</translation>
     </message>
@@ -4423,22 +4526,22 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">自動存檔間隔分鐘數。</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="827"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="904"/>
         <source>Auto save time:</source>
         <translation>自動存檔時間：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="911"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>以分鐘為單位的文件自動保存時間間隔。</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="849"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="926"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>如果設置，LibreCAD會自動生成當前繪圖的備份。</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="852"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="929"/>
         <source>Auto backup</source>
         <translation>自動備份</translation>
     </message>
@@ -4459,12 +4562,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">Esc</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="262"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="229"/>
         <source>Preferences</source>
         <translation>偏好設定</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="263"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="230"/>
         <source>Please restart the application to apply all changes.</source>
         <translation>請重新啟動應用程式以套用所有變更。</translation>
     </message>
@@ -5792,12 +5895,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="228"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="232"/>
         <source>Untitled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="239"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="243"/>
         <source>Save %1 As</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7484,12 +7587,12 @@ p, li { white-space: pre-wrap; }
         <translation>秒差距</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="193"/>
+        <location filename="../src/main/main.cpp" line="253"/>
         <source>Loading..</source>
         <translation>正在載入..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="219"/>
+        <location filename="../src/main/main.cpp" line="279"/>
         <source>Loading...</source>
         <translation>正在載入...</translation>
     </message>
@@ -7498,7 +7601,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">載入資料庫路徑..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="237"/>
+        <location filename="../src/main/main.cpp" line="297"/>
         <source>Loading File %1..</source>
         <translation>正在載入檔案 %1..</translation>
     </message>
@@ -7632,25 +7735,25 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="331"/>
-        <location filename="../src/ui/qg_filedialog.cpp" line="393"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="335"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="397"/>
         <source>Save Drawing As</source>
         <translation>另存圖形為</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="394"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="398"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 已經存在。
 您確定要取代它嗎？</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="459"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="463"/>
         <source>Old Drawing Exchange %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="460"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="464"/>
         <source>Drawing Exchange %1</source>
         <translation>圖形交換%1</translation>
     </message>
@@ -7659,54 +7762,54 @@ Do you want to replace it?</source>
         <translation type="obsolete">新dxf圖形交換檔案 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="463"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="467"/>
         <source>dwg Drawing %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="465"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="469"/>
         <source>QCad 1.x file %1</source>
         <translation>QCad 1.x 檔案 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="466"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="470"/>
         <source>LFF Font %1</source>
         <translation>LFF 字型 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="467"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="471"/>
         <source>Font %1</source>
         <translation>字型 %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="468"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="472"/>
         <source>Jww %1</source>
         <translation>jww %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_filedialog.cpp" line="492"/>
+        <location filename="../src/ui/qg_filedialog.cpp" line="496"/>
         <source>Open Drawing</source>
         <translation>開啟繪圖</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1227"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1228"/>
         <source>enter an integer number</source>
         <translation>輸入整數</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1231"/>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1253"/>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1270"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1232"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1254"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1271"/>
         <source>LibreCAD query</source>
         <translation>LibreCAD 查詢</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1249"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1250"/>
         <source>enter a number</source>
         <translation>輸入數字</translation>
     </message>
     <message>
-        <location filename="../src/main/doc_plugin_interface.cpp" line="1266"/>
+        <location filename="../src/main/doc_plugin_interface.cpp" line="1267"/>
         <source>enter text</source>
         <translation>輸入文字</translation>
     </message>
@@ -7721,47 +7824,47 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3651"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3652"/>
         <source>unknown error opening dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3655"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3656"/>
         <source>can&apos;t open this dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3659"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3660"/>
         <source>unsupported dwg version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3663"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3664"/>
         <source>error reading file header in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3667"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3668"/>
         <source>error reading header vars in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3671"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3672"/>
         <source>error reading classes in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3675"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3676"/>
         <source>error reading offsets in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3679"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3680"/>
         <source>error reading tables in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3683"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3684"/>
         <source>error reading entities in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8236,8 +8339,12 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="380"/>
+        <source>Specify end angle or [angle/chord length]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Specify end angle or [Angle/chord Length]</source>
-        <translation>指定結束角度或[角度 / 弦長]</translation>
+        <translation type="obsolete">指定結束角度或[角度 / 弦長]</translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc.cpp" line="384"/>
@@ -8263,9 +8370,13 @@ Do you want to replace it?</source>
         <translation>無效的弧形數據。</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="229"/>
         <source>Specify startpoint or [Center]</source>
-        <translation>指定起點或 [中心點]</translation>
+        <translation type="obsolete">指定起點或 [中心點]</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="229"/>
+        <source>Specify startpoint or [center]</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawarc3p.cpp" line="230"/>

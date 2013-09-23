@@ -548,6 +548,10 @@ Auto-save disabled.</source>
         <source>Qt Version: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Help files not found</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -3177,6 +3181,10 @@ p, li { white-space: pre-wrap; }
         <source>Clear</source>
         <translation>Εκκαθάριση</translation>
     </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;type in coordinates or commands&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_CoordinateWidget</name>
@@ -4894,15 +4902,51 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>1.0</source>
-        <translation>1.0</translation>
+        <translation type="obsolete">1.0</translation>
     </message>
     <message>
         <source>2.0</source>
-        <translation>2.0</translation>
+        <translation type="obsolete">2.0</translation>
     </message>
     <message>
         <source>5.0</source>
-        <translation>5.0</translation>
+        <translation type="obsolete">5.0</translation>
+    </message>
+    <message>
+        <source>General Factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>0.2</source>
+        <translation type="unfinished">0.2</translation>
+    </message>
+    <message>
+        <source>20</source>
+        <translation type="unfinished">20</translation>
+    </message>
+    <message>
+        <source>50</source>
+        <translation type="unfinished">50</translation>
+    </message>
+    <message>
+        <source>100</source>
+        <translation type="unfinished">100</translation>
+    </message>
+    <message>
+        <source>200</source>
+        <translation type="unfinished">200</translation>
+    </message>
+    <message>
+        <source>500</source>
+        <translation type="unfinished">500</translation>
+    </message>
+    <message>
+        <source>1000</source>
+        <translation type="unfinished">1000</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5210,6 +5254,34 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>Template:</source>
         <translation>Πρότυπο:</translation>
+    </message>
+    <message>
+        <source>#00FFFF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#0000FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#FFFF00</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>#FF00FF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>St&amp;art Handle Color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Handle Color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;End Handle Color:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8420,7 +8492,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify end angle or [Angle/chord Length]</source>
-        <translation>Καθορίστε την τελική γωνία ή [γωνία/μήκος χορδής]</translation>
+        <translation type="obsolete">Καθορίστε την τελική γωνία ή [γωνία/μήκος χορδής]</translation>
     </message>
     <message>
         <source>Specify included angle:</source>
@@ -8442,6 +8514,10 @@ Do you want to replace it?</source>
         <source>Draw arcs</source>
         <translation type="obsolete">Σχεδίαση τόξων</translation>
     </message>
+    <message>
+        <source>Specify end angle or [angle/chord length]</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawArc3P</name>
@@ -8451,7 +8527,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify startpoint or [Center]</source>
-        <translation>Καθορίστε το αρχικό σημείο ή [κέντρο]</translation>
+        <translation type="obsolete">Καθορίστε το αρχικό σημείο ή [κέντρο]</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -8480,6 +8556,10 @@ Do you want to replace it?</source>
     <message>
         <source>Draw arcs with 3 points</source>
         <translation type="obsolete">Σχεδίαση τόξων με 3 σημεία</translation>
+    </message>
+    <message>
+        <source>Specify startpoint or [center]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
