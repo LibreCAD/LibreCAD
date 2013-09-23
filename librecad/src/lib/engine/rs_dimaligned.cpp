@@ -72,7 +72,7 @@ RS_VectorSolutions RS_DimAligned::getRefPoints() {
  * measurement of this dimension.
  */
 QString RS_DimAligned::getMeasuredLabel() {
-    double dist = edata.extensionPoint1.distanceTo(edata.extensionPoint2);
+    double dist = edata.extensionPoint1.distanceTo(edata.extensionPoint2) * getGeneralFactor();
 
         RS_Graphic* graphic = getGraphic();
 
@@ -95,7 +95,7 @@ QString RS_DimAligned::getMeasuredLabel() {
  *
  * @param autoText Automatically reposition the text label
  */
-void RS_DimAligned::update(bool autoText) {
+void RS_DimAligned::updateDim(bool autoText) {
 
     RS_DEBUG->print("RS_DimAligned::update");
 
@@ -157,6 +157,15 @@ void RS_DimAligned::update(bool autoText) {
     calculateBorders();
 }
 
+
+void RS_DimAligned::updateDimPoint(){
+    // temporary construction line
+    RS_ConstructionLine tmpLine( NULL,
+        RS_ConstructionLineData(edata.extensionPoint1, edata.extensionPoint2));
+
+    RS_Vector tmpP1 = tmpLine.getNearestPointOnEntity(data.definitionPoint);
+    data.definitionPoint += edata.extensionPoint2 - tmpP1;
+}
 
 
 bool RS_DimAligned::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) {
@@ -246,7 +255,7 @@ void RS_DimAligned::stretch(const RS_Vector& firstCorner,
                 v.setPolar(len, ang2);
                 data.definitionPoint = edata.extensionPoint2 + v;
         }
-        update(true);
+        updateDim(true);
 }
 
 
@@ -269,11 +278,11 @@ void RS_DimAligned::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
                 RS_Vector v;
                 v.setPolar(d, a);
         data.definitionPoint = edata.extensionPoint2 + v;
-                update(true);
+                updateDim(true);
     }
         else if (ref.distanceTo(data.middleOfText)<1.0e-4) {
         data.middleOfText.move(offset);
-                update(false);
+                updateDim(false);
     }
         else if (ref.distanceTo(edata.extensionPoint1)<1.0e-4) {
                 double a1 = edata.extensionPoint2.angleTo(edata.extensionPoint1);
@@ -284,7 +293,7 @@ void RS_DimAligned::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
                 if (fabs(d1)>1.0e-4) {
                         scale(edata.extensionPoint2, RS_Vector(d2/d1, d2/d1));
                 }
-                update(true);
+                updateDim(true);
     }
         else if (ref.distanceTo(edata.extensionPoint2)<1.0e-4) {
                 double a1 = edata.extensionPoint1.angleTo(edata.extensionPoint2);
@@ -295,7 +304,7 @@ void RS_DimAligned::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
                 if (fabs(d1)>1.0e-4) {
                         scale(edata.extensionPoint1, RS_Vector(d2/d1, d2/d1));
                 }
-                update(true);
+                updateDim(true);
     }
 }
 

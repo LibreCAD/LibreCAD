@@ -299,6 +299,13 @@ if(dimtsz < 0.01) {
 
 
 /**
+ * @return general factor for linear dimensions.
+ */
+double RS_Dimension::getGeneralFactor() {
+    return getGraphicVariable("$DIMLFAC", 1.0, 40);
+}
+
+/**
  * @return general scale for dimensions.
  */
 double RS_Dimension::getGeneralScale() {

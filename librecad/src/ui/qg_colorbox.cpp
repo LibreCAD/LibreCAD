@@ -145,11 +145,12 @@ void QG_ColorBox::setColor(const RS_Color& color) {
 		   +abs(q.blue() - color.blue()) <= 3
 		) {
 			break;
-		}
-	}
-        if(cIndex == count() - 1) {
-       	    cIndex=findData(QColor(Qt::black)); //default to Qt::black
+          }
         }
+        /*color not found, default to "others...*/
+/*        if(cIndex == count() - 1) {
+       	    cIndex=findData(QColor(Qt::black)); //default to Qt::black
+        }*/
     }
     setCurrentIndex(cIndex);
 //std::cout<<"Default color for choosing: cIndex="<<cIndex<<" "<<RS_Color(itemData(cIndex).value<QColor>())<<std::endl;
@@ -235,7 +236,10 @@ void QG_ColorBox::slotColorChanged(int index) {
             currentColor=Qt::black; //default to black color
                 }
         } else { // color picker for "Others.."
-            currentColor = QColorDialog::getColor(currentColor, this);
+            RS_Color selectedColor = QColorDialog::getColor(currentColor, this);
+            //verify if user as clicked Ok or Cancel
+            if (selectedColor.isValid())
+            currentColor = selectedColor;
         }
     }
 

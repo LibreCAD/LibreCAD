@@ -159,7 +159,11 @@ public:
      * Must be overwritten by implementing dimension entity class
      * to update the subentities which make up the dimension entity.
      */
-    virtual void update(bool autoText=false) = 0;
+    virtual void update() {
+            updateDim();
+        }
+
+    virtual void updateDim(bool autoText=false) = 0;
 
     void updateCreateDimensionLine(const RS_Vector& p1, const RS_Vector& p2,
                   bool arrow1=true, bool arrow2=true, bool autoText=false);
@@ -200,6 +204,7 @@ public:
         return data.angle;
     }
 
+    double getGeneralFactor();
     double getGeneralScale();
     double getArrowSize();
     double getTickSize();

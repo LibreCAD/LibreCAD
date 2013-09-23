@@ -145,7 +145,12 @@ void RS_LayerList::add(RS_Layer* layer) {
             activate(l);
         }
 
-		l->setPen(layer->getPen());
+        l->freeze( layer->isFrozen());
+        l->lock( layer->isLocked());
+        l->setConverted( layer->isConverted());
+        l->setHelpLayer( layer->isHelpLayer());
+        l->visibleInLayerList( layer->isVisibleInLayerList());
+        l->setPen(layer->getPen());
 
         delete layer;
         layer = NULL;

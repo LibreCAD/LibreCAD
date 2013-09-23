@@ -1769,7 +1769,7 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             if (dlg.exec()) {
                 dlg.updateDim();
                 ret = true;
-                ((RS_Dimension*)entity)->update(true);
+                ((RS_Dimension*)entity)->updateDim(true);
             }
         }
         break;
@@ -1780,7 +1780,7 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             if (dlg.exec()) {
                 dlg.updateDim();
                 ret = true;
-                ((RS_DimLinear*)entity)->update(true);
+                ((RS_DimLinear*)entity)->updateDim(true);
             }
         }
         break;

@@ -259,7 +259,8 @@ RS_Vector RS_Spline::getNearestCenter(const RS_Vector& /*coord*/,
 
 
 RS_Vector RS_Spline::getNearestMiddle(const RS_Vector& /*coord*/,
-                                      double* dist)const {
+                                      double* dist,
+                                      int /*middlePoints*/)const {
     if (dist!=NULL) {
         *dist = RS_MAXDOUBLE;
     }

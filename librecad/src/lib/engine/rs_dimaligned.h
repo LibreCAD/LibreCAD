@@ -112,7 +112,7 @@ public:
 
     virtual QString getMeasuredLabel();
 
-    virtual void update(bool autoText=false);
+    virtual void updateDim(bool autoText=false);
 
     RS_Vector getExtensionPoint1() {
         return edata.extensionPoint1;
@@ -121,6 +121,12 @@ public:
     RS_Vector getExtensionPoint2() {
         return edata.extensionPoint2;
     }
+
+    /**
+     * Recalculate the original Dimension Point to remove Dim oblique angle.
+     * @author Rallaz
+     */
+    void updateDimPoint();
 
     virtual void move(const RS_Vector& offset);
     virtual void rotate(const RS_Vector& center, const double& angle);

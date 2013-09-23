@@ -2,7 +2,7 @@
 # include user-defined things in every qmake project
 exists( custom.pro ):include( custom.pro )
 
-include( settings.pro )
+include( settings.pri )
 
 # Store intermedia stuff somewhere else
 isEmpty(GENERATED_DIR){

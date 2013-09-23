@@ -201,7 +201,7 @@ void RS_Insert::update() {
                                 }
 
 //                                RS_DEBUG->print("RS_Insert::update: adding new entity");
-                addEntity(ne);
+                appendEntity(ne);
 //                std::cout<<"done # of entity: "<<i_en_counts<<std::endl;
             }
         }

@@ -22,8 +22,6 @@
 class dxfReader;
 class dxfWriter;
 
-using std::string;
-
 namespace DRW {
 
 //! Table entries type.
@@ -231,13 +229,13 @@ public:
     void parseCode(int code, dxfReader *reader);
 
 public:
-    UTF8STRING lineType;           /*!< line type, code 6 */
-    int color;                 /*!< layer color, code 62 */
-    int color24;               /*!< 24-bit color, code 420 */
-    bool plotF;                 /*!< Plot flag, code 290 */
+    UTF8STRING lineType;            /*!< line type, code 6 */
+    int color;                      /*!< layer color, code 62 */
+    int color24;                    /*!< 24-bit color, code 420 */
+    bool plotF;                     /*!< Plot flag, code 290 */
     enum DRW_LW_Conv::lineWidth lWeight; /*!< layer lineweight, code 370 */
-    string handlePlotS;        /*!< Hard-pointer ID/handle of plotstyle, code 390 */
-    string handlePlotM;        /*!< Hard-pointer ID/handle of materialstyle, code 347 */
+    std::string handlePlotS;        /*!< Hard-pointer ID/handle of plotstyle, code 390 */
+    std::string handlePlotM;        /*!< Hard-pointer ID/handle of materialstyle, code 347 */
 };
 
 //! Class to handle text style entries
@@ -348,8 +346,8 @@ public:
     void parseCode(int code, dxfReader *reader);
 
 public:
-    string handle;            /*!< entity identifier, code 5 */
-    UTF8STRING name;              /*!< File name of image, code 1 */
+    std::string handle;       /*!< entity identifier, code 5 */
+    UTF8STRING name;          /*!< File name of image, code 1 */
     int version;              /*!< class version, code 90, 0=R14 version */
     double u;                 /*!< image size in pixels U value, code 10 */
     double v;                 /*!< image size in pixels V value, code 20 */
@@ -358,7 +356,7 @@ public:
     int loaded;               /*!< image is loaded flag, code 280, 0=unloaded, 1=loaded */
     int resolution;           /*!< resolution units, code 281, 0=no, 2=centimeters, 5=inch */
 
-    std::map<string,string> reactors;
+    std::map<std::string,std::string> reactors;
 };
 
 
@@ -377,19 +375,19 @@ public:
 
     void parseCode(int code, dxfReader *reader);
     void write(dxfWriter *writer, DRW::Version ver);
-    void addComment(string c);
-    string getComments() const {return comments;}
+    void addComment(std::string c);
+    std::string getComments() const {return comments;}
 private:
-    bool getDouble(string key, double *varDouble);
-    bool getInt(string key, int *varInt);
-    bool getStr(string key, string *varStr);
-    bool getCoord(string key, DRW_Coord *varStr);
+    bool getDouble(std::string key, double *varDouble);
+    bool getInt(std::string key, int *varInt);
+    bool getStr(std::string key, std::string *varStr);
+    bool getCoord(std::string key, DRW_Coord *varStr);
 
 public:
-    std::map<string,DRW_Variant*> vars;
+    std::map<std::string,DRW_Variant*> vars;
 private:
-    string comments;
-    string name;
+    std::string comments;
+    std::string name;
     DRW_Variant *curr;
     int version; //to use on read
 };

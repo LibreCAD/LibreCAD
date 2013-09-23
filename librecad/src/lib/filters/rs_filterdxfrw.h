@@ -49,7 +49,7 @@ class DL_WriterA;
 
 /**
  * This format filter class can import and export DXF files.
- * It depends on the dxflib library.
+ * It depends on the libdxfrw library.
  *
  * @author Rallaz
  */

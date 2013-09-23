@@ -2,7 +2,7 @@ About LibreCAD
 ==============
 
 LibreCAD is a 2D CAD drawing tool based on the community edition of QCAD (www.qcad.org).
-LibreCAD has been re-structured and ported to qt4 and works natively cross platform between OSX, Windows and Linux.
+LibreCAD has been re-structured and ported to Qt version 4 and works natively cross platform between OS X, Windows and Linux.
 See http://www.librecad.org
 
 User Manual and wiki
@@ -12,8 +12,8 @@ We are in the process of building a user manual and wiki:
 
 http://wiki.librecad.org/index.php/Main_Page
 
-UNIX and OSX users
-------------------
+UNIX and OS X users
+-------------------
 
 Unzip or checkout a version of LibreCAD into a directory.
 CD into that directory and follow these instructions:
@@ -28,19 +28,19 @@ make
 After successful compiling, the executible is generated:
 
 Linux: unix/librecad
-OS/X: LibreCAD.app/Contents/MacOS/LibreCAD
+OS X: LibreCAD.app/Contents/MacOS/LibreCAD
 
 A sample building script for OS/X is included as scripts/build-osx.sh. This script file also generates a LibreCAD.dmg.
 
-Ubuntu/Debian users
--------------------
+Users of Ubuntu/Debian and derivatives
+--------------------------------------
 
-Make sure you have the qt-4 SDK installed
-Install the qt4 SDK by executing the following commands:
+Make sure you have the Qt version 4 development packages installed by
+running the following commands:
 
 ```
-$ sudo apt-get install g++ gcc make git-core libqt4-dev qt4-qmake \
-libqt4-help qt4-dev-tools libboost-all-dev libmuparser-dev libfreetype6-dev
+$ sudo apt-get install g++ gcc make git-core libqt4-dev qt4-qmake libqt4-help \
+qt4-dev-tools libboost-all-dev libmuparser-dev libfreetype6-dev pkg-config
 ```
 
 Alternatively, you make sure you have deb-src lines enabled in your sources.list file, and run,
@@ -55,7 +55,25 @@ http://www.librecad.org/2010/10/debian-64-bit-and-ubuntu-compile-how-to/
 For git see also:
 http://librecad.org/cms/home/from-source/linux.html
 
-NOTE 1: On systems like fedora (& Ubuntu??) You might need to run qmake-qt4 instead of just qmake
+Note that you will most likely need to run __qmake-qt4__ instead of just __qmake__.
+
+Users of Red Hat and similar distibutions
+-----------------------------------------
+
+Install Qt, Boost and muParser development packages for your respective distribution;
+EPEL(https://fedoraproject.org/wiki/EPEL) and similar repositories may come handy if
+your base OS does not include the necessary packages.
+
+As an example, for CentOS 6.4, after adding the EPEL repository,
+
+```
+yum groupinstall 'Desktop Platform Development' 'Development tools'
+yum install qt-devel boost-devel muParser-devel
+```
+
+will install the necessary build dependencies.
+
+Note that you will most likely need to run __qmake-qt4__ instead of just __qmake__.
 
 FreeBSD users
 -------------
@@ -111,8 +129,8 @@ Notes: At this point you will have the following directory structure: C:\muparse
 After installation, start Qt Creator and load LibreCAD.pro,
 from the build menu select "Build All".
 
-OSX USERS
----------
+OS X USERS
+----------
 
 install macports from http://www.macports.org/
 
@@ -135,6 +153,4 @@ After a successful build, the generated executible of LibreCAD can be found as L
 Alternatively, you may try the building script comes with LibreCAD at scripts/build-osx.sh
 `$ cd scripts/`
 `$ ./build-osx.sh`
-
-
 

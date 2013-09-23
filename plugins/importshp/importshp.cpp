@@ -31,14 +31,14 @@ PluginCapabilities ImportShp::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints
-            << PluginMenuLocation("File/Import", tr("shape file"));
+            << PluginMenuLocation("File/Import", "ESRI Shapefile");
     return pluginCapabilities;
 }
 
 QString ImportShp::name() const
- {
-     return (tr("shape file"));
- }
+{
+    return (tr("Import ESRI Shapefile"));
+}
 
 void ImportShp::execComm(Document_Interface *doc,
                              QWidget *parent, QString /*cmd*/)
@@ -53,6 +53,7 @@ void ImportShp::execComm(Document_Interface *doc,
 /*****************************/
 dibSHP::dibSHP(QWidget *parent) :  QDialog(parent)
 {
+    setWindowTitle(tr("Import ESRI Shapefile"));
     QVBoxLayout *mainLayout = new QVBoxLayout;
 
     QPushButton *filebut = new QPushButton(tr("File..."));
@@ -64,7 +65,7 @@ dibSHP::dibSHP(QWidget *parent) :  QDialog(parent)
     mainLayout->addLayout(lofile);
 
     QLabel *formatlabel = new QLabel(tr("File type:"));
-    formattype = new QLabel(tr("Unknoun"));
+    formattype = new QLabel(tr("Unknown"));
     QHBoxLayout *loformat = new QHBoxLayout;
     loformat->addWidget(formatlabel);
     loformat->addWidget(formattype);
@@ -164,7 +165,7 @@ void dibSHP::checkAccept()
 void dibSHP::getFile()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Select file"),
-                                fileedit->text(), "Shapefiles *.shp(*.shp)");
+                                fileedit->text(), "ESRI Shapefiles (*.shp)");
     fileedit->setText(fileName);
     updateFile();
 }
@@ -178,7 +179,7 @@ void dibSHP::updateFile()
     char field_name[12];
 
     QFileInfo fi = QFileInfo(fileName);
-    if (fi.suffix() != "shp") return;
+    if (fi.suffix().toLower() != "shp") return;
     QString file = fi.canonicalFilePath ();
     if (file.isEmpty()) return;
 
@@ -276,7 +277,7 @@ void dibSHP::procesFile(Document_Interface *doc)
     currDoc = doc;
 
     QFileInfo fi = QFileInfo(fileedit->text());
-    if (fi.suffix() != "shp") {
+    if (fi.suffix().toLower() != "shp") {
         QMessageBox::critical ( this, "Shapefile", QString(tr("The file %1 not have extension .shp")).arg(fileedit->text()) );
         return;
     }
@@ -344,9 +345,9 @@ void dibSHP::procesFile(Document_Interface *doc)
             case SHPT_ARC:
             case SHPT_ARCM:
             case SHPT_ARCZ:
+            case SHPT_POLYGON:
                 readPolyline(dh, i);
                 break;
-            case SHPT_POLYGON:
             case SHPT_POLYGONM:
             case SHPT_POLYGONZ:
                 readPolylineC(dh, i);

@@ -74,7 +74,7 @@ QString RS_DimLinear::getMeasuredLabel() {
     RS_Vector dimP2 = dimLine.getNearestPointOnEntity(edata.extensionPoint2);
 
     // Definitive dimension line:
-    double dist = dimP1.distanceTo(dimP2);
+    double dist = dimP1.distanceTo(dimP2) * getGeneralFactor();
 
         RS_Graphic* graphic = getGraphic();
 
@@ -105,7 +105,7 @@ bool RS_DimLinear::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector
  *
  * @param autoText Automatically reposition the text label
  */
-void RS_DimLinear::update(bool autoText) {
+void RS_DimLinear::updateDim(bool autoText) {
 
     RS_DEBUG->print("RS_DimLinear::update");
 
@@ -123,14 +123,10 @@ void RS_DimLinear::update(bool autoText) {
     double dimexe = getExtensionLineExtension()*dimscale;
 
     RS_LineData ld;
-    double extAngle = edata.angle + (M_PI/2.0);
 
     // direction of dimension line
     RS_Vector dirDim;
     dirDim.setPolar(100.0, edata.angle);
-    // direction of extension lines
-    RS_Vector dirExt;
-    dirExt.setPolar(100.0, extAngle);
 
     // construction line for dimension line
     RS_ConstructionLine dimLine(
@@ -148,25 +144,27 @@ void RS_DimLinear::update(bool autoText) {
     RS_Line* dimensionLine = new RS_Line(this, ld);
        addEntity(dimensionLine);
     */
-    RS_Vector vDimexo1, vDimexe1, vDimexo2, vDimexe2;
-    vDimexe1.setPolar(dimexe, edata.extensionPoint1.angleTo(dimP1));
-    vDimexo1.setPolar(dimexo, edata.extensionPoint1.angleTo(dimP1));
 
-    vDimexe2.setPolar(dimexe, edata.extensionPoint2.angleTo(dimP2));
-    vDimexo2.setPolar(dimexo, edata.extensionPoint2.angleTo(dimP2));
+    double extAngle;
+    RS_Vector vDimexo1, vDimexe1, vDimexo2, vDimexe2;
 
     if ((edata.extensionPoint1-dimP1).magnitude()<1e-6) {
-        vDimexe1.setPolar(dimexe,
-                          data.definitionPoint.angleTo(dimP1)-M_PI/2.0);
-        vDimexo1.setPolar(dimexo,
-                          data.definitionPoint.angleTo(dimP1)-M_PI/2.0);
+        if ((edata.extensionPoint2-dimP2).magnitude()<1e-6) {
+            //boot extension points are in dimension line only rotate 90
+            extAngle = edata.angle + (M_PI/2.0);
+        } else {
+            //first extension point are in dimension line use second
+            extAngle = edata.extensionPoint2.angleTo(dimP2);
+        }
+    } else {
+        //first extension point not are in dimension line use it
+        extAngle = edata.extensionPoint1.angleTo(dimP1);
     }
-    if ((edata.extensionPoint2-dimP2).magnitude()<1e-6) {
-        vDimexe2.setPolar(dimexe,
-                          data.definitionPoint.angleTo(dimP2)-M_PI/2.0);
-        vDimexo2.setPolar(dimexo,
-                          data.definitionPoint.angleTo(dimP2)-M_PI/2.0);
-    }
+    vDimexe1.setPolar(dimexe, extAngle);
+    vDimexo1.setPolar(dimexo, extAngle);
+
+    vDimexe2.setPolar(dimexe, extAngle);
+    vDimexo2.setPolar(dimexo, extAngle);
 
     // extension lines:
     ld = RS_LineData(edata.extensionPoint1+vDimexo1,
@@ -288,7 +286,7 @@ void RS_DimLinear::stretch(const RS_Vector& firstCorner,
         data.definitionPoint = edata.extensionPoint2 + v;
                 */
     }
-    update(true);
+    updateDim(true);
 }
 
 
@@ -297,19 +295,19 @@ void RS_DimLinear::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 
     if (ref.distanceTo(data.definitionPoint)<1.0e-4) {
         data.definitionPoint += offset;
-                update(true);
+                updateDim(true);
     }
         else if (ref.distanceTo(data.middleOfText)<1.0e-4) {
         data.middleOfText += offset;
-                update(false);
+                updateDim(false);
     }
         else if (ref.distanceTo(edata.extensionPoint1)<1.0e-4) {
         edata.extensionPoint1 += offset;
-                update(true);
+                updateDim(true);
     }
         else if (ref.distanceTo(edata.extensionPoint2)<1.0e-4) {
         edata.extensionPoint2 += offset;
-                update(true);
+                updateDim(true);
     }
 }
 

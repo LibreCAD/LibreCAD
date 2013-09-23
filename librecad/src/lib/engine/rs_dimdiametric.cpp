@@ -56,7 +56,7 @@ RS_DimDiametric::RS_DimDiametric(RS_EntityContainer* parent,
 QString RS_DimDiametric::getMeasuredLabel() {
 
     // Definitive dimension line:
-    double dist = data.definitionPoint.distanceTo(edata.definitionPoint);
+    double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
 
         RS_Graphic* graphic = getGraphic();
 
@@ -87,7 +87,7 @@ RS_VectorSolutions RS_DimDiametric::getRefPoints() {
  *
  * @param autoText Automatically reposition the text label
  */
-void RS_DimDiametric::update(bool autoText) {
+void RS_DimDiametric::updateDim(bool autoText) {
 
     RS_DEBUG->print("RS_DimDiametric::update");
 
@@ -157,7 +157,7 @@ void RS_DimDiametric::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
                 v.setPolar(d, a);
         edata.definitionPoint = c + v;
                 data.definitionPoint = c - v;
-                update(true);
+                updateDim(true);
     }
     else if (ref.distanceTo(data.definitionPoint)<1.0e-4) {
                 RS_Vector c = (edata.definitionPoint + data.definitionPoint)/2.0;
@@ -168,11 +168,11 @@ void RS_DimDiametric::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
                 v.setPolar(d, a);
         data.definitionPoint = c + v;
                 edata.definitionPoint = c - v;
-                update(true);
+                updateDim(true);
     }
         else if (ref.distanceTo(data.middleOfText)<1.0e-4) {
         data.middleOfText.move(offset);
-                update(false);
+                updateDim(false);
     }
 }
 

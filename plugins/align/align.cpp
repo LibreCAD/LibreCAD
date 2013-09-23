@@ -37,13 +37,13 @@ void LC_Align::execComm(Document_Interface *doc,
     QList<Plug_Entity *> obj;
     bool yes  = doc->getSelect(&obj);
     if (!yes || obj.isEmpty()) return;
-    yes = doc->getPoint(&base1, QString("first base point:"));
+    yes = doc->getPoint(&base1, QString(tr("first base point:")));
     if (yes) {
-        yes = doc->getPoint(&target1, QString("first target point:"), &base1);
+        yes = doc->getPoint(&target1, QString(tr("first target point:")), &base1);
         if (yes) {
-            yes = doc->getPoint(&base2, QString("second base point:"));
+            yes = doc->getPoint(&base2, QString(tr("second base point:")));
             if (yes) {
-                yes = doc->getPoint(&target2, QString("second target point:"), &base2);
+                yes = doc->getPoint(&target2, QString(tr("second target point:")), &base2);
             }
         }
 

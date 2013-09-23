@@ -309,7 +309,7 @@ void QC_ApplicationWindow::execPlug() {
     QC_PluginInterface *plugin = qobject_cast<QC_PluginInterface *>(action->parent());
 //get actual drawing
     QC_MDIWindow* w = getMDIWindow();
-    RS_Graphic* currdoc = static_cast<RS_Graphic*>(w->getDocument());
+    RS_Document* currdoc = w->getDocument();
 //create document interface instance
     Doc_plugin_interface pligundoc(currdoc, w->getGraphicView(), this);
 //execute plugin
@@ -3726,9 +3726,11 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
     QColor gridColor(RS_SETTINGS->readEntry("/GridColor", "Gray"));
     QColor metaGridColor(RS_SETTINGS->readEntry("/MetaGridColor", "Darkgray"));
     QColor selectedColor(RS_SETTINGS->readEntry("/SelectedColor", "#A54747"));
-    QColor highlightedColor(RS_SETTINGS->readEntry("/HighlightedColor",
-                            "#739373"));
-    RS_SETTINGS->endGroup();
+	QColor highlightedColor(RS_SETTINGS->readEntry("/HighlightedColor", "#739373"));
+	QColor startHandleColor(RS_SETTINGS->readEntry("/StartHandleColor", "#00FFFF"));
+	QColor handleColor(RS_SETTINGS->readEntry("/HandleColor", "#0000FF"));
+	QColor endHandleColor(RS_SETTINGS->readEntry("/EndHandleColor", "#0000FF"));
+	RS_SETTINGS->endGroup();
 
     QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
     for (int i = 0; i < windows.size(); ++i) {
@@ -3741,6 +3743,9 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
                 gv->setMetaGridColor(metaGridColor);
                 gv->setSelectedColor(selectedColor);
                 gv->setHighlightedColor(highlightedColor);
+				gv->setStartHandleColor(startHandleColor);
+				gv->setHandleColor(handleColor);
+				gv->setEndHandleColor(endHandleColor);
 //                gv->updateGrid();
                 gv->redraw(RS2::RedrawGrid);
             }
@@ -3927,7 +3932,7 @@ void QC_ApplicationWindow::slotHelpManual() {
             connect(helpEngine->contentWidget(), SIGNAL(linkActivated(const QUrl &)), helpBrowser, SLOT(setSource(const QUrl &)));
             addDockWidget(Qt::TopDockWidgetArea, helpWindow);
         } else {
-            QMessageBox::information(this, "Helpfiles not found", tr("Bugger, I couldn't find the helpfiles on the filesystem."));
+            QMessageBox::information(this, tr("Help files not found"), tr("Bugger, I couldn't find the helpfiles on the filesystem."));
         }
 
     }

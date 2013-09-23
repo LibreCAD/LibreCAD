@@ -82,8 +82,11 @@ RS_GraphicView::RS_GraphicView()
     setGridColor(QColor(RS_SETTINGS->readEntry("/GridColor", "#7F7F7F")));
     setMetaGridColor(QColor(RS_SETTINGS->readEntry("/MetaGridColor", "#3F3F3F")));
     setSelectedColor(QColor(RS_SETTINGS->readEntry("/SelectedColor", "#A54747")));
-    setHighlightedColor(QColor(RS_SETTINGS->readEntry("/HighlightedColor",
-                                                      "#739373")));
+	setHighlightedColor(QColor(RS_SETTINGS->readEntry("/HighlightedColor", "#739373")));
+	setStartHandleColor(QColor(RS_SETTINGS->readEntry("/StartHandleColor", "#00FFFF")));
+	setHandleColor(QColor(RS_SETTINGS->readEntry("/HandleColor", "#0000FF")));
+	setEndHandleColor(QColor(RS_SETTINGS->readEntry("/EndHandleColor", "#0000FF")));
+
     RS_SETTINGS->endGroup();
 
     printPreview = false;
@@ -1326,19 +1329,13 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
 
             for (int i=0; i<s.getNumber(); ++i) {
                 int sz = -1;
-                RS_Color col = RS_Color(0,0,255);
-                if (e->rtti()==RS2::EntityPolyline) {
-                    if (i==0 || i==s.getNumber()-1) {
-                        if (i==0) {
-                            sz = 4;
-                            col = QColor(0,64,255);
-                        }
-                        else {
-                            sz = 3;
-                            col = QColor(0,0,128);
-                        }
-                    }
-                }
+				RS_Color col = handleColor;
+				if (i == 0) {
+					col = startHandleColor;
+				}
+				else if (i == s.getNumber() - 1) {
+					col = endHandleColor;
+				}
                 if (getDeleteMode()) {
                     painter->drawHandle(toGui(s.get(i)), background, sz);
                 } else {

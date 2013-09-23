@@ -75,7 +75,7 @@ RS_Debug::deleteInstance() {
 
 
 /**
- * Constructor for a point with default coordinates.
+ * Constructor setting the default debug level.
  */
 RS_Debug::RS_Debug() {
     debugLevel = D_DEBUGGING;
@@ -86,11 +86,13 @@ RS_Debug::RS_Debug() {
  */
 void RS_Debug::setLevel(RS_DebugLevel level) {
     debugLevel = level;
-    print("RS_DEBUG: Warnings", D_WARNING);
-    print("RS_DEBUG: Errors", D_ERROR);
-    print("RS_DEBUG: Notice", D_NOTICE);
-    print("RS_DEBUG: Informational", D_INFORMATIONAL);
-    print("RS_DEBUG: Debugging", D_DEBUGGING);
+    print( D_NOTHING, "RS_DEBUG::setLevel(%d)", level);
+    print( D_CRITICAL, "RS_DEBUG: Critical");
+    print( D_ERROR, "RS_DEBUG: Errors");
+    print( D_WARNING, "RS_DEBUG: Warnings");
+    print( D_NOTICE, "RS_DEBUG: Notice");
+    print( D_INFORMATIONAL, "RS_DEBUG: Informational");
+    print( D_DEBUGGING, "RS_DEBUG: Debugging");
 }
 
 

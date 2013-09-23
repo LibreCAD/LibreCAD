@@ -270,6 +270,10 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     // dimension text height:
     RS2::Unit unit = (RS2::Unit)cbUnit->currentIndex();
 
+    // dimension general factor:
+    double dimfactor = graphic->getVariableDouble("$DIMLFAC", 1.0);
+    cbDimFactor->setEditText(QString("%1").arg(dimfactor));
+
     // dimension general scale:
     double dimscale = graphic->getVariableDouble("$DIMSCALE", 1.0);
     cbDimScale->setEditText(QString("%1").arg(dimscale));
@@ -415,12 +419,13 @@ void QG_DlgOptionsDrawing::validate() {
             graphic->addVariable("$DIMGAP",newValue , 40);
         }
         ok1 = ok1 || ok2;
+        oldValue=graphic->getVariableDouble("$DIMLFAC",1);
+        newValue=RS_Math::eval(cbDimFactor->currentText(),&ok2);
+        ok2 &= (fabs(oldValue-newValue)>RS_TOLERANCE);
+        ok1 = ok1 || ok2;
         oldValue=graphic->getVariableDouble("$DIMSCALE",1);
         newValue=RS_Math::eval(cbDimScale->currentText(),&ok2);
         ok2 &= (fabs(oldValue-newValue)>RS_TOLERANCE);
-        if(ok2){
-            graphic->addVariable("$DIMSCALE",newValue , 40);
-        }
         ok1 = ok1 || ok2;
 
         graphic->addVariable("$DIMASZ",
@@ -430,7 +435,13 @@ void QG_DlgOptionsDrawing::validate() {
                              RS_Math::eval(cbDimTsz->currentText()), 40);
         //DIMTIH, dimension text, horizontal or aligned
         graphic->addVariable("$DIMTIH", cbDimTih->currentIndex(), 70);
-        //DIMSCALE, general escale for dimensions
+        //DIMLFAC, general factor for linear dimensions
+        double dimFactor = RS_Math::eval(cbDimFactor->currentText());
+        if( RS_TOLERANCE > fabs(dimFactor)) {
+            dimFactor = 1.0;
+        }
+        graphic->addVariable("$DIMLFAC", dimFactor, 40);
+        //DIMSCALE, general scale for dimensions
         double dimScale = RS_Math::eval(cbDimScale->currentText());
         if (dimScale<0 || dimScale == 0)
             dimScale = 1.0;

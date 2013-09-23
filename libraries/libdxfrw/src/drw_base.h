@@ -13,12 +13,10 @@
 #ifndef DRW_BASE_H
 #define DRW_BASE_H
 
-#define DRW_VERSION "0.5.8"
+#define DRW_VERSION "0.5.10"
 
 #include <string>
 #include <cmath>
-
-using std::string;
 
 #define UTF8STRING std::string
 #define DRW_UNUSED(x) (void)x
@@ -182,7 +180,7 @@ public:
 //    string codepage;
 private:
 //    DRW_VarContent content;
-    string data;
+    std::string data;
 };
 
 

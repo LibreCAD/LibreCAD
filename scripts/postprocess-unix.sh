@@ -10,7 +10,7 @@ SPTDIR="${LCDIR}/support"
 DOCDIR="${SPTDIR}/doc"
 LRELEASE="lrelease"
 
-[ "$( uname -s )" = "FreeBSD" ] && LRELEASE="lrelease-qt4"
+[ "$( which lrelease-qt4 )" ] && LRELEASE="lrelease-qt4"
 
 # Generate Help Files
 cd "${DOCDIR}"

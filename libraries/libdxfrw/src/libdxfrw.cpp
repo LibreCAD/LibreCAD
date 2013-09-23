@@ -175,7 +175,7 @@ bool dxfRW::writeEntity(DRW_Entity *ent) {
 }
 
 bool dxfRW::writeLineType(DRW_LType *ent){
-    string strname = ent->name;
+    std::string strname = ent->name;
 
     transform(strname.begin(), strname.end(), strname.begin(),::toupper);
 //do not write linetypes handled by library
@@ -1660,7 +1660,7 @@ bool dxfRW::writeObjects() {
 //write IMAGEDEF_REACTOR
     for (unsigned int i=0; i<imageDef.size(); i++) {
         DRW_ImageDef *id = imageDef.at(i);
-        std::map<string, string>::iterator it;
+        std::map<std::string, std::string>::iterator it;
         for ( it=id->reactors.begin() ; it != id->reactors.end(); it++ ) {
             writer->writeString(0, "IMAGEDEF_REACTOR");
             writer->writeString(5, (*it).first);
@@ -1693,7 +1693,7 @@ bool dxfRW::writeObjects() {
 //            writer->writeString(330, "0"); handle to DICTIONARY
         }
         writer->writeString(102, "{ACAD_REACTORS");
-        std::map<string, string>::iterator it;
+        std::map<std::string, std::string>::iterator it;
         for ( it=id->reactors.begin() ; it != id->reactors.end(); it++ ) {
             writer->writeString(330, (*it).first);
         }
@@ -1722,7 +1722,7 @@ bool dxfRW::processDxf() {
     DBG("dxfRW::processDxf() start processing dxf\n");
     int code;
     bool more = true;
-    string sectionstr;
+    std::string sectionstr;
 //    section = secUnknown;
     while (reader->readRec(&code, !binary)) {
         DBG(code); DBG(" processDxf\n");
@@ -1770,7 +1770,7 @@ bool dxfRW::processDxf() {
 bool dxfRW::processHeader() {
     DBG("dxfRW::processHeader\n");
     int code;
-    string sectionstr;
+    std::string sectionstr;
     while (reader->readRec(&code, !binary)) {
         DBG(code); DBG(" processHeader\n");
         if (code == 0) {
@@ -1790,7 +1790,7 @@ bool dxfRW::processHeader() {
 bool dxfRW::processTables() {
     DBG("dxfRW::processTables\n");
     int code;
-    string sectionstr;
+    std::string sectionstr;
     bool more = true;
     while (reader->readRec(&code, !binary)) {
         DBG(code); DBG("\n");
@@ -1837,7 +1837,7 @@ bool dxfRW::processTables() {
 bool dxfRW::processLType() {
     DBG("dxfRW::processLType\n");
     int code;
-    string sectionstr;
+    std::string sectionstr;
     bool reading = false;
     DRW_LType ltype;
     while (reader->readRec(&code, !binary)) {
@@ -1864,7 +1864,7 @@ bool dxfRW::processLType() {
 bool dxfRW::processLayer() {
     DBG("dxfRW::processLayer\n");
     int code;
-    string sectionstr;
+    std::string sectionstr;
     bool reading = false;
     DRW_Layer layer;
     while (reader->readRec(&code, !binary)) {
@@ -1889,7 +1889,7 @@ bool dxfRW::processLayer() {
 bool dxfRW::processDimStyle() {
     DBG("dxfRW::processDimStyle");
     int code;
-    string sectionstr;
+    std::string sectionstr;
     bool reading = false;
     DRW_Dimstyle dimSty;
     while (reader->readRec(&code, !binary)) {
@@ -1914,7 +1914,7 @@ bool dxfRW::processDimStyle() {
 bool dxfRW::processTextStyle(){
     DBG("dxfRW::processTextStyle");
     int code;
-    string sectionstr;
+    std::string sectionstr;
     bool reading = false;
     DRW_Textstyle TxtSty;
     while (reader->readRec(&code, !binary)) {
@@ -1939,7 +1939,7 @@ bool dxfRW::processTextStyle(){
 bool dxfRW::processVports(){
     DBG("dxfRW::processVports");
     int code;
-    string sectionstr;
+    std::string sectionstr;
     bool reading = false;
     DRW_Vport vp;
     while (reader->readRec(&code, !binary)) {
@@ -1966,7 +1966,7 @@ bool dxfRW::processVports(){
 bool dxfRW::processBlocks() {
     DBG("dxfRW::processBlocks\n");
     int code;
-    string sectionstr;
+    std::string sectionstr;
     while (reader->readRec(&code, !binary)) {
         DBG(code); DBG("\n");
         if (code == 0) {
