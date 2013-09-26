@@ -115,6 +115,7 @@
 #include "rs_actionmodifymirror.h"
 #include "rs_actionmodifymove.h"
 #include "rs_actionmodifymoverotate.h"
+#include "rs_actionmodifyrevertdirection.h"
 #include "rs_actionmodifyrotate.h"
 #include "rs_actionmodifyrotate2.h"
 #include "rs_actionmodifyround.h"
@@ -621,7 +622,13 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionModifyMoveNoSelect:
         a = new RS_ActionModifyMove(*doc, *gv);
         break;
-    case RS2::ActionModifyRotate:
+	case RS2::ActionModifyRevertDirection:
+		a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyRevertDirectionNoSelect);
+		break;
+	case RS2::ActionModifyRevertDirectionNoSelect:
+		a = new RS_ActionModifyRevertDirection(*doc, *gv);
+		break;
+	case RS2::ActionModifyRotate:
         a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyRotateNoSelect);
         break;
     case RS2::ActionModifyRotateNoSelect:
@@ -1498,6 +1505,10 @@ void QG_ActionHandler::slotModifyDeleteFree() {
 
 void QG_ActionHandler::slotModifyMove() {
     setCurrentAction(RS2::ActionModifyMove);
+}
+
+void QG_ActionHandler::slotModifyRevertDirection() {
+	setCurrentAction(RS2::ActionModifyRevertDirection);
 }
 
 void QG_ActionHandler::slotModifyRotate() {

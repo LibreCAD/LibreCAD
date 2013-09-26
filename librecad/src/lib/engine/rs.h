@@ -323,6 +323,8 @@ public:
         ActionModifyMirrorNoSelect,
         ActionModifyMoveRotate,
         ActionModifyMoveRotateNoSelect,
+		ActionModifyRevertDirection,
+		ActionModifyRevertDirectionNoSelect,
         ActionModifyRotate2,
         ActionModifyRotate2NoSelect,
         ActionModifyEntity,

@@ -231,8 +231,9 @@ public:
                     RS_GraphicView* graphicView=NULL,
                                         bool handleUndo=true);
 
-        void remove();
-    bool changeAttributes(RS_AttributesData& data);
+	void remove();
+	void revertDirection();
+	bool changeAttributes(RS_AttributesData& data);
 
         void copy(const RS_Vector& ref, const bool cut);
 private:

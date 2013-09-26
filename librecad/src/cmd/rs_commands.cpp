@@ -176,7 +176,11 @@ RS_Commands::RS_Commands() {
     mainCommands.insert(tr("mi", "modify - mirror"), RS2::ActionModifyMirror);
     shortCommands.insert(tr("mi"), RS2::ActionModifyMirror);
 
-    cmdTranslation.insert("ro", tr("ro"));
+	cmdTranslation.insert("re", tr("re"));
+	mainCommands.insert(tr("re", "modify - revert direction"), RS2::ActionModifyRevertDirection);
+	shortCommands.insert(tr("re"), RS2::ActionModifyRevertDirection);
+
+	cmdTranslation.insert("ro", tr("ro"));
     mainCommands.insert(tr("ro", "modify - rotate"), RS2::ActionModifyRotate);
     shortCommands.insert(tr("ro"), RS2::ActionModifyRotate);
 

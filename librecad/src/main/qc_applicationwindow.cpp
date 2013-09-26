@@ -1202,7 +1202,11 @@ void QC_ApplicationWindow::initActions(void)
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyRotate2,
                                         actionHandler);
-    menu->addAction(action);
+	menu->addAction(action);
+	connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+	action = actionFactory.createAction(RS2::ActionModifyRevertDirection,
+										actionHandler);
+	menu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionModifyTrim,
                                         actionHandler);
