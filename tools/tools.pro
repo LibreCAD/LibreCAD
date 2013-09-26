@@ -16,7 +16,7 @@ win32 {
     exists( "$$(FREETYPE_DIR)" ) {		# Is it set in the environment?
         SUBDIRS = ttf2lff
         message( "FREETYPE_DIR is set in the environment, building ttf2lff")
-    } else:isEmpty( FREETYPE_DIR ) {		# Is it set in custom.pro?
+    } else:!isEmpty( FREETYPE_DIR ) {		# Is it set in custom.pro?
         SUBDIRS = ttf2lff
         message( "FREETYPE_DIR is set in custom.pro, building ttf2lff")
     } else {
