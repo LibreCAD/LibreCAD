@@ -233,6 +233,13 @@ void QG_CadToolBarModify::modifyOffset() {
         actionHandler->slotModifyOffset();
     }
 }
+
+void QG_CadToolBarModify::modifyRevertDirection() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotModifyRevertDirection();
+    }
+}
+
 void QG_CadToolBarModify::back() {
     if (cadToolBar!=NULL) {
         cadToolBar->back();
@@ -321,6 +328,10 @@ void QG_CadToolBarModify::restoreAction() {
         actionHandler->slotModifyOffset();
         return;
     }
+    if ( bRevertDirection ->isChecked() ) {
+        actionHandler->slotModifyRevertDirection();
+        return;
+    }
     bHidden->setChecked(true);
     //clear all action
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
@@ -397,6 +408,9 @@ void QG_CadToolBarModify::showCadToolBar(RS2::ActionType actionType) {
         return;
     case RS2::ActionModifyOffset:
         bOffset->setChecked(true);
+        return;
+    case RS2::ActionModifyRevertDirection:
+        bRevertDirection->setChecked(true);
         return;
 //    case RS2::ActionModifyExplodeText:
 //        bEntityText->setChecked(true);

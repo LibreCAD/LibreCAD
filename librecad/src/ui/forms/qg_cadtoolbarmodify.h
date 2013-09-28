@@ -66,6 +66,7 @@ public slots:
     virtual void modifyExplode();
     virtual void modifyExplodeText();
     virtual void modifyOffset();
+    virtual void modifyRevertDirection();
     virtual void back();
     virtual void resetToolBar();
 
