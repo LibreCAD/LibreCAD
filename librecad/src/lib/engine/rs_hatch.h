@@ -79,6 +79,14 @@ public:
  */
 class RS_Hatch : public RS_EntityContainer {
 public:
+    enum RS_HatchError { HATCH_UNDEFINED = -1,
+                         HATCH_OK,
+                         HATCH_INVALID_CONTOUR,
+                         HATCH_PATTERN_NOT_FOUND,
+                         HATCH_TOO_SMALL,
+                         HATCH_AREA_TOO_BIG };
+
+
     RS_Hatch(RS_EntityContainer* parent,
             const RS_HatchData& d);
     virtual ~RS_Hatch() {}
@@ -143,6 +151,9 @@ public:
 
         virtual void calculateBorders();
         void update();
+        int getUpdateError() {
+                return updateError;
+        }
         void activateContour(bool on);
 
         virtual void draw(RS_Painter* painter, RS_GraphicView* view,
@@ -174,6 +185,7 @@ protected:
         RS_EntityContainer* hatch;
         bool updateRunning;
         bool needOptimization;
+        int  updateError;
 };
 
 #endif

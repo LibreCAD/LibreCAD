@@ -50,6 +50,7 @@ RS_Hatch::RS_Hatch(RS_EntityContainer* parent,
     hatch = NULL;
     updateRunning = false;
     needOptimization = true;
+    updateError = HATCH_UNDEFINED;
 }
 
 
@@ -136,6 +137,7 @@ void RS_Hatch::update() {
 
     if (data.solid==true) {
         calculateBorders();
+        updateError = HATCH_OK;
         return;
     }
 
@@ -153,12 +155,13 @@ void RS_Hatch::update() {
         return;
     }
 
-        if (!validate()) {
-                RS_DEBUG->print(RS_Debug::D_WARNING,
+    if (!validate()) {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Hatch::update: invalid contour in hatch found");
         updateRunning = false;
-                return;
-        }
+        updateError = HATCH_INVALID_CONTOUR;
+        return;
+    }
 
     // search pattern:
     RS_DEBUG->print("RS_Hatch::update: requesting pattern");
@@ -166,6 +169,7 @@ void RS_Hatch::update() {
     if (pat==NULL) {
         updateRunning = false;
         RS_DEBUG->print("RS_Hatch::update: requesting pattern: not found");
+        updateError = HATCH_PATTERN_NOT_FOUND;
         return;
     }
     RS_DEBUG->print("RS_Hatch::update: requesting pattern: OK");
@@ -205,12 +209,14 @@ void RS_Hatch::update() {
         delete copy;
         updateRunning = false;
         RS_DEBUG->print("RS_Hatch::update: contour size or pattern size too small");
+        updateError = HATCH_TOO_SMALL;
         return;
     }
 
     // avoid huge memory consumption:
     else if (cSize.x/pSize.x>100 || cSize.y/pSize.y>100) {
         RS_DEBUG->print("RS_Hatch::update: contour size too large or pattern size too small");
+        updateError = HATCH_AREA_TOO_BIG;
         return;
     }
 
