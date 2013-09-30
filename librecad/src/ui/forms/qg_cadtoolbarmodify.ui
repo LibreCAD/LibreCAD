@@ -867,7 +867,7 @@
     </size>
    </property>
    <property name="toolTip">
-    <string>Explode Text into Letters</string>
+    <string>Revert direction</string>
    </property>
    <property name="text">
     <string/>
@@ -1215,7 +1215,7 @@
     </hint>
    </hints>
   </connection>
-   <connection>
+  <connection>
    <sender>bRevertDirection</sender>
    <signal>clicked()</signal>
    <receiver>QG_CadToolBarModify</receiver>
