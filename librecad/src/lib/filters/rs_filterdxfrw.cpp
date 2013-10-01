@@ -1331,9 +1331,66 @@ bool RS_FilterDXFRW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatT
 }
 
 /**
- * Writes blocks (just the definition, not the entities in it).
+ * Prepare unnamed blocks.
+ */
+void RS_FilterDXFRW::prepareBlocks() {
+    RS_Block *blk;
+    int dimNum = 0, hatchNum= 0;
+    QString prefix, sufix;
+
+    //check for existing *D?? or  *U??
+    for (unsigned i = 0; i < graphic->countBlocks(); i++) {
+        blk = graphic->blockAt(i);
+        prefix = blk->getName().left(2).toUpper();
+        sufix = blk->getName().mid(2);
+        if (prefix == "*D") {
+            if (sufix.toInt() > dimNum) dimNum = sufix.toInt();
+        } else if (prefix == "*U") {
+            if (sufix.toInt() > hatchNum) hatchNum = sufix.toInt();
+        }
+    }
+    //Add a name to each dimension, in dxfR12 also for hatches
+    for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
+         e != NULL; e = graphic->nextEntity(RS2::ResolveNone)) {
+        if ( !(e->getFlag(RS2::FlagUndone)) ) {
+            switch (e->rtti()) {
+            case RS2::EntityDimLinear:
+            case RS2::EntityDimAligned:
+            case RS2::EntityDimAngular:
+            case RS2::EntityDimRadial:
+            case RS2::EntityDimDiametric:
+            case RS2::EntityDimLeader:
+                prefix = "*D" + QString::number(++dimNum);
+                noNameBlock[e] = prefix;
+                break;
+            case RS2::EntityHatch:
+                if (version==1009) {
+                    if ( !((RS_Hatch*)e)->isSolid() ) {
+                        prefix = "*U" + QString::number(++hatchNum);
+                        noNameBlock[e] = prefix;
+                    }
+                }
+                break;
+            default:
+                break;
+            }//end switch
+        }//end if !RS2::FlagUndone
+    }
+}
+
+/**
+ * Writes block records (just the name, not the entities in it).
  */
 void RS_FilterDXFRW::writeBlockRecords(){
+    //first prepare and send unnamed blocks, the while loop can be ommited for R12
+    prepareBlocks();
+    QHash<RS_Entity*, QString>::const_iterator it = noNameBlock.constBegin();
+    while (it != noNameBlock.constEnd()) {
+        dxfW->writeBlockRecord(it.value().toStdString());
+        ++it;
+    }
+
+    //next send "normal" blocks
     RS_Block *blk;
     for (unsigned i = 0; i < graphic->countBlocks(); i++) {
         blk = graphic->blockAt(i);
@@ -1344,69 +1401,35 @@ void RS_FilterDXFRW::writeBlockRecords(){
     }
 }
 
+/**
+ * Writes blocks.
+ */
 void RS_FilterDXFRW::writeBlocks() {
     RS_Block *blk;
 
-    if (version==1009) {
-        int dimNum = 0, hatchNum= 0;
-        QString prefix, sufix;
-        //check for existing *D?? or  *U??
-        for (unsigned i = 0; i < graphic->countBlocks(); i++) {
-            blk = graphic->blockAt(i);
-            prefix = blk->getName().left(2).toUpper();
-            sufix = blk->getName().mid(2);
-            if (prefix == "*D") {
-                if (sufix.toInt() > dimNum) dimNum = sufix.toInt();
-            } else if (prefix == "*U") {
-                if (sufix.toInt() > hatchNum) hatchNum = sufix.toInt();
-            }
-        }
-        for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
-             e != NULL; e = graphic->nextEntity(RS2::ResolveNone)) {
+    //write unnamed blocks
+    QHash<RS_Entity*, QString>::const_iterator it = noNameBlock.constBegin();
+    while (it != noNameBlock.constEnd()) {
+        DRW_Block block;
+        block.name = it.value().toStdString();
+        block.basePoint.x = 0.0;
+        block.basePoint.y = 0.0;
+#ifndef  RS_VECTOR2D
+        block.basePoint.z = 0.0;
+#endif
+        block.flags = 1;//flag for unnamed block
+        dxfW->writeBlock(&block);
+        RS_EntityContainer *ct = (RS_EntityContainer *)it.key();
+        for (RS_Entity* e=ct->firstEntity(RS2::ResolveNone);
+             e!=NULL; e=ct->nextEntity(RS2::ResolveNone)) {
             if ( !(e->getFlag(RS2::FlagUndone)) ) {
-                switch (e->rtti()) {
-                case RS2::EntityDimLinear:
-                case RS2::EntityDimAligned:
-                case RS2::EntityDimAngular:
-                case RS2::EntityDimRadial:
-                case RS2::EntityDimDiametric:
-                case RS2::EntityDimLeader:
-                    prefix = "*D" + QString::number(++dimNum);
-                    noNameBlock[e] = prefix;
-                    break;
-                case RS2::EntityHatch:
-                    if ( !((RS_Hatch*)e)->isSolid() ) {
-                        prefix = "*U" + QString::number(++hatchNum);
-                        noNameBlock[e] = prefix;
-                    }
-                    break;
-                default:
-                    break;
-                }
+                writeEntity(e);
             }
         }
-        QHash<RS_Entity*, QString>::const_iterator it = noNameBlock.constBegin();
-        while (it != noNameBlock.constEnd()) {
-            DRW_Block block;
-            block.name = it.value().toStdString();
-            block.basePoint.x = 0.0;
-            block.basePoint.y = 0.0;
-    #ifndef  RS_VECTOR2D
-            block.basePoint.z = 0.0;
-    #endif
-            block.flags = 1;//flag for unnamed block
-            dxfW->writeBlock(&block);
-            RS_EntityContainer *ct = (RS_EntityContainer *)it.key();
-            for (RS_Entity* e=ct->firstEntity(RS2::ResolveNone);
-                    e!=NULL; e=ct->nextEntity(RS2::ResolveNone)) {
-                if ( !(e->getFlag(RS2::FlagUndone)) ) {
-                    writeEntity(e);
-                }
-            }
-            ++it;
-        }
-    } //end version R12
+        ++it;
+    }
 
+    //next write "normal" blocks
     for (unsigned i = 0; i < graphic->countBlocks(); i++) {
         blk = graphic->blockAt(i);
         if (!blk->isUndone()) {
@@ -2291,17 +2314,21 @@ void RS_FilterDXFRW::writeText(RS_Text* t){
  * Writes the given dimension entity to the file.
  */
 void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
+    QString blkName;
+    if (noNameBlock.contains(d)) {
+        blkName = noNameBlock.take(d);
+    }
 
     // version 12 are inserts of *D blocks
     if (version==1009) {
-        if (noNameBlock.contains(d)) {
+        if (!blkName.isEmpty()) {
             DRW_Insert in;
             getEntityAttributes(&in, d);
             in.basePoint.x = in.basePoint.y = 0.0;
 #ifndef  RS_VECTOR2D
             in.basePoint.z = 0.0;
 #endif
-            in.name = noNameBlock.value(d).toUtf8().data();
+            in.name = blkName.toStdString();
             in.xscale = in.yscale = 1.0;
 #ifndef  RS_VECTOR2D
             in.zscale = 1.0;
@@ -2395,7 +2422,9 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
     dim->setTextLineStyle(d->getLineSpacingStyle());
     dim->setText (toDxfString(d->getText()).toUtf8().data());
     dim->setTextLineFactor(d->getLineSpacingFactor());
-    //   void setName(const string s) {name = s;}
+    if (!blkName.isEmpty()) {
+        dim->setName(blkName.toStdString());
+    }
 
     dxfW->writeDimension(dim);
     delete dim;
