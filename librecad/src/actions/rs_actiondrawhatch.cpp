@@ -154,7 +154,27 @@ void RS_ActionDrawHatch::trigger() {
 
 		graphicView->redraw(RS2::RedrawDrawing);
 
-		RS_DIALOGFACTORY->commandMessage(tr("Hatch created successfully."));
+        switch( hatch->getUpdateError()) {
+        case RS_Hatch::HATCH_OK :
+            RS_DIALOGFACTORY->commandMessage(tr("Hatch created successfully."));
+            break;
+        case RS_Hatch::HATCH_INVALID_CONTOUR :
+            RS_DIALOGFACTORY->commandMessage(tr("Hatch Error: Invalid contour found!"));
+            break;
+        case RS_Hatch::HATCH_PATTERN_NOT_FOUND :
+            RS_DIALOGFACTORY->commandMessage(tr("Hatch Error: Pattern not found!"));
+            break;
+        case RS_Hatch::HATCH_TOO_SMALL :
+            RS_DIALOGFACTORY->commandMessage(tr("Hatch Error: Contour or pattern too small!"));
+            break;
+        case RS_Hatch::HATCH_AREA_TOO_BIG :
+            RS_DIALOGFACTORY->commandMessage(tr("Hatch Error: Contour too big!"));
+            break;
+        default :
+            RS_DIALOGFACTORY->commandMessage(tr("Hatch Error: Undefined Error!"));
+            break;
+        }
+
 	}
 	else {
 		delete hatch;

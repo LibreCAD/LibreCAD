@@ -44,9 +44,9 @@ void LC_List::execComm(Document_Interface *doc,
 
     QString text;
     for (int i = 0; i < obj.size(); ++i) {
-        QString strdata = getStrData(obj.at(i));
-        text.append(QString(tr("n %1: \n")).arg(i+1));
-        text.append(strdata);
+        text.append( QString("%1 %2: ").arg(tr("n")).arg(i+1));
+        text.append( getStrData(obj.at(i)));
+        text.append( "\n");
     }
     lc_Listdlg dlg(parent);
     dlg.setText(text);
@@ -57,168 +57,181 @@ void LC_List::execComm(Document_Interface *doc,
 }
 
 QString LC_List::getStrData(Plug_Entity *ent) {
+    if( NULL == ent)
+        return QString("%1\n").arg(tr("Empty Entity"));
+
     QHash<int, QVariant> data;
-    QString str;
+    QString strData(""),
+            strEntity("%1\n"),
+            strCommon("  %1: %2\n"),
+            strSpecific("    %1: %2\n"),
+            strSpecificXY( QString("    %1: %2=%3 %4=%5\n").arg("%1",tr("X"),"%2",tr("Y"),"%3"));
     double numA, numB, numC;
     QPointF ptA, ptB, ptC;
+
     //common entity data
-    if (ent == 0)
-        return QString(tr("Empty Entity\n\n"));
     ent->getData(&data);
-    str = tr("Layer: ") + data.value(DPI::LAYER).toString();
+    strData  = strCommon.arg(tr("Layer")).arg(data.value(DPI::LAYER).toString());
     QColor color = data.value(DPI::COLOR).value<QColor>();
-    str.append(tr("\n Color: ") + color.name());
-    str.append(tr(" Line type: ") + data.value(DPI::LTYPE).toString());
-    str.append(tr("\n Line thickness: ") + data.value(DPI::LWIDTH).toString());
-    str.append( QString(tr("\n ID: %1\n")).arg(data.value(DPI::EID).toLongLong()));
-    int et = data.value(DPI::ETYPE).toInt();
+    strData.append( strCommon.arg(tr("Color")).arg(color.name()));
+    strData.append( strCommon.arg(tr("Line type")).arg(data.value(DPI::LTYPE).toString()));
+    strData.append( strCommon.arg(tr("Line thickness")).arg(data.value(DPI::LWIDTH).toString()));
+    strData.append( strCommon.arg(tr("ID")).arg(data.value(DPI::EID).toLongLong()));
 
     //specific entity data
+    int et = data.value(DPI::ETYPE).toInt();
     switch (et) {
     case DPI::POINT:
-        str.append( QString(tr("     in point: X=%1 Y=%2\n\n")).arg(
-                d->realToStr(data.value(DPI::STARTX).toDouble()) ).arg(
-                d->realToStr(data.value(DPI::STARTY).toDouble()) ) );
-        return QString(tr("POINT: ")).append(str);
+        strData.prepend( strEntity.arg(tr("POINT")));
+        strData.append( strSpecificXY.arg(tr("in point")).
+                        arg(d->realToStr(data.value(DPI::STARTX).toDouble())).
+                        arg(d->realToStr(data.value(DPI::STARTY).toDouble())));
         break;
     case DPI::LINE:
-        ptA.setX( data.value(DPI::STARTX).toDouble() );
-        ptA.setY( data.value(DPI::STARTY).toDouble() );
-        ptB.setX( data.value(DPI::ENDX).toDouble() );
-        ptB.setY( data.value(DPI::ENDY).toDouble() );
-        str.append( QString(tr("     from point: X=%1 Y=%2\n     to point: X=%3 Y=%4\n")).arg(
-                    d->realToStr(ptA.x()) ).arg( d->realToStr(ptA.y()) ).arg(
-                    d->realToStr(ptB.x()) ).arg( d->realToStr(ptB.y()) ) );
+        strData.prepend( strEntity.arg(tr("LINE")));
+        ptA.setX( data.value(DPI::STARTX).toDouble());
+        ptA.setY( data.value(DPI::STARTY).toDouble());
+        ptB.setX( data.value(DPI::ENDX).toDouble());
+        ptB.setY( data.value(DPI::ENDY).toDouble());
+        strData.append( strSpecificXY.arg(tr("from point")).
+                        arg(d->realToStr(ptA.x())).
+                        arg(d->realToStr(ptA.y())));
+        strData.append( strSpecificXY.arg(tr("to point")).
+                        arg(d->realToStr(ptB.x())).
+                        arg(d->realToStr(ptB.y())));
         ptC = ptB - ptA;
         numA = sqrt( (ptC.x()*ptC.x())+ (ptC.y()*ptC.y()));
-        str.append( QString(tr("   length: %1,")).arg( d->realToStr(numA) ));
+        strData.append( strSpecific.arg(tr("length")).arg( d->realToStr(numA)));
         numB = asin(ptC.y() / numA);
         numC = numB*180/M_PI;
         if (ptC.x() < 0) numC = 180 - numC;
         if (numC < 0) numC = 360 + numC;
-        str.append( QString(tr("  Angle in XY plane: %1\n")).arg(d->realToStr(numC)) );
-        str.append( QString(tr("  Inc. X = %1,  Inc. Y = %2\n\n")).arg(
-                            d->realToStr(ptC.x()) ).arg( d->realToStr(ptC.y()) ));
-         return QString(tr("LINE: ")).append(str);
-       break;
+        strData.append( strSpecific.arg(tr("Angle in XY plane")).arg(d->realToStr(numC)));
+        strData.append( strSpecificXY.arg(tr("Inc.")).
+                        arg(d->realToStr(ptC.x())).
+                        arg(d->realToStr(ptC.y())));
+        break;
     case DPI::ARC:
-        str.append( QString(tr("   certer point: X=%1 Y=%2\n")).arg(
-                d->realToStr(data.value(DPI::STARTX).toDouble()) ).arg(
-                d->realToStr(data.value(DPI::STARTY).toDouble()) ) );
+        strData.prepend( strEntity.arg(tr("ARC")));
+        strData.append( strSpecificXY.arg(tr("center point")).
+                        arg(d->realToStr(data.value(DPI::STARTX).toDouble())).
+                        arg(d->realToStr(data.value(DPI::STARTY).toDouble())));
         numA = data.value(DPI::RADIUS).toDouble();
         numB = data.value(DPI::STARTANGLE).toDouble();
         numC = data.value(DPI::ENDANGLE).toDouble();
-        str.append( QString(tr("   radius: %1\n")).arg(d->realToStr(numA)) );
-        str.append( QString(tr("   initial angle: %1\n")).arg(d->realToStr(numB*180/M_PI)) );
-        str.append( QString(tr("   final angle: %1\n")).arg(d->realToStr(numC*180/M_PI)) );
-        str.append( QString(tr("   length: %1\n")).arg( d->realToStr((numC-numB)*numA) ) );
-        return QString(tr("ARC: ")).append(str);
+        strData.append( strSpecific.arg(tr("radius")).arg(d->realToStr(numA)));
+        strData.append( strSpecific.arg(tr("initial angle")).arg(d->realToStr(numB*180/M_PI)));
+        strData.append( strSpecific.arg(tr("final angle")).arg(d->realToStr(numC*180/M_PI)));
+        if( numB > numC) {
+            numB -= 2.0 * M_PI;
+        }
+        strData.append( strSpecific.arg(tr("length")).arg( d->realToStr((numC-numB)*numA)));
         break;
     case DPI::CIRCLE:
-        str.append( QString(tr("   certer point: X=%1 Y=%2\n")).arg(
-                d->realToStr(data.value(DPI::STARTX).toDouble()) ).arg(
-                d->realToStr(data.value(DPI::STARTY).toDouble()) ) );
+        strData.prepend( strEntity.arg(tr("CIRCLE")));
+        strData.append( strSpecificXY.arg(tr("center point")).
+                        arg(d->realToStr(data.value(DPI::STARTX).toDouble())).
+                        arg(d->realToStr(data.value(DPI::STARTY).toDouble())));
         numA = data.value(DPI::RADIUS).toDouble();
-        str.append( QString(tr("   radius: %1\n")).arg(d->realToStr(numA)) );
-        str.append( QString(tr("   circumference: %1\n")).arg(
-                d->realToStr(numA*2*M_PI) ) );
-        str.append( QString(tr("   area: %1\n\n")).arg(
-                d->realToStr(numA*numA*M_PI) ) );
-        return QString(tr("CIRCLE: ")).append(str);
+        strData.append( strSpecific.arg(tr("radius")).arg(d->realToStr(numA)));
+        strData.append( strSpecific.arg(tr("circumference")).arg(d->realToStr(numA*2*M_PI)));
+        strData.append( strSpecific.arg(tr("area")).arg(d->realToStr(numA*numA*M_PI)));
         break;
     case DPI::ELLIPSE://toy aqui
-        str.append( QString(tr("   certer point: X=%1 Y=%2\n")).arg(
-                d->realToStr(data.value(DPI::STARTX).toDouble()) ).arg(
-                d->realToStr(data.value(DPI::STARTY).toDouble()) ) );
-        str.append( QString(("   major axis: X=%1 Y=%2\n")).arg(
-                d->realToStr(data.value(DPI::ENDX).toDouble()) ).arg(
-                d->realToStr(data.value(DPI::ENDY).toDouble()) ) );
-/*        str.append( QString(tr("   minor axis: X=%1 Y=%2\n")).arg(
+        strData.prepend( strEntity.arg(tr("ELLIPSE")));
+        strData.append( strSpecificXY.arg(tr("center point")).
+                        arg(d->realToStr(data.value(DPI::STARTX).toDouble())).
+                        arg(d->realToStr(data.value(DPI::STARTY).toDouble())));
+        strData.append( strSpecificXY.arg(tr("major axis")).
+                        arg(d->realToStr(data.value(DPI::ENDX).toDouble())).
+                        arg(d->realToStr(data.value(DPI::ENDY).toDouble())));
+/*        strData.append( QString(tr("   minor axis: X=%1 Y=%2\n")).arg(
                 data.value(DPI::ENDX).toDouble()).arg(
                 data.value(DPI::ENDY).toDouble() ) );
-        str.append( QString(tr("   start point: X=%1 Y=%2\n")).arg(
+        strData.append( QString(tr("   start point: X=%1 Y=%2\n")).arg(
                 data.value(DPI::ENDX).toDouble()).arg(
                 data.value(DPI::ENDY).toDouble() ) );
-        str.append( QString(tr("   end point: X=%1 Y=%2\n")).arg(
+        strData.append( QString(tr("   end point: X=%1 Y=%2\n")).arg(
                 data.value(DPI::ENDX).toDouble()).arg(
                 data.value(DPI::ENDY).toDouble() ) );
-        str.append( QString(tr("   initial angle: %1\n")).arg(numB*180/M_PI) );
-        str.append( QString(tr("   final angle: %1\n")).arg(numC*180/M_PI) );
-        str.append( QString(tr("   radius ratio: %1\n")).arg(numC*180/M_PI) );*/
-        return QString(tr("ELLIPSE: ")).append(str);
+        strData.append( QString(tr("   initial angle: %1\n")).arg(numB*180/M_PI) );
+        strData.append( QString(tr("   final angle: %1\n")).arg(numC*180/M_PI) );
+        strData.append( QString(tr("   radius ratio: %1\n")).arg(numC*180/M_PI) );*/
         break;
 
     case DPI::CONSTRUCTIONLINE:
-        return QString(tr("CONSTRUCTIONLINE: ")).append(str);
+        strData.prepend( strEntity.arg(tr("CONSTRUCTIONLINE")));
         break;
     case DPI::OVERLAYBOX:
-        return QString(tr("OVERLAYBOX: ")).append(str);
+        strData.prepend( strEntity.arg(tr("OVERLAYBOX")));
         break;
     case DPI::SOLID:
-        return QString(tr("SOLID: ")).append(str);
+        strData.prepend( strEntity.arg(tr("SOLID")));
         break;
 //container entities
     case DPI::MTEXT:
-        return QString(tr("MTEXT: ")).append(str);
+        strData.prepend( strEntity.arg(tr("MTEXT")));
         break;
     case DPI::TEXT:
-        return QString(tr("TEXT: ")).append(str);
+        strData.prepend( strEntity.arg(tr("TEXT")));
         break;
     case DPI::INSERT:
-        ptA.setX( data.value(DPI::STARTX).toDouble() );
-        ptA.setY( data.value(DPI::STARTY).toDouble() );
-        str.append( QString(tr("   Name: %1\n")).arg( data.value(DPI::BLKNAME).toString()) );
-        str.append( QString(tr("   Insertion point: X=%1 Y=%2\n")).arg(
-                d->realToStr(ptA.x()) ).arg( d->realToStr(ptA.y()) ) );
-        return QString(tr("INSERT: ")).append(str);
+        strData.prepend( strEntity.arg(tr("INSERT")));
+        ptA.setX( data.value(DPI::STARTX).toDouble());
+        ptA.setY( data.value(DPI::STARTY).toDouble());
+        strData.append( strSpecific.arg(tr("Name")).arg( data.value(DPI::BLKNAME).toString()));
+        strData.append( strSpecificXY.arg(tr("Insertion point")).
+                        arg(d->realToStr(ptA.x())).
+                        arg(d->realToStr(ptA.y())));
         break;
     case DPI::POLYLINE: {
-        if (data.value(DPI::CLOSEPOLY).toInt() == 0 )
-            str.append( QString(tr("     Opened\n")) );
-        else
-            str.append( QString(tr("     Closed\n")) );
-        str.append( QString(tr("     Vertex:\n")));
+        strData.prepend( strEntity.arg(tr("POLYLINE")));
+        strData.append( strSpecific.arg(tr("Closed")).
+                        arg( (0 == data.value(DPI::CLOSEPOLY).toInt()) ? tr("No") : tr("Yes")));
+                strData.append( strSpecific.arg(tr("Vertices")).arg(""));
         QList<Plug_VertexData> vl;
         ent->getPolylineData(&vl);
         for (int i = 0; i < vl.size(); ++i) {
-            str.append( QString(tr("     in point: X=%1 Y=%2\n")).arg(
-                           d->realToStr(vl.at(i).point.x()) ).arg( d->realToStr(vl.at(i).point.y()) ) );
-            if (vl.at(i).bulge != 0)
-            str.append( QString(tr("     curvature: %1\n")).arg( d->realToStr(vl.at(i).bulge)) );
+            strData.append( strSpecificXY.arg(tr("in point")).
+                            arg(d->realToStr(vl.at(i).point.x())).
+                            arg(d->realToStr(vl.at(i).point.y())));
+            if ( 0 != vl.at(i).bulge)
+                strData.append( strSpecific.arg(tr("curvature")).arg( d->realToStr(vl.at(i).bulge)));
         }
-        return QString(tr("POLYLINE: ")).append(str);
         break; }
     case DPI::IMAGE:
-        return QString(tr("IMAGE: ")).append(str);
+        strData.prepend( strEntity.arg(tr("IMAGE")));
         break;
     case DPI::SPLINE:
-        return QString(tr("SPLINE: ")).append(str);
+        strData.prepend( strEntity.arg(tr("SPLINE")));
         break;
     case DPI::HATCH:
-        return QString(tr("HATCH: ")).append(str);
+        strData.prepend( strEntity.arg(tr("HATCH")));
         break;
     case DPI::DIMLEADER:
-        return QString(tr("DIMLEADER: ")).append(str);
+        strData.prepend( strEntity.arg(tr("DIMLEADER")));
         break;
     case DPI::DIMALIGNED:
-        return QString(tr("DIMALIGNED: ")).append(str);
+        strData.prepend( strEntity.arg(tr("DIMALIGNED")));
         break;
     case DPI::DIMLINEAR:
-        return QString(tr("DIMLINEAR: ")).append(str);
+        strData.prepend( strEntity.arg(tr("DIMLINEAR")));
         break;
     case DPI::DIMRADIAL:
-        return QString(tr("DIMRADIAL: ")).append(str);
+        strData.prepend( strEntity.arg(tr("DIMRADIAL")));
         break;
     case DPI::DIMDIAMETRIC:
-        return QString(tr("DIMDIAMETRIC: ")).append(str);
+        strData.prepend( strEntity.arg(tr("DIMDIAMETRIC")));
         break;
     case DPI::DIMANGULAR:
-        return QString(tr("DIMANGULAR: ")).append(str);
+        strData.prepend( strEntity.arg(tr("DIMANGULAR")));
         break;
     default:
+        strData.prepend( strEntity.arg(tr("UNKNOWN")));
         break;
     }
-        return QString(tr("UNKNOWN: ")).append(str);
+
+    return strData;
 }
 
 /*****************************/

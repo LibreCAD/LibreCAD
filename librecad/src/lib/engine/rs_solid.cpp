@@ -50,8 +50,8 @@ RS_Vector RS_Solid::getCorner(int num) {
     if (num>=0 && num<4) {
         return data.corner[num];
     } else {
-        RS_DEBUG->print("Illegal corner requested from Solid",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "Illegal corner requested from Solid");
         return RS_Vector(false);
     }
 }

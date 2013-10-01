@@ -733,6 +733,14 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
             writer->writeUtf8String(7, varStr);
     else
         writer->writeString(7, "STANDARD");
+    writer->writeString(9, "$CLAYER");
+    if (getStr("$CLAYER", &varStr))
+        if (ver == DRW::AC1009)
+            writer->writeUtf8Caps(8, varStr);
+        else
+            writer->writeUtf8String(8, varStr);
+    else
+        writer->writeString(8, "0");
 
     writer->writeString(9, "$DIMASZ");
     if (getDouble("$DIMASZ", &varDouble))

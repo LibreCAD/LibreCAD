@@ -965,7 +965,9 @@ bool dxfRW::writeDimension(DRW_Dimension *ent) {
         writer->writeString(0, "DIMENSION");
         writeEntity(ent);
         writer->writeString(100, "AcDbDimension");
-//        writer->writeString(2, ent->name);
+        if (!ent->getName().empty()){
+            writer->writeString(2, ent->getName());
+        }
         writer->writeDouble(10, ent->getDefPoint().x);
         writer->writeDouble(20, ent->getDefPoint().y);
         writer->writeDouble(30, ent->getDefPoint().z);
@@ -1540,7 +1542,10 @@ bool dxfRW::writeTables() {
             writer->writeInt16(280, 1);
             writer->writeInt16(281, 0);
         }
-        iface->writeBlockRecords();
+    }
+    /* allways call writeBlockRecords to iface for prepare unnamed blocks */
+    iface->writeBlockRecords();
+    if (version > DRW::AC1009) {
         writer->writeString(0, "ENDTAB");
     }
 return true;

@@ -70,11 +70,10 @@ RS_Modification::RS_Modification(RS_EntityContainer& container,
 /**
  * Deletes all selected entities.
  */
-void RS_Modification::remove
-() {
+void RS_Modification::remove() {
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::remove: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::remove: no valid container");
         return;
     }
 
@@ -109,8 +108,8 @@ void RS_Modification::remove
  */
 bool RS_Modification::changeAttributes(RS_AttributesData& data) {
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::changeAttributes: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::changeAttributes: no valid container");
         return false;
     }
 
@@ -187,8 +186,8 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data) {
 void RS_Modification::copy(const RS_Vector& ref, const bool cut) {
 
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::copy: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::copy: no valid container");
         return;
     }
 
@@ -593,8 +592,8 @@ bool RS_Modification::splitPolyline(RS_Polyline& polyline,
                                     RS_Polyline** polyline2) const {
 
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::splitPolyline: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::splitPolyline: no valid container");
         return false;
     }
 
@@ -690,15 +689,14 @@ RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
     RS_DEBUG->print("RS_Modification::addPolylineNode");
 
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::addPolylineNode: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::addPolylineNode: no valid container");
         return NULL;
     }
 
     if (segment.getParent()!=&polyline) {
-        RS_DEBUG->print("RS_Modification::addPolylineNode: "
-                        "segment not part of the polyline",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::addPolylineNode: segment not part of the polyline");
         return NULL;
     }
 
@@ -761,9 +759,8 @@ RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
                 }
             }
         } else {
-            RS_DEBUG->print("RS_Modification::addPolylineNode: "
-                            "Polyline contains non-atomic entities",
-                            RS_Debug::D_WARNING);
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                            "RS_Modification::addPolylineNode: Polyline contains non-atomic entities");
         }
     }
 
@@ -807,15 +804,14 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
     RS_DEBUG->print("RS_Modification::deletePolylineNode");
 
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::addPolylineNode: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::addPolylineNode: no valid container");
         return NULL;
     }
 
     if (node.valid==false) {
-        RS_DEBUG->print("RS_Modification::deletePolylineNode: "
-                        "node not valid",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::deletePolylineNode: node not valid");
         return NULL;
     }
 
@@ -900,9 +896,8 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
                 lastDropped = true;
             }
         } else {
-            RS_DEBUG->print("RS_Modification::deletePolylineNode: "
-                            "Polyline contains non-atomic entities",
-                            RS_Debug::D_WARNING);
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                            "RS_Modification::deletePolylineNode: Polyline contains non-atomic entities");
         }
     }
 
@@ -953,22 +948,20 @@ RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline& polyline,
     RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween");
 
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::addPolylineNodesBetween: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::addPolylineNodesBetween: no valid container");
         return NULL;
     }
 
     if (node1.valid==false || node2.valid==false) {
-        RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: "
-                        "node not valid",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::deletePolylineNodesBetween: node not valid");
         return NULL;
     }
 
     if (node1.distanceTo(node2)<1.0e-6) {
-        RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: "
-                        "nodes are identical",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::deletePolylineNodesBetween: nodes are identical");
         return NULL;
     }
 
@@ -984,9 +977,8 @@ RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline& polyline,
                     (node2.distanceTo(ae->getStartpoint())<1.0e-6 &&
                      node1.distanceTo(ae->getEndpoint())<1.0e-6)) {
 
-                RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: "
-                                "nothing to delete",
-                                RS_Debug::D_WARNING);
+                RS_DEBUG->print(RS_Debug::D_WARNING,
+                                "RS_Modification::deletePolylineNodesBetween: nothing to delete");
                 return NULL;
             }
         }
@@ -1142,9 +1134,8 @@ RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline& polyline,
                 done=false;
             }
         } else {
-            RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: "
-                            "Polyline contains non-atomic entities",
-                            RS_Debug::D_WARNING);
+            RS_DEBUG->print(RS_Debug::D_WARNING,
+                            "RS_Modification::deletePolylineNodesBetween: Polyline contains non-atomic entities");
         }
     }
 
@@ -1195,22 +1186,20 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
     RS_DEBUG->print("RS_Modification::polylineTrim");
 
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::addPolylineNodesBetween: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::addPolylineNodesBetween: no valid container");
         return NULL;
     }
 
     if (segment1.getParent()!=&polyline || segment2.getParent()!=&polyline) {
-        RS_DEBUG->print("RS_Modification::polylineTrim: "
-                        "segments not in polyline",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::polylineTrim: segments not in polyline");
         return NULL;
     }
 
     if (&segment1==&segment2) {
-        RS_DEBUG->print("RS_Modification::polylineTrim: "
-                        "segments are identical",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::polylineTrim: segments are identical");
         return NULL;
     }
 
@@ -1218,9 +1207,8 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
     sol = RS_Information::getIntersection(&segment1, &segment2, false);
 
     if (sol.getNumber()==0) {
-        RS_DEBUG->print("RS_Modification::polylineTrim: "
-                        "segments cannot be trimmed",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::polylineTrim: segments cannot be trimmed");
         return NULL;
     }
 
@@ -1314,9 +1302,8 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
                     newPolyline->addVertex(ae->getEndpoint());
                 }
             } else {
-                RS_DEBUG->print("RS_Modification::polylineTrim: "
-                                "Polyline contains non-atomic entities",
-                                RS_Debug::D_WARNING);
+                RS_DEBUG->print(RS_Debug::D_WARNING,
+                                "RS_Modification::polylineTrim: Polyline contains non-atomic entities");
             }
         }
     }
@@ -1384,9 +1371,8 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
                     newPolyline->addVertex(ae->getEndpoint());
                 }
             } else {
-                RS_DEBUG->print("RS_Modification::polylineTrim: "
-                                "Polyline contains non-atomic entities",
-                                RS_Debug::D_WARNING);
+                RS_DEBUG->print(RS_Debug::D_WARNING,
+                                "RS_Modification::polylineTrim: Polyline contains non-atomic entities");
             }
         }
     }
@@ -1426,8 +1412,8 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
  */
 bool RS_Modification::move(RS_MoveData& data) {
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::move: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::move: no valid container");
         return false;
     }
 
@@ -1488,8 +1474,8 @@ bool RS_Modification::move(RS_MoveData& data) {
  */
 bool RS_Modification::offset(const RS_OffsetData& data) {
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::offset: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::offset: no valid container");
         return false;
     }
 
@@ -1553,8 +1539,8 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
  */
 bool RS_Modification::rotate(RS_RotateData& data) {
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::rotate: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::rotate: no valid container");
         return false;
     }
 
@@ -1614,8 +1600,8 @@ bool RS_Modification::rotate(RS_RotateData& data) {
  */
 bool RS_Modification::scale(RS_ScaleData& data) {
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::scale: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::scale: no valid container");
         return false;
     }
 
@@ -1713,8 +1699,8 @@ bool RS_Modification::scale(RS_ScaleData& data) {
  */
 bool RS_Modification::mirror(RS_MirrorData& data) {
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::mirror: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::mirror: no valid container");
         return false;
     }
 
@@ -1773,8 +1759,8 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
  */
 bool RS_Modification::rotate2(RS_Rotate2Data& data) {
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::rotate2: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::rotate2: no valid container");
         return false;
     }
 
@@ -1838,8 +1824,8 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
  */
 bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::moveRotate: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::moveRotate: no valid container");
         return false;
     }
 
@@ -2903,9 +2889,8 @@ bool RS_Modification::round(const RS_Vector& coord,
 bool RS_Modification::explode() {
 
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::explode: no valid container"
-                        " for addinge entities",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::explode: no valid container for addinge entities");
         return false;
     }
     if(container->isLocked() || ! container->isVisible()) return false;
@@ -3015,9 +3000,8 @@ bool RS_Modification::explode() {
 
 bool RS_Modification::explodeTextIntoLetters() {
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::explodeTextIntoLetters: no valid container"
-                        " for addinge entities",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::explodeTextIntoLetters: no valid container for addinge entities");
         return false;
     }
     if(container->isLocked() || ! container->isVisible()) return false;
@@ -3175,8 +3159,8 @@ bool RS_Modification::explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& a
  */
 bool RS_Modification::moveRef(RS_MoveRefData& data) {
     if (container==NULL) {
-        RS_DEBUG->print("RS_Modification::moveRef: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_Modification::moveRef: no valid container");
         return false;
     }
     if(container->isLocked() || ! container->isVisible()) return false;

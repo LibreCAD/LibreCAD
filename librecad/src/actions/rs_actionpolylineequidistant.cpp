@@ -121,8 +121,8 @@ RS_Vector RS_ActionPolylineEquidistant::calculateIntersection(RS_Entity* first,R
 
 bool RS_ActionPolylineEquidistant::makeContour() {
     if (container==NULL) {
-        RS_DEBUG->print("RS_ActionPolylineEquidistant::makeContour: no valid container",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_ActionPolylineEquidistant::makeContour: no valid container");
         return false;
     }
 

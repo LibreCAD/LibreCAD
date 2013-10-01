@@ -183,6 +183,7 @@ public:
     static RS_FilterInterface* createFilter(){return new RS_FilterDXFRW();}
 
 private:
+    void prepareBlocks();
     void writeEntity(RS_Entity* e);
 #ifdef DWGSUPPORT
     void printDwgError(int le);

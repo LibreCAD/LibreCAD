@@ -263,7 +263,7 @@ void dibSHP::updateFile()
         break;
     case SHPT_NULL:
     default:
-        formattype->setText(tr("Unknoun"));
+        formattype->setText(tr("Unknown"));
         pointbox->setDisabled(true);
         break;
     }

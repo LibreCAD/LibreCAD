@@ -221,7 +221,7 @@ bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
     if (graphic!=NULL) {
         if( fabs(f - graphic->getPaperScale()) < RS_TOLERANCE ) return false;
         graphic->setPaperScale(f);
-        graphic->centerToPage();
+//        graphic->centerToPage();
         if(autoZoom) graphicView->zoomPage();
         graphicView->redraw();
         return true;
