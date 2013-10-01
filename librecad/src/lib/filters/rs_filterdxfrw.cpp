@@ -145,6 +145,12 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
 #endif
 
     delete dummyContainer;
+    /*set current layer */
+    RS_Layer* cl = graphic->findLayer(graphic->getVariableString("$CLAYER", "0"));
+    if (cl != NULL){
+        //require to notify
+        graphic->getLayerList()->activate(cl, true);
+    }
     RS_DEBUG->print("RS_FilterDXFRW::fileImport: updating inserts");
     graphic->updateInserts();
 
@@ -1510,6 +1516,9 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
     curr->setCoordX(v.x);
     curr->setCoordY(v.y);
     data.vars["$EXTMAX"] =curr;
+    curr = new DRW_Variant();
+    curr->addString( (graphic->getActiveLayer()->getName()).toUtf8().data() );
+    data.vars["$CLAYER"] =curr;
 }
 
 void RS_FilterDXFRW::writeLTypes(){
