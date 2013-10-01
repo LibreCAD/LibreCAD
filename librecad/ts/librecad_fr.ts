@@ -7752,6 +7752,26 @@ Voulez-vous le remplacer ?</translation>
         <source>Hatch created successfully.</source>
         <translation>Hachures créées avec succès.</translation>
     </message>
+    <message>
+        <source>Hatch Error: Invalid contour found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hatch Error: Pattern not found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hatch Error: Contour or pattern too small!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hatch Error: Contour too big!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hatch Error: Undefined Error!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>

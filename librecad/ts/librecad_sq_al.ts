@@ -7070,7 +7070,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/modification/rs_modification.cpp" line="415"/>
+        <location filename="../src/lib/modification/rs_modification.cpp" line="414"/>
         <source>Block %1 already exist, renamed to: %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7080,47 +7080,47 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3652"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3690"/>
         <source>unknown error opening dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3656"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3694"/>
         <source>can&apos;t open this dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3660"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3698"/>
         <source>unsupported dwg version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3664"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3702"/>
         <source>error reading file header in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3668"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3706"/>
         <source>error reading header vars in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3672"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3710"/>
         <source>error reading classes in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3676"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3714"/>
         <source>error reading offsets in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3680"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3718"/>
         <source>error reading tables in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3684"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3722"/>
         <source>error reading entities in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8217,12 +8217,37 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="157"/>
+        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="159"/>
         <source>Hatch created successfully.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="162"/>
+        <source>Hatch Error: Invalid contour found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="165"/>
+        <source>Hatch Error: Pattern not found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="168"/>
+        <source>Hatch Error: Contour or pattern too small!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="171"/>
+        <source>Hatch Error: Contour too big!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="174"/>
+        <source>Hatch Error: Undefined Error!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="182"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
         <translation type="unfinished"></translation>
     </message>

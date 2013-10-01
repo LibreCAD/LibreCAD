@@ -9745,6 +9745,26 @@ Do you want to replace it?</source>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
         <translation>Área de hachura inválida. Por favor verifique se as entidades selecionadas formam um ou mais contornos fechados.</translation>
     </message>
+    <message>
+        <source>Hatch Error: Invalid contour found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hatch Error: Pattern not found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hatch Error: Contour or pattern too small!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hatch Error: Contour too big!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hatch Error: Undefined Error!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>
