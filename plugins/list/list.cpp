@@ -122,6 +122,9 @@ QString LC_List::getStrData(Plug_Entity *ent) {
         strData.append( strSpecific.arg(tr("radius")).arg(d->realToStr(numA)));
         strData.append( strSpecific.arg(tr("initial angle")).arg(d->realToStr(numB*180/M_PI)));
         strData.append( strSpecific.arg(tr("final angle")).arg(d->realToStr(numC*180/M_PI)));
+        if( numB > numC) {
+            numB -= 2.0 * M_PI;
+        }
         strData.append( strSpecific.arg(tr("length")).arg( d->realToStr((numC-numB)*numA)));
         break;
     case DPI::CIRCLE:
