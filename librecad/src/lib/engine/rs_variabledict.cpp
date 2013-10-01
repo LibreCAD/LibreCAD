@@ -77,9 +77,8 @@ void RS_VariableDict::add(const QString& key,
     RS_DEBUG->print("RS_VariableDict::addVariable()");
 
     if (key.isEmpty()) {
-        RS_DEBUG->print("RS_VariableDict::addVariable(): "
-                        "No empty keys allowed.",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_VariableDict::addVariable(): No empty keys allowed.");
         return;
     }
 
@@ -96,9 +95,8 @@ void RS_VariableDict::add(const QString& key, int value, int code) {
     RS_DEBUG->print("RS_VariableDict::addVariable()");
 
     if (key.isEmpty()) {
-        RS_DEBUG->print("RS_VariableDict::addVariable(): "
-                        "No empty keys allowed.",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_VariableDict::addVariable(): No empty keys allowed.");
         return;
     }
 
@@ -115,9 +113,8 @@ void RS_VariableDict::add(const QString& key, double value, int code) {
     RS_DEBUG->print("RS_VariableDict::addVariable()");
 
     if (key.isEmpty()) {
-        RS_DEBUG->print("RS_VariableDict::addVariable(): "
-                        "No empty keys allowed.",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_VariableDict::addVariable(): No empty keys allowed.");
         return;
     }
 
@@ -135,9 +132,8 @@ void RS_VariableDict::add(const QString& key,
     RS_DEBUG->print("RS_VariableDict::addVariable()");
 
     if (key.isEmpty()) {
-        RS_DEBUG->print("RS_VariableDict::addVariable(): "
-                        "No empty keys allowed.",
-                        RS_Debug::D_WARNING);
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_VariableDict::addVariable(): No empty keys allowed.");
         return;
     }
 
