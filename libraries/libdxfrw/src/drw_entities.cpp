@@ -12,7 +12,7 @@
 
 #include <cstdlib>
 #include "drw_entities.h"
-#include "dxfreader.h"
+#include "intern/dxfreader.h"
 
 
 //! Calculate arbitary axis
