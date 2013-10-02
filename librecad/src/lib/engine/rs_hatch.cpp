@@ -127,6 +127,7 @@ void RS_Hatch::update() {
         RS_DEBUG->print("RS_Hatch::update");
         RS_DEBUG->print("RS_Hatch::update: contour has %d loops", count());
 
+    updateError = HATCH_OK;
     if (updateRunning) {
         return;
     }
@@ -137,7 +138,6 @@ void RS_Hatch::update() {
 
     if (data.solid==true) {
         calculateBorders();
-        updateError = HATCH_OK;
         return;
     }
 
