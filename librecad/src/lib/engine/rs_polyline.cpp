@@ -608,7 +608,12 @@ void RS_Polyline::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     //update();
 }
 
-
+void RS_Polyline::revertDirection() {
+	RS_EntityContainer::revertDirection();
+	RS_Vector tmp = data.startpoint;
+	data.startpoint = data.endpoint;
+	data.endpoint = tmp;
+}
 
 void RS_Polyline::stretch(const RS_Vector& firstCorner,
                           const RS_Vector& secondCorner,
