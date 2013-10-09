@@ -194,6 +194,7 @@ void RS_Hatch::update() {
 
     // create a pattern over the whole contour.
     RS_Vector pSize = pat->getSize();
+    RS_Vector rot_center=(pat->getMin()+pat->getMax())*0.5;
 //    RS_Vector cPos = getMin();
     RS_Vector cSize = getSize();
 
@@ -225,9 +226,14 @@ void RS_Hatch::update() {
     f = copy->getMin().y/pat->getSize().y;
     py1 = (int)floor(f);
     f = copy->getMax().x/pat->getSize().x;
-    px2 = (int)ceil(f) - 1;
+    px2 = (int)ceil(f);
     f = copy->getMax().y/pat->getSize().y;
-    py2 = (int)ceil(f) - 1;
+    py2 = (int)ceil(f);
+    RS_Vector dvx=RS_Vector(data.angle)*pSize.x;
+    RS_Vector dvy=RS_Vector(data.angle+M_PI*0.5)*pSize.y;
+    pat->rotate(rot_center, data.angle);
+    pat->move(-rot_center);
+
 
     RS_EntityContainer tmp;   // container for untrimmed lines
 
@@ -238,13 +244,8 @@ void RS_Hatch::update() {
         for (int py=py1; py<=py2; py++) {
             for (RS_Entity* e=pat->firstEntity(); e!=NULL;
                     e=pat->nextEntity()) {
-
-                RS_Entity* te = e->clone();
-                te->rotate(RS_Vector(0.0,0.0), data.angle);
-                RS_Vector v1, v2;
-                v1.setPolar(px*pSize.x, data.angle);
-                v2.setPolar(py*pSize.y, data.angle+M_PI/2.0);
-                te->move(v1+v2);
+                RS_Entity* te=e->clone();
+                te->move(dvx*px + dvy*py);
                 tmp.addEntity(te);
             }
         }
