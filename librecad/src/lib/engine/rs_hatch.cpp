@@ -194,7 +194,7 @@ void RS_Hatch::update() {
 
     // create a pattern over the whole contour.
     RS_Vector pSize = pat->getSize();
-    RS_Vector rot_center=(pat->getMin()+pat->getMax())*0.5;
+    RS_Vector rot_center=pat->getMin();
 //    RS_Vector cPos = getMin();
     RS_Vector cSize = getSize();
 
@@ -215,7 +215,7 @@ void RS_Hatch::update() {
     }
 
     // avoid huge memory consumption:
-    else if (cSize.x/pSize.x>100 || cSize.y/pSize.y>100) {
+    else if ( cSize.x* cSize.y/(pSize.x*pSize.y)>1e4) {
         RS_DEBUG->print("RS_Hatch::update: contour size too large or pattern size too small");
         updateError = HATCH_AREA_TOO_BIG;
         return;
