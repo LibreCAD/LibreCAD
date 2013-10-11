@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash -xe
 
 # this script builds LibreCAD in OS/X
 # The dependency required to be able to build LibreCAD:
