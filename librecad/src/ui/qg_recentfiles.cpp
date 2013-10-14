@@ -47,10 +47,19 @@ QG_RecentFiles::~QG_RecentFiles() {}
  * it's not already in the list.
  */
 void QG_RecentFiles::add(const QString& filename) {
-        RS_DEBUG->print("QG_RecentFiles::add");
+    RS_DEBUG->print("QG_RecentFiles::add");
 
     // is the file already in the list?
-    if (files.indexOf(filename) >= 0) {
+    int i0=files.indexOf(filename);
+    int j0=files.size()-1;
+    if (i0>=0) {
+        if (i0==j0) return; //do nothing, file already being the last in list
+        //move the i0 to the last
+        while(i0<j0) {
+            files[i0]=files[i0+1];
+            i0++;
+        }
+        files.last()=filename;
         return;
     }
 
