@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="el">
 <context>
@@ -97,8 +98,9 @@
     <message>
         <location filename="../list/list.cpp" line="79"/>
         <source>ID</source>
+        <translatorcomment>εναλλακτικά {αναγνωριστικό, ταυτότητα}</translatorcomment>
         <translation>ID</translation>
-    <translatorcomment>εναλλακτικά {αναγνωριστικό, ταυτότητα}</translatorcomment></message>
+    </message>
     <message>
         <location filename="../list/list.cpp" line="85"/>
         <source>POINT</source>
@@ -139,8 +141,9 @@
     <message>
         <location filename="../list/list.cpp" line="110"/>
         <source>Inc.</source>
+        <translatorcomment>TODO CHECKME είναι inclination το αγγλικό;</translatorcomment>
         <translation>Κλίση</translation>
-    <translatorcomment>TODO CHECKME είναι inclination το αγγλικό;</translatorcomment></message>
+    </message>
     <message>
         <location filename="../list/list.cpp" line="115"/>
         <source>ARC</source>
@@ -197,8 +200,9 @@
     <message>
         <location filename="../list/list.cpp" line="163"/>
         <source>CONSTRUCTIONLINE</source>
+        <translatorcomment>CHECKME αυτοσχεδιαστική μετάφραση, καθώς και το &quot;βοηθητική&quot; έχει χρησιμοποιηθεί για το &quot;extension&quot; και ίσως είναι κάτι διαφορετικό</translatorcomment>
         <translation>ΚΑΤΑΣΚΕΥΑΣΤΙΚΗΓΡΑΜΜΗ</translation>
-    <translatorcomment>CHECKME αυτοσχεδιαστική μετάφραση, καθώς και το "βοηθητική" έχει χρησιμοποιηθεί για το "extension" και ίσως είναι κάτι διαφορετικό</translatorcomment></message>
+    </message>
     <message>
         <location filename="../list/list.cpp" line="166"/>
         <source>OVERLAYBOX</source>
@@ -262,8 +266,9 @@
     <message>
         <location filename="../list/list.cpp" line="199"/>
         <source>curvature</source>
+        <translatorcomment>CHECKME</translatorcomment>
         <translation>καμπυλότητα</translation>
-    <translatorcomment>CHECKME</translatorcomment></message>
+    </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>IMAGE</source>
@@ -287,8 +292,9 @@
     <message>
         <location filename="../list/list.cpp" line="215"/>
         <source>DIMALIGNED</source>
+        <translatorcomment>CHECKME ΣΤΟΙΧΙΣΜΕΝΗ &apos;Η ΕΥΘΥΓΡΑΜΜΙΣΜΕΝΗ ΚΑΙ ΓΙΑΤΙ ΚΑΙ ΠΡΟΣΟΧΗ ΣΤΑ ΑΛΛΑ</translatorcomment>
         <translation>ΔΙΑΣΤΑΣΗΣΤΟΙΧΙΣΜΕΝΗ</translation>
-    <translatorcomment>CHECKME ΣΤΟΙΧΙΣΜΕΝΗ 'Η ΕΥΘΥΓΡΑΜΜΙΣΜΕΝΗ ΚΑΙ ΓΙΑΤΙ ΚΑΙ ΠΡΟΣΟΧΗ ΣΤΑ ΑΛΛΑ</translatorcomment></message>
+    </message>
     <message>
         <location filename="../list/list.cpp" line="218"/>
         <source>DIMLINEAR</source>
@@ -458,8 +464,9 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="320"/>
         <source>Point 2D layer is empty</source>
+        <translatorcomment>CHECKME ALL TRANSLATIONS BELOW SOS μπορεί να είναι &quot;κωδικών σημείων&quot;, &quot;αριθμών (των) σημείων&quot;</translatorcomment>
         <translation>Η στρώση 2Δ του σημείου είναι κενή</translation>
-    <translatorcomment>CHECKME ALL TRANSLATIONS BELOW SOS μπορεί να είναι "κωδικών σημείων", "αριθμών (των) σημείων"</translatorcomment></message>
+    </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="323"/>
         <source>Point 3D layer is empty</source>
@@ -517,7 +524,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>Δεν είναι δυνατό το άνοιγμα του αρχείου %1</translation>
     </message>
 </context>
@@ -614,8 +621,9 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="217"/>
         <source>Point+Measure</source>
+        <translatorcomment>CHECKME και τα παρακάτω</translatorcomment>
         <translation>Σημείο+Μέτρο</translation>
-    <translatorcomment>CHECKME και τα παρακάτω</translatorcomment></message>
+    </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="221"/>
         <source>3D Point</source>
@@ -669,8 +677,9 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="261"/>
         <source>Multipatch</source>
+        <translatorcomment>CHECKME από spline patch; θα είναι λάθος και αλλού. να δω το patch πώς θα μεταφραστεί.</translatorcomment>
         <translation>Πολυκαμπύλη</translation>
-    <translatorcomment>CHECKME από spline patch; θα είναι λάθος και αλλού. να δω το patch πώς θα μεταφραστεί.</translatorcomment></message>
+    </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="281"/>
         <source>The file %1 not have extension .shp</source>
