@@ -15,9 +15,9 @@
 #include <fstream>
 #include <algorithm>
 #include <sstream>
-#include "drw_textcodec.h"
-#include "dxfreader.h"
-#include "dxfwriter.h"
+#include "intern/drw_textcodec.h"
+#include "intern/dxfreader.h"
+#include "intern/dxfwriter.h"
 #include <assert.h>
 
 #ifdef DRW_DBG

@@ -2,6 +2,10 @@
 ;Basic Example Script
 
 ;--------------------------------
+;Include custom settings if exists
+  !include /NONFATAL "custom-5.1.nsh"
+
+;--------------------------------
 ;Include Modern UI
 
   !include "MUI2.nsh"
@@ -78,9 +82,16 @@ ${EndIf}
 
 FunctionEnd
 
-!define Qt_Dir 		"C:\Qt"
-!define Qt_Version 	"5.1.1"
-!define Mingw_Ver  	"mingw48_32"
+;--- define Qt folders if not already defined in custom-5.1.nsh
+!ifndef Qt_Dir
+    !define Qt_Dir 	"C:\Qt"
+!endif
+!ifndef Qt_Version
+    !define Qt_Version 	"5.1.1"
+!endif
+!ifndef Mingw_Ver
+    !define Mingw_Ver 	"mingw48_32"
+!endif
 ;--- folder contains mingw32-make.exe
 !define MINGW_DIR 	"${Qt_Dir}\Tools\${Mingw_Ver}\bin"
 !define QTCREATOR_DIR 	"${Qt_Dir}\Tools\QtCreator\bin"
