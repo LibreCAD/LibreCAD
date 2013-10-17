@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="de">
 <context>
@@ -62,262 +61,262 @@
     <message>
         <location filename="../list/list.cpp" line="47"/>
         <source>n</source>
-        <translation type="unfinished"></translation>
+        <translation>n</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="61"/>
         <source>Empty Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Leeres Objekt</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="68"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="68"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="74"/>
         <source>Layer</source>
-        <translation type="unfinished">Layer</translation>
+        <translation>Layer</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="76"/>
         <source>Color</source>
-        <translation type="unfinished">Farbe</translation>
+        <translation>Farbe</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Line type</source>
-        <translation type="unfinished">Linientyp</translation>
+        <translation>Linientyp</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="78"/>
         <source>Line thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>Linienstärke</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="85"/>
         <source>POINT</source>
-        <translation type="unfinished"></translation>
+        <translation>PUNKT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="86"/>
         <location filename="../list/list.cpp" line="195"/>
         <source>in point</source>
-        <translation type="unfinished"></translation>
+        <translation>im Punkt</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="91"/>
         <source>LINE</source>
-        <translation type="unfinished"></translation>
+        <translation>LINIE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="96"/>
         <source>from point</source>
-        <translation type="unfinished"></translation>
+        <translation>von Punkt</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
         <source>to point</source>
-        <translation type="unfinished"></translation>
+        <translation>zu Punkt</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="104"/>
         <location filename="../list/list.cpp" line="128"/>
         <source>length</source>
-        <translation type="unfinished"></translation>
+        <translation>Länge</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="109"/>
         <source>Angle in XY plane</source>
-        <translation type="unfinished"></translation>
+        <translation>Winkel in XY Ebene</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="110"/>
         <source>Inc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausdehnung</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="115"/>
         <source>ARC</source>
-        <translation type="unfinished"></translation>
+        <translation>KREISBOGEN</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="116"/>
         <location filename="../list/list.cpp" line="132"/>
         <location filename="../list/list.cpp" line="142"/>
         <source>center point</source>
-        <translation type="unfinished"></translation>
+        <translation>Mittelpunkt</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="122"/>
         <location filename="../list/list.cpp" line="136"/>
         <source>radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Radius</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="123"/>
         <source>initial angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Startwinkel</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="124"/>
         <source>final angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Endwinkel</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="131"/>
         <source>CIRCLE</source>
-        <translation type="unfinished"></translation>
+        <translation>KREIS</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="137"/>
         <source>circumference</source>
-        <translation type="unfinished"></translation>
+        <translation>Umfang</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="138"/>
         <source>area</source>
-        <translation type="unfinished"></translation>
+        <translation>Fläche</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="141"/>
         <source>ELLIPSE</source>
-        <translation type="unfinished"></translation>
+        <translation>ELLIPSE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="145"/>
         <source>major axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Hauptachse</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="163"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>HILFSLINIE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="166"/>
         <source>OVERLAYBOX</source>
-        <translation type="unfinished"></translation>
+        <translation>OVERLAYBOX</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="169"/>
         <source>SOLID</source>
-        <translation type="unfinished"></translation>
+        <translation>KÖRPER</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="173"/>
         <source>MTEXT</source>
-        <translation type="unfinished"></translation>
+        <translation>MTEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="176"/>
         <source>TEXT</source>
-        <translation type="unfinished"></translation>
+        <translation>TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>INSERT</source>
-        <translation type="unfinished"></translation>
+        <translation>BLOCK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="182"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>Insertion point</source>
-        <translation type="unfinished"></translation>
+        <translation>Einfügepunkt</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="188"/>
         <source>POLYLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>POLYLINIE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Geschlossen</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="190"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Nein</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="190"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191"/>
         <source>Vertices</source>
-        <translation type="unfinished"></translation>
+        <translation>Eckpunkte</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="199"/>
         <source>curvature</source>
-        <translation type="unfinished"></translation>
+        <translation>Krümmung</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>IMAGE</source>
-        <translation type="unfinished"></translation>
+        <translation>BILD</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="206"/>
         <source>SPLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>SPLINE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="209"/>
         <source>HATCH</source>
-        <translation type="unfinished"></translation>
+        <translation>SCHRAFFUR</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="212"/>
         <source>DIMLEADER</source>
-        <translation type="unfinished"></translation>
+        <translation>BEMASSUNGSFÜHRUNG</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
         <source>DIMALIGNED</source>
-        <translation type="unfinished"></translation>
+        <translation>BEMASSUNGAUSGERICHTET</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="218"/>
         <source>DIMLINEAR</source>
-        <translation type="unfinished"></translation>
+        <translation>BEMASSUNGLINEAR</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="221"/>
         <source>DIMRADIAL</source>
-        <translation type="unfinished"></translation>
+        <translation>BEMASSUNGRADIAL</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="224"/>
         <source>DIMDIAMETRIC</source>
-        <translation type="unfinished"></translation>
+        <translation>BEMASSUNGDURCHMESSER</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="227"/>
         <source>DIMANGULAR</source>
-        <translation type="unfinished"></translation>
+        <translation>BEMASSUNGWINKEL</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="230"/>
         <source>UNKNOWN</source>
-        <translation type="unfinished"></translation>
+        <translation>UNBEKANNT</translation>
     </message>
     <message>
         <source>n %1: 
@@ -415,12 +414,12 @@
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation type="unfinished"></translation>
+        <translation>Originalobjekt auswählen:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation type="unfinished"></translation>
+        <translation>Objekte zum Ändern auswählen:</translation>
     </message>
 </context>
 <context>
@@ -437,7 +436,7 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Read ascii points</source>
-        <translation type="unfinished">Punkte aus ASCII-Datei</translation>
+        <translation>Punkte aus ASCII-Datei</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="241"/>
@@ -606,7 +605,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>Kann Datei %1 nicht öffnen</translation>
     </message>
 </context>
@@ -634,13 +633,13 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="56"/>
         <source>Import ESRI Shapefile</source>
-        <translation type="unfinished">ESRI Shapedaten importieren</translation>
+        <translation>ESRI Shapedaten importieren</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="68"/>
         <location filename="../importshp/importshp.cpp" line="266"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbekannt</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="76"/>
@@ -843,7 +842,7 @@
     <message>
         <location filename="../sample/sample.cpp" line="132"/>
         <source>Sample plugin</source>
-        <translation type="unfinished">Beispiel Plugin</translation>
+        <translation>Beispiel Plugin</translation>
     </message>
 </context>
 <context>
