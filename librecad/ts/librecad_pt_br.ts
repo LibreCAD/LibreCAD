@@ -16,7 +16,7 @@
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Specify a point</source>
-        <translation type="unfinished"></translation>
+        <translation>Especificar um ponto</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -27,18 +27,18 @@
     <name>QC_ActionGetSelect</name>
     <message>
         <source>Select objects:</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecionar objetos:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
         <source>&amp;CAM</source>
-        <translation type="obsolete">&amp;CAM</translation>
+        <translation>&amp;CAM</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
@@ -46,11 +46,11 @@
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Edita</translation>
+        <translation>Editar</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished">Arquivo</translation>
+        <translation>Arquivo</translation>
     </message>
     <message>
         <source>None</source>
@@ -58,7 +58,7 @@
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished">Exiba</translation>
+        <translation>Exibir</translation>
     </message>
     <message>
         <source>Library Browser</source>
@@ -66,11 +66,11 @@
     </message>
     <message>
         <source>&amp;Draw</source>
-        <translation>&amp;Desenho</translation>
+        <translation>&amp;Desenhar</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>&amp;Edição</translation>
+        <translation>&amp;Editar</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -90,23 +90,23 @@
     </message>
     <message>
         <source>&amp;Snap</source>
-        <translation>&amp;Salto</translation>
+        <translation>&amp;Precisão</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Exiba</translation>
+        <translation>&amp;Exibir</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="obsolete">Resete</translation>
+        <translation>Resetar</translation>
     </message>
     <message>
         <source>Command Line</source>
-        <translation type="obsolete">Linha de Comando</translation>
+        <translation>Linha de Comando</translation>
     </message>
     <message>
         <source>&amp;Block</source>
-        <translation>&amp;Carimbo</translation>
+        <translation>&amp;Bloco</translation>
     </message>
     <message>
         <source>&amp;Layer</source>
@@ -114,15 +114,15 @@
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
-        <translation>Foca na &amp;Linha de Comando</translation>
+        <translation>Focar na &amp;Linha de Comando</translation>
     </message>
     <message>
         <source>&amp;Point</source>
-        <translation type="obsolete">&amp;Ponto</translation>
+        <translation>&amp;Ponto</translation>
     </message>
     <message>
         <source>Property Editor</source>
-        <translation type="obsolete">Editor de Propriedades</translation>
+        <translation>Editor de Propriedades</translation>
     </message>
     <message>
         <source>&amp;Dimension</source>
@@ -130,43 +130,43 @@
     </message>
     <message>
         <source>&lt;b&gt;Version:&lt;/b&gt; %1</source>
-        <translation type="obsolete">&lt;b&gt;Versão:&lt;/b&gt; %1</translation>
+        <translation>&lt;b&gt;Versão:&lt;/b&gt; %1</translation>
     </message>
     <message>
         <source>&lt;b&gt;Qt Version:&lt;/b&gt; %1</source>
-        <translation type="obsolete">&lt;b&gt;Qt Versão:&lt;/b&gt; %1</translation>
+        <translation>&lt;b&gt;Qt Versão:&lt;/b&gt; %1</translation>
     </message>
     <message>
         <source>Simulation Controls</source>
-        <translation type="obsolete">Controles de Simulação</translation>
+        <translation>Controles de Simulação</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation>&amp;Multilinha</translation>
+        <translation>&amp;Polilinha</translation>
     </message>
     <message>
         <source>CAD Tools</source>
-        <translation type="unfinished">Ferramentas CAD</translation>
+        <translation>Ferramentas CAD</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
-        <translation>&amp;Barras de ferramentas</translation>
+        <translation>&amp;Barra de ferramentas</translation>
     </message>
     <message>
         <source>&amp;Order QCAD Professional Now</source>
-        <translation type="obsolete">Ad&amp;quira o Qcad Profissional agora</translation>
+        <translation>Ad&amp;quira o Qcad Profissional agora</translation>
     </message>
     <message>
         <source>Running script &apos;%1&apos;</source>
-        <translation>Rodando o roteiro &apos;%1&apos;</translation>
+        <translation>Executando script &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Inserting block &apos;%1&apos;</source>
-        <translation>Inserindo o carimbo &apos;%1&apos;</translation>
+        <translation>Inserindo bloco &apos;%1&apos;</translation>
     </message>
     <message>
         <source>&amp;About %1</source>
-        <translation type="obsolete">&amp;Sobre %1</translation>
+        <translation>&amp;Sobre %1</translation>
     </message>
     <message>
         <source>About...</source>
@@ -174,7 +174,7 @@
     </message>
     <message>
         <source>&amp;Scripts</source>
-        <translation>&amp;Roteiro</translation>
+        <translation>&amp;Scripts</translation>
     </message>
     <message>
         <source>Block List</source>
@@ -186,7 +186,7 @@
     </message>
     <message>
         <source>Visit the RibbonSoft website</source>
-        <translation type="obsolete">Visite o websítio da Ribbonsoft</translation>
+        <translation>Visite a página da Ribbonsoft</translation>
     </message>
     <message>
         <source>&amp;Manual</source>
@@ -194,19 +194,19 @@
     </message>
     <message>
         <source>&amp;Modify</source>
-        <translation>&amp;Modifique</translation>
+        <translation>&amp;Modificar</translation>
     </message>
     <message>
         <source>&amp;Select</source>
-        <translation>&amp;Selecione</translation>
+        <translation>&amp;Selecionar</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="obsolete">&amp;Chaveta</translation>
+        <translation>&amp;Linha suave</translation>
     </message>
     <message>
         <source>Order QCAD Professional from the RibbonSoft web site</source>
-        <translation type="obsolete">Adquira o Qcad Profissional através do sítio web da Ribbonsoft</translation>
+        <translation>Adquira o Qcad Profissional através da página da Ribbonsoft</translation>
     </message>
     <message>
         <source>&amp;Ellipse</source>
@@ -218,47 +218,47 @@
     </message>
     <message>
         <source>Visit &amp;Website</source>
-        <translation type="obsolete">Visite &amp;Websítio</translation>
+        <translation>Visitar &amp;Página</translation>
     </message>
     <message>
         <source>&lt;b&gt;Date:&lt;/b&gt; %1</source>
-        <translation type="obsolete">&lt;b&gt;Data:&lt;/b&gt; %1</translation>
+        <translation>&lt;b&gt;Data:&lt;/b&gt; %1</translation>
     </message>
     <message>
         <source>Launch the online manual</source>
-        <translation type="obsolete">Lançar o manual on-line</translation>
+        <translation>Abrir o manual online</translation>
     </message>
     <message>
         <source>About the application</source>
-        <translation type="obsolete">Sobre o aplicativo</translation>
+        <translation>Sobre o aplicativo</translation>
     </message>
     <message>
         <source>&lt;b&gt;Modules:&lt;/b&gt; &lt;i&gt;%1&lt;/i&gt;&lt;br&gt;</source>
-        <translation type="obsolete">&lt;b&gt;Módulos:&lt;/b&gt; &lt;j&gt;%1&lt;/i&gt;&lt;br&gt;</translation>
+        <translation>&lt;b&gt;Módulos:&lt;/b&gt; &lt;j&gt;%1&lt;/i&gt;&lt;br&gt;</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Sobre</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserir Imagem</translation>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation type="unfinished">&amp;Janela</translation>
+        <translation>&amp;Janela</translation>
     </message>
     <message>
         <source>De&amp;bugging</source>
-        <translation type="unfinished"></translation>
+        <translation>De&amp;bugando</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation type="unfinished"></translation>
+        <translation>Linha de Comando</translation>
     </message>
     <message>
         <source>&amp;Cascade</source>
-        <translation type="unfinished">&amp;Cascata</translation>
+        <translation>&amp;Cascata</translation>
     </message>
     <message>
         <source>&amp;Tile</source>
@@ -270,29 +270,31 @@
     </message>
     <message>
         <source>Creating new file...</source>
-        <translation type="unfinished">Criando o novo arquivo...</translation>
+        <translation>Criando novo arquivo...</translation>
     </message>
     <message>
         <source>Block &apos;%1&apos;</source>
-        <translation type="unfinished">Carimbo &apos;%1&apos;</translation>
+        <translation>Bloco &apos;%1&apos;</translation>
     </message>
     <message>
         <source>unnamed document %1</source>
-        <translation type="unfinished">documento sem nome %1</translation>
+        <translation>documento sem nome %1</translation>
     </message>
     <message>
         <source>New Drawing created.</source>
-        <translation type="unfinished">Novo Desenho criado.</translation>
+        <translation>Novo Desenho criado.</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="unfinished">Abrindo o arquivo recente...</translation>
+        <translation>Abrindo arquivo recente...</translation>
     </message>
     <message>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Não foi possível abrir o arquivo
+%1
+Favor checar as permissões.</translation>
     </message>
     <message>
         <source>Loaded document: </source>
