@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="lv">
 <context>
@@ -221,7 +220,7 @@
         <translation>Komandrinda</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
+        <source>Block '%1'</source>
         <translation>Bloks “%1”</translation>
     </message>
     <message>
@@ -257,11 +256,11 @@ Pārbaudiet tiesības.</translation>
         <translation>&amp;Logs</translation>
     </message>
     <message>
-        <source>Running script &apos;%1&apos;</source>
+        <source>Running script '%1'</source>
         <translation>Darbina skriptu “%1”</translation>
     </message>
     <message>
-        <source>Inserting block &apos;%1&apos;</source>
+        <source>Inserting block '%1'</source>
         <translation>Ievieto bloku “%1”</translation>
     </message>
     <message>
@@ -295,7 +294,7 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
         <translation>Palīdzība</translation>
     </message>
     <message>
-        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
+        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
         <translation>Neraža! Datņu sistēmā nevarēju atrast palīdzības datnes.</translation>
     </message>
     <message>
@@ -364,7 +363,7 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
     </message>
     <message>
         <source>Draw &amp;Order</source>
-        <translation>Zīmēšanas &amp;secība</translation>
+        <translation>Zīmējuma &amp;secība</translation>
     </message>
     <message>
         <source>New document from template: </source>
@@ -522,15 +521,15 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
     <name>QG_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation>Tangenciālā loka opcijas</translation>
+        <translation>Pieskares loka opcijas</translation>
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation>Tangenciālā loka rādiuss</translation>
+        <translation>Pieskares loka rādiuss</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>Tangenciāla loka kopējais pretnostatītais leņķis</translation>
+        <translation>Pieskares loka kopējais pretnostatītais leņķis</translation>
     </message>
     <message>
         <source>Radius</source>
@@ -579,7 +578,7 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
         <translation>Pārsauc bloku</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
+        <source>Could not name block. A block named "%1" already exists.</source>
         <translation>Nevarēja nosaukt bloku. Bloks ar nosaukumu “%1” jau eksistē.</translation>
     </message>
 </context>
@@ -695,7 +694,7 @@ atsevišķā logā</translation>
     </message>
     <message>
         <source>Arc tangential to base entity with radius</source>
-        <translation>Loka tangenciāls, uz ko balstīt objektu ar rādiusu</translation>
+        <translation>Loka pieskare, uz ko balstīt objektu ar rādiusu</translation>
     </message>
 </context>
 <context>
@@ -729,64 +728,64 @@ atsevišķā logā</translation>
         <translation>Koncentriski</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Circle inscribed in a triangle, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Circle inscribed in a triangle, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Zīmēt riņķi, kas ir ievilkts trīsstūrī, &lt;span style=&quot; font-style:italic;&quot;&gt;piemēram&lt;/span&gt;, tangenciāls 3 līnijām&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Zīmēt riņķi, kas ir ievilkts trīsstūrī, &lt;span style=" font-style:italic;"&gt;piemēram&lt;/span&gt;, pieskare 3 līnijām&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Zīmēt tangenciālu riņķi diviem riņķiem, kad ir dots rādiuss&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Zīmēt pieskares riņķi diviem riņķiem, kad ir dots rādiuss&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Zīmēt tangenciālu riņķi riņķim, cauri diviem punktiem&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Zīmēt pieskares riņķi riņķim, cauri diviem punktiem&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Zīmēt tangenciālu riņķi diviem riņķiem, cauri dotam punktam&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Zīmēt pieskares riņķi diviem riņķiem, cauri dotam punktam&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Zīmēt tangenciālu riņķi no trīslīnijām/lokiem/riņķiem&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Zīmēt pieskares riņķi no trīslīnijām/lokiem/riņķiem&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -863,16 +862,16 @@ p, li { white-space: pre-wrap; }
         <translation>Zīmēt elipsi ar asīm x/y virzienos, norādot četrus punktus uz elipses</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Zīmēt elipsi ievilktu četrstūrī, &lt;span style=&quot; font-style:italic;&quot;&gt;piemēram&lt;/span&gt;, tangenciālu četrām līnijām&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Zīmēt elipsi ievilktu četrstūrī, &lt;span style=" font-style:italic;"&gt;piemēram&lt;/span&gt;, pieskari četrām līnijām&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Concentric</source>
@@ -942,11 +941,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Tangents from circle to circle</source>
-        <translation>Tangensi no riņķa uz riņķi</translation>
+        <translation>Pieskares no riņķa uz riņķi</translation>
     </message>
     <message>
         <source>Tangents from point to circle</source>
-        <translation>Tangensi no punkta uz riņķi</translation>
+        <translation>Pieskares no punkta uz riņķi</translation>
     </message>
     <message>
         <source>Line with two points</source>
@@ -990,7 +989,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Tangents to a circle, orthogonal to a line</source>
-        <translation>Tangensi uz riņķi, ortogonāli līnijai</translation>
+        <translation>Pieskares uz riņķi, perpendikulāri līnijai</translation>
     </message>
 </context>
 <context>
@@ -1004,23 +1003,23 @@ p, li { white-space: pre-wrap; }
         <translation>Izveidot bloku</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Lines&quot;</source>
+        <source>Show toolbar "Lines"</source>
         <translation>Rādīt rīkjoslu “Līnijas”</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Arcs&quot;</source>
+        <source>Show toolbar "Arcs"</source>
         <translation>Rādīt rīkjoslu “Loki”</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Circles&quot;</source>
+        <source>Show toolbar "Circles"</source>
         <translation>Rādīt rīkjoslu “Riņķi”</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Ellipses&quot;</source>
+        <source>Show toolbar "Ellipses"</source>
         <translation>Rādīt rīkjoslu “Elipses”</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Polylines&quot;</source>
+        <source>Show toolbar "Polylines"</source>
         <translation>Rādīt rīkjoslu “Lauztas līnijas”</translation>
     </message>
     <message>
@@ -1032,7 +1031,7 @@ p, li { white-space: pre-wrap; }
         <translation>Zīmēt punktus</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Dimensions&quot;</source>
+        <source>Show toolbar "Dimensions"</source>
         <translation>Rādīt rīkjoslu “Dimensijas”</translation>
     </message>
     <message>
@@ -1044,15 +1043,15 @@ p, li { white-space: pre-wrap; }
         <translation>Ievietot attēlu</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Modify&quot;</source>
+        <source>Show toolbar "Modify"</source>
         <translation>Rādīt rīkjoslu “Modificēt”</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Info&quot;</source>
-        <translation>Rādīt rīkjoslu “Info”</translation>
+        <source>Show toolbar "Info"</source>
+        <translation>Rādīt rīkjoslu “Informācija”</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Select&quot;</source>
+        <source>Show toolbar "Select"</source>
         <translation>Rādīt rīkjoslu “Izvēle”</translation>
     </message>
     <message>
@@ -1298,11 +1297,11 @@ p, li { white-space: pre-wrap; }
     <name>QG_CircleTan2Options</name>
     <message>
         <source>Circle Tangential2 Options</source>
-        <translation>Riņķa Tangenciālā2 opcijas</translation>
+        <translation>Riņķa Pieskares2 opcijas</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rādiuss zīmējamajam tangenciālam riņķim &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rādiuss zīmējamajam  pieskares riņķim &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -1310,7 +1309,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Radius of tangential circle</source>
-        <translation>Tangenciālā riņķa rādiuss</translation>
+        <translation>Pieskares riņķa rādiuss</translation>
     </message>
 </context>
 <context>
@@ -1361,7 +1360,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Others..</source>
-        <translation>Citi..</translation>
+        <translation>Citas krāsas..</translation>
     </message>
     <message>
         <source>Unchanged</source>
@@ -1773,12 +1772,12 @@ p, li { white-space: pre-wrap; }
         <translation>Laipni lūdzam</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Laipni lūdzam QCad&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Laipni lūdzam QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Lūdzu, izvēlieties mērvienības, kuras izmantot jauniem zīmējumiem, kā arī vēlamo valodu.&lt;br&gt;
@@ -2686,7 +2685,7 @@ Lūdzu, izvēlieties mērvienības, kuras izmantot jauniem zīmējumiem, kā ar�
         <translation>Gradiāni</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Mērnieka mērvienības</translation>
     </message>
     <message>
@@ -2694,7 +2693,7 @@ Lūdzu, izvēlieties mērvienības, kuras izmantot jauniem zīmējumiem, kā ar�
         <translation>Opcijas</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
         <translation>Garuma formātiem “Inženierijas” un “Arhitektūras” mērvienībām ir jābūt collās.</translation>
     </message>
     <message>
@@ -2859,11 +2858,11 @@ Lūdzu, izvēlieties mērvienības, kuras izmantot jauniem zīmējumiem, kā ar�
     </message>
     <message>
         <source>Use orthogonal grid</source>
-        <translation>Lietot ortogonālu režģi</translation>
+        <translation>Lietot perpendikulāru režģi</translation>
     </message>
     <message>
         <source>Orthogonal Grid</source>
-        <translation>Ortogonāls režģis</translation>
+        <translation>Perpendikulārs režģis</translation>
     </message>
     <message>
         <source>Use isometric grid</source>
@@ -2878,7 +2877,7 @@ Lūdzu, izvēlieties mērvienības, kuras izmantot jauniem zīmējumiem, kā ar�
         <translation>Atzīmju izmērs:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimensijas atzīmju izmērs. Iestatot uz 0, dimensiju atzīmes tiks deaktivētas. Dimensiju bultas netiek zīmētas, kad atzīme ir aktivēta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -3428,11 +3427,11 @@ Lūdzu, izvēlieties mērvienības, kuras izmantot jauniem zīmējumiem, kā ar�
     </message>
     <message>
         <source>Degree:</source>
-        <translation>Grāds:</translation>
+        <translation>Pakāpe:</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation>Aizvērts</translation>
+        <translation>Noslēgt</translation>
     </message>
     <message>
         <source>1</source>
@@ -4590,7 +4589,7 @@ Palīgslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Aizvērt</translation>
+        <translation>Noslēgt</translation>
     </message>
     <message>
         <source>Undo</source>
@@ -4901,7 +4900,7 @@ Palīgslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Aizvērt</translation>
+        <translation>Noslēgt</translation>
     </message>
     <message>
         <source>Undo</source>
@@ -4913,7 +4912,7 @@ Palīgslāņa saturam nevajadzētu parādīties izdrukā.</translation>
     </message>
     <message>
         <source>Tangential</source>
-        <translation>Tangenciāls</translation>
+        <translation>Pieskare</translation>
     </message>
     <message>
         <source>Tan Radius</source>
@@ -5005,28 +5004,28 @@ Palīgslāņa saturam nevajadzētu parādīties izdrukā.</translation>
         <translation>Kopējais garums</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Izvēlēto objektu skaits&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Izvēlēto objektu skaits&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Izvēlēto objektu kopējais garums&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Izvēlēto objektu kopējais garums&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -5139,7 +5138,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Snap Intersection</source>
-        <translation>Pievilkt krustpunktus</translation>
+        <translation>Pievilkt krustpunktos</translation>
     </message>
     <message>
         <source>Restrict Horizontal</source>
@@ -5151,7 +5150,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Restrict Orthogonal</source>
-        <translation>Ierobežot ortogonāli</translation>
+        <translation>Ierobežot perpendikulāri</translation>
     </message>
     <message>
         <source>Restrict Nothing</source>
@@ -5174,7 +5173,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Degree:</source>
-        <translation>Grāds:</translation>
+        <translation>Pakāpe:</translation>
     </message>
     <message>
         <source>1</source>
@@ -5380,11 +5379,11 @@ p, li { white-space: pre-wrap; }
         <translation>Izņemt slāni</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
+        <source>Layer "%1" and all entities on it will be removed.</source>
         <translation>Slānis “%1” un visi uz tā esošie objekti tiks izņemti.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
+        <source>Layer "%1" can never be removed.</source>
         <translation>Nevar izņemt slāni “%1”.</translation>
     </message>
     <message>
@@ -5396,7 +5395,7 @@ p, li { white-space: pre-wrap; }
         <translation>Izņemt bloku</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
+        <source>Block "%1" and all its entities will be removed.</source>
         <translation>Bloks “%1” un visi tajā esošie objekti tiks izņemti.</translation>
     </message>
     <message>
@@ -5404,7 +5403,7 @@ p, li { white-space: pre-wrap; }
         <translation>Slāņa īpašības</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
         <translation>Slānis ar nosaukumu “%1” jau eksistē. Norādiet citu nosaukumu.</translation>
     </message>
 </context>
@@ -5673,7 +5672,7 @@ Vai vēlaties to aizvietot?</translation>
         <translation>nezināma kļūda, atverot dwg datni</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>nevar atvērt šo dwg datni</translation>
     </message>
     <message>
@@ -6134,7 +6133,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>Arc &amp;Tangential</source>
-        <translation>Loka &amp;tangenciāls</translation>
+        <translation>Loka &amp;pieskare</translation>
     </message>
 </context>
 <context>
@@ -6280,7 +6279,7 @@ Vai vēlaties to aizvietot?</translation>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
         <source>Circle Tangential 2 P&amp;oints</source>
-        <translation>Riņķa tangenciālie 2 p&amp;unkti</translation>
+        <translation>Riņķa pieskares 2 p&amp;unkti</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6288,7 +6287,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>Specify the first point on the tangent circle</source>
-        <translation>Norādiet pirmo punktu tangensa riņķim</translation>
+        <translation>Norādiet pirmo punktu pieskares riņķim</translation>
     </message>
     <message>
         <source>Back</source>
@@ -6296,11 +6295,11 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
-        <translation>Norādiet otro punktu tangensa riņķim</translation>
+        <translation>Norādiet otro punktu pieskares riņķim</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation>Izvelieties tangensa riņķa centru</translation>
+        <translation>Izvelieties pieskares riņķa centru</translation>
     </message>
     <message>
         <source>Specify a line/arc/circle</source>
@@ -6311,7 +6310,7 @@ Vai vēlaties to aizvietot?</translation>
     <name>RS_ActionDrawCircleTan2</name>
     <message>
         <source>Circle Tangential &amp;2</source>
-        <translation>Riņķa tangenciālie &amp;2</translation>
+        <translation>Riņķa pieskares &amp;2</translation>
     </message>
     <message>
         <source>Specify the first line/arc/circle</source>
@@ -6331,14 +6330,14 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation>Izvelieties tangensa riņķa centru</translation>
+        <translation>Izvelieties pieskares riņķa centru</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2_1P</name>
     <message>
         <source>Common Tangential Circle 1 Point</source>
-        <translation>Kopīgais tangenciālais riņķa 1 punkts</translation>
+        <translation>Kopīgais pieskares riņķa 1 punkts</translation>
     </message>
     <message>
         <source>Specify a line/arc/circle</source>
@@ -6358,18 +6357,18 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
-        <translation>Norādiet punktu uz tangensa riņķi</translation>
+        <translation>Norādiet punktu uz pieskares riņķa</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation>Izvelieties tangensa riņķa centru</translation>
+        <translation>Izvelieties pieskares riņķa centru</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
     <message>
         <source>Circle Tangential &amp;3</source>
-        <translation>Riņķa tangenciālie &amp;3</translation>
+        <translation>Riņķa pieskares &amp;3</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6381,7 +6380,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation>Izvelieties tangensa riņķa centru</translation>
+        <translation>Izvelieties pieskares riņķa centru</translation>
     </message>
     <message>
         <source>Specify the first line/arc/circle</source>
@@ -6505,7 +6504,7 @@ Vai vēlaties to aizvietot?</translation>
     <name>RS_ActionDrawEllipseFociPoint</name>
     <message>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>Elipses &amp;fokusa punkts</translation>
+        <translation>Elipses &amp;fokusa punkti</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -6784,7 +6783,7 @@ Vai vēlaties to aizvietot?</translation>
     <name>RS_ActionDrawLineOrthTan</name>
     <message>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>&amp;Ortogonāls tangenss</translation>
+        <translation>&amp;Perpendikulārs tangenss</translation>
     </message>
     <message>
         <source>Select a line</source>
@@ -6900,7 +6899,7 @@ Vai vēlaties to aizvietot?</translation>
     <name>RS_ActionDrawLinePolygonCorCor</name>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>Daudzstūris (ce&amp;n, stūr)</translation>
+        <translation>Daudzstūris (stū&amp;r, stūr)</translation>
     </message>
     <message>
         <source>Specify first corner</source>
@@ -6982,14 +6981,14 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>Orthogonal</source>
-        <translation>Ortogonāls</translation>
+        <translation>Perpendikulārs</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <source>Tangent (P,C)</source>
-        <translation>Tangenss (p,c)</translation>
+        <translation>Pieskare (p,c)</translation>
     </message>
     <message>
         <source>Specify point</source>
@@ -7012,7 +7011,7 @@ Vai vēlaties to aizvietot?</translation>
     <name>RS_ActionDrawLineTangent2</name>
     <message>
         <source>Tangent (C,C)</source>
-        <translation>Tangenss (c,c)</translation>
+        <translation>Pieskare (c,c)</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7496,7 +7495,7 @@ Vai vēlaties to aizvietot?</translation>
         <translation>Ievadiet koeficientu:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
+        <source>Cannot open file '%1'</source>
         <translation>Nevar atvērt datni “%1”</translation>
     </message>
 </context>
@@ -8021,7 +8020,7 @@ Vai vēlaties to aizvietot?</translation>
         <translation>&amp;Pievienot mezglu</translation>
     </message>
     <message>
-        <source>Add polyline&apos;s node</source>
+        <source>Add polyline's node</source>
         <translation>Pievienot lauztas līnijas mezglu</translation>
     </message>
     <message>
@@ -8049,7 +8048,7 @@ Vai vēlaties to aizvietot?</translation>
         <translation>Atcelt</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Norādiet pievienojamā mezgla punktu</translation>
     </message>
     <message>
@@ -8064,7 +8063,7 @@ Vai vēlaties to aizvietot?</translation>
         <translation>&amp;Pielikt mezglu</translation>
     </message>
     <message>
-        <source>Append polyline&apos;s node</source>
+        <source>Append polyline's node</source>
         <translation>Pielikt lauztas līnijas mezglu</translation>
     </message>
     <message>
@@ -8115,7 +8114,7 @@ Vai vēlaties to aizvietot?</translation>
         <translation>&amp;Dzēst mezglu</translation>
     </message>
     <message>
-        <source>Delete polyline&apos;s node</source>
+        <source>Delete polyline's node</source>
         <translation>Dzēst lauztas līnijas mezglu</translation>
     </message>
     <message>
@@ -8135,7 +8134,7 @@ Vai vēlaties to aizvietot?</translation>
         <translation>Atcelt</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Norādiet dzēšamā mezgla punktu</translation>
     </message>
     <message>
@@ -8271,7 +8270,7 @@ Vai vēlaties to aizvietot?</translation>
         <translation>Īsinā&amp;t segmentus</translation>
     </message>
     <message>
-        <source>Trim polyline&apos;s segments</source>
+        <source>Trim polyline's segments</source>
         <translation>Īsināt lauztas līnijas segmentus</translation>
     </message>
     <message>
