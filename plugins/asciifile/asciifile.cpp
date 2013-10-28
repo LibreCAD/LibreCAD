@@ -208,7 +208,7 @@ textBox::textBox(const QString & title, const QString & label, QWidget * parent)
 #if QT_VERSION >= 0x040400
     QFormLayout *flo = new QFormLayout;
     flo->addRow( tr("Style:"), combostyle);
-    flo->addRow( tr("Heigth:"), heightedit);
+    flo->addRow( tr("Height:"), heightedit);
     flo->addRow( tr("Separation"), sepedit);
 #endif
 //    posimage.fill(Qt::black);

@@ -246,15 +246,15 @@ void dibSHP::updateFile()
         pointbox->setDisabled(true);
         break;
     case SHPT_POLYGON:
-        formattype->setText(tr("Poligon"));
+        formattype->setText(tr("Polygon"));
         pointbox->setDisabled(true);
         break;
     case SHPT_POLYGONM:
-        formattype->setText(tr("Poligon+Measure"));
+        formattype->setText(tr("Polygon+Measure"));
         pointbox->setDisabled(true);
         break;
     case SHPT_POLYGONZ:
-        formattype->setText(tr("3D Poligon"));
+        formattype->setText(tr("3D Polygon"));
         pointbox->setDisabled(true);
         break;
     case SHPT_MULTIPATCH:

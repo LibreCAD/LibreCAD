@@ -403,7 +403,7 @@
             </property>
             <item>
              <property name="text">
-              <string>#A54747</string>
+              <string notr="true">#A54747</string>
              </property>
             </item>
            </widget>
@@ -415,7 +415,7 @@
             </property>
             <item>
              <property name="text">
-              <string>#00FFFF</string>
+              <string notr="true">#00FFFF</string>
              </property>
             </item>
             <item>
@@ -465,7 +465,7 @@
             </property>
             <item>
              <property name="text">
-              <string>#C0C0C0</string>
+              <string notr="true">#C0C0C0</string>
              </property>
             </item>
             <item>
@@ -492,7 +492,7 @@
             </property>
             <item>
              <property name="text">
-              <string>#000000</string>
+              <string notr="true">#000000</string>
              </property>
             </item>
             <item>
@@ -558,7 +558,7 @@
             </property>
             <item>
              <property name="text">
-              <string>#739373</string>
+              <string notr="true">#739373</string>
              </property>
             </item>
            </widget>
@@ -583,7 +583,7 @@
             </property>
             <item>
              <property name="text">
-              <string>#404040</string>
+              <string notr="true">#404040</string>
              </property>
             </item>
             <item>
@@ -615,7 +615,7 @@
             </property>
             <item>
              <property name="text">
-              <string>#0000FF</string>
+              <string notr="true">#0000FF</string>
              </property>
             </item>
            </widget>
@@ -627,7 +627,7 @@
             </property>
             <item>
              <property name="text">
-              <string>#0000FF</string>
+              <string notr="true">#0000FF</string>
              </property>
             </item>
             <item>
