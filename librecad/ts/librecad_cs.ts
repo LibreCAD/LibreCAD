@@ -4822,10 +4822,6 @@ Toto nastavení můžete později změnit v menu Nastavení QCADu.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignement.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dimension Aligned</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4891,6 +4887,10 @@ Toto nastavení můžete později změnit v menu Nastavení QCADu.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5038,7 +5038,7 @@ Toto nastavení můžete později změnit v menu Nastavení QCADu.</translation>
     </message>
     <message>
         <source>#404040</source>
-        <translation>#404040</translation>
+        <translation type="obsolete">#404040</translation>
     </message>
     <message>
         <source>Fontsize</source>
@@ -5110,7 +5110,7 @@ Toto nastavení můžete později změnit v menu Nastavení QCADu.</translation>
     </message>
     <message>
         <source>#739373</source>
-        <translation>#739373</translation>
+        <translation type="obsolete">#739373</translation>
     </message>
     <message>
         <source>&amp;Highlighted Color:</source>
@@ -5166,10 +5166,6 @@ Toto nastavení můžete později změnit v menu Nastavení QCADu.</translation>
     </message>
     <message>
         <source>#C0C0C0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>#A54747</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6428,67 +6424,67 @@ Toto nastavení můžete později změnit v menu Nastavení QCADu.</translation>
     </message>
     <message>
         <source>1</source>
-        <translation>1</translation>
+        <translation type="obsolete">1</translation>
     </message>
     <message>
         <source>2</source>
-        <translation>2</translation>
+        <translation type="obsolete">2</translation>
     </message>
     <message>
         <source>3</source>
-        <translation>3</translation>
+        <translation type="obsolete">3</translation>
     </message>
     <message>
         <source>4</source>
-        <translation>4</translation>
+        <translation type="obsolete">4</translation>
     </message>
     <message>
         <source>5</source>
-        <translation>5</translation>
+        <translation type="obsolete">5</translation>
     </message>
     <message>
         <source>10</source>
-        <translation>10</translation>
+        <translation type="obsolete">10</translation>
     </message>
     <message>
         <source>15</source>
-        <translation>15</translation>
+        <translation type="obsolete">15</translation>
     </message>
     <message>
         <source>20</source>
-        <translation>20</translation>
+        <translation type="obsolete">20</translation>
     </message>
     <message>
         <source>25</source>
-        <translation>25</translation>
+        <translation type="obsolete">25</translation>
     </message>
     <message>
         <source>50</source>
-        <translation>50</translation>
+        <translation type="obsolete">50</translation>
     </message>
     <message>
         <source>75</source>
-        <translation>75</translation>
+        <translation type="obsolete">75</translation>
     </message>
     <message>
         <source>100</source>
-        <translation>100</translation>
+        <translation type="obsolete">100</translation>
     </message>
     <message>
         <source>150</source>
-        <translation>150</translation>
+        <translation type="obsolete">150</translation>
     </message>
     <message>
         <source>300</source>
-        <translation>300</translation>
+        <translation type="obsolete">300</translation>
     </message>
     <message>
         <source>600</source>
-        <translation>600</translation>
+        <translation type="obsolete">600</translation>
     </message>
     <message>
         <source>1200</source>
-        <translation>1200</translation>
+        <translation type="obsolete">1200</translation>
     </message>
     <message>
         <source>Colouring</source>
@@ -7188,7 +7184,7 @@ The contents of a Help Layer should not appear in printout.</source>
     </message>
     <message>
         <source>0</source>
-        <translation>0</translation>
+        <translation type="obsolete">0</translation>
     </message>
     <message>
         <source>Selected</source>

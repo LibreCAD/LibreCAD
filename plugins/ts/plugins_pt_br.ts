@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="pt_BR">
 <context>
@@ -517,7 +518,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>Não foi possível abrir o arquivo %1</translation>
     </message>
 </context>
@@ -653,18 +654,30 @@
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="249"/>
-        <source>Poligon</source>
-        <translation>Polígono</translation>
+        <source>Polygon</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="253"/>
-        <source>Poligon+Measure</source>
-        <translation>Polígono+Medida</translation>
+        <source>Polygon+Measure</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="257"/>
+        <source>3D Polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Poligon</source>
+        <translation type="obsolete">Polígono</translation>
+    </message>
+    <message>
+        <source>Poligon+Measure</source>
+        <translation type="obsolete">Polígono+Medida</translation>
+    </message>
+    <message>
         <source>3D Poligon</source>
-        <translation>Polígono 3D</translation>
+        <translation type="obsolete">Polígono 3D</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="261"/>
@@ -770,8 +783,12 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="211"/>
+        <source>Height:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Heigth:</source>
-        <translation>Altura:</translation>
+        <translation type="obsolete">Altura:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="212"/>

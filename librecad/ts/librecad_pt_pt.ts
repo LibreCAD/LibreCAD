@@ -3811,10 +3811,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignement.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dimension Aligned</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3880,6 +3876,10 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4070,15 +4070,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>#404040</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>S&amp;elected Color:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>#739373</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4223,10 +4215,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>#C0C0C0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>#A54747</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6164,67 +6152,67 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>1</source>
-        <translation type="unfinished">1</translation>
+        <translation type="obsolete">1</translation>
     </message>
     <message>
         <source>2</source>
-        <translation type="unfinished">2</translation>
+        <translation type="obsolete">2</translation>
     </message>
     <message>
         <source>3</source>
-        <translation type="unfinished">3</translation>
+        <translation type="obsolete">3</translation>
     </message>
     <message>
         <source>4</source>
-        <translation type="unfinished">4</translation>
+        <translation type="obsolete">4</translation>
     </message>
     <message>
         <source>5</source>
-        <translation type="unfinished">5</translation>
+        <translation type="obsolete">5</translation>
     </message>
     <message>
         <source>10</source>
-        <translation type="unfinished">10</translation>
+        <translation type="obsolete">10</translation>
     </message>
     <message>
         <source>15</source>
-        <translation type="unfinished">15</translation>
+        <translation type="obsolete">15</translation>
     </message>
     <message>
         <source>20</source>
-        <translation type="unfinished">20</translation>
+        <translation type="obsolete">20</translation>
     </message>
     <message>
         <source>25</source>
-        <translation type="unfinished">25</translation>
+        <translation type="obsolete">25</translation>
     </message>
     <message>
         <source>50</source>
-        <translation type="unfinished">50</translation>
+        <translation type="obsolete">50</translation>
     </message>
     <message>
         <source>75</source>
-        <translation type="unfinished">75</translation>
+        <translation type="obsolete">75</translation>
     </message>
     <message>
         <source>100</source>
-        <translation type="unfinished">100</translation>
+        <translation type="obsolete">100</translation>
     </message>
     <message>
         <source>150</source>
-        <translation type="unfinished">150</translation>
+        <translation type="obsolete">150</translation>
     </message>
     <message>
         <source>300</source>
-        <translation type="unfinished">300</translation>
+        <translation type="obsolete">300</translation>
     </message>
     <message>
         <source>600</source>
-        <translation type="unfinished">600</translation>
+        <translation type="obsolete">600</translation>
     </message>
     <message>
         <source>1200</source>
-        <translation type="unfinished">1200</translation>
+        <translation type="obsolete">1200</translation>
     </message>
     <message>
         <source>Background</source>
@@ -7240,7 +7228,7 @@ Você deseja manter suas modificações, ou as descartar?</translation>
     </message>
     <message>
         <source>0</source>
-        <translation type="unfinished">0</translation>
+        <translation type="obsolete">0</translation>
     </message>
     <message>
         <source>Selected</source>

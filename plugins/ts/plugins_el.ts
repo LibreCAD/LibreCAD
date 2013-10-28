@@ -661,18 +661,30 @@
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="249"/>
-        <source>Poligon</source>
-        <translation>Πολύγωνο</translation>
+        <source>Polygon</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="253"/>
-        <source>Poligon+Measure</source>
-        <translation>Πολύγωνο+Μέτρο</translation>
+        <source>Polygon+Measure</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="257"/>
+        <source>3D Polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Poligon</source>
+        <translation type="obsolete">Πολύγωνο</translation>
+    </message>
+    <message>
+        <source>Poligon+Measure</source>
+        <translation type="obsolete">Πολύγωνο+Μέτρο</translation>
+    </message>
+    <message>
         <source>3D Poligon</source>
-        <translation>Πολύγωνο 3Δ</translation>
+        <translation type="obsolete">Πολύγωνο 3Δ</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="261"/>
@@ -779,8 +791,12 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="211"/>
+        <source>Height:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Heigth:</source>
-        <translation>Ύψος:</translation>
+        <translation type="obsolete">Ύψος:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="212"/>

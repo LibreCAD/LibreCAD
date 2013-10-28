@@ -706,17 +706,17 @@
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="249"/>
-        <source>Poligon</source>
+        <source>Polygon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="253"/>
-        <source>Poligon+Measure</source>
+        <source>Polygon+Measure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="257"/>
-        <source>3D Poligon</source>
+        <source>3D Polygon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -823,8 +823,12 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="211"/>
+        <source>Height:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Heigth:</source>
-        <translation>Висота:</translation>
+        <translation type="obsolete">Висота:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="212"/>

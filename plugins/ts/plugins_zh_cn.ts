@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="zh_CN">
 <context>
@@ -517,7 +518,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>不能打开文件%1</translation>
     </message>
 </context>
@@ -653,18 +654,22 @@
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="249"/>
-        <source>Poligon</source>
-        <translation type="unfinished">多边形</translation>
+        <source>Polygon</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="253"/>
-        <source>Poligon+Measure</source>
-        <translation type="unfinished"/>
+        <source>Polygon+Measure</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="257"/>
-        <source>3D Poligon</source>
-        <translation type="unfinished"/>
+        <source>3D Polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Poligon</source>
+        <translation type="obsolete">多边形</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="261"/>
@@ -770,8 +775,12 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="211"/>
+        <source>Height:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Heigth:</source>
-        <translation>高度：</translation>
+        <translation type="obsolete">高度：</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="212"/>

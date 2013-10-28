@@ -2867,10 +2867,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignement.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Dimension Aligned</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2924,6 +2920,10 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3034,10 +3034,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>#404040</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Fontsize</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3098,10 +3094,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>#739373</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Highlighted Color:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3147,10 +3139,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>#C0C0C0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>#A54747</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4237,70 +4225,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>10</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>15</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>20</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>25</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>50</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>75</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>100</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>150</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>300</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>600</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1200</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Colouring</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4966,10 +4890,6 @@ The contents of a Help Layer should not appear in printout.</source>
     <name>QG_SelectionWidget</name>
     <message>
         <source>Selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -411,7 +411,7 @@
         <translation>Datne %1 neeksistē</translation>
     </message>
     <message>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>Nevar atvērt datni %1</translation>
     </message>
 </context>
@@ -515,15 +515,15 @@
     </message>
     <message>
         <source>Poligon</source>
-        <translation>Daudzstūris</translation>
+        <translation type="obsolete">Daudzstūris</translation>
     </message>
     <message>
         <source>Poligon+Measure</source>
-        <translation>Daudzstūris + mērs</translation>
+        <translation type="obsolete">Daudzstūris + mērs</translation>
     </message>
     <message>
         <source>3D Poligon</source>
-        <translation>3D daudzstūris</translation>
+        <translation type="obsolete">3D daudzstūris</translation>
     </message>
     <message>
         <source>Multipatch</source>
@@ -536,6 +536,18 @@
     <message>
         <source>The file %1 not exist</source>
         <translation>Datne %1 neeksistē</translation>
+    </message>
+    <message>
+        <source>Polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polygon+Measure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>3D Polygon</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -611,11 +623,15 @@
     </message>
     <message>
         <source>Heigth:</source>
-        <translation>Augstums:</translation>
+        <translation type="obsolete">Augstums:</translation>
     </message>
     <message>
         <source>Separation</source>
         <translation>Atdalīšana</translation>
+    </message>
+    <message>
+        <source>Height:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

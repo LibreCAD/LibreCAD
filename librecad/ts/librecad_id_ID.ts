@@ -3512,6 +3512,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1124"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="496"/>
         <source>Left crosshair with isometric grid</source>
         <translation type="unfinished"></translation>
@@ -3777,11 +3782,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1124"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignement.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1131"/>
         <source>Dimension Aligned</source>
         <translation type="unfinished"></translation>
@@ -3943,7 +3943,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="478"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="495"/>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="591"/>
         <source>#000000</source>
         <translation>#000000</translation>
@@ -3969,9 +3968,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="586"/>
         <source>#404040</source>
-        <translation>#404040</translation>
+        <translation type="obsolete">#404040</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="531"/>
@@ -3990,21 +3988,14 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="468"/>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="505"/>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="601"/>
         <source>#C0C0C0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="406"/>
-        <source>#A54747</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="561"/>
         <source>#739373</source>
-        <translation>#739737</translation>
+        <translation type="obsolete">#739737</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="544"/>
@@ -4152,15 +4143,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>20</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="418"/>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="640"/>
         <source>#00FFFF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="423"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="618"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="630"/>
         <source>#0000FF</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5645,7 +5633,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>480</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="171"/>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="174"/>
         <source>640</source>
         <translation>640</translation>
     </message>
@@ -5660,97 +5648,81 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>otomatis</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="48"/>
         <source>1</source>
-        <translation>1</translation>
+        <translation type="obsolete">1</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="53"/>
         <source>2</source>
-        <translation>2</translation>
+        <translation type="obsolete">2</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="58"/>
         <source>3</source>
-        <translation>3</translation>
+        <translation type="obsolete">3</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="63"/>
         <source>4</source>
-        <translation>4</translation>
+        <translation type="obsolete">4</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="68"/>
         <source>5</source>
-        <translation>5</translation>
+        <translation type="obsolete">5</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="73"/>
         <source>10</source>
-        <translation>10</translation>
+        <translation type="obsolete">10</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="78"/>
         <source>15</source>
-        <translation>15</translation>
+        <translation type="obsolete">15</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="83"/>
         <source>20</source>
-        <translation>20</translation>
+        <translation type="obsolete">20</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="88"/>
         <source>25</source>
-        <translation>25</translation>
+        <translation type="obsolete">25</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="93"/>
         <source>50</source>
-        <translation>50</translation>
+        <translation type="obsolete">50</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="98"/>
         <source>75</source>
-        <translation>75</translation>
+        <translation type="obsolete">75</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="103"/>
         <source>100</source>
-        <translation>100</translation>
+        <translation type="obsolete">100</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="108"/>
         <source>150</source>
-        <translation>150</translation>
+        <translation type="obsolete">150</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="113"/>
         <source>300</source>
-        <translation>300</translation>
+        <translation type="obsolete">300</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="118"/>
         <source>600</source>
-        <translation>600</translation>
+        <translation type="obsolete">600</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="123"/>
         <source>1200</source>
-        <translation>1200</translation>
+        <translation type="obsolete">1200</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="197"/>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="203"/>
         <source>Background</source>
         <translation>Latar</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="203"/>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="209"/>
         <source>White</source>
         <translation>Putih</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="213"/>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="219"/>
         <source>Black</source>
         <translation>Hitam</translation>
     </message>
@@ -5767,37 +5739,37 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">Batal</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="252"/>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="258"/>
         <source>Colouring</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="258"/>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="264"/>
         <source>Black / White</source>
         <translation type="unfinished">Hitam / Putih</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="268"/>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="274"/>
         <source>Coloured</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="304"/>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="310"/>
         <source>Borders</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="320"/>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="326"/>
         <source>Top / Bottom - Border:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="327"/>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="333"/>
         <source>Left / Right - Border:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="347"/>
+        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="353"/>
         <source>set same size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6625,10 +6597,8 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="146"/>
-        <location filename="../src/ui/forms/qg_selectionwidget.ui" line="184"/>
         <source>0</source>
-        <translation>0</translation>
+        <translation type="obsolete">0</translation>
     </message>
 </context>
 <context>

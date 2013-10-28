@@ -746,18 +746,30 @@
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="249"/>
-        <source>Poligon</source>
-        <translation>Polygon</translation>
+        <source>Polygon</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="253"/>
-        <source>Poligon+Measure</source>
-        <translation>Polygon und Maße</translation>
+        <source>Polygon+Measure</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="257"/>
+        <source>3D Polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Poligon</source>
+        <translation type="obsolete">Polygon</translation>
+    </message>
+    <message>
+        <source>Poligon+Measure</source>
+        <translation type="obsolete">Polygon und Maße</translation>
+    </message>
+    <message>
         <source>3D Poligon</source>
-        <translation>3D Polygon</translation>
+        <translation type="obsolete">3D Polygon</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="261"/>
@@ -863,8 +875,12 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="211"/>
+        <source>Height:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Heigth:</source>
-        <translation>Höhe:</translation>
+        <translation type="obsolete">Höhe:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="212"/>
