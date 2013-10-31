@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="lv">
 <context>
@@ -410,7 +411,7 @@
         <translation>Datne %1 neeksistē</translation>
     </message>
     <message>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>Nevar atvērt datni %1</translation>
     </message>
 </context>
