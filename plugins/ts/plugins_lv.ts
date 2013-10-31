@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="lv">
 <context>
@@ -411,7 +410,7 @@
         <translation>Datne %1 neeksistē</translation>
     </message>
     <message>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>Nevar atvērt datni %1</translation>
     </message>
 </context>
@@ -539,15 +538,15 @@
     </message>
     <message>
         <source>Polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Daudzstūris</translation>
     </message>
     <message>
         <source>Polygon+Measure</source>
-        <translation type="unfinished"></translation>
+        <translation>Daudzstūris + mērs</translation>
     </message>
     <message>
         <source>3D Polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>3D daudzstūris</translation>
     </message>
 </context>
 <context>
@@ -631,7 +630,7 @@
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Augstums:</translation>
     </message>
 </context>
 </TS>
