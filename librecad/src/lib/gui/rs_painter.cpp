@@ -71,6 +71,7 @@ void RS_Painter::createArc(QPolygon& pa,
     if(pa.size()>0 && pa.last() != pt2) pa<<pt2;
 }
 
+
 void RS_Painter::createEllipse(QPolygon& pa,
         const RS_Vector& cp,
                          double radius1, double radius2,
@@ -81,18 +82,15 @@ void RS_Painter::createEllipse(QPolygon& pa,
 
     const RS_Vector vr(radius1,radius2);
     const RS_Vector rvp(radius2,radius1);
+    const double ab=radius1*radius2;
     double ea1=angle1;
     double ea2=angle2;
     if(reversed) std::swap(ea1,ea2);
-    if(ea2<ea1+RS_TOLERANCE_ANGLE) {
-        ea2 += 2.*M_PI; //potential bug
+    if(RS_Math::getAngleDifference(ea1, ea2) <= RS_TOLERANCE_ANGLE) {
+        ea2 =ea1 + 2.*M_PI; //potential bug
     }
+    if(ea2 - ea1 > 2.*M_PI + RS_TOLERANCE_ANGLE) ea2 = ea1 + M_PI + remainder(ea2-ea1-M_PI, 2.*M_PI);
     const RS_Vector angleVector(-angle);
-    // minimum angular step is limited to one pixel
-    double rmax=(radius1>radius2)?radius1:radius2;
-    double aStep(1./rmax/(radius1*radius2));
-    //avoid division by zero;
-    if(radius1<1. || radius2<1.) aStep=0.2;
     /*
       draw a new line after tangent changes by 0.01 rad
       ds^2 = (a^2 sin^2 + b^2 cos^2) da^2
@@ -109,23 +107,24 @@ void RS_Painter::createEllipse(QPolygon& pa,
                toScreenY(vp.y));
 //    moveTo(toScreenX(vp.x),
 //           toScreenY(vp.y));
-        ea1 += aStep*RS_Vector(-ea1).scale(rvp).squared();
+    const double minDea=(ea2-ea1)/2048.;
     // Arc Counterclockwise:
-    while(ea1<ea2){
+    do {
 
         RS_Vector va(-ea1);
         vp=va;
+        double r2=va.scale(rvp).squared();
+        if( r2<RS_TOLERANCE15) r2=RS_TOLERANCE15;
+        double aStep=ab/(r2*sqrt(r2));
+        if(aStep < minDea) aStep=minDea;
+        if(aStep > M_PI/4.) aStep=M_PI/4.;
+        ea1 += aStep;
         vp.scale(vr);
         vp.rotate(angleVector);
         vp.move(cp);
-
-        //            vp.set(cp.x+cos(a)*radius1,
-        //                   cp.y-sin(a)*radius2);
-        //            vp.rotate(vc, -angle);
         pa<<QPoint(toScreenX(vp.x),
                toScreenY(vp.y));
-        ea1 += aStep*va.scale(rvp).squared();
-    }
+    } while(ea1<ea2);
 
     vp.set(cos(ea2)*radius1,
            -sin(ea2)*radius2);
@@ -134,6 +133,7 @@ void RS_Painter::createEllipse(QPolygon& pa,
     pa<<QPoint(toScreenX(vp.x),
            toScreenY(vp.y));
 }
+
 
 
 void RS_Painter::drawRect(const RS_Vector& p1, const RS_Vector& p2) {
