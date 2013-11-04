@@ -1404,7 +1404,8 @@ bool RS_Ellipse::isVisibleInWindow(RS_GraphicView* view) const
     RS_Vector vpMin(view->toGraph(0,view->getHeight()));
     RS_Vector vpMax(view->toGraph(view->getWidth(),0));
     //viewport
-    QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
+    QRectF visualRect(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y);
+    QPolygonF visualBox(visualRect);
     QVector<RS_Vector> vps;
     for(unsigned short i=0;i<4;i++){
         const QPointF& vp(visualBox.at(i));
@@ -1417,7 +1418,8 @@ bool RS_Ellipse::isVisibleInWindow(RS_GraphicView* view) const
         if( RS_Information::getIntersection(&e0, &line, true).size()>0) return true;
     }
     //is startpoint within viewport
-    return getEllipsePoint(getAngle1()).isInWindowOrdered(vpMin,vpMax);
+    QRectF ellipseRect(minV.x, minV.y, maxV.x - minV.x, maxV.y - minV.y);
+    return ellipseRect.intersects(visualRect);
 }
 
 /** return the equation of the entity
@@ -1476,6 +1478,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
         RS_Line line(NULL,RS_LineData(vertex.at(i),vertex.at((i+1)%4)));
         auto&& vpIts=RS_Information::getIntersection(
                     static_cast<RS_Entity*>(this), &line, true);
+    std::cout<<"vpIts.size()="<<vpIts.size()<<std::endl;
         if( vpIts.size()==0) continue;
         foreach(RS_Vector vp, vpIts.getVector()){
             auto&& ap1=getTangentDirection(vp).angle();
@@ -1492,18 +1495,26 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
                 RS_Math::getAngleDifference(baseAngle,isReversed()?getAngle1():getAngle2())
                 );
 
+
     //sorting
     qSort(crossPoints.begin(),crossPoints.end());
     //draw visible
 //    DEBUG_HEADER();
-//    std::cout<<"crossPoints.size()="<<crossPoints.size()<<std::endl;
+    std::cout<<"crossPoints.size()="<<crossPoints.size()<<std::endl;
     RS_Ellipse arc(*this);
     arc.setSelected(isSelected());
     arc.setPen(getPen());
     arc.setReversed(false);
-    for(int i=0;i<crossPoints.size()-1;i+=2){
-        arc.setAngle1(baseAngle+crossPoints[i]);
-        arc.setAngle2(baseAngle+crossPoints[i+1]);
+    if( crossPoints.size() >= 2) {
+        for(int i=0;i<crossPoints.size()-1;i+=2){
+            arc.setAngle1(baseAngle+crossPoints[i]);
+            arc.setAngle2(baseAngle+crossPoints[i+1]);
+            arc.drawVisible(painter,view,patternOffset);
+        }
+        return;
+    }
+    //a workaround for buggy equation solver, can be removed, when line-ellipse equation solver is reliable
+    if(isVisibleInWindow(view)){
         arc.drawVisible(painter,view,patternOffset);
     }
 }
