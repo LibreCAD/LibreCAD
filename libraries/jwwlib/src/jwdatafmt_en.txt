@@ -1,7 +1,6 @@
 
 
 
-
 Jw_cadのデータ形式
 The data format of Jw_cad 
 
@@ -182,42 +181,69 @@ dummy
 ar << (DWORD)dummy;
 
 ◆ 線描画の最大幅
+The maximum of line weight (etc. 35 = 0.35mm)
 「線幅を1/100mm単位とする」が設定されているときは「-101」
+"Let line width be a 1/100-mm unit." = -101
+
 ar<< (DWORD)m_nMaxDrawWid;
 
 ◆ プリンタ出力範囲の原点(X,Y)
+The starting point of a printer output range (X, Y)
+
 ar << (double)m_DPPrtGenten.x;
 ar << (double)m_DPPrtGenten.y;
 
 ◆ プリンタ出力倍率
+Printer output magnification ratio
+
 ar << (double)m_dPrtBairitsu;
 
 ◆ プリンタ90°回転出力、プリンタ出力基準点位置
+90-degree rotation printing 
+BA(Decimal number)
+A:90-degree rotation
+B:Reference point(0:Nonappointed)(Ver.3.00 or subsequent ones) 
+     7:top left      8:top center 9:top right
+     4:middle left   5:           6:
+     1:bottom left   2:           3:
 ●一位：プリンタ90°回転出力
 ●十位：プリンタ出力基準点位置の指定（0:無指定）（Ver.3.00以降）
  　  7:左上   8:中上  9:右上
   　 4:左中   5:中中  6:右中
    　1:左下   2:中下  3:右下
+
 ar << (DWORD)m_nPrtSet;
 
 ◆ 目盛設定モード
+Scale setting mode 
+BA(Decimal number)
+A:(0:Nonappointed 1:Scale display )
+B:(0:Size-of-drawings specification  1:Absolute size specification )
+Scale reading is impossible at the time of a minus value. 
 ● 一位(0：無指定、1：目盛表示)
 ● 十位(0：図面寸法指定、1：実寸指定)
 ● −値の時、目盛読取り不可
+
 ar << (DWORD)m_nMemoriMode;
 
 ◆ 目盛表示最小間隔ドット
 ar << (double)m_dMemoriHyoujiMin;
 
 ◆ 目盛表示間隔(X,Y)
+Scale display interval (X, Y)
+
 ar << (double)m_dMemoriX;
 ar << (double)m_dMemoriY;
 
 ◆ 目盛基準点(X,Y)
+Scale reference point (X, Y)
+
 ar << (double)m_DpMemoriKijunTen.x;
 ar << (double)m_DpMemoriKijunTen.y;
 
 ◆ レイヤ名
+Layer name 
+
 for(n=0; n<=15; n++){
     for(k=0; k<=15; k++){
         ar << (CString)m_aStrLayName[n][k];
@@ -225,41 +251,61 @@ for(n=0; n<=15; n++){
 }
 
 ◆ レイヤグループ名
+Layer group name 
+
 for(n=0; n<=15; n++){
     ar << (CString)m_aStrGLayName[n];
 }
 
 ◆ 日影計算の条件
+The conditions of shadow calculation 
 ● 測定面高さ
+Measuring plane height 
 ● 緯度
+Latitude
 ● 9〜15の測定の指定
+Specification of measurement (9-15 / 9:00 - 15:00)
 ● 壁面日影測定面高さ
+Surface-of-a-wall shadow measuring plane height 
+
 ar << (double)m_dKageLevel;     
 ar << (double)m_dKageIdo;       
 ar << (DWORD )m_nKage9_15JiFlg; 
 ar << (double)m_dKabeKageLevel;
 
 ◆ 天空図の条件（Ver.3.00以降)
+The conditions of a sky figure (Ver.3.00 or subsequent ones )
 ● 測定面高さ
+Measuring plane height 
 ● 天空図の半径＊２
+The radius of a sky figure * 2
+
 ar<< (double)(m_dTenkuuZuLevel    );
 ar<< (double)(m_dTenkuuZuEnkoR * 2);
 
 ◆ 2.5Dの計算単位(0以外はmm単位で計算)
+Unit of account of 2.5D (Not 0 = mm)
+
 ar << (DWORD)m_nMMTani3D;
 
 ◆ 保存時の画面倍率(読込むと前画面倍率になる)
+Screen magnification at the time of saving(It reappears at the time of loading. )
+
 ar << (double)m_dBairitsu ;
 ar << (double)m_DPGenten.x;
 ar << (double)m_DPGenten.y;
 
 ◆ 範囲記憶倍率と基準点(X,Y)
+Range magnification and Reference point(X, Y)
+
 ar << (double)m_dHanniBairitsu;
 ar << (double)m_DPHanniGenten.x;
 ar << (double)m_DPHanniGenten.y;
 
 ◆ マークジャンプ倍率、基準点(X,Y)およびレイヤグループ
-if( nOldVersionSave >= 300 ){   //Ver.3.00以降
+Mark jump magnification , Reference point(X, Y) , Layer group 
+
+if( nOldVersionSave >= 300 ){   //Ver.3.00以降(Ver.3.00 or subsequent ones )
     for( n=1; n<=8; n++){
         ar << (double)m_dZoomJumpBairitsu[n];
         ar << (double)m_DPZoomJumpGenten[ n].x;
@@ -275,50 +321,75 @@ if( nOldVersionSave >= 300 ){   //Ver.3.00以降
 }
 
 ◆ 文字の描画状態(Ver.4.05以降）
-if( nOldVersionSave >= 300 ){   //Ver.3.00以降
-    ar<< (double)(dDm11);   //ダミー
-    ar<< (double)(dDm12);   //ダミー
-    ar<< (double)(dDm13);   //ダミー
-    ar<< (DWORD )(lnDm1);   //ダミー
-    ar<< (double)(dDm21);   //ダミー
-    ar<< (double)(dDm22);   //ダミー
-    ar<< (double)(m_dMojiBG);//(Ver.4.04以前はダミー）
-                             //文字列範囲を背景色で描画するときの範囲増寸法
+Drawing of a character (Ver.4.05 or subsequent ones )
 
-    ar<< (DWORD )(m_nMojiBG);//(Ver.4.04以前はダミー）   
+if( nOldVersionSave >= 300 ){   //Ver.3.00以降 (Ver.3.00 or subsequent ones )
+    ar<< (double)(dDm11);   //ダミー dummy
+    ar<< (double)(dDm12);   //ダミー dummy
+    ar<< (double)(dDm13);   //ダミー dummy
+    ar<< (DWORD )(lnDm1);   //ダミー dummy
+    ar<< (double)(dDm21);   //ダミー dummy
+    ar<< (double)(dDm22);   //ダミー dummy
+    ar<< (double)(m_dMojiBG);//(Ver.4.04以前はダミー）(It is a dummy before Ver.4.04) 
+                             //文字列範囲を背景色で描画するときの範囲増寸法
+                             The character string range is drawn with a background color. -> Range increase size 
+
+    ar<< (DWORD )(m_nMojiBG);//(Ver.4.04以前はダミー）(It is a dummy before Ver.4.04) 
                              //十位:文字（寸法図形、ブロック図形）を最後に描画
                                一位:1 :輪郭・範囲を背景色で描画しない
                                     2 :文字の輪郭を背景色で描画する
                                     3 :文字列範囲を背景色で描画する
+                                  B:  A character (a dimensional drawing form, a block figure) is drawn at the end. 
+                                  A: 1:An outline and the range are not drawn with a background color. 
+                                     2:The outline of a character is drawn with a background color. 
+                                     3:The character string range is drawn with a background color. 
 }
 
 
 
 ◆ 複線間隔
+Parallel lines interval 
+
 for( n=0; n<=9; n++){
     ar << (double)m_adFukusenSuuchi[n];
 }
 
 ◆ 両側複線の留線出の寸法
+Both sides of Parallel lines / It surrounds in specification size. 
+
 ar << (double)m_dRyoygawaFukusenTomeDe;
 
 ◆ 色番号ごとの画面表示色、線幅
+Every color number : A display color, line weight 
 ● 画面表示色(0：背景色、1〜8：線色、9：グレー色)
+A display color(0:Background color 1-8:Line Color 9:gray)
 ● 線幅(1〜16)
+line weight : 1-16
+
 for( n=0; n<=9; n++){
     ar  << (DWORD)m_aPenColor[n];
     ar  << (DWORD)m_anPenWidth[n];
 }
 
 ◆ 色番号ごとのプリンタ出力色、線幅、実点半径
+Every color number : Printer output color , line weight , Point radius 
 ● プリンタ出力色(0：背景色、1〜8：線色、9：グレー色)
+Printer output color (0:Background color 1-8:Line Color 9:gray)
 ● 線幅(1〜500)
+line weight (1-500)
 ● 実点半径(0.1〜10)
+Point radius (0.1 - 10)
+
 for( n=0; n<=9; n++){
     ar  << (DWORD )m_aPrtPenColor[n];
     ar  << (DWORD )m_anPrtPenWidth[n];
     ar  << (double)m_adPrtTenHankei[n];
 }
+
+
+
+
+
 
 ◆ 線種番号2から9までのパターン、1ユニットのドット数、ピッチ、プリンタ出力ピッチ
 for( n=2; n<=9; n++){
