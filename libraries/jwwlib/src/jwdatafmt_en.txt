@@ -1,6 +1,5 @@
 
 
-
 Jw_cadのデータ形式
 The data format of Jw_cad 
 
@@ -386,12 +385,9 @@ for( n=0; n<=9; n++){
     ar  << (double)m_adPrtTenHankei[n];
 }
 
-
-
-
-
-
 ◆ 線種番号2から9までのパターン、1ユニットのドット数、ピッチ、プリンタ出力ピッチ
+Line type 2-9: Pattern, The number of dots of one unit , Pitch, Printer output pitch 
+
 for( n=2; n<=9; n++){
     ar  << (DWORD)m_alLType[n];
     ar  << (DWORD)m_anTokushuSenUintDot[n];
@@ -400,6 +396,8 @@ for( n=2; n<=9; n++){
 }
 
 ◆ ランダム線1から5までのパターン、画面表示振幅・ピッチ、プリンタ出力振幅・ピッチ
+Random line 1-5: Pattern, Display amplitude , Pitch, Printer output amplitude , Pitch
+
 for( n=11; n<=15; n++){
     ar  << (DWORD)m_alLType[n];
     ar  << (DWORD)m_anRandSenWide[n];
@@ -409,6 +407,8 @@ for( n=11; n<=15; n++){
 }
 
 ◆ 倍長線種番号6から9までのパターン、1ユニットのドット数、ピッチ、プリンタ出力ピッチ
+Double length Line : Pattern, The number of dots of a unit ,Pitch, Printer output pitch 
+
 for( n=16; n<=19; n++){
     ar  << (DWORD)m_alLType[n];
     ar  << (DWORD)m_anTokushuSenUintDot[n];
@@ -417,68 +417,121 @@ for( n=16; n<=19; n++){
 }
 
 ◆ 実点を画面描画時の指定半径で描画
+A point is drawn in the specification radius at the time of screen drawing. 
+
 ar << (DWORD)m_nDrawGamenTen;
 
 ◆ 実点をプリンタ出力時、指定半径で書く
+A point is written in a specification radius at the time of a printer output. 
+
 ar << (DWORD)m_nDrawPrtTen ;
 
 ◆ BitMap・ソリッドを最初に描画する
+Order of BitMap and solid drawing 
+BA(Decimal Number)
 ar << (DWORD)m_nBitMapFirstDraw;    //十位：ソリッド描画順
                                         //0:レイヤ順        (+1):色順
                                         //3:レイヤ逆順      (+2):色逆順
                                         //6:印刷出力設定順
+                                    //B: Order of solid drawing 
+                                        //0:The order of a layer (+1) The order of a Color
+                                        //3:Reverse order of a layer (+2)Reverse order of a color
                                     //一位：
                                         //0:BitMap・ソリッドを最初に描画しない
                                         //1:BitMap・ソリッドを最初に描画
                                         //2:ソリッドを最初に描画
+                                    //A: 
+                                        //0:BitMap and solid drawing : Last
+                                        //1:                         : First
+                                        //2:solid drawing : First
+                                    
+
 ◆ 逆描画
+Reverse drawing 
+
 ar << (DWORD)m_nGyakuDraw;
 
 ◆ 逆サーチ
+Reverse search 
+
 ar << (DWORD)m_nGyakuSearch;
 
 ◆ カラー印刷
+Color printing
+
 ar << (DWORD)m_nColorPrint;
 
 ◆ レイヤ順の印刷
+Printing of the order of a layer 
+
 ar << (DWORD)m_nLayJunPrint;
 
 ◆ 色番号順の印刷
+Printing of numerical order of a color 
+
 ar << (DWORD)m_nColJunPrint;
 
 ◆ レイヤグループまたはレイヤごとのプリンタ連続出力指定
+Printer continuation output specification of "a layer group or a layer" 
+
 ar << (DWORD)m_nPrtRenzoku;
 
 ◆ プリンタ共通レイヤ(表示のみレイヤ)のグレー出力指定
+Gray output specification of a printer common layer (only a display layer) 
+
 ar << (DWORD)m_nPrtKyoutsuuGray;
 
 ◆ プリンタ出力時に表示のみレイヤは出力しない
+"The layer of only a display" does not output at the time of a printer output. 
+
 ar << (DWORD)m_nPrtDispOnlyNonDraw;
 
 ◆ 作図時間（Ver.2.23以降）
+Drawing time (Ver.2.23 or subsequent ones) 
+
 ar << (DWORD)m_lnDrawTime;
 
 ◆ 2.5Dの始点位置が設定されている時のフラグ（Ver.2.23以降）
+A flag when the starting point position of 2.5D is set up (Ver.2.23 or subsequent ones) 
+CBA:(Decimal)
+A: The set up flag of the viewpoint position of a perspective 
+B: The set up flag of the viewpoint position of a bird's-eye view 
+C: The set up flag of the viewpoint position of an isometric projection figure 
 ● 一位：透視図の視点位置設定済みフラグ
 ● 十位：鳥瞰図の視点位置設定済みフラグ
 ● 百位：アイソメ図の視点位置設定済みフラグ
+
 ar << (DWORD)nEyeInit;
 
 ◆ 2.5Dの透視図・鳥瞰図・アイソメ図の視点水平角（Ver.2.23以降）
+The viewpoint horizontal angle of the perspective, bird's-eye view,
+and isometric projection figure of 2.5D (Ver.2.23 or subsequent ones) 
+
 ar << (DWORD)(m_dEye_H_Ichi_1 * 100);
 ar << (DWORD)(m_dEye_H_Ichi_2 * 100);
 ar << (DWORD)(m_dEye_H_Ichi_3 * 100);
 
 ◆ 2.5Dの透視図の視点高さ・視点離れ（Ver.2.23以降）
+Viewpoint height and viewpoint distance of the perspective of 2.5D (Ver.2.23 or subsequent ones) 
+
 ar << (double)m_dEye_Z_Ichi_1;
 ar << (double)m_dEye_Y_Ichi_1;
 
 ◆ 2.5Dの鳥瞰図の視点高さ・視点離れ（Ver.2.23以降）
+Viewpoint height and viewpoint distance of the bird's-eye view of 2.5D (Ver.2.23 or subsequent ones) 
+
 ar << (double)m_dEye_Z_Ichi_2;
 ar << (double)m_dEye_Y_Ichi_2;
 
 ◆ 2.5Dのアイソメ図の視点垂直角（Ver.2.23以降）
+The viewpoint perpendicular angle of the isometric projection figure of 2.5D (Ver.2.23 or subsequent ones) 
+
 ar << (double)m_dEye_V_Ichi_3;
+
+
+
+
+
 
 ◆ 線の長さ指定の最終値（Ver.2.25以降）
 ar << (double)m_dSenNagasaSnpou;
