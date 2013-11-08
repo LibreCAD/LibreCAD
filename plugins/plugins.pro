@@ -61,6 +61,7 @@ TRANSLATIONS = ./ts/plugins_ca.ts \
     ./ts/plugins_ro_ro.ts \
     ./ts/plugins_ru.ts \
     ./ts/plugins_sk.ts \
+    ./ts/plugins_sl.ts \
     ./ts/plugins_sq_al.ts \
     ./ts/plugins_sv.ts \
     ./ts/plugins_tr.ts \

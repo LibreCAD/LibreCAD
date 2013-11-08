@@ -5113,6 +5113,7 @@
     <None Include="..\ts\librecad_pt_pt.ts" />
     <None Include="..\ts\librecad_ru.ts" />
     <None Include="..\ts\librecad_sk.ts" />
+    <None Include="..\ts\librecad_sl.ts" />
     <None Include="..\ts\librecad_sq_al.ts" />
     <None Include="..\ts\librecad_sv.ts" />
     <None Include="..\ts\librecad_tr.ts" />
