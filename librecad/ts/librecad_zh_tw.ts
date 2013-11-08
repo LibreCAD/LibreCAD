@@ -11294,7 +11294,7 @@ Do you want to replace it?</source>
         <translation>預覽列印(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="208"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="210"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
         <translation>RS_ActionPrintPreview::fit（）：無效的紙張尺寸</translation>
     </message>

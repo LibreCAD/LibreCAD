@@ -11253,7 +11253,7 @@ Do you want to replace it?</translation>
         <translation>Print Pre&amp;view</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionprintpreview.cpp" line="208"/>
+        <location filename="../src/actions/rs_actionprintpreview.cpp" line="210"/>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
         <translation type="unfinished"></translation>
     </message>
