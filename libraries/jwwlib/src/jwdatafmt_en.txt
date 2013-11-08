@@ -1,5 +1,4 @@
 
-
 Jw_cadのデータ形式
 The data format of Jw_cad 
 
@@ -528,32 +527,44 @@ The viewpoint perpendicular angle of the isometric projection figure of 2.5D (Ve
 
 ar << (double)m_dEye_V_Ichi_3;
 
-
-
-
-
-
 ◆ 線の長さ指定の最終値（Ver.2.25以降）
+The last value of the length specification of a line (Ver.2.25 or subsequent ones )
+
 ar << (double)m_dSenNagasaSnpou;
 
 ◆ 矩形寸法横寸法・縦寸法指定の最終値（Ver.2.25以降）
+The last value of a rectangle size horizontal size and vertical size specification (Ver.2.25 or subsequent ones) 
+
 ar << (double)m_dBoxSunpouX;
 ar << (double)m_dBoxSunpouY;
 
 ◆ 円の半径指定の最終値（Ver.2.25以降）
+The last value of radius specification of a circle (Ver.2.25 or subsequent ones) 
+
 ar << (double)m_dEnHankeiSnpou ;
 
 ◆ ソリッドを任意色で書くフラグ、ソリッドの任意色の既定値（Ver.2.30以降）
+The flag which draws solid in an arbitrary color ,
+The default of a solid arbitrary color (Ver.2.30 or subsequent ones) 
+
 ar << (DWORD)pGamen->m_nSolidNinniColor; 
 ar << (DWORD)pGamen->m_SolidColor;   //RGB
 
 ◆ SXF対応拡張線色定義（Ver.4.20以降）
+The extended line color definition corresponding to SXF (Ver.4.20 or subsequent ones)
 ● 画面表示色
 ● 画面表示線幅
 ● 線色名
 ● プリンタ出力色
 ● プリンタ出力線幅
 ● 点半径
+Display color 
+Display line width 
+line color name 
+Printer output color 
+Printer output line width 
+Point radius 
+
 for( n=0; n<=256; n++){ //////   画面表示色
     n1 = n+SXCOL_EXT;   //色番号のオフセット = +100
     ar  << (DWORD)m_aPenColor[n1]
@@ -566,7 +577,9 @@ for( n=0; n<=256; n++){ //////   プリンタ出力色
         << (DWORD  )m_anPrtPenWidth[n1]
         << (double )m_adPrtTenHankei[n1] ;
 }
+
 ◆ SXF対応拡張線種定義（Ver.4.20以降）
+The extended line kind definition corresponding to SXF (Ver.4.20 or subsequent ones) 
 ● パターン
 ● 1ユニットのドット数
 ● ピッチ
@@ -574,6 +587,14 @@ for( n=0; n<=256; n++){ //////   プリンタ出力色
 ● 線種名
 ● セグメント数
 ● ピッチ線分の長さ、空白長さの繰り返し
+Pattern
+The number of dots of one unit 
+Pitch
+Printer output pitch 
+Line species name 
+The number of segments 
+The length for a pitch line, blank length (Array)
+
 for( n=0; n<=32; n++){   //////  線種パターン
     n1 = n+SXLTP_EXT;   //線種番号のオフセット = +30
     ar  << (DWORD)m_alLType[n1]
@@ -590,37 +611,57 @@ for( n=0; n<=32; n++){   //////  線種パラメータ
 }
 
 ◆ 文字種1から10までの文字幅、高さ、間隔、色番号
+Up to the character kinds 1-10 :A character width, height, an interval, a color number 
+
 for(i=1; i<=10; i++){
     ar  << (double)m_adMojiX[i] << (double)m_adMojiY[i];
     ar  << (double)m_adMojiD[i] << (DWORD)m_anMojiCol[i];
 }
 
 ◆ 書込み文字の文字幅、高さ、間隔、色番号、文字番号
+A write-in character :A character width, height, an interval, a color number, a character number 
+
 ar << (double)m_dMojiSizeX << (double)m_dMojiSizeY;
 ar << (double)m_dMojiKankaku;
 ar << (DWORD)m_nMojiColor << (DWORD)m_nMojiShu;
 
 ◆ 文字位置整理の行間、文字数
+Character position arrangement :Spacing, the number of characters 
+
 ar << (double)m_dMojiSeiriGyouKan << (double)m_dMojiSeiriSuu;
 
 ◆ 文字基準点のずれ位置使用のフラグ
+Character reference point :The flag of gap position use 
+
 ar << (DWORD)m_nMojiKijunZureOn;
 
 ◆ 文字基準点の横方向のずれ位置左、中、右
+Character reference point :The gap position of a transverse direction :The left, middle, the right 
+
 ar << (double)m_adMojiKijunZureX[0];
 ar << (double)m_adMojiKijunZureX[1];
 ar << (double)m_adMojiKijunZureX[2];
 
 ◆ 文字基準点の縦方向のずれ位置下、中、上
+Character reference point :The gap position of a lengthwise direction :The bottom, middle, top 
+
 ar << (double)m_adMojiKijunZureY[0];
 ar << (double)m_adMojiKijunZureY[1];
 ar << (double)m_adMojiKijunZureY[2];
 
 ◆ 図形データのリストの実体
+entity of the list of graphic data 
+
 m_DataList.Serialize(ar);
 
 ◆ ブロックデータの定義部のリスト
+The list of definition divisions of block data 
+
 m_DataListList.Serialize(ar);
+
+
+
+
 
 図形データリスト、ブロックデータ定義部リスト、ドキュメントクラスの宣言は以下のとおり。
 
