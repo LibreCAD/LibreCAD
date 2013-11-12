@@ -13,6 +13,8 @@ cd "${SCRIPTPATH}"/..
 rm -rf LibreCAD.app
 
 qmake librecad.pro -r -spec mkspec/macports
+make distclean
+qmake librecad.pro -r -spec mkspec/macports
 make -j4
 rm -f LibreCAD.dmg
 macdeployqt LibreCAD.app -verbose=2 -dmg

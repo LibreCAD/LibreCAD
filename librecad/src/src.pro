@@ -53,6 +53,7 @@ unix {
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
         RC_FILE = ../res/main/librecad.icns
         QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-osx.sh
+        QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
     }
     else {
         TARGET = librecad
