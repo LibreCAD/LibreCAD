@@ -84,7 +84,7 @@ FunctionEnd
 
 ;--- define Qt folders if not already defined in custom-5.1.nsh
 !ifndef Qt_Dir
-    !define Qt_Dir 	"C:\Qt"
+    !define Qt_Dir 	"C:\Qt\Qt5.1.1"
 !endif
 !ifndef Qt_Version
     !define Qt_Version 	"5.1.1"
