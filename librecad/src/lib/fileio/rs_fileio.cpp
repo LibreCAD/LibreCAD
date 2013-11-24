@@ -59,13 +59,20 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
         t = type;
     }
 
-    std::unique_ptr<RS_FilterInterface> filter(getImportFilter(file, t));
-    if (filter.get() != NULL ){
-        return filter->fileImport(graphic, file, t);
+    if (RS2::FormatUnknown != t) {
+        std::unique_ptr<RS_FilterInterface> filter(getImportFilter(file, t));
+        if (filter.get() != NULL ){
+            return filter->fileImport(graphic, file, t);
+        }
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_FileIO::fileImport: failed to import file: %s",
+                        file.toLatin1().data());
     }
-    RS_DEBUG->print(RS_Debug::D_WARNING,
-                    "RS_FileIO::fileImport: failed to import file: %s",
-                    file.toLatin1().data());
+    else {
+        RS_DEBUG->print(RS_Debug::D_WARNING,
+                        "RS_FileIO::fileImport: failed to detect file format: %s",
+                        file.toLatin1().data());
+    }
 
     return false;
 }

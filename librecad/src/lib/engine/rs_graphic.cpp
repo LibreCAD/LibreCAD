@@ -552,16 +552,18 @@ bool RS_Graphic::open(const QString &filename, RS2::FormatType type) {
     // import file:
     ret = RS_FileIO::instance()->fileImport(*this, filename, type);
 
+    if( ret) {
         setModified(false);
         layerList.setModified(false);
         blockList.setModified(false);
-    modifiedTime = finfo.lastModified();
-    currentFileName=QString(filename);
+        modifiedTime = finfo.lastModified();
+        currentFileName=QString(filename);
 
-    //cout << *((RS_Graphic*)graphic);
-    //calculateBorders();
+        //cout << *((RS_Graphic*)graphic);
+        //calculateBorders();
 
-    RS_DEBUG->print("RS_Graphic::open(%s): OK", filename.toLatin1().data());
+        RS_DEBUG->print("RS_Graphic::open(%s): OK", filename.toLatin1().data());
+    }
 
     return ret;
 }
