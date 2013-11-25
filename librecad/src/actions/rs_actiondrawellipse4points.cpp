@@ -38,6 +38,7 @@ RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
                            container, graphicView),
           cData(RS_Vector(0.,0.),1.),
           eData(RS_Vector(0.,0.),RS_Vector(1.,0),1.,0.,0.,false)
+        ,m_bUniqueEllipse(false)
 {
           points.clean();
 }
@@ -100,24 +101,22 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent* e) {
     points.set(getStatus(),mouse);
     if(preparePreview()) {
         switch(getStatus()) {
-
-
         case SetPoint2:
         case SetPoint3:
-        {
-            RS_Circle* circle=new RS_Circle(preview, cData);
-            deletePreview();
-            preview->addEntity(circle);
-            drawPreview();
-        }
+            if(valid){
+                RS_Circle* circle=new RS_Circle(preview, cData);
+                deletePreview();
+                preview->addEntity(circle);
+                drawPreview();
+            }
             break;
         case SetPoint4:
-        {
-            deletePreview();
-            RS_Ellipse* e=new RS_Ellipse(preview, eData);
-            preview->addEntity(e);
-            drawPreview();
-        }
+            if(evalid){
+                deletePreview();
+                RS_Ellipse* e=new RS_Ellipse(preview, eData);
+                preview->addEntity(e);
+                drawPreview();
+            }
         default:
             break;
         }
@@ -157,6 +156,13 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
             if(valid){
                 evalid=valid;
                 eData=e.getData();
+                m_bUniqueEllipse=false;
+            }else{
+                evalid=false;
+                if (RS_DIALOGFACTORY!=NULL && m_bUniqueEllipse==false) {
+                    RS_DIALOGFACTORY->commandMessage(tr("Can not determine uniquely an ellipse"));
+                    m_bUniqueEllipse=true;
+                }
             }
         }
     }

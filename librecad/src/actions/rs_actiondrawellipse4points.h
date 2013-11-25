@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_ellipse.h"
 
 /**
- * Draw ellipse by foci and a point on ellipse
+ * Draw ellipse in XY direction by 4 points on ellipse
  *
  * @author Dongxu Li
  */
@@ -76,6 +76,7 @@ protected:
     RS_CircleData cData;
     RS_EllipseData eData;
     bool valid,evalid;
+    bool m_bUniqueEllipse; //a message of non-unique ellipse is shown
 };
 
 #endif

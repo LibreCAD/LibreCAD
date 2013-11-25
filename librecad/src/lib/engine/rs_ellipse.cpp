@@ -563,10 +563,10 @@ bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
     }
     if ( ! RS_Math::linearSolver(mt,dn)) return false;
     double d(1.+0.25*(dn[1]*dn[1]/dn[0]+dn[3]*dn[3]/dn[2]));
-    if(fabs(dn[0])<RS_TOLERANCE2
-            ||fabs(dn[2])<RS_TOLERANCE2
-            ||d/dn[0]<RS_TOLERANCE2
-            ||d/dn[2]<RS_TOLERANCE2
+    if(fabs(dn[0])<RS_TOLERANCE15
+            ||fabs(dn[2])<RS_TOLERANCE15
+            ||d/dn[0]<RS_TOLERANCE15
+            ||d/dn[2]<RS_TOLERANCE15
             ) {
         //ellipse not defined
         return false;
@@ -577,6 +577,11 @@ bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
     data.ratio=sqrt(dn[0]/dn[2]);
     data.angle1=0.;
     data.angle2=0.;
+//    DEBUG_HEADER();
+//    std::cout<<"center="<<data.center;
+//    std::cout<<"majorP="<<data.majorP;
+//    std::cout<<"ratio="<<data.ratio;
+//    std::cout<<"successful"<<std::endl;
     return true;
 
 }
@@ -1478,7 +1483,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
         RS_Line line(NULL,RS_LineData(vertex.at(i),vertex.at((i+1)%4)));
         auto&& vpIts=RS_Information::getIntersection(
                     static_cast<RS_Entity*>(this), &line, true);
-    std::cout<<"vpIts.size()="<<vpIts.size()<<std::endl;
+//    std::cout<<"vpIts.size()="<<vpIts.size()<<std::endl;
         if( vpIts.size()==0) continue;
         foreach(RS_Vector vp, vpIts.getVector()){
             auto&& ap1=getTangentDirection(vp).angle();
@@ -1500,7 +1505,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
     qSort(crossPoints.begin(),crossPoints.end());
     //draw visible
 //    DEBUG_HEADER();
-    std::cout<<"crossPoints.size()="<<crossPoints.size()<<std::endl;
+//    std::cout<<"crossPoints.size()="<<crossPoints.size()<<std::endl;
     RS_Ellipse arc(*this);
     arc.setSelected(isSelected());
     arc.setPen(getPen());
