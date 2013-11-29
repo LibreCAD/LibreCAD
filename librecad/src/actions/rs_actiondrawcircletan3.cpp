@@ -254,6 +254,7 @@ void RS_ActionDrawCircleTan3::mouseReleaseEvent(QMouseEvent* e) {
 //            qDebug()<<"en="<<en;
             if (en==NULL) return;
             circles.resize(getStatus());
+            if(circles.indexOf(static_cast<RS_AtomicEntity*>(en))>=0) return;
 //            for(int i=0;i<circles.size();i++){
 //                if(
 //                        (circles.at(i)->getCenter() - en->getCenter()).squared() < RS_TOLERANCE2

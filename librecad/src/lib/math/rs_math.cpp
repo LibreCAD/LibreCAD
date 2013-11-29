@@ -671,8 +671,15 @@ std::vector<double> RS_Math::quarticSolverFull(const std::vector<double>& ce)
         ce2[1]=ce[2]/ce[4];
         ce2[2]=ce[1]/ce[4];
         ce2[3]=ce[0]/ce[4];
-        //std::cout<<"ce2[4]={ "<<ce2[0]<<' '<<ce2[1]<<' '<<ce2[2]<<' '<<ce2[3]<<" }\n";
-        roots=RS_Math::quarticSolver(ce2);
+//        DEBUG_HEADER();
+//        std::cout<<"ce2[4]={ "<<ce2[0]<<' '<<ce2[1]<<' '<<ce2[2]<<' '<<ce2[3]<<" }\n";
+        if(fabs(ce2[3]<= RS_TOLERANCE15)) {
+            //constant term is zero, factor 0 out, solve a cubic equation
+            ce2.resize(3);
+            roots=RS_Math::cubicSolver(ce2);
+            roots.push_back(0.);
+        }else
+            roots=RS_Math::quarticSolver(ce2);
     }
     return roots;
 }
@@ -1074,9 +1081,12 @@ bool RS_Math::simultaneousQuadraticVerify(const std::vector<std::vector<double> 
 
 //    DEBUG_HEADER();
 //    std::cout<<"verifying: x="<<x<<"\ty="<<y<<std::endl;
-//        std::cout<<"verifying: fabs(a*x2 + b*x*y+c*y2+d*x+e*y+f)/maxterm="<<fabs(sum0)/amax0<<" required to be smaller than "<<sqrt(6.)*sqrt(DBL_EPSILON)<<std::endl;
-//        std::cout<<"verifying: fabs(g*x2+h*x*y+i*y2+j*x+k*y+l)/maxterm="<< fabs(sum1)/amax1<<std::endl;
-    return fabs(sum0)/amax0<2.*sqrt(6.)*sqrt(DBL_EPSILON)
-            &&  fabs(sum1)/amax1<2.*sqrt(6.)*sqrt(DBL_EPSILON);
+//    std::cout<<"0: maxterm: "<<amax0<<std::endl;
+//    std::cout<<"verifying: fabs(a*x2 + b*x*y+c*y2+d*x+e*y+f)/maxterm="<<fabs(sum0)/amax0<<" required to be smaller than "<<sqrt(6.)*sqrt(DBL_EPSILON)<<std::endl;
+//    std::cout<<"1: maxterm: "<<amax1<<std::endl;
+//    std::cout<<"verifying: fabs(g*x2+h*x*y+i*y2+j*x+k*y+l)/maxterm="<< fabs(sum1)/amax1<<std::endl;
+    const double tols=2.*sqrt(6.)*sqrt(DBL_EPSILON); //experimental tolerances to verify simultaneous quadratic
+
+    return (amax0<=tols || fabs(sum0)/amax0<tols) &&  (amax1<=tols || fabs(sum1)/amax1<tols);
 }
 //EOF
