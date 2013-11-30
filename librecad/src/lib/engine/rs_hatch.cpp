@@ -221,13 +221,13 @@ void RS_Hatch::update() {
         return;
     }
 
-    f = copy->getMin().x/pat->getSize().x;
+    f = copy->getMin().x/pSize.x;
     px1 = (int)floor(f);
-    f = copy->getMin().y/pat->getSize().y;
+    f = copy->getMin().y/pSize.y;
     py1 = (int)floor(f);
-    f = copy->getMax().x/pat->getSize().x;
+    f = copy->getMax().x/pSize.x;
     px2 = (int)ceil(f);
-    f = copy->getMax().y/pat->getSize().y;
+    f = copy->getMax().y/pSize.y;
     py2 = (int)ceil(f);
     RS_Vector dvx=RS_Vector(data.angle)*pSize.x;
     RS_Vector dvy=RS_Vector(data.angle+M_PI*0.5)*pSize.y;
@@ -240,8 +240,8 @@ void RS_Hatch::update() {
     // adding array of patterns to tmp:
     RS_DEBUG->print("RS_Hatch::update: creating pattern carpet");
 
-    for (int px=px1; px<=px2; px++) {
-        for (int py=py1; py<=py2; py++) {
+    for (int px=px1; px<px2; px++) {
+        for (int py=py1; py<py2; py++) {
             for (RS_Entity* e=pat->firstEntity(); e!=NULL;
                     e=pat->nextEntity()) {
                 RS_Entity* te=e->clone();
@@ -265,6 +265,11 @@ void RS_Hatch::update() {
     RS_Ellipse* ellipse = NULL;
     for (RS_Entity* e=tmp.firstEntity(); e!=NULL;
             e=tmp.nextEntity()) {
+
+        line = NULL;
+        arc = NULL;
+        circle = NULL;
+        ellipse = NULL;
 
         RS_Vector startPoint;
         RS_Vector endPoint;
@@ -304,7 +309,6 @@ void RS_Hatch::update() {
 
         // getting all intersections of this pattern line with the contour:
         QList<std::shared_ptr<RS_Vector> > is;
-        is.append(std::shared_ptr<RS_Vector>(new RS_Vector(startPoint)));
 
         for (RS_Entity* loop=firstEntity(); loop!=NULL;
                 loop=nextEntity()) {
@@ -330,86 +334,102 @@ void RS_Hatch::update() {
             }
         }
 
-        is.append(std::shared_ptr<RS_Vector>(new RS_Vector(endPoint)));
 
-        // sort the intersection points into is2:
-        RS_Vector sp = startPoint;
-        double sa = center.angleTo(sp);
-        if(ellipse != NULL) sa=ellipse->getEllipseAngle(sp);
-        QList<std::shared_ptr<RS_Vector> > is2;
-        bool done;
-        double minDist;
-        double dist = 0.0;
-        std::shared_ptr<RS_Vector> av;
-        std::shared_ptr<RS_Vector> v;
-        RS_Vector last = RS_Vector(false);
-        do {
-            done = true;
-            minDist = RS_MAXDOUBLE;
-            av.reset();
-            for (int i = 0; i < is.size(); ++i) {
-                v = is.at(i);
-                double a;
-                switch(e->rtti()){
-                case RS2::EntityLine:
-                    dist = sp.distanceTo(*v);
-                    break;
-                case RS2::EntityArc:
-                case RS2::EntityCircle:
-                    a = center.angleTo(*v);
-                    dist = reversed?
-                                fmod(sa - a + 2.*M_PI,2.*M_PI):
-                                fmod(a - sa + 2.*M_PI,2.*M_PI);
-                    break;
-                case RS2::EntityEllipse:
-                    a = ellipse->getEllipseAngle(*v);
-                    dist = reversed?
-                                fmod(sa - a + 2.*M_PI,2.*M_PI):
-                                fmod(a - sa + 2.*M_PI,2.*M_PI);
-                    break;
-                default:
-                    break;
+        QList<std::shared_ptr<RS_Vector> > is2;//to be filled with sorted intersections
+        is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(startPoint)));
 
+        // sort the intersection points into is2 (only if there are intersections):
+        if(is.size() == 1)
+        {//only one intersection
+            is2.append(is.first());
+        }
+        else if(is.size() > 1)
+        {
+            RS_Vector sp = startPoint;
+            double sa = center.angleTo(sp);
+            if(ellipse != NULL) sa=ellipse->getEllipseAngle(sp);
+            bool done;
+            double minDist;
+            double dist = 0.0;
+            std::shared_ptr<RS_Vector> av;
+            std::shared_ptr<RS_Vector> v;
+            RS_Vector last = RS_Vector(false);
+            do {
+                done = true;
+                minDist = RS_MAXDOUBLE;
+                av.reset();
+                for (int i = 0; i < is.size(); ++i) {
+                    v = is.at(i);
+                    double a;
+                    switch(e->rtti()){
+                    case RS2::EntityLine:
+                        dist = sp.distanceTo(*v);
+                        break;
+                    case RS2::EntityArc:
+                    case RS2::EntityCircle:
+                        a = center.angleTo(*v);
+                        dist = reversed?
+                                    fmod(sa - a + 2.*M_PI,2.*M_PI):
+                                    fmod(a - sa + 2.*M_PI,2.*M_PI);
+                        break;
+                    case RS2::EntityEllipse:
+                        a = ellipse->getEllipseAngle(*v);
+                        dist = reversed?
+                                    fmod(sa - a + 2.*M_PI,2.*M_PI):
+                                    fmod(a - sa + 2.*M_PI,2.*M_PI);
+                        break;
+                    default:
+                        break;
+
+                    }
+
+                    if (dist<minDist) {
+                        minDist = dist;
+                        done = false;
+                        av = v;
+                    }
                 }
 
-                if (dist<minDist) {
-                    minDist = dist;
-                    done = false;
-                    av = v;
-                }
-            }
-
-            // copy to sorted list, removing double points
-            if (!done && av.get()!=NULL) {
-                if (last.valid==false || last.distanceTo(*av)>RS_TOLERANCE) {
-                    is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(*av)));
-                    last = *av;
-                }
+                // copy to sorted list, removing double points
+                if (!done && av.get()!=NULL) {
+                    if (last.valid==false || last.distanceTo(*av)>RS_TOLERANCE) {
+                        is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(*av)));
+                        last = *av;
+                    }
 #if QT_VERSION < 0x040400
-                emu_qt44_removeOne(is, av);
+                    emu_qt44_removeOne(is, av);
 #else
-                is.removeOne(av);
+                    is.removeOne(av);
 #endif
 
-                av.reset();
-            }
-        } while(!done);
+                    av.reset();
+                }
+            } while(!done);
+        }
+
+is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(endPoint)));
 
         // add small cut lines / arcs to tmp2:
             for (int i = 1; i < is2.size(); ++i) {
                 auto v1 = is2.at(i-1);
                 auto v2 = is2.at(i);
 
+
                 if (line!=NULL) {
+
                     tmp2.addEntity(new RS_Line(&tmp2,
                                                RS_LineData(*v1, *v2)));
                 } else if (arc!=NULL || circle!=NULL) {
-                    tmp2.addEntity(new RS_Arc(&tmp2,
-                                              RS_ArcData(center,
-                                                         center.distanceTo(*v1),
-                                                         center.angleTo(*v1),
-                                                         center.angleTo(*v2),
-                                                         reversed)));
+                    if(fabs(center.angleTo(*v2)-center.angleTo(*v1)) > RS_TOLERANCE_ANGLE)
+                    {//don't create an arc with a too small angle
+                        tmp2.addEntity(new RS_Arc(&tmp2,
+                                                  RS_ArcData(center,
+                                                             center.distanceTo(*v1),
+                                                             center.angleTo(*v1),
+                                                             center.angleTo(*v2),
+                                                             reversed)));
+                    }
+
                 }
             }
 
@@ -753,4 +773,3 @@ std::ostream& operator << (std::ostream& os, const RS_Hatch& p) {
     os << " Hatch: " << p.getData() << "\n";
     return os;
 }
-
