@@ -12,25 +12,58 @@ We are in the process of building a user manual and wiki:
 
 http://wiki.librecad.org/index.php/Main_Page
 
-UNIX and OS X users
--------------------
+OS X Users
+----------
+
+If you use macports, see below. If you use brew, or neither one, use this section.
+
+Install Homebrew from http://brew.sh/.
+
+```
+gcc --version # you'll need gcc 4.4 or newer. If yours is older:
+brew tap homebrew/versions
+brew options gcc48
+brew install [flags] gcc48
+mkdir ~/bin
+cd ~/bin
+ln -s /usr/local/bin/gcc-4.8 gcc
+ln -s /usr/local/bin/g++-4.8 g++
+ln -s /usr/local/bin/gcc-ar-4.8 gcc-ar
+ln -s /usr/local/bin/gcc-nm-4.8 gcc-nm
+ln -s /usr/local/bin/gcc-ranlib-4.8 gcc-ranlib
+source ~/.bashrc
+gcc --version # make sure it's 4.8. if it's not, ~/bin might not be on your path
+
+brew install boost muparser qt
+
+# Unzip or checkout a version of LibreCAD into a directory.
+cd LibreCAD
+./scripts/build-osx.sh
+```
+
+This creates an executable "LibreCAD.app/Contents/MacOS/LibreCAD" and package "LibreCAD.dmg".
+
+OS X with MacPorts Users
+-----------------------
+
+install macports from http://www.macports.org/
+
+After that install QT and a new gcc, which should version 4.4 or later.
+
+Install a version of Qt, boost and muparser, for example
+`$ sudo port install gcc46 qt4-creator-mac qt4-mac boost muparser`
+
+Select the right compiler, as LibreCAD doesn't build with the default llvm-gcc42,
+`$ sudo port select --set gcc mp-gcc46`
 
 Unzip or checkout a version of LibreCAD into a directory.
-CD into that directory and follow these instructions:
-
-Build makefile and compile LibreCAD
 
 ```
-qmake librecad.pro
-make
+cd LibreCAD
+./scripts/build-osx.sh
 ```
 
-After successful compiling, the executible is generated:
-
-Linux: unix/librecad
-OS X: LibreCAD.app/Contents/MacOS/LibreCAD
-
-A sample building script for OS/X is included as scripts/build-osx.sh. This script file also generates a LibreCAD.dmg.
+This creates an executable "LibreCAD.app/Contents/MacOS/LibreCAD" and package "LibreCAD.dmg".
 
 Users of Ubuntu/Debian and derivatives
 --------------------------------------
@@ -129,28 +162,13 @@ Notes: At this point you will have the following directory structure: C:\muparse
 After installation, start Qt Creator and load LibreCAD.pro,
 from the build menu select "Build All".
 
-OS X USERS
-----------
+Generic Unix Users
+------------------
 
-install macports from http://www.macports.org/
-
-After that install QT and a new gcc, which should version 4.4 or later.
-
-Install a version of Qt, boost and muparser, for example
-`$ sudo port install gcc46 qt4-creator-mac qt4-mac boost muparser`
-
-Select the right compiler, as LibreCAD doesn't build with the default llvm-gcc42,
-`$ sudo port select --set gcc mp-gcc46`
-
-Build a makefile in the LibreCAD source folder,
-`$ qmake librecad.pro -r -spec mkspec/macports`
-
-If the previous step is successful, you can build LibreCAD by issuing,
-`$ make -j4'
-
-After a successful build, the generated executible of LibreCAD can be found as LibreCAD.app/Contents/MacOS/LibreCAD.
-
-Alternatively, you may try the building script comes with LibreCAD at scripts/build-osx.sh
-`$ cd scripts/`
-`$ ./build-osx.sh`
-
+Unzip or checkout a version of LibreCAD into a directory.
+```
+cd LibreCAD
+qmake librecad.pro
+make
+```
+The executible is generated at "unix/librecad"
