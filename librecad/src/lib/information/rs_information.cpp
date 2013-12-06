@@ -785,7 +785,6 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
                             // ray goes through startpoint of line:
                             if (p.distanceTo(line->getStartpoint())<1.0e-4) {
                                 if (RS_Math::correctAngle(line->getAngle1())<M_PI) {
-                                    counter++;
                                     sure = false;
                                 }
                             }
@@ -793,16 +792,14 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
                             // ray goes through endpoint of line:
                             else if (p.distanceTo(line->getEndpoint())<1.0e-4) {
                                 if (RS_Math::correctAngle(line->getAngle2())<M_PI) {
-                                    counter++;
                                     sure = false;
                                 }
                             }
-                            // ray goes through the line:
+                            // else: ray goes through the line
 
 
-                            else {
                                 counter++;
-                            }
+                            
                         } else if (e->rtti()==RS2::EntityArc) {
                             RS_Arc* arc = (RS_Arc*)e;
 
