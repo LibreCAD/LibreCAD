@@ -186,5 +186,6 @@
         <file>circletan3.png</file>
         <file>circletan1_2p.png</file>
         <file>circletan2_1p.png</file>
+        <file>reverse.png</file>
     </qresource>
 </RCC>

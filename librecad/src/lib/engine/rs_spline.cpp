@@ -338,6 +338,12 @@ void RS_Spline::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     update();
 }
 
+void RS_Spline::revertDirection() {
+	for(int k = 0; k < data.controlPoints.size() / 2; k++) {
+		data.controlPoints.swap(k, data.controlPoints.size() - 1 - k);
+	}
+}
+
 
 
 

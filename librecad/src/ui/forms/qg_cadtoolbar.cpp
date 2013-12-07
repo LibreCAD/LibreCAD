@@ -607,6 +607,8 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     case RS2::ActionModifyRound:
     case RS2::ActionModifyOffset:
     case RS2::ActionModifyOffsetNoSelect:
+    case RS2::ActionModifyRevertDirection:
+    case RS2::ActionModifyRevertDirectionNoSelect:
         showToolBar(RS2::ToolBarModify, false);
         if(tbModify != NULL){
             tbModify->showCadToolBar(actionType);

@@ -378,6 +378,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actionmodifymove.h \
     actions/rs_actionmodifymoverotate.h \
     actions/rs_actionmodifyoffset.h \
+    actions/rs_actionmodifyrevertdirection.h \
     actions/rs_actionmodifyrotate.h \
     actions/rs_actionmodifyrotate2.h \
     actions/rs_actionmodifyround.h \
@@ -510,6 +511,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionmodifymove.cpp \
     actions/rs_actionmodifymoverotate.cpp \
     actions/rs_actionmodifyoffset.cpp \
+    actions/rs_actionmodifyrevertdirection.cpp \
     actions/rs_actionmodifyrotate.cpp \
     actions/rs_actionmodifyrotate2.cpp \
     actions/rs_actionmodifyround.cpp \

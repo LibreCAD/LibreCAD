@@ -101,6 +101,40 @@ void RS_Modification::remove() {
     graphicView->redraw(RS2::RedrawDrawing);
 }
 
+/**
+ * Revert direction of selected entities.
+ */
+void RS_Modification::revertDirection()
+{
+	if (container==NULL) {
+		RS_DEBUG->print("RS_Modification::revertDirection: no valid container",
+						RS_Debug::D_WARNING);
+		return;
+	}
+
+	if (document!=NULL && handleUndo) {
+		document->startUndoCycle();
+	}
+
+	QList<RS_Entity*> addList;
+	for (RS_Entity* e=container->firstEntity(); e!=NULL; e=container->nextEntity()) {
+		if (e!=NULL && e->isSelected()) {
+			RS_Entity* ec = e->clone();
+			ec->revertDirection();
+			addList.append(ec);
+		}
+	}
+	deselectOriginals(true);
+	addNewEntities(addList);
+
+	if (document!=NULL && handleUndo) {
+		document->endUndoCycle();
+	}
+
+	if (graphicView!=NULL) {
+		graphicView->redraw(RS2::RedrawDrawing);
+	}
+}
 
 
 /**

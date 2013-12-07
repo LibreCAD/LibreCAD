@@ -113,6 +113,7 @@
 #include "rs_actionmodifyentity.h"
 #include "rs_actionmodifymove.h"
 #include "rs_actionmodifymoverotate.h"
+#include "rs_actionmodifyrevertdirection.h"
 #include "rs_actionmodifyrotate.h"
 #include "rs_actionmodifyrotate2.h"
 #include "rs_actionmodifyround.h"
@@ -940,6 +941,11 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotModifyMove()));
         break;
+
+	case RS2::ActionModifyRevertDirection:
+		action = RS_ActionModifyRevertDirection::createGUIAction(id, mw);
+		connect(action, SIGNAL(triggered()), obj, SLOT(slotModifyRevertDirection()));
+		break;
 
     case RS2::ActionModifyRotate:
                 action = RS_ActionModifyRotate::createGUIAction(id, mw);

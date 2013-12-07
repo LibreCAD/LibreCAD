@@ -172,8 +172,9 @@ public slots:
     void slotModifyDeleteFree();
     void slotModifyMove();
     void slotModifyScale();
-    void slotModifyRotate();
-    void slotModifyMirror();
+	void slotModifyRevertDirection();
+	void slotModifyRotate();
+	void slotModifyMirror();
     void slotModifyMoveRotate();
     void slotModifyRotate2();
     void slotModifyEntity();

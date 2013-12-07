@@ -191,6 +191,8 @@ public:
                          const RS_Vector& offset);
         virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
         virtual void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset);
+	virtual void revertDirection();
+
 
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
 
