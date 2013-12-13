@@ -1235,7 +1235,7 @@ DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
         writer->writeInt16(282, ent->contrast);
         writer->writeInt16(283, ent->fade);
         writer->writeString(360, idReactor);
-        id->reactors[idReactor] = ent->handle;
+        id->reactors[idReactor] = toHexStr(ent->handle);
         return id;
     }
     return NULL; //not exist in acad 12
