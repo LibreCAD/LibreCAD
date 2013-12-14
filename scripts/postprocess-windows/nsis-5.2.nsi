@@ -11,13 +11,17 @@
   !include "MUI2.nsh"
   !include "WinVer.nsh"
 
+  !define APPNAME "LibreCAD"
   !define MUI_ICON "..\..\librecad\res\main\librecad.ico"
+  !define MUI_UNICON "..\..\librecad\res\main\uninstall.ico"
+
+  !define UNINSTKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APPNAME}"
 
 ;--------------------------------
 ;General
 
   ;Name and file
-  Name "LibreCAD"
+  Name "${APPNAME}"
   OutFile "../../generated/LibreCAD-Installer.exe"
 
   ;Default installation folder
@@ -162,6 +166,22 @@ Section "Install Section" SecInstall
   createShortCut "$SMPROGRAMS\LibreCAD\LibreCAD.lnk" "$INSTDIR\LibreCAD.exe"
   createShortCut "$SMPROGRAMS\LibreCAD\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
 
+  ; create add/remove software entries
+  WriteRegStr HKLM "${UNINSTKEY}" "DisplayName" "${APPNAME}"
+  WriteRegStr HKLM "${UNINSTKEY}" "DisplayIcon" "$INSTDIR\LibreCAD.exe"
+  WriteRegStr HKLM "${UNINSTKEY}" "DisplayVersion" "2.0.0rc3"
+  WriteRegStr HKLM "${UNINSTKEY}" "Publisher" "LibreCAD Team"
+  WriteRegStr HKLM "${UNINSTKEY}" "Version" "2.0"
+  WriteRegStr HKLM "${UNINSTKEY}" "HelpLink" "http://librecad.org/cms/home/get-help/forum.html"
+  WriteRegStr HKLM "${UNINSTKEY}" "InstallLocation" "$INSTDIR"
+  WriteRegStr HKLM "${UNINSTKEY}" "URLInfoAbout" "http://librecad.org/"
+  WriteRegStr HKLM "${UNINSTKEY}" "Comments" "LibreCAD - Open Source 2D-CAD"
+  WriteRegStr HKLM "${UNINSTKEY}" "UninstallString" "$INSTDIR\Uninstall.exe"
+  WriteRegDWORD HKLM "${UNINSTKEY}" "VersionMinor" "0"
+  WriteRegDWORD HKLM "${UNINSTKEY}" "VersionMajor" "2"
+  WriteRegDWORD HKLM "${UNINSTKEY}" "NoModify" "1"
+  WriteRegDWORD HKLM "${UNINSTKEY}" "NoRepair" "1"
+
   ; Open Donate URL
   Exec "rundll32 url.dll,FileProtocolHandler http://librecad.org/donate.html"
 
@@ -188,6 +208,7 @@ Section "Uninstall"
   RMDir "$INSTDIR"
 
   DeleteRegKey /ifempty HKCU "Software\LibreCAD"
+  DeleteRegKey HKLM "${UNINSTKEY}"
 
 SectionEnd
 
