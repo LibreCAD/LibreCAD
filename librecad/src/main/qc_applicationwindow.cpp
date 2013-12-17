@@ -5075,6 +5075,7 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
             break;
 
         case Qt::Key_Plus:
+        case Qt::Key_Equal:
             actionHandler->slotZoomIn();
             e->accept();
             break;
