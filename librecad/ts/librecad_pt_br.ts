@@ -7503,7 +7503,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Restrict Horizontal</source>
-        <translation>Retrição horizontal</translation>
+        <translation>Restrição horizontal</translation>
     </message>
     <message>
         <source>Restrict Vertical</source>
@@ -11577,7 +11577,7 @@ Deseja substituí-lo?</translation>
     </message>
     <message>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;Exploda texto em letras</translation>
+        <translation>&amp;Explodir texto em letras</translation>
     </message>
 </context>
 <context>
@@ -11762,7 +11762,7 @@ Deseja substituí-lo?</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation>Rotacionar D&amp;uas</translation>
+        <translation>Rotacionar d&amp;uas</translation>
     </message>
     <message>
         <source>Specify relative reference point</source>

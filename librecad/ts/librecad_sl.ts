@@ -5,423 +5,430 @@
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
-        <translation type="unfinished"></translation>
+        <translation>Izberi objekt:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Prekliči</translation>
     </message>
 </context>
 <context>
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Specify a point</source>
-        <translation type="unfinished"></translation>
+        <translation>Določi točko</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Prekliči</translation>
     </message>
 </context>
 <context>
     <name>QC_ActionGetSelect</name>
     <message>
         <source>Select objects:</source>
-        <translation type="unfinished"></translation>
+        <translation>Izberi objekte:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Prekliči</translation>
     </message>
 </context>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Datoteka</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Urejanje</translation>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Osredotoči na komandno vrsti&amp;co</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pogled</translation>
     </message>
     <message>
         <source>&amp;Select</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Izberi</translation>
     </message>
     <message>
         <source>&amp;Line</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Črta</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Lok</translation>
     </message>
     <message>
         <source>&amp;Circle</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Krog</translation>
     </message>
     <message>
         <source>&amp;Ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Elipsa</translation>
     </message>
     <message>
         <source>&amp;Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Risanje</translation>
     </message>
     <message>
         <source>&amp;Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dimenzija</translation>
     </message>
     <message>
         <source>&amp;Modify</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Uredi</translation>
     </message>
     <message>
         <source>&amp;Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pritrdi</translation>
     </message>
     <message>
         <source>&amp;Info</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Info</translation>
     </message>
     <message>
         <source>&amp;Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>P&amp;last</translation>
     </message>
     <message>
         <source>&amp;Block</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Blok</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>O...</translation>
     </message>
     <message>
         <source>&amp;Scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Skripte</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Po&amp;moč</translation>
     </message>
     <message>
         <source>De&amp;bugging</source>
-        <translation type="unfinished"></translation>
+        <translation>De&amp;bugging</translation>
     </message>
     <message>
         <source>&amp;Cascade</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kaskada</translation>
     </message>
     <message>
         <source>&amp;Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Razvrsti</translation>
     </message>
     <message>
         <source>Tile &amp;Horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Razpostavi &amp;vodoravno</translation>
     </message>
     <message>
         <source>Creating new file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Izdelujem novo datoteko...</translation>
     </message>
     <message>
         <source>unnamed document %1</source>
-        <translation type="unfinished"></translation>
+        <translation>neimenovana datoteka %1</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Odpiram zadnjo datoteko...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
-        <translation type="unfinished"></translation>
+        <translation>Naložena datoteka:</translation>
     </message>
     <message>
         <source>Opening aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Odpiranje preklicano</translation>
     </message>
     <message>
         <source>Printing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiskanje...</translation>
     </message>
     <message>
         <source>Exiting application...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapiram program...</translation>
     </message>
     <message>
         <source>About...</source>
-        <translation type="unfinished"></translation>
+        <translation>O...</translation>
     </message>
     <message>
         <source>Layer List</source>
-        <translation type="unfinished"></translation>
+        <translation>Seznam plasti</translation>
     </message>
     <message>
         <source>Block List</source>
-        <translation type="unfinished"></translation>
+        <translation>Seznam blokov</translation>
     </message>
     <message>
         <source>Library Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Brskalnik po knjižnici</translation>
     </message>
     <message>
         <source>Print preview for %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Predogled tiskanja za %1</translation>
     </message>
     <message>
         <source>New Drawing created.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova risba ustvarjena</translation>
     </message>
     <message>
         <source>Saving drawing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Shranjujem risbo...</translation>
     </message>
     <message>
         <source>Saved drawing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Shranjena risba %1</translation>
     </message>
     <message>
         <source>Saving drawing under new filename...</source>
-        <translation type="unfinished"></translation>
+        <translation>Risbo shranjujem z imenom ...</translation>
     </message>
     <message>
         <source>Exporting drawing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvažam risbo...</translation>
     </message>
     <message>
         <source>Exported: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvoženo: %1</translation>
     </message>
     <message>
         <source>Exporting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvažam...</translation>
     </message>
     <message>
         <source>Export complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvoz dokončan</translation>
     </message>
     <message>
         <source>Export failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvoz ni uspel!</translation>
     </message>
     <message>
         <source>Printing complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiskanje dokončano</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukazna vrstica</translation>
     </message>
     <message>
         <source>Block &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Blok &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne morem odpreti datoteke
+%1
+Prosim, preverite dovoljenja.</translation>
     </message>
     <message>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne morem shraniti datoteke
+%1
+Prosim, preverite dovoljenja.</translation>
     </message>
     <message>
         <source>&amp;Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Navodila</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Brez</translation>
     </message>
     <message>
         <source>Modules: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Moduli: %1</translation>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Okno</translation>
     </message>
     <message>
         <source>Running script &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Poganjam skript &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Inserting block &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Vstavljam blok &apos;%1&apos;</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Lomljenka</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Vstavi sliko</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Samodejno shranjujem risbo</translation>
     </message>
     <message>
         <source>Auto-saved drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Risba je bila samodejno shranjena</translation>
     </message>
     <message>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne moremsamodejno shraniti datoteke
+&amp;1
+Prosim,preverite dovoljenja.
+Samodejno shranjevanje zaustalvjeno.</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomoč</translation>
     </message>
     <message>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
-        <translation type="unfinished"></translation>
+        <translation>Težave, ni bilo mogoče najti datotek s pomočjo.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Uvoz</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Orodjarne</translation>
     </message>
     <message>
         <source>Compiled on: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Prevedeno na: %1</translation>
     </message>
     <message>
         <source>Program Icons Supplied by</source>
-        <translation type="unfinished"></translation>
+        <translation>Programske ikone uredili pri</translation>
     </message>
     <message>
         <source>Splash and Logo supplied by</source>
-        <translation type="unfinished"></translation>
+        <translation>Zagonska slika in logo uredili pri </translation>
     </message>
     <message>
         <source>Main Website : </source>
-        <translation type="unfinished"></translation>
+        <translation>Glavna spletna stran :</translation>
     </message>
     <message>
         <source>Version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Verzija: %1</translation>
     </message>
     <message>
         <source>SCM Revision: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>SCM Revizija: %1</translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;%1 %2</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
-        <translation type="unfinished"></translation>
+        <translation>Opozorilo: datoteka je že odprta:</translation>
     </message>
     <message>
         <source>Cannot save the file </source>
-        <translation type="unfinished"></translation>
+        <translation>Ne morem shraniti datoteke</translation>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation> , prosim preverite ime datoteke in dovoljenja.</translation>
     </message>
     <message>
         <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosim razmislite o donaciji za LibreCAD kot pomoč pri vzdrževanju kode in spletne strani.</translation>
     </message>
     <message>
         <source>Su&amp;b-Window mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Način Po&amp;d-Okno</translation>
     </message>
     <message>
         <source>Tile &amp;Vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Razporedi na&amp;vpično</translation>
     </message>
     <message>
         <source>Ta&amp;b mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Način z zavi&amp;hki</translation>
     </message>
     <message>
         <source>Draw &amp;Order</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrstni red &amp;risanja</translation>
     </message>
     <message>
         <source>New document from template: </source>
-        <translation type="unfinished"></translation>
+        <translation>Novi dokument iz predloge:</translation>
     </message>
     <message>
         <source>Select Template aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbira predloge prekinjena</translation>
     </message>
     <message>
         <source>Auto-saving failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Samodejno shranjevanje spodletelo</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteka</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Urejanje</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Pogled</translation>
     </message>
     <message>
         <source>Pen Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbira peresa</translation>
     </message>
     <message>
         <source>Snap Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbira pripenjanja</translation>
     </message>
     <message>
         <source>Tool Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Možnosti orodij</translation>
     </message>
     <message>
         <source>CAD Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>CAD orodja</translation>
     </message>
     <message>
         <source>Export as</source>
-        <translation type="unfinished"></translation>
+        <translation>Izvozi kot</translation>
     </message>
     <message>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="unfinished"></translation>
+        <translation>Prevajalnik: Clang %1.%2.%3</translation>
     </message>
     <message>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="unfinished"></translation>
+        <translation>Prevajalnik: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
         <source>Compiler: Microsoft Visual C++&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Prevajalnik: microsoft Visual C++&lt;br&gt;</translation>
     </message>
     <message>
         <source>Qt Version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Qt verzija: %1</translation>
     </message>
     <message>
         <source>Help files not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Datotek s pomočjo ni mogoče najti</translation>
     </message>
 </context>
 <context>
@@ -429,297 +436,299 @@ Auto-save disabled.</source>
     <message>
         <source>Do you really want to close the file
 %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ali res želite zapreti datoteko
+%1?</translation>
     </message>
     <message>
         <source>Do you really want to close the drawing?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ali res želite zapreti risbo?</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapiram risbo</translation>
     </message>
 </context>
 <context>
     <name>QG_ActionFactory</name>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zapri</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Mreža</translation>
     </message>
     <message>
         <source>&amp;Application Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nastavitve programa</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Statusna vrstica</translation>
     </message>
     <message>
         <source>&amp;Draft</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Draft</translation>
     </message>
     <message>
         <source>Open IDE</source>
-        <translation type="unfinished"></translation>
+        <translation>Open IDE</translation>
     </message>
     <message>
         <source>Run Script..</source>
-        <translation type="unfinished"></translation>
+        <translation>Zaženi skript...</translation>
     </message>
     <message>
         <source>&amp;Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nastavitve</translation>
     </message>
     <message>
         <source>&amp;Export...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Izvoz</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tiskaj</translation>
     </message>
     <message>
         <source>CTRL-G</source>
-        <translation type="unfinished"></translation>
+        <translation>CTRL-G</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Konec</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Kazalec izbire</translation>
     </message>
 </context>
 <context>
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Možnosti loka</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>V smeri urnih kazalcev</translation>
     </message>
     <message>
         <source>Counterclockwise</source>
-        <translation type="unfinished"></translation>
+        <translation>V smeri obratno urnih kazalcev</translation>
     </message>
 </context>
 <context>
     <name>QG_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Možnosti tangencialnega loka</translation>
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Polmer tangencialnega loka</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Skupni notranji kot tangencialnega loka</translation>
     </message>
     <message>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Polmer</translation>
     </message>
     <message>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kot</translation>
     </message>
 </context>
 <context>
     <name>QG_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Možnosti prirezovanja</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Obreži</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>izberi za izrez obeh predmetov pri prirezovanju</translation>
     </message>
     <message>
         <source>Length 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dolžina 1:</translation>
     </message>
     <message>
         <source>Length 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dolžina 2:</translation>
     </message>
 </context>
 <context>
     <name>QG_BlockDialog</name>
     <message>
         <source>Block Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Nastavitve bloka</translation>
     </message>
     <message>
         <source>Block Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ime bloka:</translation>
     </message>
     <message>
         <source>Renaming Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Preimenovanje bloka</translation>
     </message>
     <message>
         <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloka ni mogoče poimenovati. Blok imenovan &quot;%1&quot; že obstaja.</translation>
     </message>
 </context>
 <context>
     <name>QG_BlockWidget</name>
     <message>
         <source>Remove the active block</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstrani aktivni blok</translation>
     </message>
     <message>
         <source>Rename the active block</source>
-        <translation type="unfinished"></translation>
+        <translation>Preimenuj aktivni blok</translation>
     </message>
     <message>
         <source>Edit the active block
 in a separate window</source>
-        <translation type="unfinished"></translation>
+        <translation>Uredi aktivni blok
+v ločenem oknu</translation>
     </message>
     <message>
         <source>Insert the active block</source>
-        <translation type="unfinished"></translation>
+        <translation>Vstavi aktivni blok</translation>
     </message>
     <message>
         <source>Block Menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Meni bloka</translation>
     </message>
     <message>
         <source>&amp;Defreeze all Blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Odmrzni vse bloke</translation>
     </message>
     <message>
         <source>&amp;Freeze all Blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zamrzni vse bloke</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dodaj blok</translation>
     </message>
     <message>
         <source>&amp;Remove Block</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Odstrani blok</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Uredi blok</translation>
     </message>
     <message>
         <source>&amp;Toggle Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Spremeni vidljivost</translation>
     </message>
     <message>
         <source>Show all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Prikaži vse bloke</translation>
     </message>
     <message>
         <source>Hide all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrij vse bloke</translation>
     </message>
     <message>
         <source>&amp;Rename Block</source>
-        <translation type="unfinished"></translation>
+        <translation>P&amp;reimenuj blok</translation>
     </message>
     <message>
         <source>&amp;Insert Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Vstav%i blok</translation>
     </message>
     <message>
         <source>&amp;Create New Block</source>
-        <translation type="unfinished"></translation>
+        <translation>I&amp;zdelaj novi blok</translation>
     </message>
     <message>
         <source>Create Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Izdelaj blok</translation>
     </message>
     <message>
         <source>Add an empty block</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj prazen blok</translation>
     </message>
     <message>
         <source>save the active block to a file</source>
-        <translation type="unfinished"></translation>
+        <translation>shrani aktivni blok v datoteko</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBar</name>
     <message>
         <source>CAD Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>CAD orodja</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarArcs</name>
     <message>
         <source>Arcs</source>
-        <translation type="unfinished"></translation>
+        <translation>Loki</translation>
     </message>
     <message>
         <source>Arc with three points</source>
-        <translation type="unfinished"></translation>
+        <translation>Lok s tremi točkami</translation>
     </message>
     <message>
         <source>Arc with Center, Point, Angles</source>
-        <translation type="unfinished"></translation>
+        <translation>Lok s središčem, točko in kotom</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Nazaj v glavni meni</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished"></translation>
+        <translation>Koncentrično</translation>
     </message>
     <message>
         <source>Arc tangential to base entity with radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Lok tangencialen na začetni predmet s polmerom</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarCircles</name>
     <message>
         <source>Circles</source>
-        <translation type="unfinished"></translation>
+        <translation>Krožnice</translation>
     </message>
     <message>
         <source>Circle with two opposite points</source>
-        <translation type="unfinished"></translation>
+        <translation>Krožnica z dvema nasprotnima točkama</translation>
     </message>
     <message>
         <source>Circle with center and radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Krožnica s središčem in polmerom</translation>
     </message>
     <message>
         <source>Circle with center and point</source>
-        <translation type="unfinished"></translation>
+        <translation>Krožnica s tremi točkami</translation>
     </message>
     <message>
         <source>Circle with three points</source>
-        <translation type="unfinished"></translation>
+        <translation>Nazaj v glavni meni</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Nazaj na glavni meni</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished"></translation>
+        <translation>Koncentrično</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -766,70 +775,70 @@ p, li { white-space: pre-wrap; }
     <name>QG_CadToolBarDim</name>
     <message>
         <source>Dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimenzije</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Nazaj v glavni meni</translation>
     </message>
     <message>
         <source>Diametric Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Diametrične dimenzije</translation>
     </message>
     <message>
         <source>Radial Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Radialne dimenzije</translation>
     </message>
     <message>
         <source>Vertical Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikalne dimenzije</translation>
     </message>
     <message>
         <source>Horizontal Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Vodoravne dimenzije</translation>
     </message>
     <message>
         <source>Linear Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Linearne dimenzije</translation>
     </message>
     <message>
         <source>Aligned Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Poravnane dimenzije</translation>
     </message>
     <message>
         <source>Angular Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Kotne dimenzije</translation>
     </message>
     <message>
         <source>Leader</source>
-        <translation type="unfinished"></translation>
+        <translation>Vodilo</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished"></translation>
+        <translation>Koncentrično</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarEllipses</name>
     <message>
         <source>Ellipses</source>
-        <translation type="unfinished"></translation>
+        <translation>Elipse</translation>
     </message>
     <message>
         <source>Ellipse arc with center, two points and angles</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliptični lok s središčem, dvema točkama in kotom</translation>
     </message>
     <message>
         <source>Ellipse with Center and two points</source>
-        <translation type="unfinished"></translation>
+        <translation>Elipsa s središčem in dvema točkama</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Nazaj v glavni meni</translation>
     </message>
     <message>
         <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Nariši elipso z goriščema in točko na elipsi</translation>
     </message>
     <message>
         <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
@@ -845,7 +854,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Koncentrično</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -872,7 +881,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kot</translation>
     </message>
     <message>
         <source>Total length of selected entities</source>
@@ -884,7 +893,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Koncentrično</translation>
     </message>
 </context>
 <context>
@@ -970,7 +979,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Create Block</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Izdelaj blok</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Lines&quot;</source>
@@ -1010,7 +1019,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vstavi sliko</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Modify&quot;</source>
@@ -1179,7 +1188,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Koncentrično</translation>
     </message>
 </context>
 <context>
@@ -1580,7 +1589,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_DlgDimLinear</name>
     <message>
         <source>Linear Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Linearne dimenzije</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -1916,7 +1925,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kot</translation>
     </message>
     <message>
         <source>Text:</source>
@@ -2596,7 +2605,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kot</translation>
     </message>
     <message>
         <source>Decimal Degrees</source>
@@ -2752,7 +2761,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Mreža</translation>
     </message>
     <message>
         <source>Splines</source>
@@ -3409,7 +3418,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -4367,7 +4376,7 @@ The contents of a Help Layer should not appear in printout.</source>
     </message>
     <message>
         <source>&amp;Toggle Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Spremeni vidljivost</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
@@ -4809,7 +4818,7 @@ The contents of a Help Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kot</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -4821,7 +4830,7 @@ The contents of a Help Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">V smeri urnih kazalcev</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
@@ -4863,7 +4872,7 @@ The contents of a Help Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Obreži</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
@@ -5361,7 +5370,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Brez</translation>
     </message>
     <message>
         <source>Inch</source>
@@ -5588,14 +5597,14 @@ Do you want to replace it?</source>
     <name>RS_ActionBlocksAdd</name>
     <message>
         <source>&amp;Add Block</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Dodaj blok</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksAttributes</name>
     <message>
         <source>&amp;Rename Block</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">P&amp;reimenuj blok</translation>
     </message>
 </context>
 <context>
@@ -5610,14 +5619,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksEdit</name>
     <message>
         <source>&amp;Edit Block</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Uredi blok</translation>
     </message>
 </context>
 <context>
@@ -5642,7 +5651,7 @@ Do you want to replace it?</source>
     <name>RS_ActionBlocksInsert</name>
     <message>
         <source>&amp;Insert Block</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vstav%i blok</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -5654,7 +5663,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Enter angle:</source>
@@ -5689,7 +5698,7 @@ Do you want to replace it?</source>
     <name>RS_ActionBlocksRemove</name>
     <message>
         <source>&amp;Remove Block</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Odstrani blok</translation>
     </message>
 </context>
 <context>
@@ -5733,7 +5742,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify second extension line origin</source>
@@ -5764,7 +5773,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Select second line</source>
@@ -5799,7 +5808,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify dimension line location</source>
@@ -5822,7 +5831,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify next point</source>
@@ -5857,7 +5866,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify second extension line origin</source>
@@ -5900,7 +5909,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify dimension line position or enter angle:</source>
@@ -5931,7 +5940,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify radius</source>
@@ -5970,7 +5979,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -5997,7 +6006,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify end angle</source>
@@ -6032,7 +6041,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify radius</source>
@@ -6059,7 +6068,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -6086,7 +6095,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -6117,7 +6126,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify circle radius</source>
@@ -6140,7 +6149,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify the second line</source>
@@ -6163,7 +6172,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify the first point on the tangent circle</source>
@@ -6198,7 +6207,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify the second line/arc/circle</source>
@@ -6225,7 +6234,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify the another arc/circle</source>
@@ -6252,7 +6261,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Back</source>
@@ -6287,7 +6296,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify the second point on ellipse</source>
@@ -6322,7 +6331,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify endpoint of major axis</source>
@@ -6361,7 +6370,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify the first point on ellipse</source>
@@ -6396,7 +6405,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify second focus of ellipse</source>
@@ -6423,7 +6432,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify the second line</source>
@@ -6489,7 +6498,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Enter angle:</source>
@@ -6524,7 +6533,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
@@ -6567,7 +6576,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Enter angle:</source>
@@ -6606,7 +6615,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Select second line</source>
@@ -6637,7 +6646,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
 </context>
 <context>
@@ -6648,7 +6657,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -6675,7 +6684,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
@@ -6694,7 +6703,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Enter number:</source>
@@ -6729,7 +6738,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify through point</source>
@@ -6798,7 +6807,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify second corner</source>
@@ -6833,7 +6842,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify second corner</source>
@@ -6860,7 +6869,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify position</source>
@@ -6887,7 +6896,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
@@ -6906,7 +6915,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Back</source>
@@ -6933,7 +6942,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Enter text:</source>
@@ -6956,14 +6965,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawPolyline</name>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Lomljenka</translation>
     </message>
     <message>
         <source>Draw polylines</source>
@@ -6975,7 +6984,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
@@ -7010,7 +7019,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
@@ -7041,7 +7050,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Enter text:</source>
@@ -7072,7 +7081,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
 </context>
 <context>
@@ -7087,7 +7096,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
 </context>
 <context>
@@ -7156,7 +7165,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify second line</source>
@@ -7199,7 +7208,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify next point of polygon</source>
@@ -7226,7 +7235,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify second point of distance</source>
@@ -7257,7 +7266,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify point</source>
@@ -7288,7 +7297,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
 </context>
 <context>
@@ -7375,7 +7384,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Enter angle:</source>
@@ -7424,7 +7433,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Select second entity</source>
@@ -7463,7 +7472,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify cutting point</source>
@@ -7501,7 +7510,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify second break point on the same polyline</source>
@@ -7556,7 +7565,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
 </context>
 <context>
@@ -7585,7 +7594,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify second point of mirror line</source>
@@ -7608,7 +7617,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify target point</source>
@@ -7639,7 +7648,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify target point</source>
@@ -7704,7 +7713,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify relative reference point</source>
@@ -7743,7 +7752,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
 </context>
 <context>
@@ -7758,7 +7767,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
 </context>
 <context>
@@ -7773,7 +7782,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify second corner</source>
@@ -7808,7 +7817,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Select limiting entity</source>
@@ -7905,7 +7914,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
 </context>
 <context>
@@ -7940,7 +7949,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify adding node&apos;s point</source>
@@ -7979,7 +7988,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
@@ -8026,7 +8035,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify deleting node&apos;s point</source>
@@ -8081,7 +8090,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify first node</source>
@@ -8124,7 +8133,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
 </context>
 <context>
@@ -8147,7 +8156,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Entity must be a line, arc or polyline.</source>
@@ -8190,7 +8199,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify first segment</source>
@@ -8224,7 +8233,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Select to delete</source>
@@ -8333,7 +8342,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Choose second point of intersection line</source>
@@ -8377,7 +8386,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Choose second edge</source>
@@ -8400,7 +8409,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Set &amp;Relative Zero</source>
@@ -8471,7 +8480,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Zoom panning</source>
@@ -8504,7 +8513,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prekliči</translation>
     </message>
     <message>
         <source>Specify second edge</source>

@@ -8494,7 +8494,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation type="unfinished"></translation>
+        <translation>Укажите конечный угол или [угол/длину хорды]</translation>
     </message>
 </context>
 <context>

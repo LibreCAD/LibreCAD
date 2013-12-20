@@ -7,7 +7,7 @@
         <location filename="../asciifile/asciifile.cpp" line="37"/>
         <location filename="../asciifile/asciifile.cpp" line="43"/>
         <source>Read ascii points</source>
-        <translation type="unfinished"></translation>
+        <translation>Точки в формате ASCII</translation>
     </message>
 </context>
 <context>
@@ -28,27 +28,27 @@
         <location filename="../align/align.cpp" line="20"/>
         <location filename="../align/align.cpp" line="27"/>
         <source>Align</source>
-        <translation type="unfinished"></translation>
+        <translation>Выровнять</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="40"/>
         <source>first base point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Первая базовая точка:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="42"/>
         <source>first target point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Первая целевая точка:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="44"/>
         <source>second base point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Вторая базовая точка:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="46"/>
         <source>second target point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Вторая целевая точка:</translation>
     </message>
 </context>
 <context>
@@ -97,12 +97,12 @@
     <message>
         <location filename="../list/list.cpp" line="78"/>
         <source>Line thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>Толщина линии</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Идент.</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="85"/>
@@ -123,23 +123,23 @@
     <message>
         <location filename="../list/list.cpp" line="96"/>
         <source>from point</source>
-        <translation type="unfinished"></translation>
+        <translation>от точки</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
         <source>to point</source>
-        <translation type="unfinished"></translation>
+        <translation>до точки</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="104"/>
         <location filename="../list/list.cpp" line="128"/>
         <source>length</source>
-        <translation type="unfinished"></translation>
+        <translation>длинна</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="109"/>
         <source>Angle in XY plane</source>
-        <translation type="unfinished"></translation>
+        <translation>Угол в плоскости XY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="110"/>
@@ -156,23 +156,23 @@
         <location filename="../list/list.cpp" line="132"/>
         <location filename="../list/list.cpp" line="142"/>
         <source>center point</source>
-        <translation type="unfinished"></translation>
+        <translation>центральная точка</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="122"/>
         <location filename="../list/list.cpp" line="136"/>
         <source>radius</source>
-        <translation type="unfinished"></translation>
+        <translation>радиус</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="123"/>
         <source>initial angle</source>
-        <translation type="unfinished"></translation>
+        <translation>начальный угол</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="124"/>
         <source>final angle</source>
-        <translation type="unfinished"></translation>
+        <translation>конечный угол</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="131"/>
@@ -182,12 +182,12 @@
     <message>
         <location filename="../list/list.cpp" line="137"/>
         <source>circumference</source>
-        <translation type="unfinished"></translation>
+        <translation>периметр</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="138"/>
         <source>area</source>
-        <translation type="unfinished"></translation>
+        <translation>площадь</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="141"/>
@@ -197,7 +197,7 @@
     <message>
         <location filename="../list/list.cpp" line="145"/>
         <source>major axis</source>
-        <translation type="unfinished"></translation>
+        <translation>главные оси</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="163"/>
@@ -237,7 +237,7 @@
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>Insertion point</source>
-        <translation type="unfinished"></translation>
+        <translation>Точка вставки</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="188"/>
@@ -252,12 +252,12 @@
     <message>
         <location filename="../list/list.cpp" line="190"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="190"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Да</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191"/>
@@ -331,12 +331,12 @@
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите исходный объект</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите объекты для изменения</translation>
     </message>
 </context>
 <context>
@@ -353,7 +353,7 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Read ascii points</source>
-        <translation type="unfinished"></translation>
+        <translation>Точки в формате ASCII</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="241"/>
@@ -418,12 +418,12 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="262"/>
         <source>Point Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Номер точки</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="262"/>
         <source>Draw point number</source>
-        <translation type="unfinished"></translation>
+        <translation>Нумеровать точки</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
@@ -463,12 +463,12 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="320"/>
         <source>Point 2D layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Слой для 2D точек пуст</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="323"/>
         <source>Point 3D layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Слой для 3D точек пуст</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="326"/>
@@ -488,7 +488,7 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="331"/>
         <source>Point number layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Слой нумерации точек пуст</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="332"/>
@@ -552,7 +552,7 @@
         <location filename="../importshp/importshp.cpp" line="68"/>
         <location filename="../importshp/importshp.cpp" line="266"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Неизвестно</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="76"/>
