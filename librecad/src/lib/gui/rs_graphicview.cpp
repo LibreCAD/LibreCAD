@@ -155,7 +155,10 @@ void RS_GraphicView::setFactorY(double f) {
     }
 }
 
-
+void RS_GraphicView::setOffset(int ox, int oy) {
+    setOffsetX(ox);
+    setOffsetY(oy);
+}
 
 /**
  * @return true if the grid is switched on.

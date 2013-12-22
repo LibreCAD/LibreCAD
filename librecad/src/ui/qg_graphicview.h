@@ -75,6 +75,12 @@ public:
     virtual void layerToggled(RS_Layer*) {
         redraw(RS2::RedrawDrawing); 
     }
+    /**
+     * @brief setOffset
+     * @param ox, offset X
+     * @param oy, offset Y
+     */
+    virtual void setOffset(int ox, int oy);
 
 protected:
     virtual void emulateMouseMoveEvent();

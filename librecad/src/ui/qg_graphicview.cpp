@@ -28,6 +28,7 @@
 
 #include <QGridLayout>
 #include <QLabel>
+#include <QDebug>
 
 #include "rs_actionzoomin.h"
 #include "rs_actionzoompan.h"
@@ -600,10 +601,10 @@ void QG_GraphicView::adjustOffsetControls() {
         max = RS_Vector(100,100);
     }
 
-        int minVal = (int)(min.x * getFactor().x
+        int minVal = (int)(-ox-toGuiDX(getWidth())*0.5
                         - QG_SCROLLMARGIN - getBorderLeft());
-        int maxVal = (int)(max.x * getFactor().x
-                        - getWidth() + QG_SCROLLMARGIN + getBorderRight());
+        int maxVal = (int)(-ox+toGuiDX(getWidth())*0.5
+                        + QG_SCROLLMARGIN + getBorderRight());
 
         hScrollBar->setValue(0);
         if (minVal<=maxVal) {
@@ -613,10 +614,10 @@ void QG_GraphicView::adjustOffsetControls() {
 
         //hScrollBar->setMaxValue(maxVal);
 
-        minVal = (int)(getHeight() - max.y * getFactor().y
+        minVal = (int)(oy-toGuiDY(getHeight())*0.5
                         - QG_SCROLLMARGIN - getBorderTop());
-        maxVal = (int)(QG_SCROLLMARGIN + getBorderBottom()
-                        - (min.y * getFactor().y));
+        maxVal = (int)(oy+toGuiDY(getHeight())*0.5
+                       +QG_SCROLLMARGIN + getBorderBottom());
 
         if (minVal<=maxVal) {
                 vScrollBar->setRange(minVal, maxVal);
@@ -644,7 +645,8 @@ void QG_GraphicView::adjustOffsetControls() {
     RS_DEBUG->print("H min: %d / max: %d / step: %d / value: %d\n",
                     hScrollBar->minimum(), hScrollBar->maximum(),
                     hScrollBar->pageStep(), ox);
-    RS_DEBUG->print("V min: %d / max: %d / step: %d / value: %d\n",
+//    DEBUG_HEADER();
+    RS_DEBUG->print(/*RS_Debug::D_WARNING, */"V min: %d / max: %d / step: %d / value: %d\n",
                     vScrollBar->minimum(), vScrollBar->maximum(),
                     vScrollBar->pageStep(), oy);
 
@@ -702,6 +704,17 @@ void QG_GraphicView::slotVScrolled(int value) {
     //if (isUpdateEnabled()) {
   //  updateGrid();
     redraw();
+}
+/**
+ * @brief setOffset
+ * @param ox, offset X
+ * @param oy, offset Y
+ */
+void QG_GraphicView::setOffset(int ox, int oy) {
+//    DEBUG_HEADER();
+//    qDebug()<<"adjusting offset from ("<<getOffsetX()<<","<<getOffsetY()<<") to ("<<ox<<" , "<<oy<<")";
+    RS_GraphicView::setOffset(ox, oy);
+    adjustOffsetControls();
 }
 
 QPixmap* QG_GraphicView::getPixmapForView(QPixmap *pm)

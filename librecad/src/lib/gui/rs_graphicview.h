@@ -222,12 +222,11 @@ public:
         return factor;
     }
     /**
-     * Sets the offset of the graphic.
+     * @brief setOffset
+     * @param ox, offset X
+     * @param oy, offset Y
      */
-    void setOffset(int ox, int oy) {
-        setOffsetX(ox);
-        setOffsetY(oy);
-    }
+    virtual void setOffset(int ox, int oy);
     void setOffsetX(int ox) {
         offsetX = ox;
     }
