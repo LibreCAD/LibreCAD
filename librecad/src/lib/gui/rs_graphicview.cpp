@@ -156,6 +156,8 @@ void RS_GraphicView::setFactorY(double f) {
 }
 
 void RS_GraphicView::setOffset(int ox, int oy) {
+//    DEBUG_HEADER();
+//    RS_DEBUG->print(/*RS_Debug::D_WARNING, */"set offset from (%d, %d) to (%d, %d)", getOffsetX(), getOffsetY(), ox, oy);
     setOffsetX(ox);
     setOffsetY(oy);
 }
@@ -701,14 +703,14 @@ void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
         RS_DEBUG->print("f: %f/%f", fx, fy);
 
 
-//        RS_DEBUG->print("adjustOffsetControls");
-        adjustOffsetControls();
 //        RS_DEBUG->print("adjustZoomControls");
         adjustZoomControls();
 //        RS_DEBUG->print("centerOffsetX");
         centerOffsetX();
 //        RS_DEBUG->print("centerOffsetY");
         centerOffsetY();
+//        RS_DEBUG->print("adjustOffsetControls");
+        adjustOffsetControls();
 //        RS_DEBUG->print("updateGrid");
         //    updateGrid();
 

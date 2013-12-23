@@ -695,7 +695,8 @@ void QG_GraphicView::slotVScrolled(int value) {
     //static int running = false;
     //if (!running) {
     //running = true;
-    ////RS_DEBUG->print("value y: %d\n", value);
+//    DEBUG_HEADER();
+    RS_DEBUG->print(/*RS_Debug::D_WARNING,*/ "%s %s(): set vertical offset from %d to %d\n", __FILE__, __FUNCTION__, getOffsetY(), value);
     if (vScrollBar->maximum()==vScrollBar->minimum()) {
         centerOffsetY();
     } else {
@@ -714,6 +715,7 @@ void QG_GraphicView::setOffset(int ox, int oy) {
 //    DEBUG_HEADER();
 //    qDebug()<<"adjusting offset from ("<<getOffsetX()<<","<<getOffsetY()<<") to ("<<ox<<" , "<<oy<<")";
     RS_GraphicView::setOffset(ox, oy);
+    // need to adjust offset control for scrollbars when setting graphicview offset
     adjustOffsetControls();
 }
 
