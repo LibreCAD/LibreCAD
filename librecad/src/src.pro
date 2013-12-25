@@ -279,7 +279,9 @@ SOURCES += \
     lib/scripting/rs_python_wrappers.cpp \
     lib/scripting/rs_script.cpp \
     lib/scripting/rs_scriptlist.cpp \
-    ui/forms/qg_snaptoolbar.cpp
+    ui/forms/qg_snaptoolbar.cpp \
+    lib/engine/rs_color.cpp \
+    lib/engine/rs_pen.cpp
 
 # ################################################################################
 # Command
