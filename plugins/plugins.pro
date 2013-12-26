@@ -47,6 +47,7 @@ TRANSLATIONS = ./ts/plugins_ca.ts \
     ./ts/plugins_es_ve.ts \
     ./ts/plugins_fi.ts \
     ./ts/plugins_fr.ts \
+    ./ts/plugins_hi.ts \
     ./ts/plugins_hu.ts \
     ./ts/plugins_id_ID.ts \
     ./ts/plugins_it.ts \
