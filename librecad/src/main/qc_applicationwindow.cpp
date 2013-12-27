@@ -2221,7 +2221,7 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
         if (w->widget())
         {
 
-            qobject_cast<QC_MDIWindow*>(w->widget())->slotZoomAuto();
+//            qobject_cast<QC_MDIWindow*>(w->widget())->slotZoomAuto();
             for(int i=0;i<mdiAreaCAD->subWindowList().size();i++){
                 QMdiSubWindow* m=mdiAreaCAD->subWindowList().at(i);
                 if( m != w){
