@@ -25,8 +25,10 @@
 **********************************************************************/
 
 #include <QDir>
+#include <QDebug>
 
 #include "rs_graphic.h"
+#include "rs_dialogfactory.h"
 
 #include "rs_debug.h"
 #include "rs_fileio.h"
@@ -289,120 +291,128 @@ bool RS_Graphic::BackupDrawingFile(const QString &filename)
 
 bool RS_Graphic::save(bool isAutoSave)
 {
-        bool ret	= false;
+    bool ret	= false;
 
-        RS_DEBUG->print("RS_Graphic::save: Entering...");
+    RS_DEBUG->print("RS_Graphic::save: Entering...");
 
-        /*	- Save drawing file only if it has been modifed.
+    /*	- Save drawing file only if it has been modifed.
          *	- Notes: Potentially dangerous in case of an internal
          *	  coding error that make LibreCAD not aware of modification
          *	  when some kind of drawing modification is done.
          *	----------------------------------------------------------- */
-        if (isModified() == true)
+    if (isModified() == true)
+    {
+        const QString		*actualName;
+        RS2::FormatType	actualType;
+
+        actualType	= formatType;
+
+        if (isAutoSave == true)
         {
-                const QString		*actualName;
-                RS2::FormatType	actualType;
+            actualName = new QString(autosaveFilename);
 
-                actualType	= formatType;
+            if (formatType == RS2::FormatUnknown)
+                actualType = RS2::FormatDXFRW;
+        }
+        //	- This is not an AutoSave operation.  This is a manual
+        //	  save operation.  So, ...
+        //		- Set working file name to the drawing file name.
+        //		- Backup drawing file (if necessary).
+        //	------------------------------------------------------
+        else
+        {
+            QFileInfo	*finfo				= new QFileInfo(filename);
+            QDateTime m=finfo->lastModified();
+            delete finfo;
+            //bug#3414993
+            //modifiedTime should only be used for the same filename
+//            DEBUG_HEADER();
+//            qDebug()<<"currentFileName= "<<currentFileName;
+//            qDebug()<<"Checking file: filename= "<<filename;
+//            qDebug()<<"Checking file: "<<filename;
+//            qDebug()<<"modifiedTime.isValid()="<<modifiedTime.isValid();
+//            qDebug()<<"Previous timestamp: "<<modifiedTime;
+//            qDebug()<<"Current timestamp: "<<m;
+            if ( currentFileName == QString(filename)
+                 && modifiedTime.isValid() && m != modifiedTime ) {
+                //file modified by others
+//            qDebug()<<"detected on disk change";
+                RS_DIALOGFACTORY->commandMessage(QObject::tr("File on disk modified. Please save to another file to avoid data loss! File modified: %1").arg(filename));
+                return false;
+            }
 
-                if (isAutoSave == true)
-                {
-                        actualName = new QString(autosaveFilename);
-
-                        if (formatType == RS2::FormatUnknown)
-                                actualType = RS2::FormatDXFRW;
-                }
-                //	- This is not an AutoSave operation.  This is a manual
-                //	  save operation.  So, ...
-                //		- Set working file name to the drawing file name.
-                //		- Backup drawing file (if necessary).
-                //	------------------------------------------------------
-                else
-                {
-                    QFileInfo	*finfo				= new QFileInfo(filename);
-                    QDateTime m=finfo->lastModified();
-                    delete finfo;
-                    //bug#3414993
-                    //modifiedTime should only be used for the same filename
-                    if ( currentFileName == QString(filename)
-                         && modifiedTime.isValid() && m != modifiedTime ) {
-                        //file modified by others
-                        RS_DEBUG->print(RS_Debug::D_WARNING, "File on disk modified, can not save");
-                        return false;
-                    }
-
-                        actualName = new QString(filename);
+            actualName = new QString(filename);
             if (RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)!=0)
                 BackupDrawingFile(filename);
-                }
+        }
 
-                /*	Save drawing file if able to created associated object.
+        /*	Save drawing file if able to created associated object.
                  *	------------------------------------------------------- */
-                if (actualName != NULL)
-                {
-                        RS_DEBUG->print("RS_Graphic::save: File: %s", actualName->toLatin1().data());
-                        RS_DEBUG->print("RS_Graphic::save: Format: %d", (int) actualType);
-                        RS_DEBUG->print("RS_Graphic::save: Export...");
+        if (actualName != NULL)
+        {
+            RS_DEBUG->print("RS_Graphic::save: File: %s", actualName->toLatin1().data());
+            RS_DEBUG->print("RS_Graphic::save: Format: %d", (int) actualType);
+            RS_DEBUG->print("RS_Graphic::save: Export...");
 
-                        ret = RS_FileIO::instance()->fileExport(*this, *actualName, actualType);
-                    QFileInfo	*finfo				= new QFileInfo(*actualName);
-                    modifiedTime=finfo->lastModified();
-                    currentFileName=*actualName;
-                    delete finfo;
-                        delete actualName;
-                }
-                else
-                {
-                        RS_DEBUG->print("RS_Graphic::save: Can't create object!");
-                        RS_DEBUG->print("RS_Graphic::save: File not saved!");
-                }
-
-                /*	Remove AutoSave file after user has successfully saved file.
-                 *	------------------------------------------------------------ */
-                if (ret && !isAutoSave)
-                {
-                        /*	Autosave file object.
-                         *	*/
-                        QFile	*qf_file	= new QFile(autosaveFilename);
-
-                        /*	Tell that drawing file is no more modified.
-                         *	------------------------------------------- */
-                        setModified(false);
-                        layerList.setModified(false);
-                        blockList.setModified(false);
-
-                        /*	- Remove autosave file, if able to create associated object,
-                         *	  and if autosave file exist.
-                         *	------------------------------------------------------------ */
-                        if (qf_file != NULL)
-                        {
-                                if (qf_file->exists())
-                                {
-                                        RS_DEBUG->print(	"RS_Graphic::save: Removing old autosave file %s",
-                                                                                        autosaveFilename.toLatin1().data());
-                                        qf_file->remove();
-                                }
-
-                                delete qf_file;
-                        }
-                        else
-                        {
-                                RS_DEBUG->print("RS_Graphic::save: Can't create object!");
-                                RS_DEBUG->print("RS_Graphic::save: Autosave file not removed");
-                        }
-                }
-
-                RS_DEBUG->print("RS_Graphic::save: Done!");
+            ret = RS_FileIO::instance()->fileExport(*this, *actualName, actualType);
+            QFileInfo	*finfo				= new QFileInfo(*actualName);
+            modifiedTime=finfo->lastModified();
+            currentFileName=*actualName;
+            delete finfo;
+            delete actualName;
         }
         else
         {
-                RS_DEBUG->print("RS_Graphic::save: File not modified, not saved");
-                ret = true;
+            RS_DEBUG->print("RS_Graphic::save: Can't create object!");
+            RS_DEBUG->print("RS_Graphic::save: File not saved!");
         }
 
-        RS_DEBUG->print("RS_Graphic::save: Exiting...");
+        /*	Remove AutoSave file after user has successfully saved file.
+                 *	------------------------------------------------------------ */
+        if (ret && !isAutoSave)
+        {
+            /*	Autosave file object.
+                         *	*/
+            QFile	*qf_file	= new QFile(autosaveFilename);
 
-        return ret;
+            /*	Tell that drawing file is no more modified.
+                         *	------------------------------------------- */
+            setModified(false);
+            layerList.setModified(false);
+            blockList.setModified(false);
+
+            /*	- Remove autosave file, if able to create associated object,
+                         *	  and if autosave file exist.
+                         *	------------------------------------------------------------ */
+            if (qf_file != NULL)
+            {
+                if (qf_file->exists())
+                {
+                    RS_DEBUG->print(	"RS_Graphic::save: Removing old autosave file %s",
+                                        autosaveFilename.toLatin1().data());
+                    qf_file->remove();
+                }
+
+                delete qf_file;
+            }
+            else
+            {
+                RS_DEBUG->print("RS_Graphic::save: Can't create object!");
+                RS_DEBUG->print("RS_Graphic::save: Autosave file not removed");
+            }
+        }
+
+        RS_DEBUG->print("RS_Graphic::save: Done!");
+    }
+    else
+    {
+        RS_DEBUG->print("RS_Graphic::save: File not modified, not saved");
+        ret = true;
+    }
+
+    RS_DEBUG->print("RS_Graphic::save: Exiting...");
+
+    return ret;
 }
 
 
