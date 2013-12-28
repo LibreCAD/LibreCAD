@@ -1590,21 +1590,21 @@ void QG_ActionHandler::slotSnapFree() {
 //    if ( snapFree == NULL) return;
 //    disableSnaps();
     RS_SnapMode s=getSnaps();
-    s.snapFree = true;
+    s.snapFree = !s.snapFree;
     slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapGrid() {
 //    if(snapGrid==NULL) return;
     RS_SnapMode s=getSnaps();
-    s.snapGrid = true;
+    s.snapGrid = !s.snapGrid;
     slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapEndpoint() {
 //    if(snapEndpoint==NULL) return;
     RS_SnapMode s=getSnaps();
-    s.snapEndpoint = true;
+    s.snapEndpoint = !s.snapEndpoint;
 
     slotSetSnaps(s);
 }
@@ -1612,7 +1612,7 @@ void QG_ActionHandler::slotSnapEndpoint() {
 void QG_ActionHandler::slotSnapOnEntity() {
 //    if(snapOnEntity==NULL) return;
     RS_SnapMode s=getSnaps();
-    s.snapOnEntity = true;
+    s.snapOnEntity = !s.snapOnEntity;
 
     slotSetSnaps(s);
 }
@@ -1621,27 +1621,27 @@ void QG_ActionHandler::slotSnapCenter() {
 //    std::cout<<" QG_ActionHandler::slotSnapCenter(): start"<<std::endl;
 //    if(snapCenter==NULL) return;
     RS_SnapMode s=getSnaps();
-    s.snapCenter = true;
+    s.snapCenter = !s.snapCenter;
     slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapMiddle() {
     RS_SnapMode s=getSnaps();
-    s.snapMiddle = true;
+    s.snapMiddle = !s.snapMiddle;
 
     slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapDist() {
     RS_SnapMode s=getSnaps();
-    s.snapDistance = true;
+    s.snapDistance = !s.snapDistance;
 
     slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapIntersection() {
     RS_SnapMode s=getSnaps();
-    s.snapIntersection = true;
+    s.snapIntersection = !s.snapIntersection;
 
     slotSetSnaps(s);
 }
@@ -1663,26 +1663,26 @@ void QG_ActionHandler::disableSnaps() {
 }
 
 void QG_ActionHandler::slotRestrictNothing() {
-    RS_SnapMode s=getSnaps();
-    s.restriction=RS2::RestrictNothing;
+    RS_SnapMode s = getSnaps();
+    s.restriction = RS2::RestrictNothing;
     slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotRestrictOrthogonal() {
-    RS_SnapMode s=getSnaps();
-    s.restriction=RS2::RestrictOrthogonal;
+    RS_SnapMode s = getSnaps();
+    s.restriction = RS2::RestrictOrthogonal;
     slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotRestrictHorizontal() {
-    RS_SnapMode s=getSnaps();
-    s.restriction=getSnapRestriction();
+    RS_SnapMode s = getSnaps();
+    s.restriction = RS2::RestrictHorizontal;
     slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotRestrictVertical() {
-    RS_SnapMode s=getSnaps();
-    s.restriction=getSnapRestriction();
+    RS_SnapMode s = getSnaps();
+    s.restriction = RS2::RestrictVertical;
     slotSetSnaps(s);
 }
 
