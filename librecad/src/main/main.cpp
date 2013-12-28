@@ -26,7 +26,8 @@
 
 #include "main.h"
 
-#include <qapplication.h>
+#include <QApplication>
+#include <QDebug>
 
 #include <QSplashScreen>
 QSplashScreen *splash;
@@ -94,69 +95,114 @@ int main(int argc, char** argv) {
 //	qInitImages_librecad();
 #endif
 
-        const char *lpDebugSwitch = "--debug";
-        size_t      iDebugSwitchLen = strlen(lpDebugSwitch);
+        const QString lpDebugSwitch0("-d"),lpDebugSwitch1("--debug") ;
+        const QString help0("-h"), help1("--help");
+        bool allowOptions=true;
+        QList<int> argClean;
         for (int i=0; i<argc; i++) {
-            if ( ! strncmp( lpDebugSwitch, argv[i], iDebugSwitchLen)) {
+            QString argstr(argv[i]);
+            if(allowOptions&&QString::compare("--", argstr)==0){
+                allowOptions=false;
+                continue;
+            }
+
+            if (allowOptions&&(
+                        help0.compare(argstr, Qt::CaseInsensitive)==0 ||
+                        help1.compare(argstr, Qt::CaseInsensitive)==0
+                        )
+                    ){//hep information
+                qDebug()<<"librecad::usage: <options> <dxf file>";
+                qDebug()<<"-h, --help\tdisplay this message";
+                qDebug()<<"";
+                qDebug()<<" --help\tdisplay this message";
+                qDebug()<<"-d, --debug <level>";
+                RS_DEBUG->print( RS_Debug::D_NOTHING, "possible debug levels:");
+                RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Nothing", RS_Debug::D_NOTHING);
+                RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Critical", RS_Debug::D_CRITICAL);
+                RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Error", RS_Debug::D_ERROR);
+                RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Warning", RS_Debug::D_WARNING);
+                RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Notice", RS_Debug::D_NOTICE);
+                RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Informational", RS_Debug::D_INFORMATIONAL);
+                RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Debugging", RS_Debug::D_DEBUGGING);
+                exit(0);
+
+            }
+            if ( allowOptions&& (
+                     argstr.startsWith(lpDebugSwitch0, Qt::CaseInsensitive)||
+                     argstr.startsWith(lpDebugSwitch1, Qt::CaseInsensitive)
+                     )
+                 ){
                 // to control the level of debugging output use --debug with level 0-6, e.g. --debug3
                 // for a list of debug levels use --debug?
                 // if no level follows, the debugging level is set
-                if( strlen( argv[i]) > iDebugSwitchLen) {
-                    switch( argv[i][iDebugSwitchLen]) {
-                    case '?' :
-                        RS_DEBUG->print( RS_Debug::D_NOTHING, "possible debug levels:");
-                        RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Nothing", RS_Debug::D_NOTHING);
-                        RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Critical", RS_Debug::D_CRITICAL);
-                        RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Error", RS_Debug::D_ERROR);
-                        RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Warning", RS_Debug::D_WARNING);
-                        RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Notice", RS_Debug::D_NOTICE);
-                        RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Informational", RS_Debug::D_INFORMATIONAL);
-                        RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Debugging", RS_Debug::D_DEBUGGING);
-                        return 0;
-
-                    case '0' + RS_Debug::D_NOTHING :
-                        RS_DEBUG->setLevel( RS_Debug::D_NOTHING);
+                argstr.remove(QRegExp("^"+lpDebugSwitch0));
+                argstr.remove(QRegExp("^"+lpDebugSwitch1));
+                char level;
+                if(argstr.size()==0){
+                    if(i+1<argc) {
                         ++i;
-                        break;
+                        level=argv[i][0];
+                        argClean<<i;
+                    }else
+                        level='3'; //default to D_WARNING
+                }else
+                    level=argstr.toStdString()[0];
+                //                if( strlen( argv[i]) > iDebugSwitchLen) {
+                switch(level) {
+                case '?' :
+                    RS_DEBUG->print( RS_Debug::D_NOTHING, "possible debug levels:");
+                    RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Nothing", RS_Debug::D_NOTHING);
+                    RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Critical", RS_Debug::D_CRITICAL);
+                    RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Error", RS_Debug::D_ERROR);
+                    RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Warning", RS_Debug::D_WARNING);
+                    RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Notice", RS_Debug::D_NOTICE);
+                    RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Informational", RS_Debug::D_INFORMATIONAL);
+                    RS_DEBUG->print( RS_Debug::D_NOTHING, "    %d Debugging", RS_Debug::D_DEBUGGING);
+                    return 0;
 
-                    case '0' + RS_Debug::D_CRITICAL :
-                        RS_DEBUG->setLevel( RS_Debug::D_CRITICAL);
-                        ++i;
-                        break;
+                case '0' + RS_Debug::D_NOTHING :
+                    RS_DEBUG->setLevel( RS_Debug::D_NOTHING);
+                    ++i;
+                    break;
 
-                    case '0' + RS_Debug::D_ERROR :
-                        RS_DEBUG->setLevel( RS_Debug::D_ERROR);
-                        ++i;
-                        break;
+                case '0' + RS_Debug::D_CRITICAL :
+                    RS_DEBUG->setLevel( RS_Debug::D_CRITICAL);
+                    ++i;
+                    break;
 
-                    case '0' + RS_Debug::D_WARNING :
-                        RS_DEBUG->setLevel( RS_Debug::D_WARNING);
-                        ++i;
-                        break;
+                case '0' + RS_Debug::D_ERROR :
+                    RS_DEBUG->setLevel( RS_Debug::D_ERROR);
+                    ++i;
+                    break;
 
-                    case '0' + RS_Debug::D_NOTICE :
-                        RS_DEBUG->setLevel( RS_Debug::D_NOTICE);
-                        ++i;
-                        break;
+                case '0' + RS_Debug::D_WARNING :
+                    RS_DEBUG->setLevel( RS_Debug::D_WARNING);
+                    ++i;
+                    break;
 
-                    case '0' + RS_Debug::D_INFORMATIONAL :
-                        RS_DEBUG->setLevel( RS_Debug::D_INFORMATIONAL);
-                        ++i;
-                        break;
+                case '0' + RS_Debug::D_NOTICE :
+                    RS_DEBUG->setLevel( RS_Debug::D_NOTICE);
+                    ++i;
+                    break;
 
-                    case '0' + RS_Debug::D_DEBUGGING :
-                        RS_DEBUG->setLevel( RS_Debug::D_DEBUGGING);
-                        ++i;
-                        break;
+                case '0' + RS_Debug::D_INFORMATIONAL :
+                    RS_DEBUG->setLevel( RS_Debug::D_INFORMATIONAL);
+                    ++i;
+                    break;
 
-                    default :
-                        RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
-                        break;
-                    }
-                }
-                else {
+                case '0' + RS_Debug::D_DEBUGGING :
+                    RS_DEBUG->setLevel( RS_Debug::D_DEBUGGING);
+                    ++i;
+                    break;
+
+                default :
                     RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
+                    break;
                 }
+                //                }
+//                else {
+//                    RS_DEBUG->setLevel(RS_Debug::D_DEBUGGING);
+//                }
             }
         }
         RS_DEBUG->print("param 0: %s", argv[0]);
@@ -173,7 +219,7 @@ int main(int argc, char** argv) {
         RS_FileIO::instance()->registerFilter( &(RS_FilterDXF1::createFilter));
 
         // parse command line arguments that might not need a launched program:
-        QStringList fileList = handleArgs(argc, argv);
+        QStringList fileList = handleArgs(argc, argv, argClean);
 
         QString lang;
         QString langCmd;
@@ -343,7 +389,7 @@ int main(int argc, char** argv) {
  *
  * @return list of files to load on startup.
  */
-QStringList handleArgs(int argc, char** argv) {
+QStringList handleArgs(int argc, char** argv, const QList<int>& argClean) {
         RS_DEBUG->print("main: handling args..");
         QStringList ret;
 
@@ -353,6 +399,7 @@ QStringList handleArgs(int argc, char** argv) {
         QString output;
 
         for (int i=1; i<argc; i++) {
+            if(argClean.indexOf(i)>=0) continue;
                 if (QString(argv[i]).startsWith("-")==false) {
                         QString fname = QDir::toNativeSeparators(
                                 QFileInfo(QFile::decodeName(argv[i])).absoluteFilePath() );
