@@ -59,8 +59,8 @@ win32 {
 
 # c++11 is now obligatory for LibreCAD
 message(We will be using CPP11 features)
-QMAKE_CXXFLAGS_DEBUG += -std=c++0x -g
-QMAKE_CXXFLAGS += -std=c++0x -g
+QMAKE_CXXFLAGS_DEBUG += -std=c++11 -g
+QMAKE_CXXFLAGS += -std=c++11 -g
 
 # svg support
 QT += svg

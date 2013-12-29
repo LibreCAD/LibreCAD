@@ -49,7 +49,7 @@ public:
     };
     QG_BlockModel(QObject * parent = 0);
     ~QG_BlockModel();
-    Qt::ItemFlags flags ( const QModelIndex & /*index*/ ) {
+    Qt::ItemFlags flags ( const QModelIndex & /*index*/ ) const {
             return Qt::ItemIsSelectable|Qt::ItemIsEnabled;}
     int columnCount(const QModelIndex &/*parent*/) const {return LAST;}
     int rowCount ( const QModelIndex & parent = QModelIndex() ) const;
