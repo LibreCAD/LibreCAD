@@ -5,7 +5,7 @@ if "%NSIS_DIR%"=="" goto SetEnv
 goto Exit
 
 :SetEnv
-set Qt_DIR=C:\Qt\Qt5.1.1\5.1.1
+set Qt_DIR=C:\Qt\Qt5.2.0\5.2.0
 set NSIS_DIR=C:\Program Files (x86)\NSIS
 set MINGW_VER=mingw48_32
 
