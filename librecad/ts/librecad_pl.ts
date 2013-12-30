@@ -7978,6 +7978,10 @@ Czy chcesz zastąpić?</translation>
         <source>dwg Drawing %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>

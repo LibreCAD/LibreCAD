@@ -8639,6 +8639,10 @@ Deseja substituí-lo?</translation>
         <source>dwg Drawing %1</source>
         <translation>Desenho dwg %1</translation>
     </message>
+    <message>
+        <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtBoolPropertyManager</name>

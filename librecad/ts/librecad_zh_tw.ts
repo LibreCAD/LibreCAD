@@ -7578,12 +7578,12 @@ p, li { white-space: pre-wrap; }
         <translation>秒差距</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="253"/>
+        <location filename="../src/main/main.cpp" line="299"/>
         <source>Loading..</source>
         <translation>正在載入..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="279"/>
+        <location filename="../src/main/main.cpp" line="325"/>
         <source>Loading...</source>
         <translation>正在載入...</translation>
     </message>
@@ -7592,7 +7592,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">載入資料庫路徑..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="297"/>
+        <location filename="../src/main/main.cpp" line="343"/>
         <source>Loading File %1..</source>
         <translation>正在載入檔案 %1..</translation>
     </message>
@@ -7858,6 +7858,11 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3722"/>
         <source>error reading entities in dwg file</source>
         <translation>讀dwg檔案實體時出現錯誤</translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/rs_graphic.cpp" line="340"/>
+        <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
