@@ -69,3 +69,8 @@ scripts/PWD
 *.orig
 custom.pro
 *.user
+
+core
+*.core
+vgcore.*
+core.*
