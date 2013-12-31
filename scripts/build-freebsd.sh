@@ -17,10 +17,7 @@ scriptpath="${scriptpath%/*}"
 
 if [ -z "${use_cxx}" ]
 then
-	if [ "$( which g++46 )" ]
-	then
-		use_cxx="g++46"
-	elif [ "$( which g++47 )" ]
+	if [ "$( which g++47 )" ]
 	then
 		use_cxx="g++47"
 	elif [ "$( which g++48 )" ]
@@ -33,7 +30,7 @@ then
 	then
 		use_cxx="clang++33"
 	else
-		echo "No supported compiler found. Install one of lang/{gcc4{6,7,8},clang33}" >&2
+		echo "No supported compiler found. Install one of lang/{gcc4{7,8,9},clang33}" >&2
 		exit 1
 	fi
 elif [ -z "$( which ${use_cxx} )" ]
