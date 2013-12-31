@@ -950,7 +950,7 @@ bool dxfRW::writeLeader(DRW_Leader *ent){
         writer->writeDouble(76, ent->vertnum);
         writer->writeDouble(76, ent->vertexlist.size());
         for (unsigned int i=0; i<ent->vertexlist.size(); i++) {
-            DRW_Coord *vert = ent->vertexlist.at(i);
+            DRW_Coord *vert = ent->vertexlist.at(i).get();
             writer->writeDouble(10, vert->x);
             writer->writeDouble(20, vert->y);
             writer->writeDouble(30, vert->z);

@@ -960,7 +960,7 @@ void RS_FilterDXFRW::addLeader(const DRW_Leader *data) {
     setEntityAttributes(leader, data);
 
     for (unsigned int i=0; i<data->vertexlist.size(); i++) {
-        DRW_Coord *vert = data->vertexlist.at(i);
+        DRW_Coord *vert = data->vertexlist.at(i).get();
         RS_Vector v(vert->x, vert->y);
         leader->addVertex(v);
     }
@@ -2465,11 +2465,13 @@ void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
             v!=NULL;   v=l->nextEntity(RS2::ResolveNone)) {
         if (v->rtti()==RS2::EntityLine) {
             li = (RS_Line*)v;
-            leader.vertexlist.push_back(new DRW_Coord(li->getStartpoint().x, li->getStartpoint().y, 0.0));
+            std::unique_ptr<DRW_Coord> ptr(new DRW_Coord(li->getStartpoint().x, li->getStartpoint().y, 0.0));
+            leader.vertexlist.push_back(std::move(ptr));
         }
     }
     if (li != NULL) {
-        leader.vertexlist.push_back(new DRW_Coord(li->getEndpoint().x, li->getEndpoint().y, 0.0));
+        std::unique_ptr<DRW_Coord> ptr(new DRW_Coord(li->getEndpoint().x, li->getEndpoint().y, 0.0));
+        leader.vertexlist.push_back(std::move(ptr));
     }
     dxfW->writeLeader(&leader);
 }

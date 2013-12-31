@@ -938,7 +938,8 @@ void DRW_Leader::parseCode(int code, dxfReader *reader){
         break;
     case 10: {
         vertexpoint = new DRW_Coord();
-        vertexlist.push_back(vertexpoint);
+        std::unique_ptr<DRW_Coord> ptr(vertexpoint);
+        vertexlist.push_back(std::move(ptr));
         vertexpoint->x = reader->getDouble();
         break; }
     case 20:
