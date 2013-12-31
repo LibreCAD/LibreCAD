@@ -1516,6 +1516,8 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
     curr->setCoordX(v.x);
     curr->setCoordY(v.y);
     data.vars["$EXTMAX"] =curr;
+    //when saving a block, there is no active layer. ignore it to avoid crash
+    if(graphic->getActiveLayer()==0) return;
     curr = new DRW_Variant();
     curr->addString( (graphic->getActiveLayer()->getName()).toUtf8().data() );
     data.vars["$CLAYER"] =curr;
