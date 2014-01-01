@@ -9,7 +9,8 @@
 # graphics/qt4-svg databases/qt4-sql(?) textproc/qt4-clucene(?)
 # devel/boost-libs math/muparser
 # 
-# lang/gcc46 or lang/gcc47 or lang/gcc48 or lang/gcc49 or
+# lang/gcc4{7,8,9}
+# or
 # lang/clang33 and devel/llvm33 and devel/libc++
 
 scriptpath="$( readlink -f "${0}" )"
@@ -42,28 +43,25 @@ fi
 rpath=
 spec=
 cxxflags=
+libs=
 
+compiler_version=${use_cxx##*++}
 case "${use_cxx}" in
 	'g++'*)
-		use_gcc=${use_cxx#'g++'}
-		spec="freebsd-g++${use_gcc}"
-		if [ "${use_gcc}" = "49" ]
-		then
-			spec="mkspec/${spec}"
-		fi
-		rpath="$( make -C /usr/ports/lang/gcc${use_gcc} -V LOCALBASE )"/lib/gcc${use_gcc}
+		rpath="$( make -C /usr/ports/lang/gcc${compiler_version} -V LOCALBASE )"/lib/gcc${compiler_version}
 	;;
-	'clang++33')
-		if [ ! -e "$( make -C /usr/ports/lang/clang33 -V LOCALBASE )"/lib/libc++.so ]
+	'clang++'*)
+		if [ ! -e "$( make -C /usr/ports/lang/clang${compiler_version} -V LOCALBASE )"/lib/libc++.so ]
 		then
 			echo "Install devel/libc++" >&2
 			exit 1
 		fi
-		spec='mkspec/freebsd-clang33'
-		cxxflags='-stdlib=libc++'
+		cxxflags="-I /usr/local/include/c++/v1"
+		libs="-stdlib=libc++"
 	;;
 esac
+spec="freebsd-${use_cxx}"
 
 cd "${scriptpath}/.."
-qmake-qt4 librecad.pro -spec ${spec} ${rpath:+QMAKE_RPATHDIR="${rpath}"} ${cxxflags:+QMAKE_CXXFLAGS="${cxxflags}"}
+qmake-qt4 librecad.pro ${spec:+-spec ${spec}} "${rpath:+QMAKE_RPATHDIR=\"${rpath}\"}" "${cxxflags:+QMAKE_CXXFLAGS=\"${cxxflags}\"}" "${libs:+QMAKE_LIBS=\"${libs}\"}"
 make -j$( /sbin/sysctl -n hw.ncpu )
