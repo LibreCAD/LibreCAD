@@ -132,6 +132,8 @@ int main(int argc, char** argv) {
                      argstr.startsWith(lpDebugSwitch1, Qt::CaseInsensitive)
                      )
                  ){
+                argClean<<i;
+
                 // to control the level of debugging output use --debug with level 0-6, e.g. --debug3
                 // for a list of debug levels use --debug?
                 // if no level follows, the debugging level is set
@@ -140,9 +142,13 @@ int main(int argc, char** argv) {
                 char level;
                 if(argstr.size()==0){
                     if(i+1<argc) {
-                        ++i;
-                        level=argv[i][0];
-                        argClean<<i;
+                        if(QRegExp("\\d*").exactMatch(argv[i+1])){
+                            ++i;
+                            qDebug()<<"reading "<<argv[i]<<" as debugging level";
+                            level=argv[i][0];
+                            argClean<<i;
+                        }else
+                            level='3';
                     }else
                         level='3'; //default to D_WARNING
                 }else
