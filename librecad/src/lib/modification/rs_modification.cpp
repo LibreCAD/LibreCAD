@@ -2076,12 +2076,38 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     RS_AtomicEntity* trimmed2 = NULL;
 
     if (trimEntity->rtti()==RS2::EntityCircle) {
-        // convert a circle into a trimmable arc
-        RS_Circle* c = (RS_Circle*)trimEntity;
+        // convert a circle into a trimmable arc, need to start from intersections
+        RS_Circle* c = static_cast<RS_Circle*>(trimEntity);
+        double aStart=0.;
+        double aEnd=2.*M_PI;
+        switch(sol.size()){
+        case 1:
+            aStart=c->getCenter().angleTo(sol.at(0));
+            aEnd=aStart+2.*M_PI;
+            break;
+        default:
+        case 2:
+            //trim according to intersections
+            QVector<double> angles;
+            const auto& center0=c->getCenter();
+            for(RS_Vector& vp : sol.getVector()){
+                angles<< center0.angleTo(vp);
+            }
+            //sort intersections by angle to circle center
+            qSort(angles);
+            const double a0=center0.angleTo(trimCoord);
+            for(size_t i=0; i<angles.size(); ++i){
+                aStart=angles.at(i);
+                aEnd=angles.at( (i+1)%angles.size());
+                if(RS_Math::isAngleBetween(a0, aStart, aEnd, false))
+                    break;
+            }
+            break;
+        }
         RS_ArcData d(c->getCenter(),
                      c->getRadius(),
-                     0.,
-                     2*M_PI,
+                     aStart,
+                     aEnd,
                      false);
         trimmed1 = new RS_Arc(trimEntity->getParent(), d);
     } else {
