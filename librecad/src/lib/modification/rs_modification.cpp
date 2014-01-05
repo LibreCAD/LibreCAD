@@ -2081,6 +2081,8 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
         double aStart=0.;
         double aEnd=2.*M_PI;
         switch(sol.size()){
+        case 0:
+            break;
         case 1:
             aStart=c->getCenter().angleTo(sol.at(0));
             aEnd=aStart+2.*M_PI;
