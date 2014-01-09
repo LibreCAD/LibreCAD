@@ -16,7 +16,6 @@
 
 #include <string>
 #include <vector>
-#include <memory>
 #include "drw_base.h"
 
 class dxfReader;
@@ -1134,7 +1133,7 @@ public:
     DRW_Coord offsetblock;     /*!< Offset of last leader vertex from block, code 212, 222 & 232 */
     DRW_Coord offsettext;      /*!< Offset of last leader vertex from annotation, code 213, 223 & 233 */
 
-    std::vector<std::unique_ptr<DRW_Coord> > vertexlist;  /*!< vertex points list, code 10, 20 & 30 */
+    std::vector<DRW_Coord *> vertexlist;  /*!< vertex points list, code 10, 20 & 30 */
 
 private:
     DRW_Coord *vertexpoint;   /*!< current control point to add data */
