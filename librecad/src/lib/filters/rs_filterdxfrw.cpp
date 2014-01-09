@@ -25,8 +25,7 @@
 
 #include "rs_filterdxfrw.h"
 
-#include <cstdio>
-#include <memory>
+#include <stdio.h>
 //#include <map>
 
 #include "rs_dimaligned.h"
@@ -1462,7 +1461,7 @@ void RS_FilterDXFRW::writeBlocks() {
 
 
 void RS_FilterDXFRW::writeHeader(DRW_Header& data){
-    std::shared_ptr<DRW_Variant> curr(nullptr);
+    DRW_Variant *curr;
 /*TODO $ISOMETRICGRID == $SNAPSTYLE and "GRID on/off" not handled because is part of
  active vport to save is required read/write VPORT table */
     QHash<QString, RS_Variable>vars = graphic->getVariableDict();
@@ -1475,7 +1474,7 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
     }
 
     while (it != vars.end()) {
-        curr.reset(new DRW_Variant());
+        curr = new DRW_Variant();
 
             switch (it.value().getType()) {
             case RS2::VariableInt:
@@ -1502,26 +1501,26 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
             default:
                 break;
             }
-            data.vars[it.key().toStdString()] =curr.get();
+            data.vars[it.key().toStdString()] =curr;
             ++it;
     }
     RS_Vector v = graphic->getMin();
-    curr.reset(new DRW_Variant());
+    curr = new DRW_Variant();
     curr->addCoord(new DRW_Coord());
     curr->setCoordX(v.x);
     curr->setCoordY(v.y);
-    data.vars["$EXTMIN"] =curr.get();
+    data.vars["$EXTMIN"] =curr;
     v = graphic->getMax();
-    curr.reset(new DRW_Variant());
+    curr = new DRW_Variant();
     curr->addCoord(new DRW_Coord());
     curr->setCoordX(v.x);
     curr->setCoordY(v.y);
-    data.vars["$EXTMAX"] =curr.get();
+    data.vars["$EXTMAX"] =curr;
     //when saving a block, there is no active layer. ignore it to avoid crash
     if(graphic->getActiveLayer()==0) return;
-    curr.reset(new DRW_Variant());
+    curr = new DRW_Variant();
     curr->addString( (graphic->getActiveLayer()->getName()).toUtf8().data() );
-    data.vars["$CLAYER"] =curr.get();
+    data.vars["$CLAYER"] =curr;
 }
 
 void RS_FilterDXFRW::writeLTypes(){
@@ -2133,8 +2132,8 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     // write spline control points:
     QList<RS_Vector> cp = s->getControlPoints();
     for (int i = 0; i < cp.size(); ++i) {
-        std::unique_ptr<DRW_Coord> controlpoint(new DRW_Coord());
-        sp.controllist.push_back(controlpoint.get());
+        DRW_Coord *controlpoint = new DRW_Coord();
+        sp.controllist.push_back(controlpoint);
         controlpoint->x = cp.at(i).x;
         controlpoint->y = cp.at(i).y;
      }
@@ -2373,24 +2372,24 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
     switch (d->rtti()) {
     case RS2::EntityDimAligned: {
         RS_DimAligned* da = (RS_DimAligned*)d;
-        std::unique_ptr<DRW_DimAligned> dd(new DRW_DimAligned());
-        dim = dd.get() ;
+        DRW_DimAligned * dd = new DRW_DimAligned();
+        dim = dd ;
         dim->type = 1 +32;
         dd->setDef1Point(DRW_Coord (da->getExtensionPoint1().x, da->getExtensionPoint1().y, 0.0));
         dd->setDef2Point(DRW_Coord (da->getExtensionPoint2().x, da->getExtensionPoint2().y, 0.0));
         break; }
     case RS2::EntityDimDiametric: {
         RS_DimDiametric* dr = (RS_DimDiametric*)d;
-        std::unique_ptr<DRW_DimDiametric> dd(new DRW_DimDiametric());
-        dim = dd.get();
+        DRW_DimDiametric * dd = new DRW_DimDiametric();
+        dim = dd ;
         dim->type = 3+32;
         dd->setDiameter1Point(DRW_Coord (dr->getDefinitionPoint().x, dr->getDefinitionPoint().y, 0.0));
         dd->setLeaderLength(dr->getLeader());
         break; }
     case RS2::EntityDimRadial: {
         RS_DimRadial* dr = (RS_DimRadial*)d;
-        std::unique_ptr<DRW_DimRadial> dd(new DRW_DimRadial());
-        dim = dd.get() ;
+        DRW_DimRadial * dd = new DRW_DimRadial();
+        dim = dd ;
         dim->type = 4+32;
         dd->setDiameterPoint(DRW_Coord (dr->getDefinitionPoint().x, dr->getDefinitionPoint().y, 0.0));
         dd->setLeaderLength(dr->getLeader());
@@ -2398,16 +2397,16 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
     case RS2::EntityDimAngular: {
         RS_DimAngular* da = (RS_DimAngular*)d;
         if (da->getDefinitionPoint3() == da->getData().definitionPoint) {
-            std::unique_ptr<DRW_DimAngular3p> dd(new DRW_DimAngular3p());
-            dim = dd.get() ;
+            DRW_DimAngular3p * dd = new DRW_DimAngular3p();
+            dim = dd ;
             dim->type = 5+32;
             dd->setFirstLine(DRW_Coord (da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //13
             dd->setSecondLine(DRW_Coord (da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //14
             dd->SetVertexPoint(DRW_Coord (da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //15
             dd->setDimPoint(DRW_Coord (da->getDefinitionPoint().x, da->getDefinitionPoint().y, 0.0)); //10
         } else {
-            std::unique_ptr<DRW_DimAngular> dd(new DRW_DimAngular());
-            dim = dd.get() ;
+            DRW_DimAngular * dd = new DRW_DimAngular();
+            dim = dd ;
             dim->type = 2+32;
             dd->setFirstLine1(DRW_Coord (da->getDefinitionPoint1().x, da->getDefinitionPoint1().y, 0.0)); //13
             dd->setFirstLine2(DRW_Coord (da->getDefinitionPoint2().x, da->getDefinitionPoint2().y, 0.0)); //14
@@ -2417,8 +2416,8 @@ void RS_FilterDXFRW::writeDimension(RS_Dimension* d) {
         break; }
     default: { //default to DimLinear
         RS_DimLinear* dl = (RS_DimLinear*)d;
-        std::unique_ptr<DRW_DimLinear> dd(new DRW_DimLinear());
-        dim = dd.get() ;
+        DRW_DimLinear * dd = new DRW_DimLinear();
+        dim = dd ;
         dim->type = 0+32;
         dd->setDef1Point(DRW_Coord (dl->getExtensionPoint1().x, dl->getExtensionPoint1().y, 0.0));
         dd->setDef2Point(DRW_Coord (dl->getExtensionPoint2().x, dl->getExtensionPoint2().y, 0.0));
