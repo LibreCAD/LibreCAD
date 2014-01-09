@@ -532,7 +532,7 @@ void DRW_Header::parseCode(int code, dxfReader *reader){
         name = reader->getString();
         if (version < DRW::AC1015 && name == "$DIMUNIT")
             name="$DIMLUNIT";
-        vars[name].reset(curr);
+        vars[name]=curr;
         break;
     case 1:
         curr->addString(reader->getUtf8String());
@@ -924,9 +924,10 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
 
 bool DRW_Header::getDouble(std::string key, double *varDouble){
     bool result = false;
-    auto it=vars.find( key);
+    std::map<std::string,DRW_Variant *>::iterator it;
+    it=vars.find( key);
     if (it != vars.end()) {
-        auto& var = (*it).second;
+        DRW_Variant *var = (*it).second;
         if (var->type == DRW_Variant::DOUBLE) {
             *varDouble = var->content.d;
             result = true;
@@ -938,9 +939,10 @@ bool DRW_Header::getDouble(std::string key, double *varDouble){
 
 bool DRW_Header::getInt(std::string key, int *varInt){
     bool result = false;
-    auto it=vars.find( key);
+    std::map<std::string,DRW_Variant *>::iterator it;
+    it=vars.find( key);
     if (it != vars.end()) {
-        auto& var = (*it).second;
+        DRW_Variant *var = (*it).second;
         if (var->type == DRW_Variant::INTEGER) {
             *varInt = var->content.i;
             result = true;
@@ -952,9 +954,10 @@ bool DRW_Header::getInt(std::string key, int *varInt){
 
 bool DRW_Header::getStr(std::string key, std::string *varStr){
     bool result = false;
-    auto it=vars.find( key);
+    std::map<std::string,DRW_Variant *>::iterator it;
+    it=vars.find( key);
     if (it != vars.end()) {
-        auto& var = (*it).second;
+        DRW_Variant *var = (*it).second;
         if (var->type == DRW_Variant::STRING) {
             *varStr = *var->content.s;
             result = true;
@@ -966,9 +969,10 @@ bool DRW_Header::getStr(std::string key, std::string *varStr){
 
 bool DRW_Header::getCoord(std::string key, DRW_Coord *varCoord){
     bool result = false;
-    auto it=vars.find( key);
+    std::map<std::string,DRW_Variant *>::iterator it;
+    it=vars.find( key);
     if (it != vars.end()) {
-        auto& var = (*it).second;
+        DRW_Variant *var = (*it).second;
         if (var->type == DRW_Variant::COORD) {
             *varCoord = *var->content.v;
             result = true;

@@ -17,7 +17,6 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <memory>
 #include "drw_base.h"
 
 class dxfReader;
@@ -385,11 +384,11 @@ private:
     bool getCoord(std::string key, DRW_Coord *varStr);
 
 public:
-    std::map<std::string,std::unique_ptr<DRW_Variant> > vars;
+    std::map<std::string,DRW_Variant*> vars;
 private:
     std::string comments;
     std::string name;
-    DRW_Variant* curr;
+    DRW_Variant *curr;
     int version; //to use on read
 };
 

@@ -1198,9 +1198,10 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
         container = (RS_Graphic*)currentContainer;
     } else return;
 
-    for (auto it=data->vars.begin() ; it != data->vars.end(); it++ ){
+    map<std::string,DRW_Variant *>::const_iterator it;
+    for ( it=data->vars.begin() ; it != data->vars.end(); it++ ){
         QString key = QString::fromStdString((*it).first);
-        auto& var = (*it).second;
+        DRW_Variant *var = (*it).second;
         switch (var->type) {
         case DRW_Variant::COORD:
             container->addVariable(key,
@@ -1461,7 +1462,7 @@ void RS_FilterDXFRW::writeBlocks() {
 
 
 void RS_FilterDXFRW::writeHeader(DRW_Header& data){
-    DRW_Variant* curr(nullptr);
+    std::shared_ptr<DRW_Variant> curr(nullptr);
 /*TODO $ISOMETRICGRID == $SNAPSTYLE and "GRID on/off" not handled because is part of
  active vport to save is required read/write VPORT table */
     QHash<QString, RS_Variable>vars = graphic->getVariableDict();
@@ -1474,7 +1475,7 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
     }
 
     while (it != vars.end()) {
-        curr=new DRW_Variant();
+        curr.reset(new DRW_Variant());
 
             switch (it.value().getType()) {
             case RS2::VariableInt:
@@ -1501,26 +1502,26 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
             default:
                 break;
             }
-            data.vars[it.key().toStdString()].reset(curr);
+            data.vars[it.key().toStdString()] =curr.get();
             ++it;
     }
     RS_Vector v = graphic->getMin();
-    curr=new DRW_Variant();
+    curr.reset(new DRW_Variant());
     curr->addCoord(new DRW_Coord());
     curr->setCoordX(v.x);
     curr->setCoordY(v.y);
-    data.vars["$EXTMIN"].reset(curr);
+    data.vars["$EXTMIN"] =curr.get();
     v = graphic->getMax();
-    curr = new DRW_Variant();
+    curr.reset(new DRW_Variant());
     curr->addCoord(new DRW_Coord());
     curr->setCoordX(v.x);
     curr->setCoordY(v.y);
-    data.vars["$EXTMAX"].reset(curr);
+    data.vars["$EXTMAX"] =curr.get();
     //when saving a block, there is no active layer. ignore it to avoid crash
     if(graphic->getActiveLayer()==0) return;
-    curr = new DRW_Variant();
+    curr.reset(new DRW_Variant());
     curr->addString( (graphic->getActiveLayer()->getName()).toUtf8().data() );
-    data.vars["$CLAYER"].reset(curr);
+    data.vars["$CLAYER"] =curr.get();
 }
 
 void RS_FilterDXFRW::writeLTypes(){
