@@ -148,9 +148,16 @@ public:
     DRW_Variant() {
         type = INVALID;
     }
+    DRW_Variant(const DRW_Variant& d) {
+        code = d.code;
+        type = d.type;
+        if (d.type == COORD) vdata = d.vdata;
+        if (d.type == STRING) sdata = d.sdata;
+        content = d.content;
+    }
+
     ~DRW_Variant() {
     }
-    enum TYPE type;
 
     void addString(UTF8STRING s) {setType(STRING); sdata = s; content.s = &sdata;}
     void addInt(int i) {setType(INTEGER); content.i = i;}
@@ -159,8 +166,8 @@ public:
     void addCoord(DRW_Coord v) {setType(COORD); vdata = v; content.v = &vdata;}
     void setType(enum TYPE t) { type = t;}
     void setCoordX(double d) { if (type == COORD) vdata.x = d;}
-    void setCoordY(double d) { if (type == COORD) content.v->y = d;}
-    void setCoordZ(double d) { if (type == COORD) content.v->z = d;}
+    void setCoordY(double d) { if (type == COORD) vdata.y = d;}
+    void setCoordZ(double d) { if (type == COORD) vdata.z = d;}
 
 private:
     typedef union {
@@ -172,13 +179,10 @@ private:
 
 public:
     DRW_VarContent content;
-
-public:
+    enum TYPE type;
     int code;            /*!< dxf code of this value*/
-//    string version;
-//    string codepage;
+
 private:
-//    DRW_VarContent content;
     std::string sdata;
     DRW_Coord vdata;
 };

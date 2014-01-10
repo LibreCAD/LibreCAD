@@ -922,6 +922,34 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
 #endif
 }
 
+void DRW_Header::addDouble(std::string key, double value, int code){
+    curr = new DRW_Variant();
+    curr->addDouble( value );
+    curr->code = code;
+    vars[key] =curr;
+}
+
+void DRW_Header::addInt(std::string key, int value, int code){
+    curr = new DRW_Variant();
+    curr->addInt( value );
+    curr->code = code;
+    vars[key] =curr;
+}
+
+void DRW_Header::addStr(std::string key, std::string value, int code){
+    curr = new DRW_Variant();
+    curr->addString( value );
+    curr->code = code;
+    vars[key] =curr;
+}
+
+void DRW_Header::addCoord(std::string key, DRW_Coord value, int code){
+    curr = new DRW_Variant();
+    curr->addCoord( value );
+    curr->code = code;
+    vars[key] =curr;
+}
+
 bool DRW_Header::getDouble(std::string key, double *varDouble){
     bool result = false;
     std::map<std::string,DRW_Variant *>::iterator it;
