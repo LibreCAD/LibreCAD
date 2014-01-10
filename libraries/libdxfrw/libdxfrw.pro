@@ -11,7 +11,7 @@ CONFIG += static warn_on
 
 DESTDIR = ../../generated/lib
 
-VERSION = 0.5.10
+VERSION = 0.5.11
 
 DLL_NAME = dxfrw
 TARGET = $$DLL_NAME
@@ -19,6 +19,11 @@ TARGET = $$DLL_NAME
 GENERATED_DIR = ../../generated/lib/libdxfrw
 # Use common project definitions.
 include(../../common.pri)
+QMAKE_CXXFLAGS_DEBUG -= -std=c++0x -std=c++11
+QMAKE_CXXFLAGS -= -std=c++0x -std=c++11
+
+# svg support
+QT -= svg
 
 # DEFINES += DRW_DBG
 

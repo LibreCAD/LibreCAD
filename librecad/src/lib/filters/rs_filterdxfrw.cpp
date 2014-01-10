@@ -1490,9 +1490,7 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
                 curr->code = it.value().getCode();
                 break;
             case RS2::VariableVector:
-                curr->addCoord(new DRW_Coord());
-                curr->setCoordX(it.value().getVector().x);
-                curr->setCoordY(it.value().getVector().y);
+                curr->addCoord(DRW_Coord(it.value().getVector().x, it.value().getVector().y, 0.0));
 #ifndef  RS_VECTOR2D
                 curr->setCoordZ(it.value().getVector().z);
 #endif
@@ -1506,15 +1504,11 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
     }
     RS_Vector v = graphic->getMin();
     curr = new DRW_Variant();
-    curr->addCoord(new DRW_Coord());
-    curr->setCoordX(v.x);
-    curr->setCoordY(v.y);
+    curr->addCoord(DRW_Coord(v.x, v.y, 0.0));
     data.vars["$EXTMIN"] =curr;
     v = graphic->getMax();
     curr = new DRW_Variant();
-    curr->addCoord(new DRW_Coord());
-    curr->setCoordX(v.x);
-    curr->setCoordY(v.y);
+    curr->addCoord(DRW_Coord(v.x, v.y, 0.0));
     data.vars["$EXTMAX"] =curr;
     //when saving a block, there is no active layer. ignore it to avoid crash
     if(graphic->getActiveLayer()==0) return;

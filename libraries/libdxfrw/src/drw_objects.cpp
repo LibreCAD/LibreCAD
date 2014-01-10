@@ -567,7 +567,7 @@ void DRW_Header::parseCode(int code, dxfReader *reader){
         curr->code = code;
         break;
     case 10:
-        curr->addCoord(new DRW_Coord());
+        curr->addCoord();
         curr->setCoordX(reader->getDouble());
         curr->code = code;
         break;

@@ -187,10 +187,6 @@ public:
         size = 0;
         length = 0.0;
         pathIdx = 0;
-/*        color = 256; // default BYLAYER (256)
-        plotF = true; // default TRUE (plot yes)
-        lWeight = -1; // default BYLAYER (-1)*/
-//        align = 65; //always 65
     }
 
     void parseCode(int code, dxfReader *reader);
@@ -388,7 +384,7 @@ public:
 private:
     std::string comments;
     std::string name;
-    DRW_Variant *curr;
+    DRW_Variant* curr;
     int version; //to use on read
 };
 
