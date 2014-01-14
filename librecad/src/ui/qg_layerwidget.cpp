@@ -85,7 +85,7 @@ void QG_LayerModel::setLayerList(RS_LayerList* ll) {
     for (unsigned i=0; i < ll->count(); ++i) {
         listLayer.append(ll->at(i));
     }
-    qSort ( listLayer.begin(), listLayer.end(), layerLessThan );
+    std::sort( listLayer.begin(), listLayer.end(), layerLessThan );
 //called to force redraw
 #if QT_VERSION >= 0x040600
     endResetModel();

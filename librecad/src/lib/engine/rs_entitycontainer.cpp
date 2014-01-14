@@ -1889,7 +1889,7 @@ void RS_EntityContainer::draw(RS_Painter* painter, RS_GraphicView* view,
         //view->drawEntity(painter, e);
         entities<<e;
     }
-    qStableSort(entities.begin(), entities.end(), [](const RS_Entity* e1, const RS_Entity* e2)->bool{
+    std::stable_sort(entities.begin(), entities.end(), [](const RS_Entity* e1, const RS_Entity* e2)->bool{
         const RS_Layer* l1=e1->getLayer();
         const RS_Layer* l2=e2->getLayer();
         if(l1 != NULL || l2 != NULL ) {

@@ -2096,9 +2096,9 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
                 angles<< center0.angleTo(vp);
             }
             //sort intersections by angle to circle center
-            qSort(angles);
+            std::sort(angles.begin(), angles.end());
             const double a0=center0.angleTo(trimCoord);
-            for(size_t i=0; i<angles.size(); ++i){
+            for(int i=0; i<angles.size(); ++i){
                 aStart=angles.at(i);
                 aEnd=angles.at( (i+1)%angles.size());
                 if(RS_Math::isAngleBetween(a0, aStart, aEnd, false))

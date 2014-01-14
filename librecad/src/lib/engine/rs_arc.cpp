@@ -854,7 +854,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     if(vpEnd.isInWindowOrdered(vpMin, vpMax)) crossPoints.push_back(getAngleLength());
 
     //sorting
-    qSort(crossPoints.begin(),crossPoints.end());
+    std::sort(crossPoints.begin(),crossPoints.end());
     //draw visible
     RS_Arc arc(*this);
     arc.setPen(getPen());
