@@ -1882,10 +1882,21 @@ void RS_EntityContainer::draw(RS_Painter* painter, RS_GraphicView* view,
         return;
     }
 
+    QList<RS_Entity*> entities;
     for (RS_Entity* e=firstEntity(RS2::ResolveNone);
          e!=NULL;
          e = nextEntity(RS2::ResolveNone)) {
-
+        //view->drawEntity(painter, e);
+        entities<<e;
+    }
+    qStableSort(entities.begin(), entities.end(), [](const RS_Entity* e1, const RS_Entity* e2)->bool{
+        const RS_Layer* l1=e1->getLayer();
+        const RS_Layer* l2=e2->getLayer();
+        if(l1==NULL) return true;
+        if(l2==NULL) return false;
+        return e1->getLayer()->getName() < e2->getLayer()->getName();
+    });
+    for(RS_Entity* e: entities){
         view->drawEntity(painter, e);
     }
 }
