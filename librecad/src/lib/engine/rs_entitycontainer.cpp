@@ -1892,9 +1892,14 @@ void RS_EntityContainer::draw(RS_Painter* painter, RS_GraphicView* view,
     qStableSort(entities.begin(), entities.end(), [](const RS_Entity* e1, const RS_Entity* e2)->bool{
         const RS_Layer* l1=e1->getLayer();
         const RS_Layer* l2=e2->getLayer();
-        if(l1==NULL) return true;
-        if(l2==NULL) return false;
-        return e1->getLayer()->getName() < e2->getLayer()->getName();
+        if(l1 != NULL || l2 != NULL ) {
+            if(l1==NULL) return false;
+            if(l2==NULL) return true;
+            if (e1->getLayer()->getName() < e2->getLayer()->getName()) return true;
+            else
+                if (e1->getLayer()->getName() > e2->getLayer()->getName()) return false;
+        }
+        return e1->getId() < e2->getId();
     });
     for(RS_Entity* e: entities){
         view->drawEntity(painter, e);
