@@ -1106,7 +1106,7 @@ RS_Vector RS_Ellipse::prepareTrim(const RS_Vector& trimCoord,
             is = trimSol.get(ii);
         }
     }
-    qSort(ias.begin(),ias.end());
+    std::sort(ias.begin(),ias.end());
     for(int ii=0; ii<trimSol.getNumber(); ii++) { //find segment to enclude trimCoord
         if ( ! RS_Math::isSameDirection(ia,ias[ii],RS_TOLERANCE)) continue;
         if( RS_Math::isAngleBetween(am,ias[(ii+trimSol.getNumber()-1)% trimSol.getNumber()],ia,false))  {
@@ -1502,7 +1502,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
 
 
     //sorting
-    qSort(crossPoints.begin(),crossPoints.end());
+    std::sort(crossPoints.begin(),crossPoints.end());
     //draw visible
 //    DEBUG_HEADER();
 //    std::cout<<"crossPoints.size()="<<crossPoints.size()<<std::endl;

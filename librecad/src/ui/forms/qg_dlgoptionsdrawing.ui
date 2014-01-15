@@ -605,22 +605,22 @@
            </item>
            <item>
             <property name="text">
-             <string>0.01</string>
+             <string notr="true">0.01</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>0.1</string>
+             <string notr="true">0.1</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>1</string>
+             <string notr="true">1</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>10</string>
+             <string notr="true">10</string>
             </property>
            </item>
           </widget>
@@ -647,22 +647,22 @@
            </item>
            <item>
             <property name="text">
-             <string>0.01</string>
+             <string notr="true">0.01</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>0.1</string>
+             <string notr="true">0.1</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>1</string>
+             <string notr="true">1</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>10</string>
+             <string notr="true">10</string>
             </property>
            </item>
           </widget>
@@ -725,67 +725,67 @@
          </property>
          <item>
           <property name="text">
-           <string>0.1</string>
+           <string notr="true">0.1</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>0.2</string>
+           <string notr="true">0.2</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>0.5</string>
+           <string notr="true">0.5</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>1</string>
+           <string notr="true">1</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>2</string>
+           <string notr="true">2</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>5</string>
+           <string notr="true">5</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>10</string>
+           <string notr="true">10</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>20</string>
+           <string notr="true">20</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>50</string>
+           <string notr="true">50</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>100</string>
+           <string notr="true">100</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>200</string>
+           <string notr="true">200</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>500</string>
+           <string notr="true">500</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>1000</string>
+           <string notr="true">1000</string>
           </property>
          </item>
         </widget>
@@ -813,37 +813,37 @@
          </property>
          <item>
           <property name="text">
-           <string>0.1</string>
+           <string notr="true">0.1</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>0.2</string>
+           <string notr="true">0.2</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>0.5</string>
+           <string notr="true">0.5</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>1</string>
+           <string notr="true">1</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>2</string>
+           <string notr="true">2</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>5</string>
+           <string notr="true">5</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>10</string>
+           <string notr="true">10</string>
           </property>
          </item>
         </widget>
@@ -865,17 +865,17 @@
          </property>
          <item>
           <property name="text">
-           <string>1</string>
+           <string notr="true">1</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>2</string>
+           <string notr="true">2</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>5</string>
+           <string notr="true">5</string>
           </property>
          </item>
         </widget>
@@ -907,17 +907,17 @@
          </property>
          <item>
           <property name="text">
-           <string>1</string>
+           <string notr="true">1</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>2</string>
+           <string notr="true">2</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>5</string>
+           <string notr="true">5</string>
           </property>
          </item>
         </widget>
@@ -949,17 +949,17 @@
          </property>
          <item>
           <property name="text">
-           <string>1</string>
+           <string notr="true">1</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>2</string>
+           <string notr="true">2</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>5</string>
+           <string notr="true">5</string>
           </property>
          </item>
         </widget>
@@ -991,17 +991,17 @@
          </property>
          <item>
           <property name="text">
-           <string>1</string>
+           <string notr="true">1</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>2</string>
+           <string notr="true">2</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>5</string>
+           <string notr="true">5</string>
           </property>
          </item>
         </widget>
@@ -1033,17 +1033,17 @@
          </property>
          <item>
           <property name="text">
-           <string>1</string>
+           <string notr="true">1</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>2</string>
+           <string notr="true">2</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>5</string>
+           <string notr="true">5</string>
           </property>
          </item>
         </widget>
@@ -1078,22 +1078,22 @@
          </property>
          <item>
           <property name="text">
-           <string>0</string>
+           <string notr="true">0</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>1</string>
+           <string notr="true">1</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>2</string>
+           <string notr="true">2</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>5</string>
+           <string notr="true">5</string>
           </property>
          </item>
         </widget>
@@ -1212,32 +1212,32 @@
            </property>
            <item>
             <property name="text">
-             <string>2</string>
+             <string notr="true">2</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>4</string>
+             <string notr="true">4</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>8</string>
+             <string notr="true">8</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>16</string>
+             <string notr="true">16</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>32</string>
+             <string notr="true">32</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>64</string>
+             <string notr="true">64</string>
             </property>
            </item>
           </widget>

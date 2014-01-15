@@ -13,7 +13,7 @@
 #ifndef DRW_BASE_H
 #define DRW_BASE_H
 
-#define DRW_VERSION "0.5.10"
+#define DRW_VERSION "0.5.11"
 
 #include <string>
 #include <cmath>
@@ -148,20 +148,26 @@ public:
     DRW_Variant() {
         type = INVALID;
     }
-    ~DRW_Variant() {
-        if (type == COORD)
-            delete content.v;
+    DRW_Variant(const DRW_Variant& d) {
+        code = d.code;
+        type = d.type;
+        if (d.type == COORD) vdata = d.vdata;
+        if (d.type == STRING) sdata = d.sdata;
+        content = d.content;
     }
-    enum TYPE type;
 
-    void addString(UTF8STRING s) {setType(STRING); data = s; content.s = &data;}
+    ~DRW_Variant() {
+    }
+
+    void addString(UTF8STRING s) {setType(STRING); sdata = s; content.s = &sdata;}
     void addInt(int i) {setType(INTEGER); content.i = i;}
     void addDouble(double d) {setType(DOUBLE); content.d = d;}
-    void addCoord(DRW_Coord *v) {setType(COORD); content.v = v;}
-    void setType(enum TYPE t) { if (type == COORD) delete content.v; type = t;}
-    void setCoordX(double d) { if (type == COORD) content.v->x = d;}
-    void setCoordY(double d) { if (type == COORD) content.v->y = d;}
-    void setCoordZ(double d) { if (type == COORD) content.v->z = d;}
+    void addCoord() {setType(COORD); vdata.x=0.0; vdata.y=0.0; vdata.z=0.0; content.v = &vdata;}
+    void addCoord(DRW_Coord v) {setType(COORD); vdata = v; content.v = &vdata;}
+    void setType(enum TYPE t) { type = t;}
+    void setCoordX(double d) { if (type == COORD) vdata.x = d;}
+    void setCoordY(double d) { if (type == COORD) vdata.y = d;}
+    void setCoordZ(double d) { if (type == COORD) vdata.z = d;}
 
 private:
     typedef union {
@@ -173,14 +179,12 @@ private:
 
 public:
     DRW_VarContent content;
+    enum TYPE type;
+    int code;            /*!< dxf code of this value*/
 
-public:
-    int code;
-//    string version;
-//    string codepage;
 private:
-//    DRW_VarContent content;
-    std::string data;
+    std::string sdata;
+    DRW_Coord vdata;
 };
 
 

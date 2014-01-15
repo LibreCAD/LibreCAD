@@ -80,7 +80,7 @@ public:
     static int findGCD(int a, int b);
     static bool isAngleBetween(double a,
                                double a1, double a2,
-                               bool reversed);
+                               bool reversed = false);
     static double correctAngle(double a);
     static double getAngleDifference(double a1, double a2, bool reversed = false);
     static double makeAngleReadable(double angle, bool readable=true,

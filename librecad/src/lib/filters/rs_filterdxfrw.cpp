@@ -1461,7 +1461,7 @@ void RS_FilterDXFRW::writeBlocks() {
 
 
 void RS_FilterDXFRW::writeHeader(DRW_Header& data){
-    DRW_Variant *curr;
+    RS_Vector v;
 /*TODO $ISOMETRICGRID == $SNAPSTYLE and "GRID on/off" not handled because is part of
  active vport to save is required read/write VPORT table */
     QHash<QString, RS_Variable>vars = graphic->getVariableDict();
@@ -1474,51 +1474,37 @@ void RS_FilterDXFRW::writeHeader(DRW_Header& data){
     }
 
     while (it != vars.end()) {
-        curr = new DRW_Variant();
-
             switch (it.value().getType()) {
             case RS2::VariableInt:
-                curr->addInt(it.value().getInt());
-                curr->code = it.value().getCode();
+                data.addInt(it.key().toStdString(), it.value().getInt(), it.value().getCode());
                 break;
             case RS2::VariableDouble:
-                curr->addDouble(it.value().getDouble());
-                curr->code = it.value().getCode();
+                data.addDouble(it.key().toStdString(), it.value().getDouble(), it.value().getCode());
                 break;
             case RS2::VariableString:
-                curr->addString(it.value().getString().toUtf8().data() );
-                curr->code = it.value().getCode();
+                data.addStr(it.key().toStdString(), it.value().getString().toUtf8().data(), it.value().getCode());
                 break;
             case RS2::VariableVector:
-                curr->addCoord(new DRW_Coord());
-                curr->setCoordX(it.value().getVector().x);
-                curr->setCoordY(it.value().getVector().y);
+                v = it.value().getVector();
 #ifndef  RS_VECTOR2D
-                curr->setCoordZ(it.value().getVector().z);
+                data.addCoord(it.key().toStdString(), DRW_Coord(v.x, v.y, v.z), it.value().getCode());
+#else
+                data.addCoord(it.key().toStdString(), DRW_Coord(v.x, v.y, 0.0), it.value().getCode());
 #endif
-                curr->code = it.value().getCode();
                 break;
             default:
                 break;
             }
-            data.vars[it.key().toStdString()] =curr;
             ++it;
     }
-    RS_Vector v = graphic->getMin();
-    curr = new DRW_Variant();
-    curr->addCoord(new DRW_Coord());
-    curr->setCoordX(v.x);
-    curr->setCoordY(v.y);
-    data.vars["$EXTMIN"] =curr;
+    v = graphic->getMin();
+    data.addCoord("$EXTMIN", DRW_Coord(v.x, v.y, 0.0), 0);
     v = graphic->getMax();
-    curr = new DRW_Variant();
-    curr->addCoord(new DRW_Coord());
-    curr->setCoordX(v.x);
-    curr->setCoordY(v.y);
-    data.vars["$EXTMAX"] =curr;
-    curr = new DRW_Variant();
-    curr->addString( (graphic->getActiveLayer()->getName()).toUtf8().data() );
-    data.vars["$CLAYER"] =curr;
+    data.addCoord("$EXTMAX", DRW_Coord(v.x, v.y, 0.0), 0);
+
+    //when saving a block, there is no active layer. ignore it to avoid crash
+    if(graphic->getActiveLayer()==0) return;
+    data.addStr("$CLAYER", (graphic->getActiveLayer()->getName()).toUtf8().data(), 8);
 }
 
 void RS_FilterDXFRW::writeLTypes(){

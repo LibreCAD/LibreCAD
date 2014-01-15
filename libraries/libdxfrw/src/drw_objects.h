@@ -187,10 +187,6 @@ public:
         size = 0;
         length = 0.0;
         pathIdx = 0;
-/*        color = 256; // default BYLAYER (256)
-        plotF = true; // default TRUE (plot yes)
-        lWeight = -1; // default BYLAYER (-1)*/
-//        align = 65; //always 65
     }
 
     void parseCode(int code, dxfReader *reader);
@@ -362,7 +358,9 @@ public:
 
 //! Class to handle header entries
 /*!
-*  Class to handle layer symbol table entries
+*  Class to handle header vars, to read iterate over "std::map vars"
+*  to write add a DRW_Variant* into "std::map vars" (do not delete it, are cleared in dtor)
+*  or use add* helper functions.
 *  @author Rallaz
 */
 class DRW_Header {
@@ -370,13 +368,21 @@ public:
     DRW_Header() {
     }
     ~DRW_Header() {
+        for (std::map<std::string,DRW_Variant*>::iterator it=vars.begin(); it!=vars.end(); ++it)
+            delete it->second;
+
         vars.clear();
     }
+
+    void addDouble(std::string key, double value, int code);
+    void addInt(std::string key, int value, int code);
+    void addStr(std::string key, std::string value, int code);
+    void addCoord(std::string key, DRW_Coord value, int code);
+    std::string getComments() const {return comments;}
 
     void parseCode(int code, dxfReader *reader);
     void write(dxfWriter *writer, DRW::Version ver);
     void addComment(std::string c);
-    std::string getComments() const {return comments;}
 private:
     bool getDouble(std::string key, double *varDouble);
     bool getInt(std::string key, int *varInt);
@@ -388,7 +394,7 @@ public:
 private:
     std::string comments;
     std::string name;
-    DRW_Variant *curr;
+    DRW_Variant* curr;
     int version; //to use on read
 };
 

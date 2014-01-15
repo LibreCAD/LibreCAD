@@ -85,6 +85,7 @@ RS_Debug::RS_Debug() {
  * Sets the debugging level.
  */
 void RS_Debug::setLevel(RS_DebugLevel level) {
+    if(debugLevel==level) return;
     debugLevel = level;
     print( D_NOTHING, "RS_DEBUG::setLevel(%d)", level);
     print( D_CRITICAL, "RS_DEBUG: Critical");

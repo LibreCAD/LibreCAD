@@ -120,7 +120,7 @@ x11-toolkits/qt4-gui devel/qt4-linguist devel/qt4-help-tools graphics/qt4-svg de
 LibreCAD requires a C++11-capable compiler to build, Currently this means that one of
 
 ```
-lang/gcc46, lang/gcc47, lang/gcc48 or lang/gcc49
+lang/gcc47, lang/gcc48, lang/gcc49 or lang/clang33
 ```
 
 must be used.
@@ -131,7 +131,7 @@ Once these pre-requisites are satisfied, run the provided
 scripts/build-freebsd.sh
 ```
 
-See the script itself for some more options. Clang 3.3 can not currently build LibreCAD.
+See the script itself for some more options. Clang 3.3 does not yet work.
 
 Windows Users
 -------------
