@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="cs">
 <context>
@@ -29,22 +28,22 @@
     <message>
         <location filename="../align/align.cpp" line="40"/>
         <source>first base point:</source>
-        <translation type="unfinished"></translation>
+        <translation>První základní bod:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="42"/>
         <source>first target point:</source>
-        <translation type="unfinished"></translation>
+        <translation>První cílový bod:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="44"/>
         <source>second base point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Druhý základní bod:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="46"/>
         <source>second target point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Druhý cílový bod:</translation>
     </message>
 </context>
 <context>
@@ -53,267 +52,267 @@
         <location filename="../list/list.cpp" line="24"/>
         <location filename="../list/list.cpp" line="31"/>
         <source>List entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Seznam prvků</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="47"/>
         <source>n</source>
-        <translation type="unfinished"></translation>
+        <translation>č.</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="61"/>
         <source>Empty Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Prázdný prvek</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="68"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="68"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="74"/>
         <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Hladina</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="76"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Barva</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Line type</source>
-        <translation type="unfinished"></translation>
+        <translation>Druh čáry</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="78"/>
         <source>Line thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>Tloušťka čáry</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="85"/>
         <source>POINT</source>
-        <translation type="unfinished"></translation>
+        <translation>BOD</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="86"/>
         <location filename="../list/list.cpp" line="195"/>
         <source>in point</source>
-        <translation type="unfinished"></translation>
+        <translation>v bodě</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="91"/>
         <source>LINE</source>
-        <translation type="unfinished"></translation>
+        <translation>ÚSEČKA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="96"/>
         <source>from point</source>
-        <translation type="unfinished"></translation>
+        <translation>z bodu</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
         <source>to point</source>
-        <translation type="unfinished"></translation>
+        <translation>do bodu</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="104"/>
         <location filename="../list/list.cpp" line="128"/>
         <source>length</source>
-        <translation type="unfinished"></translation>
+        <translation>délka</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="109"/>
         <source>Angle in XY plane</source>
-        <translation type="unfinished"></translation>
+        <translation>Úhel v rovině XY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="110"/>
         <source>Inc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozdíl</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="115"/>
         <source>ARC</source>
-        <translation type="unfinished"></translation>
+        <translation>OBLOUK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="116"/>
         <location filename="../list/list.cpp" line="132"/>
         <location filename="../list/list.cpp" line="142"/>
         <source>center point</source>
-        <translation type="unfinished"></translation>
+        <translation>střed</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="122"/>
         <location filename="../list/list.cpp" line="136"/>
         <source>radius</source>
-        <translation type="unfinished"></translation>
+        <translation>poloměr</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="123"/>
         <source>initial angle</source>
-        <translation type="unfinished"></translation>
+        <translation>počáteční úhel</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="124"/>
         <source>final angle</source>
-        <translation type="unfinished"></translation>
+        <translation>koncový úhel</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="131"/>
         <source>CIRCLE</source>
-        <translation type="unfinished"></translation>
+        <translation>KRUŽNICE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="137"/>
         <source>circumference</source>
-        <translation type="unfinished"></translation>
+        <translation>obvod</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="138"/>
         <source>area</source>
-        <translation type="unfinished"></translation>
+        <translation>obsah</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="141"/>
         <source>ELLIPSE</source>
-        <translation type="unfinished"></translation>
+        <translation>ELIPSA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="145"/>
         <source>major axis</source>
-        <translation type="unfinished"></translation>
+        <translation>hlavní osa</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="163"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>POMOCNÁ ÚSEČKA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="166"/>
         <source>OVERLAYBOX</source>
-        <translation type="unfinished"></translation>
+        <translation>OVERLAYBOX</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="169"/>
         <source>SOLID</source>
-        <translation type="unfinished"></translation>
+        <translation>TĚLESO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="173"/>
         <source>MTEXT</source>
-        <translation type="unfinished"></translation>
+        <translation>VTEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="176"/>
         <source>TEXT</source>
-        <translation type="unfinished"></translation>
+        <translation>TEXT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>INSERT</source>
-        <translation type="unfinished"></translation>
+        <translation>VLOŽENÉ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="182"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Název</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>Insertion point</source>
-        <translation type="unfinished"></translation>
+        <translation>Bod vložení</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="188"/>
         <source>POLYLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>KŘIVKA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzavřená</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="190"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="190"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ano</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191"/>
         <source>Vertices</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzly</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="199"/>
         <source>curvature</source>
-        <translation type="unfinished"></translation>
+        <translation>křivost</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>IMAGE</source>
-        <translation type="unfinished"></translation>
+        <translation>OBRÁZEK</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="206"/>
         <source>SPLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>SPLAJNA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="209"/>
         <source>HATCH</source>
-        <translation type="unfinished"></translation>
+        <translation>ŠRAFY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="212"/>
         <source>DIMLEADER</source>
-        <translation type="unfinished"></translation>
+        <translation>ODKAZ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
         <source>DIMALIGNED</source>
-        <translation type="unfinished"></translation>
+        <translation>ZAROVNANÁ KÓTA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="218"/>
         <source>DIMLINEAR</source>
-        <translation type="unfinished"></translation>
+        <translation>PŘÍMÁ KÓTA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="221"/>
         <source>DIMRADIAL</source>
-        <translation type="unfinished"></translation>
+        <translation>KÓTA POLOMĚRU</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="224"/>
         <source>DIMDIAMETRIC</source>
-        <translation type="unfinished"></translation>
+        <translation>KÓTA PRŮMĚRU</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="227"/>
         <source>DIMANGULAR</source>
-        <translation type="unfinished"></translation>
+        <translation>KÓTA ÚHLU</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="230"/>
         <source>UNKNOWN</source>
-        <translation type="unfinished"></translation>
+        <translation>NEZNÁMÉ</translation>
     </message>
 </context>
 <context>
@@ -322,17 +321,17 @@
         <location filename="../sameprop/sameprop.cpp" line="21"/>
         <location filename="../sameprop/sameprop.cpp" line="28"/>
         <source>Same properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Stejné vlastnosti</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte původní prvek:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte měněné prvky</translation>
     </message>
 </context>
 <context>
@@ -341,7 +340,7 @@
         <location filename="../sample/sample.cpp" line="26"/>
         <location filename="../sample/sample.cpp" line="33"/>
         <source>Sample plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázkový zásuvný modul</translation>
     </message>
 </context>
 <context>
@@ -349,177 +348,177 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Read ascii points</source>
-        <translation type="unfinished">Načíst body ASCII</translation>
+        <translation>Načíst body ASCII</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="241"/>
         <source>File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor...</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Formát:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="250"/>
         <source>Space Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Oddělovač mezera</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="250"/>
         <source>Tab Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Oddělovač tabulátor</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="250"/>
         <source>Comma Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Oddělovač čárka</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="250"/>
         <source>Space in Columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Mezery ve sloupcích</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="250"/>
         <source>*.odb for Psion 2</source>
-        <translation type="unfinished"></translation>
+        <translation>*.odb pro Psion 2</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="252"/>
         <source>Connect points</source>
-        <translation type="unfinished"></translation>
+        <translation>Spojit body</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="260"/>
         <source>2D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>2D bod</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="260"/>
         <source>Draw 2D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykreslit 2D body</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="261"/>
         <source>3D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>3D bod</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="261"/>
         <source>Draw 3D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykreslit 3D body</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="262"/>
         <source>Point Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Číslo bodu</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="262"/>
         <source>Draw point number</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykreslit čísla bodů</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
         <source>Point Elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>Nadmořská výška bodu</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
         <source>Draw point elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykreslit nadmořské výšky bodů</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="264"/>
         <source>Point Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Kód bodu</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="264"/>
         <source>Draw point code</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykreslit kódy bodů</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="278"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Přijmout</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="283"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="313"/>
         <source>Select file</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte soubor</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="320"/>
         <source>Point 2D layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Hladina pro 2D body není zadána</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="323"/>
         <source>Point 3D layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Hladina pro 3D body není zadána</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="326"/>
         <source>Point elevation layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Hladina pro nadmořské výšky bodů není zadána</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="327"/>
         <source>Point elevation height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Šířka pro nadmořské výšky bodů není zadána</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="328"/>
         <source>Point elevation separation is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Mezera pro nadmořské výšky bodů není zadána</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="331"/>
         <source>Point number layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Hladina pro čísla bodů není zadána</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="332"/>
         <source>Point number height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Šířka pro čísla bodů není zadána</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="333"/>
         <source>Point number separation is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Mezera pro čísla bodů není zadána</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="336"/>
         <source>Point code layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Hladina pro kódy bodů není zadána</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="337"/>
         <source>Point code height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Šířka pro kódy bodů není zadána</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="338"/>
         <source>Point code separation is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Mezera pro kódy bodů není zadána</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="366"/>
         <source>The file %1 not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor %1 neexistuje</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can&apos;t open the file %1</source>
-        <translation type="unfinished"></translation>
+        <source>Can't open the file %1</source>
+        <translation>Nelze otevřít soubor %1</translation>
     </message>
 </context>
 <context>
@@ -527,28 +526,28 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="59"/>
         <source>File...</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor...</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="67"/>
         <source>File type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Typ souboru:</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="75"/>
         <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Hladina</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="56"/>
         <source>Import ESRI Shapefile</source>
-        <translation type="unfinished">Importovat ESRI shapefile</translation>
+        <translation>Importovat ESRI shapefile</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="68"/>
         <location filename="../importshp/importshp.cpp" line="266"/>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Neznámý</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="76"/>
@@ -556,7 +555,7 @@
         <location filename="../importshp/importshp.cpp" line="102"/>
         <location filename="../importshp/importshp.cpp" line="115"/>
         <source>Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuální</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="77"/>
@@ -564,123 +563,123 @@
         <location filename="../importshp/importshp.cpp" line="103"/>
         <location filename="../importshp/importshp.cpp" line="116"/>
         <source>From data:</source>
-        <translation type="unfinished"></translation>
+        <translation>Z dat:</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="88"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Barva</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="101"/>
         <source>Line type</source>
-        <translation type="unfinished"></translation>
+        <translation>Druh čáry</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="114"/>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Šířka</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="127"/>
         <location filename="../importshp/importshp.cpp" line="213"/>
         <source>Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Bod</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="128"/>
         <source>as Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Jako bod</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="129"/>
         <source>as Label:</source>
-        <translation type="unfinished"></translation>
+        <translation>Jako popisek:</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="141"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Přijmout</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="142"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="167"/>
         <source>Select file</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte soubor</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="217"/>
         <source>Point+Measure</source>
-        <translation type="unfinished"></translation>
+        <translation>Bod+měřítko</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="221"/>
         <source>3D Point</source>
-        <translation type="unfinished"></translation>
+        <translation>3D bod</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="225"/>
         <source>Multi Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Více bodů</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="229"/>
         <source>Multi Point+Measure</source>
-        <translation type="unfinished"></translation>
+        <translation>Více bodů+měřítko</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="233"/>
         <source>3D Multi Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Více 3D bodů</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="237"/>
         <source>Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Oblouk</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="241"/>
         <source>Arc+Measure</source>
-        <translation type="unfinished"></translation>
+        <translation>Oblouk+měřítko</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="245"/>
         <source>3D Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>3D oblouk</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="249"/>
         <source>Polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Mnohoúhelník</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="253"/>
         <source>Polygon+Measure</source>
-        <translation type="unfinished"></translation>
+        <translation>Mnohoúhleník+měřítko</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="257"/>
         <source>3D Polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>3D mnohoúhelník</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="261"/>
         <source>Multipatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Multipatch</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="281"/>
         <source>The file %1 not have extension .shp</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor %1 nemá příponu .shp</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="286"/>
         <source>The file %1 not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor %1 neexistuje</translation>
     </message>
 </context>
 <context>
@@ -688,7 +687,7 @@
     <message>
         <location filename="../list/list.cpp" line="240"/>
         <source>List entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Seznam prvků</translation>
     </message>
 </context>
 <context>
@@ -696,62 +695,62 @@
     <message>
         <location filename="../sample/sample.cpp" line="54"/>
         <source>Draw line</source>
-        <translation type="unfinished"></translation>
+        <translation>Kreslit úsečku</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="60"/>
         <source>Start X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Počátek X:</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="66"/>
         <source>Start Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Počátek Y:</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="72"/>
         <source>End X:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konec X:</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="78"/>
         <source>End Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konec Y:</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="86"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Přijmout</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="91"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="107"/>
         <source>Start X is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Počátek X není zadán</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="108"/>
         <source>Start Y is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Počátek Y není zadán</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="109"/>
         <source>End X is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Konec X není zadán</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="110"/>
         <source>End Y is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Konec Y není zadán</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="132"/>
         <source>Sample plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukázkový zásuvný modul</translation>
     </message>
 </context>
 <context>
@@ -759,7 +758,7 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="177"/>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hladina:</translation>
     </message>
 </context>
 <context>
@@ -767,17 +766,17 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="210"/>
         <source>Style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Styl:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="211"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Šířka:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="212"/>
         <source>Separation</source>
-        <translation type="unfinished"></translation>
+        <translation>Mezera:</translation>
     </message>
 </context>
 </TS>
