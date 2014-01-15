@@ -161,7 +161,7 @@
       <item row="6" column="2">
        <widget class="QLineEdit" name="leHeight">
         <property name="text">
-         <string>480</string>
+         <string notr="true">480</string>
         </property>
         <property name="placeholderText">
          <string notr="true"/>
@@ -171,7 +171,7 @@
       <item row="5" column="2">
        <widget class="QLineEdit" name="leWidth">
         <property name="text">
-         <string>640</string>
+         <string notr="true">640</string>
         </property>
         <property name="placeholderText">
          <string notr="true"/>
