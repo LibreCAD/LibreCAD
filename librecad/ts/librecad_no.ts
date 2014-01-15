@@ -2619,18 +2619,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Extension line extension:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2779,38 +2767,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>8</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>16</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>32</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>64</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>0.01</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>0.1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>10</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Crosshair</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2863,10 +2819,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Alignment:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2887,39 +2839,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>0.5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>General Factor:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>0.2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>20</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>50</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>100</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>200</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>500</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1000</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2963,22 +2883,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Graphic View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>50</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>100</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>200</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3046,42 +2950,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>6</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>7</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>8</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>9</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>10</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>11</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>12</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>14</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>#000000</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3099,18 +2967,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;Highlighted Color:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>15</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>20</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3143,14 +2999,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>#C0C0C0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>400</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>800</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3373,10 +3221,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>1.0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3401,18 +3245,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4190,14 +4022,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Bitmap Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>640</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>480</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5066,18 +4890,6 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Degree:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

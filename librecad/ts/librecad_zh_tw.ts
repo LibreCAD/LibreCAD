@@ -3865,40 +3865,20 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>自動</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="608"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="650"/>
         <source>0.01</source>
-        <translation>0.01</translation>
+        <translation type="obsolete">0.01</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="613"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="655"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="728"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="816"/>
         <source>0.1</source>
-        <translation>0.1</translation>
+        <translation type="obsolete">0.1</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="618"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="660"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="743"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="831"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="868"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="910"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="952"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="994"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1036"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1086"/>
         <source>1</source>
-        <translation>1</translation>
+        <translation type="obsolete">1</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="623"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="665"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="758"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="846"/>
         <source>10</source>
-        <translation>10</translation>
+        <translation type="obsolete">10</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="631"/>
@@ -3921,10 +3901,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>所有尺寸乘以此值</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="738"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="826"/>
         <source>0.5</source>
-        <translation>0.5</translation>
+        <translation type="obsolete">0.5</translation>
     </message>
     <message>
         <source>1.0</source>
@@ -3954,29 +3932,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>單位</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="748"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="836"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="873"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="915"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="957"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="999"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1041"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1091"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1215"/>
         <source>2</source>
-        <translation>2</translation>
+        <translation type="obsolete">2</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="753"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="841"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="878"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="920"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="962"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1004"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1046"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1096"/>
         <source>5</source>
-        <translation>5</translation>
+        <translation type="obsolete">5</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="896"/>
@@ -3999,40 +3960,32 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>基本因子：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="733"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="821"/>
         <source>0.2</source>
-        <translation>0.2</translation>
+        <translation type="obsolete">0.2</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="763"/>
         <source>20</source>
-        <translation>20</translation>
+        <translation type="obsolete">20</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="768"/>
         <source>50</source>
-        <translation>50</translation>
+        <translation type="obsolete">50</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="773"/>
         <source>100</source>
-        <translation>100</translation>
+        <translation type="obsolete">100</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="778"/>
         <source>200</source>
-        <translation>200</translation>
+        <translation type="obsolete">200</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="783"/>
         <source>500</source>
-        <translation>500</translation>
+        <translation type="obsolete">500</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="788"/>
         <source>1000</source>
-        <translation>1000</translation>
+        <translation type="obsolete">1000</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="806"/>
@@ -4055,9 +4008,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>尺寸打勾大小。將它設置為0，將禁用的尺寸刻度。尺寸箭頭將不會被繪製, 如果啟用尺寸打勾。</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1081"/>
         <source>0</source>
-        <translation>0</translation>
+        <translation type="obsolete">0</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1114"/>
@@ -4085,29 +4037,24 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>每條雲形線路徑的線段數量：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1220"/>
         <source>4</source>
-        <translation>4</translation>
+        <translation type="obsolete">4</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1225"/>
         <source>8</source>
-        <translation>8</translation>
+        <translation type="obsolete">8</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1230"/>
         <source>16</source>
-        <translation>16</translation>
+        <translation type="obsolete">16</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1235"/>
         <source>32</source>
-        <translation>32</translation>
+        <translation type="obsolete">32</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1240"/>
         <source>64</source>
-        <translation>64</translation>
+        <translation type="obsolete">64</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -4304,53 +4251,40 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>狀態列：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="100"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="328"/>
         <source>5</source>
-        <translation>5</translation>
+        <translation type="obsolete">5</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="105"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="333"/>
         <source>6</source>
-        <translation>6</translation>
+        <translation type="obsolete">6</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="110"/>
         <source>7</source>
-        <translation>7</translation>
+        <translation type="obsolete">7</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="115"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="338"/>
         <source>8</source>
-        <translation>8</translation>
+        <translation type="obsolete">8</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="120"/>
         <source>9</source>
-        <translation>9</translation>
+        <translation type="obsolete">9</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="125"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="343"/>
         <source>10</source>
-        <translation>10</translation>
+        <translation type="obsolete">10</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="130"/>
         <source>11</source>
-        <translation>11</translation>
+        <translation type="obsolete">11</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="135"/>
         <source>12</source>
-        <translation>12</translation>
+        <translation type="obsolete">12</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="140"/>
         <source>14</source>
-        <translation>14</translation>
+        <translation type="obsolete">14</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="193"/>
@@ -4383,35 +4317,28 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>預覽的物件數量(&amp;R)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="268"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="318"/>
         <source>0</source>
-        <translation>0</translation>
+        <translation type="obsolete">0</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="273"/>
         <source>50</source>
-        <translation>50</translation>
+        <translation type="obsolete">50</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="278"/>
         <source>100</source>
-        <translation>100</translation>
+        <translation type="obsolete">100</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="283"/>
         <source>200</source>
-        <translation>200</translation>
+        <translation type="obsolete">200</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="288"/>
         <source>400</source>
-        <translation>400</translation>
+        <translation type="obsolete">400</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="293"/>
         <source>800</source>
-        <translation>800</translation>
+        <translation type="obsolete">800</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="301"/>
@@ -4419,19 +4346,16 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>最小格點間隔 (px)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="323"/>
         <source>4</source>
-        <translation>4</translation>
+        <translation type="obsolete">4</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="348"/>
         <source>15</source>
-        <translation>15</translation>
+        <translation type="obsolete">15</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="353"/>
         <source>20</source>
-        <translation>20</translation>
+        <translation type="obsolete">20</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="640"/>
@@ -4856,10 +4780,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgscale.ui" line="216"/>
-        <location filename="../src/ui/forms/qg_dlgscale.ui" line="246"/>
         <source>1.0</source>
-        <translation>1.0</translation>
+        <translation type="obsolete">1.0</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="236"/>
@@ -4929,19 +4851,16 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>閉合的</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgspline.ui" line="139"/>
         <source>1</source>
-        <translation>1</translation>
+        <translation type="obsolete">1</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgspline.ui" line="144"/>
         <source>2</source>
-        <translation>2</translation>
+        <translation type="obsolete">2</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgspline.ui" line="149"/>
         <source>3</source>
-        <translation>3</translation>
+        <translation type="obsolete">3</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="180"/>
@@ -5983,14 +5902,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>高度：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="164"/>
         <source>480</source>
-        <translation>480</translation>
+        <translation type="obsolete">480</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="174"/>
         <source>640</source>
-        <translation>640</translation>
+        <translation type="obsolete">640</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgimageoptions.ui" line="29"/>
@@ -7154,19 +7071,16 @@ p, li { white-space: pre-wrap; }
         <translation>度：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_splineoptions.ui" line="73"/>
         <source>1</source>
-        <translation>1</translation>
+        <translation type="obsolete">1</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_splineoptions.ui" line="78"/>
         <source>2</source>
-        <translation>2</translation>
+        <translation type="obsolete">2</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_splineoptions.ui" line="83"/>
         <source>3</source>
-        <translation>3</translation>
+        <translation type="obsolete">3</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_splineoptions.ui" line="91"/>
@@ -7578,12 +7492,12 @@ p, li { white-space: pre-wrap; }
         <translation>秒差距</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="299"/>
+        <location filename="../src/main/main.cpp" line="305"/>
         <source>Loading..</source>
         <translation>正在載入..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="325"/>
+        <location filename="../src/main/main.cpp" line="331"/>
         <source>Loading...</source>
         <translation>正在載入...</translation>
     </message>
@@ -7592,7 +7506,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">載入資料庫路徑..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="343"/>
+        <location filename="../src/main/main.cpp" line="349"/>
         <source>Loading File %1..</source>
         <translation>正在載入檔案 %1..</translation>
     </message>
@@ -7815,47 +7729,47 @@ Do you want to replace it?</source>
         <translation>已打開DWG制圖版本%1</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3690"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3676"/>
         <source>unknown error opening dwg file</source>
         <translation>打開dwg檔案時出現未知錯誤</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3694"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3680"/>
         <source>can&apos;t open this dwg file</source>
         <translation>無法打開DWG檔案</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3698"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3684"/>
         <source>unsupported dwg version</source>
         <translation>不支持DWG制圖版本</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3702"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3688"/>
         <source>error reading file header in dwg file</source>
         <translation>讀dwg檔案頭時出現錯誤</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3706"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3692"/>
         <source>error reading header vars in dwg file</source>
         <translation>讀dwg檔案頭變量時出現錯誤</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3710"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3696"/>
         <source>error reading classes in dwg file</source>
         <translation>讀dwg檔案類時出現錯誤</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3714"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3700"/>
         <source>error reading offsets in dwg file</source>
         <translation>讀dwg檔案偏移時出現錯誤</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3718"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3704"/>
         <source>error reading tables in dwg file</source>
         <translation>讀dwg檔案表時出現錯誤</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3722"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3708"/>
         <source>error reading entities in dwg file</source>
         <translation>讀dwg檔案實體時出現錯誤</translation>
     </message>

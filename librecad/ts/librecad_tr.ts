@@ -3353,15 +3353,15 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
     <message>
         <source>1</source>
-        <translation>1</translation>
+        <translation type="obsolete">1</translation>
     </message>
     <message>
         <source>2</source>
-        <translation>2</translation>
+        <translation type="obsolete">2</translation>
     </message>
     <message>
         <source>5</source>
-        <translation>5</translation>
+        <translation type="obsolete">5</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
@@ -3461,35 +3461,35 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
     <message>
         <source>4</source>
-        <translation type="unfinished">4</translation>
+        <translation type="obsolete">4</translation>
     </message>
     <message>
         <source>8</source>
-        <translation type="unfinished">8</translation>
+        <translation type="obsolete">8</translation>
     </message>
     <message>
         <source>16</source>
-        <translation type="unfinished">16</translation>
+        <translation type="obsolete">16</translation>
     </message>
     <message>
         <source>32</source>
-        <translation type="unfinished">32</translation>
+        <translation type="obsolete">32</translation>
     </message>
     <message>
         <source>64</source>
-        <translation type="unfinished">64</translation>
+        <translation type="obsolete">64</translation>
     </message>
     <message>
         <source>0.01</source>
-        <translation type="unfinished">0.01</translation>
+        <translation type="obsolete">0.01</translation>
     </message>
     <message>
         <source>0.1</source>
-        <translation type="unfinished">0.1</translation>
+        <translation type="obsolete">0.1</translation>
     </message>
     <message>
         <source>10</source>
-        <translation type="unfinished">10</translation>
+        <translation type="obsolete">10</translation>
     </message>
     <message>
         <source>Crosshair</source>
@@ -3545,7 +3545,7 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
     <message>
         <source>0</source>
-        <translation type="unfinished">0</translation>
+        <translation type="obsolete">0</translation>
     </message>
     <message>
         <source>Alignment:</source>
@@ -3569,7 +3569,7 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
     <message>
         <source>0.5</source>
-        <translation type="unfinished">0.5</translation>
+        <translation type="obsolete">0.5</translation>
     </message>
     <message>
         <source>1.0</source>
@@ -3589,31 +3589,31 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
     <message>
         <source>0.2</source>
-        <translation type="unfinished">0.2</translation>
+        <translation type="obsolete">0.2</translation>
     </message>
     <message>
         <source>20</source>
-        <translation type="unfinished">20</translation>
+        <translation type="obsolete">20</translation>
     </message>
     <message>
         <source>50</source>
-        <translation type="unfinished">50</translation>
+        <translation type="obsolete">50</translation>
     </message>
     <message>
         <source>100</source>
-        <translation type="unfinished">100</translation>
+        <translation type="obsolete">100</translation>
     </message>
     <message>
         <source>200</source>
-        <translation type="unfinished">200</translation>
+        <translation type="obsolete">200</translation>
     </message>
     <message>
         <source>500</source>
-        <translation type="unfinished">500</translation>
+        <translation type="obsolete">500</translation>
     </message>
     <message>
         <source>1000</source>
-        <translation type="unfinished">1000</translation>
+        <translation type="obsolete">1000</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3708,39 +3708,39 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
     <message>
         <source>5</source>
-        <translation>5</translation>
+        <translation type="obsolete">5</translation>
     </message>
     <message>
         <source>6</source>
-        <translation>6</translation>
+        <translation type="obsolete">6</translation>
     </message>
     <message>
         <source>7</source>
-        <translation>7</translation>
+        <translation type="obsolete">7</translation>
     </message>
     <message>
         <source>8</source>
-        <translation>8</translation>
+        <translation type="obsolete">8</translation>
     </message>
     <message>
         <source>9</source>
-        <translation>9</translation>
+        <translation type="obsolete">9</translation>
     </message>
     <message>
         <source>10</source>
-        <translation>10</translation>
+        <translation type="obsolete">10</translation>
     </message>
     <message>
         <source>11</source>
-        <translation>11</translation>
+        <translation type="obsolete">11</translation>
     </message>
     <message>
         <source>12</source>
-        <translation>12</translation>
+        <translation type="obsolete">12</translation>
     </message>
     <message>
         <source>14</source>
-        <translation>14</translation>
+        <translation type="obsolete">14</translation>
     </message>
     <message>
         <source>Graphic View</source>
@@ -3760,19 +3760,19 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
     <message>
         <source>0</source>
-        <translation>0</translation>
+        <translation type="obsolete">0</translation>
     </message>
     <message>
         <source>50</source>
-        <translation>50</translation>
+        <translation type="obsolete">50</translation>
     </message>
     <message>
         <source>100</source>
-        <translation>100</translation>
+        <translation type="obsolete">100</translation>
     </message>
     <message>
         <source>200</source>
-        <translation>200</translation>
+        <translation type="obsolete">200</translation>
     </message>
     <message>
         <source>&amp;Paths</source>
@@ -3836,15 +3836,15 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
     <message>
         <source>4</source>
-        <translation>4</translation>
+        <translation type="obsolete">4</translation>
     </message>
     <message>
         <source>15</source>
-        <translation>15</translation>
+        <translation type="obsolete">15</translation>
     </message>
     <message>
         <source>20</source>
-        <translation>20</translation>
+        <translation type="obsolete">20</translation>
     </message>
     <message>
         <source>Please restart the application to apply all changes.</source>
@@ -3880,11 +3880,11 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
     <message>
         <source>400</source>
-        <translation type="unfinished">400</translation>
+        <translation type="obsolete">400</translation>
     </message>
     <message>
         <source>800</source>
-        <translation type="unfinished">800</translation>
+        <translation type="obsolete">800</translation>
     </message>
     <message>
         <source>Drawing unit.</source>
@@ -4190,7 +4190,7 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
     <message>
         <source>1.0</source>
-        <translation type="unfinished">1.0</translation>
+        <translation type="obsolete">1.0</translation>
     </message>
     <message>
         <source>Y</source>
@@ -4221,15 +4221,15 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
     <message>
         <source>1</source>
-        <translation type="unfinished">1</translation>
+        <translation type="obsolete">1</translation>
     </message>
     <message>
         <source>2</source>
-        <translation type="unfinished">2</translation>
+        <translation type="obsolete">2</translation>
     </message>
     <message>
         <source>3</source>
-        <translation type="unfinished">3</translation>
+        <translation type="obsolete">3</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -5082,11 +5082,11 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
     <message>
         <source>480</source>
-        <translation>480</translation>
+        <translation type="obsolete">480</translation>
     </message>
     <message>
         <source>640</source>
-        <translation>640</translation>
+        <translation type="obsolete">640</translation>
     </message>
     <message>
         <source>Resolution:</source>
@@ -6062,15 +6062,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>1</source>
-        <translation type="unfinished">1</translation>
+        <translation type="obsolete">1</translation>
     </message>
     <message>
         <source>2</source>
-        <translation type="unfinished">2</translation>
+        <translation type="obsolete">2</translation>
     </message>
     <message>
         <source>3</source>
-        <translation type="unfinished">3</translation>
+        <translation type="obsolete">3</translation>
     </message>
     <message>
         <source>Closed</source>
