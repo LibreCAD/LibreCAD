@@ -3129,8 +3129,8 @@ void QC_ApplicationWindow::slotFileExport() {
 
             // show options dialog:
             QG_ImageOptionsDialog dlg(this);
-            dlg.setGraphicSize(w->getGraphic()->getSize());
-            //dlg.setGraphicSize(w->getGraphic()->calculateBorders());
+            w->getGraphic()->calculateBorders();
+            dlg.setGraphicSize(w->getGraphic()->getSize()*2.);
             if (dlg.exec()) {
                 bool ret = slotFileExport(fn, format, dlg.getSize(), dlg.getBorders(),
                             dlg.isBackgroundBlack(), dlg.isBlackWhite());
