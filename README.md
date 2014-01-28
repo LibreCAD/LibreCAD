@@ -46,9 +46,14 @@ This creates an executable "LibreCAD.app/Contents/MacOS/LibreCAD" and package "L
 OS X with MacPorts Users
 -----------------------
 
-install macports from http://www.macports.org/
+install MacPorts from http://www.macports.org/
 
-After that install QT and a new gcc, which should version 4.4 or later.
+You can install LibreCad using MacPorts by:
+`$ sudo port install librecad`
+
+You can build LibreCAD manually by following steps:
+
+Install QT and a new gcc, which should version 4.4 or later.
 
 Install a version of Qt, boost and muparser, for example
 `$ sudo port install gcc46 qt4-creator-mac qt4-mac boost muparser`
