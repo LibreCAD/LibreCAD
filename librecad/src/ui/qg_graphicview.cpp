@@ -732,6 +732,22 @@ QPixmap* QG_GraphicView::getPixmapForView(QPixmap *pm)
         }
 }
 
+void QG_GraphicView::layerActivated(RS_Layer *layer) {
+    RS_EntityContainer *container = this->getContainer();
+    RS_Entity *entity = container->firstEntity();
+
+    while (entity != NULL) {
+        if (entity->isSelected()) {
+            entity->setLayer(layer);
+        }
+
+        entity = container->nextEntity();
+    }
+
+    container->setSelected(false);
+    redraw(RS2::RedrawDrawing);
+}
+
 
 /**
  * Handles paint events by redrawing the graphic in this view.
