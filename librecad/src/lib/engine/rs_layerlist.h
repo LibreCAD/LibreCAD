@@ -114,6 +114,10 @@ public:
     virtual bool isModified() const {
         return modified;
     }
+    /**
+     * @brief sort by layer names
+     */
+    void sort();
 
     friend std::ostream& operator << (std::ostream& os, RS_LayerList& l);
 
