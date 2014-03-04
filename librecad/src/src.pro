@@ -67,6 +67,14 @@ win32 {
     DEFINES += QC_APPDIR="\"LibreCAD\""
     DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
 
+    # add MSYSGIT_DIR = PathToGitBinFolder (without quotes) in custom.pro file, for commit hash in about dialog
+    !isEmpty( MSYSGIT_DIR ) {
+        SCMREVISION = $$system( \"$$MSYSGIT_DIR/git.exe\" describe --tags || echo "$${SCMREVISION}")
+        !isEmpty( SCMREVISION ) {
+            DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
+        }
+    }
+
     RC_FILE = ../res/main/librecad.rc
     QMAKE_POST_LINK = $$_PRO_FILE_PWD_\\..\\..\\scripts\\postprocess-win.bat
 }
