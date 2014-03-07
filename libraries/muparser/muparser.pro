@@ -33,7 +33,8 @@ HEADERS += \
     src/muParserCallback.h \
     src/muParserBytecode.h \
     src/muParserBase.h \
-    src/muParser.h
+    src/muParser.h \
+    src/muParserTemplateMagic.h
 
 SOURCES += \
     src/muParserTokenReader.cpp \
