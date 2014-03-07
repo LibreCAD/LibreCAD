@@ -10,6 +10,7 @@ TARGET = libraries
 
 SUBDIRS     = \
         libdxfrw \
-        jwwlib
+        jwwlib \
+        muparser
 
 
