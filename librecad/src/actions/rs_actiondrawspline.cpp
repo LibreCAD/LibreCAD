@@ -36,7 +36,9 @@
 RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw splines",
-                           container, graphicView) {
+                           container, graphicView)
+        ,spline(NULL)
+{
 
     reset();
     data = RS_SplineData(3, false);
@@ -44,7 +46,12 @@ RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
 
 
 
-RS_ActionDrawSpline::~RS_ActionDrawSpline() {}
+RS_ActionDrawSpline::~RS_ActionDrawSpline() {
+    if(spline != NULL) {
+        delete spline;
+        spline=NULL;
+    }
+}
 
 
 QAction* RS_ActionDrawSpline::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
@@ -137,7 +144,7 @@ void RS_ActionDrawSpline::mouseReleaseEvent(QMouseEvent* e) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
-                if (getStatus()==SetNextPoint) {
+                if (getStatus()==SetNextPoint && spline && spline->getNumberOfControlPoints()>=spline->getDegree()+1) {
                         trigger();
                 }
         deletePreview();
