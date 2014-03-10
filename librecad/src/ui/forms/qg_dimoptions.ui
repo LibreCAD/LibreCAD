@@ -95,36 +95,36 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <item>
-      <property name="text">
-       <string>ø</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>°</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>±</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>¶</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>×</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>÷</string>
-      </property>
-     </item>
+              <item>
+           <property name="text">
+            <string>⌀</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>°</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>±</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>π</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>×</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>÷</string>
+           </property>
+          </item>
     </widget>
    </item>
    <item>
