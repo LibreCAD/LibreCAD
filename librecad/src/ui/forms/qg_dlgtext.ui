@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>524</width>
-    <height>346</height>
+    <width>548</width>
+    <height>380</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -326,7 +326,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
-        <number>-1</number>
+        <number>6</number>
        </property>
        <property name="sizeConstraint">
         <enum>QLayout::SetDefaultConstraint</enum>
@@ -800,7 +800,7 @@
           </property>
           <item>
            <property name="text">
-            <string>Diameter (ø)</string>
+            <string>Diameter (⌀)</string>
            </property>
           </item>
           <item>
