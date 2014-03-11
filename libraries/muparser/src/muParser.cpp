@@ -211,7 +211,7 @@ namespace mu
   int Parser::IsVal(const char_type* a_szExpr, int *a_iPos, value_type *a_fVal)
   {
       DEBUG_HEADER();
-      cout<<"begin\n";
+      cout<<"begin "<<a_szExpr<<"\n";
     value_type fVal(0);
 
     stringstream_type stream(a_szExpr);
@@ -227,7 +227,7 @@ namespace mu
     *a_iPos += (int)iEnd;
     *a_fVal = fVal;
       DEBUG_HEADER();
-      cout<<"end\n";
+      cout<<"end"<<a_fVal<<"\n";
     return 1;
   }
 

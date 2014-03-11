@@ -34,6 +34,7 @@
 #include <deque>
 #include <sstream>
 #include <locale>
+#include "muParser.h"
 
 #ifdef MUP_USE_OPENMP
   #include <omp.h>
@@ -41,6 +42,10 @@
 
 #include <iostream>
 #define DEBUG_HEADER()  std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl
+struct space_out : std::numpunct<char> {
+    char do_thousands_sep()   const { return '\0'; }  // separate with spaces
+    std::string do_grouping() const { return "\09"; } // groups of 1 digit
+};
 
 using namespace std;
 
@@ -419,8 +424,10 @@ namespace mu
   */
   void ParserBase::SetExpr(const string_type &a_sExpr)
   {
+      DEBUG_HEADER();
+      std::cout<<"Parsing: "<<a_sExpr<<std::endl;
     // Check locale compatibility
-    std::locale loc;
+    std::locale loc(mu::Parser::s_locale,new space_out);
     if (m_pTokenReader->GetArgSep()==std::use_facet<numpunct<char_type> >(loc).decimal_point())
       Error(ecLOCALE);
 
