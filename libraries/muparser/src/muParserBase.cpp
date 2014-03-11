@@ -876,6 +876,8 @@ namespace mu
 
           m_vRPN.AddFun(funTok.GetFuncAddr(), (funTok.GetArgCount()==-1) ? -iArgNumerical : iArgNumerical);
           break;
+    default:
+        break;
     }
 
     // Push dummy value representing the function result to the stack
