@@ -40,12 +40,6 @@
   #include <omp.h>
 #endif
 
-#include <iostream>
-#define DEBUG_HEADER()  std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl
-struct space_out : std::numpunct<char> {
-    char do_thousands_sep()   const { return '\0'; }  // separate with spaces
-    std::string do_grouping() const { return "\09"; } // groups of 1 digit
-};
 
 using namespace std;
 
@@ -201,8 +195,6 @@ namespace mu
   void ParserBase::SetDecSep(char_type cDecSep)
   {
     char_type cThousandsSep = std::use_facet< change_dec_sep<char_type> >(s_locale).thousands_sep();
-    DEBUG_HEADER();
-    printf("setting thousand_sep='%c'\n", cThousandsSep);
     s_locale = std::locale(std::locale("C"), new change_dec_sep<char_type>(cDecSep, cThousandsSep));
   }
   
@@ -218,8 +210,6 @@ namespace mu
   void ParserBase::SetThousandsSep(char_type cThousandsSep)
   {
     char_type cDecSep = std::use_facet< change_dec_sep<char_type> >(s_locale).decimal_point();
-    DEBUG_HEADER();
-    printf("setting change_dec_sep='%c'\n", cThousandsSep);
     s_locale = std::locale(std::locale("C"), new change_dec_sep<char_type>(cDecSep, cThousandsSep));
   }
 
@@ -231,7 +221,6 @@ namespace mu
   */
   void ParserBase::ResetLocale()
   {
-      DEBUG_HEADER();
     s_locale = std::locale(std::locale("C"), new change_dec_sep<char_type>('.'));
     SetArgSep(',');
   }
@@ -424,8 +413,6 @@ namespace mu
   */
   void ParserBase::SetExpr(const string_type &a_sExpr)
   {
-      DEBUG_HEADER();
-      std::cout<<"Parsing: "<<a_sExpr<<std::endl;
     // Check locale compatibility
     std::locale loc(mu::Parser::s_locale,new space_out);
     if (m_pTokenReader->GetArgSep()==std::use_facet<numpunct<char_type> >(loc).decimal_point())

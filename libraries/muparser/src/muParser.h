@@ -28,6 +28,12 @@
 //--- Standard includes ------------------------------------------------------------------------
 #include <vector>
 
+#include <iostream>
+struct space_out : std::numpunct<char> {
+    char do_thousands_sep()   const { return '\0'; }  // separate with spaces
+    std::string do_grouping() const { return "\09"; } // groups of 1 digit
+};
+
 //--- Parser includes --------------------------------------------------------------------------
 #include "muParserBase.h"
 #include "muParserTemplateMagic.h"
