@@ -299,7 +299,6 @@ double RS_Math::eval(const QString& expr, bool* ok) {
     double ret(0.);
     try{
         mu::Parser p;
-        p.SetThousandsSep('\0');
         p.DefineConst("pi",M_PI);
         p.SetExpr(expr.toStdString());
         ret=p.Eval();

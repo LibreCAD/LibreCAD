@@ -71,3 +71,8 @@ isEmpty( CXX_CPP11_FLAG) {
 
 # svg support
 QT += svg
+CONFIG += c++11
+macx{
+    QMAKE_CXXFLAGS_DEBUG += -mmacosx-version-min=10.8
+    QMAKE_CXXFLAGS += -mmacosx-version-min=10.8
+}

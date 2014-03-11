@@ -17,8 +17,8 @@ TARGET = $$DLL_NAME
 GENERATED_DIR = ../../generated/lib/muparser
 # Use common project definitions.
 include(../../common.pri)
-QMAKE_CXXFLAGS_DEBUG -= -std=c++0x -std=c++11
-QMAKE_CXXFLAGS -= -std=c++0x -std=c++11
+QMAKE_CXXFLAGS_DEBUG += -std=c++0x -std=c++11
+QMAKE_CXXFLAGS += -std=c++0x -std=c++11
 
 # svg support
 QT -= svg
