@@ -37,12 +37,18 @@
 /** \brief The eulerian number. */
 #define PARSER_CONST_E   2.718281828459045235360287
 
+#include <iostream>
+#define DEBUG_HEADER()  std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl
+
 using namespace std;
 
 /** \file
     \brief Implementation of the standard floating point parser.
 */
-
+struct space_out : std::numpunct<char> {
+    char do_thousands_sep()   const { return '\0'; }  // separate with spaces
+    std::string do_grouping() const { return "\09"; } // groups of 1 digit
+};
 
 
 /** \brief Namespace for mathematical applications. */
@@ -194,6 +200,7 @@ namespace mu
   }
 
 
+
   //---------------------------------------------------------------------------
   /** \brief Default value recognition callback. 
       \param [in] a_szExpr Pointer to the expression
@@ -203,11 +210,14 @@ namespace mu
   */
   int Parser::IsVal(const char_type* a_szExpr, int *a_iPos, value_type *a_fVal)
   {
+      DEBUG_HEADER();
+      cout<<"begin\n";
     value_type fVal(0);
 
     stringstream_type stream(a_szExpr);
+    std::locale loc (Parser::s_locale,new space_out);
     stream.seekg(0);        // todo:  check if this really is necessary
-    stream.imbue(Parser::s_locale);
+    stream.imbue(loc);
     stream >> fVal;
     stringstream_type::pos_type iEnd = stream.tellg(); // Position after reading
 
@@ -216,6 +226,8 @@ namespace mu
 
     *a_iPos += (int)iEnd;
     *a_fVal = fVal;
+      DEBUG_HEADER();
+      cout<<"end\n";
     return 1;
   }
 

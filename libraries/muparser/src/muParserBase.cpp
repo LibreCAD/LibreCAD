@@ -39,6 +39,9 @@
   #include <omp.h>
 #endif
 
+#include <iostream>
+#define DEBUG_HEADER()  std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl
+
 using namespace std;
 
 /** \file
@@ -193,6 +196,8 @@ namespace mu
   void ParserBase::SetDecSep(char_type cDecSep)
   {
     char_type cThousandsSep = std::use_facet< change_dec_sep<char_type> >(s_locale).thousands_sep();
+    DEBUG_HEADER();
+    printf("setting thousand_sep='%c'\n", cThousandsSep);
     s_locale = std::locale(std::locale("C"), new change_dec_sep<char_type>(cDecSep, cThousandsSep));
   }
   
@@ -204,9 +209,12 @@ namespace mu
       By default muparser uses the "C" locale. The thousands separator of this
       locale is overwritten by the one provided here.
   */
+
   void ParserBase::SetThousandsSep(char_type cThousandsSep)
   {
     char_type cDecSep = std::use_facet< change_dec_sep<char_type> >(s_locale).decimal_point();
+    DEBUG_HEADER();
+    printf("setting change_dec_sep='%c'\n", cThousandsSep);
     s_locale = std::locale(std::locale("C"), new change_dec_sep<char_type>(cDecSep, cThousandsSep));
   }
 
@@ -218,6 +226,7 @@ namespace mu
   */
   void ParserBase::ResetLocale()
   {
+      DEBUG_HEADER();
     s_locale = std::locale(std::locale("C"), new change_dec_sep<char_type>('.'));
     SetArgSep(',');
   }
