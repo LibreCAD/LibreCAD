@@ -91,7 +91,8 @@ int main(int argc, char** argv) {
     app.setStyleSheet(
 "QToolButton:checked"
 "{"
-"    background-color: rgb(175,175,175);"
+"    background-color: rgb(160,160,160);"
+"    border-style: inset;"
 "}"
 ""
 "QToolButton"
@@ -101,7 +102,8 @@ int main(int argc, char** argv) {
 ""
 "QToolButton:hover"
 "{"
-"        background-color: rgb(175,175,175);"
+"    background-color: rgb(255,255,255);"
+"    border-style: outset;"
 "}"
                 );
 #endif
