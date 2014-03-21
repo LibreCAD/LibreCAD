@@ -19,8 +19,14 @@ SCMREVISION="2.0.3"
 GENERATED_DIR = ../../generated/librecad
 # Use common project definitions.
 include(../../common.pri)
-#include(./muparser.pri)
 include(./boost.pri)
+
+equals(build_muparser, "true"){
+    LIBS += -lmuparser
+    DEPENDPATH += ../../libraries/muparser/src
+}else{
+    include(./muparser.pri)
+}
 
 #uncomment to use 2D rs_vector instead of 3D
 #DEFINES += RS_VECTOR2D=1
@@ -82,13 +88,11 @@ win32 {
 # Additional libraries to load
 LIBS += -L../../generated/lib  \
     -ldxfrw \
-    -ljwwlib \
-    -lmuparser
+    -ljwwlib
 
 DEPENDPATH += \
     ../../libraries/libdxfrw/src \
     ../../libraries/jwwlib/src \
-    ../../libraries/muparser/src \
     cmd \
     lib/actions \
     lib/creation \

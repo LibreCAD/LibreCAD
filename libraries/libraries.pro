@@ -10,7 +10,13 @@ TARGET = libraries
 
 SUBDIRS     = \
         libdxfrw \
-        jwwlib \
-        muparser
+        jwwlib
+
+equals(build_muparser, "true"){
+        message("build muparser from source")
+        SUBDIRS += muparser
+}else{
+        message("Using external muparser lib")
+}
 
 
