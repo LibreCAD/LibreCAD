@@ -185,8 +185,8 @@ RS_Commands::RS_Commands() {
     shortCommands.insert(tr("ro"), RS2::ActionModifyRotate);
 
     cmdTranslation.insert("sz", tr("sz"));
-    mainCommands.insert(tr("sz", "modify - scale"), RS2::ActionModifyMove);
-    shortCommands.insert(tr("sz"), RS2::ActionModifyMove);
+    mainCommands.insert(tr("sz", "modify - scale"), RS2::ActionModifyScale);
+    shortCommands.insert(tr("sz"), RS2::ActionModifyScale);
 
     cmdTranslation.insert("ss", tr("ss"));
     mainCommands.insert(tr("ss", "modify - stretch"), RS2::ActionModifyStretch);
