@@ -33,6 +33,10 @@
 
 RS_Commands* RS_Commands::uniqueInstance = NULL;
 
+const char* RS_Commands::FnPrefix = "Fn";
+const char* RS_Commands::AltPrefix = "Alt-";
+const char* RS_Commands::MetaPrefix = "Meta-";
+
 /**
  * Constructor. Initiates main command dictionary.
  * mainCommand keeps a map from translated commands to actionType
@@ -150,6 +154,24 @@ RS_Commands::RS_Commands() {
     // tools:
     cmdTranslation.insert("dimregen", tr("dimregen"));
     mainCommands.insert(tr("dimregen"), RS2::ActionToolRegenerateDimensions);
+
+	 // restrictions:
+    cmdTranslation.insert("rn", tr("rn", "restrict - nothing"));
+    mainCommands.insert(tr("rn", "restrict - nothing"), RS2::ActionRestrictNothing);
+    shortCommands.insert(tr("rn"), RS2::ActionRestrictNothing);
+
+    cmdTranslation.insert("rr", tr("rr", "restrict - orthogonal"));
+    mainCommands.insert(tr("rr", "restrict - orthogonal"), RS2::ActionRestrictOrthogonal);
+    shortCommands.insert(tr("rr"), RS2::ActionRestrictOrthogonal);
+
+    cmdTranslation.insert("rh", tr("rh", "restrict - horizontal"));
+    mainCommands.insert(tr("rh", "restrict - horizontal"), RS2::ActionRestrictHorizontal);
+    shortCommands.insert(tr("rh"), RS2::ActionRestrictHorizontal);
+
+    cmdTranslation.insert("rv", tr("rv", "restrict - vertical"));
+    mainCommands.insert(tr("rv", "restrict - vertical"), RS2::ActionRestrictVertical);
+    shortCommands.insert(tr("rv"), RS2::ActionRestrictVertical);
+
 
     // modify:
     cmdTranslation.insert("tm", tr("tm"));
@@ -498,11 +520,25 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) {
  * of key-strokes that is entered like hotkeys.
  */
 RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
-    if(code.size()<1 || code.contains(QRegExp("^[a-z].*",Qt::CaseInsensitive)) == false ) return RS2::ActionNone;
-    QString c = code.toLower();
+	if(code.size() < 1)
+		return RS2::ActionNone;
+
+	QString c;
+
+	if(!(code.startsWith(RS_Commands::FnPrefix) || code.startsWith(RS_Commands::AltPrefix) || code.startsWith(RS_Commands::MetaPrefix))) {
+    	if(code.size() < 1 || code.contains(QRegExp("^[a-z].*",Qt::CaseInsensitive)) == false )
+			 return RS2::ActionNone;
+	    c = code.toLower();
+	} else {
+		c = code;
+	}
+
+
 //    std::cout<<"regex: "<<qPrintable(c)<<" matches: "<< c.contains(QRegExp("^[a-z].*",Qt::CaseInsensitive))<<std::endl;
 //    std::cout<<"RS2::ActionType RS_Commands::keycodeToAction("<<qPrintable(c)<<")"<<std::endl;
+
     QMultiHash<QString, RS2::ActionType>::iterator it = shortCommands.find(c);
+
     if( it == shortCommands.end() ) {
 
         //not found, searching for main commands
