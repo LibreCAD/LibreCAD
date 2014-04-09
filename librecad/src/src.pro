@@ -36,12 +36,12 @@ CONFIG += qt \
      link_prl \
      verbose
 
-equals ( QT_MAJOR_VERSION, 5 ) {
+greaterThan( QT_MAJOR_VERSION, 4 ) {
     # in Qt5 help is deprecated in CONFIG
-    QT += widgets printsupport
+    QT += widgets printsupport help
+} else {
+    CONFIG += help 
 } 
-
-equals ( QT_MAJOR_VERSION, 4): CONFIG += help 
 
 PRE_TARGETDEPS += ../../generated/lib/libdxfrw.a
 PRE_TARGETDEPS += ../../generated/lib/libjwwlib.a
