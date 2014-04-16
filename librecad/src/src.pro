@@ -22,7 +22,7 @@ include(../../common.pri)
 include(./boost.pri)
 
 equals(build_muparser, "true"){
-    LIBS += -lmuparser
+    LIBS += ../../generated/lib/libmuparser.a
     DEPENDPATH += ../../libraries/muparser/src
 }else{
     include(./muparser.pri)

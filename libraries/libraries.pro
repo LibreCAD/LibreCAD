@@ -13,7 +13,7 @@ SUBDIRS     = \
         jwwlib
 
 equals(build_muparser, "true"){
-        message("build muparser from source")
+        message("Using bundled muparser lib")
         SUBDIRS += muparser
 }else{
         message("Using external muparser lib")
