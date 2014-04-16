@@ -47,6 +47,7 @@ rpath=
 cxxflags=
 libs=
 compiler=
+extra=
 local_base="$( make -f /usr/share/mk/bsd.port.mk -V LOCALBASE )"
 
 compiler_version=${use_cxx##*++}
@@ -54,7 +55,6 @@ case "${use_cxx}" in
 	'g++'*)
 		rpath="${local_base}/lib/gcc${compiler_version}"
 		compiler="g++"
-		#libs="-lstdc++"
 	;;
 	'clang++'*)
 		if [ ! -e "${local_base}/lib/libc++.so" ]
@@ -65,6 +65,7 @@ case "${use_cxx}" in
 		cxxflags="-I${local_base}/include/c++/v1"
 		libs="-stdlib=libc++"
 		compiler="clang"
+		extra="build_muparser=true"
 	;;
 esac
 
@@ -76,6 +77,6 @@ qmake-qt4 librecad.pro \
 	QMAKE_LINK=${use_cxx} \
 	${rpath:+QMAKE_RPATHDIR=\"${rpath}\"} \
 	${cxxflags:+QMAKE_CXXFLAGS=\"${cxxflags}\"} \
-	${libs:+QMAKE_LIBS=\"${libs}\"}
+	${libs:+QMAKE_LIBS=\"${libs}\"} ${extra:+${extra}}
 
 make -j$( /sbin/sysctl -n hw.ncpu )
