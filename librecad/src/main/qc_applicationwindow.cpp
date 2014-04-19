@@ -1024,6 +1024,9 @@ void QC_ApplicationWindow::initActions(void)
     action = actionFactory.createAction(RS2::ActionDrawCircle2P, actionHandler);
     subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionDrawCircle2PR, actionHandler);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawCircle3P, actionHandler);
     subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
