@@ -66,8 +66,6 @@ public:
     virtual void commandEvent(RS_CommandEvent* e);
     virtual QStringList getAvailableCommands();
 
-    virtual void showOptions();
-    virtual void hideOptions();
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 //    virtual void updateToolBar();

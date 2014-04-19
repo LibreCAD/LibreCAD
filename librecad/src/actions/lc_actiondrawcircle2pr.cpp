@@ -216,27 +216,6 @@ QStringList LC_ActionDrawCircle2PR::getAvailableCommands() {
 }
 
 
-void LC_ActionDrawCircle2PR::showOptions() {
-    RS_DEBUG->print("RS_ActionDrawLine::showOptions");
-    if(RS_DIALOGFACTORY != NULL){
-        RS_ActionInterface::showOptions();
-
-        RS_DIALOGFACTORY->requestOptions(this, true);
-    }
-    RS_DEBUG->print("RS_ActionDrawLine::showOptions: OK");
-}
-
-
-
-void LC_ActionDrawCircle2PR::hideOptions() {
-    if(RS_DIALOGFACTORY != NULL){
-        RS_ActionInterface::hideOptions();
-
-        RS_DIALOGFACTORY->requestOptions(this, false);
-    }
-}
-
-
 
 void LC_ActionDrawCircle2PR::updateMouseButtonHints() {
     switch (getStatus()) {
@@ -263,17 +242,6 @@ void LC_ActionDrawCircle2PR::updateMouseButtonHints() {
 void LC_ActionDrawCircle2PR::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void LC_ActionDrawCircle2PR::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
 
 // EOF
 
