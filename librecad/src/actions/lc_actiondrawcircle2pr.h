@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_ACTIONDRAWCIRCLE2PR_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_circle.h"
+#include "rs_actiondrawcirclecr.h"
 
 /**
  * This action class can handle user events to draw a
@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  * @author Dongxu Li
  */
-class LC_ActionDrawCircle2PR : public RS_PreviewActionInterface {
+class LC_ActionDrawCircle2PR : public RS_ActionDrawCircleCR {
 	Q_OBJECT
 public:
     /**
@@ -64,8 +64,10 @@ public:
 	
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
     virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+    virtual QStringList getAvailableCommands();
 
+    virtual void showOptions();
+    virtual void hideOptions();
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 //    virtual void updateToolBar();
@@ -74,7 +76,7 @@ protected:
     /**
      * Circle data defined so far.
      */
-    RS_CircleData data;
+//    RS_CircleData data;
     /**
      * 1st point.
      */

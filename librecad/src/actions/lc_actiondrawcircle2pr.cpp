@@ -30,8 +30,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 LC_ActionDrawCircle2PR::LC_ActionDrawCircle2PR(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw circles",
-                           container, graphicView) {
+    :RS_ActionDrawCircleCR(container, graphicView)
+{
     reset();
 }
 
@@ -51,7 +51,7 @@ QAction* LC_ActionDrawCircle2PR::createGUIAction(RS2::ActionType /*type*/, QObje
 
 void LC_ActionDrawCircle2PR::reset() {
     data.reset();
-    data.radius=20.;
+    data.radius=0.;
     point1 = RS_Vector(false);
     point2 = RS_Vector(false);
 }
@@ -214,6 +214,28 @@ QStringList LC_ActionDrawCircle2PR::getAvailableCommands() {
     QStringList cmd;
     return cmd;
 }
+
+
+void LC_ActionDrawCircle2PR::showOptions() {
+    RS_DEBUG->print("RS_ActionDrawLine::showOptions");
+    if(RS_DIALOGFACTORY != NULL){
+        RS_ActionInterface::showOptions();
+
+        RS_DIALOGFACTORY->requestOptions(this, true);
+    }
+    RS_DEBUG->print("RS_ActionDrawLine::showOptions: OK");
+}
+
+
+
+void LC_ActionDrawCircle2PR::hideOptions() {
+    if(RS_DIALOGFACTORY != NULL){
+        RS_ActionInterface::hideOptions();
+
+        RS_DIALOGFACTORY->requestOptions(this, false);
+    }
+}
+
 
 
 void LC_ActionDrawCircle2PR::updateMouseButtonHints() {
