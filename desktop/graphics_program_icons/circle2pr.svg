@@ -15,7 +15,7 @@
    width="150"
    height="150"
    sodipodi:docname="circle2pr.svg"
-   inkscape:export-filename="/home/dli/github/LibreCAD/desktop/graphics_program_icons/circle2pr.png"
+   inkscape:export-filename="/home/dli/github/LibreCAD/librecad/res/extui/circle2pr.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <metadata
@@ -26,7 +26,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
