@@ -174,8 +174,8 @@
   <widget class="QToolButton" name="bCircle3P">
    <property name="geometry">
     <rect>
-     <x>33</x>
-     <y>54</y>
+     <x>0</x>
+     <y>87</y>
      <width>32</width>
      <height>32</height>
     </rect>
@@ -212,7 +212,7 @@
   <widget class="QToolButton" name="bCircleParallel">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>33</x>
      <y>87</y>
      <width>32</width>
      <height>32</height>
@@ -284,8 +284,8 @@
   <widget class="QToolButton" name="bCircleInscribe">
    <property name="geometry">
     <rect>
-     <x>33</x>
-     <y>87</y>
+     <x>0</x>
+     <y>120</y>
      <width>32</width>
      <height>32</height>
     </rect>
@@ -326,7 +326,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QToolButton" name="bCircleTan2">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>33</x>
      <y>120</y>
      <width>32</width>
      <height>32</height>
@@ -368,8 +368,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QToolButton" name="bCircleTan3">
    <property name="geometry">
     <rect>
-     <x>33</x>
-     <y>153</y>
+     <x>0</x>
+     <y>186</y>
      <width>32</width>
      <height>32</height>
     </rect>
@@ -410,7 +410,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QToolButton" name="bCircleTan1_2P">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>33</x>
      <y>153</y>
      <width>32</width>
      <height>32</height>
@@ -452,8 +452,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QToolButton" name="bCircleTan2_1P">
    <property name="geometry">
     <rect>
-     <x>33</x>
-     <y>120</y>
+     <x>0</x>
+     <y>153</y>
      <width>32</width>
      <height>32</height>
     </rect>
@@ -477,6 +477,44 @@ p, li { white-space: pre-wrap; }
    <property name="icon">
     <iconset resource="../../../res/extui/extui.qrc">
      <normaloff>:/extui/circletan2_1p.png</normaloff>:/extui/circletan2_1p.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="autoExclusive">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="bCircle2PR">
+   <property name="geometry">
+    <rect>
+     <x>33</x>
+     <y>54</y>
+     <width>32</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>32</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="toolTip">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circle with 2 Points and Radius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../../../res/extui/extui.qrc">
+     <normaloff>:/extui/circle2pr.png</normaloff>:/extui/circle2pr.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -658,6 +696,22 @@ p, li { white-space: pre-wrap; }
     <hint type="sourcelabel">
      <x>48</x>
      <y>135</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>32</x>
+     <y>167</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>bCircle2PR</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_CadToolBarCircles</receiver>
+   <slot>drawCircle2PR()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>48</x>
+     <y>69</y>
     </hint>
     <hint type="destinationlabel">
      <x>32</x>
