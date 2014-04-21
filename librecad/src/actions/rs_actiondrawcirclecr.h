@@ -82,9 +82,7 @@ public:
 		return data.radius;
 	}
 
-	void setRadius(double r) {
-		data.radius = r;
-	}
+    void setRadius(double r);
 
 protected:
     /**

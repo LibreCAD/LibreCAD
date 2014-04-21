@@ -98,7 +98,7 @@ bool LC_ActionDrawCircle2PR::preparePreview(const RS_Vector& mouse) {
     const RS_Vector center2= vp - dvp;
 
     if( center1.squaredTo(center2) < RS_TOLERANCE ) {
-        //no need to select center, as only one solutio possible
+        //no need to select center, as only one solution possible
         data.center=vp;
         return false;
     }
@@ -178,7 +178,8 @@ void LC_ActionDrawCircle2PR::coordinateEvent(RS_CoordinateEvent* e) {
             graphicView->moveRelativeZero(mouse);
             setStatus(SelectCenter);
         }else{
-            RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is too small for point select").arg(data.radius));
+            RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is too small for points selected\ndistance between points=%2 is larger than diameter=%3").
+                                             arg(data.radius).arg(point1.distanceTo(point2)).arg(2.*data.radius));
         }
         break;
 
@@ -187,7 +188,7 @@ void LC_ActionDrawCircle2PR::coordinateEvent(RS_CoordinateEvent* e) {
         if(showPreview || data.isValid())
             trigger();
         else
-            RS_DIALOGFACTORY->commandMessage(tr("Select from possible two circle centers"));
+            RS_DIALOGFACTORY->commandMessage(tr("Select from two possible circle centers"));
     }
         break;
 
