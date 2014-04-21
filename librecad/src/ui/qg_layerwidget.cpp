@@ -335,12 +335,12 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
         lastLayer = layerList->getActive();
         layerList->activate(lay);
         lastLayer = layerList->getActive();
-        layerList->activate(lay);
+        layerList->activate(lay, true);
         return;
     }
 
     RS_Layer* l = layerList->getActive();
-    layerList->activate(lay);
+    layerList->activate(lay, true);
     switch(layerIdx.column()){
     case QG_LayerModel::VISIBLE:
         actionHandler->slotLayersToggleView();
