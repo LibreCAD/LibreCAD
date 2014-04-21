@@ -69,7 +69,7 @@ public:
 	
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
     virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+    virtual QStringList getAvailableCommands();
 	
     virtual void hideOptions();
     virtual void showOptions();
@@ -82,9 +82,7 @@ public:
 		return data.radius;
 	}
 
-	void setRadius(double r) {
-		data.radius = r;
-	}
+    void setRadius(double r);
 
 protected:
     /**
