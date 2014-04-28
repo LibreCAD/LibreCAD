@@ -9,7 +9,8 @@ class plot : public QObject, QC_PluginInterface
     Q_OBJECT
      Q_INTERFACES(QC_PluginInterface)
 #if QT_VERSION >= 0x050000
-     Q_PLUGIN_METADATA(IID "org.librecad.sample" FILE  "sample.json")
+//FIXME, file sample.json missing
+     //Q_PLUGIN_METADATA(IID "org.librecad.sample" FILE  "sample.json")
 #endif
 
 public:

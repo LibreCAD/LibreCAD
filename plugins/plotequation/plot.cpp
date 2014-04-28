@@ -79,7 +79,7 @@ void plot::execComm(Document_Interface *doc, QWidget *parent, QString cmd)
             if(!equation2.isEmpty())
             {//calculate the values of the second equation
                 p.SetExpr(equation2.toStdString());
-                for(size_t i = 0; i < xValues.size(); ++i)
+                for(int i = 0; i < xValues.size(); ++i)
                 {
                     equationVariable = xValues.at(i);
                     yValues2.append(p.Eval());

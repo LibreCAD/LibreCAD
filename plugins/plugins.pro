@@ -15,8 +15,10 @@ SUBDIRS     = \
         list \
         sameprop \
         importshp \
-        sample \
-        plotequation
+        sample 
+
+# will add back after some fixes
+#        plotequation
 
 TRANSLATIONS = ./ts/plugins_ca.ts \
     ./ts/plugins_cs.ts \
