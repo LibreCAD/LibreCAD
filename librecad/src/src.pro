@@ -20,13 +20,7 @@ GENERATED_DIR = ../../generated/librecad
 # Use common project definitions.
 include(../../common.pri)
 include(./boost.pri)
-
-equals(build_muparser, "true"){
-    LIBS += ../../generated/lib/libmuparser.a
-    DEPENDPATH += ../../libraries/muparser/src
-}else{
-    include(./muparser.pri)
-}
+include(./muparser.pri)
 
 #uncomment to use 2D rs_vector instead of 3D
 #DEFINES += RS_VECTOR2D=1
