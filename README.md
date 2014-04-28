@@ -152,10 +152,6 @@ A sample build batch file is included as scripts/build-windows.bat. If successfu
 - Download boost, from https://sourceforge.net/projects/boost/files/boost/
 - unzip into C:\boost\, for example C:\boost\1_53_0 (in this directory you will find boost root directory, INSTALL, index, Jamroot etc.. etc).
 
-- Download muParser 2.2.2 or later from http://sourceforge.net/projects/muparser/files/muparser/
-- Create a directory named "muparser" in `C:\`
-- Unzip muparser_v2_2_2.zip into `C:\muparser\`
-
 Notes: At this point you will have the following directory structure: C:\muparser\muparser_v2_2_2\ (assuming you are using muparser-2.2.2). If you prefer to keep muParser in other locations, you should specify the directiory location with a custom.pro file in LibreCAD source folder, for example, the following setting is equivalent to the default muparser path in common.pro:
 
 `MUPARSER_DIR = /muparser/muparser_v2_2_2`
