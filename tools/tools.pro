@@ -9,7 +9,11 @@ exists( ../custom.pro ):include( ../custom.pro )
 TEMPLATE = subdirs
 
 unix {
-    SUBDIRS = ttf2lff
+    packagesExist(freetype2){
+	SUBDIRS = ttf2lff
+    } else{
+        message( "package freetype2 is not found. Ignoring ttf2lff")
+    }
 }
 
 win32 {
