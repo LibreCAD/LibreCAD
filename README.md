@@ -34,7 +34,7 @@ ln -s /usr/local/bin/gcc-ranlib-4.8 gcc-ranlib
 source ~/.bashrc
 gcc --version # make sure it's 4.8. if it's not, ~/bin might not be on your path
 
-brew install boost muparser qt
+brew install boost qt
 
 # Unzip or checkout a version of LibreCAD into a directory.
 cd LibreCAD
@@ -55,8 +55,8 @@ You can build LibreCAD manually by following steps:
 
 Install QT and a new gcc, which should version 4.4 or later.
 
-Install a version of Qt, boost and muparser, for example
-`$ sudo port install gcc46 qt4-creator-mac qt4-mac boost muparser`
+Install a version of Qt and boost, for example
+`$ sudo port install gcc46 qt4-creator-mac qt4-mac boost`
 
 Select the right compiler, as LibreCAD doesn't build with the default llvm-gcc42,
 `$ sudo port select --set gcc mp-gcc46`

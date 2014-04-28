@@ -14,9 +14,9 @@ cd "${SCRIPTPATH}"/..
 # have to clean up any existing binary files to avoid crashes of bug#422
 rm -rf LibreCAD.app
 
-$QMAKE_CMD -r -spec macx-clang "build_muparser = true"
+$QMAKE_CMD -r -spec macx-clang
 make distclean
-$QMAKE_CMD -r -spec macx-clang "build_muparser = true"
+$QMAKE_CMD -r -spec macx-clang
 make -j4
 rm -f LibreCAD.dmg
 macdeployqt LibreCAD.app -verbose=2 -dmg
