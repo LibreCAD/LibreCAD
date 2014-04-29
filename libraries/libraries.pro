@@ -12,7 +12,7 @@ SUBDIRS     = \
         libdxfrw \
         jwwlib
 
-equals(build_muparser, "true"){
+macx|win32|equals(build_muparser, "true"){
         message("Using bundled muparser lib")
         SUBDIRS += muparser
 }else{
