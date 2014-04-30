@@ -41,7 +41,7 @@ QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
     layerHidden = QIcon(":/ui/hiddenblock.png");
     layerDefreeze = QIcon(":/ui/unlockedlayer.png");
     layerFreeze = QIcon(":/ui/lockedlayer.png");
-    helpLayer = QIcon(":/ui/fileprint.png");
+    constructionLayer = QIcon(":/ui/fileprint.png");
 }
 
 QG_LayerModel::~QG_LayerModel() {
@@ -128,8 +128,8 @@ QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
             } else {
                 return layerFreeze;
             }
-        case HelpLayer:
-            return helpLayer.pixmap(QSize(20,20),lay->isHelpLayer() ?
+        case ConstructionLayer:
+            return constructionLayer.pixmap(QSize(20,20),lay->isConstructionLayer() ?
                                         QIcon::Disabled:
                                         QIcon::Normal,
                                     QIcon::On);
@@ -169,7 +169,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layerView->setMinimumHeight(140);
     layerView->setColumnWidth(QG_LayerModel::VISIBLE, 16);
     layerView->setColumnWidth(QG_LayerModel::LOCKED, 16);
-    layerView->setColumnWidth(QG_LayerModel::HelpLayer, 20);
+    layerView->setColumnWidth(QG_LayerModel::ConstructionLayer, 20);
     layerView->verticalHeader()->hide();
     layerView->horizontalHeader()->setStretchLastSection(true);
     layerView->horizontalHeader()->hide();
@@ -348,7 +348,7 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
     case QG_LayerModel::LOCKED:
         actionHandler->slotLayersToggleLock();
         break;
-    case QG_LayerModel::HelpLayer:
+    case QG_LayerModel::ConstructionLayer:
         actionHandler->slotLayersTogglePrint();
         break;
     default:

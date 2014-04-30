@@ -51,7 +51,7 @@ struct DL_LayerData {
                  int lFlags,bool lPlotF) {
         name = lName;
         flags = lFlags;
-        plotF = lPlotF;//set help Layer, if plotF is false.
+        plotF = lPlotF;//set construction Layer, if plotF is false.
     }
 
     /** Layer name. */

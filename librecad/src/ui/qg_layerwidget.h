@@ -46,7 +46,7 @@ public:
     enum {
         VISIBLE,
         LOCKED,
-        HelpLayer,
+        ConstructionLayer,
         NAME,
         LAST
     };
@@ -69,7 +69,7 @@ private:
     QIcon layerHidden;
     QIcon layerDefreeze;
     QIcon layerFreeze;
-    QIcon helpLayer;
+    QIcon constructionLayer;
 };
 
 

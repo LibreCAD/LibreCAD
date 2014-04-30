@@ -225,7 +225,7 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
     }
     // a little check to avoid doing unneeded intersections, an attempt to avoid O(N^2) increasing of checking two-entity information
     if (onEntities &&
-            (! (e1 -> isHelpLayer() || e2 -> isHelpLayer() ))
+            (! (e1 -> isConstructionLayer() || e2 -> isConstructionLayer() ))
             && (
                 e1 -> getMin().x > e2 -> getMax().x
                 || e1 -> getMax().x < e2 -> getMin().x
@@ -256,8 +256,8 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
         if (onEntities==true) {
             //ignore intersections not on entity
             if (!(
-                        (e1->isHelpLayer(true) || e1->isPointOnEntity(vp, tol)) &&
-                        (e2->isHelpLayer(true) || e2->isPointOnEntity(vp, tol))
+                        (e1->isConstructionLayer(true) || e1->isPointOnEntity(vp, tol)) &&
+                        (e2->isConstructionLayer(true) || e2->isPointOnEntity(vp, tol))
                         )
                     ) {
 //                std::cout<<"Ignored intersection "<<ret.get(i)<<std::endl;

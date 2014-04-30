@@ -157,7 +157,7 @@ void RS_LayerList::add(RS_Layer* layer) {
         l->freeze( layer->isFrozen());
         l->lock( layer->isLocked());
         l->setConverted( layer->isConverted());
-        l->setHelpLayer( layer->isHelpLayer());
+        l->setConstructionLayer( layer->isConstructionLayer());
         l->visibleInLayerList( layer->isVisibleInLayerList());
         l->setPen(layer->getPen());
 

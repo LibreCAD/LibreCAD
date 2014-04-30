@@ -24,13 +24,13 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="2">
-    <widget class="QCheckBox" name="cbHelpLayer">
+    <widget class="QCheckBox" name="cbConstructionLayer">
      <property name="toolTip">
-      <string>A Help Layer has entities of infinite straight lines intended to be used for geometric construction.
-The contents of a Help Layer should not appear in printout.</string>
+      <string>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
+The contents of a Construction Layer should not appear in printout.</string>
      </property>
      <property name="text">
-      <string>Help Layer</string>
+      <string>Construction Layer</string>
      </property>
     </widget>
    </item>

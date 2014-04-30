@@ -880,15 +880,15 @@ QList<QString> RS_Entity::getAllKeys() {
     return varList.keys();
 }
 
-//! helpLayer contains entities of infinite length, helpLayer doesn't show up in print
-bool RS_Entity::isHelpLayer(bool typeCheck) const  {
+//! constructionLayer contains entities of infinite length, constructionLayer doesn't show up in print
+bool RS_Entity::isConstructionLayer(bool typeCheck) const  {
     if(     typeCheck
         &&  getParent() != NULL
         &&  RS2::EntityLine != rtti() ){
-            // do not expand entities on help layers, except lines
+            // do not expand entities on construction layers, except lines
             return false;
     }
-    if(layer != NULL) return layer->isHelpLayer();
+    if(layer != NULL) return layer->isConstructionLayer();
     return false;
 }
 

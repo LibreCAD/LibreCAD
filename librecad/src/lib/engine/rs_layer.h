@@ -70,8 +70,8 @@ public:
     //! Converted flag (cam)
     bool converted;
 
-    //! Help Layer, a help layer has entities of infinite length, and will never be printed out
-    bool helpLayer;
+    //! Construction Layer, a construction layer has entities of infinite length, and will never be printed out
+    bool constructionLayer;
 
     //! visible in layer list
     bool visibleInLayerList;
@@ -172,7 +172,7 @@ public:
      * Toggles printing of this layer on / off.
      */
     void togglePrint() {
-        data.helpLayer = !data.helpLayer;
+        data.constructionLayer = !data.constructionLayer;
     }
 
     /**
@@ -206,8 +206,8 @@ public:
         return data.visibleInLayerList;
     }
     /**
-      whether the layer is a help layer
-      A help layer has plotF flag=false
+      whether the layer is a construction layer
+      A construction layer has plotF flag=false
 1- LAYER dxf group codes:
  70   Standard flags (bit-coded values):
                   1 = Layer is frozen; otherwise layer is thawed
@@ -215,12 +215,12 @@ public:
                   ... more codes follow not used by LC
  290   Plotting flag. If set to 0, do not plot this layer
       */
-    bool isHelpLayer(){
-        return data.helpLayer;
+    bool isConstructionLayer(){
+        return data.constructionLayer;
     }
-    bool setHelpLayer(bool helpLayer){
-        data.helpLayer=helpLayer;
-        return helpLayer;
+    bool setConstructionLayer(bool constructionLayer){
+        data.constructionLayer=constructionLayer;
+        return constructionLayer;
     }
     /**
      * Copies all attributes (pen) and the name of the layer.
