@@ -301,18 +301,23 @@ void QG_LayerWidget::update() {
  * Activates the given layer and makes it the active
  * layer in the layerlist.
  */
-void QG_LayerWidget::activateLayer(RS_Layer* layer) {
+void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
     RS_DEBUG->print("QG_LayerWidget::activateLayer() begin");
 
     if (layer==NULL || layerList==NULL) {
         return;
     }
+    int yPos = layerView->verticalScrollBar()->value();
+
 
     layerList->activate(layer);
 
     layerList->activate(layer);
     QModelIndex idx = layerModel->getIndex (layer);
+
     layerView->setCurrentIndex ( idx );
+    if(updateScroll==false)
+        layerView->verticalScrollBar()->setValue(yPos);
 
     RS_DEBUG->print("QG_LayerWidget::activateLayer() end");
 }
@@ -350,10 +355,10 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
         actionHandler->slotLayersTogglePrint();
         break;
     default:
-        break;
+        activateLayer(l);
+        return;
     }
-
-    activateLayer(l);
+    activateLayer(l, false);
 }
 
 /**

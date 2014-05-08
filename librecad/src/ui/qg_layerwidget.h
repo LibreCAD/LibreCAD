@@ -88,7 +88,7 @@ public:
     void setLayerList(RS_LayerList* layerList, bool showByBlock);
 
     void update();
-    void activateLayer(RS_Layer* layer);
+    void activateLayer(RS_Layer* layer, bool updateScroll=true);
 
     virtual void layerActivated(RS_Layer* layer) {
         activateLayer(layer);
