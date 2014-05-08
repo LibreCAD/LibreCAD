@@ -62,10 +62,6 @@ QModelIndex QG_LayerModel::index ( int row, int column, const QModelIndex & /*pa
     return createIndex ( row, column);
 }
 
-bool layerLessThan(const RS_Layer *s1, const RS_Layer *s2) {
-     return s1->getName() < s2->getName();
-}
-
 void QG_LayerModel::setLayerList(RS_LayerList* ll) {
 	/* since 4.6 the recomended way is to use begin/endResetModel()
 	 * TNick <nicu.tofan@gmail.com>
@@ -85,7 +81,9 @@ void QG_LayerModel::setLayerList(RS_LayerList* ll) {
     for (unsigned i=0; i < ll->count(); ++i) {
         listLayer.append(ll->at(i));
     }
-    std::sort( listLayer.begin(), listLayer.end(), layerLessThan );
+    std::sort( listLayer.begin(), listLayer.end(), [](const RS_Layer *s1, const RS_Layer *s2)-> bool{
+        return s1->getName() < s2->getName();
+    } );
 //called to force redraw
 #if QT_VERSION >= 0x040600
     endResetModel();
