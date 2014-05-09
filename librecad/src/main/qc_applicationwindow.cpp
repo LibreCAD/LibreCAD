@@ -3373,6 +3373,8 @@ void QC_ApplicationWindow::slotFilePrint() {
     RS_SETTINGS->endGroup();
 
     // printer setup:
+    printer.setOutputFormat(QPrinter::NativeFormat);
+
     QPrintDialog printDialog(&printer, this);
     if (printDialog.exec() == QDialog::Accepted) {
         //printer.setOutputToFile(true);
