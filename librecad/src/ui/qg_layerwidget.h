@@ -117,6 +117,11 @@ public:
     QLineEdit* getMatchLayerName() {
         return matchLayerName;
     }
+    /**
+     * @brief getActiveName
+     * @return the name of the active layer
+     */
+    QString getActiveName() const;
 
 signals:
     void escape();

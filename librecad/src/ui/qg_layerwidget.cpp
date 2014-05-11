@@ -35,6 +35,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include "qg_actionhandler.h"
+#include "qc_applicationwindow.h"
 
 QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
     layerVisible = QIcon(":/ui/visibleblock.png");
@@ -261,6 +262,19 @@ void QG_LayerWidget::setLayerList(RS_LayerList* layerList, bool showByBlock) {
     update();
 }
 
+/**
+ * @brief getActiveName
+ * @return the name of the active layer
+ */
+QString QG_LayerWidget::getActiveName() const
+{
+    if(layerList){
+        RS_Layer* p=layerList->getActive();
+        if(p) return p->getName();
+    }
+    return QString();
+}
+
 
 
 /**
@@ -318,6 +332,9 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
     layerView->setCurrentIndex ( idx );
     if(updateScroll==false)
         layerView->verticalScrollBar()->setValue(yPos);
+
+    //update active layer name in mainwindow status bar
+    QC_ApplicationWindow::getAppWindow()->slotUpdateActiveLayer();
 
     RS_DEBUG->print("QG_LayerWidget::activateLayer() end");
 }

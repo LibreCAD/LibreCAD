@@ -92,6 +92,7 @@
 #include "qg_dlgimageoptions.h"
 #include "qg_filedialog.h"
 #include "qg_selectionwidget.h"
+#include "qg_activelayername.h"
 #include "qg_mousewidget.h"
 
 #include "rs_dialogfactory.h"
@@ -1678,6 +1679,14 @@ void QC_ApplicationWindow::initStatusBar() {
     statusBar()->addWidget(mouseWidget);
     selectionWidget = new QG_SelectionWidget(statusBar(), "selections");
     statusBar()->addWidget(selectionWidget);
+    m_pActiveLayerName=new QG_ActiveLayerName(this);
+    statusBar()->addWidget(m_pActiveLayerName);
+}
+
+void QC_ApplicationWindow::slotUpdateActiveLayer()
+{
+    if(layerWidget&&m_pActiveLayerName)
+        m_pActiveLayerName->activeLayerChanged(layerWidget->getActiveName());
 }
 
 
