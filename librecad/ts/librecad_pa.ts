@@ -2,6 +2,42 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="pa">
 <context>
+    <name>LC_ActionDrawCircle2PR</name>
+    <message>
+        <source>2 Points, Radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>radius=%1 is too small for points selected
+distance between points=%2 is larger than diameter=%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select from two possible circle centers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify first point</source>
+        <translation type="unfinished">ਪਹਿਲਾਂ ਬਿੰਦੂ ਦਿਓ</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">ਰੱਦ ਕਰੋ</translation>
+    </message>
+    <message>
+        <source>Specify second point</source>
+        <translation type="unfinished">ਦੂਜਾ ਬਿੰਦੂ ਦਿਓ</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">ਪਿੱਛੇ</translation>
+    </message>
+    <message>
+        <source>Select circle center</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -783,6 +819,29 @@ Auto-save disabled.</source>
     </message>
 </context>
 <context>
+    <name>QG_ActiveLayerName</name>
+    <message>
+        <source>Selection</source>
+        <translation type="unfinished">ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
@@ -1075,6 +1134,10 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circle with 2 Points and Radius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1853,6 +1916,14 @@ p, li { white-space: pre-wrap; }
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;type in coordinates or commands&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="unfinished">ਨਕਲ(&amp;C)</translation>
+    </message>
+    <message>
+        <source>select&amp;All</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_CoordinateWidget</name>
@@ -1884,7 +1955,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>ø</source>
-        <translation>ø</translation>
+        <translation type="obsolete">ø</translation>
     </message>
     <message utf8="true">
         <source>°</source>
@@ -1896,7 +1967,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>¶</source>
-        <translation>¶</translation>
+        <translation type="obsolete">¶</translation>
     </message>
     <message utf8="true">
         <source>×</source>
@@ -1908,6 +1979,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>⌀</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>π</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1931,7 +2010,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>ø (Diameter)</source>
-        <translation>ø (ਵਿਆਸ)</translation>
+        <translation type="obsolete">ø (ਵਿਆਸ)</translation>
     </message>
     <message utf8="true">
         <source>° (Degree)</source>
@@ -1943,7 +2022,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>¶ (Pi)</source>
-        <translation>¶ (ਪਾਈ)</translation>
+        <translation type="obsolete">¶ (ਪਾਈ)</translation>
     </message>
     <message utf8="true">
         <source>× (Times)</source>
@@ -1952,6 +2031,14 @@ p, li { white-space: pre-wrap; }
     <message utf8="true">
         <source>÷ (Division)</source>
         <translation>÷ (ਭਾਗ)</translation>
+    </message>
+    <message utf8="true">
+        <source>⌀ (Diameter)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>π (Pi)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2571,7 +2658,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message utf8="true">
         <source>Diameter (ø)</source>
-        <translation type="unfinished">ਵਿਆਸ (ø)</translation>
+        <translation type="obsolete">ਵਿਆਸ (ø)</translation>
     </message>
     <message utf8="true">
         <source>Degree (°)</source>
@@ -3068,6 +3155,10 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
         <translation type="unfinished">[100000-10FFFD] Supplementary Private Use Area-B</translation>
+    </message>
+    <message utf8="true">
+        <source>Diameter (⌀)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4318,7 +4409,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message utf8="true">
         <source>Diameter (ø)</source>
-        <translation>ਵਿਆਸ (ø)</translation>
+        <translation type="obsolete">ਵਿਆਸ (ø)</translation>
     </message>
     <message utf8="true">
         <source>Degree (°)</source>
@@ -4892,6 +4983,10 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>Middle</source>
         <translation type="unfinished">ਮੱਧ</translation>
     </message>
+    <message utf8="true">
+        <source>Diameter (⌀)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ExitDialog</name>
@@ -5272,12 +5367,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">Esc</translation>
     </message>
     <message>
-        <source>A Help Layer has entities of infinite straight lines intended to be used for geometric construction.
-The contents of a Help Layer should not appear in printout.</source>
+        <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
+The contents of a Construction Layer should not appear in printout.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Help Layer</source>
+        <source>Construction Layer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6590,6 +6685,10 @@ Do you want to replace it?</source>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
@@ -7342,6 +7441,10 @@ Do you want to replace it?</source>
         <source>Back</source>
         <translation>ਪਿੱਛੇ</translation>
     </message>
+    <message>
+        <source>radius=%1 is invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleInscribe</name>
@@ -7678,6 +7781,10 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Specify the fourth line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can not determine uniquely an ellipse</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11722,6 +11829,42 @@ parallel</translation>
         <translation type="unfinished">re
 
 ਚਤੁਰਭੁਜ</translation>
+    </message>
+    <message>
+        <source>rn</source>
+        <comment>restrict - nothing</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rr</source>
+        <comment>restrict - orthogonal</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rh</source>
+        <comment>restrict - horizontal</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rv</source>
+        <comment>restrict - vertical</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rv</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
