@@ -63,8 +63,8 @@ void QG_CircleOptions::destroy() {
 }
 
 void QG_CircleOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawCircleCR) {
-        action = (RS_ActionDrawCircleCR*)a;
+    if (a!=NULL && ( a->rtti()==RS2::ActionDrawCircleCR ||  a->rtti()==RS2::ActionDrawCircle2PR) ) {
+        action = static_cast<RS_ActionDrawCircleCR*>(a);
 
         QString sr;
         if (update) {

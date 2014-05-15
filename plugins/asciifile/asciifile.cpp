@@ -542,7 +542,7 @@ void dibPunto::drawElev()
     QString sty = ptelev->getStyleStr();
     for (int i = 0; i < dataList.size(); ++i) {
         pointData *pd = dataList.at(i);
-        if (!pd->x.isEmpty() && !pd->x.isEmpty() && !pd->z.isEmpty()){
+        if (!pd->x.isEmpty() && !pd->y.isEmpty() && !pd->z.isEmpty()){
             newx = pd->x.toDouble() + incx;
             newy = pd->y.toDouble() + incy;
             QPointF pt(newx,newy);
@@ -562,7 +562,7 @@ void dibPunto::drawCode()
     QString sty = ptcode->getStyleStr();
     for (int i = 0; i < dataList.size(); ++i) {
         pointData *pd = dataList.at(i);
-        if (!pd->x.isEmpty() && !pd->x.isEmpty() && !pd->code.isEmpty()){
+        if (!pd->x.isEmpty() && !pd->y.isEmpty() && !pd->code.isEmpty()){
             newx = pd->x.toDouble() + incx;
             newy = pd->y.toDouble() + incy;
             QPointF pt(newx,newy);

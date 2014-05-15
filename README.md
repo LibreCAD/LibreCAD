@@ -34,7 +34,7 @@ ln -s /usr/local/bin/gcc-ranlib-4.8 gcc-ranlib
 source ~/.bashrc
 gcc --version # make sure it's 4.8. if it's not, ~/bin might not be on your path
 
-brew install boost muparser qt
+brew install boost qt
 
 # Unzip or checkout a version of LibreCAD into a directory.
 cd LibreCAD
@@ -46,12 +46,17 @@ This creates an executable "LibreCAD.app/Contents/MacOS/LibreCAD" and package "L
 OS X with MacPorts Users
 -----------------------
 
-install macports from http://www.macports.org/
+install MacPorts from http://www.macports.org/
 
-After that install QT and a new gcc, which should version 4.4 or later.
+You can install LibreCad using MacPorts by:
+`$ sudo port install librecad`
 
-Install a version of Qt, boost and muparser, for example
-`$ sudo port install gcc46 qt4-creator-mac qt4-mac boost muparser`
+You can build LibreCAD manually by following steps:
+
+Install QT and a new gcc, which should version 4.4 or later.
+
+Install a version of Qt and boost, for example
+`$ sudo port install gcc46 qt4-creator-mac qt4-mac boost`
 
 Select the right compiler, as LibreCAD doesn't build with the default llvm-gcc42,
 `$ sudo port select --set gcc mp-gcc46`
@@ -111,27 +116,9 @@ Note that you will most likely need to run __qmake-qt4__ instead of just __qmake
 FreeBSD users
 -------------
 
-Make sure you have the following ports installed:
+See scripts/build-freebsd.sh for the list of ports that need to be installed.
 
-```
-x11-toolkits/qt4-gui devel/qt4-linguist devel/qt4-help-tools graphics/qt4-svg devel/boost-libs math/muparser
-```
-
-LibreCAD requires a C++11-capable compiler to build, Currently this means that one of
-
-```
-lang/gcc47, lang/gcc48, lang/gcc49 or lang/clang33
-```
-
-must be used.
-
-Once these pre-requisites are satisfied, run the provided
-
-```
-scripts/build-freebsd.sh
-```
-
-See the script itself for some more options. Clang 3.3 does not yet work.
+Use the script itself to build LibreCAD.
 
 Windows Users
 -------------
@@ -147,20 +134,7 @@ A sample build batch file is included as scripts/build-windows.bat. If successfu
 - Download boost, from https://sourceforge.net/projects/boost/files/boost/
 - unzip into C:\boost\, for example C:\boost\1_53_0 (in this directory you will find boost root directory, INSTALL, index, Jamroot etc.. etc).
 
-- Download muParser 2.2.2 or later from http://sourceforge.net/projects/muparser/files/muparser/
-- Create a directory named "muparser" in `C:\`
-- Unzip muparser_v2_2_2.zip into `C:\muparser\`
-
-Notes: At this point you will have the following directory structure: C:\muparser\muparser_v2_2_2\ (assuming you are using muparser-2.2.2). If you prefer to keep muParser in other locations, you should specify the directiory location with a custom.pro file in LibreCAD source folder, for example, the following setting is equivalent to the default muparser path in common.pro:
-
-`MUPARSER_DIR = /muparser/muparser_v2_2_2`
-
-- Start Qt Desktop using "Qt 4.8.4 for Desktop (MinGW)" shortcut.
-- In Qt Desktop console, navigate to muParser build directory (C:\muparser\muparser_v2_2_2\build\), then type the following command to built muParser library:
-  `mingw32-make -fmakefile.mingw`
-
-After installation, start Qt Creator and load LibreCAD.pro,
-from the build menu select "Build All".
+Start Qt Creator and load LibreCAD.pro, from the build menu select "Build All".
 
 Generic Unix Users
 ------------------

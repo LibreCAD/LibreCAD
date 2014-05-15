@@ -183,10 +183,10 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
     if (data.flags&0x04) {
         layer->lock(true);
     }
-    //help layer doesn't appear in printing
-    layer->setHelpLayer(! data.plotF);
-    if (layer->isHelpLayer())
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::addLayer: layer %s is help layer", layer->getName().toStdString().c_str());
+    //construction layer doesn't appear in printing
+    layer->setConstructionLayer(! data.plotF);
+    if (layer->isConstructionLayer())
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::addLayer: layer %s is construction layer", layer->getName().toStdString().c_str());
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: add layer to graphic");
     graphic->addLayer(layer);
@@ -1731,9 +1731,9 @@ void RS_FilterDXFRW::writeLayers(){
         lay.lineType = lineTypeToName(pen.getLineType()).toStdString();
         lay.flags = l->isFrozen() ? 0x01 : 0x00;
         if (l->isLocked()) lay.flags |=0x04;
-        lay.plotF = ! l->isHelpLayer(); // a help layer should not appear in print
+        lay.plotF = ! l->isConstructionLayer(); // a construction layer should not appear in print
         if (!lay.plotF)
-            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::writeLayers: layer %s saved as help layer", lay.name.c_str());
+            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::writeLayers: layer %s saved as construction layer", lay.name.c_str());
 //        lay.lineType = lineType.toStdString(); //.toLatin1().data();
         dxfW->writeLayer(&lay);
     }

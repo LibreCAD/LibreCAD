@@ -1,6 +1,6 @@
 /****************************************************************************
 **
- * Toggle whether a layer should appear on print (a help layer doesn't appear on
+ * Toggle whether a layer should appear on print (a construction layer doesn't appear on
  printout, and have straight lines of infinite length)
 
 Copyright (C) 2011 Dongxu Li (dongxuli2011@gmail.com)
@@ -31,7 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_layer.h"
 
 /**
- * whether a layer should appear on print (a help layer doesn't appear on
+ * whether a layer should appear on print (a construction layer doesn't appear on
  printout, and have straight lines of infinite length)
  *
  * @author Dongxu Li

@@ -13,14 +13,14 @@ DEFINES += HAS_BOOST=1
 DEFINES -= DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-SCMREVISION="2.0.2"
+SCMREVISION="2.0.3"
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
 # Use common project definitions.
 include(../../common.pri)
-include(./muparser.pri)
 include(./boost.pri)
+include(./muparser.pri)
 
 #uncomment to use 2D rs_vector instead of 3D
 #DEFINES += RS_VECTOR2D=1
@@ -53,6 +53,7 @@ unix {
         DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
         RC_FILE = ../res/main/librecad.icns
         QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-osx.sh
+        QT += printsupport
     }
     else {
         TARGET = librecad
@@ -66,6 +67,14 @@ win32 {
     TARGET = LibreCAD
     DEFINES += QC_APPDIR="\"LibreCAD\""
     DEFINES += QINITIMAGES_LIBRECAD="qInitImages_LibreCAD"
+
+    # add MSYSGIT_DIR = PathToGitBinFolder (without quotes) in custom.pro file, for commit hash in about dialog
+    !isEmpty( MSYSGIT_DIR ) {
+        SCMREVISION = $$system( \"$$MSYSGIT_DIR/git.exe\" describe --tags || echo "$${SCMREVISION}")
+        !isEmpty( SCMREVISION ) {
+            DEFINES += QC_SCMREVISION=\"$$SCMREVISION\"
+        }
+    }
 
     RC_FILE = ../res/main/librecad.rc
     QMAKE_POST_LINK = $$_PRO_FILE_PWD_\\..\\..\\scripts\\postprocess-win.bat
@@ -199,7 +208,9 @@ HEADERS += \
     lib/scripting/rs_python_wrappers.h \
     lib/scripting/rs_script.h \
     lib/scripting/rs_scriptlist.h \
-    ui/forms/qg_snaptoolbar.h
+    ui/forms/qg_snaptoolbar.h \
+    actions/lc_actiondrawcircle2pr.h \
+    ui/forms/qg_activelayername.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -281,7 +292,9 @@ SOURCES += \
     lib/scripting/rs_scriptlist.cpp \
     ui/forms/qg_snaptoolbar.cpp \
     lib/engine/rs_color.cpp \
-    lib/engine/rs_pen.cpp
+    lib/engine/rs_pen.cpp \
+    actions/lc_actiondrawcircle2pr.cpp \
+    ui/forms/qg_activelayername.cpp
 
 # ################################################################################
 # Command
@@ -829,7 +842,8 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_textoptions.ui \
     ui/forms/qg_trimamountoptions.ui \
     ui/forms/qg_widgetpen.ui \
-    ui/forms/qg_snaptoolbar.ui
+    ui/forms/qg_snaptoolbar.ui \
+    ui/forms/qg_activelayername.ui
 
 RESOURCES += ../res/ui/ui.qrc
 

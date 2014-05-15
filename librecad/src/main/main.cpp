@@ -86,6 +86,27 @@ int main(int argc, char** argv) {
 
 
     QApplication app(argc, argv);
+#if defined(Q_OS_MAC) && QT_VERSION > 0x050000
+//need stylesheet for Qt5 on mac
+    app.setStyleSheet(
+"QToolButton:checked"
+"{"
+"    background-color: rgb(160,160,160);"
+"    border-style: inset;"
+"}"
+""
+"QToolButton"
+"{"
+"    background-color: transparent;"
+"}"
+""
+"QToolButton:hover"
+"{"
+"    background-color: rgb(255,255,255);"
+"    border-style: outset;"
+"}"
+                );
+#endif
 
 
         // for image mime resources from png files

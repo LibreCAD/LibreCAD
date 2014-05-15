@@ -50,6 +50,7 @@
 #include "rs_actiondrawarctangential.h"
 #include "rs_actiondrawcircle.h"
 #include "rs_actiondrawcircle2p.h"
+#include "lc_actiondrawcircle2pr.h"
 #include "rs_actiondrawcircle3p.h"
 #include "rs_actiondrawcirclecr.h"
 #include "rs_actiondrawcircleinscribe.h"
@@ -679,6 +680,12 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                 action = RS_ActionDrawCircle2P::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotDrawCircle2P()));
+        break;
+
+    case RS2::ActionDrawCircle2PR:
+                action = LC_ActionDrawCircle2PR::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotDrawCircle2PR()));
         break;
 
     case RS2::ActionDrawCircle3P:

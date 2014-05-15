@@ -2069,7 +2069,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     }
 
     if (sol.hasValid()==false) {
-        return false;
+        return both ? trim( limitCoord, (RS_AtomicEntity*)limitEntity, trimCoord, trimEntity, false) : false;
     }
 
     RS_AtomicEntity* trimmed1 = NULL;

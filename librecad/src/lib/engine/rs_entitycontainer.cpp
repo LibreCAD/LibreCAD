@@ -25,7 +25,10 @@
 **********************************************************************/
 
 
-#include <QDebug>
+#include <QObject>
+
+#include "rs_dialogfactory.h"
+#include "qg_dialogfactory.h"
 #include "rs_entitycontainer.h"
 
 #include "rs_debug.h"
@@ -1679,13 +1682,15 @@ bool RS_EntityContainer::optimizeContours() {
         vpStart=current->getStartpoint();
         vpEnd=current->getEndpoint();
     }
-        RS_Entity* next(NULL);
+    RS_Entity* next(NULL);
 //    std::cout<<"RS_EntityContainer::optimizeContours: 4"<<std::endl;
     /** connect entities **/
+    const QString errMsg=QObject::tr("Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)");
+
     while(count()>0){
         double dist(0.);
 //        std::cout<<" count()="<<count()<<std::endl;
-        getNearestEndpoint(vpEnd,&dist,&next);
+        RS_Vector&& vpTmp=getNearestEndpoint(vpEnd,&dist,&next);
         if(dist>1e-8) {
             if(vpEnd.squaredTo(vpStart)<1e-8){
                 RS_Entity* e2=entityAt(0);
@@ -1695,6 +1700,7 @@ bool RS_EntityContainer::optimizeContours() {
                 removeEntity(e2);
                 continue;
             }
+            QG_DIALOGFACTORY->commandMessage(errMsg.arg(dist).arg(vpTmp.x).arg(vpTmp.y).arg(vpEnd.x).arg(vpEnd.y));
             closed=false;
         }
         if(next && closed){ 			//workaround if next is NULL
@@ -1714,7 +1720,8 @@ bool RS_EntityContainer::optimizeContours() {
     }
 //    DEBUG_HEADER();
     if(vpEnd.valid && vpEnd.squaredTo(vpStart)>1e-8) {
-//        std::cout<<"ds2="<<vpEnd.squaredTo(vpStart)<<std::endl;
+        if(closed) QG_DIALOGFACTORY->commandMessage(errMsg.arg(vpEnd.distanceTo(vpStart))
+                                         .arg(vpStart.x).arg(vpStart.y).arg(vpEnd.x).arg(vpEnd.y));
         closed=false;
     }
 //    std::cout<<"RS_EntityContainer::optimizeContours: 5"<<std::endl;
@@ -1873,8 +1880,11 @@ void RS_EntityContainer::revertDirection() {
 	}
 }
 
-
-
+/**
+ * @brief RS_EntityContainer::draw() draw entities in order
+ * @param painter
+ * @param view
+ */
 void RS_EntityContainer::draw(RS_Painter* painter, RS_GraphicView* view,
                               double& /*patternOffset*/) {
 
@@ -1882,30 +1892,13 @@ void RS_EntityContainer::draw(RS_Painter* painter, RS_GraphicView* view,
         return;
     }
 
-    QList<RS_Entity*> entities;
     for (RS_Entity* e=firstEntity(RS2::ResolveNone);
          e!=NULL;
          e = nextEntity(RS2::ResolveNone)) {
-        //view->drawEntity(painter, e);
-        entities<<e;
-    }
-    std::stable_sort(entities.begin(), entities.end(), [](const RS_Entity* e1, const RS_Entity* e2)->bool{
-        const RS_Layer* l1=e1->getLayer();
-        const RS_Layer* l2=e2->getLayer();
-        if(l1 != NULL || l2 != NULL ) {
-            if(l1==NULL) return false;
-            if(l2==NULL) return true;
-            if (e1->getLayer()->getName() < e2->getLayer()->getName()) return true;
-            else
-                if (e1->getLayer()->getName() > e2->getLayer()->getName()) return false;
-        }
-        return e1->getId() < e2->getId();
-    });
-    for(RS_Entity* e: entities){
+
         view->drawEntity(painter, e);
     }
 }
-
 
 /**
  * Dumps the entities to stdout.

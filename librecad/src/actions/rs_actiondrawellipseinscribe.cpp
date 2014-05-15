@@ -153,6 +153,8 @@ bool RS_ActionDrawEllipseInscribe::preparePreview(){
         valid= e.createInscribeQuadrilateral(lines);
         if(valid){
             eData=e.getData();
+        }else if( RS_DIALOGFACTORY){
+            RS_DIALOGFACTORY->commandMessage(tr("Can not determine uniquely an ellipse"));
         }
     }
     return valid;

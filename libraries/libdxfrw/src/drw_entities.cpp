@@ -21,19 +21,30 @@
 *  @author Rallaz
 */
 void DRW_Entity::calculateAxis(DRW_Coord extPoint){
+    //Follow the arbitrary DXF definitions for extrusion axes.
     if (fabs(extPoint.x) < 0.015625 && fabs(extPoint.y) < 0.015625) {
+        //If we get here, implement Ax = Wy x N where Wy is [0,1,0] per the DXF spec.
+        //The cross product works out to Wy.y*N.z-Wy.z*N.y, Wy.z*N.x-Wy.x*N.z, Wy.x*N.y-Wy.y*N.x
+        //Factoring in the fixed values for Wy gives N.z,0,-N.x
         extAxisX.x = extPoint.z;
         extAxisX.y = 0;
         extAxisX.z = -extPoint.x;
     } else {
+        //Otherwise, implement Ax = Wz x N where Wz is [0,0,1] per the DXF spec.
+        //The cross product works out to Wz.y*N.z-Wz.z*N.y, Wz.z*N.x-Wz.x*N.z, Wz.x*N.y-Wz.y*N.x
+        //Factoring in the fixed values for Wz gives -N.y,N.x,0.
         extAxisX.x = -extPoint.y;
         extAxisX.y = extPoint.x;
         extAxisX.z = 0;
     }
+
     extAxisX.unitize();
+
+    //Ay = N x Ax
     extAxisY.x = (extPoint.y * extAxisX.z) - (extAxisX.y * extPoint.z);
     extAxisY.y = (extPoint.z * extAxisX.x) - (extAxisX.z * extPoint.x);
     extAxisY.z = (extPoint.x * extAxisX.y) - (extAxisX.x * extPoint.y);
+
     extAxisY.unitize();
 }
 //! Extrude a point using arbitary axis
@@ -141,6 +152,8 @@ void DRW_Line::parseCode(int code, dxfReader *reader){
 
 void DRW_Circle::applyExtrusion(){
     if (haveExtrusion) {
+        //NOTE: Commenting these out causes the the arcs being tested to be located
+        //on the other side of the y axis (all x dimensions are negated).
         calculateAxis(extPoint);
         extrudePoint(extPoint, &basePoint);
     }
@@ -154,6 +167,26 @@ void DRW_Circle::parseCode(int code, dxfReader *reader){
     default:
         DRW_Point::parseCode(code, reader);
         break;
+    }
+}
+
+void DRW_Arc::applyExtrusion(){
+    DRW_Circle::applyExtrusion();
+
+    if(haveExtrusion){
+        // If the extrusion vector has a z value less than 0, the angles for the arc
+        // have to be mirrored since DXF files use the right hand rule.
+        // Note that the following code only handles the special case where there is a 2D
+        // drawing with the z axis heading into the paper (or rather screen). An arbitrary
+        // extrusion axis (with x and y values greater than 1/64) may still have issues.
+        if (fabs(extPoint.x) < 0.015625 && fabs(extPoint.y) < 0.015625 && extPoint.z < 0.0) {
+            staangle=M_PI-staangle;
+            endangle=M_PI-endangle;
+
+            double temp = staangle;
+            staangle=endangle;
+            endangle=temp;
+        }
     }
 }
 

@@ -107,6 +107,15 @@ void RS_LayerList::activate(RS_Layer* layer, bool notify) {
 }
 
 
+/**
+ * @brief sort by layer names
+ */
+void RS_LayerList::sort()
+{
+    std::stable_sort(layers.begin(), layers.end(), [](const RS_Layer* l0, const RS_Layer* l1 )->bool{
+                         return l0->getName() < l1->getName();
+                     });
+}
 
 /**
  * Adds a layer to the layer list.
@@ -127,7 +136,7 @@ void RS_LayerList::add(RS_Layer* layer) {
     RS_Layer* l = find(layer->getName());
     if (l==NULL) {
         layers.append(layer);
-
+        this->sort();
         // notify listeners
         for (int i=0; i<layerListListeners.size(); ++i) {
             RS_LayerListListener* l = layerListListeners.at(i);
@@ -148,7 +157,7 @@ void RS_LayerList::add(RS_Layer* layer) {
         l->freeze( layer->isFrozen());
         l->lock( layer->isLocked());
         l->setConverted( layer->isConverted());
-        l->setHelpLayer( layer->isHelpLayer());
+        l->setConstructionLayer( layer->isConstructionLayer());
         l->visibleInLayerList( layer->isVisibleInLayerList());
         l->setPen(layer->getPen());
 

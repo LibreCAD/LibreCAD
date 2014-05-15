@@ -69,7 +69,7 @@ void QG_LayerDialog::setLayer(RS_Layer* l) {
 	layerName = layer->getName();
     leName->setText(layerName);
     wPen->setPen(layer->getPen(), false, false, tr("Default Pen"));
-    cbHelpLayer->setChecked(l->isHelpLayer());
+    cbConstructionLayer->setChecked(l->isConstructionLayer());
 
     if (layer->getName()=="0") {
         leName->setEnabled(false);
@@ -79,7 +79,7 @@ void QG_LayerDialog::setLayer(RS_Layer* l) {
 void QG_LayerDialog::updateLayer() {
     layer->setName(leName->text());
     layer->setPen(wPen->getPen());
-    layer->setHelpLayer(cbHelpLayer->isChecked());
+    layer->setConstructionLayer(cbConstructionLayer->isChecked());
 }
 
 void QG_LayerDialog::validate() {

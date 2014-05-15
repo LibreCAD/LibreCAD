@@ -92,6 +92,14 @@ void RS_ActionDrawCircleCR::trigger() {
                     circle->getId());
 }
 
+void RS_ActionDrawCircleCR::setRadius(double r)
+{
+    if(r>RS_TOLERANCE){
+        data.radius=r;
+    }else{
+        RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is invalid").arg(r));
+    }
+}
 
 
 void RS_ActionDrawCircleCR::mouseMoveEvent(QMouseEvent* e) {

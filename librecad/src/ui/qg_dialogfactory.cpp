@@ -719,6 +719,7 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         break;
 
     case RS2::ActionDrawCircleCR:
+    case RS2::ActionDrawCircle2PR:
         requestCircleOptions(action, on, update);
         break;
 

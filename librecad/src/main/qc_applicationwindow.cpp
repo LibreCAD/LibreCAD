@@ -92,6 +92,7 @@
 #include "qg_dlgimageoptions.h"
 #include "qg_filedialog.h"
 #include "qg_selectionwidget.h"
+#include "qg_activelayername.h"
 #include "qg_mousewidget.h"
 
 #include "rs_dialogfactory.h"
@@ -1024,6 +1025,9 @@ void QC_ApplicationWindow::initActions(void)
     action = actionFactory.createAction(RS2::ActionDrawCircle2P, actionHandler);
     subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionDrawCircle2PR, actionHandler);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionDrawCircle3P, actionHandler);
     subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
@@ -1675,6 +1679,14 @@ void QC_ApplicationWindow::initStatusBar() {
     statusBar()->addWidget(mouseWidget);
     selectionWidget = new QG_SelectionWidget(statusBar(), "selections");
     statusBar()->addWidget(selectionWidget);
+    m_pActiveLayerName=new QG_ActiveLayerName(this);
+    statusBar()->addWidget(m_pActiveLayerName);
+}
+
+void QC_ApplicationWindow::slotUpdateActiveLayer()
+{
+    if(layerWidget&&m_pActiveLayerName)
+        m_pActiveLayerName->activeLayerChanged(layerWidget->getActiveName());
 }
 
 
@@ -3129,8 +3141,8 @@ void QC_ApplicationWindow::slotFileExport() {
 
             // show options dialog:
             QG_ImageOptionsDialog dlg(this);
-            dlg.setGraphicSize(w->getGraphic()->getSize());
-            //dlg.setGraphicSize(w->getGraphic()->calculateBorders());
+            w->getGraphic()->calculateBorders();
+            dlg.setGraphicSize(w->getGraphic()->getSize()*2.);
             if (dlg.exec()) {
                 bool ret = slotFileExport(fn, format, dlg.getSize(), dlg.getBorders(),
                             dlg.isBackgroundBlack(), dlg.isBlackWhite());
@@ -3370,6 +3382,8 @@ void QC_ApplicationWindow::slotFilePrint() {
     RS_SETTINGS->endGroup();
 
     // printer setup:
+    printer.setOutputFormat(QPrinter::NativeFormat);
+
     QPrintDialog printDialog(&printer, this);
     if (printDialog.exec() == QDialog::Accepted) {
         //printer.setOutputToFile(true);
@@ -5017,27 +5031,61 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
     // multi key codes:
     static QTime ts = QTime();
     static QList<int> doubleCharacters;
+    bool actionProcessed = false;
     QTime now = QTime::currentTime();
-    bool actionProcessed=false;
-    doubleCharacters << e->key();
-    if (doubleCharacters.size()>2)
-        doubleCharacters=doubleCharacters.mid(doubleCharacters.size()-2,2);
-    if (ts.msecsTo(now)<2000) {
 
-        QString code="";
+	 // Handle "single" function keys and Alt- hotkeys.
+	 QString modCode = "";
+	 int fn_nr = 0;
+
+	 if(e->key() >= Qt::Key_F1 && e->key() <= Qt::Key_F35) {
+		 fn_nr = e->key() - Qt::Key_F1 + 1;
+	 }
+
+	 if(e->text().size() > 0) {
+		 if(e->modifiers() & Qt::AltModifier) {
+			 modCode += RS_Commands::AltPrefix;
+			 modCode += e->text();
+		 } else if(e->modifiers() & Qt::MetaModifier) {
+			 modCode += RS_Commands::MetaPrefix;
+			 modCode += e->text();
+		 }
+	 } else if(fn_nr > 0) {
+		 modCode += RS_Commands::FnPrefix;
+		 modCode += QString::number(fn_nr);
+	 }
+
+	 if(modCode.size() > 0) {
+		// We found a single function key. Handle it.
+		//std::cout << modCode.toStdString() << std::endl;
+      actionHandler->keycode(modCode);
+		ts = now;
+
+		return;
+	 }
+
+	 // Handle double character keycodes.
+    doubleCharacters << e->key();
+
+    if (doubleCharacters.size() > 2)
+        doubleCharacters = doubleCharacters.mid(doubleCharacters.size() - 2, 2);
+
+    if (ts.msecsTo(now) < 2000 && doubleCharacters.size() == 2) {
+        QString code = "";
         QList<int>::iterator i;
+
         for (i = doubleCharacters.begin(); i != doubleCharacters.end(); ++i)
              code += QChar(*i);
 
         // Check against double keycode handler
-        if (actionHandler->keycode(code)==true) {
-            actionProcessed=true;
+        if (actionHandler->keycode(code) == true) {
+            actionProcessed = true;
         }
 
         // Matches doublescape, since this is not a action, it's not done in actionHandler (is that logical??)
         if (doubleCharacters == (QList<int>() << Qt::Key_Escape << Qt::Key_Escape) ) {
             slotKillAllActions();
-            actionProcessed=true;
+            actionProcessed = true;
             RS_DEBUG->print("QC_ApplicationWindow::Got double escape!");
         }
 
@@ -5047,7 +5095,7 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
     }
     ts = now;
 
-    if (actionProcessed==false) {
+    if (actionProcessed == false) {
         // single key codes:
         switch (e->key()) {
         //need to pass Escape to actions, issue#285
@@ -5096,8 +5144,6 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
         RS_DEBUG->print("QC_ApplicationWindow::KeyPressEvent: Accepted");
         return;
     }
-
-
 
     QMainWindow::keyPressEvent(e);
 }

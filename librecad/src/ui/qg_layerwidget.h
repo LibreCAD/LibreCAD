@@ -46,7 +46,7 @@ public:
     enum {
         VISIBLE,
         LOCKED,
-        HelpLayer,
+        ConstructionLayer,
         NAME,
         LAST
     };
@@ -69,7 +69,7 @@ private:
     QIcon layerHidden;
     QIcon layerDefreeze;
     QIcon layerFreeze;
-    QIcon helpLayer;
+    QIcon constructionLayer;
 };
 
 
@@ -88,7 +88,7 @@ public:
     void setLayerList(RS_LayerList* layerList, bool showByBlock);
 
     void update();
-    void activateLayer(RS_Layer* layer);
+    void activateLayer(RS_Layer* layer, bool updateScroll=true);
 
     virtual void layerActivated(RS_Layer* layer) {
         activateLayer(layer);
@@ -117,6 +117,11 @@ public:
     QLineEdit* getMatchLayerName() {
         return matchLayerName;
     }
+    /**
+     * @brief getActiveName
+     * @return the name of the active layer
+     */
+    QString getActiveName() const;
 
 signals:
     void escape();

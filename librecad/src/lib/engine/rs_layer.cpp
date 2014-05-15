@@ -38,7 +38,7 @@ RS_Layer::RS_Layer(const QString& name) {
     data.pen.setColor(Qt::black);
     data.frozen = false;
     data.locked = false;
-    data.helpLayer = false;
+    data.constructionLayer = false;
 }
 
 

@@ -40,6 +40,14 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
     setupUi(this);
 
     init();
+    teHistory->setContextMenuPolicy(Qt::ActionsContextMenu);
+
+    QAction* action=new QAction(tr("&Copy"), teHistory);
+    connect(action, SIGNAL(triggered()), teHistory, SLOT(copy()));
+    teHistory->addAction(action);
+    action=new QAction(tr("select&All"), teHistory);
+    connect(action, SIGNAL(triggered()), teHistory, SLOT(selectAll()));
+    teHistory->addAction(action);
 }
 
 /*

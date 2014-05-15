@@ -168,7 +168,7 @@ void RS_FilterDXF::addLayer(const DL_LayerData& data) {
     RS_Layer* layer = new RS_Layer(toNativeString(data.name.c_str(),getDXFEncoding()));
     RS_DEBUG->print("RS_FilterDXF::addLayer: set pen");
     layer->setPen(attributesToPen(attributes));
-    layer->setHelpLayer(! data.plotF); //plotF is used to indicate whether the plot is plotted in printing
+    layer->setConstructionLayer(! data.plotF); //plotF is used to indicate whether the plot is plotted in printing
     //layer->setFlags(data.flags&0x07);
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: flags");
@@ -1472,7 +1472,7 @@ void RS_FilterDXF::writeLayer(DL_WriterA& dw, RS_Layer* l) {
     dxf.writeLayer(
         dw,
         DL_LayerData(toDxfString(l->getName()).toStdString(),  //RLZ: verify layername whit locales
-                     l->isFrozen() + (l->isLocked()<<2), ! l->isHelpLayer()),
+                     l->isFrozen() + (l->isLocked()<<2), ! l->isConstructionLayer()),
         DL_Attributes(std::string(""),
                       colorToNumber(l->getPen().getColor()),
                       widthToNumber(l->getPen().getWidth()),

@@ -223,7 +223,7 @@ public:
         isccw = 1;
     }
 
-    virtual void applyExtrusion(){DRW_Circle::applyExtrusion();}
+    virtual void applyExtrusion();
     void parseCode(int code, dxfReader *reader);
 
 public:

@@ -562,9 +562,9 @@ public:
 
     /** Recalculates the borders of this entity. */
     virtual void calculateBorders() = 0;
-    /** whether the entity is on a helpLayer */
-    //! helpLayer contains entities of infinite length, helpLayer doesn't show up in print
-    bool isHelpLayer(bool typeCheck = false) const; // ignore certain entity types for helpLayer check
+    /** whether the entity is on a constructionLayer */
+    //! constructionLayer contains entities of infinite length, constructionLayer doesn't show up in print
+    bool isConstructionLayer(bool typeCheck = false) const; // ignore certain entity types for constructionLayer check
     /** return the equation of the entity
 for quadratic,
 

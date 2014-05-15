@@ -144,7 +144,7 @@
           </property>
           <item>
            <property name="text">
-            <string>ø (Diameter)</string>
+            <string>⌀ (Diameter)</string>
            </property>
           </item>
           <item>
@@ -159,7 +159,7 @@
           </item>
           <item>
            <property name="text">
-            <string>¶ (Pi)</string>
+            <string>π (Pi)</string>
            </property>
           </item>
           <item>

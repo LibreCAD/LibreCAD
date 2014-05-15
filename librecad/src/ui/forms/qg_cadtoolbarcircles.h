@@ -48,6 +48,7 @@ public slots:
     virtual void drawCircle();
     virtual void drawCircleCR();
     virtual void drawCircle2P();
+    virtual void drawCircle2PR();
     virtual void drawCircle3P();
     virtual void drawCircle1_2P();
     virtual void drawCircle2_1P();

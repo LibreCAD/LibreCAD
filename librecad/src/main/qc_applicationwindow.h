@@ -56,6 +56,7 @@ class QG_RecentFiles;
 class QG_PenToolBar;
 class QHelpEngine;
 class QC_PluginInterface;
+class QG_ActiveLayerName;
 
 /**
  * Main application window. Hold together document, view and controls.
@@ -212,6 +213,11 @@ public slots:
     void slotTestResize800();
     /** resizes window to 640x480 for screen shots */
     void slotTestResize1024();
+    /**
+     * @brief slotUpdateActiveLayer
+     * update layer name when active layer changed
+     */
+    void slotUpdateActiveLayer();
 
 signals:
     void gridChanged(bool on);
@@ -377,6 +383,7 @@ private:
     QG_MouseWidget* mouseWidget;
     /** Selection Status */
     QG_SelectionWidget* selectionWidget;
+    QG_ActiveLayerName* m_pActiveLayerName;
 
     /** Option widget for individual tool options */
     QToolBar* optionWidget;

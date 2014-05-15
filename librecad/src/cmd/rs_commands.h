@@ -70,6 +70,11 @@ public:
     static QString msgAvailableCommands();
     void updateAlias();
 
+	 // Prefixes for function-, Meta- and Alt- keys.
+	 static const char *FnPrefix;
+	 static const char *AltPrefix;
+	 static const char *MetaPrefix;
+
 protected:
     static RS_Commands* uniqueInstance;
 

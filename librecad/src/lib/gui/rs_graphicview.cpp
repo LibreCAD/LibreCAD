@@ -1275,8 +1275,8 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
         return;
     }
     if( isPrintPreview() || isPrinting() ) {
-        //do not draw help layer on print preview or print
-            if(e->isHelpLayer()) return;
+        //do not draw construction layer on print preview or print
+            if(e->isConstructionLayer()) return;
     }
 
     // test if the entity is in the viewport

@@ -468,20 +468,26 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     // scroll up / down:
     if (e->modifiers()==Qt::ControlModifier) {
         scroll = true;
-        if (e->delta()>0) {
-            direction = RS2::Up;
-        } else {
-            direction = RS2::Down;
+        switch(e->orientation()){
+        case Qt::Horizontal:
+            direction=(e->delta()>0)?RS2::Left:RS2::Right;
+            break;
+        default:
+        case Qt::Vertical:
+            direction=(e->delta()>0)?RS2::Up:RS2::Down;
         }
     }
 
     // scroll left / right:
     else if	(e->modifiers()==Qt::ShiftModifier) {
         scroll = true;
-        if (e->delta()>0) {
-            direction = RS2::Right;
-        } else {
-            direction = RS2::Left;
+        switch(e->orientation()){
+        case Qt::Horizontal:
+            direction=(e->delta()>0)?RS2::Up:RS2::Down;
+            break;
+        default:
+        case Qt::Vertical:
+            direction=(e->delta()>0)?RS2::Left:RS2::Right;
         }
     }
 
@@ -730,6 +736,22 @@ QPixmap* QG_GraphicView::getPixmapForView(QPixmap *pm)
         } else {
                 return pm;
         }
+}
+
+void QG_GraphicView::layerActivated(RS_Layer *layer) {
+    RS_EntityContainer *container = this->getContainer();
+    RS_Entity *entity = container->firstEntity();
+
+    while (entity != NULL) {
+        if (entity->isSelected()) {
+            entity->setLayer(layer);
+        }
+
+        entity = container->nextEntity();
+    }
+
+    container->setSelected(false);
+    redraw(RS2::RedrawDrawing);
 }
 
 

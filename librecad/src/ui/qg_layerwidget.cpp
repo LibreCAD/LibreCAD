@@ -35,13 +35,14 @@
 #include <QLabel>
 #include <QLineEdit>
 #include "qg_actionhandler.h"
+#include "qc_applicationwindow.h"
 
 QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
     layerVisible = QIcon(":/ui/visibleblock.png");
     layerHidden = QIcon(":/ui/hiddenblock.png");
     layerDefreeze = QIcon(":/ui/unlockedlayer.png");
     layerFreeze = QIcon(":/ui/lockedlayer.png");
-    helpLayer = QIcon(":/ui/fileprint.png");
+    constructionLayer = QIcon(":/ui/fileprint.png");
 }
 
 QG_LayerModel::~QG_LayerModel() {
@@ -60,10 +61,6 @@ QModelIndex QG_LayerModel::index ( int row, int column, const QModelIndex & /*pa
     if ( row >= listLayer.size() || row < 0)
         return QModelIndex();
     return createIndex ( row, column);
-}
-
-bool layerLessThan(const RS_Layer *s1, const RS_Layer *s2) {
-     return s1->getName() < s2->getName();
 }
 
 void QG_LayerModel::setLayerList(RS_LayerList* ll) {
@@ -85,7 +82,9 @@ void QG_LayerModel::setLayerList(RS_LayerList* ll) {
     for (unsigned i=0; i < ll->count(); ++i) {
         listLayer.append(ll->at(i));
     }
-    std::sort( listLayer.begin(), listLayer.end(), layerLessThan );
+    std::sort( listLayer.begin(), listLayer.end(), [](const RS_Layer *s1, const RS_Layer *s2)-> bool{
+        return s1->getName() < s2->getName();
+    } );
 //called to force redraw
 #if QT_VERSION >= 0x040600
     endResetModel();
@@ -128,8 +127,8 @@ QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
             } else {
                 return layerFreeze;
             }
-        case HelpLayer:
-            return helpLayer.pixmap(QSize(20,20),lay->isHelpLayer() ?
+        case ConstructionLayer:
+            return constructionLayer.pixmap(QSize(20,20),lay->isConstructionLayer() ?
                                         QIcon::Disabled:
                                         QIcon::Normal,
                                     QIcon::On);
@@ -169,7 +168,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layerView->setMinimumHeight(140);
     layerView->setColumnWidth(QG_LayerModel::VISIBLE, 16);
     layerView->setColumnWidth(QG_LayerModel::LOCKED, 16);
-    layerView->setColumnWidth(QG_LayerModel::HelpLayer, 20);
+    layerView->setColumnWidth(QG_LayerModel::ConstructionLayer, 20);
     layerView->verticalHeader()->hide();
     layerView->horizontalHeader()->setStretchLastSection(true);
     layerView->horizontalHeader()->hide();
@@ -263,6 +262,19 @@ void QG_LayerWidget::setLayerList(RS_LayerList* layerList, bool showByBlock) {
     update();
 }
 
+/**
+ * @brief getActiveName
+ * @return the name of the active layer
+ */
+QString QG_LayerWidget::getActiveName() const
+{
+    if(layerList){
+        RS_Layer* p=layerList->getActive();
+        if(p) return p->getName();
+    }
+    return QString();
+}
+
 
 
 /**
@@ -303,18 +315,26 @@ void QG_LayerWidget::update() {
  * Activates the given layer and makes it the active
  * layer in the layerlist.
  */
-void QG_LayerWidget::activateLayer(RS_Layer* layer) {
+void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
     RS_DEBUG->print("QG_LayerWidget::activateLayer() begin");
 
     if (layer==NULL || layerList==NULL) {
         return;
     }
+    int yPos = layerView->verticalScrollBar()->value();
+
 
     layerList->activate(layer);
 
     layerList->activate(layer);
     QModelIndex idx = layerModel->getIndex (layer);
+
     layerView->setCurrentIndex ( idx );
+    if(updateScroll==false)
+        layerView->verticalScrollBar()->setValue(yPos);
+
+    //update active layer name in mainwindow status bar
+    QC_ApplicationWindow::getAppWindow()->slotUpdateActiveLayer();
 
     RS_DEBUG->print("QG_LayerWidget::activateLayer() end");
 }
@@ -335,12 +355,12 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
         lastLayer = layerList->getActive();
         layerList->activate(lay);
         lastLayer = layerList->getActive();
-        layerList->activate(lay);
+        layerList->activate(lay, true);
         return;
     }
 
     RS_Layer* l = layerList->getActive();
-    layerList->activate(lay);
+    layerList->activate(lay, true);
     switch(layerIdx.column()){
     case QG_LayerModel::VISIBLE:
         actionHandler->slotLayersToggleView();
@@ -348,14 +368,14 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
     case QG_LayerModel::LOCKED:
         actionHandler->slotLayersToggleLock();
         break;
-    case QG_LayerModel::HelpLayer:
+    case QG_LayerModel::ConstructionLayer:
         actionHandler->slotLayersTogglePrint();
         break;
     default:
-        break;
+        activateLayer(l);
+        return;
     }
-
-    activateLayer(l);
+    activateLayer(l, false);
 }
 
 /**

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   width="150"
+   height="150"
+   sodipodi:docname="circle2pr.svg"
+   inkscape:export-filename="/home/dli/github/LibreCAD/librecad/res/extui/circle2pr.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1008"
+     inkscape:window-height="596"
+     id="namedview4"
+     showgrid="false"
+     inkscape:object-nodes="true"
+     inkscape:zoom="2.2250293"
+     inkscape:cx="75"
+     inkscape:cy="48.654702"
+     inkscape:window-x="15"
+     inkscape:window-y="32"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <path
+     style="fill:#000000;stroke:#000000;stroke-width:0.55487317;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     d=""
+     id="path3868"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#000000;stroke:#000000;stroke-width:0.55487317;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     d=""
+     id="path3870"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#000000;stroke:#000000;stroke-width:0.55487317;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     d=""
+     id="path3874"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#000000;stroke:#000000;stroke-width:0.55487317;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     d=""
+     id="path3876"
+     inkscape:connector-curvature="0" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer1"
+     inkscape:label="a" />
+  <path
+     sodipodi:type="arc"
+     style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="path3887-2-7-8"
+     sodipodi:cx="88.987587"
+     sodipodi:cy="125.73066"
+     sodipodi:rx="68.250603"
+     sodipodi:ry="45.8923"
+     d="m 157.23819,125.73066 a 68.250603,45.8923 0 1 1 -136.501206,0 68.250603,45.8923 0 1 1 136.501206,0 z"
+     transform="matrix(0.9020413,-0.02113809,0,1.3148163,-5.8116619,-87.706182)" />
+  <path
+     sodipodi:type="arc"
+     style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="path3887-2-6"
+     sodipodi:cx="88.987587"
+     sodipodi:cy="125.73066"
+     sodipodi:rx="68.250603"
+     sodipodi:ry="45.8923"
+     d="m 157.23819,125.73066 a 68.250603,45.8923 0 1 1 -136.501206,0 68.250603,45.8923 0 1 1 136.501206,0 z"
+     transform="matrix(0.85054856,-0.01990655,0,1.2382122,-1.0555935,-78.625756)" />
+  <path
+     sodipodi:type="arc"
+     style="fill:#000000;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="path3910-53-4"
+     sodipodi:cx="29.887247"
+     sodipodi:cy="105.05677"
+     sodipodi:rx="7.8650646"
+     sodipodi:ry="7.6403489"
+     d="m 37.752312,105.05677 a 7.8650646,7.6403489 0 1 1 -15.73013,0 7.8650646,7.6403489 0 1 1 15.73013,0 z"
+     transform="matrix(1.4569768,0,0,1.3511332,87.049809,-87.253169)" />
+  <path
+     sodipodi:type="arc"
+     style="fill:#7cfc00;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="path3910-3-9-6"
+     sodipodi:cx="29.887247"
+     sodipodi:cy="105.05677"
+     sodipodi:rx="7.8650646"
+     sodipodi:ry="7.6403489"
+     d="m 37.752312,105.05677 a 7.8650646,7.6403489 0 1 1 -15.73013,0 7.8650646,7.6403489 0 1 1 15.73013,0 z"
+     transform="matrix(1.2859881,0,0,1.1748178,92.525803,-69.008703)" />
+  <path
+     sodipodi:type="arc"
+     style="fill:#000000;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="path3910-53-4-1"
+     sodipodi:cx="29.887247"
+     sodipodi:cy="105.05677"
+     sodipodi:rx="7.8650646"
+     sodipodi:ry="7.6403489"
+     d="m 37.752312,105.05677 a 7.8650646,7.6403489 0 1 1 -15.73013,0 7.8650646,7.6403489 0 1 1 15.73013,0 z"
+     transform="matrix(1.4569768,0,0,1.3511332,51.904542,-121.71045)"
+     inkscape:export-filename="/home/dongxu/github/LibreCAD/desktop/graphics_program_icons/circletan1_2p.png"
+     inkscape:export-xdpi="710.52631"
+     inkscape:export-ydpi="710.52631" />
+  <path
+     sodipodi:type="arc"
+     style="fill:#7cfc00;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="path3910-3-9-6-1"
+     sodipodi:cx="29.887247"
+     sodipodi:cy="105.05677"
+     sodipodi:rx="7.8650646"
+     sodipodi:ry="7.6403489"
+     d="m 37.752312,105.05677 a 7.8650646,7.6403489 0 1 1 -15.73013,0 7.8650646,7.6403489 0 1 1 15.73013,0 z"
+     transform="matrix(1.2859881,0,0,1.1748178,57.380536,-103.46599)"
+     inkscape:export-filename="/home/dongxu/github/LibreCAD/desktop/graphics_program_icons/circletan1_2p.png"
+     inkscape:export-xdpi="710.52631"
+     inkscape:export-ydpi="710.52631" />
+  <rect
+     style="fill:#000000;fill-opacity:1"
+     id="rect3016"
+     width="6.7188315"
+     height="54.905186"
+     x="-104.17366"
+     y="17.527752"
+     transform="matrix(-0.99142019,-0.13071349,-0.377025,0.92620308,0,0)" />
+  <rect
+     style="fill:#000000;fill-opacity:1"
+     id="rect3016-8"
+     width="5.7072015"
+     height="55.265888"
+     x="-112.85394"
+     y="-50.900398"
+     transform="matrix(-0.68438155,-0.72912406,-0.92077084,0.3901039,0,0)"
+     inkscape:transform-center-y="-3.8080334"
+     inkscape:transform-center-x="-2.1452972" />
+</svg>
