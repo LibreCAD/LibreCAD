@@ -358,16 +358,16 @@ QString RS_Math::doubleToString(double value, int prec) {
 
     valStr.setNum(value, 'f', prec);
 
-//    if(valStr.contains('.')) {
-//        // Remove zeros at the end:
-//        while (valStr.at(valStr.length()-1)=='0') {
-//            valStr.truncate(valStr.length()-1);
-//        }
+    if(valStr.contains('.')) {
+        // Remove zeros at the end:
+        while (valStr.at(valStr.length()-1)=='0') {
+            valStr.truncate(valStr.length()-1);
+        }
 
-//        if(valStr.at(valStr.length()-1)=='.') {
-//            valStr.truncate(valStr.length()-1);
-//        }
-//    }
+        if(valStr.at(valStr.length()-1)=='.') {
+            valStr.truncate(valStr.length()-1);
+        }
+    }
 
     return valStr;
 }
