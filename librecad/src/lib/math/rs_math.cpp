@@ -31,8 +31,8 @@
 #endif
 
 #include <muParser.h>
-#include "rs_math.h"
 
+#include "rs_math.h"
 #include "rs_debug.h"
 
 #ifdef EMU_C99
@@ -359,14 +359,17 @@ QString RS_Math::doubleToString(double value, int prec) {
     valStr.setNum(value, 'f', prec);
 
     if(valStr.contains('.')) {
-        // Remove zeros at the end:
-        while (valStr.at(valStr.length()-1)=='0') {
-            valStr.truncate(valStr.length()-1);
-        }
+        // Remove tailing point and zeros:
+        valStr.replace(QRegExp("0*$"), "");
+        valStr.replace(QRegExp(R"(\.$)"), "");
+//        while (valStr.at(valStr.length()-1)=='0') {
+//            valStr.truncate(valStr.length()-1);
+//        }
 
-        if(valStr.at(valStr.length()-1)=='.') {
-            valStr.truncate(valStr.length()-1);
-        }
+//        if(valStr.at(valStr.length()-1)=='.') {
+//            valStr.truncate(valStr.length()-1);
+//        }
+
     }
 
     return valStr;
