@@ -132,7 +132,7 @@ bool RS_Math::isAngleBetween(double a,
 
     //    bool ret = false;
 
-    if (reversed) swap(a1,a2);
+    if (reversed) std::swap(a1,a2);
     //a1 and a2 almost the same angle
         // the |a2-a1| % (2 pi)=0 means the whole angular range
     if(fabs( remainder(correctAngle(a2 - a1 ) , 2.*M_PI)) < RS_TOLERANCE_ANGLE) return true;
