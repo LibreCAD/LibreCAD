@@ -1548,9 +1548,8 @@ p, li { white-space: pre-wrap; }
         <translation>Bevel</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="380"/>
         <source>Trim by amount</source>
-        <translation>Trim by amount</translation>
+        <translation type="obsolete">Trim by amount</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="304"/>
@@ -1609,6 +1608,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="342"/>
         <source>Trim / Extend two</source>
         <translation>Trim / Extend two</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="380"/>
+        <source>Lengthen</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="418"/>

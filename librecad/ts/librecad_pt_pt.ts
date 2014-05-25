@@ -1329,10 +1329,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Trim by amount</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Trim / Extend</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1398,6 +1394,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Revert direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lengthen</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

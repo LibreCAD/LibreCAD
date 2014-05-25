@@ -2832,7 +2832,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim by amount</source>
-        <translation>Przytnij o wartość</translation>
+        <translation type="obsolete">Przytnij o wartość</translation>
     </message>
     <message>
         <source>Trim / Extend two</source>
@@ -2885,6 +2885,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Revert direction</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lengthen</source>
+        <translation type="unfinished">Wydłuż</translation>
     </message>
 </context>
 <context>

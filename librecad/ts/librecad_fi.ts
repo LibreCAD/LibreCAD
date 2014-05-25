@@ -1391,11 +1391,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="380"/>
-        <source>Trim by amount</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="304"/>
         <source>Trim / Extend</source>
         <translation type="unfinished"></translation>
@@ -1443,6 +1438,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="342"/>
         <source>Trim / Extend two</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="380"/>
+        <source>Lengthen</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

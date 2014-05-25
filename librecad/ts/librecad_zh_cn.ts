@@ -1597,9 +1597,8 @@ p, li { white-space: pre-wrap; }
         <translation>倒角</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="380"/>
         <source>Trim by amount</source>
-        <translation>定值修剪</translation>
+        <translation type="obsolete">定值修剪</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="304"/>
@@ -1658,6 +1657,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="342"/>
         <source>Trim / Extend two</source>
         <translation>修剪/延伸 两实体</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="380"/>
+        <source>Lengthen</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="418"/>

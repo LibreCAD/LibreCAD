@@ -807,6 +807,72 @@
     </message>
 </context>
 <context>
+    <name>plot</name>
+    <message>
+        <location filename="../plotequation/plot.cpp" line="20"/>
+        <location filename="../plotequation/plot.cpp" line="27"/>
+        <source>Plot plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plot.cpp" line="27"/>
+        <source>Draw</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>plotDialog</name>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="6"/>
+        <source>Plot equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="9"/>
+        <source>This plugin allows you to plot mathematical equations.
+If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+You can use pi when you need the value of pi (i.e. (3*pi)).
+Use t or x in your equation as a variable/parameter.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="13"/>
+        <source>Equation 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="14"/>
+        <source>Equation 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="17"/>
+        <source>start value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="18"/>
+        <source>end value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="19"/>
+        <source>step size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="23"/>
+        <source>Draw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../plotequation/plotdialog.cpp" line="24"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Відміна</translation>
+    </message>
+</context>
+<context>
     <name>pointBox</name>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="177"/>

@@ -1512,7 +1512,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim by amount</source>
-        <translation>ਮਾਤਰਾ ਨਾਲ ਛਾਂਟੋ</translation>
+        <translation type="obsolete">ਮਾਤਰਾ ਨਾਲ ਛਾਂਟੋ</translation>
     </message>
     <message>
         <source>Trim / Extend two</source>
@@ -1565,6 +1565,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Revert direction</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lengthen</source>
+        <translation type="unfinished">Lengthen</translation>
     </message>
 </context>
 <context>

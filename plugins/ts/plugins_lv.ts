@@ -609,6 +609,60 @@
     </message>
 </context>
 <context>
+    <name>plot</name>
+    <message>
+        <source>Plot plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>plotDialog</name>
+    <message>
+        <source>Plot equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This plugin allows you to plot mathematical equations.
+If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+You can use pi when you need the value of pi (i.e. (3*pi)).
+Use t or x in your equation as a variable/parameter.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equation 1:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equation 2:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>start value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>end value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>step size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Draw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Atcelt</translation>
+    </message>
+</context>
+<context>
     <name>pointBox</name>
     <message>
         <source>Layer:</source>

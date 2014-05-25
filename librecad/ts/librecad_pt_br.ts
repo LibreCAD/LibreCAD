@@ -1368,7 +1368,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim by amount</source>
-        <translation>Aparar em quantidade</translation>
+        <translation type="obsolete">Aparar em quantidade</translation>
     </message>
     <message>
         <source>Trim / Extend</source>
@@ -1437,6 +1437,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Revert direction</source>
         <translation>Inverter seleção da entidade</translation>
+    </message>
+    <message>
+        <source>Lengthen</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -2860,7 +2860,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim by amount</source>
-        <translation>Διευθέτηση κατά ποσό</translation>
+        <translation type="obsolete">Διευθέτηση κατά ποσό</translation>
     </message>
     <message>
         <source>Trim / Extend two</source>
@@ -2913,6 +2913,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Revert direction</source>
         <translation>Αντιστροφή φοράς</translation>
+    </message>
+    <message>
+        <source>Lengthen</source>
+        <translation type="unfinished">Επιμήκυνση</translation>
     </message>
 </context>
 <context>
