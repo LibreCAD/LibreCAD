@@ -377,7 +377,7 @@
     </size>
    </property>
    <property name="toolTip">
-    <string>Trim by amount</string>
+    <string>Lengthen</string>
    </property>
    <property name="text">
     <string/>
