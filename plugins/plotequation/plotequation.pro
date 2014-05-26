@@ -18,8 +18,6 @@ SOURCES += \
     plotdialog.cpp
 
 HEADERS += \
-    plot.h \
-    plotdialog.h \
     plotdialog.h \
     plot.h
 
