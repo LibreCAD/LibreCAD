@@ -129,6 +129,7 @@ void QG_DlgOptionsGeneral::init() {
     // font size:
     QString sizeStatus = RS_SETTINGS->readEntry("/StatusBarFontSize", "9");
     cbSizeStatus->setCurrentIndex( cbSizeStatus->findText(sizeStatus) );
+    cbSplash->setChecked(RS_SETTINGS->readNumEntry("/ShowSplash",1)==1);
 
     RS_SETTINGS->endGroup();
 
@@ -207,6 +208,7 @@ void QG_DlgOptionsGeneral::ok() {
 	RS_SETTINGS->writeEntry("/HandleColor", cbHandleColor->currentText());
 	RS_SETTINGS->writeEntry("/EndHandleColor", cbEndHandleColor->currentText());
 	RS_SETTINGS->writeEntry("/StatusBarFontSize", cbSizeStatus->currentText());
+    RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Paths");

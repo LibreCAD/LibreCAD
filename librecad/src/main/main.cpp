@@ -30,7 +30,7 @@
 #include <QDebug>
 
 #include <QSplashScreen>
-QSplashScreen *splash;
+QSplashScreen *splash=nullptr;
 
 #ifdef RS_SCRIPTING
 #include <qsproject.h>
@@ -281,10 +281,10 @@ int main(int argc, char** argv) {
         }
 
 #ifdef QSPLASHSCREEN_H
-        RS_DEBUG->print("main: splashscreen..");
+//        RS_DEBUG->print("main: splashscreen..");
 
         QPixmap* pixmap = new QPixmap(":/main/splash_librecad.png");
-# endif
+#endif
 
         RS_DEBUG->print("main: init fontlist..");
     RS_FONTLIST->init();
@@ -321,11 +321,18 @@ int main(int argc, char** argv) {
         RS_DEBUG->print("main: loading translation: OK");
 
 #ifdef QSPLASHSCREEN_H
-        splash = new QSplashScreen(*pixmap);
-        splash->show();
-        splash->showMessage(QObject::tr("Loading.."),
-                Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
-        RS_DEBUG->print("main: splashscreen: OK");
+        RS_SETTINGS->beginGroup("Appearance");
+        {
+            bool showSplash=RS_SETTINGS->readNumEntry("/ShowSplash",1)==1;
+            if(showSplash){
+                splash = new QSplashScreen(*pixmap);
+                splash->show();
+                splash->showMessage(QObject::tr("Loading.."),
+                                    Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
+                RS_DEBUG->print("main: splashscreen: OK");
+            }
+        }
+        RS_SETTINGS->endGroup();
 #endif
 
     //QApplication::setStyle(new QWindowsStyle());
@@ -383,7 +390,7 @@ int main(int argc, char** argv) {
         if (splash) {
                 splash->finish(appWin);
                 delete splash;
-                splash = 0;
+                splash = nullptr;
         }
 # endif
         delete pixmap;
