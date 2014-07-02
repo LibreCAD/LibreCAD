@@ -390,8 +390,7 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
  * Draws image.
  */
 void RS_PainterQt::drawImg(QImage& img, const RS_Vector& pos,
-                           double angle, const RS_Vector& factor,
-                           int sx, int sy, int sw, int sh) {
+                           double angle, const RS_Vector& factor) {
     save();
 
     // Render smooth only at close zooms
@@ -404,17 +403,12 @@ void RS_PainterQt::drawImg(QImage& img, const RS_Vector& pos,
 
     QMatrix wm;
     wm.translate(pos.x, pos.y);
-    wm.scale(factor.x, factor.y);
     wm.rotate(RS_Math::rad2deg(-angle));
+    wm.scale(factor.x, factor.y);
     setWorldMatrix(wm);
 
 
-    if (fabs(angle)<1.0e-4) {
-        drawImage(0+sx,-img.height()+sy, img, sx, sy, sw, sh);
-    }
-    else {
-        drawImage(0,-img.height(), img);
-    }
+    drawImage(0,-img.height(), img);
 
     restore();
 }

@@ -357,52 +357,13 @@ void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
     //
     //}
 
-    int ox = 0;
-    int oy = 0;
-    int width = view->getWidth();
-    int height = view->getHeight();
-
     RS_Vector scale = RS_Vector(view->toGuiDX(data.uVector.magnitude()),
                                 view->toGuiDY(data.vVector.magnitude()));
     double angle = data.uVector.angle();
 
-    int startX, stopX, startY, stopY;
-
-    if (data.uVector.x>1.0e-6 && data.vVector.y>1.0e-6) {
-        startX = (int)((view->toGraphX(ox)-data.insertionPoint.x) /
-                       data.uVector.x) - 1;
-        if (startX<0) {
-            startX = 0;
-        }
-        stopX = (int)((view->toGraphX(width)-data.insertionPoint.x) /
-                      data.uVector.x) + 1;
-        if (stopX>(int)data.size.x) {
-            stopX = (int)data.size.x;
-        }
-        startY = -(int)((view->toGraphY(oy) -
-                         (data.insertionPoint.y+getImageHeight())) /
-                        data.vVector.y) - 1;
-        if (startY<0) {
-            startY = 0;
-        }
-        stopY = -(int)((view->toGraphY(height) -
-                        (data.insertionPoint.y+getImageHeight())) /
-                       data.vVector.y) + 1;
-        if (stopY>(int)data.size.y) {
-            stopY = (int)data.size.y;
-        }
-    }
-        else {
-                startX = 0;
-                startY = 0;
-                stopX = 0;
-                stopY = 0;
-        }
-
     painter->drawImg(img,
                      view->toGui(data.insertionPoint),
-                     angle, scale,
-                     startX, startY, stopX-startX, stopY-startY);
+                     angle, scale);
 
     if (isSelected()) {
         RS_VectorSolutions sol = getCorners();
