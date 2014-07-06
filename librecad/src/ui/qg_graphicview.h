@@ -75,6 +75,7 @@ public:
     virtual void layerToggled(RS_Layer*) {
         redraw(RS2::RedrawDrawing); 
     }
+    virtual void layerActivated(RS_Layer *);
     /**
      * @brief setOffset
      * @param ox, offset X
