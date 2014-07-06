@@ -131,6 +131,11 @@ protected:
 	QPixmap *PixmapLayer3;  // USed for crosshair and actionitems
 	
 	RS2::RedrawMethod redrawMethod;
+    /**
+     * @brief m_bUpdateLayer
+     * if true, update selected entities, when a layer is selected in the layerwidget
+     */
+    bool m_bUpdateLayer;
 		
 };
 
