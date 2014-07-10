@@ -53,6 +53,7 @@ TRANSLATIONS = ./ts/plugins_ca.ts \
     ./ts/plugins_id_ID.ts \
     ./ts/plugins_it.ts \
     ./ts/plugins_ja.ts \
+    ./ts/plugins_ko.ts \
     ./ts/plugins_lv.ts \
     ./ts/plugins_nl.ts \
     ./ts/plugins_no.ts \
