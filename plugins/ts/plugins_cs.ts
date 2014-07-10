@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="cs">
 <context>
@@ -518,7 +517,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>Nelze otevřít soubor %1</translation>
     </message>
 </context>
@@ -760,12 +759,12 @@
         <location filename="../plotequation/plot.cpp" line="20"/>
         <location filename="../plotequation/plot.cpp" line="27"/>
         <source>Plot plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Zásuvný modul Vykreslit</translation>
     </message>
     <message>
         <location filename="../plotequation/plot.cpp" line="27"/>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykreslit</translation>
     </message>
 </context>
 <context>
@@ -773,51 +772,55 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="6"/>
         <source>Plot equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykreslit rovnici</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="9"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+If you don't want to use the parametric form, just leave out "Equation2".
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Tento zásuvný modul umožňuje vykreslovat matematické rovnice.
+Pokud nechcete použít parametrický tvar, vynechte pole "Rovnice 2".
+V případě potřeby lze použít hodnotu pi (například (3*pi)).
+Jako proměnnou (parametr) rovnice použijte t nebo x.
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="13"/>
         <source>Equation 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rovnice 1:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="14"/>
         <source>Equation 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rovnice 2:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="17"/>
         <source>start value:</source>
-        <translation type="unfinished"></translation>
+        <translation>počáteční hodnota:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>end value:</source>
-        <translation type="unfinished"></translation>
+        <translation>koncová hodnota:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="19"/>
         <source>step size:</source>
-        <translation type="unfinished"></translation>
+        <translation>velikost kroku:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="23"/>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Vykreslit</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="24"/>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušit</translation>
+        <translation>Zrušit</translation>
     </message>
 </context>
 <context>

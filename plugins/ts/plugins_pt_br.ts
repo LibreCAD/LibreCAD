@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="pt_BR">
 <context>
@@ -518,7 +517,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>Não foi possível abrir o arquivo %1</translation>
     </message>
 </context>
@@ -772,12 +771,12 @@
         <location filename="../plotequation/plot.cpp" line="20"/>
         <location filename="../plotequation/plot.cpp" line="27"/>
         <source>Plot plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin gráfico</translation>
     </message>
     <message>
         <location filename="../plotequation/plot.cpp" line="27"/>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>desenho</translation>
     </message>
 </context>
 <context>
@@ -785,51 +784,51 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="6"/>
         <source>Plot equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Equação gráfica</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="9"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+If you don't want to use the parametric form, just leave out "Equation2".
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Este plugin permite plotar equações matemáticas.Se não desejar usar o modo paramétrico, apenas não use "Equação2".Você pode usar pi quando precisar do valor de pi (i.e.(3*pi)).Use t ou x na sua equação como uma variável/parâmetro.</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="13"/>
         <source>Equation 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Equação 1:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="14"/>
         <source>Equation 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Equação 2:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="17"/>
         <source>start value:</source>
-        <translation type="unfinished"></translation>
+        <translation>valor inicial:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>end value:</source>
-        <translation type="unfinished"></translation>
+        <translation>valor final:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="19"/>
         <source>step size:</source>
-        <translation type="unfinished"></translation>
+        <translation>medida:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="23"/>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Desenhar</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="24"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
