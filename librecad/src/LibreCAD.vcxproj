@@ -5100,6 +5100,7 @@
     <None Include="..\ts\librecad_et.ts" />
     <None Include="..\ts\librecad_fi.ts" />
     <None Include="..\ts\librecad_fr.ts" />
+    <None Include="..\ts\librecad_hi.ts" />
     <None Include="..\ts\librecad_hu.ts" />
     <None Include="..\ts\librecad_id_ID.ts" />
     <None Include="..\ts\librecad_it.ts" />
