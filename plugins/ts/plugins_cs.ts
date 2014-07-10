@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="cs">
 <context>
@@ -517,7 +518,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>Nelze otevřít soubor %1</translation>
     </message>
 </context>
@@ -777,12 +778,12 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="9"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don't want to use the parametric form, just leave out "Equation2".
+If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
         <translation>Tento zásuvný modul umožňuje vykreslovat matematické rovnice.
-Pokud nechcete použít parametrický tvar, vynechte pole "Rovnice 2".
+Pokud nechcete použít parametrický tvar, vynechte pole &quot;Rovnice 2&quot;.
 V případě potřeby lze použít hodnotu pi (například (3*pi)).
 Jako proměnnou (parametr) rovnice použijte t nebo x.
 </translation>

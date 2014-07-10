@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="ru">
 <context>
@@ -143,7 +144,7 @@
     <message>
         <location filename="../list/list.cpp" line="110"/>
         <source>Inc.</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="115"/>
@@ -201,12 +202,12 @@
     <message>
         <location filename="../list/list.cpp" line="163"/>
         <source>CONSTRUCTIONLINE</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="166"/>
         <source>OVERLAYBOX</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="169"/>
@@ -432,17 +433,17 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
         <source>Draw point elevation</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="264"/>
         <source>Point Code</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="264"/>
         <source>Draw point code</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="278"/>
@@ -472,17 +473,17 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="326"/>
         <source>Point elevation layer is empty</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="327"/>
         <source>Point elevation height is empty</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="328"/>
         <source>Point elevation separation is empty</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="331"/>
@@ -492,27 +493,27 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="332"/>
         <source>Point number height is empty</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="333"/>
         <source>Point number separation is empty</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="336"/>
         <source>Point code layer is empty</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="337"/>
         <source>Point code height is empty</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="338"/>
         <source>Point code separation is empty</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="366"/>
@@ -521,7 +522,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>Невозможно открыть файл %1</translation>
     </message>
 </context>
@@ -618,7 +619,7 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="217"/>
         <source>Point+Measure</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="221"/>
@@ -628,17 +629,17 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="225"/>
         <source>Multi Point</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="229"/>
         <source>Multi Point+Measure</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="233"/>
         <source>3D Multi Point</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="237"/>
@@ -648,7 +649,7 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="241"/>
         <source>Arc+Measure</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="245"/>
@@ -658,22 +659,22 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="249"/>
         <source>Polygon</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="253"/>
         <source>Polygon+Measure</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="257"/>
         <source>3D Polygon</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="261"/>
         <source>Multipatch</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="281"/>
@@ -763,12 +764,12 @@
         <location filename="../plotequation/plot.cpp" line="20"/>
         <location filename="../plotequation/plot.cpp" line="27"/>
         <source>Plot plugin</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plot.cpp" line="27"/>
         <source>Draw</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -776,46 +777,46 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="6"/>
         <source>Plot equation</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="9"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don't want to use the parametric form, just leave out "Equation2".
+If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="13"/>
         <source>Equation 1:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="14"/>
         <source>Equation 2:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="17"/>
         <source>start value:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>end value:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="19"/>
         <source>step size:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="23"/>
         <source>Draw</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="24"/>
@@ -841,7 +842,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="211"/>
         <source>Height:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Heigth:</source>

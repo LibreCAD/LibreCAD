@@ -4252,43 +4252,43 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>應用程式偏好設定</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="30"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="39"/>
         <source>&amp;Appearance</source>
         <translation>外觀(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="36"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="45"/>
         <source>Language</source>
         <translation>語言</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="42"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="51"/>
         <source>&amp;GUI Language:</source>
         <translation>圖形介面語言(&amp;G)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="58"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="67"/>
         <source>&amp;Command Language:</source>
         <translation>指令語言(&amp;C)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="396"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="405"/>
         <source>Colors</source>
         <translation>顏色</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="569"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="578"/>
         <source>Backgr&amp;ound:</source>
         <translation>背景(&amp;O)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="451"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="460"/>
         <source>G&amp;rid Color:</source>
         <translation>格點顏色(&amp;R)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="478"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="591"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="487"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="600"/>
         <source>#000000</source>
         <translation>#000000</translation>
     </message>
@@ -4301,14 +4301,14 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">#c0c0c0</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="483"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="510"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="606"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="492"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="519"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="615"/>
         <source>#808080</source>
         <translation>#808080</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="518"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="527"/>
         <source>&amp;Meta Grid Color:</source>
         <translation>格點變化顏色(&amp;M)：</translation>
     </message>
@@ -4317,7 +4317,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">#404040</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="531"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="540"/>
         <source>S&amp;elected Color:</source>
         <translation>選取顏色(&amp;E)：</translation>
     </message>
@@ -4326,15 +4326,15 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">#a54747</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="473"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="500"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="596"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="482"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="509"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="605"/>
         <source>#FFFFFF</source>
         <translation>#FFFFFF</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="505"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="601"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="514"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="610"/>
         <source>#C0C0C0</source>
         <translation>#C0C0C0</translation>
     </message>
@@ -4347,17 +4347,17 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">#739373</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="544"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="553"/>
         <source>&amp;Highlighted Color:</source>
         <translation>亮顯顏色(&amp;H)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="90"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="99"/>
         <source>Fontsize</source>
         <translation>字體大小</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="180"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="189"/>
         <source>Statusbar:</source>
         <translation>狀態列：</translation>
     </message>
@@ -4398,32 +4398,32 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">14</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="193"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="202"/>
         <source>Graphic View</source>
         <translation>圖形檢視</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="199"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="208"/>
         <source>&amp;Show large crosshairs</source>
         <translation>顯示十字準星(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="202"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="211"/>
         <source>Alt+S</source>
         <translation>Alt+S</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="209"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="218"/>
         <source>A&amp;utomatically scale grid</source>
         <translation>自動縮放格點(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="212"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="221"/>
         <source>Alt+U</source>
         <translation>Alt+U</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="251"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="260"/>
         <source>Number of p&amp;review entities:</source>
         <translation>預覽的物件數量(&amp;R)：</translation>
     </message>
@@ -4452,7 +4452,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">800</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="301"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="310"/>
         <source>Minimal Grid Spacing (px):</source>
         <translation>最小格點間隔 (px)：</translation>
     </message>
@@ -4469,99 +4469,109 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">20</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="640"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="649"/>
         <source>#00FFFF</source>
         <translation>#00FFFF</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="423"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="432"/>
         <source>#0000FF</source>
         <translation>#0000FF</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="428"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="635"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="437"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="644"/>
         <source>#FFFF00</source>
         <translation>#FFFF00</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="433"/>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="645"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="442"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="654"/>
         <source>#FF00FF</source>
         <translation>#FF00FF</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="441"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="450"/>
         <source>St&amp;art Handle Color:</source>
         <translation>始點標誌，顏色 (&amp;a)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="653"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="662"/>
         <source>&amp;Handle Color:</source>
         <translation>標誌，顏色:</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="663"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="672"/>
         <source>&amp;End Handle Color:</source>
         <translation>終點標誌，顏色 (&amp;E)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="677"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="685"/>
+        <source>Splash Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="697"/>
+        <source>Display Splash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="709"/>
         <source>&amp;Paths</source>
         <translation>路徑(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="683"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="715"/>
         <source>Translations:</source>
         <translation>翻譯：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="693"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="725"/>
         <source>Hatch Patterns:</source>
         <translation>剖面線樣式：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="703"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="735"/>
         <source>Fonts:</source>
         <translation>字型：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="713"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="745"/>
         <source>Scripts:</source>
         <translation>腳本：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="723"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="755"/>
         <source>Part Libraries:</source>
         <translation>構件函式庫：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="733"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="765"/>
         <source>Template:</source>
         <translation>模板:</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="802"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="834"/>
         <source>&amp;Defaults</source>
         <translation>預設值(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="820"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="852"/>
         <source>Defaults for new drawings</source>
         <translation>預設為新圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="832"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="864"/>
         <source>&amp;Unit:</source>
         <translation>單位(&amp;U)：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="845"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="877"/>
         <source>Drawing unit.</source>
         <translation>繪圖單位</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="896"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="928"/>
         <source>Program Defaults</source>
         <translation>程式預設值</translation>
     </message>
@@ -4570,22 +4580,22 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">自動存檔間隔分鐘數。</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="904"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="936"/>
         <source>Auto save time:</source>
         <translation>自動存檔時間：</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="911"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="943"/>
         <source>Time between automatic saving of the document in minutes.</source>
         <translation>以分鐘為單位的文件自動保存時間間隔。</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="926"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="958"/>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
         <translation>如果設置，LibreCAD會自動生成當前繪圖的備份。</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="929"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.ui" line="961"/>
         <source>Auto backup</source>
         <translation>自動備份</translation>
     </message>
@@ -4606,12 +4616,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="obsolete">Esc</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="229"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="231"/>
         <source>Preferences</source>
         <translation>偏好設定</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="230"/>
+        <location filename="../src/ui/forms/qg_dlgoptionsgeneral.cpp" line="232"/>
         <source>Please restart the application to apply all changes.</source>
         <translation>請重新啟動應用程式以套用所有變更。</translation>
     </message>
@@ -7616,12 +7626,12 @@ p, li { white-space: pre-wrap; }
         <translation>秒差距</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="326"/>
+        <location filename="../src/main/main.cpp" line="330"/>
         <source>Loading..</source>
         <translation>正在載入..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="352"/>
+        <location filename="../src/main/main.cpp" line="359"/>
         <source>Loading...</source>
         <translation>正在載入...</translation>
     </message>
@@ -7630,7 +7640,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">載入資料庫路徑..</translation>
     </message>
     <message>
-        <location filename="../src/main/main.cpp" line="370"/>
+        <location filename="../src/main/main.cpp" line="377"/>
         <source>Loading File %1..</source>
         <translation>正在載入檔案 %1..</translation>
     </message>
@@ -8731,39 +8741,39 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionDrawCircleTan2_1P</name>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="59"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="60"/>
         <source>Common Tangential Circle 1 Point</source>
         <translation>兩個圓共同的切圓,切圓上一個點點</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="397"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="398"/>
         <source>Specify a line/arc/circle</source>
         <translation>指定直線/圓弧/圓</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="398"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="399"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="402"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="403"/>
         <source>Specify the another arc/circle</source>
         <translation>指定另一個圓弧/圓</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="403"/>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="408"/>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="412"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="404"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="409"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="413"/>
         <source>Back</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="407"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="408"/>
         <source>Specify a point on the tangent circle</source>
         <translation>指定切圓的上的一個點</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="411"/>
+        <location filename="../src/actions/rs_actiondrawcircletan2_1p.cpp" line="412"/>
         <source>Select the center of the tangent circle</source>
         <translation>選擇切圓的中心</translation>
     </message>

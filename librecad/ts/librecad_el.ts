@@ -5400,6 +5400,14 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <source>&amp;End Handle Color:</source>
         <translation>Χρώμα &amp;τελικής λαβής:</translation>
     </message>
+    <message>
+        <source>Splash Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Splash</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgOptionsVariables</name>

@@ -4337,6 +4337,14 @@ Neid sätteid saab hiljem muuta QCad-i dialoogis Sätted.</translation>
         <source>&amp;End Handle Color:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Splash Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Splash</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgOptionsVariables</name>

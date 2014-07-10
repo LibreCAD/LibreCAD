@@ -3652,6 +3652,14 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
         <source>&amp;End Handle Color:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Splash Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Splash</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgPoint</name>

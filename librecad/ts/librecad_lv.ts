@@ -3349,6 +3349,14 @@ Lūdzu, izvēlieties mērvienības, kuras izmantot jauniem zīmējumiem, kā ar�
         <source>&amp;End Handle Color:</source>
         <translation>B&amp;eigu tura krāsa:</translation>
     </message>
+    <message>
+        <source>Splash Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Splash</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgPoint</name>
