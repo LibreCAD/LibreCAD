@@ -69,8 +69,7 @@ public:
                              double a1, double a2,
                              bool reversed);
         virtual void drawImg(QImage& img, const RS_Vector& pos,
-            double angle, const RS_Vector& factor,
-            int sx, int sy, int sw, int sh);
+            double angle, const RS_Vector& factor);
     virtual void drawTextH(int x1, int y1, int x2, int y2,
                            const QString& text);
     virtual void drawTextV(int x1, int y1, int x2, int y2,

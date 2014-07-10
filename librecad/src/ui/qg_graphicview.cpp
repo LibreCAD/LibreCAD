@@ -123,6 +123,12 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlag
 
     // See https://sourceforge.net/tracker/?func=detail&aid=3289298&group_id=342582&atid=1433844 (Left-mouse drag shrinks window)
     setAttribute(Qt::WA_NoMousePropagation);
+
+    //update entities to selected entities to the current active layer
+    RS_SETTINGS->beginGroup("/Modify");
+    m_bUpdateLayer=(RS_SETTINGS->readEntry("/ModifyEntitiesToActiveLayer", "0")=="1");
+    RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", m_bUpdateLayer?1:0);
+    RS_SETTINGS->endGroup();
 }
 
 
@@ -739,6 +745,7 @@ QPixmap* QG_GraphicView::getPixmapForView(QPixmap *pm)
 }
 
 void QG_GraphicView::layerActivated(RS_Layer *layer) {
+    if(m_bUpdateLayer==false) return;
     RS_EntityContainer *container = this->getContainer();
     RS_Entity *entity = container->firstEntity();
 

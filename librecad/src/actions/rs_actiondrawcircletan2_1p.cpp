@@ -23,6 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_actiondrawcircletan2_1p.h"
 
 #include <QAction>
+#include <QDebug>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
@@ -62,28 +63,27 @@ QAction* RS_ActionDrawCircleTan2_1P::createGUIAction(RS2::ActionType /*type*/, Q
 }
 
 void RS_ActionDrawCircleTan2_1P::init(int status) {
-    RS_PreviewActionInterface::init(status);
     if(status>=0) {
         RS_Snapper::suspend();
     }
-
-    if (status<=SetCircle2) {
-        bool updateNeeded(false);
-        if(circles.size()>=2 && circles[1]!=NULL) {
-            if(circles[1]->isHighlighted()){
-                circles[1]->setHighlighted(false);
-                updateNeeded=true;
-            }
+    if(status>circles.size()) status=circles.size();
+    RS_PreviewActionInterface::init(status);
+    for(int i=0; i<status; ++i){
+        if(circles[i]==NULL) {
+            status=i;
+            break;
         }
-        if(status<= SetCircle1 && circles.size()>=1&&circles[0]!=NULL) {
-            if(circles[0]->isHighlighted()){
-                circles[0]->setHighlighted(false);
-                updateNeeded=true;
-            }
-        }
-        if(updateNeeded) graphicView->redraw(RS2::RedrawDrawing);
-        circles.clear();
     }
+    bool updateNeeded(false);
+    for(int i=status; i<circles.size(); ++i){
+        if(circles[i])
+            if(circles[i]->isHighlighted()){
+                circles[i]->setHighlighted(false);
+                updateNeeded=true;
+            }
+    }
+    if(updateNeeded) graphicView->redraw(RS2::RedrawDrawing);
+    circles.resize(status);
 }
 
 
@@ -208,8 +208,9 @@ RS_Entity* RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent* e) {
     RS_Entity*  en = catchEntity(e,enTypeList, RS2::ResolveAll);
     if(en == NULL) return ret;
     if(en->isVisible()==false) return ret;
-    for(int i=0;i<getStatus();i++) {
-        if(en->getId() == circles[i]->getId()) return ret; //do not pull in the same line again
+    for(int i=0; i<circles.size(); ++i) {
+        if(circles[i])
+            if(en->getId() == circles[i]->getId()) return ret; //do not pull in the same line again
     }
     if(en->getParent() != NULL) {
         if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/

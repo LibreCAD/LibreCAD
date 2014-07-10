@@ -2171,16 +2171,24 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
 
     // trim limit entity:
     if (trimBoth) {
-        RS_Vector is = sol.getClosest(limitCoord);
+        if (
+            trimmed2->rtti()==RS2::EntityEllipse
+            || trimmed2->rtti()==RS2::EntityArc
+            || trimmed2->rtti()==RS2::EntityCircle
+            || trimmed2->rtti()==RS2::EntityLine
+        )
+            is2 = trimmed2->prepareTrim(limitCoord, sol);
+         else
+            is2 = sol.getClosest(trimCoord);
 
-        RS2::Ending ending = trimmed2->getTrimPoint(limitCoord, is);
+        RS2::Ending ending = trimmed2->getTrimPoint(limitCoord, is2);
 
         switch (ending) {
         case RS2::EndingStart:
-            trimmed2->trimStartpoint(is);
+            trimmed2->trimStartpoint(is2);
             break;
         case RS2::EndingEnd:
-            trimmed2->trimEndpoint(is);
+            trimmed2->trimEndpoint(is2);
             break;
         default:
             break;
