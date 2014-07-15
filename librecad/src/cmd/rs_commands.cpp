@@ -271,6 +271,11 @@ RS_Commands::RS_Commands() {
     mainCommands.insert(tr("np", "snap - nearest point"), RS2::ActionSnapOnEntity);
     shortCommands.insert(tr("np"), RS2::ActionSnapOnEntity);
 
+    cmdTranslation.insert("setrelativezero", tr("setrelativezero"));
+    mainCommands.insert(tr("setrelativezero", "snap - set relative zero position"), RS2::ActionSetRelativeZero);
+    cmdTranslation.insert("rz", tr("rz"));
+    shortCommands.insert(tr("rz"), RS2::ActionSetRelativeZero);
+
     // selection:
     cmdTranslation.insert("sa", tr("sa"));
     mainCommands.insert(tr("sa", "Select all"), RS2::ActionSelectAll);
