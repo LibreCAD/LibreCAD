@@ -41,6 +41,9 @@ public:
     RS_ActionZoomScroll(RS2::Direction direction,
                         RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
+    RS_ActionZoomScroll(int offsetX, int offsetY,
+                        RS_EntityContainer& container,
+                        RS_GraphicView& graphicView);
     ~RS_ActionZoomScroll() {}
 
     virtual void init(int status=0);
@@ -48,6 +51,8 @@ public:
 
 protected:
     RS2::Direction direction;
+    bool hasOffset;
+    int offsetX, offsetY;
 };
 
 #endif

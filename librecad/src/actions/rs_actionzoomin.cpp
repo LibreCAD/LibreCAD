@@ -40,9 +40,11 @@ RS_ActionZoomIn::RS_ActionZoomIn(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView,
                                  RS2::ZoomDirection direction,
                                  RS2::Axis axis,
-                                 const RS_Vector& center)
+                                 const RS_Vector& center,
+                                 double factor)
         :RS_ActionInterface("Zoom in", container, graphicView) {
 
+    this->zoom_factor = factor;
     this->direction = direction;
     this->axis = axis;
     this->center = center;
@@ -101,9 +103,9 @@ void RS_ActionZoomIn::trigger() {
 
     case RS2::Both:
         if (direction==RS2::In) {
-            graphicView->zoomIn(1.25, center);
+            graphicView->zoomIn(zoom_factor, center);
         } else {
-            graphicView->zoomOut(1.25, center);
+            graphicView->zoomOut(zoom_factor, center);
         }
         break;
     }
