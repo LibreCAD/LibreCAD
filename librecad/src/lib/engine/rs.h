@@ -155,6 +155,7 @@ public:
         EntityHatch,        /**< Hatch */
         EntityImage,        /**< Image */
         EntitySpline,       /**< Spline */
+        EntitySplinePoints,       /**< SplinePoints */
         EntityOverlayBox,    /**< OverlayBox */
         EntityPreview    /**< Preview Container */
     };
@@ -288,6 +289,7 @@ public:
         ActionDrawMText,
         ActionDrawPoint,
         ActionDrawSpline,
+        ActionDrawSplinePoints,
         ActionDrawPolyline,
         ActionDrawText,
 

@@ -1078,10 +1078,13 @@ void QC_ApplicationWindow::initActions(void)
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
     // Splines:
-//    subMenu= menu->addMenu(tr("&Spline"));
-//    subMenu->setObjectName("Spline");
+    subMenu= menu->addMenu(tr("&Spline"));
+    subMenu->setObjectName("Spline");
     action = actionFactory.createAction(RS2::ActionDrawSpline, actionHandler);
-    menu->addAction(action);
+    subMenu->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionDrawSplinePoints, actionHandler);
+    subMenu->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
 
         // Polylines:
