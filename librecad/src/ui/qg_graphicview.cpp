@@ -505,7 +505,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     QPoint numPixels = e->pixelDelta();
 
     // high-resolution scrolling triggers Pan instead of Zoom logic
-    isSmoothScrolling = !numPixels.isNull();
+    isSmoothScrolling |= !numPixels.isNull();
 
     if (isSmoothScrolling) {
         if (e->phase() == Qt::ScrollEnd) isSmoothScrolling = false;
