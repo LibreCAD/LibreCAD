@@ -81,7 +81,7 @@
 #include "rs_actiondrawlineorthtan.h"
 #include "rs_actiondrawpoint.h"
 #include "rs_actiondrawspline.h"
-#include "rs_actiondrawsplinepoints.h"
+#include "lc_actiondrawsplinepoints.h"
 #include "rs_actiondrawtext.h"
 #include "rs_actiondrawmtext.h"
 #include "rs_actioneditcopy.h"

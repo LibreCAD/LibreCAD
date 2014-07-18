@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 
-#ifndef RS_SPLINEPOINTS_H
-#define RS_SPLINEPOINTS_H
+#ifndef LC_SPLINEPOINTS_H
+#define LC_SPLINEPOINTS_H
 
 #include <QList>
 #include "rs_atomicentity.h"
@@ -44,15 +44,6 @@ public:
     LC_SplinePointsData(bool closed)
 	{
 		this->closed = closed;
-	}
-
-    LC_SplinePointsData(const LC_SplinePointsData& ld)
-	{
-		this->closed = ld.closed;
-		for(int i = 0; i < ld.splinePoints.count(); i++)
-		{
-			this->splinePoints.append(ld.splinePoints.at(i));
-		}
 	}
 
     friend std::ostream& operator << (std::ostream& os, const LC_SplinePointsData& ld)
@@ -76,13 +67,14 @@ public:
 class LC_SplinePoints : public RS_AtomicEntity // RS_EntityContainer
 {
 private:
-	RS_Vector dynPoint;
 	void drawPattern(RS_Painter* painter, RS_GraphicView* view,
 		int iPoints, double& patternOffset, RS_LineTypePattern* pat);
 	void drawSimple(RS_Painter* painter, RS_GraphicView* view, int iPoints);
-	bool m_bInsertionState;
 	void UpdateControlPoints();
 	void UpdateQuadExtent(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2);
+	int GetNearestQuad(const RS_Vector& coord, double* dist, double* dt) const;
+	RS_Vector GetSplinePointAtDist(double dDist, int iStartSeg, double dStartT,
+		int *piSeg, double *pdt) const;
 public:
     LC_SplinePointsData data;
 public:
@@ -132,11 +124,6 @@ public:
 		update();
 	}
 	
-	void setInsert(bool c)
-	{
-		m_bInsertionState = c;
-	}
-
 	virtual RS_VectorSolutions getRefPoints();
 	virtual RS_Vector getNearestRef(const RS_Vector& coord,
 		double* dist = NULL);
@@ -162,8 +149,6 @@ public:
 
     virtual double getDirection1() const;
     virtual double getDirection2() const;
-
-	void update();
 
 	//virtual void moveStartpoint(const RS_Vector& pos);
 	//virtual void moveEndpoint(const RS_Vector& pos);
@@ -215,7 +200,6 @@ public:
 		double solidDist = RS_MAXDOUBLE) const;
 
 	bool addPoint(const RS_Vector& v);
-	void dynamicPoint(const RS_Vector& v);
 	void removeLastPoint();
 
 	virtual void move(const RS_Vector& offset);
@@ -233,6 +217,9 @@ public:
     friend std::ostream& operator << (std::ostream& os, const LC_SplinePoints& l);
 
 	virtual void calculateBorders();
+
+    virtual bool offset(const RS_Vector& coord, const double& distance);
+    virtual QVector<RS_Entity*> offsetTwoSides(const double& distance) const;
 };
 
 #endif

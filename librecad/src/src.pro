@@ -166,7 +166,7 @@ HEADERS += \
     lib/engine/rs_settings.h \
     lib/engine/rs_solid.h \
     lib/engine/rs_spline.h \
-    lib/engine/rs_splinepoints.h \
+    lib/engine/lc_splinepoints.h \
     lib/engine/rs_system.h \
     lib/engine/rs_text.h \
     lib/engine/rs_undo.h \
@@ -257,7 +257,7 @@ SOURCES += \
     lib/engine/rs_settings.cpp \
     lib/engine/rs_solid.cpp \
     lib/engine/rs_spline.cpp \
-    lib/engine/rs_splinepoints.cpp \
+    lib/engine/lc_splinepoints.cpp \
     lib/engine/rs_system.cpp \
     lib/engine/rs_text.cpp \
     lib/engine/rs_undo.cpp \
@@ -360,7 +360,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actiondrawpoint.h \
     actions/rs_actiondrawpolyline.h \
     actions/rs_actiondrawspline.h \
-    actions/rs_actiondrawsplinepoints.h \
+    actions/lc_actiondrawsplinepoints.h \
     actions/rs_actiondrawtext.h \
     actions/rs_actioneditcopy.h \
     actions/rs_actioneditpaste.h \
@@ -494,7 +494,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actiondrawpoint.cpp \
     actions/rs_actiondrawpolyline.cpp \
     actions/rs_actiondrawspline.cpp \
-    actions/rs_actiondrawsplinepoints.cpp \
+    actions/lc_actiondrawsplinepoints.cpp \
     actions/rs_actiondrawtext.cpp \
     actions/rs_actioneditcopy.cpp \
     actions/rs_actioneditpaste.cpp \

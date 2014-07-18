@@ -47,7 +47,7 @@ public:
 
     LC_ActionDrawSplinePoints(RS_EntityContainer& container,
 		RS_GraphicView& graphicView);
-    virtual ~LC_ActionDrawSplinePoints();
+    ~LC_ActionDrawSplinePoints();
 
 	virtual RS2::ActionType rtti()
 	{
@@ -56,7 +56,6 @@ public:
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-	void clear();
 	void reset();
 
 	virtual void init(int status = 0);
@@ -77,16 +76,16 @@ public:
 	//virtual void updateToolBar();
 
 	//void close();
-private:
+protected:
 	/**
 	* Spline data defined so far.
 	*/
     LC_SplinePointsData data;
 
 	/**
-	* Spline entity we're working on.
+	* Spline used.
 	*/
-    LC_SplinePoints* spline;
+    LC_SplinePoints *spline;
 
 	/**
 	* Point history (for undo)
