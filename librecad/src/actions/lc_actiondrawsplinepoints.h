@@ -4,6 +4,7 @@
 **
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2014 Dongxu Li (dongxuli2011@gmail.com)
+** Copyright (C) 2014 Pavel Krejcir (pavel@pamsoft.cz)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,11 +21,11 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#ifndef RS_ACTIONDRAWSPLINEPOINTS_H
-#define RS_ACTIONDRAWSPLINEPOINTS_H
+#ifndef LC_ACTIONDRAWSPLINEPOINTS_H
+#define LC_ACTIONDRAWSPLINEPOINTS_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_splinepoints.h"
+#include "lc_splinepoints.h"
 
 /**
  * This action class can handle user events to draw splines through points.

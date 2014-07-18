@@ -4,6 +4,7 @@
 **
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2014 Dongxu Li (dongxuli2011@gmail.com)
+** Copyright (C) 2014 Pavel Krejcir (pavel@pamsoft.cz)
 **
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -24,7 +25,7 @@
 **
 **********************************************************************/
 
-#include "rs_actiondrawsplinepoints.h"
+#include "lc_actiondrawsplinepoints.h"
 
 #include <QAction>
 #include "rs_dialogfactory.h"
@@ -48,7 +49,7 @@ LC_ActionDrawSplinePoints::~LC_ActionDrawSplinePoints()
 QAction* LC_ActionDrawSplinePoints::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/)
 {
 	QAction* action = new QAction(tr("&Spline through points"),  NULL);
-	action->setIcon(QIcon(":/extui/menuspline.png"));
+	action->setIcon(QIcon(":/extui/menusplinepoints.png"));
 	//action->zetStatusTip(tr("Draw splines"));
 	return action;
 }

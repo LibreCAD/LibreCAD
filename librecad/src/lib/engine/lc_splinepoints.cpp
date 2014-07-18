@@ -4,6 +4,7 @@
 **
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2014 Dongxu Li (dongxuli2011@gmail.com)
+** Copyright (C) 2014 Pevel Krejcir (pavel@pamsoft.cz)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
