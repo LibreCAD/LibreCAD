@@ -407,9 +407,9 @@ RS_Vector GetDistToQuadSquared(const RS_Vector& coord, const RS_Vector& x1,
 	RS_Vector vRes(false), vNewRes(false);
 	bool bResSet = false;
 	double dDist, dNewDist;
-	for(int i = 0; i < dSol.size(); i++)
-	{
-		vNewRes = GetDistToQuadAtPointSquared(coord, x1, c1, x2, dSol[i], &dNewDist);
+    for(const double& d: dSol)
+    {
+        vNewRes = GetDistToQuadAtPointSquared(coord, x1, c1, x2, d, &dNewDist);
 		bResSet = SetNewDist(bResSet, dNewDist, vNewRes, &dDist, &vRes);
 	}
 
@@ -1042,7 +1042,7 @@ double GetQuadPointAtDist(const RS_Vector& x1, const RS_Vector& c1, const RS_Vec
 	double dDet = dx1*dx2 - dx12*dx12; // always >= 0 from Schwarz inequality
 
 	double dRes = RS_MAXDOUBLE;
-	double a0, a1, a2, a3, a4;
+    double a0, a1, a2/*, a3, a4*/;
 
 	std::vector<double> dCoefs(0, 0.);
 	std::vector<double> dSol(0, 0.);
@@ -1064,9 +1064,9 @@ double GetQuadPointAtDist(const RS_Vector& x1, const RS_Vector& c1, const RS_Vec
 
 		dRes = t1;
 		a1 = 0;
-		for(int i = 0; i < dSol.size(); i++)
+        for(const double& d: dSol)
 		{
-			a0 = (dSol[i]*dA - dx12)/dx1;
+            a0 = (d*dA - dx12)/dx1;
 			a2 = GetQuadLength(x1, c1, x2, t1, a0);
 			if(fabs(dDist - a2) < fabs(dDist - a1))
 			{
@@ -1754,13 +1754,13 @@ void AddQuadTangentPoints(RS_VectorSolutions *pVS, const RS_Vector& point,
 		dSol.push_back(-a3/a2);
 	}
 
-	for(int i = 0; i < dSol.size(); i++)
+    for(double& d: dSol)
 	{
-		if(dSol[i] > -RS_TOLERANCE && dSol[i] < 1.0 + RS_TOLERANCE)
+        if(d > -RS_TOLERANCE && d < 1.0 + RS_TOLERANCE)
 		{
-			if(dSol[i] < 0.0) dSol[i] = 0.0;
-			if(dSol[i] > 1.0) dSol[i] = 1.0;
-			pVS->push_back(GetQuadPoint(x1, c1, x2, dSol[i]));
+            if(d < 0.0) d = 0.0;
+            if(d > 1.0) d = 1.0;
+            pVS->push_back(GetQuadPoint(x1, c1, x2, d));
 		}
 	}
 }
@@ -1841,7 +1841,7 @@ printf("getTangentPoint\n");
 	return ret;
 }
 
-RS_Vector RS_SplinePoints::getTangentDirection(const RS_Vector& point) const
+RS_Vector RS_SplinePoints::getTangentDirection(const RS_Vector& /*point*/) const
 {
 printf("getTangentDirection\n");
 	return RS_Vector(false);

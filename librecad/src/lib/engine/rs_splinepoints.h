@@ -42,7 +42,7 @@ public:
 	/**
 	* Default constructor. Leaves the data object uninitialized.
 	*/
-	RS_SplinePointsData() {}
+    RS_SplinePointsData() = default;
 
 	RS_SplinePointsData(bool closed)
 	{
