@@ -14,8 +14,8 @@
    height="297mm"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.0 r9654"
-   sodipodi:docname="librecad.svg">
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="librecad-icons.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -25,16 +25,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.30227273"
-     inkscape:cx="725.08351"
-     inkscape:cy="223.98705"
+     inkscape:zoom="2.3195979"
+     inkscape:cx="-429.81587"
+     inkscape:cy="-327.83273"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1342"
-     inkscape:window-height="740"
+     inkscape:window-width="1920"
+     inkscape:window-height="1014"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -8563,5 +8563,69 @@
        height="1.6083119"
        x="1422.5204"
        y="344.3118" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m -638.98175,1306.6641 c -1.7253,30.6693 -12.6633,26.3704 -24.6225,7.955 -17.5878,-28.5016 -26.7979,-36.0588 -30.9359,-30.9359 -11.3629,11.7834 15.8781,65.6654 26.769,53.033 7.3595,-9.4013 0.2391,-44.4956 12.8795,-44.8256 6.6075,0.1106 15.9588,-0.3202 15.9099,14.7735 z"
+       id="path6292-2"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccc"
+       inkscape:export-filename="/tmp/splinePoints.png"
+       inkscape:export-xdpi="209.60698"
+       inkscape:export-ydpi="209.60698" />
+    <rect
+       style="color:#000000;fill:#7cfc00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect5494-9"
+       width="11.258166"
+       height="10.674783"
+       x="-646.68848"
+       y="1291.8948"
+       ry="3.3965125"
+       inkscape:export-filename="/tmp/splinePoints.png"
+       inkscape:export-xdpi="209.60698"
+       inkscape:export-ydpi="209.60698" />
+    <rect
+       style="color:#000000;fill:#7cfc00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect5494-4"
+       width="11.258166"
+       height="10.674783"
+       x="-691.52386"
+       y="1279.8239"
+       ry="3.3965125"
+       inkscape:export-filename="/tmp/splinePoints.png"
+       inkscape:export-xdpi="209.60698"
+       inkscape:export-ydpi="209.60698" />
+    <rect
+       style="color:#000000;fill:#7cfc00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect5494-26"
+       width="11.258166"
+       height="10.674783"
+       x="-676.00391"
+       y="1331.5569"
+       ry="3.3965125"
+       inkscape:export-filename="/tmp/splinePoints.png"
+       inkscape:export-xdpi="209.60698"
+       inkscape:export-ydpi="209.60698" />
+    <rect
+       style="color:#000000;fill:#7cfc00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect5494-48"
+       width="11.258166"
+       height="10.674783"
+       x="-653.15509"
+       y="1322.9347"
+       ry="3.3965125"
+       inkscape:export-filename="/tmp/splinePoints.png"
+       inkscape:export-xdpi="209.60698"
+       inkscape:export-ydpi="209.60698" />
+    <rect
+       style="color:#000000;fill:#7cfc00;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect5494-0"
+       width="11.258166"
+       height="10.674783"
+       x="-666.95062"
+       y="1290.1704"
+       ry="3.3965125"
+       inkscape:export-filename="/tmp/splinePoints.png"
+       inkscape:export-xdpi="209.60698"
+       inkscape:export-ydpi="209.60698" />
   </g>
 </svg>

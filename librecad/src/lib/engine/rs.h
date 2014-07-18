@@ -289,7 +289,7 @@ public:
         ActionDrawMText,
         ActionDrawPoint,
         ActionDrawSpline,
-        ActionDrawSplinePoints,
+        ActionDrawSplinePoints, //interpolation spline
         ActionDrawPolyline,
         ActionDrawText,
 

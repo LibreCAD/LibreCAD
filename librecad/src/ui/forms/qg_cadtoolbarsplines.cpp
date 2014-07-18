@@ -61,12 +61,12 @@ void QG_CadToolBarSplines::init() {
     cadToolBar = NULL;
 }
 
-void QG_CadToolBarSplines::mousePressEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton && cadToolBar!=NULL) {
-        cadToolBar->back();
-        e->accept();
-    }
-}
+//void QG_CadToolBarSplines::mousePressEvent(QMouseEvent* e) {
+//    if (e->button()==Qt::RightButton && cadToolBar!=NULL) {
+//        cadToolBar->back();
+//        e->accept();
+//    }
+//}
 
 void QG_CadToolBarSplines::contextMenuEvent(QContextMenuEvent *e) {
     e->accept();
@@ -88,16 +88,52 @@ void QG_CadToolBarSplines::drawSpline() {
     }
 }
 
-void QG_CadToolBarSplines::back() {
-    if (cadToolBar!=NULL) {
-        cadToolBar->back();
+void QG_CadToolBarSplines::drawSplineInt() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawSplinePoints();
     }
 }
+
+void QG_CadToolBarSplines::back() {
+    if (cadToolBar!=NULL) {
+        cadToolBar->showPreviousToolBar();
+    }
+}
+
 //restore action from checked button
 void QG_CadToolBarSplines::restoreAction()
 {
     if(actionHandler==NULL) return;
     if ( bSpline ->isChecked() ) {
-    actionHandler->slotDrawSpline();
+        actionHandler->slotDrawSpline();
+        return;
+    }
+    if(bSplineInt->isChecked()){
+        actionHandler->slotDrawSplinePoints();
+        return;
+    }
+    bHidden->setChecked(true);
+    RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
+    if(currentAction != NULL) {
+        currentAction->finish(false); //finish the action, but do not update toolBar
+    }
+}
+
+void QG_CadToolBarSplines::resetToolBar() {
+    bHidden->setChecked(true);
+}
+
+
+void QG_CadToolBarSplines::showCadToolBar(RS2::ActionType actionType) {
+    switch(actionType){
+    case RS2::ActionDrawSpline:
+        bSpline->setChecked(true);
+        return;
+    case RS2::ActionDrawSplinePoints:
+        bSplineInt->setChecked(true);
+        return;
+    default:
+        bHidden->setChecked(true);
+        return;
     }
 }

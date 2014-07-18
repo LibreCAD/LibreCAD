@@ -25,6 +25,7 @@
 **********************************************************************/
 #ifndef QG_CADTOOLBARSPLINES_H
 #define QG_CADTOOLBARSPLINES_H
+#include "rs.h"
 
 class QG_CadToolBar;
 class QG_ActionHandler;
@@ -42,11 +43,14 @@ public:
     void restoreAction();
 
 public slots:
-    virtual void mousePressEvent( QMouseEvent * e );
+//    virtual void mousePressEvent( QMouseEvent * e );
     virtual void contextMenuEvent( QContextMenuEvent * e );
     virtual void setCadToolBar( QG_CadToolBar * tb );
     virtual void drawSpline();
+    virtual void drawSplineInt();
     virtual void back();
+    virtual void resetToolBar();
+    virtual void showCadToolBar(RS2::ActionType actionType);
 
 protected:
     QG_ActionHandler* actionHandler;
