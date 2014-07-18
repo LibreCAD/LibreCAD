@@ -3,7 +3,6 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -36,20 +35,20 @@
 /**
  * Holds the data that defines a line.
  */
-class RS_SplinePointsData
+class LC_SplinePointsData
 {
 public:
 	/**
 	* Default constructor. Leaves the data object uninitialized.
 	*/
-    RS_SplinePointsData() = default;
+    LC_SplinePointsData() = default;
 
-	RS_SplinePointsData(bool closed)
+    LC_SplinePointsData(bool closed)
 	{
 		this->closed = closed;
 	}
 
-	RS_SplinePointsData(const RS_SplinePointsData& ld)
+    LC_SplinePointsData(const LC_SplinePointsData& ld)
 	{
 		this->closed = ld.closed;
 		for(int i = 0; i < ld.splinePoints.count(); i++)
@@ -58,7 +57,7 @@ public:
 		}
 	}
 
-	friend std::ostream& operator << (std::ostream& os, const RS_SplinePointsData& ld)
+    friend std::ostream& operator << (std::ostream& os, const LC_SplinePointsData& ld)
 	{
 		os << "( closed: " << ld.closed << ")";
 		return os;
@@ -76,7 +75,7 @@ public:
  *
  * @author Pavel Krejcir
  */
-class RS_SplinePoints : public RS_AtomicEntity // RS_EntityContainer
+class LC_SplinePoints : public RS_AtomicEntity // RS_EntityContainer
 {
 private:
 	RS_Vector dynPoint;
@@ -87,10 +86,10 @@ private:
 	void UpdateControlPoints();
 	void UpdateQuadExtent(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2);
 public:
-	RS_SplinePointsData data;
+    LC_SplinePointsData data;
 public:
-	RS_SplinePoints(RS_EntityContainer* parent, const RS_SplinePointsData& d);
-	virtual ~RS_SplinePoints();
+    LC_SplinePoints(RS_EntityContainer* parent, const LC_SplinePointsData& d);
+    virtual ~LC_SplinePoints();
 	virtual RS_Entity* clone();
 
 	/**	@return RS2::EntitySpline */
@@ -106,7 +105,7 @@ public:
 	}
 
 	/** @return Copy of data that defines the spline. */
-	RS_SplinePointsData getData() const
+    LC_SplinePointsData getData() const
 	{
 		return data;
 	}
@@ -233,7 +232,7 @@ public:
 	virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
 	QList<RS_Vector> getPoints();
 
-	friend std::ostream& operator << (std::ostream& os, const RS_SplinePoints& l);
+    friend std::ostream& operator << (std::ostream& os, const LC_SplinePoints& l);
 
 	virtual void calculateBorders();
 };

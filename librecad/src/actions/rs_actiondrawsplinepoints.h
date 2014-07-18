@@ -3,7 +3,6 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -35,7 +34,7 @@
  *
  * @author Pavel Krejcir
  */
-class RS_ActionDrawSplinePoints : public RS_PreviewActionInterface
+class LC_ActionDrawSplinePoints : public RS_PreviewActionInterface
 {
 	Q_OBJECT
 public:
@@ -48,9 +47,9 @@ public:
 		SetNextPoint      /**< Setting the next point. */
 	};
 
-	RS_ActionDrawSplinePoints(RS_EntityContainer& container,
+    LC_ActionDrawSplinePoints(RS_EntityContainer& container,
 		RS_GraphicView& graphicView);
-	virtual ~RS_ActionDrawSplinePoints();
+    virtual ~LC_ActionDrawSplinePoints();
 
 	virtual RS2::ActionType rtti()
 	{
@@ -84,12 +83,12 @@ private:
 	/**
 	* Spline data defined so far.
 	*/
-	RS_SplinePointsData data;
+    LC_SplinePointsData data;
 
 	/**
 	* Spline entity we're working on.
 	*/
-	RS_SplinePoints* spline;
+    LC_SplinePoints* spline;
 
 	/**
 	* Point history (for undo)

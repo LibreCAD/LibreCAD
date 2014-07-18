@@ -798,7 +798,7 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
         break;
 
     case RS2::ActionDrawSplinePoints:
-                action = RS_ActionDrawSplinePoints::createGUIAction(id, mw);
+                action = LC_ActionDrawSplinePoints::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotDrawSplinePoints()));
         break;

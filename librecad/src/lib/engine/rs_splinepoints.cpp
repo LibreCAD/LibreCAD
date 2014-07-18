@@ -3,7 +3,6 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
 ** This file may be distributed and/or modified under the terms of the
@@ -39,8 +38,8 @@
 /**
  * Constructor.
  */
-RS_SplinePoints::RS_SplinePoints(RS_EntityContainer* parent,
-	const RS_SplinePointsData& d) : RS_AtomicEntity(parent), data(d)
+LC_SplinePoints::LC_SplinePoints(RS_EntityContainer* parent,
+    const LC_SplinePointsData& d) : RS_AtomicEntity(parent), data(d)
 {
 	m_bInsertionState = false;
 	calculateBorders();
@@ -49,13 +48,13 @@ RS_SplinePoints::RS_SplinePoints(RS_EntityContainer* parent,
 /**
  * Destructor.
  */
-RS_SplinePoints::~RS_SplinePoints()
+LC_SplinePoints::~LC_SplinePoints()
 {
 }
 
-RS_Entity* RS_SplinePoints::clone()
+RS_Entity* LC_SplinePoints::clone()
 {
-	RS_SplinePoints* l = new RS_SplinePoints(*this);
+    LC_SplinePoints* l = new LC_SplinePoints(*this);
 	l->initId();
 	return l;
 }
@@ -73,7 +72,7 @@ RS_Vector GetThreePointsControl(const RS_Vector& x1, const RS_Vector& x2, const 
 }
 
 
-void RS_SplinePoints::UpdateQuadExtent(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2)
+void LC_SplinePoints::UpdateQuadExtent(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2)
 {
     RS_Vector locMinV = RS_Vector::minimum(x1, x2);
     RS_Vector locMaxV = RS_Vector::maximum(x1, x2);
@@ -107,7 +106,7 @@ void RS_SplinePoints::UpdateQuadExtent(const RS_Vector& x1, const RS_Vector& c1,
     maxV = RS_Vector::maximum(locMaxV, maxV);
 }
 
-void RS_SplinePoints::calculateBorders()
+void LC_SplinePoints::calculateBorders()
 {
 	minV = RS_Vector(false);
 	maxV = RS_Vector(false);
@@ -196,7 +195,7 @@ void RS_SplinePoints::calculateBorders()
 	return;
 }
 
-RS_VectorSolutions RS_SplinePoints::getRefPoints()
+RS_VectorSolutions LC_SplinePoints::getRefPoints()
 {
 	RS_VectorSolutions ret(data.splinePoints.count());
 
@@ -208,13 +207,13 @@ RS_VectorSolutions RS_SplinePoints::getRefPoints()
 	return ret;
 }
 
-RS_Vector RS_SplinePoints::getNearestRef(const RS_Vector& coord,
+RS_Vector LC_SplinePoints::getNearestRef(const RS_Vector& coord,
 	double* dist)
 {
     return RS_Entity::getNearestRef(coord, dist);
 }
 
-RS_Vector RS_SplinePoints::getNearestSelectedRef(const RS_Vector& coord,
+RS_Vector LC_SplinePoints::getNearestSelectedRef(const RS_Vector& coord,
 	double* dist)
 {
     return RS_Entity::getNearestSelectedRef(coord, dist);
@@ -224,7 +223,7 @@ RS_Vector RS_SplinePoints::getNearestSelectedRef(const RS_Vector& coord,
  * Updates the internal polygon of this spline. Called when the
  * spline or it's data, position, .. changes.
  */
-void RS_SplinePoints::update()
+void LC_SplinePoints::update()
 {
 	RS_DEBUG->print("RS_SplinePoints::update");
 
@@ -242,7 +241,7 @@ void RS_SplinePoints::update()
 }
 
 /** @return Start point of the entity */
-RS_Vector RS_SplinePoints::getStartPoint() const
+RS_Vector LC_SplinePoints::getStartPoint() const
 {
 	if(data.closed) return RS_Vector(false);
 
@@ -253,7 +252,7 @@ RS_Vector RS_SplinePoints::getStartPoint() const
 }
 
 /** @return End point of the entity */
-RS_Vector RS_SplinePoints::getEndPoint() const
+RS_Vector LC_SplinePoints::getEndPoint() const
 {
 	if(data.closed) return RS_Vector(false);
 
@@ -263,7 +262,7 @@ RS_Vector RS_SplinePoints::getEndPoint() const
     return data.splinePoints.at(iCount - 1);
 }
 
-RS_Vector RS_SplinePoints::getNearestEndpoint(const RS_Vector& coord,
+RS_Vector LC_SplinePoints::getNearestEndpoint(const RS_Vector& coord,
 	double* dist) const
 {
 	double minDist = RS_MAXDOUBLE;
@@ -424,7 +423,7 @@ RS_Vector GetDistToQuadSquared(const RS_Vector& coord, const RS_Vector& x1,
 	return vRes;
 }
 
-RS_Vector RS_SplinePoints::getNearestPointOnEntity(const RS_Vector& coord,
+RS_Vector LC_SplinePoints::getNearestPointOnEntity(const RS_Vector& coord,
 	bool onEntity, double* dist, RS_Entity** entity) const
 {
 	int iPoints = data.splinePoints.count();
@@ -436,7 +435,7 @@ RS_Vector RS_SplinePoints::getNearestPointOnEntity(const RS_Vector& coord,
 	{
 		vStart = data.splinePoints.at(0);
 		if(dist) *dist = (coord - vStart).magnitude();
-		if(entity) *entity = const_cast<RS_SplinePoints*>(this);
+        if(entity) *entity = const_cast<LC_SplinePoints*>(this);
 		return vStart;
 	}
 
@@ -445,7 +444,7 @@ RS_Vector RS_SplinePoints::getNearestPointOnEntity(const RS_Vector& coord,
 		vStart = data.splinePoints.at(0);
 		vEnd = data.splinePoints.at(1);
 		vControl = GetDistToLine(coord, vStart, vEnd, dist);
-		if(entity) *entity = const_cast<RS_SplinePoints*>(this);
+        if(entity) *entity = const_cast<LC_SplinePoints*>(this);
 		return vControl;
 	}
 
@@ -496,7 +495,7 @@ RS_Vector RS_SplinePoints::getNearestPointOnEntity(const RS_Vector& coord,
 			{
 				vRes = GetDistToLine(coord, vStart, vEnd, dist);
 			}
-			if(entity) *entity = const_cast<RS_SplinePoints*>(this);
+            if(entity) *entity = const_cast<LC_SplinePoints*>(this);
 			return vRes;
 		}
 
@@ -525,11 +524,11 @@ RS_Vector RS_SplinePoints::getNearestPointOnEntity(const RS_Vector& coord,
 	}
 
 	if(dist) *dist = sqrt(dDist);
-	if(entity) *entity = const_cast<RS_SplinePoints*>(this);
+    if(entity) *entity = const_cast<LC_SplinePoints*>(this);
 	return vRes;
 }
 
-double RS_SplinePoints::getDistanceToPoint(const RS_Vector& coord,
+double LC_SplinePoints::getDistanceToPoint(const RS_Vector& coord,
 	RS_Entity** entity, RS2::ResolveLevel level, double solidDist) const
 {
 	double dDist = RS_MAXDOUBLE;
@@ -537,7 +536,7 @@ double RS_SplinePoints::getDistanceToPoint(const RS_Vector& coord,
 	return dDist;
 }
 
-RS_Vector RS_SplinePoints::getNearestCenter(const RS_Vector& /*coord*/,
+RS_Vector LC_SplinePoints::getNearestCenter(const RS_Vector& /*coord*/,
 	double* dist)
 {
 	if(dist != NULL)
@@ -548,7 +547,7 @@ RS_Vector RS_SplinePoints::getNearestCenter(const RS_Vector& /*coord*/,
 	return RS_Vector(false);
 }
 
-RS_Vector RS_SplinePoints::getNearestMiddle(const RS_Vector& /*coord*/,
+RS_Vector LC_SplinePoints::getNearestMiddle(const RS_Vector& /*coord*/,
 	double* dist, int /*middlePoints*/) const
 {
 	if(dist != NULL)
@@ -559,7 +558,7 @@ RS_Vector RS_SplinePoints::getNearestMiddle(const RS_Vector& /*coord*/,
 	return RS_Vector(false);
 }
 
-RS_Vector RS_SplinePoints::getNearestDist(double /*distance*/,
+RS_Vector LC_SplinePoints::getNearestDist(double /*distance*/,
 	const RS_Vector& /*coord*/, double* dist)
 {
 printf("getNearestDist\n");
@@ -571,7 +570,7 @@ printf("getNearestDist\n");
 	return RS_Vector(false);
 }
 
-void RS_SplinePoints::move(const RS_Vector& offset)
+void LC_SplinePoints::move(const RS_Vector& offset)
 {
 	for(int i = 0; i < data.splinePoints.count(); i++)
 	{
@@ -580,12 +579,12 @@ void RS_SplinePoints::move(const RS_Vector& offset)
 	update();
 }
 
-void RS_SplinePoints::rotate(const RS_Vector& center, const double& angle)
+void LC_SplinePoints::rotate(const RS_Vector& center, const double& angle)
 {
 	rotate(center, RS_Vector(angle));
 }
 
-void RS_SplinePoints::rotate(const RS_Vector& center, const RS_Vector& angleVector)
+void LC_SplinePoints::rotate(const RS_Vector& center, const RS_Vector& angleVector)
 {
 	for(int i = 0; i < data.splinePoints.count(); i++)
 	{
@@ -594,7 +593,7 @@ void RS_SplinePoints::rotate(const RS_Vector& center, const RS_Vector& angleVect
 	update();
 }
 
-void RS_SplinePoints::scale(const RS_Vector& center, const RS_Vector& factor)
+void LC_SplinePoints::scale(const RS_Vector& center, const RS_Vector& factor)
 {
 	for(int i = 0; i < data.splinePoints.count(); i++)
 	{
@@ -603,7 +602,7 @@ void RS_SplinePoints::scale(const RS_Vector& center, const RS_Vector& factor)
 	update();
 }
 
-void RS_SplinePoints::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
+void LC_SplinePoints::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 {
 	for(int i = 0; i < data.splinePoints.count(); i++)
 	{
@@ -612,7 +611,7 @@ void RS_SplinePoints::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisP
 	update();
 }
 
-void RS_SplinePoints::moveRef(const RS_Vector& ref, const RS_Vector& offset)
+void LC_SplinePoints::moveRef(const RS_Vector& ref, const RS_Vector& offset)
 {
 	for(int i = 0; i < data.splinePoints.count(); i++)
 	{
@@ -624,7 +623,7 @@ void RS_SplinePoints::moveRef(const RS_Vector& ref, const RS_Vector& offset)
 	update();
 }
 
-void RS_SplinePoints::revertDirection()
+void LC_SplinePoints::revertDirection()
 {
 	for(int k = 0; k < data.splinePoints.count() / 2; k++)
 	{
@@ -636,7 +635,7 @@ void RS_SplinePoints::revertDirection()
 /**
  * @return The reference points of the spline.
  */
-QList<RS_Vector> RS_SplinePoints::getPoints()
+QList<RS_Vector> LC_SplinePoints::getPoints()
 {
 	return data.splinePoints;
 }
@@ -644,7 +643,7 @@ QList<RS_Vector> RS_SplinePoints::getPoints()
 /**
  * Appends the given point to the control points.
  */
-bool RS_SplinePoints::addPoint(const RS_Vector& v)
+bool LC_SplinePoints::addPoint(const RS_Vector& v)
 {
 	if(data.splinePoints.count() < 1 ||
 		(v - data.splinePoints.last()).squared() > RS_TOLERANCE2)
@@ -659,7 +658,7 @@ bool RS_SplinePoints::addPoint(const RS_Vector& v)
 /**
  * Sets the dynamic point.
  */
-void RS_SplinePoints::dynamicPoint(const RS_Vector& v)
+void LC_SplinePoints::dynamicPoint(const RS_Vector& v)
 {
 	dynPoint = v;
 }
@@ -667,7 +666,7 @@ void RS_SplinePoints::dynamicPoint(const RS_Vector& v)
 /**
  * Removes the control point that was last added.
  */
-void RS_SplinePoints::removeLastPoint()
+void LC_SplinePoints::removeLastPoint()
 {
 	data.splinePoints.pop_back();
 	if(data.splinePoints.count() > 0) dynPoint = data.splinePoints.last();
@@ -781,7 +780,7 @@ double* GetMatrix(int iCount, bool bClosed, double *dt)
 	return(dRes);
 }
 
-void RS_SplinePoints::UpdateControlPoints()
+void LC_SplinePoints::UpdateControlPoints()
 {
 	data.controlPoints.clear();
 
@@ -1303,7 +1302,7 @@ double DrawPatternQuad(double *pdPattern, int iPattern, double patternOffset,
 	return(dSegOffs);
 }
 
-void RS_SplinePoints::drawPattern(RS_Painter* painter, RS_GraphicView* view,
+void LC_SplinePoints::drawPattern(RS_Painter* painter, RS_GraphicView* view,
 	int iPoints, double& patternOffset, RS_LineTypePattern* pat)
 {
 	double dpmm = static_cast<RS_PainterQt*>(painter)->getDpmm();
@@ -1421,7 +1420,7 @@ void RS_SplinePoints::drawPattern(RS_Painter* painter, RS_GraphicView* view,
 	delete[] ds;
 }
 
-void RS_SplinePoints::drawSimple(RS_Painter* painter, RS_GraphicView* view, int iPoints)
+void LC_SplinePoints::drawSimple(RS_Painter* painter, RS_GraphicView* view, int iPoints)
 {
 	RS_Vector vStart = view->toGui(data.splinePoints.at(0));
 	RS_Vector vControl(false), vEnd(false);
@@ -1521,7 +1520,7 @@ void RS_SplinePoints::drawSimple(RS_Painter* painter, RS_GraphicView* view, int 
 	painter->drawPath(qPath);
 }
 
-void RS_SplinePoints::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset)
+void LC_SplinePoints::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset)
 {
 	if(painter == NULL || view == NULL)
 	{
@@ -1565,7 +1564,7 @@ void RS_SplinePoints::draw(RS_Painter* painter, RS_GraphicView* view, double& pa
 	else drawSimple(painter, view, iPoints);
 }
 
-double RS_SplinePoints::getLength() const
+double LC_SplinePoints::getLength() const
 {
 	int iPoints = data.splinePoints.count();
 
@@ -1643,7 +1642,7 @@ double RS_SplinePoints::getLength() const
 	return dRes;
 }
 
-double RS_SplinePoints::getDirection1() const
+double LC_SplinePoints::getDirection1() const
 {
 	int iPoints = data.splinePoints.count();
 
@@ -1685,7 +1684,7 @@ double RS_SplinePoints::getDirection1() const
 	return(vStart.angleTo(vEnd));
 }
 
-double RS_SplinePoints::getDirection2() const
+double LC_SplinePoints::getDirection2() const
 {
 	int iPoints = data.splinePoints.count();
 
@@ -1765,7 +1764,7 @@ void AddQuadTangentPoints(RS_VectorSolutions *pVS, const RS_Vector& point,
 	}
 }
 
-RS_VectorSolutions RS_SplinePoints::getTangentPoint(const RS_Vector& point) const
+RS_VectorSolutions LC_SplinePoints::getTangentPoint(const RS_Vector& point) const
 {
 printf("getTangentPoint\n");
     RS_VectorSolutions ret;
@@ -1841,7 +1840,7 @@ printf("getTangentPoint\n");
 	return ret;
 }
 
-RS_Vector RS_SplinePoints::getTangentDirection(const RS_Vector& /*point*/) const
+RS_Vector LC_SplinePoints::getTangentDirection(const RS_Vector& /*point*/) const
 {
 printf("getTangentDirection\n");
 	return RS_Vector(false);
@@ -1850,7 +1849,7 @@ printf("getTangentDirection\n");
 /**
  * Dumps the spline's data to stdout.
  */
-std::ostream& operator << (std::ostream& os, const RS_SplinePoints& l)
+std::ostream& operator << (std::ostream& os, const LC_SplinePoints& l)
 {
 	os << " SplinePoints: " << l.getData() << "\n";
 	return os;

@@ -559,7 +559,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDrawSpline(*doc, *gv);
         break;
     case RS2::ActionDrawSplinePoints:
-        a = new RS_ActionDrawSplinePoints(*doc, *gv);
+        a = new LC_ActionDrawSplinePoints(*doc, *gv);
         break;
     case RS2::ActionDrawMText:
         a = new RS_ActionDrawMText(*doc, *gv);
