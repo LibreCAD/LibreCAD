@@ -45,6 +45,7 @@ RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
     circleType.push_back(RS2::EntityArc);
     circleType.push_back(RS2::EntityCircle);
     circleType.push_back(RS2::EntityEllipse);
+    circleType.push_back(RS2::EntitySplinePoints);
 }
 
 
@@ -106,7 +107,8 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
             RS_Entity* en = catchEntity(e, circleType, RS2::ResolveAll);
             if (en!=NULL && (en->rtti()==RS2::EntityCircle ||
                              en->rtti()==RS2::EntityArc ||
-                             en->rtti()==RS2::EntityEllipse)) {
+                             en->rtti()==RS2::EntityEllipse ||
+                             en->rtti()==RS2::EntitySplinePoints)) {
                 circle = en;
 
                 RS_Creation creation(NULL, NULL);

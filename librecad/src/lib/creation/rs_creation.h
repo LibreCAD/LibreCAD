@@ -34,6 +34,7 @@
 #include "rs_insert.h"
 #include "rs_image.h"
 #include "rs_block.h"
+#include "lc_splinepoints.h"
 
 
 /**
@@ -80,6 +81,10 @@ public:
     RS_Circle* createParallelCircle(const RS_Vector& coord,
                                     double distance, int number,
                                     RS_Circle* e);
+
+    LC_SplinePoints* createParallelSplinePoints(const RS_Vector& coord,
+                                    double distance, int number,
+                                    LC_SplinePoints* e);
 
     RS_Line* createBisector(const RS_Vector& coord1,
                             const RS_Vector& coord2,

@@ -28,6 +28,7 @@
 
 #include "rs_constructionline.h"
 #include "lc_quadratic.h"
+#include "lc_splinepoints.h"
 
 
 /**
@@ -246,9 +247,17 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
             }
         }
     }
-    const auto&& qf1=e1->getQuadratic();
-    const auto&& qf2=e2->getQuadratic();
-    ret=LC_Quadratic::getIntersection(qf1,qf2);
+
+	if(e1->rtti() == RS2::EntitySplinePoints || e2->rtti() == RS2::EntitySplinePoints)
+	{
+		ret = LC_SplinePoints::getIntersection(e1, e2);
+	}
+	else
+	{
+		const auto&& qf1=e1->getQuadratic();
+		const auto&& qf2=e2->getQuadratic();
+		ret=LC_Quadratic::getIntersection(qf1,qf2);
+	}
     RS_VectorSolutions ret2;
     for(int i=0;i<ret.getNumber();i++) {
         RS_Vector&& vp=ret.get(i);

@@ -75,6 +75,8 @@ private:
 	int GetNearestQuad(const RS_Vector& coord, double* dist, double* dt) const;
 	RS_Vector GetSplinePointAtDist(double dDist, int iStartSeg, double dStartT,
 		int *piSeg, double *pdt) const;
+	bool GetQuadPoints(int iSeg, RS_Vector *pvStart, RS_Vector *pvControl,
+		RS_Vector *pvEnd) const;
 public:
     LC_SplinePointsData data;
 public:
@@ -220,6 +222,9 @@ public:
 
     virtual bool offset(const RS_Vector& coord, const double& distance);
     virtual QVector<RS_Entity*> offsetTwoSides(const double& distance) const;
+
+	static RS_VectorSolutions getIntersection(RS_Entity* e1, RS_Entity* e2);
+	RS_VectorSolutions getLineIntersect(RS_Line* l1);
 };
 
 #endif
