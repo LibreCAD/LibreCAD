@@ -225,6 +225,8 @@ public:
 
 	static RS_VectorSolutions getIntersection(RS_Entity* e1, RS_Entity* e2);
 	RS_VectorSolutions getLineIntersect(RS_Line* l1);
+	RS_VectorSolutions getSplinePointsIntersect(LC_SplinePoints* l1);
+	RS_VectorSolutions getQuadraticIntersect(RS_Entity* e1);
 };
 
 #endif

@@ -29,7 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_painter.h"
 #include "rs_graphic.h"
 #include "rs_painterqt.h"
-
+#include "lc_quadratic.h"
 
 RS_Vector GetQuadPoint(const RS_Vector& x1,
 	const RS_Vector& c1, const RS_Vector& x2, double dt)
@@ -294,7 +294,7 @@ void LC_SplinePoints::UpdateQuadExtent(const RS_Vector& x1, const RS_Vector& c1,
 
 	if(fabs(vDer.x) > RS_TOLERANCE)
 	{
-		dt = (c1.x - x1.x)/vDer.x;
+		dt = (x1.x - c1.x)/vDer.x;
 		if(dt > RS_TOLERANCE && dt < 1.0 - RS_TOLERANCE)
 		{
 			dx = x1.x*(1.0 - dt)*(1.0 - dt) + 2.0*c1.x*dt*(1.0 - dt) + x2.x*dt*dt;
@@ -305,7 +305,7 @@ void LC_SplinePoints::UpdateQuadExtent(const RS_Vector& x1, const RS_Vector& c1,
 
 	if(fabs(vDer.y) > RS_TOLERANCE)
 	{
-		dt = (c1.y - x1.y)/vDer.y;
+		dt = (x1.y - c1.y)/vDer.y;
 		if(dt > RS_TOLERANCE && dt < 1.0 - RS_TOLERANCE)
 		{
 			dx = x1.y*(1.0 - dt)*(1.0 - dt) + 2.0*c1.y*dt*(1.0 - dt) + x2.y*dt*dt;
@@ -343,7 +343,7 @@ void LC_SplinePoints::calculateBorders()
 	}
 
 	int n = data.controlPoints.count();
-	if(n < 3) return;
+//	if(n < 1) return;
 
 	if(data.closed)
 	{
@@ -2754,14 +2754,242 @@ RS_VectorSolutions LC_SplinePoints::getLineIntersect(RS_Line* l1)
 	}
 
     return ret;
-
 }
+
+RS_VectorSolutions LC_SplinePoints::getSplinePointsIntersect(LC_SplinePoints* l1)
+{
+	RS_VectorSolutions ret;
+    return ret;
+}
+
+RS_VectorSolutions getQuadraticLineIntersect(std::vector<double> dQuadCoefs,
+	const RS_Vector& vx1, const RS_Vector& vx2)
+{
+	RS_VectorSolutions ret;
+	if(dQuadCoefs.size() < 3) return ret;
+
+	RS_Vector x1 = vx2 - vx1;
+
+	double a0 = 0.0;
+	double a1 = 0.0;
+	double a2 = 0.0;
+
+	if(dQuadCoefs.size() > 3)
+	{
+		a2 = dQuadCoefs[0]*x1.x*x1.x + dQuadCoefs[1]*x1.x*x1.y + dQuadCoefs[2]*x1.y*x1.y;
+		a1 = 2.0*(dQuadCoefs[0]*x1.x*vx1.x + dQuadCoefs[2]*x1.y*vx1.y) +
+			dQuadCoefs[1]*(x1.x*vx1.y + x1.y*vx1.x) + dQuadCoefs[3]*x1.x + dQuadCoefs[4]*x1.y;
+		a0 = dQuadCoefs[0]*vx1.x*vx1.x + dQuadCoefs[1]*vx1.x*vx1.y + dQuadCoefs[2]*vx1.y*vx1.y +
+			dQuadCoefs[3]*vx1.x + dQuadCoefs[4]*vx1.y + dQuadCoefs[5];
+	}
+	else
+	{
+		a1 = dQuadCoefs[0]*x1.x + dQuadCoefs[1]*x1.y;
+		a0 = dQuadCoefs[0]*vx1.x + dQuadCoefs[1]*vx1.y + dQuadCoefs[2];
+	}
+
+	std::vector<double> dSol(0, 0.);
+	std::vector<double> dCoefs(0, 0.);
+
+	if(fabs(a2) > RS_TOLERANCE)
+	{
+		dCoefs.push_back(a1/a2);
+		dCoefs.push_back(a0/a2);
+		dSol = RS_Math::quadraticSolver(dCoefs);
+
+	}
+	else if(fabs(a1) > RS_TOLERANCE)
+	{
+		dSol.push_back(-a0/a1);
+	}
+
+    for(double& d: dSol)
+	{
+        if(d > -RS_TOLERANCE && d < 1.0 + RS_TOLERANCE)
+		{
+            if(d < 0.0) d = 0.0;
+            if(d > 1.0) d = 1.0;
+			ret.push_back(vx1*(1.0 - d) + vx2*d);
+		}
+	}
+
+	return ret;
+}
+
+void addQuadraticQuadIntersect(RS_VectorSolutions *pVS, std::vector<double> dQuadCoefs,
+	const RS_Vector& vx1, const RS_Vector& vc1, const RS_Vector& vx2)
+{
+	if(dQuadCoefs.size() < 3) return;
+
+	RS_Vector x1 = vx2 - vc1*2.0 + vx1;
+	RS_Vector x2 = vc1 - vx1;
+
+	double a0 = 0.0;
+	double a1 = 0.0;
+	double a2 = 0.0;
+	double a3 = 0.0;
+	double a4 = 0.0;
+
+	if(dQuadCoefs.size() > 3)
+	{
+		a4 = dQuadCoefs[0]*x1.x*x1.x + dQuadCoefs[1]*x1.x*x1.y + dQuadCoefs[2]*x1.y*x1.y;
+		a3 = 4.0*dQuadCoefs[0]*x1.x*x2.x + 2.0*dQuadCoefs[1]*(x1.x*x2.y + x1.y*x2.x) +
+			4.0*dQuadCoefs[2]*x1.y*x2.y;
+		a2 = dQuadCoefs[0]*(2.0*x1.x*vx1.x + 4.0*x2.x*x2.x) +
+			dQuadCoefs[1]*(x1.x*vx1.y + x1.y*vx1.x + 4.0*x2.x*x2.y) +
+			dQuadCoefs[2]*(2.0*x1.y*vx1.y + 4.0*x2.y*x2.y) +
+			dQuadCoefs[3]*x1.x + dQuadCoefs[4]*x1.y;
+		a1 = 4.0*(dQuadCoefs[0]*x2.x*vx1.x + dQuadCoefs[2]*x2.y*vx1.y) +
+			2.0*(dQuadCoefs[1]*(x2.x*vx1.y + x2.y*vx1.x) + dQuadCoefs[3]*x2.x + dQuadCoefs[4]*x2.y);
+		a0 = dQuadCoefs[0]*vx1.x*vx1.x + dQuadCoefs[1]*vx1.x*vx1.y + dQuadCoefs[2]*vx1.y*vx1.y +
+			dQuadCoefs[3]*vx1.x + dQuadCoefs[4]*vx1.y + dQuadCoefs[5];
+	}
+	else
+	{
+		a2 = dQuadCoefs[0]*x1.x + dQuadCoefs[1]*x1.y;
+		a1 = 2.0*(dQuadCoefs[0]*x2.x + dQuadCoefs[1]*x2.y);
+		a0 = dQuadCoefs[0]*vx1.x + dQuadCoefs[1]*vx1.y + dQuadCoefs[2];
+	}
+
+	std::vector<double> dSol(0, 0.);
+	std::vector<double> dCoefs(0, 0.);
+
+	if(fabs(a4) > RS_TOLERANCE)
+	{
+		dCoefs.push_back(a3/a4);
+		dCoefs.push_back(a2/a4);
+		dCoefs.push_back(a1/a4);
+		dCoefs.push_back(a0/a4);
+		dSol = RS_Math::quarticSolver(dCoefs);
+	}
+	else if(fabs(a3) > RS_TOLERANCE)
+	{
+		dCoefs.push_back(a2/a3);
+		dCoefs.push_back(a1/a3);
+		dCoefs.push_back(a0/a3);
+		dSol = RS_Math::cubicSolver(dCoefs);
+	}
+	else if(fabs(a2) > RS_TOLERANCE)
+	{
+		dCoefs.push_back(a1/a2);
+		dCoefs.push_back(a0/a2);
+		dSol = RS_Math::quadraticSolver(dCoefs);
+
+	}
+	else if(fabs(a1) > RS_TOLERANCE)
+	{
+		dSol.push_back(-a0/a1);
+	}
+
+    for(double& d: dSol)
+	{
+        if(d > -RS_TOLERANCE && d < 1.0 + RS_TOLERANCE)
+		{
+            if(d < 0.0) d = 0.0;
+            if(d > 1.0) d = 1.0;
+			pVS->push_back(GetQuadAtPoint(vx1, vc1, vx2, d));
+		}
+	}
+}
+
+RS_VectorSolutions LC_SplinePoints::getQuadraticIntersect(RS_Entity* e1)
+{
+	RS_VectorSolutions ret;
+
+	LC_Quadratic lcQuad = e1->getQuadratic();
+	std::vector<double> dQuadCoefs = lcQuad.getCoefficients();
+
+	int iPoints = data.splinePoints.count();
+
+	if(iPoints < 2) return ret;
+
+	RS_Vector vStart(false), vEnd(false), vControl(false);
+	RS_Vector vPoint(false);
+
+	if(iPoints < 3)
+	{
+		vStart = data.splinePoints.at(0);
+		vEnd = data.splinePoints.at(1);
+		ret = getQuadraticLineIntersect(dQuadCoefs, vStart, vEnd);
+		return ret;
+	}
+
+	int n = data.controlPoints.count();
+
+	if(data.closed)
+	{
+		vStart = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
+		vControl = data.controlPoints.at(0);
+		vEnd = (data.controlPoints.at(0) + data.controlPoints.at(1))/2.0;
+
+		addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
+
+		for(int i = 1; i < n - 1; i++)
+		{
+			vStart = vEnd;
+			vControl = data.controlPoints.at(i);
+			vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
+
+			addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
+		}
+
+		vStart = vEnd;
+		vControl = data.controlPoints.at(n - 1);
+		vEnd = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
+
+		addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
+	}
+	else
+	{
+		if(iPoints < 4)
+		{
+			vStart = data.splinePoints.at(0);
+			vPoint = data.splinePoints.at(1);
+			vEnd = data.splinePoints.at(2);
+			vControl = GetThreePointsControl(vStart, vPoint, vEnd);
+
+			if(vControl.valid)
+				addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
+			else ret = getQuadraticLineIntersect(dQuadCoefs, vStart, vEnd);
+			return ret;
+		}
+
+		vStart = data.splinePoints.at(0);
+		vControl = data.controlPoints.at(0);
+		vEnd = (data.controlPoints.at(0) + data.controlPoints.at(1))/2.0;
+
+		addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
+
+		for(int i = 1; i < n - 1; i++)
+		{
+			vStart = vEnd;
+			vControl = data.controlPoints.at(i);
+			vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
+
+			addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
+		}
+
+		vStart = vEnd;
+		vControl = data.controlPoints.at(n - 1);
+		vEnd = data.splinePoints.at(iPoints - 1);
+
+		addQuadraticQuadIntersect(&ret, dQuadCoefs, vStart, vControl, vEnd);
+	}
+
+    return ret;
+}
+
 
 RS_VectorSolutions LC_SplinePoints::getIntersection(RS_Entity* e1, RS_Entity* e2)
 {
 	RS_VectorSolutions ret;
 
-	if(e1->rtti() != RS2::EntitySplinePoints) std::swap(e1, e2);
+	if(e1->rtti() != RS2::EntitySplinePoints) //std::swap(&e1, &e2);
+	{
+		RS_Entity *etmp = e2;
+		e2 = e1;
+		e1 = etmp;
+	}
 	if(e1->rtti() != RS2::EntitySplinePoints) return ret;
 	
 	switch(e2->rtti())
@@ -2769,8 +2997,11 @@ RS_VectorSolutions LC_SplinePoints::getIntersection(RS_Entity* e1, RS_Entity* e2
 	case RS2::EntityLine:
 		ret = ((LC_SplinePoints*)e1)->getLineIntersect((RS_Line*)e2);
 		break;
-	default:
+	case RS2::EntitySplinePoints:
+		ret = ((LC_SplinePoints*)e1)->getSplinePointsIntersect((LC_SplinePoints*)e2);
 		break;
+	default:
+		ret = ((LC_SplinePoints*)e1)->getQuadraticIntersect(e2);
 	}
 
 	return ret;
