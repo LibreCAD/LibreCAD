@@ -75,7 +75,9 @@ public:
 	virtual void updateMouseCursor();
 	//virtual void updateToolBar();
 
-	//void close();
+	void setClosed(bool c);
+	bool isClosed();
+	void undo();
 protected:
 	/**
 	* Spline data defined so far.
@@ -92,7 +94,6 @@ protected:
 	*/
 	QList<RS_Vector> undoBuffer;
 
-	void undo();
 	void redo();
 };
 

@@ -728,6 +728,7 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         break;
 
     case RS2::ActionDrawSpline:
+    case RS2::ActionDrawSplinePoints:
         requestSplineOptions(action, on, update);
         break;
 

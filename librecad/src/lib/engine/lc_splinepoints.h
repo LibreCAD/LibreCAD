@@ -32,6 +32,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 /**
  * Holds the data that defines a line.
+ * Few notes about implementation:
+ * When drawing, the spline is defined via splinePoints collection.
+ * However, since we want to allow trimming/cutting the spline,
+ * we cannot guarantee that the shape would stay unchanged after
+ * a part of the spline would be cut off. This would espetially be
+ * obvious after cutting closed splines. So we introduce the "cut"
+ * state. After that, all splinePoints will be deleted except start
+ * and end points, and the controlPoints become the reference points
+ * of that shape. It will be further possible to modify the spline,
+ * but the control points will serve as handles then. 
  */
 class LC_SplinePointsData
 {
@@ -41,9 +51,10 @@ public:
 	*/
     LC_SplinePointsData() = default;
 
-    LC_SplinePointsData(bool closed)
+    LC_SplinePointsData(bool closed, bool cut)
 	{
 		this->closed = closed;
+		this->cut = cut;
 	}
 
     friend std::ostream& operator << (std::ostream& os, const LC_SplinePointsData& ld)
@@ -53,6 +64,7 @@ public:
 	}
 public:
 	bool closed;
+	bool cut;
 	/** points on the spline. */
 	QList<RS_Vector> splinePoints;
 	QList<RS_Vector> controlPoints;
@@ -68,15 +80,20 @@ class LC_SplinePoints : public RS_AtomicEntity // RS_EntityContainer
 {
 private:
 	void drawPattern(RS_Painter* painter, RS_GraphicView* view,
-		int iPoints, double& patternOffset, RS_LineTypePattern* pat);
-	void drawSimple(RS_Painter* painter, RS_GraphicView* view, int iPoints);
+		double& patternOffset, RS_LineTypePattern* pat);
+	void drawSimple(RS_Painter* painter, RS_GraphicView* view);
 	void UpdateControlPoints();
 	void UpdateQuadExtent(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2);
 	int GetNearestQuad(const RS_Vector& coord, double* dist, double* dt) const;
 	RS_Vector GetSplinePointAtDist(double dDist, int iStartSeg, double dStartT,
 		int *piSeg, double *pdt) const;
-	bool GetQuadPoints(int iSeg, RS_Vector *pvStart, RS_Vector *pvControl,
+	int GetQuadPoints(int iSeg, RS_Vector *pvStart, RS_Vector *pvControl,
 		RS_Vector *pvEnd) const;
+
+    bool offsetCut(const RS_Vector& coord, const double& distance);
+    bool offsetSpline(const RS_Vector& coord, const double& distance);
+    QVector<RS_Entity*> offsetTwoSidesSpline(const double& distance) const;
+    QVector<RS_Entity*> offsetTwoSidesCut(const double& distance) const;
 public:
     LC_SplinePointsData data;
 public:
@@ -126,6 +143,8 @@ public:
 		update();
 	}
 	
+    virtual void update();
+
 	virtual RS_VectorSolutions getRefPoints();
 	virtual RS_Vector getNearestRef(const RS_Vector& coord,
 		double* dist = NULL);
@@ -227,6 +246,12 @@ public:
 	RS_VectorSolutions getLineIntersect(RS_Line* l1);
 	RS_VectorSolutions getSplinePointsIntersect(LC_SplinePoints* l1);
 	RS_VectorSolutions getQuadraticIntersect(RS_Entity* e1);
+
+	// we will not enable trimming, maybe in the future
+	//virtual void trimStartpoint(const RS_Vector& pos);
+	//virtual void trimEndpoint(const RS_Vector& pos);
+
+	LC_SplinePoints* cut(const RS_Vector& pos);
 };
 
 #endif

@@ -37,7 +37,7 @@ LC_ActionDrawSplinePoints::LC_ActionDrawSplinePoints(RS_EntityContainer& contain
 	RS_GraphicView& graphicView) : RS_PreviewActionInterface("Draw splines through points",
 	container, graphicView)
 {
-    data = LC_SplinePointsData(false);
+    data = LC_SplinePointsData(false, false);
 	spline = NULL;
 }
 
@@ -380,6 +380,20 @@ void LC_ActionDrawSplinePoints::redo()
 		RS_DIALOGFACTORY->commandMessage(
 			tr("Cannot undo: Nothing could be redone."));
 	}
+}
+
+void LC_ActionDrawSplinePoints::setClosed(bool c)
+{
+	data.closed = c;
+	if(spline)
+	{
+		spline->setClosed(c);
+	}
+}
+
+bool LC_ActionDrawSplinePoints::isClosed()
+{
+	return data.closed;
 }
 
 // EOF

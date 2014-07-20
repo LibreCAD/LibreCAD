@@ -26,6 +26,7 @@
 #include "qg_splineoptions.h"
 
 #include "rs_actiondrawspline.h"
+#include "lc_actiondrawsplinepoints.h"
 #include "rs_settings.h"
 
 /*
@@ -83,10 +84,26 @@ void QG_SplineOptions::setAction(RS_ActionInterface* a, bool update) {
         }
         cbDegree->setCurrentIndex( cbDegree->findText(QString("%1").arg(degree)) );
         cbClosed->setChecked(closed);
+        action1 = NULL;
+    } else if (a!=NULL && a->rtti()==RS2::ActionDrawSplinePoints) {
+        action1 = (LC_ActionDrawSplinePoints*)a;
+        
+        bool closed;
+         if (update) {
+            closed = action1->isClosed();
+        } else {
+            RS_SETTINGS->beginGroup("/Draw");
+            closed = RS_SETTINGS->readNumEntry("/SplineClosed", 0);
+            RS_SETTINGS->endGroup();
+            action1->setClosed(closed);
+        }
+        cbClosed->setChecked(closed);
+        action = NULL;
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, 
 			"QG_SplineOptions::setAction: wrong action type");
         action = NULL;
+        action1 = NULL;
     }
 }
 
@@ -94,11 +111,17 @@ void QG_SplineOptions::setClosed(bool c) {
     if (action!=NULL) {
         action->setClosed(c);
     }
+    if (action1!=NULL) {
+        action1->setClosed(c);
+    }
 }
 
 void QG_SplineOptions::undo() {
     if (action!=NULL) {
         action->undo();
+    }
+    if (action1!=NULL) {
+        action1->undo();
     }
 }
 

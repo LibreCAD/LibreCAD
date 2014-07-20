@@ -38,6 +38,7 @@
 #include "rs_mtext.h"
 #include "rs_text.h"
 #include "rs_layer.h"
+#include "lc_splinepoints.h"
 
 #include "rs_dialogfactory.h"
 
@@ -2360,6 +2361,19 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
         break;
         }
         // handle ellipse arc the using the default method
+    case RS2::EntitySplinePoints: // interpolation spline can be closed
+		// so we cannot use the default implementation
+        cut2 = ((LC_SplinePoints*)cutEntity)->cut(cutCoord);
+		cut1 = (RS_AtomicEntity*)cutEntity->clone();
+
+        cut1->setPen(cutEntity->getPen(false));
+        cut1->setLayer(cutEntity->getLayer(false));
+		if(cut2)
+		{
+		    cut2->setPen(cutEntity->getPen(false));
+		    cut2->setLayer(cutEntity->getLayer(false));
+		}
+		break;
     default:
         cut1 = (RS_AtomicEntity*)cutEntity->clone();
         cut2 = (RS_AtomicEntity*)cutEntity->clone();
