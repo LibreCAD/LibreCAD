@@ -120,9 +120,9 @@ public:
 	}
 
 	/** @return Number of control points. */
-	int getNumberOfPoints()
+	int getNumberOfControlPoints()
 	{
-		return data.splinePoints.count();
+		return data.controlPoints.count();
 	}
 
 	/**
@@ -222,6 +222,7 @@ public:
 
 	bool addPoint(const RS_Vector& v);
 	void removeLastPoint();
+	void addControlPoint(const RS_Vector& v);
 
 	virtual void move(const RS_Vector& offset);
 	virtual void rotate(const RS_Vector& center, const double& angle);
@@ -234,6 +235,8 @@ public:
 
 	virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
 	QList<RS_Vector> getPoints();
+	QList<RS_Vector> getControlPoints();
+	QList<RS_Vector> getStrokePoints();
 
     friend std::ostream& operator << (std::ostream& os, const LC_SplinePoints& l);
 

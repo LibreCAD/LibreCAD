@@ -36,8 +36,9 @@
 QG_SplineOptions::QG_SplineOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
 {
+    action = NULL;
+    action1 = NULL;
     setupUi(this);
-
 }
 
 /*
@@ -66,11 +67,11 @@ void QG_SplineOptions::destroy() {
 }
 
 void QG_SplineOptions::setAction(RS_ActionInterface* a, bool update) {
+    int degree;
+    bool closed;
     if (a!=NULL && a->rtti()==RS2::ActionDrawSpline) {
         action = (RS_ActionDrawSpline*)a;
         
-        int degree;
-        bool closed;
          if (update) {
             degree = action->getDegree();
             closed = action->isClosed();
@@ -88,15 +89,16 @@ void QG_SplineOptions::setAction(RS_ActionInterface* a, bool update) {
     } else if (a!=NULL && a->rtti()==RS2::ActionDrawSplinePoints) {
         action1 = (LC_ActionDrawSplinePoints*)a;
         
-        bool closed;
          if (update) {
             closed = action1->isClosed();
         } else {
             RS_SETTINGS->beginGroup("/Draw");
+            degree = RS_SETTINGS->readNumEntry("/SplineDegree", 3);
             closed = RS_SETTINGS->readNumEntry("/SplineClosed", 0);
             RS_SETTINGS->endGroup();
             action1->setClosed(closed);
         }
+        cbDegree->setCurrentIndex( cbDegree->findText(QString("%1").arg(degree)) );
         cbClosed->setChecked(closed);
         action = NULL;
     } else {

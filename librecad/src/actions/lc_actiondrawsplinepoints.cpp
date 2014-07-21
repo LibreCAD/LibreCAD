@@ -77,7 +77,6 @@ void LC_ActionDrawSplinePoints::trigger()
 	spline->setLayerToActive();
 	spline->setPenToActive();
 	spline->update();
-//spline->setClosed(true);
 	container->addEntity(spline);
 
 	// upd. undo list:

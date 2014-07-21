@@ -42,6 +42,7 @@
 #include "rs_image.h"
 #include "rs_leader.h"
 #include "rs_spline.h"
+#include "lc_splinepoints.h"
 #include "rs_system.h"
 
 #include <QStringList>
@@ -64,6 +65,8 @@ RS_FilterDXF::RS_FilterDXF()
     hatchLoop = NULL;
     currentContainer = NULL;
     graphic = NULL;
+	spline = NULL;
+	splinePoints = NULL;
     //exportVersion = DL_Codes::VER_2002;
     //systemVariables.setAutoDelete(true);
     RS_DEBUG->print("RS_FilterDXF::RS_FilterDXF(): OK");
@@ -394,12 +397,23 @@ void RS_FilterDXF::addVertex(const DL_VertexData& data) {
 void RS_FilterDXF::addSpline(const DL_SplineData& data) {
     RS_DEBUG->print("RS_FilterDXF::addSpline: degree: %d", data.degree);
 
+	if(data.degree == 2)
+	{
+		RS_SplinePointsData d(((data.flags&0x1)==0x1), true);
+		splinePoints = new RS_SplinePoints(currentContainer, d);
+        setEntityAttributes(spline, attributes);
+		currentContainer->addEntity(spline);
+		spline = NULL;
+		return;
+	}
+
     if (data.degree>=1 && data.degree<=3) {
         RS_SplineData d(data.degree, ((data.flags&0x1)==0x1));
         spline = new RS_Spline(currentContainer, d);
         setEntityAttributes(spline, attributes);
 
         currentContainer->addEntity(spline);
+		splinePoints = NULL;
     } else {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterDXF::addSpline: Invalid degree for spline: %d. "
@@ -419,6 +433,10 @@ void RS_FilterDXF::addControlPoint(const DL_ControlPointData& data) {
     if (spline!=NULL) {
         spline->addControlPoint(v);
         spline->update();
+    }
+    else if (splinePoints != NULL) {
+        splinePoints->addControlPoint(v);
+        splinePoints->update();
     }
 }
 
@@ -1569,6 +1587,9 @@ void RS_FilterDXF::writeEntity(DL_WriterA& dw, RS_Entity* e,
     case RS2::EntitySpline:
         writeSpline(dw, (RS_Spline*)e, attrib);
         break;
+    case RS2::EntitySplinePoints:
+        writeSplinePoints(dw, (LC_SplinePoints*)e, attrib);
+        break;
     case RS2::EntityVertex:
         break;
     case RS2::EntityCircle:
@@ -1796,6 +1817,71 @@ void RS_FilterDXF::writeSpline(DL_WriterA& dw,
                                                   (*it).y,
                                                   0.0));
     }
+}
+
+
+
+/**
+ * Writes the given spline entity to the file.
+ */
+void RS_FilterDXF::writeSplinePoints(DL_WriterA& dw,
+	LC_SplinePoints* s, const DL_Attributes& attrib)
+{
+	// split spline into atomic entities for DXF R12:
+	if(dxf.getVersion() == VER_R12)
+	{
+		QList<RS_Vector> sp = s->getStrokePoints();
+        dxf.writePolyline(dw, DL_PolylineData(sp.size, 0, 0, s->isClosed()*0x1), attrib);
+		for(int i = 0; i < sp.count(); i++)
+		{
+			dxf.writeVertex(dw, DL_VertexData(sp.at(i).x, sp.at(i).y, 0.0, 0.0));
+		}
+		dxf.writePolylineEnd(dw);
+		return;
+	}
+
+	// Number of control points:
+	int numCtrl = s->getNumberOfControlPoints();
+	QList<RS_Vector> cp = s->getControlPoints();
+
+	if(numCtrl < 3)
+	{
+		if(numCtrl > 1)
+		{
+			dxf.writeLine(dw, cp.at(0).x, cp.at(0).y, 0.0,
+				cp.at(1).x, cp.at(1).y, 0.0), attrib);
+		}
+		return;
+	}
+
+	// Number of knots (= number of control points + spline degree + 1)
+	int numKnots = numCtrl + 3;
+
+	int flags;
+	if(s->isClosed()) flags = 11;
+	else flags = 8;
+
+	// write spline header:
+	dxf.writeSpline(dw, DL_SplineData(2, numKnots, numCtrl, flags), attrib);
+
+	// write spline knots:
+	int k = 3;
+	DL_KnotData kd;
+	for(int i = 1; i <= numKnots; i++) 
+	{
+		if(i <= 3) kd = DL_KnotData(0.0);
+		else if(i <= numCtrl)
+			kd = DL_KnotData((i - 3.0)/(numCtrl - 2.0));
+		else kd = DL_KnotData(1.0);
+		dxf.writeKnot(dw, kd);
+	}
+
+	// write spline control points:
+	QList<RS_Vector>::iterator it;
+	for(it = cp.begin(); it != cp.end(); it++)
+	{
+		dxf.writeControlPoint(dw, DL_ControlPointData((*it).x, (*it).y, 0.0));
+	}
 }
 
 

@@ -1084,6 +1084,50 @@ QList<RS_Vector> LC_SplinePoints::getPoints()
 	return data.splinePoints;
 }
 
+QList<RS_Vector> LC_SplinePoints::getControlPoints()
+{
+	return data.controlPoints;
+}
+
+void StrokeQuad(QList<RS_Vector> *plist, RS_Vector vx1, RS_Vector vc1,
+	RS_Vector vx2, int iSeg)
+{
+	if(iSeg < 1)
+	{
+		plist->push_back(vx1);
+		return;
+	}
+
+	RS_Vector x(false);
+	double dt;
+	for(int i = 0; i < iSeg; i++)
+	{
+		dt = (double)i/(double)iSeg;
+		x = GetQuadPoint(vx1, vc1, vx2, dt);
+		plist->push_back(x);
+	}
+}
+
+QList<RS_Vector> LC_SplinePoints::getStrokePoints()
+{
+	QList<RS_Vector> ret;
+    int p1 = getGraphicVariableInt("$SPLINESEGS", 8);
+	int iSplines = data.controlPoints.count();
+	if(!data.closed) iSplines -= 2;
+
+	RS_Vector vStart(false), vControl(false), vEnd(false);
+	int iPts;
+	for(int i = 1; i <= iSplines; i++)
+	{
+		iPts = GetQuadPoints(i, &vStart, &vControl, &vEnd);
+		if(iPts > 2) StrokeQuad(&ret, vStart, vControl, vEnd, p1);
+		else if(iPts > 1) ret.push_back(vStart);
+	}
+
+	if(!data.closed && vEnd.valid) ret.push_back(vEnd);
+}
+
+
 /**
  * Appends the given point to the control points.
  */
@@ -1106,6 +1150,11 @@ bool LC_SplinePoints::addPoint(const RS_Vector& v)
 void LC_SplinePoints::removeLastPoint()
 {
 	data.splinePoints.pop_back();
+}
+
+void LC_SplinePoints::addControlPoint(const RS_Vector& v)
+{
+	data.controlPoints.append(v);
 }
 
 double* GetMatrix(int iCount, bool bClosed, double *dt)
@@ -1224,7 +1273,12 @@ void LC_SplinePoints::UpdateControlPoints()
 
 	int n = data.splinePoints.count();
 
-	if(data.closed && n < 3) return;
+	if(data.closed && n < 3)
+	{
+		if(n > 0) data.controlPoints.append(data.splinePoints.at(0));
+		if(n > 1) data.controlPoints.append(data.splinePoints.at(1));
+		return;
+	}
 
 	if(!data.closed && n < 4)
 	{
@@ -1576,22 +1630,15 @@ void LC_SplinePoints::drawPattern(RS_Painter* painter, RS_GraphicView* view,
 	QPainterPath qPath(QPointF(vx1.x, vx1.y));
 	double dCurOffset = dpmm*patternOffset;
 
-	/*if(iPoints < 3)
-	{
-		if(iPoints > 1)
-		{
-			vx2 = view->toGui(data.splinePoints.at(1));
-			DrawPatternLine(ds, pat->num, dCurOffset, qPath, vx1, vx2);
-			painter->drawPath(qPath);
-		}
-		delete[] ds;
-		return;
-	}*/
-
 	if(data.closed)
 	{
 		if(n < 3)
 		{
+			vEnd = data.controlPoints.at(1);
+			vx1 = view->toGui(vStart);
+			vx2 = view->toGui(vEnd);
+			DrawPatternLine(ds, pat->num, dCurOffset, qPath, vx1, vx2);
+			painter->drawPath(qPath);
 			delete[] ds;
 			return;
 		}
@@ -1688,7 +1735,14 @@ void LC_SplinePoints::drawSimple(RS_Painter* painter, RS_GraphicView* view)
 
 	if(data.closed)
 	{
-		if(n < 3) return;
+		if(n < 3)
+		{
+			vEnd = view->toGui(data.controlPoints.at(1));
+			vControl = view->toGui(vEnd);
+			qPath.lineTo(QPointF(vControl.x, vControl.y));
+			painter->drawPath(qPath);
+			return;
+		}
 
 		vStart = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
 		vControl = view->toGui(vStart);
@@ -3354,7 +3408,7 @@ LC_SplinePoints* LC_SplinePoints::cut(const RS_Vector& pos)
 	{
 		// if the spline is closed, we must delete splinePoints, add the pos
 		// as start and end point and reorder control points. We must return
-		// NULL since there will still be inly one spline
+		// NULL since there will still be only one spline
 		for(int i = 0 ; i < iQuad - 1; i++)
 		{
 			vNewControl = data.controlPoints.first();
