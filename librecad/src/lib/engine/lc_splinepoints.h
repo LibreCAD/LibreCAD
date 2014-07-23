@@ -246,7 +246,9 @@ public:
     virtual QVector<RS_Entity*> offsetTwoSides(const double& distance) const;
 
 	static RS_VectorSolutions getIntersection(RS_Entity* e1, RS_Entity* e2);
-	RS_VectorSolutions getLineIntersect(RS_Line* l1);
+	RS_VectorSolutions getLineIntersect(const RS_Vector& x1, const RS_Vector& x2);
+	void addQuadIntersect(RS_VectorSolutions *pVS, const RS_Vector& x1,
+		const RS_Vector& c1, const RS_Vector& x2);
 	RS_VectorSolutions getSplinePointsIntersect(LC_SplinePoints* l1);
 	RS_VectorSolutions getQuadraticIntersect(RS_Entity* e1);
 

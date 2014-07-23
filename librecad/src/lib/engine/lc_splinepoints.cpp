@@ -1125,6 +1125,7 @@ QList<RS_Vector> LC_SplinePoints::getStrokePoints()
 	}
 
 	if(!data.closed && vEnd.valid) ret.push_back(vEnd);
+	return ret;
 }
 
 
@@ -2986,14 +2987,15 @@ std::ostream& operator << (std::ostream& os, const LC_SplinePoints& l)
 	return os;
 }
 
-RS_VectorSolutions getLineLineIntersect(RS_Line* l1, const RS_Vector& vx1,
-	const RS_Vector& vx2)
+RS_VectorSolutions getLineLineIntersect(
+	const RS_Vector& vStart, const RS_Vector& vEnd,
+	const RS_Vector& vx1, const RS_Vector& vx2)
 {
 	RS_VectorSolutions ret;
 
 	RS_Vector x1 = vx2 - vx1;
-	RS_Vector x2 = l1->getStartpoint() - l1->getEndpoint();
-	RS_Vector x3 = l1->getStartpoint() - vx1;
+	RS_Vector x2 = vStart - vEnd;
+	RS_Vector x3 = vStart - vx1;
 	
 	double dDet = x1.x*x2.y - x1.y*x2.x;
 	if(fabs(dDet) < RS_TOLERANCE) return ret;
@@ -3016,13 +3018,14 @@ RS_VectorSolutions getLineLineIntersect(RS_Line* l1, const RS_Vector& vx1,
 	return ret;
 }
 
-void addLineQuadIntersect(RS_VectorSolutions *pVS, RS_Line* l1,
+void addLineQuadIntersect(RS_VectorSolutions *pVS,
+	const RS_Vector& vStart, const RS_Vector& vEnd,
 	const RS_Vector& vx1, const RS_Vector& vc1, const RS_Vector& vx2)
 {
 	RS_Vector x1 = vx2 - vc1*2.0 + vx1;
 	RS_Vector x2 = vc1 - vx1;
-	RS_Vector x3 = vx1 - l1->getStartpoint();
-	RS_Vector x4 = l1->getEndpoint() - l1->getStartpoint();
+	RS_Vector x3 = vx1 - vStart;
+	RS_Vector x4 = vEnd - vStart;
 
 	double a1 = x1.x*x4.y - x1.y*x4.x;
 	double a2 = 2.0*(x2.x*x4.y - x2.y*x4.x);
@@ -3055,15 +3058,15 @@ void addLineQuadIntersect(RS_VectorSolutions *pVS, RS_Line* l1,
 
 			ds = -1.0;
 			x1 = GetQuadAtPoint(vx1, vc1, vx2, d);
-			if(fabs(x4.x) > RS_TOLERANCE) ds = (x1.x - l1->getStartpoint().x)/x4.x;
-			else if(fabs(x4.y) > RS_TOLERANCE) ds = (x1.y - l1->getStartpoint().y)/x4.y;
+			if(fabs(x4.x) > RS_TOLERANCE) ds = (x1.x - vStart.x)/x4.x;
+			else if(fabs(x4.y) > RS_TOLERANCE) ds = (x1.y - vStart.y)/x4.y;
 
 			if(ds > -RS_TOLERANCE && ds < 1.0 + RS_TOLERANCE) pVS->push_back(x1);
 		}
 	}
 }
 
-RS_VectorSolutions LC_SplinePoints::getLineIntersect(RS_Line* l1)
+RS_VectorSolutions LC_SplinePoints::getLineIntersect(const RS_Vector& x1, const RS_Vector& x2)
 {
 	RS_VectorSolutions ret;
 
@@ -3080,7 +3083,7 @@ RS_VectorSolutions LC_SplinePoints::getLineIntersect(RS_Line* l1)
 		vControl = data.controlPoints.at(0);
 		vEnd = (data.controlPoints.at(0) + data.controlPoints.at(1))/2.0;
 
-		addLineQuadIntersect(&ret, l1, vStart, vControl, vEnd);
+		addLineQuadIntersect(&ret, x1, x2, vStart, vControl, vEnd);
 
 		for(int i = 1; i < n - 1; i++)
 		{
@@ -3088,14 +3091,14 @@ RS_VectorSolutions LC_SplinePoints::getLineIntersect(RS_Line* l1)
 			vControl = data.controlPoints.at(i);
 			vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
 
-			addLineQuadIntersect(&ret, l1, vStart, vControl, vEnd);
+			addLineQuadIntersect(&ret, x1, x2, vStart, vControl, vEnd);
 		}
 
 		vStart = vEnd;
 		vControl = data.controlPoints.at(n - 1);
 		vEnd = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
 
-		addLineQuadIntersect(&ret, l1, vStart, vControl, vEnd);
+		addLineQuadIntersect(&ret, x1, x2, vStart, vControl, vEnd);
 	}
 	else
 	{
@@ -3103,19 +3106,19 @@ RS_VectorSolutions LC_SplinePoints::getLineIntersect(RS_Line* l1)
 		vEnd = data.controlPoints.at(1);
 		if(n < 3)
 		{
-			return getLineLineIntersect(l1, vStart, vEnd);
+			return getLineLineIntersect(x1, x2, vStart, vEnd);
 		}
 
 		vControl = vEnd;
 		vEnd = data.controlPoints.at(2);
 		if(n < 4)
 		{
-			addLineQuadIntersect(&ret, l1, vStart, vControl, vEnd);
+			addLineQuadIntersect(&ret, x1, x2, vStart, vControl, vEnd);
 			return ret;
 		}
 
 		vEnd = (data.controlPoints.at(1) + data.controlPoints.at(2))/2.0;
-		addLineQuadIntersect(&ret, l1, vStart, vControl, vEnd);
+		addLineQuadIntersect(&ret, x1, x2, vStart, vControl, vEnd);
 
 		for(int i = 2; i < n - 2; i++)
 		{
@@ -3123,23 +3126,206 @@ RS_VectorSolutions LC_SplinePoints::getLineIntersect(RS_Line* l1)
 			vControl = data.controlPoints.at(i);
 			vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
 
-			addLineQuadIntersect(&ret, l1, vStart, vControl, vEnd);
+			addLineQuadIntersect(&ret, x1, x2, vStart, vControl, vEnd);
 		}
 
 		vStart = vEnd;
 		vControl = data.controlPoints.at(n - 2);
 		vEnd = data.controlPoints.at(n - 1);
 
-		addLineQuadIntersect(&ret, l1, vStart, vControl, vEnd);
+		addLineQuadIntersect(&ret, x1, x2, vStart, vControl, vEnd);
 	}
 
     return ret;
 }
 
-// TODO - intersect with another interpolation spline
+void addQuadQuadIntersect(RS_VectorSolutions *pVS,
+	const RS_Vector& vStart, const RS_Vector& vControl, const RS_Vector& vEnd,
+	const RS_Vector& vx1, const RS_Vector& vc1, const RS_Vector& vx2)
+{
+	RS_Vector va0 = vStart;
+	RS_Vector va1 = (vControl - vStart)*2.0;
+	RS_Vector va2 = vEnd - vControl*2.0 + vStart;
+
+	RS_Vector vb0 = vx1;
+	RS_Vector vb1 = (vc1 - vx1)*2.0;
+	RS_Vector vb2 = vx2 - vc1*2.0 + vx1;
+
+	std::vector<double> a1(0, 0.), b1(0, 0.);
+	a1.push_back(va2.x);
+	b1.push_back(va2.y);
+	a1.push_back(0.0);
+	b1.push_back(0.0);
+	a1.push_back(-vb2.x);
+	b1.push_back(-vb2.y);
+	a1.push_back(va1.x);
+	b1.push_back(va1.y);
+	a1.push_back(-vb1.x);
+	b1.push_back(-vb1.y);
+	a1.push_back(va0.x - vb0.x);
+	b1.push_back(va0.y - vb0.y);
+
+	std::vector<std::vector<double>> m(0);
+	m.push_back(a1);
+	m.push_back(b1);
+
+	RS_VectorSolutions pvRes = RS_Math::simultaneousQuadraticSolverFull(m);
+
+	RS_Vector vSol(false);
+	for(int i = 0; i < pvRes.size(); i++)
+	{
+		vSol = pvRes.at(i);
+		if(vSol.x > -RS_TOLERANCE && vSol.x < 1.0 + RS_TOLERANCE &&
+			vSol.y > -RS_TOLERANCE && vSol.y < 1.0 + RS_TOLERANCE)
+		{
+			if(vSol.x < 0.0) vSol.x = 0.0;
+			if(vSol.x > 1.0) vSol.x = 1.0;
+			pVS->push_back(GetQuadPoint(vStart, vControl, vEnd, vSol.x));
+		}
+	}
+}
+
+void LC_SplinePoints::addQuadIntersect(RS_VectorSolutions *pVS, const RS_Vector& x1,
+	const RS_Vector& c1, const RS_Vector& x2)
+{
+	int n = data.controlPoints.count();
+	if(n < 2) return;
+
+	RS_Vector vStart(false), vEnd(false), vControl(false);
+
+	if(data.closed)
+	{
+		if(n < 3) return;
+
+		vStart = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
+		vControl = data.controlPoints.at(0);
+		vEnd = (data.controlPoints.at(0) + data.controlPoints.at(1))/2.0;
+
+		addQuadQuadIntersect(pVS, vStart, vControl, vEnd, x1, c1, x2);
+
+		for(int i = 1; i < n - 1; i++)
+		{
+			vStart = vEnd;
+			vControl = data.controlPoints.at(i);
+			vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
+
+			addQuadQuadIntersect(pVS, vStart, vControl, vEnd, x1, c1, x2);
+		}
+
+		vStart = vEnd;
+		vControl = data.controlPoints.at(n - 1);
+		vEnd = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
+
+		addQuadQuadIntersect(pVS, vStart, vControl, vEnd, x1, c1, x2);
+	}
+	else
+	{
+		vStart = data.controlPoints.at(0);
+		vEnd = data.controlPoints.at(1);
+		if(n < 3)
+		{
+			addLineQuadIntersect(pVS, vStart, vEnd, x1, c1, x2);
+			return;
+		}
+
+		vControl = vEnd;
+		vEnd = data.controlPoints.at(2);
+		if(n < 4)
+		{
+			addQuadQuadIntersect(pVS, vStart, vControl, vEnd, x1, c1, x2);
+			return;
+		}
+
+		vEnd = (data.controlPoints.at(1) + data.controlPoints.at(2))/2.0;
+		addQuadQuadIntersect(pVS, vStart, vControl, vEnd, x1, c1, x2);
+
+		for(int i = 2; i < n - 2; i++)
+		{
+			vStart = vEnd;
+			vControl = data.controlPoints.at(i);
+			vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
+
+			addQuadQuadIntersect(pVS, vStart, vControl, vEnd, x1, c1, x2);
+		}
+
+		vStart = vEnd;
+		vControl = data.controlPoints.at(n - 2);
+		vEnd = data.controlPoints.at(n - 1);
+
+		addQuadQuadIntersect(pVS, vStart, vControl, vEnd, x1, c1, x2);
+	}
+}
+
 RS_VectorSolutions LC_SplinePoints::getSplinePointsIntersect(LC_SplinePoints* l1)
 {
 	RS_VectorSolutions ret;
+
+	int n = data.controlPoints.count();
+	if(n < 2) return ret;
+
+	RS_Vector vStart(false), vEnd(false), vControl(false);
+
+	if(data.closed)
+	{
+		if(n < 3) return ret;
+
+		vStart = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
+		vControl = data.controlPoints.at(0);
+		vEnd = (data.controlPoints.at(0) + data.controlPoints.at(1))/2.0;
+
+		l1->addQuadIntersect(&ret, vStart, vControl, vEnd);
+
+		for(int i = 1; i < n - 1; i++)
+		{
+			vStart = vEnd;
+			vControl = data.controlPoints.at(i);
+			vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
+
+			l1->addQuadIntersect(&ret, vStart, vControl, vEnd);
+		}
+
+		vStart = vEnd;
+		vControl = data.controlPoints.at(n - 1);
+		vEnd = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
+
+		l1->addQuadIntersect(&ret, vStart, vControl, vEnd);
+	}
+	else
+	{
+		vStart = data.controlPoints.at(0);
+		vEnd = data.controlPoints.at(1);
+		if(n < 3)
+		{
+			return l1->getLineIntersect(vStart, vEnd);
+		}
+
+		vControl = vEnd;
+		vEnd = data.controlPoints.at(2);
+		if(n < 4)
+		{
+			l1->addQuadIntersect(&ret, vStart, vControl, vEnd);
+			return ret;
+		}
+
+		vEnd = (data.controlPoints.at(1) + data.controlPoints.at(2))/2.0;
+		l1->addQuadIntersect(&ret, vStart, vControl, vEnd);
+
+		for(int i = 2; i < n - 2; i++)
+		{
+			vStart = vEnd;
+			vControl = data.controlPoints.at(i);
+			vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
+
+			l1->addQuadIntersect(&ret, vStart, vControl, vEnd);
+		}
+
+		vStart = vEnd;
+		vControl = data.controlPoints.at(n - 2);
+		vEnd = data.controlPoints.at(n - 1);
+
+		l1->addQuadIntersect(&ret, vStart, vControl, vEnd);
+	}
+
     return ret;
 }
 
@@ -3355,17 +3541,15 @@ RS_VectorSolutions LC_SplinePoints::getIntersection(RS_Entity* e1, RS_Entity* e2
 	RS_VectorSolutions ret;
 
 	if(e1->rtti() != RS2::EntitySplinePoints) std::swap(e1, e2);
-	/*{
-		RS_Entity *etmp = e2;
-		e2 = e1;
-		e1 = etmp;
-	}*/
 	if(e1->rtti() != RS2::EntitySplinePoints) return ret;
+
+	RS_Line* rsln;
 	
 	switch(e2->rtti())
 	{
 	case RS2::EntityLine:
-		ret = ((LC_SplinePoints*)e1)->getLineIntersect((RS_Line*)e2);
+		rsln = (RS_Line*)e2;
+		ret = ((LC_SplinePoints*)e1)->getLineIntersect(rsln->getStartpoint(), rsln->getEndpoint());
 		break;
 	case RS2::EntitySplinePoints:
 		ret = ((LC_SplinePoints*)e1)->getSplinePointsIntersect((LC_SplinePoints*)e2);
