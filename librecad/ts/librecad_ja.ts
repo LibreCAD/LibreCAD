@@ -38,6 +38,41 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionDrawSplinePoints</name>
+    <message>
+        <source>&amp;Spline through points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify first control point</source>
+        <translation type="unfinished">１つ目の制御点指示</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">中止</translation>
+    </message>
+    <message>
+        <source>Specify next control point or [%1]</source>
+        <translation type="unfinished">次の制御点指示か[%1]</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">戻る</translation>
+    </message>
+    <message>
+        <source>Specify next control point</source>
+        <translation type="unfinished">次の制御点指示</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot undo: Nothing could be redone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -130,7 +165,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="obsolete">スプライン(&amp;S)</translation>
+        <translation type="unfinished">スプライン(&amp;S)</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -1444,7 +1479,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Round</source>
-        <translation>Ｒ面取り</translation>
+        <translation type="obsolete">Ｒ面取り</translation>
     </message>
     <message>
         <source>Bevel</source>
@@ -1517,6 +1552,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Lengthen</source>
         <translation type="unfinished">伸長</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1724,6 +1763,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Spline</source>
         <translation>スプライン</translation>
+    </message>
+    <message>
+        <source>Interpolation Spline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9385,7 +9428,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Entity must be a line, arc, circle or ellipse.</source>
+        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9717,7 +9760,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>&amp;Round</source>
-        <translation>Ｒ面取り(&amp;R)</translation>
+        <translation type="obsolete">Ｒ面取り(&amp;R)</translation>
     </message>
     <message>
         <source>Round Entities</source>
@@ -9746,6 +9789,10 @@ Do you want to replace it?</source>
     <message>
         <source>Cancel</source>
         <translation>中止</translation>
+    </message>
+    <message>
+        <source>&amp;Fillet</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11704,6 +11751,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>rv</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>setrelativezero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>setrelativezero</source>
+        <comment>snap - set relative zero position</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rz</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

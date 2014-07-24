@@ -38,6 +38,41 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionDrawSplinePoints</name>
+    <message>
+        <source>&amp;Spline through points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify first control point</source>
+        <translation type="unfinished">Especifiqueu el primer punt de control</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel·la</translation>
+    </message>
+    <message>
+        <source>Specify next control point or [%1]</source>
+        <translation type="unfinished">Especifiqueu el punt de control següent o [%1]</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Enrere</translation>
+    </message>
+    <message>
+        <source>Specify next control point</source>
+        <translation type="unfinished">Especifiqueu el punt de control següent</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished">No es pot desfer: Encara no hi ha definides prou entitats.</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Nothing could be redone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -468,6 +503,10 @@ S&apos;ha desactivat el desament automàtic.</translation>
     <message>
         <source>Help files not found</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Spline</source>
+        <translation type="unfinished">&amp;Spline</translation>
     </message>
 </context>
 <context>
@@ -1240,7 +1279,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Round</source>
-        <translation>Arrodoneix</translation>
+        <translation type="obsolete">Arrodoneix</translation>
     </message>
     <message>
         <source>Bevel</source>
@@ -1300,6 +1339,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Lengthen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1433,6 +1476,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Spline</source>
         <translation>Spline</translation>
+    </message>
+    <message>
+        <source>Interpolation Spline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8233,7 +8280,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle or ellipse.</source>
-        <translation>L&apos;entitat deu ser una línia, arc, circumferència o el·lipse.</translation>
+        <translation type="obsolete">L&apos;entitat deu ser una línia, arc, circumferència o el·lipse.</translation>
+    </message>
+    <message>
+        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8484,7 +8535,7 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionModifyRound</name>
     <message>
         <source>&amp;Round</source>
-        <translation>&amp;Arrodoneix</translation>
+        <translation type="obsolete">&amp;Arrodoneix</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -8509,6 +8560,10 @@ Voleu reemplaçar-lo?</translation>
     <message>
         <source>Cancel</source>
         <translation>Cancel·la</translation>
+    </message>
+    <message>
+        <source>&amp;Fillet</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10155,6 +10210,19 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>rv</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>setrelativezero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>setrelativezero</source>
+        <comment>snap - set relative zero position</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rz</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

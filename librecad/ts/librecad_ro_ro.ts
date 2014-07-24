@@ -38,6 +38,41 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionDrawSplinePoints</name>
+    <message>
+        <source>&amp;Spline through points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify first control point</source>
+        <translation type="unfinished">Specificati primul punct de control</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Renuntare</translation>
+    </message>
+    <message>
+        <source>Specify next control point or [%1]</source>
+        <translation type="unfinished">Specificati urmatorul punct de control sau [%1]</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Inapoi</translation>
+    </message>
+    <message>
+        <source>Specify next control point</source>
+        <translation type="unfinished">Specificati urmatorul punct de control</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished">Nu se poate anula: nu au fost definite suficiente entitati.</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Nothing could be redone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -372,7 +407,7 @@ Acum puteti sa va salvati lucrul.</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="obsolete">&amp;Curba</translation>
+        <translation type="unfinished">&amp;Curba</translation>
     </message>
     <message>
         <source>Running script &apos;%1&apos;</source>
@@ -1569,7 +1604,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Round</source>
-        <translation>Rotunjire</translation>
+        <translation type="obsolete">Rotunjire</translation>
     </message>
     <message>
         <source>Bevel</source>
@@ -1634,6 +1669,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Lengthen</source>
         <translation type="unfinished">Lungime</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1837,6 +1876,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Spline</source>
         <translation>Curba</translation>
+    </message>
+    <message>
+        <source>Interpolation Spline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9502,7 +9545,11 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle or ellipse.</source>
-        <translation>Entitatea trebuie sa fie un obiect de tip linie, arc, cerc sau elipsa.</translation>
+        <translation type="obsolete">Entitatea trebuie sa fie un obiect de tip linie, arc, cerc sau elipsa.</translation>
+    </message>
+    <message>
+        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9833,7 +9880,7 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>&amp;Round</source>
-        <translation>&amp;Rotunjire</translation>
+        <translation type="obsolete">&amp;Rotunjire</translation>
     </message>
     <message>
         <source>Round Entities</source>
@@ -9862,6 +9909,10 @@ Doriti sa il inlocuiti cu acesta?</translation>
     <message>
         <source>Cancel</source>
         <translation>Renuntare</translation>
+    </message>
+    <message>
+        <source>&amp;Fillet</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11793,6 +11844,19 @@ Doriti sa il inlocuiti cu acesta?</translation>
     </message>
     <message>
         <source>rv</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>setrelativezero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>setrelativezero</source>
+        <comment>snap - set relative zero position</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rz</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

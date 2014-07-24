@@ -47,6 +47,51 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionDrawSplinePoints</name>
+    <message>
+        <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="55"/>
+        <source>&amp;Spline through points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="244"/>
+        <source>Specify first control point</source>
+        <translation type="unfinished">指定第一個控制點</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="245"/>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="268"/>
+        <source>Specify next control point or [%1]</source>
+        <translation type="unfinished">指定下一個控制點或 [%1]</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="269"/>
+        <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="275"/>
+        <source>Back</source>
+        <translation type="unfinished">返回</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="274"/>
+        <source>Specify next control point</source>
+        <translation type="unfinished">指定下一個控制點</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="336"/>
+        <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="359"/>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="380"/>
+        <source>Cannot undo: Nothing could be redone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="38"/>
@@ -171,48 +216,49 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>橢圓(&amp;E)</translation>
     </message>
     <message>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1081"/>
         <source>&amp;Spline</source>
-        <translation type="obsolete">雲形線(&amp;S)</translation>
+        <translation type="unfinished">雲形線(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1088"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1091"/>
         <source>&amp;Polyline</source>
         <translation>聚合線(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1153"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1155"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1156"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1158"/>
         <source>&amp;Dimension</source>
         <translation>標註(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1185"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1188"/>
         <source>&amp;Modify</source>
         <translation>修改(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1272"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1275"/>
         <source>&amp;Snap</source>
         <translation>貼齊(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1283"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1286"/>
         <source>&amp;Info</source>
         <translation>資訊(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1311"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1314"/>
         <source>&amp;Layer</source>
         <translation>圖層(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="662"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1342"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1345"/>
         <source>&amp;Block</source>
         <translation>圖塊(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1393"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1396"/>
         <source>&amp;Scripts</source>
         <translation>腳本(&amp;S)</translation>
     </message>
@@ -221,158 +267,158 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1410"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1413"/>
         <source>About</source>
         <translation>關於</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1417"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1420"/>
         <source>&amp;Manual</source>
         <translation>手冊(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1465"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1468"/>
         <source>Insert Image</source>
         <translation>插入影像</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1554"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1557"/>
         <source>&amp;Window</source>
         <translation>視窗(&amp;W)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1561"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1564"/>
         <source>&amp;Help</source>
         <translation>說明(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1569"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1572"/>
         <source>De&amp;bugging</source>
         <translation>除錯(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1614"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1617"/>
         <source>Pen Selection</source>
         <translation>選擇繪圖筆</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1622"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1625"/>
         <source>Snap Selection</source>
         <translation>選擇捕捉</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1632"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1635"/>
         <source>Tool Options</source>
         <translation>工具選項</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1643"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1646"/>
         <source>CAD Tools</source>
         <translation>CAD 工具</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1812"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1815"/>
         <source>Layer List</source>
         <translation>圖層清單</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1833"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1836"/>
         <source>Block List</source>
         <translation>圖塊清單</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1854"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1857"/>
         <source>Library Browser</source>
         <translation>資料庫瀏覽器</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1863"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1866"/>
         <source>Command line</source>
         <translation>指令列</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1932"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1935"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2176"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2179"/>
         <source>Su&amp;b-Window mode</source>
         <translation>子視窗模式(&amp;b)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2179"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2182"/>
         <source>&amp;Cascade</source>
         <translation>重疊顯示(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2181"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2184"/>
         <source>&amp;Tile</source>
         <translation>並排(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2182"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2185"/>
         <source>Tile &amp;Vertically</source>
         <translation>垂直並排(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2183"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2186"/>
         <source>Tile &amp;Horizontally</source>
         <translation>水平並排(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2184"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2187"/>
         <source>Ta&amp;b mode</source>
         <translation>分頁模式(&amp;b)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2479"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2482"/>
         <source>Creating new file...</source>
         <translation>新建圖檔...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2488"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2491"/>
         <source>Block &apos;%1&apos;</source>
         <translation>圖塊 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2490"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2493"/>
         <source>unnamed document %1</source>
         <translation>未命名文件 %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2564"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2567"/>
         <source>New Drawing created.</source>
         <translation>新繪圖已建立。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2619"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2622"/>
         <source>New document from template: </source>
         <translation>從模版新建檔案</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2667"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2670"/>
         <source>Select Template aborted</source>
         <translation>選擇模板中止</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2741"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2744"/>
         <source>Opening recent file...</source>
         <translation>開啟最近的檔案...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2817"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2820"/>
         <source>Warning: File already opened : </source>
         <translation>警告：檔案已開啟：</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3953"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3956"/>
         <source>Help files not found</source>
         <translation>未找到幫助資料檔案</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2683"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2850"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2686"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2853"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -381,38 +427,38 @@ Please check the permissions.</source>
 請檢查檔案權限。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2912"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2915"/>
         <source>Loaded document: </source>
         <translation>載入的文件：</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2919"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2922"/>
         <source>Opening aborted</source>
         <translation>已中止開啟</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2933"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2936"/>
         <source>Saving drawing...</source>
         <translation>繪圖儲存中...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2945"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3004"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2948"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3007"/>
         <source>Saved drawing: %1</source>
         <translation>已儲存繪圖: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2948"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2951"/>
         <source>Cannot save the file </source>
         <translation>無法儲存檔案</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2950"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2953"/>
         <source> , please check the filename and permissions.</source>
         <translation>，請檢查檔案名和權限。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2996"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2999"/>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
@@ -421,32 +467,32 @@ Please check the permissions.</source>
 請檢查檔案權限。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3861"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3864"/>
         <source>Compiler: Clang %1.%2.%3</source>
         <translation>編譯器: Clang %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3863"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3866"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
         <translation>編譯器: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3865"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3868"/>
         <source>Compiler: Microsoft Visual C++&lt;br&gt;</source>
         <translation>編譯器: 微软 MSVC++</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3867"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3870"/>
         <source>Qt Version: %1</source>
         <translation>Qt版本: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3880"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3883"/>
         <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation>請考慮捐贈給LibreCAD以幫助保持源代碼和網站。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2976"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2979"/>
         <source>Saving drawing under new filename...</source>
         <translation>以新檔名儲存繪圖...</translation>
     </message>
@@ -471,17 +517,17 @@ Please check the permissions.</source>
         <translation>視圖</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3017"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3020"/>
         <source>Auto-saving drawing...</source>
         <translation>繪圖自動儲存中...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3025"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3028"/>
         <source>Auto-saved drawing</source>
         <translation>繪圖已自動儲存</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3030"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3033"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -492,77 +538,77 @@ Auto-save disabled.</source>
 無法自動儲存。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3035"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3038"/>
         <source>Auto-saving failed</source>
         <translation>自動保存失敗</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3048"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3051"/>
         <source>Exporting drawing...</source>
         <translation>正在匯出繪圖...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3086"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3089"/>
         <source>Export as</source>
         <translation>導出為</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3150"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3153"/>
         <source>Exported: %1</source>
         <translation>已匯出: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3190"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3193"/>
         <source>Exporting...</source>
         <translation>匯出...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3278"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3281"/>
         <source>Export complete</source>
         <translation>匯出完成</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3280"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3283"/>
         <source>Export failed!</source>
         <translation>匯出失敗！</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3361"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3364"/>
         <source>Printing...</source>
         <translation>列印...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3453"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3456"/>
         <source>Printing complete</source>
         <translation>列印完成</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3538"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3541"/>
         <source>Print preview for %1</source>
         <translation>預覽列印 %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3605"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3608"/>
         <source>Exiting application...</source>
         <translation>退出程式...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3842"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3845"/>
         <source>None</source>
         <translation>無</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3848"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3851"/>
         <source>About...</source>
         <translation>關於...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3856"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3859"/>
         <source>Version: %1</source>
         <translation>版本: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3858"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3861"/>
         <source>SCM Revision: %1</source>
         <translation>SCM 版本: %1</translation>
     </message>
@@ -575,17 +621,17 @@ Auto-save disabled.</source>
         <translation type="obsolete">SVN 修訂: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3868"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3871"/>
         <source>Compiled on: %1</source>
         <translation>編譯: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3870"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3873"/>
         <source>Program Icons Supplied by</source>
         <translation>程式圖示提供</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3871"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3874"/>
         <source>Splash and Logo supplied by</source>
         <translation>登入畫面與標誌提供</translation>
     </message>
@@ -594,12 +640,12 @@ Auto-save disabled.</source>
         <translation type="obsolete">日期: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3873"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3876"/>
         <source>Modules: %1</source>
         <translation>模組: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3875"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3878"/>
         <source>Main Website : </source>
         <translation>主網站：</translation>
     </message>
@@ -608,12 +654,12 @@ Auto-save disabled.</source>
         <translation type="obsolete">請捐贈 LibreCAD，以幫助維持源碼與其網站。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3945"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3948"/>
         <source>Help</source>
         <translation>求助</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3953"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3956"/>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation>報錯，我在檔案系統上無法找到說明文件。</translation>
     </message>
@@ -641,42 +687,42 @@ Auto-save disabled.</source>
 <context>
     <name>QG_ActionFactory</name>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="256"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="257"/>
         <source>&amp;Export...</source>
         <translation>匯出(&amp;E)...</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="265"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="266"/>
         <source>&amp;Close</source>
         <translation>關閉(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="276"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="277"/>
         <source>&amp;Print...</source>
         <translation>列印(&amp;P)...</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="297"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="298"/>
         <source>&amp;Quit</source>
         <translation>&amp;離開</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="313"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="314"/>
         <source>&amp;Grid</source>
         <translation>格點(&amp;G)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="315"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="316"/>
         <source>CTRL-G</source>
         <translation>CTRL-G</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="323"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="324"/>
         <source>&amp;Draft</source>
         <translation>草圖(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="332"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="333"/>
         <source>&amp;Statusbar</source>
         <translation>狀態列(&amp;S)</translation>
     </message>
@@ -697,7 +743,7 @@ Auto-save disabled.</source>
         <translation type="obsolete">返回(&amp;b)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="415"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="416"/>
         <source>&amp;Selection pointer</source>
         <translation>選擇指向</translation>
     </message>
@@ -746,22 +792,22 @@ Auto-save disabled.</source>
         <translation type="obsolete">垂直限制(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="1376"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="1383"/>
         <source>&amp;Preferences</source>
         <translation>偏好設定(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="1378"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="1385"/>
         <source>&amp;Application Preferences</source>
         <translation>應用程式偏好設定(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="1401"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="1408"/>
         <source>Open IDE</source>
         <translation>開啟 IDE</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="1411"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="1418"/>
         <source>Run Script..</source>
         <translation>執行腳本..</translation>
     </message>
@@ -1575,9 +1621,8 @@ p, li { white-space: pre-wrap; }
         <translation>拉伸</translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="494"/>
         <source>Round</source>
-        <translation>圓角</translation>
+        <translation type="obsolete">圓角</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="456"/>
@@ -1655,6 +1700,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="418"/>
         <source>Offset (Experimental Feature, work in progress)</source>
         <translation>偏移(试验中功能）</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="494"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_cadtoolbarmodify.ui" line="532"/>
@@ -1919,6 +1969,11 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/forms/qg_cadtoolbarsplines.ui" line="82"/>
         <source>Spline</source>
         <translation>雲形線</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/forms/qg_cadtoolbarsplines.ui" line="120"/>
+        <source>Interpolation Spline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7448,10 +7503,10 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2686"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2854"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2995"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3029"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2689"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2857"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2998"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3032"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="169"/>
         <source>Warning</source>
         <translation>警告</translation>
@@ -7664,112 +7719,112 @@ p, li { white-space: pre-wrap; }
         <translation>開啟影像</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2051"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2052"/>
         <source>Windows Bitmap</source>
         <translation>Windows 點陣圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2053"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2054"/>
         <source>Joint Photographic Experts Group</source>
         <translation>聯合影像專業組織</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2055"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2056"/>
         <source>Graphics Interchange Format</source>
         <translation>圖形交換格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2057"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2058"/>
         <source>Multiple-image Network Graphics</source>
         <translation>多重影像網路圖形</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2059"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2060"/>
         <source>Portable Bit Map</source>
         <translation>可攜式點陣圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2061"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2062"/>
         <source>Portable Grey Map</source>
         <translation>可攜式灰階圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2063"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2064"/>
         <source>Portable Network Graphic</source>
         <translation>可攜式網路圖形</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2065"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2066"/>
         <source>Portable Pixel Map</source>
         <translation>可攜式像素圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2067"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2068"/>
         <source>X Bitmap Format</source>
         <translation>X 點陣圖格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2069"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2070"/>
         <source>X Pixel Map</source>
         <translation>X像素圖</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2071"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2072"/>
         <source>Scalable Vector Graphics</source>
         <translation>可縮放向量圖形</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2073"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2074"/>
         <source>SGI Black &amp; White</source>
         <translation>SGI黑白图像</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2075"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2076"/>
         <source>Encapsulated PostScript</source>
         <translation>EPS 封裝PostScript檔</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2077"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2078"/>
         <source>Encapsulated PostScript Format</source>
         <translation>EPS 封裝PostScript檔</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2079"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2080"/>
         <source>Encapsulated PostScript Interchange</source>
         <translation>EPSI 封裝PostScript檔</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2081"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2082"/>
         <source>Windows Icon</source>
         <translation>ICO，图标格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2083"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2084"/>
         <source>JPEG 2000</source>
         <translation>JPEG 2000</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2085"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2086"/>
         <source>ZSoft Paintbrush</source>
         <translation>PIC PCPaint格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2087"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2088"/>
         <source>PC Paint</source>
         <translation>PC Paint</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2089"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2090"/>
         <source>SGI-Bilddatei</source>
         <translation>RGB, SGI圖像格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2091"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2092"/>
         <source>Targa Image File</source>
         <translation>TGA Truevison圖像格式</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_dialogfactory.cpp" line="2093"/>
+        <location filename="../src/ui/qg_dialogfactory.cpp" line="2094"/>
         <source>Tagged Image File Format</source>
         <translation>TIFF 圖像格式</translation>
     </message>
@@ -7853,57 +7908,57 @@ Do you want to replace it?</source>
         <translation>輸入文字</translation>
     </message>
     <message>
-        <location filename="../src/lib/modification/rs_modification.cpp" line="448"/>
+        <location filename="../src/lib/modification/rs_modification.cpp" line="449"/>
         <source>Block %1 already exist, renamed to: %2</source>
         <translation>圖塊%1已經存在, 重命名%2</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="121"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="122"/>
         <source>Opened dwg file version %1.</source>
         <translation>已打開DWG制圖版本%1</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3676"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3778"/>
         <source>unknown error opening dwg file</source>
         <translation>打開dwg檔案時出現未知錯誤</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3680"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3782"/>
         <source>can&apos;t open this dwg file</source>
         <translation>無法打開DWG檔案</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3684"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3786"/>
         <source>unsupported dwg version</source>
         <translation>不支持DWG制圖版本</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3688"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3790"/>
         <source>error reading file header in dwg file</source>
         <translation>讀dwg檔案頭時出現錯誤</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3692"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3794"/>
         <source>error reading header vars in dwg file</source>
         <translation>讀dwg檔案頭變量時出現錯誤</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3696"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3798"/>
         <source>error reading classes in dwg file</source>
         <translation>讀dwg檔案類時出現錯誤</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3700"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3802"/>
         <source>error reading offsets in dwg file</source>
         <translation>讀dwg檔案偏移時出現錯誤</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3704"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3806"/>
         <source>error reading tables in dwg file</source>
         <translation>讀dwg檔案表時出現錯誤</translation>
     </message>
     <message>
-        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3708"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="3810"/>
         <source>error reading entities in dwg file</source>
         <translation>讀dwg檔案實體時出現錯誤</translation>
     </message>
@@ -9660,27 +9715,27 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="53"/>
+        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="54"/>
         <source>Tangent (P,C)</source>
         <translation>切線 (P,C)</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="186"/>
+        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="188"/>
         <source>Specify point</source>
         <translation>指定點</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="187"/>
+        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="189"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="190"/>
+        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="192"/>
         <source>Select circle, arc or ellipse</source>
         <translation>選擇圓、弧或橢圓</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="191"/>
+        <location filename="../src/actions/rs_actiondrawlinetangent1.cpp" line="193"/>
         <source>Back</source>
         <translation>返回</translation>
     </message>
@@ -10415,42 +10470,46 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifycut.cpp" line="107"/>
-        <location filename="../src/actions/rs_actionmodifycut.cpp" line="125"/>
+        <location filename="../src/actions/rs_actionmodifycut.cpp" line="126"/>
         <source>No Entity found.</source>
         <translation>找不到物件。</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifycut.cpp" line="114"/>
         <source>Entity must be a line, arc, circle or ellipse.</source>
-        <translation>物件必須是線， 弧， 圓或橢圓。</translation>
+        <translation type="obsolete">物件必須是線， 弧， 圓或橢圓。</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifycut.cpp" line="127"/>
+        <location filename="../src/actions/rs_actionmodifycut.cpp" line="115"/>
+        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actionmodifycut.cpp" line="128"/>
         <source>Cutting point is invalid.</source>
         <translation>剪切點無效。</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifycut.cpp" line="130"/>
+        <location filename="../src/actions/rs_actionmodifycut.cpp" line="131"/>
         <source>Cutting point is not on entity.</source>
         <translation>剪切點不在物件上。</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifycut.cpp" line="153"/>
+        <location filename="../src/actions/rs_actionmodifycut.cpp" line="154"/>
         <source>Specify entity to cut</source>
         <translation>指定要剪切的物件</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifycut.cpp" line="154"/>
+        <location filename="../src/actions/rs_actionmodifycut.cpp" line="155"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifycut.cpp" line="157"/>
+        <location filename="../src/actions/rs_actionmodifycut.cpp" line="158"/>
         <source>Specify cutting point</source>
         <translation>指定剪切點</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionmodifycut.cpp" line="158"/>
+        <location filename="../src/actions/rs_actionmodifycut.cpp" line="159"/>
         <source>Back</source>
         <translation>返回</translation>
     </message>
@@ -10757,9 +10816,13 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionModifyRound</name>
     <message>
-        <location filename="../src/actions/rs_actionmodifyround.cpp" line="52"/>
         <source>&amp;Round</source>
-        <translation>圓角(&amp;R)</translation>
+        <translation type="obsolete">圓角(&amp;R)</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actionmodifyround.cpp" line="52"/>
+        <source>&amp;Fillet</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actionmodifyround.cpp" line="227"/>
@@ -11713,12 +11776,12 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionZoomIn</name>
     <message>
-        <location filename="../src/actions/rs_actionzoomin.cpp" line="56"/>
+        <location filename="../src/actions/rs_actionzoomin.cpp" line="58"/>
         <source>Zoom &amp;In</source>
         <translation>拉近(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actionzoomin.cpp" line="66"/>
+        <location filename="../src/actions/rs_actionzoomin.cpp" line="68"/>
         <source>Zoom &amp;Out</source>
         <translation>拉遠(&amp;O)</translation>
     </message>
@@ -11900,7 +11963,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="92"/>
         <location filename="../src/cmd/rs_commands.cpp" line="93"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="362"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="367"/>
         <source>text</source>
         <translation>文字</translation>
     </message>
@@ -11962,13 +12025,13 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="123"/>
         <location filename="../src/cmd/rs_commands.cpp" line="124"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="368"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="373"/>
         <source>undo</source>
         <translation>復原</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="126"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="369"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="374"/>
         <source>u</source>
         <comment>undo</comment>
         <translation>u</translation>
@@ -11976,7 +12039,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="128"/>
         <location filename="../src/cmd/rs_commands.cpp" line="129"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="371"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="376"/>
         <source>redo</source>
         <translatorcomment>重作~~沿用自AutoCAD中文版</translatorcomment>
         <translation>重作</translation>
@@ -12297,19 +12360,19 @@ Do you want to replace it?</source>
         <translation>np</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="280"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="285"/>
         <source>tn</source>
         <comment>Deselect all</comment>
         <translation>tn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="279"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="281"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="284"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="286"/>
         <source>tn</source>
         <translation>tn</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="498"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="503"/>
         <source>Command: %1</source>
         <translation>指令: %1</translation>
     </message>
@@ -12415,130 +12478,130 @@ Do you want to replace it?</source>
         <translation type="obsolete">ex</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="283"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="303"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="288"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="308"/>
         <source>angle</source>
         <translation>角度</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="285"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="315"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="290"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="320"/>
         <source>close</source>
         <translation>關閉</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="286"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="311"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="291"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="316"/>
         <source>chord length</source>
         <translation>弦長</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="287"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="318"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="292"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="323"/>
         <source>columns</source>
         <translation>欄</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="288"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="293"/>
         <source>columnspacing</source>
         <translatorcomment>欄寬~~沿用Excel稱呼</translatorcomment>
         <translation>欄寬</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="289"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="326"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="294"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="331"/>
         <source>factor</source>
         <translation>係數</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="290"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="295"/>
         <source>length</source>
         <translation>長度</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="291"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="296"/>
         <source>length1</source>
         <translation>長度1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="292"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="297"/>
         <source>length2</source>
         <translation>長度2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="293"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="298"/>
         <source>number</source>
         <translation>數字</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="294"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="349"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="299"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="354"/>
         <source>radius</source>
         <translation>半徑</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="295"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="300"/>
         <source>rows</source>
         <translation>列</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="296"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="301"/>
         <source>rowspacing</source>
         <translation>列高</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="297"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="365"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="302"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="370"/>
         <source>through</source>
         <translation>通過</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="298"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="303"/>
         <source>trim</source>
         <translation>修剪</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="352"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="357"/>
         <source>reversed</source>
         <comment>reversed</comment>
         <translation>反轉</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="353"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="358"/>
         <source>rev</source>
         <comment>reversed</comment>
         <translation>rev</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="354"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="359"/>
         <source>r</source>
         <comment>reversed</comment>
         <translation>r</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="356"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="361"/>
         <source>row</source>
         <translation>行</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="357"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="362"/>
         <source>r</source>
         <comment>row</comment>
         <translation>r</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="372"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="377"/>
         <source>r</source>
         <comment>redo</comment>
         <translation>r</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="374"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="379"/>
         <source>back</source>
         <translation>返回</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="304"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="309"/>
         <source>ang</source>
         <comment>angle</comment>
         <translation>ang</translation>
@@ -12718,190 +12781,207 @@ Do you want to replace it?</source>
         <translation>sf</translation>
     </message>
     <message>
+        <location filename="../src/cmd/rs_commands.cpp" line="274"/>
+        <source>setrelativezero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/cmd/rs_commands.cpp" line="275"/>
+        <source>setrelativezero</source>
+        <comment>snap - set relative zero position</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/rs_commands.cpp" line="276"/>
         <location filename="../src/cmd/rs_commands.cpp" line="277"/>
+        <source>rz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/rs_commands.cpp" line="280"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="282"/>
         <source>sa</source>
         <translation>sa</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="276"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="281"/>
         <source>sa</source>
         <comment>Select all</comment>
         <translation>sa</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="284"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="289"/>
         <source>dpi</source>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="305"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="310"/>
         <source>a</source>
         <comment>angle</comment>
         <translation>a</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="307"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="312"/>
         <source>center</source>
         <translation>中心</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="308"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="313"/>
         <source>cen</source>
         <comment>center</comment>
         <translation>cen</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="309"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="314"/>
         <source>c</source>
         <comment>center</comment>
         <translation>c</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="312"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="317"/>
         <source>length</source>
         <comment>chord length</comment>
         <translation>長度</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="313"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="318"/>
         <source>l</source>
         <comment>chord length</comment>
         <translation>l</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="316"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="321"/>
         <source>c</source>
         <comment>close</comment>
         <translation>c</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="319"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="324"/>
         <source>cols</source>
         <comment>columns</comment>
         <translation>cols</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="320"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="325"/>
         <source>c</source>
         <comment>columns</comment>
         <translation>c</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="322"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="327"/>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation>欄寬</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="323"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="328"/>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
         <translation>欄寬</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="324"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="329"/>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
         <translation>cs</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="327"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="332"/>
         <source>fact</source>
         <comment>factor</comment>
         <translation>fact</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="328"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="333"/>
         <source>f</source>
         <comment>factor</comment>
         <translation>f</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="330"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="335"/>
         <source>help</source>
         <translation>說明</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="331"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="336"/>
         <source>?</source>
         <comment>help</comment>
         <translation>?</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="333"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="338"/>
         <source>length</source>
         <comment>length</comment>
         <translation>長度</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="334"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="339"/>
         <source>len</source>
         <comment>length</comment>
         <translation>len</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="335"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="340"/>
         <source>l</source>
         <comment>length</comment>
         <translation>l</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="337"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="342"/>
         <source>length1</source>
         <comment>length1</comment>
         <translation>長度1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="338"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="343"/>
         <source>len1</source>
         <comment>length1</comment>
         <translation>len1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="339"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="344"/>
         <source>l1</source>
         <comment>length1</comment>
         <translation>l1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="341"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="346"/>
         <source>length2</source>
         <comment>length2</comment>
         <translation>長度2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="342"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="347"/>
         <source>len2</source>
         <comment>length2</comment>
         <translation>len2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="343"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="348"/>
         <source>l2</source>
         <comment>length2</comment>
         <translation>l2</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="345"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="350"/>
         <source>number</source>
         <comment>number</comment>
         <translation>數字</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="346"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="351"/>
         <source>num</source>
         <comment>number</comment>
         <translation>num</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="347"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="352"/>
         <source>n</source>
         <comment>number</comment>
         <translation>n</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="350"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="355"/>
         <source>r</source>
         <comment>radius</comment>
         <translation>r</translation>
@@ -12927,48 +13007,48 @@ Do you want to replace it?</source>
         <translation type="obsolete">r</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="359"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="364"/>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
         <translation>列高</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="360"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="365"/>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
         <translation>rs</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="363"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="368"/>
         <source>t</source>
         <comment>text</comment>
         <translation>t</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="366"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="371"/>
         <source>t</source>
         <comment>through</comment>
         <translation>t</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="375"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="380"/>
         <source>b</source>
         <comment>back</comment>
         <translation>b</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="548"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="571"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="553"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="576"/>
         <source>Command not found: %1</source>
         <translation>命令未找到: %1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="555"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="560"/>
         <source>Accepted keycode: %1</source>
         <translation>接受鍵碼: %1</translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="724"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="729"/>
         <source>Available commands:</source>
         <translation>可用的指令：</translation>
     </message>

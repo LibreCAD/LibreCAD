@@ -39,6 +39,41 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
 </context>
 <context>
+    <name>LC_ActionDrawSplinePoints</name>
+    <message>
+        <source>&amp;Spline through points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify first control point</source>
+        <translation type="unfinished">Especifique o primeiro ponto de controle</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify next control point or [%1]</source>
+        <translation type="unfinished">Especifique o próximo ponto de controle ou [%1]</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify next control point</source>
+        <translation type="unfinished">Especificar próximo ponto de controle</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished">Não foi possível desfazer: Ainda não há entidades suficientes definidas.</translation>
+    </message>
+    <message>
+        <source>Cannot undo: Nothing could be redone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -239,7 +274,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="obsolete">&amp;Linha suave</translation>
+        <translation type="unfinished">&amp;Linha suave</translation>
     </message>
     <message>
         <source>Order QCAD Professional from the RibbonSoft web site</source>
@@ -1365,7 +1400,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Round</source>
-        <translation>Arredondar</translation>
+        <translation type="obsolete">Arredondar</translation>
     </message>
     <message>
         <source>Bevel</source>
@@ -1446,6 +1481,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Lengthen</source>
         <translation>Estender</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1597,6 +1636,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Splines</source>
         <translation>Linhas suaves</translation>
+    </message>
+    <message>
+        <source>Interpolation Spline</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11496,7 +11539,7 @@ Deseja substituí-lo?</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle or ellipse.</source>
-        <translation>A entidade deve ser uma linha, arco, círculo ou elipse.</translation>
+        <translation type="obsolete">A entidade deve ser uma linha, arco, círculo ou elipse.</translation>
     </message>
     <message>
         <source>Cutting point is invalid.</source>
@@ -11521,6 +11564,10 @@ Deseja substituí-lo?</translation>
     <message>
         <source>Back</source>
         <translation>Retornar</translation>
+    </message>
+    <message>
+        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11958,7 +12005,7 @@ Deseja substituí-lo?</translation>
     </message>
     <message>
         <source>&amp;Round</source>
-        <translation>&amp;Arredondar</translation>
+        <translation type="obsolete">&amp;Arredondar</translation>
     </message>
     <message>
         <source>Enter radius:</source>
@@ -11975,6 +12022,10 @@ Deseja substituí-lo?</translation>
     <message>
         <source>Specify first entity</source>
         <translation>Especifique a primeira entidade</translation>
+    </message>
+    <message>
+        <source>&amp;Fillet</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -14135,6 +14186,19 @@ não são exibidas para melhorar a performance de exibição.</translation>
     <message>
         <source>rv</source>
         <translation>rv</translation>
+    </message>
+    <message>
+        <source>setrelativezero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>setrelativezero</source>
+        <comment>snap - set relative zero position</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rz</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
