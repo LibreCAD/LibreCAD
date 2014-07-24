@@ -188,5 +188,6 @@
         <file>circletan2_1p.png</file>
         <file>reverse.png</file>
         <file>circle2pr.png</file>
+        <file>splinepoints.png</file>
     </qresource>
 </RCC>

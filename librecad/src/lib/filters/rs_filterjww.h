@@ -40,6 +40,7 @@
 #include "rs_leader.h"
 #include "rs_polyline.h"
 #include "rs_spline.h"
+#include "lc_splinepoints.h"
 #include "rs_solid.h"
 #include "rs_mtext.h"
 #include "rs_image.h"
@@ -150,6 +151,8 @@ public:
 		RS_Polyline* l, const DL_Attributes& attrib);
 	void writeSpline(DL_WriterA& dw, 
 		RS_Spline* s, const DL_Attributes& attrib);
+	void writeSplinePoints(DL_WriterA& dw,
+		LC_SplinePoints* s, const DL_Attributes& attrib);
 	void writeCircle(DL_WriterA& dw, RS_Circle* c, const DL_Attributes& attrib);
 	void writeArc(DL_WriterA& dw, RS_Arc* a, const DL_Attributes& attrib);
 	void writeEllipse(DL_WriterA& dw, RS_Ellipse* s, const DL_Attributes& attrib);
@@ -216,6 +219,7 @@ private:
     RS_Polyline* polyline;
     /** Pointer to current spline entity we're adding control points to. */
     RS_Spline* spline;
+    LC_SplinePoints* splinePoints;
     /** Pointer to current leader entity we're adding vertices to. */
     RS_Leader* leader;
     /** Pointer to current entity container (either block or graphic) */

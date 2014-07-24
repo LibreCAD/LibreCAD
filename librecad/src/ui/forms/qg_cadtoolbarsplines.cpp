@@ -3,25 +3,21 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-**
-**
-** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software
-** Foundation and appearing in the file gpl-2.0.txt included in the
-** packaging of this file.
-**
-** This program is distributed in the hope that it will be useful,
-** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-** GNU General Public License for more details.
-**
-** You should have received a copy of the GNU General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-**
-** This copyright notice MUST APPEAR in all copies of the script!
-**
+** Copyright (C) 2014 Dongxu Li (dongxuli2011@gmail.com)
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include "qg_cadtoolbarsplines.h"
 
@@ -61,12 +57,12 @@ void QG_CadToolBarSplines::init() {
     cadToolBar = NULL;
 }
 
-void QG_CadToolBarSplines::mousePressEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton && cadToolBar!=NULL) {
-        cadToolBar->back();
-        e->accept();
-    }
-}
+//void QG_CadToolBarSplines::mousePressEvent(QMouseEvent* e) {
+//    if (e->button()==Qt::RightButton && cadToolBar!=NULL) {
+//        cadToolBar->back();
+//        e->accept();
+//    }
+//}
 
 void QG_CadToolBarSplines::contextMenuEvent(QContextMenuEvent *e) {
     e->accept();
@@ -88,16 +84,52 @@ void QG_CadToolBarSplines::drawSpline() {
     }
 }
 
-void QG_CadToolBarSplines::back() {
-    if (cadToolBar!=NULL) {
-        cadToolBar->back();
+void QG_CadToolBarSplines::drawSplineInt() {
+    if (cadToolBar!=NULL && actionHandler!=NULL) {
+        actionHandler->slotDrawSplinePoints();
     }
 }
+
+void QG_CadToolBarSplines::back() {
+    if (cadToolBar!=NULL) {
+        cadToolBar->showPreviousToolBar();
+    }
+}
+
 //restore action from checked button
 void QG_CadToolBarSplines::restoreAction()
 {
     if(actionHandler==NULL) return;
     if ( bSpline ->isChecked() ) {
-    actionHandler->slotDrawSpline();
+        actionHandler->slotDrawSpline();
+        return;
+    }
+    if(bSplineInt->isChecked()){
+        actionHandler->slotDrawSplinePoints();
+        return;
+    }
+    bHidden->setChecked(true);
+    RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
+    if(currentAction != NULL) {
+        currentAction->finish(false); //finish the action, but do not update toolBar
+    }
+}
+
+void QG_CadToolBarSplines::resetToolBar() {
+    bHidden->setChecked(true);
+}
+
+
+void QG_CadToolBarSplines::showCadToolBar(RS2::ActionType actionType) {
+    switch(actionType){
+    case RS2::ActionDrawSpline:
+        bSpline->setChecked(true);
+        return;
+    case RS2::ActionDrawSplinePoints:
+        bSplineInt->setChecked(true);
+        return;
+    default:
+        bHidden->setChecked(true);
+        return;
     }
 }

@@ -145,6 +145,7 @@ public slots:
     void slotDrawEllipseCenter3Points();
     void slotDrawEllipseInscribe();
     void slotDrawSpline();
+    void slotDrawSplinePoints();
     void slotDrawMText();
     void slotDrawText();
     void slotDrawHatch();

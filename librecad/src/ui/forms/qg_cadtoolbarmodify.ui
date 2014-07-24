@@ -491,7 +491,7 @@
     </size>
    </property>
    <property name="toolTip">
-    <string>Round</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="text">
     <string/>

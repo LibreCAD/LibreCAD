@@ -81,6 +81,7 @@
 #include "rs_actiondrawlineorthtan.h"
 #include "rs_actiondrawpoint.h"
 #include "rs_actiondrawspline.h"
+#include "lc_actiondrawsplinepoints.h"
 #include "rs_actiondrawtext.h"
 #include "rs_actiondrawmtext.h"
 #include "rs_actioneditcopy.h"
@@ -794,6 +795,12 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                 action = RS_ActionDrawSpline::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotDrawSpline()));
+        break;
+
+    case RS2::ActionDrawSplinePoints:
+                action = LC_ActionDrawSplinePoints::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotDrawSplinePoints()));
         break;
 
         case RS2::ActionPolylineAdd:

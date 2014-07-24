@@ -73,7 +73,7 @@ void QG_CadToolBar::init() {
     tbArcs = NULL;
     tbCircles = NULL;
     tbEllipses = NULL;
-    //    tbSplines = NULL;
+    tbSplines = NULL;
     tbPolylines = NULL;
 
     tbDim = NULL;
@@ -150,9 +150,9 @@ void QG_CadToolBar::createSubToolBars(QG_ActionHandler* ah) {
     tbEllipses->setCadToolBar(this);
     tbEllipses->hide();
 
-    //    tbSplines = new QG_CadToolBarSplines(this);
-    //    tbSplines->setCadToolBar(this);
-    //    tbSplines->hide();
+    tbSplines = new QG_CadToolBarSplines(this);
+    tbSplines->setCadToolBar(this);
+    tbSplines->hide();
 
     tbPolylines = new QG_CadToolBarPolylines(this);
     tbPolylines->setCadToolBar(this);
@@ -249,6 +249,10 @@ void QG_CadToolBar::showToolBar(RS2::ToolBarId id, bool restoreAction ) {
         if(restoreAction) tbEllipses->restoreAction();
         newTb = tbEllipses;
         break;
+    case RS2::ToolBarSplines:
+        if(restoreAction) tbSplines->restoreAction();
+        newTb = tbSplines;
+        break;
     case RS2::ToolBarPolylines:
         if(restoreAction) tbPolylines->restoreAction();
         newTb = tbPolylines;
@@ -310,6 +314,10 @@ void QG_CadToolBar::resetToolBar() {
         tbEllipses->resetToolBar();
         return;
     }
+    if(currentTb == tbSplines) {
+        tbSplines->resetToolBar();
+        return;
+    }
     if(currentTb == tbPolylines) {
         tbPolylines->resetToolBar();
         return;
@@ -349,9 +357,9 @@ void QG_CadToolBar::showToolBarEllipses() {
     showToolBar(RS2::ToolBarEllipses);
 }
 
-//void QG_CadToolBar::showToolBarSplines() {
-//    showToolBar(RS2::ToolBarSplines);
-//}
+void QG_CadToolBar::showToolBarSplines() {
+    showToolBar(RS2::ToolBarSplines);
+}
 
 void QG_CadToolBar::showToolBarPolylines() {
     showToolBar(RS2::ToolBarPolylines);
@@ -392,96 +400,6 @@ void QG_CadToolBar::showToolBarSelect(RS_ActionInterface* selectAction,
 void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
     switch(actionType){
     //no op
-    case RS2::ActionFileNew:
-    case RS2::ActionFileNewTemplate:
-    case RS2::ActionFileOpen:
-    case RS2::ActionFileSave:
-    case RS2::ActionFileSaveAs:
-    case RS2::ActionFileExport:
-    case RS2::ActionFileClose:
-    case RS2::ActionFilePrint:
-    case RS2::ActionFilePrintPreview:
-    case RS2::ActionFileQuit:
-    case RS2::ActionPrintPreview:
-    case RS2::ActionEditUndo:
-    case RS2::ActionEditRedo:
-    case RS2::ActionEditCut:
-    case RS2::ActionEditCutNoSelect:
-    case RS2::ActionEditCopy:
-    case RS2::ActionEditCopyNoSelect:
-    case RS2::ActionEditPaste:
-    case RS2::ActionViewStatusBar:
-    case RS2::ActionViewLayerList:
-    case RS2::ActionViewBlockList:
-    case RS2::ActionViewCommandLine:
-    case RS2::ActionViewLibrary:
-    case RS2::ActionViewPenToolbar:
-    case RS2::ActionViewOptionToolbar:
-    case RS2::ActionViewCadToolbar:
-    case RS2::ActionViewFileToolbar:
-    case RS2::ActionViewEditToolbar:
-    case RS2::ActionViewSnapToolbar:
-    case RS2::ActionViewGrid:
-    case RS2::ActionViewDraft:
-    case RS2::ActionZoomIn:
-    case RS2::ActionZoomOut:
-    case RS2::ActionZoomAuto:
-    case RS2::ActionZoomWindow:
-    case RS2::ActionZoomPan:
-    case RS2::ActionZoomRedraw:
-    case RS2::ActionZoomPrevious:
-    case RS2::ActionSelect:
-    case RS2::ActionSelectSingle:
-    case RS2::ActionSelectContour:
-    case RS2::ActionSelectWindow:
-    case RS2::ActionDeselectWindow:
-    case RS2::ActionSelectAll:
-    case RS2::ActionDeselectAll:
-    case RS2::ActionSelectIntersected:
-    case RS2::ActionDeselectIntersected:
-    case RS2::ActionSelectInvert:
-    case RS2::ActionSelectLayer:
-    case RS2::ActionSelectDouble:
-    case RS2::ActionDrawHatch:
-    case RS2::ActionDrawHatchNoSelect:
-    case RS2::ActionEditKillAllActions:
-    case RS2::ActionSnapFree:
-    case RS2::ActionSnapGrid:
-    case RS2::ActionSnapEndpoint:
-    case RS2::ActionSnapOnEntity:
-    case RS2::ActionSnapCenter:
-    case RS2::ActionSnapMiddle:
-    case RS2::ActionSnapDist:
-    case RS2::ActionSnapIntersection:
-    case RS2::ActionSnapIntersectionManual:
-    case RS2::ActionRestrictNothing:
-    case RS2::ActionRestrictOrthogonal:
-    case RS2::ActionRestrictHorizontal:
-    case RS2::ActionRestrictVertical:
-    case RS2::ActionSetRelativeZero:
-    case RS2::ActionLockRelativeZero:
-    case RS2::ActionUnlockRelativeZero:
-    case RS2::ActionLayersDefreezeAll:
-    case RS2::ActionLayersFreezeAll:
-    case RS2::ActionLayersAdd:
-    case RS2::ActionLayersRemove:
-    case RS2::ActionLayersEdit:
-    case RS2::ActionLayersToggleView:
-    case RS2::ActionLayersToggleLock:
-    case RS2::ActionLayersTogglePrint:
-    case RS2::ActionBlocksDefreezeAll:
-    case RS2::ActionBlocksFreezeAll:
-    case RS2::ActionBlocksAdd:
-    case RS2::ActionBlocksRemove:
-    case RS2::ActionBlocksAttributes:
-    case RS2::ActionBlocksEdit:
-    case RS2::ActionBlocksInsert:
-    case RS2::ActionBlocksToggleView:
-    case RS2::ActionBlocksCreate:
-    case RS2::ActionBlocksCreateNoSelect:
-    case RS2::ActionBlocksExplode:
-    case RS2::ActionBlocksExplodeNoSelect:
-    case RS2::ActionModifyExplodeText:
     default:
         return;
         //default action resets toolbar, issue#295
@@ -490,7 +408,6 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
         break;
     case RS2::ActionDrawImage:
     case RS2::ActionDrawPoint:
-    case RS2::ActionDrawSpline:
     case RS2::ActionDrawMText:
         showToolBar(RS2::ToolBarMain, false);
         if(tbMain != NULL){
@@ -529,6 +446,13 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
         showToolBar(RS2::ToolBarEllipses, false);
         if(tbEllipses != NULL){
             tbEllipses->showCadToolBar(actionType);
+        }
+        break;
+    case RS2::ActionDrawSpline:
+    case RS2::ActionDrawSplinePoints:
+        showToolBar(RS2::ToolBarSplines, false);
+        if(tbSplines){
+            tbSplines->showCadToolBar(actionType);
         }
         break;
     case RS2::ActionDrawLine:
@@ -626,9 +550,6 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
             tbInfo->showCadToolBar(actionType);
         }
         break;
-
-
-
     }
     if(cleanup){
         if(actionHandler != NULL) {

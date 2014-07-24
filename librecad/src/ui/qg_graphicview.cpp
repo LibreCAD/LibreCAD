@@ -29,6 +29,9 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QDebug>
+#if QT_VERSION >= 0x050200
+#include <QNativeGestureEvent>
+#endif
 
 #include "rs_actionzoomin.h"
 #include "rs_actionzoompan.h"
@@ -359,6 +362,36 @@ void QG_GraphicView::mouseMoveEvent(QMouseEvent* e) {
     //RS_DEBUG->print("QG_GraphicView::mouseMoveEvent end");
 }
 
+bool QG_GraphicView::event(QEvent *event) {
+#if QT_VERSION >= 0x050200
+    if (event->type() == QEvent::NativeGesture) {
+        QNativeGestureEvent *nge = static_cast<QNativeGestureEvent *>(event);
+
+        if (nge->gestureType() == Qt::ZoomNativeGesture) {
+            double v = nge->value();
+            RS2::ZoomDirection direction;
+            double factor;
+
+            if (v < 0) {
+                direction = RS2::Out;
+                factor = 1-v;
+            } else {
+                direction = RS2::In;
+                factor = 1+v;
+            }
+
+            // It seems the NativeGestureEvent::pos() incorrectly reports global coordinates
+            QPoint g = mapFromGlobal(nge->globalPos());
+            RS_Vector mouse = toGraph(RS_Vector(g.x(), g.y()));
+            setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
+                                                 RS2::Both, mouse, factor));
+        }
+
+        return true;
+    }
+#endif
+	return QWidget::event(event);
+}
 
 /**
  * support for the wacom graphic tablet.
@@ -466,7 +499,49 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         return;
     }
 
-        RS_Vector mouse = toGraph(RS_Vector(e->x(), e->y()));
+    RS_Vector mouse = toGraph(RS_Vector(e->x(), e->y()));
+
+#if QT_VERSION >= 0x050200
+    QPoint numPixels = e->pixelDelta();
+
+    // high-resolution scrolling triggers Pan instead of Zoom logic
+    isSmoothScrolling |= !numPixels.isNull();
+
+    if (isSmoothScrolling) {
+        if (e->phase() == Qt::ScrollEnd) isSmoothScrolling = false;
+
+        if (!numPixels.isNull()) {
+            if (e->modifiers()==Qt::ControlModifier) {
+                // Hold ctrl to zoom. 1 % per pixel
+                double v = -numPixels.y() / 100.;
+                RS2::ZoomDirection direction;
+                double factor;
+
+                if (v < 0) {
+                    direction = RS2::Out; factor = 1-v;
+                } else {
+                    direction = RS2::In;  factor = 1+v;
+                }
+
+                setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
+                                                     RS2::Both, mouse, factor));
+            } else {
+                // otherwise, scroll
+                setCurrentAction(new RS_ActionZoomScroll(numPixels.x(), numPixels.y(),
+                                                         *container, *this));
+            }
+            redraw();
+        }
+        e->accept();
+        return;
+    }
+#endif
+
+    if (e->delta() == 0) {
+        // A zero delta event occurs when smooth scrolling is ended. Ignore this
+        e->accept();
+        return;
+    }
 
     bool scroll = false;
     RS2::Direction direction = RS2::Up;

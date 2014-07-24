@@ -46,6 +46,7 @@
 class RS_Spline;
 class RS_Hatch;
 class DL_WriterA;
+class LC_SplinePoints;
 
 /**
  * This format filter class can import and export DXF files.
@@ -138,6 +139,7 @@ public:
     void writeSolid(RS_Solid* s);
     void writeLWPolyline(RS_Polyline* l);
     void writeSpline(RS_Spline* s);
+	void writeSplinePoints(LC_SplinePoints *s);
     void writeInsert(RS_Insert* i);
     void writeMText(RS_MText* t);
     void writeText(RS_Text* t);

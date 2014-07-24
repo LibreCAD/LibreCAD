@@ -212,6 +212,10 @@ RS_Entity* RS_Creation::createParallel(const RS_Vector& coord,
         return createParallelCircle(coord, distance, number, (RS_Circle*)e);
         break;
 
+    case RS2::EntitySplinePoints:
+        return createParallelSplinePoints(coord, distance, number, (LC_SplinePoints*)e);
+        break;
+
     default:
         break;
     }
@@ -477,6 +481,58 @@ RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
     return ret;
 }
 
+/**
+ * Creates a spline pseudo-parallel to the given circle e.
+ * Out of the 2 possible parallels, the one closest to
+ * the given coordinate is returned.
+ *
+ * @param coord Coordinate to define which parallel we want (typically a
+ *              mouse coordinate).
+ * @param distance Distance of the parallel.
+ * @param number Number of parallels.
+ * @param e Original entity.
+ *
+ * @return Pointer to the first created parallel or NULL if no
+ *    parallel has been created.
+ */
+LC_SplinePoints* RS_Creation::createParallelSplinePoints(const RS_Vector& coord,
+	double distance, int number, LC_SplinePoints* e)
+{
+	if(!e) return NULL;
+
+	//QVector<RS_Entity*>  LC_SplinePoints::offsetTwoSides(const double& distance)
+
+	LC_SplinePoints *psp, *ret = NULL;
+
+	for(int i = 1; i <= number; i++)
+	{
+		psp = (LC_SplinePoints*)e->clone();
+		psp->offset(coord, i*distance);
+
+		if(document && handleUndo)
+		{
+			document->startUndoCycle();
+		}
+
+		psp->setParent(container);
+		psp->setLayerToActive();
+		psp->setPenToActive();
+
+		if(!ret) ret = psp;
+
+		if(container) container->addEntity(psp);
+
+		if(document && handleUndo)
+		{
+			document->addUndoable(psp);
+			document->endUndoCycle();
+		}
+
+		if(graphicView)graphicView->drawEntity(psp);
+	}
+
+	return ret;
+}
 
 
 /**
@@ -633,7 +689,8 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
     // check given entities:
     if (circle==NULL || !point.valid ||
             (circle->rtti()!=RS2::EntityArc && circle->rtti()!=RS2::EntityCircle
-             && circle->rtti()!=RS2::EntityEllipse)) {
+             && circle->rtti()!=RS2::EntityEllipse
+			&& circle->rtti()!=RS2::EntitySplinePoints)) {
 
         return NULL;
     }

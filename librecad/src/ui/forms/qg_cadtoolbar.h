@@ -68,7 +68,7 @@ public slots:
     virtual void showToolBarLines();
     virtual void showToolBarArcs();
     virtual void showToolBarEllipses();
-//    virtual void showToolBarSplines();
+    virtual void showToolBarSplines();
     virtual void showToolBarPolylines();
     virtual void showToolBarCircles();
     virtual void showToolBarInfo();
@@ -85,7 +85,7 @@ signals:
     void signalNext();
 
 protected:
-    //    QG_CadToolBarSplines* tbSplines;
+    QG_CadToolBarSplines* tbSplines;
     QG_CadToolBarInfo* tbInfo;
     QG_ActionHandler* actionHandler;
     QVector<RS2::ToolBarId> toolbarIDs;

@@ -98,6 +98,8 @@ protected:
     virtual void keyPressEvent(QKeyEvent* e);
     virtual void keyReleaseEvent(QKeyEvent* e);
 
+    virtual bool event(QEvent * e);
+
     void paintEvent(QPaintEvent *);
     virtual void resizeEvent(QResizeEvent* e);
 
@@ -137,6 +139,8 @@ protected:
      */
     bool m_bUpdateLayer;
 		
+    //! Keep tracks of if we are currently doing a high-resolution scrolling
+    bool isSmoothScrolling;
 };
 
 #endif

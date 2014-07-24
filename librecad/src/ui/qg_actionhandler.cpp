@@ -83,6 +83,7 @@
 #include "rs_actiondrawmtext.h"
 #include "rs_actiondrawpoint.h"
 #include "rs_actiondrawspline.h"
+#include "lc_actiondrawsplinepoints.h"
 #include "rs_actiondrawtext.h"
 #include "rs_actioneditcopy.h"
 #include "rs_actioneditpaste.h"
@@ -556,6 +557,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionDrawSpline:
         a = new RS_ActionDrawSpline(*doc, *gv);
+        break;
+    case RS2::ActionDrawSplinePoints:
+        a = new LC_ActionDrawSplinePoints(*doc, *gv);
         break;
     case RS2::ActionDrawMText:
         a = new RS_ActionDrawMText(*doc, *gv);
@@ -1443,6 +1447,10 @@ void QG_ActionHandler::slotDrawEllipseInscribe() {
 
 void QG_ActionHandler::slotDrawSpline() {
     setCurrentAction(RS2::ActionDrawSpline);
+}
+
+void QG_ActionHandler::slotDrawSplinePoints() {
+    setCurrentAction(RS2::ActionDrawSplinePoints);
 }
 
 void QG_ActionHandler::slotDrawMText() {

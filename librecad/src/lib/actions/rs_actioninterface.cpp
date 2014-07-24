@@ -98,6 +98,10 @@ QString RS_ActionInterface::getName() {
     return name;
 }
 
+void RS_ActionInterface::setName(const char* _name) {
+    this->name=_name;
+}
+
 /**
  * Called to initiate an action. This funtcion is often
  * overwritten by the implementing action.

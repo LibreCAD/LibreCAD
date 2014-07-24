@@ -78,7 +78,7 @@ void QG_CadToolBarMain::setCadToolBar(QG_CadToolBar* tb) {
         connect(bMenuEllipse, SIGNAL(clicked()),
                 tb, SLOT(showToolBarEllipses()));
         connect(bMenuSpline, SIGNAL(clicked()),
-                actionHandler, SLOT(slotDrawSpline()));
+                tb, SLOT(showToolBarSplines()));
         connect(bMenuPolyline, SIGNAL(clicked()),
                 tb, SLOT(showToolBarPolylines()));
         connect(bMenuPoint, SIGNAL(clicked()),
@@ -136,10 +136,6 @@ void QG_CadToolBarMain::slotDrawImage()
 void QG_CadToolBarMain::restoreAction()
 {
     if(actionHandler==NULL) return;
-    if ( bMenuSpline ->isChecked() ) {
-        actionHandler->slotDrawSpline();
-        return;
-    }
     if ( bMenuPoint ->isChecked() ) {
         actionHandler->slotDrawPoint();
         return;
@@ -166,9 +162,6 @@ void QG_CadToolBarMain::showCadToolBar(RS2::ActionType actionType) {
         break;
     case RS2::ActionDrawPoint:
         bMenuPoint->setChecked(true);
-        break;
-    case RS2::ActionDrawSpline:
-        bMenuSpline->setChecked(true);
         break;
     case RS2::ActionDrawMText:
         bMenuText->setChecked(true);

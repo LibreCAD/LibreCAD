@@ -49,7 +49,7 @@ RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
 
 QAction* RS_ActionModifyRound::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
         // (tr("Round")
-        QAction* action = new QAction(tr("&Round"), NULL);
+        QAction* action = new QAction(tr("&Fillet"), NULL);
         action->setIcon(QIcon(":/extui/modifyround.png"));
     //action->zetStatusTip(tr("Round Entities"));
         return action;

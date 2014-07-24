@@ -78,11 +78,11 @@ public:
 //    virtual void updateToolBar();
 
 	//void close();
-	void undo();
-	void setDegree(int deg);
+    virtual void undo();
+    virtual void setDegree(int deg);
 	int getDegree();
-	void setClosed(bool c);
-	bool isClosed();
+    virtual void setClosed(bool c);
+    virtual bool isClosed();
 
 protected:
     /**

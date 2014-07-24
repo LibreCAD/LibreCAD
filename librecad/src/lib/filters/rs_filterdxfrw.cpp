@@ -37,6 +37,7 @@
 #include "rs_image.h"
 #include "rs_leader.h"
 #include "rs_spline.h"
+#include "lc_splinepoints.h"
 #include "rs_system.h"
 #include "rs_graphicview.h"
 #include "rs_grid.h"
@@ -524,6 +525,24 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
  */
 void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
     RS_DEBUG->print("RS_FilterDXFRW::addSpline: degree: %d", data->degree);
+
+	if(data->degree == 2)
+	{
+		LC_SplinePoints* splinePoints;
+		LC_SplinePointsData d(((data->flags&0x1)==0x1), true);
+		splinePoints = new LC_SplinePoints(currentContainer, d);
+		setEntityAttributes(splinePoints, data);
+		currentContainer->addEntity(splinePoints);
+
+		for(unsigned int i = 0; i < data->controllist.size(); i++)
+		{
+			DRW_Coord *vert = data->controllist.at(i);
+			RS_Vector v(vert->x, vert->y);
+			splinePoints->addControlPoint(v);
+		}
+		splinePoints->update();
+		return;
+	}
 
         RS_Spline* spline;
         if (data->degree>=1 && data->degree<=3) {
@@ -1874,6 +1893,9 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
     case RS2::EntitySpline:
         writeSpline((RS_Spline*)e);
         break;
+    case RS2::EntitySplinePoints:
+        writeSplinePoints((LC_SplinePoints*)e);
+        break;
 //    case RS2::EntityVertex:
 //        break;
     case RS2::EntityInsert:
@@ -2124,6 +2146,86 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     getEntityAttributes(&sp, s);
     dxfW->writeSpline(&sp);
 
+}
+
+
+/**
+ * Writes the given spline entity to the file.
+ */
+void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s)
+{
+	int nCtrls = s->getNumberOfControlPoints();
+	QList<RS_Vector> cp = s->getControlPoints();
+
+	if(nCtrls < 3)
+	{
+		if(nCtrls > 1)
+		{
+			DRW_Line line;
+			line.basePoint.x = cp.at(0).x;
+			line.basePoint.y = cp.at(0).y;
+			line.secPoint.x = cp.at(1).x;
+			line.secPoint.y = cp.at(1).y;
+			getEntityAttributes(&line, s);
+			dxfW->writeLine(&line);
+		}
+		return;
+	}
+
+	// version 12 do not support Spline write as polyline
+	if(version == 1009)
+	{
+		DRW_Polyline pol;
+		QList<RS_Vector> sp = s->getStrokePoints();
+
+		for(int i = 0; i < sp.count(); i++)
+		{
+			pol.addVertex(DRW_Vertex(sp.at(i).x, sp.at(i).y, 0.0, 0.0));
+		}
+
+		if(s->isClosed()) pol.flags = 1;
+
+		getEntityAttributes(&pol, s);
+		dxfW->writePolyline(&pol);
+		return;
+	}
+
+	DRW_Spline sp;
+
+	if(s->isClosed()) sp.flags = 11;
+	else sp.flags = 8;
+
+	sp.ncontrol = nCtrls;
+	sp.degree = 2;
+	sp.nknots = nCtrls + 3;
+
+	// write spline knots:
+	for(int i = 1; i <= sp.nknots; i++) 
+	{
+		if(i <= 3)
+		{
+			sp.knotslist.push_back(0.0);
+		}
+		else if(i <= nCtrls)
+		{
+			sp.knotslist.push_back((i - 3.0)/(nCtrls - 2.0));
+		}
+		else
+		{
+			sp.knotslist.push_back(1.0);
+		}
+	}
+
+	// write spline control points:
+	for(int i = 0; i < cp.size(); ++i)
+	{
+		DRW_Coord *controlpoint = new DRW_Coord();
+		sp.controllist.push_back(controlpoint);
+		controlpoint->x = cp.at(i).x;
+		controlpoint->y = cp.at(i).y;
+	}
+	getEntityAttributes(&sp, s);
+	dxfW->writeSpline(&sp);
 }
 
 

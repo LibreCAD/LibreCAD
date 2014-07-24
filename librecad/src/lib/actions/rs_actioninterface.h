@@ -59,6 +59,7 @@ public:
 
     virtual RS2::ActionType rtti();
 
+    void setName(const char* _name);
     QString getName();
 
     virtual void init(int status=0);

@@ -35,12 +35,26 @@ RS_ActionZoomScroll::RS_ActionZoomScroll(RS2::Direction direction,
         :RS_ActionInterface("Zoom scroll", container, graphicView) {
 
     this->direction = direction;
+    this->hasOffset = false;
+}
+
+RS_ActionZoomScroll::RS_ActionZoomScroll(int offsetX, int offsetY,
+                                         RS_EntityContainer& container,
+                                         RS_GraphicView& graphicView)
+:RS_ActionInterface("Zoom scroll", container, graphicView) {
+
+    this->hasOffset = true;
+    this->offsetX = offsetX;
+    this->offsetY = offsetY;
 }
 
 
-
 void RS_ActionZoomScroll::trigger() {
-    graphicView->zoomScroll(direction);
+    if (hasOffset) {
+        graphicView->zoomPan(offsetX, offsetY);
+    } else {
+        graphicView->zoomScroll(direction);
+    }
     finish(false);
 }
 
