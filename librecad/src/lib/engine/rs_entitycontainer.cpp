@@ -1642,19 +1642,20 @@ bool RS_EntityContainer::optimizeContours() {
             enList<<e1;
             continue;
         }
-        if(e1->rtti()==RS2::EntityCircle) {
+
+        //detect circles and whole ellipses
+        switch(e1->rtti()){
+        case RS2::EntityEllipse:
+            if(static_cast<RS_Ellipse*>(e1)->isArc())
+                continue;
+        case RS2::EntityCircle:
             //directly detect circles, bug#3443277
             tmp.addEntity(e1->clone());
             enList<<e1;
+        default:
             continue;
         }
-        if(e1->rtti()==RS2::EntityEllipse) {
-            if(static_cast<RS_Ellipse*>(e1)->isArc() == false){
-            tmp.addEntity(e1->clone());
-            enList<<e1;
-            continue;
-            }
-}
+
     }
     //    std::cout<<"RS_EntityContainer::optimizeContours: 1"<<std::endl;
 
@@ -1689,7 +1690,7 @@ bool RS_EntityContainer::optimizeContours() {
 
     while(count()>0){
         double dist(0.);
-//        std::cout<<" count()="<<count()<<std::endl;
+        std::cout<<" count()="<<count()<<"\tcurrent->getId()="<< current->getId()<<std::endl;
         RS_Vector&& vpTmp=getNearestEndpoint(vpEnd,&dist,&next);
         if(dist>1e-8) {
             if(vpEnd.squaredTo(vpStart)<1e-8){
