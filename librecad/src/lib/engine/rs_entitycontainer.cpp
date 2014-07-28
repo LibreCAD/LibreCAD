@@ -1660,10 +1660,8 @@ bool RS_EntityContainer::optimizeContours() {
     //    std::cout<<"RS_EntityContainer::optimizeContours: 1"<<std::endl;
 
     /** remove unsupported entities */
-    const auto itEnd=enList.end();
-    for(auto it=enList.begin();it!=itEnd;it++){
-        removeEntity(*it);
-    }
+    for(RS_Entity* it: enList)
+        removeEntity(it);
 
     /** check and form a closed contour **/
 //    std::cout<<"RS_EntityContainer::optimizeContours: 2"<<std::endl;
