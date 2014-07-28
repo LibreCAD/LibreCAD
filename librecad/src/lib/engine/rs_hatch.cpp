@@ -26,6 +26,7 @@
 
 
 #include <QPainterPath>
+#include <QBrush>
 #include <memory>
 #include "rs_hatch.h"
 
@@ -563,7 +564,6 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
     for (RS_Entity* l=firstEntity(RS2::ResolveNone);
          l!=NULL;
          l=nextEntity(RS2::ResolveNone)) {
-
         l->setLayer(getLayer());
 
         if (l->rtti()==RS2::EntityContainer) {
@@ -679,9 +679,13 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
     for(int i=0;i<paClosed.size();i++){
         path.addPolygon(paClosed.at(i));
     }
-        painter->setBrush(painter->getPen().getColor());
-        painter->disablePen();
-        painter->drawPath(path);
+
+    //bug#474, restore brush after solid fill
+    const QBrush brush(painter->brush());
+    painter->setBrush(painter->getPen().getColor());
+    painter->disablePen();
+    painter->drawPath(path);
+    painter->setBrush(brush);
 
 //    pa<<jp;
 

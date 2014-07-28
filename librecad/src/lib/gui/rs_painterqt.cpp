@@ -456,7 +456,7 @@ void RS_PainterQt::fillTriangle(const RS_Vector& p1,
                   toScreenX(p1.x),toScreenY(p1.y),
                   toScreenX(p2.x),toScreenY(p2.y),
                   toScreenX(p3.x),toScreenY(p3.y));
-    setBrush(pen().color());
+    setBrush(RS_Color(pen().color()));
     drawPolygon(arr);
 }
 
@@ -484,7 +484,12 @@ int RS_PainterQt::getHeight() {
     return device()->height();
 }
 
-RS_Pen RS_PainterQt::getPen() {
+const QBrush& RS_PainterQt::brush() const
+{
+    return QPainter::brush();
+}
+
+RS_Pen RS_PainterQt::getPen() const{
     return lpen;
     //RS_Pen p(pen().color(),
     //         RS2::qw(pen().width()),
@@ -536,6 +541,9 @@ void RS_PainterQt::setBrush(const RS_Color& color) {
     }
 }
 
+void RS_PainterQt::setBrush(const QBrush& color) {
+    QPainter::setBrush(color);
+}
 
 void RS_PainterQt::drawPolygon(const QPolygon& a, Qt::FillRule rule) {
     QPainter::drawPolygon(a,rule);

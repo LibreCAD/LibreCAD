@@ -1688,7 +1688,6 @@ bool RS_EntityContainer::optimizeContours() {
 
     while(count()>0){
         double dist(0.);
-        std::cout<<" count()="<<count()<<"\tcurrent->getId()="<< current->getId()<<std::endl;
         RS_Vector&& vpTmp=getNearestEndpoint(vpEnd,&dist,&next);
         if(dist>1e-8) {
             if(vpEnd.squaredTo(vpStart)<1e-8){

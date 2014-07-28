@@ -92,13 +92,16 @@ public:
     virtual double getDpmm();
     virtual int getHeight();
 
-    virtual RS_Pen getPen();
+
+    virtual RS_Pen getPen() const;
     virtual void setPen(const RS_Pen& pen);
     virtual void setPen(const RS_Color& color);
     virtual void setPen(int r, int g, int b);
     virtual void disablePen();
     //virtual void setColor(const QColor& color);
+    virtual const QBrush& brush() const;
     virtual void setBrush(const RS_Color& color);
+    virtual void setBrush(const QBrush& color);
 
     virtual void setClipRect(int x, int y, int w, int h);
     virtual void resetClipping();
