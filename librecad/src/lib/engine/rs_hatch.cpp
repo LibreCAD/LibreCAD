@@ -703,7 +703,6 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 //must be called after update()
 double RS_Hatch::getTotalArea() {
 
-    //area of solid fill. Use polygon approximation, except trivial cases
     m_fTotalArea=0.;
 
     // loops:

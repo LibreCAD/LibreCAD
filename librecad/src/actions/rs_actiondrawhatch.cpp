@@ -160,7 +160,7 @@ void RS_ActionDrawHatch::trigger() {
             RS_DIALOGFACTORY->commandMessage(tr("Hatch created successfully."));
 
             //total area is only calculated for solid fill
-            if(m_bShowArea&& hatch->isSolid()){
+            if(m_bShowArea){
                 RS_DIALOGFACTORY->commandMessage(tr("Total solid fill area = %1").
                                                  arg(hatch->getTotalArea(),10,'g',8));
             }
