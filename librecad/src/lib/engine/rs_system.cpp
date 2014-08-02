@@ -490,7 +490,7 @@ bool RS_System::createPaths(const QString& directory) {
 /**
  * Create if not exist and return the Application data directory.
  * In OS_WIN32 "c:\documents&settings\<user>\local configuration\application data\LibreCAD"
- * In OS_MAC "/Users/<user>/Library/Application Support/LibreCAD/librecad.alias"
+ * In OS_MAC "/Users/<user>/Library/Application Support/LibreCAD"
  * In OS_LINUX "/home/<user>/.local/share/data/LibreCAD"
  *
  * @return Application data directory.

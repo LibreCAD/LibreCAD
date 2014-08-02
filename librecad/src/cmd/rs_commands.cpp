@@ -383,7 +383,7 @@ RS_Commands::RS_Commands() {
 /**
  * Read existing alias file or create one new.
  * In OS_WIN32 "c:\documents&settings\<user>\local configuration\application data\LibreCAD\librecad.alias"
- * In OS_MAC "??? /librecad.alias"
+ * In OS_MAC "/Users/<user>/Library/Application Support/LibreCAD/librecad.alias"
  * In OS_LINUX "/home/<user>/.local/share/data/LibreCAD/librecad.alias"
  */
 void RS_Commands::updateAlias(){
