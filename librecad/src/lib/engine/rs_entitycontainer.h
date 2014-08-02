@@ -200,6 +200,14 @@ public:
 
     bool isOwner() {return autoDelete;}
     void setOwner(bool owner) {autoDelete=owner;}
+    /**
+     * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
+     * Contour Area =\oint x dy
+     * @return line integral \oint x dy along the entity
+     * returns absolute value
+     */
+    virtual double areaLineIntegral() const;
+
 protected:
 
     /** entities in the container */

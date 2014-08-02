@@ -1134,6 +1134,22 @@ LC_Quadratic RS_Arc::getQuadratic() const
     return ret;
 }
 
+/**
+ * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
+ * Contour Area =\oint x dy
+ * @return line integral \oint x dy along the entity
+ * \oint x dy = c_x r \sin t + \frac{1}{4}r^2\sin 2t +  \frac{1}{2}r^2 t
+ */
+double RS_Arc::areaLineIntegral() const
+{
+    const double& r=data.radius;
+    const double& a0=data.angle1;
+    const double& a1=data.angle2;
+    const double r2=0.25*r*r;
+    const double fStart=data.center.x*r*sin(a0)+r2*sin(a0+a0);
+    const double fEnd=data.center.x*r*sin(a1)+r2*sin(a1+a1);
+    return (isReversed()?fStart-fEnd:fEnd-fStart) + 2.*r2*getAngleLength();
+}
 
 /**
  * Dumps the point's data to stdout.

@@ -1453,6 +1453,43 @@ LC_Quadratic RS_Ellipse::getQuadratic() const
     return ret;
 }
 
+/**
+ * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
+ * Contour Area =\oint x dy
+ * @return line integral \oint x dy along the entity
+ * \oint x dy = Cx y + \frac{1}{4}((a^{2}+b^{2})sin(2a)cos^{2}(t)-ab(2sin^{2}(a)sin(2t)-2t-sin(2t)))
+ */
+double RS_Ellipse::areaLineIntegral() const
+{
+    const double a=getMajorRadius();
+    const double b=getMinorRadius();
+    if(!isArc())
+        return M_PI*a*b;
+    const double ab=a*b;
+    const double r2=a*a+b*b;
+    const double& cx=data.center.x;
+    const double aE=getAngle();
+    const double& a0=data.angle1;
+    const double& a1=data.angle2;
+    const double fStart=cx*getStartpoint().y+0.25*r2*sin(2.*aE)*cos(a0)*cos(a0)-0.25*ab*(2.*sin(aE)*sin(aE)*sin(2.*a0)-sin(2.*a0));
+    const double fEnd=cx*getEndpoint().y+0.25*r2*sin(2.*aE)*cos(a1)*cos(a1)-0.25*ab*(2.*sin(aE)*sin(aE)*sin(2.*a1)-sin(2.*a1));
+    return (isReversed()?fStart-fEnd:fEnd-fStart) + 0.5*ab*getAngleLength();
+}
+
+/**
+ * @return Angle length in rad.
+ */
+double RS_Ellipse::getAngleLength() const {
+    double ret;
+    if (isReversed()) {
+        ret= RS_Math::correctAngle(data.angle1-data.angle2);
+    } else {
+        ret= RS_Math::correctAngle(data.angle2-data.angle1);
+    }
+    if(ret<RS_TOLERANCE_ANGLE) ret=2.*M_PI;
+    return ret;
+}
+
 /** find the visible part of the arc, and call drawVisible() to draw */
 void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
     if(isArc()==false){

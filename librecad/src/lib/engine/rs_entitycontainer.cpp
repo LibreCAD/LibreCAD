@@ -1899,6 +1899,44 @@ void RS_EntityContainer::draw(RS_Painter* painter, RS_GraphicView* view,
 }
 
 /**
+ * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
+ * Contour Area =\oint x dy
+ * @return line integral \oint x dy along the entity
+ */
+double RS_EntityContainer::areaLineIntegral() const
+{
+    //TODO make sure all contour integral is by counter-clockwise
+    double contourArea=0.;
+    //closed area is always positive
+    double closedArea=0.;
+    RS_EntityContainer* loop=const_cast<RS_EntityContainer*>(this);
+
+    // edges:
+    for (RS_Entity* e=loop->firstEntity(RS2::ResolveNone);
+         e!=NULL;
+         e=loop->nextEntity(RS2::ResolveNone)) {
+        e->setLayer(getLayer());
+        switch (e->rtti()) {
+        case RS2::EntityLine:
+        case RS2::EntityArc:
+            contourArea += e->areaLineIntegral();
+            break;
+        case RS2::EntityCircle:
+            closedArea += e->areaLineIntegral();
+            break;
+        case RS2::EntityEllipse:
+            if(static_cast<RS_Ellipse*>(e)->isArc())
+                contourArea += e->areaLineIntegral();
+            else
+                closedArea += e->areaLineIntegral();
+        default:
+            break;
+        }
+    }
+    return fabs(contourArea)+closedArea;
+}
+
+/**
  * Dumps the entities to stdout.
  */
 std::ostream& operator << (std::ostream& os, RS_EntityContainer& ec) {
