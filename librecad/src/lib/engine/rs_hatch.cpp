@@ -703,6 +703,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 double RS_Hatch::getTotalArea() {
 
     double totalArea=0.;
+    double closedArea=0.;
 
     // loops:
     for (RS_Entity* l=firstEntity(RS2::ResolveNone);
@@ -745,7 +746,7 @@ double RS_Hatch::getTotalArea() {
 
                 case RS2::EntityCircle: {
                     RS_Circle* circle = static_cast<RS_Circle*>(e);
-                    totalArea += M_PI*circle->getRadius()*circle->getRadius();
+                    closedArea += M_PI*circle->getRadius()*circle->getRadius();
                 }
                     break;
                 case RS2::EntityEllipse:
@@ -766,7 +767,7 @@ double RS_Hatch::getTotalArea() {
                     }
                     else{
                         auto ellipse=static_cast<RS_Ellipse*>(e);
-                        totalArea += M_PI*ellipse->getMajorRadius()*ellipse->getMinorRadius();
+                        closedArea += M_PI*ellipse->getMajorRadius()*ellipse->getMinorRadius();
                     }
                     break;
                 default:
@@ -777,7 +778,7 @@ double RS_Hatch::getTotalArea() {
 
         }
     }
-    return fabs(totalArea);
+    return fabs(totalArea)+closedArea;
 }
 
 double RS_Hatch::getDistanceToPoint(
