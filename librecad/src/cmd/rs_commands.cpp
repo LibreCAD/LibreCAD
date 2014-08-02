@@ -380,6 +380,7 @@ RS_Commands::RS_Commands() {
     cmdTranslation.insert(tr("b","back"), "back");
 }
 
+#include<QDebug>
 /**
  * Read existing alias file or create one new.
  * In OS_WIN32 "c:\documents&settings\<user>\local configuration\application data\LibreCAD\librecad.alias"
@@ -395,25 +396,28 @@ void RS_Commands::updateAlias(){
     QString line;
     QHash<QString, QString> aliasList;
     if (f.exists()) {
-    //alias file exists, read user defined alias
+        qDebug()<<"alias File: "<<aliasName;
+
+        //alias file exists, read user defined alias
         if (f.open(QIODevice::ReadOnly)) {
             QTextStream ts(&f);
-            line = ts.readLine();
             //check if is empty file or not alias file
-            if(!line.isNull() || line == "#LibreCAD alias v1") {
-                while (!ts.atEnd()) {
-                    line = ts.readLine();
-                    if (line.isEmpty() || line.at(0)=='#')
-                        continue;
-                    // Read alias
-                    QStringList txtList = line.split('\t',QString::SkipEmptyParts);
-                    if (txtList.size()> 1) {
-                        aliasList.insert(txtList.at(0), txtList.at(1));
-                    } else if (txtList.size()> 0) {
-                        aliasList.insert(txtList.at(0), "txtList.at(1)" "");
-                    }
+            //            if(!line.isNull() || line == "#LibreCAD alias v1") {
+            //                while (!ts.atEnd())
+            while(!ts.atEnd())
+            {
+                line=ts.readLine().trimmed();
+                if (line.isEmpty() || line.at(0)=='#' ) continue;
+                // Read alias
+                QStringList txtList = line.split(QRegExp(R"(\s)"),QString::SkipEmptyParts);
+                if (txtList.size()> 1) {
+//                    qDebug()<<"reading: "<<txtList.at(0)<<"\t"<< txtList.at(1);
+                    aliasList.insert(txtList.at(0), txtList.at(1));
+                } else if (txtList.size()> 0) {
+                    aliasList.insert(txtList.at(0), "txtList.at(1)" "");
                 }
             }
+            //            }
         }
     } else {
     //alias file do no exist, create one with translated shortCommands
@@ -441,6 +445,7 @@ void RS_Commands::updateAlias(){
     for (it = aliasList.constBegin(); it != aliasList.constEnd(); ++it) {
         QString translated = cmdTranslation.value(it.value());
         RS2::ActionType act = mainCommands.value(translated,RS2::ActionNone);
+//        qDebug()<<"alias: "<<it.key()<<"\t"<<translated;
         if (act != RS2::ActionNone && it.key() != " ")
             shortCommands.insert(it.key(), act);
     }
