@@ -148,6 +148,7 @@ public:
         void setAngle(double angle) {
                 data.angle = angle;
         }
+        double getTotalArea();
 
         virtual void calculateBorders();
         void update();
@@ -186,6 +187,7 @@ protected:
         bool updateRunning;
         bool needOptimization;
         int  updateError;
+        double m_fTotalArea;
 };
 
 #endif

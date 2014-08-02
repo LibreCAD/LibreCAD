@@ -36,8 +36,9 @@
 RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw Hatch",
-                           container, graphicView) {
-
+                           container, graphicView)
+        ,m_bShowArea(false)
+{
     hatch = NULL;
 }
 
@@ -157,6 +158,12 @@ void RS_ActionDrawHatch::trigger() {
         switch( hatch->getUpdateError()) {
         case RS_Hatch::HATCH_OK :
             RS_DIALOGFACTORY->commandMessage(tr("Hatch created successfully."));
+
+            //total area is only calculated for solid fill
+            if(m_bShowArea&& hatch->isSolid()){
+                RS_DIALOGFACTORY->commandMessage(tr("Total solid fill area = %1").
+                                                 arg(hatch->getTotalArea(),10,'g',8));
+            }
             break;
         case RS_Hatch::HATCH_INVALID_CONTOUR :
             RS_DIALOGFACTORY->commandMessage(tr("Hatch Error: Invalid contour found!"));

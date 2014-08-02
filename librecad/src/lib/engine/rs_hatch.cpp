@@ -25,12 +25,16 @@
 **********************************************************************/
 
 
+#include <memory>
 #include <QPainterPath>
 #include <QBrush>
-#include <memory>
+#include <QString>
 #include "rs_hatch.h"
 
 #include "rs_graphicview.h"
+#include "rs_dialogfactory.h"
+#include "rs_infoarea.h"
+
 #include "rs_information.h"
 #include "rs_painter.h"
 #include "rs_pattern.h"
@@ -46,7 +50,9 @@
  */
 RS_Hatch::RS_Hatch(RS_EntityContainer* parent,
                    const RS_HatchData& d)
-        : RS_EntityContainer(parent), data(d) {
+        : RS_EntityContainer(parent), data(d)
+        ,m_fTotalArea(-1.)
+{
 
     hatch = NULL;
     updateRunning = false;
@@ -540,6 +546,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         return;
     }
 
+    //area of solid fill. Use polygon approximation, except trivial cases
     QPainterPath path;
     QList<QPolygon> paClosed;
     QPolygon pa;
@@ -676,25 +683,108 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         pa<<pa.first();
         paClosed<<pa;
     }
-    for(int i=0;i<paClosed.size();i++){
-        path.addPolygon(paClosed.at(i));
+
+    for(auto& p:paClosed){
+        path.addPolygon(p);
     }
 
     //bug#474, restore brush after solid fill
     const QBrush brush(painter->brush());
-    painter->setBrush(painter->getPen().getColor());
+    const RS_Pen pen=painter->getPen();
+    painter->setBrush(pen.getColor());
     painter->disablePen();
     painter->drawPath(path);
     painter->setBrush(brush);
+    painter->setPen(pen);
 
-//    pa<<jp;
-
-//    painter->setBrush(painter->getPen().getColor());
-//    painter->disablePen();
-//    painter->drawPolygon(pa);
 
 }
 
+//must be called after update()
+double RS_Hatch::getTotalArea() {
+
+    //area of solid fill. Use polygon approximation, except trivial cases
+    m_fTotalArea=0.;
+
+    // loops:
+    for (RS_Entity* l=firstEntity(RS2::ResolveNone);
+         l!=NULL;
+         l=nextEntity(RS2::ResolveNone)) {
+
+        if (l!=hatch && l->rtti()==RS2::EntityContainer) {
+            RS_EntityContainer* loop = (RS_EntityContainer*)l;
+
+            // edges:
+            for (RS_Entity* e=loop->firstEntity(RS2::ResolveNone);
+                 e!=NULL;
+                 e=loop->nextEntity(RS2::ResolveNone)) {
+
+                e->setLayer(getLayer());
+                switch (e->rtti()) {
+                case RS2::EntityLine: {
+                    const RS_Vector p0=e->getStartpoint();
+                    const RS_Vector p1=e->getEndpoint();
+                    //contour integral of \int x dy = 0.5*(y1 - y0)*(x1+x0)
+                    m_fTotalArea += (p1.y - p0.y)*(p0.x + p1.x);
+
+                }
+                    break;
+
+                case RS2::EntityArc: {
+                    //contour integral of \int x dy
+                    //for arc = center_x*r*sin(t) + r^2/4*sin(2t)+r^2/2*t
+
+                    RS_Arc* arc=static_cast<RS_Arc*>(e);
+                    const double r=arc->getRadius();
+                    const double a0=arc->getAngle1();
+                    const double a1=arc->getAngle2();
+                    const double r2=0.25*r*r;
+                    const double fStart=arc->getCenter().x*r*sin(a0)+r2*sin(a0+a0);
+                    const double fEnd=arc->getCenter().x*r*sin(a1)+r2*sin(a1+a1);
+                    const double s0=(arc->isReversed()?fStart-fEnd:fEnd-fStart) + 2.*r2*arc->getAngleLength();
+
+                    m_fTotalArea += s0+s0;
+
+
+                }
+                    break;
+
+                case RS2::EntityCircle: {
+                    RS_Circle* circle = static_cast<RS_Circle*>(e);
+                    m_fTotalArea += M_PI*circle->getRadius()*circle->getRadius();
+                }
+                    break;
+                case RS2::EntityEllipse:
+                    if(static_cast<RS_Ellipse*>(e)->isArc()) {
+                        auto ellipse=static_cast<RS_Ellipse*>(e);
+                        //contour integral of \int x dy
+                        //for scaled to arc by a factor 1/ratio
+
+                        const double r=ellipse->getMajorRadius();
+                        const double a0=ellipse->getAngle1();
+                        const double a1=ellipse->getAngle2();
+                        const double r2=0.25*r*r;
+                        const double fStart=ellipse->getCenter().x*r*sin(a0)+r2*sin(a0+a0);
+                        const double fEnd=ellipse->getCenter().x*r*sin(a1)+r2*sin(a1+a1);
+                        m_fTotalArea += 2.*ellipse->getRatio()*(
+                                    (ellipse->isReversed()?fStart-fEnd:fEnd-fStart) + 2.*r2*ellipse->getAngleLength()
+                                    );
+                    }
+                    else{
+                        auto ellipse=static_cast<RS_Ellipse*>(e);
+                        m_fTotalArea += M_PI*ellipse->getMajorRadius()*ellipse->getMinorRadius();
+                    }
+                    break;
+                default:
+                    break;
+                }
+
+            }
+
+        }
+    }
+    return 0.5*fabs(m_fTotalArea);
+}
 
 double RS_Hatch::getDistanceToPoint(
     const RS_Vector& coord,

@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <QPolygon>
 #include "rs_infoarea.h"
 
 #include "rs_math.h"
@@ -111,6 +112,19 @@ void RS_InfoArea::calculate() {
 
     area = 0.5*fabs(area);
     calculationNeeded=false;
+}
+
+double RS_InfoArea::getArea(const QPolygon& polygon)
+{
+    double ret= 0.0;
+    if(polygon.size()<3) return ret;
+
+    for(int i=0;i<polygon.size(); ++i){
+        const QPoint& p0=polygon.at(i);
+        const QPoint& p1=polygon.at((i+1)%polygon.size());
+        ret += p0.x()*p1.y()-p0.y()*p1.x();
+    }
+    return 0.5*fabs(ret);
 }
 
 

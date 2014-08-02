@@ -571,7 +571,11 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionSelect(*doc, *gv, RS2::ActionDrawHatchNoSelect);
         break;
     case RS2::ActionDrawHatchNoSelect:
-        a = new RS_ActionDrawHatch(*doc, *gv);
+    {
+        auto p = new RS_ActionDrawHatch(*doc, *gv);
+        p->setShowArea(true);
+        a=p;
+    }
         break;
     case RS2::ActionDrawImage:
         a = new RS_ActionDrawImage(*doc, *gv);
