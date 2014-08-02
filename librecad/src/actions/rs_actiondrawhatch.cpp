@@ -155,18 +155,14 @@ void RS_ActionDrawHatch::trigger() {
 
 		graphicView->redraw(RS2::RedrawDrawing);
 
+        bool printArea=true;
         switch( hatch->getUpdateError()) {
         case RS_Hatch::HATCH_OK :
             RS_DIALOGFACTORY->commandMessage(tr("Hatch created successfully."));
-
-            //total area is only calculated for solid fill
-            if(m_bShowArea){
-                RS_DIALOGFACTORY->commandMessage(tr("Total solid fill area = %1").
-                                                 arg(hatch->getTotalArea(),10,'g',8));
-            }
             break;
         case RS_Hatch::HATCH_INVALID_CONTOUR :
             RS_DIALOGFACTORY->commandMessage(tr("Hatch Error: Invalid contour found!"));
+            printArea=false;
             break;
         case RS_Hatch::HATCH_PATTERN_NOT_FOUND :
             RS_DIALOGFACTORY->commandMessage(tr("Hatch Error: Pattern not found!"));
@@ -179,7 +175,12 @@ void RS_ActionDrawHatch::trigger() {
             break;
         default :
             RS_DIALOGFACTORY->commandMessage(tr("Hatch Error: Undefined Error!"));
+            printArea=false;
             break;
+        }
+        if(m_bShowArea&&printArea){
+            RS_DIALOGFACTORY->commandMessage(tr("Total hatch area = %1").
+                                             arg(hatch->getTotalArea(),10,'g',8));
         }
 
 	}

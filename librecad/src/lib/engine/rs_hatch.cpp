@@ -51,7 +51,6 @@
 RS_Hatch::RS_Hatch(RS_EntityContainer* parent,
                    const RS_HatchData& d)
         : RS_EntityContainer(parent), data(d)
-        ,m_fTotalArea(-1.)
 {
 
     hatch = NULL;
@@ -703,7 +702,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 //must be called after update()
 double RS_Hatch::getTotalArea() {
 
-    m_fTotalArea=0.;
+    double totalArea=0.;
 
     // loops:
     for (RS_Entity* l=firstEntity(RS2::ResolveNone);
@@ -724,7 +723,7 @@ double RS_Hatch::getTotalArea() {
                     const RS_Vector p0=e->getStartpoint();
                     const RS_Vector p1=e->getEndpoint();
                     //contour integral of \int x dy = 0.5*(y1 - y0)*(x1+x0)
-                    m_fTotalArea += (p1.y - p0.y)*(p0.x + p1.x);
+                    totalArea += 0.5*(p1.y - p0.y)*(p0.x + p1.x);
 
                 }
                     break;
@@ -740,17 +739,13 @@ double RS_Hatch::getTotalArea() {
                     const double r2=0.25*r*r;
                     const double fStart=arc->getCenter().x*r*sin(a0)+r2*sin(a0+a0);
                     const double fEnd=arc->getCenter().x*r*sin(a1)+r2*sin(a1+a1);
-                    const double s0=(arc->isReversed()?fStart-fEnd:fEnd-fStart) + 2.*r2*arc->getAngleLength();
-
-                    m_fTotalArea += s0+s0;
-
-
+                    totalArea +=(arc->isReversed()?fStart-fEnd:fEnd-fStart) + 2.*r2*arc->getAngleLength();
                 }
                     break;
 
                 case RS2::EntityCircle: {
                     RS_Circle* circle = static_cast<RS_Circle*>(e);
-                    m_fTotalArea += M_PI*circle->getRadius()*circle->getRadius();
+                    totalArea += M_PI*circle->getRadius()*circle->getRadius();
                 }
                     break;
                 case RS2::EntityEllipse:
@@ -765,13 +760,13 @@ double RS_Hatch::getTotalArea() {
                         const double r2=0.25*r*r;
                         const double fStart=ellipse->getCenter().x*r*sin(a0)+r2*sin(a0+a0);
                         const double fEnd=ellipse->getCenter().x*r*sin(a1)+r2*sin(a1+a1);
-                        m_fTotalArea += 2.*ellipse->getRatio()*(
+                        totalArea += ellipse->getRatio()*(
                                     (ellipse->isReversed()?fStart-fEnd:fEnd-fStart) + 2.*r2*ellipse->getAngleLength()
                                     );
                     }
                     else{
                         auto ellipse=static_cast<RS_Ellipse*>(e);
-                        m_fTotalArea += M_PI*ellipse->getMajorRadius()*ellipse->getMinorRadius();
+                        totalArea += M_PI*ellipse->getMajorRadius()*ellipse->getMinorRadius();
                     }
                     break;
                 default:
@@ -782,7 +777,7 @@ double RS_Hatch::getTotalArea() {
 
         }
     }
-    return 0.5*fabs(m_fTotalArea);
+    return fabs(totalArea);
 }
 
 double RS_Hatch::getDistanceToPoint(

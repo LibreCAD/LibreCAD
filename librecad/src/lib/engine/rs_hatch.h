@@ -187,7 +187,6 @@ protected:
         bool updateRunning;
         bool needOptimization;
         int  updateError;
-        double m_fTotalArea;
 };
 
 #endif
