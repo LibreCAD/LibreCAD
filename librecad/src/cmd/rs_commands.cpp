@@ -396,10 +396,10 @@ void RS_Commands::updateAlias(){
     QString line;
     QHash<QString, QString> aliasList;
     if (f.exists()) {
-        qDebug()<<"alias File: "<<aliasName;
 
         //alias file exists, read user defined alias
         if (f.open(QIODevice::ReadOnly)) {
+        qDebug()<<"alias File: "<<aliasName;
             QTextStream ts(&f);
             //check if is empty file or not alias file
             //            if(!line.isNull() || line == "#LibreCAD alias v1") {
@@ -443,11 +443,19 @@ void RS_Commands::updateAlias(){
     //add alias to shortCommands
     QHash<QString, QString>::const_iterator it;
     for (it = aliasList.constBegin(); it != aliasList.constEnd(); ++it) {
-        QString translated = cmdTranslation.value(it.value());
-        RS2::ActionType act = mainCommands.value(translated,RS2::ActionNone);
-//        qDebug()<<"alias: "<<it.key()<<"\t"<<translated;
-        if (act != RS2::ActionNone && it.key() != " ")
+            qDebug()<<"alias: "<<it.key()<<" "<<it.value();
+        RS2::ActionType act=RS2::ActionNone;
+        if(cmdTranslation.contains(it.value())){
+            act= mainCommands.value(cmdTranslation.value(it.value()),RS2::ActionNone);
+        }else if(mainCommands.contains(it.value()))
+                act= mainCommands.value(it.value(),RS2::ActionNone);
+        else if(shortCommands.contains(it.value()))
+            act= shortCommands.value(it.value(),RS2::ActionNone);
+
+        if (act != RS2::ActionNone && it.key() != " "){
+            qDebug()<<"inserting "<<it.key();
             shortCommands.insert(it.key(), act);
+        }
     }
     f.close();
 }
