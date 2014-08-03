@@ -84,12 +84,13 @@ void RS_Painter::createEllipse(QPolygon& pa,
     const RS_Vector rvp(radius2,radius1);
     const double ab=radius1*radius2;
     double ea1=angle1;
-    double ea2=angle2;
-    if(reversed) std::swap(ea1,ea2);
-    if(RS_Math::getAngleDifference(ea1, ea2) <= RS_TOLERANCE_ANGLE) {
-        ea2 =ea1 + 2.*M_PI; //potential bug
-    }
-    if(ea2 - ea1 > 2.*M_PI + RS_TOLERANCE_ANGLE) ea2 = ea1 + M_PI + remainder(ea2-ea1-M_PI, 2.*M_PI);
+    double ea2;
+    double dA=RS_Math::getAngleDifference(angle1, angle2, reversed);
+    if(dA <= RS_TOLERANCE_ANGLE) {
+        dA=2.*M_PI;
+        ea2 =ea1 + dA;
+    }else
+        ea2 = ea1 +(reversed?-dA:dA);
     const RS_Vector angleVector(-angle);
     /*
       draw a new line after tangent changes by 0.01 rad
@@ -103,11 +104,11 @@ void RS_Painter::createEllipse(QPolygon& pa,
     //           cp.y-sin(a1)*radius2);
     //    vp.rotate(vc, -angle);
     pa.clear();
-    pa<<QPoint(toScreenX(vp.x),
-               toScreenY(vp.y));
+//    pa<<QPoint(toScreenX(vp.x),
+//               toScreenY(vp.y));
 //    moveTo(toScreenX(vp.x),
 //           toScreenY(vp.y));
-    const double minDea=(ea2-ea1)/2048.;
+    const double minDea=fabs(ea2-ea1)/2048.;
     // Arc Counterclockwise:
     do {
 
@@ -118,13 +119,13 @@ void RS_Painter::createEllipse(QPolygon& pa,
         double aStep=ab/(r2*sqrt(r2));
         if(aStep < minDea) aStep=minDea;
         if(aStep > M_PI/4.) aStep=M_PI/4.;
-        ea1 += aStep;
+        ea1 += reversed?-aStep:aStep;
         vp.scale(vr);
         vp.rotate(angleVector);
         vp.move(cp);
         pa<<QPoint(toScreenX(vp.x),
                toScreenY(vp.y));
-    } while(ea1<ea2);
+    } while(fabs(angle1-ea1)<dA);
 
     vp.set(cos(ea2)*radius1,
            -sin(ea2)*radius2);
