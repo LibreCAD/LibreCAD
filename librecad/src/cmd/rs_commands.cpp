@@ -449,7 +449,7 @@ void RS_Commands::updateAlias(){
             act= mainCommands.value(cmdTranslation.value(it.value()),RS2::ActionNone);
         }else if(mainCommands.contains(it.value()))
                 act= mainCommands.value(it.value(),RS2::ActionNone);
-        else if(shortCommands.contains(it.value()))
+        else
             act= shortCommands.value(it.value(),RS2::ActionNone);
 
         if (act != RS2::ActionNone && it.key() != " "){
