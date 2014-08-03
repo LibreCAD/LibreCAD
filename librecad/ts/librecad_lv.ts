@@ -6802,6 +6802,10 @@ Vai vēlaties to aizvietot?</translation>
         <source>Hatch Error: Undefined Error!</source>
         <translation>Svītrošanas kļūda — nedefinēta kļūda!</translation>
     </message>
+    <message>
+        <source>Total hatch area = %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>

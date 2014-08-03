@@ -9281,6 +9281,10 @@ Do you want to replace it?</source>
         <source>Hatch Error: Undefined Error!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Total hatch area = %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>

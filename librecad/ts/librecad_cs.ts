@@ -9264,6 +9264,10 @@ Přejete si ho přepsat?</translation>
         <source>Hatch Error: Undefined Error!</source>
         <translation>Chyba šraf: Neznámá chyba!</translation>
     </message>
+    <message>
+        <source>Total hatch area = %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>

@@ -6615,27 +6615,27 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="81"/>
+        <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="84"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="84"/>
+        <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="87"/>
         <source>fixed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="97"/>
+        <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="100"/>
         <source>Toggle Black / White mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="120"/>
+        <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="123"/>
         <source>Center to page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="140"/>
+        <location filename="../src/ui/forms/qg_printpreviewoptions.ui" line="143"/>
         <source>Fit to page</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7584,7 +7584,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1688"/>
+        <location filename="../src/lib/engine/rs_entitycontainer.cpp" line="1687"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8691,42 +8691,47 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionDrawHatch</name>
     <message>
-        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="47"/>
+        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="48"/>
         <source>&amp;Hatch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="159"/>
+        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="161"/>
         <source>Hatch created successfully.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="162"/>
+        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="164"/>
         <source>Hatch Error: Invalid contour found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="165"/>
+        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="168"/>
         <source>Hatch Error: Pattern not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="168"/>
+        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="171"/>
         <source>Hatch Error: Contour or pattern too small!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="171"/>
+        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="174"/>
         <source>Hatch Error: Contour too big!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="174"/>
+        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="177"/>
         <source>Hatch Error: Undefined Error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/rs_actiondrawhatch.cpp" line="182"/>
+        <source>Total hatch area = %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/rs_actiondrawhatch.cpp" line="190"/>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11799,7 +11804,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="503"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="516"/>
         <source>Command: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12348,18 +12353,18 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="553"/>
-        <location filename="../src/cmd/rs_commands.cpp" line="576"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="566"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="589"/>
         <source>Command not found: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="560"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="573"/>
         <source>Accepted keycode: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/cmd/rs_commands.cpp" line="729"/>
+        <location filename="../src/cmd/rs_commands.cpp" line="742"/>
         <source>Available commands:</source>
         <translation type="unfinished"></translation>
     </message>
