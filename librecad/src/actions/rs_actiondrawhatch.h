@@ -60,10 +60,14 @@ public:
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
     virtual void updateToolBar();
+    void setShowArea(bool s){
+        m_bShowArea=s;
+    }
 
 private:
     RS_HatchData data;
 	RS_Hatch* hatch;
+    bool m_bShowArea;
 };
 
 #endif

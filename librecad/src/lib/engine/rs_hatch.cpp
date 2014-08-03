@@ -25,11 +25,16 @@
 **********************************************************************/
 
 
-#include <QPainterPath>
 #include <memory>
+#include <QPainterPath>
+#include <QBrush>
+#include <QString>
 #include "rs_hatch.h"
 
 #include "rs_graphicview.h"
+#include "rs_dialogfactory.h"
+#include "rs_infoarea.h"
+
 #include "rs_information.h"
 #include "rs_painter.h"
 #include "rs_pattern.h"
@@ -45,7 +50,8 @@
  */
 RS_Hatch::RS_Hatch(RS_EntityContainer* parent,
                    const RS_HatchData& d)
-        : RS_EntityContainer(parent), data(d) {
+        : RS_EntityContainer(parent), data(d)
+{
 
     hatch = NULL;
     updateRunning = false;
@@ -523,7 +529,7 @@ void RS_Hatch::activateContour(bool on) {
         RS_DEBUG->print("RS_Hatch::activateContour: OK");
 }
 
-
+//#include<QDebug>
 /**
  * Overrides drawing of subentities. This is only ever called for solid fills.
  */
@@ -539,6 +545,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         return;
     }
 
+    //area of solid fill. Use polygon approximation, except trivial cases
     QPainterPath path;
     QList<QPolygon> paClosed;
     QPolygon pa;
@@ -563,7 +570,6 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
     for (RS_Entity* l=firstEntity(RS2::ResolveNone);
          l!=NULL;
          l=nextEntity(RS2::ResolveNone)) {
-
         l->setLayer(getLayer());
 
         if (l->rtti()==RS2::EntityContainer) {
@@ -585,8 +591,9 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 //                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
 //                        jp<<pt1;
 //                    }
-
-                    pa<<pt1<<pt2;
+                    if(pa.size() && (pa.last()-pt1).manhattanLength()>=1)
+                        pa<<pt1;
+                    pa<<pt2;
                 }
                     break;
 
@@ -599,11 +606,12 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
                     QPolygon pa2;
                     RS_Arc* arc=static_cast<RS_Arc*>(e);
+
                     painter->createArc(pa2, view->toGui(arc->getCenter()),
-                                       view->toGuiDX(arc->getRadius()),
-                                       arc->getAngle1(),
-                                       arc->getAngle2(),
-                                       arc->isReversed());
+                                       view->toGuiDX(arc->getRadius())
+                                       ,arc->getAngle1(),arc->getAngle2(),arc->isReversed());
+                    if(pa.size() &&pa2.size()&&(pa.last()-pa2.first()).manhattanLength()<1)
+                        pa2.remove(0,1);
                     pa<<pa2;
 
                 }
@@ -637,14 +645,19 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                 if(static_cast<RS_Ellipse*>(e)->isArc()) {
                     QPolygon pa2;
                     auto ellipse=static_cast<RS_Ellipse*>(e);
+
                     painter->createEllipse(pa2,
                                            view->toGui(ellipse->getCenter()),
                                            view->toGuiDX(ellipse->getMajorRadius()),
                                            view->toGuiDX(ellipse->getMinorRadius()),
-                                           ellipse->getAngle(),
-                                           ellipse->getAngle1(), ellipse->getAngle2(),
-                                           ellipse->isReversed()
+                                           ellipse->getAngle()
+                                           ,ellipse->getAngle1(),ellipse->getAngle2(),ellipse->isReversed()
                                            );
+//                    qDebug()<<"ellipse: "<<ellipse->getCenter().x<<","<<ellipse->getCenter().y;
+//                    qDebug()<<"ellipse: pa2.size()="<<pa2.size();
+//                    qDebug()<<"ellipse: pa2="<<pa2;
+                    if(pa.size() && pa2.size()&&(pa.last()-pa2.first()).manhattanLength()<1)
+                        pa2.remove(0,1);
                     pa<<pa2;
                 }else{
                     QPolygon pa2;
@@ -663,6 +676,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                 default:
                     break;
                 }
+//                qDebug()<<"pa="<<pa;
                 if( pa.size()>2 && pa.first() == pa.last()) {
                     paClosed<<pa;
                     pa.clear();
@@ -676,21 +690,39 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         pa<<pa.first();
         paClosed<<pa;
     }
-    for(int i=0;i<paClosed.size();i++){
-        path.addPolygon(paClosed.at(i));
+
+    for(auto& p:paClosed){
+        path.addPolygon(p);
     }
-        painter->setBrush(painter->getPen().getColor());
-        painter->disablePen();
-        painter->drawPath(path);
 
-//    pa<<jp;
+    //bug#474, restore brush after solid fill
+    const QBrush brush(painter->brush());
+    const RS_Pen pen=painter->getPen();
+    painter->setBrush(pen.getColor());
+    painter->disablePen();
+    painter->drawPath(path);
+    painter->setBrush(brush);
+    painter->setPen(pen);
 
-//    painter->setBrush(painter->getPen().getColor());
-//    painter->disablePen();
-//    painter->drawPolygon(pa);
 
 }
 
+//must be called after update()
+double RS_Hatch::getTotalArea() {
+
+    double totalArea=0.;
+
+    // loops:
+    for (RS_Entity* l=firstEntity(RS2::ResolveNone);
+         l!=NULL;
+         l=nextEntity(RS2::ResolveNone)) {
+
+        if (l!=hatch && l->rtti()==RS2::EntityContainer) {
+            totalArea += l->areaLineIntegral();
+        }
+    }
+    return totalArea;
+}
 
 double RS_Hatch::getDistanceToPoint(
     const RS_Vector& coord,

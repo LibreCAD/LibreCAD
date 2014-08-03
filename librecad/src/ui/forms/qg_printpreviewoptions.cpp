@@ -90,6 +90,8 @@ void QG_PrintPreviewOptions::init() {
     blackWhiteDisabled= RS_SETTINGS->readNumEntry("/BlackWhiteSet", 0)!=0;
     RS_SETTINGS->endGroup();
     action=NULL;
+    //make sure user scale is accepted
+    cbScale->setInsertPolicy(QComboBox::InsertAtTop);
 }
 
 void QG_PrintPreviewOptions::destroy() {

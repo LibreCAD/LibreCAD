@@ -227,16 +227,7 @@ public:
     /**
      * @return Angle length in rad.
      */
-    virtual double getAngleLength() const {
-        double ret;
-        if (isReversed()) {
-            ret= RS_Math::correctAngle(data.angle1-data.angle2);
-        } else {
-            ret= RS_Math::correctAngle(data.angle2-data.angle1);
-        }
-        if(ret<RS_TOLERANCE_ANGLE) ret=2.*M_PI;
-        return ret;
-    }
+    virtual double getAngleLength() const;
 
     /** @return The major radius of this ellipse. Same as getRadius() */
     double getMajorRadius() const {
@@ -324,6 +315,13 @@ public:
     m0 x + m1 y + m2 =0
     **/
     virtual LC_Quadratic getQuadratic() const;
+/**
+ * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
+ * Contour Area =\oint x dy
+ * @return line integral \oint x dy along the entity
+ * \oint x dy = Cx y + \frac{1}{4}((a^{2}+b^{2})sin(2a)cos^{2}(t)-ab(2sin^{2}(a)sin(2t)-2t-sin(2t)))
+ */
+virtual double areaLineIntegral() const;
 
 protected:
     RS_EllipseData data;

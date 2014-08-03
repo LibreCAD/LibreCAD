@@ -291,6 +291,13 @@ for linear:
 m0 x + m1 y + m2 =0
 **/
     virtual LC_Quadratic getQuadratic() const;
+    /**
+     * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
+     * Contour Area =\oint x dy
+     * @return line integral \oint x dy along the entity
+     * \oint x dy = c_x r \sin t + \frac{1}{4}r^2\sin 2t +  \frac{1}{2}r^2 t
+     */
+    virtual double areaLineIntegral() const;
 
 protected:
     RS_ArcData data;

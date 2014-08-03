@@ -30,7 +30,7 @@
 #include <QVector>
 #include "rs_vector.h"
 
-
+class QPolygon;
 /**
  * Class for getting information about an area.
  *
@@ -60,6 +60,12 @@ public:
     RS_Vector at(int i){
         return thePoints.at(i);
     }
+    /**
+     * @brief getArea of polygon
+     * @param polygon
+     * @return area
+     */
+    static double getArea(const QPolygon& polygon);
 
 private:
     void calculate();

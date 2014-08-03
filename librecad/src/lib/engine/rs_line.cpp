@@ -339,6 +339,13 @@ LC_Quadratic RS_Line::getQuadratic() const
 }
 
 
+
+double RS_Line::areaLineIntegral() const
+{
+    return 0.5*(data.endpoint.y - data.startpoint.y)*(data.startpoint.x + data.endpoint.x);
+}
+
+
 RS_Vector  RS_Line::getTangentDirection(const RS_Vector& /*point*/)const{
         return getEndpoint() - getStartpoint();
 }

@@ -126,12 +126,14 @@ public:
     virtual void drawPath ( const QPainterPath & path ) = 0;
     virtual void drawHandle(const RS_Vector& p, const RS_Color& c, int size=-1);
 
-    virtual RS_Pen getPen() = 0;
+    virtual RS_Pen getPen() const = 0;
     virtual void setPen(const RS_Pen& pen) = 0;
     virtual void setPen(const RS_Color& color) = 0;
     virtual void setPen(int r, int g, int b) = 0;
     virtual void disablePen() = 0;
+    virtual const QBrush& brush() const = 0;
     virtual void setBrush(const RS_Color& color) = 0;
+    virtual void setBrush(const QBrush& color) = 0;
     virtual void drawPolygon(const QPolygon& a, Qt::FillRule rule=Qt::WindingFill) = 0;
     virtual void erase() = 0;
     virtual int getWidth() = 0;

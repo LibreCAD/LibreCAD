@@ -1642,27 +1642,26 @@ bool RS_EntityContainer::optimizeContours() {
             enList<<e1;
             continue;
         }
-        if(e1->rtti()==RS2::EntityCircle) {
+
+        //detect circles and whole ellipses
+        switch(e1->rtti()){
+        case RS2::EntityEllipse:
+            if(static_cast<RS_Ellipse*>(e1)->isArc())
+                continue;
+        case RS2::EntityCircle:
             //directly detect circles, bug#3443277
             tmp.addEntity(e1->clone());
             enList<<e1;
+        default:
             continue;
         }
-        if(e1->rtti()==RS2::EntityEllipse) {
-            if(static_cast<RS_Ellipse*>(e1)->isArc() == false){
-            tmp.addEntity(e1->clone());
-            enList<<e1;
-            continue;
-            }
-}
+
     }
     //    std::cout<<"RS_EntityContainer::optimizeContours: 1"<<std::endl;
 
     /** remove unsupported entities */
-    const auto itEnd=enList.end();
-    for(auto it=enList.begin();it!=itEnd;it++){
-        removeEntity(*it);
-    }
+    for(RS_Entity* it: enList)
+        removeEntity(it);
 
     /** check and form a closed contour **/
 //    std::cout<<"RS_EntityContainer::optimizeContours: 2"<<std::endl;
@@ -1689,7 +1688,6 @@ bool RS_EntityContainer::optimizeContours() {
 
     while(count()>0){
         double dist(0.);
-//        std::cout<<" count()="<<count()<<std::endl;
         RS_Vector&& vpTmp=getNearestEndpoint(vpEnd,&dist,&next);
         if(dist>1e-8) {
             if(vpEnd.squaredTo(vpStart)<1e-8){
@@ -1706,9 +1704,9 @@ bool RS_EntityContainer::optimizeContours() {
         if(next && closed){ 			//workaround if next is NULL
             next->setProcessed(true);
             RS_Entity* eTmp = next->clone();
-            if(vpEnd.squaredTo(next->getStartpoint())>1e-8)
+            if(vpEnd.squaredTo(eTmp->getStartpoint())>vpEnd.squaredTo(eTmp->getEndpoint()))
                 eTmp->revertDirection();
-            vpEnd=( vpEnd.squaredTo(next->getStartpoint()) > vpEnd.squaredTo(next->getEndpoint()) )? next->getStartpoint():next->getEndpoint();
+            vpEnd=eTmp->getEndpoint();
             tmp.addEntity(eTmp);
         	removeEntity(next);
         } else { 			//workaround if next is NULL
@@ -1898,6 +1896,44 @@ void RS_EntityContainer::draw(RS_Painter* painter, RS_GraphicView* view,
 
         view->drawEntity(painter, e);
     }
+}
+
+/**
+ * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
+ * Contour Area =\oint x dy
+ * @return line integral \oint x dy along the entity
+ */
+double RS_EntityContainer::areaLineIntegral() const
+{
+    //TODO make sure all contour integral is by counter-clockwise
+    double contourArea=0.;
+    //closed area is always positive
+    double closedArea=0.;
+    RS_EntityContainer* loop=const_cast<RS_EntityContainer*>(this);
+
+    // edges:
+    for (RS_Entity* e=loop->firstEntity(RS2::ResolveNone);
+         e!=NULL;
+         e=loop->nextEntity(RS2::ResolveNone)) {
+        e->setLayer(getLayer());
+        switch (e->rtti()) {
+        case RS2::EntityLine:
+        case RS2::EntityArc:
+            contourArea += e->areaLineIntegral();
+            break;
+        case RS2::EntityCircle:
+            closedArea += e->areaLineIntegral();
+            break;
+        case RS2::EntityEllipse:
+            if(static_cast<RS_Ellipse*>(e)->isArc())
+                contourArea += e->areaLineIntegral();
+            else
+                closedArea += e->areaLineIntegral();
+        default:
+            break;
+        }
+    }
+    return fabs(contourArea)+closedArea;
 }
 
 /**

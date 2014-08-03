@@ -150,6 +150,16 @@ Section "Install Section" SecInstall
   SetOutPath "$INSTDIR\resources\qm"
   File "${TRANSLATIONS_DIR}\qt_??.qm"
   File "${TRANSLATIONS_DIR}\qt_??_??.qm"
+  File "${TRANSLATIONS_DIR}\qtbase_??.qm"
+  File "${TRANSLATIONS_DIR}\qtbase_??_??.qm"
+  File "${TRANSLATIONS_DIR}\qtmultimedia_??.qm"
+  File "${TRANSLATIONS_DIR}\qtmultimedia_??_??.qm"
+  File "${TRANSLATIONS_DIR}\qtquick1_??.qm"
+  File "${TRANSLATIONS_DIR}\qtquick1_??_??.qm"
+  File "${TRANSLATIONS_DIR}\qtscript_??.qm"
+  File "${TRANSLATIONS_DIR}\qtscript_??_??.qm"
+  File "${TRANSLATIONS_DIR}\qtxmlpatterns_??.qm"
+  File "${TRANSLATIONS_DIR}\qtxmlpatterns_??_??.qm"
   SetOutPath "$INSTDIR"
 
   ;Store installation folder

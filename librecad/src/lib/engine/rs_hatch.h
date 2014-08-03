@@ -148,6 +148,7 @@ public:
         void setAngle(double angle) {
                 data.angle = angle;
         }
+        double getTotalArea();
 
         virtual void calculateBorders();
         void update();
