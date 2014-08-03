@@ -29,7 +29,7 @@
 #ifndef RS_COMMANDS_H
 #define RS_COMMANDS_H
 
-#include <QMultiHash>
+#include <QHash>
 #include <QObject>
 
 #include "rs.h"
@@ -83,8 +83,8 @@ private:
     RS_Commands(RS_Commands& ) = delete;
     RS_Commands& operator = ( RS_Commands& ) = delete;
 
-    QMultiHash<QString, RS2::ActionType> mainCommands;
-    QMultiHash<QString, RS2::ActionType> shortCommands;
+    QHash<QString, RS2::ActionType> mainCommands;
+    QHash<QString, RS2::ActionType> shortCommands;
     // key=english command , value = translated
     QHash<QString, QString> cmdTranslation;
 };
