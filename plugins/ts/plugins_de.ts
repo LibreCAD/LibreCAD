@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="de">
 <context>
@@ -606,7 +605,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>Kann Datei %1 nicht öffnen</translation>
     </message>
 </context>
@@ -864,12 +863,12 @@
         <location filename="../plotequation/plot.cpp" line="20"/>
         <location filename="../plotequation/plot.cpp" line="27"/>
         <source>Plot plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Plot Plugin</translation>
     </message>
     <message>
         <location filename="../plotequation/plot.cpp" line="27"/>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeichnen</translation>
     </message>
 </context>
 <context>
@@ -877,51 +876,55 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="6"/>
         <source>Plot equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichung plotten</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="9"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+If you don't want to use the parametric form, just leave out "Equation2".
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Dieses Plugin ermöglicht es mathematische Gleichungen zu plotten.
+Wenn man nicht die parametrische Form verwenden möchte, lässt man einfach "Gleichung 2" weg.
+Man kann pi verwenden, wenn der Wert von Pi (d. h. (3*pi)) benötigt wird.
+Als Variable/Parameter der Gleichung kann t oder x verwendet werden.
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="13"/>
         <source>Equation 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichung 1:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="14"/>
         <source>Equation 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichung 2:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="17"/>
         <source>start value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Anfangswert:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>end value:</source>
-        <translation type="unfinished"></translation>
+        <translation>Endwert:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="19"/>
         <source>step size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Schrittweite:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="23"/>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeichnen</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="24"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
 </context>
 <context>
