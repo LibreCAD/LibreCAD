@@ -3386,8 +3386,10 @@ void QC_ApplicationWindow::slotFilePrint() {
 
     // printer setup:
     printer.setOutputFormat(QPrinter::NativeFormat);
+    printer.setOutputFormat(QPrinter::PdfFormat);
 
     QPrintDialog printDialog(&printer, this);
+    printDialog.setOption(QAbstractPrintDialog::PrintToFile);
     if (printDialog.exec() == QDialog::Accepted) {
         //printer.setOutputToFile(true);
         //printer.setOutputFileName(outputFile);
