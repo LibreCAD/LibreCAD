@@ -179,7 +179,7 @@ Section "Install Section" SecInstall
   ; create add/remove software entries
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayName" "${APPNAME}"
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayIcon" "$INSTDIR\LibreCAD.exe"
-  WriteRegStr HKLM "${UNINSTKEY}" "DisplayVersion" "2.0.4"
+  WriteRegStr HKLM "${UNINSTKEY}" "DisplayVersion" "2.0.5"
   WriteRegStr HKLM "${UNINSTKEY}" "Publisher" "LibreCAD Team"
   WriteRegStr HKLM "${UNINSTKEY}" "Version" "2.0"
   WriteRegStr HKLM "${UNINSTKEY}" "HelpLink" "http://librecad.org/cms/home/get-help/forum.html"
