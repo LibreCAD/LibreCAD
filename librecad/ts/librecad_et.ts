@@ -1163,6 +1163,10 @@ Auto-save disabled.</source>
         <source>&amp;Selection pointer</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export as PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>

@@ -705,6 +705,10 @@ Salvamento automático desabilitado.</translation>
         <source>Restrict &amp;Vertically</source>
         <translation type="obsolete">Restrinja &amp;Vertical</translation>
     </message>
+    <message>
+        <source>Export as PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>

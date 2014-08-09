@@ -886,6 +886,10 @@ Autosalvare dezactivata.</translation>
         <source>&amp;OnEntity</source>
         <translation type="obsolete">&amp;Dupa entitate</translation>
     </message>
+    <message>
+        <source>Export as PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>

@@ -2148,6 +2148,10 @@ Salvataggio automatico disattivato</translation>
         <source>&amp;OnEntity</source>
         <translation type="obsolete">&amp;Oggetto</translation>
     </message>
+    <message>
+        <source>Export as PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>

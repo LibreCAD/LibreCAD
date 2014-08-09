@@ -2148,6 +2148,10 @@ Autozapis wyłączony.</translation>
         <source>&amp;Endpoint</source>
         <translation type="obsolete">&amp;Punkt końcowy</translation>
     </message>
+    <message>
+        <source>Export as PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>

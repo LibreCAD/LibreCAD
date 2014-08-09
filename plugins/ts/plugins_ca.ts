@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="ca">
 <context>
@@ -16,7 +17,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../importshp/importshp.cpp" line="40"/>
         <source>Import ESRI Shapefile</source>
-        <translation>Importa el fitxer d'ombrejats ESRI</translation>
+        <translation>Importa el fitxer d&apos;ombrejats ESRI</translation>
     </message>
 </context>
 <context>
@@ -30,7 +31,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../align/align.cpp" line="40"/>
         <source>first base point:</source>
-        <translation>Primer punt d'origen:</translation>
+        <translation>Primer punt d&apos;origen:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="42"/>
@@ -40,7 +41,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../align/align.cpp" line="44"/>
         <source>second base point:</source>
-        <translation>Segon punt d'origen:</translation>
+        <translation>Segon punt d&apos;origen:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="46"/>
@@ -234,7 +235,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>Insertion point</source>
-        <translation>Punt d'inserció</translation>
+        <translation>Punt d&apos;inserció</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="188"/>
@@ -430,7 +431,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
         <source>Draw point elevation</source>
-        <translation>Dibuixa l'elevació del punt</translation>
+        <translation>Dibuixa l&apos;elevació del punt</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="264"/>
@@ -475,12 +476,12 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="327"/>
         <source>Point elevation height is empty</source>
-        <translation>L'alçada de l'elevació del punt és buida</translation>
+        <translation>L&apos;alçada de l&apos;elevació del punt és buida</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="328"/>
         <source>Point elevation separation is empty</source>
-        <translation>La separació de l'elevació del punt és buida</translation>
+        <translation>La separació de l&apos;elevació del punt és buida</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="331"/>
@@ -490,7 +491,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="332"/>
         <source>Point number height is empty</source>
-        <translation>L'alçada del nombre del punt és buida</translation>
+        <translation>L&apos;alçada del nombre del punt és buida</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="333"/>
@@ -505,7 +506,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="337"/>
         <source>Point code height is empty</source>
-        <translation>L'alçada del nombre del punt és buida</translation>
+        <translation>L&apos;alçada del nombre del punt és buida</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="338"/>
@@ -519,7 +520,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>No es pot obrir el fitxer %1</translation>
     </message>
 </context>
@@ -543,7 +544,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../importshp/importshp.cpp" line="56"/>
         <source>Import ESRI Shapefile</source>
-        <translation>Importa el fitxer d'ombrejats ESRI</translation>
+        <translation>Importa el fitxer d&apos;ombrejats ESRI</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="68"/>
@@ -752,7 +753,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../sample/sample.cpp" line="132"/>
         <source>Sample plugin</source>
-        <translation>Connector d'exemple</translation>
+        <translation>Connector d&apos;exemple</translation>
     </message>
 </context>
 <context>
@@ -761,12 +762,12 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
         <location filename="../plotequation/plot.cpp" line="20"/>
         <location filename="../plotequation/plot.cpp" line="27"/>
         <source>Plot plugin</source>
-        <translation>Connector d'impressió</translation>
+        <translation>Connector d&apos;impressió</translation>
     </message>
     <message>
         <location filename="../plotequation/plot.cpp" line="27"/>
         <source>Draw</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Dibuixa</translation>
     </message>
 </context>
 <context>
@@ -774,17 +775,17 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="6"/>
         <source>Plot equation</source>
-        <translation>Equació d'impressió</translation>
+        <translation>Equació d&apos;impressió</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="9"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don't want to use the parametric form, just leave out "Equation2".
+If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
         <translation>Aquest connector us permet imprimir equacions matemàtiques.
-Si voleu usar la forma paramètrica deixeu fora"Equació 2"
+Si voleu usar la forma paramètrica deixeu fora&quot;Equació 2&quot;
 Podeu usar pi si necessiteu el valor de pi (p.ex. (3*pi)).
 Useu t o x en la vostra equació com a variable/paràmetre.
 </translation>

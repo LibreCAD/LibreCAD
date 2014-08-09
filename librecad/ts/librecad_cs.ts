@@ -2144,6 +2144,10 @@ Automatické ukládání bylo vypnuto.</translation>
         <source>&amp;Selection pointer</source>
         <translation>&amp;Ukazatel výběru</translation>
     </message>
+    <message>
+        <source>Export as PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>

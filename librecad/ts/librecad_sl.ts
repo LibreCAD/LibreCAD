@@ -577,6 +577,10 @@ Samodejno shranjevanje zaustalvjeno.</translation>
         <source>&amp;Selection pointer</source>
         <translation>&amp;Kazalec izbire</translation>
     </message>
+    <message>
+        <source>Export as PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>

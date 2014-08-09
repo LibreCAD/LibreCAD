@@ -2177,6 +2177,10 @@ Az automatikus mentés kikapcsolva.</translation>
         <source>&amp;OnEntity</source>
         <translation type="obsolete">&amp;Elemen</translation>
     </message>
+    <message>
+        <source>Export as PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>

@@ -157,22 +157,22 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>匯入</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="690"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="694"/>
         <source>&amp;Edit</source>
         <translation>編輯(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="761"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="765"/>
         <source>&amp;View</source>
         <translation>檢視(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="830"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="834"/>
         <source>&amp;Toolbars</source>
         <translation>工具列(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="862"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="866"/>
         <source>Focus on &amp;Command Line</source>
         <translation>進入指令列(&amp;C)</translation>
     </message>
@@ -181,12 +181,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">CTRL+M</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="880"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="884"/>
         <source>&amp;Select</source>
         <translation>選取(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="917"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="921"/>
         <source>&amp;Draw</source>
         <translation>繪圖(&amp;D)</translation>
     </message>
@@ -196,69 +196,69 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">點(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="928"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="932"/>
         <source>&amp;Line</source>
         <translation>線(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1001"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1005"/>
         <source>&amp;Arc</source>
         <translation>弧(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1017"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1021"/>
         <source>&amp;Circle</source>
         <translation>圓(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1053"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1057"/>
         <source>&amp;Ellipse</source>
         <translation>橢圓(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1081"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1085"/>
         <source>&amp;Spline</source>
         <translation>雲形線(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1091"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1095"/>
         <source>&amp;Polyline</source>
         <translation>聚合線(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1156"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1158"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1160"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1162"/>
         <source>&amp;Dimension</source>
         <translation>標註(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1188"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1192"/>
         <source>&amp;Modify</source>
         <translation>修改(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1275"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1279"/>
         <source>&amp;Snap</source>
         <translation>貼齊(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1286"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1290"/>
         <source>&amp;Info</source>
         <translation>資訊(&amp;I)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1314"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1318"/>
         <source>&amp;Layer</source>
         <translation>圖層(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="662"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1345"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1349"/>
         <source>&amp;Block</source>
         <translation>圖塊(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1396"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1400"/>
         <source>&amp;Scripts</source>
         <translation>腳本(&amp;S)</translation>
     </message>
@@ -267,158 +267,158 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="obsolete">&amp;CAM</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1413"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1417"/>
         <source>About</source>
         <translation>關於</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1420"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1424"/>
         <source>&amp;Manual</source>
         <translation>手冊(&amp;M)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1468"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1472"/>
         <source>Insert Image</source>
         <translation>插入影像</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1557"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1561"/>
         <source>&amp;Window</source>
         <translation>視窗(&amp;W)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1564"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1568"/>
         <source>&amp;Help</source>
         <translation>說明(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1572"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1576"/>
         <source>De&amp;bugging</source>
         <translation>除錯(&amp;B)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1617"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1621"/>
         <source>Pen Selection</source>
         <translation>選擇繪圖筆</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1625"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1629"/>
         <source>Snap Selection</source>
         <translation>選擇捕捉</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1635"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1639"/>
         <source>Tool Options</source>
         <translation>工具選項</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1646"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1650"/>
         <source>CAD Tools</source>
         <translation>CAD 工具</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1815"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1819"/>
         <source>Layer List</source>
         <translation>圖層清單</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1836"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1840"/>
         <source>Block List</source>
         <translation>圖塊清單</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1857"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1861"/>
         <source>Library Browser</source>
         <translation>資料庫瀏覽器</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1866"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1870"/>
         <source>Command line</source>
         <translation>指令列</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="1935"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="1939"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2179"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2183"/>
         <source>Su&amp;b-Window mode</source>
         <translation>子視窗模式(&amp;b)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2182"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2186"/>
         <source>&amp;Cascade</source>
         <translation>重疊顯示(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2184"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2188"/>
         <source>&amp;Tile</source>
         <translation>並排(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2185"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2189"/>
         <source>Tile &amp;Vertically</source>
         <translation>垂直並排(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2186"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2190"/>
         <source>Tile &amp;Horizontally</source>
         <translation>水平並排(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2187"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2191"/>
         <source>Ta&amp;b mode</source>
         <translation>分頁模式(&amp;b)</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2482"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2486"/>
         <source>Creating new file...</source>
         <translation>新建圖檔...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2491"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2495"/>
         <source>Block &apos;%1&apos;</source>
         <translation>圖塊 &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2493"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2497"/>
         <source>unnamed document %1</source>
         <translation>未命名文件 %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2567"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2571"/>
         <source>New Drawing created.</source>
         <translation>新繪圖已建立。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2622"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2626"/>
         <source>New document from template: </source>
         <translation>從模版新建檔案</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2670"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2674"/>
         <source>Select Template aborted</source>
         <translation>選擇模板中止</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2744"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2748"/>
         <source>Opening recent file...</source>
         <translation>開啟最近的檔案...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2820"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2824"/>
         <source>Warning: File already opened : </source>
         <translation>警告：檔案已開啟：</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3956"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3969"/>
         <source>Help files not found</source>
         <translation>未找到幫助資料檔案</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2686"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2853"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2690"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2857"/>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
@@ -427,38 +427,38 @@ Please check the permissions.</source>
 請檢查檔案權限。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2915"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2919"/>
         <source>Loaded document: </source>
         <translation>載入的文件：</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2922"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2926"/>
         <source>Opening aborted</source>
         <translation>已中止開啟</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2936"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2940"/>
         <source>Saving drawing...</source>
         <translation>繪圖儲存中...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2948"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3007"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2952"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3011"/>
         <source>Saved drawing: %1</source>
         <translation>已儲存繪圖: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2951"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2955"/>
         <source>Cannot save the file </source>
         <translation>無法儲存檔案</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2953"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2957"/>
         <source> , please check the filename and permissions.</source>
         <translation>，請檢查檔案名和權限。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2999"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3003"/>
         <source>Cannot save the file
 %1
 Please check the permissions.</source>
@@ -467,32 +467,32 @@ Please check the permissions.</source>
 請檢查檔案權限。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3864"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3877"/>
         <source>Compiler: Clang %1.%2.%3</source>
         <translation>編譯器: Clang %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3866"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3879"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
         <translation>編譯器: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3868"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3881"/>
         <source>Compiler: Microsoft Visual C++&lt;br&gt;</source>
         <translation>編譯器: 微软 MSVC++</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3870"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3883"/>
         <source>Qt Version: %1</source>
         <translation>Qt版本: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3883"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3896"/>
         <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
         <translation>請考慮捐贈給LibreCAD以幫助保持源代碼和網站。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2979"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2983"/>
         <source>Saving drawing under new filename...</source>
         <translation>以新檔名儲存繪圖...</translation>
     </message>
@@ -502,32 +502,32 @@ Please check the permissions.</source>
         <translation>檔案</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="693"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="697"/>
         <source>Edit</source>
         <translation>編輯</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="729"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="733"/>
         <source>Draw &amp;Order</source>
         <translation>同層物件次序</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="764"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="768"/>
         <source>View</source>
         <translation>視圖</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3020"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3024"/>
         <source>Auto-saving drawing...</source>
         <translation>繪圖自動儲存中...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3028"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3032"/>
         <source>Auto-saved drawing</source>
         <translation>繪圖已自動儲存</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3033"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3037"/>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
@@ -538,77 +538,77 @@ Auto-save disabled.</source>
 無法自動儲存。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3038"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3042"/>
         <source>Auto-saving failed</source>
         <translation>自動保存失敗</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3051"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3055"/>
         <source>Exporting drawing...</source>
         <translation>正在匯出繪圖...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3089"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3093"/>
         <source>Export as</source>
         <translation>導出為</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3153"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3157"/>
         <source>Exported: %1</source>
         <translation>已匯出: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3193"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3197"/>
         <source>Exporting...</source>
         <translation>匯出...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3281"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3285"/>
         <source>Export complete</source>
         <translation>匯出完成</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3283"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3287"/>
         <source>Export failed!</source>
         <translation>匯出失敗！</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3364"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3368"/>
         <source>Printing...</source>
         <translation>列印...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3456"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3464"/>
         <source>Printing complete</source>
         <translation>列印完成</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3541"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3554"/>
         <source>Print preview for %1</source>
         <translation>預覽列印 %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3608"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3621"/>
         <source>Exiting application...</source>
         <translation>退出程式...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3845"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3858"/>
         <source>None</source>
         <translation>無</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3851"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3864"/>
         <source>About...</source>
         <translation>關於...</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3859"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3872"/>
         <source>Version: %1</source>
         <translation>版本: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3861"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3874"/>
         <source>SCM Revision: %1</source>
         <translation>SCM 版本: %1</translation>
     </message>
@@ -621,17 +621,17 @@ Auto-save disabled.</source>
         <translation type="obsolete">SVN 修訂: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3871"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3884"/>
         <source>Compiled on: %1</source>
         <translation>編譯: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3873"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3886"/>
         <source>Program Icons Supplied by</source>
         <translation>程式圖示提供</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3874"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3887"/>
         <source>Splash and Logo supplied by</source>
         <translation>登入畫面與標誌提供</translation>
     </message>
@@ -640,12 +640,12 @@ Auto-save disabled.</source>
         <translation type="obsolete">日期: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3876"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3889"/>
         <source>Modules: %1</source>
         <translation>模組: %1</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3878"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3891"/>
         <source>Main Website : </source>
         <translation>主網站：</translation>
     </message>
@@ -654,12 +654,12 @@ Auto-save disabled.</source>
         <translation type="obsolete">請捐贈 LibreCAD，以幫助維持源碼與其網站。</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3948"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3961"/>
         <source>Help</source>
         <translation>求助</translation>
     </message>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3956"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3969"/>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation>報錯，我在檔案系統上無法找到說明文件。</translation>
     </message>
@@ -702,27 +702,32 @@ Auto-save disabled.</source>
         <translation>列印(&amp;P)...</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="298"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="292"/>
+        <source>Export as PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="315"/>
         <source>&amp;Quit</source>
         <translation>&amp;離開</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="314"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="331"/>
         <source>&amp;Grid</source>
         <translation>格點(&amp;G)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="316"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="333"/>
         <source>CTRL-G</source>
         <translation>CTRL-G</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="324"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="341"/>
         <source>&amp;Draft</source>
         <translation>草圖(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="333"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="350"/>
         <source>&amp;Statusbar</source>
         <translation>狀態列(&amp;S)</translation>
     </message>
@@ -743,7 +748,7 @@ Auto-save disabled.</source>
         <translation type="obsolete">返回(&amp;b)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="416"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="433"/>
         <source>&amp;Selection pointer</source>
         <translation>選擇指向</translation>
     </message>
@@ -792,22 +797,22 @@ Auto-save disabled.</source>
         <translation type="obsolete">垂直限制(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="1383"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="1400"/>
         <source>&amp;Preferences</source>
         <translation>偏好設定(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="1385"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="1402"/>
         <source>&amp;Application Preferences</source>
         <translation>應用程式偏好設定(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="1408"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="1425"/>
         <source>Open IDE</source>
         <translation>開啟 IDE</translation>
     </message>
     <message>
-        <location filename="../src/ui/qg_actionfactory.cpp" line="1418"/>
+        <location filename="../src/ui/qg_actionfactory.cpp" line="1435"/>
         <source>Run Script..</source>
         <translation>執行腳本..</translation>
     </message>
@@ -7503,10 +7508,10 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2689"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2857"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="2998"/>
-        <location filename="../src/main/qc_applicationwindow.cpp" line="3032"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2693"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="2861"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3002"/>
+        <location filename="../src/main/qc_applicationwindow.cpp" line="3036"/>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="169"/>
         <source>Warning</source>
         <translation>警告</translation>

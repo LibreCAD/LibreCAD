@@ -577,6 +577,10 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
         <source>&amp;Selection pointer</source>
         <translation>Izvēlēšanā&amp;s rādītājs</translation>
     </message>
+    <message>
+        <source>Export as PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>
