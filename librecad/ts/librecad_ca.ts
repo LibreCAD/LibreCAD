@@ -1,75 +1,75 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="ca" sourcelanguage="en">
 <context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>2 Points, Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>2 punts i radi</translation>
     </message>
     <message>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished"></translation>
+        <translation>El radi=%1 és massa petit pels punts seleccionats\n
+La distància entre els punts=%2 és més gran que el diàmetre=%3</translation>
     </message>
     <message>
         <source>Select from two possible circle centers</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccioneu entre els dos possibles centres</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished">Especifiqueu el primer punt</translation>
+        <translation>Especifiqueu el primer punt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancel·la</translation>
+        <translation>Cancel·la</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished">Especifiqueu el segon punt</translation>
+        <translation>Especifiqueu el segon punt</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Enrere</translation>
+        <translation>Enrere</translation>
     </message>
     <message>
         <source>Select circle center</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccioneu el centre</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
         <source>&amp;Spline through points</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Spline per punts</translation>
     </message>
     <message>
         <source>Specify first control point</source>
-        <translation type="unfinished">Especifiqueu el primer punt de control</translation>
+        <translation>Especifiqueu el primer punt de control</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancel·la</translation>
+        <translation>Cancel·la</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation type="unfinished">Especifiqueu el punt de control següent o [%1]</translation>
+        <translation>Especifiqueu el següent punt de control o [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Enrere</translation>
+        <translation>Enrere</translation>
     </message>
     <message>
         <source>Specify next control point</source>
-        <translation type="unfinished">Especifiqueu el punt de control següent</translation>
+        <translation>Especifiqueu el següent punt de control</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished">No es pot desfer: Encara no hi ha definides prou entitats.</translation>
+        <translation>No es pot desfer: Encara no hi ha definides prou entitats.</translation>
     </message>
     <message>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished"></translation>
+        <translation>No es pot desfer: No s'ha pogut refer res.</translation>
     </message>
 </context>
 <context>
@@ -119,7 +119,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
-        <translation>Posa el focus en la &amp;línia d&apos;ordres</translation>
+        <translation>Cursor a la línia d'&amp;ordres</translation>
     </message>
     <message>
         <source>&amp;View</source>
@@ -147,7 +147,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     </message>
     <message>
         <source>&amp;Draw</source>
-        <translation>&amp;Traça</translation>
+        <translation>&amp;Dibuixa</translation>
     </message>
     <message>
         <source>&amp;Dimension</source>
@@ -203,7 +203,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     </message>
     <message>
         <source>Creating new file...</source>
-        <translation>S&apos;està creant un fitxer nou...</translation>
+        <translation>S'està creant un fitxer nou...</translation>
     </message>
     <message>
         <source>unnamed document %1</source>
@@ -211,23 +211,23 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation>S&apos;està obrint un fitxer recent...</translation>
+        <translation>S'està obrint un fitxer recent...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
-        <translation>Document carregat:</translation>
+        <translation>S'ha carregat el document: </translation>
     </message>
     <message>
         <source>Opening aborted</source>
-        <translation>S&apos;ha interromput l&apos;obertura del fitxer</translation>
+        <translation>S'ha interromput l'obertura del fitxer</translation>
     </message>
     <message>
         <source>Printing...</source>
-        <translation>S&apos;està imprimint...</translation>
+        <translation>S'està imprimint...</translation>
     </message>
     <message>
         <source>Exiting application...</source>
-        <translation>S&apos;està sortint de l&apos;aplicació...</translation>
+        <translation>S'està sortint de l'aplicació...</translation>
     </message>
     <message>
         <source>About...</source>
@@ -247,55 +247,55 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     </message>
     <message>
         <source>Print preview for %1</source>
-        <translation>Previsualització d&apos;impressió per a %1</translation>
+        <translation>Previsualització d'impressió per a %1</translation>
     </message>
     <message>
         <source>New Drawing created.</source>
-        <translation>S&apos;ha creat un dibuix nou.</translation>
+        <translation>S'ha creat un dibuix nou.</translation>
     </message>
     <message>
         <source>Saving drawing...</source>
-        <translation>S&apos;està desant el dibuix...</translation>
+        <translation>S'està desant el dibuix...</translation>
     </message>
     <message>
         <source>Saved drawing: %1</source>
-        <translation>S&apos;ha desat el dibuix: %1</translation>
+        <translation>S'ha desat el dibuix: %1</translation>
     </message>
     <message>
         <source>Saving drawing under new filename...</source>
-        <translation>S&apos;està desant el dibuix sota un nom nou...</translation>
+        <translation>S'està desant el dibuix sota un nom nou...</translation>
     </message>
     <message>
         <source>Exporting drawing...</source>
-        <translation>S&apos;està exportant el dibuix...</translation>
+        <translation>S'està exportant el dibuix...</translation>
     </message>
     <message>
         <source>Exported: %1</source>
-        <translation>Exportat: %1</translation>
+        <translation>S'ha exportat: %1</translation>
     </message>
     <message>
         <source>Exporting...</source>
-        <translation>S&apos;està exportant...</translation>
+        <translation>S'està exportant...</translation>
     </message>
     <message>
         <source>Export complete</source>
-        <translation>S&apos;ha completat l&apos;exportació</translation>
+        <translation>S'ha completat l'exportació</translation>
     </message>
     <message>
         <source>Export failed!</source>
-        <translation>Ha fallat l&apos;exportació!</translation>
+        <translation>Ha fallat l'exportació!</translation>
     </message>
     <message>
         <source>Printing complete</source>
-        <translation>S&apos;ha completat la impressió</translation>
+        <translation>S'ha completat la impressió</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation>Línia d&apos;ordres</translation>
+        <translation>Línia d'ordres</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Bloc &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Bloc '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -319,7 +319,7 @@ Comproveu els permisos.</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>No res</translation>
+        <translation>Cap</translation>
     </message>
     <message>
         <source>Modules: %1</source>
@@ -330,16 +330,16 @@ Comproveu els permisos.</translation>
         <translation>Fi&amp;nestres</translation>
     </message>
     <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation>S&apos;està executant l&apos;script &apos;%1&apos;</translation>
+        <source>Running script '%1'</source>
+        <translation>S'està executant l'script '%1'</translation>
     </message>
     <message>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translation>S&apos;està inserint el bloc &apos;%1&apos;</translation>
+        <source>Inserting block '%1'</source>
+        <translation>S'està inserint el bloc '%1'</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation>P&amp;olilínia</translation>
+        <translation>&amp;Polilínia</translation>
     </message>
     <message>
         <source>Insert Image</source>
@@ -347,11 +347,11 @@ Comproveu els permisos.</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
-        <translation>S&apos;està desant automàticament el dibuix...</translation>
+        <translation>S'està desant automàticament el dibuix...</translation>
     </message>
     <message>
         <source>Auto-saved drawing</source>
-        <translation>El dibuix s&apos;ha desat automàticament</translation>
+        <translation>El dibuix s'ha desat automàticament</translation>
     </message>
     <message>
         <source>Cannot auto-save the file
@@ -361,15 +361,15 @@ Auto-save disabled.</source>
         <translation>No es pot desar automàticament el fitxer
 %1
 Comproveu els permisos.
-S&apos;ha desactivat el desament automàtic.</translation>
+S'ha desactivat el desament automàtic.</translation>
     </message>
     <message>
         <source>Help</source>
         <translation>Ajuda</translation>
     </message>
     <message>
-        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
-        <translation>No es poden trobar els fitxers d&apos;ajuda en el sistema de fitxers.</translation>
+        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
+        <translation>No es poden trobar els fitxers d'ajuda en el sistema de fitxers.</translation>
     </message>
     <message>
         <source>Import</source>
@@ -377,7 +377,7 @@ S&apos;ha desactivat el desament automàtic.</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
-        <translation>&amp;Barres d&apos;eines</translation>
+        <translation>&amp;Barres d'eines</translation>
     </message>
     <message>
         <source>Compiled on: %1</source>
@@ -438,75 +438,75 @@ S&apos;ha desactivat el desament automàtic.</translation>
     </message>
     <message>
         <source>Draw &amp;Order</source>
-        <translation>&amp;Ordre de dibuix</translation>
+        <translation>&amp;Ordena el dibuix</translation>
     </message>
     <message>
         <source>New document from template: </source>
-        <translation type="unfinished"></translation>
+        <translation>Document nou des de plantilla:</translation>
     </message>
     <message>
         <source>Select Template aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>S'ha interromput la selecció de plantilla</translation>
     </message>
     <message>
         <source>Auto-saving failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ha fallat el desament automàtic</translation>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fitxer</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Edita</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualització</translation>
     </message>
     <message>
         <source>Pen Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecció de traç</translation>
     </message>
     <message>
         <source>Snap Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Força la selecció</translation>
     </message>
     <message>
         <source>Tool Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opcions d'eina</translation>
     </message>
     <message>
         <source>CAD Tools</source>
-        <translation type="unfinished">Eines CAD</translation>
+        <translation>Eines CAD</translation>
     </message>
     <message>
         <source>Export as</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporta com</translation>
     </message>
     <message>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="unfinished"></translation>
+        <translation>Compilador: Clang %1.%2.%3</translation>
     </message>
     <message>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="unfinished"></translation>
+        <translation>Compilador: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
         <source>Compiler: Microsoft Visual C++&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Compilador: Microsoft Visual C++&lt;br&gt;</translation>
     </message>
     <message>
         <source>Qt Version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Versió Qt: %1</translation>
     </message>
     <message>
         <source>Help files not found</source>
-        <translation type="unfinished"></translation>
+        <translation>No s'han trobat els fitxers d'ajuda</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="unfinished">&amp;Spline</translation>
+        <translation>&amp;Spline</translation>
     </message>
 </context>
 <context>
@@ -523,7 +523,7 @@ S&apos;ha desactivat el desament automàtic.</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation>S&apos;està tancant el dibuix</translation>
+        <translation>S'està tancant el dibuix</translation>
     </message>
 </context>
 <context>
@@ -570,11 +570,11 @@ S&apos;ha desactivat el desament automàtic.</translation>
     </message>
     <message>
         <source>&amp;Application Preferences</source>
-        <translation>Preferències de l&apos;&amp;aplicació</translation>
+        <translation>Preferències de l'&amp;aplicació</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation>Barra d&apos;&amp;estat</translation>
+        <translation>Barra d'&amp;estat</translation>
     </message>
     <message>
         <source>&amp;Draft</source>
@@ -602,7 +602,7 @@ S&apos;ha desactivat el desament automàtic.</translation>
     </message>
     <message>
         <source>CTRL-G</source>
-        <translation>CTRL-G</translation>
+        <translation>Ctrl-G</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -629,57 +629,62 @@ S&apos;ha desactivat el desament automàtic.</translation>
     <name>QG_ActiveLayerName</name>
     <message>
         <source>Selection</source>
-        <translation type="unfinished">Selecció</translation>
+        <translation>Selecció</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Current Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa actual</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Nom de la capa actual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation>Opcions d&apos;arc</translation>
+        <translation>Opcions d'arc</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>Sentit de les agulles del rellotge</translation>
+        <translation>En sentit horari</translation>
     </message>
     <message>
         <source>Counterclockwise</source>
-        <translation>Sentit contrari al de les agulles del rellotge</translation>
+        <translation>En sentit anti-horari</translation>
     </message>
 </context>
 <context>
     <name>QG_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation>Opcions d&apos;arc tangencial</translation>
+        <translation>Opcions d'arc tangent</translation>
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation>Radi de l&apos;arc tangencial</translation>
+        <translation>Radi de l'arc tangent</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>Angle oposat total de l&apos;arc tangencial</translation>
+        <translation>Angle complementari de l'arc tangent</translation>
     </message>
     <message>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translatorcomment>Dibuixa un arc tangent donat el radi</translatorcomment>
         <translation>Radi</translation>
     </message>
     <message>
@@ -692,7 +697,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation>Opcions de bisell</translation>
+        <translation>Opcions de bisella</translation>
     </message>
     <message>
         <source>Trim</source>
@@ -727,15 +732,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Renaming Block</source>
-        <translation>S&apos;està canviant el nom del bloc</translation>
+        <translation>S'està canviant el nom del bloc</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>No es pot canviar el nom del bloc. Ja hi ha un bloc amb el nom &quot;%1&quot;.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>No es pot canviar el nom del bloc. Ja hi ha un bloc amb el nom "%1".</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -846,7 +851,7 @@ en una finestra separada</translation>
     </message>
     <message>
         <source>Arc with Center, Point, Angles</source>
-        <translation>Arc amb centre, punt, angles</translation>
+        <translation>Arc amb centre, punt i angles</translation>
     </message>
     <message>
         <source>Back to main menu</source>
@@ -858,7 +863,7 @@ en una finestra separada</translation>
     </message>
     <message>
         <source>Arc tangential to base entity with radius</source>
-        <translation>Arc tangent a entitat de base amb radi</translation>
+        <translation>Arc tangent a entitat  base amb radi</translation>
     </message>
 </context>
 <context>
@@ -889,83 +894,95 @@ en una finestra separada</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Concèntriques</translation>
+        <translation>Concèntrica</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Circle inscribed in a triangle, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Circle inscribed in a triangle, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dibuixa una circumferència inscrita en un triangle, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangent a 3 línies&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Dibuixa una circumferència inscrita en un triangle, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangent a 3 línies&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Dibuixa una circumferència tangent a dues circumferències, donat el radi&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Dibuixa una circumferència tangent a dues circumferències, donat el radi&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of three circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of three circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Dibuixa una circumferència tangent a tres circumferències&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Dibuixa una circumferència tangent a tres circumferències&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Dibuixa una circumferència tangent a una circumferència, que passa per dos punts donats&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Dibuixa una circumferència tangent a una altra i que passi per dos punts donats&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Dibuixa una circumferència tangent a tres línies/arcs/circumferències&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Dibuixa una circumferència tangent a altres dos i que passi  per un punt donat&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:8pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt; font-style:italic;"&gt;i.e.&lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;\n
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;\n
+p, li { white-space: pre-wrap; }\n
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:8pt; font-weight:400; font-style:normal;"&gt;\n
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Dibuixa una circumferència inscrita en un triangle, &lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt; font-style:italic;"&gt;p.ex.&lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;, tangent a 3 línies. Useu-ho enlloc de la nova característica &amp;quot;Circumferència tangent 3&amp;quot; &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circle with 2 Points and Radius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circumferència amb 2 punts i radi&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1040,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Ellipse arc with center, two points and angles</source>
-        <translation>Arc d&apos;el·lipse a partir del centre, dos punts i els angles</translation>
+        <translation>Arc d'el·lipse a partir del centre, dos punts i els angles</translation>
     </message>
     <message>
         <source>Ellipse with Center and two points</source>
@@ -1035,31 +1052,31 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation>Dibuixa una el·lipse a partir dels focus i un punt de l&apos;el·lipse</translation>
+        <translation>Dibuixa una el·lipse a partir dels focus i un punt de l'el·lipse</translation>
     </message>
     <message>
         <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation>Dibuixa una el·lipse amb els eixos en les direccions x/y a partir de quatre punts de l&apos;el·lipse</translation>
+        <translation>Dibuixa una el·lipse amb els eixos en les direccions x/y a partir de quatre punts de l'el·lipse</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dibuixa una el·lipse inscrita en un quadrilàter, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangent a quatre línies&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Dibuixa una el·lipse inscrita en un quadrilàter, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangent a quatre línies&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Concèntriques</translation>
+        <translation>Concèntrica</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dibuixa una el·lipse a partir del centre i 3 punts en l&apos;el·lipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dibuixa una el·lipse a partir del centre i 3 punts en l'el·lipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1074,11 +1091,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Distance (Point, Point)</source>
-        <translation>Distància (punt, punt)</translation>
+        <translation>Distància de punt a punt</translation>
     </message>
     <message>
         <source>Distance (Entity, Point)</source>
-        <translation>Distància (entitat, punt)</translation>
+        <translation>Distància d'entitat a punt</translation>
     </message>
     <message>
         <source>Angle</source>
@@ -1090,7 +1107,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Area of polygon</source>
-        <translation>Àrea d&apos;un polígon</translation>
+        <translation>Àrea d'un polígon</translation>
     </message>
     <message>
         <source>Concentric</source>
@@ -1125,7 +1142,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Tangents from point to circle</source>
-        <translation>Tangent a una circumferencia des d&apos;un punt</translation>
+        <translation>Tangents a una circumferencia des d'un punt</translation>
     </message>
     <message>
         <source>Line with two points</source>
@@ -1183,64 +1200,64 @@ p, li { white-space: pre-wrap; }
         <translation>Crea un bloc</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Lines&quot;</source>
-        <translation>Mostra la barra d&apos;eines &quot;Línies&quot;</translation>
+        <source>Show toolbar "Lines"</source>
+        <translation>Mostra la barra d'eines "Línies"</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Arcs&quot;</source>
-        <translation>Mostra la barra d&apos;eines &quot;Arcs&quot;</translation>
+        <source>Show toolbar "Arcs"</source>
+        <translation>Mostra la barra d'eines "Arcs"</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Circles&quot;</source>
-        <translation>Mostra la barra d&apos;eines &quot;Circumferències&quot;</translation>
+        <source>Show toolbar "Circles"</source>
+        <translation>Mostra la barra d'eines "Circumferències"</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Ellipses&quot;</source>
-        <translation>Mostra la barra d&apos;eines &quot;El·lipses&quot;</translation>
+        <source>Show toolbar "Ellipses"</source>
+        <translation>Mostra la barra d'eines "El·lipses"</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Polylines&quot;</source>
-        <translation>Mostra la barra d&apos;eines &quot;Polilínies&quot;</translation>
+        <source>Show toolbar "Polylines"</source>
+        <translation>Mostra la barra d'eines "Polilínies"</translation>
     </message>
     <message>
         <source>Draw Splines</source>
-        <translation>Traça splines</translation>
+        <translation>Dibuixa  splines</translation>
     </message>
     <message>
         <source>Draw Points</source>
-        <translation>Traça punts</translation>
+        <translation>Dibuixa punts</translation>
     </message>
     <message>
         <source>Insert Text</source>
         <translation type="obsolete">Insereix un text</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Dimensions&quot;</source>
-        <translation>Mostra la barra d&apos;eines &quot;Cotes&quot;</translation>
+        <source>Show toolbar "Dimensions"</source>
+        <translation>Mostra la barra d'eines "Cotes"</translation>
     </message>
     <message>
         <source>Create Hatch</source>
-        <translation>Crea un ratllat</translation>
+        <translation>Crea un ombrejat</translation>
     </message>
     <message>
         <source>Insert Image</source>
         <translation>Insereix una imatge</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Modify&quot;</source>
-        <translation>Mostra la barra d&apos;eines &quot;Modifica&quot;</translation>
+        <source>Show toolbar "Modify"</source>
+        <translation>Mostra la barra d'eines "Modifica"</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Info&quot;</source>
-        <translation>Mostra la barra d&apos;eines &quot;Informació&quot;</translation>
+        <source>Show toolbar "Info"</source>
+        <translation>Mostra la barra d'eines "Informació"</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Select&quot;</source>
-        <translation>Mostra la barra d&apos;eines &quot;Selecció&quot;</translation>
+        <source>Show toolbar "Select"</source>
+        <translation>Mostra la barra d'eines "Selecció"</translation>
     </message>
     <message>
         <source>Insert Multi-line Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Insereix Text Multi-línia</translation>
     </message>
 </context>
 <context>
@@ -1275,7 +1292,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Stretch</source>
-        <translation>Amplia</translation>
+        <translation>Estira</translation>
     </message>
     <message>
         <source>Round</source>
@@ -1283,7 +1300,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bevel</source>
-        <translation>Bisell</translation>
+        <translation>Bisella</translation>
     </message>
     <message>
         <source>Trim by amount</source>
@@ -1291,19 +1308,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim / Extend two</source>
-        <translation>Redueix / estén dos</translation>
+        <translation>Redueix / Estén les dos</translation>
     </message>
     <message>
         <source>Trim / Extend</source>
-        <translation>Redueix / estén</translation>
+        <translation>Redueix / Estén</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
-        <translation>Edita els atributs de l&apos;entitat</translation>
+        <translation>Edita els atributs de l'entitat</translation>
     </message>
     <message>
         <source>Edit Entity Geometry</source>
-        <translation>Edita la geometria de l&apos;entitat</translation>
+        <translation>Edita la geometria de l'entitat</translation>
     </message>
     <message>
         <source>Mirror</source>
@@ -1311,11 +1328,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Divide</source>
-        <translation>Divisió</translation>
+        <translation>Divideix</translation>
     </message>
     <message>
         <source>Explode Text into Letters</source>
-        <translation>Explota text en lletres</translation>
+        <translation>Explota el text en lletres</translation>
     </message>
     <message>
         <source>Edit Text</source>
@@ -1327,23 +1344,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Rotate Two</source>
-        <translation>Gira dos</translation>
+        <translation>Gira a dos</translation>
     </message>
     <message>
         <source>Offset (Experimental Feature, work in progress)</source>
-        <translation>Desfasament (característica experimental, s&apos;hi està treballant)</translation>
+        <translation>Desfasa (característica experimental, s'hi està treballant)</translation>
     </message>
     <message>
         <source>Revert direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Canvia la direcció</translation>
     </message>
     <message>
         <source>Lengthen</source>
-        <translation type="unfinished"></translation>
+        <translation>Allarga</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Arrodoneix entre una cantonada interior o exterior&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1389,11 +1406,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim segments</source>
-        <translation>Redueix segments</translation>
+        <translation>Redueix els segments</translation>
     </message>
     <message>
         <source>Append node</source>
-        <translation>Allarga una polilínia</translation>
+        <translation>Afegeix un node</translation>
     </message>
     <message>
         <source>Polyline equidistant</source>
@@ -1405,7 +1422,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Concèntric</translation>
+        <translation>Concèntrica</translation>
     </message>
 </context>
 <context>
@@ -1424,15 +1441,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Select intersected entities</source>
-        <translation>Selecciona les entitats que s&apos;interseccionen</translation>
+        <translation>Selecciona les entitats que s'intersequen</translation>
     </message>
     <message>
         <source>Deselect intersected entities</source>
-        <translation>Desselecciona les entitats que s&apos;interseccionen</translation>
+        <translation>(De)selecciona les entitats que s'intersequen</translation>
     </message>
     <message>
         <source>Deselect all</source>
-        <translation>Desselecciona-ho tot</translation>
+        <translation>(De)selecciona-ho tot</translation>
     </message>
     <message>
         <source>Invert Selection</source>
@@ -1444,23 +1461,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>(De-)Select contour</source>
-        <translation>(Des)Selecciona contorns</translation>
+        <translation>(De)selecciona el contorn</translation>
     </message>
     <message>
         <source>(De-)Select entity</source>
-        <translation>(Des)Selecciona entitats</translation>
+        <translation>(De)selecciona l'entitat</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation>Desselecciona una finestra</translation>
+        <translation>Desselecciona la finestra</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation>Selecciona una finestra</translation>
+        <translation>Selecciona la finestra</translation>
     </message>
     <message>
         <source>Continue action</source>
-        <translation>Continua l&apos;acció</translation>
+        <translation>Continua l'acció</translation>
     </message>
 </context>
 <context>
@@ -1479,14 +1496,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Interpolation Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Spline d'interpolació</translation>
     </message>
 </context>
 <context>
     <name>QG_CircleOptions</name>
     <message>
         <source>Circle Options</source>
-        <translation>Opcions de circumferències</translation>
+        <translation>Opcions de circumferència</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -1497,11 +1514,11 @@ p, li { white-space: pre-wrap; }
     <name>QG_CircleTan2Options</name>
     <message>
         <source>Circle Tangential2 Options</source>
-        <translation>Opcions de circumferència tangencial2</translation>
+        <translation>Opcions de circumferència tangent 2</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radi de la circumferència tangent que s&apos;ha de traçar&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radi de la circumferència tangent que s'ha de traçar&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -1548,7 +1565,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Black / White</source>
-        <translation>Negre / blanc</translation>
+        <translation>Blanc / Negre</translation>
     </message>
     <message>
         <source>Gray</source>
@@ -1564,7 +1581,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Unchanged</source>
-        <translation>No canviat</translation>
+        <translation>Sense canvis</translation>
     </message>
     <message>
         <source>Dark Red</source>
@@ -1606,7 +1623,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_CommandWidget</name>
     <message>
         <source>Command Line</source>
-        <translation>Línia d&apos;ordres</translation>
+        <translation>Línia d'ordres</translation>
     </message>
     <message>
         <source>Command:</source>
@@ -1618,7 +1635,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Command history and output</source>
-        <translation>Historial i sortida d&apos;ordres</translation>
+        <translation>Historial i sortida d'ordres</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -1626,15 +1643,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;type in coordinates or commands&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;teclegeu coordenades o ordres&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Copia</translation>
+        <translation>&amp;Copia</translation>
     </message>
     <message>
         <source>select&amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccion&amp;a-ho tot</translation>
     </message>
 </context>
 <context>
@@ -1695,22 +1712,22 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>⌀</source>
-        <translation type="unfinished"></translation>
+        <translation>⌀</translation>
     </message>
     <message utf8="true">
         <source>π</source>
-        <translation type="unfinished"></translation>
+        <translation>π</translation>
     </message>
 </context>
 <context>
     <name>QG_DimensionLabelEditor</name>
     <message>
         <source>Dimension Label Editor</source>
-        <translation>Editor de cotes lineals</translation>
+        <translation>Editor d'etiquetes de cota</translation>
     </message>
     <message>
         <source>Dimension Label:</source>
-        <translation>Cota lineal:</translation>
+        <translation>Etiqueta de cota:</translation>
     </message>
     <message>
         <source>Label:</source>
@@ -1746,11 +1763,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>⌀ (Diameter)</source>
-        <translation type="unfinished"></translation>
+        <translation>⌀ (Diàmetre)</translation>
     </message>
     <message utf8="true">
         <source>π (Pi)</source>
-        <translation type="unfinished"></translation>
+        <translation>π (Pi)</translation>
     </message>
 </context>
 <context>
@@ -1797,7 +1814,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -1824,7 +1841,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -1867,7 +1884,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -1898,7 +1915,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -1921,7 +1938,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -1992,7 +2009,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -2007,7 +2024,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_DlgHatch</name>
     <message>
         <source>Choose Hatch Attributes</source>
-        <translation>Trieu els atributs de ratllat</translation>
+        <translation>Trieu els atributs d'ombrejat</translation>
     </message>
     <message>
         <source>Pattern</source>
@@ -2035,7 +2052,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -2082,7 +2099,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>path:</source>
-        <translation>camí:</translation>
+        <translation>Camí:</translation>
     </message>
     <message>
         <source>insert (y):</source>
@@ -2094,7 +2111,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -2110,7 +2127,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>DPI</source>
-        <translation type="unfinished"></translation>
+        <translation>PPP</translation>
     </message>
 </context>
 <context>
@@ -2120,16 +2137,16 @@ p, li { white-space: pre-wrap; }
         <translation>Benvinguts</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
-Escolliu la unitat que voleu utilitzar per a nosus dibuixos i el vostre idioma preferit.&lt;br&gt;
-Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de LibreCAD.</translation>
+Escolliu la unitat que voleu utilitzar per a nous dibuixos i el vostre idioma preferit.&lt;br&gt;
+Podreu canviar aquests paràmetres més endavant des dell menú Edita/Preferències de LibreCAD.</translation>
     </message>
     <message>
         <source>Default Unit:</source>
@@ -2137,15 +2154,15 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>GUI Language:</source>
-        <translation>Llengua de la interfície gràfica:</translation>
+        <translation>Idioma de la interfície gràfica:</translation>
     </message>
     <message>
         <source>Command Language:</source>
-        <translation>Llengua de la línia d&apos;ordres:</translation>
+        <translation>Idioma de la línia d'ordres:</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="obsolete">D&apos;acord</translation>
+        <translation type="obsolete">D'acord</translation>
     </message>
 </context>
 <context>
@@ -2164,11 +2181,11 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>Insertion point (x):</source>
-        <translation>Punt d&apos;inserció (x):</translation>
+        <translation>Punt d'inserció (x):</translation>
     </message>
     <message>
         <source>Insertion point (y):</source>
-        <translation>Punt d&apos;inserció (y):</translation>
+        <translation>Punt d'inserció (y):</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -2196,7 +2213,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -2247,7 +2264,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -2258,107 +2275,107 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     <name>QG_DlgMText</name>
     <message>
         <source>MText</source>
-        <translation type="unfinished"></translation>
+        <translation>TextM</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Capa:</translation>
+        <translation>Capa:</translation>
     </message>
     <message>
         <source>Font</source>
-        <translation type="unfinished">Tipus de lletra</translation>
+        <translation>Tipus de lletra</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation type="unfinished">&amp;Alçada:</translation>
+        <translation>&amp;Alçada:</translation>
     </message>
     <message>
         <source>Line &amp;spacing:</source>
-        <translation type="unfinished">&amp;Espaiat de línies:</translation>
+        <translation>&amp;Espaiat entre línies:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
-        <translation type="unfinished">Espaiat de línies &amp;predeterminat</translation>
+        <translation>Espaiat entre línies &amp;predeterminat</translation>
     </message>
     <message>
         <source>Alt+D</source>
-        <translation type="unfinished">Alt+D</translation>
+        <translation>Alt+D</translation>
     </message>
     <message>
         <source>Alignment</source>
-        <translation type="unfinished">Alineació</translation>
+        <translation>Alineació</translation>
     </message>
     <message>
         <source>Top Right</source>
-        <translation type="unfinished">Dalt dreta</translation>
+        <translation>Dalt dreta</translation>
     </message>
     <message>
         <source>Top Left</source>
-        <translation type="unfinished">Dalt esquerra</translation>
+        <translation>Dalt esquerra</translation>
     </message>
     <message>
         <source>Middle Left</source>
-        <translation type="unfinished">Mig esquerra</translation>
+        <translation>Mig esquerra</translation>
     </message>
     <message>
         <source>Middle Center</source>
-        <translation type="unfinished">Mig centre</translation>
+        <translation>Mig centre</translation>
     </message>
     <message>
         <source>Middle Right</source>
-        <translation type="unfinished">Mig dreta</translation>
+        <translation>Mig dreta</translation>
     </message>
     <message>
         <source>Bottom Left</source>
-        <translation type="unfinished">Baix esquerra</translation>
+        <translation>Baix esquerra</translation>
     </message>
     <message>
         <source>Bottom Right</source>
-        <translation type="unfinished">Baix dreta</translation>
+        <translation>Baix dreta</translation>
     </message>
     <message>
         <source>Bottom Center</source>
-        <translation type="unfinished">Baix centre</translation>
+        <translation>Baix centre</translation>
     </message>
     <message>
         <source>Top Center</source>
-        <translation type="unfinished">Dalt centre</translation>
+        <translation>Dalt centre</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished">Angle</translation>
+        <translation>Angle</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation type="unfinished">Text:</translation>
+        <translation>Text:</translation>
     </message>
     <message>
         <source>Clear Text</source>
-        <translation type="unfinished">Buida el text</translation>
+        <translation>Neteja el text</translation>
     </message>
     <message>
         <source>Load Text From File</source>
-        <translation type="unfinished">Carrega el text des d&apos;un fitxer</translation>
+        <translation>Carrega el text des d'un fitxer</translation>
     </message>
     <message>
         <source>Save Text To File</source>
-        <translation type="unfinished">Desa el text en un fitxer</translation>
+        <translation>Desa el text en un fitxer</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Retalla</translation>
+        <translation>Retalla</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Copia</translation>
+        <translation>Copia</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished">Enganxa</translation>
+        <translation>Enganxa</translation>
     </message>
     <message>
         <source>Insert Symbol</source>
-        <translation type="unfinished">Caràcter especial</translation>
+        <translation>Caràcter especial</translation>
     </message>
     <message utf8="true">
         <source>Diameter (ø)</source>
@@ -2366,503 +2383,503 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message utf8="true">
         <source>Degree (°)</source>
-        <translation type="unfinished">Grau (°)</translation>
+        <translation>Grau (°)</translation>
     </message>
     <message utf8="true">
         <source>Plus / Minus (±)</source>
-        <translation type="unfinished">Més / Menys (±)</translation>
+        <translation>Més / Menys (±)</translation>
     </message>
     <message>
         <source>At (@)</source>
-        <translation type="unfinished">Arrova (@)</translation>
+        <translation>Arrova (@)</translation>
     </message>
     <message>
         <source>Hash (#)</source>
-        <translation type="unfinished">Coixinet (#)</translation>
+        <translation>Coixinet (#)</translation>
     </message>
     <message>
         <source>Dollar ($)</source>
-        <translation type="unfinished">Dòlar ($)</translation>
+        <translation>Dòlar ($)</translation>
     </message>
     <message utf8="true">
         <source>Copyright (©)</source>
-        <translation type="unfinished">Copyright (©)</translation>
+        <translation>Copyright (©)</translation>
     </message>
     <message utf8="true">
         <source>Registered (®)</source>
-        <translation type="unfinished">Registrat (®)</translation>
+        <translation>Registrat (®)</translation>
     </message>
     <message utf8="true">
         <source>Paragraph (§)</source>
-        <translation type="unfinished">Paràgraf (§)</translation>
+        <translation>Paràgraf (§)</translation>
     </message>
     <message utf8="true">
         <source>Pi (π)</source>
-        <translation type="unfinished">Pi (π)</translation>
+        <translation>Pi (π)</translation>
     </message>
     <message utf8="true">
         <source>Pound (£)</source>
-        <translation type="unfinished">Lliura (£)</translation>
+        <translation>Lliura (£)</translation>
     </message>
     <message utf8="true">
         <source>Yen (¥)</source>
-        <translation type="unfinished">Ien (¥)</translation>
+        <translation>Ien (¥)</translation>
     </message>
     <message utf8="true">
         <source>Times (×)</source>
-        <translation type="unfinished">Multiplicació (×)</translation>
+        <translation>Multiplicació (×)</translation>
     </message>
     <message utf8="true">
         <source>Division (÷)</source>
-        <translation type="unfinished">Divisió (÷)</translation>
+        <translation>Divisió (÷)</translation>
     </message>
     <message>
         <source>Insert Unicode</source>
-        <translation type="unfinished">Caràcter Unicode</translation>
+        <translation>Caràcter Unicode</translation>
     </message>
     <message>
         <source>Page:</source>
-        <translation type="unfinished">Pàgina:</translation>
+        <translation>Pàgina:</translation>
     </message>
     <message>
         <source>Char:</source>
-        <translation type="unfinished">Caràcter:</translation>
+        <translation>Caràcter:</translation>
     </message>
     <message>
         <source>[0000-007F] Basic Latin</source>
-        <translation type="unfinished">[0000-007F] Llatí bàsic</translation>
+        <translation>[0000-007F] Llatí bàsic</translation>
     </message>
     <message>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation type="unfinished">[0080-00FF] Llatí-1 suplementari</translation>
+        <translation>[0080-00FF] Llatí-1 suplementari</translation>
     </message>
     <message>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation type="unfinished">[0100-017F] Llatí ampliat-A</translation>
+        <translation>[0100-017F] Llatí ampliat-A</translation>
     </message>
     <message>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation type="unfinished">[0180-024F] Llatí ampliat-B</translation>
+        <translation>[0180-024F] Llatí ampliat-B</translation>
     </message>
     <message>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation type="unfinished">[0250-02AF] Extensions de l&apos;IPA</translation>
+        <translation>[0250-02AF] Extensions de l'IPA</translation>
     </message>
     <message>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation type="unfinished">[02B0-02FF] Lletres modificadores d&apos;espaiat</translation>
+        <translation>[02B0-02FF] Lletres modificadores d'espaiat</translation>
     </message>
     <message>
         <source>[0300-036F] Combining Diacritical Marks</source>
-        <translation type="unfinished">[0300-036F] Caràcters diacrítics per a combinar</translation>
+        <translation>[0300-036F] Caràcters diacrítics per a combinar</translation>
     </message>
     <message>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation type="unfinished">[0370-03FF] Grec i copte</translation>
+        <translation>[0370-03FF] Grec i copte</translation>
     </message>
     <message>
         <source>[0400-04FF] Cyrillic</source>
-        <translation type="unfinished">[0400-04FF] Ciríl·lic</translation>
+        <translation>[0400-04FF] Ciríl·lic</translation>
     </message>
     <message>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation type="unfinished">[0500-052F] Ciríl·lic suplementari</translation>
+        <translation>[0500-052F] Ciríl·lic suplementari</translation>
     </message>
     <message>
         <source>[0530-058F] Armenian</source>
-        <translation type="unfinished">[0530-058F] Armeni</translation>
+        <translation>[0530-058F] Armeni</translation>
     </message>
     <message>
         <source>[0590-05FF] Hebrew</source>
-        <translation type="unfinished">[0590-05FF] Hebreu</translation>
+        <translation>[0590-05FF] Hebreu</translation>
     </message>
     <message>
         <source>[0600-06FF] Arabic</source>
-        <translation type="unfinished">[0600-06FF] Àrab</translation>
+        <translation>[0600-06FF] Àrab</translation>
     </message>
     <message>
         <source>[0700-074F] Syriac</source>
-        <translation type="unfinished">[0700-074F] Siríac</translation>
+        <translation>[0700-074F] Siríac</translation>
     </message>
     <message>
         <source>[0780-07BF] Thaana</source>
-        <translation type="unfinished">[0780-07BF] Thaana</translation>
+        <translation>[0780-07BF] Thaana</translation>
     </message>
     <message>
         <source>[0900-097F] Devanagari</source>
-        <translation type="unfinished">[0900-097F] Devanagari</translation>
+        <translation>[0900-097F] Devanagari</translation>
     </message>
     <message>
         <source>[0980-09FF] Bengali</source>
-        <translation type="unfinished">[0980-09FF] Bengalí</translation>
+        <translation>[0980-09FF] Bengalí</translation>
     </message>
     <message>
         <source>[0A00-0A7F] Gurmukhi</source>
-        <translation type="unfinished">[0A00-0A7F] Gurmukhi</translation>
+        <translation>[0A00-0A7F] Gurmukhi</translation>
     </message>
     <message>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation type="unfinished">[0A80-0AFF] Gujarati</translation>
+        <translation>[0A80-0AFF] Gujarati</translation>
     </message>
     <message>
         <source>[0B00-0B7F] Oriya</source>
-        <translation type="unfinished">[0B00-0B7F] Oriya</translation>
+        <translation>[0B00-0B7F] Oriya</translation>
     </message>
     <message>
         <source>[0B80-0BFF] Tamil</source>
-        <translation type="unfinished">[0B80-0BFF] Tàmil</translation>
+        <translation>[0B80-0BFF] Tàmil</translation>
     </message>
     <message>
         <source>[0C00-0C7F] Telugu</source>
-        <translation type="unfinished">[0C00-0C7F] Telugu</translation>
+        <translation>[0C00-0C7F] Telugu</translation>
     </message>
     <message>
         <source>[0C80-0CFF] Kannada</source>
-        <translation type="unfinished">[0C80-0CFF] Canarès</translation>
+        <translation>[0C80-0CFF] Canarès</translation>
     </message>
     <message>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation type="unfinished">[0D00-0D7F] Malaialam</translation>
+        <translation>[0D00-0D7F] Malaialam</translation>
     </message>
     <message>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation type="unfinished">[0D80-0DFF] Singalès</translation>
+        <translation>[0D80-0DFF] Singalès</translation>
     </message>
     <message>
         <source>[0E00-0E7F] Thai</source>
-        <translation type="unfinished">[0E00-0E7F] Tailandès</translation>
+        <translation>[0E00-0E7F] Tailandès</translation>
     </message>
     <message>
         <source>[0E80-0EFF] Lao</source>
-        <translation type="unfinished">[0E80-0EFF] Laosià</translation>
+        <translation>[0E80-0EFF] Laosià</translation>
     </message>
     <message>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation type="unfinished">[0F00-0FFF] Tibetà</translation>
+        <translation>[0F00-0FFF] Tibetà</translation>
     </message>
     <message>
         <source>[1000-109F] Myanmar</source>
-        <translation type="unfinished">[1000-109F] Myanmar</translation>
+        <translation>[1000-109F] Myanmar</translation>
     </message>
     <message>
         <source>[10A0-10FF] Georgian</source>
-        <translation type="unfinished">[10A0-10FF] Georgià</translation>
+        <translation>[10A0-10FF] Georgià</translation>
     </message>
     <message>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation type="unfinished">[1100-11FF] Hangul Jamo</translation>
+        <translation>[1100-11FF] Hangul Jamo</translation>
     </message>
     <message>
         <source>[1200-137F] Ethiopic</source>
-        <translation type="unfinished">[1200-137F] Etíop</translation>
+        <translation>[1200-137F] Etíop</translation>
     </message>
     <message>
         <source>[13A0-13FF] Cherokee</source>
-        <translation type="unfinished">[13A0-13FF] Cherokee</translation>
+        <translation>[13A0-13FF] Cherokee</translation>
     </message>
     <message>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation type="unfinished">[1400-167F]Sil·làbic unificat d&apos;aborígens canadencs </translation>
+        <translation>[1400-167F]Sil·làbic unificat d'aborígens canadencs </translation>
     </message>
     <message>
         <source>[1680-169F] Ogham</source>
-        <translation type="unfinished">[1680-169F] Ogham</translation>
+        <translation>[1680-169F] Ogham</translation>
     </message>
     <message>
         <source>[16A0-16FF] Runic</source>
-        <translation type="unfinished">[16A0-16FF] Rúnic</translation>
+        <translation>[16A0-16FF] Rúnic</translation>
     </message>
     <message>
         <source>[1700-171F] Tagalog</source>
-        <translation type="unfinished">[1700-171F] Tagal</translation>
+        <translation>[1700-171F] Tagal</translation>
     </message>
     <message>
         <source>[1720-173F] Hanunoo</source>
-        <translation type="unfinished">[1720-173F] Hanunoo</translation>
+        <translation>[1720-173F] Hanunoo</translation>
     </message>
     <message>
         <source>[1740-175F] Buhid</source>
-        <translation type="unfinished">[1740-175F] Buhid</translation>
+        <translation>[1740-175F] Buhid</translation>
     </message>
     <message>
         <source>[1760-177F] Tagbanwa</source>
-        <translation type="unfinished">[1760-177F] Tagbanwa</translation>
+        <translation>[1760-177F] Tagbanwa</translation>
     </message>
     <message>
         <source>[1780-17FF] Khmer</source>
-        <translation type="unfinished">[1780-17FF] Khmer</translation>
+        <translation>[1780-17FF] Khmer</translation>
     </message>
     <message>
         <source>[1800-18AF] Mongolian</source>
-        <translation type="unfinished">[1800-18AF] Mongol</translation>
+        <translation>[1800-18AF] Mongol</translation>
     </message>
     <message>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation type="unfinished">[1E00-1EFF] Llatí ampliat addicional</translation>
+        <translation>[1E00-1EFF] Llatí ampliat addicional</translation>
     </message>
     <message>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation type="unfinished">[1F00-1FFF] Grec ampliat</translation>
+        <translation>[1F00-1FFF] Grec ampliat</translation>
     </message>
     <message>
         <source>[2000-206F] General Punctuation</source>
-        <translation type="unfinished">[2000-206F] Puntuació general</translation>
+        <translation>[2000-206F] Puntuació general</translation>
     </message>
     <message>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation type="unfinished">[2070-209F] Superíndexs i subíndexs</translation>
+        <translation>[2070-209F] Superíndexs i subíndexs</translation>
     </message>
     <message>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation type="unfinished">[20A0-20CF] Símbols de monedes</translation>
+        <translation>[20A0-20CF] Símbols de monedes</translation>
     </message>
     <message>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
-        <translation type="unfinished">[20D0-20FF] Caràcters combinats per a símbols</translation>
+        <translation>[20D0-20FF] Caràcters combinats per a símbols</translation>
     </message>
     <message>
         <source>[2100-214F] Letterlike Symbols</source>
-        <translation type="unfinished">[2100-214F] Símbols tipus carta</translation>
+        <translation>[2100-214F] Símbols tipus carta</translation>
     </message>
     <message>
         <source>[2150-218F] Number Forms</source>
-        <translation type="unfinished">[2150-218F] Símbols numèrics</translation>
+        <translation>[2150-218F] Símbols numèrics</translation>
     </message>
     <message>
         <source>[2190-21FF] Arrows</source>
-        <translation type="unfinished">[2190-21FF] Fletxes</translation>
+        <translation>[2190-21FF] Fletxes</translation>
     </message>
     <message>
         <source>[2200-22FF] Mathematical Operators</source>
-        <translation type="unfinished">[2200-22FF] Operadors matemàtics</translation>
+        <translation>[2200-22FF] Operadors matemàtics</translation>
     </message>
     <message>
         <source>[2300-23FF] Miscellaneous Technical</source>
-        <translation type="unfinished">[2300-23FF] Caràcters tècnics diversos</translation>
+        <translation>[2300-23FF] Caràcters tècnics diversos</translation>
     </message>
     <message>
         <source>[2400-243F] Control Pictures</source>
-        <translation type="unfinished">[2400-243F] Imatges de control</translation>
+        <translation>[2400-243F] Imatges de control</translation>
     </message>
     <message>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation type="unfinished">[2440-245F] Reconeixement òptic de caràcters</translation>
+        <translation>[2440-245F] Reconeixement òptic de caràcters</translation>
     </message>
     <message>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation type="unfinished">[2460-24FF] Alfanumèrics tancats</translation>
+        <translation>[2460-24FF] Alfanumèrics tancats</translation>
     </message>
     <message>
         <source>[2500-257F] Box Drawing</source>
-        <translation type="unfinished">[2500-257F] Dibuix de quadres</translation>
+        <translation>[2500-257F] Dibuix de quadres</translation>
     </message>
     <message>
         <source>[2580-259F] Block Elements</source>
-        <translation type="unfinished">[2580-259F] Elements de bloc</translation>
+        <translation>[2580-259F] Elements de bloc</translation>
     </message>
     <message>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation type="unfinished">[25A0-25FF] Formes geomètriques</translation>
+        <translation>[25A0-25FF] Formes geomètriques</translation>
     </message>
     <message>
         <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation type="unfinished">[2600-26FF] Símbols diversos</translation>
+        <translation>[2600-26FF] Símbols diversos</translation>
     </message>
     <message>
         <source>[2700-27BF] Dingbats</source>
-        <translation type="unfinished">[2700-27BF] Dingbats</translation>
+        <translation>[2700-27BF] Ornaments</translation>
     </message>
     <message>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation type="unfinished">[27C0-27EF] Símbols matemàtics diversos-A</translation>
+        <translation>[27C0-27EF] Símbols matemàtics diversos-A</translation>
     </message>
     <message>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation type="unfinished">[27F0-27FF] Fletxes supplementàries-A</translation>
+        <translation>[27F0-27FF] Fletxes supplementàries-A</translation>
     </message>
     <message>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation type="unfinished">[2800-28FF] Patrons de Braille</translation>
+        <translation>[2800-28FF] Patrons de Braille</translation>
     </message>
     <message>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation type="unfinished">[2900-297F] Fletxes supplementàries-B</translation>
+        <translation>[2900-297F] Fletxes supplementàries-B</translation>
     </message>
     <message>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation type="unfinished">[2980-29FF] Símbols matemàtics diversos-B</translation>
+        <translation>[2980-29FF] Símbols matemàtics diversos-B</translation>
     </message>
     <message>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation type="unfinished">[2A00-2AFF] Operadors matemàtics suplementaris</translation>
+        <translation>[2A00-2AFF] Operadors matemàtics suplementaris</translation>
     </message>
     <message>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation type="unfinished">[2E80-2EFF] Suplement de radicals CJK</translation>
+        <translation>[2E80-2EFF] Suplement de radicals CJK</translation>
     </message>
     <message>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation type="unfinished">[2F00-2FDF] Radicals Kangxi</translation>
+        <translation>[2F00-2FDF] Radicals Kangxi</translation>
     </message>
     <message>
         <source>[2FF0-2FFF] Ideographic Description Characters</source>
-        <translation type="unfinished">[2FF0-2FFF] Caràcters de descripció ideogràfica</translation>
+        <translation>[2FF0-2FFF] Caràcters de descripció ideogràfica</translation>
     </message>
     <message>
         <source>[3000-303F] CJK Symbols and Punctuation</source>
-        <translation type="unfinished">[3000-303F] Símbols i puntuació CJK</translation>
+        <translation>[3000-303F] Símbols i puntuació CJK</translation>
     </message>
     <message>
         <source>[3040-309F] Hiragana</source>
-        <translation type="unfinished">[3040-309F] Hiragana</translation>
+        <translation>[3040-309F] Hiragana</translation>
     </message>
     <message>
         <source>[30A0-30FF] Katakana</source>
-        <translation type="unfinished">[30A0-30FF] Katakana</translation>
+        <translation>[30A0-30FF] Katakana</translation>
     </message>
     <message>
         <source>[3100-312F] Bopomofo</source>
-        <translation type="unfinished">[3100-312F] Bopomofo</translation>
+        <translation>[3100-312F] Bopomofo</translation>
     </message>
     <message>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation type="unfinished">[3130-318F] Hangul Compatibility Jamo</translation>
+        <translation>[3130-318F] Hangul Compatibility Jamo</translation>
     </message>
     <message>
         <source>[3190-319F] Kanbun</source>
-        <translation type="unfinished">[3190-319F] Kanbun</translation>
+        <translation>[3190-319F] Kanbun</translation>
     </message>
     <message>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation type="unfinished">[31A0-31BF] Bopomofo ampliat</translation>
+        <translation>[31A0-31BF] Bopomofo ampliat</translation>
     </message>
     <message>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation type="unfinished">[3200-32FF] Lletres i mesos CJK tancats</translation>
+        <translation>[3200-32FF] Lletres i mesos CJK tancats</translation>
     </message>
     <message>
         <source>[3300-33FF] CJK Compatibility</source>
-        <translation type="unfinished">[3300-33FF] Compatibilitat CJK</translation>
+        <translation>[3300-33FF] Compatibilitat CJK</translation>
     </message>
     <message>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation type="unfinished">[3400-4DBF] Ideografs unificats CJK Extensió A</translation>
+        <translation>[3400-4DBF] Ideografs unificats CJK Extensió A</translation>
     </message>
     <message>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation type="unfinished">[4E00-9FAF] Ideografs unificats CJK</translation>
+        <translation>[4E00-9FAF] Ideografs unificats CJK</translation>
     </message>
     <message>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation type="unfinished">[A000-A48F] Síl·labes Yi</translation>
+        <translation>[A000-A48F] Síl·labes Yi</translation>
     </message>
     <message>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation type="unfinished">[A490-A4CF] Radicals Yi</translation>
+        <translation>[A490-A4CF] Radicals Yi</translation>
     </message>
     <message>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation type="unfinished">[AC00-D7AF] Síl·labes Hangul</translation>
+        <translation>[AC00-D7AF] Síl·labes Hangul</translation>
     </message>
     <message>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation type="unfinished">[D800-DBFF] Substituts alts</translation>
+        <translation>[D800-DBFF] Substituts alts</translation>
     </message>
     <message>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation type="unfinished">[DC00-DFFF] Àrea de substituts baixos</translation>
+        <translation>[DC00-DFFF] Àrea de substituts baixos</translation>
     </message>
     <message>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation type="unfinished">[E000-F8FF] Àrea d&apos;ús privat</translation>
+        <translation>[E000-F8FF] Àrea d'ús privat</translation>
     </message>
     <message>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation type="unfinished">[F900-FAFF] Ideografs de compatibilitat CJK</translation>
+        <translation>[F900-FAFF] Ideografs de compatibilitat CJK</translation>
     </message>
     <message>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation type="unfinished">[FB00-FB4F] Formes de presentació alfabètica</translation>
+        <translation>[FB00-FB4F] Formes de presentació alfabètica</translation>
     </message>
     <message>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation type="unfinished">[FB50-FDFF] Formes de presentació de l&apos;àrab-A</translation>
+        <translation>[FB50-FDFF] Formes de presentació de l'àrab-A</translation>
     </message>
     <message>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation type="unfinished">[FE00-FE0F] Selectors de variació</translation>
+        <translation>[FE00-FE0F] Selectors de variació</translation>
     </message>
     <message>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation type="unfinished">[FE20-FE2F] Caràcters mitjos combinats</translation>
+        <translation>[FE20-FE2F] Caràcters mitjos combinats</translation>
     </message>
     <message>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation type="unfinished">[FE30-FE4F] Símbols de compatibilitat CJK</translation>
+        <translation>[FE30-FE4F] Símbols de compatibilitat CJK</translation>
     </message>
     <message>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation type="unfinished">[FE50-FE6F] Variants petites de símbols</translation>
+        <translation>[FE50-FE6F] Variants petites de símbols</translation>
     </message>
     <message>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation type="unfinished">[FE70-FEFF] Formes de presentació de l&apos;àrab-B</translation>
+        <translation>[FE70-FEFF] Formes de presentació de l'àrab-B</translation>
     </message>
     <message>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation type="unfinished">[FF00-FFEF] Símbols d&apos;amplada mitja i completa</translation>
+        <translation>[FF00-FFEF] Símbols d'amplada mitja i completa</translation>
     </message>
     <message>
         <source>[FFF0-FFFF] Specials</source>
-        <translation type="unfinished">[FFF0-FFFF] Especials</translation>
+        <translation>[FFF0-FFFF] Especials</translation>
     </message>
     <message>
         <source>[10300-1032F] Old Italic</source>
-        <translation type="unfinished">[10300-1032F] Cursiva antiga</translation>
+        <translation>[10300-1032F] Cursiva antiga</translation>
     </message>
     <message>
         <source>[10330-1034F] Gothic</source>
-        <translation type="unfinished">[10330-1034F] Gòtica</translation>
+        <translation>[10330-1034F] Gòtica</translation>
     </message>
     <message>
         <source>[10400-1044F] Deseret</source>
-        <translation type="unfinished">[10400-1044F] Deseret</translation>
+        <translation>[10400-1044F] Deseret</translation>
     </message>
     <message>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
-        <translation type="unfinished">[1D000-1D0FF] Símbols musicals bizantins</translation>
+        <translation>[1D000-1D0FF] Símbols musicals bizantins</translation>
     </message>
     <message>
         <source>[1D100-1D1FF] Musical Symbols</source>
-        <translation type="unfinished">[1D100-1D1FF] Símbols musicals</translation>
+        <translation>[1D100-1D1FF] Símbols musicals</translation>
     </message>
     <message>
         <source>[1D400-1D7FF] Mathematical Alphanumeric Symbols</source>
-        <translation type="unfinished">[1D400-1D7FF] Símbols alfanumèrics matemàtics</translation>
+        <translation>[1D400-1D7FF] Símbols alfanumèrics matemàtics</translation>
     </message>
     <message>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation type="unfinished">[20000-2A6DF] Ideografs unificats CJK Extensió B</translation>
+        <translation>[20000-2A6DF] Ideografs unificats CJK Extensió B</translation>
     </message>
     <message>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation type="unfinished">[2F800-2FA1F] Suplement d&apos;ideografs de compatibilitat CJK</translation>
+        <translation>[2F800-2FA1F] Suplement d'ideografs de compatibilitat CJK</translation>
     </message>
     <message>
         <source>[E0000-E007F] Tags</source>
-        <translation type="unfinished">[E0000-E007F] Etiquetes</translation>
+        <translation>[E0000-E007F] Etiquetes</translation>
     </message>
     <message>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation type="unfinished">[F0000-FFFFD] Àrea d&apos;ús privat suplementari-A</translation>
+        <translation>[F0000-FFFFD] Àrea d'ús privat suplementari-A</translation>
     </message>
     <message>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation type="unfinished">[100000-10FFFD] Àrea d&apos;ús privat suplementari-B</translation>
+        <translation>[100000-10FFFD] Àrea d'ús privat suplementari-B</translation>
     </message>
     <message utf8="true">
         <source>Diameter (⌀)</source>
-        <translation type="unfinished"></translation>
+        <translation>Diàmetre (ø)</translation>
     </message>
 </context>
 <context>
@@ -2881,11 +2898,11 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Suprimeix l&apos;original</translation>
+        <translation>&amp;Suprimeix l'original</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Manté l&apos;original</translation>
+        <translation>&amp;Manté l'original</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
@@ -2897,7 +2914,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -2920,11 +2937,11 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Suprimeix l&apos;original</translation>
+        <translation>&amp;Suprimeix l'original</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Manté l&apos;original</translation>
+        <translation>&amp;Manté l'original</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
@@ -2940,7 +2957,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -2967,7 +2984,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     <name>QG_DlgMoveRotate</name>
     <message>
         <source>Move/Rotate Options</source>
-        <translation>Opcions de &apos;Mou/gira&apos;</translation>
+        <translation>Opcions de 'Mou/gira'</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2979,7 +2996,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -2999,11 +3016,11 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Suprimeix l&apos;original</translation>
+        <translation>&amp;Suprimeix l'original</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Manté l&apos;original</translation>
+        <translation>&amp;Manté l'original</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
@@ -3074,7 +3091,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Paper Format</source>
@@ -3109,7 +3126,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
         <translation>Graus centesimals</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Topogràfic</translation>
     </message>
     <message>
@@ -3117,8 +3134,8 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
         <translation>Opcions</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>Per als formats de longitud &apos;Enginyeria&apos; i &apos;Arquitectura&apos;, s&apos;ha d&apos;establir la unitat en polzades.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>Per als formats de longitud 'Enginyeria' i 'Arquitectura', s'ha d'establir la unitat en polzades.</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
@@ -3313,7 +3330,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
         <translation>Mida de les marques:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mida de les marques de cota. Posada a 0 desactivarà les marques de cota. Les fletxes de cota no es dibuixaran si les marques de cota estan activades.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -3330,7 +3347,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>Dimension Aligned</source>
-        <translation>Alineat amb la cota</translation>
+        <translation>Cota alineada</translation>
     </message>
     <message>
         <source>Horizontal</source>
@@ -3338,11 +3355,11 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>General Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Escala general:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Escala per multiplicar tots els valors de cota.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>0.5</source>
@@ -3362,7 +3379,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>General Factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor general:</translation>
     </message>
     <message>
         <source>0.2</source>
@@ -3394,11 +3411,11 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Escala per multiplicar totes les geometries de cota.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Alineació del text.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3413,7 +3430,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>Hatch Patterns:</source>
-        <translation>Plantilles dels ratllats:</translation>
+        <translation>Plantilles d'ombrejat:</translation>
     </message>
     <message>
         <source>Fonts:</source>
@@ -3429,11 +3446,11 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation>Llengua</translation>
+        <translation>Idioma</translation>
     </message>
     <message>
         <source>Graphic View</source>
@@ -3457,7 +3474,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>Application Preferences</source>
-        <translation>Preferències de l&apos;aplicació</translation>
+        <translation>Preferències de l'aplicació</translation>
     </message>
     <message>
         <source>Defaults for new drawings</source>
@@ -3465,15 +3482,15 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;Appearance</source>
-        <translation>&amp;Apariència</translation>
+        <translation>&amp;Aparença</translation>
     </message>
     <message>
         <source>&amp;GUI Language:</source>
-        <translation>Llengua de la interfície &amp;gràfica:</translation>
+        <translation>Idioma de la interfície &amp;gràfica:</translation>
     </message>
     <message>
         <source>&amp;Command Language:</source>
-        <translation>Llengua de la línia d&apos;&amp;ordres:</translation>
+        <translation>Idioma de la línia d'&amp;ordres:</translation>
     </message>
     <message>
         <source>&amp;Show large crosshairs</source>
@@ -3481,7 +3498,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>Number of p&amp;review entities:</source>
-        <translation>Nombre d&apos;entitats en la pre&amp;visualització:</translation>
+        <translation>Nombre d'entitats en la pre&amp;visualització:</translation>
     </message>
     <message>
         <source>&amp;Paths</source>
@@ -3533,7 +3550,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>Statusbar:</source>
-        <translation>Barra d&apos;estat:</translation>
+        <translation>Barra d'estat:</translation>
     </message>
     <message>
         <source>5</source>
@@ -3609,7 +3626,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>Please restart the application to apply all changes.</source>
-        <translation>Per a aplicar els canvis cal reiniciar l&apos;aplicació.</translation>
+        <translation>Per a aplicar els canvis cal reiniciar l'aplicació.</translation>
     </message>
     <message>
         <source>Alt+S</source>
@@ -3669,43 +3686,43 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>Template:</source>
-        <translation type="unfinished"></translation>
+        <translation>Plantilla:</translation>
     </message>
     <message>
         <source>#00FFFF</source>
-        <translation type="unfinished"></translation>
+        <translation>#00FFFF</translation>
     </message>
     <message>
         <source>#0000FF</source>
-        <translation type="unfinished"></translation>
+        <translation>#00FFFF</translation>
     </message>
     <message>
         <source>#FFFF00</source>
-        <translation type="unfinished"></translation>
+        <translation>#FFFF00</translation>
     </message>
     <message>
         <source>#FF00FF</source>
-        <translation type="unfinished"></translation>
+        <translation>#FF00FF</translation>
     </message>
     <message>
         <source>St&amp;art Handle Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Inici&amp;a el gestor de color:</translation>
     </message>
     <message>
         <source>&amp;Handle Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Gestor de color:</translation>
     </message>
     <message>
         <source>&amp;End Handle Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Finalitza el gestor de color:</translation>
     </message>
     <message>
         <source>Splash Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Finestra de presentació</translation>
     </message>
     <message>
         <source>Display Splash</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra la presentació</translation>
     </message>
 </context>
 <context>
@@ -3736,7 +3753,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -3763,7 +3780,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -3782,7 +3799,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     <name>QG_DlgRotate</name>
     <message>
         <source>Rotation Options</source>
-        <translation>Opcions de &apos;Rotació&apos;</translation>
+        <translation>Opcions de Gira</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -3790,7 +3807,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -3802,11 +3819,11 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Suprimeix l&apos;original</translation>
+        <translation>&amp;Suprimeix l'original</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Manté l&apos;original</translation>
+        <translation>&amp;Manté l'original</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies:</source>
@@ -3833,7 +3850,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     <name>QG_DlgRotate2</name>
     <message>
         <source>Rotate Two Options</source>
-        <translation>Opcions de &apos;Gira Dos&apos;</translation>
+        <translation>Opcions de Gira a dos</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3845,15 +3862,15 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Suprimeix l&apos;original</translation>
+        <translation>&amp;Suprimeix l'original</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Manté l&apos;original</translation>
+        <translation>&amp;Manté l'original</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
@@ -3884,7 +3901,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     <name>QG_DlgScale</name>
     <message>
         <source>Scaling Options</source>
-        <translation>Opcions de &apos;Escala&apos;</translation>
+        <translation>Opcions de Escala</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -3892,7 +3909,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -3912,11 +3929,11 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Suprimeix l&apos;original</translation>
+        <translation>&amp;Suprimeix l'original</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Manté l&apos;original</translation>
+        <translation>&amp;Manté l'original</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
@@ -3983,7 +4000,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;D&apos;acord</translation>
+        <translation>&amp;D'acord</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -4010,11 +4027,11 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>Clear Text</source>
-        <translation>Buida el text</translation>
+        <translation>Neteja el text</translation>
     </message>
     <message>
         <source>Load Text From File</source>
-        <translation>Carrega el text des d&apos;un fitxer</translation>
+        <translation>Carrega el text des d'un fitxer</translation>
     </message>
     <message>
         <source>Save Text To File</source>
@@ -4082,7 +4099,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Insert Symbol</source>
@@ -4174,11 +4191,11 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation>[0250-02AF] Extensions de l&apos;IPA</translation>
+        <translation>[0250-02AF] Extensions de l'IPA</translation>
     </message>
     <message>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation>[02B0-02FF] Lletres modificadores d&apos;espaiat</translation>
+        <translation>[02B0-02FF] Lletres modificadores d'espaiat</translation>
     </message>
     <message>
         <source>[0300-036F] Combining Diacritical Marks</source>
@@ -4290,7 +4307,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F]Sil·làbic unificat d&apos;aborígens canadencs </translation>
+        <translation>[1400-167F]Sil·làbic unificat d'aborígens canadencs </translation>
     </message>
     <message>
         <source>[1680-169F] Ogham</source>
@@ -4502,7 +4519,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation>[E000-F8FF] Àrea d&apos;ús privat</translation>
+        <translation>[E000-F8FF] Àrea d'ús privat</translation>
     </message>
     <message>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
@@ -4514,7 +4531,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation>[FB50-FDFF] Formes de presentació de l&apos;àrab-A</translation>
+        <translation>[FB50-FDFF] Formes de presentació de l'àrab-A</translation>
     </message>
     <message>
         <source>[FE00-FE0F] Variation Selectors</source>
@@ -4534,11 +4551,11 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation>[FE70-FEFF] Formes de presentació de l&apos;àrab-B</translation>
+        <translation>[FE70-FEFF] Formes de presentació de l'àrab-B</translation>
     </message>
     <message>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation>[FF00-FFEF] Símbols d&apos;amplada mitja i completa</translation>
+        <translation>[FF00-FFEF] Símbols d'amplada mitja i completa</translation>
     </message>
     <message>
         <source>[FFF0-FFFF] Specials</source>
@@ -4574,7 +4591,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation>[2F800-2FA1F] Suplement d&apos;ideografs de compatibilitat CJK</translation>
+        <translation>[2F800-2FA1F] Suplement d'ideografs de compatibilitat CJK</translation>
     </message>
     <message>
         <source>[E0000-E007F] Tags</source>
@@ -4582,15 +4599,15 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation>[F0000-FFFFD] Àrea d&apos;ús privat suplementari-A</translation>
+        <translation>[F0000-FFFFD] Àrea d'ús privat suplementari-A</translation>
     </message>
     <message>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation>[100000-10FFFD] Àrea d&apos;ús privat suplementari-B</translation>
+        <translation>[100000-10FFFD] Àrea d'ús privat suplementari-B</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation>&amp;Alçada:</translation>
+        <translation>&amp;Altura:</translation>
     </message>
     <message>
         <source>Line &amp;spacing:</source>
@@ -4614,59 +4631,59 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Capa:</translation>
+        <translation>Capa:</translation>
     </message>
     <message>
         <source>Font settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paràmetres del tipus de lletra</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angle:</translation>
+        <translation>Angle:</translation>
     </message>
     <message>
         <source>Oblique:</source>
-        <translation type="unfinished"></translation>
+        <translation>Inclinació:</translation>
     </message>
     <message>
         <source>Width factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Factor d'amplada:</translation>
     </message>
     <message>
         <source>Font:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipus de lletra:</translation>
     </message>
     <message>
         <source>Baseline Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Línia base esquerra</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Baseline Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Línia base dreta</translation>
     </message>
     <message>
         <source>Baseline Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Línia base centre</translation>
     </message>
     <message>
         <source>Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajusta</translation>
     </message>
     <message>
         <source>Aligned</source>
-        <translation type="unfinished"></translation>
+        <translation>Alinea</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation type="unfinished">Mig</translation>
+        <translation>Centra</translation>
     </message>
     <message utf8="true">
         <source>Diameter (⌀)</source>
-        <translation type="unfinished"></translation>
+        <translation>Diàmetre (ø)</translation>
     </message>
 </context>
 <context>
@@ -4697,60 +4714,61 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>Save As...</source>
-        <translation type="unfinished"></translation>
+        <translation>Anomena i desa...</translation>
     </message>
 </context>
 <context>
     <name>QG_FileDialog</name>
     <message>
         <source>Drawing Exchange DXF 2000 %1</source>
-        <translation>Drawing Exchange DXF 2000 %1</translation>
+        <translation>Dibuix d'intercanvi DXF 2000 %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF R12 %1</source>
-        <translation>Drawing Exchange DXF R12 %1</translation>
+        <translation>Dibuix d'intercanvi DXF R12 %1</translation>
     </message>
     <message>
         <source>LFF Font %1</source>
-        <translation>LFF Font %1</translation>
+        <translation>Tipus de lletra LFF %1</translation>
     </message>
     <message>
         <source>QCad Font %1</source>
-        <translation>QCad Font %1</translation>
+        <translation>Tipus de lletra QCad %1</translation>
     </message>
     <message>
         <source>Jww Drawing %1</source>
-        <translation>Jww Drawing %1</translation>
+        <translation>Dibuix Jww %1</translation>
     </message>
     <message>
         <source>Drawing Exchange %1</source>
-        <translation>Drawing Exchange %1</translation>
+        <translation>Dibuix d'intercanvi %1</translation>
     </message>
     <message>
         <source>QCad 1.x file %1</source>
-        <translation>QCad 1.x file %1</translation>
+        <translation>Fitxer QCad 1.x %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF 2007 %1</source>
-        <translation>Drawing Exchange DXF 2007 %1</translation>
+        <translation>Dibuix d'intercanvi DXF 2007 %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF 2004 %1</source>
-        <translation>Drawing Exchange DXF 2004 %1</translation>
+        <translation>Dibuix d'intercanvi DXF 2004 %1</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF R14 %1</source>
-        <translation>Drawing Exchange DXF R14 %1</translation>
+        <translation>Dibuix d'intercanvi DXF R14 %1</translation>
     </message>
     <message>
         <source>Block</source>
         <comment>block file</comment>
-        <translation>el fitxer de bloc</translation>
+        <translatorcomment> fitxer de bloc</translatorcomment>
+        <translation>Bloc</translation>
     </message>
     <message>
         <source>Drawing</source>
         <comment>drawing file</comment>
-        <translation>el fitxer de dibuix</translation>
+        <translation>Dibuix</translation>
     </message>
     <message>
         <source>Open %1</source>
@@ -4758,22 +4776,22 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>Save %1 As</source>
-        <translation>Anomena i desa %1</translation>
+        <translation>Anomena i desa %1 com</translation>
     </message>
     <message>
         <source>dwg Drawing %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibuix dwg %1</translation>
     </message>
     <message>
         <source>Untitled</source>
-        <translation type="unfinished"></translation>
+        <translation>Sense títol</translation>
     </message>
 </context>
 <context>
     <name>QG_ImageOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Opcions de &apos;Insereix&apos;</translation>
+        <translation>Opcions de Insereix</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -4789,22 +4807,22 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Factor d&apos;escala</translation>
+        <translation>Factor d'escala</translation>
     </message>
     <message>
         <source>DPI</source>
-        <translation type="unfinished"></translation>
+        <translation>PPP</translation>
     </message>
     <message>
         <source>DPI of Image</source>
-        <translation type="unfinished"></translation>
+        <translation>PPP de la imatge</translation>
     </message>
 </context>
 <context>
     <name>QG_ImageOptionsDialog</name>
     <message>
         <source>Image Export Options</source>
-        <translation>Opcions d&apos;exportació d&apos;imatge</translation>
+        <translation>Opcions d'exportació d'imatge</translation>
     </message>
     <message>
         <source>Bitmap Size</source>
@@ -4840,7 +4858,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -4932,11 +4950,11 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>Black / White</source>
-        <translation>Blanc i negre</translation>
+        <translation>Blanc /  negre</translation>
     </message>
     <message>
         <source>Coloured</source>
-        <translation>Color</translation>
+        <translation>Acolorid</translation>
     </message>
     <message>
         <source>Borders</source>
@@ -4952,14 +4970,14 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>set same size</source>
-        <translation>Posa la mateixa mida</translation>
+        <translation>Defineix la mateixa mida</translation>
     </message>
 </context>
 <context>
     <name>QG_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Opcions de &apos;Insereix&apos;</translation>
+        <translation>Opcions de Insereix</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -4975,7 +4993,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Factor d&apos;escala</translation>
+        <translation>Factor d'escala</translation>
     </message>
     <message>
         <source>Array:</source>
@@ -5006,7 +5024,7 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     <name>QG_LayerBox</name>
     <message>
         <source>- Unchanged -</source>
-        <translation>- No canviat -</translation>
+        <translation>- Sense canvis -</translation>
     </message>
 </context>
 <context>
@@ -5025,11 +5043,11 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     </message>
     <message>
         <source>Default Pen</source>
-        <translation>Llapis predeterminat</translation>
+        <translation>Traç predeterminat</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="obsolete">&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D'acord</translation>
     </message>
     <message>
         <source>Alt+O</source>
@@ -5042,21 +5060,22 @@ Podreu canviar aquests paràmetres més avant en el menú Edita/Preferències de
     <message>
         <source>A Help Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Help Layer should not appear in printout.</source>
-        <translation type="obsolete">Una capa d&apos;ajuda conté entitats d&apos;infinites línies rectes destinades a usar-se en la construcció geomètrica.
-El contingut d&apos;una capa d&apos;ajuda no apareixerà en la impressió.</translation>
+        <translation type="obsolete">Una capa d'ajuda conté entitats d'infinites línies rectes destinades a usar-se en la construcció geomètrica.
+El contingut d'una capa d'ajuda no apareixerà en la impressió.</translation>
     </message>
     <message>
         <source>Help Layer</source>
-        <translation type="obsolete">Capa d&apos;ajuda</translation>
+        <translation type="obsolete">Capa d'ajuda</translation>
     </message>
     <message>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation type="unfinished"></translation>
+        <translation>Una capa de construcció conté entitats de infinites línies rectes  destinadesr a ser usades en la construcció geomètrica.
+El contingut d'una capa de construcció no ha d'apareixer en la sortida impresa.</translation>
     </message>
     <message>
         <source>Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa de construcció</translation>
     </message>
 </context>
 <context>
@@ -5111,14 +5130,14 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Looking for matching layer names</source>
-        <translation>S&apos;estan cercant noms de capes coincidents</translation>
+        <translation>S'estan cercant noms de capes coincidents</translation>
     </message>
 </context>
 <context>
     <name>QG_LibraryInsertOptions</name>
     <message>
         <source>Library Insert Options</source>
-        <translation>Opcions de &apos;Inserció de la biblioteca&apos;</translation>
+        <translation>Opcions de 'Inserció de la biblioteca'</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -5134,7 +5153,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Factor d&apos;escala</translation>
+        <translation>Factor d'escala</translation>
     </message>
 </context>
 <context>
@@ -5152,7 +5171,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LineAngleOptions</name>
     <message>
         <source>Line Angle Options</source>
-        <translation>Opcions de l&apos;angle de la línia</translation>
+        <translation>Opcions de Línia amb angle</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -5160,7 +5179,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Angle de la línia</translation>
+        <translation>Línia amb angle</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -5191,7 +5210,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LineBisectorOptions</name>
     <message>
         <source>Line Bisector Options</source>
-        <translation>Opcions de la línia bisectriu</translation>
+        <translation>Opcions de Línia bisectriu</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -5230,11 +5249,11 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Undo the last line drawing</source>
-        <translation>Desfés l&apos;última línia dibuixada</translation>
+        <translation>Desfés l'última línia dibuixada</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
-        <translation>Refés l&apos;última línia dibuixada</translation>
+        <translation>Refés l'última línia dibuixada</translation>
     </message>
     <message>
         <source>Redo</source>
@@ -5245,7 +5264,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
-        <translation>Opcions de línia paral·lela</translation>
+        <translation>Opcions de Línia paral·lela</translation>
     </message>
     <message>
         <source>Distance:</source>
@@ -5253,7 +5272,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Distance to original entity</source>
-        <translation>Distància a l&apos;entitat original</translation>
+        <translation>Distància a l'entitat original</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -5268,7 +5287,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation>Opcions de la línia paral·lela per un punt</translation>
+        <translation>Opcions de Llínia paral·lela per un punt</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -5283,7 +5302,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LinePolygon2Options</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Opcions de polígon</translation>
+        <translation>Opcions de Polígon</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -5291,14 +5310,14 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Nombre d&apos;arestes</translation>
+        <translation>Nombre d'arestes</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygonOptions</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Opcions de polígon</translation>
+        <translation>Opcions de Polígon</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -5306,14 +5325,14 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Nombre d&apos;arestes</translation>
+        <translation>Nombre d'arestes</translation>
     </message>
 </context>
 <context>
     <name>QG_LineRelAngleOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Opcions d&apos;angle relatiu de línia</translation>
+        <translation>Opcions de Línia amb angles relatius</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -5344,7 +5363,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>No Pen</source>
-        <translation>Sense línia</translation>
+        <translation>Sense traç</translation>
     </message>
     <message>
         <source>Continuous</source>
@@ -5424,22 +5443,22 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>- Unchanged -</source>
-        <translation>- No canviat -</translation>
+        <translation>- Sense canvis -</translation>
     </message>
 </context>
 <context>
     <name>QG_MTextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation type="unfinished">Opcions de text</translation>
+        <translation>Opcions de Text</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation type="unfinished">Text:</translation>
+        <translation>Text:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Angle:</translation>
+        <translation>Angle:</translation>
     </message>
 </context>
 <context>
@@ -5454,7 +5473,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Offset from original entity</source>
-        <translation>Desfasament a partir de l&apos;entitat original</translation>
+        <translation>Desfasament a partir de l'entitat original</translation>
     </message>
 </context>
 <context>
@@ -5480,7 +5499,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
-        <translation>Opcions de &apos;mou i gira&apos;</translation>
+        <translation>Opcions de Mou i gira</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -5495,7 +5514,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Line width</source>
-        <translation>Amplada de línia</translation>
+        <translation>Gruix de línia</translation>
     </message>
     <message>
         <source>Line type</source>
@@ -5506,7 +5525,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Opcions d&apos;angle relatiu de línia</translation>
+        <translation>Opcions de Línia amb angle relatiu</translation>
     </message>
     <message>
         <source>Spacing:</source>
@@ -5525,7 +5544,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation>Opcions de &apos;Polilínia&apos;</translation>
+        <translation>Opcions de Polilínia</translation>
     </message>
     <message>
         <source>Close</source>
@@ -5541,7 +5560,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Tangential</source>
-        <translation>Tangencial</translation>
+        <translation>Tangent</translation>
     </message>
     <message>
         <source>Tan Radius</source>
@@ -5561,22 +5580,22 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>Sentit de les agulles del rellotge</translation>
+        <translation>En sentit horari</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation>Sentit contrari al de les agulles del rellotge</translation>
+        <translation>En sentit anti-horari</translation>
     </message>
 </context>
 <context>
     <name>QG_PrintPreviewOptions</name>
     <message>
         <source>Print Preview Options</source>
-        <translation>Opcions de &apos;Previsualització d&apos;impressió&apos;</translation>
+        <translation>Opcions de Previsualitza la impressió</translation>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation>Commuta el mode Blanc/Negre</translation>
+        <translation>Commuta el mode Blanc i negre/Color</translation>
     </message>
     <message>
         <source>Center to page</source>
@@ -5588,18 +5607,18 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;L&apos;escalat d&apos;impressió està bloquejat en el valor actual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;L'escalat d'impressió està bloquejat en el valor actual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>fixed</source>
-        <translation>fix</translation>
+        <translation>Fixat</translation>
     </message>
 </context>
 <context>
     <name>QG_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation>Opcions de &apos;Arrodoneix&apos;</translation>
+        <translation>Opcions d'Arrodoneix</translation>
     </message>
     <message>
         <source>Trim</source>
@@ -5607,7 +5626,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Comprova si es poden reduir les arester per arrodonir</translation>
+        <translation>Comprova si es poden reduir les arestes per arrodonir</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -5633,35 +5652,35 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>Longitud total</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Nombre d&apos;entitats seleccionades&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Nombre d'entitats seleccionades&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Longitud total de les entitats seleccionades&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Longitud total de les entitats seleccionades&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Opcions de &apos;força distància&apos;</translation>
+        <translation>Opcions de Força distància</translation>
     </message>
     <message>
         <source>Distance:</source>
@@ -5672,7 +5691,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Opcions de &apos;força distància&apos;</translation>
+        <translation>Opcions de Força distància</translation>
     </message>
     <message>
         <source>Middle Points:</source>
@@ -5680,7 +5699,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Number of equidistant division points</source>
-        <translation>Nombre de punts de divisió equidistant</translation>
+        <translation>Nombre de punts de divisió equidistants</translation>
     </message>
 </context>
 <context>
@@ -5695,7 +5714,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Snap to equidistant points of entity</source>
-        <translation>Força a punts equidistants de les entitats</translation>
+        <translation>Força a punts equidistants de l'entitat</translation>
     </message>
     <message>
         <source>Snap to center points</source>
@@ -5707,11 +5726,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Snap to closest point on entity</source>
-        <translation>Força al punt més proper en l&apos;entitat</translation>
+        <translation>Força al punt més proper en l'entitat</translation>
     </message>
     <message>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>Força al punt amb una distància donada a l&apos;extrem</translation>
+        <translation>Força al punt amb una distància donada a l'extrem</translation>
     </message>
     <message>
         <source>Snap to intersections manually</source>
@@ -5731,74 +5750,74 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Move relative Zero</source>
-        <translation>Mou l&apos;origen relatiu</translation>
+        <translation>Mou l'origen relatiu</translation>
     </message>
     <message>
         <source>Lock relative Zero</source>
-        <translation>Bloqueja l&apos;origen relatiu</translation>
+        <translation>Bloqueja l'origen relatiu</translation>
     </message>
     <message>
         <source>Free Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>Forçat lliure</translation>
     </message>
     <message>
         <source>Snap on grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Força a la graella</translation>
     </message>
     <message>
         <source>Snap on Endpoints</source>
-        <translation type="unfinished"></translation>
+        <translation>Força als extrems</translation>
     </message>
     <message>
         <source>Snap on Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Força a l'entitat</translation>
     </message>
     <message>
         <source>Snap Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Força al centre</translation>
     </message>
     <message>
         <source>Snap Middle</source>
-        <translation type="unfinished"></translation>
+        <translation>Força al mig</translation>
     </message>
     <message>
         <source>Snap Distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Força a la distància</translation>
     </message>
     <message>
         <source>Snap Intersection</source>
-        <translation type="unfinished"></translation>
+        <translation>Força a la intersecció</translation>
     </message>
     <message>
         <source>Restrict Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Restricció horitzontal</translation>
     </message>
     <message>
         <source>Restrict Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Restricció vertical</translation>
     </message>
     <message>
         <source>Restrict Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Restricció ortogonal</translation>
     </message>
     <message>
         <source>Restrict Nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Cap restricció</translation>
     </message>
     <message>
         <source>Set relative zero position</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifica l'origen relatiu</translation>
     </message>
     <message>
         <source>Lock relative zero position</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloqueja l'origen relatiu</translation>
     </message>
 </context>
 <context>
     <name>QG_SplineOptions</name>
     <message>
         <source>Spline Options</source>
-        <translation>Opcions de spline</translation>
+        <translation>Opcions de Spline</translation>
     </message>
     <message>
         <source>Degree:</source>
@@ -5829,7 +5848,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_TextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation>Opcions de text</translation>
+        <translation>Opcions de Text</translation>
     </message>
     <message>
         <source>Text:</source>
@@ -5844,7 +5863,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation>Opcions de &apos;redueix o estén una quantitat&apos;</translation>
+        <translation>Opcions de Redueix o estén una quantitat</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
@@ -5860,14 +5879,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>La longitud introduïda s&apos;usa com a longitud total després de la reducció o extensió, per compte de l&apos;increment de longitud</translation>
+        <translation>La longitud introduïda s'usa com a longitud total després de la reducció o extensió, en lloc de l'increment de longitud</translation>
     </message>
 </context>
 <context>
     <name>QG_WidgetPen</name>
     <message>
         <source>Pen</source>
-        <translation>Llapis</translation>
+        <translation>Traç</translation>
     </message>
     <message>
         <source>Line type:</source>
@@ -5875,7 +5894,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Width:</source>
-        <translation>Amplada:</translation>
+        <translation>Guix:</translation>
     </message>
     <message>
         <source>Color:</source>
@@ -5894,107 +5913,107 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Default</source>
-        <translation>Valor predeterminat</translation>
+        <translation>Predeterminat</translation>
     </message>
     <message>
         <source>0.00mm</source>
-        <translation>0.00mm</translation>
+        <translation>0.00 mm</translation>
     </message>
     <message>
         <source>0.05mm</source>
-        <translation>0.05mm</translation>
+        <translation>0.05 mm</translation>
     </message>
     <message>
         <source>0.09mm</source>
-        <translation>0.09mm</translation>
+        <translation>0.09 mm</translation>
     </message>
     <message>
         <source>0.13mm (ISO)</source>
-        <translation>0.13mm (ISO)</translation>
+        <translation>0.13 mm (ISO)</translation>
     </message>
     <message>
         <source>0.15mm</source>
-        <translation>0.15mm</translation>
+        <translation>0.15 mm</translation>
     </message>
     <message>
         <source>0.18mm (ISO)</source>
-        <translation>0.18mm (ISO)</translation>
+        <translation>0.18 mm (ISO)</translation>
     </message>
     <message>
         <source>0.20mm</source>
-        <translation>0.20mm</translation>
+        <translation>0.20 mm</translation>
     </message>
     <message>
         <source>0.25mm (ISO)</source>
-        <translation>0.25mm (ISO)</translation>
+        <translation>0.25 mm (ISO)</translation>
     </message>
     <message>
         <source>0.30mm</source>
-        <translation>0.30mm</translation>
+        <translation>0.30 mm</translation>
     </message>
     <message>
         <source>0.35mm (ISO)</source>
-        <translation>0.35mm (ISO)</translation>
+        <translation>0.35 mm (ISO)</translation>
     </message>
     <message>
         <source>0.40mm</source>
-        <translation>0.40mm</translation>
+        <translation>0.40 mm</translation>
     </message>
     <message>
         <source>0.50mm (ISO)</source>
-        <translation>0.50mm (ISO)</translation>
+        <translation>0.50 mm (ISO)</translation>
     </message>
     <message>
         <source>0.53mm</source>
-        <translation>0.53mm</translation>
+        <translation>0.53 mm</translation>
     </message>
     <message>
         <source>0.60mm</source>
-        <translation>0.60mm</translation>
+        <translation>0.60 mm</translation>
     </message>
     <message>
         <source>0.70mm (ISO)</source>
-        <translation>0.70mm (ISO)</translation>
+        <translation>0.70 mm (ISO)</translation>
     </message>
     <message>
         <source>0.80mm</source>
-        <translation>0.80mm</translation>
+        <translation>0.80 mm</translation>
     </message>
     <message>
         <source>0.90mm</source>
-        <translation>0.90mm</translation>
+        <translation>0.90 mm</translation>
     </message>
     <message>
         <source>1.00mm (ISO)</source>
-        <translation>1.00mm (ISO)</translation>
+        <translation>1.00 mm (ISO)</translation>
     </message>
     <message>
         <source>1.06mm</source>
-        <translation>1.06mm</translation>
+        <translation>1.06 mm</translation>
     </message>
     <message>
         <source>1.20mm</source>
-        <translation>1.20mm</translation>
+        <translation>1.20 mm</translation>
     </message>
     <message>
         <source>1.40mm (ISO)</source>
-        <translation>1.40mm (ISO)</translation>
+        <translation>1.40 mm (ISO)</translation>
     </message>
     <message>
         <source>1.58mm</source>
-        <translation>1.58mm</translation>
+        <translation>1.58 mm</translation>
     </message>
     <message>
         <source>2.00mm (ISO)</source>
-        <translation>2.00mm (ISO)</translation>
+        <translation>2.00 mm (ISO)</translation>
     </message>
     <message>
         <source>2.11mm</source>
-        <translation>2.11mm</translation>
+        <translation>2.11 mm</translation>
     </message>
     <message>
         <source>- Unchanged -</source>
-        <translation>- No canviat -</translation>
+        <translation>- Sense canvis -</translation>
     </message>
 </context>
 <context>
@@ -6008,12 +6027,12 @@ p, li { white-space: pre-wrap; }
         <translation>Elimina una capa</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation>S&apos;eliminaran la capa &quot;%1&quot; i totes les entitats que hi ha en ella.</translation>
+        <source>Layer "%1" and all entities on it will be removed.</source>
+        <translation>S'eliminaran la capa "%1" i totes les entitats que hi ha en ella.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>No es pot eliminar la capa &quot;%1&quot;.</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>No es pot eliminar la capa "%1".</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -6024,16 +6043,16 @@ p, li { white-space: pre-wrap; }
         <translation>Elimina un bloc</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>S&apos;eliminaran el bloc &quot;%1&quot; i totes les seues entitats.</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>S'eliminaran el bloc "%1" i totes les seues entitats.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
-        <translation>Propietats de &apos;Capa&apos;</translation>
+        <translation>Propietats de Capa</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Ja hi ha una capa amb el nom &quot;%1&quot;. Especifiqueu un nom diferent.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>Ja hi ha una capa amb el nom "%1". Especifiqueu un nom diferent.</translation>
     </message>
 </context>
 <context>
@@ -6098,15 +6117,15 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Drawing Exchange %1</source>
-        <translation>Drawing Exchange %1</translation>
+        <translation>Dibuix d'intercanvi %1</translation>
     </message>
     <message>
         <source>QCad 1.x file %1</source>
-        <translation>QCad 1.x file %1</translation>
+        <translation>Fitxer QCad 1.x %1</translation>
     </message>
     <message>
         <source>Font %1</source>
-        <translation>Font %1</translation>
+        <translation>Tipus de lletraz %1</translation>
     </message>
     <message>
         <source>All Files (*.*)</source>
@@ -6114,7 +6133,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>No res</translation>
+        <translation>Cap</translation>
     </message>
     <message>
         <source>Inch</source>
@@ -6198,15 +6217,15 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Loading..</source>
-        <translation>S&apos;està carregant..</translation>
+        <translation>S'està carregant..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
-        <translation>S&apos;està carregant el fitxer %1..</translation>
+        <translation>S'està carregant el fitxer %1..</translation>
     </message>
     <message>
         <source>Loading...</source>
-        <translation>S&apos;està carregant...</translation>
+        <translation>S'està carregant...</translation>
     </message>
     <message>
         <source>enter an integer number</source>
@@ -6214,11 +6233,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>LibreCAD query</source>
-        <translation>LibreCAD query</translation>
+        <translation>Consulta del LibreCAD</translation>
     </message>
     <message>
         <source>enter a number</source>
-        <translation>introduïu un nombre</translation>
+        <translation>Introduïu un nombre</translation>
     </message>
     <message>
         <source>enter text</source>
@@ -6226,7 +6245,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>LFF Font %1</source>
-        <translation>LFF Font %1</translation>
+        <translation>Tipus de lletra LFF %1</translation>
     </message>
     <message>
         <source>Jww %1</source>
@@ -6234,11 +6253,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Block %1 already exist, renamed to: %2</source>
-        <translation>El bloc %1 ja existeix, s&apos;ha canviat el nom a: %2</translation>
+        <translation>El bloc %1 ja existeix. S'ha canviat el nom a: %2</translation>
     </message>
     <message>
         <source>All Image Files (%1) </source>
-        <translation>Tots els fitxers d&apos;imatge (%1) </translation>
+        <translation>Tots els fitxers d'imatge (%1) </translation>
     </message>
     <message>
         <source>Scalable Vector Graphics</source>
@@ -6294,55 +6313,55 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Opened dwg file version %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>S'ha obert el fitxer dwg versió %1.</translation>
     </message>
     <message>
         <source>unknown error opening dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>S'ha produit un error desconegut en obrir el fitxer dwg</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
-        <translation type="unfinished"></translation>
+        <source>can't open this dwg file</source>
+        <translation>No es pot obrir el fitxer dwg</translation>
     </message>
     <message>
         <source>unsupported dwg version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versió dwg sense suport</translation>
     </message>
     <message>
         <source>error reading file header in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>S'ha produit un error en llegir la capçalera del fitxer dwg</translation>
     </message>
     <message>
         <source>error reading header vars in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>S'ha produit un error en llegir les variables de capçalera del fitxer dwg</translation>
     </message>
     <message>
         <source>error reading classes in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>S'ha produit un error de lectura de clases en el fitxer dwg</translation>
     </message>
     <message>
         <source>error reading offsets in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>S'ha produit un error de lectura de desfasaments en el fitxer dwg</translation>
     </message>
     <message>
         <source>error reading tables in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>S'ha produit un error de lectura de taules en el fitxer dwg</translation>
     </message>
     <message>
         <source>error reading entities in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>S'ha produit un error de lectura d'entitats en el fitxer dwg</translation>
     </message>
     <message>
         <source>dwg Drawing %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibuix dwg %1</translation>
     </message>
     <message>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>El fitxer en el disc s'ha modificat. Deseu-lo en un altre fitxer per evitar la pèrdua de dades. Fitxer modificat: %1</translation>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation type="unfinished"></translation>
+        <translation>L'ombrejat ha fallat degut a una errada=%1 entre (%2, %3) i (%4, %5)</translation>
     </message>
 </context>
 <context>
@@ -6407,7 +6426,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -6419,11 +6438,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Introduïu l&apos;angle:</translation>
+        <translation>Introduïu l'angle:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
         <source>Enter factor:</source>
@@ -6439,11 +6458,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Enter column spacing:</source>
-        <translation>Introduïu l&apos;espaiat de les columnes:</translation>
+        <translation>Introduïu l'espaiat de les columnes:</translation>
     </message>
     <message>
         <source>Enter row spacing:</source>
-        <translation>Introduïu l&apos;espaiat de les files:</translation>
+        <translation>Introduïu l'espaiat de les files:</translation>
     </message>
 </context>
 <context>
@@ -6486,11 +6505,11 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionDimAligned</name>
     <message>
         <source>&amp;Aligned</source>
-        <translation>&amp;Alineat</translation>
+        <translation>&amp;Alineada</translation>
     </message>
     <message>
         <source>Specify first extension line origin</source>
-        <translation>Especifiqueu l&apos;origen de la primera línia d&apos;extensió</translation>
+        <translation>Especifiqueu l'origen de la primera línia d'extensió</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6498,7 +6517,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation>Especifiqueu l&apos;origen de la segona línia d&apos;extensió</translation>
+        <translation>Especifiqueu l'origen de la segona línia d'extensió</translation>
     </message>
     <message>
         <source>Back</source>
@@ -6552,11 +6571,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation>Seleccioneu l&apos;arc o circumferència</translation>
+        <translation>Seleccioneu l'arc o circumferència</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6579,7 +6598,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Especifiqueu el punt de destinació</translation>
+        <translation>Especifiqueu el punt de destí</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6610,11 +6629,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Specify first extension line origin</source>
-        <translation>Especifiqueu l&apos;origen de la primera línia d&apos;extensió</translation>
+        <translation>Especifiqueu l'origen de la primera línia d'extensió</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6622,7 +6641,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify second extension line origin</source>
-        <translation>Especifiqueu l&apos;origen de la segona línia d&apos;extensió</translation>
+        <translation>Especifiqueu l'origen de la segona línia d'extensió</translation>
     </message>
     <message>
         <source>Back</source>
@@ -6638,7 +6657,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Enter dimension line angle:</source>
-        <translation>Introduïu l&apos;angle de la línia de cota:</translation>
+        <translation>Introduïu l'angle de la línia de cota:</translation>
     </message>
 </context>
 <context>
@@ -6653,11 +6672,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Select arc or circle entity</source>
-        <translation>Seleccioneu l&apos;arc o circumferència</translation>
+        <translation>Seleccioneu l'arc o circumferència</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6665,7 +6684,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify dimension line position or enter angle:</source>
-        <translation>Especifiqueu la posició de la línia de cota o introduïu l&apos;angle:</translation>
+        <translation>Especifiqueu la posició de la línia de cota o introduïu l'angle:</translation>
     </message>
     <message>
         <source>Enter dimension text:</source>
@@ -6676,11 +6695,11 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionDrawArc</name>
     <message>
         <source>&amp;Center, Point, Angles</source>
-        <translation>&amp;Centre, punt, angles</translation>
+        <translation>&amp;Centre, punt i angles</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Not a valid chord length</source>
@@ -6704,15 +6723,15 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify start angle:</source>
-        <translation>Especifiqueu l&apos;angle inicial:</translation>
+        <translation>Especifiqueu l'angle inicial:</translation>
     </message>
     <message>
         <source>Specify end angle or [Angle/chord Length]</source>
-        <translation type="obsolete">Especifiqueu l&apos;angle final o [Angle/longitud de corda]</translation>
+        <translation type="obsolete">Especifiqueu l'angle final o [Angle/longitud de corda]</translation>
     </message>
     <message>
         <source>Specify included angle:</source>
-        <translation>Especifiqueu l&apos;angle inclòs:</translation>
+        <translation>Especifiqueu l'angle inclòs:</translation>
     </message>
     <message>
         <source>Specify chord length:</source>
@@ -6720,7 +6739,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify end angle or [angle/chord length]</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifiqueu l'angle final o [angle/longitud de corda]</translation>
     </message>
 </context>
 <context>
@@ -6731,7 +6750,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Invalid arc data.</source>
-        <translation>Les dades de l&apos;arc no són vàlides.</translation>
+        <translation>Les dades de l'arc no són vàlides.</translation>
     </message>
     <message>
         <source>Specify startpoint or [Center]</source>
@@ -6755,14 +6774,14 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify startpoint or [center]</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifiqueu el punt final o [centre]</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawArcTangential</name>
     <message>
         <source>Specify base entity</source>
-        <translation>Espedifiqueu l&apos;entitat de base</translation>
+        <translation>Espedifiqueu l'entitat de base</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6770,7 +6789,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation>Especifiqueu l&apos;angle final</translation>
+        <translation>Especifiqueu l'angle final</translation>
     </message>
     <message>
         <source>Back</source>
@@ -6793,7 +6812,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Specify center</source>
@@ -6878,7 +6897,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Specify circle center</source>
@@ -6898,7 +6917,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>radius=%1 is invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>El radi=%1 no és vàlid</translation>
     </message>
 </context>
 <context>
@@ -6960,7 +6979,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifiqueu una línia/arc/circumferència</translation>
     </message>
 </context>
 <context>
@@ -6994,31 +7013,31 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionDrawCircleTan2_1P</name>
     <message>
         <source>Common Tangential Circle 1 Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangent comuna a una circumferència per un punt</translation>
     </message>
     <message>
         <source>Specify a line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifiqueu una línia/arc/circumferència</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancel·la</translation>
+        <translation>Cancel·la</translation>
     </message>
     <message>
         <source>Specify the another arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifiqueu l'altre arc/circumferència</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Enrere</translation>
+        <translation>Enrere</translation>
     </message>
     <message>
         <source>Specify a point on the tangent circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifiqueu un punt en la circumferència tangent</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation type="unfinished">Seleccioneu el centre de la circumferència tangent</translation>
+        <translation>Seleccioneu el centre de la circumferència tangent</translation>
     </message>
 </context>
 <context>
@@ -7053,15 +7072,15 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify the first line/arc/circle</source>
-        <translation type="unfinished">Especifiqueu la primera línia/arc/circumferència</translation>
+        <translation>Especifiqueu la primera línia/arc/circumferència</translation>
     </message>
     <message>
         <source>Specify the second line/arc/circle</source>
-        <translation type="unfinished">Especifiqueu la segona línia/arc/circumferència</translation>
+        <translation>Especifiqueu la segona línia/arc/circumferència</translation>
     </message>
     <message>
         <source>Specify the third line/arc/circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifiqueu la tercera línia/arc/circumferència</translation>
     </message>
 </context>
 <context>
@@ -7072,7 +7091,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify the first point on ellipse</source>
-        <translation>Especifiqueu el primer punt en l&apos;el·lipse</translation>
+        <translation>Especifiqueu el primer punt en l'el·lipse</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7080,7 +7099,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify the second point on ellipse</source>
-        <translation>Especifiqueu el segon punt en l&apos;el·lipse</translation>
+        <translation>Especifiqueu el segon punt en l'el·lipse</translation>
     </message>
     <message>
         <source>Back</source>
@@ -7088,30 +7107,30 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
-        <translation>Especifiqueu el tercer punt en l&apos;el·lipse</translation>
+        <translation>Especifiqueu el tercer punt en l'el·lipse</translation>
     </message>
     <message>
         <source>Specify the fourth point on ellipse</source>
-        <translation>Especifiqueu el quart punt en l&apos;el·lipse</translation>
+        <translation>Especifiqueu el quart punt en l'el·lipse</translation>
     </message>
     <message>
         <source>Can not determine uniquely an ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>No es pot determinar unicament una el·lipse</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
         <source>&amp;Ellipse (Axis)</source>
-        <translation>&amp;El·lipse (Eix)</translation>
+        <translation>&amp;El·lipse (Eixos)</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Specify ellipse center</source>
-        <translation>Especifiqueu el centre de l&apos;el·lipse</translation>
+        <translation>Especifiqueu el centre de l'el·lipse</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7119,7 +7138,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify endpoint of major axis</source>
-        <translation>Especifiqueu l&apos;extrem de l&apos;eix major</translation>
+        <translation>Especifiqueu l'extrem de l'eix major</translation>
     </message>
     <message>
         <source>Back</source>
@@ -7127,30 +7146,30 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation>Especifiqueu l&apos;extrem o longitud de l&apos;eix menor:</translation>
+        <translation>Especifiqueu l'extrem o longitud de l'eix menor:</translation>
     </message>
     <message>
         <source>Specify start angle</source>
-        <translation>Especifiqueu l&apos;angle inicial</translation>
+        <translation>Especifiqueu l'angle inicial</translation>
     </message>
     <message>
         <source>Specify end angle</source>
-        <translation>Especifiqueu l&apos;angle final</translation>
+        <translation>Especifiqueu l'angle final</translation>
     </message>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>&amp;Arc d&apos;el·lipse (Eixos)</translation>
+        <translation>&amp;Arc d'el·lipse (Eixos)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseCenter3Points</name>
     <message>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>Centre de l&apos;el·lipse i &amp;3 punts</translation>
+        <translation>Centre de l'el·lipse i &amp;3 punts</translation>
     </message>
     <message>
         <source>Specify the center of ellipse</source>
-        <translation>Especifiqueu el centre de l&apos;el·lipse</translation>
+        <translation>Especifiqueu el centre de l'el·lipse</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7158,11 +7177,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify the first point on ellipse</source>
-        <translation>Especifiqueu el primer punt en l&apos;el·lipse</translation>
+        <translation>Especifiqueu el primer punt en l'el·lipse</translation>
     </message>
     <message>
         <source>Specify the second point on ellipse</source>
-        <translation>Especifiqueu el segon punt en l&apos;el·lipse</translation>
+        <translation>Especifiqueu el segon punt en l'el·lipse</translation>
     </message>
     <message>
         <source>Back</source>
@@ -7170,22 +7189,22 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify the third point on ellipse</source>
-        <translation>Especifiqueu el tercer punt en l&apos;el·lipse</translation>
+        <translation>Especifiqueu el tercer punt en l'el·lipse</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipseFociPoint</name>
     <message>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>Els dos &amp;focus de l&apos;el·lipse </translation>
+        <translation>Els dos &amp;focus de l'el·lipse </translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Specify first focus of ellipse</source>
-        <translation>Especifiqueu el primer focus de l&apos;el·lipse</translation>
+        <translation>Especifiqueu el primer focus de l'el·lipse</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7193,7 +7212,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify second focus of ellipse</source>
-        <translation>Especifiqueu el segon focus de l&apos;el·lipse</translation>
+        <translation>Especifiqueu el segon focus de l'el·lipse</translation>
     </message>
     <message>
         <source>Back</source>
@@ -7201,7 +7220,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
-        <translation>Especifiqueu un punt en l&apos;el·lipse o la distància total als focus</translation>
+        <translation>Especifiqueu un punt en l'el·lipse o la distància total als focus</translation>
     </message>
 </context>
 <context>
@@ -7236,53 +7255,53 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Can not determine uniquely an ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>No es pot determinar unicament una el·lipse</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawHatch</name>
     <message>
         <source>&amp;Hatch</source>
-        <translation>&amp;Ratllat</translation>
+        <translation>&amp;Ombrejat</translation>
     </message>
     <message>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation>L&apos;àrea de ratllat no és vàlida. Comproveu que les entittats seleccionades formen un o més contorns tancats.</translation>
+        <translation>L'àrea d'ombrejat no és vàlida. Comproveu que les entittats seleccionades formen un o més contorns tancats.</translation>
     </message>
     <message>
         <source>Hatch created successfully.</source>
-        <translation>S&apos;ha creat el ratllat amb èxit.</translation>
+        <translation>S'ha creat l'ombrejat amb èxit.</translation>
     </message>
     <message>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation type="unfinished"></translation>
+        <translation>S'ha produit un error en l'ombrejat: el contorn trobat no és vàlid.</translation>
     </message>
     <message>
         <source>Hatch Error: Pattern not found!</source>
-        <translation type="unfinished"></translation>
+        <translation>S'ha produit un error en l'ombrejat: no s'ha trobat el patró.</translation>
     </message>
     <message>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation type="unfinished"></translation>
+        <translation>S'ha produit un error en l'ombrejat: el contorn o el patró és massa petit.</translation>
     </message>
     <message>
         <source>Hatch Error: Contour too big!</source>
-        <translation type="unfinished"></translation>
+        <translation>S'ha produit un error en l'ombrejat: el contorn és massa gran.</translation>
     </message>
     <message>
         <source>Hatch Error: Undefined Error!</source>
-        <translation type="unfinished"></translation>
+        <translation>S'ha produit un error sense definir en l'ombrejat.</translation>
     </message>
     <message>
         <source>Total hatch area = %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Àrea total ombrejada = %1</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -7294,11 +7313,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Introduïu l&apos;angle:</translation>
+        <translation>Introduïu l'angle:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
         <source>Enter factor:</source>
@@ -7310,7 +7329,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Enter dpi:</source>
-        <translation type="unfinished"></translation>
+        <translation>Introduiu ppp:</translation>
     </message>
 </context>
 <context>
@@ -7360,7 +7379,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Specify position</source>
@@ -7372,7 +7391,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Introduïu l&apos;angle:</translation>
+        <translation>Introduïu l'angle:</translation>
     </message>
     <message>
         <source>Back</source>
@@ -7399,7 +7418,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Select first line</source>
@@ -7491,7 +7510,7 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionDrawLineParallel</name>
     <message>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation>Especifiqueu la distància &lt;%1&gt;, seleccioneu l&apos;entitat o [%2]</translation>
+        <translation>Especifiqueu la distància &lt;%1&gt;, seleccioneu l'entitat o [%2]</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7503,11 +7522,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
-        <translation>El nombre no és vàlid. Ha d&apos;estar entre 1 i 99</translation>
+        <translation>El nombre no és vàlid. Ha d'estar entre 1 i 99</translation>
     </message>
     <message>
         <source>&amp;Parallel</source>
@@ -7526,7 +7545,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Select entity</source>
-        <translation>Seleccioneu l&apos;entitat</translation>
+        <translation>Selecciona l'entitat</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7546,25 +7565,25 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
-        <translation>El nombre no és vàlid. Ha d&apos;estar entre 1 i 99</translation>
+        <translation>El nombre no és vàlid. Ha d'estar entre 1 i 99</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>&amp;Polígon (Cen,Vèr)</translation>
+        <translation>&amp;Polígon (Centre,Vèrtex)</translation>
     </message>
     <message>
         <source>Specify center</source>
@@ -7580,18 +7599,18 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>El nombre no és vàlid. Ha d&apos;estar entre 1 i 9999</translation>
+        <translation>El nombre no és vàlid. Ha d'estar entre 1 i 9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygonCorCor</name>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>Polí&amp;gon (Vèr,Vèr)</translation>
+        <translation>Polí&amp;gon (Vèrtex,Vèrtex)</translation>
     </message>
     <message>
         <source>Specify first corner</source>
@@ -7615,11 +7634,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>El nombre no és vàlid. Ha d&apos;estar entre 1 i 9999</translation>
+        <translation>El nombre no és vàlid. Ha d'estar entre 1 i 9999</translation>
     </message>
     <message>
         <source>Not a valid expression.</source>
-        <translation>L&apos;expressió no és vàlida.</translation>
+        <translation>L'expressió no és vàlida.</translation>
     </message>
 </context>
 <context>
@@ -7653,11 +7672,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Select base entity</source>
-        <translation>Espedifiqueu l&apos;entitat de base</translation>
+        <translation>Espedifiqueu l'entitat de base</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7726,30 +7745,30 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionDrawMText</name>
     <message>
         <source>&amp;MText</source>
-        <translation type="unfinished"></translation>
+        <translation>Text&amp;M</translation>
     </message>
     <message>
         <source>Specify insertion point</source>
-        <translation type="unfinished">Especifiqueu el punt d&apos;inserció</translation>
+        <translation>Especifiqueu el punt d'inserció</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancel·la</translation>
+        <translation>Cancel·la</translation>
     </message>
     <message>
         <source>Enter text:</source>
-        <translation type="unfinished">Introduïu el text:</translation>
+        <translation>Introduïu el text:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Enrere</translation>
+        <translation>Enrere</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <source>&amp;Points</source>
-        <translation>&amp;Punts</translation>
+        <translation>P&amp;unts</translation>
     </message>
     <message>
         <source>Specify location</source>
@@ -7768,7 +7787,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation>Traça polilínies</translation>
+        <translation>Dibuixa polilínies</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -7838,7 +7857,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify insertion point</source>
-        <translation>Especifiqueu el punt d&apos;inserció</translation>
+        <translation>Especifiqueu el punt d'inserció</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7854,7 +7873,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished">Especifiqueu el segon punt</translation>
+        <translation>Especifiqueu el segon punt</translation>
     </message>
 </context>
 <context>
@@ -7921,7 +7940,7 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionFileNewTemplate</name>
     <message>
         <source>New From &amp;Template</source>
-        <translation type="unfinished"></translation>
+        <translation>Nou des de plan&amp;tilla</translation>
     </message>
 </context>
 <context>
@@ -7977,7 +7996,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source> or %1%2</source>
-        <translation type="unfinished"></translation>
+        <translation>o %1%2</translation>
     </message>
 </context>
 <context>
@@ -8019,7 +8038,7 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionInfoDist</name>
     <message>
         <source>&amp;Distance Point to Point</source>
-        <translation>Distància &amp;punt a punt</translation>
+        <translation>Distància de &amp;punt a punt</translation>
     </message>
     <message>
         <source>Distance: %1</source>
@@ -8043,14 +8062,14 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5 </source>
-        <translation type="unfinished"></translation>
+        <translation>Distància: %1 Cartesiana: (%2 , %3), Polar: (%4&lt;%5 </translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
     <message>
         <source>&amp;Distance Entity to Point</source>
-        <translation>Distància &amp;entitat a punt</translation>
+        <translation>Distància d'&amp;entitat a punt</translation>
     </message>
     <message>
         <source>Distance: %1</source>
@@ -8058,7 +8077,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify entity</source>
-        <translation>Especifiqueu l&apos;entitat</translation>
+        <translation>Especifiqueu l'entitat</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -8172,7 +8191,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -8184,26 +8203,26 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation>Introduïu l&apos;angle:</translation>
+        <translation>Introduïu l'angle:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
         <source>Enter factor:</source>
         <translation>Introduïu el factor:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>No es pot obrir el fitxer &apos;%1&apos;</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>No es pot obrir el fitxer '%1'</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLockRelativeZero</name>
     <message>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>(Des)b&amp;loqueja l&apos;origen relatiu</translation>
+        <translation>(Des)b&amp;loqueja l'origen relatiu</translation>
     </message>
 </context>
 <context>
@@ -8217,11 +8236,11 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionModifyBevel</name>
     <message>
         <source>&amp;Bevel</source>
-        <translation>&amp;Bisell</translation>
+        <translation>&amp;Bisella</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Select first entity</source>
@@ -8252,7 +8271,7 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionModifyCut</name>
     <message>
         <source>No Entity found.</source>
-        <translation>No s&apos;ha trobat cap entitat.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <source>Cutting point is invalid.</source>
@@ -8260,11 +8279,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Cutting point is not on entity.</source>
-        <translation>El punt de tall no està en l&apos;entitat.</translation>
+        <translation>El punt de tall no està en l'entitat.</translation>
     </message>
     <message>
         <source>Specify entity to cut</source>
-        <translation>Especifiqueu l&apos;entitat a retallar</translation>
+        <translation>Especifiqueu l'entitat a retallar</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -8284,11 +8303,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle or ellipse.</source>
-        <translation type="obsolete">L&apos;entitat deu ser una línia, arc, circumferència o el·lipse.</translation>
+        <translation type="obsolete">L'entitat deu ser una línia, arc, circumferència o el·lipse.</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished"></translation>
+        <translation>L'entitat ha de ser una línia, arc, circumferència,  el·lipse o spline interpolada.</translation>
     </message>
 </context>
 <context>
@@ -8334,7 +8353,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>One of the chosen entities is NULL</source>
-        <translation>Una de les entitats triades es NULL</translation>
+        <translation>Una de les entitats triades es nula</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
@@ -8346,22 +8365,22 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>First entity is NULL</source>
-        <translation>La primera entitat és NULL</translation>
+        <translation>La primera entitat és nula</translation>
     </message>
     <message>
         <source>Second entity is NULL</source>
-        <translation>La segona entitat és NULL</translation>
+        <translation>La segona entitat és nula</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteQuick</name>
     <message>
         <source>&amp;Delete selected</source>
-        <translation>&amp;Suprimeix l&apos;entitat seleccionada</translation>
+        <translation>&amp;Suprimeix l'entitat seleccionada</translation>
     </message>
     <message>
         <source>Pick entity to delete</source>
-        <translation>Tria l&apos;entitat a suprimir</translation>
+        <translation>Tria l'entitat a suprimir</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -8379,7 +8398,7 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionModifyExplodeText</name>
     <message>
         <source>&amp;Explode Text into Letters</source>
-        <translation>&amp;Explota text en lletres</translation>
+        <translation>&amp;Explota el text en lletres</translation>
     </message>
 </context>
 <context>
@@ -8390,7 +8409,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify first point of mirror line</source>
-        <translation>Especifiqueu el primer punt de l&apos;eix de simetria</translation>
+        <translation>Especifiqueu el primer punt de l'eix de simetria</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -8398,7 +8417,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify second point of mirror line</source>
-        <translation>Especifiqueu el segon punt de l&apos;eix de simetria</translation>
+        <translation>Especifiqueu el segon punt de l'eix de simetria</translation>
     </message>
     <message>
         <source>Back</source>
@@ -8421,7 +8440,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Especifiqueu el punt de destinació</translation>
+        <translation>Especifiqueu el punt de destí</translation>
     </message>
     <message>
         <source>Back</source>
@@ -8440,7 +8459,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -8452,7 +8471,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Especifiqueu el punt de destinació</translation>
+        <translation>Especifiqueu el punt de destí</translation>
     </message>
     <message>
         <source>Back</source>
@@ -8460,7 +8479,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
-        <translation>Introduïu l&apos;angle de gir:</translation>
+        <translation>Introduïu l'angle de gir:</translation>
     </message>
 </context>
 <context>
@@ -8482,18 +8501,18 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionModifyRevertDirection</name>
     <message>
         <source>Re&amp;vert direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Can&amp;via la direcció</translation>
     </message>
     <message>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate</name>
     <message>
         <source>&amp;Rotate</source>
-        <translation>&amp;Gira</translation>
+        <translation>Gi&amp;ra</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -8509,14 +8528,14 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify target point to rotate to</source>
-        <translation>Especifiqueu el punt de destinació</translation>
+        <translation>Especifiqueu el punt de destí</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate2</name>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation>Gira &amp;Dos</translation>
+        <translation>Gira a &amp;dos</translation>
     </message>
     <message>
         <source>Specify absolute reference point</source>
@@ -8543,7 +8562,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Specify first entity</source>
@@ -8567,7 +8586,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>&amp;Fillet</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Arrodoneix</translation>
     </message>
 </context>
 <context>
@@ -8589,7 +8608,7 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionModifyStretch</name>
     <message>
         <source>&amp;Stretch</source>
-        <translation>&amp;Amplia</translation>
+        <translation>E&amp;stira</translation>
     </message>
     <message>
         <source>Specify first corner</source>
@@ -8613,7 +8632,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation>Especifiqueu el punt de destinació</translation>
+        <translation>Especifiqueu el punt de destí</translation>
     </message>
 </context>
 <context>
@@ -8624,7 +8643,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>&amp;Trim Two</source>
-        <translation>&amp;Redueix dos</translation>
+        <translation>&amp;Redueix les dos</translation>
     </message>
     <message>
         <source>Select first trim entity</source>
@@ -8636,7 +8655,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Select limiting entity</source>
-        <translation>Seleccioneu l&apos;entitat que límita</translation>
+        <translation>Seleccioneu l'entitat que límita</translation>
     </message>
     <message>
         <source>Back</source>
@@ -8648,34 +8667,34 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Select entity to trim</source>
-        <translation>Seleccioneu l&apos;entitat a reduir</translation>
+        <translation>Seleccioneu l'entitat a reduir</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
         <source>&amp;Lengthen</source>
-        <translation>&amp;Allarga</translation>
+        <translation>A&amp;llarga</translation>
     </message>
     <message>
         <source>No entity found. </source>
-        <translation>No s&apos;ha trobat cap entitat.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation>L&apos;entitat seleccionada forma part d&apos;un bloc. Heu d&apos;editar el bloc.</translation>
+        <translation>L'entitat seleccionada forma part d'un bloc. Heu d'editar el bloc.</translation>
     </message>
     <message>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation>L&apos;entitat seleccionada no és una entitat atòmica o no es pot retallar.</translation>
+        <translation>L'entitat seleccionada no és una entitat atòmica o no es pot retallar.</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation>L&apos;expressió no és vàlida</translation>
+        <translation>L'expressió no és vàlida</translation>
     </message>
     <message>
         <source>Select entity to trim or enter distance:</source>
-        <translation>Seleccioneu l&apos;entitat a reduir (o estendre) o introduïu la distància:</translation>
+        <translation>Seleccioneu l'entitat a reduir (o estendre) o introduïu la distància:</translation>
     </message>
     <message>
         <source>Back</source>
@@ -8693,39 +8712,39 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionOrder</name>
     <message>
         <source>move to bottom</source>
-        <translation>mou cap avall</translation>
+        <translation>Mou al capdavall</translation>
     </message>
     <message>
         <source>set to bottom</source>
-        <translation>posa al capdavall</translation>
+        <translation>Mou al capdavall</translation>
     </message>
     <message>
         <source>lower after entity</source>
-        <translation>més avall després de l&apos;entitat</translation>
+        <translation>Abaixa sota l'entitat</translation>
     </message>
     <message>
         <source>lower over entity</source>
-        <translation>més avall sobre l&apos;entitat</translation>
+        <translation>Abaixa sota l'entitat</translation>
     </message>
     <message>
         <source>raise over entity</source>
-        <translation>apuja sobre l&apos;entitat</translation>
+        <translation>Apuja sobre l'entitat</translation>
     </message>
     <message>
         <source>move to top</source>
-        <translation>mou cap amunt</translation>
+        <translation>Mou al capdamunt</translation>
     </message>
     <message>
         <source>set to top</source>
-        <translation>posa al capdamunt</translation>
+        <translation>Mou al capdamunt</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation>No s&apos;ha trobat cap entitat.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <source>Choose entity for order</source>
-        <translation>Tria l&apos;entitat a ordenar</translation>
+        <translation>Trieu l'entitat a ordenar</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -8739,16 +8758,16 @@ Voleu reemplaçar-lo?</translation>
         <translation>&amp;Afegeix un node</translation>
     </message>
     <message>
-        <source>Add polyline&apos;s node</source>
+        <source>Add polyline's node</source>
         <translation>Afegeix un node de polilínia</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation>No s&apos;ha trobat cap entitat.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>L&apos;entitat deu ser una polilínia.</translation>
+        <translation>L'entitat ha de ser una polilínia.</translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
@@ -8756,7 +8775,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation>El punt afegit no està en l&apos;entitat.</translation>
+        <translation>El punt afegit no està en l'entitat.</translation>
     </message>
     <message>
         <source>Specify polyline to add nodes</source>
@@ -8767,7 +8786,7 @@ Voleu reemplaçar-lo?</translation>
         <translation>Cancel·la</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Especifiqueu el punt del node a afegir</translation>
     </message>
     <message>
@@ -8779,23 +8798,23 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionPolylineAppend</name>
     <message>
         <source>A&amp;ppend node</source>
-        <translation>A&amp;llarga una polilínia</translation>
+        <translation>A&amp;fegeix un node</translation>
     </message>
     <message>
-        <source>Append polyline&apos;s node</source>
+        <source>Append polyline's node</source>
         <translation>Afegeix un node de polilínea</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation>No s&apos;ha trobat cap entitat.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>L&apos;entitat deu ser una polilínia.</translation>
+        <translation>L'entitat ha de ser una polilínia.</translation>
     </message>
     <message>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation>Feu clic en algun punt proper a un dels extrems d&apos;una polilínia.</translation>
+        <translation>Feu clic en algun punt proper a un dels extrems d'una polilínia.</translation>
     </message>
     <message>
         <source>Specify the polyline somewhere near the beginning or end point</source>
@@ -8833,16 +8852,16 @@ Voleu reemplaçar-lo?</translation>
         <translation>Suprimeix un &amp;node</translation>
     </message>
     <message>
-        <source>Delete polyline&apos;s node</source>
+        <source>Delete polyline's node</source>
         <translation>Suprimeix un node de polilínea</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation>No s&apos;ha trobat cap entitat.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>L&apos;entitat deu ser una polilínia.</translation>
+        <translation>L'entitat ha de ser una polilínia.</translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
@@ -8850,7 +8869,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation type="obsolete">El punt afegit no està en l&apos;entitat.</translation>
+        <translation type="obsolete">El punt afegit no està en l'entitat.</translation>
     </message>
     <message>
         <source>Specify polyline to delete node</source>
@@ -8861,7 +8880,7 @@ Voleu reemplaçar-lo?</translation>
         <translation>Cancel·la</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Especifiqueu el punt del node a suprimir</translation>
     </message>
     <message>
@@ -8870,11 +8889,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>El punt a suprimir no és vàlid.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished">El punt a suprimir no està en l&apos;entitat.</translation>
+        <translation>El punt a suprimir no és a l'entitat.</translation>
     </message>
 </context>
 <context>
@@ -8889,11 +8908,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation>No s&apos;ha trobat cap entitat.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>L&apos;entitat deu ser una polilínia.</translation>
+        <translation>L'entitat ha de ser una polilínia.</translation>
     </message>
     <message>
         <source>Deletinging point is invalid.</source>
@@ -8901,11 +8920,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation>El punt a suprimir no està en l&apos;entitat.</translation>
+        <translation>El punt a suprimir no és a l'entitat.</translation>
     </message>
     <message>
         <source>Deleteinging point is not on entity.</source>
-        <translation>El punt a suprimir no està en l&apos;entitat.</translation>
+        <translation>El punt a suprimir no és a l'entitat.</translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>
@@ -8929,7 +8948,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>El punt a suprimir no és vàlid.</translation>
     </message>
 </context>
 <context>
@@ -8944,11 +8963,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation>No s&apos;ha trobat cap entitat.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>L&apos;entitat deu ser una polilínia.</translation>
+        <translation>L'entitat ha de ser una polilínia.</translation>
     </message>
     <message>
         <source>Choose the original polyline</source>
@@ -8971,7 +8990,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation>No s&apos;ha trobat cap entitat.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <source>Choose one of the segments on the original polyline</source>
@@ -8983,11 +9002,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Entity must be a line, arc or polyline.</source>
-        <translation>L&apos;entitat deu ser una línia, arc o polilínia.</translation>
+        <translation>L'entitat ha de ser una línia, arc o polilínia.</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
-        <translation>L&apos;entitat no pot ser una polilínia tancada.</translation>
+        <translation>L'entitat no pot ser una polilínia tancada.</translation>
     </message>
 </context>
 <context>
@@ -8997,16 +9016,16 @@ Voleu reemplaçar-lo?</translation>
         <translation>&amp;Redueix segments</translation>
     </message>
     <message>
-        <source>Trim polyline&apos;s segments</source>
+        <source>Trim polyline's segments</source>
         <translation>Redueix segments de polilínia</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation>No s&apos;ha trobat cap entitat.</translation>
+        <translation>No s'ha trobat cap entitat.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation>L&apos;entitat deu ser una polilínia.</translation>
+        <translation>L'entitat ha de ser una polilínia.</translation>
     </message>
     <message>
         <source>Specifying point is invalid.</source>
@@ -9014,7 +9033,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>No Segment found on entity.</source>
-        <translation>No s&apos;ha trobat cap segment en l&apos;entitat.</translation>
+        <translation>No s'ha trobat cap segment en l'entitat.</translation>
     </message>
     <message>
         <source>Specify polyline to trim</source>
@@ -9041,18 +9060,18 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionPrintPreview</name>
     <message>
         <source>Print Pre&amp;view</source>
-        <translation>Pre&amp;visualització</translation>
+        <translation>Pre&amp;visualitza la imoressió</translation>
     </message>
     <message>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation>RS_ActionPrintPreview::fit(): Invalid paper size</translation>
+        <translation>RS_ActionPrintPreview::fit(): La mida del paper no és vàlida</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelect</name>
     <message>
         <source>Select to modify attributes</source>
-        <translation>Seleccioneu l&apos;entitat per a modificar els atributs</translation>
+        <translation>Seleccioneu per a modificar els atributs</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9060,63 +9079,63 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Select to delete</source>
-        <translation>Seleccioneu l&apos;entitat a suprimir</translation>
+        <translation>Seleccioneu per suprimir</translation>
     </message>
     <message>
         <source>Select to delete immediately</source>
-        <translation>Seleccioneu l&apos;entitat a suprimir immediatament</translation>
+        <translation>Seleccioneu per suprimir immediatament</translation>
     </message>
     <message>
         <source>Select to move</source>
-        <translation>Seleccioneu l&apos;entitat a moure</translation>
+        <translation>Seleccioneu per moure</translation>
     </message>
     <message>
         <source>Select to rotate</source>
-        <translation>Seleccioneu l&apos;entitat a girar</translation>
+        <translation>Seleccioneu per girar</translation>
     </message>
     <message>
         <source>Select to scale</source>
-        <translation>Seleccioneu l&apos;entitat a escalar</translation>
+        <translation>Seleccioneu per escalar</translation>
     </message>
     <message>
         <source>Select to mirror</source>
-        <translation>Seleccioneu l&apos;entitat per a simetria</translation>
+        <translation>Seleccioneu  per simetria</translation>
     </message>
     <message>
         <source>Select to move and rotate</source>
-        <translation>Seleccioneu l&apos;entitat a moure i girar</translation>
+        <translation>Seleccioneu per moure i girar</translation>
     </message>
     <message>
         <source>Select for two axis rotation</source>
-        <translation>Seleccioneu l&apos;entitat a girar amb dos eixos</translation>
+        <translation>Seleccioneu per girar a dos eixos</translation>
     </message>
     <message>
         <source>Select to explode text</source>
-        <translation>Seleccioneu l&apos;entitat per a explotar el text</translation>
+        <translation>Seleccioneu  per explotar el text</translation>
     </message>
     <message>
         <source>Select to create block</source>
-        <translation>Seleccioneu les entitats per a crear un bloc</translation>
+        <translation>Seleccioneu  per crear un bloc</translation>
     </message>
     <message>
         <source>Select to copy</source>
-        <translation>Seleccioneu l&apos;entitat a copiar</translation>
+        <translation>Seleccioneu per copiar</translation>
     </message>
     <message>
         <source>Select to cut</source>
-        <translation>Seleccioneu l&apos;entitat a retallar</translation>
+        <translation>Seleccioneu per retallar</translation>
     </message>
     <message>
         <source>No entity selected!</source>
-        <translation>No s&apos;ha seleccionat cap entitat!</translation>
+        <translation>No s'ha seleccionat cap entitat!</translation>
     </message>
     <message>
         <source>Select to create offset</source>
-        <translation>Seleccioneu l&apos;entitat per a crear el desfasament</translation>
+        <translation>Seleccioneu per crear el desfasament</translation>
     </message>
     <message>
         <source>Select entities to order</source>
-        <translation>Selecciona les entitats que s&apos;han d&apos;ordenar</translation>
+        <translation>Selecciona les entitats a ordenar</translation>
     </message>
     <message>
         <source>Select to explode block</source>
@@ -9124,7 +9143,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Select to revert direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccioneu per canviar la direcció</translation>
     </message>
 </context>
 <context>
@@ -9135,7 +9154,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation>&amp;Desselecciona-ho tot</translation>
+        <translation>(&amp;De)selecciona-ho tot</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
@@ -9146,26 +9165,26 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionSelectContour</name>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation>(Des)Selecciona &amp;contorns</translation>
+        <translation>(De)selecciona el &amp;contorn</translation>
     </message>
     <message>
         <source>Entity must be an Atomic Entity.</source>
-        <translation>L&apos;entitat deu ser una entitat atòmica.</translation>
+        <translation>L'entitat ha de ser una entitat atòmica.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectIntersected</name>
     <message>
         <source>Select Intersected Entities</source>
-        <translation>Selecciona les entitats que s&apos;interseccionen</translation>
+        <translation>Selecciona les entitats que s'intersequen</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
-        <translation>Desselecciona les entitats que s&apos;interseccionen</translation>
+        <translation>(De)selecciona les entitats que s'intersequen</translation>
     </message>
     <message>
         <source>Choose first point of intersection line</source>
-        <translation>Trieu el primer punt de la línia d&apos;intersecció</translation>
+        <translation>Trieu el primer punt de la línia d'intersecció</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9173,7 +9192,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Choose second point of intersection line</source>
-        <translation>Trieu el segon punt de la línia d&apos;intersecció</translation>
+        <translation>Trieu el segon punt de la línia d'intersecció</translation>
     </message>
     <message>
         <source>Back</source>
@@ -9191,25 +9210,25 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionSelectLayer</name>
     <message>
         <source>(De-)Select Layer</source>
-        <translation>(Des)Selecciona capes</translation>
+        <translation>(De)selecciona la capa</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectSingle</name>
     <message>
         <source>Select Entity</source>
-        <translation>Seleccioneu l&apos;entitat</translation>
+        <translation>Selecciona l'entitat</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
     <message>
         <source>Select Window</source>
-        <translation>Selecciona una Finestra</translation>
+        <translation>Selecciona la finestra</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation>Desselecciona una Finestra</translation>
+        <translation>(De)selecciona la finestra</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9217,7 +9236,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Choose second edge</source>
-        <translation>Trieu el segon eix</translation>
+        <translation>Trieu la segona cantonada</translation>
     </message>
     <message>
         <source>Back</source>
@@ -9232,7 +9251,7 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionSetRelativeZero</name>
     <message>
         <source>Set relative Zero</source>
-        <translation>Defineix l&apos;origen relatiu</translation>
+        <translation>Defineix l'origen relatiu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9240,7 +9259,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Set &amp;Relative Zero</source>
-        <translation>Defineix l&apos;origen &amp;relatiu</translation>
+        <translation>Defineix l'origen &amp;relatiu</translation>
     </message>
 </context>
 <context>
@@ -9270,11 +9289,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Regenerated %1 dimension entities</source>
-        <translation>S&apos;han regenerat %1 cotes</translation>
+        <translation>S'han regenerat %1 cotes</translation>
     </message>
     <message>
         <source>No dimension entities found</source>
-        <translation>No s&apos;ha trobat cap cota</translation>
+        <translation>No s'ha trobat cap cota</translation>
     </message>
 </context>
 <context>
@@ -9299,7 +9318,7 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionZoomPan</name>
     <message>
         <source>Zoom &amp;Panning</source>
-        <translation>&amp;Enquadrament amb el mateix zoom</translation>
+        <translation>&amp;Enquadrament</translation>
     </message>
     <message>
         <source>Click and drag to pan zoom</source>
@@ -9311,14 +9330,14 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Zoom panning</source>
-        <translation>Enquadrament amb el mateix zoom</translation>
+        <translation>Enquadrament</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomPrevious</name>
     <message>
         <source>Previous &amp;View</source>
-        <translation>&amp;Visualització anterior</translation>
+        <translation>&amp;Visualització prèvia</translation>
     </message>
 </context>
 <context>
@@ -9336,7 +9355,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify first edge</source>
-        <translation>Especifiqueu la primera vora</translation>
+        <translation>Especifiqueu la primera cantonada</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9344,7 +9363,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify second edge</source>
-        <translation>Especifiqueu la segona vora</translation>
+        <translation>Especifiqueu la segona cantonada</translation>
     </message>
     <message>
         <source>Back</source>
@@ -10156,78 +10175,77 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Command not found: %1</source>
-        <translation>No s&apos;ha trobat l&apos;ordre: %1</translation>
+        <translation>No s'ha trobat l'ordre: %1</translation>
     </message>
     <message>
         <source>Accepted keycode: %1</source>
-        <translatorcomment>Codi clau acceptat: %1</translatorcomment>
-        <translation></translation>
+        <translation>Codi clau acceptat: %1</translation>
     </message>
     <message>
         <source>mtext</source>
-        <translation type="unfinished"></translation>
+        <translation>textm</translation>
     </message>
     <message>
         <source>dpi</source>
-        <translation type="unfinished"></translation>
+        <translation>ppp</translation>
     </message>
     <message>
         <source>re</source>
-        <translation type="unfinished"></translation>
+        <translation>cd</translation>
     </message>
     <message>
         <source>re</source>
         <comment>modify - revert direction</comment>
-        <translation type="unfinished"></translation>
+        <translation>cd</translation>
     </message>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"></translation>
+        <translation>cr</translation>
     </message>
     <message>
         <source>rn</source>
-        <translation type="unfinished"></translation>
+        <translation>cr</translation>
     </message>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>ro</translation>
     </message>
     <message>
         <source>rr</source>
-        <translation type="unfinished"></translation>
+        <translation>ro</translation>
     </message>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>rh</translation>
     </message>
     <message>
         <source>rh</source>
-        <translation type="unfinished"></translation>
+        <translation>rh</translation>
     </message>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>rv</translation>
     </message>
     <message>
         <source>rv</source>
-        <translation type="unfinished"></translation>
+        <translation>rv</translation>
     </message>
     <message>
         <source>setrelativezero</source>
-        <translation type="unfinished"></translation>
+        <translation/>
     </message>
     <message>
         <source>setrelativezero</source>
         <comment>snap - set relative zero position</comment>
-        <translation type="unfinished"></translation>
+        <translation/>
     </message>
     <message>
         <source>rz</source>
-        <translation type="unfinished"></translation>
+        <translation/>
     </message>
 </context>
 </TS>
