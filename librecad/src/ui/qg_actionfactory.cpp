@@ -287,6 +287,23 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                 obj, SLOT(slotFilePrint()));
         break;
 
+    case RS2::ActionFilePrintPDF:
+                        // tr("Print Drawing")
+                        action = new QAction(tr("Export as PDF"), mw);
+                        /*
+#if QT_VERSION >= 0x040600
+                        action->setIcon(QIcon::fromTheme("document-print", QIcon(":/actions/fileprint.png")));
+#else
+                        action->setIcon(QIcon(":/actions/fileprint.png"));
+#endif
+*/
+//                        action->setShortcut(QKeySequence::Print);
+                        //action->zetStatusTip(tr("Prints out the current drawing"));
+
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotFilePrintPDF()));
+        break;
+
     case RS2::ActionFilePrintPreview:
                 action = RS_ActionPrintPreview::createGUIAction(id, mw);
                 action->setCheckable(true);

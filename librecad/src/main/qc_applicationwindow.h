@@ -154,7 +154,8 @@ public slots:
     /** closing the current file */
     void slotFileClosing();
     /** prints the current file */
-    void slotFilePrint();
+    void slotFilePrint(bool printPDF=false);
+    void slotFilePrintPDF();
     /** shows print preview of the current file */
     void slotFilePrintPreview(bool on);
     /** exits the application */

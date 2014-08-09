@@ -187,6 +187,7 @@ public:
         ActionFileExport,
         ActionFileClose,
         ActionFilePrint,
+        ActionFilePrintPDF,
         ActionFilePrintPreview,
         ActionFileQuit,
 

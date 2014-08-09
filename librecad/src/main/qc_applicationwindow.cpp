@@ -672,6 +672,10 @@ void QC_ApplicationWindow::initActions(void)
     menu->addAction(action);
     tb->addAction(action);
     connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
+    action = actionFactory.createAction(RS2::ActionFilePrintPDF, this);
+    menu->addAction(action);
+    tb->addAction(action);
+    connect(this, SIGNAL(windowsChanged(bool)), action, SLOT(setEnabled(bool)));
     action = actionFactory.createAction(RS2::ActionFilePrintPreview, this);
     menu->addAction(action);
     tb->addAction(action);
@@ -3342,7 +3346,7 @@ void QC_ApplicationWindow::slotFileClosing() {
 /**
  * Menu file -> print.
  */
-void QC_ApplicationWindow::slotFilePrint() {
+void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     RS_DEBUG->print("QC_ApplicationWindow::slotFilePrint()");
 
     QC_MDIWindow* w = getMDIWindow();
@@ -3385,8 +3389,10 @@ void QC_ApplicationWindow::slotFilePrint() {
     RS_SETTINGS->endGroup();
 
     // printer setup:
-    printer.setOutputFormat(QPrinter::NativeFormat);
-    printer.setOutputFormat(QPrinter::PdfFormat);
+    if(printPDF)
+        printer.setOutputFormat(QPrinter::PdfFormat);
+    else
+        printer.setOutputFormat(QPrinter::NativeFormat);
 
     QPrintDialog printDialog(&printer, this);
     printDialog.setOption(QAbstractPrintDialog::PrintToFile);
@@ -3457,6 +3463,11 @@ void QC_ApplicationWindow::slotFilePrint() {
 
     statusBar()->showMessage(tr("Printing complete"), 2000);
 }
+
+void QC_ApplicationWindow::slotFilePrintPDF() {
+    slotFilePrint(true);
+}
+
 
 
 /*	*
