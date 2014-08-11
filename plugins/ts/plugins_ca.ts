@@ -767,7 +767,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../plotequation/plot.cpp" line="27"/>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dibuixa</translation>
     </message>
 </context>
 <context>

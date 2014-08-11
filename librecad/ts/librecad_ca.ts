@@ -1301,7 +1301,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Round</source>
-        <translation>Arrodoneix</translation>
+        <translation type="obsolete">Arrodoneix</translation>
     </message>
     <message>
         <source>Bevel</source>
@@ -8563,7 +8563,7 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionModifyRound</name>
     <message>
         <source>&amp;Round</source>
-        <translation>&amp;Arrodoneix</translation>
+        <translation type="obsolete">&amp;Arrodoneix</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
