@@ -205,7 +205,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../list/list.cpp" line="166"/>
         <source>OVERLAYBOX</source>
-        <translation>Quadre sobreposat</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="169"/>
@@ -446,7 +446,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="278"/>
         <source>Accept</source>
-        <translation>Accepta</translation>
+        <translation>D&apos;acord</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="283"/>
@@ -602,7 +602,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../importshp/importshp.cpp" line="141"/>
         <source>Accept</source>
-        <translation>Accepta</translation>
+        <translation>D&apos;acord</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="142"/>
@@ -672,7 +672,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../importshp/importshp.cpp" line="261"/>
         <source>Multipatch</source>
-        <translation>Correcció múltiple</translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="281"/>
@@ -723,7 +723,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../sample/sample.cpp" line="86"/>
         <source>Accept</source>
-        <translation>Accepta</translation>
+        <translation>D&apos;acord</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="91"/>
@@ -767,7 +767,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <message>
         <location filename="../plotequation/plot.cpp" line="27"/>
         <source>Draw</source>
-        <translation type="unfinished">Dibuixa</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

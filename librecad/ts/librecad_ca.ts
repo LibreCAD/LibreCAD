@@ -176,7 +176,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     </message>
     <message>
         <source>About</source>
-        <translation>Quant a</translation>
+        <translation>Quant a...</translation>
     </message>
     <message>
         <source>&amp;Scripts</source>
@@ -627,7 +627,7 @@ S&apos;ha desactivat el desament automàtic.</translation>
     </message>
     <message>
         <source>Export as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporta a PDF</translation>
     </message>
 </context>
 <context>
@@ -1226,7 +1226,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Draw Splines</source>
-        <translation>Dibuixa  splines</translation>
+        <translation>Dibuixa splines</translation>
     </message>
     <message>
         <source>Draw Points</source>
@@ -1301,7 +1301,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Round</source>
-        <translation type="obsolete">Arrodoneix</translation>
+        <translation>Arrodoneix</translation>
     </message>
     <message>
         <source>Bevel</source>
@@ -2147,11 +2147,11 @@ p, li { white-space: pre-wrap; }
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Benvinguts a LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Escolliu la unitat que voleu utilitzar per a nous dibuixos i el vostre idioma preferit.&lt;br&gt;
-Podreu canviar aquests paràmetres més endavant des dell menú Edita/Preferències de LibreCAD.</translation>
+Podreu canviar aquests paràmetres més endavant des del menú Edita/Preferències de LibreCAD.</translation>
     </message>
     <message>
         <source>Default Unit:</source>
@@ -2206,11 +2206,11 @@ Podreu canviar aquests paràmetres més endavant des dell menú Edita/Preferènc
     </message>
     <message>
         <source>Row Spacing:</source>
-        <translation>Espai entre files:</translation>
+        <translation>Espaiat entre files:</translation>
     </message>
     <message>
         <source>Column Spacing:</source>
-        <translation>Espai entre columnes:</translation>
+        <translation>Espaiat entre columnes:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2989,7 +2989,7 @@ Podreu canviar aquests paràmetres més endavant des dell menú Edita/Preferènc
     <name>QG_DlgMoveRotate</name>
     <message>
         <source>Move/Rotate Options</source>
-        <translation>Opcions de &apos;Mou/gira&apos;</translation>
+        <translation>Opcions de Mou i gira</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4707,7 +4707,7 @@ Podreu canviar aquests paràmetres més endavant des dell menú Edita/Preferènc
     </message>
     <message>
         <source>QCad</source>
-        <translation>QCad</translation>
+        <translation>LibreCAD</translation>
     </message>
     <message>
         <source>C&amp;lose</source>
@@ -5022,7 +5022,7 @@ Podreu canviar aquests paràmetres més endavant des dell menú Edita/Preferènc
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation>Espai entre files</translation>
+        <translation>Espaiat entre files</translation>
     </message>
 </context>
 <context>
@@ -5075,8 +5075,8 @@ El contingut d&apos;una capa d&apos;ajuda no apareixerà en la impressió.</tran
     <message>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Una capa de construcció conté entitats de infinites línies rectes  destinadesr a ser usades en la construcció geomètrica.
-El contingut d&apos;una capa de construcció no ha d&apos;apareixer en la sortida impresa.</translation>
+        <translation>Una capa de construcció té entitats d&apos;infinites línies rectes per ser usades per construccions geomètriques.
+El contingut d&apos;una capa de construcció no hauria d&apos;aparèixer en la sortida impresa.</translation>
     </message>
     <message>
         <source>Construction Layer</source>
@@ -5196,7 +5196,7 @@ El contingut d&apos;una capa de construcció no ha d&apos;apareixer en la sortid
     </message>
     <message>
         <source>Snap Point:</source>
-        <translation>Punt de forçat:</translation>
+        <translation>Força al punt:</translation>
     </message>
     <message>
         <source>Start</source>
@@ -5345,7 +5345,7 @@ El contingut d&apos;una capa de construcció no ha d&apos;apareixer en la sortid
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Angle de la línia</translation>
+        <translation>Línia amb angle</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -5899,7 +5899,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Width:</source>
-        <translation>Guix:</translation>
+        <translation>Gruix:</translation>
     </message>
     <message>
         <source>Color:</source>
@@ -6314,7 +6314,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Old Drawing Exchange %1</source>
-        <translation>Old Drawing Exchange %1</translation>
+        <translation>Dibuix d&apos;intercanvi vell %1</translation>
     </message>
     <message>
         <source>Opened dwg file version %1.</source>
@@ -6338,11 +6338,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>error reading header vars in dwg file</source>
-        <translation>S&apos;ha produit un error en llegir les variables de capçalera del fitxer dwg</translation>
+        <translation>S&apos;ha produït un error en llegir les variables d&apos;encapçalament del fitxer dwg</translation>
     </message>
     <message>
         <source>error reading classes in dwg file</source>
-        <translation>S&apos;ha produit un error de lectura de clases en el fitxer dwg</translation>
+        <translation>S&apos;ha produït un error en llegir les classes en el fitxer dwg</translation>
     </message>
     <message>
         <source>error reading offsets in dwg file</source>
@@ -6358,7 +6358,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>dwg Drawing %1</source>
-        <translation>Dibuix dwg %1</translation>
+        <translation>Fitxer dwg %1</translation>
     </message>
     <message>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
@@ -6463,11 +6463,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Enter column spacing:</source>
-        <translation>Introduïu l&apos;espaiat de les columnes:</translation>
+        <translation>Introduïu l&apos;espaiat entre columnes:</translation>
     </message>
     <message>
         <source>Enter row spacing:</source>
-        <translation>Introduïu l&apos;espaiat de les files:</translation>
+        <translation>Introduïu l&apos;espaiat entre files:</translation>
     </message>
 </context>
 <context>
@@ -7938,14 +7938,14 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionFileNew</name>
     <message>
         <source>&amp;New</source>
-        <translation>&amp;Nou</translation>
+        <translation>&amp;Nou...</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileNewTemplate</name>
     <message>
         <source>New From &amp;Template</source>
-        <translation>Nou des de plan&amp;tilla</translation>
+        <translation>Nou des de plan&amp;tilla...</translation>
     </message>
 </context>
 <context>
@@ -8001,7 +8001,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source> or %1%2</source>
-        <translation>o %1%2</translation>
+        <translation> o %1%2</translation>
     </message>
 </context>
 <context>
@@ -8312,7 +8312,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation>L&apos;entitat ha de ser una línia, arc, circumferència,  el·lipse o spline interpolada.</translation>
+        <translation>L&apos;entitat ha de ser una línia, arc, circumferència, el·lipse o spline interpolada.</translation>
     </message>
 </context>
 <context>
@@ -8350,31 +8350,31 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Parent of second entity is not a polyline</source>
-        <translation>La segona entitat no està en una polilínia</translation>
+        <translation>L&apos;origen de la segona entitat no està en una polilínia</translation>
     </message>
     <message>
         <source>Parent of second entity is NULL</source>
-        <translation>La segona entitat no està en cap altra entitat superior</translation>
+        <translation>No existeix l&apos;origen de la segona entitat</translation>
     </message>
     <message>
         <source>One of the chosen entities is NULL</source>
-        <translation>Una de les entitats triades es nula</translation>
+        <translation>No existeix una de les entitats triades</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
-        <translation>La primera entitat no està en una polilínia</translation>
+        <translation>L&apos;origen de la primera entitat no està en una polilínia</translation>
     </message>
     <message>
         <source>Parent of first entity is NULL</source>
-        <translation>La primera entitat no està en cap altra entitat superior</translation>
+        <translation>No existeix l&apos;origen de la primera entitat</translation>
     </message>
     <message>
         <source>First entity is NULL</source>
-        <translation>La primera entitat és nula</translation>
+        <translation>No existeix la primera entitat</translation>
     </message>
     <message>
         <source>Second entity is NULL</source>
-        <translation>La segona entitat és nula</translation>
+        <translation>No existeix la segona entitat</translation>
     </message>
 </context>
 <context>
@@ -8453,7 +8453,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
-        <translation>El nombre de còpies no és vàlid, utilitzeu %1 </translation>
+        <translation>El nombre de còpies no és vàlid. Utilitzeu %1 </translation>
     </message>
 </context>
 <context>
@@ -8563,7 +8563,7 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionModifyRound</name>
     <message>
         <source>&amp;Round</source>
-        <translation type="obsolete">&amp;Arrodoneix</translation>
+        <translation>&amp;Arrodoneix</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -8710,7 +8710,7 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionOptionsDrawing</name>
     <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation>Preferències del &amp;dibuix actual</translation>
+        <translation>Preferències del d&amp;ibuix actual...</translation>
     </message>
 </context>
 <context>
@@ -8784,7 +8784,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>Specify polyline to add nodes</source>
-        <translation>Especifiqueu la polilínia per a afegir nodes</translation>
+        <translation>Especifiqueu la polilínia on afegir nodes</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9065,7 +9065,7 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionPrintPreview</name>
     <message>
         <source>Print Pre&amp;view</source>
-        <translation>Pre&amp;visualitza la imoressió</translation>
+        <translation>Pre&amp;visualitza la impressió</translation>
     </message>
     <message>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
@@ -9429,11 +9429,11 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>columnspacing</source>
-        <translation>espaicolumnes</translation>
+        <translation>ec</translation>
     </message>
     <message>
         <source>rowspacing</source>
-        <translation>espaifiles</translation>
+        <translation>ef</translation>
     </message>
     <message>
         <source>ang</source>
@@ -9475,13 +9475,13 @@ Voleu reemplaçar-lo?</translation>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
         <translatorcomment>espaicolumnes per a insercions</translatorcomment>
-        <translation>espaicolumnes</translation>
+        <translation>ec</translation>
     </message>
     <message>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
         <translatorcomment>espaicolumnes per a insercions</translatorcomment>
-        <translation>espaicols</translation>
+        <translation>ec</translation>
     </message>
     <message>
         <source>cs</source>
@@ -9493,7 +9493,7 @@ Voleu reemplaçar-lo?</translation>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
         <translatorcomment>espaifiles per a insercions</translatorcomment>
-        <translation>espaifiles</translation>
+        <translation>ef</translation>
     </message>
     <message>
         <source>rs</source>
@@ -9549,7 +9549,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>through</source>
-        <translation>través</translation>
+        <translation>a través</translation>
     </message>
     <message>
         <source>help</source>
@@ -9570,7 +9570,7 @@ Voleu reemplaçar-lo?</translation>
         <source>len</source>
         <comment>length</comment>
         <translatorcomment>longitud</translatorcomment>
-        <translation>len</translation>
+        <translation>lon</translation>
     </message>
     <message>
         <source>l</source>
@@ -9588,7 +9588,7 @@ Voleu reemplaçar-lo?</translation>
         <source>num</source>
         <comment>number</comment>
         <translatorcomment>nombre</translatorcomment>
-        <translation>nomb</translation>
+        <translation>nom</translation>
     </message>
     <message>
         <source>n</source>
@@ -9667,7 +9667,7 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>chord length</source>
-        <translation>longitud corda</translation>
+        <translation>longitud de la corda</translation>
     </message>
     <message>
         <source>length</source>
@@ -9709,13 +9709,13 @@ Voleu reemplaçar-lo?</translation>
         <source>zp</source>
         <comment>zoom - pan</comment>
         <translatorcomment>enquadrament</translatorcomment>
-        <translation>enquadrament</translation>
+        <translation>enq</translation>
     </message>
     <message>
         <source>da</source>
         <comment>dimension - aligned</comment>
         <translatorcomment>alineat amb la cota</translatorcomment>
-        <translation>ac</translation>
+        <translation>ca</translation>
     </message>
     <message>
         <source>dh</source>
@@ -9739,7 +9739,7 @@ Voleu reemplaçar-lo?</translation>
         <source>ld</source>
         <comment>dimension - leader</comment>
         <translatorcomment>guia de cota</translatorcomment>
-        <translation>gc</translation>
+        <translation>cg</translation>
     </message>
     <message>
         <source>sg</source>
@@ -9751,7 +9751,7 @@ Voleu reemplaçar-lo?</translation>
         <source>se</source>
         <comment>snap - end</comment>
         <translatorcomment>força a extrems</translatorcomment>
-        <translation>se</translation>
+        <translation>fe</translation>
     </message>
     <message>
         <source>si</source>
@@ -10241,16 +10241,16 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>setrelativezero</source>
-        <translation></translation>
+        <translation>eor</translation>
     </message>
     <message>
         <source>setrelativezero</source>
         <comment>snap - set relative zero position</comment>
-        <translation></translation>
+        <translation>eor</translation>
     </message>
     <message>
         <source>rz</source>
-        <translation></translation>
+        <translation>or</translation>
     </message>
 </context>
 </TS>
