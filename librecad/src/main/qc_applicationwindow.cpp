@@ -3347,7 +3347,7 @@ void QC_ApplicationWindow::slotFileClosing() {
  * Menu file -> print.
  */
 void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotFilePrint()");
+    RS_DEBUG->print(RS_Debug::D_INFORMATIONAL,"QC_ApplicationWindow::slotFilePrint(%s)", printPDF ? "PDF" : "Native");
 
     QC_MDIWindow* w = getMDIWindow();
     if (w==NULL) {
@@ -3380,26 +3380,56 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         printer.setOrientation(QPrinter::Portrait);
     }
 
+    QString     strDefaultFile("");
     RS_SETTINGS->beginGroup("/Print");
-    printer.setOutputFileName(RS_SETTINGS->readEntry("/FileName", ""));
+    strDefaultFile = RS_SETTINGS->readEntry("/FileName", "");
+    printer.setOutputFileName(strDefaultFile);
     printer.setColorMode((QPrinter::ColorMode)RS_SETTINGS->readNumEntry("/ColorMode", (int)QPrinter::Color));
-//RLZ: No more needed, if setOutputFileName == "" then setOutputToFile is false
-/*    printer.setOutputToFile((bool)RS_SETTINGS->readNumEntry("/PrintToFile",
-                             0));*/
     RS_SETTINGS->endGroup();
 
     // printer setup:
-    if(printPDF)
+    bool    bStartPrinting = false;
+    if(printPDF) {
         printer.setOutputFormat(QPrinter::PdfFormat);
-    else
+        QFileInfo   infDefaultFile(strDefaultFile);
+        QString     strPdfFileName("");
+        QFileDialog fileDlg(this, tr("Export PDF as"));
+        QString     defFilter("PDF files (*.pdf)");
+        QStringList filters;
+
+        filters << defFilter
+                << "Any files (*)";
+
+#if QT_VERSION < 0x040400
+        emu_qt44_QFileDialog_setNameFilters(fileDlg, filters);
+#else
+        fileDlg.setNameFilters(filters);
+#endif
+        fileDlg.setFileMode(QFileDialog::AnyFile);
+        fileDlg.selectNameFilter(defFilter);
+        fileDlg.setAcceptMode(QFileDialog::AcceptSave);
+        fileDlg.setDirectory(infDefaultFile.dir().path());
+        strPdfFileName = infDefaultFile.baseName();
+        if( strPdfFileName.isEmpty())
+            strPdfFileName = "unnamed";
+        fileDlg.selectFile(strPdfFileName);
+
+        if( QDialog::Accepted == fileDlg.exec()) {
+            QStringList files = fileDlg.selectedFiles();
+            if (!files.isEmpty()) {
+                printer.setOutputFileName(files[0]);
+                bStartPrinting = true;
+            }
+        }
+    } else {
         printer.setOutputFormat(QPrinter::NativeFormat);
 
-    QPrintDialog printDialog(&printer, this);
-    printDialog.setOption(QAbstractPrintDialog::PrintToFile);
-    if (printDialog.exec() == QDialog::Accepted) {
-        //printer.setOutputToFile(true);
-        //printer.setOutputFileName(outputFile);
+        QPrintDialog printDialog(&printer, this);
+        printDialog.setOption(QAbstractPrintDialog::PrintToFile);
+        bStartPrinting = (QDialog::Accepted == printDialog.exec());
+    }
 
+    if (bStartPrinting) {
         // Try to set the printer to the highest resolution
         //todo: handler printer resolution better
         if(printer.outputFormat() == QPrinter::NativeFormat ){
@@ -3419,7 +3449,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
             printer.setResolution(1200);
         }
 
-//        std::cout<<"printer.resolution()="<<printer.resolution()<<std::endl;
+        RS_DEBUG->print(RS_Debug::D_INFORMATIONAL,"QC_ApplicationWindow::slotFilePrint: resolution is %d", printer.resolution());
         QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
         printer.setFullPage(true);
 
@@ -3453,8 +3483,6 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         painter.end();
 
         RS_SETTINGS->beginGroup("/Print");
-        //RLZ: No more needed, if outputFileName == "" then PrintToFile is false
-//        RS_SETTINGS->writeEntry("/PrintToFile", (int)printer.outputToFile());
         RS_SETTINGS->writeEntry("/ColorMode", (int)printer.colorMode());
         RS_SETTINGS->writeEntry("/FileName", printer.outputFileName());
         RS_SETTINGS->endGroup();
