@@ -7,7 +7,7 @@
 # the LibreCAD source folder 
 
 SCRIPTPATH="$(dirname "$0")"
-PATH=~/Qt5.2.1/5.2.1/clang_64/bin:$PATH
+PATH=~/Qt5.3.1/5.3/clang_64/bin:$PATH
 QMAKE_CMD=qmake
 
 cd "${SCRIPTPATH}"/..
