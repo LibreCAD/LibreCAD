@@ -9,7 +9,7 @@
 # graphics/qt4-svg databases/qt4-sql(?) textproc/qt4-clucene(?)
 # devel/binutils devel/boost-libs math/muparser
 # 
-# lang/gcc4{7,8,9}
+# lang/gcc{4{7,8,9},5}
 # or
 # lang/clang3{3,4} and devel/llvm3{3,4} and devel/libc++
 
@@ -18,9 +18,9 @@ scriptpath="${scriptpath%/*}"
 
 if [ -z "${use_cxx}" ]
 then
-	if [ "$( which g++410 )" ]
+	if [ "$( which g++5 )" ]
 	then
-		use_cxx="g++410"
+		use_cxx="g++5"
 	elif [ "$( which g++49 )" ]
 	then
 		use_cxx="g++49"
@@ -37,7 +37,7 @@ then
 	then
 		use_cxx="clang++33"
 	else
-		echo "No supported compiler found. Install one of lang/{gcc4{7,8,9,10},clang3{3,4}}" >&2
+		echo "No supported compiler found. Install one of lang/{gcc{4{7,8,9},5},clang3{3,4}}" >&2
 		exit 1
 	fi
 elif [ -z "$( which ${use_cxx} )" ]
