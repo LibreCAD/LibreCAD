@@ -42,8 +42,7 @@ public:
      */
     enum Status {
         Neutral,
-        Moving,
-        Offset
+        Moving
     };
 
 public:
@@ -99,6 +98,7 @@ protected:
     RS_Vector v1;
     RS_Vector v2;
     bool scaleFixed;
+    bool m_bPaperOffset;
 };
 
 #endif
