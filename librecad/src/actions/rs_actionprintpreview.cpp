@@ -131,7 +131,7 @@ void RS_ActionPrintPreview::mouseReleaseEvent(QMouseEvent* e) {
 void RS_ActionPrintPreview::coordinateEvent(RS_CoordinateEvent* e) {
     RS_Vector pinsbase = graphic->getPaperInsertionBase();
     RS_Vector mouse = e->getCoordinate();
-    qDebug()<<"coordinateEvent= ("<<mouse.x<<", "<<mouse.y<<")";
+//    qDebug()<<"coordinateEvent= ("<<mouse.x<<", "<<mouse.y<<")";
 
     if(m_bPaperOffset) {
         RS_DIALOGFACTORY->commandMessage(tr("Printout offset in paper coordinates by (%1, %2)").arg(mouse.x,mouse.y));
@@ -148,7 +148,7 @@ void RS_ActionPrintPreview::coordinateEvent(RS_CoordinateEvent* e) {
 
 void RS_ActionPrintPreview::commandEvent(RS_CommandEvent*  e) {
     QString c = e->getCommand().trimmed().toLower();
-    qDebug()<<"cmd="<<c;
+//    qDebug()<<"cmd="<<c;
     if (checkCommand("graphoffset", c)) {
         m_bPaperOffset=false;
         RS_DIALOGFACTORY->commandMessage(tr("Printout offset in graph coordinates"));
@@ -173,7 +173,7 @@ void RS_ActionPrintPreview::commandEvent(RS_CommandEvent*  e) {
             RS_DIALOGFACTORY->commandMessage(tr("Printout offset ignores relative zero. Ignoring '@'"));
             c.remove(0, 1);
         }
-        qDebug()<<"offset by absolute coordinate: ";
+//        qDebug()<<"offset by absolute coordinate: ";
 
         const int commaPos = c.indexOf(',');
         bool ok1, ok2;
