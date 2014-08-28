@@ -153,10 +153,19 @@ void RS_ActionPrintPreview::commandEvent(RS_CommandEvent*  e) {
         m_bPaperOffset=false;
         RS_DIALOGFACTORY->commandMessage(tr("Printout offset in graph coordinates"));
         e->accept();
+        return;
     } else if (checkCommand("paperoffset", c)) {
         m_bPaperOffset=true;
         RS_DIALOGFACTORY->commandMessage(tr("Printout offset in paper coordinates"));
         e->accept();
+        return;
+    }else if (checkCommand("help", c)) {
+        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+                                         + getAvailableCommands().join(", ")+tr(": select printout offset coordinates")+
+                                         "\n"+tr("type in offset from command line to offset printout")
+                                         );
+        e->accept();
+        return;
     }
     //coordinate event
     if (c.contains(',')){
@@ -184,6 +193,7 @@ QStringList RS_ActionPrintPreview::getAvailableCommands() {
     QStringList cmd;
     cmd +=command("graphoffset");
     cmd +=command("paperoffset");
+    cmd +=command("help");
     return cmd;
 }
 
