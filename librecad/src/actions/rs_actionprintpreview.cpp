@@ -125,7 +125,14 @@ void RS_ActionPrintPreview::mouseReleaseEvent(QMouseEvent* e) {
 
 
 
-void RS_ActionPrintPreview::coordinateEvent(RS_CoordinateEvent* ) {}
+void RS_ActionPrintPreview::coordinateEvent(RS_CoordinateEvent* e) {
+    RS_Vector pinsbase = graphic->getPaperInsertionBase();
+    RS_Vector mouse = e->getCoordinate();
+   // double scale = graphic->getPaperScale();
+
+    graphic->setPaperInsertionBase(pinsbase-mouse);
+
+}
 
 
 
@@ -133,10 +140,7 @@ void RS_ActionPrintPreview::commandEvent(RS_CommandEvent* ) {}
 
 
 
-QStringList RS_ActionPrintPreview::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
-}
+QStringList RS_ActionPrintPreview::getAvailableCommands() {}
 
 void RS_ActionPrintPreview::resume() {
     RS_ActionInterface::resume();

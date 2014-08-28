@@ -42,7 +42,8 @@ public:
      */
     enum Status {
         Neutral,
-        Moving
+        Moving,
+        Offset
     };
 
 public:
