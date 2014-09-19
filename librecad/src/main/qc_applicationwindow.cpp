@@ -140,6 +140,7 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
 QC_ApplicationWindow::QC_ApplicationWindow()
         : QMainWindow(0),
         QG_MainWindowInterface()
+      ,m_qDraftModeTitle(" ["+tr("Draft Mode")+"]")
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
@@ -2496,6 +2497,9 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     } else {
         w->setWindowTitle(tr("unnamed document %1").arg(id));
     }
+
+    //check for draft mode
+    updateWindowTitle(w);
     w->setWindowIcon(QIcon(":/main/document.png"));
 
     // only graphics offer block lists, blocks don't
@@ -2904,6 +2908,7 @@ void QC_ApplicationWindow::
                 /*	Format and set caption.
                  *	----------------------- */
         w->setWindowTitle(format_filename_caption(fileName));
+        updateWindowTitle(w);
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption: OK");
 
@@ -2990,7 +2995,10 @@ void QC_ApplicationWindow::slotFileSaveAs() {
             if (!cancelled) {
                 name = w->getDocument()->getFilename();
                 recentFiles->add(name);
-                w->setWindowTitle(name);
+                w->setWindowTitle(format_filename_caption(name));
+                if(w->getGraphicView()->isDraftMode())
+                    w->setWindowTitle(w->windowTitle()+m_qDraftModeTitle);
+
                 if (!autosaveTimer->isActive()) {
                     RS_SETTINGS->beginGroup("/Defaults");
                     autosaveTimer->start(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5)*60*1000);
@@ -3689,6 +3697,30 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
     RS_SETTINGS->beginGroup("/Appearance");
     RS_SETTINGS->writeEntry("/DraftMode", (int)toggle);
     RS_SETTINGS->endGroup();
+    QList<QWidget *> windows;
+    if(mdiAreaCAD)
+        for(QMdiSubWindow* w: mdiAreaCAD->subWindowList())
+            windows<<w;
+    windows.append(this);
+
+    //handle "Draft Mode" in window titles
+    if(toggle){
+        for(QWidget* w: windows){
+            QString title=w->windowTitle();
+//            qDebug()<<"position="<<w->windowTitle().lastIndexOf(m_qDraftModeTitle)<<" "<<m_qDraftModeTitle.size()<<" "<<w->windowTitle().size();
+            //avoid duplicated "Draft Mode" string in window title
+            if(title.size()>m_qDraftModeTitle.size() && title.size()-1 != title.lastIndexOf(m_qDraftModeTitle)+m_qDraftModeTitle.size())
+                w->setWindowTitle(title+m_qDraftModeTitle);
+        }
+    } else {
+        for(QWidget* w: windows){
+            QString title=w->windowTitle();
+            if(title.size()>m_qDraftModeTitle.size() && title.count(m_qDraftModeTitle)==1){
+                title.remove(title.lastIndexOf(m_qDraftModeTitle),m_qDraftModeTitle.size());
+                w->setWindowTitle(title);
+            }
+        }
+    }
 
     redrawAll();
 }
@@ -5218,3 +5250,17 @@ void QC_ApplicationWindow::keyReleaseEvent(QKeyEvent* e) {
 
 
 
+void QC_ApplicationWindow::updateWindowTitle(QWidget *w)
+{
+    //check for draft mode
+    RS_DEBUG->print("QC_ApplicationWindow::slotViewDraft()");
+
+    RS_SETTINGS->beginGroup("/Appearance");
+    bool draftMode=RS_SETTINGS->readNumEntry("/DraftMode", 0);
+    RS_SETTINGS->endGroup();
+    if(draftMode){
+//        qDebug()<<"position="<<w->windowTitle().lastIndexOf(m_qDraftModeTitle)<<" "<<m_qDraftModeTitle.size()<<" "<<w->windowTitle().size();
+        if(w->windowTitle().lastIndexOf(m_qDraftModeTitle))
+        w->setWindowTitle(w->windowTitle()+m_qDraftModeTitle);
+    }
+}
