@@ -588,7 +588,11 @@ void QC_ApplicationWindow::initMDI() {
     connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
             this, SLOT(slotWindowActivated(QMdiSubWindow*)));
 
+    //send key events for mdiAreaCAD to command widget by default
+    mdiAreaCAD->installEventFilter(commandWidget);
+
     RS_DEBUG->print("QC_ApplicationWindow::initMDI() end");
+
 }
 /**
  * @return Pointer to the currently active MDI Window or NULL if no
