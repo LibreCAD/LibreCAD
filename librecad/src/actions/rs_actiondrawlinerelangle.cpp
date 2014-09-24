@@ -251,7 +251,8 @@ void RS_ActionDrawLineRelAngle::commandEvent(RS_CommandEvent* e) {
     case SetAngle: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
+                e->accept();
                 angle = RS_Math::deg2rad(a);
             } else {
                 if (RS_DIALOGFACTORY!=NULL) {

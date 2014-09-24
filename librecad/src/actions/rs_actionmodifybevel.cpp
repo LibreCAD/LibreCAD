@@ -172,7 +172,8 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent* e) {
     case SetLength1: {
             bool ok;
             double l = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
+                e->accept();
                 data.length1 = l;
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));

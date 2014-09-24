@@ -175,11 +175,12 @@ void RS_ActionDrawCircleCR::commandEvent(RS_CommandEvent* e) {
             double r = RS_Math::eval(c, &ok);
             if (ok==true) {
                 data.radius = r;
+                e->accept();
+                trigger();
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
             }
             RS_DIALOGFACTORY->requestOptions(this, true, true);
-            setStatus(SetCenter);
         }
         break;
 

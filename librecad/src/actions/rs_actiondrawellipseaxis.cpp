@@ -307,7 +307,8 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent* e) {
     case SetMinor: {
             bool ok;
             double m = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
+                e->accept();
                 ratio = m / major.magnitude();
                 if (!isArc) {
                     trigger();
@@ -325,7 +326,8 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent* e) {
     case SetAngle1: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
+                e->accept();
                 angle1 = RS_Math::deg2rad(a);
                 setStatus(SetAngle2);
             } else {
@@ -339,7 +341,8 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent* e) {
     case SetAngle2: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
+                e->accept();
                 angle2 = RS_Math::deg2rad(a);
                 trigger();
             } else {

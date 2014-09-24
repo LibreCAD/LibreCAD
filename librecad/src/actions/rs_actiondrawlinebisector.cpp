@@ -196,7 +196,8 @@ void RS_ActionDrawLineBisector::commandEvent(RS_CommandEvent* e) {
     case SetLength: {
             bool ok;
             double l = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
+                e->accept();
                 length = l;
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
@@ -209,8 +210,12 @@ void RS_ActionDrawLineBisector::commandEvent(RS_CommandEvent* e) {
     case SetNumber: {
             bool ok;
             int n = (int)RS_Math::eval(c, &ok);
-            if (ok==true) {
-                number = n;
+            if (ok) {
+                e->accept();
+                if(n>0 && n<=200)
+                    number = n;
+                else
+                     RS_DIALOGFACTORY->commandMessage(tr("Number sector lines not in range: ", "number of bisector to create must be in [1, 200]")+QString::number(n));
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
             }

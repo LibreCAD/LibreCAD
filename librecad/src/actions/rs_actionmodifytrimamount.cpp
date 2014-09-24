@@ -138,7 +138,8 @@ void RS_ActionModifyTrimAmount::commandEvent(RS_CommandEvent* e) {
     case ChooseTrimEntity: {
             bool ok;
             double d = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
+                e->accept();
                 distance = d;
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));

@@ -220,7 +220,8 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
     case SetRadius: {
             bool ok;
             double r = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
+                e->accept();
                 data.radius = r;
             } else {
                 if (RS_DIALOGFACTORY!=NULL) {
