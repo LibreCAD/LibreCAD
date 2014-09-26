@@ -4,6 +4,7 @@ THISDIR="`pwd`"
 LCDIR="${THISDIR}/librecad"
 PIDIR="${THISDIR}/plugins"
 RESOURCEDIR="${THISDIR}/unix/resources"
+APPDATADIR="${THISDIR}/unix/appdata"
 TSDIRLC="${LCDIR}/ts"
 TSDIRPI="${PIDIR}/ts"
 SPTDIR="${LCDIR}/support"
@@ -46,4 +47,8 @@ for tf in *.qm
 do
         cp "${tf}" "${RESOURCEDIR}/qm/${tf}"
 done
+
+# copy appdata.xml to unix/appdata/librecad.appdata.xml
+mkdir -p "${APPDATADIR}"
+cp "${SPTDIR}"/librecad.appdata.xml "${APPDATADIR}"/
 

@@ -13,7 +13,7 @@ DEFINES += HAS_BOOST=1
 DEFINES -= DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-SCMREVISION="2.0.5"
+SCMREVISION="2.0.6"
 
 # Store intermedia stuff somewhere else
 GENERATED_DIR = ../../generated/librecad
@@ -951,6 +951,7 @@ TRANSLATIONS = ../ts/librecad_ca.ts \
     ../ts/librecad_es_ve.ts \
     ../ts/librecad_fi.ts \
     ../ts/librecad_fr.ts \
+    ../ts/librecad_gl.ts \
     ../ts/librecad_hi.ts \
     ../ts/librecad_hu.ts \
     ../ts/librecad_id_ID.ts \
@@ -970,6 +971,7 @@ TRANSLATIONS = ../ts/librecad_ca.ts \
     ../ts/librecad_sl.ts \
     ../ts/librecad_sq_al.ts \
     ../ts/librecad_sv.ts \
+    ../ts/librecad_ta.ts \
     ../ts/librecad_tr.ts \
     ../ts/librecad_uk.ts \
     ../ts/librecad_zh_cn.ts \

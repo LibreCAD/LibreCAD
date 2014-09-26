@@ -378,6 +378,10 @@ RS_Commands::RS_Commands() {
 
     cmdTranslation.insert(tr("back"), "back");
     cmdTranslation.insert(tr("b","back"), "back");
+    //printer preview
+    cmdTranslation.insert(tr("paperoffset"), "paperoffset");
+    cmdTranslation.insert(tr("graphoffset"), "graphoffset");
+
 }
 
 //#include<QDebug>

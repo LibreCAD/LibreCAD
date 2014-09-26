@@ -268,9 +268,10 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
     case SetRadius: {
             bool ok;
             double r = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 data.radius = r;
                 setStatus(SetAngle1);
+                e->accept();
             } else {
                 if (RS_DIALOGFACTORY!=NULL) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
@@ -282,8 +283,9 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
     case SetAngle1: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 data.angle1 = RS_Math::deg2rad(a);
+                e->accept();
                 setStatus(SetAngle2);
             } else {
                 if (RS_DIALOGFACTORY!=NULL) {
@@ -301,8 +303,9 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
             } else {
                 bool ok;
                 double a = RS_Math::eval(c, &ok);
-                if (ok==true) {
+                if (ok) {
                     data.angle2 = RS_Math::deg2rad(a);
+                    e->accept();
                     trigger();
                 } else {
                     if (RS_DIALOGFACTORY!=NULL) {
@@ -316,8 +319,9 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
     case SetIncAngle: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 data.angle2 = data.angle1 + RS_Math::deg2rad(a);
+                e->accept();
                 trigger();
             } else {
                 if (RS_DIALOGFACTORY!=NULL) {
@@ -330,7 +334,7 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
     case SetChordLength: {
             bool ok;
             double l = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 if (fabs(l/(2*data.radius))<=1.0) {
                     data.angle2 = data.angle1 + asin(l/(2*data.radius)) * 2;
                     trigger();
@@ -340,6 +344,7 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
                             tr("Not a valid chord length"));
                     }
                 }
+                e->accept();
             } else {
                 if (RS_DIALOGFACTORY!=NULL) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));

@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Ryan Lerch <rlerch@redhat.com> -->
 <!-- Copyright 2014 Dongxu Li <dongxuli2011@gmail.com> -->
+
 <application>
   <id type="desktop">librecad.desktop</id>
-  <metadata_license>CC0</metadata_license>
+  <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-2.0 and GPL-2.0+ and Apache-2.0 and MIT</project_license>
+  <summary>2D Computer Aided Design (CAD)</summary>
   <description>
-    <_p>
-    LibreCAD is a 2D CAD drawing tool based on the community edition of QCAD (www.qcad.org). LibreCAD has been re-structured and ported to Qt version 4 and works natively cross platform between OS/X, Windows and Linux. See http://www.librecad.org
-    </_p>
-    </description>
+    <p>
+      LibreCAD is an 2D Computer Aided Design (CAD) application for creating plans
+      and designs on your computer.
+      It can be used to make  accurate 2D representations of floorplans, part designs,
+      and just about anything that can be represented as a flat 2D plan.
+    </p>
+  </description>
+  <url type="homepage">http://librecad.org/</url>
   <screenshots>
-    <screenshot type="default" width="1600" height="900">https://sourceforge.net/p/librecad/screenshot/t.png</screenshot>
+    <screenshot type="default">http://wiki.librecad.org/images/f/f8/Lcnotclosed.png</screenshot>
   </screenshots>
-  <url type="homepage">http://librecad.org/cms/home.html</url>
-  <updatecontact>dongxuli2011_at_gmail.com</updatecontact>
+  <updatecontact>dongxuli2011@gmail.com</updatecontact>
 </application>
+

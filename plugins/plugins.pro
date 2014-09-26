@@ -48,6 +48,7 @@ TRANSLATIONS = ./ts/plugins_ca.ts \
     ./ts/plugins_es_ve.ts \
     ./ts/plugins_fi.ts \
     ./ts/plugins_fr.ts \
+    ./ts/plugins_gl.ts \
     ./ts/plugins_hi.ts \
     ./ts/plugins_hu.ts \
     ./ts/plugins_id_ID.ts \
@@ -67,6 +68,7 @@ TRANSLATIONS = ./ts/plugins_ca.ts \
     ./ts/plugins_sl.ts \
     ./ts/plugins_sq_al.ts \
     ./ts/plugins_sv.ts \
+    ./ts/plugins_ta.ts \
     ./ts/plugins_tr.ts \
     ./ts/plugins_uk.ts \
     ./ts/plugins_zh_cn.ts \

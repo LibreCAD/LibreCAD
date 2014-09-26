@@ -347,6 +347,12 @@ private:
     /** Helper function for Menu file -> New & New.... */
     bool slotFileNewHelper(QString fileName, QC_MDIWindow* w = NULL);
 
+    /**
+     * @brief updateWindowTitle, for draft mode, add "Draft Mode" to window title
+     * @param w, pointer to window widget
+     */
+    void updateWindowTitle(QWidget* w);
+
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;
     QTimer *autosaveTimer;
@@ -455,6 +461,9 @@ private:
     QAction *testResize640;
     QAction *testResize800;
     QAction *testResize1024;
+
+    //display "Draft Mode" in window title for draft mode
+    const QString m_qDraftModeTitle;
 
 //Plugin support
 private:

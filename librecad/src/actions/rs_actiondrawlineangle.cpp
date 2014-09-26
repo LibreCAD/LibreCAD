@@ -220,7 +220,8 @@ void RS_ActionDrawLineAngle::commandEvent(RS_CommandEvent* e) {
     case SetAngle: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
+                e->accept();
                 angle = RS_Math::deg2rad(a);
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
@@ -233,7 +234,8 @@ void RS_ActionDrawLineAngle::commandEvent(RS_CommandEvent* e) {
     case SetLength: {
             bool ok;
             double l = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
+                e->accept();
                 length = l;
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));

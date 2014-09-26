@@ -15,6 +15,7 @@
 
 #include <QDialog>
 #include "qc_plugininterface.h"
+#include "document_interface.h"
 #include <QTextEdit>
 
 //class QTextEdit;
@@ -36,6 +37,7 @@ class LC_List : public QObject, QC_PluginInterface
 
 private:
     QString getStrData(Plug_Entity *ent);
+    double polylineRadius( const Plug_VertexData& ptA, const Plug_VertexData& ptB);
     Document_Interface *d;
 };
 

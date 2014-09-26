@@ -31,6 +31,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
+#include "rs_commandevent.h"
 
 /**
  * Constructor.
@@ -38,7 +39,9 @@
 RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
                                              RS_GraphicView& graphicView)
     :RS_ActionInterface("Print Preview",
-                        container, graphicView), hasOptions(false),scaleFixed(false){
+                        container, graphicView), hasOptions(false),scaleFixed(false)
+    ,m_bPaperOffset(false)
+{
     showOptions();
 }
 
@@ -125,16 +128,72 @@ void RS_ActionPrintPreview::mouseReleaseEvent(QMouseEvent* e) {
 
 
 
-void RS_ActionPrintPreview::coordinateEvent(RS_CoordinateEvent* ) {}
+void RS_ActionPrintPreview::coordinateEvent(RS_CoordinateEvent* e) {
+    RS_Vector pinsbase = graphic->getPaperInsertionBase();
+    RS_Vector mouse = e->getCoordinate();
+//    qDebug()<<"coordinateEvent= ("<<mouse.x<<", "<<mouse.y<<")";
+
+    if(m_bPaperOffset) {
+        RS_DIALOGFACTORY->commandMessage(tr("Printout offset in paper coordinates by (%1, %2)").arg(mouse.x,mouse.y));
+        mouse *= graphic->getPaperScale();
+    }else
+        RS_DIALOGFACTORY->commandMessage(tr("Printout offset in graph coordinates by (%1, %2)").arg(mouse.x,mouse.y));
+
+    graphic->setPaperInsertionBase(pinsbase-mouse);
+    graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
+
+}
 
 
 
-void RS_ActionPrintPreview::commandEvent(RS_CommandEvent* ) {}
+void RS_ActionPrintPreview::commandEvent(RS_CommandEvent*  e) {
+    QString c = e->getCommand().trimmed().toLower();
+//    qDebug()<<"cmd="<<c;
+    if (checkCommand("graphoffset", c)) {
+        m_bPaperOffset=false;
+        RS_DIALOGFACTORY->commandMessage(tr("Printout offset in graph coordinates"));
+        e->accept();
+        return;
+    } else if (checkCommand("paperoffset", c)) {
+        m_bPaperOffset=true;
+        RS_DIALOGFACTORY->commandMessage(tr("Printout offset in paper coordinates"));
+        e->accept();
+        return;
+    }else if (checkCommand("help", c)) {
+        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+                                         + getAvailableCommands().join(", ")+tr(": select printout offset coordinates")+
+                                         "\n"+tr("type in offset from command line to offset printout")
+                                         );
+        e->accept();
+        return;
+    }
+    //coordinate event
+    if (c.contains(',')){
+        if(c.startsWith('@')) {
+            RS_DIALOGFACTORY->commandMessage(tr("Printout offset ignores relative zero. Ignoring '@'"));
+            c.remove(0, 1);
+        }
+//        qDebug()<<"offset by absolute coordinate: ";
+
+        const int commaPos = c.indexOf(',');
+        bool ok1, ok2;
+        double x = RS_Math::eval(c.left(commaPos), &ok1);
+        double y = RS_Math::eval(c.mid(commaPos+1), &ok2);
+        if (ok1 && ok2) {
+            RS_CoordinateEvent ce(RS_Vector(x,y));
+            this->coordinateEvent(&ce);
+            e->accept();
+        }
+    }
+}
 
 
 
 QStringList RS_ActionPrintPreview::getAvailableCommands() {
     QStringList cmd;
+    cmd +=command("graphoffset");
+    cmd +=command("paperoffset");
+    cmd +=command("help");
     return cmd;
 }
 

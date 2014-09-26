@@ -79,6 +79,18 @@ bool QG_CommandWidget::checkFocus() {
     return leCommand->hasFocus();
 }
 
+bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
+{
+    if (event->type() == QEvent::KeyPress) {
+        leCommand->setFocus(Qt::OtherFocusReason);
+        QKeyEvent * newEvent = new QKeyEvent(*static_cast<QKeyEvent*>(event));
+        QApplication::postEvent(leCommand, newEvent);
+        return true;
+    } else
+        return false;
+}
+
+
 void QG_CommandWidget::setFocus() {
     //setCommandMode();
     leCommand->setFocus();

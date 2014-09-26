@@ -236,7 +236,7 @@ void RS_ActionDrawEllipseFociPoint::commandEvent(RS_CommandEvent* e) {
     case SetPoint: {
         bool ok;
         double a = RS_Math::eval(cmd, &ok);
-        if (ok==true) {
+        if (ok) {
             e->accept();
 //            std::cout<<"e->isAccepted()="<<e->isAccepted()<<std::endl;
             d=0.5*fabs(a);

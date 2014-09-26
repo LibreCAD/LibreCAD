@@ -230,7 +230,8 @@ void RS_ActionDrawLineParallelThrough::commandEvent(RS_CommandEvent* e) {
     case SetNumber: {
             bool ok;
             int n = c.toInt(&ok);
-            if (ok==true) {
+            if (ok) {
+                e->accept();
                 if (n>0 && n<100) {
                     number = n;
                 } else {

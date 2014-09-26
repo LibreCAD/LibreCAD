@@ -16,7 +16,6 @@
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 #include <math.h>
-#include "document_interface.h"
 #include "list.h"
 
 QString LC_List::name() const
@@ -191,12 +190,14 @@ QString LC_List::getStrData(Plug_Entity *ent) {
                 strData.append( strSpecific.arg(tr("Vertices")).arg(""));
         QList<Plug_VertexData> vl;
         ent->getPolylineData(&vl);
-        for (int i = 0; i < vl.size(); ++i) {
+        int iVertices = vl.size();
+        for (int i = 0; i < iVertices; ++i) {
             strData.append( strSpecificXY.arg(tr("in point")).
                             arg(d->realToStr(vl.at(i).point.x())).
                             arg(d->realToStr(vl.at(i).point.y())));
-            if ( 0 != vl.at(i).bulge)
-                strData.append( strSpecific.arg(tr("curvature")).arg( d->realToStr(vl.at(i).bulge)));
+            if ( 0 != vl.at(i).bulge) {
+                strData.append( strSpecific.arg(tr("radius")).arg( d->realToStr(polylineRadius(vl.at(i), vl.at((i+1) % iVertices)))));
+            }
         }
         break; }
     case DPI::IMAGE:
@@ -232,6 +233,13 @@ QString LC_List::getStrData(Plug_Entity *ent) {
     }
 
     return strData;
+}
+
+double LC_List::polylineRadius( const Plug_VertexData& ptA, const Plug_VertexData& ptB)
+{
+    double dChord = sqrt( pow(ptA.point.x() - ptB.point.x(), 2) + pow(ptA.point.y() - ptB.point.y(), 2));
+
+    return fabs( 0.5 * dChord / sin( 2.0 * atan(ptA.bulge)));
 }
 
 /*****************************/

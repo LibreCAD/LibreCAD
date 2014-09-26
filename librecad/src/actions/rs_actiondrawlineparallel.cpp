@@ -196,7 +196,8 @@ void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent* e) {
             } else {
                 bool ok;
                 double d = RS_Math::eval(c, &ok);
-                if (ok==true && d>1.0e-10) {
+                if(ok) e->accept();
+                if (ok && d>1.0e-10) {
                     distance = d;
                 } else {
                     if (RS_DIALOGFACTORY!=NULL) {
@@ -215,7 +216,8 @@ void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent* e) {
     case SetNumber: {
             bool ok;
             int n = c.toInt(&ok);
-            if (ok==true) {
+            if (ok) {
+                e->accept();
                 if (n>0 && n<100) {
                     number = n;
                 } else {
