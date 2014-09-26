@@ -625,6 +625,14 @@ Auto-save disabled.</source>
         <source>Help files not found</source>
         <translation>Τα αρχεία βοήθειας δεν βρέθηκαν</translation>
     </message>
+    <message>
+        <source>Draft Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -9555,6 +9563,11 @@ Do you want to replace it?</source>
         <source>Draw bisectors</source>
         <translation type="obsolete">Σχεδίαση διχοτόμων</translation>
     </message>
+    <message>
+        <source>Number sector lines not in range: </source>
+        <comment>number of bisector to create must be in [1, 200]</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineFree</name>
@@ -11787,6 +11800,34 @@ Do you want to replace it?</source>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
         <translation>Μη έγκυρο μέγεθος χαρτιού</translation>
     </message>
+    <message>
+        <source>Printout offset in paper coordinates by (%1, %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout offset in graph coordinates by (%1, %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout offset in graph coordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout offset in paper coordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>: select printout offset coordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>type in offset from command line to offset printout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionSelect</name>
@@ -13231,6 +13272,14 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>rz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>paperoffset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>graphoffset</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

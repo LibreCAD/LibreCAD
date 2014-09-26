@@ -207,7 +207,7 @@
     </message>
     <message>
         <source>curvature</source>
-        <translation>izliekums</translation>
+        <translation type="obsolete">izliekums</translation>
     </message>
     <message>
         <source>IMAGE</source>

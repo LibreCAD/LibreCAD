@@ -50,268 +50,268 @@
 <context>
     <name>LC_List</name>
     <message>
-        <location filename="../list/list.cpp" line="24"/>
-        <location filename="../list/list.cpp" line="31"/>
+        <location filename="../list/list.cpp" line="23"/>
+        <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
         <translation>列出实体</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="47"/>
+        <location filename="../list/list.cpp" line="46"/>
         <source>n</source>
         <translation>n</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="61"/>
+        <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
         <translation>无实体</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="68"/>
+        <location filename="../list/list.cpp" line="67"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="68"/>
+        <location filename="../list/list.cpp" line="67"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="74"/>
+        <location filename="../list/list.cpp" line="73"/>
         <source>Layer</source>
         <translation>图层</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="76"/>
+        <location filename="../list/list.cpp" line="75"/>
         <source>Color</source>
         <translation>颜色</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="77"/>
+        <location filename="../list/list.cpp" line="76"/>
         <source>Line type</source>
         <translation>线型</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="78"/>
+        <location filename="../list/list.cpp" line="77"/>
         <source>Line thickness</source>
         <translation>线宽</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="79"/>
+        <location filename="../list/list.cpp" line="78"/>
         <source>ID</source>
         <translation>编号</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="85"/>
+        <location filename="../list/list.cpp" line="84"/>
         <source>POINT</source>
         <translation>点</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="86"/>
+        <location filename="../list/list.cpp" line="85"/>
         <location filename="../list/list.cpp" line="195"/>
         <source>in point</source>
         <translation>于点</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="91"/>
+        <location filename="../list/list.cpp" line="90"/>
         <source>LINE</source>
         <translation>线段</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="96"/>
+        <location filename="../list/list.cpp" line="95"/>
         <source>from point</source>
         <translation>从点</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="99"/>
+        <location filename="../list/list.cpp" line="98"/>
         <source>to point</source>
         <translation>至点</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="104"/>
-        <location filename="../list/list.cpp" line="128"/>
+        <location filename="../list/list.cpp" line="103"/>
+        <location filename="../list/list.cpp" line="127"/>
         <source>length</source>
         <translation>长度</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="109"/>
+        <location filename="../list/list.cpp" line="108"/>
         <source>Angle in XY plane</source>
         <translation>在XY平面内夹角</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="110"/>
+        <location filename="../list/list.cpp" line="109"/>
         <source>Inc.</source>
         <translation>位移</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="115"/>
+        <location filename="../list/list.cpp" line="114"/>
         <source>ARC</source>
         <translation>弧</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="116"/>
-        <location filename="../list/list.cpp" line="132"/>
-        <location filename="../list/list.cpp" line="142"/>
+        <location filename="../list/list.cpp" line="115"/>
+        <location filename="../list/list.cpp" line="131"/>
+        <location filename="../list/list.cpp" line="141"/>
         <source>center point</source>
         <translation>中心点</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="122"/>
-        <location filename="../list/list.cpp" line="136"/>
+        <location filename="../list/list.cpp" line="121"/>
+        <location filename="../list/list.cpp" line="135"/>
+        <location filename="../list/list.cpp" line="199"/>
         <source>radius</source>
         <translation>半径</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="123"/>
+        <location filename="../list/list.cpp" line="122"/>
         <source>initial angle</source>
         <translation>起始角</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="124"/>
+        <location filename="../list/list.cpp" line="123"/>
         <source>final angle</source>
         <translation>终止角</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="131"/>
+        <location filename="../list/list.cpp" line="130"/>
         <source>CIRCLE</source>
         <translation>圆</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="137"/>
+        <location filename="../list/list.cpp" line="136"/>
         <source>circumference</source>
         <translation>周长</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="138"/>
+        <location filename="../list/list.cpp" line="137"/>
         <source>area</source>
         <translation>面积</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="141"/>
+        <location filename="../list/list.cpp" line="140"/>
         <source>ELLIPSE</source>
         <translation>椭圆</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="145"/>
+        <location filename="../list/list.cpp" line="144"/>
         <source>major axis</source>
         <translation>主轴</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="163"/>
+        <location filename="../list/list.cpp" line="162"/>
         <source>CONSTRUCTIONLINE</source>
         <translation>辅助线</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="166"/>
+        <location filename="../list/list.cpp" line="165"/>
         <source>OVERLAYBOX</source>
         <translation>图形框</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="169"/>
+        <location filename="../list/list.cpp" line="168"/>
         <source>SOLID</source>
         <translation>区域阴影</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="173"/>
+        <location filename="../list/list.cpp" line="172"/>
         <source>MTEXT</source>
         <translation>多行文字</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="176"/>
+        <location filename="../list/list.cpp" line="175"/>
         <source>TEXT</source>
         <translation>文字</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="179"/>
+        <location filename="../list/list.cpp" line="178"/>
         <source>INSERT</source>
         <translation>插图</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="182"/>
+        <location filename="../list/list.cpp" line="181"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="183"/>
+        <location filename="../list/list.cpp" line="182"/>
         <source>Insertion point</source>
         <translation>插入点</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="188"/>
+        <location filename="../list/list.cpp" line="187"/>
         <source>POLYLINE</source>
         <translation>多线段</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="189"/>
+        <location filename="../list/list.cpp" line="188"/>
         <source>Closed</source>
         <translation>闭合</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="190"/>
+        <location filename="../list/list.cpp" line="189"/>
         <source>No</source>
         <translation>否</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="190"/>
+        <location filename="../list/list.cpp" line="189"/>
         <source>Yes</source>
         <translation>是</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="191"/>
+        <location filename="../list/list.cpp" line="190"/>
         <source>Vertices</source>
         <translation>节点</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="199"/>
         <source>curvature</source>
-        <translation>弧度</translation>
+        <translation type="obsolete">弧度</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="203"/>
+        <location filename="../list/list.cpp" line="204"/>
         <source>IMAGE</source>
         <translation>图像</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="206"/>
+        <location filename="../list/list.cpp" line="207"/>
         <source>SPLINE</source>
         <translation>样条曲线</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="209"/>
+        <location filename="../list/list.cpp" line="210"/>
         <source>HATCH</source>
         <translation>阴影</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="212"/>
+        <location filename="../list/list.cpp" line="213"/>
         <source>DIMLEADER</source>
         <translation>引线标注</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="215"/>
+        <location filename="../list/list.cpp" line="216"/>
         <source>DIMALIGNED</source>
         <translation>对齐标注</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="218"/>
+        <location filename="../list/list.cpp" line="219"/>
         <source>DIMLINEAR</source>
         <translation>线性标注</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="221"/>
+        <location filename="../list/list.cpp" line="222"/>
         <source>DIMRADIAL</source>
         <translation>半径标注</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="224"/>
+        <location filename="../list/list.cpp" line="225"/>
         <source>DIMDIAMETRIC</source>
         <translation>直径标注</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="227"/>
+        <location filename="../list/list.cpp" line="228"/>
         <source>DIMANGULAR</source>
         <translation>角度标注</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="230"/>
+        <location filename="../list/list.cpp" line="231"/>
         <source>UNKNOWN</source>
         <translation>未知</translation>
     </message>
@@ -690,7 +690,7 @@
 <context>
     <name>lc_Listdlg</name>
     <message>
-        <location filename="../list/list.cpp" line="240"/>
+        <location filename="../list/list.cpp" line="248"/>
         <source>List entities</source>
         <translation>列实体</translation>
     </message>

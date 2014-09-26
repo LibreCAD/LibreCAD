@@ -50,268 +50,268 @@
 <context>
     <name>LC_List</name>
     <message>
-        <location filename="../list/list.cpp" line="24"/>
-        <location filename="../list/list.cpp" line="31"/>
+        <location filename="../list/list.cpp" line="23"/>
+        <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
         <translation>Elemek listázása</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="47"/>
+        <location filename="../list/list.cpp" line="46"/>
         <source>n</source>
         <translation>n</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="61"/>
+        <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="68"/>
+        <location filename="../list/list.cpp" line="67"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="68"/>
+        <location filename="../list/list.cpp" line="67"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="74"/>
+        <location filename="../list/list.cpp" line="73"/>
         <source>Layer</source>
         <translation>Fólia</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="76"/>
+        <location filename="../list/list.cpp" line="75"/>
         <source>Color</source>
         <translation>Szín</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="77"/>
+        <location filename="../list/list.cpp" line="76"/>
         <source>Line type</source>
         <translation>Vonaltípus</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="78"/>
+        <location filename="../list/list.cpp" line="77"/>
         <source>Line thickness</source>
         <translation>Vonalvastagság</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="79"/>
+        <location filename="../list/list.cpp" line="78"/>
         <source>ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="85"/>
+        <location filename="../list/list.cpp" line="84"/>
         <source>POINT</source>
         <translation>PONT</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="86"/>
+        <location filename="../list/list.cpp" line="85"/>
         <location filename="../list/list.cpp" line="195"/>
         <source>in point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="91"/>
+        <location filename="../list/list.cpp" line="90"/>
         <source>LINE</source>
         <translation>VONAL</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="96"/>
+        <location filename="../list/list.cpp" line="95"/>
         <source>from point</source>
         <translation>ponttól</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="99"/>
+        <location filename="../list/list.cpp" line="98"/>
         <source>to point</source>
         <translation>pontig</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="104"/>
-        <location filename="../list/list.cpp" line="128"/>
+        <location filename="../list/list.cpp" line="103"/>
+        <location filename="../list/list.cpp" line="127"/>
         <source>length</source>
         <translation>hossz</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="109"/>
+        <location filename="../list/list.cpp" line="108"/>
         <source>Angle in XY plane</source>
         <translation>Szög az XY síkban</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="110"/>
+        <location filename="../list/list.cpp" line="109"/>
         <source>Inc.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="115"/>
+        <location filename="../list/list.cpp" line="114"/>
         <source>ARC</source>
         <translation>ÍV</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="116"/>
-        <location filename="../list/list.cpp" line="132"/>
-        <location filename="../list/list.cpp" line="142"/>
+        <location filename="../list/list.cpp" line="115"/>
+        <location filename="../list/list.cpp" line="131"/>
+        <location filename="../list/list.cpp" line="141"/>
         <source>center point</source>
         <translation>középpont</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="122"/>
-        <location filename="../list/list.cpp" line="136"/>
+        <location filename="../list/list.cpp" line="121"/>
+        <location filename="../list/list.cpp" line="135"/>
+        <location filename="../list/list.cpp" line="199"/>
         <source>radius</source>
         <translation>sugár</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="123"/>
+        <location filename="../list/list.cpp" line="122"/>
         <source>initial angle</source>
         <translation>kezdeti szög</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="124"/>
+        <location filename="../list/list.cpp" line="123"/>
         <source>final angle</source>
         <translation>végső szög</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="131"/>
+        <location filename="../list/list.cpp" line="130"/>
         <source>CIRCLE</source>
         <translation>KÖR</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="137"/>
+        <location filename="../list/list.cpp" line="136"/>
         <source>circumference</source>
         <translation>kerület</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="138"/>
+        <location filename="../list/list.cpp" line="137"/>
         <source>area</source>
         <translation>terület</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="141"/>
+        <location filename="../list/list.cpp" line="140"/>
         <source>ELLIPSE</source>
         <translation>ELLIPSZIS</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="145"/>
+        <location filename="../list/list.cpp" line="144"/>
         <source>major axis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="163"/>
+        <location filename="../list/list.cpp" line="162"/>
         <source>CONSTRUCTIONLINE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="166"/>
+        <location filename="../list/list.cpp" line="165"/>
         <source>OVERLAYBOX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="169"/>
+        <location filename="../list/list.cpp" line="168"/>
         <source>SOLID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="173"/>
+        <location filename="../list/list.cpp" line="172"/>
         <source>MTEXT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="176"/>
+        <location filename="../list/list.cpp" line="175"/>
         <source>TEXT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="179"/>
+        <location filename="../list/list.cpp" line="178"/>
         <source>INSERT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="182"/>
+        <location filename="../list/list.cpp" line="181"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="183"/>
+        <location filename="../list/list.cpp" line="182"/>
         <source>Insertion point</source>
         <translation>Beillesztési pont</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="188"/>
+        <location filename="../list/list.cpp" line="187"/>
         <source>POLYLINE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="189"/>
+        <location filename="../list/list.cpp" line="188"/>
         <source>Closed</source>
         <translation>Zárt</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="190"/>
+        <location filename="../list/list.cpp" line="189"/>
         <source>No</source>
         <translation>Nem</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="190"/>
+        <location filename="../list/list.cpp" line="189"/>
         <source>Yes</source>
         <translation>Igen</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="191"/>
+        <location filename="../list/list.cpp" line="190"/>
         <source>Vertices</source>
         <translation>Tetőpontok</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="199"/>
         <source>curvature</source>
-        <translation>görbület</translation>
+        <translation type="obsolete">görbület</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="203"/>
+        <location filename="../list/list.cpp" line="204"/>
         <source>IMAGE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="206"/>
+        <location filename="../list/list.cpp" line="207"/>
         <source>SPLINE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="209"/>
+        <location filename="../list/list.cpp" line="210"/>
         <source>HATCH</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="212"/>
+        <location filename="../list/list.cpp" line="213"/>
         <source>DIMLEADER</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="215"/>
+        <location filename="../list/list.cpp" line="216"/>
         <source>DIMALIGNED</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="218"/>
+        <location filename="../list/list.cpp" line="219"/>
         <source>DIMLINEAR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="221"/>
+        <location filename="../list/list.cpp" line="222"/>
         <source>DIMRADIAL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="224"/>
+        <location filename="../list/list.cpp" line="225"/>
         <source>DIMDIAMETRIC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="227"/>
+        <location filename="../list/list.cpp" line="228"/>
         <source>DIMANGULAR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="230"/>
+        <location filename="../list/list.cpp" line="231"/>
         <source>UNKNOWN</source>
         <translation type="unfinished"></translation>
     </message>
@@ -686,7 +686,7 @@
 <context>
     <name>lc_Listdlg</name>
     <message>
-        <location filename="../list/list.cpp" line="240"/>
+        <location filename="../list/list.cpp" line="248"/>
         <source>List entities</source>
         <translation type="unfinished">Elemek listázása</translation>
     </message>

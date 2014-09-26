@@ -620,6 +620,14 @@ Automatické ukládání bylo vypnuto.</translation>
         <source>&amp;Spline</source>
         <translation type="unfinished">S&amp;plajna</translation>
     </message>
+    <message>
+        <source>Draft Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -9480,6 +9488,11 @@ Přejete si ho přepsat?</translation>
         <source>Draw bisectors</source>
         <translation type="obsolete">Kreslí osy</translation>
     </message>
+    <message>
+        <source>Number sector lines not in range: </source>
+        <comment>number of bisector to create must be in [1, 200]</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineFree</name>
@@ -11720,6 +11733,34 @@ Přejete si ho přepsat?</translation>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
         <translation>RS_ActionPrintPreview::fit(): Neplatná velikost papíru</translation>
     </message>
+    <message>
+        <source>Printout offset in paper coordinates by (%1, %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout offset in graph coordinates by (%1, %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout offset in graph coordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout offset in paper coordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>: select printout offset coordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>type in offset from command line to offset printout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionSelect</name>
@@ -13185,6 +13226,14 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>rz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>paperoffset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>graphoffset</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
