@@ -24,6 +24,8 @@
 **
 **********************************************************************/
 
+#include <QApplication>
+#include <QDesktopWidget>
 #include <QAction>
 #include <limits.h>
 #include "qc_applicationwindow.h"
@@ -1070,11 +1072,24 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
     // drawing meta grid:
     if (!isPrintPreview()) {
 
+        //increase grid point size on for DPI>96
+        int dpiX = qApp->desktop()->logicalDpiX();
+//        DEBUG_HEADER();
+//        RS_DEBUG->print(RS_Debug::D_ERROR, "dpiX=%d\n",dpiX);
+        const RS_Pen penSaved=painter->getPen();
+        if(dpiX>96) {
+            RS_Pen pen=penSaved;
+            pen.setWidth(RS2::Width01);
+            painter->setPen(pen);
+        }
+
         //only drawGrid updates the grid layout (updatePointArray())
         drawMetaGrid(painter);
         //draw grid after metaGrid to avoid overwriting grid points by metaGrid lines
         //bug# 3430258
         drawGrid(painter);
+
+        if(dpiX>96) painter->setPen(penSaved);
 
     }
 
