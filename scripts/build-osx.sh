@@ -7,16 +7,17 @@
 # the LibreCAD source folder 
 
 SCRIPTPATH="$(dirname "$0")"
-PATH=~/Qt5.3.1/5.3/clang_64/bin:$PATH
 QMAKE_CMD=qmake
+
+qmake -v
 
 cd "${SCRIPTPATH}"/..
 # have to clean up any existing binary files to avoid crashes of bug#422
 rm -rf LibreCAD.app
 
-$QMAKE_CMD -r -spec macx-clang
+$QMAKE_CMD -r -spec macx-g++
 make distclean
-$QMAKE_CMD -r -spec macx-clang
+$QMAKE_CMD -r -spec macx-g++
 #undefined symbol x86_64: https://qt-project.org/forums/viewthread/35646
 find . -iname makefile -exec sed -i '' \
 	-e 's:mmacosx-version-min=10.[1-8]:mmacosx-version-min=10.9:g' \
