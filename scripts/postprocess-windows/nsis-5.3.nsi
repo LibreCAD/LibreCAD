@@ -3,7 +3,7 @@
 
 ;--------------------------------
 ;Include custom settings if exists
-  !include /NONFATAL "custom-5.1.nsh"
+  !include /NONFATAL "custom-5.3.nsi"
 
 ;--------------------------------
 ;Include Modern UI
@@ -86,7 +86,7 @@ ${EndIf}
 
 FunctionEnd
 
-;--- define Qt folders if not already defined in custom-5.1.nsh
+;--- define Qt folders if not already defined in custom-5.3.nsi
 !ifndef Qt_Dir
     !define Qt_Dir 	"C:\Qt\Qt5.3.2"
 !endif
