@@ -32,9 +32,6 @@
 #include "rs_modification.h"
 #include "rs_selection.h"
 #include "rs_overlaybox.h"
-#include "rs_graphic.h"
-#include "rs_layerlist.h"
-#include "rs_layer.h"
 
 
 
@@ -194,14 +191,6 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
             //ToDo: preview interface should not take pen from layer 0
             RS_Pen pen_f(RS_Color(50,50,255,40), RS2::Width00, RS2::SolidLine);
             RS_OverlayBox* ob=new RS_OverlayBox(preview, RS_OverlayBoxData(v1, v2));
-//            RS_DEBUG->print(RS_Debug::D_ERROR, "line=%d, layer=%d\n", __LINE__, (int64_t) ob->getLayer());
-//            RS_LayerList* list=graphic->getLayerList();
-//            for(unsigned i=0; i < list->count(); ++i){
-//                RS_DEBUG->print(RS_Debug::D_ERROR, "layer[%d]: %d, name=%s\n", i, list->at(i),list->at(i)->getName().toStdString().c_str());
-//            }
-            if(ob->getLayer()==NULL)
-                ob->setLayer(graphic->getLayerList()->at(0)->getName());
-
             ob->setPen(pen_f);
             ob->setVisible(true);
             preview->addEntity(ob);

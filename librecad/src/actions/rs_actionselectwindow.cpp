@@ -31,9 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_selection.h"
 #include "rs_overlaybox.h"
-#include "rs_graphic.h"
-#include "rs_layerlist.h"
-#include "rs_layer.h"
+
 
 /**
  * Constructor.
@@ -103,9 +101,6 @@ void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
         deletePreview();
                 RS_Pen pen_f(RS_Color(50,50,255,40), RS2::Width00, RS2::SolidLine);
                 RS_OverlayBox* ob=new RS_OverlayBox(preview, RS_OverlayBoxData(v1, v2));
-
-                if(ob->getLayer()==NULL)
-                    ob->setLayer(graphic->getLayerList()->at(0)->getName());
                 ob->setPen(pen_f);
                 ob->setVisible(true);
                 preview->addEntity(ob);
