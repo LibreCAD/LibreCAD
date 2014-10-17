@@ -165,6 +165,8 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
     case MovingRef:
         v2 = snapPoint(e);
+        RS_DIALOGFACTORY->updateCoordinateWidget(v2, v2 - graphicView->getRelativeZero());
+
 
         deletePreview();
         preview->addSelectionFrom(*container);
@@ -174,6 +176,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
     case Moving:
         v2 = snapPoint(e);
+        RS_DIALOGFACTORY->updateCoordinateWidget(v2, v2 - graphicView->getRelativeZero());
 
         deletePreview();
         preview->addSelectionFrom(*container);
