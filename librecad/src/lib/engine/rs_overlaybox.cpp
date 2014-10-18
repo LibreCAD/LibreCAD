@@ -62,9 +62,6 @@ void RS_OverlayBox::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pa
 
     RS_Vector v1=view->toGui(getCorner1());
     RS_Vector v2=view->toGui(getCorner2());
-    DEBUG_HEADER();
-    RS_DEBUG->print(RS_Debug::D_ERROR, "(%d, %d) (%d, %d)\n",
-                    (int) v1.x, (int) v1.y, (int) v2.x, (int) v2.y);
 
     QRectF selectRect(
                 v1.x,
