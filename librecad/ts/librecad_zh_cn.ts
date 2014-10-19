@@ -8181,12 +8181,12 @@ Do you want to replace it?</source>
 <context>
     <name>RS_ActionDefault</name>
     <message>
-        <location filename="../src/actions/rs_actiondefault.cpp" line="351"/>
+        <location filename="../src/actions/rs_actiondefault.cpp" line="354"/>
         <source>Choose second edge</source>
         <translation>选择第二条边</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondefault.cpp" line="352"/>
+        <location filename="../src/actions/rs_actiondefault.cpp" line="355"/>
         <source>Back</source>
         <translation>返回</translation>
     </message>

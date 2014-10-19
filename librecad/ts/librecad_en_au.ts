@@ -8099,12 +8099,12 @@ Do you want to replace it?</translation>
 <context>
     <name>RS_ActionDefault</name>
     <message>
-        <location filename="../src/actions/rs_actiondefault.cpp" line="351"/>
+        <location filename="../src/actions/rs_actiondefault.cpp" line="354"/>
         <source>Choose second edge</source>
         <translation>Choose second edge</translation>
     </message>
     <message>
-        <location filename="../src/actions/rs_actiondefault.cpp" line="352"/>
+        <location filename="../src/actions/rs_actiondefault.cpp" line="355"/>
         <source>Back</source>
         <translation>Back</translation>
     </message>
