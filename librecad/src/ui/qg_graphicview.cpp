@@ -61,6 +61,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlag
     setBackground(background);
 
     redrawMethod=RS2::RedrawAll;
+    isSmoothScrolling = false;
 
     PixmapLayer1=PixmapLayer2=PixmapLayer3=NULL;
 

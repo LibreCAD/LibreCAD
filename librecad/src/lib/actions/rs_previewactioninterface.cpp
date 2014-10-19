@@ -45,6 +45,7 @@ RS_ActionInterface(name, container, graphicView) {
     // preview is linked to the container for getting access to
     //   document settings / dictionary variables
     preview = new RS_Preview(&container);
+    preview->setLayer(NULL);
     hasPreview = true;
 
     RS_DEBUG->print("RS_PreviewActionInterface::RS_PreviewActionInterface: Setting up action with preview: \"%s\": OK", name);

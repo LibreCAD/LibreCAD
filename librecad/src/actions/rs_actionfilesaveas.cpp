@@ -31,7 +31,7 @@
 
 RS_ActionFileSaveAs::RS_ActionFileSaveAs(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :RS_ActionInterface("Add Layer", container, graphicView) {}
+        :RS_ActionInterface("Save as", container, graphicView) {}
 
 
 QAction* RS_ActionFileSaveAs::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
