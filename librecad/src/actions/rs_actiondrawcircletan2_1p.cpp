@@ -75,7 +75,7 @@ void RS_ActionDrawCircleTan2_1P::init(int status) {
         }
     }
     bool updateNeeded(false);
-    for(int i=status; i<circles.size(); ++i){
+    for(int i=status>=0?status:0; i<circles.size(); ++i){
         if(circles[i])
             if(circles[i]->isHighlighted()){
                 circles[i]->setHighlighted(false);
