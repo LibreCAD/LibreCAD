@@ -182,6 +182,12 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
             deletePreview();
             RS_Circle* e=new RS_Circle(preview, cData);
             preview->addEntity(e);
+//            double r0=cData.radius*0.1;
+//            if(centers.size()>1)
+//                for(unsigned i=0; i< centers.size(); ++i){
+//                    RS_DEBUG->print(RS_Debug::D_ERROR, "center %d: (%g, %g)\n",i,centers.at(i).x,centers.at(i).y);
+//                    preview->addEntity(new RS_Circle(preview, RS_CircleData(centers.at(i), r0)));
+//                }
             drawPreview();
         }
     }
@@ -222,6 +228,16 @@ bool RS_ActionDrawCircleTan1_2P::getCenters(){
             auto&& ds=vp.distanceTo(circle->getCenter()) - RS_TOLERANCE;
             if( ds0 <= ds || ds1 <= ds ) continue;
         }
+
+        //avoid counting the same center
+        bool existing=false;
+        for(unsigned i=0; i<centers.size(); ++i){
+            if(centers.at(i).squaredTo(vp) < RS_TOLERANCE15 ){
+                existing=true;
+                break;
+            }
+        }
+        if(existing) continue;
         centers.push_back(vp);
     }
 //    DEBUG_HEADER();
