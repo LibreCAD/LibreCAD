@@ -77,7 +77,7 @@ win32 {
     }
 
     RC_FILE = ../res/main/librecad.rc
-    QMAKE_POST_LINK = $$_PRO_FILE_PWD_\\..\\..\\scripts\\postprocess-win.bat
+    QMAKE_POST_LINK = "$$_PRO_FILE_PWD_/../../scripts/postprocess-win.bat" $$SCMREVISION
 }
 
 # Additional libraries to load
