@@ -181,6 +181,8 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
         if(preparePreview()) {
             deletePreview();
             RS_Circle* e=new RS_Circle(preview, cData);
+            for(size_t i=0; i<centers.size(); ++i)
+                preview->addEntity(new RS_Point(preview, centers.at(i)));
             preview->addEntity(e);
 //            double r0=cData.radius*0.1;
 //            if(centers.size()>1)
@@ -212,27 +214,34 @@ bool RS_ActionDrawCircleTan1_2P::getCenters(){
     if(getStatus() < SetPoint2) return false;
 
     LC_Quadratic lc0(circle, points[0]);
-    LC_Quadratic lc1(circle, points[1]);
+//    LC_Quadratic lc1(circle, points[1]);
+    LC_Quadratic lc1(points[1], points[0]);
     auto&& list=LC_Quadratic::getIntersection(lc0,lc1);
 //    DEBUG_HEADER();
 //    std::cout<<"intersections : "<<list<<std::endl;
 
-    for(unsigned int i=0;i<list.size();i++){
+    for(unsigned int i=0;i<list.size();++i){
         auto vp=list.get(i);
         //when taking the path of center of tangent circle passing a given point,
         // the center is never closer to the circle center than the point, for internal and external tangent circles
         double ds0=vp.distanceTo(points[0]);
-        double ds1=vp.distanceTo(points[1]);
+//        double ds1=vp.distanceTo(points[1]);
 //        if( fabs(ds0 - ds1)> RS_TOLERANCE) continue;
         if(circle->rtti()==RS2::EntityCircle||circle->rtti()==RS2::EntityArc){
-            auto&& ds=vp.distanceTo(circle->getCenter()) - RS_TOLERANCE;
-            if( ds0 <= ds || ds1 <= ds ) continue;
+            double ds=vp.distanceTo(circle->getCenter());
+            //condition for tangential to the given circle
+            if( fabs(ds - (ds0 + circle->getRadius())) > RS_TOLERANCE && fabs(ds - fabs(ds0 - circle->getRadius())) > RS_TOLERANCE ) continue;
+        }else{
+            double ds=0.;
+            circle->getNearestPointOnEntity(vp, false,&ds);
+            //condition for tangential to the given straight line
+            if( fabs(ds - ds0)>RS_TOLERANCE) continue;
         }
 
         //avoid counting the same center
         bool existing=false;
-        for(unsigned i=0; i<centers.size(); ++i){
-            if(centers.at(i).squaredTo(vp) < RS_TOLERANCE15 ){
+        for(unsigned j=0; j<centers.size(); ++j){
+            if(centers.at(j).squaredTo(vp) < RS_TOLERANCE15 ){
                 existing=true;
                 break;
             }
