@@ -115,12 +115,11 @@ RS_Vector RS_Line::getNearestEndpoint(const RS_Vector& coord,
 
 
 RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
-        bool onEntity, double* dist, RS_Entity** entity)const {
+                                           bool onEntity, double* dist, RS_Entity** entity)const {
 
     if (entity!=NULL) {
         *entity = const_cast<RS_Line*>(this);
     }
-//std::cout<<"RS_Line::getNearestPointOnEntity():"<<coord<<std::endl;
     RS_Vector direction = data.endpoint-data.startpoint;
     RS_Vector vpc=coord-data.startpoint;
     double a=direction.squared();
@@ -129,14 +128,16 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
         vpc=getMiddlePoint();
     }else{
         //find projection on line
-        vpc = data.startpoint + direction*RS_Vector::dotP(vpc,direction)/a;
+        const double t=RS_Vector::dotP(vpc,direction)/a;
         if( !isConstructionLayer() && onEntity &&
-                ! vpc.isInWindowOrdered(minV,maxV) ){
-//                !( vpc.x>= minV.x && vpc.x <= maxV.x && vpc.y>= minV.y && vpc.y<=maxV.y) ) {
+                ( t<=-RS_TOLERANCE || t>=1.+RS_TOLERANCE )
+                ){
+            //                !( vpc.x>= minV.x && vpc.x <= maxV.x && vpc.y>= minV.y && vpc.y<=maxV.y) ) {
             //projection point not within range, find the nearest endpoint
-//            std::cout<<"not within window, returning endpoints\n";
+            //            std::cout<<"not within window, returning endpoints\n";
             return getNearestEndpoint(coord,dist);
         }
+        vpc = data.startpoint + direction*t;
     }
 
     if (dist!=NULL) {
