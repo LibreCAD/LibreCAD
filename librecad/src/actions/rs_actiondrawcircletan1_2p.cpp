@@ -182,7 +182,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
             deletePreview();
             RS_Circle* e=new RS_Circle(preview, cData);
             for(size_t i=0; i<centers.size(); ++i)
-                preview->addEntity(new RS_Point(preview, centers.at(i)));
+                preview->addEntity(new RS_Point(preview, RS_PointData(centers.at(i))));
             preview->addEntity(e);
 //            double r0=cData.radius*0.1;
 //            if(centers.size()>1)
