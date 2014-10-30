@@ -204,6 +204,8 @@ bool RS_ActionDrawCircleTan3::preparePreview(){
     for(int i=0;i<candidates.size();i++){
         double d;
         candidates.at(i).getNearestPointOnEntity(coord,false,&d);
+        double dCenter=coord.distanceTo(candidates.at(i).getCenter());
+        d=std::min(d,dCenter);
         if(d<dist){
             dist=d;
             index=i;

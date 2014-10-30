@@ -311,6 +311,14 @@ QList<RS_Circle> RS_Circle::createTan3(const QVector<RS_AtomicEntity*>& circles)
      }
     unsigned short flags=0;
     do{
+        for(unsigned short j=0u;j<3u;++j){
+            if(flags & (1u<<j)) {
+                cs[j].setRadius( - fabs(cs[j].getRadius()));
+            }else{
+                cs[j].setRadius( fabs(cs[j].getRadius()));
+            }
+        }
+//        RS_DEBUG->print(RS_Debug::D_ERROR, "flags=%d\n",flags);
         auto&& list=solveAppolloniusSingle(cs);
         if(list.size()>=1){
             for(RS_Circle& c0: list){
@@ -324,18 +332,9 @@ QList<RS_Circle> RS_Circle::createTan3(const QVector<RS_AtomicEntity*>& circles)
                 if(addNew) ret<<c0;
             }
         }
-        ret.append(solveAppolloniusSingle(cs));
-        ++flags;
-        for(unsigned short j=0u;j<3u;++j){
-            if(flags & (1u<<j)) {
-                cs[j].setRadius( - fabs(cs[j].getRadius()));
-            }else{
-                cs[j].setRadius( fabs(cs[j].getRadius()));
-            }
-            ++j;
-        }
 
-    }while(flags<8u);
+
+    }while(++flags<8u);
 //    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
 //    std::cout<<"before testing, ret.size()="<<ret.size()<<std::endl;
     for(int i=0;i<ret.size();){
@@ -396,6 +395,9 @@ QList<RS_Circle> RS_Circle::solveAppolloniusSingle(const QList<RS_Circle>& circl
         centers.push_back(circles[i].getCenter());
         radii.push_back(circles[i].getRadius());
     }
+//              for(int i=0;i<circles.size();i++){
+//    std::cout<<"i="<<i<<"\t center="<<circles[i].getCenter()<<"\tr="<<radii.at(i)<<std::endl;
+//              }
 /** form the linear equation to solve center in radius **/
     QVector<QVector<double> > mat(2,QVector<double>(3,0.));
     mat[0][0]=centers[2].x - centers[0].x;
