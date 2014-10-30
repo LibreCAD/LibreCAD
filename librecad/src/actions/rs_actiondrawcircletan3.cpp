@@ -135,6 +135,9 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent* e) {
             deletePreview();
             RS_Circle* e=new RS_Circle(preview, cData);
             preview->addEntity(e);
+            for(RS_Circle& c: candidates){
+                preview->addEntity(new RS_Point(NULL, RS_PointData(c.getCenter())));
+            }
             drawPreview();
         }
     }
@@ -224,19 +227,9 @@ RS_Entity* RS_ActionDrawCircleTan3::catchCircle(QMouseEvent* e) {
         if(en->getId() == circles[i]->getId()) return ret; //do not pull in the same line again
     }
     if(en->getParent() != NULL) {
-        if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
-                || en->getParent()->rtti() == RS2::EntitySpline
-                || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
-                || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
-                || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
-                || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
-                || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
-                || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
-                || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
-                || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
-                ){
+        if ( en->getParent()->ignoredOnModification()){
             return ret;
-    }
+        }
     }
     return en;
 }
