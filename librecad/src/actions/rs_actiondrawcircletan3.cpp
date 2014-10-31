@@ -230,7 +230,7 @@ RS_Entity* RS_ActionDrawCircleTan3::catchCircle(QMouseEvent* e) {
     }
     if(en->getParent() != NULL) {
         if ( en->getParent()->ignoredOnModification()){
-            return ret;
+            return NULL;
         }
     }
     return en;
