@@ -1979,8 +1979,6 @@ void RS_Modification::deselectOriginals(bool remove
  */
 void RS_Modification::addNewEntities(QList<RS_Entity*>& addList) {
     for (int i = 0; i < addList.size(); ++i) {
-        /*        if (addList.at(i) == "Jane")
-                    cout << "Found Jane at position " << i << endl;*/
         if (addList.at(i) != NULL) {
             container->addEntity(addList.at(i));
             if (document!=NULL && handleUndo) {
