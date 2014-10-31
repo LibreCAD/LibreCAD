@@ -160,6 +160,7 @@
 
 #include "qg_mainwindowinterface.h"
 #include "qg_snaptoolbar.h"
+#include "qc_applicationwindow.h"
 
 //a list of EntityTypes which support actionOffset
 QVector<RS2::EntityType> QG_ActionHandler::offsetEntities(0);
@@ -1078,12 +1079,17 @@ bool QG_ActionHandler::command(const QString& cmd) {
     RS_DEBUG->print("QG_ActionHandler::command: %s", cmd.toLatin1().data());
     QString c = cmd.toLower();
 
-    if (c=="\n") {
+    if (c=="\n" || c==tr("escape", "escape, go back from action steps")) {
         RS_GraphicView* gv = mainWindow->getGraphicView();
         if (gv!=NULL) {
-            gv->back();
+            if(c=="\n" ){
+                gv->enter();
+                RS_DEBUG->print("QG_ActionHandler::command: enter");
+            }else{
+                gv->back();
+                RS_DEBUG->print("QG_ActionHandler::command: back");
+            }
         }
-        RS_DEBUG->print("QG_ActionHandler::command: back");
         return true;
     }
 

@@ -2006,8 +2006,8 @@ void QC_ApplicationWindow::slotKillAllActions() {
  * Goes one step further in the current action.
  */
 void QC_ApplicationWindow::slotEnter() {
-
-    if (commandWidget==NULL || !commandWidget->checkFocus()) {
+    RS_DEBUG->print("QC_ApplicationWindow::slotEnter(): begin\n");
+//    if (commandWidget==NULL || !commandWidget->checkFocus()) {
         if (cadToolBar!=NULL) {
             cadToolBar->forceNext();
         } else {
@@ -2016,7 +2016,8 @@ void QC_ApplicationWindow::slotEnter() {
                 graphicView->enter();
             }
         }
-    }
+//    }
+    RS_DEBUG->print("QC_ApplicationWindow::slotEnter(): end\n");
 }
 
 

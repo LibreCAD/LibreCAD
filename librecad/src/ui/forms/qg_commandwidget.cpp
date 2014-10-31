@@ -164,8 +164,10 @@ void QG_CommandWidget::escape() {
     //leCommand->clearFocus();
 
     if (actionHandler!=NULL) {
-                actionHandler->slotFocusNormal();
-        }
+        actionHandler->slotFocusNormal();
+        actionHandler->command(QString(tr("escape", "escape, go back from action steps")));
+
+    }
 }
 
 /*void QG_CommandWidget::cmdChanged(const QString& text) {
