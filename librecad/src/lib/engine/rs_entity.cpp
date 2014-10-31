@@ -892,6 +892,20 @@ bool RS_Entity::isConstructionLayer(bool typeCheck) const  {
     return false;
 }
 
+bool RS_Entity::trimmable() const
+{
+    switch(rtti()){
+    case RS2::EntityArc:
+    case RS2::EntityCircle:
+    case RS2::EntityEllipse:
+    case RS2::EntityLine:
+        return true;
+    default:
+        return false;
+    }
+}
+
+
 /**
  * Dumps the elements data to stdout.
  */

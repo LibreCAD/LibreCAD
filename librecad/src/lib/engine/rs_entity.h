@@ -584,6 +584,13 @@ m0 x + m1 y + m2 =0
         return 0.;
     }
 
+    /**
+     * @brief trimmable, whether the entity type can be trimmed
+     * @return true, for trimmable entity types
+     * currently, trimmable types are: RS_Line, RS_Circle, RS_Arc, RS_Ellipse
+     */
+    bool trimmable() const;
+
 
 protected:
     //! Entity's parent entity or NULL is this entity has no parent.

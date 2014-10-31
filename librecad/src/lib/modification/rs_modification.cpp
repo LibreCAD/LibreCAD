@@ -2121,12 +2121,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     RS_Vector is, is2;
 
     //RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
-    if (
-        trimEntity->rtti()==RS2::EntityEllipse
-        || trimEntity->rtti()==RS2::EntityArc
-        || trimEntity->rtti()==RS2::EntityCircle
-        || trimEntity->rtti()==RS2::EntityLine
-    ) {
+    if ( trimEntity->trimmable() ) {
         is = trimmed1->prepareTrim(trimCoord, sol);
     } else {
         is = sol.getClosest(limitCoord, NULL, &ind);
@@ -2170,12 +2165,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
 
     // trim limit entity:
     if (trimBoth) {
-        if (
-            trimmed2->rtti()==RS2::EntityEllipse
-            || trimmed2->rtti()==RS2::EntityArc
-            || trimmed2->rtti()==RS2::EntityCircle
-            || trimmed2->rtti()==RS2::EntityLine
-        )
+        if ( trimmed2->trimmable())
             is2 = trimmed2->prepareTrim(limitCoord, sol);
          else
             is2 = sol.getClosest(trimCoord);
