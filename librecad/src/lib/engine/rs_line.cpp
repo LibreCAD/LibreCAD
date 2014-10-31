@@ -440,7 +440,6 @@ bool RS_Line::offset(const RS_Vector& coord, const double& distance) {
     }
     direction*=distance;
     move(direction);
-    moveBorders(direction);
     return true;
 }
 
@@ -483,8 +482,7 @@ void RS_Line::move(const RS_Vector& offset) {
 
     data.startpoint.move(offset);
     data.endpoint.move(offset);
-    minV += offset;
-    maxV += offset;
+    moveBorders(offset);
 //    RS_DEBUG->print("RS_Line::move2: sp: %f/%f, ep: %f/%f",
 //                    data.startpoint.x, data.startpoint.y,
 //                    data.endpoint.x, data.endpoint.y);
