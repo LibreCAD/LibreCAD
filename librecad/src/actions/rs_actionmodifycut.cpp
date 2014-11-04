@@ -105,19 +105,13 @@ void RS_ActionModifyCut::mouseReleaseEvent(QMouseEvent* e) {
             cutEntity = catchEntity(e);
             if (cutEntity==NULL) {
                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-            } else if (cutEntity->rtti()!=RS2::EntityLine &&
-                       cutEntity->rtti()!=RS2::EntityArc &&
-                       cutEntity->rtti()!=RS2::EntityCircle &&
-                       cutEntity->rtti()!=RS2::EntityEllipse &&
-                       cutEntity->rtti()!=RS2::EntitySplinePoints) {
-
-                RS_DIALOGFACTORY->commandMessage(
-                    tr("Entity must be a line, arc, circle, ellipse or interpolation spline."));
-            } else {
+            } else if(cutEntity->trimmable()){
                 cutEntity->setHighlighted(true);
                 graphicView->drawEntity(cutEntity);
                 setStatus(SetCutCoord);
-            }
+            }else
+                RS_DIALOGFACTORY->commandMessage(
+                            tr("Entity must be a line, arc, circle, ellipse or interpolation spline."));
             break;
 
         case SetCutCoord:
