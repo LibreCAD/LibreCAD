@@ -193,6 +193,14 @@ RS_Commands::RS_Commands() {
     cmdTranslation.insert("ch", tr("ch"));
     mainCommands.insert(tr("ch", "modify - bevel (chamfer)"), RS2::ActionModifyBevel);
     shortCommands.insert(tr("ch"), RS2::ActionModifyBevel);
+    cmdTranslation.insert("fillet", tr("fillet", "modify - fillet"));
+    mainCommands.insert(tr("fillet", "modify - fillet"), RS2::ActionModifyBevel);
+
+    cmdTranslation.insert("divide", tr("divide", "modify - divide"));
+    mainCommands.insert(tr("divide", "modify - divide"), RS2::ActionModifyCut);
+    shortCommands.insert(tr("div", "modify - divide"), RS2::ActionModifyCut);
+    cmdTranslation.insert("cut", tr("cut", "modify - divide"));
+    mainCommands.insert(tr("cut", "modify - divide"), RS2::ActionModifyCut);
 
     cmdTranslation.insert("mi", tr("mi"));
     mainCommands.insert(tr("mi", "modify - mirror"), RS2::ActionModifyMirror);
