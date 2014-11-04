@@ -278,6 +278,24 @@ bool RS_Entity::isPointOnEntity(const RS_Vector& coord,
     return (dist<=fabs(tolerance));
 }
 
+double RS_Entity::getDistanceToPoint(const RS_Vector& coord,
+                                  RS_Entity** entity,
+                                  RS2::ResolveLevel /*level*/,
+                                  double /*solidDist*/) const
+{
+    if( entity != NULL) {
+        *entity=const_cast<RS_Entity*>(this);
+    }
+    double dToEntity = RS_MAXDOUBLE;
+    (void) getNearestPointOnEntity(coord, true, &dToEntity, entity);
+
+    // RVT 6 Jan 2011 : Add selection by center point
+    if(getCenter().valid){
+        double dToCenter=getCenter().distanceTo(coord);
+        return std::min(dToEntity,dToCenter);
+    }else
+        return dToEntity;
+}
 
 /**
  * Is this entity visible?
@@ -899,6 +917,7 @@ bool RS_Entity::trimmable() const
     case RS2::EntityCircle:
     case RS2::EntityEllipse:
     case RS2::EntityLine:
+    case RS2::EntitySplinePoints:
         return true;
     default:
         return false;

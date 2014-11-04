@@ -503,8 +503,11 @@ RS_Vector RS_Circle::getNearestPointOnEntity(const RS_Vector& coord,
     double d(vp.magnitude());
     if( d < RS_TOLERANCE ) return RS_Vector(false);
     vp =data.center+vp*(data.radius/d);
+//    RS_DEBUG->print(RS_Debug::D_ERROR, "circle(%g, %g), r=%g: distance to point (%g, %g)\n",data.center.x,data.center.y,coord.x,coord.y);
+
     if(dist!=NULL){
         *dist=coord.distanceTo(vp);
+//        RS_DEBUG->print(RS_Debug::D_ERROR, "circle(%g, %g), r=%g: distance to point (%g, %g)=%g\n",data.center.x,data.center.y,coord.x,coord.y,*dist);
     }
     return vp;
 }
@@ -612,26 +615,6 @@ RS_Vector RS_Circle::getNearestOrthTan(const RS_Vector& coord,
                 return getCenter() - vp1*getRadius();
         }
 }
-
-double RS_Circle::getDistanceToPoint(const RS_Vector& coord,
-                                     RS_Entity** entity,
-                                     RS2::ResolveLevel, double) const {
-    if (entity!=NULL) {
-        *entity = const_cast<RS_Circle*>(this);
-    }
-
-    // RVT Jan 6 2010, allow selections to mid point of circle
-    double dToCenter=data.center.distanceTo(coord);
-    double dToEdge=fabs(dToCenter - data.radius);
-
-    if (dToEdge<dToCenter) {
-        return dToEdge;
-    } else {
-        return dToCenter;
-    }
-}
-
-
 
 void RS_Circle::move(const RS_Vector& offset) {
     data.center.move(offset);

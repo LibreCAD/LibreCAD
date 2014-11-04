@@ -326,10 +326,11 @@ RS_Vector RS_Arc::getNearestPointOnEntity(const RS_Vector& coord,
         vec.setPolar(data.radius, angle);
         vec+=data.center;
     } else {
-            vec=getNearestEndpoint(coord, dist);
+            return vec=getNearestEndpoint(coord, dist);
     }
     if (dist!=NULL) {
-        *dist = fabs((vec-data.center).magnitude()-data.radius);
+        *dist = vec.distanceTo(coord);
+//        RS_DEBUG->print(RS_Debug::D_ERROR, "distance to (%g, %g)=%g\n", coord.x,coord.y,*dist);
     }
 
     return vec;
@@ -493,46 +494,6 @@ RS_Vector RS_Arc::getNearestOrthTan(const RS_Vector& coord,
         }
         return getCenter()+vp;
 }
-
-
-double RS_Arc::getDistanceToPoint(const RS_Vector& coord,
-                                  RS_Entity** entity,
-                                  RS2::ResolveLevel,
-                                  double) const {
-    if (entity!=NULL) {
-        *entity = const_cast<RS_Arc*>(this);
-    }
-
-    // check endpoints first:
-    double dist = coord.distanceTo(getStartpoint());
-    if (dist<1.0e-4) {
-        return dist;
-    }
-    dist = coord.distanceTo(getEndpoint());
-    if (dist<1.0e-4) {
-        return dist;
-    }
-
-    if (RS_Math::isAngleBetween(data.center.angleTo(coord),
-                                data.angle1, data.angle2,
-                                isReversed())) {
-
-        // RVT 6 Jan 2011 : Added selection by center point of arc
-        double dToEdge=fabs((coord-data.center).magnitude() - data.radius);
-        double dToCenter=data.center.distanceTo(coord);
-
-        if (dToEdge<dToCenter) {
-            return dToEdge;
-        } else {
-            return dToCenter;
-        }
-
-    } else {
-        return RS_MAXDOUBLE;
-    }
-}
-
-
 
 void RS_Arc::moveStartpoint(const RS_Vector& pos) {
     // polyline arcs: move point not angle:

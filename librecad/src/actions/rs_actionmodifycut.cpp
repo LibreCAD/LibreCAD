@@ -84,6 +84,7 @@ void RS_ActionModifyCut::mouseMoveEvent(QMouseEvent* e) {
 
     switch (getStatus()) {
     case ChooseCutEntity:
+        deleteSnapper();
         break;
 
     case SetCutCoord:
@@ -125,6 +126,7 @@ void RS_ActionModifyCut::mouseReleaseEvent(QMouseEvent* e) {
                     tr("Cutting point is not on entity."));
             } else {
                 trigger();
+                deleteSnapper();
             }
             break;
 

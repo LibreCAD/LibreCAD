@@ -257,67 +257,6 @@ RS_Vector RS_Line::getNearestDist(double distance,
 }*/
 
 
-double RS_Line::getDistanceToPoint(const RS_Vector& coord,
-                                   RS_Entity** entity,
-                                   RS2::ResolveLevel /*level*/,
-                                   double /*solidDist*/)const {
-
-//    RS_DEBUG->print("RS_Line::getDistanceToPoint");
-
-    if (entity!=NULL) {
-        *entity = const_cast<RS_Line*>(this);
-    }
-    double ret;
-    getNearestPointOnEntity(coord,true,&ret,entity);
-    //std::cout<<"rs_line::getDistanceToPoint(): new algorithm dist= "<<ret<<std::endl;
-    return ret;
-//    // check endpoints first:
-//    double dist = coord.distanceTo(getStartpoint());
-//    if (dist<1.0e-4) {
-//        RS_DEBUG->print("RS_Line::getDistanceToPoint: OK1");
-//        return dist;
-//    }
-//    dist = coord.distanceTo(getEndpoint());
-//    if (dist<1.0e-4) {
-//        RS_DEBUG->print("RS_Line::getDistanceToPoint: OK2");
-//        return dist;
-//    }
-//
-//    dist = RS_MAXDOUBLE;
-//    RS_Vector ae = data.endpoint-data.startpoint;
-//    RS_Vector ea = data.startpoint-data.endpoint;
-//    RS_Vector ap = coord-data.startpoint;
-//    RS_Vector ep = coord-data.endpoint;
-//
-//    if (ae.magnitude()<1.0e-6 || ea.magnitude()<1.0e-6) {
-//        RS_DEBUG->print("RS_Line::getDistanceToPoint: OK2a");
-//        return dist;
-//    }
-//
-//    // Orthogonal projection from both sides:
-//    RS_Vector ba = ae * RS_Vector::dotP(ae, ap) /
-//                   RS_Math::pow(ae.magnitude(), 2);
-//    RS_Vector be = ea * RS_Vector::dotP(ea, ep) /
-//                   RS_Math::pow(ea.magnitude(), 2);
-//
-//    // Check if the projection is outside this line:
-//    if (ba.magnitude()>ae.magnitude() || be.magnitude()>ea.magnitude()) {
-//        // return distance to endpoint
-//        getNearestEndpoint(coord, &dist);
-//        RS_DEBUG->print("RS_Line::getDistanceToPoint: OK3");
-//        return dist;
-//    }
-//    //RS_DEBUG->print("ba: %f", ba.magnitude());
-//    //RS_DEBUG->print("ae: %f", ae.magnitude());
-//
-//    RS_Vector cp = RS_Vector::crossP(ap, ae);
-//    dist = cp.magnitude() / ae.magnitude();
-//
-//    RS_DEBUG->print("RS_Line::getDistanceToPoint: OK4");
-//    std::cout<<"rs_line::getDistanceToPoint(): Old algorithm dist= "<<ret<<std::endl;
-//
-//    return dist;
-}
 
 /** return the equation of the entity
 for quadratic,
@@ -338,8 +277,6 @@ LC_Quadratic RS_Line::getQuadratic() const
     ce[2]= -normal.dotP(data.endpoint);
     return LC_Quadratic(ce);
 }
-
-
 
 double RS_Line::areaLineIntegral() const
 {

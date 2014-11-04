@@ -466,10 +466,10 @@ public:
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity = NULL,
                                       RS2::ResolveLevel level = RS2::ResolveNone,
-                                      double solidDist = RS_MAXDOUBLE) const = 0;
+                                      double solidDist = RS_MAXDOUBLE) const;
 
     virtual bool isPointOnEntity(const RS_Vector& coord,
-                                 double tolerance=RS_TOLERANCE) const;
+                                 double tolerance=20.*RS_TOLERANCE) const;
 
     /**
      * Implementations must offset the entity by the given direction and distance.
