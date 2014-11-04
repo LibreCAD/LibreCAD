@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_ellipse.h"
 
 /**
- * Draw ellipse by foci and a point on ellipse
+ * Draw a circle tangential to two give circles and passing a given point
  *
  * @author Dongxu Li
  */
