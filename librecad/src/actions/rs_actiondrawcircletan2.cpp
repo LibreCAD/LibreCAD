@@ -53,7 +53,7 @@ RS_ActionDrawCircleTan2::~RS_ActionDrawCircleTan2() {
 QAction* RS_ActionDrawCircleTan2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
 
-    action = new QAction(tr("Circle Tangential &2"), NULL);
+    action = new QAction(tr("Tangential 2 Circles, Radius",  "circle tangential to two give circles and with radius"), NULL);
     action->setIcon(QIcon(":/extui/circletan2.png"));
     return action;
 }

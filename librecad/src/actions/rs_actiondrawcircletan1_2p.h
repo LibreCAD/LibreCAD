@@ -30,7 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class RS_Circle;
 
 /**
- * Draw ellipse by foci and a point on ellipse
+ * Draw tangential circle passing 2 points
  *
  * @author Dongxu Li
  */
