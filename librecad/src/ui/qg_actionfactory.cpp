@@ -1378,6 +1378,11 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotBlocksExplode()));
         break;
+    case RS2::ActionBlocksImport:
+        action = new QAction(QIcon(":/ui/blockinsert.png"), tr("&Block"), obj);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotImportBlock()));
+        break;
 
 
         // Options actions:
@@ -1445,45 +1450,50 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
 }
 
 
-void QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, RS2::ActionType id) const
+QAction*  QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, RS2::ActionType id) const
 {
     if(id==RS2::ActionNone){
         menu->addSeparator();
-        return;
+        return nullptr;
     }
     QAction* const action=createAction(id, obj);
     menu->addAction(action);
+    return action;
 }
-void QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, QObject* obj2, RS2::ActionType id) const
+
+QAction*  QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, QObject* obj2, RS2::ActionType id) const
 {
     if(id==RS2::ActionNone){
         menu->addSeparator();
-        return;
+        return nullptr;
     }
     QAction* const action=createAction(id, obj, obj2);
     menu->addAction(action);
-
+    return action;
 }
 
-void QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, RS2::ActionType id) const
+QAction*  QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, RS2::ActionType id) const
 {
     if(id==RS2::ActionNone){
         menu->addSeparator();
-        return;
+        return nullptr;
     }
     QAction* const action=createAction(id, obj);
     menu->addAction(action);
     toolbar->addAction(action);
+    return action;
 }
-void QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, QObject* obj2, RS2::ActionType id) const
+
+QAction*  QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, QObject* obj2, RS2::ActionType id) const
 {
     if(id==RS2::ActionNone){
         menu->addSeparator();
-        return;
+        return nullptr;
     }
     QAction* const action=createAction(id, obj, obj2);
     menu->addAction(action);
     toolbar->addAction(action);
+    return action;
 }
 
 
