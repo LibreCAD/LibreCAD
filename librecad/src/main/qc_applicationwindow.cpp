@@ -635,12 +635,12 @@ void QC_ApplicationWindow::initActions(void)
     tb = fileToolBar;
     tb->setWindowTitle(tr("File"));
 
-    actionFactory.addGUI(menu, fileToolBar, this, RS2::ActionFileNew);
-    actionFactory.addGUI(menu, fileToolBar, this, RS2::ActionFileNewTemplate);
-    actionFactory.addGUI(menu, fileToolBar, this, RS2::ActionFileOpen);
-    actionFactory.addGUI(menu, fileToolBar, this, RS2::ActionFileSave);
-    actionFactory.addGUI(menu, fileToolBar, this, RS2::ActionFileSaveAs);
-    actionFactory.addGUI(menu, fileToolBar, this, RS2::ActionFileExport);
+    actionFactory.addGUI(menu, fileToolBar, this, {RS2::ActionFileNew
+                                                   ,RS2::ActionFileNewTemplate
+                                                   ,RS2::ActionFileOpen
+                                                   ,RS2::ActionFileSave
+                                                   ,RS2::ActionFileSaveAs
+                                                   ,RS2::ActionFileExport});
 
     subMenu = menu->addMenu(tr("Import"));
     subMenu->setObjectName("Import");
@@ -653,9 +653,9 @@ void QC_ApplicationWindow::initActions(void)
     actionFactory.addGUI(subMenu, this, RS2::ActionBlocksImport);
 
     menu->addSeparator();
-    actionFactory.addGUI(menu, this, RS2::ActionFileClose);
-    actionFactory.addGUI(menu, this, RS2::ActionFilePrint);
-    actionFactory.addGUI(menu, this, RS2::ActionFilePrintPDF);
+    actionFactory.addGUI(menu, this, {RS2::ActionFileClose
+                                      ,RS2::ActionFilePrint
+                                      ,RS2::ActionFilePrintPDF});
     action= actionFactory.addGUI(menu, this, RS2::ActionFilePrintPreview);
     connect(this, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
 
@@ -684,18 +684,18 @@ void QC_ApplicationWindow::initActions(void)
     tb->addSeparator();
     menu->addSeparator();
 
-    actionFactory.addGUI(menu, editToolBar, actionHandler, RS2::ActionEditCut);
-    actionFactory.addGUI(menu, editToolBar, actionHandler, RS2::ActionEditCopy);
-    actionFactory.addGUI(menu, editToolBar, actionHandler, RS2::ActionEditPaste);
+    actionFactory.addGUI(menu, editToolBar, actionHandler, {RS2::ActionEditCut
+                                                            ,RS2::ActionEditCopy
+                                                            ,RS2::ActionEditPaste});
 
     menu->addSeparator();
     // Draw order:
     subMenu= menu->addMenu(tr("Draw &Order"));
     subMenu->setObjectName("Order");
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionOrderBottom);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionOrderLower);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionOrderRaise);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionOrderTop);
+    actionFactory.addGUI(subMenu, actionHandler, {RS2::ActionOrderBottom
+                                                  ,RS2::ActionOrderLower
+                                                  ,RS2::ActionOrderRaise
+                                                  ,RS2::ActionOrderTop});
 
     actionFactory.addGUI(menu, this, RS2::ActionOptionsGeneral);
     actionFactory.addGUI(menu, actionHandler, RS2::ActionOptionsDrawing);
@@ -737,14 +737,14 @@ void QC_ApplicationWindow::initActions(void)
 
     menu->addSeparator();
     zoomToolBar->addSeparator();
-    actionFactory.addGUI(menu, zoomToolBar, actionHandler, RS2::ActionZoomRedraw);
-    actionFactory.addGUI(menu, zoomToolBar, actionHandler, RS2::ActionZoomIn);
-    actionFactory.addGUI(menu, zoomToolBar, actionHandler, RS2::ActionZoomOut);
-    actionFactory.addGUI(menu, zoomToolBar, actionHandler, RS2::ActionZoomAuto);
+    actionFactory.addGUI(menu, zoomToolBar, actionHandler, {RS2::ActionZoomRedraw
+                                                            ,RS2::ActionZoomIn
+                                                            ,RS2::ActionZoomOut
+                                                            ,RS2::ActionZoomAuto});
     previousZoom =actionFactory.addGUI(menu, zoomToolBar, actionHandler, RS2::ActionZoomPrevious);
     previousZoom->setEnabled(false);
-    actionFactory.addGUI(menu, zoomToolBar, actionHandler, RS2::ActionZoomWindow);
-    actionFactory.addGUI(menu, zoomToolBar, actionHandler, RS2::ActionZoomPan);
+    actionFactory.addGUI(menu, zoomToolBar, actionHandler, {RS2::ActionZoomWindow
+                                                            , RS2::ActionZoomPan});
     menu->addSeparator();
 
     actionFactory.addGUI(menu, this, RS2::ActionViewStatusBar);
@@ -789,16 +789,16 @@ void QC_ApplicationWindow::initActions(void)
     //
     menu = menuBar()->addMenu(tr("&Select"));
     menu->setObjectName("Select");
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionDeselectAll);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionSelectAll);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionSelectSingle);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionSelectContour);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionDeselectWindow);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionSelectWindow);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionSelectInvert);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionSelectIntersected);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionDeselectIntersected);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionSelectLayer);
+    actionFactory.addGUI(menu, actionHandler, {RS2::ActionDeselectAll
+                         ,RS2::ActionSelectAll
+                         ,RS2::ActionSelectSingle
+                         ,RS2::ActionSelectContour
+                         ,RS2::ActionDeselectWindow
+                         ,RS2::ActionSelectWindow
+                         ,RS2::ActionSelectInvert
+                         ,RS2::ActionSelectIntersected
+                         ,RS2::ActionDeselectIntersected
+                         ,RS2::ActionSelectLayer});
 
     // Drawing actions:
     //
@@ -813,57 +813,56 @@ void QC_ApplicationWindow::initActions(void)
     // Lines:
     subMenu= menu->addMenu(tr("&Line"));
     subMenu->setObjectName("Line");
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawLine);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawLineAngle);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawLineHorizontal);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawLineVertical);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawLineRectangle);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawLineParallel);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawLineParallelThrough);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawLineBisector);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawLineTangent1);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawLineTangent2);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawLineOrthTan);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawLineOrthogonal);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawLineRelAngle);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawLinePolygonCenCor);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawLinePolygonCorCor);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawLineFree);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawPolyline);
+    actionFactory.addGUI(subMenu, actionHandler, {RS2::ActionDrawLine
+                                                  ,RS2::ActionDrawLineAngle
+                                                  ,RS2::ActionDrawLineHorizontal
+                                                  ,RS2::ActionDrawLineVertical
+                                                  ,RS2::ActionDrawLineRectangle
+                                                  ,RS2::ActionDrawLineParallel
+                                                  ,RS2::ActionDrawLineParallelThrough
+                                                  ,RS2::ActionDrawLineBisector
+                                                  ,RS2::ActionDrawLineTangent1
+                                                  ,RS2::ActionDrawLineTangent2
+                                                  ,RS2::ActionDrawLineOrthTan
+                                                  ,RS2::ActionDrawLineOrthogonal
+                                                  ,RS2::ActionDrawLineRelAngle
+                                                  ,RS2::ActionDrawLinePolygonCenCor
+                                                  ,RS2::ActionDrawLinePolygonCorCor
+                                                  ,RS2::ActionDrawLineFree
+                                                  ,RS2::ActionDrawPolyline});
 
     // Arcs:
     subMenu= menu->addMenu(tr("&Arc"));
     subMenu->setObjectName("Arc");
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawArc);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawArc3P);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawArcParallel);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawArcTangential);
-    action = actionFactory.createAction(RS2::ActionDrawArc, actionHandler);
+    actionFactory.addGUI(subMenu, actionHandler, {RS2::ActionDrawArc
+                                                  ,RS2::ActionDrawArc3P
+                                                  ,RS2::ActionDrawArcParallel
+                                                  ,RS2::ActionDrawArcTangential});
 
     // Circles:
     subMenu= menu->addMenu(tr("&Circle"));
     subMenu->setObjectName("Circle");
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawCircle);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawCircleCR);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawCircle2P);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawCircle2PR);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawCircle3P);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawCircleParallel);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawCircleInscribe);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawCircleTan1_2P);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawCircleTan2);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawCircleTan2_1P);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawCircleTan3);
+    actionFactory.addGUI(subMenu, actionHandler, {RS2::ActionDrawCircle
+                                                  ,RS2::ActionDrawCircleCR
+                                                  ,RS2::ActionDrawCircle2P
+                                                  ,RS2::ActionDrawCircle2PR
+                                                  ,RS2::ActionDrawCircle3P
+                                                  ,RS2::ActionDrawCircleParallel
+                                                  ,RS2::ActionDrawCircleInscribe
+                                                  ,RS2::ActionDrawCircleTan1_2P
+                                                  ,RS2::ActionDrawCircleTan2
+                                                  ,RS2::ActionDrawCircleTan2_1P
+                                                  ,RS2::ActionDrawCircleTan3});
 
     // Ellipses:
     subMenu= menu->addMenu(tr("&Ellipse"));
     subMenu->setObjectName("Ellipse");
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawEllipseAxis);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawEllipseArcAxis);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawEllipseFociPoint);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawEllipse4Points);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawEllipseCenter3Points);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawEllipseInscribe);
+    actionFactory.addGUI(subMenu, actionHandler, {RS2::ActionDrawEllipseAxis
+                                                  ,RS2::ActionDrawEllipseArcAxis
+                                                  ,RS2::ActionDrawEllipseFociPoint
+                                                  ,RS2::ActionDrawEllipse4Points
+                                                  ,RS2::ActionDrawEllipseCenter3Points
+                                                  ,RS2::ActionDrawEllipseInscribe});
 
     // Splines:
     subMenu= menu->addMenu(tr("&Spline"));
@@ -874,26 +873,25 @@ void QC_ApplicationWindow::initActions(void)
         // Polylines:
     subMenu= menu->addMenu(tr("&Polyline"));
     subMenu->setObjectName("Polyline");
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawPolyline);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionPolylineAdd);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionPolylineAppend);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionPolylineDel);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionPolylineDelBetween);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionPolylineTrim);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionPolylineEquidistant);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionPolylineSegment);
+    actionFactory.addGUI(subMenu, actionHandler, {RS2::ActionDrawPolyline
+                                                  ,RS2::ActionPolylineAdd
+                                                  ,RS2::ActionPolylineAppend
+                                                  ,RS2::ActionPolylineDel
+                                                  ,RS2::ActionPolylineDelBetween
+                                                  ,RS2::ActionPolylineTrim
+                                                  ,RS2::ActionPolylineEquidistant
+                                                  ,RS2::ActionPolylineSegment});
 
     // Text:
     subMenu= menu->addMenu(tr("&Text"));
     subMenu->setObjectName("Text");
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawMText);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawText);
+    actionFactory.addGUI(subMenu, actionHandler, {RS2::ActionDrawMText
+                                                  , RS2::ActionDrawText});
 
     // Hatch:
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionDrawHatch);
-
-    // Image:
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionDrawImage);
+    actionFactory.addGUI(menu, actionHandler, {RS2::ActionDrawHatch
+                                               // Image:
+                                               , RS2::ActionDrawImage});
     // Dimensioning actions:
     //
 #ifdef __APPLE1__
@@ -903,39 +901,39 @@ void QC_ApplicationWindow::initActions(void)
     menu = menuBar()->addMenu(tr("&Dimension"));
 #endif
     menu->setObjectName("Dimension");
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionDimAligned);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionDimLinear);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionDimLinearHor);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionDimLinearVer);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionDimRadial);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionDimDiametric);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionDimAngular);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionDimLeader);
+    actionFactory.addGUI(menu, actionHandler, {RS2::ActionDimAligned
+                                               ,RS2::ActionDimLinear
+                                               ,RS2::ActionDimLinearHor
+                                               ,RS2::ActionDimLinearVer
+                                               ,RS2::ActionDimRadial
+                                               ,RS2::ActionDimDiametric
+                                               ,RS2::ActionDimAngular
+                                               ,RS2::ActionDimLeader});
 
     // Modifying actions:
     //
     menu = menuBar()->addMenu(tr("&Modify"));
     menu->setObjectName("Modify");
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyMove);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyRotate);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyScale);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyMirror);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyMoveRotate);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyRotate2);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyRevertDirection);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyTrim);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyTrim2);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyTrimAmount);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyBevel);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyRound);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyCut);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyStretch);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyEntity);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyAttributes);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyDelete);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyDeleteQuick);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionModifyExplodeText);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionBlocksExplode);
+    actionFactory.addGUI(menu, actionHandler, {RS2::ActionModifyMove
+                                               ,RS2::ActionModifyRotate
+                                               ,RS2::ActionModifyScale
+                                               ,RS2::ActionModifyMirror
+                                               ,RS2::ActionModifyMoveRotate
+                                               ,RS2::ActionModifyRotate2
+                                               ,RS2::ActionModifyRevertDirection
+                                               ,RS2::ActionModifyTrim
+                                               ,RS2::ActionModifyTrim2
+                                               ,RS2::ActionModifyTrimAmount
+                                               ,RS2::ActionModifyBevel
+                                               ,RS2::ActionModifyRound
+                                               ,RS2::ActionModifyCut
+                                               ,RS2::ActionModifyStretch
+                                               ,RS2::ActionModifyEntity
+                                               ,RS2::ActionModifyAttributes
+                                               ,RS2::ActionModifyDelete
+                                               ,RS2::ActionModifyDeleteQuick
+                                               ,RS2::ActionModifyExplodeText
+                                               ,RS2::ActionBlocksExplode});
 
     // Snapping actions:
     //
@@ -952,11 +950,11 @@ void QC_ApplicationWindow::initActions(void)
     //
     menu = menuBar()->addMenu(tr("&Info"));
     menu->setObjectName("Info");
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionInfoDist);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionInfoDist2);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionInfoAngle);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionInfoTotalLength);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionInfoArea);
+    actionFactory.addGUI(menu, actionHandler, {RS2::ActionInfoDist
+                                               ,RS2::ActionInfoDist2
+                                               ,RS2::ActionInfoAngle
+                                               ,RS2::ActionInfoTotalLength
+                                               ,RS2::ActionInfoArea});
 
     //action = actionFactory.createAction(RS2::ActionInfoInside,
     //                                    actionHandler);
@@ -965,29 +963,29 @@ void QC_ApplicationWindow::initActions(void)
     //
     menu = menuBar()->addMenu(tr("&Layer"));
     menu->setObjectName("Layer");
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionLayersDefreezeAll);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionLayersFreezeAll);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionLayersAdd);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionLayersRemove);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionLayersEdit);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionLayersToggleLock);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionLayersToggleView);
+    actionFactory.addGUI(menu, actionHandler, {RS2::ActionLayersDefreezeAll
+                                               ,RS2::ActionLayersFreezeAll
+                                               ,RS2::ActionLayersAdd
+                                               ,RS2::ActionLayersRemove
+                                               ,RS2::ActionLayersEdit
+                                               ,RS2::ActionLayersToggleLock
+                                               ,RS2::ActionLayersToggleView});
 
     // Block actions:
     //
     menu = menuBar()->addMenu(tr("&Block"));
     menu->setObjectName("Block");
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionBlocksDefreezeAll);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionBlocksFreezeAll);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionBlocksToggleView);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionBlocksAdd);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionBlocksRemove);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionBlocksAttributes);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionBlocksInsert);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionBlocksEdit);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionBlocksSave);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionBlocksCreate);
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionBlocksExplode);
+    actionFactory.addGUI(menu, actionHandler, {RS2::ActionBlocksDefreezeAll
+                                               ,RS2::ActionBlocksFreezeAll
+                                               ,RS2::ActionBlocksToggleView
+                                               ,RS2::ActionBlocksAdd
+                                               ,RS2::ActionBlocksRemove
+                                               ,RS2::ActionBlocksAttributes
+                                               ,RS2::ActionBlocksInsert
+                                               ,RS2::ActionBlocksEdit
+                                               ,RS2::ActionBlocksSave
+                                               ,RS2::ActionBlocksCreate
+                                               ,RS2::ActionBlocksExplode});
 
     QMainWindow::addToolBarBreak(Qt::TopToolBarArea);
     addToolBar(Qt::TopToolBarArea, penToolBar);

@@ -209,14 +209,14 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
     }
 
     QWidget* mw = widget;
-    QAction* action = NULL;
-    QPixmap icon;
+    QAction* action = nullptr;
+//    QPixmap icon;
 
     if (mw==NULL) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_ActionFactory::createAction: "
                         "No valid main window available to create action. id: %d ", id);
-        return NULL;
+        return nullptr;
     }
 
     // create requested action
@@ -1452,47 +1452,47 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
 
 QAction*  QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, RS2::ActionType id) const
 {
-    if(id==RS2::ActionNone){
-        menu->addSeparator();
-        return nullptr;
-    }
     QAction* const action=createAction(id, obj);
-    menu->addAction(action);
+    if(action) menu->addAction(action);
     return action;
+}
+
+void QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, const std::initializer_list<RS2::ActionType>& list) const
+{
+    for(RS2::ActionType type: list)
+        addGUI(menu, obj, type);
 }
 
 QAction*  QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, QObject* obj2, RS2::ActionType id) const
 {
-    if(id==RS2::ActionNone){
-        menu->addSeparator();
-        return nullptr;
-    }
     QAction* const action=createAction(id, obj, obj2);
-    menu->addAction(action);
+    if(action) menu->addAction(action);
     return action;
 }
 
 QAction*  QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, RS2::ActionType id) const
 {
-    if(id==RS2::ActionNone){
-        menu->addSeparator();
-        return nullptr;
-    }
     QAction* const action=createAction(id, obj);
-    menu->addAction(action);
-    toolbar->addAction(action);
+    if(action){
+        menu->addAction(action);
+        toolbar->addAction(action);
+    }
     return action;
+}
+
+void QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, const std::initializer_list<RS2::ActionType>& list) const
+{
+    for(RS2::ActionType type: list)
+        addGUI(menu, toolbar, obj, type);
 }
 
 QAction*  QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, QObject* obj2, RS2::ActionType id) const
 {
-    if(id==RS2::ActionNone){
-        menu->addSeparator();
-        return nullptr;
-    }
     QAction* const action=createAction(id, obj, obj2);
-    menu->addAction(action);
-    toolbar->addAction(action);
+    if(action){
+        menu->addAction(action);
+        toolbar->addAction(action);
+    }
     return action;
 }
 
