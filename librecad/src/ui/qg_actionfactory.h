@@ -31,6 +31,9 @@
 
 #include "qg_actionhandler.h"
 
+class QMenu;
+class QToolBar;
+
 /**
  * This class can store recent files in a list.
  */
@@ -41,7 +44,12 @@ public:
     QG_ActionFactory(QG_ActionHandler* ah, QWidget* w);
     virtual ~QG_ActionFactory();
 
-    QAction* createAction(RS2::ActionType id, QObject* obj, QObject* obj2=NULL);
+    QAction* createAction(RS2::ActionType id, QObject* obj, QObject* obj2=NULL) const;
+    void addGUI(QMenu* menu, QObject* obj, RS2::ActionType id) const;
+    void addGUI(QMenu* menu, QObject* obj, QObject* obj2, RS2::ActionType id) const;
+    void addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, RS2::ActionType id) const;
+    void addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, QObject* obj2, RS2::ActionType id) const;
+
 
 private:
     QG_ActionHandler* actionHandler;

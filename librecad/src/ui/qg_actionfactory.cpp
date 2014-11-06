@@ -27,6 +27,7 @@
 #include "qg_actionfactory.h"
 
 #include <QDockWidget>
+#include <QMenu>
 #include <QToolBar>
 
 #include "rs_actionblockscreate.h"
@@ -159,9 +160,10 @@
  * @param ah Action handler which provides the slots.
  * @param w Widget through which the events come in.
  */
-QG_ActionFactory::QG_ActionFactory(QG_ActionHandler* ah, QWidget* w) {
-    actionHandler = ah;
-    widget = w;
+QG_ActionFactory::QG_ActionFactory(QG_ActionHandler* ah, QWidget* w):
+    actionHandler(ah)
+  ,widget(w)
+{
 }
 
 
@@ -196,7 +198,7 @@ QG_ActionFactory::~QG_ActionFactory() {}
  *	*/
 
 QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
-                                                                                                                QObject* obj2)
+                                                                                                                QObject* obj2) const
 {
     // assert that action handler is not invalid:
     if (actionHandler==NULL) {
@@ -1441,5 +1443,48 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
 
     return action;
 }
+
+
+void QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, RS2::ActionType id) const
+{
+    if(id==RS2::ActionNone){
+        menu->addSeparator();
+        return;
+    }
+    QAction* const action=createAction(id, obj);
+    menu->addAction(action);
+}
+void QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, QObject* obj2, RS2::ActionType id) const
+{
+    if(id==RS2::ActionNone){
+        menu->addSeparator();
+        return;
+    }
+    QAction* const action=createAction(id, obj, obj2);
+    menu->addAction(action);
+
+}
+
+void QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, RS2::ActionType id) const
+{
+    if(id==RS2::ActionNone){
+        menu->addSeparator();
+        return;
+    }
+    QAction* const action=createAction(id, obj);
+    menu->addAction(action);
+    toolbar->addAction(action);
+}
+void QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, QObject* obj2, RS2::ActionType id) const
+{
+    if(id==RS2::ActionNone){
+        menu->addSeparator();
+        return;
+    }
+    QAction* const action=createAction(id, obj, obj2);
+    menu->addAction(action);
+    toolbar->addAction(action);
+}
+
 
 
