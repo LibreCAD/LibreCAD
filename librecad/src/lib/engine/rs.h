@@ -391,6 +391,7 @@ public:
         ActionBlocksCreateNoSelect,
         ActionBlocksExplode,
         ActionBlocksExplodeNoSelect,
+        ActionBlocksImport,
 
         ActionModifyExplodeText,
         ActionModifyExplodeTextNoSelect,

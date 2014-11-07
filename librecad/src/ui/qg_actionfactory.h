@@ -31,6 +31,9 @@
 
 #include "qg_actionhandler.h"
 
+class QMenu;
+class QToolBar;
+
 /**
  * This class can store recent files in a list.
  */
@@ -41,7 +44,68 @@ public:
     QG_ActionFactory(QG_ActionHandler* ah, QWidget* w);
     virtual ~QG_ActionFactory();
 
-    QAction* createAction(RS2::ActionType id, QObject* obj, QObject* obj2=NULL);
+    /**
+     * @brief createAction, create GUI action by action type, and connect to slot of QObject obj
+     * @param id, Action type enum
+     * @param obj, the QObject used to connect slot per action type
+     * @param obj2, a QDockWidget, to accept toggleViewAction() from the current action to show/hide
+     * @return a pointer to the action created
+     */
+    QAction* createAction(RS2::ActionType id, QObject* obj, QObject* obj2=NULL) const;
+
+    /**
+     * @brief addGUI, create action by action type and add the action to menu
+     * @param menu, a pointer to QMemu to add the action
+     * @param obj, the QObject used to connect slot per action type
+     * @param id, action type
+     * @return a pointer to the action created
+     */
+    QAction*  addGUI(QMenu* menu, QObject* obj, RS2::ActionType id) const;
+    /**
+     * @brief addGUI, create action by action type and add the action to menu
+     * @param menu, a pointer to QMemu to add the action
+     * @param obj, the QObject used to connect slot per action type
+     * @param obj2, a QDockWidget, to accept toggleViewAction() from the current action to show/hide
+     * @param id, action type
+     * @return a pointer to the action created
+     */
+    QAction*  addGUI(QMenu* menu, QObject* obj, QObject* obj2, RS2::ActionType id) const;
+    /**
+     * @brief addGUI, create action by action type and add the action to menu
+     * @param menu, a pointer to QMemu to add the action
+     * @param toolbar, a pointer to QToolBar to add the action
+     * @param obj, the QObject used to connect slot per action type
+     * @param id, action type
+     * @return a pointer to the action created
+     */
+    QAction*  addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, RS2::ActionType id) const;
+    /**
+     * @brief addGUI, create action by action type and add the action to menu
+     * @param menu, a pointer to QMemu to add the action
+     * @param toolbar, a pointer to QToolBar to add the action
+     * @param obj, the QObject used to connect slot per action type
+     * @param obj2, a QDockWidget, to accept toggleViewAction() from the current action to show/hide
+     * @param id, action type
+     * @return a pointer to the action created
+     */
+    QAction*  addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, QObject* obj2, RS2::ActionType id) const;
+
+    /**
+     * @brief addGUI, create action by a list of action types and add the actions to menu
+     * @param menu, a pointer to QMemu to add the action
+     * @param obj, the QObject used to connect slot per action type
+     * @param list, an initializer list of action types
+     */
+    void addGUI(QMenu* menu, QObject* obj, const std::initializer_list<RS2::ActionType>& list) const;
+    /**
+     * @brief addGUI, create action by a list of action types and add the actions to menu
+     * @param menu, a pointer to QMemu to add the action
+     * @param toolbar, a pointer to QToolBar to add the action
+     * @param obj, the QObject used to connect slot per action type
+     * @param list, an initializer list of action types
+     */
+    void addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, const std::initializer_list<RS2::ActionType>& list) const;
+
 
 private:
     QG_ActionHandler* actionHandler;

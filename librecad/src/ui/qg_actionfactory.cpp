@@ -27,6 +27,7 @@
 #include "qg_actionfactory.h"
 
 #include <QDockWidget>
+#include <QMenu>
 #include <QToolBar>
 
 #include "rs_actionblockscreate.h"
@@ -159,9 +160,10 @@
  * @param ah Action handler which provides the slots.
  * @param w Widget through which the events come in.
  */
-QG_ActionFactory::QG_ActionFactory(QG_ActionHandler* ah, QWidget* w) {
-    actionHandler = ah;
-    widget = w;
+QG_ActionFactory::QG_ActionFactory(QG_ActionHandler* ah, QWidget* w):
+    actionHandler(ah)
+  ,widget(w)
+{
 }
 
 
@@ -196,7 +198,7 @@ QG_ActionFactory::~QG_ActionFactory() {}
  *	*/
 
 QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
-                                                                                                                QObject* obj2)
+                                                                                                                QObject* obj2) const
 {
     // assert that action handler is not invalid:
     if (actionHandler==NULL) {
@@ -207,14 +209,14 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
     }
 
     QWidget* mw = widget;
-    QAction* action = NULL;
-    QPixmap icon;
+    QAction* action = nullptr;
+//    QPixmap icon;
 
     if (mw==NULL) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_ActionFactory::createAction: "
                         "No valid main window available to create action. id: %d ", id);
-        return NULL;
+        return nullptr;
     }
 
     // create requested action
@@ -1376,6 +1378,11 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotBlocksExplode()));
         break;
+    case RS2::ActionBlocksImport:
+        action = new QAction(QIcon(":/ui/blockinsert.png"), tr("&Block"), obj);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotImportBlock()));
+        break;
 
 
         // Options actions:
@@ -1441,5 +1448,53 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
 
     return action;
 }
+
+
+QAction*  QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, RS2::ActionType id) const
+{
+    QAction* const action=createAction(id, obj);
+    if(action) menu->addAction(action);
+    return action;
+}
+
+void QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, const std::initializer_list<RS2::ActionType>& list) const
+{
+    for(RS2::ActionType type: list)
+        addGUI(menu, obj, type);
+}
+
+QAction*  QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, QObject* obj2, RS2::ActionType id) const
+{
+    QAction* const action=createAction(id, obj, obj2);
+    if(action) menu->addAction(action);
+    return action;
+}
+
+QAction*  QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, RS2::ActionType id) const
+{
+    QAction* const action=createAction(id, obj);
+    if(action){
+        menu->addAction(action);
+        toolbar->addAction(action);
+    }
+    return action;
+}
+
+void QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, const std::initializer_list<RS2::ActionType>& list) const
+{
+    for(RS2::ActionType type: list)
+        addGUI(menu, toolbar, obj, type);
+}
+
+QAction*  QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, QObject* obj2, RS2::ActionType id) const
+{
+    QAction* const action=createAction(id, obj, obj2);
+    if(action){
+        menu->addAction(action);
+        toolbar->addAction(action);
+    }
+    return action;
+}
+
 
 
