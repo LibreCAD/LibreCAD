@@ -625,15 +625,13 @@ void QC_ApplicationWindow::initActions(void)
     QG_ActionFactory actionFactory(actionHandler, this);
     QAction* action;
     QMenu* menu;
-    QToolBar* tb;
     QMenu* subMenu;
 
     // File actions:
     //
     menu = menuBar()->addMenu(tr("&File"));
     menu->setObjectName("File");
-    tb = fileToolBar;
-    tb->setWindowTitle(tr("File"));
+    fileToolBar->setWindowTitle(tr("File"));
 
     actionFactory.addGUI(menu, fileToolBar, this, {RS2::ActionFileNew
                                                    ,RS2::ActionFileNewTemplate
@@ -670,18 +668,17 @@ void QC_ApplicationWindow::initActions(void)
     //
     menu = menuBar()->addMenu(tr("&Edit"));
     menu->setObjectName("Edit");
-    tb = editToolBar;
-    tb->setWindowTitle(tr("Edit"));
+    editToolBar->setWindowTitle(tr("Edit"));
 
     actionFactory.addGUI(menu, editToolBar, actionHandler, RS2::ActionEditKillAllActions);
 
-    tb->addSeparator();
+    editToolBar->addSeparator();
     menu->addSeparator();
 
     undoButton = actionFactory.addGUI(menu, editToolBar, actionHandler, RS2::ActionEditUndo);
     redoButton = actionFactory.addGUI(menu, editToolBar, actionHandler, RS2::ActionEditRedo);
 
-    tb->addSeparator();
+    editToolBar->addSeparator();
     menu->addSeparator();
 
     actionFactory.addGUI(menu, editToolBar, actionHandler, {RS2::ActionEditCut
@@ -713,8 +710,7 @@ void QC_ApplicationWindow::initActions(void)
     //
     menu = menuBar()->addMenu(tr("&View"));
     menu->setObjectName("View");
-    tb = zoomToolBar;
-    tb->setWindowTitle(tr("View"));
+    zoomToolBar->setWindowTitle(tr("View"));
     action=actionFactory.addGUI(menu, zoomToolBar, this, RS2::ActionViewGrid);
     action->setChecked(true);
     connect(this, SIGNAL(gridChanged(bool)), action, SLOT(setChecked(bool)));
@@ -793,12 +789,13 @@ void QC_ApplicationWindow::initActions(void)
                          ,RS2::ActionSelectAll
                          ,RS2::ActionSelectSingle
                          ,RS2::ActionSelectContour
-                         ,RS2::ActionDeselectWindow
                          ,RS2::ActionSelectWindow
-                         ,RS2::ActionSelectInvert
+                         ,RS2::ActionDeselectWindow
                          ,RS2::ActionSelectIntersected
                          ,RS2::ActionDeselectIntersected
-                         ,RS2::ActionSelectLayer});
+                         ,RS2::ActionSelectLayer
+                         ,RS2::ActionSelectInvert
+                         });
 
     // Drawing actions:
     //
@@ -867,8 +864,8 @@ void QC_ApplicationWindow::initActions(void)
     // Splines:
     subMenu= menu->addMenu(tr("&Spline"));
     subMenu->setObjectName("Spline");
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawSpline);
-    actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawSplinePoints);
+    actionFactory.addGUI(subMenu, actionHandler, {RS2::ActionDrawSpline
+                                                  , RS2::ActionDrawSplinePoints});
 
         // Polylines:
     subMenu= menu->addMenu(tr("&Polyline"));
