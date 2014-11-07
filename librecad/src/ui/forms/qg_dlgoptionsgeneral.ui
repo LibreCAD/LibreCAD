@@ -696,7 +696,7 @@
          <property name="title">
           <string>Splash Window</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout">
+         <layout class="QGridLayout" name="splashGridLayout">
           <item row="0" column="0">
            <widget class="QCheckBox" name="cbSplash">
             <property name="text">
