@@ -624,6 +624,10 @@ Auto-save disabled.</source>
         <source>Export as PDF</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Text</source>
+        <translation type="unfinished">&amp;Tekst</translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -1173,6 +1177,18 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Export as PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Block</source>
+        <translation type="unfinished">&amp;Plokk</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ActionHandler</name>
+    <message>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2295,6 +2311,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>select&amp;All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7882,10 +7903,6 @@ Määra alguspunkt või [keskpunkt]</translation>
 <context>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
-        <source>Circle Tangential 2 P&amp;oints</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation type="unfinished">Loobu</translation>
     </message>
@@ -7909,13 +7926,13 @@ Määra alguspunkt või [keskpunkt]</translation>
         <source>Specify a line/arc/circle</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tangential, 2 P&amp;oints</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Circle Tangential &amp;2</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Specify the first line/arc/circle</source>
         <translation type="unfinished"></translation>
@@ -7936,13 +7953,14 @@ Määra alguspunkt või [keskpunkt]</translation>
         <source>Select the center of the tangent circle</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tangential 2 Circles, Radius</source>
+        <comment>circle tangential to two give circles and with radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Common Tangential Circle 1 Point</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Specify a line/arc/circle</source>
         <translation type="unfinished"></translation>
@@ -7967,13 +7985,13 @@ Määra alguspunkt või [keskpunkt]</translation>
         <source>Select the center of the tangent circle</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tangential 2 Circles, 1 Point</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Circle Tangential &amp;3</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">Loobu</translation>
@@ -7996,6 +8014,10 @@ Määra alguspunkt või [keskpunkt]</translation>
     </message>
     <message>
         <source>Specify the third line/arc/circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tangential &amp;3 Circles</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12185,6 +12207,26 @@ Määra alguspunkt või [keskpunkt]</translation>
     </message>
     <message>
         <source>graphoffset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fillet</source>
+        <comment>modify - fillet</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>divide</source>
+        <comment>modify - divide</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>div</source>
+        <comment>modify - divide</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cut</source>
+        <comment>modify - divide</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

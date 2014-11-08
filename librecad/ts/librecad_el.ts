@@ -633,6 +633,10 @@ Auto-save disabled.</source>
         <source>Export as PDF</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Text</source>
+        <translation type="unfinished">&amp;Κείμενο</translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -2153,6 +2157,18 @@ Auto-save disabled.</source>
         <source>Export as PDF</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Block</source>
+        <translation type="unfinished">Μπλο&amp;κ</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ActionHandler</name>
+    <message>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>
@@ -3331,6 +3347,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>select&amp;All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8982,7 +9003,7 @@ Do you want to replace it?</source>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
         <source>Circle Tangential 2 P&amp;oints</source>
-        <translation>Εφαπτόμενος κύκλος 2 &amp;σημεία</translation>
+        <translation type="obsolete">Εφαπτόμενος κύκλος 2 &amp;σημεία</translation>
     </message>
     <message>
         <source>Specify an arc/circle</source>
@@ -9012,12 +9033,16 @@ Do you want to replace it?</source>
         <source>Specify a line/arc/circle</source>
         <translation>Καθορίστε μία γραμμή/τόξο/κύκλο</translation>
     </message>
+    <message>
+        <source>Tangential, 2 P&amp;oints</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2</name>
     <message>
         <source>Circle Tangential &amp;2</source>
-        <translation>Εφαπτόμενος κύκλος &amp;2</translation>
+        <translation type="obsolete">Εφαπτόμενος κύκλος &amp;2</translation>
     </message>
     <message>
         <source>Specify the first line/arc/circle</source>
@@ -9039,12 +9064,17 @@ Do you want to replace it?</source>
         <source>Select the center of the tangent circle</source>
         <translation>Επιλέξτε το κέντρο του εφαπτόμενου κύκλου</translation>
     </message>
+    <message>
+        <source>Tangential 2 Circles, Radius</source>
+        <comment>circle tangential to two give circles and with radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2_1P</name>
     <message>
         <source>Common Tangential Circle 1 Point</source>
-        <translation>Κοινός εφαπτόμενος κύκλος 1 σημείο</translation>
+        <translation type="obsolete">Κοινός εφαπτόμενος κύκλος 1 σημείο</translation>
     </message>
     <message>
         <source>Specify a line/arc/circle</source>
@@ -9070,12 +9100,16 @@ Do you want to replace it?</source>
         <source>Select the center of the tangent circle</source>
         <translation>Επιλέξτε το κέντρο του εφαπτόμενου κύκλου</translation>
     </message>
+    <message>
+        <source>Tangential 2 Circles, 1 Point</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
     <message>
         <source>Circle Tangential &amp;3</source>
-        <translation>Εφαπτόμενος κύκλος &amp;3</translation>
+        <translation type="obsolete">Εφαπτόμενος κύκλος &amp;3</translation>
     </message>
     <message>
         <source>Specify the first arc/circle</source>
@@ -9112,6 +9146,10 @@ Do you want to replace it?</source>
     <message>
         <source>Specify the third line/arc/circle</source>
         <translation>Καθορίστε την τρίτη γραμμή/τόξο/κύκλο</translation>
+    </message>
+    <message>
+        <source>Tangential &amp;3 Circles</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -13280,6 +13318,26 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>graphoffset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fillet</source>
+        <comment>modify - fillet</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>divide</source>
+        <comment>modify - divide</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>div</source>
+        <comment>modify - divide</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cut</source>
+        <comment>modify - divide</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

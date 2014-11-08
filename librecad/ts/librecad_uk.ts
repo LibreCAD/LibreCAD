@@ -533,6 +533,10 @@ Auto-save disabled.</source>
         <source>Export as PDF</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Text</source>
+        <translation type="unfinished">&amp;Текст</translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -2065,6 +2069,18 @@ Auto-save disabled.</source>
         <source>Export as PDF</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Block</source>
+        <translation type="unfinished">&amp;Блок</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ActionHandler</name>
+    <message>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>
@@ -3250,6 +3266,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>select&amp;All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8734,7 +8755,7 @@ Do you want to replace it?</source>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
         <source>Circle Tangential 2 P&amp;oints</source>
-        <translation>За &amp;дотичною та двом точкам</translation>
+        <translation type="obsolete">За &amp;дотичною та двом точкам</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -8760,12 +8781,16 @@ Do you want to replace it?</source>
         <source>Specify a line/arc/circle</source>
         <translation>Вкажіть лінію, дугу чи коло</translation>
     </message>
+    <message>
+        <source>Tangential, 2 P&amp;oints</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2</name>
     <message>
         <source>Circle Tangential &amp;2</source>
-        <translation type="unfinished">За &amp;трьома дотичними {2?}</translation>
+        <translation type="obsolete">За &amp;трьома дотичними {2?}</translation>
     </message>
     <message>
         <source>Specify the first line/arc/circle</source>
@@ -8787,12 +8812,17 @@ Do you want to replace it?</source>
         <source>Select the center of the tangent circle</source>
         <translation>Вкажіть центр дотичного кола</translation>
     </message>
+    <message>
+        <source>Tangential 2 Circles, Radius</source>
+        <comment>circle tangential to two give circles and with radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2_1P</name>
     <message>
         <source>Common Tangential Circle 1 Point</source>
-        <translation>За двома дотичними й точці</translation>
+        <translation type="obsolete">За двома дотичними й точці</translation>
     </message>
     <message>
         <source>Specify a line/arc/circle</source>
@@ -8818,12 +8848,16 @@ Do you want to replace it?</source>
         <source>Select the center of the tangent circle</source>
         <translation>Вкажіть центр кола</translation>
     </message>
+    <message>
+        <source>Tangential 2 Circles, 1 Point</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
     <message>
         <source>Circle Tangential &amp;3</source>
-        <translation>За &amp;трьома дотичними</translation>
+        <translation type="obsolete">За &amp;трьома дотичними</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -8848,6 +8882,10 @@ Do you want to replace it?</source>
     <message>
         <source>Specify the third line/arc/circle</source>
         <translation>Вкажіть третю лінію, дугу або коло</translation>
+    </message>
+    <message>
+        <source>Tangential &amp;3 Circles</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12161,6 +12199,26 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>graphoffset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fillet</source>
+        <comment>modify - fillet</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>divide</source>
+        <comment>modify - divide</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>div</source>
+        <comment>modify - divide</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cut</source>
+        <comment>modify - divide</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

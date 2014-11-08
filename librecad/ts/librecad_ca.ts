@@ -517,6 +517,10 @@ S&apos;ha desactivat el desament automàtic.</translation>
         <source>Export as PDF</source>
         <translation type="unfinished">Exporta a PDF</translation>
     </message>
+    <message>
+        <source>&amp;Text</source>
+        <translation type="unfinished">&amp;Text</translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -636,6 +640,18 @@ S&apos;ha desactivat el desament automàtic.</translation>
     <message>
         <source>Export as PDF</source>
         <translation>Exporta a PDF</translation>
+    </message>
+    <message>
+        <source>&amp;Block</source>
+        <translation type="unfinished">&amp;Blocs</translation>
+    </message>
+</context>
+<context>
+    <name>QG_ActionHandler</name>
+    <message>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1665,6 +1681,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>select&amp;All</source>
         <translation>Seleccion&amp;a-ho tot</translation>
+    </message>
+    <message>
+        <source>escape</source>
+        <comment>escape, go back from action steps</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6964,7 +6985,7 @@ Voleu reemplaçar-lo?</translation>
     <name>RS_ActionDrawCircleTan1_2P</name>
     <message>
         <source>Circle Tangential 2 P&amp;oints</source>
-        <translation>Circumferència tangent 2 P&amp;unts</translation>
+        <translation type="obsolete">Circumferència tangent 2 P&amp;unts</translation>
     </message>
     <message>
         <source>Specify an arc/circle</source>
@@ -6994,12 +7015,16 @@ Voleu reemplaçar-lo?</translation>
         <source>Specify a line/arc/circle</source>
         <translation>Especifiqueu una línia/arc/circumferència</translation>
     </message>
+    <message>
+        <source>Tangential, 2 P&amp;oints</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2</name>
     <message>
         <source>Circle Tangential &amp;2</source>
-        <translation>Circumferència tangent &amp;2</translation>
+        <translation type="obsolete">Circumferència tangent &amp;2</translation>
     </message>
     <message>
         <source>Specify the first line/arc/circle</source>
@@ -7021,12 +7046,17 @@ Voleu reemplaçar-lo?</translation>
         <source>Select the center of the tangent circle</source>
         <translation>Seleccioneu el centre de la circumferència tangent</translation>
     </message>
+    <message>
+        <source>Tangential 2 Circles, Radius</source>
+        <comment>circle tangential to two give circles and with radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan2_1P</name>
     <message>
         <source>Common Tangential Circle 1 Point</source>
-        <translation>Tangent comuna a una circumferència per un punt</translation>
+        <translation type="obsolete">Tangent comuna a una circumferència per un punt</translation>
     </message>
     <message>
         <source>Specify a line/arc/circle</source>
@@ -7052,12 +7082,16 @@ Voleu reemplaçar-lo?</translation>
         <source>Select the center of the tangent circle</source>
         <translation>Seleccioneu el centre de la circumferència tangent</translation>
     </message>
+    <message>
+        <source>Tangential 2 Circles, 1 Point</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleTan3</name>
     <message>
         <source>Circle Tangential &amp;3</source>
-        <translation>Circumferència tangent &amp;3</translation>
+        <translation type="obsolete">Circumferència tangent &amp;3</translation>
     </message>
     <message>
         <source>Specify the first arc/circle</source>
@@ -7094,6 +7128,10 @@ Voleu reemplaçar-lo?</translation>
     <message>
         <source>Specify the third line/arc/circle</source>
         <translation>Especifiqueu la tercera línia/arc/circumferència</translation>
+    </message>
+    <message>
+        <source>Tangential &amp;3 Circles</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10299,6 +10337,26 @@ Voleu reemplaçar-lo?</translation>
     </message>
     <message>
         <source>graphoffset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fillet</source>
+        <comment>modify - fillet</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>divide</source>
+        <comment>modify - divide</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>div</source>
+        <comment>modify - divide</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cut</source>
+        <comment>modify - divide</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
