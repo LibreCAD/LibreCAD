@@ -54,6 +54,13 @@ public:
 */
     LC_Quadratic(const RS_AtomicEntity* circle0,const RS_AtomicEntity* circle1,
                  bool mirror = false);
+    /**
+     * @brief LC_Quadratic, construct a Perpendicular bisector line, which is the path of circles passing point0 and point1
+     * @param point0
+     * @param point1
+     */
+    LC_Quadratic(const RS_Vector& point0, const RS_Vector& point1);
+
     LC_Quadratic(std::vector<double> ce);
     std::vector<double> getCoefficients() const;
     LC_Quadratic move(const RS_Vector& v);

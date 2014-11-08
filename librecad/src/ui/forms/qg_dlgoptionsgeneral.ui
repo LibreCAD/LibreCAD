@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>643</width>
-    <height>550</height>
+    <height>565</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -681,25 +681,33 @@
        </item>
        <item row="1" column="0">
         <widget class="QGroupBox" name="gbSplash">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="title">
           <string>Splash Window</string>
          </property>
-         <widget class="QCheckBox" name="cbSplash">
-          <property name="geometry">
-           <rect>
-            <x>160</x>
-            <y>0</y>
-            <width>140</width>
-            <height>20</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Display Splash</string>
-          </property>
-          <property name="checked">
-           <bool>false</bool>
-          </property>
-         </widget>
+         <layout class="QGridLayout" name="splashGridLayout">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="cbSplash">
+            <property name="text">
+             <string>Display Splash</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>

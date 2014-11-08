@@ -1,54 +1,75 @@
 @ECHO OFF
 
+REM from librecad/src goto LibreCAD root folder
+REM CAUTION! pushd isn't tolerant for /, use \
+pushd ..\..
 cd > PWD
-set /p PWD= < PWD
+set /p LC_PWD= < PWD
+del PWD
 
-
-set PWD=%PWD%\..\..
-
-
-set RESOURCEDIR=%PWD%\windows\resources
-set TSDIRLC=%PWD%\librecad\ts
-set TSDIRPI=%PWD%\plugins\ts
-set DOCDIR=%PWD%\librecad\support\doc
+set LC_RESOURCEDIR=%LC_PWD%\windows\resources
+set LC_TSDIRLC=%LC_PWD%\librecad\ts
+set LC_TSDIRPI=%LC_PWD%\plugins\ts
+set LC_DOCDIR=%LC_PWD%\librecad\support\doc
+set LC_NSISDIR=%LC_PWD%\scripts\postprocess-windows
 
 REM Generate Help Files
-cd "%DOCDIR%"
+pushd "%LC_DOCDIR%"
 qcollectiongenerator LibreCADdoc.qhcp
-
-cd "%PWD%"
+popd
 
 REM Postprocess for windows
 echo " Copying fonts and patterns"
-if not exist "%RESOURCEDIR%\fonts\" (mkdir "%RESOURCEDIR%\fonts")
-if not exist "%RESOURCEDIR%\patterns\" (mkdir "%RESOURCEDIR%\patterns")
-if not exist "%RESOURCEDIR%\library\" (mkdir "%RESOURCEDIR%\library")
-if not exist "%RESOURCEDIR%\doc\" (mkdir "%RESOURCEDIR%\doc")
-if not exist "%RESOURCEDIR%\library\misc\" (mkdir "%RESOURCEDIR%\library\misc")
-if not exist "%RESOURCEDIR%\library\templates\" (mkdir "%RESOURCEDIR%\library\templates")
+if not exist "%LC_RESOURCEDIR%\fonts\" (mkdir "%LC_RESOURCEDIR%\fonts")
+if not exist "%LC_RESOURCEDIR%\patterns\" (mkdir "%LC_RESOURCEDIR%\patterns")
+if not exist "%LC_RESOURCEDIR%\library\" (mkdir "%LC_RESOURCEDIR%\library")
+if not exist "%LC_RESOURCEDIR%\doc\" (mkdir "%LC_RESOURCEDIR%\doc")
+if not exist "%LC_RESOURCEDIR%\library\misc\" (mkdir "%LC_RESOURCEDIR%\library\misc")
+if not exist "%LC_RESOURCEDIR%\library\templates\" (mkdir "%LC_RESOURCEDIR%\library\templates")
 
-copy "librecad\support\patterns\*.dxf" "%RESOURCEDIR%\patterns"
-copy "librecad\support\fonts\*.lff" "%RESOURCEDIR%\fonts"
-copy "librecad\support\doc\*.qhc" "%RESOURCEDIR%\doc"
-copy "librecad\support\doc\*.qch" "%RESOURCEDIR%\doc"
-copy "librecad\support\library\misc\*.dxf" "%RESOURCEDIR%\library\misc"
-copy "librecad\support\library\templates\*.dxf" "%RESOURCEDIR%\library\templates"
+copy "librecad\support\patterns\*.dxf" "%LC_RESOURCEDIR%\patterns"
+copy "librecad\support\fonts\*.lff" "%LC_RESOURCEDIR%\fonts"
+copy "librecad\support\doc\*.qhc" "%LC_RESOURCEDIR%\doc"
+copy "librecad\support\doc\*.qch" "%LC_RESOURCEDIR%\doc"
+copy "librecad\support\library\misc\*.dxf" "%LC_RESOURCEDIR%\library\misc"
+copy "librecad\support\library\templates\*.dxf" "%LC_RESOURCEDIR%\library\templates"
 
 
 REM Generate translations
 echo "Generating Translations"
 lrelease librecad\src\src.pro
 lrelease plugins\plugins.pro
-if not exist "%RESOURCEDIR%\qm\" (mkdir "%RESOURCEDIR%\qm")
+if not exist "%LC_RESOURCEDIR%\qm\" (mkdir "%LC_RESOURCEDIR%\qm")
 
-cd "%TSDIRLC%"
+REM translations for LibreCAD
+cd "%LC_TSDIRLC%"
 for /f %%F in ('dir /b *.qm') do (
-        copy "%%F" "%RESOURCEDIR%\qm\%%F"
+        copy "%%F" "%LC_RESOURCEDIR%\qm\%%F"
 )
 
-cd "%TSDIRPI%"
+REM translations for PlugIns
+cd "%LC_TSDIRPI%"
 for /f %%F in ('dir /b *.qm') do (
-        copy "%%F" "%RESOURCEDIR%\qm\%%F"
+        copy "%%F" "%LC_RESOURCEDIR%\qm\%%F"
 )
 
-cd "%PWD%"
+REM Create NSIS-Include file
+set LC_SCMREV_NSH=%LC_NSISDIR%\generated_scmrev.nsh
+echo Create %LC_SCMREV_NSH% for NSIS Installer
+echo ;CAUTION! >%LC_SCMREV_NSH%
+echo ;this file is created by postprocess-win.bat during build process >>%LC_SCMREV_NSH%
+echo ;changes will be overwritten, use custom.nsh for local settings >>%LC_SCMREV_NSH%
+echo. >>%LC_SCMREV_NSH%
+echo !define SCMREVISION "%1" >>%LC_SCMREV_NSH%
+echo. >>%LC_SCMREV_NSH%
+
+if exist %LC_NSISDIR%\custom-*.ns? (
+	echo.
+	echo Warning!
+	echo An old NSIS custom include file was found!
+	echo Please, rename it to custom.nsh.
+	echo.
+)
+
+REM return to librecad/src
+popd

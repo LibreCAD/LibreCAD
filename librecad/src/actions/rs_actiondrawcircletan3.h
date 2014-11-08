@@ -29,7 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_previewactioninterface.h"
 
 /**
- * Draw ellipse by foci and a point on ellipse
+ * Draw Common tangential circle of 3 given circles, i.e. Appollonius's problem
  *
  * @author Dongxu Li
  */

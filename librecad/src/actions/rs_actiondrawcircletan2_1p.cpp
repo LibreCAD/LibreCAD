@@ -57,7 +57,7 @@ RS_ActionDrawCircleTan2_1P::~RS_ActionDrawCircleTan2_1P() {
 QAction* RS_ActionDrawCircleTan2_1P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
 
-    action = new QAction(tr("Common Tangential Circle 1 Point"), NULL);
+    action = new QAction(tr("Tangential 2 Circles, 1 Point"), NULL);
     action->setIcon(QIcon(":/extui/circletan2_1p.png"));
     return action;
 }
@@ -75,7 +75,7 @@ void RS_ActionDrawCircleTan2_1P::init(int status) {
         }
     }
     bool updateNeeded(false);
-    for(int i=status; i<circles.size(); ++i){
+    for(int i=status>=0?status:0; i<circles.size(); ++i){
         if(circles[i])
             if(circles[i]->isHighlighted()){
                 circles[i]->setHighlighted(false);
@@ -213,18 +213,8 @@ RS_Entity* RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent* e) {
             if(en->getId() == circles[i]->getId()) return ret; //do not pull in the same line again
     }
     if(en->getParent() != NULL) {
-        if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
-             || en->getParent()->rtti() == RS2::EntitySpline
-             || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
-             || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
-             || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
-             || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
-             || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
-             || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
-             || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
-             || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
-             ){
-            return ret;
+        if ( en->getParent()->ignoredOnModification()){
+            return NULL;
         }
     }
     return en;

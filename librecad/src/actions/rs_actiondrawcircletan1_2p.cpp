@@ -57,7 +57,7 @@ RS_ActionDrawCircleTan1_2P::~RS_ActionDrawCircleTan1_2P() {
 QAction* RS_ActionDrawCircleTan1_2P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
 
-    action = new QAction(tr("Circle Tangential 2 P&oints"), NULL);
+    action = new QAction(tr("Tangential, 2 P&oints"), NULL);
     action->setIcon(QIcon(":/extui/circletan1_2p.png"));
     return action;
 }
@@ -181,7 +181,15 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
         if(preparePreview()) {
             deletePreview();
             RS_Circle* e=new RS_Circle(preview, cData);
+            for(size_t i=0; i<centers.size(); ++i)
+                preview->addEntity(new RS_Point(preview, RS_PointData(centers.at(i))));
             preview->addEntity(e);
+//            double r0=cData.radius*0.1;
+//            if(centers.size()>1)
+//                for(unsigned i=0; i< centers.size(); ++i){
+//                    RS_DEBUG->print(RS_Debug::D_ERROR, "center %d: (%g, %g)\n",i,centers.at(i).x,centers.at(i).y);
+//                    preview->addEntity(new RS_Circle(preview, RS_CircleData(centers.at(i), r0)));
+//                }
             drawPreview();
         }
     }
@@ -206,22 +214,39 @@ bool RS_ActionDrawCircleTan1_2P::getCenters(){
     if(getStatus() < SetPoint2) return false;
 
     LC_Quadratic lc0(circle, points[0]);
-    LC_Quadratic lc1(circle, points[1]);
+//    LC_Quadratic lc1(circle, points[1]);
+    LC_Quadratic lc1(points[1], points[0]);
     auto&& list=LC_Quadratic::getIntersection(lc0,lc1);
 //    DEBUG_HEADER();
 //    std::cout<<"intersections : "<<list<<std::endl;
 
-    for(unsigned int i=0;i<list.size();i++){
+    for(unsigned int i=0;i<list.size();++i){
         auto vp=list.get(i);
         //when taking the path of center of tangent circle passing a given point,
         // the center is never closer to the circle center than the point, for internal and external tangent circles
         double ds0=vp.distanceTo(points[0]);
-        double ds1=vp.distanceTo(points[1]);
+//        double ds1=vp.distanceTo(points[1]);
 //        if( fabs(ds0 - ds1)> RS_TOLERANCE) continue;
         if(circle->rtti()==RS2::EntityCircle||circle->rtti()==RS2::EntityArc){
-            auto&& ds=vp.distanceTo(circle->getCenter()) - RS_TOLERANCE;
-            if( ds0 <= ds || ds1 <= ds ) continue;
+            double ds=vp.distanceTo(circle->getCenter());
+            //condition for tangential to the given circle
+            if( fabs(ds - (ds0 + circle->getRadius())) > RS_TOLERANCE && fabs(ds - fabs(ds0 - circle->getRadius())) > RS_TOLERANCE ) continue;
+        }else{
+            double ds=0.;
+            circle->getNearestPointOnEntity(vp, false,&ds);
+            //condition for tangential to the given straight line
+            if( fabs(ds - ds0)>RS_TOLERANCE) continue;
         }
+
+        //avoid counting the same center
+        bool existing=false;
+        for(unsigned j=0; j<centers.size(); ++j){
+            if(centers.at(j).squaredTo(vp) < RS_TOLERANCE15 ){
+                existing=true;
+                break;
+            }
+        }
+        if(existing) continue;
         centers.push_back(vp);
     }
 //    DEBUG_HEADER();
@@ -246,18 +271,8 @@ RS_Entity* RS_ActionDrawCircleTan1_2P::catchCircle(QMouseEvent* e) {
     if(en == NULL) return ret;
     if(en->isVisible()==false) return ret;
     if(en->getParent() != NULL) {
-        if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
-             || en->getParent()->rtti() == RS2::EntitySpline
-             || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
-             || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
-             || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
-             || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
-             || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
-             || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
-             || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
-             || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
-             ){
-            return ret;
+        if ( en->getParent()->ignoredOnModification()){
+            return NULL;
         }
     }
     return en;

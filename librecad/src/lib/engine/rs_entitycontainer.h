@@ -207,6 +207,12 @@ public:
      * returns absolute value
      */
     virtual double areaLineIntegral() const;
+    /**
+     * @brief ignoreForModification, ignore this entity for entity catch for certain actions
+     * like catching circles to create tangent circles
+     * @return, true, indicate this entity container should be ignored
+     */
+    bool ignoredOnModification() const;
 
 protected:
 

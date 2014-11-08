@@ -206,10 +206,7 @@ public:
                                      bool startp);
     //virtual RS_Vector getNearestRef(const RS_Vector& coord,
     //                                 double* dist = NULL);
-    virtual double getDistanceToPoint(const RS_Vector& coord,
-                                      RS_Entity** entity=NULL,
-                                      RS2::ResolveLevel level=RS2::ResolveNone,
-                                      double solidDist = RS_MAXDOUBLE)const;
+
     /**
           * implementations must revert the direction of an atomic entity
           */

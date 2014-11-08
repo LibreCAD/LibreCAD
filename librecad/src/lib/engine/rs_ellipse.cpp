@@ -993,23 +993,6 @@ RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
 }
 
 
-
-double RS_Ellipse::getDistanceToPoint(const RS_Vector& coord,
-                                      RS_Entity** entity,
-                                      RS2::ResolveLevel, double /*solidDist*/) const{
-    if( entity != NULL) {
-        *entity=const_cast<RS_Ellipse*>(this);
-    }
-    double dToEntity = RS_MAXDOUBLE;
-    getNearestPointOnEntity(coord, true, &dToEntity, entity);
-
-    // RVT 6 Jan 2011 : Add selection by center point
-    double dToCenter=data.center.distanceTo(coord);
-    return std::min(dToEntity,dToCenter);
-}
-
-
-
 void RS_Ellipse::move(const RS_Vector& offset) {
     data.center.move(offset);
     //calculateEndpoints();

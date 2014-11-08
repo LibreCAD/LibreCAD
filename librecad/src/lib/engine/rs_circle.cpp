@@ -306,31 +306,42 @@ QList<RS_Circle> RS_Circle::createTan3(const QVector<RS_AtomicEntity*>& circles)
     QList<RS_Circle> ret;
     if(circles.size()!=3) return ret;
      QList<RS_Circle> cs;
-     for(unsigned short i=0;i<3;i++){
+     for(unsigned short i=0u;i<3u;i++){
          cs<<RS_Circle(NULL,RS_CircleData(circles.at(i)->getCenter(),circles.at(i)->getRadius()));
      }
     unsigned short flags=0;
     do{
-        ret.append(solveAppolloniusSingle(cs));
-        flags++;
-        unsigned short j=0;
-        for(unsigned short i=1u;i<=4u;i<<=1){
-            if(flags & i) {
+        for(unsigned short j=0u;j<3u;++j){
+            if(flags & (1u<<j)) {
                 cs[j].setRadius( - fabs(cs[j].getRadius()));
             }else{
                 cs[j].setRadius( fabs(cs[j].getRadius()));
             }
-            j++;
+        }
+//        RS_DEBUG->print(RS_Debug::D_ERROR, "flags=%d\n",flags);
+        auto&& list=solveAppolloniusSingle(cs);
+        if(list.size()>=1){
+            for(RS_Circle& c0: list){
+                bool addNew=true;
+                for(RS_Circle& c: ret){
+                    if((c0.getCenter()-c.getCenter()).squared()<RS_TOLERANCE15 && fabs(c0.getRadius() - c.getRadius())<RS_TOLERANCE){
+                        addNew=false;
+                        break;
+                    }
+                }
+                if(addNew) ret<<c0;
+            }
         }
 
-    }while(flags<8u);
+
+    }while(++flags<8u);
 //    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
 //    std::cout<<"before testing, ret.size()="<<ret.size()<<std::endl;
     for(int i=0;i<ret.size();){
         if(ret[i].testTan3(circles) == false) {
             ret.erase(ret.begin()+i);
         }else{
-            i++;
+            ++i;
         }
     }
 //        DEBUG_HEADER();
@@ -382,8 +393,11 @@ QList<RS_Circle> RS_Circle::solveAppolloniusSingle(const QList<RS_Circle>& circl
     for(size_t i=0;i<3;i++){
         if(circles[i].getCenter().valid==false) return ret;
         centers.push_back(circles[i].getCenter());
-        radii.push_back(fabs(circles[i].getRadius()));
+        radii.push_back(circles[i].getRadius());
     }
+//              for(int i=0;i<circles.size();i++){
+//    std::cout<<"i="<<i<<"\t center="<<circles[i].getCenter()<<"\tr="<<radii.at(i)<<std::endl;
+//              }
 /** form the linear equation to solve center in radius **/
     QVector<QVector<double> > mat(2,QVector<double>(3,0.));
     mat[0][0]=centers[2].x - centers[0].x;
@@ -411,10 +425,10 @@ QList<RS_Circle> RS_Circle::solveAppolloniusSingle(const QList<RS_Circle>& circl
     // r^0 term
     mat[0][2]=0.5*(centers[2].squared()-centers[0].squared()+radii[0]*radii[0]-radii[2]*radii[2]);
     mat[1][2]=0.5*(centers[2].squared()-centers[1].squared()+radii[1]*radii[1]-radii[2]*radii[2]);
-    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
-    for(unsigned short i=0;i<=1;i++){
-        std::cout<<"eqs P:"<<i<<" : "<<mat[i][0]<<"*x + "<<mat[i][1]<<"*y = "<<mat[i][2]<<std::endl;
-    }
+//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//    for(unsigned short i=0;i<=1;i++){
+//        std::cout<<"eqs P:"<<i<<" : "<<mat[i][0]<<"*x + "<<mat[i][1]<<"*y = "<<mat[i][2]<<std::endl;
+//    }
 //    QVector<QVector<double> > sm(2,QVector<double>(2,0.));
     QVector<double> sm(2,0.);
     if(RS_Math::linearSolver(mat,sm)==false){
@@ -448,7 +462,7 @@ QList<RS_Circle> RS_Circle::solveAppolloniusSingle(const QList<RS_Circle>& circl
     std::vector<double>&& vr=RS_Math::quadraticSolver(ce);
     for(size_t i=0; i < vr.size();i++){
         if(vr.at(i)<RS_TOLERANCE) continue;
-        ret<<RS_Circle(NULL,RS_CircleData(vp+vq*vr.at(i),vr.at(i)));
+        ret<<RS_Circle(NULL,RS_CircleData(vp+vq*vr.at(i),fabs(vr.at(i))));
     }
 //    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
 //    std::cout<<"Found "<<ret.size()<<" solutions"<<std::endl;
@@ -489,8 +503,11 @@ RS_Vector RS_Circle::getNearestPointOnEntity(const RS_Vector& coord,
     double d(vp.magnitude());
     if( d < RS_TOLERANCE ) return RS_Vector(false);
     vp =data.center+vp*(data.radius/d);
+//    RS_DEBUG->print(RS_Debug::D_ERROR, "circle(%g, %g), r=%g: distance to point (%g, %g)\n",data.center.x,data.center.y,coord.x,coord.y);
+
     if(dist!=NULL){
         *dist=coord.distanceTo(vp);
+//        RS_DEBUG->print(RS_Debug::D_ERROR, "circle(%g, %g), r=%g: distance to point (%g, %g)=%g\n",data.center.x,data.center.y,coord.x,coord.y,*dist);
     }
     return vp;
 }
@@ -598,26 +615,6 @@ RS_Vector RS_Circle::getNearestOrthTan(const RS_Vector& coord,
                 return getCenter() - vp1*getRadius();
         }
 }
-
-double RS_Circle::getDistanceToPoint(const RS_Vector& coord,
-                                     RS_Entity** entity,
-                                     RS2::ResolveLevel, double) const {
-    if (entity!=NULL) {
-        *entity = const_cast<RS_Circle*>(this);
-    }
-
-    // RVT Jan 6 2010, allow selections to mid point of circle
-    double dToCenter=data.center.distanceTo(coord);
-    double dToEdge=fabs(dToCenter - data.radius);
-
-    if (dToEdge<dToCenter) {
-        return dToEdge;
-    } else {
-        return dToCenter;
-    }
-}
-
-
 
 void RS_Circle::move(const RS_Vector& offset) {
     data.center.move(offset);

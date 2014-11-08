@@ -466,10 +466,10 @@ public:
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity = NULL,
                                       RS2::ResolveLevel level = RS2::ResolveNone,
-                                      double solidDist = RS_MAXDOUBLE) const = 0;
+                                      double solidDist = RS_MAXDOUBLE) const;
 
     virtual bool isPointOnEntity(const RS_Vector& coord,
-                                 double tolerance=RS_TOLERANCE) const;
+                                 double tolerance=20.*RS_TOLERANCE) const;
 
     /**
      * Implementations must offset the entity by the given direction and distance.
@@ -583,6 +583,13 @@ m0 x + m1 y + m2 =0
     virtual double areaLineIntegral() const{
         return 0.;
     }
+
+    /**
+     * @brief trimmable, whether the entity type can be trimmed
+     * @return true, for trimmable entity types
+     * currently, trimmable types are: RS_Line, RS_Circle, RS_Arc, RS_Ellipse
+     */
+    bool trimmable() const;
 
 
 protected:

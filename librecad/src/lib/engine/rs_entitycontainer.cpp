@@ -1936,6 +1936,26 @@ double RS_EntityContainer::areaLineIntegral() const
     return fabs(contourArea)+closedArea;
 }
 
+bool RS_EntityContainer::ignoredOnModification() const
+{
+    switch(rtti()){
+    case RS2::EntityInsert:         /**Insert*/
+    case RS2::EntitySpline:
+    case RS2::EntityMText:        /**< Text 15*/
+    case RS2::EntityText:         /**< Text 15*/
+    case RS2::EntityDimAligned:   /**< Aligned Dimension */
+    case RS2::EntityDimLinear:    /**< Linear Dimension */
+    case RS2::EntityDimRadial:    /**< Radial Dimension */
+    case RS2::EntityDimDiametric: /**< Diametric Dimension */
+    case RS2::EntityDimAngular:   /**< Angular Dimension */
+    case RS2::EntityDimLeader:    /**< Leader Dimension */
+        return true;
+    default:
+        return false;
+    }
+}
+
+
 /**
  * Dumps the entities to stdout.
  */

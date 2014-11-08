@@ -17,6 +17,7 @@ Makefile
 .libs
 generated/*
 clean
+custom*.*
 
 # Unix generated directories (except Apple)
 unix/
@@ -35,8 +36,6 @@ release/
 *.ilk
 *.rc
 *.bak
-custom-windows.bat
-custom*.nsh
 object_script.LibreCAD.*
 # Win/qmake generated project files
 #*.vcproj
@@ -67,7 +66,6 @@ scripts/PWD
 #vim files
 *.swp
 *.orig
-custom.pro
 *.user
 
 core

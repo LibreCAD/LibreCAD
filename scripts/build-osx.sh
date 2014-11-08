@@ -25,5 +25,23 @@ find . -iname makefile -exec sed -i '' \
 	'{}' ';'
 
 make -j4
-rm -f LibreCAD.dmg
-macdeployqt LibreCAD.app -verbose=2 -dmg
+
+APP_FILE=LibreCAD
+OUTPUT_DMG=${APP_FILE}.dmg
+rm -f "${OUTPUT_DMG}"
+macdeployqt ${APP_FILE}.app -verbose=2 -dmg
+
+TMP_DMG=$(mktemp temp-DMG.XXXXXXXXXX)
+
+mv -vf "${OUTPUT_DMG}" "${TMP_DMG}"
+
+#bz2 compression
+rm -f $OUTPUT_DMG
+hdiutil convert -format UDBZ "${TMP_DMG}" -o "$OUTPUT_DMG"
+if [[ -f  "${OUTPUT_DMG}" ]]
+then
+	echo "DMG installer generated:"
+	ls -lh "${OUTPUT_DMG}"
+fi
+
+rm -f "${TMP_DMG}"

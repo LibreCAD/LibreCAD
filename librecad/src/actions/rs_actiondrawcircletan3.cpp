@@ -56,7 +56,7 @@ RS_ActionDrawCircleTan3::~RS_ActionDrawCircleTan3() {
 QAction* RS_ActionDrawCircleTan3::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
 
-    action = new QAction(tr("Circle Tangential &3"), NULL);
+    action = new QAction(tr("Tangential &3 Circles"), NULL);
     action->setIcon(QIcon(":/extui/circletan3.png"));
     return action;
 }
@@ -135,6 +135,9 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent* e) {
             deletePreview();
             RS_Circle* e=new RS_Circle(preview, cData);
             preview->addEntity(e);
+            for(RS_Circle& c: candidates){
+                preview->addEntity(new RS_Point(NULL, RS_PointData(c.getCenter())));
+            }
             drawPreview();
         }
     }
@@ -201,6 +204,8 @@ bool RS_ActionDrawCircleTan3::preparePreview(){
     for(int i=0;i<candidates.size();i++){
         double d;
         candidates.at(i).getNearestPointOnEntity(coord,false,&d);
+        double dCenter=coord.distanceTo(candidates.at(i).getCenter());
+        d=std::min(d,dCenter);
         if(d<dist){
             dist=d;
             index=i;
@@ -224,19 +229,9 @@ RS_Entity* RS_ActionDrawCircleTan3::catchCircle(QMouseEvent* e) {
         if(en->getId() == circles[i]->getId()) return ret; //do not pull in the same line again
     }
     if(en->getParent() != NULL) {
-        if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
-                || en->getParent()->rtti() == RS2::EntitySpline
-                || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
-                || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
-                || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
-                || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
-                || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
-                || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
-                || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
-                || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
-                ){
-            return ret;
-    }
+        if ( en->getParent()->ignoredOnModification()){
+            return NULL;
+        }
     }
     return en;
 }

@@ -1,4 +1,4 @@
-@echo on
+@echo off
 
 if "%Qt_DIR%"=="" goto SetEnv
 if "%NSIS_DIR%"=="" goto SetEnv

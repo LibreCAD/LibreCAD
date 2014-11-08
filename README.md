@@ -129,7 +129,7 @@ http://wiki.librecad.org/index.php/LibreCAD_Installation_from_Source
 
 A sample build batch file is included as scripts/build-windows.bat. If successful, this building script generates a Windows installer file using NSIS(http://nsis.sourceforge.net/Main_Page). 
 
-- Download a copy of Qt SDK,  4.8.4 for example from http://qt-project.org/downloads 
+- Download a copy of Qt SDK,  5.3.2 for example from http://qt-project.org/downloads 
 
 - Download boost, from https://sourceforge.net/projects/boost/files/boost/
 - unzip into C:\boost\, for example C:\boost\1_53_0 (in this directory you will find boost root directory, INSTALL, index, Jamroot etc.. etc).

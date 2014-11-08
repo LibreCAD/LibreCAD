@@ -3,7 +3,14 @@
 
 ;--------------------------------
 ;Include custom settings if exists
-  !include /NONFATAL "custom-5.1.nsh"
+  !include /NONFATAL "custom.nsh"
+
+;--------------------------------
+;Include version information
+  !include /NONFATAL "generated_scmrev.nsh"
+!ifndef SCMREVISION
+    !define SCMREVISION "2.0.x"
+!endif
 
 ;--------------------------------
 ;Include Modern UI
@@ -179,7 +186,7 @@ Section "Install Section" SecInstall
   ; create add/remove software entries
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayName" "${APPNAME}"
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayIcon" "$INSTDIR\LibreCAD.exe"
-  WriteRegStr HKLM "${UNINSTKEY}" "DisplayVersion" "2.0.5"
+  WriteRegStr HKLM "${UNINSTKEY}" "DisplayVersion" "${SCMREVISION}"
   WriteRegStr HKLM "${UNINSTKEY}" "Publisher" "LibreCAD Team"
   WriteRegStr HKLM "${UNINSTKEY}" "Version" "2.0"
   WriteRegStr HKLM "${UNINSTKEY}" "HelpLink" "http://librecad.org/cms/home/get-help/forum.html"

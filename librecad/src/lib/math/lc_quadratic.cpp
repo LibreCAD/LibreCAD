@@ -314,6 +314,18 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
     return;
 }
 
+/**
+ * @brief LC_Quadratic, construct a Perpendicular bisector line, which is the path of circles passing point0 and point1
+ * @param point0
+ * @param point1
+ */
+LC_Quadratic::LC_Quadratic(const RS_Vector& point0, const RS_Vector& point1)
+{
+    RS_Vector vStart=(point0+point1)*0.5;
+    RS_Vector vEnd=vStart + (point0-vStart).rotate(0.5*M_PI);
+    *this=RS_Line(vStart, vEnd).getQuadratic();
+}
+
 std::vector<double>  LC_Quadratic::getCoefficients() const
 {
     std::vector<double> ret(0,0.);

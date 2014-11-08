@@ -53,7 +53,7 @@ RS_ActionDrawCircleTan2::~RS_ActionDrawCircleTan2() {
 QAction* RS_ActionDrawCircleTan2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
 
-    action = new QAction(tr("Circle Tangential &2"), NULL);
+    action = new QAction(tr("Tangential 2 Circles, Radius",  "circle tangential to two give circles and with radius"), NULL);
     action->setIcon(QIcon(":/extui/circletan2.png"));
     return action;
 }
@@ -167,26 +167,15 @@ bool RS_ActionDrawCircleTan2::preparePreview(){
 }
 
 RS_Entity* RS_ActionDrawCircleTan2::catchCircle(QMouseEvent* e) {
-    RS_Entity* ret=NULL;
     RS_Entity*  en = catchEntity(e,enTypeList, RS2::ResolveAll);
-    if(en == NULL) return ret;
-    if(en->isVisible()==false) return ret;
+    if(en == NULL) return NULL;
+    if(en->isVisible()==false) return NULL;
     for(int i=0;i<getStatus();i++) {
-        if(en->getId() == circles[i]->getId()) return ret; //do not pull in the same line again
+        if(en->getId() == circles[i]->getId()) return NULL; //do not pull in the same line again
     }
     if(en->getParent() != NULL) {
-        if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
-             || en->getParent()->rtti() == RS2::EntitySpline
-             || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
-             || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
-             || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
-             || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
-             || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
-             || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
-             || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
-             || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
-             ){
-            return ret;
+        if ( en->getParent()->ignoredOnModification()){
+            return NULL;
         }
     }
     return en;
