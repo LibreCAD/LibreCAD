@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="gl">
 <context>
@@ -41,7 +40,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
         <source>&amp;Spline through points</source>
-        <translation>Spline a través de puntos</translation>
+        <translation>Spline a &amp;través de puntos</translation>
     </message>
     <message>
         <source>Specify first control point</source>
@@ -181,7 +180,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;Axuda</translation>
+        <translation>A&amp;xuda</translation>
     </message>
     <message>
         <source>De&amp;bugging</source>
@@ -292,8 +291,8 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>Liña de comandos</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Bloque &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Bloque '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -325,15 +324,15 @@ Debe de revisar os permisos.</translation>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation>F&amp;iestra</translation>
+        <translation>Fies&amp;tra</translation>
     </message>
     <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation>Executando script &apos;%1&apos;</translation>
+        <source>Running script '%1'</source>
+        <translation>Executando script '%1'</translation>
     </message>
     <message>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translation>Inserindo bloque &apos;%1&apos;</translation>
+        <source>Inserting block '%1'</source>
+        <translation>Inserindo bloque '%1'</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -366,7 +365,7 @@ Gardado automático desactivado.</translation>
         <translation>Axuda</translation>
     </message>
     <message>
-        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
+        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
         <translation>Demo, non podo atopar os ficheiros de axuda no ordenador.</translation>
     </message>
     <message>
@@ -507,7 +506,7 @@ Gardado automático desactivado.</translation>
     </message>
     <message>
         <source>Draft Mode</source>
-        <translation>Modo borrador</translation>
+        <translation>Modo bosquexo</translation>
     </message>
     <message>
         <source>Export as PDF</source>
@@ -551,7 +550,7 @@ Gardado automático desactivado.</translation>
     </message>
     <message>
         <source>&amp;Draft</source>
-        <translation>&amp;Borrador</translation>
+        <translation>Bosque&amp;xo</translation>
     </message>
     <message>
         <source>Open IDE</source>
@@ -605,16 +604,16 @@ Gardado automático desactivado.</translation>
         <translation>Capa actual</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Nome da capa activa actual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Nome da capa activa actual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -661,7 +660,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation>Opcións de bisel</translation>
+        <translation>Opcións de chafrán</translation>
     </message>
     <message>
         <source>Trim</source>
@@ -669,7 +668,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Actíveo para tallares as dúas entidades a biselar</translation>
+        <translation>Actíveo para tallares as dúas entidades a achafranar</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -695,8 +694,8 @@ p, li { white-space: pre-wrap; }
         <translation>Renomeando o bloque</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Non se puido nomear o bloque. Un bloque co nome &quot;%1&quot; xa existe.</translation>
+        <source>Could not name block. A block named "%1" already exists.</source>
+        <translation>Non se puido nomear o bloque. Un bloque co nome "%1" xa existe.</translation>
     </message>
 </context>
 <context>
@@ -729,7 +728,7 @@ nunha fiestra nova</translation>
     </message>
     <message>
         <source>&amp;Freeze all Blocks</source>
-        <translation>A&amp;gochar tódolos bloques</translation>
+        <translation>Agochar &amp;tódolos bloques</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
@@ -845,64 +844,64 @@ nunha fiestra nova</translation>
         <translation>Círculos concéntricos</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Debuxe un círculo tanxencial a dous círculos, arcos ou liñas, dado o raio&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Debuxe un círculo tanxencial a dous círculos, arcos ou liñas, dado o raio&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Debuxe un círculo tanxencial a outro círculo, arco ou liña, dados dous puntos&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Debuxe un círculo tanxencial a outro círculo, arco ou liña, dados dous puntos&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Debuxe un círculo tanxencial a dous círculos, arcos ou liñas, dado un punto&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Debuxe un círculo tanxencial a dous círculos, arcos ou liñas, dado un punto&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Debuxe un círculo tanxencial a tres círculos, arcos ou liñas&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Debuxe un círculo tanxencial a tres círculos, arcos ou liñas&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:8pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt; font-style:italic;"&gt;i.e.&lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Debuxe un círculo inscrito nun triángulo, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tanxencial a 3 liñas. Por favor use en paga disto o recurso máis recente &amp;quot;Círculo tanxencial a tres círculos, arcos ou liñas&amp;quot;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:8pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Debuxe un círculo inscrito nun triángulo, &lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt; font-style:italic;"&gt;ou o que é o mesmo&lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;, tanxencial a 3 liñas. Por favor use en paga disto o recurso máis recente &amp;quot;Círculo tanxencial a tres círculos, arcos ou liñas&amp;quot;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circle with 2 Points and Radius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -953,7 +952,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Acoutamento concéntrico</translation>
+        <translation type="unfinished">Acoutamento concéntrico</translation>
     </message>
 </context>
 <context>
@@ -983,20 +982,20 @@ p, li { white-space: pre-wrap; }
         <translation>Elipse dados catro puntos, e cos eixes nas direccións X e Y</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Debuxar elipse inscrita nun cuadrilátero, &lt;span style=&quot; font-style:italic;&quot;&gt;ou o que é o mesmo&lt;/span&gt;, tanxencial a catro liñas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Debuxar elipse inscrita nun cuadrilátero, &lt;span style=" font-style:italic;"&gt;ou o que é o mesmo&lt;/span&gt;, tanxencial a catro liñas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Concéntrica</translation>
+        <translation type="unfinished">Concéntrica</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1035,7 +1034,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Concéntrica</translation>
+        <translation type="unfinished">Concéntrica</translation>
     </message>
 </context>
 <context>
@@ -1124,36 +1123,36 @@ p, li { white-space: pre-wrap; }
         <translation>Crear bloque</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Lines&quot;</source>
-        <translation>Amosar ferramentas &quot;Liñas e polígonos&quot;</translation>
+        <source>Show toolbar "Lines"</source>
+        <translation>Amosar ferramentas "Liñas e polígonos"</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Arcs&quot;</source>
-        <translation>Amosar ferramentas &quot;Arcos&quot;</translation>
+        <source>Show toolbar "Arcs"</source>
+        <translation>Amosar ferramentas "Arcos"</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Circles&quot;</source>
-        <translation>Amosar ferramentas &quot;Círculos&quot;</translation>
+        <source>Show toolbar "Circles"</source>
+        <translation>Amosar ferramentas "Círculos"</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Ellipses&quot;</source>
-        <translation>Amosar ferramentas &quot;Elipses&quot;</translation>
+        <source>Show toolbar "Ellipses"</source>
+        <translation>Amosar ferramentas "Elipses"</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Polylines&quot;</source>
-        <translation>Amosar ferramentas &quot;Poliliñas&quot;</translation>
+        <source>Show toolbar "Polylines"</source>
+        <translation>Amosar ferramentas "Poliliñas"</translation>
     </message>
     <message>
         <source>Draw Splines</source>
-        <translation>Amosar ferramentas &quot;Splines&quot;</translation>
+        <translation>Amosar ferramentas "Splines"</translation>
     </message>
     <message>
         <source>Draw Points</source>
         <translation>Debuxar puntos</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Dimensions&quot;</source>
-        <translation>Amosar ferramentas &quot;Acoutar&quot;</translation>
+        <source>Show toolbar "Dimensions"</source>
+        <translation>Amosar ferramentas "Acoutar"</translation>
     </message>
     <message>
         <source>Create Hatch</source>
@@ -1164,16 +1163,16 @@ p, li { white-space: pre-wrap; }
         <translation>Inserir imaxe</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Modify&quot;</source>
-        <translation>Amosar ferramentas &quot;Modificar&quot;</translation>
+        <source>Show toolbar "Modify"</source>
+        <translation>Amosar ferramentas "Modificar"</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Info&quot;</source>
-        <translation>Amosar ferramentas &quot;Consultar&quot;</translation>
+        <source>Show toolbar "Info"</source>
+        <translation>Amosar ferramentas "Consultar"</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Select&quot;</source>
-        <translation>Amosar ferramentas &quot;Seleccionar&quot;</translation>
+        <source>Show toolbar "Select"</source>
+        <translation>Amosar ferramentas "Seleccionar"</translation>
     </message>
     <message>
         <source>Insert Multi-line Text</source>
@@ -1208,7 +1207,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Delete</source>
-        <translation>Eliminar</translation>
+        <translation>Desbotar</translation>
     </message>
     <message>
         <source>Stretch</source>
@@ -1240,7 +1239,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Divide</source>
-        <translation>Dividir entidade</translation>
+        <translation>Partir entidade</translation>
     </message>
     <message>
         <source>Explode Text into Letters</source>
@@ -1256,7 +1255,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Rotate Two</source>
-        <translation>Dobre rotación</translation>
+        <translation>Dobre xiro</translation>
     </message>
     <message>
         <source>Offset (Experimental Feature, work in progress)</source>
@@ -1334,7 +1333,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Concentrica</translation>
+        <translation type="unfinished">Concéntrica</translation>
     </message>
 </context>
 <context>
@@ -1909,12 +1908,12 @@ p, li { white-space: pre-wrap; }
         <translation>Benvindo!</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Benvindo o QCad&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Benvindo o QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Por favor, escolme as unidades de medida que queira usar nos seus novos debuxos e mais a súa linguaxe preferida.&lt;br&gt;
@@ -2810,7 +2809,7 @@ Vostede pode trocar estas preferencias despois, no cadro de diálogo de opcións
         <translation>Gradiáns</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Unidades de topógrafo</translation>
     </message>
     <message>
@@ -2818,8 +2817,8 @@ Vostede pode trocar estas preferencias despois, no cadro de diálogo de opcións
         <translation>Opcións</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>Par os formatos de lonxitude &apos;Enxeñaría&apos; e mais &apos;Arquitectura&apos;, débese configurar a unidade en polgada.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>Par os formatos de lonxitude 'Enxeñaría' e mais 'Arquitectura', débese configurar a unidade en polgada.</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
@@ -2970,7 +2969,7 @@ Vostede pode trocar estas preferencias despois, no cadro de diálogo de opcións
         <translation>Tamaño do remate de liña:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tamaño do remate de liña. Configurar isto a 0 desactiva o remate de liña. Pola contra, cando se establece algún valor, non se debuxa a frecha de liña de acoutamento.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -4893,28 +4892,28 @@ Os contidos dunha Capa de Construción non deberan aparecer na impresión.</tran
         <translation>Largura total</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Cantidade de entidades seleccionadas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Cantidade de entidades seleccionadas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Largura total de entidades seleccionadas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Largura total de entidades seleccionadas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -4991,11 +4990,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Move relative Zero</source>
-        <translation>Desprazar o cero relativo</translation>
+        <translation>Desprazar a orixe relativa</translation>
     </message>
     <message>
         <source>Lock relative Zero</source>
-        <translation>Fixar o cero relativo</translation>
+        <translation>Bloquear a orixe relativa</translation>
     </message>
     <message>
         <source>Free Snap</source>
@@ -5047,11 +5046,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Set relative zero position</source>
-        <translation>Configurar a posición do cero relativo</translation>
+        <translation>Fixar a orixe relativa</translation>
     </message>
     <message>
         <source>Lock relative zero position</source>
-        <translation>Fixar a posición do cero relativo</translation>
+        <translation>Bloquear a posición da orixe relativa</translation>
     </message>
 </context>
 <context>
@@ -5104,11 +5103,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished">Distancia. valores negativos para tallar, positivos para alongar. O signo negativo ignórase cando se talla o final da lonxitude total.</translation>
+        <translation>Distancia. valores negativos para tallar, positivos para alongar. O signo negativo ignórase cando se activa a opción de largura total final.</translation>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">A largura introducida úsase como largura total despois de tallares, empaga de incrementares a largura</translation>
+        <translation>Activándoa, a largura introducida úsase como largura total final, empaga de incrementares a largura.</translation>
     </message>
 </context>
 <context>
@@ -5256,12 +5255,12 @@ p, li { white-space: pre-wrap; }
         <translation>Desbotar a capa</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation>A capa &quot;%1&quot; e tódalas súas entidades vánse desbotar</translation>
+        <source>Layer "%1" and all entities on it will be removed.</source>
+        <translation>A capa "%1" e tódalas súas entidades vánse desbotar</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>A capa &quot;%1&quot; nunca se pode desbotar</translation>
+        <source>Layer "%1" can never be removed.</source>
+        <translation>A capa "%1" nunca se pode desbotar</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -5272,16 +5271,16 @@ p, li { white-space: pre-wrap; }
         <translation>Desbotar bloque</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>O bloque &quot;%1&quot; e tódalas súas entidades vánse desbotar</translation>
+        <source>Block "%1" and all its entities will be removed.</source>
+        <translation>O bloque "%1" e tódalas súas entidades vánse desbotar</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Propiedades da capa</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Xa hai unha capa co nome &quot;%1&quot; . Por favor, especifique outro nome diferente.</translation>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
+        <translation>Xa hai unha capa co nome "%1" . Por favor, especifique outro nome diferente.</translation>
     </message>
 </context>
 <context>
@@ -5462,7 +5461,7 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>LibreCAD query</source>
-        <translation>Requirir a LibreCAD</translation>
+        <translation type="unfinished">Requirir a LibreCAD</translation>
     </message>
     <message>
         <source>enter a number</source>
@@ -5549,7 +5548,7 @@ Quere reemprazalo?</translation>
         <translation>Erro descoñecido abrindo o ficheiro dwg</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>Non se pode abrir este ficheiro dwg</translation>
     </message>
     <message>
@@ -5670,8 +5669,8 @@ Quere reemprazalo?</translation>
         <translation>Introducir ángulo:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
         <source>Enter factor:</source>
@@ -5705,7 +5704,7 @@ Quere reemprazalo?</translation>
     <name>RS_ActionBlocksSave</name>
     <message>
         <source>&amp;Save Block</source>
-        <translation>Ga&amp;rdar bloque</translation>
+        <translation>&amp;Gardar bloque</translation>
     </message>
     <message>
         <source>No block activated to save</source>
@@ -6351,7 +6350,7 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>Specify endpoint or length of minor axis:</source>
-        <translation>Especifique o punto final ou a largura do eixe menor:</translation>
+        <translation>Especifique o punto final ou a semilargura do eixe menor:</translation>
     </message>
     <message>
         <source>Specify start angle</source>
@@ -6521,8 +6520,8 @@ Quere reemprazalo?</translation>
         <translation>Introducir ángulo:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
         <source>Enter factor:</source>
@@ -6530,7 +6529,7 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>Insert &amp;Image</source>
-        <translation>Inserir i&amp;maxe</translation>
+        <translation>I&amp;nserir imaxe</translation>
     </message>
     <message>
         <source>Enter dpi:</source>
@@ -6573,7 +6572,7 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>Cannot redo: Not previous line segment defined.</source>
-        <translation type="unfinished">Non se pode desfacer: non se definiu o segmento previo.</translation>
+        <translation>Non se pode refacer: non se desfixo ningún segmento previo.</translation>
     </message>
 </context>
 <context>
@@ -6785,8 +6784,8 @@ Quere reemprazalo?</translation>
 <context>
     <name>RS_ActionDrawLinePolygon</name>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
 </context>
 <context>
@@ -6878,7 +6877,7 @@ Quere reemprazalo?</translation>
     <name>RS_ActionDrawLineRelAngle</name>
     <message>
         <source>Relative angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Oblicua respecto doutra</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -6886,138 +6885,138 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>Select base entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla a entidade base</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify position</source>
-        <translation type="unfinished">Especifique a posición</translation>
+        <translation>Especifique a posición</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortogonal</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tanxente dende punto</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o punto</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Select circle, arc or ellipse</source>
-        <translation type="unfinished">Escolla un círculo, arco ou elipse</translation>
+        <translation>Escolla un círculo, arco ou elipse</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
     <message>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tanxente a dúas curvas</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Select first circle or ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla o primeiro círculo, arco ou elipse</translation>
     </message>
     <message>
         <source>Select second circle or ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla o segundo círculo, arco ou elipse</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawMText</name>
     <message>
         <source>&amp;MText</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Multitexto</translation>
     </message>
     <message>
         <source>Specify insertion point</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o punto de inserción</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Enter text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Introduza o texto:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <source>&amp;Points</source>
-        <translation type="unfinished"></translation>
+        <translation>P&amp;untos</translation>
     </message>
     <message>
         <source>Specify location</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique a localización</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawPolyline</name>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished">&amp;Poliliña</translation>
+        <translation>Polili&amp;ña</translation>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Debuxar poliliñas</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished">Especifique o primeiro punto</translation>
+        <translation>Especifique o primeiro punto</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished">Especifique o seguinte punto ou [%1]</translation>
+        <translation>Especifique o seguinte punto ou [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o seguinte punto</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
@@ -7032,27 +7031,27 @@ Quere reemprazalo?</translation>
     <name>RS_ActionDrawSpline</name>
     <message>
         <source>&amp;Spline</source>
-        <translation type="unfinished">&amp;Spline</translation>
+        <translation>&amp;Spline</translation>
     </message>
     <message>
         <source>Specify first control point</source>
-        <translation type="unfinished">Especifique o primeiro punto de control</translation>
+        <translation>Especifique o primeiro punto de control</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation type="unfinished">Especifique o seguinte punto de control ou [%1]</translation>
+        <translation>Especifique o seguinte punto de control ou [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify next control point</source>
-        <translation type="unfinished">Especifique o seguinte punto de control</translation>
+        <translation>Especifique o seguinte punto de control</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
@@ -7063,337 +7062,337 @@ Quere reemprazalo?</translation>
     <name>RS_ActionDrawText</name>
     <message>
         <source>&amp;Text</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Texto</translation>
     </message>
     <message>
         <source>Specify insertion point</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o punto de inserción</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Enter text:</source>
-        <translation type="unfinished"></translation>
+        <translation>Introduza o texto:</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished">Especifique o segundo punto</translation>
+        <translation>Especifique o segundo punto</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditCopy</name>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Copiar</translation>
+        <translation>&amp;Copiar</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>Cor&amp;tar</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished">Especifique o punto de referencia</translation>
+        <translation>Especifique o punto de referencia</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditPaste</name>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Co&amp;lar</translation>
     </message>
     <message>
         <source>Set reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o punto de destino</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionEditUndo</name>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Desfacer</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Refacer</translation>
     </message>
     <message>
         <source>Nothing to undo!</source>
-        <translation type="unfinished"></translation>
+        <translation>Non hai nada que desfacer!</translation>
     </message>
     <message>
         <source>Nothing to redo!</source>
-        <translation type="unfinished"></translation>
+        <translation>Non hai nada que refacer!</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileNew</name>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Novo</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileNewTemplate</name>
     <message>
         <source>New From &amp;Template</source>
-        <translation type="unfinished"></translation>
+        <translation>N&amp;ovo a partires dun Patrón</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileOpen</name>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Abrir...</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileSave</name>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Gardar</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileSaveAs</name>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Gardar &amp;coma...</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoAngle</name>
     <message>
         <source>Lines are parallel</source>
-        <translation type="unfinished"></translation>
+        <translation>As liñas son paralelas</translation>
     </message>
     <message>
         <source>Specify first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla a primeira liña</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify second line</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla a segunda liña</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>An&amp;gle between two lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Án&amp;gulo entre dúas liñas</translation>
     </message>
     <message>
         <source>Angle: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ángulo: %1</translation>
     </message>
     <message>
         <source> or %1%2</source>
-        <translation type="unfinished"></translation>
+        <translation> ou %1%2</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoArea</name>
     <message>
         <source>Area: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Área: %1</translation>
     </message>
     <message>
         <source>Circumference: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Perímetro: %1</translation>
     </message>
     <message>
         <source>Point: %1/%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Punto: %1/%2</translation>
     </message>
     <message>
         <source>Specify first point of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o primeiro punto do polígono</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify next point of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o seguinte punto do polígono</translation>
     </message>
     <message>
         <source>Polygonal &amp;Area</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Área poligonal</translation>
     </message>
     <message>
         <source>Closing Point: %1/%2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pechando o punto: %1/%2</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoDist</name>
     <message>
         <source>&amp;Distance Point to Point</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Distancia entre dous puntos</translation>
     </message>
     <message>
         <source>Specify first point of distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o primeiro punto</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify second point of distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o segundo punto</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5 </source>
-        <translation type="unfinished"></translation>
+        <translation>Distancia: %1 Coord. cartesianas: (%2 , %3). Coord. polares: (%4&lt;%5 </translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
     <message>
         <source>&amp;Distance Entity to Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Dis&amp;tancia entre entidade e punto</translation>
     </message>
     <message>
         <source>Distance: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Distance: %1</translation>
     </message>
     <message>
         <source>Specify entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla unha entidade</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique un punto</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoInside</name>
     <message>
         <source>Point inside contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Punto dentro do contorno</translation>
     </message>
     <message>
         <source>Point is inside selected contour.</source>
-        <translation type="unfinished"></translation>
+        <translation>O punto está dentro do contorno escollido.</translation>
     </message>
     <message>
         <source>Point is outside selected contour.</source>
-        <translation type="unfinished"></translation>
+        <translation>O punto está fóra do contorno escollido.</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique un punto</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionInfoTotalLength</name>
     <message>
         <source>&amp;Total length of selected entities</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Largura total varias entidades</translation>
     </message>
     <message>
         <source>Total Length of selected entities: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Largura total das entidades escollidas: %1</translation>
     </message>
     <message>
         <source>At least one of the selected entities cannot be measured.</source>
-        <translation type="unfinished"></translation>
+        <translation>Polo menos unha das entidades seleccionadas non se pode medir.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Engadir capa</translation>
+        <translation>&amp;Engadir capa</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersEdit</name>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation type="unfinished">Edi&amp;tar capa</translation>
+        <translation>Edi&amp;tar capa</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersFreezeAll</name>
     <message>
         <source>&amp;Hide all</source>
-        <translation type="unfinished">A&amp;gochar todo</translation>
+        <translation>A&amp;gochar todo</translation>
     </message>
     <message>
         <source>&amp;Show all</source>
-        <translation type="unfinished">&amp;Amosar todo</translation>
+        <translation>&amp;Amosar todo</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">Des&amp;botar capa</translation>
+        <translation>Des&amp;botar capa</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternar blo&amp;queo da capa</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersTogglePrint</name>
     <message>
         <source>Toggle Layer &amp;Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternar im&amp;presión da capa</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleView</name>
     <message>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternar &amp;visibilidade da capa</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLibraryInsert</name>
     <message>
         <source>Insert Library Object</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserir obxecto da libraría</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -7401,48 +7400,48 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished">Especifique o punto de referencia</translation>
+        <translation>Especifique o punto de referencia</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation type="unfinished">Introducir ángulo:</translation>
+        <translation>Introducir ángulo:</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
+        <source/>
+        <translation/>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation type="unfinished">Introducir factor:</translation>
+        <translation>Introducir factor:</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Non se pode abrir o ficheiro '%1'</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLockRelativeZero</name>
     <message>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>(Bloq-)&amp;Desbloquear orixe relativa</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyAttributes</name>
     <message>
         <source>&amp;Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Atributos</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyBevel</name>
     <message>
         <source>&amp;Bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Chafrán chairo</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -7450,214 +7449,214 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>Select first entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla a primeira entidade</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Select second entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla a segunda entidade</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Enter length 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Introduza largura 1:</translation>
     </message>
     <message>
         <source>Enter length 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Introduza largura 2:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyCut</name>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non se atopou ningunha entidade.</translation>
     </message>
     <message>
         <source>Cutting point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>O punto de corte non é válido.</translation>
     </message>
     <message>
         <source>Cutting point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>O punto de corte non está na entidade.</translation>
     </message>
     <message>
         <source>Specify entity to cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla unha entidade para tallar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify cutting point</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Especifique o punto de corte</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Part&amp;ir</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished"></translation>
+        <translation>A entidade debe ser unha liña, arco, círculo, elipse ou  spline interpolada.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDelete</name>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Desbotar</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
         <source>Delete Freehand</source>
-        <translation type="unfinished"></translation>
+        <translation>Borrar liña a man alzada</translation>
     </message>
     <message>
         <source>Specify first break point on a polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Especifique o primeiro punto de corte na poliliña</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify second break point on the same polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Especifique o segundo punto de corte na poliliña</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">As entidades non están na mesma poliliña</translation>
     </message>
     <message>
         <source>Parent of second entity is not a polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">O pai de segunda entidade non é unha poliliña</translation>
     </message>
     <message>
         <source>Parent of second entity is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">O pai da segunda entidade é nulo</translation>
     </message>
     <message>
         <source>One of the chosen entities is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Unha das entidades escollidas é nula</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">O pai da primeira entidade non é unha poliliña</translation>
     </message>
     <message>
         <source>Parent of first entity is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">O pai da primeira entidade é nulo</translation>
     </message>
     <message>
         <source>First entity is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A primeira entidade é nula</translation>
     </message>
     <message>
         <source>Second entity is NULL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A segunda entidade é nula</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteQuick</name>
     <message>
         <source>&amp;Delete selected</source>
-        <translation type="unfinished"></translation>
+        <translation>De&amp;sbotar escollidas</translation>
     </message>
     <message>
         <source>Pick entity to delete</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Escolla entidade para desbotar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyEntity</name>
     <message>
         <source>&amp;Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Propiedades</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyExplodeText</name>
     <message>
         <source>&amp;Explode Text into Letters</source>
-        <translation type="unfinished"></translation>
+        <translation>Est&amp;oupar o texto en letras</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMirror</name>
     <message>
         <source>&amp;Mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Imaxe espello</translation>
     </message>
     <message>
         <source>Specify first point of mirror line</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o primeiro punto do eixe de simetría</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify second point of mirror line</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o segundo punto do eixe de simetría</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMove</name>
     <message>
         <source>&amp;Move / Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Mover/Copiar</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished">Especifique o punto de referencia</translation>
+        <translation>Especifique o punto de referencia</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished">Especifique o punto de destino</translation>
+        <translation>Especifique o punto de destino</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
-        <translation type="unfinished"></translation>
+        <translation>Número de copias non válido, use %1 </translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
     <message>
         <source>M&amp;ove and Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Mo&amp;ver e xirar</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -7665,95 +7664,95 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished">Especifique o punto de referencia</translation>
+        <translation>Especifique o punto de referencia</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished">Especifique o punto de destino</translation>
+        <translation>Especifique o punto de destino</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Enter rotation angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Introduza ángulo de xiro:</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyOffset</name>
     <message>
         <source>&amp;Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Despra&amp;zamento</translation>
     </message>
     <message>
         <source>Specify direction of offset</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Escolla a dirección do desprazamento</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRevertDirection</name>
     <message>
         <source>Re&amp;vert direction</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Reverter dirección</translation>
     </message>
     <message>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate</name>
     <message>
         <source>&amp;Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Xirar</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished">Especifique o punto de referencia</translation>
+        <translation>Especifique o punto de referencia</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify rotation center</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o centro de xiro</translation>
     </message>
     <message>
         <source>Specify target point to rotate to</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Especifique o punto de destino para xirar</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate2</name>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation type="unfinished"></translation>
+        <translation>Do&amp;bre xiro</translation>
     </message>
     <message>
         <source>Specify absolute reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o centro de xiro absoluto</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify relative reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o centro de xiro relativo</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -7764,73 +7763,73 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>Specify first entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla a primeira entidade</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify second entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla a segunda entidade</translation>
     </message>
     <message>
         <source>Enter radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Introduza o raio:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>&amp;Fillet</source>
-        <translation type="unfinished"></translation>
+        <translation>C&amp;hafrán arredondado</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
     <message>
         <source>&amp;Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Escalar</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished">Especifique o punto de referencia</translation>
+        <translation>Especifique o punto de referencia</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyStretch</name>
     <message>
         <source>&amp;Stretch</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta&amp;licar/encoller</translation>
     </message>
     <message>
         <source>Specify first corner</source>
-        <translation type="unfinished">Especifique o primeiro vértice</translation>
+        <translation>Especifique o primeiro vértice</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify second corner</source>
-        <translation type="unfinished">Especifique o segundo vértice</translation>
+        <translation>Especifique o segundo vértice</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished">Especifique o punto de referencia</translation>
+        <translation>Especifique o punto de referencia</translation>
     </message>
     <message>
         <source>Specify target point</source>
-        <translation type="unfinished">Especifique o punto de destino</translation>
+        <translation>Especifique o punto de destino</translation>
     </message>
 </context>
 <context>
@@ -7849,15 +7848,15 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Select limiting entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla a entidade limitante</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Select second trim entity</source>
@@ -7872,15 +7871,15 @@ Quere reemprazalo?</translation>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
         <source>&amp;Lengthen</source>
-        <translation type="unfinished"></translation>
+        <translation>Alon&amp;gar</translation>
     </message>
     <message>
         <source>No entity found. </source>
-        <translation type="unfinished"></translation>
+        <translation>Non se atopou ningunha entidade. </translation>
     </message>
     <message>
         <source>The chosen Entity is in a block. Please edit the block.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A entidade escollida é un bloque. por favor edite o bloque.</translation>
     </message>
     <message>
         <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
@@ -7896,307 +7895,307 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionOptionsDrawing</name>
     <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferencias do de&amp;buxo actual</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionOrder</name>
     <message>
         <source>move to bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>mover ó fondo</translation>
     </message>
     <message>
         <source>set to bottom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">definir no fondo</translation>
     </message>
     <message>
         <source>lower after entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">inferior por baixo doutra entidade</translation>
     </message>
     <message>
         <source>lower over entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">inferior por riba doutra entidade</translation>
     </message>
     <message>
         <source>raise over entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">superior por riba doutra entidade</translation>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished"></translation>
+        <translation>mover á cima</translation>
     </message>
     <message>
         <source>set to top</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">definir na cima</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non se atopou ningunha entidade.</translation>
     </message>
     <message>
         <source>Choose entity for order</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla a entidade para ordenar</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineAdd</name>
     <message>
         <source>&amp;Add node</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Engadir nodo</translation>
     </message>
     <message>
-        <source>Add polyline&apos;s node</source>
-        <translation type="unfinished"></translation>
+        <source>Add polyline's node</source>
+        <translation>Engadir nodo de poliliña</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non se atopou ningunha entidade.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>A entidade ten que ser unha poliliña.</translation>
     </message>
     <message>
         <source>Adding point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>O punto engadido non é válido.</translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>O punto que tenta engadir non está na entidade.</translation>
     </message>
     <message>
         <source>Specify polyline to add nodes</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla a poliliña para lle engadir os nodos</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="unfinished"></translation>
+        <source>Specify adding node's point</source>
+        <translation>Especifique o punto onde engadir o nodo</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineAppend</name>
     <message>
         <source>A&amp;ppend node</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Anexar nodo</translation>
     </message>
     <message>
-        <source>Append polyline&apos;s node</source>
-        <translation type="unfinished"></translation>
+        <source>Append polyline's node</source>
+        <translation>Anexar nodo de poliliña</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non se atopou ningunha entidade.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>A entidade ten que ser unha poliliña.</translation>
     </message>
     <message>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prema en algún sitio preto do comezo ou do final dunha poliliña existente.</translation>
     </message>
     <message>
         <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla a poliliña premendo en algún sitio preto do punto de comezo ou de final</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify next point or [%1]</source>
-        <translation type="unfinished">Especifique o seguinte punto ou [%1]</translation>
+        <translation>Especifique o seguinte punto ou [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify next point</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o seguinte punto</translation>
     </message>
     <message>
         <source>Can not append nodes in a closed polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non se poden anexar nodos nunha poliliña pechada.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non se pode desfacer: Non hai aínda suficientes entidades definidas.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineDel</name>
     <message>
         <source>&amp;Delete node</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Desbotar nodo</translation>
     </message>
     <message>
-        <source>Delete polyline&apos;s node</source>
-        <translation type="unfinished"></translation>
+        <source>Delete polyline's node</source>
+        <translation>Desbotar nodo de poliliña</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non se atopou ningunha entidade.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>A entidade ten que ser unha poliliña.</translation>
     </message>
     <message>
         <source>Specify polyline to delete node</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla unha poliliña para desbotar nodo</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="unfinished"></translation>
+        <source>Specify deleting node's point</source>
+        <translation>Especifique o punto no nodo a desbotar</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>O punto a desbotar non é válido.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>O punto que tenta desbotar non está na entidade.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineDelBetween</name>
     <message>
         <source>Delete &amp;between two nodes</source>
-        <translation type="unfinished"></translation>
+        <translation>Des&amp;botar entre dous nodos</translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation type="unfinished">Borrar entre dous nodos</translation>
+        <translation>Desbotar entre dous nodos</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non se atopou ningunha entidade.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>A entidade ten que ser unha poliliña.</translation>
     </message>
     <message>
         <source>Deletinging point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>O punto que tenta desbotar non é válido.</translation>
     </message>
     <message>
         <source>Deleting point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>O punto que tenta desbotar non está na entidade.</translation>
     </message>
     <message>
         <source>Deleteinging point is not on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">O punto que tenta desbotar non está na entidade.</translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Escolla unha poliliña para desbotar entre dous nodos</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify first node</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o primeiro nodo</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify second node</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique o segundo nodo</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>O punto que tenta desbotar non é válido.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Crear poliliñas e&amp;quidistantes</translation>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Crear poliliñas equidistantes</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non se atopou ningunha entidade.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>A entidade ten que ser unha poliliña.</translation>
     </message>
     <message>
         <source>Choose the original polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla a poliliña orixinal</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
     <message>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="unfinished"></translation>
+        <translation>Poliliña nova con &amp;segmentos vellos</translation>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished">Poliliña nova a partir de segmentos de poliliña</translation>
+        <translation>Poliliña nova con segmentos vellos</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non se atopou ningunha entidade.</translation>
     </message>
     <message>
         <source>Choose one of the segments on the original polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla un dos segmentos na poliliña orixinal</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Entity must be a line, arc or polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>A entidade ten que ser unha liña, un arco ou unha poliliña.</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>A entidade no pode ser unha poliliña pechada.</translation>
     </message>
 </context>
 <context>
@@ -8206,24 +8205,24 @@ Quere reemprazalo?</translation>
         <translation>&amp;Tallar segmentos</translation>
     </message>
     <message>
-        <source>Trim polyline&apos;s segments</source>
+        <source>Trim polyline's segments</source>
         <translation>Tallar segmentos de poliliña</translation>
     </message>
     <message>
         <source>No Entity found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non se atopou ningunha entidade.</translation>
     </message>
     <message>
         <source>Entity must be a polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>A entidade ten que ser unha poliliña.</translation>
     </message>
     <message>
         <source>Specifying point is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>O punto especificado non é válido.</translation>
     </message>
     <message>
         <source>No Segment found on entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non se atopou ningún segmento na entidade.</translation>
     </message>
     <message>
         <source>Specify polyline to trim</source>
@@ -8231,226 +8230,226 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify first segment</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla o primeiro segmento</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Specify second segment</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla o segundo segmento</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPrintPreview</name>
     <message>
         <source>Print Pre&amp;view</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vista previa de impresión</translation>
     </message>
     <message>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation type="unfinished"></translation>
+        <translation>RS_ActionPrintPreview::fit(): Tamaño de papel non válido</translation>
     </message>
     <message>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Desprazamento da impresión no papel por coordenadas (%1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Desprazamento da impresión no gráfico por coordenadas (%1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Coordenadas de desprazamento da impresión no gráfico</translation>
     </message>
     <message>
         <source>Printout offset in paper coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Coordenadas de desprazamento da impresión no papel</translation>
     </message>
     <message>
         <source>: select printout offset coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">: seleccione coordenadas de desprazamento da impresión</translation>
     </message>
     <message>
         <source>type in offset from command line to offset printout</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">introduza desprazamento dende a liña de comandos para o desprazamento da impresión</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation type="unfinished">Desprazamento da impresión ignora a orixe relativa. Esquecendo '@'</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelect</name>
     <message>
         <source>Select to modify attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla para modificar atributos</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Select to delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla para desbotar</translation>
     </message>
     <message>
         <source>Select to delete immediately</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla para desbotar axiña</translation>
     </message>
     <message>
         <source>Select to move</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla para mover</translation>
     </message>
     <message>
         <source>Select to rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla para xirar</translation>
     </message>
     <message>
         <source>Select to scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla para escalar</translation>
     </message>
     <message>
         <source>Select to mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla para imaxe espello</translation>
     </message>
     <message>
         <source>Select to move and rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla para mover e xirar</translation>
     </message>
     <message>
         <source>Select for two axis rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla para dobre xiro</translation>
     </message>
     <message>
         <source>Select to explode text</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla para estoupar o texto en letras</translation>
     </message>
     <message>
         <source>Select to create block</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla para crear bloque</translation>
     </message>
     <message>
         <source>Select to copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla para copiar</translation>
     </message>
     <message>
         <source>Select to cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla para tallar</translation>
     </message>
     <message>
         <source>No entity selected!</source>
-        <translation type="unfinished"></translation>
+        <translation>Non se escolleu ningunha entidade!</translation>
     </message>
     <message>
         <source>Select to create offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla para facer desprazamento</translation>
     </message>
     <message>
         <source>Select entities to order</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla entidades para ordenar</translation>
     </message>
     <message>
         <source>Select to explode block</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla un bloque para estopar</translation>
     </message>
     <message>
         <source>Select to revert direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla para reverter dirección</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectAll</name>
     <message>
         <source>Select &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar &amp;todo</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Deseleccionar todo</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+K</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectContour</name>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished"></translation>
+        <translation>(Sel-)Deseleccionar &amp;contorno</translation>
     </message>
     <message>
         <source>Entity must be an Atomic Entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>A entidade ten que ser unha entidade atómica.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectIntersected</name>
     <message>
         <source>Select Intersected Entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar por intersección</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Deseleccionar por intersección</translation>
     </message>
     <message>
         <source>Choose first point of intersection line</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla o primeiro punto da liña de intersección</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Choose second point of intersection line</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla o segundo punto da liña de intersección</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectInvert</name>
     <message>
         <source>Invert Selection</source>
-        <translation type="unfinished">Inverter selección</translation>
+        <translation>Inverter selección</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectLayer</name>
     <message>
         <source>(De-)Select Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>(Sel-)Deseleccionar capa</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectSingle</name>
     <message>
         <source>Select Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar entidade</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
     <message>
         <source>Select Window</source>
-        <translation type="unfinished">Seleccionar por fiestra</translation>
+        <translation>Seleccionar por fiestra</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation type="unfinished">Deseleccionar por fiestra</translation>
+        <translation>Deseleccionar por fiestra</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Choose second edge</source>
@@ -8458,134 +8457,134 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
-        <translation type="unfinished"></translation>
+        <translation>Prema e arrastre para facer a fiestra de selección</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSetRelativeZero</name>
     <message>
         <source>Set relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Fixar orixe relativa</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Set &amp;Relative Zero</source>
-        <translation type="unfinished"></translation>
+        <translation>Fixar orixe &amp;relativa</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
         <source>I&amp;ntersection Manually</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Manualmente á &amp;intersección</translation>
     </message>
     <message>
         <source>Select first entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla a primeira entidade</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
     <message>
         <source>Select second entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla a segunda entidade</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionToolRegenerateDimensions</name>
     <message>
         <source>Regenerate Dimension Entities</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rexenerar entidades de acoutamento</translation>
     </message>
     <message>
         <source>Regenerated %1 dimension entities</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rexeneradas %1 entidades de acoutamento</translation>
     </message>
     <message>
         <source>No dimension entities found</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Non se atopou ningunha entidade de acoutamento.</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomAuto</name>
     <message>
         <source>&amp;Auto Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom á área g&amp;ráfica</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomIn</name>
     <message>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Medrar zoom</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Desmedrar zoom</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomPan</name>
     <message>
         <source>Zoom &amp;Panning</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Arrastrar área gráfica</translation>
     </message>
     <message>
         <source>Click and drag to pan zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Prema e arrastre para focalizar unha zona</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Zoom panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrastrar área gráfica</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomPrevious</name>
     <message>
         <source>Previous &amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom &amp;previo</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomRedraw</name>
     <message>
         <source>&amp;Redraw</source>
-        <translation type="unfinished"></translation>
+        <translation>Rede&amp;buxar</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomWindow</name>
     <message>
         <source>&amp;Window Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Zoom por fiestra</translation>
     </message>
     <message>
         <source>Specify first edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla a primeira esquina</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify second edge</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolla a segunda esquina</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Atrás</translation>
+        <translation>Atrás</translation>
     </message>
 </context>
 <context>
@@ -8771,7 +8770,7 @@ Quere reemprazalo?</translation>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation>l</translation>
+        <translation>la</translation>
     </message>
     <message>
         <source>c</source>
@@ -8842,7 +8841,7 @@ Quere reemprazalo?</translation>
     <message>
         <source>r</source>
         <comment>radius</comment>
-        <translation>r</translation>
+        <translation>ra</translation>
     </message>
     <message>
         <source>t</source>
@@ -8988,7 +8987,7 @@ Quere reemprazalo?</translation>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>st</translation>
+        <translation>ee</translation>
     </message>
     <message>
         <source>er</source>
@@ -9069,7 +9068,7 @@ Quere reemprazalo?</translation>
     <message>
         <source>tm</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>tm</translation>
+        <translation>etd</translation>
     </message>
     <message>
         <source>da</source>
@@ -9093,7 +9092,7 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>tm</source>
-        <translation>tm</translation>
+        <translation>etd</translation>
     </message>
     <message>
         <source>xt</source>
@@ -9109,7 +9108,7 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>ch</source>
-        <translation>bi</translation>
+        <translation>ch</translation>
     </message>
     <message>
         <source>mi</source>
@@ -9125,7 +9124,7 @@ Quere reemprazalo?</translation>
     </message>
     <message>
         <source>ss</source>
-        <translation>st</translation>
+        <translation>ee</translation>
     </message>
     <message>
         <source>er</source>
@@ -9383,11 +9382,11 @@ Quere reemprazalo?</translation>
     <message>
         <source>setrelativezero</source>
         <comment>snap - set relative zero position</comment>
-        <translation>definircerorel</translation>
+        <translation>definirorixerel</translation>
     </message>
     <message>
         <source>rz</source>
-        <translation>rc</translation>
+        <translation>do</translation>
     </message>
     <message>
         <source>paperoffset</source>
