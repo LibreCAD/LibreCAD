@@ -28,6 +28,7 @@ include(./muparser.pri)
 CONFIG += qt \
      warn_on \
      link_prl \
+     c++11 \
      verbose
 
 greaterThan( QT_MAJOR_VERSION, 4 ) {
