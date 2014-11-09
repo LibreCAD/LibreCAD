@@ -7,7 +7,7 @@
 QT       -= core gui
 TEMPLATE = lib
 
-CONFIG += static warn_on
+CONFIG += c++11 static warn_on
 
 DESTDIR = ../../generated/lib
 
