@@ -183,6 +183,10 @@
      <property name="text">
       <string/>
      </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/dirpos.png</normaloff>:/extui/dirpos.png</iconset>
+     </property>
      <property name="checked">
       <bool>true</bool>
      </property>
@@ -202,12 +206,18 @@
      <property name="text">
       <string/>
      </property>
+     <property name="icon">
+      <iconset resource="../../../res/extui/extui.qrc">
+       <normaloff>:/extui/dirneg.png</normaloff>:/extui/dirneg.png</iconset>
+     </property>
     </widget>
    </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../../../res/extui/extui.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>bClose</sender>
