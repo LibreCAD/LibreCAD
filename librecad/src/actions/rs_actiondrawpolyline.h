@@ -48,13 +48,13 @@ public:
         SetNextPoint      /**< Setting the endpoint. */
     };
 
-    enum Mode {
-	Line,
-	Tangential,
-	TanRad,
+    enum SegmentMode {
+    Line=0,
+    Tangential=1,
+    TanRad=2,
 //	TanAng,
 //	TanRadAng,
-	Ang,
+    Ang=3,
 //	RadAngEndp,
 //	RadAngCenp
     };
@@ -92,7 +92,7 @@ public:
 	void close();
 	void undo();
 
-	void setMode(int m) {
+    void setMode(SegmentMode m) {
 		Mode=m;
 	}
 
@@ -135,7 +135,7 @@ public:
 protected:
     double Radius;
     double Angle;
-    int Mode;
+    SegmentMode Mode;
     int Reversed;
     bool calculatedSegment;
 
