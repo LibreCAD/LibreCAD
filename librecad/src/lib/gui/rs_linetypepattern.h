@@ -43,34 +43,34 @@ struct RS_LineTypePattern {
     double totalLength;
     int num;
     //define all line patterns in pixels
-    const static RS_LineTypePattern patternSolidLine;
+    static const RS_LineTypePattern patternSolidLine;
 
-    const static RS_LineTypePattern patternDotLine;
-    const static RS_LineTypePattern patternDotLine2;
-    const static RS_LineTypePattern patternDotLineX2;
+    static const RS_LineTypePattern patternDotLine;
+    static const RS_LineTypePattern patternDotLine2;
+    static const RS_LineTypePattern patternDotLineX2;
 
-    const static RS_LineTypePattern patternDashLine;
-    const static RS_LineTypePattern patternDashLine2;
-    const static RS_LineTypePattern patternDashLineX2;
+    static const RS_LineTypePattern patternDashLine;
+    static const RS_LineTypePattern patternDashLine2;
+    static const RS_LineTypePattern patternDashLineX2;
 
-    const static RS_LineTypePattern patternDashDotLine;
-    const static RS_LineTypePattern patternDashDotLine2;
-    const static RS_LineTypePattern patternDashDotLineX2;
+    static const RS_LineTypePattern patternDashDotLine;
+    static const RS_LineTypePattern patternDashDotLine2;
+    static const RS_LineTypePattern patternDashDotLineX2;
 
-    const static RS_LineTypePattern patternDivideLine;
-    const static RS_LineTypePattern patternDivideLine2;
-    const static RS_LineTypePattern patternDivideLineX2;
+    static const RS_LineTypePattern patternDivideLine;
+    static const RS_LineTypePattern patternDivideLine2;
+    static const RS_LineTypePattern patternDivideLineX2;
 
-    const static RS_LineTypePattern patternCenterLine;
-    const static RS_LineTypePattern patternCenterLine2;
-    const static RS_LineTypePattern patternCenterLineX2;
+    static const RS_LineTypePattern patternCenterLine;
+    static const RS_LineTypePattern patternCenterLine2;
+    static const RS_LineTypePattern patternCenterLineX2;
 
-    const static RS_LineTypePattern patternBorderLine;
-    const static RS_LineTypePattern patternBorderLine2;
-    const static RS_LineTypePattern patternBorderLineX2;
+    static const RS_LineTypePattern patternBorderLine;
+    static const RS_LineTypePattern patternBorderLine2;
+    static const RS_LineTypePattern patternBorderLineX2;
 
-    const static RS_LineTypePattern patternBlockLine;
-    const static RS_LineTypePattern patternSelected;
+    static const RS_LineTypePattern patternBlockLine;
+    static const RS_LineTypePattern patternSelected;
 };
 
 #endif

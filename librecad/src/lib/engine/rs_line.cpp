@@ -611,10 +611,10 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
 
 
     // Pattern:
-    RS_LineTypePattern* pat;
+    const RS_LineTypePattern* pat;
     if (isSelected()) {
 //        styleFactor=1.;
-        pat = &patternSelected;
+        pat = &RS_LineTypePattern::patternSelected;
     } else {
         pat = view->getPattern(getPen().getLineType());
     }

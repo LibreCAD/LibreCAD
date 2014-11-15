@@ -1574,9 +1574,9 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
     }
 
     // Pattern:
-    RS_LineTypePattern* pat;
+    const RS_LineTypePattern* pat;
     if (isSelected()) {
-        pat = &patternSelected;
+        pat = &RS_LineTypePattern::patternSelected;
     } else {
         pat = view->getPattern(getPen().getLineType());
     }

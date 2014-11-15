@@ -1421,77 +1421,77 @@ void RS_GraphicView::deleteEntity(RS_Entity* e) {
  * @return Pointer to the static pattern struct that belongs to the
  * given pattern type or NULL.
  */
-RS_LineTypePattern* RS_GraphicView::getPattern(RS2::LineType t) {
+const RS_LineTypePattern* RS_GraphicView::getPattern(RS2::LineType t) {
     switch (t) {
     case RS2::SolidLine:
-        return &patternSolidLine;
+        return &RS_LineTypePattern::patternSolidLine;
         break;
 
     case RS2::DotLine:
-        return &patternDotLine;
+        return &RS_LineTypePattern::patternDotLine;
         break;
     case RS2::DotLine2:
-        return &patternDotLine2;
+        return &RS_LineTypePattern::patternDotLine2;
         break;
     case RS2::DotLineX2:
-        return &patternDotLineX2;
+        return &RS_LineTypePattern::patternDotLineX2;
         break;
 
     case RS2::DashLine:
-        return &patternDashLine;
+        return &RS_LineTypePattern::patternDashLine;
         break;
     case RS2::DashLine2:
-        return &patternDashLine2;
+        return &RS_LineTypePattern::patternDashLine2;
         break;
     case RS2::DashLineX2:
-        return &patternDashLineX2;
+        return &RS_LineTypePattern::patternDashLineX2;
         break;
 
     case RS2::DashDotLine:
-        return &patternDashDotLine;
+        return &RS_LineTypePattern::patternDashDotLine;
         break;
     case RS2::DashDotLine2:
-        return &patternDashDotLine2;
+        return &RS_LineTypePattern::patternDashDotLine2;
         break;
     case RS2::DashDotLineX2:
-        return &patternDashDotLineX2;
+        return &RS_LineTypePattern::patternDashDotLineX2;
         break;
 
     case RS2::DivideLine:
-        return &patternDivideLine;
+        return &RS_LineTypePattern::patternDivideLine;
         break;
     case RS2::DivideLine2:
-        return &patternDivideLine2;
+        return &RS_LineTypePattern::patternDivideLine2;
         break;
     case RS2::DivideLineX2:
-        return &patternDivideLineX2;
+        return &RS_LineTypePattern::patternDivideLineX2;
         break;
 
     case RS2::CenterLine:
-        return &patternCenterLine;
+        return &RS_LineTypePattern::patternCenterLine;
         break;
     case RS2::CenterLine2:
-        return &patternCenterLine2;
+        return &RS_LineTypePattern::patternCenterLine2;
         break;
     case RS2::CenterLineX2:
-        return &patternCenterLineX2;
+        return &RS_LineTypePattern::patternCenterLineX2;
         break;
 
     case RS2::BorderLine:
-        return &patternBorderLine;
+        return &RS_LineTypePattern::patternBorderLine;
         break;
     case RS2::BorderLine2:
-        return &patternBorderLine2;
+        return &RS_LineTypePattern::patternBorderLine2;
         break;
     case RS2::BorderLineX2:
-        return &patternBorderLineX2;
+        return &RS_LineTypePattern::patternBorderLineX2;
         break;
 
     case RS2::LineByLayer:
-        return &patternBlockLine;
+        return &RS_LineTypePattern::patternBlockLine;
         break;
     case RS2::LineByBlock:
-        return &patternBlockLine;
+        return &RS_LineTypePattern::patternBlockLine;
         break;
     default:
         break;
