@@ -1823,6 +1823,8 @@ void LC_SplinePoints::draw(RS_Painter* painter, RS_GraphicView* view, double& pa
 		return;
 	}
 
+    RS_Pen penSaved = painter->getPen();
+
 	// Pattern:
 	RS_LineTypePattern* pat = NULL;
 	if(isSelected())
@@ -1853,6 +1855,8 @@ void LC_SplinePoints::draw(RS_Painter* painter, RS_GraphicView* view, double& pa
 	if(bDrawPattern)
 		drawPattern(painter, view, patternOffset, pat);
 	else drawSimple(painter, view);
+    painter->setPen(penSaved);
+
 }
 
 double LC_SplinePoints::getLength() const
