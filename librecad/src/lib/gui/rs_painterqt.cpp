@@ -452,12 +452,14 @@ void RS_PainterQt::fillTriangle(const RS_Vector& p1,
                                 const RS_Vector& p3) {
 
     QPolygon arr(3);
+    QBrush brushSaved=brush();
     arr.putPoints(0, 3,
                   toScreenX(p1.x),toScreenY(p1.y),
                   toScreenX(p2.x),toScreenY(p2.y),
                   toScreenX(p3.x),toScreenY(p3.y));
     setBrush(RS_Color(pen().color()));
     drawPolygon(arr);
+    setBrush(brushSaved);
 }
 
 
