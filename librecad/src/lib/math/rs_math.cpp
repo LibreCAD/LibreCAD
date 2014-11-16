@@ -360,15 +360,15 @@ QString RS_Math::doubleToString(double value, int prec) {
 
     if(valStr.contains('.')) {
         // Remove tailing point and zeros:
-        valStr.replace(QRegExp("0*$"), "");
-        valStr.replace(QRegExp(R"(\.$)"), "");
+//        valStr.replace(QRegExp("0*$"), "");
+//        valStr.replace(QRegExp(R"(\.$)"), "");
 //        while (valStr.at(valStr.length()-1)=='0') {
 //            valStr.truncate(valStr.length()-1);
 //        }
 
-//        if(valStr.at(valStr.length()-1)=='.') {
-//            valStr.truncate(valStr.length()-1);
-//        }
+        if(valStr.at(valStr.length()-1)=='.') {
+            valStr.truncate(valStr.length()-1);
+        }
 
     }
 
