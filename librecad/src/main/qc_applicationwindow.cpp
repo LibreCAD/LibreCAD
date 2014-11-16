@@ -921,6 +921,7 @@ void QC_ApplicationWindow::initActions(void)
                                                ,RS2::ActionModifyTrim
                                                ,RS2::ActionModifyTrim2
                                                ,RS2::ActionModifyTrimAmount
+                                               ,RS2::ActionModifyOffset
                                                ,RS2::ActionModifyBevel
                                                ,RS2::ActionModifyRound
                                                ,RS2::ActionModifyCut

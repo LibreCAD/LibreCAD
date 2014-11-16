@@ -124,6 +124,7 @@
 #include "rs_actionmodifystretch.h"
 #include "rs_actionmodifytrim.h"
 #include "rs_actionmodifytrimamount.h"
+#include "rs_actionmodifyoffset.h"
 #include "rs_actionmodifyexplodetext.h"
 #include "rs_actionoptionsdrawing.h"
 #include "rs_actionprintpreview.h"
@@ -1024,6 +1025,12 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
 
     case RS2::ActionModifyTrimAmount:
                 action = RS_ActionModifyTrimAmount::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()),
+                obj, SLOT(slotModifyTrimAmount()));
+        break;
+
+    case RS2::ActionModifyOffset:
+                action = RS_ActionModifyOffset::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
                 obj, SLOT(slotModifyTrimAmount()));
         break;
