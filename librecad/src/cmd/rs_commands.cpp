@@ -322,8 +322,8 @@ RS_Commands::RS_Commands() {
     cmdTranslation.insert(tr("ce", "center"), "center");
 
     cmdTranslation.insert(tr("chord length"), "chord length");
-    cmdTranslation.insert(tr("length", "chord length"), "chord length");
-    cmdTranslation.insert(tr("le", "chord length"), "chord length");
+//    cmdTranslation.insert(tr("length", "chord length"), "chord length");
+    cmdTranslation.insert(tr("cl", "chord length"), "chord length");
 
     cmdTranslation.insert(tr("close"), "close");
     cmdTranslation.insert(tr("c", "close"), "close");
