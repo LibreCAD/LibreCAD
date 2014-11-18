@@ -28,12 +28,13 @@ include(./muparser.pri)
 CONFIG += qt \
      warn_on \
      link_prl \
-     c++11 \
      verbose
+
 
 greaterThan( QT_MAJOR_VERSION, 4 ) {
     # in Qt5 help is deprecated in CONFIG
     QT += widgets printsupport help
+    CONFIG += c++11
 } else {
     CONFIG += help 
 } 
