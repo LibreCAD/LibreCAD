@@ -672,35 +672,42 @@ public:
      * Enum of line styles:
      */
     enum LineType {
+        LineByBlock = -2,      /**< Line type defined by block not entity */
+        LineByLayer = -1,     /**< Line type defined by layer not entity */
         NoPen = 0,            /**< No line at all. */
         SolidLine = 1,        /**< Normal line. */
 
         DotLine = 2,          /**< Dotted line. */
-        DotLine2 = 3,         /**< Dotted line small. */
-        DotLineX2 = 4,        /**< Dotted line large. */
+        DotLineTiny = 3,          /**< Dotted line tiny */
+        DotLine2 = 4,         /**< Dotted line small. */
+        DotLineX2 = 5,        /**< Dotted line large. */
 
-        DashLine = 5,         /**< Dashed line. */
-        DashLine2 = 6,        /**< Dashed line small. */
-        DashLineX2 = 7,       /**< Dashed line large. */
+        DashLine = 6,         /**< Dashed line. */
+        DashLineTiny=7,       /**< Dashed line tiny */
+        DashLine2 = 8,        /**< Dashed line small. */
+        DashLineX2 = 9,       /**< Dashed line large. */
 
-        DashDotLine = 8,      /**< Alternate dots and dashes. */
-        DashDotLine2 = 9,     /**< Alternate dots and dashes small. */
-        DashDotLineX2 = 10,   /**< Alternate dots and dashes large. */
+        DashDotLine = 10,      /**< Alternate dots and dashes. */
+        DashDotLineTiny = 11,      /**< Alternate dots and dashes tiny. */
+        DashDotLine2 = 12,     /**< Alternate dots and dashes small. */
+        DashDotLineX2 = 13,   /**< Alternate dots and dashes large. */
 
-        DivideLine = 11,      /**< dash, dot, dot. */
-        DivideLine2 = 12,     /**< dash, dot, dot small. */
-        DivideLineX2 = 13,    /**< dash, dot, dot large. */
+        DivideLine = 14,      /**< dash, dot, dot. */
+        DivideLineTiny = 15,      /**< dash, dot, dot, tiny */
+        DivideLine2 = 16,     /**< dash, dot, dot small. */
+        DivideLineX2 = 17,    /**< dash, dot, dot large. */
 
-        CenterLine = 14,      /**< dash, small dash. */
-        CenterLine2 = 15,     /**< dash, small dash small. */
-        CenterLineX2 = 16,    /**< dash, small dash large. */
+        CenterLine = 18,      /**< dash, small dash. */
+        CenterLineTiny = 19,      /**< dash, small dash tiny */
+        CenterLine2 = 20,     /**< dash, small dash small. */
+        CenterLineX2 = 21,    /**< dash, small dash large. */
 
-        BorderLine = 17,      /**< dash, dash, dot. */
-        BorderLine2 = 18,     /**< dash, dash, dot small. */
-        BorderLineX2 = 19,    /**< dash, dash, dot large. */
+        BorderLine = 22,      /**< dash, dash, dot. */
+        BorderLineTiny = 23,      /**< dash, dash, dot tiny */
+        BorderLine2 = 24,     /**< dash, dash, dot small. */
+        BorderLineX2 = 25,    /**< dash, dash, dot large. */
 
-        LineByLayer = -1,     /**< Line type defined by layer not entity */
-        LineByBlock = -2      /**< Line type defined by block not entity */
+        LineTypeUnchanged=26      /**< Line type defined by block not entity */
     };
 
     /**

@@ -1430,6 +1430,9 @@ const RS_LineTypePattern* RS_GraphicView::getPattern(RS2::LineType t) {
     case RS2::DotLine:
         return &RS_LineTypePattern::patternDotLine;
         break;
+    case RS2::DotLineTiny:
+        return &RS_LineTypePattern::patternDotLineTiny;
+        break;
     case RS2::DotLine2:
         return &RS_LineTypePattern::patternDotLine2;
         break;
@@ -1439,6 +1442,9 @@ const RS_LineTypePattern* RS_GraphicView::getPattern(RS2::LineType t) {
 
     case RS2::DashLine:
         return &RS_LineTypePattern::patternDashLine;
+        break;
+    case RS2::DashLineTiny:
+        return &RS_LineTypePattern::patternDashLineTiny;
         break;
     case RS2::DashLine2:
         return &RS_LineTypePattern::patternDashLine2;
@@ -1450,6 +1456,9 @@ const RS_LineTypePattern* RS_GraphicView::getPattern(RS2::LineType t) {
     case RS2::DashDotLine:
         return &RS_LineTypePattern::patternDashDotLine;
         break;
+    case RS2::DashDotLineTiny:
+        return &RS_LineTypePattern::patternDashDotLineTiny;
+        break;
     case RS2::DashDotLine2:
         return &RS_LineTypePattern::patternDashDotLine2;
         break;
@@ -1459,6 +1468,9 @@ const RS_LineTypePattern* RS_GraphicView::getPattern(RS2::LineType t) {
 
     case RS2::DivideLine:
         return &RS_LineTypePattern::patternDivideLine;
+        break;
+    case RS2::DivideLineTiny:
+        return &RS_LineTypePattern::patternDivideLineTiny;
         break;
     case RS2::DivideLine2:
         return &RS_LineTypePattern::patternDivideLine2;
@@ -1470,6 +1482,9 @@ const RS_LineTypePattern* RS_GraphicView::getPattern(RS2::LineType t) {
     case RS2::CenterLine:
         return &RS_LineTypePattern::patternCenterLine;
         break;
+    case RS2::CenterLineTiny:
+        return &RS_LineTypePattern::patternCenterLineTiny;
+        break;
     case RS2::CenterLine2:
         return &RS_LineTypePattern::patternCenterLine2;
         break;
@@ -1479,6 +1494,9 @@ const RS_LineTypePattern* RS_GraphicView::getPattern(RS2::LineType t) {
 
     case RS2::BorderLine:
         return &RS_LineTypePattern::patternBorderLine;
+        break;
+    case RS2::BorderLineTiny:
+        return &RS_LineTypePattern::patternBorderLineTiny;
         break;
     case RS2::BorderLine2:
         return &RS_LineTypePattern::patternBorderLine2;
