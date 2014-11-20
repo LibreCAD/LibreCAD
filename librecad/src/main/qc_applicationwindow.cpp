@@ -3022,6 +3022,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         if( QDialog::Accepted == fileDlg.exec()) {
             QStringList files = fileDlg.selectedFiles();
             if (!files.isEmpty()) {
+                if(!files[0].endsWith(R"(.pdf)",Qt::CaseInsensitive)) files[0]=files[0]+".pdf";
                 printer.setOutputFileName(files[0]);
                 bStartPrinting = true;
             }
