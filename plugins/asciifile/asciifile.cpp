@@ -23,7 +23,7 @@
 #include <QPushButton>
 #include <QFileDialog>
 #include <QSettings>
-#include <math.h>
+#include <cmath>
 
 #include <QMessageBox>
 
@@ -610,16 +610,29 @@ void dibPunto::procesfileNormal(QFile* file, QString sep, QString::SplitBehavior
         data = line.split(sep, skip);
         pd = new pointData;
         int i = 0;
-        int j = data.size();
-        if (i<j) pd->number = data.at(i); else pd->number = QString ();
-        i++;
-        if (i<j) pd->x = data.at(i); else pd->x = QString();
-        i++;
-        if (i<j) pd->y = data.at(i); else pd->y = QString();
-        i++;
-        if (i<j) pd->z = data.at(i); else pd->z = QString();
-        i++;
-        if (i<j) pd->code = data.at(i); else pd->code = QString ();
+        switch(data.size()){
+        case 0:
+        case 1:
+            delete pd;
+            continue;
+
+            //allow reading in raw 2D ascii data in format:
+            // x y
+        case 2:
+            pd->x = data.at(0);
+            pd->y = data.at(1);
+            break;
+        default:
+        case 5:
+            pd->code=data.at(4);
+        case 4:
+            pd->z = data.at(3);
+        case 3:
+            pd->number = data.at(i);
+            pd->x = data.at(1);
+            pd->y = data.at(2);
+            break;
+        }
         dataList.append(pd);
     }
 }
