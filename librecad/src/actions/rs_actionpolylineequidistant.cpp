@@ -210,7 +210,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                      newPolyline->setNextBulge(arcFirst.getBulge());
                 }
                 //check if the entity are reverted
-                if (abs (prevEntity->getStartpoint().angleTo(prevEntity->getEndpoint())- startAngle) > 0.785){
+                if (fabs(remainder(prevEntity->getStartpoint().angleTo(prevEntity->getEndpoint())- startAngle, 2.*M_PI)) > 0.785){
                     prevEntity = newPolyline->lastEntity();
                     RS_Vector v0 = calculateIntersection(prevEntity, currEntity);
                     if (prevEntity->rtti()==RS2::EntityArc) {
