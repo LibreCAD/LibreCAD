@@ -30,6 +30,7 @@
 #include "rs_actioninterface.h"
 #include "rs_dialogfactory.h"
 #include "rs_commandevent.h"
+#include "rs_commands.h"
 
 /**
  * Constructor.
@@ -233,14 +234,37 @@ void RS_EventHandler::keyReleaseEvent(QKeyEvent* e) {
 }
 
 
+bool RS_EventHandler::cliCalculator(const QString& cmd) const
+{
+    QString str=RS_Commands::filterCliCal(cmd);
+
+    if(str.isEmpty()){
+//        RS_DIALOGFACTORY->commandMessage("No math expression");
+        return false;
+    }
+    bool ok=true;
+    double result=RS_Math::eval(str,&ok);
+    if(ok)
+        RS_DIALOGFACTORY->commandMessage(str + " = "+QString::number(result));
+    else
+        RS_DIALOGFACTORY->commandMessage("Calculator error for input: "+ str);
+    return true;
+}
 
 /**
  * Handles command line events.
  */
 void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
     RS_DEBUG->print("RS_EventHandler::commandEvent");
-
     QString cmd = e->getCommand();
+
+    // allow using command line as a calculator
+    if (!e->isAccepted())  {
+        if(cliCalculator(cmd)) {
+            e->accept();
+            return;
+        }
+    }
 
     if (coordinateInputEnabled) {
         if (!e->isAccepted()) {

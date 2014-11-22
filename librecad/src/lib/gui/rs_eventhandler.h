@@ -54,9 +54,9 @@ public:
     void keyPressEvent(QKeyEvent* e);
     void keyReleaseEvent(QKeyEvent* e);
 
-        void commandEvent(RS_CommandEvent* e);
-        void enableCoordinateInput();
-        void disableCoordinateInput();
+    void commandEvent(RS_CommandEvent* e);
+    void enableCoordinateInput();
+    void disableCoordinateInput();
 
     void setDefaultAction(RS_ActionInterface* action);
     RS_ActionInterface* getDefaultAction();
@@ -75,12 +75,19 @@ public:
     void setSnapRestriction(RS2::SnapRestriction sr);
 
 protected:
-        RS_GraphicView* graphicView;
-        RS_ActionInterface* defaultAction;
-//    RS_ActionInterface* currentActions[RS_MAXACTIONS];
+    RS_GraphicView* graphicView;
+    RS_ActionInterface* defaultAction;
+    //    RS_ActionInterface* currentActions[RS_MAXACTIONS];
     QList<RS_ActionInterface*> currentActions;
     int actionIndex;
-        bool coordinateInputEnabled;
+    bool coordinateInputEnabled;
+private:
+    /**
+         * @brief cliCalEvent, process cli "cal" calculator command
+         * @param cmd, cli line to check for "cal" command
+         * @return true, if cli starts with "cal"
+         */
+    bool cliCalculator(const QString& cmd) const;
 };
 
 #endif

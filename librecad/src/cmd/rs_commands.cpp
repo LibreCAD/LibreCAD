@@ -753,5 +753,29 @@ QString RS_Commands::msgAvailableCommands() {
     return tr("Available commands:");
 }
 
+/**
+ * @brief extractCliCal, filter cli calculator math expression
+ * @param cmd, cli string
+ * @return math expression for RS_Math:eval();
+ */
+QString RS_Commands::filterCliCal(const QString& cmd)
+{
+
+    QString str=cmd.trimmed();
+    const QRegExp calCmd(R"(^(cal|calculate))");
+    if(!(str.contains(calCmd)
+         || str.startsWith(tr("cal","command to trigger cli calculator"), Qt::CaseInsensitive)
+         || str.startsWith(tr("calculate","command to trigger cli calculator"), Qt::CaseInsensitive)
+                           )) {
+        return QString();
+    }
+    int index=str.indexOf(QRegExp(R"(\s)"));
+    bool spaceFound=(index>=0);
+    str=str.mid(index);
+    index=str.indexOf(QRegExp(R"(\S)"));
+    if(!(spaceFound && index>=0)) return QString();
+    str=str.mid(index);
+    return str;
+}
 
 // EOF

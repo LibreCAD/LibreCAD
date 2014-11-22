@@ -70,10 +70,16 @@ public:
     static QString msgAvailableCommands();
     void updateAlias();
 
-	 // Prefixes for function-, Meta- and Alt- keys.
-	 static const char *FnPrefix;
-	 static const char *AltPrefix;
-	 static const char *MetaPrefix;
+    // Prefixes for function-, Meta- and Alt- keys.
+    static const char *FnPrefix;
+    static const char *AltPrefix;
+    static const char *MetaPrefix;
+    /**
+      * @brief extractCliCal, filter cli calculator math expression
+      * @param cmd, cli string
+      * @return math expression for RS_Math:eval();
+      */
+    static QString filterCliCal(const QString& cmd);
 
 protected:
     static RS_Commands* uniqueInstance;
