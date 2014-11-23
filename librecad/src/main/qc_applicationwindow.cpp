@@ -1746,12 +1746,9 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
  */
 void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
 
-    RS_DEBUG->print("QC_ApplicationWindow::slotWindowsMenuAboutToShow");
+    RS_DEBUG->print( RS_Debug::D_NOTICE, "QC_ApplicationWindow::slotWindowsMenuAboutToShow");
 
     windowsMenu->clear();
-    //    while( windowsMenu.size() > 0 ){
-//            delete windowsMenu->takeFirst();
-//    }
 
     QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
     for (int i=0; i<windows.size(); ) {
@@ -1776,21 +1773,21 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
             continue;
         }
     }
-    if (mdiAreaCAD->subWindowList().size()>1) {
-        if(mdiAreaTab) {
-            windowsMenu->addAction(tr("Su&b-Window mode"),
-                                             this, SLOT(slotToggleTab()));
-        }else{
-            windowsMenu->addAction(tr("&Cascade"), this, SLOT(slotCascade()));
-//            windowsMenu->addAction(tr("&Tile"), mdiAreaCAD, SLOT(tileSubWindows()));
-            windowsMenu->addAction(tr("&Tile"), this, SLOT(slotTile()));
-            windowsMenu->addAction(tr("Tile &Vertically"), this, SLOT(slotTileVertical()));
-            windowsMenu->addAction(tr("Tile &Horizontally"), this, SLOT(slotTileHorizontal()));
-            windowsMenu->addAction(tr("Ta&b mode"), this, SLOT(slotToggleTab()));
+
+    if ( mdiAreaCAD->subWindowList().isEmpty()) {
+        return; //no sub-window to show
+    } else if( mdiAreaTab) {
+        windowsMenu->addAction( tr("Su&b-Window mode"), this, SLOT(slotToggleTab()));
+    } else {
+        windowsMenu->addAction( tr("Ta&b mode"), this, SLOT(slotToggleTab()));
+        if ( 1 < mdiAreaCAD->subWindowList().size()) {
+            windowsMenu->addAction( tr("&Cascade"), this, SLOT(slotCascade()));
+            windowsMenu->addAction( tr("&Tile"), this, SLOT(slotTile()));
+            windowsMenu->addAction( tr("Tile &Vertically"), this, SLOT(slotTileVertical()));
+            windowsMenu->addAction( tr("Tile &Horizontally"), this, SLOT(slotTileHorizontal()));
         }
-    }else{
-        if(mdiAreaCAD->subWindowList().size() == 0) return; //no sub-window to show
     }
+
     windowsMenu->addSeparator();
     QMdiSubWindow* active= mdiAreaCAD->activeSubWindow();
 //    int active=windows.indexOf(mdiAreaCAD->activeSubWindow());
@@ -1802,10 +1799,6 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
         id->setCheckable(true);
         id->setData(i);
         id->setChecked(windows.at(i)==active);
-//    std::cout<<" QC_ApplicationWindow::slotWindowsMenuAboutToShow(): "<<i<<":windows.at(i)->isactiveSubWindow(): "<< windows.at(i)->isactiveSubWindow()<<std::endl;
-////    std::cout<<" QC_ApplicationWindow::slotWindowsMenuAboutToShow(): "<<i<<":windows.at(i)->widget()->isactiveSubWindow(): "<< windows.at(i)->widget()->isactiveSubWindow()<<std::endl;
-////    std::cout<<" QC_ApplicationWindow::slotWindowsMenuAboutToShow(): "<<i<<":windows.at(i)->hasFocus(): "<< windows.at(i)->hasFocus()<<std::endl;
-//    std::cout<<" QC_ApplicationWindow::slotWindowsMenuAboutToShow(): "<<i<<":windows.at(i)->widget()->hasFocus(): "<< windows.at(i)->widget()->hasFocus()<<std::endl;
     }
 }
 
