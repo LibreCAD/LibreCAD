@@ -4785,6 +4785,7 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
             break;
 
         case Qt::Key_Return:
+        case Qt::Key_Enter:
             slotEnter();
             e->accept();
             break;
