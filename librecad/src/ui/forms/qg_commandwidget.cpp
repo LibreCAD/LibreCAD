@@ -82,12 +82,25 @@ bool QG_CommandWidget::checkFocus() {
 bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
 {
     if (event->type() == QEvent::KeyPress) {
-        leCommand->setFocus(Qt::OtherFocusReason);
-        QKeyEvent * newEvent = new QKeyEvent(*static_cast<QKeyEvent*>(event));
-        QApplication::postEvent(leCommand, newEvent);
-        return true;
-    } else
-        return false;
+        QKeyEvent* e=static_cast<QKeyEvent*>(event);
+        switch(e->key()){
+        case Qt::Key_Return:
+        case Qt::Key_Enter:
+        case Qt::Key_Escape:
+            return false;
+        default:
+        {
+            DEBUG_HEADER();
+            leCommand->setFocus(Qt::OtherFocusReason);
+            event->accept();
+            QKeyEvent * newEvent = new QKeyEvent(*static_cast<QKeyEvent*>(event));
+            QApplication::postEvent(leCommand, newEvent);
+            return true;
+        }
+        }
+
+    }
+    return false;
 }
 
 
