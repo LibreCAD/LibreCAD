@@ -752,6 +752,7 @@ void QC_ApplicationWindow::initActions(void)
     actionFactory.addGUI(subMenu, this, blockWidget->parentWidget(), RS2::ActionViewBlockList);
     actionFactory.addGUI(subMenu, this, libraryWidget->parentWidget(), RS2::ActionViewLibrary);
     actionFactory.addGUI(subMenu, this, commandWidget->parentWidget(), RS2::ActionViewCommandLine);
+    actionFactory.addGUI(subMenu, this, cadToolBar->parentWidget(), RS2::ActionViewCadToolbar);
 
     subMenu->addSeparator();
 
@@ -1261,8 +1262,8 @@ void QC_ApplicationWindow::initToolBar() {
 
     connect(cadToolBar, SIGNAL(signalBack()),
             this, SLOT(slotBack()));
-    connect(this, SIGNAL(windowsChanged(bool)),
-            cadToolBar, SLOT(setEnabled(bool)));
+//    connect(this, SIGNAL(windowsChanged(bool)),
+//            cadToolBar, SLOT(setEnabled(bool)));
 
     //QG_CadToolBarMain* cadToolBarMain =
     //new QG_CadToolBarMain(cadToolBar);
