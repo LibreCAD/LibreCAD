@@ -2971,14 +2971,20 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
 #if QT_VERSION < 0x040400
     emu_qt44_QPrinter_setPaperSize(printer, RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape)));
 #else
-    printer.setPaperSize(RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape)));
+    QPrinter::PageSize paperSize=RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape));
+    printer.setPaperSize(paperSize);
 #endif // QT_VERSION 0x040400
+    if(paperSize==QPrinter::Custom){
+        RS_Vector&& s=graphic->getPaperSize()*RS_Units::getFactorToMM(graphic->getUnit());
+        if(landscape) s=s.flipXY();
+        printer.setPaperSize(QSizeF(s.x,s.y),QPrinter::Millimeter);
+        RS_DEBUG->print(RS_Debug::D_ERROR, "set paper size to (%g, %g)\n", s.x,s.y);
+    }
     if (landscape) {
         printer.setOrientation(QPrinter::Landscape);
     } else {
         printer.setOrientation(QPrinter::Portrait);
     }
-
     QString     strDefaultFile("");
     RS_SETTINGS->beginGroup("/Print");
     strDefaultFile = RS_SETTINGS->readEntry("/FileName", "");
@@ -3065,6 +3071,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         double fy = (double)printer.height() / printer.heightMM()
                     * RS_Units::getFactorToMM(graphic->getUnit());
 
+
         double f = (fx+fy)/2.0;
 
         double scale = graphic->getPaperScale();
@@ -3072,7 +3079,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         gv.setOffset((int)(graphic->getPaperInsertionBase().x * f),
                      (int)(graphic->getPaperInsertionBase().y * f));
         gv.setFactor(f*scale);
-
+RS_DEBUG->print(RS_Debug::D_ERROR, "PaperSize=(%d, %d)\n",printer.widthMM(), printer.heightMM());
         gv.setContainer(graphic);
 //fixme, I don't understand the meaning of 'true' here
 //        gv.drawEntity(&painter, graphic, true);

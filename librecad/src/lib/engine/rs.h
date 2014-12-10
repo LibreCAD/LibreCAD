@@ -1089,6 +1089,7 @@ public:
                 QPrinter::PageSize ret;
 
                 switch (f) {
+                default:
         case Custom:
                         ret = QPrinter::Custom;
                         break;
@@ -1113,7 +1114,6 @@ public:
                 case A3:
                         ret = QPrinter::A3;
                         break;
-                default:
                 case A4:
                         ret = QPrinter::A4;
                         break;
