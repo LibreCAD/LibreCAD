@@ -2978,7 +2978,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         RS_Vector&& s=graphic->getPaperSize()*RS_Units::getFactorToMM(graphic->getUnit());
         if(landscape) s=s.flipXY();
         printer.setPaperSize(QSizeF(s.x,s.y),QPrinter::Millimeter);
-        RS_DEBUG->print(RS_Debug::D_ERROR, "set paper size to (%g, %g)\n", s.x,s.y);
+//        RS_DEBUG->print(RS_Debug::D_ERROR, "set paper size to (%g, %g)\n", s.x,s.y);
     }
     if (landscape) {
         printer.setOrientation(QPrinter::Landscape);
@@ -3070,7 +3070,8 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
                     * RS_Units::getFactorToMM(graphic->getUnit());
         double fy = (double)printer.height() / printer.heightMM()
                     * RS_Units::getFactorToMM(graphic->getUnit());
-
+//RS_DEBUG->print(RS_Debug::D_ERROR, "paper size=(%d, %d)\n",
+//                printer.widthMM(),printer.heightMM());
 
         double f = (fx+fy)/2.0;
 
@@ -3079,7 +3080,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         gv.setOffset((int)(graphic->getPaperInsertionBase().x * f),
                      (int)(graphic->getPaperInsertionBase().y * f));
         gv.setFactor(f*scale);
-RS_DEBUG->print(RS_Debug::D_ERROR, "PaperSize=(%d, %d)\n",printer.widthMM(), printer.heightMM());
+//RS_DEBUG->print(RS_Debug::D_ERROR, "PaperSize=(%d, %d)\n",printer.widthMM(), printer.heightMM());
         gv.setContainer(graphic);
 //fixme, I don't understand the meaning of 'true' here
 //        gv.drawEntity(&painter, graphic, true);

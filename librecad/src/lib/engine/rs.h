@@ -1068,7 +1068,7 @@ public:
                 Comm10E,
         DLE,
                 Folio,
-                //Ledger,
+                Ledger,
                 Tabloid,
         Arch_A,
         Arch_B,
@@ -1086,110 +1086,86 @@ public:
      * Wrapper for Qt.
      */
     static QPrinter::PageSize rsToQtPaperFormat(RS2::PaperFormat f) {
-                QPrinter::PageSize ret;
 
-                switch (f) {
-                default:
+        switch (f) {
+        default:
         case Custom:
-                        ret = QPrinter::Custom;
-                        break;
-                case Letter:
-                        ret = QPrinter::Letter;
-                        break;
-                case Legal:
-                        ret = QPrinter::Legal;
-                        break;
-                case Executive:
-                        ret = QPrinter::Executive;
-                        break;
-                case A0:
-                        ret = QPrinter::A0;
-                        break;
-                case A1:
-                        ret = QPrinter::A1;
-                        break;
-                case A2:
-                        ret = QPrinter::A2;
-                        break;
-                case A3:
-                        ret = QPrinter::A3;
-                        break;
-                case A4:
-                        ret = QPrinter::A4;
-                        break;
-                case A5:
-                        ret = QPrinter::A5;
-                        break;
-                case A6:
-                        ret = QPrinter::A6;
-                        break;
-                case A7:
-                        ret = QPrinter::A7;
-                        break;
-                case A8:
-                        ret = QPrinter::A8;
-                        break;
-                case A9:
-                        ret = QPrinter::A9;
-                        break;
-                case B0:
-                        ret = QPrinter::B0;
-                        break;
-                case B1:
-                        ret = QPrinter::B1;
-                        break;
-                case B2:
-                        ret = QPrinter::B2;
-                        break;
-                case B3:
-                        ret = QPrinter::B3;
-                        break;
-                case B4:
-                        ret = QPrinter::B4;
-                        break;
-                case B5:
-                        ret = QPrinter::B5;
-                        break;
-                case B6:
-                        ret = QPrinter::B6;
-                        break;
-                case B7:
-                        ret = QPrinter::B7;
-                        break;
-                case B8:
-                        ret = QPrinter::B8;
-                        break;
-                case B9:
-                        ret = QPrinter::B9;
-                        break;
-                case B10:
-                        ret = QPrinter::B10;
-                        break;
-                case C5E:
-                        ret = QPrinter::C5E;
-                        break;
-                case Comm10E:
-                        ret = QPrinter::Comm10E;
-                        break;
+            return QPrinter::Custom;
+        case Letter:
+            return QPrinter::Letter;
+        case Legal:
+            return QPrinter::Legal;
+        case Executive:
+            return QPrinter::Executive;
+        case A0:
+            return QPrinter::A0;
+        case A1:
+            return QPrinter::A1;
+        case A2:
+            return QPrinter::A2;
+        case A3:
+            return QPrinter::A3;
+        case A4:
+            return QPrinter::A4;
+        case A5:
+            return QPrinter::A5;
+        case A6:
+            return QPrinter::A6;
+        case A7:
+            return QPrinter::A7;
+        case A8:
+            return QPrinter::A8;
+        case A9:
+            return QPrinter::A9;
+        case B0:
+            return QPrinter::B0;
+        case B1:
+            return QPrinter::B1;
+        case B2:
+            return QPrinter::B2;
+        case B3:
+            return QPrinter::B3;
+        case B4:
+            return QPrinter::B4;
+        case B5:
+            return QPrinter::B5;
+        case B6:
+            return QPrinter::B6;
+        case B7:
+            return QPrinter::B7;
+        case B8:
+            return QPrinter::B8;
+        case B9:
+            return QPrinter::B9;
+        case B10:
+            return QPrinter::B10;
+        case C5E:
+            return QPrinter::C5E;
+        case Comm10E:
+            return QPrinter::Comm10E;
         case DLE:
-                        ret = QPrinter::DLE;
-                        break;
-                case Folio:
-                        ret = QPrinter::Folio;
-                        break;
-                //case Ledger:
-                //	ret = QPrinter::Ledger;
-                //	break;
-                case Tabloid:
-                        ret = QPrinter::Tabloid;
-                        break;
-                case NPageSize:
-                        ret = QPrinter::NPageSize;
-                        break;
-                }
-
-                return ret;
+            return QPrinter::DLE;
+        case Folio:
+            return QPrinter::Folio;
+        case Ledger:
+            return QPrinter::Ledger;
+        case Tabloid:
+            return QPrinter::Tabloid;
+        case Arch_A:
+            return QPrinter::ArchA;
+        case Arch_B:
+            return QPrinter::ArchB;
+        case Arch_C:
+            return QPrinter::ArchC;
+        case Arch_D:
+            return QPrinter::ArchD;
+        case Arch_E:
+            return QPrinter::ArchE;
+        case NPageSize:
+            return QPrinter::NPageSize;
         }
+
+    }
 
         /**
          * Items that can be put on a overlay, teh items are rendered in this order. Best is to leave snapper as last so
