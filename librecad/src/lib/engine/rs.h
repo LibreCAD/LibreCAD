@@ -1151,6 +1151,7 @@ public:
             return QPrinter::Ledger;
         case Tabloid:
             return QPrinter::Tabloid;
+#if QT_MAJOR_VERSION >= 5
         case Arch_A:
             return QPrinter::ArchA;
         case Arch_B:
@@ -1161,6 +1162,7 @@ public:
             return QPrinter::ArchD;
         case Arch_E:
             return QPrinter::ArchE;
+#endif
         case NPageSize:
             return QPrinter::NPageSize;
         }
