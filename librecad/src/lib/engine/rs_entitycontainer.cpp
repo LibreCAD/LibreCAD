@@ -701,7 +701,9 @@ void RS_EntityContainer::updateDimensions(bool autoText) {
         if (RS_Information::isDimension(e->rtti())) {
             // update and reposition label:
             ((RS_Dimension*)e)->updateDim(autoText);
-        } else if (e->isContainer()) {
+        } else if(e->rtti()==RS2::EntityDimLeader)
+            e->update();
+        else if (e->isContainer()) {
             ((RS_EntityContainer*)e)->updateDimensions(autoText);
         }
     }
