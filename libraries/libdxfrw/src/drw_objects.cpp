@@ -915,7 +915,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
     }
 #ifdef DRW_DBG
     std::map<std::string,DRW_Variant *>::const_iterator it;
-    for ( it=vars.begin() ; it != vars.end(); it++ ){
+    for ( it=vars.begin() ; it != vars.end(); ++it ){
 //        QString key = QString::fromStdString((*it).first);
         std::cerr << (*it).first << std::endl;
     }

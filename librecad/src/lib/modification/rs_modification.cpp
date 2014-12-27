@@ -1687,7 +1687,7 @@ bool RS_Modification::scale(RS_ScaleData& data) {
 
         for(QList<RS_Entity*>::iterator pe=selectedList.begin();
                 pe != selectedList.end();
-                pe++ ) {
+                ++pe ) {
             RS_Entity* e= *pe;
             //for (RS_Entity* e=container->firstEntity();
             //        e!=NULL;

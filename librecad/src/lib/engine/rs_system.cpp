@@ -735,7 +735,7 @@ QString RS_System::getEncoding(const QString& str) {
         return "eucJP";
     } else if (l=="euckr") {
         return "eucKR";
-    } else if (l=="gb2312" || l=="gb2312" || l=="chinese" || l=="cn-gb" ||
+    } else if (l=="gb2312" || l=="chinese" || l=="cn-gb" ||
                l=="csgb2312" || l=="csgb231280" || l=="csiso58gb231280" ||
                l=="gb_2312-80" || l=="gb231280" || l=="gb2312-80" || l=="gbk" ||
                l=="iso-ir-58") {

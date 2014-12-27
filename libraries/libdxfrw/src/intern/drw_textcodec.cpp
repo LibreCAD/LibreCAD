@@ -150,7 +150,7 @@ std::string DRW_ConvTable::fromUtf8(std::string *s) {
 std::string DRW_ConvTable::toUtf8(std::string *s) {
     std::string res;
     std::string::iterator it;
-    for ( it=s->begin() ; it < s->end(); it++ ) {
+    for ( it=s->begin() ; it < s->end(); ++it ) {
         unsigned char c = *it;
         if (c < 0x80) {
             //check for \U+ encoded text
@@ -291,7 +291,7 @@ std::string DRW_ConvDBCSTable::fromUtf8(std::string *s) {
 std::string DRW_ConvDBCSTable::toUtf8(std::string *s) {
     std::string res;
     std::string::iterator it;
-    for ( it=s->begin() ; it < s->end(); it++ ) {
+    for ( it=s->begin() ; it < s->end(); ++it ) {
         bool notFound = true;
         unsigned char c = *it;
         if (c < 0x80) {
@@ -377,7 +377,7 @@ std::string DRW_Conv932Table::fromUtf8(std::string *s) {
 std::string DRW_Conv932Table::toUtf8(std::string *s) {
     std::string res;
     std::string::iterator it;
-    for ( it=s->begin() ; it < s->end(); it++ ) {
+    for ( it=s->begin() ; it < s->end(); ++it ) {
         bool notFound = true;
         unsigned char c = *it;
         if (c < 0x80) {
@@ -471,7 +471,7 @@ std::string DRW_TextCodec::correctCodePage(const std::string& s) {
         //Chinese PRC GBK (XGB) simplified
     } else if (cp=="ANSI_936" || cp=="GBK" || cp=="GB2312" || cp=="CHINESE" || cp=="CN-GB" ||
                cp=="CSGB2312" || cp=="CSGB231280" || cp=="CSISO58BG231280" ||
-               cp=="GB_2312-80" || cp=="GB231280" || cp=="GB2312-80" || cp=="GBK" ||
+               cp=="GB_2312-80" || cp=="GB231280" || cp=="GB2312-80" ||
                cp=="ISO-IR-58" || cp=="GB18030") {
         return "ANSI_936";
         //Korean

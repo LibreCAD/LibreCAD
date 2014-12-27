@@ -1896,7 +1896,7 @@ void RS_FilterJWW::writeSplinePoints(DL_WriterA& dw,
 
 	// write spline control points:
 	QList<RS_Vector>::iterator it;
-	for(it = cp.begin(); it != cp.end(); it++)
+	for(it = cp.begin(); it != cp.end(); ++it)
 	{
 		jww.writeControlPoint(dw, DL_ControlPointData((*it).x, (*it).y, 0.0));
 	}

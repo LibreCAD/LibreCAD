@@ -91,7 +91,7 @@ void QG_CadToolBarModify::init() {
     bHidden->setMaximumSize(0,0); //zero size
     buttonList.push_back(bHidden);
     //set up auto-exclusive
-    for(QList<QToolButton*>::iterator it=buttonList.begin();it !=buttonList.end();it++){
+    for(QList<QToolButton*>::iterator it=buttonList.begin();it !=buttonList.end();++it){
         (*it)->setCheckable(true);
         (*it)->setAutoExclusive(true);
     }
