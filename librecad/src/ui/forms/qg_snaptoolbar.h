@@ -49,7 +49,7 @@ public:
     virtual void setActionHandler(QG_ActionHandler* ah);
     bool lockedRelativeZero();
     void setLockedRelativeZero(bool on);
-    QVector<QAction*> getActions() const;
+    const QVector<QAction*>& getActions() const;
 
 protected:
     QG_ActionHandler* actionHandler;

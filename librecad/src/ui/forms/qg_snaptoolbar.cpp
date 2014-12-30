@@ -218,7 +218,7 @@ void QG_SnapToolBar::setLockedRelativeZero(bool on)
 {
     bLockRelZero->setChecked(on);
 }
-QVector<QAction*> QG_SnapToolBar::getActions() const
+const QVector<QAction*>& QG_SnapToolBar::getActions() const
 {
     return m_vSnapActions;
 }
