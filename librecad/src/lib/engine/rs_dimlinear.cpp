@@ -145,26 +145,32 @@ void RS_DimLinear::updateDim(bool autoText) {
        addEntity(dimensionLine);
     */
 
-    double extAngle;
+    double extAngle1, extAngle2;
     RS_Vector vDimexo1, vDimexe1, vDimexo2, vDimexe2;
 
     if ((edata.extensionPoint1-dimP1).magnitude()<1e-6) {
         if ((edata.extensionPoint2-dimP2).magnitude()<1e-6) {
             //boot extension points are in dimension line only rotate 90
-            extAngle = edata.angle + (M_PI/2.0);
+            extAngle2 = edata.angle + (M_PI/2.0);
         } else {
             //first extension point are in dimension line use second
-            extAngle = edata.extensionPoint2.angleTo(dimP2);
+            extAngle2 = edata.extensionPoint2.angleTo(dimP2);
         }
+            extAngle1 = extAngle2;
     } else {
         //first extension point not are in dimension line use it
-        extAngle = edata.extensionPoint1.angleTo(dimP1);
+        extAngle1 = edata.extensionPoint1.angleTo(dimP1);
+        if ((edata.extensionPoint2-dimP2).magnitude()<1e-6)
+            extAngle2 = extAngle1;
+        else
+            extAngle2 = edata.extensionPoint2.angleTo(dimP2);
     }
-    vDimexe1.setPolar(dimexe, extAngle);
-    vDimexo1.setPolar(dimexo, extAngle);
+    vDimexe1.setPolar(dimexe, extAngle1);
+    vDimexo1.setPolar(dimexo, extAngle1);
 
-    vDimexe2.setPolar(dimexe, extAngle);
-    vDimexo2.setPolar(dimexo, extAngle);
+
+    vDimexe2.setPolar(dimexe, extAngle2);
+    vDimexo2.setPolar(dimexo, extAngle2);
 
     // extension lines:
     ld = RS_LineData(edata.extensionPoint1+vDimexo1,
