@@ -1032,7 +1032,7 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
     case RS2::ActionModifyOffset:
                 action = RS_ActionModifyOffset::createGUIAction(id, mw);
         connect(action, SIGNAL(triggered()),
-                obj, SLOT(slotModifyTrimAmount()));
+                obj, SLOT(slotModifyOffset()));
         break;
 
     case RS2::ActionModifyCut:
