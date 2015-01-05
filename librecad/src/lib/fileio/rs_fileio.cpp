@@ -133,7 +133,7 @@ RS2::FormatType RS_FileIO::detectFormat(const QString& file) {
         type = RS2::FormatDWG;
 #endif
     } else if (ext=="dxf") {
-        type = RS2::FormatDXF1;
+        type = RS2::FormatDXFRW;
         QFile f(file);
 
         if (!f.open(QIODevice::ReadOnly)) {
