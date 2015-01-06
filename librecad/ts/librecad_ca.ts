@@ -5479,6 +5479,30 @@ El contingut d&apos;una capa de construcció no hauria d&apos;aparèixer en la s
         <source>- Unchanged -</source>
         <translation>- Sense canvis -</translation>
     </message>
+    <message>
+        <source>Dot (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash Dot (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Divide (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Border (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_MTextOptions</name>
@@ -9524,7 +9548,7 @@ Voleu reemplaçar-lo?</translation>
         <source>a</source>
         <comment>angle</comment>
         <translatorcomment>angle</translatorcomment>
-        <translation>a</translation>
+        <translation type="obsolete">a</translation>
     </message>
     <message>
         <source>fact</source>
@@ -9548,7 +9572,7 @@ Voleu reemplaçar-lo?</translation>
         <source>c</source>
         <comment>columns</comment>
         <translatorcomment>columnes</translatorcomment>
-        <translation>c</translation>
+        <translation type="obsolete">c</translation>
     </message>
     <message>
         <source>columnspacing</source>
@@ -9594,7 +9618,7 @@ Voleu reemplaçar-lo?</translation>
         <source>c</source>
         <comment>center</comment>
         <translatorcomment>centre</translatorcomment>
-        <translation>c</translation>
+        <translation type="obsolete">c</translation>
     </message>
     <message>
         <source>point</source>
@@ -9736,7 +9760,7 @@ Voleu reemplaçar-lo?</translation>
         <source>r</source>
         <comment>radius</comment>
         <translatorcomment>radi</translatorcomment>
-        <translation>r</translation>
+        <translation type="obsolete">r</translation>
     </message>
     <message>
         <source>t</source>
@@ -9752,13 +9776,13 @@ Voleu reemplaçar-lo?</translation>
         <source>length</source>
         <comment>chord length</comment>
         <translatorcomment>longitud corda</translatorcomment>
-        <translation>longitud</translation>
+        <translation type="obsolete">longitud</translation>
     </message>
     <message>
         <source>l</source>
         <comment>chord length</comment>
         <translatorcomment>longitud corda</translatorcomment>
-        <translation>l</translation>
+        <translation type="obsolete">l</translation>
     </message>
     <message>
         <source>Command: %1</source>
@@ -10239,17 +10263,17 @@ Voleu reemplaçar-lo?</translation>
         <source>r</source>
         <comment>reversed</comment>
         <translatorcomment>invertit</translatorcomment>
-        <translation>i</translation>
+        <translation type="obsolete">i</translation>
     </message>
     <message>
         <source>row</source>
-        <translation>fila</translation>
+        <translation type="obsolete">fila</translation>
     </message>
     <message>
         <source>r</source>
         <comment>row</comment>
         <translatorcomment>fila</translatorcomment>
-        <translation>f</translation>
+        <translation type="obsolete">f</translation>
     </message>
     <message>
         <source>r</source>
@@ -10357,6 +10381,46 @@ Voleu reemplaçar-lo?</translation>
     <message>
         <source>cut</source>
         <comment>modify - divide</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>an</source>
+        <comment>angle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ce</source>
+        <comment>center</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cl</source>
+        <comment>chord length</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>co</source>
+        <comment>columns</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ra</source>
+        <comment>radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>row</source>
+        <comment>row</comment>
+        <translation type="unfinished">fila</translation>
+    </message>
+    <message>
+        <source>cal</source>
+        <comment>command to trigger cli calculator</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate</source>
+        <comment>command to trigger cli calculator</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

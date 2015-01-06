@@ -7214,6 +7214,30 @@ Obsah pomocné hladiny se nezobrazí ve výstupu.</translation>
         <source>- Unchanged -</source>
         <translation>- Beze změny -</translation>
     </message>
+    <message>
+        <source>Dot (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash Dot (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Divide (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Border (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_MTextOptions</name>
@@ -12371,7 +12395,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>a</source>
         <comment>angle</comment>
-        <translation>uh</translation>
+        <translation type="obsolete">uh</translation>
     </message>
     <message>
         <source>fact</source>
@@ -12391,7 +12415,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>c</source>
         <comment>columns</comment>
-        <translation>s</translation>
+        <translation type="obsolete">s</translation>
     </message>
     <message>
         <source>r</source>
@@ -12435,7 +12459,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>c</source>
         <comment>center</comment>
-        <translation>str</translation>
+        <translation type="obsolete">str</translation>
     </message>
     <message>
         <source>reversed</source>
@@ -12588,7 +12612,7 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>r</source>
         <comment>radius</comment>
-        <translation>pol</translation>
+        <translation type="obsolete">pol</translation>
     </message>
     <message>
         <source>t</source>
@@ -12602,12 +12626,12 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>length</source>
         <comment>chord length</comment>
-        <translation>délka</translation>
+        <translation type="obsolete">délka</translation>
     </message>
     <message>
         <source>l</source>
         <comment>chord length</comment>
-        <translation>dt</translation>
+        <translation type="obsolete">dt</translation>
     </message>
     <message>
         <source>Command: %1</source>
@@ -13181,16 +13205,16 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>r</source>
         <comment>reversed</comment>
-        <translation>op</translation>
+        <translation type="obsolete">op</translation>
     </message>
     <message>
         <source>row</source>
-        <translation>řádek</translation>
+        <translation type="obsolete">řádek</translation>
     </message>
     <message>
         <source>r</source>
         <comment>row</comment>
-        <translation>ra</translation>
+        <translation type="obsolete">ra</translation>
     </message>
     <message>
         <source>Command not found: %1</source>
@@ -13292,6 +13316,46 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>cut</source>
         <comment>modify - divide</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>an</source>
+        <comment>angle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ce</source>
+        <comment>center</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cl</source>
+        <comment>chord length</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>co</source>
+        <comment>columns</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ra</source>
+        <comment>radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>row</source>
+        <comment>row</comment>
+        <translation type="unfinished">řádek</translation>
+    </message>
+    <message>
+        <source>cal</source>
+        <comment>command to trigger cli calculator</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate</source>
+        <comment>command to trigger cli calculator</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

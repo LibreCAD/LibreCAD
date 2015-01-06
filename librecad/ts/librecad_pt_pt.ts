@@ -6939,6 +6939,30 @@ The contents of a Construction Layer should not appear in printout.</source>
         <source>Dot (small)</source>
         <translation>Pontilhado (pequeno)</translation>
     </message>
+    <message>
+        <source>Dot (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash Dot (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Divide (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Border (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_MTextOptions</name>
@@ -13420,11 +13444,6 @@ não são exibidas para melhorar a performance de exibição.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>a</source>
-        <comment>angle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>fact</source>
         <comment>factor</comment>
         <translation type="unfinished"></translation>
@@ -13436,11 +13455,6 @@ não são exibidas para melhorar a performance de exibição.</translation>
     </message>
     <message>
         <source>cols</source>
-        <comment>columns</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>c</source>
         <comment>columns</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -13475,11 +13489,6 @@ não são exibidas para melhorar a performance de exibição.</translation>
     </message>
     <message>
         <source>cen</source>
-        <comment>center</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>c</source>
         <comment>center</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -13607,11 +13616,6 @@ não são exibidas para melhorar a performance de exibição.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>r</source>
-        <comment>radius</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>t</source>
         <comment>text</comment>
         <translation type="unfinished"></translation>
@@ -13623,12 +13627,7 @@ não são exibidas para melhorar a performance de exibição.</translation>
     <message>
         <source>length</source>
         <comment>chord length</comment>
-        <translation type="unfinished">comprimento</translation>
-    </message>
-    <message>
-        <source>l</source>
-        <comment>chord length</comment>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">comprimento</translation>
     </message>
     <message>
         <source>Command: %1</source>
@@ -14065,20 +14064,6 @@ não são exibidas para melhorar a performance de exibição.</translation>
     </message>
     <message>
         <source>r</source>
-        <comment>reversed</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>row</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>row</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>r</source>
         <comment>redo</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -14182,6 +14167,46 @@ não são exibidas para melhorar a performance de exibição.</translation>
     <message>
         <source>cut</source>
         <comment>modify - divide</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>an</source>
+        <comment>angle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ce</source>
+        <comment>center</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cl</source>
+        <comment>chord length</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>co</source>
+        <comment>columns</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ra</source>
+        <comment>radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>row</source>
+        <comment>row</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cal</source>
+        <comment>command to trigger cli calculator</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate</source>
+        <comment>command to trigger cli calculator</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

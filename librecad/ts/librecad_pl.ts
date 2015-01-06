@@ -7223,6 +7223,30 @@ The contents of a Construction Layer should not appear in printout.</source>
         <source>- Unchanged -</source>
         <translation>- Niezmienione -</translation>
     </message>
+    <message>
+        <source>Dot (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash Dot (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Divide (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Border (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_MTextOptions</name>
@@ -12400,7 +12424,7 @@ Czy chcesz zastąpić?</translation>
     <message>
         <source>a</source>
         <comment>angle</comment>
-        <translation>k</translation>
+        <translation type="obsolete">k</translation>
     </message>
     <message>
         <source>fact</source>
@@ -12420,7 +12444,7 @@ Czy chcesz zastąpić?</translation>
     <message>
         <source>c</source>
         <comment>columns</comment>
-        <translation>k</translation>
+        <translation type="obsolete">k</translation>
     </message>
     <message>
         <source>r</source>
@@ -12464,7 +12488,7 @@ Czy chcesz zastąpić?</translation>
     <message>
         <source>c</source>
         <comment>center</comment>
-        <translation>s</translation>
+        <translation type="obsolete">s</translation>
     </message>
     <message>
         <source>reversed</source>
@@ -12617,7 +12641,7 @@ Czy chcesz zastąpić?</translation>
     <message>
         <source>r</source>
         <comment>radius</comment>
-        <translation>pr</translation>
+        <translation type="obsolete">pr</translation>
     </message>
     <message>
         <source>t</source>
@@ -12631,12 +12655,12 @@ Czy chcesz zastąpić?</translation>
     <message>
         <source>length</source>
         <comment>chord length</comment>
-        <translation>dlc</translation>
+        <translation type="obsolete">dlc</translation>
     </message>
     <message>
         <source>l</source>
         <comment>chord length</comment>
-        <translation>dc</translation>
+        <translation type="obsolete">dc</translation>
     </message>
     <message>
         <source>Command: %1</source>
@@ -13208,20 +13232,6 @@ Czy chcesz zastąpić?</translation>
         <translation type="unfinished">odw</translation>
     </message>
     <message>
-        <source>r</source>
-        <comment>reversed</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>row</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>row</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Command not found: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13321,6 +13331,46 @@ Czy chcesz zastąpić?</translation>
     <message>
         <source>cut</source>
         <comment>modify - divide</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>an</source>
+        <comment>angle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ce</source>
+        <comment>center</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cl</source>
+        <comment>chord length</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>co</source>
+        <comment>columns</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ra</source>
+        <comment>radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>row</source>
+        <comment>row</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cal</source>
+        <comment>command to trigger cli calculator</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate</source>
+        <comment>command to trigger cli calculator</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

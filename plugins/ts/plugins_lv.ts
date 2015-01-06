@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="lv">
 <context>
@@ -410,7 +411,7 @@
         <translation>Datne %1 neeksistē</translation>
     </message>
     <message>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>Nevar atvērt datni %1</translation>
     </message>
 </context>
@@ -626,35 +627,35 @@
     </message>
     <message>
         <source>This plugin allows you to plot mathematical equations.
-If you don't want to use the parametric form, just leave out "Equation2".
+If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Equation 1:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Equation 2:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>start value:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>end value:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>step size:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Draw</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Zīmēt</translation>
     </message>
     <message>
         <source>Cancel</source>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="el">
 <context>
@@ -200,7 +201,7 @@
     <message>
         <location filename="../list/list.cpp" line="162"/>
         <source>CONSTRUCTIONLINE</source>
-        <translatorcomment>CHECKME αυτοσχεδιαστική μετάφραση, καθώς και το "βοηθητική" έχει χρησιμοποιηθεί για το "extension" και ίσως είναι κάτι διαφορετικό</translatorcomment>
+        <translatorcomment>CHECKME αυτοσχεδιαστική μετάφραση, καθώς και το &quot;βοηθητική&quot; έχει χρησιμοποιηθεί για το &quot;extension&quot; και ίσως είναι κάτι διαφορετικό</translatorcomment>
         <translation>ΚΑΤΑΣΚΕΥΑΣΤΙΚΗΓΡΑΜΜΗ</translation>
     </message>
     <message>
@@ -291,7 +292,7 @@
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>DIMALIGNED</source>
-        <translatorcomment>CHECKME ΣΤΟΙΧΙΣΜΕΝΗ 'Η ΕΥΘΥΓΡΑΜΜΙΣΜΕΝΗ ΚΑΙ ΓΙΑΤΙ ΚΑΙ ΠΡΟΣΟΧΗ ΣΤΑ ΑΛΛΑ</translatorcomment>
+        <translatorcomment>CHECKME ΣΤΟΙΧΙΣΜΕΝΗ &apos;Η ΕΥΘΥΓΡΑΜΜΙΣΜΕΝΗ ΚΑΙ ΓΙΑΤΙ ΚΑΙ ΠΡΟΣΟΧΗ ΣΤΑ ΑΛΛΑ</translatorcomment>
         <translation>ΔΙΑΣΤΑΣΗΣΤΟΙΧΙΣΜΕΝΗ</translation>
     </message>
     <message>
@@ -463,7 +464,7 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="320"/>
         <source>Point 2D layer is empty</source>
-        <translatorcomment>CHECKME ALL TRANSLATIONS BELOW SOS μπορεί να είναι "κωδικών σημείων", "αριθμών (των) σημείων"</translatorcomment>
+        <translatorcomment>CHECKME ALL TRANSLATIONS BELOW SOS μπορεί να είναι &quot;κωδικών σημείων&quot;, &quot;αριθμών (των) σημείων&quot;</translatorcomment>
         <translation>Η στρώση 2Δ του σημείου είναι κενή</translation>
     </message>
     <message>
@@ -523,7 +524,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>Δεν είναι δυνατό το άνοιγμα του αρχείου %1</translation>
     </message>
 </context>
@@ -779,7 +780,7 @@
         <location filename="../plotequation/plot.cpp" line="20"/>
         <location filename="../plotequation/plot.cpp" line="27"/>
         <source>Plot plugin</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plot.cpp" line="27"/>
@@ -792,16 +793,16 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="6"/>
         <source>Plot equation</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="9"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don't want to use the parametric form, just leave out "Equation2".
+If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="13"/>

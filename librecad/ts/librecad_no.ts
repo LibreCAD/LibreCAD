@@ -4681,6 +4681,30 @@ The contents of a Construction Layer should not appear in printout.</source>
         <source>Border (large)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Dot (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash Dot (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Divide (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Border (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_MTextOptions</name>
@@ -8693,11 +8717,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>a</source>
-        <comment>angle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>center</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8708,31 +8727,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>c</source>
-        <comment>center</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>length</source>
-        <comment>chord length</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>l</source>
-        <comment>chord length</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>c</source>
         <comment>close</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cols</source>
-        <comment>columns</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>c</source>
         <comment>columns</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -8823,11 +8822,6 @@ Do you want to replace it?</source>
     <message>
         <source>n</source>
         <comment>number</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>radius</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9281,20 +9275,6 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>r</source>
-        <comment>reversed</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>row</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>row</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>r</source>
         <comment>redo</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -9398,6 +9378,46 @@ Do you want to replace it?</source>
     <message>
         <source>cut</source>
         <comment>modify - divide</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>an</source>
+        <comment>angle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ce</source>
+        <comment>center</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cl</source>
+        <comment>chord length</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>co</source>
+        <comment>columns</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ra</source>
+        <comment>radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>row</source>
+        <comment>row</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cal</source>
+        <comment>command to trigger cli calculator</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate</source>
+        <comment>command to trigger cli calculator</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
