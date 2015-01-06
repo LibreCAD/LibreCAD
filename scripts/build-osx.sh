@@ -7,9 +7,19 @@
 # the LibreCAD source folder 
 
 SCRIPTPATH="$(dirname "$0")"
-QMAKE_CMD=qmake
 
-qmake -v
+#use default gcc from MacPorts
+# port install gcc49
+# port select gcc mp-gcc49
+
+export PATH=/opt/local/bin:$PATH
+
+#default qt from MacPorts
+# specify QT_PATH to customize
+QT_PATH=/opt/local/bin
+QMAKE_CMD=$QT_PATH/qmake
+
+$QMAKE_CMD -v
 
 cd "${SCRIPTPATH}"/..
 # have to clean up any existing binary files to avoid crashes of bug#422
@@ -29,7 +39,7 @@ make -j4
 APP_FILE=LibreCAD
 OUTPUT_DMG=${APP_FILE}.dmg
 rm -f "${OUTPUT_DMG}"
-macdeployqt ${APP_FILE}.app -verbose=2 -dmg
+$QT_PATH/macdeployqt ${APP_FILE}.app -verbose=2 -dmg
 
 TMP_DMG=$(mktemp temp-DMG.XXXXXXXXXX)
 
