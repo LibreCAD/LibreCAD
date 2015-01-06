@@ -923,7 +923,8 @@ RESOURCES += ../res/main/main.qrc
 
 # ################################################################################
 # Translations
-TRANSLATIONS = ../ts/librecad_ca.ts \
+TRANSLATIONS = ../ts/librecad_ar.ts \
+    ../ts/librecad_ca.ts \
     ../ts/librecad_cs.ts \
     ../ts/librecad_et.ts \
     ../ts/librecad_en.ts \
