@@ -5071,6 +5071,8 @@
     <ClInclude Include="lib\engine\rs_vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\ts\librecad_ar.ts" />
+    <None Include="..\ts\librecad_ca.ts" />
     <None Include="..\ts\librecad_cs.ts" />
     <None Include="..\ts\librecad_da.ts" />
     <None Include="..\ts\librecad_de.ts" />

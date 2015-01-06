@@ -315,22 +315,22 @@ RS_Commands::RS_Commands() {
 // used in function, checkCommand()
     cmdTranslation.insert(tr("angle"), "angle");
     cmdTranslation.insert(tr("ang", "angle"), "angle");
-    cmdTranslation.insert(tr("a", "angle"), "angle");
+    cmdTranslation.insert(tr("an", "angle"), "angle");
 
     cmdTranslation.insert(tr("center"), "center");
     cmdTranslation.insert(tr("cen", "center"), "center");
-    cmdTranslation.insert(tr("c", "center"), "center");
+    cmdTranslation.insert(tr("ce", "center"), "center");
 
     cmdTranslation.insert(tr("chord length"), "chord length");
-    cmdTranslation.insert(tr("length", "chord length"), "chord length");
-    cmdTranslation.insert(tr("l", "chord length"), "chord length");
+//    cmdTranslation.insert(tr("length", "chord length"), "chord length");
+    cmdTranslation.insert(tr("cl", "chord length"), "chord length");
 
     cmdTranslation.insert(tr("close"), "close");
     cmdTranslation.insert(tr("c", "close"), "close");
 
     cmdTranslation.insert(tr("columns"), "columns");
     cmdTranslation.insert(tr("cols", "columns"), "columns");
-    cmdTranslation.insert(tr("c", "columns"), "columns");
+    cmdTranslation.insert(tr("co", "columns"), "columns");
 
     cmdTranslation.insert(tr("columnspacing", "columnspacing for inserts"), "columnspacing");
     cmdTranslation.insert(tr("colspacing", "columnspacing for inserts"), "columnspacing");
@@ -360,14 +360,13 @@ RS_Commands::RS_Commands() {
     cmdTranslation.insert(tr("n","number"), "number");
 
     cmdTranslation.insert(tr("radius"), "radius");
-    cmdTranslation.insert(tr("r","radius"), "radius");
+    cmdTranslation.insert(tr("ra","radius"), "radius");
 
     cmdTranslation.insert(tr("reversed","reversed"), "reversed");
     cmdTranslation.insert(tr("rev","reversed"), "reversed");
-    cmdTranslation.insert(tr("r","reversed"), "reversed");
+    cmdTranslation.insert(tr("rev","reversed"), "reversed");
 
-    cmdTranslation.insert(tr("row"), "row");
-    cmdTranslation.insert(tr("r","row"), "row");
+    cmdTranslation.insert(tr("row", "row"), "row");
 
     cmdTranslation.insert(tr("rowspacing", "rowspacing for inserts"), "rowspacing");
     cmdTranslation.insert(tr("rs","rowspacing for inserts"), "rowspacing");
@@ -754,5 +753,29 @@ QString RS_Commands::msgAvailableCommands() {
     return tr("Available commands:");
 }
 
+/**
+ * @brief extractCliCal, filter cli calculator math expression
+ * @param cmd, cli string
+ * @return math expression for RS_Math:eval();
+ */
+QString RS_Commands::filterCliCal(const QString& cmd)
+{
+
+    QString str=cmd.trimmed();
+    const QRegExp calCmd(R"(^(cal|calculate))");
+    if(!(str.contains(calCmd)
+         || str.startsWith(tr("cal","command to trigger cli calculator"), Qt::CaseInsensitive)
+         || str.startsWith(tr("calculate","command to trigger cli calculator"), Qt::CaseInsensitive)
+                           )) {
+        return QString();
+    }
+    int index=str.indexOf(QRegExp(R"(\s)"));
+    bool spaceFound=(index>=0);
+    str=str.mid(index);
+    index=str.indexOf(QRegExp(R"(\S)"));
+    if(!(spaceFound && index>=0)) return QString();
+    str=str.mid(index);
+    return str;
+}
 
 // EOF

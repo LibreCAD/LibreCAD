@@ -42,7 +42,7 @@ class RS_ActionInterface;
 class RS_EventHandler;
 class RS_Grid;
 class RS_CommandEvent;
-class RS_LineTypePattern;
+struct RS_LineTypePattern;
 
 
 /**
@@ -337,7 +337,7 @@ public:
     virtual void setPenForEntity(RS_Painter *painter, RS_Entity* e );
 
 
-    virtual RS_LineTypePattern* getPattern(RS2::LineType t);
+    virtual const RS_LineTypePattern* getPattern(RS2::LineType t);
 
     virtual void drawAbsoluteZero(RS_Painter *painter);
     virtual void drawRelativeZero(RS_Painter *painter);

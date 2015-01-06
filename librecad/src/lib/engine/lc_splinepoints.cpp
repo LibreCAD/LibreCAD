@@ -1609,7 +1609,7 @@ double DrawPatternQuad(double *pdPattern, int iPattern, double patternOffset,
 }
 
 void LC_SplinePoints::drawPattern(RS_Painter* painter, RS_GraphicView* view,
-	double& patternOffset, RS_LineTypePattern* pat)
+    double& patternOffset, const RS_LineTypePattern* pat)
 {
 	int n = data.controlPoints.count();
 	if(n < 2) return;
@@ -1823,12 +1823,14 @@ void LC_SplinePoints::draw(RS_Painter* painter, RS_GraphicView* view, double& pa
 		return;
 	}
 
+    RS_Pen penSaved = painter->getPen();
+
 	// Pattern:
-	RS_LineTypePattern* pat = NULL;
+    const RS_LineTypePattern* pat = NULL;
 	if(isSelected())
 	{
 //		styleFactor=1.;
-		pat = &patternSelected;
+        pat = &RS_LineTypePattern::patternSelected;
 	}
 	else
 	{
@@ -1853,6 +1855,8 @@ void LC_SplinePoints::draw(RS_Painter* painter, RS_GraphicView* view, double& pa
 	if(bDrawPattern)
 		drawPattern(painter, view, patternOffset, pat);
 	else drawSimple(painter, view);
+    painter->setPen(penSaved);
+
 }
 
 double LC_SplinePoints::getLength() const

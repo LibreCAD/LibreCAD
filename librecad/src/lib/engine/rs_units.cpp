@@ -947,9 +947,9 @@ RS_Vector RS_Units::paperFormatToSize(RS2::PaperFormat p) {
     case RS2::Folio:
         ret = RS_Vector(210.0, 330.0);
         break;
-    //case RS2::Ledger:
-    //    ret = RS_Vector(432.0, 279.0);
-    //    break;
+    case RS2::Ledger:
+        ret = RS_Vector(432.0, 279.0);
+        break;
     case RS2::Tabloid:
         ret = RS_Vector(279.0, 432.0);
         break;
@@ -1134,9 +1134,9 @@ QString RS_Units::paperFormatToString(RS2::PaperFormat p) {
     case RS2::Folio:
         ret = "Folio";
         break;
-    //case RS2::Ledger:
-    //    ret = "Ledger";
-    //    break;
+    case RS2::Ledger:
+        ret = "Ledger";
+        break;
     case RS2::Tabloid:
         ret = "Tabloid";
         break;
@@ -1258,8 +1258,8 @@ RS2::PaperFormat RS_Units::stringToPaperFormat(const QString& p) {
         ret = RS2::DLE;
     } else if (p=="folio") {
         ret = RS2::Folio;
-    //} else if (p=="ledger") {
-    //    ret = RS2::Ledger;
+    } else if (p=="ledger") {
+        ret = RS2::Ledger;
     } else if (p=="tabloid") {
         ret = RS2::Tabloid;
     }

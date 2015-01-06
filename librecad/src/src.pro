@@ -30,9 +30,11 @@ CONFIG += qt \
      link_prl \
      verbose
 
+
 greaterThan( QT_MAJOR_VERSION, 4 ) {
     # in Qt5 help is deprecated in CONFIG
     QT += widgets printsupport help
+    CONFIG += c++11
 } else {
     CONFIG += help 
 } 
@@ -921,7 +923,8 @@ RESOURCES += ../res/main/main.qrc
 
 # ################################################################################
 # Translations
-TRANSLATIONS = ../ts/librecad_ca.ts \
+TRANSLATIONS = ../ts/librecad_ar.ts \
+    ../ts/librecad_ca.ts \
     ../ts/librecad_cs.ts \
     ../ts/librecad_et.ts \
     ../ts/librecad_en.ts \

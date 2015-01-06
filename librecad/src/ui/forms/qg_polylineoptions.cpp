@@ -23,6 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include <initializer_list>
 #include "qg_polylineoptions.h"
 
 #include "rs_actiondrawpolyline.h"
@@ -87,7 +88,7 @@ void QG_PolylineOptions::setAction(RS_ActionInterface* a, bool update) {
             RS_SETTINGS->endGroup();
             action->setRadius(sd1.toDouble());
             action->setAngle(sd2.toDouble());
-            action->setMode(mode);
+            action->setMode((RS_ActionDrawPolyline::SegmentMode)mode);
             action->setReversed(reversed);
         }
         leRadius->setText(sd1);
@@ -143,45 +144,41 @@ void QG_PolylineOptions::updateDirection(bool /*pos*/) {
 
 void QG_PolylineOptions::updateMode( int m )
 {
-    enum Mode {
-        Line,
-        Tangential,
-        TanRad,
-//	TanAng,
-//	TanRadAng,
-        Ang,
-//	RadAngEndp,
-//	RadAngCenp
-    };
+//    enum Mode {
+//        Line,Right-click on the package and choose Mark for Upgrade from the context menu, or press Ctrl + U.
+//        Tangential,
+//        TanRad,
+////	TanAng,
+////	TanRadAng,
+//        Ang,
+////	RadAngEndp,
+////	RadAngCenp
+//    };
 
     if (action!=NULL) {
-        action->setMode(m);
+        action->setMode((RS_ActionDrawPolyline::SegmentMode) m);
     }
-    switch(m) {
-        case Line:
-        case Tangential:
-            leRadius->setDisabled(true);
-            leAngle->setDisabled(true);
-            lRadius->setDisabled(true);
-            lAngle->setDisabled(true);
-            buttonGroup1->setDisabled(true);
-            break;
-        case TanRad:
-            leRadius->setDisabled(false);
-            leAngle->setDisabled(true);
-            lRadius->setDisabled(false);
-            lAngle->setDisabled(true);
-            buttonGroup1->setDisabled(true);
-            break;
-//        case TanAng:
-        case Ang:
-            leRadius->setDisabled(true);
-            leAngle->setDisabled(false);
-            lRadius->setDisabled(true);
-            lAngle->setDisabled(false);
-            buttonGroup1->setDisabled(false);
-            break;
-/*        case TanRadAng:
+    switch((RS_ActionDrawPolyline::SegmentMode) m) {
+    case RS_ActionDrawPolyline::Line:
+    case RS_ActionDrawPolyline::Tangential:
+    default:
+        for(QWidget* p: std::initializer_list<QWidget*>({leRadius, leAngle, lRadius, lAngle, buttonGroup1, rbPos, rbNeg}))
+            p->hide();
+        break;
+    case RS_ActionDrawPolyline::TanRad:
+        for(QWidget* p: std::initializer_list<QWidget*>({leAngle, lAngle, buttonGroup1, rbPos, rbNeg}))
+            p->hide();
+        for(QWidget* p: std::initializer_list<QWidget*>({leRadius, lRadius}))
+            p->show();
+        break;
+        //        case TanAng:
+    case RS_ActionDrawPolyline::Ang:
+        for(QWidget* p: std::initializer_list<QWidget*>({leRadius, lRadius}))
+            p->hide();
+        for(QWidget* p: std::initializer_list<QWidget*>({leAngle, lAngle, buttonGroup1, rbPos, rbNeg}))
+            p->show();
+        break;
+        /*        case TanRadAng:
         case RadAngEndp:
         case RadAngCenp:
             leRadius->setDisabled(false);

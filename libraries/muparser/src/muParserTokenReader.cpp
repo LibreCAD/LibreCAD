@@ -28,6 +28,7 @@
 #include <map>
 #include <stack>
 #include <string>
+#include <memory>
 
 #include "muParserTokenReader.h"
 #include "muParserBase.h"
@@ -145,7 +146,7 @@ namespace mu
   */
   ParserTokenReader* ParserTokenReader::Clone(ParserBase *a_pParent) const
   {
-    std::auto_ptr<ParserTokenReader> ptr(new ParserTokenReader(*this));
+    std::unique_ptr<ParserTokenReader> ptr(new ParserTokenReader(*this));
     ptr->SetParent(a_pParent);
     return ptr.release();
   }

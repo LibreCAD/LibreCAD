@@ -142,7 +142,7 @@ Generic Unix Users
 Unzip or checkout a version of LibreCAD into a directory.
 ```
 cd LibreCAD
-qmake librecad.pro
+qmake -r librecad.pro
 make
 ```
 The executible is generated at "unix/librecad"

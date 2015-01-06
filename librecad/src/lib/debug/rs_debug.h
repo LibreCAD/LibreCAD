@@ -33,6 +33,7 @@
 #endif
 
 #include <QString>
+#include <QDebug>
 
 /** print out a debug header*/
 #define DEBUG_HEADER()  std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl

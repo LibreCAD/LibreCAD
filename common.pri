@@ -63,7 +63,6 @@ isEmpty( CXX_CPP11_FLAG) {
     QMAKE_CXXFLAGS_DEBUG += -std=c++11 -g
     QMAKE_CXXFLAGS += -std=c++11 -g
 } else {
-    # for pre g++ 4.7 versions set CXX_CPP11_FLAG = -std=c++0x
     # in custom.pro file
     QMAKE_CXXFLAGS_DEBUG += $$CXX_CPP11_FLAG -g
     QMAKE_CXXFLAGS += $$CXX_CPP11_FLAG -g
@@ -71,7 +70,9 @@ isEmpty( CXX_CPP11_FLAG) {
 
 # svg support
 QT += svg
-CONFIG += c++11
+greaterThan( QT_MAJOR_VERSION, 4 ) {
+	CONFIG += c++11
+}
 macx{
     QMAKE_CXXFLAGS_DEBUG += -mmacosx-version-min=10.8
     QMAKE_CXXFLAGS += -mmacosx-version-min=10.8

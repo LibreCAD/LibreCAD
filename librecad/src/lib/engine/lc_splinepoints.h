@@ -80,7 +80,7 @@ class LC_SplinePoints : public RS_AtomicEntity // RS_EntityContainer
 {
 private:
 	void drawPattern(RS_Painter* painter, RS_GraphicView* view,
-		double& patternOffset, RS_LineTypePattern* pat);
+        double& patternOffset, const RS_LineTypePattern* pat);
 	void drawSimple(RS_Painter* painter, RS_GraphicView* view);
 	void UpdateControlPoints();
 	void UpdateQuadExtent(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2);

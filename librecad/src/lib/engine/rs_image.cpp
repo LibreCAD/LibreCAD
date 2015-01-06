@@ -212,18 +212,20 @@ RS_Vector RS_Image::getNearestPointOnEntity(const RS_Vector& coord,
 RS_Vector RS_Image::getNearestCenter(const RS_Vector& coord,
                                      double* dist) {
 
-    RS_VectorSolutions points(4);
+    RS_VectorSolutions points;
     RS_VectorSolutions corners = getCorners();
-    if(containsPoint(coord)){
-        //if coord is within image
-        if(dist!=NULL) *dist=0.;
-        return coord;
-    }
+    //bug#485, there's no clear reason to ignore snapping to center within an image
+//    if(containsPoint(coord)){
+//        //if coord is within image
+//        if(dist!=NULL) *dist=0.;
+//        return coord;
+//    }
 
-    points.set(0, (corners.get(0) + corners.get(1))/2.0);
-    points.set(1, (corners.get(1) + corners.get(2))/2.0);
-    points.set(2, (corners.get(2) + corners.get(3))/2.0);
-    points.set(3, (corners.get(3) + corners.get(0))/2.0);
+    points.push_back((corners.get(0) + corners.get(1))/2.0);
+    points.push_back((corners.get(1) + corners.get(2))/2.0);
+    points.push_back((corners.get(2) + corners.get(3))/2.0);
+    points.push_back((corners.get(3) + corners.get(0))/2.0);
+    points.push_back((corners.get(0) + corners.get(2))/2.0);
 
     return points.getClosest(coord, dist);
 }

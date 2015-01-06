@@ -588,8 +588,12 @@ void QC_ApplicationWindow::initMDI() {
     connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
             this, SLOT(slotWindowActivated(QMdiSubWindow*)));
 
+    //this event filter allows sending key events to the command widget, therefore, no
+    // need to activate the command widget before typing commands.
+    // Since this nice feature causes a bug of lost key events when the command widget is on
+    // a screen different from the main window, disabled for the time being
     //send key events for mdiAreaCAD to command widget by default
-    mdiAreaCAD->installEventFilter(commandWidget);
+//    mdiAreaCAD->installEventFilter(commandWidget);
 
     RS_DEBUG->print("QC_ApplicationWindow::initMDI() end");
 
@@ -654,7 +658,7 @@ void QC_ApplicationWindow::initActions(void)
     actionFactory.addGUI(menu, this, {RS2::ActionFileClose
                                       ,RS2::ActionFilePrint
                                       ,RS2::ActionFilePrintPDF});
-    action= actionFactory.addGUI(menu, this, RS2::ActionFilePrintPreview);
+    action= actionFactory.addGUI(menu, fileToolBar, this, RS2::ActionFilePrintPreview);
     connect(this, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
 
     menu->addSeparator();
@@ -752,6 +756,7 @@ void QC_ApplicationWindow::initActions(void)
     actionFactory.addGUI(subMenu, this, blockWidget->parentWidget(), RS2::ActionViewBlockList);
     actionFactory.addGUI(subMenu, this, libraryWidget->parentWidget(), RS2::ActionViewLibrary);
     actionFactory.addGUI(subMenu, this, commandWidget->parentWidget(), RS2::ActionViewCommandLine);
+    actionFactory.addGUI(subMenu, this, cadToolBar->parentWidget(), RS2::ActionViewCadToolbar);
 
     subMenu->addSeparator();
 
@@ -921,6 +926,7 @@ void QC_ApplicationWindow::initActions(void)
                                                ,RS2::ActionModifyTrim
                                                ,RS2::ActionModifyTrim2
                                                ,RS2::ActionModifyTrimAmount
+                                               ,RS2::ActionModifyOffset
                                                ,RS2::ActionModifyBevel
                                                ,RS2::ActionModifyRound
                                                ,RS2::ActionModifyCut
@@ -937,8 +943,7 @@ void QC_ApplicationWindow::initActions(void)
     menu = menuBar()->addMenu(tr("&Snap"));
     menu->setObjectName("Snap");
     if(snapToolBar!=NULL) {
-        auto&& actions = snapToolBar->getActions();
-        foreach(QAction* a, actions){
+        foreach(QAction* a, snapToolBar->getActions()){
             menu->addAction(a);
 //            connect(this, SIGNAL(windowsChanged(bool)), a, SLOT(setEnabled(bool)));
         }
@@ -1260,8 +1265,8 @@ void QC_ApplicationWindow::initToolBar() {
 
     connect(cadToolBar, SIGNAL(signalBack()),
             this, SLOT(slotBack()));
-    connect(this, SIGNAL(windowsChanged(bool)),
-            cadToolBar, SLOT(setEnabled(bool)));
+//    connect(this, SIGNAL(windowsChanged(bool)),
+//            cadToolBar, SLOT(setEnabled(bool)));
 
     //QG_CadToolBarMain* cadToolBarMain =
     //new QG_CadToolBarMain(cadToolBar);
@@ -1745,12 +1750,9 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
  */
 void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
 
-    RS_DEBUG->print("QC_ApplicationWindow::slotWindowsMenuAboutToShow");
+    RS_DEBUG->print( RS_Debug::D_NOTICE, "QC_ApplicationWindow::slotWindowsMenuAboutToShow");
 
     windowsMenu->clear();
-    //    while( windowsMenu.size() > 0 ){
-//            delete windowsMenu->takeFirst();
-//    }
 
     QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
     for (int i=0; i<windows.size(); ) {
@@ -1775,21 +1777,21 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
             continue;
         }
     }
-    if (mdiAreaCAD->subWindowList().size()>1) {
-        if(mdiAreaTab) {
-            windowsMenu->addAction(tr("Su&b-Window mode"),
-                                             this, SLOT(slotToggleTab()));
-        }else{
-            windowsMenu->addAction(tr("&Cascade"), this, SLOT(slotCascade()));
-//            windowsMenu->addAction(tr("&Tile"), mdiAreaCAD, SLOT(tileSubWindows()));
-            windowsMenu->addAction(tr("&Tile"), this, SLOT(slotTile()));
-            windowsMenu->addAction(tr("Tile &Vertically"), this, SLOT(slotTileVertical()));
-            windowsMenu->addAction(tr("Tile &Horizontally"), this, SLOT(slotTileHorizontal()));
-            windowsMenu->addAction(tr("Ta&b mode"), this, SLOT(slotToggleTab()));
+
+    if ( mdiAreaCAD->subWindowList().isEmpty()) {
+        return; //no sub-window to show
+    } else if( mdiAreaTab) {
+        windowsMenu->addAction( tr("Su&b-Window mode"), this, SLOT(slotToggleTab()));
+    } else {
+        windowsMenu->addAction( tr("Ta&b mode"), this, SLOT(slotToggleTab()));
+        if ( 1 < mdiAreaCAD->subWindowList().size()) {
+            windowsMenu->addAction( tr("&Cascade"), this, SLOT(slotCascade()));
+            windowsMenu->addAction( tr("&Tile"), this, SLOT(slotTile()));
+            windowsMenu->addAction( tr("Tile &Vertically"), this, SLOT(slotTileVertical()));
+            windowsMenu->addAction( tr("Tile &Horizontally"), this, SLOT(slotTileHorizontal()));
         }
-    }else{
-        if(mdiAreaCAD->subWindowList().size() == 0) return; //no sub-window to show
     }
+
     windowsMenu->addSeparator();
     QMdiSubWindow* active= mdiAreaCAD->activeSubWindow();
 //    int active=windows.indexOf(mdiAreaCAD->activeSubWindow());
@@ -1801,10 +1803,6 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
         id->setCheckable(true);
         id->setData(i);
         id->setChecked(windows.at(i)==active);
-//    std::cout<<" QC_ApplicationWindow::slotWindowsMenuAboutToShow(): "<<i<<":windows.at(i)->isactiveSubWindow(): "<< windows.at(i)->isactiveSubWindow()<<std::endl;
-////    std::cout<<" QC_ApplicationWindow::slotWindowsMenuAboutToShow(): "<<i<<":windows.at(i)->widget()->isactiveSubWindow(): "<< windows.at(i)->widget()->isactiveSubWindow()<<std::endl;
-////    std::cout<<" QC_ApplicationWindow::slotWindowsMenuAboutToShow(): "<<i<<":windows.at(i)->hasFocus(): "<< windows.at(i)->hasFocus()<<std::endl;
-//    std::cout<<" QC_ApplicationWindow::slotWindowsMenuAboutToShow(): "<<i<<":windows.at(i)->widget()->hasFocus(): "<< windows.at(i)->widget()->hasFocus()<<std::endl;
     }
 }
 
@@ -2976,14 +2974,20 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
 #if QT_VERSION < 0x040400
     emu_qt44_QPrinter_setPaperSize(printer, RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape)));
 #else
-    printer.setPaperSize(RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape)));
+    QPrinter::PageSize paperSize=RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape));
+    printer.setPaperSize(paperSize);
 #endif // QT_VERSION 0x040400
+    if(paperSize==QPrinter::Custom){
+        RS_Vector&& s=graphic->getPaperSize()*RS_Units::getFactorToMM(graphic->getUnit());
+        if(landscape) s=s.flipXY();
+        printer.setPaperSize(QSizeF(s.x,s.y),QPrinter::Millimeter);
+//        RS_DEBUG->print(RS_Debug::D_ERROR, "set paper size to (%g, %g)\n", s.x,s.y);
+    }
     if (landscape) {
         printer.setOrientation(QPrinter::Landscape);
     } else {
         printer.setOrientation(QPrinter::Portrait);
     }
-
     QString     strDefaultFile("");
     RS_SETTINGS->beginGroup("/Print");
     strDefaultFile = RS_SETTINGS->readEntry("/FileName", "");
@@ -3021,6 +3025,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         if( QDialog::Accepted == fileDlg.exec()) {
             QStringList files = fileDlg.selectedFiles();
             if (!files.isEmpty()) {
+                if(!files[0].endsWith(R"(.pdf)",Qt::CaseInsensitive)) files[0]=files[0]+".pdf";
                 printer.setOutputFileName(files[0]);
                 bStartPrinting = true;
             }
@@ -3068,6 +3073,8 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
                     * RS_Units::getFactorToMM(graphic->getUnit());
         double fy = (double)printer.height() / printer.heightMM()
                     * RS_Units::getFactorToMM(graphic->getUnit());
+//RS_DEBUG->print(RS_Debug::D_ERROR, "paper size=(%d, %d)\n",
+//                printer.widthMM(),printer.heightMM());
 
         double f = (fx+fy)/2.0;
 
@@ -3076,7 +3083,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         gv.setOffset((int)(graphic->getPaperInsertionBase().x * f),
                      (int)(graphic->getPaperInsertionBase().y * f));
         gv.setFactor(f*scale);
-
+//RS_DEBUG->print(RS_Debug::D_ERROR, "PaperSize=(%d, %d)\n",printer.widthMM(), printer.heightMM());
         gv.setContainer(graphic);
 //fixme, I don't understand the meaning of 'true' here
 //        gv.drawEntity(&painter, graphic, true);
@@ -4790,6 +4797,7 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
             break;
 
         case Qt::Key_Return:
+        case Qt::Key_Enter:
             slotEnter();
             e->accept();
             break;
