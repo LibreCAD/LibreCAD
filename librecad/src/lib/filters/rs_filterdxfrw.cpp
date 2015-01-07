@@ -1217,7 +1217,7 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
     } else return;
 
     map<std::string,DRW_Variant *>::const_iterator it;
-    for ( it=data->vars.begin() ; it != data->vars.end(); it++ ){
+    for ( it=data->vars.begin() ; it != data->vars.end(); ++it ){
         QString key = QString::fromStdString((*it).first);
         DRW_Variant *var = (*it).second;
         switch (var->type) {

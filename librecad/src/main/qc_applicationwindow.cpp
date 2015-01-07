@@ -243,7 +243,7 @@ QMenu *QC_ApplicationWindow::findMenu(const QString &searchMenu, const QObjectLi
                 return foundMenu;
             }
         }
-        i++;
+        ++i;
     }
     return 0;
 }
