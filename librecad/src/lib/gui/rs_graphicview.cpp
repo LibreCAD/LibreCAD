@@ -742,6 +742,7 @@ void RS_GraphicView::zoomPrevious() {
  * switch back later with @see restoreView().
  */
 void RS_GraphicView::saveView() {
+    if(getGraphic()) getGraphic()->setModified(true);
     QDateTime noUpdateWindow=QDateTime::currentDateTime().addMSecs(-500);
     //do not update view within 500 milliseconds
     if(previousViewTime > noUpdateWindow) return;
