@@ -48,7 +48,12 @@ dxfRW::dxfRW(const char* name){
 dxfRW::~dxfRW(){
     if (reader != NULL)
         delete reader;
+    if (writer != NULL)
+        delete writer;
+    for (std::vector<DRW_ImageDef*>::iterator it=imageDef.begin(); it!=imageDef.end(); ++it)
+        delete *it;
 
+    imageDef.clear();
 }
 
 bool dxfRW::read(DRW_Interface *interface_, bool ext){

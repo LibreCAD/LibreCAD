@@ -13,7 +13,7 @@
 #ifndef DRW_BASE_H
 #define DRW_BASE_H
 
-#define DRW_VERSION "0.5.11"
+#define DRW_VERSION "0.5.13"
 
 #include <string>
 #include <cmath>
