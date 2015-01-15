@@ -32,7 +32,8 @@ namespace DRW {
          STYLE,
          DIMSTYLE,
          VPORT,
-         BLOCK_RECORD
+         BLOCK_RECORD,
+         APPID
      };
 
 
@@ -396,6 +397,24 @@ private:
     std::string name;
     DRW_Variant* curr;
     int version; //to use on read
+};
+
+//! Class to handle AppId entries
+/*!
+*  Class to handle AppId symbol table entries
+*  @author Rallaz
+*/
+class DRW_AppId : public DRW_TableEntry {
+public:
+    DRW_AppId() { reset();}
+
+    void reset(){
+        tType = DRW::APPID;
+        flags = 0;
+        name = "";
+    }
+
+    void parseCode(int code, dxfReader *reader){DRW_TableEntry::parseCode(code, reader);}
 };
 
 namespace DRW {

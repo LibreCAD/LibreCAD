@@ -1858,6 +1858,12 @@ void RS_FilterDXFRW::writeDimstyles(){
     dxfW->writeDimstyle(&dsty);
 }
 
+void RS_FilterDXFRW::writeAppId(){
+    DRW_AppId ai;
+    ai.name ="LibreCad";
+    dxfW->writeAppId(&ai);
+}
+
 void RS_FilterDXFRW::writeEntities(){
     for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
          e != NULL; e = graphic->nextEntity(RS2::ResolveNone)) {

@@ -82,6 +82,7 @@ public:
     virtual void addDimStyle(const DRW_Dimstyle& /*data*/){}
     virtual void addVport(const DRW_Vport& data);
     virtual void addTextStyle(const DRW_Textstyle& /*data*/){}
+    virtual void addAppId(const DRW_AppId& /*data*/){}
     virtual void addBlock(const DRW_Block& data);
     virtual void setBlock(const int handle);
     virtual void endBlock();
@@ -130,6 +131,7 @@ public:
     virtual void writeBlockRecords();
     virtual void writeBlocks();
     virtual void writeDimstyles();
+    virtual void writeAppId();
 
     void writePoint(RS_Point* p);
     void writeLine(RS_Line* l);

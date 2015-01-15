@@ -48,6 +48,8 @@ public:
     virtual void addVport(const DRW_Vport& data) = 0;
     /** Called for every text style. */
     virtual void addTextStyle(const DRW_Textstyle& data) = 0;
+    /** Called for every AppId entry. */
+    virtual void addAppId(const DRW_AppId& data) = 0;
 
     /**
      * Called for every block. Note: all entities added after this
@@ -205,6 +207,7 @@ public:
     virtual void writeTextstyles() = 0;
     virtual void writeVports() = 0;
     virtual void writeDimstyles() = 0;
+    virtual void writeAppId() = 0;
 protected:
 //    DL_Attributes attributes;
 //    DL_Extrusion *extrusion;

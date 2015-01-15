@@ -483,6 +483,23 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     return true;
 }
 
+bool dxfRW::writeAppId(DRW_AppId *ent){
+    writer->writeString(0, "APPID");
+    if (version > DRW::AC1009) {
+        writer->writeString(5, toHexStr(++entCount));
+        if (version > DRW::AC1014) {
+            writer->writeString(330, "9");
+        }
+        writer->writeString(100, "AcDbSymbolTableRecord");
+        writer->writeString(100, "AcDbRegAppTableRecord");
+        writer->writeUtf8String(2, ent->name);
+    } else {
+        writer->writeUtf8Caps(2, ent->name);
+    }
+    writer->writeInt16(70, ent->flags);
+    return true;
+}
+
 bool dxfRW::writePoint(DRW_Point *ent) {
     writer->writeString(0, "POINT");
     writeEntity(ent);
@@ -1480,6 +1497,7 @@ bool dxfRW::writeTables() {
     }
     writer->writeString(2, "ACAD");
     writer->writeInt16(70, 0);
+    iface->writeAppId();
     writer->writeString(0, "ENDTAB");
 
     writer->writeString(0, "TABLE");
@@ -1824,7 +1842,7 @@ bool dxfRW::processTables() {
                     } else if (sectionstr == "UCS") {
 //                        processUCS();
                     } else if (sectionstr == "APPID") {
-//                        processAppId();
+                        processAppId();
                     } else if (sectionstr == "DIMSTYLE") {
                         processDimStyle();
                     } else if (sectionstr == "BLOCK_RECORD") {
@@ -1955,6 +1973,31 @@ bool dxfRW::processVports(){
             sectionstr = reader->getString();
             DBG(sectionstr); DBG("\n");
             if (sectionstr == "VPORT") {
+                reading = true;
+                vp.reset();
+            } else if (sectionstr == "ENDTAB") {
+                return true;  //found ENDTAB terminate
+            }
+        } else if (reading)
+            vp.parseCode(code, reader);
+    }
+    return true;
+}
+
+bool dxfRW::processAppId(){
+    DBG("dxfRW::processAppId");
+    int code;
+    std::string sectionstr;
+    bool reading = false;
+    DRW_AppId vp;
+    while (reader->readRec(&code, !binary)) {
+        DBG(code); DBG("\n");
+        if (code == 0) {
+            if (reading)
+                iface->addAppId(vp);
+            sectionstr = reader->getString();
+            DBG(sectionstr); DBG("\n");
+            if (sectionstr == "APPID") {
                 reading = true;
                 vp.reset();
             } else if (sectionstr == "ENDTAB") {
