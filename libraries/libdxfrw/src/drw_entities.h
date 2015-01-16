@@ -82,7 +82,13 @@ public:
         haveExtrusion = false;
         color24 = -1; //default -1 not set
     }
-    virtual~DRW_Entity() {}
+
+    virtual~DRW_Entity() {
+        for (std::vector<DRW_Variant*>::iterator it=extData.begin(); it!=extData.end(); ++it)
+            delete *it;
+
+        extData.clear();
+    }
 
     DRW_Entity(const DRW_Entity& d) {
         eType = d.eType;
@@ -98,6 +104,7 @@ public:
         lWeight = d.lWeight;
         space = d.space;
         haveExtrusion = d.haveExtrusion;
+        curr = NULL;
     }
 
     virtual void applyExtrusion() = 0;
@@ -120,9 +127,12 @@ public:
     std::string colorName;     /*!< color name, code 430 */
     int space;                 /*!< space indicator 0 = model, 1 paper, code 67*/
     bool haveExtrusion;        /*!< set to true if the entity have extrusion*/
+    std::vector<DRW_Variant*> extData; /*!< FIFO list of extended data, codes 1000 to 1071*/
+
 private:
     DRW_Coord extAxisX;
     DRW_Coord extAxisY;
+    DRW_Variant* curr;
 };
 
 

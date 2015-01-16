@@ -50,8 +50,15 @@ public:
     DRW_TableEntry() {
         tType = DRW::UNKNOWNT;
         flags = 0;
+        curr = NULL;
     }
-    virtual~DRW_TableEntry() {}
+
+    virtual~DRW_TableEntry() {
+        for (std::vector<DRW_Variant*>::iterator it=extData.begin(); it!=extData.end(); ++it)
+            delete *it;
+
+        extData.clear();
+    }
 
 protected:
     void parseCode(int code, dxfReader *reader);
@@ -62,6 +69,10 @@ public:
     int handleBlock;           /*!< Soft-pointer ID/handle to owner BLOCK_RECORD object, code 330 */
     UTF8STRING name;           /*!< entry name, code 2 */
     int flags;                 /*!< Flags relevant to entry, code 70 */
+    std::vector<DRW_Variant*> extData; /*!< FIFO list of extended data, codes 1000 to 1071*/
+
+private:
+    DRW_Variant* curr;
 };
 
 
