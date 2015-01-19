@@ -115,6 +115,7 @@ private:
     bool writeTables();
     bool writeBlocks();
     bool writeObjects();
+    bool writeExtData(const std::vector<DRW_Variant*> &ed);
     std::string toHexStr(int n);
 
 private:

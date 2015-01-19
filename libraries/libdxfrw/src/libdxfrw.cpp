@@ -249,6 +249,9 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
         writer->writeString(390, "F");
     } else
         writer->writeUtf8Caps(6, ent->lineType);
+    if (!ent->extData.empty()){
+        writeExtData(ent->extData);
+    }
 //    writer->writeString(347, "10012");
     return true;
 }
@@ -1741,6 +1744,51 @@ bool dxfRW::writeObjects() {
        imageDef.pop_back();
     }
 
+    return true;
+}
+
+bool dxfRW::writeExtData(const std::vector<DRW_Variant*> &ed){
+    for (std::vector<DRW_Variant*>::const_iterator it=ed.begin(); it!=ed.end(); ++it){
+        switch ((*it)->code) {
+        case 1000:
+        case 1001:
+        case 1002:
+        case 1003:
+        case 1004:
+        case 1005:
+        {int cc = (*it)->code;
+            if ((*it)->type == DRW_Variant::STRING)
+                writer->writeUtf8String(cc, *(*it)->content.s);
+//            writer->writeUtf8String((*it)->code, (*it)->content.s);
+            break;}
+        case 1010:
+        case 1011:
+        case 1012:
+        case 1013:
+            if ((*it)->type == DRW_Variant::COORD) {
+                writer->writeDouble((*it)->code, (*it)->content.v->x);
+                writer->writeDouble((*it)->code+10 , (*it)->content.v->y);
+                writer->writeDouble((*it)->code+20 , (*it)->content.v->z);
+            }
+            break;
+        case 1040:
+        case 1041:
+        case 1042:
+            if ((*it)->type == DRW_Variant::DOUBLE)
+                writer->writeDouble((*it)->code, (*it)->content.d);
+            break;
+        case 1070:
+            if ((*it)->type == DRW_Variant::INTEGER)
+                writer->writeInt16((*it)->code, (*it)->content.i);
+            break;
+        case 1071:
+            if ((*it)->type == DRW_Variant::INTEGER)
+                writer->writeInt32((*it)->code, (*it)->content.i);
+            break;
+        default:
+            break;
+        }
+    }
     return true;
 }
 

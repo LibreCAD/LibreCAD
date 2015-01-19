@@ -62,6 +62,12 @@ public:
 
 protected:
     void parseCode(int code, dxfReader *reader);
+    void reset(){
+        flags =0;
+        for (std::vector<DRW_Variant*>::iterator it=extData.begin(); it!=extData.end(); ++it)
+            delete *it;
+        extData.clear();
+    }
 
 public:
     enum DRW::TTYPE tType;     /*!< enum: entity type, code 0 */
@@ -107,6 +113,7 @@ public:
         dimfit = dimatfit = 3;
         dimdsep = '.';
         dimlwd = dimlwe = -2;
+        DRW_TableEntry::reset();
     }
 
     void parseCode(int code, dxfReader *reader);
@@ -199,6 +206,7 @@ public:
         size = 0;
         length = 0.0;
         pathIdx = 0;
+        DRW_TableEntry::reset();
     }
 
     void parseCode(int code, dxfReader *reader);
@@ -232,6 +240,7 @@ public:
         plotF = true; // default TRUE (plot yes)
         lWeight = DRW_LW_Conv::widthDefault; // default BYDEFAULT (dxf -3, dwg 31)
         color24 = -1; //default -1 not set
+        DRW_TableEntry::reset();
     }
 
     void parseCode(int code, dxfReader *reader);
@@ -262,6 +271,7 @@ public:
         font="txt";
         genFlag = 0; //2= X mirror, 4= Y mirror
         fontFamily = 0;
+        DRW_TableEntry::reset();
     }
 
     void parseCode(int code, dxfReader *reader);
@@ -302,6 +312,7 @@ public:
         circleZoom = 100;
         ucsIcon = 3;
         gridBehavior = 7;
+        DRW_TableEntry::reset();
     }
 
     void parseCode(int code, dxfReader *reader);

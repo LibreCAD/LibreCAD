@@ -1751,9 +1751,12 @@ void RS_FilterDXFRW::writeLayers(){
         lay.flags = l->isFrozen() ? 0x01 : 0x00;
         if (l->isLocked()) lay.flags |=0x04;
         lay.plotF = ! l->isConstructionLayer(); // a construction layer should not appear in print
+        if(l->isConstructionLayer()) {
+            lay.extData.push_back(new DRW_Variant(1001, "LibreCad"));
+            lay.extData.push_back(new DRW_Variant(1070, 1));
+        }
         if (!lay.plotF)
             RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::writeLayers: layer %s saved as construction layer", lay.name.c_str());
-//        lay.lineType = lineType.toStdString(); //.toLatin1().data();
         dxfW->writeLayer(&lay);
     }
 }
