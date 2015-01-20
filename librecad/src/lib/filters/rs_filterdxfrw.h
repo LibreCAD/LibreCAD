@@ -206,6 +206,10 @@ private:
     /** File version. */
     QString versionStr;
     int version;
+    /** Library File version. */
+    QString libVersionStr;
+    int libVersion;
+    int libRelease;
     /** dimension style. */
     QString dimStyle;
     /** text style. */

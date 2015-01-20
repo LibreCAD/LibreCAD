@@ -112,6 +112,10 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
     dimStyle = "Standard";
     codePage = "ANSI_1252";
     textStyle = "Standard";
+    //reset library version
+    libVersionStr = "";
+    libVersion = 0;
+    libRelease = 0;
 
 #ifdef DWGSUPPORT
     if (type == RS2::FormatDWG) {
@@ -184,10 +188,29 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
     if (data.flags&0x04) {
         layer->lock(true);
     }
-    //construction layer doesn't appear in printing
-    layer->setConstructionLayer(! data.plotF);
-    if (layer->isConstructionLayer())
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::addLayer: layer %s is construction layer", layer->getName().toStdString().c_str());
+//    layer->setPrint(! data.plotF);
+
+    //parse extended data to read construction flag
+    if (!data.extData.empty()){
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::addLayer: layer %s have extended data", layer->getName().toStdString().c_str());
+        bool isLCdata = false;
+        for (std::vector<DRW_Variant*>::const_iterator it=data.extData.begin(); it!=data.extData.end(); ++it){
+            if ((*it)->code == 1001){
+                if (*(*it)->content.s == std::string("LibreCad"))
+                    isLCdata = true;
+                else
+                    isLCdata = false;
+            } else if (isLCdata && (*it)->code == 1070){
+                if ((*it)->content.i == 1){
+                    layer->setConstructionLayer(true);
+                    RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::addLayer: layer %s is construction layer", layer->getName().toStdString().c_str());
+                }
+            }
+        }
+    }
+    //pre dxfrw 0.5.13 plot flag are used to store construction layer
+    if (libVersionStr == "dxfrw" && libVersion == 0 && libRelease < 513)
+        layer->setConstructionLayer(! data.plotF);
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: add layer to graphic");
     graphic->addLayer(layer);
@@ -1259,13 +1282,16 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
     for (int i = 0; i < comm.size(); ++i) {
         QStringList comstr = comm.at(i).split(' ',QString::SkipEmptyParts);
         if (!comstr.isEmpty() && comstr.at(0) == "dxflib") {
+            libVersionStr = "dxflib";
             oldMText = true;
             break;
         } else if (comstr.size()>1 && comstr.at(0) == "dxfrw"){
+            libVersionStr = "dxfrw";
             QStringList libversionstr = comstr.at(1).split('.',QString::SkipEmptyParts);
             if (libversionstr.size()<3) break;
-            int libRelease = (libversionstr.at(1)+ libversionstr.at(2)).toInt();
-            if (libversionstr.at(0)=="0" && libRelease < 54){
+            libVersion = libversionstr.at(0).toInt();
+            libRelease = (libversionstr.at(1)+ libversionstr.at(2)).toInt();
+            if (libVersion==0 && libRelease < 54){
                 oldMText = true;
                 break;
             }
@@ -1750,7 +1776,9 @@ void RS_FilterDXFRW::writeLayers(){
         lay.lineType = lineTypeToName(pen.getLineType()).toStdString();
         lay.flags = l->isFrozen() ? 0x01 : 0x00;
         if (l->isLocked()) lay.flags |=0x04;
+//        lay.plotF = ! l->isPrint();
         lay.plotF = ! l->isConstructionLayer(); // a construction layer should not appear in print
+//        if(l->isConstruction()) {
         if(l->isConstructionLayer()) {
             lay.extData.push_back(new DRW_Variant(1001, "LibreCad"));
             lay.extData.push_back(new DRW_Variant(1070, 1));
