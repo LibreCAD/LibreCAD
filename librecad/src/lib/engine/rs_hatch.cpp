@@ -223,6 +223,8 @@ void RS_Hatch::update() {
     // avoid huge memory consumption:
     else if ( cSize.x* cSize.y/(pSize.x*pSize.y)>1e4) {
         RS_DEBUG->print("RS_Hatch::update: contour size too large or pattern size too small");
+        delete pat;
+        delete copy;
         updateError = HATCH_AREA_TOO_BIG;
         return;
     }
