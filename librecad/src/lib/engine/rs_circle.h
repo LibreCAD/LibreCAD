@@ -208,6 +208,14 @@ for linear:
 m0 x + m1 y + m2 =0
 **/
     virtual LC_Quadratic getQuadratic() const;
+    
+/**
+* @brief Returns area of full circle
+* Note: Circular arcs are handled separately by RS_Arc (areaLIneIntegral) 
+* However, full ellipses and ellipse arcs are handled by RS_Ellipse
+* @return \pi r^2
+*/
+    virtual double areaLineIntegral() const;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Circle& a);
 
