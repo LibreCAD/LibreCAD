@@ -260,7 +260,9 @@ void RS_Hatch::update() {
     }
 
     delete pat;
-    pat = NULL;
+    pat = nullptr;
+    delete copy;
+    copy = nullptr;
     RS_DEBUG->print("RS_Hatch::update: creating pattern carpet: OK");
 
 

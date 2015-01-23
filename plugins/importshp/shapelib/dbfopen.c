@@ -689,7 +689,7 @@ DBFCreateLL( const char * pszFilename, const char * pszCodePage, SAHooks *psHook
     if( fp == NULL )
     {
         free ( pszBasename );
-        free ( pszFilename );
+        free ( pszFullname );
         return( NULL );
     }
     
@@ -700,7 +700,7 @@ DBFCreateLL( const char * pszFilename, const char * pszCodePage, SAHooks *psHook
     if( fp == NULL )
     {
         free ( pszBasename );
-        free ( pszFilename );
+        free ( pszFullname );
         return( NULL );
     }
 
