@@ -743,6 +743,21 @@ LC_Quadratic RS_Circle::getQuadratic() const
     return ret;
 }
 
+
+/**
+* @brief Returns area of full circle
+* Note: Circular arcs are handled separately by RS_Arc (areaLIneIntegral) 
+* However, full ellipses and ellipse arcs are handled by RS_Ellipse
+* @return \pi r^2
+*/
+double RS_Circle::areaLineIntegral() const
+{
+	const double r = getRadius();
+	
+	return M_PI*r*r;
+}
+
+
 /**
  * Dumps the circle's data to stdout.
  */
