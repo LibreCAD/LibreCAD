@@ -377,6 +377,7 @@ public:
         ActionLayersToggleView,
         ActionLayersToggleLock,
         ActionLayersTogglePrint,
+        ActionLayersToggleConstruction,
 
         ActionBlocksDefreezeAll,
         ActionBlocksFreezeAll,

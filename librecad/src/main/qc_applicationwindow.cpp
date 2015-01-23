@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -971,7 +972,9 @@ void QC_ApplicationWindow::initActions(void)
                                                ,RS2::ActionLayersRemove
                                                ,RS2::ActionLayersEdit
                                                ,RS2::ActionLayersToggleLock
-                                               ,RS2::ActionLayersToggleView});
+                                               ,RS2::ActionLayersToggleView
+                                               ,RS2::ActionLayersTogglePrint
+                                               ,RS2::ActionLayersToggleConstruction});
 
     // Block actions:
     //

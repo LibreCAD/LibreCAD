@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -67,11 +68,14 @@ public:
     //! Locked flag
     bool locked;
 
+    //! Print flag
+    bool print;
+
     //! Converted flag (cam)
     bool converted;
 
-    //! Construction Layer, a construction layer has entities of infinite length, and will never be printed out
-    bool constructionLayer;
+    //! a construction layer has entities of infinite length, and will never be printed out
+    bool construction;
 
     //! visible in layer list
     bool visibleInLayerList;
@@ -123,9 +127,9 @@ public:
     }
 
     /**
-  * @retval true the layer has been converted already
-  * @retval false the layer still needs to be converted
-  */
+     * @retval true the layer has been converted already
+     * @retval false the layer still needs to be converted
+     */
     bool isConverted() const {
         return data.converted;
     }
@@ -153,11 +157,6 @@ public:
      */
     void freeze(bool freeze) {
         data.frozen = freeze;
-        /*if (freeze) {
-            setFlag(RS2::FlagFrozen);
-        } else {
-            delFlag(RS2::FlagFrozen);
-        }*/
     }
 
     /**
@@ -172,7 +171,14 @@ public:
      * Toggles printing of this layer on / off.
      */
     void togglePrint() {
-        data.constructionLayer = !data.constructionLayer;
+        data.print = !data.print;
+    }
+
+    /**
+     * Toggles construction attribute of this layer on / off.
+     */
+    void toggleConstruction() {
+        data.construction = !data.construction;
     }
 
     /**
@@ -185,58 +191,64 @@ public:
     }
 
     /**
-  * return the LOCK state of the Layer
+     * return the LOCK state of the Layer
      */
     bool isLocked() {
         return data.locked;
     }
+
     /**
-     * Locks/Unlocks this layer.
+     * set visibility of layer in layer list
      *
-     * @param l true: lock, false: unlock
+     * @param l true: visible, false: invisible
      */
     void visibleInLayerList(bool l) {
         data.visibleInLayerList = l;
     }
 
     /**
-  * return the LOCK state of the Layer
+     * return the visibility of the Layer in layer list
      */
     bool isVisibleInLayerList() {
         return data.visibleInLayerList;
     }
+
     /**
-      whether the layer is a construction layer
-      A construction layer has plotF flag=false
-1- LAYER dxf group codes:
- 70   Standard flags (bit-coded values):
-                  1 = Layer is frozen; otherwise layer is thawed
-                  4 = Layer is locked
-                  ... more codes follow not used by LC
- 290   Plotting flag. If set to 0, do not plot this layer
-      */
-    bool isConstructionLayer(){
-        return data.constructionLayer;
-    }
-    bool setConstructionLayer(bool constructionLayer){
-        data.constructionLayer=constructionLayer;
-        return constructionLayer;
-    }
-    /**
-     * Copies all attributes (pen) and the name of the layer.
+     * set the PRINT state of the Layer
+     *
+     * @param print true: print layer, false: don't print layer
      */
-    /*
-    RS_Layer& operator = (const RS_Layer& l) {
-        setName(l.getName());
-        setPen(l.getPen());
-  setFrozen(l.isFrozen());
-        return *this;
+    bool setPrint( const bool print) {
+        return data.print = print;
     }
- */
+
+    /**
+     * return the PRINT state of the Layer
+     */
+    bool isPrint() {
+        return data.print;
+    }
+
+    /**
+     * whether the layer is a construction layer
+     * The construction layer property is stored
+     * in extended data in the DXF layer table
+     */
+    bool isConstruction(){
+        return data.construction;
+    }
+
+    /**
+     * set the construction attribute for the layer
+     *
+     * @param construction true: infinite lines, false: normal layer
+     */
+    bool setConstruction( const bool construction){
+        data.construction = construction;
+        return construction;
+    }
 
     friend std::ostream& operator << (std::ostream& os, const RS_Layer& l);
-
-    //friend class RS_LayerList;
 
 private:
     //! Layer data

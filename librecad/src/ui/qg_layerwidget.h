@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2011 Rallaz (rallazz@gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 **
@@ -46,7 +47,8 @@ public:
     enum {
         VISIBLE,
         LOCKED,
-        ConstructionLayer,
+        PRINT,
+        CONSTRUCTION,
         NAME,
         LAST
     };
@@ -69,7 +71,8 @@ private:
     QIcon layerHidden;
     QIcon layerDefreeze;
     QIcon layerFreeze;
-    QIcon constructionLayer;
+    QIcon layerPrint;
+    QIcon layerConstruction;
 };
 
 
@@ -111,6 +114,9 @@ public:
         update();
     }
     virtual void layerToggledPrint(RS_Layer*) {
+        update();
+    }
+    virtual void layerToggledConstruction(RS_Layer*) {
         update();
     }
 

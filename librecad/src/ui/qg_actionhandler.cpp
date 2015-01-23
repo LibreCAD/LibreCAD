@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -104,6 +105,7 @@
 #include "rs_actionlayerstogglelock.h"
 #include "rs_actionlayerstoggleview.h"
 #include "rs_actionlayerstoggleprint.h"
+#include "lc_actionlayerstoggleconstruction.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_actionlockrelativezero.h"
 #include "rs_actionmodifyattributes.h"
@@ -836,6 +838,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionLayersTogglePrint:
         a = new RS_ActionLayersTogglePrint(*doc, *gv);
+        break;
+    case RS2::ActionLayersToggleConstruction:
+        a = new LC_ActionLayersToggleConstruction(*doc, *gv);
         break;
         // Block actions:
         //
@@ -1800,6 +1805,10 @@ void QG_ActionHandler::slotLayersToggleLock() {
 
 void QG_ActionHandler::slotLayersTogglePrint() {
     setCurrentAction(RS2::ActionLayersTogglePrint);
+}
+
+void QG_ActionHandler::slotLayersToggleConstruction() {
+    setCurrentAction(RS2::ActionLayersToggleConstruction);
 }
 
 

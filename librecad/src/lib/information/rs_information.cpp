@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -226,7 +227,7 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
     }
     // a little check to avoid doing unneeded intersections, an attempt to avoid O(N^2) increasing of checking two-entity information
     if (onEntities &&
-            (! (e1 -> isConstructionLayer() || e2 -> isConstructionLayer() ))
+            (! (e1 -> isConstruction() || e2 -> isConstruction() ))
             && (
                 e1 -> getMin().x > e2 -> getMax().x
                 || e1 -> getMax().x < e2 -> getMin().x
@@ -265,8 +266,8 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
         if (onEntities==true) {
             //ignore intersections not on entity
             if (!(
-                        (e1->isConstructionLayer(true) || e1->isPointOnEntity(vp, tol)) &&
-                        (e2->isConstructionLayer(true) || e2->isPointOnEntity(vp, tol))
+                        (e1->isConstruction(true) || e1->isPointOnEntity(vp, tol)) &&
+                        (e2->isConstruction(true) || e2->isPointOnEntity(vp, tol))
                         )
                     ) {
 //                std::cout<<"Ignored intersection "<<ret.get(i)<<std::endl;

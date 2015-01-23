@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -899,15 +900,21 @@ QList<QString> RS_Entity::getAllKeys() {
 }
 
 //! constructionLayer contains entities of infinite length, constructionLayer doesn't show up in print
-bool RS_Entity::isConstructionLayer(bool typeCheck) const  {
+bool RS_Entity::isConstruction(bool typeCheck) const  {
     if(     typeCheck
         &&  getParent() != NULL
         &&  RS2::EntityLine != rtti() ){
             // do not expand entities on construction layers, except lines
             return false;
     }
-    if(layer != NULL) return layer->isConstructionLayer();
+    if (nullptr != layer) return layer->isConstruction();
     return false;
+}
+
+//! whether printing is enabled or disabled for the entity's layer
+bool RS_Entity::isPrint(void) const  {
+    if (nullptr != layer) return layer->isPrint();
+    return true;
 }
 
 bool RS_Entity::trimmable() const

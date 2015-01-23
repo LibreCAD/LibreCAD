@@ -2,7 +2,8 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-**  Copyright (C) 2011 Rallaz, rallazz@gmail.com
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
+** Copyright (C) 2011 Rallaz, rallazz@gmail.com
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 **
 **
@@ -26,7 +27,6 @@
 #include "rs_filterdxfrw.h"
 
 #include <stdio.h>
-//#include <map>
 
 #include "rs_dimaligned.h"
 #include "rs_dimangular.h"
@@ -188,7 +188,7 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
     if (data.flags&0x04) {
         layer->lock(true);
     }
-//    layer->setPrint(! data.plotF);
+    layer->setPrint(data.plotF);
 
     //parse extended data to read construction flag
     if (!data.extData.empty()){
@@ -202,15 +202,17 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
                     isLCdata = false;
             } else if (isLCdata && (*it)->code == 1070){
                 if ((*it)->content.i == 1){
-                    layer->setConstructionLayer(true);
-                    RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::addLayer: layer %s is construction layer", layer->getName().toStdString().c_str());
+                    layer->setConstruction(true);
                 }
             }
         }
     }
     //pre dxfrw 0.5.13 plot flag are used to store construction layer
     if (libVersionStr == "dxfrw" && libVersion == 0 && libRelease < 513)
-        layer->setConstructionLayer(! data.plotF);
+        layer->setConstruction(! data.plotF);
+
+    if (layer->isConstruction())
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::addLayer: layer %s is construction layer", layer->getName().toStdString().c_str());
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: add layer to graphic");
     graphic->addLayer(layer);
@@ -1776,15 +1778,12 @@ void RS_FilterDXFRW::writeLayers(){
         lay.lineType = lineTypeToName(pen.getLineType()).toStdString();
         lay.flags = l->isFrozen() ? 0x01 : 0x00;
         if (l->isLocked()) lay.flags |=0x04;
-//        lay.plotF = ! l->isPrint();
-        lay.plotF = ! l->isConstructionLayer(); // a construction layer should not appear in print
-//        if(l->isConstruction()) {
-        if(l->isConstructionLayer()) {
+        lay.plotF = l->isPrint();
+        if( l->isConstruction()) {
             lay.extData.push_back(new DRW_Variant(1001, "LibreCad"));
             lay.extData.push_back(new DRW_Variant(1070, 1));
-        }
-        if (!lay.plotF)
             RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::writeLayers: layer %s saved as construction layer", lay.name.c_str());
+        }
         dxfW->writeLayer(&lay);
     }
 }

@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -129,7 +130,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
     }else{
         //find projection on line
         const double t=RS_Vector::dotP(vpc,direction)/a;
-        if( !isConstructionLayer() && onEntity &&
+        if( !isConstruction() && onEntity &&
                 ( t<=-RS_TOLERANCE || t>=1.+RS_TOLERANCE )
                 ){
             //                !( vpc.x>= minV.x && vpc.x <= maxV.x && vpc.y>= minV.y && vpc.y<=maxV.y) ) {
@@ -566,7 +567,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     RS_Vector pEnd(view->toGui(endPoints.at(1)));
     //    std::cout<<"draw line: "<<pStart<<" to "<<pEnd<<std::endl;
     RS_Vector direction=pEnd-pStart;
-    if(isConstructionLayer(true) && direction.squared() > RS_TOLERANCE){
+    if(isConstruction(true) && direction.squared() > RS_TOLERANCE){
         //extend line on a construction layer to fill the whole view
         RS_Vector lb(0,0);
         RS_Vector rt(view->getWidth(),view->getHeight());

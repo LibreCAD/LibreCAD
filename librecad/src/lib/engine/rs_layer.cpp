@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -38,7 +39,8 @@ RS_Layer::RS_Layer(const QString& name) {
     data.pen.setColor(Qt::black);
     data.frozen = false;
     data.locked = false;
-    data.constructionLayer = false;
+    data.print = true;
+    data.construction = false;
 }
 
 
@@ -48,8 +50,8 @@ RS_Layer::RS_Layer(const QString& name) {
 std::ostream& operator << (std::ostream& os, const RS_Layer& l) {
     os << " name: " << l.getName().toLatin1().data()
     << " pen: " << l.getPen()
-	<< " frozen: " << (int)l.isFrozen()
-	<< " address: " << &l
+    << " frozen: " << (int)l.isFrozen()
+    << " address: " << &l
     << std::endl;
     return os;
 }

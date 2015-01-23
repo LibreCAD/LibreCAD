@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -564,7 +565,9 @@ public:
     virtual void calculateBorders() = 0;
     /** whether the entity is on a constructionLayer */
     //! constructionLayer contains entities of infinite length, constructionLayer doesn't show up in print
-    bool isConstructionLayer(bool typeCheck = false) const; // ignore certain entity types for constructionLayer check
+    bool isConstruction(bool typeCheck = false) const; // ignore certain entity types for constructionLayer check
+    //! whether printing is enabled or disabled for the entity's layer
+    bool isPrint(void) const;
     /** return the equation of the entity
 for quadratic,
 

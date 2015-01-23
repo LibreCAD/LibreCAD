@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -156,8 +157,9 @@ void RS_LayerList::add(RS_Layer* layer) {
 
         l->freeze( layer->isFrozen());
         l->lock( layer->isLocked());
+        l->setPrint( layer->isPrint());
         l->setConverted( layer->isConverted());
-        l->setConstructionLayer( layer->isConstructionLayer());
+        l->setConstruction( layer->isConstruction());
         l->visibleInLayerList( layer->isVisibleInLayerList());
         l->setPen(layer->getPen());
 
@@ -339,7 +341,7 @@ void RS_LayerList::toggleLock(RS_Layer* layer) {
 
 
 /**
- * Swith printing for the given layer on / off.
+ * Switch printing for the given layer on / off.
  * Listeners are notified.
  */
 void RS_LayerList::togglePrint(RS_Layer* layer) {
@@ -354,6 +356,26 @@ void RS_LayerList::togglePrint(RS_Layer* layer) {
     for (int i=0; i<layerListListeners.size(); ++i) {
         RS_LayerListListener* l = layerListListeners.at(i);
         l->layerToggledPrint(layer);
+    }
+}
+
+
+/**
+ * Switch construction attribute for the given layer on / off.
+ * Listeners are notified.
+ */
+void RS_LayerList::toggleConstruction(RS_Layer* layer) {
+    if (layer==NULL) {
+        return;
+    }
+
+    layer->toggleConstruction();
+    setModified(true);
+
+    // Notify listeners:
+    for (int i=0; i<layerListListeners.size(); ++i) {
+        RS_LayerListListener* l = layerListListeners.at(i);
+        l->layerToggledConstruction(layer);
     }
 }
 
