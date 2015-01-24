@@ -258,12 +258,8 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
         break;
 
     case RS2::ActionFileExport:
-                        // tr("Export Drawing")
-                        action = new QAction(tr("&Export..."), NULL);
-                        //action->zetStatusTip(tr("Exports the current drawing as bitmap"));
-
-        connect(action, SIGNAL(triggered()),
-                obj, SLOT(slotFileExport()));
+        action = new QAction( QIcon(":/actions/fileexport.png"), tr("&Export..."), NULL);
+        connect( action, SIGNAL( triggered()), obj, SLOT(slotFileExport()));
         break;
 
     case RS2::ActionFileClose:

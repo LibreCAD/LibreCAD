@@ -112,9 +112,6 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
 #ifndef QC_ABOUT_ICON
 # define QC_ABOUT_ICON ":/main/intro_librecad.png"
 #endif
-#ifndef QC_APP_ICON16
-# define QC_APP_ICON16 ":/main/librecad16.png"
-#endif
 
 #include <QSplashScreen>
     extern QSplashScreen *splash;
@@ -645,7 +642,7 @@ void QC_ApplicationWindow::initActions(void)
                                                    ,RS2::ActionFileSaveAs
                                                    ,RS2::ActionFileExport});
 
-    subMenu = menu->addMenu(tr("Import"));
+    subMenu = menu->addMenu( QIcon(":/actions/fileimport.png"), tr("Import"));
     subMenu->setObjectName("Import");
 
     //insert images
@@ -1016,19 +1013,15 @@ void QC_ApplicationWindow::initActions(void)
 
     // Help menu:
     //
-    /*RVT_PORThelpAboutApp = new QAction(tr("About"),
-                                                           QC_APP_ICON16), tr("&About %1").arg(QC_APPNAME), 0, this); */
-    helpAboutApp = new QAction(QIcon(QC_APP_ICON16), tr("About"), this);
+    helpAboutApp = new QAction( QIcon(QC_APP_ICON), tr("About"), this);
 
     //helpAboutApp->zetStatusTip(tr("About the application"));
     //helpAboutApp->setWhatsThis(tr("About\n\nAbout the application"));
     connect(helpAboutApp, SIGNAL(triggered()),
             this, SLOT(slotHelpAbout()));
 
-    helpManual = new QAction(QIcon(":/main/contents.png"), tr("&Manual"), this);
-    //helpManual->zetStatusTip(tr("Launch the online manual"));
-    connect(helpManual, SIGNAL(triggered()),
-            this, SLOT(slotHelpManual()));
+    helpManual = new QAction( QIcon(":/main/manual.png"), tr("&Manual"), this);
+    connect( helpManual, SIGNAL(triggered()), this, SLOT(slotHelpManual()));
 
 /* RVT_PORT    testDumpEntities = new QAction("Dump Entities",
                                    "Dump &Entities", 0, this); */

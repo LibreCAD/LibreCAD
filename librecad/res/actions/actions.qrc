@@ -1,6 +1,7 @@
 <RCC version="1.0">
 <qresource prefix="/actions">
 <file>configure.png</file>
+<file>drawingprefs.png</file>
 <file>editcopy.png</file>
 <file>editcopy2.png</file>
 <file>editcut.png</file>
@@ -11,7 +12,9 @@
 <file>editundo.png</file>
 <file>exit.png</file>
 <file>fileclose.png</file>
+<file>fileexport.png</file>
 <file>fileexportpdf.png</file>
+<file>fileimport.png</file>
 <file>filenew.png</file>
 <file>fileopen.png</file>
 <file>fileopen2.png</file>
