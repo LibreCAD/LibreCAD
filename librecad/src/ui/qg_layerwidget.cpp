@@ -169,10 +169,10 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layerView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     layerView->setFocusPolicy(Qt::NoFocus);
     layerView->setMinimumHeight(140);
-    layerView->setColumnWidth(QG_LayerModel::VISIBLE, 16);
-    layerView->setColumnWidth(QG_LayerModel::LOCKED, 16);
-    layerView->setColumnWidth(QG_LayerModel::PRINT, 20);
-    layerView->setColumnWidth(QG_LayerModel::CONSTRUCTION, 16);
+    layerView->setColumnWidth(QG_LayerModel::VISIBLE, 18);
+    layerView->setColumnWidth(QG_LayerModel::LOCKED, 18);
+    layerView->setColumnWidth(QG_LayerModel::PRINT, 24);
+    layerView->setColumnWidth(QG_LayerModel::CONSTRUCTION, 18);
     layerView->verticalHeader()->hide();
     layerView->horizontalHeader()->setStretchLastSection(true);
     layerView->horizontalHeader()->hide();
