@@ -552,95 +552,57 @@ QString QG_DialogFactory::requestFileSaveAsDialog() {
  * @return File name with path and extension to determine the file type
  *         or an empty string if the dialog was cancelled.
  */
-QString QG_DialogFactory::requestImageOpenDialog() {
-    QString fn = "";
+QString QG_DialogFactory::requestImageOpenDialog()
+{
+    QString strFileName = "";
 
     // read default settings:
     RS_SETTINGS->beginGroup("/Paths");
-    QString defDir = RS_SETTINGS->readEntry("/OpenImage",
-                       RS_SYSTEM->getHomeDir());
-    QString defFilter = RS_SETTINGS->readEntry("/ImageFilter",
-                          "Portable Network Graphic (*.png)");
+    QString defDir = RS_SETTINGS->readEntry("/OpenImage", RS_SYSTEM->getHomeDir());
+    QString defFilter = RS_SETTINGS->readEntry( "/ImageFilter", "");
     RS_SETTINGS->endGroup();
 
-    bool cancel = false;
-
-    QFileDialog fileDlg(NULL, "");
-    fileDlg.setModal(true);
-
-    // RVT_PORT
-    //Q3StrList f = QImageReader::supportedImageFormats();
-    //QStringList formats = QStringList::fromStrList(f);
     QStringList filters;
     QString all = "";
-    //filters = QStringList::fromStrList(formats);
-
     bool haveJpeg= false;
     foreach (QByteArray format, QImageReader::supportedImageFormats()) {
         if (format.toUpper() == "JPG" || format.toUpper() == "JPEG" ){
             if (!haveJpeg) {
                 haveJpeg = true;
-                filters.append("jpeg (*.jpeg *.jpg) ");
+                filters.append("jpeg (*.jpeg *.jpg)");
                 all += " *.jpeg *.jpg";
             }
         } else {
-            filters.append(QString("%1 (*.%1) ").arg(QString(format)));
+            filters.append(QString("%1 (*.%1)").arg(QString(format)));
             all += QString(" *.%1").arg(QString(format));
         }
-                /* RVT_PORT
-                 QString ext = (*it);
-        QString st;
-        if (ext=="JPEG") {
-            st = QString("%1 (*.%2 *.jpg)").arg(extToFormat(*it))
-                 .arg(QString(*it).lower());
-        } else {
-            st = QString("%1 (*.%2)").arg(extToFormat(*it))
-                 .arg(QString(*it).lower());
-        }
-        filters.append(st);
-
-        if (!all.isEmpty()) {
-            all += " ";
-        }
-
-        if (ext=="JPEG") {
-            all += QString("*.%1 *.jpg").arg(QString(*it).lower());
-        } else {
-            all += QString("*.%1").arg(QString(*it).lower());
-        } */
     }
-    filters.append(QObject::tr("All Image Files (%1) ").arg(all));
+    QString strAllImageFiles = QObject::tr("All Image Files (%1)").arg(all);
+    filters.append(strAllImageFiles);
     filters.append(QObject::tr("All Files (*.*)"));
 
-    //filters.append("Drawing Exchange (*.)");
-    //filters.append("Font (*.cxf)");
-
-#if QT_VERSION < 0x040400
-    emu_qt44_QFileDialog_setNameFilters(fileDlg, filters);
-#else
-    fileDlg.setNameFilters(filters);
-#endif
-
+    QFileDialog fileDlg(NULL, "");
+    fileDlg.setModal(true);
     fileDlg.setFileMode(QFileDialog::ExistingFile);
     fileDlg.setWindowTitle(QObject::tr("Open Image"));
     fileDlg.setDirectory(defDir);
 #if QT_VERSION >= 0x040400
+    fileDlg.setNameFilters(filters);
+    if (defFilter.isEmpty())
+        defFilter = strAllImageFiles;
     fileDlg.selectNameFilter(defFilter);
+#else
+    emu_qt44_QFileDialog_setNameFilters(fileDlg, filters);
 #endif
 
-    if (fileDlg.exec()==QDialog::Accepted) {
-//        fn = fileDlg.selectedFile();
-        QStringList sf = fileDlg.selectedFiles();
-        if (!sf.isEmpty()) fn = sf.first();
-        cancel = false;
-    } else {
-        cancel = true;
-    }
+    if (QDialog::Accepted == fileDlg.exec()) {
+        QStringList strSelectedFiles = fileDlg.selectedFiles();
+        if (!strSelectedFiles.isEmpty())
+            strFileName = strSelectedFiles.first();
 
-    // store new default settings:
-    if (!cancel) {
+        // store new default settings:
         RS_SETTINGS->beginGroup("/Paths");
-        RS_SETTINGS->writeEntry("/OpenImage", QFileInfo(fn).absolutePath());
+        RS_SETTINGS->writeEntry("/OpenImage", QFileInfo(strFileName).absolutePath());
 #if QT_VERSION < 0x040400
         RS_SETTINGS->writeEntry("/ImageFilter", emu_qt44_QFileDialog_selectedNameFilter(fileDlg));
 #else
@@ -649,7 +611,7 @@ QString QG_DialogFactory::requestImageOpenDialog() {
         RS_SETTINGS->endGroup();
     }
 
-    return fn;
+    return strFileName;
 }
 
 
