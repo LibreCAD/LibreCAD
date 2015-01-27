@@ -61,7 +61,8 @@ void QG_MouseWidget::languageChange()
 void QG_MouseWidget::init() {
     lLeftButton->setText("");
     lRightButton->setText("");
-    
+    lMousePixmap->setPixmap( QPixmap(":/ui/mousebuttons24.png"));
+
     int fsize;
 #ifdef __APPLE__
     fsize = 9;
