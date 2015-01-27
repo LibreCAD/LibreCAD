@@ -916,7 +916,7 @@ RS_Vector LC_SplinePoints::getNearestMiddle(const RS_Vector& coord,
 		return vStart;
 	}
 
-	vEnd = data.splinePoints.at(1);
+    vEnd = data.controlPoints.at(1);
 
 	if(n < 3)
 	{
