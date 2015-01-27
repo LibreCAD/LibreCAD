@@ -102,38 +102,6 @@ Armin Stebich (librecad@mail.lordofbikes.de)</dc:title>
        width="150"
        style="display:none" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m 265.44169,800.66418 0,100 17.5,16.25 81.25,0 11.25,-8.75 0,-107.5 z"
-       id="path3072"
-       inkscape:connector-curvature="0" />
-    <path
-       style="fill:#7cfc00;fill-opacity:1;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m 282.94169,800.66418 0,46.25 10,8.75 53.75,0 11.25,-8.75 0,-46.25 z"
-       id="path3074"
-       inkscape:connector-curvature="0" />
-    <g
-       id="g3907"
-       transform="translate(242.94169,-119.198)">
-      <path
-         transform="translate(0,902.36218)"
-         inkscape:connector-curvature="0"
-         id="path3863"
-         d="m 47.5,133.75 0,-36.25 10,-8.75 42.5,0 8.75,8.75 0,36.25 z"
-         style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <path
-         transform="translate(0,902.36218)"
-         inkscape:connector-curvature="0"
-         id="path3865"
-         d="m 60,120 0,-17.5 8.75,0 0,17.5 z"
-         style="fill:none;stroke:#000000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path3867"
-         transform="translate(0,902.36218)"
-         d="m 58.75,93.75 -6.25,5 0,31.25 51.25,0 0,-30 -6.25,-6.25 -38.75,0 z m -2.5,5 16.25,0 0,25 -16.25,0 0,-25 z"
-         style="fill:#7cfc00;fill-opacity:1;stroke:none" />
-    </g>
-    <path
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:4.30293417;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m 17.597546,919.36893 109.947504,0.39273 0.37328,109.28184 -9.62502,7.0758 -82.553088,0.7864 -17.768752,-16.1171 z"
        id="path3217"
