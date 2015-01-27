@@ -534,10 +534,35 @@ bool RS_Ellipse::isPointOnEntity(const RS_Vector& coord,
 
 RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
                                        double* dist) {
-    if (dist!=NULL) {
-        *dist = coord.distanceTo(data.center);
+    RS_Vector   vCenter = data.center;
+    double      distCenter = coord.distanceTo(data.center);
+
+    RS_VectorSolutions  vsFoci = getFoci();
+    if( 2 == vsFoci.getNumber()) {
+        RS_Vector vFocus1 = vsFoci.get(0);
+        RS_Vector vFocus2 = vsFoci.get(1);
+
+        double distFocus1 = coord.distanceTo(vFocus1);
+        double distFocus2 = coord.distanceTo(vFocus2);
+
+        /* if (distFocus1 < distCenter) is true
+         * then (distFocus1 < distFocus2) must be true too
+         * and vice versa
+         * no need to check this */
+        if( distFocus1 < distCenter) {
+            vCenter = vFocus1;
+            distCenter = distFocus1;
+        }
+        else if( distFocus2 < distCenter) {
+            vCenter = vFocus2;
+            distCenter = distFocus2;
+        }
     }
-    return data.center;
+
+    if (NULL != dist) {
+        *dist = distCenter;
+    }
+    return vCenter;
 }
 
 /**
