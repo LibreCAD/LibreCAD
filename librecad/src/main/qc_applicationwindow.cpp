@@ -2971,14 +2971,15 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     emu_qt44_QPrinter_setPaperSize(printer, RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape)));
 #else
     QPrinter::PageSize paperSize=RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape));
-    printer.setPaperSize(paperSize);
 #endif // QT_VERSION 0x040400
     if(paperSize==QPrinter::Custom){
-        RS_Vector&& s=graphic->getPaperSize()*RS_Units::getFactorToMM(graphic->getUnit());
+        RS_Vector&& s=graphic->getPaperSize();
         if(landscape) s=s.flipXY();
         printer.setPaperSize(QSizeF(s.x,s.y),QPrinter::Millimeter);
 //        RS_DEBUG->print(RS_Debug::D_ERROR, "set paper size to (%g, %g)\n", s.x,s.y);
-    }
+    }else
+        printer.setPaperSize(paperSize);
+//    qDebug()<<"paper size=("<<printer.paperSize(QPrinter::Millimeter).width()<<", "<<printer.paperSize(QPrinter::Millimeter).height()<<")";
     if (landscape) {
         printer.setOrientation(QPrinter::Landscape);
     } else {
@@ -3012,6 +3013,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         fileDlg.setFileMode(QFileDialog::AnyFile);
         fileDlg.selectNameFilter(defFilter);
         fileDlg.setAcceptMode(QFileDialog::AcceptSave);
+        fileDlg.setDefaultSuffix("pdf");
         fileDlg.setDirectory(infDefaultFile.dir().path());
         strPdfFileName = infDefaultFile.baseName();
         if( strPdfFileName.isEmpty())
@@ -3031,6 +3033,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
 
         QPrintDialog printDialog(&printer, this);
         printDialog.setOption(QAbstractPrintDialog::PrintToFile);
+        printDialog.setOption(QAbstractPrintDialog::PrintShowPageSize);
         bStartPrinting = (QDialog::Accepted == printDialog.exec());
     }
 
