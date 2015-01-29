@@ -77,8 +77,8 @@ double RS_Circle::getLength() const {
 
 bool RS_Circle::isTangent(const RS_CircleData&  circleData){
     double d=circleData.center.distanceTo(data.center);
-    if( fabs(d-fabs(circleData.radius - data.radius))<RS_TOLERANCE ||
-            fabs(d-fabs(circleData.radius + data.radius))<RS_TOLERANCE ) return true;
+    if( fabs(d-fabs(circleData.radius - data.radius))<20.*RS_TOLERANCE ||
+            fabs(d-fabs(circleData.radius + data.radius))<20.*RS_TOLERANCE ) return true;
     return false;
 }
 
