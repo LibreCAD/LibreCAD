@@ -161,7 +161,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     showByBlock = false;
     lastLayer = NULL;
 
-    layerModel = new QG_LayerModel;
+    layerModel = new QG_LayerModel(this);
     layerView = new QTableView(this);
     layerView->setModel (layerModel);
     layerView->setShowGrid (false);
@@ -181,7 +181,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     lay->setSpacing ( 0 );
     lay->setContentsMargins(2, 2, 2, 2);
 
-    QHBoxLayout* layButtons = new QHBoxLayout();
+    QHBoxLayout* layButtons = new QHBoxLayout(this);
     QToolButton* but;
     // show all layer:
     but = new QToolButton(this);
@@ -225,7 +225,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layButtons->addWidget(but);
 
     // lineEdit to filter layer list with RegEx
-    matchLayerName = new QLineEdit;
+    matchLayerName = new QLineEdit(this);
     matchLayerName->setReadOnly(false);
     //matchLayerName->setText("*");
     matchLayerName->setToolTip(tr("Looking for matching layer names"));
@@ -245,7 +245,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
  * Destructor
  */
 QG_LayerWidget::~QG_LayerWidget() {
-    delete layerView;
+//    delete layerView;
 }
 
 
@@ -433,17 +433,18 @@ void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
                                  SLOT(slotLayersDefreezeAll()), 0);
         contextMenu->addAction( tr("&Freeze all Layers"), actionHandler,
                                  SLOT(slotLayersFreezeAll()), 0);
+        contextMenu->addSeparator();
         contextMenu->addAction( tr("&Add Layer"), actionHandler,
                                  SLOT(slotLayersAdd()), 0);
         contextMenu->addAction( tr("&Remove Layer"), actionHandler,
                                  SLOT(slotLayersRemove()), 0);
-        contextMenu->addAction( tr("&Edit Layer"), actionHandler,
+        contextMenu->addAction( tr("Edit Layer &Attributes"), actionHandler,
                                  SLOT(slotLayersEdit()), 0);
-        contextMenu->addAction( tr("&Toggle Visibility"), actionHandler,
+        contextMenu->addAction( tr("Toggle Layer &Visibility"), actionHandler,
                                  SLOT(slotLayersToggleView()), 0);
-        contextMenu->addAction( tr("&Toggle Printing"), actionHandler,
+        contextMenu->addAction( tr("Toggle Layer &Printing"), actionHandler,
                                  SLOT(slotLayersTogglePrint()), 0);
-        contextMenu->addAction( tr("&Toggle Construction"), actionHandler,
+        contextMenu->addAction( tr("Toggle &Construction Layer"), actionHandler,
                                  SLOT(slotLayersToggleConstruction()), 0);
         contextMenu->exec(QCursor::pos());
         delete contextMenu;
