@@ -153,14 +153,43 @@ bool RS_ActionDrawCircleTan3::getData(){
     if(getStatus() != SetCircle3) return false;
     //find the nearest circle
     int i=0;
-    for(i=0;i<circles.size();i++)
+    for(;i<circles.size();++i)
         if(circles[i]->rtti() == RS2::EntityLine) break;
     candidates.clear();
-    if(i<circles.size() && circles[i]->rtti() == RS2::EntityLine){
-        LC_Quadratic lc0(circles[i],circles[(i+1)%3]);
-        LC_Quadratic lc1(circles[i],circles[(i+2)%3]);
-        auto&& sol=LC_Quadratic::getIntersection(lc0,lc1);
-        double d;
+        const int i1=(i+1)%3;
+        const int i2=(i+2)%3;
+        if(i<circles.size() && circles[i]->rtti() == RS2::EntityLine){
+
+            LC_Quadratic lc0(circles[i],circles[i1],false);
+             LC_Quadratic lc01(circles[i],circles[i1],true);
+            LC_Quadratic lc1;
+            RS_VectorSolutions sol;
+            //detect degenerate case two circles with the same radius
+            if(circles[i1]->rtti()== RS2::EntityCircle &&
+                    circles[i2]->rtti()== RS2::EntityCircle
+                    ){
+                RS_Circle* c1=static_cast<RS_Circle*>(circles[i1]);
+                RS_Circle* c2=static_cast<RS_Circle*>(circles[i2]);
+                if(fabs(fabs(c1->getRadius())-fabs(c2->getRadius()))<RS_TOLERANCE){
+                    //degenerate
+                    const RS_Vector p0=(c1->getCenter()+c2->getCenter())*0.5;
+                    const RS_Vector p1=p0 + (c1->getCenter() - p0).rotate(0.5*M_PI);
+                    lc1=RS_Line(NULL, RS_LineData(p0,p1 )).getQuadratic();
+                    sol=LC_Quadratic::getIntersection(lc0,lc1);
+
+                    sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
+                    lc1=RS_Line(NULL, RS_LineData(c1->getCenter(),c1->getCenter())).getQuadratic();
+                    sol.appendTo(LC_Quadratic::getIntersection(lc0,lc1));
+                    sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
+                }
+
+            }
+            if(sol.size()==0) {
+                lc1=LC_Quadratic(circles[i],circles[i2]);
+                sol=LC_Quadratic::getIntersection(lc0,lc1);
+                sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
+            }
+            double d;
 
         //line passes circle center, need a second parabola as the image of the line
         for(int j=1;j<=2;j++){
@@ -174,12 +203,10 @@ bool RS_ActionDrawCircleTan3::getData(){
             }
         }
 
-
         for(size_t j=0;j<sol.size();j++){
+            if(sol[j].squared()>RS_MAXDOUBLE*RS_MAXDOUBLE) continue;
             circles[i]->getNearestPointOnEntity(sol[j],false,&d);
             RS_CircleData data(sol[j],d);
-//            DEBUG_HEADER();
-//            std::cout<<sol[j]<<" r="<<d<<std::endl;
             if(circles[(i+1)%3]->isTangent(data)==false) continue;
             if(circles[(i+2)%3]->isTangent(data)==false) continue;
 

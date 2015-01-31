@@ -76,9 +76,13 @@ double RS_Circle::getLength() const {
 }
 
 bool RS_Circle::isTangent(const RS_CircleData&  circleData){
-    double d=circleData.center.distanceTo(data.center);
-    if( fabs(d-fabs(circleData.radius - data.radius))<20.*RS_TOLERANCE ||
-            fabs(d-fabs(circleData.radius + data.radius))<20.*RS_TOLERANCE ) return true;
+    const double d=circleData.center.distanceTo(data.center);
+//    DEBUG_HEADER();
+    const double r0=fabs(circleData.radius);
+    const double r1=fabs(data.radius);
+//    std::cout<<fabs(d-fabs(r0-r1))<<" : "<<fabs(d-fabs(r0+r1))<<std::endl;
+    if( fabs(d-fabs(r0-r1))<20.*RS_TOLERANCE ||
+            fabs(d-fabs(r0+r1))<20.*RS_TOLERANCE ) return true;
     return false;
 }
 
