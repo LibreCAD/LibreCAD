@@ -185,9 +185,19 @@ bool RS_ActionDrawCircleTan3::getData(){
 
             }
             if(sol.size()==0) {
-                lc1=LC_Quadratic(circles[i],circles[i2]);
-                sol=LC_Quadratic::getIntersection(lc0,lc1);
-                sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
+                switch(circles[i2]->rtti()){
+                case RS2::EntityCircle:
+                    lc1=LC_Quadratic(circles[i],circles[i2], true);
+                    sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
+                    if(circles[i1]->rtti()== RS2::EntityCircle )
+                        sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
+                    //there's no break, because the default part would be run for circles as well
+                default:
+                    lc1=LC_Quadratic(circles[i],circles[i2]);
+                    sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
+                    if(circles[i1]->rtti()== RS2::EntityCircle )
+                        sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
+                }
             }
             double d;
 
@@ -203,13 +213,23 @@ bool RS_ActionDrawCircleTan3::getData(){
             }
         }
 
-        for(size_t j=0;j<sol.size();j++){
-            if(sol[j].squared()>RS_MAXDOUBLE*RS_MAXDOUBLE) continue;
-            circles[i]->getNearestPointOnEntity(sol[j],false,&d);
-            RS_CircleData data(sol[j],d);
+        //clean up duplicate and invalid
+        RS_VectorSolutions sol1;
+        for(size_t j=0; j<sol.size(); ++j){
+            const RS_Vector&& vp=sol.at(j);
+            if(vp.magnitude()>RS_MAXDOUBLE) continue;
+            if(sol1.size())
+                if(sol1.getClosestDistance(vp)<RS_TOLERANCE) continue;
+
+            sol1.push_back(vp);
+        }
+
+
+        for(size_t j=0;j<sol1.size();j++){
+            circles[i]->getNearestPointOnEntity(sol1[j],false,&d);
+            RS_CircleData data(sol1[j],d);
             if(circles[(i+1)%3]->isTangent(data)==false) continue;
             if(circles[(i+2)%3]->isTangent(data)==false) continue;
-
             candidates<<RS_Circle(NULL,data);
         }
     }else{
