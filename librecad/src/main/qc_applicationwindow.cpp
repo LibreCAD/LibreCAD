@@ -565,7 +565,7 @@ void QC_ApplicationWindow::initMDI() {
     RS_DEBUG->print("QC_ApplicationWindow::initMDI() begin");
 
     QFrame *vb = new QFrame(this);
-    vb->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
+    vb->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
     QVBoxLayout *layout = new QVBoxLayout;
     vb->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     layout->setContentsMargins ( 0, 0, 0, 0 );
@@ -577,7 +577,7 @@ void QC_ApplicationWindow::initMDI() {
     mdiAreaCAD->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     mdiAreaCAD->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     mdiAreaCAD->setFocusPolicy(Qt::ClickFocus);
-    mdiAreaCAD->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    mdiAreaCAD->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
 #if QT_VERSION >= 0x040800
     mdiAreaCAD->setTabsClosable(true);
 #endif
@@ -1400,6 +1400,7 @@ void QC_ApplicationWindow::initView() {
 
     RS_DEBUG->print("  layer widget..");
     dw = new QDockWidget( "Layer", this);
+    dw->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         dw->setObjectName ( "LayerDW" );
     layerWidget = new QG_LayerWidget(actionHandler, dw, "Layer");
     layerWidget->setFocusPolicy(Qt::NoFocus);
