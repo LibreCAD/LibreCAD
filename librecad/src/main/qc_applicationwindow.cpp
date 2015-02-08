@@ -1619,9 +1619,10 @@ void QC_ApplicationWindow::slotEnter() {
  * Sets the keyboard focus on the command line.
  */
 void QC_ApplicationWindow::slotFocusCommandLine() {
-    if (commandWidget->isVisible()) {
+//    if (commandWidget->isVisible()) {
+        commandWidget->show();
         commandWidget->setFocus();
-    }
+//    }
 }
 
 
