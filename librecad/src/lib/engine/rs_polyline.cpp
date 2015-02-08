@@ -564,6 +564,7 @@ void RS_Polyline::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);
     data.startpoint.move(offset);
     data.endpoint.move(offset);
+    calculateBorders();
 }
 
 
@@ -577,6 +578,7 @@ void RS_Polyline::rotate(const RS_Vector& center, const RS_Vector& angleVector) 
     RS_EntityContainer::rotate(center, angleVector);
     data.startpoint.rotate(center, angleVector);
     data.endpoint.rotate(center, angleVector);
+    calculateBorders();
 }
 
 
@@ -585,6 +587,7 @@ void RS_Polyline::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_EntityContainer::scale(center, factor);
     data.startpoint.scale(center, factor);
     data.endpoint.scale(center, factor);
+    calculateBorders();
 }
 
 
@@ -593,6 +596,7 @@ void RS_Polyline::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint
     RS_EntityContainer::mirror(axisPoint1, axisPoint2);
     data.startpoint.mirror(axisPoint1, axisPoint2);
     data.endpoint.mirror(axisPoint1, axisPoint2);
+    calculateBorders();
 }
 
 
@@ -605,6 +609,7 @@ void RS_Polyline::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     if (ref.distanceTo(data.endpoint)<1.0e-4) {
        data.endpoint.move(offset);
     }
+    calculateBorders();
     //update();
 }
 
@@ -627,6 +632,7 @@ void RS_Polyline::stretch(const RS_Vector& firstCorner,
     }
 
         RS_EntityContainer::stretch(firstCorner, secondCorner, offset);
+    calculateBorders();
 }
 
 
@@ -654,7 +660,6 @@ void RS_Polyline::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patte
         while(e!=NULL) {
             view->drawEntityPlain(painter, e, patternOffset);
             e = nextEntity(RS2::ResolveNone);
-            //RS_DEBUG->print("offset: %f\nlength was: %f", offset, e->getLength());
         }
     }
 }
