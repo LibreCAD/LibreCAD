@@ -1308,9 +1308,7 @@ void QC_ApplicationWindow::initSettings() {
     for (int i=0; i<recentFiles->getNumber(); ++i) {
         QString filename = RS_SETTINGS->readEntry(QString("/File") +
                            QString::number(i+1));
-        if (!filename.isEmpty()) {
-            recentFiles->add(filename);
-        }
+        if (QFileInfo(filename).exists()) recentFiles->add(filename);
     }
     RS_SETTINGS->endGroup();
 //    QList <QAction*> recentFilesAction;
@@ -1534,7 +1532,8 @@ void QC_ApplicationWindow::updateRecentFilesMenu() {
         //oldest on top
 //        QString text = tr("&%1 %2").arg(i + 1).arg(recentFiles->get(i));
         //newest on top
-        QString text = tr("&%1 %2").arg(i + 1).arg(recentFiles->get(numRecentFiles-i-1));
+        QString&& text = tr("&%1 %2").arg(i + 1).arg(recentFiles->get(numRecentFiles-i-1));
+
         recentFilesAction[i]->setText(text);
         //newest on top
         recentFilesAction[i]->setData(recentFiles->get(numRecentFiles-i-1));
@@ -2413,7 +2412,7 @@ void QC_ApplicationWindow::
 
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
-    if (!fileName.isEmpty())
+    if ( QFileInfo(fileName).exists())
          {
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: creating new doc window");
         if (openedFiles.indexOf(fileName) >=0) {
@@ -2523,6 +2522,7 @@ void QC_ApplicationWindow::
     }
          else
          {
+        QG_DIALOGFACTORY->commandMessage(tr("File '%1' does not exist. Opening aborted").arg(fileName));
         statusBar()->showMessage(tr("Opening aborted"), 2000);
     }
 
