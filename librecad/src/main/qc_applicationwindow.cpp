@@ -2447,11 +2447,14 @@ void QC_ApplicationWindow::
         qApp->processEvents(QEventLoop::AllEvents, 1000);
 
         // open the file in the new view:
-        if (w->slotFileOpen(fileName, type)==false) {
+        bool success=false;
+        if(QFileInfo(fileName).exists())
+            success=w->slotFileOpen(fileName, type);
+        if (!success) {
                // error
                QApplication::restoreOverrideCursor();
                QString msg=tr("Cannot open the file\n%1\nPlease "
-                              "check the permissions.")
+                              "check its existence and permissions.")
                        .arg(fileName);
                commandWidget->appendHistory(msg);
                QMessageBox::information(this, QMessageBox::tr("Warning"),
