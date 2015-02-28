@@ -581,9 +581,9 @@ RS_Vector RS_Circle::getMiddlePoint(void)const
 /**
  * @brief compute middlePoints for each quadrant of a circle
  *
- * 0 middlePoints snaps to axis intersection at 0, 90, 180 and 270 degree (getNearestEndpoint)
- * 1 middlePoints snaps to 45, 135, 225 and 315 degree
- * 2 middlePoints snaps to 30, 60, 120, 150, 210, 240, 300 and 330 degree
+ * 0 middlePoints snaps to axis intersection at 0, 90, 180 and 270 degree (getNearestEndpoint) \n
+ * 1 middlePoints snaps to 45, 135, 225 and 315 degree \n
+ * 2 middlePoints snaps to 30, 60, 120, 150, 210, 240, 300 and 330 degree \n
  * and so on
  *
  * @param coord coordinates to compute, e.g. mouse cursor position
