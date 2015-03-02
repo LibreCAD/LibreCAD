@@ -158,7 +158,7 @@ public:
     bool createInscribe(const RS_Vector& coord, const QVector<RS_Line*>& lines);
     virtual QVector<RS_Entity* > offsetTwoSides(const double& distance) const;
     RS_VectorSolutions createTan1_2P(const RS_AtomicEntity* circle, const QVector<RS_Vector> points);
-    RS_VectorSolutions createTan2(const QVector<RS_AtomicEntity*>& circles, const double& r);
+	static RS_VectorSolutions createTan2(const QVector<RS_AtomicEntity*>& circles, const double& r);
     /** solve one of the eight Appollonius Equations
 | Cx - Ci|^2=(Rx+Ri)^2
 with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are the Center and radius of the i-th existing circle

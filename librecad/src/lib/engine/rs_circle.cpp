@@ -265,8 +265,8 @@ QVector<RS_Entity* > RS_Circle::offsetTwoSides(const double& distance) const
 {
     QVector<RS_Entity*> ret(0,NULL);
     ret<<new RS_Circle(NULL,RS_CircleData(getCenter(),getRadius()+distance));
-    if(getRadius()>distance)
-    ret<<new RS_Circle(NULL,RS_CircleData(getCenter(),getRadius()-distance));
+	if(fabs(getRadius()-distance)>RS_TOLERANCE)
+	ret<<new RS_Circle(NULL,RS_CircleData(getCenter(),fabs(getRadius()-distance)));
     return ret;
 }
 
@@ -301,7 +301,7 @@ RS_VectorSolutions RS_Circle::createTan2(const QVector<RS_AtomicEntity*>& circle
     }
     for(auto it0=e1.begin();it0!=e1.end();it0++){
         delete *it0;
-    }
+	}
     return centers;
 
 }

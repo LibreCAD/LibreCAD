@@ -37,18 +37,9 @@ RS_ActionDrawCircleTan2::RS_ActionDrawCircleTan2(
     :RS_PreviewActionInterface("Draw circle inscribed",
                                container, graphicView),
       cData(RS_Vector(0.,0.),1.),
-      enTypeList()
+	  enTypeList({RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle})
 {
-    //    supported types
-    enTypeList<<RS2::EntityLine<<RS2::EntityArc<<RS2::EntityCircle;
 }
-
-
-
-RS_ActionDrawCircleTan2::~RS_ActionDrawCircleTan2() {
-}
-
-
 
 QAction* RS_ActionDrawCircleTan2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
@@ -132,6 +123,9 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent* e) {
             deletePreview();
             RS_Circle* e=new RS_Circle(preview, cData);
             preview->addEntity(e);
+			for(int i=0; i< centers.size(); ++i){
+				preview->addEntity(new RS_Point(preview, RS_PointData(centers.at(i))));
+			}
             drawPreview();
         }
     }
