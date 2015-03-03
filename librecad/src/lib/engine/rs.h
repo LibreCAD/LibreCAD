@@ -723,31 +723,37 @@ public:
             return Qt::SolidLine;
             break;
         case DotLine:
+        case DotLineTiny:
         case DotLine2:
         case DotLineX2:
             return Qt::DotLine;
             break;
         case DashLine:
+        case DashLineTiny:
         case DashLine2:
         case DashLineX2:
             return Qt::DashLine;
             break;
         case DashDotLine:
+        case DashDotLineTiny:
         case DashDotLine2:
         case DashDotLineX2:
             return Qt::DashDotLine;
             break;
         case DivideLine:
+        case DivideLineTiny:
         case DivideLine2:
         case DivideLineX2:
             return Qt::DashDotDotLine;
             break;
         case CenterLine:
+        case CenterLineTiny:
         case CenterLine2:
         case CenterLineX2:
             return Qt::DashDotLine;
             break;
         case BorderLine:
+        case BorderLineTiny:
         case BorderLine2:
         case BorderLineX2:
             return Qt::DashDotLine;
