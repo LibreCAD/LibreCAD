@@ -434,7 +434,12 @@ void QG_DlgOptionsDrawing::validate() {
         graphic->addVariable("$DIMTSZ",
                              RS_Math::eval(cbDimTsz->currentText()), 40);
         //DIMTIH, dimension text, horizontal or aligned
-        graphic->addVariable("$DIMTIH", cbDimTih->currentIndex(), 70);
+        int iOldIndex = graphic->getVariableInt("$DIMTIH",0);
+        int iNewIndex = cbDimTih->currentIndex();
+        if( iOldIndex != iNewIndex) {
+            ok1 = true;
+            graphic->addVariable("$DIMTIH", iNewIndex, 70);
+        }
         //DIMLFAC, general factor for linear dimensions
         double dimFactor = RS_Math::eval(cbDimFactor->currentText());
         if( RS_TOLERANCE > fabs(dimFactor)) {
