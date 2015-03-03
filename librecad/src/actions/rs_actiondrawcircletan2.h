@@ -1,8 +1,8 @@
 /****************************************************************************
 **
- * Draw ellipse by foci and a point on ellipse
+ * Draw a tangential circle of two given circles, with given radius
 
-Copyright (C) 2012 Dongxu Li (dongxuli2011@gmail.com)
+Copyright (C) 2012-2015 Dongxu Li (dongxuli2011@gmail.com)
 Copyright (C) 2011 R. van Twisk (librecad@rvt.dds.nl)
 
 This program is free software; you can redistribute it and/or
@@ -25,7 +25,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QVector>
 #include "rs_previewactioninterface.h"
-#include "rs_ellipse.h"
 
 /**
  * Draw a circle tangential to two give circles and with radius
