@@ -1574,6 +1574,15 @@ void RS_FilterDXFRW::writeLTypes(){
     dxfW->writeLineType(&ltype);
 
     ltype.path.clear();
+    ltype.name = "DOTTINY";
+    ltype.desc = "Dot (.15x) .....................................";
+    ltype.size = 2;
+    ltype.length = 0.9525;
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-0.9525);
+    dxfW->writeLineType(&ltype);
+
+    ltype.path.clear();
     ltype.name = "DOT2";
     ltype.desc = "Dot (.5x) .....................................";
     ltype.size = 2;
@@ -1593,11 +1602,20 @@ void RS_FilterDXFRW::writeLTypes(){
 
     ltype.path.clear();
     ltype.name = "DASHED";
-    ltype.desc = "Dot . . . . . . . . . . . . . . . . . . . . . .";
+    ltype.desc = "Dashed _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _";
     ltype.size = 2;
     ltype.length = 19.05;
     ltype.path.push_back(12.7);
     ltype.path.push_back(-6.35);
+    dxfW->writeLineType(&ltype);
+
+    ltype.path.clear();
+    ltype.name = "DASHEDTINY";
+    ltype.desc = "Dashed (.15x) _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _";
+    ltype.size = 2;
+    ltype.length = 2.8575;
+    ltype.path.push_back(1.905);
+    ltype.path.push_back(-0.9525);
     dxfW->writeLineType(&ltype);
 
     ltype.path.clear();
@@ -1627,6 +1645,17 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-6.35);
     ltype.path.push_back(0.0);
     ltype.path.push_back(-6.35);
+    dxfW->writeLineType(&ltype);
+
+    ltype.path.clear();
+    ltype.name = "DASHDOTTINY";
+    ltype.desc = "Dash dot (.15x) _._._._._._._._._._._._._._._.";
+    ltype.size = 4;
+    ltype.length = 3.81;
+    ltype.path.push_back(1.905);
+    ltype.path.push_back(-0.9525);
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-0.9525);
     dxfW->writeLineType(&ltype);
 
     ltype.path.clear();
@@ -1662,6 +1691,19 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-6.35);
     ltype.path.push_back(0.0);
     ltype.path.push_back(-6.35);
+    dxfW->writeLineType(&ltype);
+
+    ltype.path.clear();
+    ltype.name = "DIVIDETINY";
+    ltype.desc = "Divide (.15x) __..__..__..__..__..__..__..__.._";
+    ltype.size = 6;
+    ltype.length = 4.7625;
+    ltype.path.push_back(1.905);
+    ltype.path.push_back(-0.9525);
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-0.9525);
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-0.9525);
     dxfW->writeLineType(&ltype);
 
     ltype.path.clear();
@@ -1704,6 +1746,19 @@ void RS_FilterDXFRW::writeLTypes(){
     dxfW->writeLineType(&ltype);
 
     ltype.path.clear();
+    ltype.name = "BORDERTINY";
+    ltype.desc = "Border (.15x) __.__.__.__.__.__.__.__.__.__.__.";
+    ltype.size = 6;
+    ltype.length = 6.6675;
+    ltype.path.push_back(1.905);
+    ltype.path.push_back(-0.9525);
+    ltype.path.push_back(1.905);
+    ltype.path.push_back(-0.9525);
+    ltype.path.push_back(0.0);
+    ltype.path.push_back(-0.9525);
+    dxfW->writeLineType(&ltype);
+
+    ltype.path.clear();
     ltype.name = "BORDER2";
     ltype.desc = "Border (.5x) __.__.__.__.__.__.__.__.__.__.__.";
     ltype.size = 6;
@@ -1738,6 +1793,17 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.path.push_back(-6.35);
     ltype.path.push_back(6.35);
     ltype.path.push_back(-6.35);
+    dxfW->writeLineType(&ltype);
+
+    ltype.path.clear();
+    ltype.name = "CENTERTINY";
+    ltype.desc = "Center (.15x) ___ _ ___ _ ___ _ ___ _ ___ _ ___";
+    ltype.size = 4;
+    ltype.length = 7.62;
+    ltype.path.push_back(4.7625);
+    ltype.path.push_back(-0.9525);
+    ltype.path.push_back(0.9525);
+    ltype.path.push_back(-0.9525);
     dxfW->writeLineType(&ltype);
 
     ltype.path.clear();
@@ -3081,6 +3147,9 @@ RS2::LineType RS_FilterDXFRW::nameToLineType(const QString& name) {
     } else if (uName=="ACAD_ISO07W100" || uName=="DOT") {
         return RS2::DotLine;
 
+    } else if (uName=="DOTTINY") {
+        return RS2::DotLineTiny;
+
     } else if (uName=="DOT2") {
         return RS2::DotLine2;
 
@@ -3091,6 +3160,9 @@ RS2::LineType RS_FilterDXFRW::nameToLineType(const QString& name) {
     } else if (uName=="ACAD_ISO02W100" || uName=="ACAD_ISO03W100" ||
                uName=="DASHED" || uName=="HIDDEN") {
         return RS2::DashLine;
+
+    } else if (uName=="DASHEDTINY" || uName=="HIDDEN2") {
+        return RS2::DashLineTiny;
 
     } else if (uName=="DASHED2" || uName=="HIDDEN2") {
         return RS2::DashLine2;
@@ -3103,6 +3175,9 @@ RS2::LineType RS_FilterDXFRW::nameToLineType(const QString& name) {
                uName=="DASHDOT") {
         return RS2::DashDotLine;
 
+    } else if (uName=="DASHDOTTINY") {
+        return RS2::DashDotLineTiny;
+
     } else if (uName=="DASHDOT2") {
         return RS2::DashDotLine2;
 
@@ -3114,6 +3189,9 @@ RS2::LineType RS_FilterDXFRW::nameToLineType(const QString& name) {
     } else if (uName=="ACAD_ISO12W100" || uName=="DIVIDE") {
         return RS2::DivideLine;
 
+    } else if (uName=="DIVIDETINY") {
+        return RS2::DivideLineTiny;
+
     } else if (uName=="DIVIDE2") {
         return RS2::DivideLine2;
 
@@ -3124,6 +3202,9 @@ RS2::LineType RS_FilterDXFRW::nameToLineType(const QString& name) {
     } else if (uName=="CENTER") {
         return RS2::CenterLine;
 
+    } else if (uName=="CENTERTINY") {
+        return RS2::CenterLineTiny;
+
     } else if (uName=="CENTER2") {
         return RS2::CenterLine2;
 
@@ -3133,6 +3214,9 @@ RS2::LineType RS_FilterDXFRW::nameToLineType(const QString& name) {
 
     } else if (uName=="BORDER") {
         return RS2::BorderLine;
+
+    } else if (uName=="BORDERTINY") {
+        return RS2::BorderLineTiny;
 
     } else if (uName=="BORDER2") {
         return RS2::BorderLine2;
@@ -3161,6 +3245,9 @@ QString RS_FilterDXFRW::lineTypeToName(RS2::LineType lineType) {
     case RS2::DotLine:
         return "DOT";
         break;
+    case RS2::DotLineTiny:
+        return "DOTTINY";
+        break;
     case RS2::DotLine2:
         return "DOT2";
         break;
@@ -3170,6 +3257,9 @@ QString RS_FilterDXFRW::lineTypeToName(RS2::LineType lineType) {
 
     case RS2::DashLine:
         return "DASHED";
+        break;
+    case RS2::DashLineTiny:
+        return "DASHEDTINY";
         break;
     case RS2::DashLine2:
         return "DASHED2";
@@ -3181,6 +3271,9 @@ QString RS_FilterDXFRW::lineTypeToName(RS2::LineType lineType) {
     case RS2::DashDotLine:
         return "DASHDOT";
         break;
+    case RS2::DashDotLineTiny:
+        return "DASHDOTTINY";
+        break;
     case RS2::DashDotLine2:
         return "DASHDOT2";
         break;
@@ -3190,6 +3283,9 @@ QString RS_FilterDXFRW::lineTypeToName(RS2::LineType lineType) {
 
     case RS2::DivideLine:
         return "DIVIDE";
+        break;
+    case RS2::DivideLineTiny:
+        return "DIVIDETINY";
         break;
     case RS2::DivideLine2:
         return "DIVIDE2";
@@ -3201,6 +3297,9 @@ QString RS_FilterDXFRW::lineTypeToName(RS2::LineType lineType) {
     case RS2::CenterLine:
         return "CENTER";
         break;
+    case RS2::CenterLineTiny:
+        return "CENTERTINY";
+        break;
     case RS2::CenterLine2:
         return "CENTER2";
         break;
@@ -3210,6 +3309,9 @@ QString RS_FilterDXFRW::lineTypeToName(RS2::LineType lineType) {
 
     case RS2::BorderLine:
         return "BORDER";
+        break;
+    case RS2::BorderLineTiny:
+        return "BORDERTINY";
         break;
     case RS2::BorderLine2:
         return "BORDER2";
