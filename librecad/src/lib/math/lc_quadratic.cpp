@@ -433,7 +433,7 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
             return ret;
         }
         std::vector<std::vector<double> >  ce(0);
-        if(fabsf(p2->m_vLinear(1))<RS_TOLERANCE){
+		if(fabs(p2->m_vLinear(1))<RS_TOLERANCE){
             const double angle=0.25*M_PI;
             LC_Quadratic p11(*p1);
             LC_Quadratic p22(*p2);

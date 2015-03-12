@@ -750,7 +750,6 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
     //    std::cout<<"20 ip.size()="<<ip.size()<<"\n";
     if(ip.size()<2) return false; //not enough connecting lines, so, no quadrilateral defined
     //    std::cout<<"22\n";
-    RS_VectorSolutions sol2=RS_Information::getIntersection( & ip[0],& ip[1],true);
     if(ip.size() == 3) {//find intersecting pair
         //    RS_VectorSolutions sol0=RS_Information::getIntersection(line0,line1,true);
         RS_VectorSolutions sol1=RS_Information::getIntersection(&ip[2],&ip[1],true);
