@@ -332,7 +332,9 @@ RS_VectorSolutions RS_Information::getIntersectionLineLine(RS_Line* e1,
     double num = ((p4.x-p3.x)*(p1.y-p3.y) - (p4.y-p3.y)*(p1.x-p3.x));
     double div = ((p4.y-p3.y)*(p2.x-p1.x) - (p4.x-p3.x)*(p2.y-p1.y));
 
-    if (fabs(div)>RS_TOLERANCE) {
+	if (fabs(div)>RS_TOLERANCE &&
+			fabs(remainder(e1->getAngle1()-e2->getAngle1(), M_PI))>=RS_TOLERANCE_ANGLE
+			) {
         double u = num / div;
 
         double xs = p1.x + u * (p2.x-p1.x);
