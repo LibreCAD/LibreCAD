@@ -26,11 +26,11 @@
 
 
 #include "rs_image.h"
+#include "rs_settings.h"
 
 #include "rs_constructionline.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
-#include "rs_painter.h"
 #include "rs_painterqt.h"
 
 
@@ -277,10 +277,14 @@ double RS_Image::getDistanceToPoint(const RS_Vector& coord,
     RS_VectorSolutions corners = getCorners();
 
     //allow selecting image by clicking within images, bug#3464626
-    if(containsPoint(coord)){
-        //if coord is on image
-        return double(0.);
-    }
+	if(containsPoint(coord)){
+		//if coord is on image
+
+		RS_SETTINGS->beginGroup("/Appearance");
+		bool draftMode = (bool)RS_SETTINGS->readNumEntry("/DraftMode", 0);
+		RS_SETTINGS->endGroup();
+		if(!draftMode) return double(0.);
+	}
     //continue to allow selecting by image edges
     double dist;
     double minDist = RS_MAXDOUBLE;
