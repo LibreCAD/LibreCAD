@@ -672,11 +672,13 @@ bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
   */
 bool RS_Ellipse::createFromQuadratic(const QVector<double>& dn){
 	if(dn.size()<3) return false;
-    if(fabs(dn[0]) <RS_TOLERANCE2 || fabs(dn[2])<RS_TOLERANCE2) return false; //invalid quadratic form
-		qDebug()<<"Quadratic: ";
-	for(auto& f: dn){
-		qDebug()<<"dn: "<<f;
-	}
+	if(fabs(dn[0]) <RS_TOLERANCE2 || fabs(dn[2])<RS_TOLERANCE2) return false; //invalid quadratic form
+	RS_DEBUG->print("RS_Ellipse::createFromQuadratic() begin\n");
+
+//		qDebug()<<"Quadratic: ";
+//	for(auto& f: dn){
+//		qDebug()<<"dn: "<<f;
+//	}
 	//eigenvalue and eigen vectors of quadratic form
     // (dn[0] 0.5*dn[1])
     // (0.5*dn[1] dn[2])
@@ -725,6 +727,7 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
 RS_EntityContainer container(NULL, false);
     QVector<RS_Line*> quad;
     for(int i=0;i<lines.size();i++){//copy the line pointers
+		if(lines[i]->getLength()<RS_TOLERANCE) return false;
         quad.push_back(lines[i]);
 		container.addEntity(lines[i]);
     }
@@ -758,13 +761,13 @@ RS_EntityContainer container(NULL, false);
         RS_VectorSolutions sol1=RS_Information::getIntersectionLineLine(quad[l],quad[m]);
         if(sol1.getNumber()==0) continue;
 
-        ip.push_back(RS_Line(sol0.get(0),sol1.get(0)));
+		ip.push_back(RS_Line(sol0.get(0),sol1.get(0)));
+
     }
 
     //    std::cout<<"20 ip.size()="<<ip.size()<<"\n";
     if(ip.size()<2) return false; //not enough connecting lines, so, no quadrilateral defined
     //    std::cout<<"22\n";
-    RS_VectorSolutions sol2=RS_Information::getIntersection( & ip[0],& ip[1],true);
     if(ip.size() == 3) {//find intersecting pair
         //    RS_VectorSolutions sol0=RS_Information::getIntersection(line0,line1,true);
 		RS_VectorSolutions sol1=RS_Information::getIntersection(&ip[2],&ip[1],true);
@@ -777,7 +780,7 @@ RS_EntityContainer container(NULL, false);
             }
         }
     }
-    RS_VectorSolutions sol=RS_Information::getIntersection( & ip[0],& ip[1],true);
+	RS_VectorSolutions sol=RS_Information::getIntersectionLineLine( & ip[0],& ip[1]);
     if(sol.getNumber()==0) {//this should not happen
 //        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Ellipse::createInscribeQuadrilateral(): can not locate projection Center");
         RS_DEBUG->print("RS_Ellipse::createInscribeQuadrilateral(): can not locate projection Center");
@@ -786,40 +789,48 @@ RS_EntityContainer container(NULL, false);
     RS_Vector centerProjection(sol.get(0));
 //        std::cout<<"RS_Ellipse::createInscribe(): centerProjection="<<centerProjection<<std::endl;
 
-	std::vector<RS_Line> edge; //form the closed quadrilateral with ordered edges
-	edge.push_back(RS_Line(
+	std::vector<std::unique_ptr<RS_Line> > edge(4); //form the closed quadrilateral with ordered edges
+	edge[0].reset(new RS_Line(
 					  container.getNearestEndpoint(ip[0].getStartpoint()),
 				   container.getNearestEndpoint(ip[1].getStartpoint())));
-	edge.push_back(RS_Line(
+	edge[1].reset(new RS_Line(
 					  container.getNearestEndpoint(ip[1].getStartpoint()),
 				   container.getNearestEndpoint(ip[0].getEndpoint())));
-	edge.push_back(RS_Line(
+	edge[2].reset(new RS_Line(
 					  container.getNearestEndpoint(ip[0].getEndpoint()),
 				   container.getNearestEndpoint(ip[1].getEndpoint())));
-	edge.push_back(RS_Line(
+	edge[3].reset(new RS_Line(
 					  container.getNearestEndpoint(ip[1].getEndpoint()),
 				   container.getNearestEndpoint(ip[0].getStartpoint())));
+//	qDebug()<<"\nedge:{";
+//	for(std::unique_ptr<RS_Line>& p: edge ){
+//		std::cout<<p->getStartpoint()<<" , "<<p->getEndpoint()<<std::endl;
+//	}
+//	qDebug()<<"}edge:";
 	std::vector<RS_Vector> tangent;//holds the tangential points on edges, in the order of edges: 1 3 2 0
 	int parallel=0;
+	int parallel_index=0;
 	for(int i=0;i<=1;++i) {
-		RS_VectorSolutions sol1=RS_Information::getIntersectionLineLine(& edge[i],& edge[(i+2)%edge.size()]);
+		RS_VectorSolutions sol1=RS_Information::getIntersectionLineLine(edge[i].get(), edge[(i+2)%edge.size()].get());
         RS_Vector direction;
         if(sol1.getNumber()==0) {
-            direction=edge[i].getEndpoint()-edge[i].getStartpoint();
+			direction=edge[i]->getEndpoint()-edge[i]->getStartpoint();
+			++parallel;
+			parallel_index=i;
         }else{
             direction=sol1.get(0)-centerProjection;
         }
         //                std::cout<<"Direction: "<<direction<<std::endl;
         RS_Line l(centerProjection, centerProjection+direction);
         for(int k=1;k<=3;k+=2){
-			RS_VectorSolutions sol2=RS_Information::getIntersectionLineLine(&l, &edge[(i+k)%edge.size()]);
-            for(int j=0;j<sol2.getNumber();j++) {
+			RS_VectorSolutions sol2=RS_Information::getIntersectionLineLine(&l, edge[(i+k)%edge.size()].get());
+			for(int j=0;j<sol2.getNumber();++j) {
                 tangent.push_back(sol2.get(j));
                 //                std::cout<<"Tangential: "<<tangent.size()<<": "<<sol2.get(j)<<std::endl;
             }
         }
     }
-	qDebug()<<"parallel="<<parallel;
+
 
 	RS_Line cl0(ip[0].getEndpoint(),(tangent[0]+tangent[2])*0.5);
 	RS_Line cl1(ip[1].getEndpoint(),(tangent[1]+tangent[2])*0.5);
@@ -835,7 +846,38 @@ RS_EntityContainer container(NULL, false);
 //                    std::cout<<"line0: "<<*cl0<<std::endl;
 //                    std::cout<<"line1: "<<*cl1<<std::endl;
 //                    std::cout<<"center: "<<center<<std::endl;
+//	qDebug()<<"parallel="<<parallel;
+	if(parallel==1){
+		RS_DEBUG->print("RS_Ellipse::createInscribeQuadrilateral(): trapezoid detected\n");
+		//trapezoid
+		RS_Line* l0=edge[parallel_index].get();
+		RS_Line* l1=edge[(parallel_index+2)%4].get();
+		RS_Vector&& centerPoint=(l0->getMiddlePoint()+l1->getMiddlePoint())*0.5;
+		//not symmetric, no inscribed ellipse
+		if( fabs(centerPoint.distanceTo(l0->getStartpoint()) - centerPoint.distanceTo(l0->getEndpoint()))>RS_TOLERANCE)
+			return false;
+		//symmetric
+		RS_DEBUG->print("RS_Ellipse::createInscribeQuadrilateral(): symmetric trapezoid detected\n");
+		double d=l0->getDistanceToPoint(centerPoint);
+		double l=((l0->getLength()+l1->getLength()))*0.25;
+		double k= 4.*d/fabs(l0->getLength()-l1->getLength());
+		double theta=d/(l*k);
+		if(theta>1. || d<RS_TOLERANCE) {
+			RS_DEBUG->print("RS_Ellipse::createInscribeQuadrilateral(): this should not happen\n");
+			return false;
+		}
+		theta=asin(theta);
 
+		//major axis
+		double a=d/(k*tan(theta));
+		setCenter(RS_Vector(0., 0.));
+		setMajorP(RS_Vector(a, 0.));
+		setRatio(d/a);
+		rotate(l0->getAngle1());
+		setCenter(centerPoint);
+		return true;
+
+	}
 //    double ratio;
     //        std::cout<<"dn="<<dn[0]<<' '<<dn[1]<<' '<<dn[2]<<std::endl;
 	QVector<double> dn(3);
@@ -848,7 +890,7 @@ RS_EntityContainer container(NULL, false);
     mt.clear();
 	const double symTolerance=100.*RS_TOLERANCE;
 	for(const RS_Vector& vp: tangent){//form the linear equation
-		std::cout<<"point  : "<<vp<<std::endl;
+//		std::cout<<"point  : "<<vp<<std::endl;
         QVector<double> mtRow;
         mtRow.push_back(vp.x*vp.x);
         mtRow.push_back(vp.x*vp.y);
@@ -871,6 +913,8 @@ RS_EntityContainer container(NULL, false);
 //    std::cout<<"mt.size()="<<mt.size()<<std::endl;
     switch(mt.size()){
     case 2:{// the quadrilateral is a parallelogram
+		RS_DEBUG->print("RS_Ellipse::createInscribeQuadrilateral(): parallelogram detected\n");
+
         //fixme, need to handle degenerate case better
         //        double angle(center.angleTo(tangent[0]));
         RS_Vector majorP(tangent[0]);
