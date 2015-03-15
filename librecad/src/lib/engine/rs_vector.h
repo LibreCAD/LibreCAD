@@ -85,14 +85,18 @@ public:
 
     RS_Vector operator + (const RS_Vector& v) const;
     RS_Vector operator - (const RS_Vector& v) const;
+	RS_Vector operator * (const RS_Vector& v) const;
+	RS_Vector operator / (const RS_Vector& v) const;
     RS_Vector operator * (const double& s) const;
     RS_Vector operator / (const double& s) const;
     RS_Vector operator - () const;
 
-    void operator += (const RS_Vector& v);
-    void operator -= (const RS_Vector& v);
-    void operator *= (const double& s);
-    void operator /= (const double& s);
+	RS_Vector operator += (const RS_Vector& v);
+	RS_Vector operator -= (const RS_Vector& v);
+	RS_Vector operator *= (const RS_Vector& v);
+	RS_Vector operator /= (const RS_Vector& v);
+	RS_Vector operator *= (const double& s);
+	RS_Vector operator /= (const double& s);
 
     bool operator == (const RS_Vector& v) const;
     bool operator != (const RS_Vector& v) const {

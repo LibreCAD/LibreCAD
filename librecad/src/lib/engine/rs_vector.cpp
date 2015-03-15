@@ -480,6 +480,27 @@ RS_Vector RS_Vector::operator - (const RS_Vector& v) const {
 #endif
 }
 
+RS_Vector RS_Vector::operator * (const RS_Vector& v) const {
+#ifdef  RS_VECTOR2D
+	return RS_Vector(x * v.x, y * v.y);
+#else
+	return RS_Vector(x * v.x, y * v.y, z * v.z);
+#endif
+}
+
+RS_Vector RS_Vector::operator / (const RS_Vector& v) const {
+	if(fabs(v.x)> RS_TOLERANCE && fabs(v.y)>RS_TOLERANCE
+#ifndef  RS_VECTOR2D
+			&& fabs(v.z)
+#endif
+			){
+#ifdef  RS_VECTOR2D
+	return RS_Vector(x / v.x, y / v.y);
+#else
+	return RS_Vector(x / v.x, y / v.y, z / v.z);
+#endif
+	}
+}
 
 /**
  * binary * operator.
@@ -498,11 +519,13 @@ RS_Vector RS_Vector::operator * (const double& s) const {
  * binary / operator.
  */
 RS_Vector RS_Vector::operator / (const double& s) const {
+	if(fabs(s)> RS_TOLERANCE){
 #ifdef  RS_VECTOR2D
-    return RS_Vector(x / s, y / s);
+		return RS_Vector(x / s, y / s);
 #else
-    return RS_Vector(x / s, y / s, z / s);
+		return RS_Vector(x / s, y / s, z / s);
 #endif
+	}
 }
 
 
@@ -517,8 +540,6 @@ RS_Vector RS_Vector::operator - () const {
     return RS_Vector(-x, -y, -z);
 #endif
 }
-
-
 
 /**
  * Scalarproduct (dot product).
@@ -545,42 +566,70 @@ RS_Vector RS_Vector::flipXY(void) const{
 /**
  * += operator. Assert: both vectors must be valid.
  */
-void RS_Vector::operator += (const RS_Vector& v) {
+RS_Vector RS_Vector::operator += (const RS_Vector& v) {
     x += v.x;
     y += v.y;
 #ifndef RS_VECTOR2D
     z += v.z;
 #endif
+	return *this;
 }
 
 
 /**
  * -= operator
  */
-void RS_Vector::operator -= (const RS_Vector& v) {
+RS_Vector RS_Vector::operator -= (const RS_Vector& v) {
     x -= v.x;
     y -= v.y;
 #ifndef RS_VECTOR2D
     z -= v.z;
 #endif
+	return *this;
 }
 
+
+RS_Vector RS_Vector::operator *= (const RS_Vector& v) {
+	x *= v.x;
+	y *= v.y;
+#ifndef RS_VECTOR2D
+	z *= v.z;
+#endif
+	return *this;
+}
+
+
+RS_Vector RS_Vector::operator /= (const RS_Vector& v) {
+	if(fabs(v.x)> RS_TOLERANCE && fabs(v.y)>RS_TOLERANCE
+#ifndef  RS_VECTOR2D
+			&& fabs(v.z)
+#endif
+			){
+		x /= v.x;
+		y /= v.y;
+#ifndef RS_VECTOR2D
+		z /= v.z;
+#endif
+	}
+	return *this;
+}
 
 
 /**
  * *= operator
  */
-void RS_Vector::operator *= (const double& s) {
+RS_Vector RS_Vector::operator *= (const double& s) {
     x *= s;
     y *= s;
 #ifndef RS_VECTOR2D
     z *= s;
 #endif
+	return *this;
 }
 /**
  * /= operator
  */
-void RS_Vector::operator /= (const double& s) {
+RS_Vector RS_Vector::operator /= (const double& s) {
     if(fabs(s)>RS_TOLERANCE) {
     x /= s;
     y /= s;
@@ -588,6 +637,7 @@ void RS_Vector::operator /= (const double& s) {
     z /= s;
 #endif
     }
+	return *this;
 }
 
 
