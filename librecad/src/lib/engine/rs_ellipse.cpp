@@ -25,7 +25,7 @@
 **********************************************************************/
 
 #include <QVector>
-#include <QDebug>
+#include <array>
 #include "rs_ellipse.h"
 
 #include "rs_graphic.h"
@@ -696,9 +696,9 @@ bool RS_Ellipse::createFromQuadratic(const QVector<double>& dn){
 //			std::cout<<"lambda1="<<lambda1<<"\tlambda2="<<lambda2<<std::endl;
     if(lambda1<RS_TOLERANCE15 || lambda2<RS_TOLERANCE15) return false;
 	RS_Vector mP(-dn[1]/(s+d),1.);
-	std::cout<<"mP="<<mP<<std::endl;
+//	std::cout<<"mP="<<mP<<std::endl;
 	mP /= sqrt(mP.squared()*lambda2);
-	std::cout<<"mP="<<mP<<std::endl;
+//	std::cout<<"mP="<<mP<<std::endl;
 //    ratio=sqrt(lambda2/lambda1);
 //    setCenter(center);
 	if(rotated) mP.rotate(RS_Vector(0., 1.));
@@ -789,7 +789,7 @@ RS_EntityContainer container(NULL, false);
     RS_Vector centerProjection(sol.get(0));
 //        std::cout<<"RS_Ellipse::createInscribe(): centerProjection="<<centerProjection<<std::endl;
 
-	std::vector<std::unique_ptr<RS_Line> > edge(4); //form the closed quadrilateral with ordered edges
+	std::array<std::unique_ptr<RS_Line>, 4> edge; //form the closed quadrilateral with ordered edges
 	edge[0].reset(new RS_Line(
 					  container.getNearestEndpoint(ip[0].getStartpoint()),
 				   container.getNearestEndpoint(ip[1].getStartpoint())));
@@ -824,13 +824,11 @@ RS_EntityContainer container(NULL, false);
         RS_Line l(centerProjection, centerProjection+direction);
         for(int k=1;k<=3;k+=2){
 			RS_VectorSolutions sol2=RS_Information::getIntersectionLineLine(&l, edge[(i+k)%edge.size()].get());
-			for(int j=0;j<sol2.getNumber();++j) {
-                tangent.push_back(sol2.get(j));
-                //                std::cout<<"Tangential: "<<tangent.size()<<": "<<sol2.get(j)<<std::endl;
-            }
+			if(sol2.size())  tangent.push_back(sol2.get(0));
         }
     }
 
+	if(tangent.size()<3) return false;
 
 	RS_Line cl0(ip[0].getEndpoint(),(tangent[0]+tangent[2])*0.5);
 	RS_Line cl1(ip[1].getEndpoint(),(tangent[1]+tangent[2])*0.5);
@@ -959,7 +957,6 @@ RS_EntityContainer container(NULL, false);
         angleVector.y *= -1.;
         rotate(center,angleVector);
     }
-	std::cout<<*this<<std::endl;
     return true;
 
 }
