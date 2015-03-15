@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWELLIPSEINSCRIBE_H
 #define RS_ACTIONDRAWELLIPSEINSCRIBE_H
 
-#include <QVector>
+#include <vector>
 #include "rs_previewactioninterface.h"
 #include "rs_ellipse.h"
 
@@ -72,7 +72,7 @@ public:
 
 protected:
     // 4 points on ellipse
-    QVector<RS_Line*> lines;
+	std::vector<RS_Line*> lines;
     private:
     RS_EllipseData eData;
     bool valid;

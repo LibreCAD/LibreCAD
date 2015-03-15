@@ -67,9 +67,9 @@ void RS_ActionDrawEllipseInscribe::init(int status) {
 
 void RS_ActionDrawEllipseInscribe::finish(bool updateTB){
     if(lines.size()>0){
-        for(int i=0;i<lines.size();i++) {
-            if(lines.at(i) != NULL) lines.at(i)->setHighlighted(false);
-        }
+		for(RS_Line* p: lines){
+			if(p) p->setHighlighted(false);
+		}
         graphicView->redraw(RS2::RedrawDrawing);
         lines.clear();
     }
@@ -93,7 +93,7 @@ void RS_ActionDrawEllipseInscribe::trigger() {
         document->endUndoCycle();
     }
 
-    for(int i=0;i<lines.size();i++) lines[i]->setHighlighted(false);
+	for(RS_Line* p: lines) p->setHighlighted(false);
     graphicView->redraw(RS2::RedrawDrawing);
     drawSnapper();
 

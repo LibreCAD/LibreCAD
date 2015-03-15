@@ -721,19 +721,19 @@ bool RS_Ellipse::createFromQuadratic(const QVector<double>& dn){
 *
 *@Author Dongxu Li
 */
-bool	RS_Ellipse::createInscribeQuadrilateral(const QVector<RS_Line*>& lines)
+bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 {
-    if(lines.size() != 4) return false; //only do 4 lines
-RS_EntityContainer container(NULL, false);
+	if(lines.size() != 4) return false; //only do 4 lines
+	RS_EntityContainer container(NULL, false);
     QVector<RS_Line*> quad;
-    for(int i=0;i<lines.size();i++){//copy the line pointers
-		if(lines[i]->getLength()<RS_TOLERANCE) return false;
-        quad.push_back(lines[i]);
-		container.addEntity(lines[i]);
+	for(RS_Line* p: lines){//copy the line pointers
+		if(p->getLength()<RS_TOLERANCE) return false;
+		quad.push_back(p);
+		container.addEntity(p);
     }
     //    std::cout<<"0\n";
-    for(int i=0;i<lines.size()*2;i++){//move parallel lines to opposite
-        int j=(i+1)%lines.size();
+	for(size_t i=0;i<lines.size()*2;i++){//move parallel lines to opposite
+		size_t j=(i+1)%lines.size();
 
         //        std::cout<<"("<<i<<","<<j<<")\n";
         //        std::cout<<*quad[i]<<std::endl;
@@ -741,7 +741,7 @@ RS_EntityContainer container(NULL, false);
         RS_VectorSolutions sol=RS_Information::getIntersectionLineLine(quad[i%lines.size()],quad[j]);
         if(sol.getNumber()==0) {
             std::swap( quad[j],quad[ (i+2)%lines.size()]); //move to oppose
-            i++;
+			++i;
         }
     }
     //    std::cout<<"========1========\n";
