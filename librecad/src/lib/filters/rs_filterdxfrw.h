@@ -28,25 +28,28 @@
 
 #include "rs_filterinterface.h"
 
-#include "rs_block.h"
 #include "rs_color.h"
 #include "rs_dimension.h"
-#include "rs_insert.h"
-#include "rs_layer.h"
-#include "rs_leader.h"
-#include "rs_polyline.h"
-#include "rs_solid.h"
-#include "rs_mtext.h"
-#include "rs_text.h"
-#include "rs_image.h"
-
 #include "drw_interface.h"
 #include "libdxfrw.h"
 
+class RS_Point;
+class RS_Line;
+class RS_Circle;
+class RS_Arc;
+class RS_Ellipse;
+class RS_Solid;
+class RS_Polyline;
 class RS_Spline;
-class RS_Hatch;
-class DL_WriterA;
 class LC_SplinePoints;
+class RS_Insert;
+class RS_MText;
+class RS_Text;
+class RS_Hatch;
+class RS_Image;
+class RS_Leader;
+class RS_Polyline;
+class DL_WriterA;
 
 /**
  * This format filter class can import and export DXF files.

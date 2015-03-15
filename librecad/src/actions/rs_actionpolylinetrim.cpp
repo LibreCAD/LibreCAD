@@ -24,13 +24,14 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actionpolylinetrim.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
+#include "rs_atomicentity.h"
 
 
 

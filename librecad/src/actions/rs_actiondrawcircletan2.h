@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QVector>
 #include "rs_previewactioninterface.h"
+#include "rs_circle.h"
 
 /**
  * Draw a circle tangential to two give circles and with radius

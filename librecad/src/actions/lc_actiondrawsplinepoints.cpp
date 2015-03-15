@@ -25,13 +25,14 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "lc_actiondrawsplinepoints.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commands.h"
 #include "rs_commandevent.h"
+#include "rs_point.h"
 
 LC_ActionDrawSplinePoints::LC_ActionDrawSplinePoints(RS_EntityContainer& container,
     RS_GraphicView& graphicView) : RS_ActionDrawSpline( container, graphicView)

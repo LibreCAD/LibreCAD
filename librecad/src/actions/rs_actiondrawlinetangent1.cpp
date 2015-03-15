@@ -24,12 +24,13 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawlinetangent1.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_creation.h"
+#include "rs_line.h"
 
 
 

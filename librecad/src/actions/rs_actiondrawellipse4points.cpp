@@ -20,9 +20,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawellipse4points.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
@@ -40,13 +40,6 @@ RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
           eData(RS_Vector(0.,0.),RS_Vector(1.,0),1.,0.,0.,false)
         ,m_bUniqueEllipse(false)
 {
-          points.clean();
-}
-
-
-
-RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points() {
-    points.clean();
 }
 
 

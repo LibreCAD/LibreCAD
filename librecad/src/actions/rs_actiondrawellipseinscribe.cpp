@@ -20,12 +20,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawellipseinscribe.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_ellipse.h"
+#include "rs_line.h"
+
 
 /**
  * Constructor.
@@ -35,17 +38,12 @@ RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw ellipse inscribed",
-                           container, graphicView),
-          eData(RS_Vector(0.,0.),RS_Vector(1.,0),1.,0.,0.,false)
+						   container, graphicView)
+		,eData(new RS_EllipseData())
 {
 }
 
-
-
-RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe() {
-
-}
-
+RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe(){}
 
 QAction* RS_ActionDrawEllipseInscribe::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
@@ -67,7 +65,7 @@ void RS_ActionDrawEllipseInscribe::init(int status) {
 
 void RS_ActionDrawEllipseInscribe::finish(bool updateTB){
     if(lines.size()>0){
-		for(RS_Line* p: lines){
+		for(RS_Line* const p: lines){
 			if(p) p->setHighlighted(false);
 		}
         graphicView->redraw(RS2::RedrawDrawing);
@@ -81,7 +79,7 @@ void RS_ActionDrawEllipseInscribe::trigger() {
     RS_PreviewActionInterface::trigger();
 
 
-    RS_Ellipse* ellipse=new RS_Ellipse(container, eData);
+	RS_Ellipse* ellipse=new RS_Ellipse(container, *eData);
 
     deletePreview();
     container->addEntity(ellipse);
@@ -93,7 +91,7 @@ void RS_ActionDrawEllipseInscribe::trigger() {
         document->endUndoCycle();
     }
 
-	for(RS_Line* p: lines) p->setHighlighted(false);
+	for(RS_Line*const p: lines) p->setHighlighted(false);
     graphicView->redraw(RS2::RedrawDrawing);
     drawSnapper();
 
@@ -126,7 +124,7 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
 //        lines[getStatus()]=static_cast<RS_Line*>(en);
         if(preparePreview()) {
             deletePreview();
-            RS_Ellipse* e=new RS_Ellipse(preview, eData);
+			RS_Ellipse* e=new RS_Ellipse(preview, *eData);
             preview->addEntity(e);
             drawPreview();
         }
@@ -139,10 +137,10 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
 bool RS_ActionDrawEllipseInscribe::preparePreview(){
     valid=false;
     if(getStatus() == SetLine4) {
-        RS_Ellipse e(preview,eData);
+		RS_Ellipse e(preview, RS_EllipseData());
         valid= e.createInscribeQuadrilateral(lines);
         if(valid){
-            eData=e.getData();
+			eData.reset(new RS_EllipseData(e.getData()));
         }else if( RS_DIALOGFACTORY){
             RS_DIALOGFACTORY->commandMessage(tr("Can not determine uniquely an ellipse"));
         }

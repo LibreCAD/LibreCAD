@@ -30,6 +30,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_line.h"
 
 
 
@@ -42,9 +43,6 @@ RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
 }
 
 
-
-RS_ActionDrawLineRectangle::~RS_ActionDrawLineRectangle() {}
-
 QAction* RS_ActionDrawLineRectangle::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
         //  tr("&Rectangle"),
         QAction* action = new QAction(tr("Rectangle"), NULL);
@@ -56,8 +54,8 @@ QAction* RS_ActionDrawLineRectangle::createGUIAction(RS2::ActionType /*type*/, Q
 
 void RS_ActionDrawLineRectangle::reset() {
     for (int i=0; i<4; ++i) {
-        data[i] = RS_LineData(RS_Vector(false),
-                              RS_Vector(false));
+		data[i].reset(new RS_LineData(RS_Vector(false),
+							  RS_Vector(false)));
     }
 }
 
@@ -79,8 +77,7 @@ void RS_ActionDrawLineRectangle::trigger() {
 
     // create and add rectangle:
     for (int i=0; i<4; ++i) {
-        line[i] = new RS_Line(container,
-                              data[i]);
+		line[i] = new RS_Line(container, *data[i]);
         line[i]->setLayerToActive();
         line[i]->setPenToActive();
         container->addEntity(line[i]);
@@ -113,7 +110,7 @@ void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
         preparePreview();
 
         for (int i=0; i<4; ++i) {
-            preview->addEntity(new RS_Line(preview, data[i]));
+			preview->addEntity(new RS_Line(preview, *data[i]));
         }
         drawPreview();
     }
@@ -135,10 +132,10 @@ void RS_ActionDrawLineRectangle::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawLineRectangle::preparePreview() {
-    data[0] = RS_LineData(corner1, RS_Vector(corner2.x, corner1.y));
-    data[1] = RS_LineData(RS_Vector(corner2.x, corner1.y), corner2);
-    data[2] = RS_LineData(corner2, RS_Vector(corner1.x, corner2.y));
-    data[3] = RS_LineData(RS_Vector(corner1.x, corner2.y), corner1);
+	data[0].reset(new RS_LineData(corner1, RS_Vector(corner2.x, corner1.y)));
+	data[1].reset(new RS_LineData(RS_Vector(corner2.x, corner1.y), corner2));
+	data[2].reset(new RS_LineData(corner2, RS_Vector(corner1.x, corner2.y)));
+	data[3].reset(new RS_LineData(RS_Vector(corner1.x, corner2.y), corner1));
 }
 
 
@@ -181,7 +178,7 @@ void RS_ActionDrawLineRectangle::commandEvent(RS_CommandEvent* e) {
     }
 }
 
-
+RS_ActionDrawLineRectangle::~RS_ActionDrawLineRectangle(){}
 
 QStringList RS_ActionDrawLineRectangle::getAvailableCommands() {
     QStringList cmd;

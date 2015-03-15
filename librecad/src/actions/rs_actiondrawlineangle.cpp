@@ -24,20 +24,23 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawlineangle.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_settings.h"
+#include "rs_line.h"
 
 RS_ActionDrawLineAngle::RS_ActionDrawLineAngle(RS_EntityContainer& container,
         RS_GraphicView& graphicView,
         double angle,
         bool fixedAngle, RS2::ActionType actionType)
         :RS_PreviewActionInterface("Draw lines with given angle",
-                           container, graphicView) {
+						   container, graphicView)
+		,data(new RS_LineData())
+{
 
     this->angle = angle;
     this->actionType=actionType;
@@ -89,8 +92,7 @@ QAction* RS_ActionDrawLineAngle::createGUIAction(RS2::ActionType type, QObject* 
 }
 
 void RS_ActionDrawLineAngle::reset() {
-    data = RS_LineData(RS_Vector(false),
-                       RS_Vector(false));
+	data.reset(new RS_LineData(RS_Vector(false), RS_Vector(false)));
 }
 
 
@@ -107,8 +109,7 @@ void RS_ActionDrawLineAngle::trigger() {
     RS_PreviewActionInterface::trigger();
 
     preparePreview();
-    RS_Line* line = new RS_Line(container,
-                                data);
+	RS_Line* line = new RS_Line(container, *data);
     line->setLayerToActive();
     line->setPenToActive();
     container->addEntity(line);
@@ -120,7 +121,7 @@ void RS_ActionDrawLineAngle::trigger() {
         document->endUndoCycle();
     }
 
-    graphicView->moveRelativeZero(data.startpoint);
+	graphicView->moveRelativeZero(data->startpoint);
         graphicView->redraw(RS2::RedrawDrawing);
     RS_DEBUG->print("RS_ActionDrawLineAngle::trigger(): line added: %d",
                     line->getId());
@@ -131,12 +132,12 @@ void RS_ActionDrawLineAngle::trigger() {
 void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineAngle::mouseMoveEvent begin");
 
-    if (getStatus()==SetPos) {
+	if (getStatus()==SetPos && data->startpoint.valid) {
         pos = snapPoint(e);
         deletePreview();
         preparePreview();
         preview->addEntity(new RS_Line(preview,
-                                       data));
+									   *data));
         drawPreview();
     }
 
@@ -175,7 +176,7 @@ void RS_ActionDrawLineAngle::preparePreview() {
     }
 
     p2 += p1;
-    data = RS_LineData(p1, p2);
+	data.reset(new RS_LineData(p1, p2));
 }
 
 

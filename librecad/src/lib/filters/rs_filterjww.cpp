@@ -24,26 +24,36 @@
 **
 **********************************************************************/
 
-
+#include <QTextCodec>
 #include "rs_filterjww.h"
-
-#include <stdio.h>
 
 #include "dl_attributes.h"
 #include "dl_codes.h"
 #include "dl_writer_ascii.h"
 
+
+#include "rs_arc.h"
+#include "rs_block.h"
+#include "rs_circle.h"
 #include "rs_dimaligned.h"
 #include "rs_dimangular.h"
 #include "rs_dimdiametric.h"
 #include "rs_dimlinear.h"
 #include "rs_dimradial.h"
+#include "rs_ellipse.h"
 #include "rs_hatch.h"
 #include "rs_image.h"
+#include "rs_insert.h"
+#include "rs_layer.h"
 #include "rs_leader.h"
+#include "rs_line.h"
+#include "rs_point.h"
+#include "rs_polyline.h"
+#include "rs_solid.h"
+#include "rs_spline.h"
+#include "lc_splinepoints.h"
 #include "rs_system.h"
 
-#include <qtextcodec.h>
 
 /**
  * Default constructor.

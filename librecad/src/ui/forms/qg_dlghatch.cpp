@@ -26,6 +26,8 @@
 #include "qg_dlghatch.h"
 
 #include "rs_settings.h"
+#include "rs_line.h"
+#include "rs_hatch.h"
 
 /*
  *  Constructs a QG_DlgHatch as a child of 'parent', with the
@@ -43,14 +45,6 @@ QG_DlgHatch::QG_DlgHatch(QWidget* parent, bool modal, Qt::WindowFlags fl)
     init();
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_DlgHatch::~QG_DlgHatch()
-{
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
-}
 
 /*
  *  Sets the strings of the subwidgets using the current

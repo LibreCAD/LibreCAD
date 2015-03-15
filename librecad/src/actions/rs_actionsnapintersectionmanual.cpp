@@ -24,12 +24,13 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actionsnapintersectionmanual.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
+#include "rs_circle.h"
 
 
 /**

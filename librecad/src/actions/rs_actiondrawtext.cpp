@@ -24,12 +24,14 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawtext.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_line.h"
+#include "rs_text.h"
 
 
 
@@ -43,6 +45,8 @@ RS_ActionDrawText::RS_ActionDrawText(RS_EntityContainer& container,
     secPos = RS_Vector(false);
     textChanged = true;
 }
+
+RS_ActionDrawText::~RS_ActionDrawText(){}
 
 
 QAction* RS_ActionDrawText::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
@@ -62,9 +66,9 @@ void RS_ActionDrawText::init(int status) {
         case ShowDialog: {
                 reset();
 
-                RS_Text tmp(NULL, data);
+				RS_Text tmp(NULL, *data);
                 if (RS_DIALOGFACTORY->requestTextDialog(&tmp)) {
-                    data = tmp.getData();
+					data.reset(new RS_TextData(tmp.getData()));
                     setStatus(SetPos);
                     showOptions();
                 } else {
@@ -90,15 +94,15 @@ void RS_ActionDrawText::init(int status) {
 
 
 void RS_ActionDrawText::reset() {
-    data = RS_TextData(RS_Vector(0.0,0.0), RS_Vector(0.0,0.0),
+	data.reset(new RS_TextData(RS_Vector(0.0,0.0), RS_Vector(0.0,0.0),
                        1.0, 1.0,
                        RS_TextData::VABaseline,
                        RS_TextData::HALeft,
                        RS_TextData::None,
-                       data.text,
+					   data->text,
                        "standard",
                        0.0,
-                       RS2::Update);
+					   RS2::Update));
 }
 
 
@@ -110,7 +114,7 @@ void RS_ActionDrawText::trigger() {
     if (pos.valid) {
         deletePreview();
 
-        RS_Text* text = new RS_Text(container, data);
+		RS_Text* text = new RS_Text(container, *data);
         text->update();
         container->addEntity(text);
 
@@ -130,14 +134,14 @@ void RS_ActionDrawText::trigger() {
 
 
 void RS_ActionDrawText::preparePreview() {
-    if (data.halign == RS_TextData::HAFit || data.halign == RS_TextData::HAAligned) {
+	if (data->halign == RS_TextData::HAFit || data->halign == RS_TextData::HAAligned) {
         if (secPos.valid) {
             RS_Line* text = new RS_Line(pos, secPos);
             preview->addEntity(text);
         }
     } else {
-        data.insertionPoint = pos;
-        RS_Text* text = new RS_Text(preview, data);
+		data->insertionPoint = pos;
+		RS_Text* text = new RS_Text(preview, *data);
         text->update();
         preview->addEntity(text);
     }
@@ -197,15 +201,15 @@ void RS_ActionDrawText::coordinateEvent(RS_CoordinateEvent* e) {
         break;
 
     case SetPos:
-        data.insertionPoint = mouse;
-        if (data.halign == RS_TextData::HAFit || data.halign == RS_TextData::HAAligned)
+		data->insertionPoint = mouse;
+		if (data->halign == RS_TextData::HAFit || data->halign == RS_TextData::HAAligned)
             setStatus(SetSecPos);
         else
             trigger();
         break;
 
     case SetSecPos:
-        data.secondPoint = mouse;
+		data->secondPoint = mouse;
         trigger();
         break;
 
@@ -337,24 +341,24 @@ void RS_ActionDrawText::updateMouseCursor() {
 
 
 void RS_ActionDrawText::setText(const QString& t) {
-    data.text = t;
+	data->text = t;
     textChanged = true;
 }
 
 
 
-QString RS_ActionDrawText::getText() {
-    return data.text;
+const QString&  RS_ActionDrawText::getText() const{
+	return data->text;
 }
 
 
 void RS_ActionDrawText::setAngle(double a) {
-    data.angle = a;
+	data->angle = a;
     textChanged = true;
 }
 
-double RS_ActionDrawText::getAngle() {
-    return data.angle;
+double RS_ActionDrawText::getAngle() const{
+	return data->angle;
 }
 
 

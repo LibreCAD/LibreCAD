@@ -28,7 +28,6 @@
 #define RS_ACTIONSELECTINTERSECTED_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_vector.h"
 
 
 /**
@@ -51,7 +50,7 @@ public:
     RS_ActionSelectIntersected(RS_EntityContainer& container,
                          RS_GraphicView& graphicView,
                          bool select);
-    ~RS_ActionSelectIntersected() {}
+	~RS_ActionSelectIntersected()=default;
 
 	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 

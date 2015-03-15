@@ -27,6 +27,9 @@
 
 #include "rs_insert.h"
 
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_ellipse.h"
 #include "rs_block.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"

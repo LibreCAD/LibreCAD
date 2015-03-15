@@ -27,8 +27,10 @@
 #ifndef RS_ACTIONDRAWLINEANGLE_H
 #define RS_ACTIONDRAWLINEANGLE_H
 
+#include <memory>
 #include "rs_previewactioninterface.h"
-#include "rs_line.h"
+
+class RS_LineData;
 
 /**
  * This action class can handle user events to draw 
@@ -53,7 +55,7 @@ public:
                            double angle=0.0,
                            bool fixedAngle=false,
                            RS2::ActionType actionType=RS2::ActionDrawLineAngle);
-    ~RS_ActionDrawLineAngle();
+	~RS_ActionDrawLineAngle();
 
 	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 	
@@ -120,7 +122,7 @@ protected:
     /**
      * Line data defined so far.
      */
-    RS_LineData data;
+	std::unique_ptr<RS_LineData> data;
 	/**
 	 * Position.
 	 */

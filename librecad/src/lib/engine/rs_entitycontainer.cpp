@@ -34,6 +34,8 @@
 #include "rs_debug.h"
 #include "rs_dimension.h"
 #include "rs_layer.h"
+#include "rs_arc.h"
+#include "rs_ellipse.h"
 #include "rs_line.h"
 #include "rs_insert.h"
 #include "rs_spline.h"

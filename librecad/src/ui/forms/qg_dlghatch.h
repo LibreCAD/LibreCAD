@@ -27,7 +27,8 @@
 #define QG_DLGHATCH_H
 
 #include "ui_qg_dlghatch.h"
-#include "rs_hatch.h"
+
+class RS_Hatch;
 
 class QG_DlgHatch : public QDialog, public Ui::QG_DlgHatch
 {
@@ -35,7 +36,7 @@ class QG_DlgHatch : public QDialog, public Ui::QG_DlgHatch
 
 public:
     QG_DlgHatch(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
-    ~QG_DlgHatch();
+	~QG_DlgHatch()=default;
 
 public slots:
     virtual void polish();

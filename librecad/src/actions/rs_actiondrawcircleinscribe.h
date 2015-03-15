@@ -25,7 +25,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QVector>
 #include "rs_previewactioninterface.h"
-#include "rs_ellipse.h"
+#include "rs_circle.h"
+
+class RS_Line;
 
 /**
  * Draw ellipse by foci and a point on ellipse
@@ -47,7 +49,7 @@ public:
 public:
     RS_ActionDrawCircleInscribe(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView);
-    ~RS_ActionDrawCircleInscribe();
+	~RS_ActionDrawCircleInscribe()=default;
 
     static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 

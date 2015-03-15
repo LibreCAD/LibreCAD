@@ -26,6 +26,7 @@
 
 
 #include "rs_dimaligned.h"
+#include "rs_line.h"
 
 #include "rs_graphic.h"
 #include "rs_units.h"

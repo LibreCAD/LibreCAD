@@ -24,12 +24,13 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawlinetangent2.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_creation.h"
+#include "rs_line.h"
 
 
 
@@ -47,6 +48,9 @@ RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
     circleType<<RS2::EntityArc<<RS2::EntityCircle<<RS2::EntityEllipse;
     setStatus(SetCircle1);
 }
+
+RS_ActionDrawLineTangent2::~RS_ActionDrawLineTangent2(){}
+
 
 QAction* RS_ActionDrawLineTangent2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
         // tr("Tan&gent (C,C)"),
@@ -76,7 +80,7 @@ void RS_ActionDrawLineTangent2::trigger() {
 
     RS_Entity* newEntity = NULL;
 
-    newEntity = new RS_Line(container, lineData);
+	newEntity = new RS_Line(container, *lineData);
 
     if (newEntity!=NULL) {
         newEntity->setLayerToActive();
@@ -125,10 +129,10 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
         return;
     }
     valid=true;
-    lineData=tangent->getData();
+	lineData.reset(new RS_LineData(tangent->getData()));
 
     deletePreview();
-    preview->addEntity(new RS_Line(preview, lineData));
+	preview->addEntity(new RS_Line(preview, *lineData));
     drawPreview();
 }
 

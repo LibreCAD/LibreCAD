@@ -30,6 +30,7 @@
 #include "rs_previewactioninterface.h"
 
 
+
 /**
  * This action class can handle user events to draw parallel 
  * lines, arcs and circles.
@@ -83,8 +84,6 @@ public:
 private:
     /** Closest parallel. */
     RS_Entity* parallel;
-    /** Data of new line */
-    RS_LineData data;
 	/** Number of parallels. */
 	int number;
 	/** Coordinate of the mouse. */

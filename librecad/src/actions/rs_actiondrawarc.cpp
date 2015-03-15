@@ -24,13 +24,14 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawarc.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commands.h"
 #include "rs_commandevent.h"
+#include "rs_circle.h"
 
 
 RS_ActionDrawArc::RS_ActionDrawArc(RS_EntityContainer& container,
@@ -41,9 +42,6 @@ RS_ActionDrawArc::RS_ActionDrawArc(RS_EntityContainer& container,
     reset();
 }
 
-
-
-RS_ActionDrawArc::~RS_ActionDrawArc() {}
 
 QAction* RS_ActionDrawArc::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
         // (tr("Arc: Center, Point, Angles")

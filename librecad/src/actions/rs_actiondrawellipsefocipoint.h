@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define RS_ACTIONDRAWELLIPSEFOCIPOINT_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_ellipse.h"
 
 /**
  * Draw ellipse by foci and a point on ellipse
@@ -46,7 +45,7 @@ public:
 public:
     RS_ActionDrawEllipseFociPoint(RS_EntityContainer& container,
                                   RS_GraphicView& graphicView);
-    ~RS_ActionDrawEllipseFociPoint();
+	~RS_ActionDrawEllipseFociPoint()=default;
 
     static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
     RS2::ActionType rtti(){

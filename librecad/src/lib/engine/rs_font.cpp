@@ -25,12 +25,14 @@
 **********************************************************************/
 
 
-#include "rs_font.h"
 
 #include <iostream>
 #include <QTextStream>
 #include <QTextCodec>
 
+#include "rs_font.h"
+#include "rs_arc.h"
+#include "rs_line.h"
 #include "rs_polyline.h"
 #include "rs_fontchar.h"
 #include "rs_system.h"

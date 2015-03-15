@@ -28,10 +28,11 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QAction>
-#include <limits.h>
+#include <climits>
 #include "qc_applicationwindow.h"
 #include "rs_graphicview.h"
 
+#include "rs_line.h"
 #include "rs_linetypepattern.h"
 #include "rs_eventhandler.h"
 #include "rs_graphic.h"

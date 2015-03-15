@@ -24,12 +24,14 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondimradial.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
 
 
 RS_ActionDimRadial::RS_ActionDimRadial(

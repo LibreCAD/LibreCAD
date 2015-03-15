@@ -102,6 +102,9 @@
 #include "doc_plugin_interface.h"
 #include "qc_plugininterface.h"
 #include "rs_commands.h"
+#include "rs_arc.h"
+#include "rs_ellipse.h"
+#include "rs_point.h"
 
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;

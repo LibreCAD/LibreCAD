@@ -27,8 +27,10 @@
 #ifndef RS_ACTIONDRAWLINE_H
 #define RS_ACTIONDRAWLINE_H
 
+#include <memory>
 #include "rs_previewactioninterface.h"
 
+class RS_LineData;
 
 /**
  * This action class can handle user events to draw
@@ -50,7 +52,7 @@ public:
 public:
     RS_ActionDrawLine(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-    virtual ~RS_ActionDrawLine();
+	virtual ~RS_ActionDrawLine();
 
         virtual RS2::ActionType rtti() {
                 return RS2::ActionDrawLine;
@@ -87,7 +89,7 @@ protected:
      /**
     * Line data defined so far.
     */
-    RS_LineData data;
+	std::unique_ptr<RS_LineData> data;
         /**
          * Start point of the series of lines. Used for close function.
          */

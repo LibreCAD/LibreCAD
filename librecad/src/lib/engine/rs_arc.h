@@ -36,7 +36,7 @@ class LC_Quadratic;
  */
 class RS_ArcData {
 public:
-    RS_ArcData() {}
+	RS_ArcData() = default;
 
     RS_ArcData(const RS_Vector& center,
                double radius,

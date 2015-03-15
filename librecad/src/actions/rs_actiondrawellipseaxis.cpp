@@ -24,12 +24,14 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawellipseaxis.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_ellipse.h"
+#include "rs_line.h"
 
 /**
  * Constructor.
@@ -52,9 +54,6 @@ RS_ActionDrawEllipseAxis::RS_ActionDrawEllipseAxis(
     angle2 = isArc?2.*M_PI:0.0;
 }
 
-
-
-RS_ActionDrawEllipseAxis::~RS_ActionDrawEllipseAxis() {}
 
 
 QAction* RS_ActionDrawEllipseAxis::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {

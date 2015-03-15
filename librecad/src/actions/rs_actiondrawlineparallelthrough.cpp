@@ -24,9 +24,9 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawlineparallelthrough.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_creation.h"

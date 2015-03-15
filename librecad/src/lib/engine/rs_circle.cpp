@@ -29,8 +29,9 @@
 #include <QDebug>
 #include "rs_circle.h"
 
-//#include <values.h>
 
+#include "rs_arc.h"
+#include "rs_line.h"
 #include "rs_constructionline.h"
 #include "rs_information.h"
 #include "rs_graphicview.h"
@@ -306,9 +307,9 @@ RS_VectorSolutions RS_Circle::createTan2(const QVector<RS_AtomicEntity*>& circle
 
 }
 
-QList<RS_Circle> RS_Circle::createTan3(const QVector<RS_AtomicEntity*>& circles)
+std::vector<RS_Circle> RS_Circle::createTan3(const std::vector<RS_AtomicEntity*>& circles)
 {
-    QList<RS_Circle> ret;
+	std::vector<RS_Circle> ret;
     if(circles.size()!=3) return ret;
      QList<RS_Circle> cs;
      for(unsigned short i=0u;i<3u;i++){
@@ -334,7 +335,7 @@ QList<RS_Circle> RS_Circle::createTan3(const QVector<RS_AtomicEntity*>& circles)
                         break;
                     }
                 }
-                if(addNew) ret<<c0;
+				if(addNew) ret.push_back(c0);
             }
         }
 
@@ -342,7 +343,7 @@ QList<RS_Circle> RS_Circle::createTan3(const QVector<RS_AtomicEntity*>& circles)
     }while(++flags<8u);
 //    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
 //    std::cout<<"before testing, ret.size()="<<ret.size()<<std::endl;
-    for(int i=0;i<ret.size();){
+	for(size_t i=0;i<ret.size();){
         if(ret[i].testTan3(circles) == false) {
             ret.erase(ret.begin()+i);
         }else{
@@ -354,7 +355,7 @@ QList<RS_Circle> RS_Circle::createTan3(const QVector<RS_AtomicEntity*>& circles)
     return ret;
 }
 
-bool RS_Circle::testTan3(const QVector<RS_AtomicEntity*>& circles)
+bool RS_Circle::testTan3(const std::vector<RS_AtomicEntity*>& circles)
 {
 
     if(circles.size()!=3) return false;

@@ -24,9 +24,10 @@
 **
 **********************************************************************/
 
-#include "rs_arc.h"
 #include <cmath>
+#include "rs_arc.h"
 
+#include "rs_line.h"
 #include "rs_constructionline.h"
 #include "rs_linetypepattern.h"
 #include "rs_information.h"

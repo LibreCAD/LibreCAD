@@ -26,6 +26,7 @@
 
 #include "rs_selection.h"
 
+#include "rs_line.h"
 #include "rs_information.h"
 #include "rs_polyline.h"
 #include "rs_entity.h"

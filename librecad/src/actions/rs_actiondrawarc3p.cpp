@@ -24,14 +24,15 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawarc3p.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_actiondrawarc.h"
 #include "rs_commands.h"
 #include "rs_commandevent.h"
+#include "rs_line.h"
 
 
 

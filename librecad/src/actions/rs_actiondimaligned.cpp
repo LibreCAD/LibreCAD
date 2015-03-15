@@ -24,10 +24,11 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondimaligned.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
+#include "rs_line.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_constructionline.h"

@@ -24,9 +24,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWCIRCLETAN3_H
 #define RS_ACTIONDRAWCIRCLETAN3_H
 
+#include <vector>
+#include <memory>
 #include <QVector>
-#include "rs_circle.h"
 #include "rs_previewactioninterface.h"
+
+class RS_CircleData;
+class RS_AtomicEntity;
 
 /**
  * Draw Common tangential circle of 3 given circles, i.e. Appollonius's problem
@@ -49,7 +53,7 @@ public:
 public:
     RS_ActionDrawCircleTan3(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView);
-    ~RS_ActionDrawCircleTan3();
+	~RS_ActionDrawCircleTan3()=default;
 
     static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 
@@ -80,17 +84,16 @@ public:
 
 //protected:
     private:
-    QVector<double> verifyCenter(const RS_Vector& center) const;
-    QVector<double> getRadii(RS_AtomicEntity* entity, const RS_Vector& center) const;
+	std::vector<double> verifyCenter(const RS_Vector& center) const;
+	std::vector<double> getRadii(RS_AtomicEntity* entity, const RS_Vector& center) const;
     RS_Entity* catchCircle(QMouseEvent* e);
-    QVector<RS_AtomicEntity*> circles;
-    RS_CircleData cData;
-    QVector<RS_CircleData> m_vCandidates;
+	std::vector<RS_AtomicEntity*> circles;
+	std::shared_ptr<RS_CircleData> cData;
     RS_Vector coord;
     bool valid;
-    QVector<RS2::EntityType> enTypeList;
+	QVector<RS2::EntityType> enTypeList;
     //keep a list of centers found
-    QList<RS_Circle> candidates;
+	std::vector<std::shared_ptr<RS_CircleData> > candidates;
     RS_VectorSolutions centers;
 
 };

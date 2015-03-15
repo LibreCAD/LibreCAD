@@ -500,6 +500,7 @@ RS_Vector RS_Vector::operator / (const RS_Vector& v) const {
 	return RS_Vector(x / v.x, y / v.y, z / v.z);
 #endif
 	}
+	return *this;
 }
 
 /**
@@ -526,6 +527,7 @@ RS_Vector RS_Vector::operator / (const double& s) const {
 		return RS_Vector(x / s, y / s, z / s);
 #endif
 	}
+	return *this;
 }
 
 

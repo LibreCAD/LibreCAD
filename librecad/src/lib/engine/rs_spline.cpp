@@ -27,6 +27,8 @@
 
 #include "rs_spline.h"
 
+
+#include "rs_line.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
 #include "rs_painter.h"

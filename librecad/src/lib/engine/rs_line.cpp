@@ -26,7 +26,6 @@
 **********************************************************************/
 
 
-#include <QtGui>
 #include "rs_line.h"
 
 #include "rs_debug.h"
@@ -37,6 +36,7 @@
 #include "rs_information.h"
 #include "lc_quadratic.h"
 #include "rs_painterqt.h"
+#include "rs_circle.h"
 
 
 #ifdef EMU_C99

@@ -24,13 +24,16 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawpolyline.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commands.h"
 #include "rs_commandevent.h"
+#include "rs_arc.h"
+#include "rs_line.h"
+#include "rs_polyline.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -62,7 +65,7 @@ QAction* RS_ActionDrawPolyline::createGUIAction(RS2::ActionType /*type*/,
 
 void RS_ActionDrawPolyline::reset() {
         polyline = NULL;
-    data = RS_PolylineData(RS_Vector(false), RS_Vector(false), false);
+	data.reset(new RS_PolylineData(RS_Vector(false), RS_Vector(false), false));
     start = RS_Vector(false);
     history.clear();
     bHistory.clear();
@@ -128,7 +131,7 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent* e) {
             preview->addEntity(new RS_Line(preview,
                                        RS_LineData(point, mouse)));
         } else
-            preview->addEntity(new RS_Arc(preview,arc_data));
+			preview->addEntity(new RS_Arc(preview, *arc_data));
         drawPreview();
     }
 
@@ -179,7 +182,7 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
                 b=tan(delta/2);
                 suc = arc.createFrom2PBulge(point,mouse,b);
                 if (suc)
-                    arc_data = arc.getData();
+					arc_data.reset(new RS_ArcData(arc.getData()));
                 else
                     b=0;
             }
@@ -208,7 +211,7 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
             suc = arc.createFrom2PDirectionRadius(point, mouse,
                 direction,Radius);
             if (suc){
-                arc_data = arc.getData();
+				arc_data.reset(new RS_ArcData(arc.getData()));
                 b=arc.getBulge();
                 calculatedEndpoint = arc.getEndpoint();
                 calculatedSegment=true;
@@ -230,8 +233,8 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
         b=tan(Reversed*Angle*M_PI/720.0);
         suc = arc.createFrom2PBulge(point,mouse,b);
         if (suc)
-            arc_data = arc.getData();
-        else
+			arc_data.reset(new RS_ArcData(arc.getData()));
+		else
             b=0;
         break;
     default:
@@ -275,9 +278,9 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
         point = mouse;
         history.append(mouse);
         bHistory.append(bulge);
-                if (polyline==NULL) {
+				if (polyline==NULL) {
                         //printf("polyline==NULL\n");
-                        polyline = new RS_Polyline(container, data);
+						polyline = new RS_Polyline(container, *data);
                         polyline->addVertex(start, 0.0);
                 }
                 if (polyline!=NULL) {

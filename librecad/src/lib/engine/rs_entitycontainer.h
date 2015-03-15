@@ -28,12 +28,8 @@
 #ifndef RS_ENTITYCONTAINER_H
 #define RS_ENTITYCONTAINER_H
 
-#include "rs_arc.h"
-#include "rs_circle.h"
-#include "rs_ellipse.h"
+#include <vector>
 #include "rs_entity.h"
-#include "rs_line.h"
-#include "rs_point.h"
 
 /**
  * Class representing a tree of entities.

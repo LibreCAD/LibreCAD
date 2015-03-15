@@ -26,6 +26,7 @@
 
 
 #include "rs_information.h"
+#include "rs_line.h"
 #include "rs_dimension.h"
 #include "rs_solid.h"
 #include "rs_units.h"

@@ -45,7 +45,7 @@ public:
                         RS_GraphicView& graphicView,
                         bool keepAspectRatio=true);
 
-    ~RS_ActionZoomWindow() {}
+	~RS_ActionZoomWindow()=default;
 
         static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

@@ -31,6 +31,7 @@
 
 #include <QList>
 #include <QVector>
+#include <vector>
 #include "rs_atomicentity.h"
 
 class LC_Quadratic;
@@ -40,7 +41,7 @@ class LC_Quadratic;
  */
 class RS_CircleData {
 public:
-    RS_CircleData() {}
+	RS_CircleData() = default;
 
     RS_CircleData(const RS_Vector& center,
                   double radius) {
@@ -102,7 +103,7 @@ public:
     }
 
     /** @return Copy of data that defines the circle. **/
-    RS_CircleData getData() const {
+	const RS_CircleData& getData() const {
         return data;
     }
 
@@ -165,8 +166,8 @@ with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are th
 **/
     static QList<RS_Circle> solveAppolloniusSingle(const QList<RS_Circle>& circles);
 
-    QList<RS_Circle> createTan3(const QVector<RS_AtomicEntity*>& circles);
-    bool testTan3(const QVector<RS_AtomicEntity*>& circles);
+	std::vector<RS_Circle> createTan3(const std::vector<RS_AtomicEntity*>& circles);
+	bool testTan3(const std::vector<RS_AtomicEntity*>& circles);
     virtual RS_Vector getMiddlePoint(void)const;
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = nullptr) const;

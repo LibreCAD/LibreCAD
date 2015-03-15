@@ -24,12 +24,13 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actionpolylineappend.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commands.h"
+#include "rs_polyline.h"
 
 
 RS_ActionPolylineAppend::RS_ActionPolylineAppend(RS_EntityContainer& container,
@@ -157,7 +158,7 @@ void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent* e) {
                 history.append(mouse);
                 bHistory.append(0.0);
                 if (polyline==NULL) {
-			polyline = new RS_Polyline(container, data);
+			polyline = new RS_Polyline(container, *data);
 			polyline->addVertex(start, 0.0, prepend);
 		}
 		if (polyline!=NULL) {

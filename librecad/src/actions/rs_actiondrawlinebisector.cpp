@@ -24,20 +24,22 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawlinebisector.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_creation.h"
+#include "rs_line.h"
 
 
 
 RS_ActionDrawLineBisector::RS_ActionDrawLineBisector(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Bisectors", container, graphicView) {
+		:RS_PreviewActionInterface("Draw Bisectors", container, graphicView)
+{
 
     bisector = NULL;
     length = 10.0;

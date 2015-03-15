@@ -25,16 +25,18 @@
 **********************************************************************/
 
 
+#include <QStringList>
 #include "rs_filtercxf.h"
 
 #include <iostream>
 #include <fstream>
 
+#include "rs_arc.h"
+#include "rs_line.h"
 #include "rs_font.h"
 #include "rs_utility.h"
 #include "rs_system.h"
 #include "rs_block.h"
-#include <QStringList>
 
 
 /**

@@ -26,6 +26,7 @@
 
 
 #include "rs_image.h"
+#include "rs_line.h"
 #include "rs_settings.h"
 
 #include "rs_constructionline.h"

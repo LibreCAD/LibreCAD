@@ -40,7 +40,7 @@ public:
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-    RS_LineData() {}
+	RS_LineData() = default;
 
     RS_LineData(const RS_Vector& startpoint,
                 const RS_Vector& endpoint) {

@@ -27,7 +27,11 @@
 
 #include "rs_information.h"
 
+#include "rs_arc.h"
+#include "rs_circle.h"
 #include "rs_constructionline.h"
+#include "rs_ellipse.h"
+#include "rs_line.h"
 #include "lc_quadratic.h"
 #include "lc_splinepoints.h"
 

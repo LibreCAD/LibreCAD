@@ -28,8 +28,8 @@
 #define RS_INFORMATION_H
 
 #include "rs_entitycontainer.h"
-#include "rs_line.h"
-#include "rs_arc.h"
+
+class RS_Ellipse;
 
 
 
@@ -59,6 +59,7 @@ public:
     RS_Entity* getNearestEntity(const RS_Vector& point,
                                 double* dist = NULL,
                                 RS2::ResolveLevel level=RS2::ResolveAll) const;
+
 
     static RS_VectorSolutions getIntersection(RS_Entity* e1,
             RS_Entity* e2,

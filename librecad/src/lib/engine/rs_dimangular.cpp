@@ -28,6 +28,8 @@
 #include "rs_dimangular.h"
 
 #include "rs_constructionline.h"
+#include "rs_arc.h"
+#include "rs_line.h"
 #include "rs_graphic.h"
 #include "rs_information.h"
 #include "rs_solid.h"

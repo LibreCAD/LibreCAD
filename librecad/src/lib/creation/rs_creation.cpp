@@ -27,6 +27,10 @@
 
 #include <QFileInfo>
 #include "rs_creation.h"
+#include "rs_arc.h"
+#include "rs_line.h"
+#include "rs_circle.h"
+#include "rs_ellipse.h"
 
 #include "rs_information.h"
 #include "rs_graphic.h"

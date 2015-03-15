@@ -36,6 +36,7 @@
 #include "rs_system.h"
 #include "rs_actioninterface.h"
 #include "rs_document.h"
+#include "rs_hatch.h"
 
 #include "rs_actiondimlinear.h"
 

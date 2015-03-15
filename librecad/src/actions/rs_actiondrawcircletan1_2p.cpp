@@ -20,14 +20,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawcircletan1_2p.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_arc.h"
-#include "rs_circle.h"
+#include "rs_line.h"
+#include "rs_point.h"
 #include "lc_quadratic.h"
 
 /**
@@ -45,11 +46,6 @@ RS_ActionDrawCircleTan1_2P::RS_ActionDrawCircleTan1_2P(
 {
     //    supported types
     enTypeList<<RS2::EntityLine<<RS2::EntityArc<<RS2::EntityCircle;
-}
-
-
-
-RS_ActionDrawCircleTan1_2P::~RS_ActionDrawCircleTan1_2P() {
 }
 
 

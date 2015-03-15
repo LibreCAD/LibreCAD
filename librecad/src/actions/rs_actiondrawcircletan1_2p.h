@@ -25,9 +25,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QVector>
 #include "rs_previewactioninterface.h"
-//#include "rs_ellipse.h"
+#include "rs_circle.h"
 
-class RS_Circle;
+class RS_AtomicEntity;
 
 /**
  * Draw tangential circle passing 2 points
@@ -50,7 +50,7 @@ public:
 public:
     RS_ActionDrawCircleTan1_2P(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView);
-    ~RS_ActionDrawCircleTan1_2P();
+	~RS_ActionDrawCircleTan1_2P()=default;
 
     static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 

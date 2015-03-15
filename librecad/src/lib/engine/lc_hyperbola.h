@@ -39,6 +39,7 @@ class LC_Quadratic;
  */
 class LC_HyperbolaData {
 public:
+	LC_HyperbolaData() = default;
     LC_HyperbolaData(const RS_Vector& center,
                    const RS_Vector& majorP,
                    double ratio,

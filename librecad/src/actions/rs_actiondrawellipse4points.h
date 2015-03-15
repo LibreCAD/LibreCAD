@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define RS_ACTIONDRAWELLIPSE4POINTS_H
 
 #include "rs_previewactioninterface.h"
+#include "rs_circle.h"
 #include "rs_ellipse.h"
 
 /**
@@ -47,7 +48,7 @@ public:
 public:
     RS_ActionDrawEllipse4Points(RS_EntityContainer& container,
                                 RS_GraphicView& graphicView);
-    ~RS_ActionDrawEllipse4Points();
+	~RS_ActionDrawEllipse4Points()=default;
 
     static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
     RS2::ActionType rtti(){

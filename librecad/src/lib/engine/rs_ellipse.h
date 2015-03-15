@@ -47,6 +47,8 @@ class LC_Quadratic;
  */
 class RS_EllipseData {
 public:
+	RS_EllipseData() = default;
+	RS_EllipseData(const RS_EllipseData& ) = default;
     RS_EllipseData(const RS_Vector& center,
                    const RS_Vector& majorP,
                    double ratio,

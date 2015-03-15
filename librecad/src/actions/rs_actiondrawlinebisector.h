@@ -29,6 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
+class RS_Line;
 
 /**
  * This action class can handle user events to draw bisectors.
@@ -48,7 +49,7 @@ private:
 public:
     RS_ActionDrawLineBisector(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineBisector() {}
+	~RS_ActionDrawLineBisector() = default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	
@@ -93,8 +94,6 @@ private:
     RS_Line* line1;
     /** Second chosen entity */
     RS_Line* line2;
-    /** Data of new bisector */
-    RS_LineData data;
     /** Length of the bisector. */
     double length;
 	/** Number of bisectors to create. */
