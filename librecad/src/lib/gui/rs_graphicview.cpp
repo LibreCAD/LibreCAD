@@ -1352,7 +1352,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
         if (!e->isParentSelected()) {
             RS_VectorSolutions s = e->getRefPoints();
 
-            for (int i=0; i<s.getNumber(); ++i) {
+			for (size_t i=0; i<s.getNumber(); ++i) {
                 int sz = -1;
 				RS_Color col = handleColor;
 				if (i == 0) {

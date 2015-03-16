@@ -153,35 +153,24 @@ public:
     ~RS_VectorSolutions();
 
 	void alloc(size_t num);
-    void clean()
-    {
-        clear();
-    }
+	void clean();
     void clear();
-    RS_Vector get(int i) const
-    {
-        return at(i);
-    }
-    RS_Vector at(int i) const;
-    RS_Vector operator [] (const int i) const
-    {
-        return at(i);
-    }
+	const RS_Vector& get(size_t i) const;
+	RS_Vector at(size_t i) const;
+	const RS_Vector&  operator [] (const size_t i) const;
+	RS_Vector&  operator [] (const size_t i);
 	size_t getNumber() const;
-    size_t size() const
-    {
-        return vector.size();
-    }
+	size_t size() const;
     void resize(size_t n);
     bool hasValid() const;
-    void set(int i, const RS_Vector& v);
+void set(size_t i, const RS_Vector& v);
     void push_back(const RS_Vector& v);
 	void removeAt(const size_t i);
     RS_VectorSolutions appendTo(const RS_VectorSolutions& v);
     void setTangent(bool t);
     bool isTangent() const;
     RS_Vector getClosest(const RS_Vector& coord,
-                         double* dist=NULL, int* index=NULL) const;
+						 double* dist=NULL, size_t* index=NULL) const;
     double getClosestDistance(const RS_Vector& coord,
                               int counts = -1); //default to search all
 	const std::vector<RS_Vector>& getVector() const;

@@ -162,8 +162,8 @@ RS_VectorSolutions RS_Image::getCorners() const {
 bool RS_Image::containsPoint(const RS_Vector& coord) const{
     QPolygonF paf;
     RS_VectorSolutions corners =getCorners();
-    for(int i=0;i<corners.getNumber();i++){
-        paf.push_back(QPointF(corners.get(i).x,corners.get(i).y));
+	for(const RS_Vector& vp: corners){
+		paf.push_back(QPointF(vp.x, vp.y));
     }
     paf.push_back(paf.at(0));
     return paf.containsPoint(QPointF(coord.x,coord.y),Qt::OddEvenFill);

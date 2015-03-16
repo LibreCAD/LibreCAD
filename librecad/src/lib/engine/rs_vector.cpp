@@ -810,7 +810,7 @@ void RS_VectorSolutions::alloc(size_t num) {
     vector.reserve(num);
 #else
     if(vector.size() <num) {
-        for(int i=vector.size();i<num;i++){
+		for(size_t i=vector.size();i<num;i++){
             vector.push_back(RS_Vector(false));
         }
     }
@@ -821,6 +821,32 @@ void RS_VectorSolutions::alloc(size_t num) {
    // tangent = false;
 }
 
+
+void RS_VectorSolutions::clean()
+{
+	vector.clear();
+	tangent = false;
+}
+
+const RS_Vector& RS_VectorSolutions::get(size_t i) const
+{
+	return vector.at(i);
+}
+
+const RS_Vector&  RS_VectorSolutions::operator [] (const size_t i) const
+{
+	return vector.at(i);
+}
+
+RS_Vector&  RS_VectorSolutions::operator [] (const size_t i)
+{
+	return vector.at(i);
+}
+
+size_t RS_VectorSolutions::size() const
+{
+	return vector.size();
+}
 /**
  * Deletes vector array and resets everything.
  */
@@ -835,7 +861,7 @@ void RS_VectorSolutions::clear() {
  * @return vector solution number i or an invalid vector if there
  * are less solutions.
  */
-RS_Vector RS_VectorSolutions::at(int i) const {
+RS_Vector RS_VectorSolutions::at(size_t i) const {
     if (i<vector.size()) {
         return vector[i];
     } else {
@@ -889,7 +915,7 @@ void RS_VectorSolutions::push_back(const RS_Vector& v) {
 }
 
 void RS_VectorSolutions::removeAt(const size_t i){
-	if (i>=0 && vector.size()> i)
+	if (vector.size()> i)
 		vector.erase(vector.begin()+i);
 }
 
@@ -903,12 +929,12 @@ RS_VectorSolutions RS_VectorSolutions::appendTo(const RS_VectorSolutions& v) {
  * If i is greater than the current number of solutions available,
  * nothing happens.
  */
-void RS_VectorSolutions::set(int i, const RS_Vector& v) {
+void RS_VectorSolutions::set(size_t i, const RS_Vector& v) {
     if (i<vector.size()) {
         vector[i] = v;
     }else{
 //            RS_DEBUG->print(RS_Debug::D_ERROR, "set member in vector in RS_VectorSolutions: out of range, %d to size of %d", i,vector.size());
-        for(int j=vector.size();j<=i;j++)
+		for(size_t j=vector.size();j<=i;++j)
             vector.push_back(v);
     }
 }
@@ -938,51 +964,53 @@ bool RS_VectorSolutions::isTangent() const {
  */
 void RS_VectorSolutions::rotate(const double& ang) {
     RS_Vector angleVector(ang);
-    for (int i=0; i<vector.size(); i++) {
-        if (vector[i].valid) {
-            vector[i].rotate(angleVector);
-        }
-    }
+	for (RS_Vector& vp: vector) {
+		if (vp.valid) {
+			vp.rotate(angleVector);
+		}
+	}
 }
 
 /**
  * Rotates all vectors around (0,0) by the given angleVector.
  */
 void RS_VectorSolutions::rotate(const RS_Vector& angleVector) {
-    for (int i=0; i<vector.size(); i++) {
-        if (vector[i].valid) {
-                //To be a real rotation, the determinant of angleVector has to be 1 for a pure rotation
-            vector[i].rotate(angleVector);
-        }
-    }
+	for (RS_Vector& vp: vector) {
+		if (vp.valid) {
+			vp.rotate(angleVector);
+		}
+	}
 }
 
 /**
  * Rotates all vectors around the given center by the given angle.
  */
 void RS_VectorSolutions::rotate(const RS_Vector& center, const double& ang) {
-    RS_Vector angleVector(ang);
-    for (int i=0; i<vector.size(); i++) {
-        if (vector[i].valid) {
-            vector[i].rotate(center,angleVector);
-        }
-    }
+	const RS_Vector angleVector(ang);
+	for (RS_Vector& vp: vector) {
+		if (vp.valid) {
+			vp.rotate(center,angleVector);
+		}
+	}
 }
+
 void RS_VectorSolutions::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
-    for (int i=0; i<vector.size(); i++) {
-        if (vector[i].valid) {
-            vector[i].rotate(center,angleVector);
-        }
-    }
+	for (RS_Vector& vp: vector) {
+		if (vp.valid) {
+			vp.rotate(center,angleVector);
+		}
+	}
 }
 
 /**
  * Move all vectors around the given center by the given vector.
  */
 void RS_VectorSolutions::move(const RS_Vector& vp) {
-    for (int i=0; i<vector.size(); i++) {
-        if (vector[i].valid) vector[i].move(vp);
-    }
+	for (RS_Vector& v: vector) {
+		if (v.valid) {
+			v.move(vp);
+		}
+	}
 }
 
 
@@ -990,16 +1018,16 @@ void RS_VectorSolutions::move(const RS_Vector& vp) {
  * Scales all vectors by the given factors with the given center.
  */
 void RS_VectorSolutions::scale(const RS_Vector& center, const RS_Vector& factor) {
-    for (int i=0; i<vector.size(); i++) {
-        if (vector[i].valid) {
-            vector[i].scale(center, factor);
-        }
-    }
+	for (RS_Vector& vp: vector) {
+		if (vp.valid) {
+			vp.scale(center, factor);
+		}
+	}
 }
 void RS_VectorSolutions::scale( const RS_Vector& factor) {
-    for (int i=0; i<vector.size(); i++) {
-        if (vector[i].valid) {
-            vector[i].scale(factor);
+	for (RS_Vector& vp: vector) {
+		if (vp.valid) {
+			vp.scale(factor);
         }
     }
 }
@@ -1010,14 +1038,14 @@ void RS_VectorSolutions::scale( const RS_Vector& factor) {
  * dist will contain the distance if it doesn't point to NULL (default).
  */
 RS_Vector RS_VectorSolutions::getClosest(const RS_Vector& coord,
-                                         double* dist, int* index) const {
+										 double* dist, size_t* index) const {
 
     double curDist(0.);
     double minDist = RS_MAXDOUBLE;
     RS_Vector closestPoint(false);
     int pos(0);
 
-    for (int i=0; i<vector.size(); i++) {
+	for (size_t i=0; i<vector.size(); i++) {
         if (vector[i].valid) {
             curDist = (coord - vector[i]).squared();
 
@@ -1047,9 +1075,9 @@ double RS_VectorSolutions::getClosestDistance(const RS_Vector& coord,
     double ret=RS_MAXDOUBLE*RS_MAXDOUBLE;
     int i=vector.size();
     if (counts<i && counts>=0) i=counts;
-    for(int j=0; j<i; j++) {
-        if(vector[j].valid) {
-            double d=(coord - vector[j]).squared();
+	for(const RS_Vector& vp: vector){
+		if(vp.valid) {
+			double d=(coord - vp).squared();
             if(d<ret) ret=d;
         }
     }
@@ -1060,8 +1088,8 @@ double RS_VectorSolutions::getClosestDistance(const RS_Vector& coord,
 RS_VectorSolutions RS_VectorSolutions::flipXY(void) const
 {
         RS_VectorSolutions ret;
-        const int counts=vector.size();
-        for(int i=0;i<counts;i++) ret.push_back(vector[i].flipXY());
+		for(const RS_Vector& vp: vector)
+			ret.push_back(vp.flipXY());
         return ret;
 }
 
@@ -1075,8 +1103,8 @@ RS_VectorSolutions RS_VectorSolutions::operator = (const RS_VectorSolutions& s) 
 
 std::ostream& operator << (std::ostream& os,
                            const RS_VectorSolutions& s) {
-    for (int i=0; i<s.getNumber(); ++i) {
-        os << "(" << s.get(i) << ")\n";
+	for (const RS_Vector& vp: s){
+		os << "(" << vp << ")\n";
     }
     os << " tangent: " << (int)s.isTangent() << "\n";
     return os;

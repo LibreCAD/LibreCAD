@@ -479,12 +479,12 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
 //        RS_VectorSolutions sol1;
         double dmax(RS_TOLERANCE15);
         RS_Vector trimP(false);
-        for(int j=0;j<sol0.getNumber();j++){
+		for(const RS_Vector& vp: sol0){
 
-            double d0( (sol0.get(j) - pnew->entityAt(previousIndex)->getStartpoint()).squared());//potential bug, need to trim better
+			double d0( (vp - pnew->entityAt(previousIndex)->getStartpoint()).squared());//potential bug, need to trim better
             if(d0>dmax) {
                 dmax=d0;
-                trimP=sol0.get(j);
+				trimP=vp;
             }
         }
         if(trimP.valid){
@@ -505,11 +505,11 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
 //        RS_VectorSolutions sol1;
         double dmax(RS_TOLERANCE15);
         RS_Vector trimP(false);
-        for(int j=0;j<sol0.getNumber();j++){
-            double d0( (sol0.get(j) - pnew->entityAt(previousIndex)->getEndpoint()).squared());//potential bug, need to trim better
+		for(const RS_Vector& vp: sol0){
+			double d0( (vp - pnew->entityAt(previousIndex)->getEndpoint()).squared());//potential bug, need to trim better
             if(d0>dmax) {
                 dmax=d0;
-                trimP=sol0.get(j);
+				trimP=vp;
             }
         }
         if(trimP.valid){
@@ -534,12 +534,12 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
 //            double a0(intersections.at(i).angleTo(vp0));
 //            double a1(intersections.at(i).angleTo(vp1));
             RS_VectorSolutions sol1;
-            for(int j=0;j<sol0.getNumber();j++){
-                if(RS_Math::isAngleBetween(intersections.at(i).angleTo(sol0.get(j)),
+			for(const RS_Vector& vp: sol0){
+				if(RS_Math::isAngleBetween(intersections.at(i).angleTo(vp),
                                            pnew->entityAt(i)->getDirection2(),
                                            pnew->entityAt(i+1)->getDirection1(),
                                            false)==false){
-                    sol1.push_back(sol0.get(j));
+					sol1.push_back(vp);
                 }
             }
             if(sol1.getNumber()==0) continue;

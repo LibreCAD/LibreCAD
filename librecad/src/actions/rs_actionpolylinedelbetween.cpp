@@ -118,7 +118,7 @@ void RS_ActionPolylineDelBetween::mouseReleaseEvent(QMouseEvent* e) {
                                 RS_DIALOGFACTORY->commandMessage(
                                         tr("Entity must be a polyline."));
                         } else {
-                                RS_Vector clickCoord = snapPoint(e);
+							snapPoint(e);
                                 delSegment = NULL;
                                 double dist = graphicView->toGraphDX(snapRange)*0.9;
                                 delSegment =  (RS_AtomicEntity*)((RS_Polyline*)delEntity)->getNearestEntity( RS_Vector(graphicView->toGraphX(e->x()),

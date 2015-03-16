@@ -98,7 +98,7 @@ RS_Vector RS_ConstructionLine::getNearestPointOnEntity(const RS_Vector& coord,
     RS_Vector ae = data.point2-data.point1;
     RS_Vector ea = data.point1-data.point2;
     RS_Vector ap = coord-data.point1;
-    RS_Vector ep = coord-data.point2;
+//    RS_Vector ep = coord-data.point2;
 
         if (ae.magnitude()<1.0e-6 || ea.magnitude()<1.0e-6) {
                 return RS_Vector(false);
@@ -107,8 +107,8 @@ RS_Vector RS_ConstructionLine::getNearestPointOnEntity(const RS_Vector& coord,
     // Orthogonal projection from both sides:
     RS_Vector ba = ae * RS_Vector::dotP(ae, ap)
                    / (ae.magnitude()*ae.magnitude());
-    RS_Vector be = ea * RS_Vector::dotP(ea, ep)
-                   / (ea.magnitude()*ea.magnitude());
+//    RS_Vector be = ea * RS_Vector::dotP(ea, ep)
+//                   / (ea.magnitude()*ea.magnitude());
 
     return data.point1+ba;
 }

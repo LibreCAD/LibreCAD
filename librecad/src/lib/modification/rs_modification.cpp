@@ -2120,7 +2120,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     }
 
     // trim trim entity
-    int ind = 0;
+	size_t ind = 0;
     RS_Vector is, is2;
 
     //RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
