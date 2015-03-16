@@ -27,8 +27,10 @@
 #ifndef RS_ACTIONDRAWCIRCLE3P_H
 #define RS_ACTIONDRAWCIRCLE3P_H
 
+#include <memory>
 #include "rs_previewactioninterface.h"
-#include "rs_circle.h"
+
+class RS_CircleData;
 
 /**
  * This action class can handle user events to draw 
@@ -80,7 +82,7 @@ protected:
     /**
      * Circle data defined so far.
      */
-    RS_CircleData data;
+	std::unique_ptr<RS_CircleData> data;
     /**
      * 1st point.
      */

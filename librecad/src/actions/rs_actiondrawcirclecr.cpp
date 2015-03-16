@@ -24,12 +24,13 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawcirclecr.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_circle.h"
 
 /**
  * Constructor.
@@ -37,7 +38,9 @@
 RS_ActionDrawCircleCR::RS_ActionDrawCircleCR(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw circles CR",
-                           container, graphicView) {
+						   container, graphicView)
+		,data(new RS_CircleData())
+{
 
     reset();
 }
@@ -57,7 +60,7 @@ QAction* RS_ActionDrawCircleCR::createGUIAction(RS2::ActionType /*type*/, QObjec
 
 
 void RS_ActionDrawCircleCR::reset() {
-    data = RS_CircleData(RS_Vector(false), 0.0);
+	data.reset(new RS_CircleData(RS_Vector(false), 0.0));
 }
 
 
@@ -72,7 +75,7 @@ void RS_ActionDrawCircleCR::trigger() {
     RS_PreviewActionInterface::trigger();
 
     RS_Circle* circle = new RS_Circle(container,
-                                      data);
+									  *data);
     circle->setLayerToActive();
     circle->setPenToActive();
     container->addEntity(circle);
@@ -95,7 +98,7 @@ void RS_ActionDrawCircleCR::trigger() {
 void RS_ActionDrawCircleCR::setRadius(double r)
 {
     if(r>RS_TOLERANCE){
-        data.radius=r;
+		data->radius=r;
     }else{
         RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is invalid").arg(r));
     }
@@ -108,10 +111,10 @@ void RS_ActionDrawCircleCR::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
     case SetCenter:
-        data.center = mouse;
+		data->center = mouse;
         deletePreview();
         preview->addEntity(new RS_Circle(preview,
-                                         data));
+										 *data));
         drawPreview();
         break;
     }
@@ -142,7 +145,7 @@ void RS_ActionDrawCircleCR::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetCenter:
-        data.center = mouse;
+		data->center = mouse;
         trigger();
         break;
 
@@ -174,7 +177,7 @@ void RS_ActionDrawCircleCR::commandEvent(RS_CommandEvent* e) {
             bool ok;
             double r = RS_Math::eval(c, &ok);
             if (ok==true) {
-                data.radius = r;
+				data->radius = r;
                 e->accept();
                 trigger();
             } else {
@@ -244,6 +247,9 @@ void RS_ActionDrawCircleCR::updateMouseCursor() {
 }
 
 
+double RS_ActionDrawCircleCR::getRadius() const{
+	return data->radius;
+}
 
 //void RS_ActionDrawCircleCR::updateToolBar() {
 //    if (RS_DIALOGFACTORY!=NULL) {

@@ -27,9 +27,10 @@
 #ifndef RS_ACTIONDRAWCIRCLE_H
 #define RS_ACTIONDRAWCIRCLE_H
 
+#include <memory>
 #include "rs_previewactioninterface.h"
-#include "rs_circle.h"
 
+class RS_CircleData;
 /**
  * This action class can handle user events to draw 
  * circles with a given center and a point on the circle line.
@@ -82,7 +83,7 @@ protected:
     /**
      * Circle data defined so far.
      */
-    RS_CircleData data;
+	std::unique_ptr<RS_CircleData> data;
 };
 
 #endif

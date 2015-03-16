@@ -26,6 +26,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_circle.h"
+#include "rs_ellipse.h"
 
 /**
  * Constructor.
@@ -35,14 +37,15 @@ RS_ActionDrawEllipseCenter3Points::RS_ActionDrawEllipseCenter3Points(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw ellipse by center and 3 points",
-                           container, graphicView),
-          cData(RS_Vector(0.,0.),1.),
-          eData(RS_Vector(0.,0.),RS_Vector(1.,0),1.,0.,0.,false)
+						   container, graphicView),
+		  cData(new RS_CircleData(RS_Vector(0.,0.),1.)),
+		  eData(new RS_EllipseData(RS_Vector(0.,0.),RS_Vector(1.,0),1.,0.,0.,false))
 {
           points.clean();
 
 }
 
+RS_ActionDrawEllipseCenter3Points::~RS_ActionDrawEllipseCenter3Points(){}
 
 QAction* RS_ActionDrawEllipseCenter3Points::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
@@ -67,7 +70,7 @@ void RS_ActionDrawEllipseCenter3Points::trigger() {
     RS_PreviewActionInterface::trigger();
 
 
-    RS_Ellipse* ellipse=new RS_Ellipse(container, eData);
+	RS_Ellipse* ellipse=new RS_Ellipse(container, *eData);
 
     deletePreview();
     container->addEntity(ellipse);
@@ -102,7 +105,7 @@ void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent* e) {
 
         case SetPoint1:
         {
-            RS_Circle* circle=new RS_Circle(preview, cData);
+			RS_Circle* circle=new RS_Circle(preview, *cData);
             deletePreview();
             preview->addEntity(circle);
             drawPreview();
@@ -113,7 +116,7 @@ void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent* e) {
         case SetPoint3:
         {
             deletePreview();
-            RS_Ellipse* e=new RS_Ellipse(preview, eData);
+			RS_Ellipse* e=new RS_Ellipse(preview, *eData);
             preview->addEntity(e);
             drawPreview();
         }
@@ -131,10 +134,10 @@ bool RS_ActionDrawEllipseCenter3Points::preparePreview(){
     switch(getStatus()) {
     case SetPoint1:
     {
-        RS_Circle c(preview,cData);
+		RS_Circle c(preview, *cData);
         valid= c.createFromCR(points.get(0),points.get(0).distanceTo(points.get(1)));
         if(valid){
-            cData=c.getData();
+			cData.reset(new RS_CircleData(c.getData()));
         }
 
     }
@@ -142,10 +145,10 @@ bool RS_ActionDrawEllipseCenter3Points::preparePreview(){
     case SetPoint2:
     case SetPoint3:
     {
-        RS_Ellipse e(preview,eData);
+		RS_Ellipse e(preview, *eData);
         valid= e.createFromCenter3Points(points);
         if(valid){
-            eData=e.getData();
+			eData.reset(new RS_EllipseData(e.getData()));
         }
     }
         break;

@@ -26,6 +26,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_circle.h"
+#include "rs_ellipse.h"
 
 /**
  * Constructor.
@@ -36,12 +38,13 @@ RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw ellipse from 4 points",
                            container, graphicView),
-          cData(RS_Vector(0.,0.),1.),
-          eData(RS_Vector(0.,0.),RS_Vector(1.,0),1.,0.,0.,false)
+		  cData(new RS_CircleData(RS_Vector(0.,0.),1.)),
+		  eData(new RS_EllipseData(RS_Vector(0.,0.),RS_Vector(1.,0),1.,0.,0.,false))
         ,m_bUniqueEllipse(false)
 {
 }
 
+RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points(){}
 
 QAction* RS_ActionDrawEllipse4Points::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
@@ -62,9 +65,9 @@ void RS_ActionDrawEllipse4Points::trigger() {
     RS_PreviewActionInterface::trigger();
     RS_Entity* en;
     if(getStatus()==SetPoint4&&evalid){
-        en=new RS_Ellipse(container, eData);
+		en=new RS_Ellipse(container, *eData);
     }else{
-        en=new RS_Circle(container, cData);
+		en=new RS_Circle(container, *cData);
     }
 
     // update undo list:
@@ -97,7 +100,7 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent* e) {
         case SetPoint2:
         case SetPoint3:
             if(valid){
-                RS_Circle* circle=new RS_Circle(preview, cData);
+				RS_Circle* circle=new RS_Circle(preview, *cData);
                 deletePreview();
                 preview->addEntity(circle);
                 drawPreview();
@@ -106,7 +109,7 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent* e) {
         case SetPoint4:
             if(evalid){
                 deletePreview();
-                RS_Ellipse* e=new RS_Ellipse(preview, eData);
+				RS_Ellipse* e=new RS_Ellipse(preview, *eData);
                 preview->addEntity(e);
                 drawPreview();
             }
@@ -125,10 +128,10 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
     case SetPoint2:
     case SetPoint3:
     {
-        RS_Circle c(preview,cData);
+		RS_Circle c(preview, *cData);
         valid= c.createFrom3P(points);
         if(valid){
-            cData=c.getData();
+			cData.reset(new RS_CircleData(c.getData()));
         }
 
     }
@@ -138,17 +141,17 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
         int j=SetPoint4;
         evalid=false;
 		if( (points.get(j) - points.get(j-1)).squared() <RS_TOLERANCE15){
-            RS_Circle c(preview,cData);
+			RS_Circle c(preview, *cData);
             valid= c.createFrom3P(points);
             if(valid){
-                cData=c.getData();
-            }
+				cData.reset(new RS_CircleData(c.getData()));
+			}
         }else{
-            RS_Ellipse e(preview,eData);
+			RS_Ellipse e(preview, *eData);
             valid= e.createFrom4P(points);
             if(valid){
                 evalid=valid;
-                eData=e.getData();
+				eData.reset(new RS_EllipseData(e.getData()));
                 m_bUniqueEllipse=false;
             }else{
                 evalid=false;

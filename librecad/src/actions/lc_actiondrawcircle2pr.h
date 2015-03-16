@@ -45,7 +45,7 @@ public:
 public:
     LC_ActionDrawCircle2PR(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-    ~LC_ActionDrawCircle2PR();
+	~LC_ActionDrawCircle2PR()=default;
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

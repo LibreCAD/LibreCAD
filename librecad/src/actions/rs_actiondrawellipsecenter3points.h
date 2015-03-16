@@ -23,9 +23,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWELLIPSECENTER3POINTS_H
 #define RS_ACTIONDRAWELLIPSECENTER3POINTS_H
 
+#include <memory>
 #include "rs_previewactioninterface.h"
-#include "rs_circle.h"
-#include "rs_ellipse.h"
+
+class RS_CircleData;
+class RS_EllipseData;
 
 /**
  * Draw ellipse by center and 3 points on ellipse
@@ -48,7 +50,7 @@ public:
 public:
     RS_ActionDrawEllipseCenter3Points(RS_EntityContainer& container,
                                       RS_GraphicView& graphicView);
-	~RS_ActionDrawEllipseCenter3Points()=default;
+	~RS_ActionDrawEllipseCenter3Points();
 
     static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
     RS2::ActionType rtti(){
@@ -73,9 +75,9 @@ public:
 protected:
     // 4 points on ellipse
     RS_VectorSolutions points;
-    private:
-    RS_CircleData cData;
-    RS_EllipseData eData;
+	private:
+	std::unique_ptr<RS_CircleData> cData;
+	std::unique_ptr<RS_EllipseData> eData;
     bool valid;
 };
 

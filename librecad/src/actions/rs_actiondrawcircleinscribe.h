@@ -24,10 +24,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define RS_ACTIONDRAWCIRCLEINSCRIBE_H
 
 #include <QVector>
+#include <memory>
 #include "rs_previewactioninterface.h"
-#include "rs_circle.h"
 
 class RS_Line;
+class RS_CircleData;
 
 /**
  * Draw ellipse by foci and a point on ellipse
@@ -49,7 +50,7 @@ public:
 public:
     RS_ActionDrawCircleInscribe(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView);
-	~RS_ActionDrawCircleInscribe()=default;
+	~RS_ActionDrawCircleInscribe();
 
     static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 
@@ -75,7 +76,7 @@ public:
 protected:
     QVector<RS_Line*> lines;
     private:
-    RS_CircleData cData;
+	std::unique_ptr<RS_CircleData> cData;
     RS_Vector coord;
     bool valid;
 };
