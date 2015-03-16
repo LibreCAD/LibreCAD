@@ -81,7 +81,7 @@ void RS_ActionDrawCircleTan2_1P::init(int status) {
 
 void RS_ActionDrawCircleTan2_1P::finish(bool updateTB){
     if( circles.size() >0) {
-        foreach(RS_AtomicEntity* circle, circles)
+		for(RS_AtomicEntity*const circle: circles)
             circle->setHighlighted(false);
         graphicView->redraw(RS2::RedrawDrawing);
     }
@@ -115,7 +115,7 @@ void RS_ActionDrawCircleTan2_1P::trigger() {
     }
 
 
-    foreach(RS_AtomicEntity* circle, circles)
+	for(RS_AtomicEntity*const circle: circles)
         circle->setHighlighted(false);
     graphicView->redraw(RS2::RedrawDrawing);
     circles.clear();

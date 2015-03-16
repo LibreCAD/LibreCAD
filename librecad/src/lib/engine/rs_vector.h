@@ -29,7 +29,7 @@
 #define RS_VECTOR_H
 
 #include <iostream>
-#include <QVector>
+#include <vector>
 #include "rs.h"
 
 /**
@@ -48,7 +48,7 @@ public:
     explicit RS_Vector(double angle);
     //RS_Vector(double v[]);
     explicit RS_Vector(bool valid);
-    ~RS_Vector();
+	~RS_Vector()=default;
 
     void set(double angle); // set to unit vector by the direction of angle
 #ifdef  RS_VECTOR2D
@@ -152,7 +152,7 @@ public:
 
     ~RS_VectorSolutions();
 
-    void alloc(int num);
+	void alloc(size_t num);
     void clean()
     {
         clear();
@@ -167,7 +167,7 @@ public:
     {
         return at(i);
     }
-    int getNumber() const;
+	size_t getNumber() const;
     size_t size() const
     {
         return vector.size();
@@ -176,7 +176,7 @@ public:
     bool hasValid() const;
     void set(int i, const RS_Vector& v);
     void push_back(const RS_Vector& v);
-    void removeAt(const int i);
+	void removeAt(const size_t i);
     RS_VectorSolutions appendTo(const RS_VectorSolutions& v);
     void setTangent(bool t);
     bool isTangent() const;
@@ -184,8 +184,10 @@ public:
                          double* dist=NULL, int* index=NULL) const;
     double getClosestDistance(const RS_Vector& coord,
                               int counts = -1); //default to search all
-    QVector<RS_Vector> getVector() const;
-    void rotate(const double& ang);
+	const std::vector<RS_Vector>& getVector() const;
+	std::vector<RS_Vector>::const_iterator begin() const;
+	std::vector<RS_Vector>::const_iterator end() const;
+	void rotate(const double& ang);
     void rotate(const RS_Vector& angleVector);
     void rotate(const RS_Vector& center, const double& ang);
     void rotate(const RS_Vector& center, const RS_Vector& angleVector);
@@ -202,7 +204,7 @@ public:
                                       const RS_VectorSolutions& s);
 
 private:
-    QVector<RS_Vector> vector;
+	std::vector<RS_Vector> vector;
     bool tangent;
 };
 

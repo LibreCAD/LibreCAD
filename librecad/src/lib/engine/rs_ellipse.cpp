@@ -1598,7 +1598,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
                     static_cast<RS_Entity*>(this), &line, true);
 //    std::cout<<"vpIts.size()="<<vpIts.size()<<std::endl;
         if( vpIts.size()==0) continue;
-        foreach(RS_Vector vp, vpIts.getVector()){
+		for(const RS_Vector& vp: vpIts){
             auto&& ap1=getTangentDirection(vp).angle();
             auto&& ap2=line.getTangentDirection(vp).angle();
             //ignore tangent points, because the arc doesn't cross over

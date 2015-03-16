@@ -371,7 +371,7 @@ bool RS_Line::offset(const RS_Vector& coord, const double& distance) {
     if(ds< RS_TOLERANCE) return false;
     direction /= ds;
     RS_Vector vp(coord-getStartpoint());
-    RS_Vector vp1(getStartpoint() + direction*(RS_Vector::dotP(direction,vp))); //projection
+//    RS_Vector vp1(getStartpoint() + direction*(RS_Vector::dotP(direction,vp))); //projection
     direction.set(-direction.y,direction.x); //rotate pi/2
     if(RS_Vector::dotP(direction,vp)<0.) {
         direction *= -1.;

@@ -3177,7 +3177,7 @@ void addQuadQuadIntersect(RS_VectorSolutions *pVS,
 
     RS_VectorSolutions&& pvRes = RS_Math::simultaneousQuadraticSolverFull(m);
 
-    for(RS_Vector& vSol: pvRes.getVector())
+	for(RS_Vector vSol: pvRes)
     {
 		if(vSol.x > -RS_TOLERANCE && vSol.x < 1.0 + RS_TOLERANCE &&
 			vSol.y > -RS_TOLERANCE && vSol.y < 1.0 + RS_TOLERANCE)

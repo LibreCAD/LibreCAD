@@ -840,7 +840,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
         }
     }else{
         //circle2 is Ellipse
-        RS_Ellipse* e2=(RS_Ellipse*)circle2->clone();
+		std::unique_ptr<RS_Ellipse> e2((RS_Ellipse*)circle2->clone());
 //        RS_Ellipse* e2=new RS_Ellipse(NULL,RS_EllipseData(RS_Vector(4.,1.),RS_Vector(2.,0.),0.5,0.,0.,false));
 //        RS_Ellipse  e3(NULL,RS_EllipseData(RS_Vector(4.,1.),RS_Vector(2.,0.),0.5,0.,0.,false));
 //        RS_Ellipse* circle1=new RS_Ellipse(NULL,RS_EllipseData(RS_Vector(0.,0.),RS_Vector(1.,0.),1.,0.,0.,false));
@@ -888,10 +888,8 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
 
         auto&& vs0=RS_Math::simultaneousQuadraticSolver(m); //to hold solutions
         if (vs0.getNumber()<1) return NULL;
-        for(int i=0;i<vs0.getNumber();i++){
-//            std::cout<<"i="<<i<<"\n";
-            RS_Vector vpec=vs0.get(i); //this holds ( a*sin(t), b*cos(t))
-//            std::cout<<"solution "<<i<<" ="<<vpec<<std::endl;
+//        for(size_t i=0;i<vs0.getNumber();i++){
+		for(RS_Vector vpec: vs0){
             RS_Vector vpe2(e2->getCenter()+ RS_Vector(vpec.y/e2->getRatio(),vpec.x*e2->getRatio()));
             vpec.x *= -1.;//direction vector of tangent
             RS_Vector vpe1(vpe2 - vpec*(RS_Vector::dotP(vpec,vpe2)/vpec.squared()));
@@ -904,7 +902,6 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
             poss.push_back(l);
 
         }
-        delete e2;
         //debugging
 
     }

@@ -264,9 +264,8 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
 		ret=LC_Quadratic::getIntersection(qf1,qf2);
 	}
     RS_VectorSolutions ret2;
-    for(int i=0;i<ret.getNumber();i++) {
-        RS_Vector&& vp=ret.get(i);
-        if ( ! ret.get(i).valid) continue;
+	for(const RS_Vector& vp: ret){
+		if ( ! vp.valid) continue;
         if (onEntities==true) {
             //ignore intersections not on entity
             if (!(
@@ -560,7 +559,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     double shifta1=-e01->getAngle();
     e02->move(shiftc1);
     e02->rotate(shifta1);
-    RS_Vector majorP2=e02->getMajorP();
+//    RS_Vector majorP2=e02->getMajorP();
     double a1=e01->getMajorRadius();
     double b1=e01->getMinorRadius();
     double x2=e02->getCenter().x,
@@ -619,8 +618,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     auto&& vs0=RS_Math::simultaneousQuadraticSolver(m);
     shifta1 = - shifta1;
     shiftc1 = - shiftc1;
-    for(int i=0; i<vs0.getNumber(); i++) {
-        RS_Vector vp=vs0.get(i);
+	for(RS_Vector vp: vs0){
         vp.rotate(shifta1);
         vp.move(shiftc1);
         ret.push_back(vp);

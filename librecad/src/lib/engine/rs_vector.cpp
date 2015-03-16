@@ -27,7 +27,6 @@
 
 #include "rs_vector.h"
 
-//#include <values.h>
 
 #include "rs_debug.h"
 #include "rs_math.h"
@@ -104,14 +103,6 @@ RS_Vector::RS_Vector(bool valid) {
     set(0.0, 0.0, 0.0);
 #endif
     this->valid = valid;
-}
-
-
-/**
- * Destructor.
- */
-RS_Vector::~RS_Vector() {
-    //RS_DEBUG->print("RS_Vector::~RS_Vector");
 }
 
 
@@ -814,7 +805,7 @@ RS_VectorSolutions::~RS_VectorSolutions() {
 /**
  * Allocates 'num' vectors.
  */
-void RS_VectorSolutions::alloc(int num) {
+void RS_VectorSolutions::alloc(size_t num) {
 #if QT_VERSION >= 0x040700
     vector.reserve(num);
 #else
@@ -857,7 +848,7 @@ RS_Vector RS_VectorSolutions::at(int i) const {
 /**
  * @return Number of solutions available.
  */
-int RS_VectorSolutions::getNumber() const {
+size_t RS_VectorSolutions::getNumber() const {
     return vector.size();
 }
 
@@ -868,11 +859,8 @@ int RS_VectorSolutions::getNumber() const {
  * @retval false There's no valid solution.
  */
 bool RS_VectorSolutions::hasValid() const {
-    for (int i=0; i<vector.size(); i++) {
-        if (vector[i].valid) {
-            return true;
-        }
-    }
+	for(const RS_Vector& v: vector)
+		if (v.valid)  return true;
 
     return false;
 }
@@ -881,21 +869,32 @@ void RS_VectorSolutions::resize(size_t n){
     vector.resize(n);
 }
 
-QVector<RS_Vector> RS_VectorSolutions::getVector() const {
+const std::vector<RS_Vector>& RS_VectorSolutions::getVector() const {
     return vector;
+}
+
+
+std::vector<RS_Vector>::const_iterator RS_VectorSolutions::begin() const
+{
+	return vector.begin();
+}
+
+std::vector<RS_Vector>::const_iterator RS_VectorSolutions::end() const
+{
+	return vector.end();
 }
 
 void RS_VectorSolutions::push_back(const RS_Vector& v) {
         vector.push_back(v);
 }
 
-void RS_VectorSolutions::removeAt(const int i){
-    if (vector.size()> i)
-        vector.remove(i);
+void RS_VectorSolutions::removeAt(const size_t i){
+	if (i>=0 && vector.size()> i)
+		vector.erase(vector.begin()+i);
 }
 
 RS_VectorSolutions RS_VectorSolutions::appendTo(const RS_VectorSolutions& v) {
-    vector += v.getVector();
+	vector.insert(vector.end(), v.begin(), v.end());
     return *this;
 }
 

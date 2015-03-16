@@ -1877,7 +1877,7 @@ void RS_EntityContainer::revertDirection() {
 		entities.swap(k, entities.size() - 1 - k);
 	}
 
-	foreach(RS_Entity* entity, entities) {
+	for(RS_Entity*const entity: entities) {
 		entity->revertDirection();
 	}
 }

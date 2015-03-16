@@ -259,7 +259,7 @@ void QC_ApplicationWindow::loadPlugins() {
 
     for (int i = 0; i < lst.size(); ++i) {
         QDir pluginsDir(lst.at(i));
-        foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
+		for(const QString& fileName: pluginsDir.entryList(QDir::Files)) {
             QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
             QObject *plugin = pluginLoader.instance();
             if (plugin) {
@@ -267,7 +267,7 @@ void QC_ApplicationWindow::loadPlugins() {
                 if (pluginInterface) {
                     loadedPlugins.append(pluginInterface);
                     PluginCapabilities pluginCapabilities=pluginInterface->getCapabilities();
-                    foreach (PluginMenuLocation loc,  pluginCapabilities.menuEntryPoints) {
+					for(const PluginMenuLocation& loc: pluginCapabilities.menuEntryPoints) {
                         QAction *actpl = new QAction(loc.menuEntryActionName, plugin);
                         actpl->setData(loc.menuEntryActionName);
                         connect(actpl, SIGNAL(triggered()), this, SLOT(execPlug()));
@@ -2678,7 +2678,7 @@ void QC_ApplicationWindow::slotFileExport() {
     #if QT_VERSION >= 0x040300
         supportedImageFormats.append("svg"); // add svg
     #endif
-        foreach (QString format, supportedImageFormats) {
+		for (QString format: supportedImageFormats) {
             format = format.toLower();
             QString st;
             if (format=="jpeg" || format=="tiff") {
@@ -3522,7 +3522,7 @@ void QC_ApplicationWindow::slotHelpAbout() {
     /**
       * Show all plugin that has been loaded
       */
-    foreach (QC_PluginInterface *pluginInterface, loadedPlugins)
+	for (QC_PluginInterface * const pluginInterface: loadedPlugins)
         modules.append(pluginInterface->name());
 
     QString modulesString=tr("None");

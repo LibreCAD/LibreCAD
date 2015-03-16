@@ -566,7 +566,7 @@ QString QG_DialogFactory::requestImageOpenDialog()
     QStringList filters;
     QString all = "";
     bool haveJpeg= false;
-    foreach (QByteArray format, QImageReader::supportedImageFormats()) {
+	for(const QByteArray& format: QImageReader::supportedImageFormats()) {
         if (format.toUpper() == "JPG" || format.toUpper() == "JPEG" ){
             if (!haveJpeg) {
                 haveJpeg = true;
