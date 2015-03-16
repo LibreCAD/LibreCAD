@@ -102,7 +102,7 @@ class RS_Ellipse : public RS_AtomicEntity {
 public:
     RS_Ellipse(RS_EntityContainer* parent,
                const RS_EllipseData& d);
-    virtual ~RS_Ellipse() {}
+	~RS_Ellipse()=default;
 
     virtual RS_Entity* clone() {
         RS_Ellipse* e = new RS_Ellipse(*this);

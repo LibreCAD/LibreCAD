@@ -367,14 +367,18 @@ bool RS_Ellipse::switchMajorMinor(void)
  * @return Start point of the entity.
  */
 RS_Vector  RS_Ellipse::getStartpoint() const {
-    return getEllipsePoint(data.angle1);
+	if(isArc()) return getEllipsePoint(data.angle1);
+	return RS_Vector(false);
 }
+
 /**
  * @return End point of the entity.
  */
 RS_Vector  RS_Ellipse::getEndpoint() const {
-    return getEllipsePoint(data.angle2);
+	if(isArc()) return getEllipsePoint(data.angle2);
+	return RS_Vector(false);
 }
+
 /**
  * @return Ellipse point by ellipse angle
  */

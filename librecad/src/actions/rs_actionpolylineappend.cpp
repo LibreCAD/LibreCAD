@@ -100,7 +100,7 @@ void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent* e) {
                                     tr("Can not append nodes in a closed polyline."));
                             return;
                         } else {
-//				RS_Vector clickCoord = snapPoint(e);
+				snapPoint(e);
 				RS_Entity* entFirst = ((RS_Polyline*)originalPolyline)->firstEntity();
 				RS_Entity* entLast = ((RS_Polyline*)originalPolyline)->lastEntity();
 				double dist = graphicView->toGraphDX(snapRange)*0.9;
