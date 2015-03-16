@@ -27,8 +27,10 @@
 #ifndef RS_ACTIONDRAWARC3P_H
 #define RS_ACTIONDRAWARC3P_H
 
+#include <memory>
 #include "rs_previewactioninterface.h"
-#include "rs_arc.h"
+
+class RS_ArcData;
 
 /**
  * This action class can handle user events to draw 
@@ -79,7 +81,7 @@ protected:
     /**
      * Arc data defined so far.
      */
-    RS_ArcData data;
+	std::unique_ptr<RS_ArcData> data;
     /**
      * 1st point.
      */

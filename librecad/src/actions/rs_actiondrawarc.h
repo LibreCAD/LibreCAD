@@ -27,8 +27,10 @@
 #ifndef RS_ACTIONDRAWARC_H
 #define RS_ACTIONDRAWARC_H
 
+#include <memory>
 #include "rs_previewactioninterface.h"
-#include "rs_arc.h"
+
+class RS_ArcData;
 
 /**
  * This action class can handle user events to draw 
@@ -54,7 +56,7 @@ public:
 public:
     RS_ActionDrawArc(RS_EntityContainer& container,
                      RS_GraphicView& graphicView);
-	~RS_ActionDrawArc()=default;
+	~RS_ActionDrawArc();
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	
@@ -81,19 +83,15 @@ public:
     virtual void updateMouseCursor();
 //    virtual void updateToolBar();
 
-	bool isReversed() {
-		return data.reversed;
-	}
+	bool isReversed() const;
 
-	void setReversed(bool r) {
-		data.reversed = r;
-	}
+	void setReversed(bool r) const;
 
 protected:
     /**
      * Arc data defined so far.
      */
-    RS_ArcData data;
+	std::unique_ptr<RS_ArcData> data;
 	/**
 	 * Commands
 	 */
