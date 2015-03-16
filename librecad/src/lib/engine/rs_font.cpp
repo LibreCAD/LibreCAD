@@ -263,8 +263,8 @@ void RS_Font::readCXF(QString path) {
                     double cx = (*it2++).toDouble();
                     double cy = (*it2++).toDouble();
                     double r = (*it2++).toDouble();
-                    double a1 = (*it2++).toDouble()/ARAD;
-                    double a2 = (*it2).toDouble()/ARAD;
+					double a1 = RS_Math::deg2rad((*it2++).toDouble());
+					double a2 = RS_Math::deg2rad((*it2).toDouble());
                     bool reversed = (line.at(1)=='R');
 
                     RS_ArcData ad(RS_Vector(cx,cy),

@@ -4113,7 +4113,7 @@ void QC_ApplicationWindow::slotTestInsertBlock() {
         // insert one green instance of the block (rotate):
         insData = RS_InsertData("debugblock",
                                 RS_Vector(-50.0,20.0),
-                                RS_Vector(1.0,1.0), 30.0/ARAD,
+								RS_Vector(1.0,1.0), M_PI/6.,
                                 1, 1, RS_Vector(0.0, 0.0),
                                 NULL, RS2::NoUpdate);
         ins = new RS_Insert(graphic, insData);
@@ -4142,7 +4142,7 @@ void QC_ApplicationWindow::slotTestInsertBlock() {
         for (double a=0.0; a<360.0; a+=45.0) {
             insData = RS_InsertData("debugblock",
                                     RS_Vector(60.0,0.0),
-                                    RS_Vector(2.0/5,2.0/5), a/ARAD,
+									RS_Vector(2.0/5,2.0/5), RS_Math::deg2rad(a),
                                     1, 1, RS_Vector(0.0, 0.0),
                                     NULL, RS2::NoUpdate);
             ins = new RS_Insert(graphic, insData);
@@ -4601,8 +4601,8 @@ void QC_ApplicationWindow::slotTestMath01() {
 
         // cos
         double a;
-        double x = 59.0/ARAD;
-        double x_0 = 60.0/ARAD;
+		double x = RS_Math::deg2rad(59.0);
+		double x_0 = RS_Math::deg2rad(60.0);
         for (a=0.01; a<2*M_PI; a+=0.01) {
             // cos curve:
             RS_Line* line = new RS_Line(graphic,

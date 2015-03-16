@@ -853,8 +853,8 @@ void Doc_plugin_interface::addArc(QPointF *start, qreal radius, qreal a1, qreal 
     if (doc!=NULL) {
         RS_Vector v(start->x(), start->y());
         RS_ArcData d(v, radius,
-                 a1/ARAD,
-                 a2/ARAD,
+				 RS_Math::deg2rad(a1),
+				 RS_Math::deg2rad(a2),
                  false);
         RS_Arc* entity = new RS_Arc(doc, d);
         doc->addEntity(entity);

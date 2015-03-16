@@ -243,8 +243,9 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                                     a->getCenter().x,
                                     a->getCenter().y,
                                     a->getRadius(),
-                                    a->getAngle1()*ARAD,
-                                    a->getAngle2()*ARAD);
+									RS_Math::rad2deg(a->getAngle1()),
+									RS_Math::rad2deg(a->getAngle2())
+													 );
                         }
                         // Ignore entities other than arcs / lines
                         else {}
