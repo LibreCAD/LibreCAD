@@ -633,7 +633,7 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
         QList<double> ias;
         double ia(0.),ia2(0.);
         RS_Vector is,is2;
-        for(int ii=0; ii<trimSol.getNumber(); ii++) { //find closest according ellipse angle
+		for(size_t ii=0; ii<trimSol.getNumber(); ++ii) { //find closest according ellipse angle
             ias.append(getArcAngle(trimSol.get(ii)));
             if( !ii ||  fabs( remainder( ias[ii] - am, 2*M_PI)) < fabs( remainder( ia -am, 2*M_PI)) ) {
                 ia = ias[ii];
@@ -641,7 +641,7 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
             }
         }
         std::sort(ias.begin(),ias.end());
-        for(int ii=0; ii<trimSol.getNumber(); ii++) { //find segment to enclude trimCoord
+		for(size_t ii=0; ii<trimSol.getNumber(); ++ii) { //find segment to enclude trimCoord
             if ( ! RS_Math::isSameDirection(ia,ias[ii],RS_TOLERANCE)) continue;
             if( RS_Math::isAngleBetween(am,ias[(ii+trimSol.getNumber()-1)% trimSol.getNumber()],ia,false))  {
                 ia2=ias[(ii+trimSol.getNumber()-1)% trimSol.getNumber()];
@@ -650,9 +650,9 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
             }
             break;
         }
-        for(int ii=0; ii<trimSol.getNumber(); ii++) { //find segment to enclude trimCoord
-            if ( ! RS_Math::isSameDirection(ia2,getArcAngle(trimSol.get(ii)),RS_TOLERANCE)) continue;
-            is2=trimSol.get(ii);
+		for(const RS_Vector& vp: trimSol) { //find segment to enclude trimCoord
+			if ( ! RS_Math::isSameDirection(ia2,getArcAngle(vp),RS_TOLERANCE)) continue;
+			is2=vp;
             break;
         }
 //        if(RS_Math::isSameDirection(getAngle1(),getAngle2(),RS_TOLERANCE_ANGLE)
