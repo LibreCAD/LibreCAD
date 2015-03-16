@@ -25,9 +25,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QVector>
 #include "rs_previewactioninterface.h"
-#include "rs_circle.h"
 
 class RS_AtomicEntity;
+class RS_CircleData;
 
 /**
  * Draw tangential circle passing 2 points
@@ -50,7 +50,7 @@ public:
 public:
     RS_ActionDrawCircleTan1_2P(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView);
-	~RS_ActionDrawCircleTan1_2P()=default;
+	~RS_ActionDrawCircleTan1_2P();
 
     static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 
@@ -77,9 +77,7 @@ public:
 //    virtual void showOptions();
 //    virtual void hideOptions();
 //    void setRadius(const double& r);
-    double getRadius(){
-        return cData.radius;
-    }
+	double getRadius() const;
 
 
 protected:
@@ -87,7 +85,7 @@ protected:
     RS_AtomicEntity* circle;
     QVector<RS_Vector> points;
     private:
-    RS_CircleData cData;
+	std::unique_ptr<RS_CircleData> cData;
     RS_Vector coord;
     double radius;
     bool valid;

@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_circle.h"
 #include "rs_point.h"
 
 /**
@@ -37,10 +38,13 @@ RS_ActionDrawCircleTan2::RS_ActionDrawCircleTan2(
         RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw circle inscribed",
                                container, graphicView),
-      cData(RS_Vector(0.,0.),1.),
+	  cData(new RS_CircleData(RS_Vector(0.,0.),1.)),
 	  enTypeList({RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle})
 {
 }
+
+RS_ActionDrawCircleTan2::~RS_ActionDrawCircleTan2(){}
+
 
 QAction* RS_ActionDrawCircleTan2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
@@ -88,7 +92,7 @@ void RS_ActionDrawCircleTan2::trigger() {
     RS_PreviewActionInterface::trigger();
 
 
-    RS_Circle* circle=new RS_Circle(container, cData);
+	RS_Circle* circle=new RS_Circle(container, *cData);
 
     container->addEntity(circle);
 
@@ -122,7 +126,7 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent* e) {
         //        circles[getStatus()]=static_cast<RS_Line*>(en);
         if(preparePreview()) {
             deletePreview();
-            RS_Circle* e=new RS_Circle(preview, cData);
+			RS_Circle* e=new RS_Circle(preview, *cData);
             preview->addEntity(e);
 			for(size_t i=0; i< centers.size(); ++i){
 				preview->addEntity(new RS_Point(preview, RS_PointData(centers.at(i))));
@@ -139,22 +143,22 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionDrawCircleTan2::setRadius(const double& r)
 {
-    cData.radius=r;
+	cData->radius=r;
     if(getStatus() == SetCenter){
-		centers=RS_Circle::createTan2(circles,cData.radius);
+		centers=RS_Circle::createTan2(circles,cData->radius);
     }
 }
 
 bool RS_ActionDrawCircleTan2::getCenters(){
     if(getStatus() != SetCircle2) return false;
-	centers=RS_Circle::createTan2(circles,cData.radius);
+	centers=RS_Circle::createTan2(circles,cData->radius);
     valid= (centers.size()>0);
     return valid;
 }
 
 bool RS_ActionDrawCircleTan2::preparePreview(){
     if(valid) {
-        cData.center=centers.getClosest(coord);
+		cData->center=centers.getClosest(coord);
     }
     return valid;
 }
@@ -343,6 +347,9 @@ void RS_ActionDrawCircleTan2::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
+double RS_ActionDrawCircleTan2::getRadius() const{
+	return cData->radius;
+}
 
 
 //void RS_ActionDrawCircleTan2::updateToolBar() {

@@ -39,14 +39,12 @@ RS_ActionDrawCircleTan2_1P::RS_ActionDrawCircleTan2_1P(
         RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw tangent circle 2P",
                                container, graphicView),
-      cData(RS_Vector(0.,0.),1.),
-      enTypeList()
+	  cData(new RS_CircleData(RS_Vector(0.,0.),1.)),
+	  enTypeList({RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle})
 {
-    //    supported types
-    enTypeList<<RS2::EntityLine<<RS2::EntityArc<<RS2::EntityCircle;
 }
 
-
+RS_ActionDrawCircleTan2_1P::~RS_ActionDrawCircleTan2_1P(){}
 
 QAction* RS_ActionDrawCircleTan2_1P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
@@ -105,7 +103,7 @@ void RS_ActionDrawCircleTan2_1P::trigger() {
     RS_PreviewActionInterface::trigger();
 
 
-    RS_Circle* c=new RS_Circle(container, cData);
+	RS_Circle* c=new RS_Circle(container, *cData);
 
     container->addEntity(c);
 
@@ -170,7 +168,7 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent* e) {
     }
     deletePreview();
     if(preparePreview()){
-        RS_Circle* e=new RS_Circle(preview, cData);
+		RS_Circle* e=new RS_Circle(preview, *cData);
         preview->addEntity(e);
         drawPreview();
     }
@@ -192,8 +190,8 @@ bool RS_ActionDrawCircleTan2_1P::preparePreview(){
 //        double ds2=(centers[i]-point).squared();
 //        if( (centers[i]-circles[0]).squared()<ds2
 //    }
-    cData.center=centers.getClosest(coord);
-    cData.radius=point.distanceTo(cData.center);
+	cData->center=centers.getClosest(coord);
+	cData->radius=point.distanceTo(cData->center);
     return true;
 }
 
@@ -277,6 +275,11 @@ void RS_ActionDrawCircleTan2_1P::coordinateEvent(RS_CoordinateEvent* e) {
 //        trigger();
     }
 
+}
+
+double RS_ActionDrawCircleTan2_1P::getRadius() const
+{
+	return cData->radius;
 }
 
 //fixme, support command line
