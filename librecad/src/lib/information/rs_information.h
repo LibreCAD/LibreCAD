@@ -83,6 +83,7 @@ public:
     
 	static RS_VectorSolutions getIntersectionEllipseLine(RS_Line* line,
             RS_Ellipse* ellipse);
+	static RS_VectorSolutions createQuadrilateral(const RS_EntityContainer& container);
 
     static bool isPointInsideContour(const RS_Vector& point,
                                      RS_EntityContainer* contour,

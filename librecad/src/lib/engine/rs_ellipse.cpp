@@ -730,62 +730,25 @@ bool RS_Ellipse::createFromQuadratic(const QVector<double>& dn){
 bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 {
 	if(lines.size() != 4) return false; //only do 4 lines
-	RS_EntityContainer container(NULL, false);
-    QVector<RS_Line*> quad;
-	for(RS_Line* p: lines){//copy the line pointers
-		if(p->getLength()<RS_TOLERANCE) return false;
-		quad.push_back(p);
-		container.addEntity(p);
-    }
-    //    std::cout<<"0\n";
-	for(size_t i=0;i<lines.size()*2;i++){//move parallel lines to opposite
-		size_t j=(i+1)%lines.size();
-
-        //        std::cout<<"("<<i<<","<<j<<")\n";
-        //        std::cout<<*quad[i]<<std::endl;
-        //        std::cout<<*quad[j]<<std::endl;
-        RS_VectorSolutions sol=RS_Information::getIntersectionLineLine(quad[i%lines.size()],quad[j]);
-        if(sol.getNumber()==0) {
-            std::swap( quad[j],quad[ (i+2)%lines.size()]); //move to oppose
-			++i;
-        }
-    }
-    //    std::cout<<"========1========\n";
+	RS_EntityContainer container(NULL, true);
+	QVector<RS_Line*> quad;
+	{ //form quadrilateral from intersections
+		RS_EntityContainer c0(NULL, false);
+		for(RS_Line*const p: lines){//copy the line pointers
+			c0.addEntity(p);
+		}
+		RS_VectorSolutions s0=RS_Information::createQuadrilateral(c0);
+		if(s0.size()!=4) return false;
+		for(size_t i=0; i<4; ++i){
+			RS_Line*const pl=new RS_Line(&container, RS_LineData(s0[i], s0[(i+1)%4]));
+			quad.push_back(pl);
+			container.addEntity(pl);
+		}
+	}
 
     QVector<RS_Line> ip;
-	for(int i=1;i<4;++i){//find intersections
-        //(0,i)
-        //        std::cout<<"(0,"<<i<<")\n";
-        RS_VectorSolutions sol0=RS_Information::getIntersectionLineLine(quad[0],quad[i]);
-        if(sol0.getNumber()==0) continue;
-        int l(1);
-		if( l==i) ++l;
-        int m(l+1);
-		if( m==i) ++m;
-        // lines in two pairs: (0, i) and (l,m)
-        //        std::cout<<"(0,"<<i<<"):("<<l<<","<<m<<")\n";
-        RS_VectorSolutions sol1=RS_Information::getIntersectionLineLine(quad[l],quad[m]);
-        if(sol1.getNumber()==0) continue;
-
-		ip.push_back(RS_Line(sol0.get(0),sol1.get(0)));
-
-    }
-
-    //    std::cout<<"20 ip.size()="<<ip.size()<<"\n";
-    if(ip.size()<2) return false; //not enough connecting lines, so, no quadrilateral defined
-    //    std::cout<<"22\n";
-    if(ip.size() == 3) {//find intersecting pair
-        //    RS_VectorSolutions sol0=RS_Information::getIntersection(line0,line1,true);
-		RS_VectorSolutions sol1=RS_Information::getIntersection(&ip[2],&ip[1],true);
-        if(sol1.getNumber()) {
-            ip[0]=ip[2];
-        }else{
-            sol1=RS_Information::getIntersection(& ip[2],&ip[0],true);
-            if(sol1.getNumber()) {
-                ip[1]=ip[2];
-            }
-        }
-    }
+	ip.push_back(RS_Line(NULL, RS_LineData(quad[0]->getStartpoint(), quad[1]->getEndpoint())));
+	ip.push_back(RS_Line(NULL, RS_LineData(quad[1]->getStartpoint(), quad[2]->getEndpoint())));
 	RS_VectorSolutions sol=RS_Information::getIntersectionLineLine( & ip[0],& ip[1]);
     if(sol.getNumber()==0) {//this should not happen
 //        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Ellipse::createInscribeQuadrilateral(): can not locate projection Center");

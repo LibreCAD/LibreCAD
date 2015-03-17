@@ -25,6 +25,8 @@
 **
 **********************************************************************/
 
+#include <vector>
+#include <utility>
 #include "rs_information.h"
 
 #include "rs_arc.h"
@@ -921,3 +923,77 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
     return ((counter%2)==1);
 }
 
+
+RS_VectorSolutions RS_Information::createQuadrilateral(const RS_EntityContainer& container)
+{
+	RS_VectorSolutions ret;
+	if(container.count()!=4) return ret;
+	RS_EntityContainer c(container);
+	std::vector<RS_Line*> lines;
+	for (RS_Entity* e=c.firstEntity(RS2::ResolveNone);
+		 e!=NULL;
+		 e=c.nextEntity(RS2::ResolveNone)) {
+		if(e->rtti()!=RS2::EntityLine) return ret;
+		lines.push_back(static_cast<RS_Line*>(e));
+	}
+	if(lines.size()!=4) return ret;
+
+	//neigbours;
+	std::vector<RS_Vector> vertices;
+	for(unsigned i=0; i<3; ++i){
+		for(unsigned j=i+1; j<4; ++j){
+			RS_VectorSolutions&& sol=RS_Information::getIntersectionLineLine(lines[i], lines[j]);
+			if(sol.size()){
+				vertices.push_back(sol.at(0));
+			}
+		}
+	}
+
+//	std::cout<<"vertices.size()="<<vertices.size()<<std::endl;
+
+	switch (vertices.size()){
+	default:
+		return ret;
+	case 4:
+		break;
+	case 5:
+	case 6:
+		for(RS_Line* pl: lines){
+			const double a0=pl->getDirection1();
+			std::vector<std::vector<RS_Vector>::iterator> left;
+			std::vector<std::vector<RS_Vector>::iterator> right;
+			for(auto it=vertices.begin(); it != vertices.end(); ++it){
+				RS_Vector&& dir=*it - pl->getNearestPointOnEntity(*it, false);
+				if(dir.squared()<RS_TOLERANCE15) continue;
+//				std::cout<<"angle="<<remainder(dir.angle() - a0, 2.*M_PI)<<std::endl;
+				if(remainder(dir.angle() - a0, 2.*M_PI) > 0.)
+					left.push_back(it);
+				else
+					right.push_back(it);
+
+				if(left.size()==2 && right.size()==1){
+					vertices.erase(right[0]);
+					break;
+				} else if(left.size()==1 && right.size()==2){
+					vertices.erase(left[0]);
+					break;
+				}
+			}
+			if(vertices.size()==4) break;
+		}
+		break;
+	}
+
+	RS_Vector center(0., 0.);
+	for(const RS_Vector& vp: vertices)
+		center += vp;
+	center *= 0.25;
+	std::sort(vertices.begin(), vertices.end(), [&center](const RS_Vector& a, const RS_Vector&b)->bool{
+		return center.angleTo(a)<center.angleTo(b);
+	});
+	for(const RS_Vector& vp: vertices){
+		ret.push_back(vp);
+//		std::cout<<"vp="<<vp<<std::endl;
+	}
+	return ret;
+}
