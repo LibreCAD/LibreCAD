@@ -83,6 +83,11 @@ public:
     
 	static RS_VectorSolutions getIntersectionEllipseLine(RS_Line* line,
             RS_Ellipse* ellipse);
+	/**
+	 * @brief createQuadrilateral form quadrilateral from 4 straight lines
+	 * @param container contains 4 straight lines
+	 * @return ordered vertices of quadrilateral formed by the 4 lines
+	 */
 	static RS_VectorSolutions createQuadrilateral(const RS_EntityContainer& container);
 
     static bool isPointInsideContour(const RS_Vector& point,
