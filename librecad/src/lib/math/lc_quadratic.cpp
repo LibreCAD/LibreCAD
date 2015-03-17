@@ -450,10 +450,10 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
         ce.push_back(p1->getCoefficients());
         ce.push_back(p2->getCoefficients());
         ret=RS_Math::simultaneousQuadraticSolverMixed(ce);
-        for(size_t j=0;j<ret.size();j++){
-            DEBUG_HEADER();
-            std::cout<<j<<": ("<<ret[j].x<<", "<< ret[j].y<<")"<<std::endl;
-        }
+//        for(size_t j=0;j<ret.size();j++){
+//            DEBUG_HEADER();
+//            std::cout<<j<<": ("<<ret[j].x<<", "<< ret[j].y<<")"<<std::endl;
+//        }
         return ret;
     }
     if( fabs(p1->m_mQuad(0,0))<RS_TOLERANCE && fabs(p1->m_mQuad(0,1))<RS_TOLERANCE
