@@ -90,8 +90,8 @@ protected:
     RS_Vector coord;
     double radius;
     bool valid;
-    QVector<RS2::EntityType> enTypeList;
-    //keep a list of centers found
+	const QVector<RS2::EntityType> enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+	//keep a list of centers found
     RS_VectorSolutions centers;
 
 };

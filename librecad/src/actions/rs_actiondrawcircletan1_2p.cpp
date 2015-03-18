@@ -43,7 +43,6 @@ RS_ActionDrawCircleTan1_2P::RS_ActionDrawCircleTan1_2P(
                                container, graphicView)
     ,circle(NULL)
 	,cData(new RS_CircleData(RS_Vector(0.,0.),1.))
-	,enTypeList({RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle})
 {
 }
 

@@ -39,8 +39,7 @@ RS_ActionDrawCircleTan2_1P::RS_ActionDrawCircleTan2_1P(
         RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw tangent circle 2P",
                                container, graphicView),
-	  cData(new RS_CircleData(RS_Vector(0.,0.),1.)),
-	  enTypeList({RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle})
+	  cData(new RS_CircleData(RS_Vector(0.,0.),1.))
 {
 }
 

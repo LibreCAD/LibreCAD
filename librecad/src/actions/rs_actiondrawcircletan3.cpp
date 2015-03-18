@@ -40,11 +40,8 @@ RS_ActionDrawCircleTan3::RS_ActionDrawCircleTan3(
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw circle inscribed",
                            container, graphicView),
-		  cData(new RS_CircleData(RS_Vector(0.,0.),1.)),
-          enTypeList()
+		  cData(new RS_CircleData(RS_Vector(0.,0.),1.))
 {
-//    supported types
-    enTypeList<<RS2::EntityLine<<RS2::EntityArc<<RS2::EntityCircle;
 }
 
 QAction* RS_ActionDrawCircleTan3::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

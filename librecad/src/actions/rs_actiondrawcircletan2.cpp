@@ -38,8 +38,7 @@ RS_ActionDrawCircleTan2::RS_ActionDrawCircleTan2(
         RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw circle inscribed",
                                container, graphicView),
-	  cData(new RS_CircleData(RS_Vector(0.,0.),1.)),
-	  enTypeList({RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle})
+	  cData(new RS_CircleData(RS_Vector(0.,0.),1.))
 {
 }
 
