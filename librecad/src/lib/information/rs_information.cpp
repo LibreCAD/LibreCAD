@@ -26,7 +26,6 @@
 **********************************************************************/
 
 #include <vector>
-#include <utility>
 #include "rs_information.h"
 
 #include "rs_arc.h"
