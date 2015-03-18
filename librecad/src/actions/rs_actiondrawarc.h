@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDRAWARC_H
 #define RS_ACTIONDRAWARC_H
 
-#include <memory>
 #include "rs_previewactioninterface.h"
 
 class RS_ArcData;

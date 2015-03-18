@@ -125,10 +125,10 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent* e) {
         //        circles[getStatus()]=static_cast<RS_Line*>(en);
         if(preparePreview()) {
             deletePreview();
-			RS_Circle* e=new RS_Circle(preview, *cData);
+			RS_Circle* e=new RS_Circle(preview.get(), *cData);
             preview->addEntity(e);
 			for(size_t i=0; i< centers.size(); ++i){
-				preview->addEntity(new RS_Point(preview, RS_PointData(centers.at(i))));
+				preview->addEntity(new RS_Point(preview.get(), RS_PointData(centers.at(i))));
 			}
             drawPreview();
         }

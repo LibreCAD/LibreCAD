@@ -132,7 +132,7 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
 	lineData.reset(new RS_LineData(tangent->getData()));
 
     deletePreview();
-	preview->addEntity(new RS_Line(preview, *lineData));
+	preview->addEntity(new RS_Line(preview.get(), *lineData));
     drawPreview();
 }
 

@@ -121,7 +121,7 @@ void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e) {
             RS_Vector mouse = snapPoint(e);
             edata.definitionPoint4 = mouse;
 
-            RS_DimAngular* d = new RS_DimAngular(preview, data, edata);
+			RS_DimAngular* d = new RS_DimAngular(preview.get(), data, edata);
 
             deletePreview();
             preview->addEntity(d);

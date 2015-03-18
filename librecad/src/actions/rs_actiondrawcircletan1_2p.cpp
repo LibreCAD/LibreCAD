@@ -148,7 +148,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
             return;
         }
         deletePreview();
-		RS_Circle* e=new RS_Circle(preview, *cData);
+		RS_Circle* e=new RS_Circle(preview.get(), *cData);
         preview->addEntity(e);
         drawPreview();
         break;
@@ -161,7 +161,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
         coord=mouse;
         if(getCenters()==false) return;
         if(preparePreview()) {
-			RS_Circle* e=new RS_Circle(preview, *cData);
+			RS_Circle* e=new RS_Circle(preview.get(), *cData);
             preview->addEntity(e);
             drawPreview();
         }
@@ -174,9 +174,9 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
         //        circles[getStatus()]=static_cast<RS_Line*>(en);
         if(preparePreview()) {
             deletePreview();
-			RS_Circle* e=new RS_Circle(preview, *cData);
+			RS_Circle* e=new RS_Circle(preview.get(), *cData);
             for(size_t i=0; i<centers.size(); ++i)
-                preview->addEntity(new RS_Point(preview, RS_PointData(centers.at(i))));
+				preview->addEntity(new RS_Point(preview.get(), RS_PointData(centers.at(i))));
             preview->addEntity(e);
 //            double r0=cData.radius*0.1;
 //            if(centers.size()>1)

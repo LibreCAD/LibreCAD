@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define RS_ACTIONDRAWELLIPSEINSCRIBE_H
 
 #include <vector>
-#include <memory>
 #include "rs_previewactioninterface.h"
 
 class RS_EllipseData;

@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDRAWPOLYLINE_H
 #define RS_ACTIONDRAWPOLYLINE_H
 
-#include <memory>
 #include "rs_previewactioninterface.h"
 
 class RS_PolylineData;

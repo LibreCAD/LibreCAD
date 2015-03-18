@@ -115,7 +115,7 @@ void LC_ActionDrawSplinePoints::mouseMoveEvent(QMouseEvent* e)
 		QList<RS_Vector> cpts = sp->getPoints();
 		for(int i = 0; i < cpts.count(); i++)
 		{
-			preview->addEntity(new RS_Point(preview, RS_PointData(cpts.at(i))));
+			preview->addEntity(new RS_Point(preview.get(), RS_PointData(cpts.at(i))));
 		}
 		drawPreview();
 	}
@@ -154,7 +154,7 @@ void LC_ActionDrawSplinePoints::coordinateEvent(RS_CoordinateEvent* e)
 		{
             spline = new LC_SplinePoints(container, data);
 			spline->addPoint(mouse);
-			preview->addEntity(new RS_Point(preview, RS_PointData(mouse)));
+			preview->addEntity(new RS_Point(preview.get(), RS_PointData(mouse)));
 		}
 		setStatus(SetNextPoint);
 		graphicView->moveRelativeZero(mouse);

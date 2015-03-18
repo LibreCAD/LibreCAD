@@ -131,7 +131,7 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent* e) {
 
     case SelectCenter: {
         if(preparePreview(mouse)){
-			RS_Circle* circle = new RS_Circle(preview, *data);
+			RS_Circle* circle = new RS_Circle(preview.get(), *data);
 
             deletePreview();
             preview->addEntity(circle);

@@ -97,7 +97,7 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent* e) {
             //                  graphicView->toGraphY(e->y()));
             deletePreview();
 
-            RS_Creation creation(preview, NULL, false);
+			RS_Creation creation(preview.get(), NULL, false);
             creation.createParallelThrough(coord,
                                            number,
                                            entity);

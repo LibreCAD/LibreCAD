@@ -131,7 +131,7 @@ void RS_ActionDrawMText::trigger() {
 
 void RS_ActionDrawMText::preparePreview() {
     data.insertionPoint = pos;
-    RS_MText* text = new RS_MText(preview, data);
+	RS_MText* text = new RS_MText(preview.get(), data);
     text->update();
     preview->addEntity(text);
     textChanged = false;

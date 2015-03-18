@@ -38,13 +38,15 @@
 RS_PreviewActionInterface::RS_PreviewActionInterface(const char* name,
         RS_EntityContainer& container,
         RS_GraphicView& graphicView) :
-RS_ActionInterface(name, container, graphicView) {
+RS_ActionInterface(name, container, graphicView)
+,preview(new RS_Preview(&container))
+{
 
     RS_DEBUG->print("RS_PreviewActionInterface::RS_PreviewActionInterface: Setting up action with preview: \"%s\"", name);
 
     // preview is linked to the container for getting access to
     //   document settings / dictionary variables
-    preview = new RS_Preview(&container);
+
     preview->setLayer(NULL);
     hasPreview = true;
 
@@ -56,8 +58,6 @@ RS_ActionInterface(name, container, graphicView) {
 /** Destructor */
 RS_PreviewActionInterface::~RS_PreviewActionInterface() {
     deletePreview();
-    delete preview;
-    preview=NULL;
 }
 
 
@@ -101,7 +101,7 @@ void RS_PreviewActionInterface::trigger() {
  */
 void RS_PreviewActionInterface::deletePreview() {
         graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
-        if (hasPreview && preview!= NULL ){
+		if (hasPreview){
                 //avoid deletiong NULL or empty preview
             preview->clear();
             hasPreview=false;
@@ -115,14 +115,12 @@ void RS_PreviewActionInterface::deletePreview() {
  * Draws / deletes the current preview.
  */
 void RS_PreviewActionInterface::drawPreview() {
-    if (preview!=NULL){
-                // RVT_PORT How does offset work??        painter->setOffset(offset);
-                RS_EntityContainer *container=graphicView->getOverlayContainer(RS2::ActionPreviewEntity);
-                container->clear();
-                container->setOwner(false); // Little hack for now so we don't delete teh preview twice
-                container->addEntity(preview);
-                graphicView->redraw(RS2::RedrawOverlay);
-                hasPreview=true;
-    }
+	// RVT_PORT How does offset work??        painter->setOffset(offset);
+	RS_EntityContainer *container=graphicView->getOverlayContainer(RS2::ActionPreviewEntity);
+	container->clear();
+	container->setOwner(false); // Little hack for now so we don't delete teh preview twice
+	container->addEntity(preview.get());
+	graphicView->redraw(RS2::RedrawOverlay);
+	hasPreview=true;
 }
 

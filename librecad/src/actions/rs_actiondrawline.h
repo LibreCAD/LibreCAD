@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDRAWLINE_H
 #define RS_ACTIONDRAWLINE_H
 
-#include <memory>
 #include "rs_previewactioninterface.h"
 
 class RS_LineData;

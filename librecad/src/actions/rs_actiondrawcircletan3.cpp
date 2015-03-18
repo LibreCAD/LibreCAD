@@ -116,7 +116,7 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent* e) {
 //        circles[getStatus()]=static_cast<RS_Line*>(en);
         if(preparePreview()) {
             deletePreview();
-			RS_Circle* e=new RS_Circle(preview, *cData);
+			RS_Circle* e=new RS_Circle(preview.get(), *cData);
             preview->addEntity(e);
 			for(auto& c: candidates){
 				preview->addEntity(new RS_Point(NULL, RS_PointData(c->center)));

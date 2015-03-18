@@ -144,7 +144,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                               0.5,
                               0.0, isArc?2.*M_PI:0.0,
                               false);
-            preview->addEntity(new RS_Ellipse(preview, ed));
+			preview->addEntity(new RS_Ellipse(preview.get(), ed));
             drawPreview();
         }
         break;
@@ -159,7 +159,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                               ratio,
                               0.0, isArc?2.*M_PI:0.0,
                               false);
-            preview->addEntity(new RS_Ellipse(preview, ed));
+			preview->addEntity(new RS_Ellipse(preview.get(), ed));
             drawPreview();
         }
         break;
@@ -176,13 +176,13 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                         v.scale(RS_Vector(1.0, 1.0/ratio));
                         angle1 = v.angle(); // + major.angle();
 
-            preview->addEntity(new RS_Line(preview, RS_LineData(center, mouse)));
+			preview->addEntity(new RS_Line(preview.get(), RS_LineData(center, mouse)));
 
             RS_EllipseData ed(center, major,
                               ratio,
                               angle1, angle1+1.0,
                               false);
-            preview->addEntity(new RS_Ellipse(preview, ed));
+			preview->addEntity(new RS_Ellipse(preview.get(), ed));
             drawPreview();
         }
         break;
@@ -198,14 +198,14 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                         v.scale(RS_Vector(1.0, 1.0/ratio));
                         angle2 = v.angle(); // + major.angle();
 
-            preview->addEntity(new RS_Line(preview, RS_LineData(center, mouse)));
+			preview->addEntity(new RS_Line(preview.get(), RS_LineData(center, mouse)));
 
             RS_EllipseData ed(
                 center, major,
                 ratio,
                 angle1, angle2,
                 false);
-            preview->addEntity(new RS_Ellipse(preview, ed));
+			preview->addEntity(new RS_Ellipse(preview.get(), ed));
             drawPreview();
         }
 

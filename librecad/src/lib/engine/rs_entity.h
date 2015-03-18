@@ -29,9 +29,6 @@
 #ifndef RS_ENTITY_H
 #define RS_ENTITY_H
 
-#include <memory>
-#include <QMultiHash>
-
 #include "rs_math.h"
 #include "rs_pen.h"
 #include "rs_undoable.h"

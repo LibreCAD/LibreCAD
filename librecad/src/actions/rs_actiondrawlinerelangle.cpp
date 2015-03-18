@@ -137,7 +137,7 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent* e) {
 
             deletePreview();
 
-            RS_Creation creation(preview, NULL, false);
+			RS_Creation creation(preview.get(), NULL, false);
             creation.createLineRelAngle(pos,
                                         entity,
                                         angle,

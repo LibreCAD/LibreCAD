@@ -122,7 +122,7 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent* e) {
 		if (data->center.valid) {
 			data->radius = data->center.distanceTo(mouse);
             deletePreview();
-            preview->addEntity(new RS_Circle(preview,
+			preview->addEntity(new RS_Circle(preview.get(),
 											 RS_CircleData(data->center,
 														   data->radius)));
             drawPreview();
@@ -137,7 +137,7 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent* e) {
 			data->angle2 = RS_Math::correctAngle(data->angle1+M_PI/3);
         }
         deletePreview();
-        preview->addEntity(new RS_Arc(preview,
+		preview->addEntity(new RS_Arc(preview.get(),
 									  *data));
         drawPreview();
         break;
@@ -145,7 +145,7 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent* e) {
     case SetAngle2:
 		data->angle2 = data->center.angleTo(mouse);
         deletePreview();
-        preview->addEntity(new RS_Arc(preview,
+		preview->addEntity(new RS_Arc(preview.get(),
 									  *data));
         drawPreview();
         break;
@@ -153,7 +153,7 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent* e) {
     case SetIncAngle:
 		data->angle2 = data->angle1 + data->center.angleTo(mouse);
         deletePreview();
-        preview->addEntity(new RS_Arc(preview,
+		preview->addEntity(new RS_Arc(preview.get(),
 									  *data));
         drawPreview();
         break;
@@ -163,7 +163,7 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent* e) {
 			if (fabs(x/(2*data->radius))<=1.0) {
 				data->angle2 = data->angle1 + asin(x/(2*data->radius)) * 2;
                 deletePreview();
-                preview->addEntity(new RS_Arc(preview,
+				preview->addEntity(new RS_Arc(preview.get(),
 											  *data));
                 drawPreview();
             }

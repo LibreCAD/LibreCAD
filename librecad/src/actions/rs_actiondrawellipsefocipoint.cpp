@@ -115,7 +115,7 @@ void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent* e) {
                               major*d,
                               sqrt(d*d-c*c)/d,
                               0., 0.,false);
-            preview->addEntity(new RS_Ellipse(preview, ed));
+			preview->addEntity(new RS_Ellipse(preview.get(), ed));
             drawPreview();
         }
         break;

@@ -190,7 +190,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
             deletePreview();
 
-            RS_OverlayBox* ob=new RS_OverlayBox(preview, RS_OverlayBoxData(v1, v2));
+			RS_OverlayBox* ob=new RS_OverlayBox(preview.get(), RS_OverlayBoxData(v1, v2));
             preview->addEntity(ob);
 
             drawPreview();

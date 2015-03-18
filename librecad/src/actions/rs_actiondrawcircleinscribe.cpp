@@ -124,7 +124,7 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
 //        lines[getStatus()]=static_cast<RS_Line*>(en);
         if(preparePreview()) {
             deletePreview();
-			RS_Circle* e=new RS_Circle(preview, *cData);
+			RS_Circle* e=new RS_Circle(preview.get(), *cData);
             preview->addEntity(e);
             drawPreview();
         }
@@ -137,7 +137,7 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
 bool RS_ActionDrawCircleInscribe::preparePreview(){
     valid=false;
     if(getStatus() == SetLine3) {
-		RS_Circle c(preview, *cData);
+		RS_Circle c(preview.get(), *cData);
         valid= c.createInscribe(coord, lines);
         if(valid){
 			cData.reset(new RS_CircleData(c.getData()));

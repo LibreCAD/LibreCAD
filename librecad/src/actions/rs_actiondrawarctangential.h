@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDRAWARCTANGENTIAL_H
 #define RS_ACTIONDRAWARCTANGENTIAL_H
 
-#include <memory>
 #include "rs_previewactioninterface.h"
 
 class RS_AtomicEntity;

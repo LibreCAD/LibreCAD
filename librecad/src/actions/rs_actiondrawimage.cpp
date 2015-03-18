@@ -115,19 +115,19 @@ void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent* e) {
         //RS_Creation creation(preview, NULL, false);
         //creation.createInsert(data);
         RS_Line* line;
-        line = new RS_Line(preview,
+		line = new RS_Line(preview.get(),
                            RS_LineData(RS_Vector(0, 0),
                                        RS_Vector(img.width(), 0)));
         preview->addEntity(line);
-        line = new RS_Line(preview,
+		line = new RS_Line(preview.get(),
                            RS_LineData(RS_Vector(img.width(), 0),
                                        RS_Vector(img.width(), img.height())));
         preview->addEntity(line);
-        line = new RS_Line(preview,
+		line = new RS_Line(preview.get(),
                            RS_LineData(RS_Vector(img.width(),
                                                  img.height()), RS_Vector(0, img.height())));
         preview->addEntity(line);
-        line = new RS_Line(preview,
+		line = new RS_Line(preview.get(),
                            RS_LineData(RS_Vector(0, img.height()),
                                        RS_Vector(0, 0)));
         preview->addEntity(line);

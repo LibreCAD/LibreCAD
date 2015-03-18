@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDRAWCIRCLECR_H
 #define RS_ACTIONDRAWCIRCLECR_H
 
-#include <memory>
 #include "rs_previewactioninterface.h"
 
 class RS_CircleData;

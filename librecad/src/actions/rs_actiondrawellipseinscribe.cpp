@@ -124,7 +124,7 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
 //        lines[getStatus()]=static_cast<RS_Line*>(en);
         if(preparePreview()) {
             deletePreview();
-			RS_Ellipse* e=new RS_Ellipse(preview, *eData);
+			RS_Ellipse* e=new RS_Ellipse(preview.get(), *eData);
             preview->addEntity(e);
             drawPreview();
         }
@@ -137,7 +137,7 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
 bool RS_ActionDrawEllipseInscribe::preparePreview(){
     valid=false;
     if(getStatus() == SetLine4) {
-		RS_Ellipse e(preview, RS_EllipseData());
+		RS_Ellipse e(preview.get(), RS_EllipseData());
         valid= e.createInscribeQuadrilateral(lines);
         if(valid){
 			eData.reset(new RS_EllipseData(e.getData()));

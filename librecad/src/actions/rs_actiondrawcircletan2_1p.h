@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define RS_ACTIONDRAWCIRCLETAN2_1P_H
 
 #include <QVector>
-#include <memory>
 #include "rs_previewactioninterface.h"
 
 class RS_AtomicEntity;

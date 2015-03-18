@@ -110,7 +110,7 @@ void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
         preparePreview();
 
         for (int i=0; i<4; ++i) {
-			preview->addEntity(new RS_Line(preview, *data[i]));
+			preview->addEntity(new RS_Line(preview.get(), *data[i]));
         }
         drawPreview();
     }

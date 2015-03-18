@@ -85,11 +85,11 @@ void RS_ActionInfoArea::display() {
     }
 	switch(ia->size()){
     case 2:
-		preview->addEntity(new RS_Line(preview,ia->at(0),ia->at(1)));
+		preview->addEntity(new RS_Line(preview.get(),ia->at(0),ia->at(1)));
         break;
     default:
 		for(int i=0;i<ia->size();i++){
-			preview->addEntity(new RS_Line(preview,ia->at(i),ia->at((i+1) % ia->size())));
+			preview->addEntity(new RS_Line(preview.get(),ia->at(i),ia->at((i+1) % ia->size())));
         }
 		double area = ia->getArea();
 		double circ = ia->getCircumference();

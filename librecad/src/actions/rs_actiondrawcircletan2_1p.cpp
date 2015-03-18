@@ -167,7 +167,7 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent* e) {
     }
     deletePreview();
     if(preparePreview()){
-		RS_Circle* e=new RS_Circle(preview, *cData);
+		RS_Circle* e=new RS_Circle(preview.get(), *cData);
         preview->addEntity(e);
         drawPreview();
     }

@@ -100,7 +100,7 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent* e) {
         case SetPoint2:
         case SetPoint3:
             if(valid){
-				RS_Circle* circle=new RS_Circle(preview, *cData);
+				RS_Circle* circle=new RS_Circle(preview.get(), *cData);
                 deletePreview();
                 preview->addEntity(circle);
                 drawPreview();
@@ -109,7 +109,7 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent* e) {
         case SetPoint4:
             if(evalid){
                 deletePreview();
-				RS_Ellipse* e=new RS_Ellipse(preview, *eData);
+				RS_Ellipse* e=new RS_Ellipse(preview.get(), *eData);
                 preview->addEntity(e);
                 drawPreview();
             }
@@ -128,7 +128,7 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
     case SetPoint2:
     case SetPoint3:
     {
-		RS_Circle c(preview, *cData);
+		RS_Circle c(preview.get(), *cData);
         valid= c.createFrom3P(points);
         if(valid){
 			cData.reset(new RS_CircleData(c.getData()));
@@ -141,13 +141,13 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
         int j=SetPoint4;
         evalid=false;
 		if( (points.get(j) - points.get(j-1)).squared() <RS_TOLERANCE15){
-			RS_Circle c(preview, *cData);
+			RS_Circle c(preview.get(), *cData);
             valid= c.createFrom3P(points);
             if(valid){
 				cData.reset(new RS_CircleData(c.getData()));
 			}
         }else{
-			RS_Ellipse e(preview, *eData);
+			RS_Ellipse e(preview.get(), *eData);
             valid= e.createFrom4P(points);
             if(valid){
                 evalid=valid;

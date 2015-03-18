@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDRAWLINETANGENT2_H
 #define RS_ACTIONDRAWLINETANGENT2_H
 
-#include <memory>
 #include "rs_previewactioninterface.h"
 
 class RS_Line;

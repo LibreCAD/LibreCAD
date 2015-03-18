@@ -141,7 +141,7 @@ void RS_ActionDrawText::preparePreview() {
         }
     } else {
 		data->insertionPoint = pos;
-		RS_Text* text = new RS_Text(preview, *data);
+		RS_Text* text = new RS_Text(preview.get(), *data);
         text->update();
         preview->addEntity(text);
     }

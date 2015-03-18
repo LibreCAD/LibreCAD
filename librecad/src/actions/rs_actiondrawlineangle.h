@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDRAWLINEANGLE_H
 #define RS_ACTIONDRAWLINEANGLE_H
 
-#include <memory>
 #include "rs_previewactioninterface.h"
 
 class RS_LineData;

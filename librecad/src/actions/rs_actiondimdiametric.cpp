@@ -137,7 +137,7 @@ void RS_ActionDimDiametric::mouseMoveEvent(QMouseEvent* e) {
             pos = snapPoint(e);
 
             preparePreview();
-            RS_DimDiametric* d = new RS_DimDiametric(preview, data, edata);
+			RS_DimDiametric* d = new RS_DimDiametric(preview.get(), data, edata);
 
             deletePreview();
             preview->addEntity(d);

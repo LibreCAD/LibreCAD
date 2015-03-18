@@ -121,8 +121,8 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent* e) {
             //preview->move(targetPoint-referencePoint);
             RS_Entity* tmp1 = entity1->clone();
             RS_Entity* tmp2 = entity2->clone();
-            tmp1->reparent(preview);
-            tmp2->reparent(preview);
+			tmp1->reparent(preview.get());
+			tmp2->reparent(preview.get());
             preview->addEntity(tmp1);
             preview->addEntity(tmp2);
 

@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDRAWLINEHORVERT_H
 #define RS_ACTIONDRAWLINEHORVERT_H
 
-#include <memory>
 #include "rs_previewactioninterface.h"
 
 class RS_LineData;

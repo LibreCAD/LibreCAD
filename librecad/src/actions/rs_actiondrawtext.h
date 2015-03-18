@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDRAWTEXT_H
 #define RS_ACTIONDRAWTEXT_H
 
-#include <memory>
 #include "rs_previewactioninterface.h"
 
 class RS_TextData;
