@@ -746,23 +746,26 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 		}
 	}
 
-    QVector<RS_Line> ip;
-	ip.push_back(RS_Line(NULL, RS_LineData(quad[0]->getStartpoint(), quad[1]->getEndpoint())));
-	ip.push_back(RS_Line(NULL, RS_LineData(quad[1]->getStartpoint(), quad[2]->getEndpoint())));
-	RS_VectorSolutions sol=RS_Information::getIntersectionLineLine( & ip[0],& ip[1]);
-    if(sol.getNumber()==0) {//this should not happen
-//        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Ellipse::createInscribeQuadrilateral(): can not locate projection Center");
-        RS_DEBUG->print("RS_Ellipse::createInscribeQuadrilateral(): can not locate projection Center");
-        return false;
-    }
-    RS_Vector centerProjection(sol.get(0));
+	RS_Vector centerProjection;
+	{
+		std::vector<RS_Line> diagonal;
+		diagonal.push_back(RS_Line(NULL, RS_LineData(quad[0]->getStartpoint(), quad[1]->getEndpoint())));
+		diagonal.push_back(RS_Line(NULL, RS_LineData(quad[1]->getStartpoint(), quad[2]->getEndpoint())));
+		RS_VectorSolutions&& sol=RS_Information::getIntersectionLineLine( & diagonal[0],& diagonal[1]);
+		if(sol.getNumber()==0) {//this should not happen
+			//        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Ellipse::createInscribeQuadrilateral(): can not locate projection Center");
+			RS_DEBUG->print("RS_Ellipse::createInscribeQuadrilateral(): can not locate projection Center");
+			return false;
+		}
+		centerProjection=sol.get(0);
+	}
 //        std::cout<<"RS_Ellipse::createInscribe(): centerProjection="<<centerProjection<<std::endl;
 
 	std::vector<RS_Vector> tangent;//holds the tangential points on edges, in the order of edges: 1 3 2 0
 	int parallel=0;
 	int parallel_index=0;
 	for(int i=0;i<=1;++i) {
-		RS_VectorSolutions sol1=RS_Information::getIntersectionLineLine(quad[i], quad[(i+2)%4]);
+		RS_VectorSolutions&& sol1=RS_Information::getIntersectionLineLine(quad[i], quad[(i+2)%4]);
         RS_Vector direction;
         if(sol1.getNumber()==0) {
 			direction=quad[i]->getEndpoint()-quad[i]->getStartpoint();
@@ -781,9 +784,9 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 
 	if(tangent.size()<3) return false;
 
-	RS_Line cl0(ip[0].getEndpoint(),(tangent[0]+tangent[2])*0.5);
-	RS_Line cl1(ip[1].getEndpoint(),(tangent[1]+tangent[2])*0.5);
-	sol=RS_Information::getIntersection(&cl0, &cl1,false);
+	RS_Line cl0(quad[1]->getEndpoint(),(tangent[0]+tangent[2])*0.5);
+	RS_Line cl1(quad[2]->getEndpoint(),(tangent[1]+tangent[2])*0.5);
+	RS_VectorSolutions&& sol=RS_Information::getIntersection(&cl0, &cl1,false);
     if(sol.getNumber()==0){
         //this should not happen
 //        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Ellipse::createInscribeQuadrilateral(): can not locate Ellipse Center");
