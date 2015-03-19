@@ -198,8 +198,7 @@ bool RS_ActionDrawCircleTan3::getData(){
 
         //clean up duplicate and invalid
         RS_VectorSolutions sol1;
-        for(size_t j=0; j<sol.size(); ++j){
-            const RS_Vector&& vp=sol.at(j);
+		for(const RS_Vector& vp: sol){
             if(vp.magnitude()>RS_MAXDOUBLE) continue;
             if(sol1.size())
                 if(sol1.getClosestDistance(vp)<RS_TOLERANCE) continue;

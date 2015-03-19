@@ -155,8 +155,13 @@ public:
 	void alloc(size_t num);
 	void clean();
     void clear();
-	const RS_Vector& get(size_t i) const;
-	RS_Vector at(size_t i) const;
+	/**
+	 * @brief get range safe method of member access
+	 * @param i member index
+	 * @return indexed member, or invalid vector, if out of range
+	 */
+	RS_Vector get(size_t i) const;
+	const RS_Vector& at(size_t i) const;
 	const RS_Vector&  operator [] (const size_t i) const;
 	RS_Vector&  operator [] (const size_t i);
 	size_t getNumber() const;

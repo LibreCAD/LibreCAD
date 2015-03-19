@@ -828,9 +828,11 @@ void RS_VectorSolutions::clean()
 	tangent = false;
 }
 
-const RS_Vector& RS_VectorSolutions::get(size_t i) const
+RS_Vector RS_VectorSolutions::get(size_t i) const
 {
-	return vector.at(i);
+	if(i<vector.size())
+		return vector.at(i);
+	return RS_Vector(false);
 }
 
 const RS_Vector&  RS_VectorSolutions::operator [] (const size_t i) const
@@ -861,12 +863,8 @@ void RS_VectorSolutions::clear() {
  * @return vector solution number i or an invalid vector if there
  * are less solutions.
  */
-RS_Vector RS_VectorSolutions::at(size_t i) const {
-    if (i<vector.size()) {
+const RS_Vector& RS_VectorSolutions::at(size_t i) const {
         return vector[i];
-    } else {
-        return RS_Vector(false);
-    }
 }
 
 

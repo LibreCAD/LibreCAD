@@ -214,8 +214,7 @@ bool RS_ActionDrawCircleTan1_2P::getCenters(){
 //    DEBUG_HEADER();
 //    std::cout<<"intersections : "<<list<<std::endl;
 
-    for(unsigned int i=0;i<list.size();++i){
-        auto vp=list.get(i);
+	for(const RS_Vector& vp: list){
         //when taking the path of center of tangent circle passing a given point,
         // the center is never closer to the circle center than the point, for internal and external tangent circles
         double ds0=vp.distanceTo(points[0]);

@@ -335,18 +335,18 @@ void RS_Hatch::update() {
                     RS_VectorSolutions sol =
                         RS_Information::getIntersection(e, p, true);
 
-                    for (int i=0; i<=1; ++i) {
-                        if (sol.get(i).valid) {
-                            is.append(std::shared_ptr<RS_Vector>(
-                                          new RS_Vector(sol.get(i))
-                                                        ));
-                            RS_DEBUG->print("  pattern line intersection: %f/%f",
-                                            sol.get(i).x, sol.get(i).y);
-                        }
-                    }
-                }
-            }
-        }
+					for (const RS_Vector& vp: sol){
+						if (vp.valid) {
+							is.append(std::shared_ptr<RS_Vector>(
+										  new RS_Vector(vp)
+										  ));
+							RS_DEBUG->print("  pattern line intersection: %f/%f",
+											vp.x, vp.y);
+						}
+					}
+				}
+			}
+		}
 
 
         QList<std::shared_ptr<RS_Vector> > is2;//to be filled with sorted intersections
