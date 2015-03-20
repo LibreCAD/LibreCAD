@@ -937,11 +937,11 @@ RS_VectorSolutions RS_Information::createQuadrilateral(const RS_EntityContainer&
 	}
 	if(lines.size()!=4) return ret;
 
-	//neigbours;
+	//find intersections
 	std::vector<RS_Vector> vertices;
-	for(unsigned i=0; i<3; ++i){
-		for(unsigned j=i+1; j<4; ++j){
-			RS_VectorSolutions&& sol=RS_Information::getIntersectionLineLine(lines[i], lines[j]);
+	for(auto it=lines.begin()+1; it != lines.end(); ++it){
+		for(auto jt=lines.begin(); jt != it; ++jt){
+			RS_VectorSolutions&& sol=RS_Information::getIntersectionLineLine(*it, *jt);
 			if(sol.size()){
 				vertices.push_back(sol.at(0));
 			}
@@ -983,13 +983,16 @@ RS_VectorSolutions RS_Information::createQuadrilateral(const RS_EntityContainer&
 		break;
 	}
 
+	//order vertices
 	RS_Vector center(0., 0.);
 	for(const RS_Vector& vp: vertices)
 		center += vp;
 	center *= 0.25;
-	std::sort(vertices.begin(), vertices.end(), [&center](const RS_Vector& a, const RS_Vector&b)->bool{
+	std::sort(vertices.begin(), vertices.end(), [&center](const RS_Vector& a,
+			  const RS_Vector&b)->bool{
 		return center.angleTo(a)<center.angleTo(b);
-	});
+	}
+	);
 	for(const RS_Vector& vp: vertices){
 		ret.push_back(vp);
 //		std::cout<<"vp="<<vp<<std::endl;
