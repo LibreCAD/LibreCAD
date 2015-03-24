@@ -594,7 +594,7 @@ void QC_ApplicationWindow::initMDI() {
     // Since this nice feature causes a bug of lost key events when the command widget is on
     // a screen different from the main window, disabled for the time being
     //send key events for mdiAreaCAD to command widget by default
-//    mdiAreaCAD->installEventFilter(commandWidget);
+	mdiAreaCAD->installEventFilter(commandWidget);
 
     RS_DEBUG->print("QC_ApplicationWindow::initMDI() end");
 
