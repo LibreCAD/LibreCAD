@@ -568,7 +568,7 @@ void QC_ApplicationWindow::initMDI() {
     RS_DEBUG->print("QC_ApplicationWindow::initMDI() begin");
 
     QFrame *vb = new QFrame(this);
-    vb->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
+	vb->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     QVBoxLayout *layout = new QVBoxLayout;
     vb->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     layout->setContentsMargins ( 0, 0, 0, 0 );
@@ -580,7 +580,7 @@ void QC_ApplicationWindow::initMDI() {
     mdiAreaCAD->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     mdiAreaCAD->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     mdiAreaCAD->setFocusPolicy(Qt::ClickFocus);
-    mdiAreaCAD->setSizePolicy(QSizePolicy::MinimumExpanding,QSizePolicy::MinimumExpanding);
+	mdiAreaCAD->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 #if QT_VERSION >= 0x040800
     mdiAreaCAD->setTabsClosable(true);
 #endif
@@ -1250,7 +1250,7 @@ void QC_ApplicationWindow::initToolBar() {
     QToolBar* t = new QToolBar(tr("CAD Tools"), this);
 
     t->setMinimumSize(66,400);
-        QSizePolicy policy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
+		QSizePolicy policy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         t->setSizePolicy(policy);
         t->setObjectName ( "CADTB" );
     t->setFixedWidth(66);
@@ -1425,6 +1425,7 @@ void QC_ApplicationWindow::initView() {
 
     RS_DEBUG->print("  block widget..");
     dw = new QDockWidget("Block", this);
+	dw->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         dw->setObjectName ( "BlockDW" );
     // dw->setResizeEnabled(true);
     blockWidget = new QG_BlockWidget(actionHandler, dw, "Block");
@@ -1444,7 +1445,9 @@ void QC_ApplicationWindow::initView() {
 
     RS_DEBUG->print("  library widget..");
     dw = new QDockWidget("Library", this);
-        dw->setObjectName ( "LibraryDW" );
+	dw->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+		dw->setObjectName ( "BlockDW" );
+		dw->setObjectName ( "LibraryDW" );
     libraryWidget = new QG_LibraryWidget(dw, "Library");
     libraryWidget->setActionHandler(actionHandler);
     libraryWidget->setFocusPolicy(Qt::NoFocus);
@@ -1467,7 +1470,9 @@ void QC_ApplicationWindow::initView() {
 
     RS_DEBUG->print("  command widget..");
     dw = new QDockWidget(tr("Command line"), this);
-    dw->setFeatures(QDockWidget::DockWidgetVerticalTitleBar|QDockWidget::AllDockWidgetFeatures);
+	dw->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+		dw->setObjectName ( "BlockDW" );
+	dw->setFeatures(QDockWidget::DockWidgetVerticalTitleBar|QDockWidget::AllDockWidgetFeatures);
     dw->setObjectName ( "CommandDW" );
     // dw->setResizeEnabled(true);
     commandWidget = new QG_CommandWidget(dw, "Command");
