@@ -42,7 +42,7 @@ public:
      * Action States.
      */
     enum Status {
-        SetCenter,   /**< Settinge the center.  */
+        SetCenter,   /**< Setting the center.  */
         SetMajor,    /**< Setting endpoint of major axis. */
         SetMinor,    /**< Setting minor/major ratio. */
         SetAngle1,   /**< Setting start angle. */
