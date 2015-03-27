@@ -345,6 +345,8 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
         action = new QAction(tr("&Statusbar"), mw);
         //action->zetStatusTip(tr("Enables/disables the statusbar"));
         action->setCheckable(true);
+        // StatusBar is displayed by default
+        action->setChecked(true);
 
         connect(action, SIGNAL(toggled(bool)),
                 obj, SLOT(slotViewStatusBar(bool)));
