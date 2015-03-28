@@ -40,7 +40,7 @@ class RS_ActionFileNewTemplate : public RS_ActionInterface {
 public:
     RS_ActionFileNewTemplate(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-    ~RS_ActionFileNewTemplate() {}
+    ~RS_ActionFileNewTemplate() = default;
 
 	static QAction* createGUIAction(RS2::ActionType type, QObject* parent);
 
