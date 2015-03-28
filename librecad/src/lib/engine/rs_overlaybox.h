@@ -38,7 +38,7 @@ public:
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-    RS_OverlayBoxData() {}
+	RS_OverlayBoxData() = default;
 
     RS_OverlayBoxData(const RS_Vector& corner1, const RS_Vector& corner2) {
 
@@ -69,8 +69,8 @@ public:
 class RS_OverlayBox : public RS_AtomicEntity {
 public:
     RS_OverlayBox(RS_EntityContainer* parent, const RS_OverlayBoxData& d);
-    virtual RS_Entity* clone();
-    virtual ~RS_OverlayBox();
+	virtual RS_Entity* clone() const;
+	virtual ~RS_OverlayBox() = default;
 
     /**	@return RS2::EntityLine */
     virtual RS2::EntityType rtti() const {

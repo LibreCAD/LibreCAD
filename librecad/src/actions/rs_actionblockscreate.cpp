@@ -24,13 +24,15 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actionblockscreate.h"
 
-#include <QAction>
 #include "rs_creation.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
+#include "rs_insert.h"
+#include "rs_modification.h"
 
 /**
  * Constructor.
@@ -42,10 +44,6 @@ RS_ActionBlocksCreate::RS_ActionBlocksCreate(RS_EntityContainer& container,
 
     referencePoint = RS_Vector(false);
 }
-
-
-
-RS_ActionBlocksCreate::~RS_ActionBlocksCreate() {}
 
 
 
@@ -81,7 +79,7 @@ void RS_ActionBlocksCreate::trigger() {
 
             if (!d.name.isEmpty()) {
                 RS_Creation creation(container, graphicView);
-                creation.createBlock(d, referencePoint, true);
+				creation.createBlock(&d, referencePoint, true);
 
                 RS_InsertData id(
                     d.name,
@@ -90,7 +88,7 @@ void RS_ActionBlocksCreate::trigger() {
                     0.0,
                     1, 1, RS_Vector(0.0,0.0)
                 );
-                creation.createInsert(id);
+				creation.createInsert(&id);
             }
         }
     }

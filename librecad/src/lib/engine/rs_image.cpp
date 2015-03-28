@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-
+#include <QImage>
 #include "rs_image.h"
 #include "rs_line.h"
 #include "rs_settings.h"
@@ -34,6 +34,31 @@
 #include "rs_graphicview.h"
 #include "rs_painterqt.h"
 
+RS_ImageData::RS_ImageData(int _handle,
+						   const RS_Vector& _insertionPoint,
+						   const RS_Vector& _uVector,
+						   const RS_Vector& _vVector,
+						   const RS_Vector& _size,
+						   const QString& _file,
+						   int _brightness,
+						   int _contrast,
+						   int _fade):
+	handle(_handle)
+  , insertionPoint(_insertionPoint)
+  , uVector(_uVector)
+  , vVector(_vVector)
+  , size(_size)
+  , file(_file)
+  , brightness(_brightness)
+  , contrast(_contrast)
+  , fade(_fade)
+{
+}
+
+std::ostream& operator << (std::ostream& os, const RS_ImageData& ld) {
+	os << "(" << ld.insertionPoint << ")";
+	return os;
+}
 
 /**
  * Constructor.
@@ -46,21 +71,24 @@ RS_Image::RS_Image(RS_EntityContainer* parent,
     calculateBorders();
 }
 
-
-
-/**
- * Destructor.
- */
-RS_Image::~RS_Image() {
-    /*if (img!=NULL) {
-        delete[] img;
-    }*/
+RS_Image::RS_Image(const RS_Image& _image):
+	data(_image.data)
+  ,img(_image.img.get()?new QImage(*_image.img):nullptr)
+{
 }
 
+RS_Image RS_Image::operator = (const RS_Image& _image)
+{
+	data=_image.data;
+	if(_image.img.get()){
+		img.reset(new QImage(*_image.img));
+	}else{
+		img.reset();
+	}
+	return *this;
+}
 
-
-
-RS_Entity* RS_Image::clone() {
+RS_Entity* RS_Image::clone() const {
     RS_Image* i = new RS_Image(*this);
         i->setHandle(getHandle());
     i->initId();
@@ -84,9 +112,9 @@ void RS_Image::update() {
 
     // the whole image:
     //QImage image = QImage(data.file);
-    img = QImage(data.file);
-    if (!img.isNull()) {
-        data.size = RS_Vector(img.width(), img.height());
+	img.reset(new QImage(data.file));
+	if (!img->isNull()) {
+		data.size = RS_Vector(img->width(), img->height());
     }
 
     RS_DEBUG->print("RS_Image::update: OK");
@@ -354,7 +382,7 @@ void RS_Image::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
 
 
 void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-    if (painter==NULL || view==NULL || img.isNull()) {
+	if (painter==NULL || view==NULL || !img.get() || img->isNull()) {
         return;
     }
 
@@ -368,7 +396,7 @@ void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                                 view->toGuiDY(data.vVector.magnitude()));
     double angle = data.uVector.angle();
 
-    painter->drawImg(img,
+	painter->drawImg(*img,
                      view->toGui(data.insertionPoint),
                      angle, scale);
 

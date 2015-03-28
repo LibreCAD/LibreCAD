@@ -48,7 +48,7 @@ public:
     /**
      * Destrutor.
      */
-    virtual ~RS_AtomicEntity() {}
+	virtual ~RS_AtomicEntity() = default;
 
     /**
      * @return false because entities made from subclasses are

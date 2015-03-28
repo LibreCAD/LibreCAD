@@ -104,6 +104,7 @@
 #include "rs_commands.h"
 #include "rs_arc.h"
 #include "rs_ellipse.h"
+#include "rs_line.h"
 #include "rs_point.h"
 
 

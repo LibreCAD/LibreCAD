@@ -40,7 +40,7 @@ class RS_ActionLayersEdit : public RS_ActionInterface {
 public:
     RS_ActionLayersEdit(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionLayersEdit() {}
+    ~RS_ActionLayersEdit() = default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

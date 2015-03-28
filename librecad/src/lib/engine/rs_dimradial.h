@@ -83,15 +83,9 @@ public:
     RS_DimRadial(RS_EntityContainer* parent,
                  const RS_DimensionData& d,
                  const RS_DimRadialData& ed);
-    virtual ~RS_DimRadial() {}
+	virtual ~RS_DimRadial() = default;
 
-    virtual RS_Entity* clone() {
-        RS_DimRadial* d = new RS_DimRadial(*this);
-        d->setOwner(isOwner());
-        d->initId();
-        d->detach();
-        return d;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityDimRadial */
     virtual RS2::EntityType rtti() const {

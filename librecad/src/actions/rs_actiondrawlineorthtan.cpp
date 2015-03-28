@@ -20,13 +20,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawlineorthtan.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_creation.h"
 #include "rs_selection.h"
+#include "rs_line.h"
 
 
 /**
@@ -42,10 +43,6 @@ RS_ActionDrawLineOrthTan::RS_ActionDrawLineOrthTan(
     ,tangent(NULL)
     ,circle(NULL)
 {
-    //    circleList.clear();
-    circleList.push_back(RS2::EntityArc);
-    circleList.push_back(RS2::EntityCircle);
-    circleList.push_back(RS2::EntityEllipse);
 }
 
 

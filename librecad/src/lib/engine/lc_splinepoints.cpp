@@ -272,14 +272,7 @@ LC_SplinePoints::LC_SplinePoints(RS_EntityContainer* parent,
 	calculateBorders();
 }
 
-/**
- * Destructor.
- */
-LC_SplinePoints::~LC_SplinePoints()
-{
-}
-
-RS_Entity* LC_SplinePoints::clone()
+RS_Entity* LC_SplinePoints::clone() const
 {
     LC_SplinePoints* l = new LC_SplinePoints(*this);
 	l->initId();

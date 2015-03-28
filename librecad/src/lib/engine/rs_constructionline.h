@@ -76,10 +76,11 @@ private:
  */
 class RS_ConstructionLine : public RS_AtomicEntity {
 public:
+	RS_ConstructionLine()=default;
     RS_ConstructionLine(RS_EntityContainer* parent,
                         const RS_ConstructionLineData& d);
 
-    virtual RS_Entity* clone();
+	virtual RS_Entity* clone() const;
 
     virtual ~RS_ConstructionLine();
 

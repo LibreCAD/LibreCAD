@@ -38,10 +38,16 @@
 #include "rs_painterqt.h"
 #include "rs_circle.h"
 
-
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
+
+std::ostream& operator << (std::ostream& os, const RS_LineData& ld) {
+	os << "(" << ld.startpoint <<
+		  "/" << ld.endpoint <<
+		  ")";
+	return os;
+}
 
 /**
  * Constructor.
@@ -65,18 +71,10 @@ RS_Line::RS_Line(const RS_Vector& pStart, const RS_Vector& pEnd)
 }
 
 
-/**
- * Destructor.
- */
-RS_Line::~RS_Line() {}
-
-
-
-
-RS_Entity* RS_Line::clone() {
-    RS_Line* l = new RS_Line(*this);
-    l->initId();
-    return l;
+RS_Entity* RS_Line::clone() const {
+	RS_Line* l = new RS_Line(*this);
+	l->initId();
+	return l;
 }
 
 

@@ -48,7 +48,13 @@ RS_DimLinear::RS_DimLinear(RS_EntityContainer* parent,
     calculateBorders();
 }
 
-
+RS_Entity* RS_DimLinear::clone() const {
+	RS_DimLinear* d = new RS_DimLinear(*this);
+	d->setOwner(isOwner());
+	d->initId();
+	d->detach();
+	return d;
+}
 
 RS_VectorSolutions RS_DimLinear::getRefPoints() {
         RS_VectorSolutions ret(edata.extensionPoint1, edata.extensionPoint2,

@@ -40,9 +40,6 @@ RS_ActionBlocksExplode::RS_ActionBlocksExplode(RS_EntityContainer& container,
 
 
 
-RS_ActionBlocksExplode::~RS_ActionBlocksExplode() {}
-
-
 QAction* RS_ActionBlocksExplode::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
         // tr("Explode"),
     QAction* action = new QAction(tr("Ex&plode"), NULL);

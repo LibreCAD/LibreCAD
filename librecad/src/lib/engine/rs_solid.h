@@ -100,12 +100,9 @@ class RS_Solid : public RS_AtomicEntity {
 public:
     RS_Solid(RS_EntityContainer* parent,
              const RS_SolidData& d);
+	~RS_Solid() = default;
 
-    virtual RS_Entity* clone() {
-        RS_Solid* s = new RS_Solid(*this);
-        s->initId();
-        return s;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS_ENTITY_POINT */
     virtual RS2::EntityType rtti() const {

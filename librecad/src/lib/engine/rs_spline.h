@@ -39,7 +39,7 @@ public:
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-    RS_SplineData() {}
+	RS_SplineData() = default;
 
         RS_SplineData(int degree, bool closed) {
                 this->degree = degree;
@@ -72,10 +72,10 @@ class RS_Spline : public RS_EntityContainer {
 public:
     RS_Spline(RS_EntityContainer* parent,
             const RS_SplineData& d);
+	virtual ~RS_Spline() = default;
 
-    virtual RS_Entity* clone();
+	virtual RS_Entity* clone() const;
 
-    virtual ~RS_Spline();
 
     /**	@return RS2::EntitySpline */
     virtual RS2::EntityType rtti() const {

@@ -52,7 +52,11 @@ RS_Arc::RS_Arc(RS_EntityContainer* parent,
     calculateBorders();
 }
 
-
+RS_Entity* RS_Arc::clone() const {
+	RS_Arc* a = new RS_Arc(*this);
+	a->initId();
+	return a;
+}
 
 /**
  * Creates this arc from 3 given points which define the arc line.

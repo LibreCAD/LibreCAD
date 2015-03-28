@@ -43,7 +43,13 @@ RS_MText::RS_MText(RS_EntityContainer* parent,
     setText(data.text);
 }
 
-
+RS_Entity* RS_MText::clone() const{
+	RS_MText* t = new RS_MText(*this);
+	t->setOwner(isOwner());
+	t->initId();
+	t->detach();
+	return t;
+}
 
 /**
  * Sets a new text. The entities representing the

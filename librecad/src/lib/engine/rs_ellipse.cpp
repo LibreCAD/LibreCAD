@@ -42,6 +42,30 @@
 #include "emu_c99.h" /* C99 math */
 #endif
 
+RS_EllipseData::RS_EllipseData(const RS_Vector& _center,
+							   const RS_Vector& _majorP,
+							   double _ratio,
+							   double _angle1, double _angle2,
+							   bool _reversed):
+	center(_center)
+  ,majorP(_majorP)
+  ,ratio(_ratio)
+  ,angle1(_angle1)
+  ,angle2(_angle2)
+  ,reversed(_reversed)
+{
+}
+
+std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed) {
+	os << "(" << ed.center <<
+		  " " << ed.majorP <<
+		  " " << ed.ratio <<
+		  " " << ed.angle1 <<
+		  "," << ed.angle2 <<
+		  ")";
+	return os;
+}
+
 /**
  * Constructor.
  */
@@ -53,6 +77,11 @@ RS_Ellipse::RS_Ellipse(RS_EntityContainer* parent,
     calculateBorders();
 }
 
+RS_Entity* RS_Ellipse::clone() const {
+	RS_Ellipse* e = new RS_Ellipse(*this);
+	e->initId();
+	return e;
+}
 
 /**
  * Recalculates the endpoints using the angles and the radius.

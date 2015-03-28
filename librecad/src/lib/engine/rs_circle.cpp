@@ -51,6 +51,11 @@ RS_Circle::RS_Circle(RS_EntityContainer* parent,
     calculateBorders();
 }
 
+RS_Entity* RS_Circle::clone() const {
+	RS_Circle* c = new RS_Circle(*this);
+	c->initId();
+	return c;
+}
 
 
 void RS_Circle::calculateBorders() {

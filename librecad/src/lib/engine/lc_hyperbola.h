@@ -40,20 +40,13 @@ class LC_Quadratic;
 class LC_HyperbolaData {
 public:
 	LC_HyperbolaData() = default;
-    LC_HyperbolaData(const RS_Vector& center,
-                   const RS_Vector& majorP,
-                   double ratio,
-                   double angle1, double angle2,
-                   bool reversed) {
-
-        this->center = center;
-        this->majorP = majorP;
-        this->ratio = ratio;
-        this->angle1 = angle1;
-        this->angle2 = angle2;
-        this->reversed = reversed;
-    }
-    /** create data based on foci and a point on hyperbola */
+	LC_HyperbolaData(const RS_Vector& center,
+					 const RS_Vector& majorP,
+					 double ratio,
+					 double angle1, double angle2,
+					 bool reversed);
+	~LC_HyperbolaData() = default;
+	/** create data based on foci and a point on hyperbola */
     LC_HyperbolaData(const RS_Vector& focus0,
                      const RS_Vector& focus1,
                      const RS_Vector& point);
@@ -61,15 +54,7 @@ public:
 
     friend class LC_Hyperbola;
 
-    friend std::ostream& operator << (std::ostream& os, const LC_HyperbolaData& ed) {
-        os << "(" << ed.center <<
-           "/" << ed.majorP <<
-           " " << ed.ratio <<
-           " " << ed.angle1 <<
-           "," << ed.angle2 <<
-           ")";
-        return os;
-    }
+	friend std::ostream& operator << (std::ostream& os, const LC_HyperbolaData& ed);
 
 private:
     //! Hyperbola center
@@ -96,6 +81,7 @@ private:
  */
 class LC_Hyperbola : public RS_AtomicEntity {
 public:
+	LC_Hyperbola() = default;
     LC_Hyperbola(RS_EntityContainer* parent,
                const LC_HyperbolaData& d);
 
@@ -103,13 +89,9 @@ public:
     LC_Hyperbola(const RS_Vector& focus0,
                      const RS_Vector& focus1,
                      const RS_Vector& point);
-    virtual ~LC_Hyperbola() {}
+	virtual ~LC_Hyperbola() = default;
 
-    virtual RS_Entity* clone() {
-        LC_Hyperbola* e = new LC_Hyperbola(*this);
-        e->initId();
-        return e;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityHyperbola */
     virtual RS2::EntityType rtti() const {

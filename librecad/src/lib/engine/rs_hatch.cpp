@@ -88,7 +88,7 @@ bool RS_Hatch::validate() {
 
 
 
-RS_Entity* RS_Hatch::clone() {
+RS_Entity* RS_Hatch::clone() const{
     RS_Hatch* t = new RS_Hatch(*this);
     t->setOwner(isOwner());
     t->initId();
@@ -101,7 +101,7 @@ RS_Entity* RS_Hatch::clone() {
 /**
  * @return Number of loops.
  */
-int RS_Hatch::countLoops() {
+int RS_Hatch::countLoops() const{
     if (data.solid) {
         return count();
     } else {
@@ -109,7 +109,9 @@ int RS_Hatch::countLoops() {
     }
 }
 
-
+bool RS_Hatch::isContainer() const {
+	return !isSolid();
+}
 
 /**
  * Recalculates the borders of this hatch.

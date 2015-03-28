@@ -48,7 +48,7 @@ private:
 public:
     RS_ActionDimDiametric(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDimDiametric() {}
+    ~RS_ActionDimDiametric() = default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	

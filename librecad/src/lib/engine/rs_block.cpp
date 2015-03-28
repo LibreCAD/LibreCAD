@@ -42,12 +42,7 @@ RS_Block::RS_Block(RS_EntityContainer* parent,
 }
 
 
-
-RS_Block::~RS_Block() {}
-
-
-
-RS_Entity* RS_Block::clone() {
+RS_Entity* RS_Block::clone() const {
     RS_Block* blk = new RS_Block(*this);
     blk->setOwner(isOwner());
     blk->detach();

@@ -83,15 +83,12 @@ public:
  */
 class RS_Circle : public RS_AtomicEntity {
 public:
+	RS_Circle()=default;
     RS_Circle (RS_EntityContainer* parent,
                const RS_CircleData& d);
-    virtual ~RS_Circle() {}
+	~RS_Circle() = default;
 
-    virtual RS_Entity* clone() {
-        RS_Circle* c = new RS_Circle(*this);
-        c->initId();
-        return c;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityCircle */
     virtual RS2::EntityType rtti() const {

@@ -47,7 +47,13 @@ RS_DimDiametric::RS_DimDiametric(RS_EntityContainer* parent,
     calculateBorders();
 }
 
-
+RS_Entity* RS_DimDiametric::clone() const {
+	RS_DimDiametric* d = new RS_DimDiametric(*this);
+	d->setOwner(isOwner());
+	d->initId();
+	d->detach();
+	return d;
+}
 
 /**
  * @return Automatically created label for the default

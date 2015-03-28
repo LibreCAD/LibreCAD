@@ -40,7 +40,7 @@ class RS_ActionLayersAdd : public RS_ActionInterface {
 public:
     RS_ActionLayersAdd(RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
-    ~RS_ActionLayersAdd() {}
+    ~RS_ActionLayersAdd() = default;
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

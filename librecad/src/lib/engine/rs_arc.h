@@ -89,15 +89,12 @@ public:
  */
 class RS_Arc : public RS_AtomicEntity {
 public:
+	RS_Arc()=default;
     RS_Arc(RS_EntityContainer* parent,
            const RS_ArcData& d);
-    virtual ~RS_Arc() {}
+	virtual ~RS_Arc() = default;
 
-    virtual RS_Entity* clone() {
-        RS_Arc* a = new RS_Arc(*this);
-        a->initId();
-        return a;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityArc */
     virtual RS2::EntityType rtti() const {

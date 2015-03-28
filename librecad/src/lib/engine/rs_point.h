@@ -61,11 +61,7 @@ public:
     RS_Point(RS_EntityContainer* parent,
              const RS_PointData& d);
 
-    virtual RS_Entity* clone() {
-        RS_Point* p = new RS_Point(*this);
-        p->initId();
-        return p;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS_ENTITY_POINT */
     virtual RS2::EntityType rtti() const {

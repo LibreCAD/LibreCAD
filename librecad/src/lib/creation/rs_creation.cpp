@@ -27,17 +27,21 @@
 
 #include <QFileInfo>
 #include "rs_creation.h"
+#include "rs_document.h"
+#include "rs_constructionline.h"
+#include "rs_graphicview.h"
+#include "rs_graphic.h"
 #include "rs_arc.h"
+#include "rs_block.h"
 #include "rs_line.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
-
-#include "rs_information.h"
-#include "rs_graphic.h"
-#include "rs_constructionline.h"
-#include "rs_graphicview.h"
-#include "rs_modification.h"
+#include "rs_insert.h"
+#include "rs_image.h"
 #include "lc_hyperbola.h"
+#include "lc_splinepoints.h"
+#include "rs_modification.h"
+#include "rs_information.h"
 
 /**
  * Default constructor.
@@ -1192,7 +1196,7 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
      *
      * @param data Insert data (position, block name, ..)
      */
-RS_Insert* RS_Creation::createInsert(RS_InsertData& data) {
+RS_Insert* RS_Creation::createInsert(const RS_InsertData* pdata) {
 
     RS_DEBUG->print("RS_Creation::createInsert");
 
@@ -1200,7 +1204,7 @@ RS_Insert* RS_Creation::createInsert(RS_InsertData& data) {
         document->startUndoCycle();
     }
 
-    RS_Insert* ins = new RS_Insert(container, data);
+	RS_Insert* ins = new RS_Insert(container, *pdata);
     // inserts are also on layers
     ins->setLayerToActive();
     ins->setPenToActive();
@@ -1226,13 +1230,13 @@ RS_Insert* RS_Creation::createInsert(RS_InsertData& data) {
 /**
      * Creates an image with the given data.
      */
-RS_Image* RS_Creation::createImage(RS_ImageData& data) {
+RS_Image* RS_Creation::createImage(const RS_ImageData* data) {
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
     }
 
-    RS_Image* img = new RS_Image(container, data);
+	RS_Image* img = new RS_Image(container, *data);
     img->setLayerToActive();
     img->setPenToActive();
     img->update();
@@ -1259,7 +1263,7 @@ RS_Image* RS_Creation::createImage(RS_ImageData& data) {
      * @param name Block name
      * @param remove true: remove existing entities, false: don't touch entities
      */
-RS_Block* RS_Creation::createBlock(const RS_BlockData& data,
+RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
                                    const RS_Vector& referencePoint,
                                    const bool remove) {
 
@@ -1270,7 +1274,7 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData& data,
 
     RS_Block* block =
             new RS_Block(container,
-                         RS_BlockData(data.name, data.basePoint, data.frozen));
+						 RS_BlockData(data->name, data->basePoint, data->frozen));
 
     // copy entities into a block
     for (RS_Entity* e=container->firstEntity();

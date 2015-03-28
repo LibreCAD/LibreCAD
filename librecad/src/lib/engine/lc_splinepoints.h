@@ -98,8 +98,8 @@ public:
     LC_SplinePointsData data;
 public:
     LC_SplinePoints(RS_EntityContainer* parent, const LC_SplinePointsData& d);
-    virtual ~LC_SplinePoints();
-	virtual RS_Entity* clone();
+	virtual ~LC_SplinePoints() = default;
+	virtual RS_Entity* clone() const;
 
 	/**	@return RS2::EntitySpline */
 	virtual RS2::EntityType rtti() const

@@ -47,7 +47,7 @@ public:
 public:
     RS_ActionOrder(RS_EntityContainer& container,
                         RS_GraphicView& graphicView, RS2::ActionType type);
-    ~RS_ActionOrder() {}
+    ~RS_ActionOrder() = default;
 
     static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
     virtual RS2::ActionType rtti(){

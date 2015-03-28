@@ -73,15 +73,6 @@ RS_Entity::RS_Entity(RS_EntityContainer* parent) {
     pen = e.pen;
 }*/
 
-
-
-/**
- * Destructor.
- */
-RS_Entity::~RS_Entity() {}
-
-
-
 /**
  * Initialisation. Called from all constructors.
  */

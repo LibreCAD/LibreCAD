@@ -43,17 +43,7 @@ RS_Spline::RS_Spline(RS_EntityContainer* parent,
     calculateBorders();
 }
 
-
-
-/**
- * Destructor.
- */
-RS_Spline::~RS_Spline() {}
-
-
-
-
-RS_Entity* RS_Spline::clone() {
+RS_Entity* RS_Spline::clone() const{
     RS_Spline* l = new RS_Spline(*this);
     l->setOwner(isOwner());
     l->initId();

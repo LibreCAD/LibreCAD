@@ -40,7 +40,7 @@ public:
         /**
          * Default constructor.
          */
-    RS_InsertData() {}
+	RS_InsertData() = default;
 
     /**
      * @param name The name of the block used as an identifier.
@@ -112,15 +112,9 @@ class RS_Insert : public RS_EntityContainer {
 public:
     RS_Insert(RS_EntityContainer* parent,
               const RS_InsertData& d);
-    virtual ~RS_Insert();
+	virtual ~RS_Insert() = default;
 
-    virtual RS_Entity* clone() {
-        RS_Insert* i = new RS_Insert(*this);
-        i->setOwner(isOwner());
-        i->initId();
-        i->detach();
-        return i;
-    }
+	virtual RS_Entity* clone() const;
 
     /** @return RS2::EntityInsert */
     virtual RS2::EntityType rtti() const {
