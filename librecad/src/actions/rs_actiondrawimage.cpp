@@ -24,14 +24,18 @@
 **
 **********************************************************************/
 
-#include "rs_actiondrawimage.h"
-
+#include <memory>
 #include <QAction>
-// #include <QDebug>
+#include <QImage>
+#include "rs_image.h"
+#include "rs_line.h"
+#include "rs_units.h"
+
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_creation.h"
+#include "rs_actiondrawimage.h"
 
 /**
  * Constructor.
@@ -60,14 +64,14 @@ void RS_ActionDrawImage::init(int status) {
 
     reset();
 
-    data.file = RS_DIALOGFACTORY->requestImageOpenDialog();
+	data->file = RS_DIALOGFACTORY->requestImageOpenDialog();
     // RVT_PORT should we really redarw here?? graphicView->redraw();
 
-    if (!data.file.isEmpty()) {
-        //std::cout << "file: " << data.file << "\n";
-        //qDebug() << "file: " << data.file;
+	if (!data->file.isEmpty()) {
+		//std::cout << "file: " << data->file << "\n";
+		//qDebug() << "file: " << data->file;
 
-        img = QImage(data.file);
+		img.reset(new QImage(data->file));
 
         setStatus(SetTargetPoint);
     } else {
@@ -79,13 +83,15 @@ void RS_ActionDrawImage::init(int status) {
 
 
 void RS_ActionDrawImage::reset() {
-    data = RS_ImageData(0,
-                        RS_Vector(0.0,0.0),
-                        RS_Vector(1.0,0.0),
-                        RS_Vector(0.0,1.0),
-                        RS_Vector(1.0,1.0),
-                        "",
-                        50, 50, 0);
+	data.reset(new RS_ImageData(
+				   0,
+				   RS_Vector(0.0,0.0),
+				   RS_Vector(1.0,0.0),
+				   RS_Vector(0.0,1.0),
+				   RS_Vector(1.0,1.0),
+				   "",
+				   50, 50, 0)
+			   );
 }
 
 
@@ -93,9 +99,9 @@ void RS_ActionDrawImage::reset() {
 void RS_ActionDrawImage::trigger() {
     deletePreview();
 
-    if (!data.file.isEmpty()) {
+	if (!data->file.isEmpty()) {
         RS_Creation creation(container, graphicView);
-        creation.createImage(data);
+		creation.createImage(data.get());
     }
 
     graphicView->redraw(RS2::RedrawDrawing);
@@ -109,7 +115,7 @@ void RS_ActionDrawImage::trigger() {
 void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case SetTargetPoint:
-        data.insertionPoint = snapPoint(e);
+		data->insertionPoint = snapPoint(e);
 
         deletePreview();
         //RS_Creation creation(preview, NULL, false);
@@ -117,24 +123,24 @@ void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent* e) {
         RS_Line* line;
 		line = new RS_Line(preview.get(),
                            RS_LineData(RS_Vector(0, 0),
-                                       RS_Vector(img.width(), 0)));
+									   RS_Vector(img->width(), 0)));
         preview->addEntity(line);
 		line = new RS_Line(preview.get(),
-                           RS_LineData(RS_Vector(img.width(), 0),
-                                       RS_Vector(img.width(), img.height())));
+						   RS_LineData(RS_Vector(img->width(), 0),
+									   RS_Vector(img->width(), img->height())));
         preview->addEntity(line);
 		line = new RS_Line(preview.get(),
-                           RS_LineData(RS_Vector(img.width(),
-                                                 img.height()), RS_Vector(0, img.height())));
+						   RS_LineData(RS_Vector(img->width(),
+												 img->height()), RS_Vector(0, img->height())));
         preview->addEntity(line);
 		line = new RS_Line(preview.get(),
-                           RS_LineData(RS_Vector(0, img.height()),
+						   RS_LineData(RS_Vector(0, img->height()),
                                        RS_Vector(0, 0)));
         preview->addEntity(line);
         preview->scale(RS_Vector(0,0),
-                       RS_Vector(data.uVector.magnitude(), data.uVector.magnitude()));
-        preview->rotate(RS_Vector(0,0), data.uVector.angle());
-        preview->move(data.insertionPoint);
+					   RS_Vector(data->uVector.magnitude(), data->uVector.magnitude()));
+		preview->rotate(RS_Vector(0,0), data->uVector.angle());
+		preview->move(data->insertionPoint);
 
         drawPreview();
         break;
@@ -163,7 +169,7 @@ void RS_ActionDrawImage::coordinateEvent(RS_CoordinateEvent* e) {
         return;
     }
 
-    data.insertionPoint = e->getCoordinate();
+	data->insertionPoint = e->getCoordinate();
     trigger();
 }
 
@@ -241,6 +247,41 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
 }
 
 
+double RS_ActionDrawImage::getAngle() const {
+	return data->uVector.angle();
+}
+
+void RS_ActionDrawImage::setAngle(double a) const{
+	double l = data->uVector.magnitude();
+	data->uVector.setPolar(l, a);
+	data->vVector.setPolar(l, a+M_PI/2);
+}
+
+double RS_ActionDrawImage::getFactor() const {
+	return data->uVector.magnitude();
+}
+
+void RS_ActionDrawImage::setFactor(double f) const {
+	double a = data->uVector.angle();
+	data->uVector.setPolar(f, a);
+	data->vVector.setPolar(f, a+M_PI/2);
+}
+
+double RS_ActionDrawImage::dpiToScale(double dpi) const {
+	return RS_Units::dpiToScale(dpi, document->getGraphicUnit());
+}
+
+
+
+double RS_ActionDrawImage::scaleToDpi(double scale) const {
+	return RS_Units::scaleToDpi(scale, document->getGraphicUnit());
+}
+
+
+
+void RS_ActionDrawImage::updateMouseCursor() {
+	graphicView->setMouseCursor(RS2::CadCursor);
+}
 
 QStringList RS_ActionDrawImage::getAvailableCommands() {
     QStringList cmd;
@@ -304,39 +345,6 @@ void RS_ActionDrawImage::updateMouseButtonHints() {
 }
 
 
-
-double RS_ActionDrawImage::dpiToScale(double dpi) {
-    return RS_Units::dpiToScale(dpi, document->getGraphicUnit());
-}
-
-
-
-double RS_ActionDrawImage::scaleToDpi(double scale) {
-    return RS_Units::scaleToDpi(scale, document->getGraphicUnit());
-}
-
-
-
-void RS_ActionDrawImage::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
-}
-
-
-//void RS_ActionDrawImage::updateToolBar() {
-//    if(RS_DIALOGFACTORY==NULL) return;
-//    if (isFinished()) {
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-//    }
-//    /*
-//    //not needed any more with new snap
-//    return;
-//    if (!isFinished()) {
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-//    } else {
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-//    }
-//    */
-//}
 
 
 // EOF

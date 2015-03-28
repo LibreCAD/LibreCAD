@@ -34,6 +34,31 @@
 #include "rs_graphicview.h"
 #include "rs_painterqt.h"
 
+RS_ImageData::RS_ImageData(int _handle,
+						   const RS_Vector& _insertionPoint,
+						   const RS_Vector& _uVector,
+						   const RS_Vector& _vVector,
+						   const RS_Vector& _size,
+						   const QString& _file,
+						   int _brightness,
+						   int _contrast,
+						   int _fade):
+	handle(_handle)
+  , insertionPoint(_insertionPoint)
+  , uVector(_uVector)
+  , vVector(_vVector)
+  , size(_size)
+  , file(_file)
+  , brightness(_brightness)
+  , contrast(_contrast)
+  , fade(_fade)
+{
+}
+
+std::ostream& operator << (std::ostream& os, const RS_ImageData& ld) {
+	os << "(" << ld.insertionPoint << ")";
+	return os;
+}
 
 /**
  * Constructor.

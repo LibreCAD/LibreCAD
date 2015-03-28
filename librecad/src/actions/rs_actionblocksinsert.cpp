@@ -97,7 +97,7 @@ void RS_ActionBlocksInsert::trigger() {
     if (block!=NULL) {
         RS_Creation creation(container, graphicView);
 		data.updateMode = RS2::Update;
-        creation.createInsert(data);
+		creation.createInsert(&data);
     }
 
 	graphicView->redraw(RS2::RedrawDrawing); 
@@ -118,7 +118,7 @@ void RS_ActionBlocksInsert::mouseMoveEvent(QMouseEvent* e) {
 			RS_Creation creation(preview.get(), NULL, false);
 			// Create insert as preview only
 			data.updateMode = RS2::PreviewUpdate;
-            creation.createInsert(data);
+			creation.createInsert(&data);
             drawPreview();
         }
         break;

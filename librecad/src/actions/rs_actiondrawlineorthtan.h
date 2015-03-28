@@ -43,7 +43,7 @@ private:
 public:
     RS_ActionDrawLineOrthTan(RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineOrthTan() {}
+	~RS_ActionDrawLineOrthTan() = default;
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
@@ -68,7 +68,7 @@ private:
     RS_Line* tangent; //holds the tangent line for preview
     /** arc/circle/ellipse to generate tangent */
     RS_Entity* circle;
-    QVector<RS2::EntityType> circleList; //this holds a list of entity types which supports tangent
+	const QVector<RS2::EntityType> circleList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse}; //this holds a list of entity types which supports tangent
 
 };
 

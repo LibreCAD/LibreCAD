@@ -28,8 +28,8 @@
 #define RS_ACTIONDRAWIMAGE_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_image.h"
-#include "rs_units.h"
+
+struct RS_ImageData;
 
 /**
  * This action class can handle user events for inserting bitmaps into the
@@ -86,34 +86,22 @@ public:
     virtual void updateMouseCursor();
 //    virtual void updateToolBar();
 
-	double getAngle() {
-		return data.uVector.angle();
-	}
+	double getAngle() const;
 
-	void setAngle(double a) {
-		double l = data.uVector.magnitude();
-		data.uVector.setPolar(l, a);
-		data.vVector.setPolar(l, a+M_PI/2);
-	}
+	void setAngle(double a) const;
 
-	double getFactor() {
-		return data.uVector.magnitude();
-	}
+	double getFactor() const;
 
-	void setFactor(double f) {
-		double a = data.uVector.angle();
-		data.uVector.setPolar(f, a);
-		data.vVector.setPolar(f, a+M_PI/2);
-	}
+	void setFactor(double f) const;
 
-    double dpiToScale(double dpi);
+	double dpiToScale(double dpi) const;
 
-    double scaleToDpi(double scale);
+	double scaleToDpi(double scale) const;
 
 
 protected:
-	RS_ImageData data;
-        QImage img;
+	std::unique_ptr<RS_ImageData> data;
+	std::unique_ptr<QImage> img;
 	
 	/** Last status before entering option. */
 	Status lastStatus;
