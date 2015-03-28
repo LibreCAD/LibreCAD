@@ -191,14 +191,7 @@ public:
                 double factor,
                 double angle,
                 bool asInsert,
-                const QString& blockName) {
-
-                this->insertionPoint = insertionPoint;
-                this->factor = factor;
-                this->angle = angle;
-                this->asInsert = asInsert;
-                this->blockName = blockName;
-        }
+				const QString& blockName);
 
         //! Insertion point.
         RS_Vector insertionPoint;
@@ -272,9 +265,7 @@ public:
                            RS_RoundData& data);
 
         bool explode();
-        bool explodeTextIntoLetters();
-        bool explodeTextIntoLetters(RS_MText* text, QList<RS_Entity*>& addList);
-        bool explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& addList);
+		bool explodeTextIntoLetters();
         bool moveRef(RS_MoveRefData& data);
 
     bool splitPolyline(RS_Polyline& polyline,
@@ -295,7 +286,9 @@ public:
 
 private:
     void deselectOriginals(bool remove);
-    void addNewEntities(QList<RS_Entity*>& addList);
+	void addNewEntities(std::vector<RS_Entity*>& addList);
+	bool explodeTextIntoLetters(RS_MText* text, std::vector<RS_Entity*>& addList);
+	bool explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entity*>& addList);
 
 protected:
     RS_EntityContainer* container;
