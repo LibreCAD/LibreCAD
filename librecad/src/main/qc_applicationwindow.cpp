@@ -257,16 +257,24 @@ void QC_ApplicationWindow::loadPlugins() {
 
     loadedPlugins.clear();
     QStringList lst = RS_SYSTEM->getDirectoryList("plugins");
+    // Keep track of plugin filenames loaded to skip duplicate plugins.
+    QStringList loadedPluginFileNames;
 
     for (int i = 0; i < lst.size(); ++i) {
         QDir pluginsDir(lst.at(i));
 		for(const QString& fileName: pluginsDir.entryList(QDir::Files)) {
+            // Skip loading a plugin if a plugin with the same
+            // filename has already been loaded.
+            if (loadedPluginFileNames.contains(fileName)) {
+                continue;
+            }
             QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
             QObject *plugin = pluginLoader.instance();
             if (plugin) {
                 QC_PluginInterface *pluginInterface = qobject_cast<QC_PluginInterface *>(plugin);
                 if (pluginInterface) {
                     loadedPlugins.append(pluginInterface);
+                    loadedPluginFileNames.append(fileName);
                     PluginCapabilities pluginCapabilities=pluginInterface->getCapabilities();
 					for(const PluginMenuLocation& loc: pluginCapabilities.menuEntryPoints) {
                         QAction *actpl = new QAction(loc.menuEntryActionName, plugin);
