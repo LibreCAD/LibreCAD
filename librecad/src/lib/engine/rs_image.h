@@ -23,13 +23,13 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-
 #ifndef RS_IMAGE_H
 #define RS_IMAGE_H
 
-#include <QImage>
+#include <memory>
 #include "rs_atomicentity.h"
+
+class QImage;
 
 /**
  * Holds the data that defines a line.
@@ -82,10 +82,11 @@ class RS_Image : public RS_AtomicEntity {
 public:
     RS_Image(RS_EntityContainer* parent,
             const RS_ImageData& d);
+	RS_Image(const RS_Image& _image);
+	RS_Image operator = (const RS_Image& _image);
+	virtual ~RS_Image() = default;
 
-    virtual RS_Entity* clone();
-
-    virtual ~RS_Image();
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityImage */
     virtual RS2::EntityType rtti() const {
@@ -218,7 +219,7 @@ public:
 
 protected:
     RS_ImageData data;
-        QImage img;
+	std::unique_ptr<QImage> img;
         //QImage** img;
         //int nx;
         //int ny;

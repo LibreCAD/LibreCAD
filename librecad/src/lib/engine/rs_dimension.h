@@ -136,7 +136,7 @@ class RS_Dimension : public RS_EntityContainer {
 public:
     RS_Dimension(RS_EntityContainer* parent,
                  const RS_DimensionData& d);
-    virtual ~RS_Dimension() {}
+	virtual ~RS_Dimension() = default;
 
     /** @return Copy of data that defines the dimension. */
     RS_DimensionData getData() const {

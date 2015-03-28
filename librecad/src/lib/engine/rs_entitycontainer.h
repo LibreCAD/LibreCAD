@@ -41,11 +41,11 @@ class RS_EntityContainer : public RS_Entity {
 
 public:
 
-    RS_EntityContainer(RS_EntityContainer* parent=NULL, bool owner=true);
+	RS_EntityContainer(RS_EntityContainer* parent=NULL, bool owner=true);
     //RS_EntityContainer(const RS_EntityContainer& ec);
     virtual ~RS_EntityContainer();
 
-    virtual RS_Entity* clone();
+	virtual RS_Entity* clone() const;
     virtual void detach();
 
     /** @return RS2::EntityContainer */
@@ -194,7 +194,7 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, RS_EntityContainer& ec);
 
-    bool isOwner() {return autoDelete;}
+	bool isOwner() const {return autoDelete;}
     void setOwner(bool owner) {autoDelete=owner;}
     /**
      * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem

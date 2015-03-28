@@ -100,15 +100,12 @@ private:
  */
 class RS_Ellipse : public RS_AtomicEntity {
 public:
+	RS_Ellipse()=default;
     RS_Ellipse(RS_EntityContainer* parent,
                const RS_EllipseData& d);
 	~RS_Ellipse()=default;
 
-    virtual RS_Entity* clone() {
-        RS_Ellipse* e = new RS_Ellipse(*this);
-        e->initId();
-        return e;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityEllipse */
     virtual RS2::EntityType rtti() const {

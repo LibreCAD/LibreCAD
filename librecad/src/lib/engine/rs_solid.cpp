@@ -42,7 +42,11 @@ RS_Solid::RS_Solid(RS_EntityContainer* parent,
     calculateBorders();
 }
 
-
+RS_Entity* RS_Solid::clone() const {
+	RS_Solid* s = new RS_Solid(*this);
+	s->initId();
+	return s;
+}
 
 /**
  * @return Corner number 'num'.

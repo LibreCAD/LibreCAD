@@ -35,7 +35,7 @@
  */
 class RS_BlockData {
 public:
-    RS_BlockData() {}
+	RS_BlockData() = default;
 
     RS_BlockData(const QString& name,
 	           const RS_Vector& basePoint,
@@ -91,9 +91,9 @@ public:
      */
     RS_Block(RS_EntityContainer* parent, const RS_BlockData& d);
 
-    virtual ~RS_Block();
+	virtual ~RS_Block() = default;
 	
-    virtual RS_Entity* clone();
+	virtual RS_Entity* clone() const;
 
     /** @return RS2::EntityBlock */
     virtual RS2::EntityType rtti() const {

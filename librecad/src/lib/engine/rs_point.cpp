@@ -40,7 +40,11 @@ RS_Point::RS_Point(RS_EntityContainer* parent,
     calculateBorders ();
 }
 
-
+RS_Entity* RS_Point::clone() const {
+	RS_Point* p = new RS_Point(*this);
+	p->initId();
+	return p;
+}
 
 void RS_Point::calculateBorders () {
     minV = maxV = data.pos;

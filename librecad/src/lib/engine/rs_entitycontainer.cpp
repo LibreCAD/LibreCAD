@@ -88,7 +88,7 @@ RS_EntityContainer::~RS_EntityContainer() {
 
 
 
-RS_Entity* RS_EntityContainer::clone() {
+RS_Entity* RS_EntityContainer::clone() const{
     RS_DEBUG->print("RS_EntityContainer::clone: ori autoDel: %d",
                     autoDelete);
 

@@ -94,15 +94,9 @@ public:
     RS_DimLinear(RS_EntityContainer* parent,
                  const RS_DimensionData& d,
                  const RS_DimLinearData& ed);
-    virtual ~RS_DimLinear() {}
+	virtual ~RS_DimLinear() = default;
 
-    virtual RS_Entity* clone() {
-        RS_DimLinear* d = new RS_DimLinear(*this);
-        d->setOwner(isOwner());
-        d->initId();
-        d->detach();
-        return d;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityDimLinear */
     virtual RS2::EntityType rtti() const {

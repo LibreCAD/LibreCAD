@@ -91,15 +91,9 @@ public:
     RS_DimAngular(RS_EntityContainer* parent,
                  const RS_DimensionData& d,
                  const RS_DimAngularData& ed);
-    virtual ~RS_DimAngular() {}
+	virtual ~RS_DimAngular() = default;
 
-    virtual RS_Entity* clone() {
-        RS_DimAngular* d = new RS_DimAngular(*this);
-        d->setOwner(isOwner());
-        d->initId();
-        d->detach();
-        return d;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityDimAngular */
     virtual RS2::EntityType rtti() const {

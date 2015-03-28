@@ -83,15 +83,9 @@ public:
     RS_DimDiametric(RS_EntityContainer* parent,
                  const RS_DimensionData& d,
                  const RS_DimDiametricData& ed);
-    virtual ~RS_DimDiametric() {}
+	virtual ~RS_DimDiametric() = default;
 
-    virtual RS_Entity* clone() {
-        RS_DimDiametric* d = new RS_DimDiametric(*this);
-        d->setOwner(isOwner());
-        d->initId();
-        d->detach();
-        return d;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityDimDiametric */
     virtual RS2::EntityType rtti() const {

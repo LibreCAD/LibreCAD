@@ -85,15 +85,9 @@ public:
     RS_DimAligned(RS_EntityContainer* parent,
                   const RS_DimensionData& d,
                   const RS_DimAlignedData& ed);
-    virtual ~RS_DimAligned() {}
+	virtual ~RS_DimAligned() = default;
 
-    virtual RS_Entity* clone() {
-        RS_DimAligned* d = new RS_DimAligned(*this);
-        d->setOwner(isOwner());
-        d->initId();
-        d->detach();
-        return d;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityDimAligned */
     virtual RS2::EntityType rtti() const {

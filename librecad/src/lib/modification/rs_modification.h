@@ -220,6 +220,7 @@ public:
  */
 class RS_Modification {
 public:
+	RS_Modification()=delete;
     RS_Modification(RS_EntityContainer& entityContainer,
                     RS_GraphicView* graphicView=NULL,
                                         bool handleUndo=true);

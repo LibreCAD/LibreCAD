@@ -74,13 +74,13 @@ class RS_Line : public RS_AtomicEntity {
 public:
     //RS_Line(RS_EntityContainer* parent);
     //RS_Line(const RS_Line& l);
-    RS_Line(){}
+	RS_Line() = default;
     RS_Line(RS_EntityContainer* parent,
             const RS_LineData& d);
     RS_Line(RS_EntityContainer* parent, const RS_Vector& pStart, const RS_Vector& pEnd);
     RS_Line(const RS_Vector& pStart, const RS_Vector& pEnd);
 
-    virtual RS_Entity* clone();
+	virtual RS_Entity* clone() const;
     /*{
         cout << "cloning line\n";
         return new RS_Line(*this);
@@ -91,7 +91,7 @@ public:
            //}
        }*/
 
-    virtual ~RS_Line();
+	virtual ~RS_Line() = default;
 
     /**	@return RS2::EntityLine */
     virtual RS2::EntityType rtti() const {

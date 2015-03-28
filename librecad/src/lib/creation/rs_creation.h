@@ -30,6 +30,7 @@
 
 #include <QString>
 #include "rs_vector.h"
+
 class RS_Document;
 class RS_EntityContainer;
 class RS_GraphicView;

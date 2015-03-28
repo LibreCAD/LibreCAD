@@ -39,7 +39,7 @@ public:
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-    RS_HatchData() {}
+	RS_HatchData() = default;
 
         /**
          * @param solid true: solid fill, false: pattern.
@@ -86,12 +86,13 @@ public:
                          HATCH_TOO_SMALL,
                          HATCH_AREA_TOO_BIG };
 
+	RS_Hatch() = default;
 
     RS_Hatch(RS_EntityContainer* parent,
             const RS_HatchData& d);
-    virtual ~RS_Hatch() {}
+	virtual ~RS_Hatch() = default;
 
-    virtual RS_Entity* clone();
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityHatch */
     virtual RS2::EntityType rtti() const {
@@ -102,14 +103,7 @@ public:
      * @return true: if this is a hatch with lines (hatch pattern),
      *         false: if this is filled with a solid color.
      */
-    virtual bool isContainer() const {
-                if (isSolid()) {
-                        return false;
-                }
-                else {
-                return true;
-                }
-    }
+	virtual bool isContainer() const;
 
     /** @return Copy of data that defines the hatch. */
     RS_HatchData getData() const {
@@ -118,7 +112,7 @@ public:
 
         bool validate();
 
-        int countLoops();
+		int countLoops() const;
 
         /** @return true if this is a solid fill. false if it is a pattern hatch. */
         bool isSolid() const {

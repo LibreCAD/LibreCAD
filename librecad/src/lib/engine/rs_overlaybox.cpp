@@ -41,15 +41,7 @@ RS_OverlayBox::RS_OverlayBox(RS_EntityContainer* parent,
     :RS_AtomicEntity(parent), data(d) {
 }
 
-/**
- * Destructor.
- */
-RS_OverlayBox::~RS_OverlayBox() {}
-
-
-
-
-RS_Entity* RS_OverlayBox::clone() {
+RS_Entity* RS_OverlayBox::clone() const{
     RS_OverlayBox* l = new RS_OverlayBox(*this);
     l->initId();
     return l;

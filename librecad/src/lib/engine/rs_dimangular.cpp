@@ -51,7 +51,13 @@ RS_DimAngular::RS_DimAngular(RS_EntityContainer* parent,
     calculateBorders();
 }
 
-
+RS_Entity* RS_DimAngular::clone() const{
+		RS_DimAngular* d = new RS_DimAngular(*this);
+		d->setOwner(isOwner());
+		d->initId();
+		d->detach();
+		return d;
+	}
 
 /**
  * @return Automatically created label for the default

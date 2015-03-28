@@ -160,15 +160,9 @@ class RS_Text : public RS_EntityContainer {
 public:
     RS_Text(RS_EntityContainer* parent,
             const RS_TextData& d);
-    virtual ~RS_Text() {}
+	virtual ~RS_Text() = default;
 
-    virtual RS_Entity* clone() {
-        RS_Text* t = new RS_Text(*this);
-        t->setOwner(isOwner());
-        t->initId();
-        t->detach();
-        return t;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityText */
     virtual RS2::EntityType rtti() const {

@@ -73,7 +73,7 @@ public:
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-    RS_MTextData() {}
+	RS_MTextData() = default;
 
     /**
      * Constructor with initialisation.
@@ -169,15 +169,9 @@ class RS_MText : public RS_EntityContainer {
 public:
     RS_MText(RS_EntityContainer* parent,
             const RS_MTextData& d);
-    virtual ~RS_MText() {}
+	virtual ~RS_MText() = default;
 
-    virtual RS_Entity* clone() {
-        RS_MText* t = new RS_MText(*this);
-        t->setOwner(isOwner());
-        t->initId();
-        t->detach();
-        return t;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityText */
     virtual RS2::EntityType rtti() const {

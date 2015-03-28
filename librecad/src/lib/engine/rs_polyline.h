@@ -79,15 +79,9 @@ public:
     RS_Polyline(RS_EntityContainer* parent=NULL);
     RS_Polyline(RS_EntityContainer* parent,
                 const RS_PolylineData& d);
-    virtual ~RS_Polyline();
+	virtual ~RS_Polyline() = default;
 
-    virtual RS_Entity* clone() {
-        RS_Polyline* p = new RS_Polyline(*this);
-        p->setOwner(isOwner());
-        p->initId();
-        p->detach();
-        return p;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityPolyline */
     virtual RS2::EntityType rtti() const {

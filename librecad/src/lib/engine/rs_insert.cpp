@@ -50,10 +50,13 @@ RS_Insert::RS_Insert(RS_EntityContainer* parent,
 }
 
 
-/**
- * Destructor.
- */
-RS_Insert::~RS_Insert() {}
+RS_Entity* RS_Insert::clone() const{
+	RS_Insert* i = new RS_Insert(*this);
+	i->setOwner(isOwner());
+	i->initId();
+	i->detach();
+	return i;
+}
 
 
 /**

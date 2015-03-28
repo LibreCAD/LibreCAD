@@ -59,6 +59,13 @@ RS_DimAligned::RS_DimAligned(RS_EntityContainer* parent,
 //    update();
 //}
 
+RS_Entity* RS_DimAligned::clone() const{
+	RS_DimAligned* d = new RS_DimAligned(*this);
+	d->setOwner(isOwner());
+	d->initId();
+	d->detach();
+	return d;
+}
 
 RS_VectorSolutions RS_DimAligned::getRefPoints() {
         RS_VectorSolutions ret(edata.extensionPoint1, edata.extensionPoint2,

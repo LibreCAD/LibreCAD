@@ -96,6 +96,7 @@ private:
  */
 class LC_Hyperbola : public RS_AtomicEntity {
 public:
+	LC_Hyperbola() = default;
     LC_Hyperbola(RS_EntityContainer* parent,
                const LC_HyperbolaData& d);
 
@@ -103,13 +104,9 @@ public:
     LC_Hyperbola(const RS_Vector& focus0,
                      const RS_Vector& focus1,
                      const RS_Vector& point);
-    virtual ~LC_Hyperbola() {}
+	virtual ~LC_Hyperbola() = default;
 
-    virtual RS_Entity* clone() {
-        LC_Hyperbola* e = new LC_Hyperbola(*this);
-        e->initId();
-        return e;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityHyperbola */
     virtual RS2::EntityType rtti() const {
