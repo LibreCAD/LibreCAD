@@ -1160,7 +1160,12 @@ RS_Entity* RS_EntityContainer::entityAt(int index) {
         return NULL;
 }
 
-
+void RS_EntityContainer::setEntityAt(int index,RS_Entity* en){
+	if(autoDelete && entities.at(index)) {
+		delete entities.at(index);
+	}
+	entities[index] = en;
+}
 
 /**
  * @return Current index.
@@ -1178,16 +1183,6 @@ int RS_EntityContainer::findEntity(RS_Entity* entity) {
     entIdx = entities.indexOf(entity);
     return entIdx;
 }
-
-
-
-/**
- * Returns the copy to a new iterator for traversing the entities.
- */
-QListIterator<RS_Entity*> RS_EntityContainer::createIterator() {
-    return QListIterator<RS_Entity*>(entities);
-}
-
 
 /**
  * @return The point which is closest to 'coord'
@@ -1959,6 +1954,15 @@ bool RS_EntityContainer::ignoredOnModification() const
     }
 }
 
+QList<RS_Entity *>::const_iterator RS_EntityContainer::begin() const
+{
+	return entities.begin();
+}
+
+QList<RS_Entity *>::const_iterator RS_EntityContainer::end() const
+{
+	return entities.end();
+}
 
 /**
  * Dumps the entities to stdout.

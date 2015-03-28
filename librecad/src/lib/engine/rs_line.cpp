@@ -38,10 +38,16 @@
 #include "rs_painterqt.h"
 #include "rs_circle.h"
 
-
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
+
+std::ostream& operator << (std::ostream& os, const RS_LineData& ld) {
+	os << "(" << ld.startpoint <<
+		  "/" << ld.endpoint <<
+		  ")";
+	return os;
+}
 
 /**
  * Constructor.

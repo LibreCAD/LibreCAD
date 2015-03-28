@@ -94,17 +94,10 @@ public:
     virtual RS_Entity* nextEntity(RS2::ResolveLevel level=RS2::ResolveNone);
     virtual RS_Entity* prevEntity(RS2::ResolveLevel level=RS2::ResolveNone);
     virtual RS_Entity* entityAt(int index);
-    virtual void setEntityAt(int index,RS_Entity* en){
-        if(autoDelete && entities.at(index) != NULL) {
-            delete entities.at(index);
-        }
-        entities[index] = en;
-    }
+	virtual void setEntityAt(int index,RS_Entity* en);
 //RLZ unused	virtual int entityAt();
         virtual int findEntity(RS_Entity* entity);
     virtual void clear();
-
-    QListIterator<RS_Entity*> createIterator();
 
     //virtual unsigned long int count() {
         //	return count(false);
@@ -209,6 +202,12 @@ public:
      * @return, true, indicate this entity container should be ignored
      */
     bool ignoredOnModification() const;
+	/**
+	 * @brief begin/end to support range based loop
+	 * @return iterator
+	 */
+	QList<RS_Entity *>::const_iterator begin() const;
+	QList<RS_Entity *>::const_iterator end() const;
 
 protected:
 

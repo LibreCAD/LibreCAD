@@ -49,17 +49,8 @@ public:
         this->endpoint = endpoint;
     }
 
-    friend class RS_Line;
-    friend class RS_ActionDrawLine;
+	friend std::ostream& operator << (std::ostream& os, const RS_LineData& ld);
 
-    friend std::ostream& operator << (std::ostream& os, const RS_LineData& ld) {
-        os << "(" << ld.startpoint <<
-           "/" << ld.endpoint <<
-           ")";
-        return os;
-    }
-
-public:
     RS_Vector startpoint;
     RS_Vector endpoint;
 };

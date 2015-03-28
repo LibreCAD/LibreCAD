@@ -53,27 +53,11 @@ public:
                    const RS_Vector& majorP,
                    double ratio,
                    double angle1, double angle2,
-                   bool reversed) {
-
-        this->center = center;
-        this->majorP = majorP;
-        this->ratio = ratio;
-        this->angle1 = angle1;
-        this->angle2 = angle2;
-        this->reversed = reversed;
-    }
+				   bool reversed);
 
     friend class RS_Ellipse;
 
-    friend std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed) {
-        os << "(" << ed.center <<
-           " " << ed.majorP <<
-           " " << ed.ratio <<
-           " " << ed.angle1 <<
-           "," << ed.angle2 <<
-           ")";
-        return os;
-    }
+	friend std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed);
 
 private:
     //! Ellipse center
