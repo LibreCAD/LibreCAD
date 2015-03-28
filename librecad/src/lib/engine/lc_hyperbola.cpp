@@ -34,6 +34,29 @@
 #include "rs_linetypepattern.h"
 #include "lc_quadratic.h"
 
+LC_HyperbolaData::LC_HyperbolaData(const RS_Vector& _center,
+			   const RS_Vector& _majorP,
+			   double _ratio,
+			   double _angle1, double _angle2,
+			   bool _reversed):
+	center(_center)
+	,majorP(_majorP)
+	,ratio(_ratio)
+	,angle1(_angle1)
+	,angle2(_angle2)
+	,reversed(_reversed)
+{
+}
+
+std::ostream& operator << (std::ostream& os, const LC_HyperbolaData& ed) {
+	os << "(" << ed.center <<
+	   "/" << ed.majorP <<
+	   " " << ed.ratio <<
+	   " " << ed.angle1 <<
+	   "," << ed.angle2 <<
+	   ")";
+	return os;
+}
 
 #ifdef EMU_C99
 #include "emu_c99.h" /* C99 math */
