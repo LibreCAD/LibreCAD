@@ -30,6 +30,9 @@
 #include "rs_previewactioninterface.h"
 #include "rs_insert.h"
 
+class RS_Block;
+class RS_InsertData;
+
 /**
  * This action class can handle user events for inserting blocks into the
  * current drawing.
@@ -84,57 +87,33 @@ public:
     virtual void updateMouseCursor();
     virtual void updateToolBar();
 
-	double getAngle() {
-		return data.angle;
-	}
+	double getAngle() const;
 
-	void setAngle(double a) {
-		data.angle = a;
-	}
+	void setAngle(double a);
 
-	double getFactor() {
-		return data.scaleFactor.x;
-	}
+	double getFactor() const;
 
-	void setFactor(double f) {
-		data.scaleFactor = RS_Vector(f, f);
-	}
+	void setFactor(double f);
 
-	int getColumns() {
-		return data.cols;
-	}
+	int getColumns() const;
 
-	void setColumns(int c) {
-		data.cols = c;
-	}
+	void setColumns(int c);
 	
-	int getRows() {
-		return data.rows;
-	}
+	int getRows() const;
 
-	void setRows(int r) {
-		data.rows = r;
-	}
+	void setRows(int r);
 
-	double getColumnSpacing() {
-		return data.spacing.x;
-	}
+	double getColumnSpacing() const;
 
-	void setColumnSpacing(double cs) {
-		data.spacing.x = cs;
-	}
+	void setColumnSpacing(double cs);
 	
-	double getRowSpacing() {
-		return data.spacing.y;
-	}
+	double getRowSpacing() const;
 
-	void setRowSpacing(double rs) {
-		data.spacing.y = rs;
-	}
+	void setRowSpacing(double rs);
 
 protected:
 	RS_Block* block;
-	RS_InsertData data;
+	std::unique_ptr<RS_InsertData> data;
 	
 	/** Last status before entering option. */
 	Status lastStatus;
