@@ -47,9 +47,6 @@ QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
     layerConstruction = QIcon(":/ui/constructionlayer.png");
 }
 
-QG_LayerModel::~QG_LayerModel() {
-
-}
 
 int QG_LayerModel::rowCount ( const QModelIndex & /*parent*/ ) const {
     return listLayer.size();
@@ -157,9 +154,9 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
 
     setObjectName(name);
     actionHandler = ah;
-    layerList = NULL;
+	layerList = nullptr;
     showByBlock = false;
-    lastLayer = NULL;
+	lastLayer = nullptr;
 
     layerModel = new QG_LayerModel(this);
     layerView = new QTableView(this);
@@ -183,10 +180,11 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
 
 	QHBoxLayout* layButtons = new QHBoxLayout;
     QToolButton* but;
+	const QSize minButSize(22,22);
     // show all layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":ui/visiblelayer.png"));
-    but->setMinimumSize(QSize(22,22));
+	but->setMinimumSize(minButSize);
     but->setToolTip(tr("Show all layers"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersDefreezeAll()));
@@ -194,7 +192,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     // hide all layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":ui/hiddenlayer.png"));
-    but->setMinimumSize(QSize(22,22));
+	but->setMinimumSize(minButSize);
     but->setToolTip(tr("Hide all layers"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersFreezeAll()));
@@ -202,7 +200,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     // add layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":ui/layeradd.png"));
-    but->setMinimumSize(QSize(22,22));
+	but->setMinimumSize(minButSize);
     but->setToolTip(tr("Add a layer"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersAdd()));
@@ -210,7 +208,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     // remove layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":ui/layerremove.png"));
-    but->setMinimumSize(QSize(22,22));
+	but->setMinimumSize(minButSize);
     but->setToolTip(tr("Remove the current layer"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersRemove()));
@@ -218,7 +216,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     // rename layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":ui/layeredit.png"));
-    but->setMinimumSize(QSize(22,22));
+	but->setMinimumSize(minButSize);
     but->setToolTip(tr("Modify layer attributes / rename"));
     connect(but, SIGNAL(clicked()),
             actionHandler, SLOT(slotLayersEdit()));
@@ -239,16 +237,6 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
 
     connect(layerView, SIGNAL(pressed(QModelIndex)), this, SLOT(slotActivated(QModelIndex)));
 }
-
-
-
-/**
- * Destructor
- */
-QG_LayerWidget::~QG_LayerWidget() {
-//    delete layerView;
-}
-
 
 
 /**

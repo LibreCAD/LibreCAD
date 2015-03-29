@@ -52,8 +52,8 @@ public:
         NAME,
         LAST
     };
-    QG_LayerModel(QObject * parent = 0);
-    ~QG_LayerModel();
+	QG_LayerModel(QObject * parent = nullptr);
+	~QG_LayerModel() = default;
     Qt::ItemFlags flags ( const QModelIndex & /*index*/ ) const {
             return Qt::ItemIsSelectable|Qt::ItemIsEnabled;}
     int columnCount(const QModelIndex &/*parent*/) const {return LAST;}
@@ -86,7 +86,7 @@ class QG_LayerWidget: public QWidget, public RS_LayerListListener {
 public:
     QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
                    const char* name=0, Qt::WindowFlags f = 0);
-    ~QG_LayerWidget();
+	~QG_LayerWidget() = default;
 
     void setLayerList(RS_LayerList* layerList, bool showByBlock);
 
