@@ -34,34 +34,24 @@
 /**
  * Holds the data that defines a line.
  */
-class RS_SplineData {
-public:
-    /**
-     * Default constructor. Leaves the data object uninitialized.
-     */
+struct RS_SplineData {
+	/**
+	 * Default constructor. Leaves the data object uninitialized.
+	 */
 	RS_SplineData() = default;
 
-        RS_SplineData(int degree, bool closed) {
-                this->degree = degree;
-                this->closed = closed;
-        }
+	RS_SplineData(int degree, bool closed);
 
-    friend std::ostream& operator << (std::ostream& os, const RS_SplineData& ld) {
-        os << "( degree: " << ld.degree <<
-        " closed: " << ld.closed <<
-        ")";
-        return os;
-    }
 
-public:
-        /** Degree of the spline (1, 2, 3) */
-        int degree;
-        /** Closed flag. */
-        bool closed;
-        /** Control points of the spline. */
-    QList<RS_Vector> controlPoints;
+	/** Degree of the spline (1, 2, 3) */
+	int degree;
+	/** Closed flag. */
+	bool closed;
+	/** Control points of the spline. */
+	QList<RS_Vector> controlPoints;
 };
 
+std::ostream& operator << (std::ostream& os, const RS_SplineData& ld);
 
 /**
  * Class for a spline entity.

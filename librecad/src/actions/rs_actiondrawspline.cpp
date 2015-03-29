@@ -27,6 +27,7 @@
 #include <QAction>
 #include "rs_actiondrawspline.h"
 
+#include "rs_spline.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commands.h"
@@ -35,24 +36,18 @@
 
 
 RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
-                                     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw splines",
-                           container, graphicView)
-        ,spline(NULL)
+										 RS_GraphicView& graphicView)
+	:RS_PreviewActionInterface("Draw splines",
+							   container, graphicView)
+	,data(new RS_SplineData(3, false))
+	,spline(nullptr)
 {
-
-    reset();
-    data = RS_SplineData(3, false);
+	reset();
 }
 
 
 
-RS_ActionDrawSpline::~RS_ActionDrawSpline() {
-    if(spline != NULL) {
-        delete spline;
-        spline=NULL;
-    }
-}
+RS_ActionDrawSpline::~RS_ActionDrawSpline() {}
 
 
 QAction* RS_ActionDrawSpline::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
@@ -66,7 +61,7 @@ QAction* RS_ActionDrawSpline::createGUIAction(RS2::ActionType /*type*/, QObject*
 
 
 void RS_ActionDrawSpline::reset() {
-        spline = NULL;
+		spline = nullptr;
     //start = RS_Vector(false);
     history.clear();
     //bHistory.clear();
@@ -85,7 +80,7 @@ void RS_ActionDrawSpline::init(int status) {
 void RS_ActionDrawSpline::trigger() {
     RS_PreviewActionInterface::trigger();
 
-        if (spline==NULL) {
+		if (!spline) {
                 return;
         }
 
@@ -169,7 +164,7 @@ void RS_ActionDrawSpline::coordinateEvent(RS_CoordinateEvent* e) {
         history.clear();
         history.append(mouse);
                 if (spline==NULL) {
-                        spline = new RS_Spline(container, data);
+						spline = new RS_Spline(container, *data);
                         spline->addControlPoint(mouse);
                 }
         //bHistory.clear();
@@ -379,25 +374,25 @@ void RS_ActionDrawSpline::undo() {
 
 
 void RS_ActionDrawSpline::setDegree(int deg) {
-        data.degree = deg;
-        if (spline!=NULL) {
+		data->degree = deg;
+		if (spline) {
                 spline->setDegree(deg);
         }
 }
 
 int RS_ActionDrawSpline::getDegree() {
-        return data.degree;
+		return data->degree;
 }
 
 void RS_ActionDrawSpline::setClosed(bool c) {
-        data.closed = c;
-        if (spline!=NULL) {
+		data->closed = c;
+		if (spline) {
                 spline->setClosed(c);
         }
 }
 
 bool RS_ActionDrawSpline::isClosed() {
-        return data.closed;
+		return data->closed;
 }
 
 // EOF

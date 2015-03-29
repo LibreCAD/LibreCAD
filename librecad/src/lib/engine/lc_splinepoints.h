@@ -43,26 +43,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * of that shape. It will be further possible to modify the spline,
  * but the control points will serve as handles then. 
  */
-class LC_SplinePointsData
+struct LC_SplinePointsData
 {
-public:
 	/**
 	* Default constructor. Leaves the data object uninitialized.
 	*/
     LC_SplinePointsData() = default;
+	~LC_SplinePointsData() = default;
 
-    LC_SplinePointsData(bool closed, bool cut)
-	{
-		this->closed = closed;
-		this->cut = cut;
-	}
+	LC_SplinePointsData(bool closed, bool cut);
 
-    friend std::ostream& operator << (std::ostream& os, const LC_SplinePointsData& ld)
-	{
-		os << "( closed: " << ld.closed << ")";
-		return os;
-	}
-public:
 	bool closed;
 	bool cut;
 	/** points on the spline. */
@@ -70,6 +60,7 @@ public:
 	QList<RS_Vector> controlPoints;
 };
 
+std::ostream& operator << (std::ostream& os, const LC_SplinePointsData& ld);
 
 /**
  * Class for a spline entity.

@@ -26,7 +26,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_previewactioninterface.h"
 #include "rs_actiondrawspline.h"
-#include "lc_splinepoints.h"
+
+struct LC_SplinePointsData;
+class LC_SplinePoints;
 
 /**
  * This action class can handle user events to draw splines through points.
@@ -86,12 +88,12 @@ protected:
 	/**
 	* Spline data defined so far.
 	*/
-    LC_SplinePointsData data;
+	std::unique_ptr<LC_SplinePointsData> data;
 
 	/**
 	* Spline used.
 	*/
-    LC_SplinePoints *spline;
+	std::unique_ptr<LC_SplinePoints> spline;
 
 	/**
 	* Point history (for undo)

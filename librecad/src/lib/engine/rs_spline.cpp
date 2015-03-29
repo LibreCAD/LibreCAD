@@ -34,6 +34,20 @@
 #include "rs_painter.h"
 #include "rs_graphic.h"
 
+
+RS_SplineData::RS_SplineData(int _degree, bool _closed):
+	degree(_degree)
+  ,closed(_closed)
+{
+}
+
+std::ostream& operator << (std::ostream& os, const RS_SplineData& ld) {
+	os << "( degree: " << ld.degree <<
+		  " closed: " << ld.closed <<
+		  ")";
+	return os;
+}
+
 /**
  * Constructor.
  */

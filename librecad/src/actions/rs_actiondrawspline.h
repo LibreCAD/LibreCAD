@@ -28,8 +28,9 @@
 #define RS_ACTIONDRAWSPLINE_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_spline.h"
 
+struct RS_SplineData;
+class RS_Spline;
 
 /**
  * This action class can handle user events to draw splines.
@@ -88,7 +89,7 @@ protected:
     /**
      * Spline data defined so far.
      */
-    RS_SplineData data;
+	std::unique_ptr<RS_SplineData> data;
 	
     /**
      * Polyline entity we're working on.

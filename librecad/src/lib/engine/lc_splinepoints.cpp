@@ -33,6 +33,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_painterqt.h"
 #include "lc_quadratic.h"
 
+LC_SplinePointsData::LC_SplinePointsData(bool _closed, bool _cut):
+	closed(_closed)
+  ,cut(_cut)
+{
+}
+
+std::ostream& operator << (std::ostream& os, const LC_SplinePointsData& ld)
+{
+	os << "( closed: " << ld.closed << ")";
+	return os;
+}
+
 RS_Vector GetQuadPoint(const RS_Vector& x1,
 	const RS_Vector& c1, const RS_Vector& x2, double dt)
 {
@@ -267,7 +279,9 @@ RS_Vector GetThreePointsControl(const RS_Vector& x1, const RS_Vector& x2, const 
  * Constructor.
  */
 LC_SplinePoints::LC_SplinePoints(RS_EntityContainer* parent,
-    const LC_SplinePointsData& d) : RS_AtomicEntity(parent), data(d)
+								 const LC_SplinePointsData& d) :
+	RS_AtomicEntity(parent)
+  ,data(d)
 {
 	calculateBorders();
 }
