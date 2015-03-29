@@ -26,8 +26,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <vector>
 #include "rs_previewactioninterface.h"
 
-class RS_EllipseData;
+struct RS_EllipseData;
 class RS_Line;
+
 /**
  * Draw ellipse by foci and a point on ellipse
  *

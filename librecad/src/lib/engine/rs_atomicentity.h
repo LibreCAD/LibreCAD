@@ -30,7 +30,7 @@
 
 #include "rs_entity.h"
 
-class RS_CircleData;
+struct RS_CircleData;
 
 /**
  * Class representing an atomic entity

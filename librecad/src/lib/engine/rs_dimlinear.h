@@ -33,17 +33,11 @@
 /**
  * Holds the data that defines a linear dimension entity.
  */
-class RS_DimLinearData {
-public:
+struct RS_DimLinearData {
     /**
 	 * Default constructor
      */
-	RS_DimLinearData():
-		extensionPoint1(false),
-		extensionPoint2(false),
-		angle(0.0),
-		oblique(0.0)
-	{}
+	RS_DimLinearData();
 
     /**
      * Constructor with initialisation.
@@ -55,23 +49,8 @@ public:
      */
     RS_DimLinearData(const RS_Vector& extensionPoint1,
                      const RS_Vector& extensionPoint2,
-                     double angle, double oblique) {
-        this->extensionPoint1 = extensionPoint1;
-        this->extensionPoint2 = extensionPoint2;
-        this->angle = angle;
-        this->oblique = oblique;
-    }
+					 double angle, double oblique);
 
-    friend class RS_DimLinear;
-    friend class RS_ActionDimLinear;
-
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_DimLinearData& dd) {
-        os << "(" << dd.extensionPoint1 << "/" << dd.extensionPoint1 << ")";
-        return os;
-    }
-
-public:
     /** Definition point. Startpoint of the first definition line. */
     RS_Vector extensionPoint1;
     /** Definition point. Startpoint of the second definition line. */
@@ -82,7 +61,8 @@ public:
     double oblique;
 };
 
-
+std::ostream& operator << (std::ostream& os,
+									  const RS_DimLinearData& dd);
 
 /**
  * Class for aligned dimension entities.

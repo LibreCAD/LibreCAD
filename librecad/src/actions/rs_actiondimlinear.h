@@ -28,7 +28,8 @@
 #define RS_ACTIONDIMLINEAR_H
 
 #include "rs_actiondimension.h"
-#include "rs_dimlinear.h"
+
+struct RS_DimLinearData;
 
 /**
  * This action class can handle user events to draw 
@@ -87,23 +88,17 @@ public:
 	
     virtual void updateMouseButtonHints();
 
-	double getAngle() {
-		return edata.angle;
-	}
+	double getAngle() const;
 
-	void setAngle(double a) {
-		edata.angle = a;
-	}
+	void setAngle(double a);
 
-	bool hasFixedAngle() {
-		return fixedAngle;
-	}
+	bool hasFixedAngle() const;
 
 protected:
     /**
      * Aligned dimension data.
      */
-    RS_DimLinearData edata;
+	std::unique_ptr<RS_DimLinearData> edata;
     /**
      * Is the angle fixed?
      */

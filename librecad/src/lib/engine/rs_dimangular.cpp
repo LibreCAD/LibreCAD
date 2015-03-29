@@ -35,7 +35,36 @@
 #include "rs_solid.h"
 #include "rs_mtext.h"
 
+RS_DimAngularData::RS_DimAngularData():
+	definitionPoint1(false),
+	definitionPoint2(false),
+	definitionPoint3(false),
+	definitionPoint4(false)
+{}
 
+/**
+ * Constructor with initialisation.
+ *
+ * @param definitionPoint Definition point of the angular dimension.
+ * @param leader Leader length.
+ */
+RS_DimAngularData::RS_DimAngularData(const RS_Vector& _definitionPoint1,
+				  const RS_Vector& _definitionPoint2,
+									  const RS_Vector& _definitionPoint3,
+									  const RS_Vector& _definitionPoint4):
+	definitionPoint1(_definitionPoint1)
+	,definitionPoint2(_definitionPoint2)
+	,definitionPoint3(_definitionPoint3)
+	,definitionPoint4(_definitionPoint4)
+{
+}
+
+std::ostream& operator << (std::ostream& os,
+								  const RS_DimAngularData& dd) {
+	os << "(" << dd.definitionPoint1 << "," << dd.definitionPoint2 << ","
+					  << dd.definitionPoint3 << "," << dd.definitionPoint3 << ")";
+	return os;
+}
 /**
  * Constructor.
  *
@@ -118,7 +147,7 @@ RS_Vector RS_DimAngular::getCenter() const {
     RS_ConstructionLine l1(NULL, RS_ConstructionLineData(edata.definitionPoint1,
                            edata.definitionPoint2));
     RS_ConstructionLine l2(NULL, RS_ConstructionLineData(edata.definitionPoint3,
-                           data.definitionPoint));
+						   data.definitionPoint));
     RS_VectorSolutions vs = RS_Information::getIntersection(&l1, &l2, false);
 
     return vs.get(0);
@@ -163,7 +192,7 @@ if ( a1 >= 0. ) {
 }
 a1 = d*(rp1*p0p2-p1p2*p0p1);
 if ( a1 >= 0. ) {
-            p2 = data.definitionPoint;
+			p2 = data.definitionPoint;
 } else {
             vp2 *= -1;
             p2 = edata.definitionPoint3;

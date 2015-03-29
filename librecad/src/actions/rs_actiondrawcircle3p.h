@@ -29,7 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
-class RS_CircleData;
+struct RS_CircleData;
 
 /**
  * This action class can handle user events to draw 

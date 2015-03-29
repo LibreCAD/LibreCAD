@@ -30,7 +30,7 @@
 #include "rs_previewactioninterface.h"
 
 class RS_Line;
-class RS_LineData;
+struct RS_LineData;
 /**
  * This action class can handle user events to draw tangents from circle to
  * circle.

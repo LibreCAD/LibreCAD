@@ -1274,7 +1274,7 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
 
     RS_Block* block =
             new RS_Block(container,
-						 RS_BlockData(data->name, data->basePoint, data->frozen));
+						 RS_BlockData(*data));
 
     // copy entities into a block
     for (RS_Entity* e=container->firstEntity();

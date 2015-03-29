@@ -36,38 +36,18 @@
 /**
  * Holds the data that defines a polyline.
  */
-class RS_PolylineData : public RS_Flags {
-public:
-    RS_PolylineData() {
-        startpoint = endpoint = RS_Vector(false);
-    }
-    RS_PolylineData(const RS_Vector& startpoint,
+struct RS_PolylineData : public RS_Flags {
+	RS_PolylineData();
+	~RS_PolylineData()=default;
+	RS_PolylineData(const RS_Vector& startpoint,
                     const RS_Vector& endpoint,
-                    bool closed) {
+					bool closed);
 
-        this->startpoint = startpoint;
-        this->endpoint = endpoint;
-        if (closed==true) {
-            setFlag(RS2::FlagClosed);
-        }
-    }
-
-    friend class RS_Polyline;
-
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_PolylineData& pd) {
-        os << "(" << pd.startpoint <<
-        "/" << pd.endpoint <<
-        ")";
-        return os;
-    }
-
-private:
     RS_Vector startpoint;
     RS_Vector endpoint;
 };
 
-
+std::ostream& operator << (std::ostream& os, const RS_PolylineData& pd);
 
 /**
  * Class for a poly line entity (lots of connected lines and arcs).

@@ -72,7 +72,8 @@ RS_Image::RS_Image(RS_EntityContainer* parent,
 }
 
 RS_Image::RS_Image(const RS_Image& _image):
-	data(_image.data)
+	RS_AtomicEntity(_image.getParent())
+  ,data(_image.data)
   ,img(_image.img.get()?new QImage(*_image.img):nullptr)
 {
 }

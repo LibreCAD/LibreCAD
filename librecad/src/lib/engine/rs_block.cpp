@@ -29,6 +29,19 @@
 
 #include "rs_graphic.h"
 
+RS_BlockData::RS_BlockData(const QString& _name,
+						   const RS_Vector& _basePoint,
+						   bool _frozen):
+	name(_name)
+  ,basePoint(_basePoint)
+  ,frozen(_frozen)
+{
+}
+
+bool RS_BlockData::isValid() const{
+	return (!name.isEmpty() && basePoint.valid);
+}
+
 /**
  * @param parent The graphic this block belongs to.
  * @param name The name of the block used as an identifier.

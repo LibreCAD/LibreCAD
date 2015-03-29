@@ -42,6 +42,13 @@
 #include "emu_c99.h"
 #endif
 
+RS_LineData::RS_LineData(const RS_Vector& _startpoint,
+			const RS_Vector& _endpoint):
+	startpoint(_startpoint)
+	,endpoint(_endpoint)
+{
+}
+
 std::ostream& operator << (std::ostream& os, const RS_LineData& ld) {
 	os << "(" << ld.startpoint <<
 		  "/" << ld.endpoint <<
@@ -381,8 +388,8 @@ bool RS_Line::offset(const RS_Vector& coord, const double& distance) {
 
 bool RS_Line::isTangent(const RS_CircleData&  circleData){
     double d;
-    getNearestPointOnEntity(circleData.center,false,&d);
-    if(fabs(d-circleData.radius)<20.*RS_TOLERANCE) return true;
+	getNearestPointOnEntity(circleData.center,false,&d);
+	if(fabs(d-circleData.radius)<20.*RS_TOLERANCE) return true;
     return false;
 }
 

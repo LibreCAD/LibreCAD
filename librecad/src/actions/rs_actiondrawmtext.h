@@ -28,8 +28,8 @@
 #define RS_ACTIONDRAWMTEXT_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_mtext.h"
 
+struct RS_MTextData;
 
 /**
  * This action class can handle user events to draw texts.
@@ -51,7 +51,7 @@ public:
 public:
     RS_ActionDrawMText(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-    ~RS_ActionDrawMText() = default;
+	~RS_ActionDrawMText();
 
         static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
@@ -87,7 +87,7 @@ public:
         double getAngle();
 
 private:
-    RS_MTextData data;
+	std::unique_ptr<RS_MTextData> data;
         //RS_Text* text;
     RS_Vector pos;
         bool textChanged;

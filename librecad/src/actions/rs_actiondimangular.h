@@ -28,8 +28,8 @@
 #define RS_ACTIONDIMANGULAR_H
 
 #include "rs_actiondimension.h"
-#include "rs_dimangular.h"
 
+struct RS_DimAngularData;
 
 /**
  * This action class can handle user events to draw angular dimensions.
@@ -49,7 +49,7 @@ private:
 public:
     RS_ActionDimAngular(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDimAngular() = default;
+	~RS_ActionDimAngular();
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
@@ -81,7 +81,7 @@ private:
 	/** Center of arc */
 	RS_Vector center;
     /** Data of new dimension */
-    RS_DimAngularData edata;
+	std::unique_ptr<RS_DimAngularData> edata;
 	/** Last status before entering text. */
 	Status lastStatus;
 };

@@ -31,6 +31,71 @@
 #include "rs_solid.h"
 #include "rs_units.h"
 
+RS_DimensionData::RS_DimensionData():
+	definitionPoint(false),
+	middleOfText(false),
+	valign(RS_MTextData::VABottom),
+	halign(RS_MTextData::HALeft),
+	lineSpacingStyle(RS_MTextData::Exact),
+	lineSpacingFactor(0.0),
+	text(""),
+	style(""),
+	angle(0.0)
+{}
+
+/**
+ * Constructor with initialisation.
+ *
+ * @param definitionPoint Definition point.
+ * @param middleOfText Middle point of dimension text.
+ * @param valign Vertical alignment.
+ * @param halign Horizontal alignment.
+ * @param lineSpacingStyle Line spacing style.
+ * @param lineSpacingFactor Line spacing factor.
+ * @param text Text string entered explicitly by user or null
+ *         or "<>" for the actual measurement or " " (one blank space).
+ *         for supressing the text.
+ * @param style Dimension style name.
+ * @param angle Rotation angle of dimension text away from
+ *         default orientation.
+ */
+RS_DimensionData::RS_DimensionData(const RS_Vector& _definitionPoint,
+				 const RS_Vector& _middleOfText,
+				 RS_MTextData::VAlign _valign,
+				 RS_MTextData::HAlign _halign,
+				 RS_MTextData::MTextLineSpacingStyle _lineSpacingStyle,
+				 double _lineSpacingFactor,
+				 QString _text,
+				 QString _style,
+				 double _angle):
+	definitionPoint(_definitionPoint)
+	,middleOfText(_middleOfText)
+	,valign(_valign)
+	,halign(_halign)
+	,lineSpacingStyle(_lineSpacingStyle)
+	,lineSpacingFactor(_lineSpacingFactor)
+	,text(_text)
+	,style(_style)
+	,angle(_angle)
+{
+}
+
+std::ostream& operator << (std::ostream& os,
+						   const RS_DimensionData& dd) {
+	os << "("
+	   << dd.definitionPoint<<','
+	   <<dd.middleOfText<<','
+	  <<dd.valign<<','
+	 <<dd.halign<<','
+	<<dd.lineSpacingStyle<<','
+	<<dd.lineSpacingFactor<<','
+	<<dd.text.toLatin1().data() <<','
+	<<dd.style.toLatin1().data()<<','
+	<<dd.angle
+	<< ")";
+	return os;
+}
+
 /**
  * Constructor.
  */
@@ -403,7 +468,7 @@ double RS_Dimension::getGraphicVariable(const QString& key, double defMM,
 
 
 void RS_Dimension::move(const RS_Vector& offset) {
-    data.definitionPoint.move(offset);
+	data.definitionPoint.move(offset);
     data.middleOfText.move(offset);
 }
 
@@ -411,27 +476,27 @@ void RS_Dimension::move(const RS_Vector& offset) {
 
 void RS_Dimension::rotate(const RS_Vector& center, const double& angle) {
     RS_Vector angleVector(angle);
-    data.definitionPoint.rotate(center, angleVector);
+	data.definitionPoint.rotate(center, angleVector);
     data.middleOfText.rotate(center, angleVector);
     data.angle = RS_Math::correctAngle(data.angle+angle);
 }
 
 void RS_Dimension::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
-    data.definitionPoint.rotate(center, angleVector);
+	data.definitionPoint.rotate(center, angleVector);
     data.middleOfText.rotate(center, angleVector);
     data.angle = RS_Math::correctAngle(data.angle+angleVector.angle());
 }
 
 
 void RS_Dimension::scale(const RS_Vector& center, const RS_Vector& factor) {
-    data.definitionPoint.scale(center, factor);
+	data.definitionPoint.scale(center, factor);
     data.middleOfText.scale(center, factor);
 }
 
 
 
 void RS_Dimension::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
-    data.definitionPoint.mirror(axisPoint1, axisPoint2);
+	data.definitionPoint.mirror(axisPoint1, axisPoint2);
     data.middleOfText.mirror(axisPoint1, axisPoint2);
 }
 

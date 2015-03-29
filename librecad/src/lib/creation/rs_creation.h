@@ -41,10 +41,10 @@ class RS_Circle;
 class RS_Ellipse;
 class RS_Line;
 class LC_SplinePoints;
-class RS_BlockData;
+struct RS_BlockData;
 struct RS_ImageData;
 class RS_Image;
-class RS_InsertData;
+struct RS_InsertData;
 class RS_Insert;
 class RS_Block;
 

@@ -31,6 +31,51 @@
 #include "rs_fontlist.h"
 #include "rs_insert.h"
 
+RS_MTextData::RS_MTextData(const RS_Vector& _insertionPoint,
+			double _height,
+			double _width,
+			VAlign _valign,
+			HAlign _halign,
+			MTextDrawingDirection _drawingDirection,
+			MTextLineSpacingStyle _lineSpacingStyle,
+			double _lineSpacingFactor,
+			const QString& _text,
+			const QString& _style,
+			double _angle,
+			RS2::UpdateMode _updateMode):
+	insertionPoint(_insertionPoint)
+	,height(_height)
+	,width(_width)
+	,valign(_valign)
+	,halign(_halign)
+	,drawingDirection(_drawingDirection)
+	,lineSpacingStyle(_lineSpacingStyle)
+	,lineSpacingFactor(_lineSpacingFactor)
+	,text(_text)
+	,style(_style)
+	,angle(_angle)
+	,updateMode(_updateMode)
+{
+}
+
+std::ostream& operator << (std::ostream& os, const RS_MTextData& td) {
+	os << "("
+	   <<td.insertionPoint<<','
+	  <<td.height<<','
+	 <<td.width<<','
+	<<td.valign<<','
+	<<td.halign<<','
+	<<td.drawingDirection<<','
+	<<td.lineSpacingStyle<<','
+	<<td.lineSpacingFactor<<','
+	<<td.text.toLatin1().data() <<','
+	<<td.style.toLatin1().data()<<','
+	<<td.angle<<','
+	<<td.updateMode<<','
+	<<")";
+	return os;
+}
+
 /**
  * Constructor.
  */

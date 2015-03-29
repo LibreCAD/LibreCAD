@@ -34,52 +34,27 @@ class LC_Quadratic;
 /**
  * Holds the data that defines an arc.
  */
-class RS_ArcData {
-public:
+struct RS_ArcData {
 	RS_ArcData() = default;
+	~RS_ArcData() = default;
 
-    RS_ArcData(const RS_Vector& center,
-               double radius,
-               double angle1, double angle2,
-               bool reversed) {
+	RS_ArcData(const RS_Vector& center,
+			   double radius,
+			   double angle1, double angle2,
+			   bool reversed);
 
-        this->center = center;
-        this->radius = radius;
-        this->angle1 = angle1;
-        this->angle2 = angle2;
-        this->reversed = reversed;
-    }
+	void reset();
 
-    void reset() {
-        center = RS_Vector(false);
-        radius = 0.0;
-        angle1 = 0.0;
-        angle2 = 0.0;
-        reversed = false;
-    }
+	bool isValid() const;
 
-    bool isValid() {
-        return (center.valid && radius>RS_TOLERANCE &&
-                fabs(angle1-angle2)>RS_TOLERANCE_ANGLE);
-    }
-
-    friend std::ostream& operator << (std::ostream& os, const RS_ArcData& ad) {
-        os << "(" << ad.center <<
-           "/" << ad.radius <<
-           " " << ad.angle1 <<
-           "," << ad.angle2 <<
-           ")";
-        return os;
-    }
-
-public:
-    RS_Vector center;
-    double radius;
-    double angle1;
-    double angle2;
-    bool reversed;
+	RS_Vector center;
+	double radius;
+	double angle1;
+	double angle2;
+	bool reversed;
 };
 
+std::ostream& operator << (std::ostream& os, const RS_ArcData& ad);
 
 
 /**
@@ -159,26 +134,12 @@ public:
      * @return Direction 1. The angle at which the arc starts at
      * the startpoint.
      */
-    double getDirection1() const {
-        if (!data.reversed) {
-            return RS_Math::correctAngle(data.angle1+M_PI/2.0);
-        }
-        else {
-            return RS_Math::correctAngle(data.angle1-M_PI/2.0);
-        }
-    }
+	double getDirection1() const;
     /**
      * @return Direction 2. The angle at which the arc starts at
      * the endpoint.
      */
-    double getDirection2() const {
-        if (!data.reversed) {
-            return RS_Math::correctAngle(data.angle2-M_PI/2.0);
-        }
-        else {
-            return RS_Math::correctAngle(data.angle2+M_PI/2.0);
-        }
-    }
+	double getDirection2() const;
 
     /**
      * @retval true if the arc is reversed (clockwise),

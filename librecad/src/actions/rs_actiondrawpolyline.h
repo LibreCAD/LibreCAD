@@ -29,8 +29,8 @@
 
 #include "rs_previewactioninterface.h"
 
-class RS_PolylineData;
-class RS_ArcData;
+struct RS_PolylineData;
+struct RS_ArcData;
 class RS_Polyline;
 
 /**

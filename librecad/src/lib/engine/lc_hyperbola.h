@@ -37,8 +37,7 @@ class LC_Quadratic;
  * ratio is the ratio between semi-major and semi-minor axis
 
  */
-class LC_HyperbolaData {
-public:
+struct LC_HyperbolaData {
 	LC_HyperbolaData() = default;
 	LC_HyperbolaData(const RS_Vector& center,
 					 const RS_Vector& majorP,
@@ -47,31 +46,25 @@ public:
 					 bool reversed);
 	~LC_HyperbolaData() = default;
 	/** create data based on foci and a point on hyperbola */
-    LC_HyperbolaData(const RS_Vector& focus0,
-                     const RS_Vector& focus1,
-                     const RS_Vector& point);
-//    LC_HyperbolaData(const RS_Vector& focus0, const RS_Circle* circle);
+	LC_HyperbolaData(const RS_Vector& focus0,
+					 const RS_Vector& focus1,
+					 const RS_Vector& point);
 
-    friend class LC_Hyperbola;
-
-	friend std::ostream& operator << (std::ostream& os, const LC_HyperbolaData& ed);
-
-private:
-    //! Hyperbola center
-    RS_Vector center;
-    //! Endpoint of major axis relative to center.
-    RS_Vector majorP;
-    //! Ratio of minor axis to major axis.
-    double ratio;
-    //! Start angle
-    double angle1;
-    //! End angle
-    double angle2;
-    //! Reversed (cw) flag
-    bool reversed;
+	//! Hyperbola center
+	RS_Vector center;
+	//! Endpoint of major axis relative to center.
+	RS_Vector majorP;
+	//! Ratio of minor axis to major axis.
+	double ratio;
+	//! Start angle
+	double angle1;
+	//! End angle
+	double angle2;
+	//! Reversed (cw) flag
+	bool reversed;
 };
 
-
+std::ostream& operator << (std::ostream& os, const LC_HyperbolaData& ed);
 
 
 /**

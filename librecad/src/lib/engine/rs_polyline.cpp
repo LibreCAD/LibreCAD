@@ -34,7 +34,31 @@
 //#include "rs_modification.h"
 #include "rs_information.h"
 
+RS_PolylineData::RS_PolylineData():
+	startpoint(false)
+	,endpoint(false)
+{
+}
 
+RS_PolylineData::RS_PolylineData(const RS_Vector& _startpoint,
+				const RS_Vector& _endpoint,
+				bool _closed):
+	startpoint(_startpoint)
+	,endpoint(_endpoint)
+{
+
+	if (_closed==true) {
+		setFlag(RS2::FlagClosed);
+	}
+}
+
+std::ostream& operator << (std::ostream& os,
+								  const RS_PolylineData& pd) {
+	os << "(" << pd.startpoint <<
+	"/" << pd.endpoint <<
+	")";
+	return os;
+}
 /**
  * Constructor.
  */

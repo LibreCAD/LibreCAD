@@ -33,47 +33,29 @@
 /**
  * Holds the data that defines an aligned dimension entity.
  */
-class RS_DimAlignedData {
-public:
-    /**
+struct RS_DimAlignedData {
+	/**
 	 * Default constructor
-     */
-	RS_DimAlignedData():
-		extensionPoint1(false),
-		extensionPoint2(false)
-	{}
+	 */
+	RS_DimAlignedData();
+	/**
+	 * Constructor with initialisation.
+	 *
+		* @para extensionPoint1 Definition point. Startpoint of the
+	 *         first extension line.
+		* @para extensionPoint2 Definition point. Startpoint of the
+	 *         second extension line.
+	 */
+	RS_DimAlignedData(const RS_Vector& extensionPoint1,
+					  const RS_Vector& extensionPoint2);
 
-    /**
-     * Constructor with initialisation.
-     *
-        * @para extensionPoint1 Definition point. Startpoint of the
-     *         first extension line.
-        * @para extensionPoint2 Definition point. Startpoint of the
-     *         second extension line.
-     */
-    RS_DimAlignedData(const RS_Vector& extensionPoint1,
-                      const RS_Vector& extensionPoint2) {
-        this->extensionPoint1 = extensionPoint1;
-        this->extensionPoint2 = extensionPoint2;
-    }
-
-    friend class RS_DimAligned;
-    friend class RS_ActionDimAligned;
-
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_DimAlignedData& dd) {
-        os << "(" << dd.extensionPoint1 << "/" << dd.extensionPoint1 << ")";
-        return os;
-    }
-
-private:
-    /** Definition point. Startpoint of the first extension line. */
-    RS_Vector extensionPoint1;
-    /** Definition point. Startpoint of the second extension line. */
-    RS_Vector extensionPoint2;
+	/** Definition point. Startpoint of the first extension line. */
+	RS_Vector extensionPoint1;
+	/** Definition point. Startpoint of the second extension line. */
+	RS_Vector extensionPoint2;
 };
 
-
+std::ostream& operator << (std::ostream& os, const RS_DimAlignedData& dd);
 
 /**
  * Class for aligned dimension entities.

@@ -26,6 +26,7 @@
 
 #include <QAction>
 #include "rs_actiondimdiametric.h"
+#include "rs_dimdiametric.h"
 
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
@@ -43,6 +44,7 @@ RS_ActionDimDiametric::RS_ActionDimDiametric(
     reset();
 }
 
+RS_ActionDimDiametric::~RS_ActionDimDiametric(){}
 
 QAction* RS_ActionDimDiametric::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Diametric")
@@ -55,8 +57,9 @@ QAction* RS_ActionDimDiametric::createGUIAction(RS2::ActionType /*type*/, QObjec
 void RS_ActionDimDiametric::reset() {
     RS_ActionDimension::reset();
 
-    edata = RS_DimDiametricData(RS_Vector(false),
-                                0.0);
+	edata.reset(new RS_DimDiametricData(RS_Vector(false),
+								0.0)
+				);
     entity = NULL;
     pos = RS_Vector(false);
     RS_DIALOGFACTORY->requestOptions(this, true, true);
@@ -72,8 +75,8 @@ void RS_ActionDimDiametric::trigger() {
         RS_DimDiametric* newEntity = NULL;
 
         newEntity = new RS_DimDiametric(container,
-                                        data,
-                                        edata);
+										*data,
+										*edata);
 
         newEntity->setLayerToActive();
         newEntity->setPenToActive();
@@ -111,11 +114,11 @@ void RS_ActionDimDiametric::preparePreview() {
         }
         double angle = center.angleTo(pos);
 
-        data.definitionPoint.setPolar(radius, angle+M_PI);
-        data.definitionPoint += center;
+		data->definitionPoint.setPolar(radius, angle+M_PI);
+		data->definitionPoint += center;
 
-        edata.definitionPoint.setPolar(radius, angle);
-        edata.definitionPoint += center;
+		edata->definitionPoint.setPolar(radius, angle);
+		edata->definitionPoint += center;
     }
 }
 
@@ -137,7 +140,7 @@ void RS_ActionDimDiametric::mouseMoveEvent(QMouseEvent* e) {
             pos = snapPoint(e);
 
             preparePreview();
-			RS_DimDiametric* d = new RS_DimDiametric(preview.get(), data, edata);
+			RS_DimDiametric* d = new RS_DimDiametric(preview.get(), *data, *edata);
 
             deletePreview();
             preview->addEntity(d);
@@ -253,7 +256,7 @@ void RS_ActionDimDiametric::commandEvent(RS_CommandEvent* e) {
         double a = RS_Math::eval(c, &ok);
         if (ok==true) {
             pos.setPolar(1.0, RS_Math::deg2rad(a));
-            pos += data.definitionPoint;
+			pos += data->definitionPoint;
             trigger();
             reset();
             setStatus(SetEntity);

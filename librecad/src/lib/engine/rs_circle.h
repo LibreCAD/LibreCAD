@@ -39,42 +39,20 @@ class LC_Quadratic;
 /**
  * Holds the data that defines a circle.
  */
-class RS_CircleData {
-public:
+struct RS_CircleData {
 	RS_CircleData() = default;
 
-    RS_CircleData(const RS_Vector& center,
-                  double radius) {
+	RS_CircleData(const RS_Vector& m_vCenter,
+				  double radius);
 
-        this->center = center;
-        this->radius = radius;
-    }
+	void reset();
 
-    void reset() {
-        center = RS_Vector(false);
-        radius = 0.0;
-    }
-
-    bool isValid() {
-        return (center.valid && radius>RS_TOLERANCE);
-    }
-
-    friend class RS_Circle;
-
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_CircleData& ad) {
-        os << "(" << ad.center <<
-              "/" << ad.radius <<
-              ")";
-        return os;
-    }
-
-public:
-    RS_Vector center;
-    double radius;
+	bool isValid() const;
+	RS_Vector center;
+	double radius;
 };
 
-
+std::ostream& operator << (std::ostream& os, const RS_CircleData& ad);
 
 /**
  * Class for a circle entity.
@@ -129,21 +107,13 @@ public:
     }
 
     /** @return The center point (x) of this arc */
-    virtual RS_Vector getCenter() const {
-        return data.center;
-    }
+	virtual RS_Vector getCenter() const;
     /** Sets new center. */
-    void setCenter(const RS_Vector& c) {
-        data.center = c;
-    }
+	void setCenter(const RS_Vector& c);
     /** @return The radius of this arc */
-    virtual double getRadius() const {
-        return data.radius;
-    }
+	virtual double getRadius() const;
     /** Sets new radius. */
-    void setRadius(double r) {
-        data.radius = r;
-    }
+	void setRadius(double r);
     double getAngleLength() const;
     virtual double getLength() const;
     virtual bool isTangent(const RS_CircleData&  circleData);

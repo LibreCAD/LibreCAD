@@ -27,7 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_previewactioninterface.h"
 
 class RS_AtomicEntity;
-class RS_CircleData;
+struct RS_CircleData;
 
 /**
  * Draw a circle tangential to two give circles and with radius

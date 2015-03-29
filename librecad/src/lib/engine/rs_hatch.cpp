@@ -49,6 +49,23 @@
 #include "emu_qt44.h"
 #endif
 
+RS_HatchData::RS_HatchData(bool _solid,
+						   double _scale,
+						   double _angle,
+						   const QString& _pattern):
+	solid(_solid)
+  ,scale(_scale)
+  ,angle(_angle)
+  ,pattern(_pattern)
+{
+	//std::cout << "RS_HatchData: " << pattern.latin1() << "\n";
+}
+
+std::ostream& operator << (std::ostream& os, const RS_HatchData& td) {
+	os << "(" << td.pattern.toLatin1().data() << ")";
+	return os;
+}
+
 /**
  * Constructor.
  */

@@ -31,7 +31,7 @@
 #include "rs_insert.h"
 
 class RS_Block;
-class RS_InsertData;
+struct RS_InsertData;
 
 /**
  * This action class can handle user events for inserting blocks into the

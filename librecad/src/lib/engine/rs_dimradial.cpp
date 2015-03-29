@@ -31,6 +31,29 @@
 #include "rs_solid.h"
 #include "rs_graphic.h"
 
+RS_DimRadialData::RS_DimRadialData():
+	definitionPoint(false),
+	leader(0.0)
+{}
+
+/**
+ * Constructor with initialisation.
+ *
+ * @param definitionPoint Definition point of the radial dimension.
+ * @param leader Leader length.
+ */
+RS_DimRadialData::RS_DimRadialData(const RS_Vector& _definitionPoint,
+				 double _leader):
+	definitionPoint(_definitionPoint)
+	,leader(_leader)
+{
+}
+
+std::ostream& operator << (std::ostream& os,
+								  const RS_DimRadialData& dd) {
+	os << "(" << dd.definitionPoint << "/" << dd.leader << ")";
+	return os;
+}
 
 /**
  * Constructor.
@@ -60,7 +83,7 @@ RS_Entity* RS_DimRadial::clone() const {
 QString RS_DimRadial::getMeasuredLabel() {
 
     // Definitive dimension line:
-    double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
+	double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
 
     RS_Graphic* graphic = getGraphic();
 
@@ -78,7 +101,7 @@ QString RS_DimRadial::getMeasuredLabel() {
 
 RS_VectorSolutions RS_DimRadial::getRefPoints() {
         RS_VectorSolutions ret(edata.definitionPoint,
-                                                data.definitionPoint, data.middleOfText);
+												data.definitionPoint, data.middleOfText);
         return ret;
 }
 
@@ -106,7 +129,7 @@ void RS_DimRadial::updateDim(bool autoText) {
     // general scale (DIMSCALE)
     double dimscale = getGeneralScale();
 
-    RS_Vector p1 = data.definitionPoint;
+	RS_Vector p1 = data.definitionPoint;
     RS_Vector p2 = edata.definitionPoint;
     double angle = p1.angleTo(p2);
 
@@ -259,12 +282,12 @@ void RS_DimRadial::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoin
 void RS_DimRadial::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 
     if (ref.distanceTo(edata.definitionPoint)<1.0e-4) {
-                double d = data.definitionPoint.distanceTo(edata.definitionPoint);
-                double a = data.definitionPoint.angleTo(edata.definitionPoint + offset);
+				double d = data.definitionPoint.distanceTo(edata.definitionPoint);
+				double a = data.definitionPoint.angleTo(edata.definitionPoint + offset);
 
                 RS_Vector v;
                 v.setPolar(d, a);
-        edata.definitionPoint = data.definitionPoint + v;
+		edata.definitionPoint = data.definitionPoint + v;
                 updateDim(true);
     }
         else if (ref.distanceTo(data.middleOfText)<1.0e-4) {

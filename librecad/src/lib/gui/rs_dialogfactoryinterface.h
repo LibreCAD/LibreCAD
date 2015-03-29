@@ -31,15 +31,15 @@
 #include "rs.h"
 
 class RS_ActionInterface;
-class RS_ArcData;
+struct RS_ArcData;
 class RS_AttributesData;
 class RS_BevelData;
 class RS_Block;
-class RS_BlockData;
+struct RS_BlockData;
 class RS_BlockList;
-class RS_CircleData;
-class RS_DimLinearData;
-class RS_DimensionData;
+struct RS_CircleData;
+struct RS_DimLinearData;
+struct RS_DimensionData;
 class RS_Document;
 class RS_Entity;
 class RS_EventHandler;

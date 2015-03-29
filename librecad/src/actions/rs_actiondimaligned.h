@@ -28,7 +28,8 @@
 #define RS_ACTIONDIMALIGNED_H
 
 #include "rs_actiondimension.h"
-#include "rs_dimaligned.h"
+
+struct RS_DimAlignedData;
 
 /**
  * This action class can handle user events to draw
@@ -78,13 +79,13 @@ public:
     virtual void updateMouseButtonHints();
 
 protected:
-    /**
-     * Aligned dimension data.
-     */
-    RS_DimAlignedData edata;
+		/**
+	 * Aligned dimension data.
+	 */
+		std::unique_ptr<RS_DimAlignedData> edata;
 
-        /** Last status before entering text. */
-        Status lastStatus;
+		/** Last status before entering text. */
+		Status lastStatus;
 }
 ;
 

@@ -33,15 +33,11 @@
 /**
  * Holds the data that defines a diametric dimension entity.
  */
-class RS_DimDiametricData {
-public:
+struct RS_DimDiametricData {
     /**
 	 * Default constructor
      */
-	RS_DimDiametricData():
-		definitionPoint(false),
-		leader(0.0)
-	{}
+	RS_DimDiametricData();
 
     /**
      * Constructor with initialisation.
@@ -50,28 +46,16 @@ public:
      * @param leader Leader length.
      */
     RS_DimDiametricData(const RS_Vector& definitionPoint,
-                     double leader) {
-        this->definitionPoint = definitionPoint;
-        this->leader = leader;
-    }
+					 double leader);
 
-    friend class RS_DimDiametric;
-    //friend class RS_ActionDimDiametric;
 
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_DimDiametricData& dd) {
-        os << "(" << dd.definitionPoint << "/" << dd.leader << ")";
-        return os;
-    }
-
-public:
     /** Definition point. */
     RS_Vector definitionPoint;
     /** Leader length. */
     double leader;
 };
 
-
+std::ostream& operator << (std::ostream& os, const RS_DimDiametricData& dd);
 
 /**
  * Class for diametric dimension entities.

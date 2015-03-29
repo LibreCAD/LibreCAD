@@ -45,8 +45,7 @@ class LC_Quadratic;
  * angle1=angle2=0.0 is reserved for whole ellipses
  * add 2*M_PI to angle1 or angle2 to make whole range ellipse arcs
  */
-class RS_EllipseData {
-public:
+struct RS_EllipseData {
 	RS_EllipseData() = default;
 	RS_EllipseData(const RS_EllipseData& ) = default;
     RS_EllipseData(const RS_Vector& center,
@@ -55,11 +54,6 @@ public:
                    double angle1, double angle2,
 				   bool reversed);
 
-    friend class RS_Ellipse;
-
-	friend std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed);
-
-private:
     //! Ellipse center
     RS_Vector center;
     //! Endpoint of major axis relative to center.
@@ -74,8 +68,7 @@ private:
     bool reversed;
 };
 
-
-
+std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed);
 
 /**
  * Class for an ellipse entity. All angles are in Rad.

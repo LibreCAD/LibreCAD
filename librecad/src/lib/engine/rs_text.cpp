@@ -31,6 +31,49 @@
 #include "rs_fontlist.h"
 #include "rs_insert.h"
 
+RS_TextData::RS_TextData(const RS_Vector& _insertionPoint,
+						 const RS_Vector& _secondPoint,
+						 double _height,
+						 double _widthRel,
+						 VAlign _valign,
+						 HAlign _halign,
+						 TextGeneration _textGeneration,
+						 const QString& _text,
+						 const QString& _style,
+						 double _angle,
+						 RS2::UpdateMode _updateMode):
+	insertionPoint(_insertionPoint)
+  ,secondPoint(_secondPoint)
+  ,height(_height)
+  ,widthRel(_widthRel)
+  ,valign(_valign)
+  ,halign(_halign)
+  ,textGeneration(_textGeneration)
+  ,text(_text)
+  ,style(_style)
+  ,angle(_angle)
+  ,updateMode(_updateMode)
+{
+}
+
+
+std::ostream& operator << (std::ostream& os, const RS_TextData& td) {
+	os << "("
+	   <<td.insertionPoint<<','
+	  <<td.secondPoint<<','
+	 <<td.height<<','
+	<<td.widthRel<<','
+	<<td.valign<<','
+	<<td.halign<<','
+	<<td.textGeneration<<','
+	<<td.text.toLatin1().data() <<','
+	<<td.style.toLatin1().data()<<','
+	<<td.angle<<','
+	<<td.updateMode<<','
+	<<")";
+	return os;
+}
+
 /**
  * Constructor.
  */

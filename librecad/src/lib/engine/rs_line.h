@@ -35,26 +35,20 @@ class LC_Quadratic;
 /**
  * Holds the data that defines a line.
  */
-class RS_LineData {
-public:
+struct RS_LineData {
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
 	RS_LineData() = default;
 
     RS_LineData(const RS_Vector& startpoint,
-                const RS_Vector& endpoint) {
-
-        this->startpoint = startpoint;
-        this->endpoint = endpoint;
-    }
-
-	friend std::ostream& operator << (std::ostream& os, const RS_LineData& ld);
+				const RS_Vector& endpoint);
 
     RS_Vector startpoint;
     RS_Vector endpoint;
 };
 
+std::ostream& operator << (std::ostream& os, const RS_LineData& ld);
 
 /**
  * Class for a line entity.

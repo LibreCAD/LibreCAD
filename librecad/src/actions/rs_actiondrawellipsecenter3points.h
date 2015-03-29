@@ -25,8 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_previewactioninterface.h"
 
-class RS_CircleData;
-class RS_EllipseData;
+struct RS_CircleData;
+struct RS_EllipseData;
 
 /**
  * Draw ellipse by center and 3 points on ellipse

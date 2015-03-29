@@ -29,7 +29,8 @@
 #define RS_ACTIONDRAWLINEFREE_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_polyline.h"
+
+class RS_Polyline;
 
 /**
  * This action class can handle user events to draw freehand lines.
@@ -65,7 +66,7 @@ public:
 
 protected:
     RS_Vector vertex;
-    RS_Polyline* polyline;
+	std::unique_ptr<RS_Polyline> polyline;
 };
 
 #endif

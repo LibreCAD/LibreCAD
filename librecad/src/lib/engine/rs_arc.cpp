@@ -42,6 +42,39 @@
 #include "emu_c99.h"
 #endif
 
+RS_ArcData::RS_ArcData(const RS_Vector& _center,
+					   double _radius,
+					   double _angle1, double _angle2,
+					   bool _reversed):
+	center(_center)
+  ,radius(_radius)
+  ,angle1(_angle1)
+  ,angle2(_angle2)
+  ,reversed(_reversed)
+{
+}
+
+void RS_ArcData::reset() {
+	center = RS_Vector(false);
+	radius = 0.0;
+	angle1 = 0.0;
+	angle2 = 0.0;
+	reversed = false;
+}
+
+bool RS_ArcData::isValid() const{
+	return (center.valid && radius>RS_TOLERANCE &&
+			fabs(remainder(angle1-angle2, 2.*M_PI))>RS_TOLERANCE_ANGLE);
+}
+
+std::ostream& operator << (std::ostream& os, const RS_ArcData& ad) {
+	os << "(" << ad.center <<
+		  "/" << ad.radius <<
+		  " " << ad.angle1 <<
+		  "," << ad.angle2 <<
+		  ")";
+	return os;
+}
 /**
  * Default constructor.
  */
@@ -252,6 +285,26 @@ RS_VectorSolutions RS_Arc::getRefPoints() {
     return ret;
 }
 
+double RS_Arc::getDirection1() const {
+	if (!data.reversed) {
+		return RS_Math::correctAngle(data.angle1+M_PI/2.0);
+	}
+	else {
+		return RS_Math::correctAngle(data.angle1-M_PI/2.0);
+	}
+}
+/**
+ * @return Direction 2. The angle at which the arc starts at
+ * the endpoint.
+ */
+double RS_Arc::getDirection2() const {
+	if (!data.reversed) {
+		return RS_Math::correctAngle(data.angle2-M_PI/2.0);
+	}
+	else {
+		return RS_Math::correctAngle(data.angle2+M_PI/2.0);
+	}
+}
 
 RS_Vector RS_Arc::getNearestEndpoint(const RS_Vector& coord, double* dist) const{
     double dist1, dist2;

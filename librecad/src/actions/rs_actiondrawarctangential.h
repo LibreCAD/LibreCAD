@@ -30,7 +30,7 @@
 #include "rs_previewactioninterface.h"
 
 class RS_AtomicEntity;
-class RS_ArcData;
+struct RS_ArcData;
 
 /**
  * This action class can handle user events to draw 
