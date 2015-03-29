@@ -177,11 +177,11 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layerView->horizontalHeader()->setStretchLastSection(true);
     layerView->horizontalHeader()->hide();
 
-    QVBoxLayout* lay = new QVBoxLayout(this);
+	QVBoxLayout* lay = new QVBoxLayout(this);
     lay->setSpacing ( 0 );
     lay->setContentsMargins(2, 2, 2, 2);
 
-    QHBoxLayout* layButtons = new QHBoxLayout(this);
+	QHBoxLayout* layButtons = new QHBoxLayout;
     QToolButton* but;
     // show all layer:
     but = new QToolButton(this);
@@ -235,6 +235,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     lay->addWidget(matchLayerName);
     lay->addLayout(layButtons);
     lay->addWidget(layerView);
+	this->setLayout(lay);
 
     connect(layerView, SIGNAL(pressed(QModelIndex)), this, SLOT(slotActivated(QModelIndex)));
 }
