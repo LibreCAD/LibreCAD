@@ -255,7 +255,7 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
         return NULL;
     }
 
-    double ang = e->getAngle1() + M_PI/2.0;
+	double ang = e->getAngle1() + M_PI_2;
     RS_Vector p1, p2;
     RS_LineData parallelData;
     RS_Line* ret = NULL;
@@ -795,8 +795,8 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
             double dist2 = circleRadius2 - circleRadius1;
             if (dist1>dist2) {
                 double angle2 = asin(dist2/dist1);
-                double angt1 = angle1 + angle2 + M_PI/2.0;
-                double angt2 = angle1 - angle2 - M_PI/2.0;
+				double angt1 = angle1 + angle2 + M_PI_2;
+				double angt2 = angle1 - angle2 - M_PI_2;
                 RS_Vector offs1;
                 RS_Vector offs2;
 
@@ -820,8 +820,8 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
             double dist3 = circleRadius2 + circleRadius1;
             if (dist1>dist3) {
                 double angle3 = asin(dist3/dist1);
-                double angt3 = angle1 + angle3 + M_PI/2.0;
-                double angt4 = angle1 - angle3 - M_PI/2.0;
+				double angt3 = angle1 + angle3 + M_PI_2;
+				double angt4 = angle1 - angle3 - M_PI_2;
                 RS_Vector offs1;
                 RS_Vector offs2;
 
@@ -1026,7 +1026,7 @@ RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord,
         a1 = ((RS_Line*)entity)->getAngle1();
         break;
     case RS2::EntityArc:
-        a1 = ((RS_Arc*)entity)->getCenter().angleTo(coord) + M_PI/2.0;
+		a1 = ((RS_Arc*)entity)->getCenter().angleTo(coord) + M_PI_2;
         break;
     case RS2::EntityCircle:
         a1 = ((RS_Circle*)entity)->getCenter().angleTo(coord);

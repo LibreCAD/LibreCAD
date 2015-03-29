@@ -1274,9 +1274,9 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
     // find out if we need to trim towards the open part of the polyline
     bool reverseTrim;
     reverseTrim = !RS_Math::isSameDirection(firstSegment->getDirection1(),
-                                            firstSegment->getStartpoint().angleTo(sol.get(0)), M_PI/2.0);
+											firstSegment->getStartpoint().angleTo(sol.get(0)), M_PI_2);
     //reverseTrim = reverseTrim || !RS_Math::isSameDirection(segment2.getDirection1(),
-    //	segment2.getStartpoint().angleTo(sol.get(0)), M_PI/2.0);
+	//	segment2.getStartpoint().angleTo(sol.get(0)), M_PI_2);
 
     RS_Polyline* newPolyline = new RS_Polyline(container);
     newPolyline->setClosed(polyline.isClosed());

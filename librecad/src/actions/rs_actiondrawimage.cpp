@@ -254,7 +254,7 @@ double RS_ActionDrawImage::getAngle() const {
 void RS_ActionDrawImage::setAngle(double a) const{
 	double l = data->uVector.magnitude();
 	data->uVector.setPolar(l, a);
-	data->vVector.setPolar(l, a+M_PI/2);
+	data->vVector.setPolar(l, a+M_PI_2);
 }
 
 double RS_ActionDrawImage::getFactor() const {
@@ -264,7 +264,7 @@ double RS_ActionDrawImage::getFactor() const {
 void RS_ActionDrawImage::setFactor(double f) const {
 	double a = data->uVector.angle();
 	data->uVector.setPolar(f, a);
-	data->vVector.setPolar(f, a+M_PI/2);
+	data->vVector.setPolar(f, a+M_PI_2);
 }
 
 double RS_ActionDrawImage::dpiToScale(double dpi) const {

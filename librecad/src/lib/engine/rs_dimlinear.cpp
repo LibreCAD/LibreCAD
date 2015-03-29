@@ -185,7 +185,7 @@ void RS_DimLinear::updateDim(bool autoText) {
     if ((edata.extensionPoint1-dimP1).magnitude()<1e-6) {
         if ((edata.extensionPoint2-dimP2).magnitude()<1e-6) {
             //boot extension points are in dimension line only rotate 90
-            extAngle2 = edata.angle + (M_PI/2.0);
+			extAngle2 = edata.angle + (M_PI_2);
         } else {
             //first extension point are in dimension line use second
             extAngle2 = edata.extensionPoint2.angleTo(dimP2);
@@ -297,7 +297,7 @@ void RS_DimLinear::stretch(const RS_Vector& firstCorner,
         //RS_Vector v = data.definitionPoint - edata.extensionPoint2;
         //double len = edata.extensionPoint2.distanceTo(data.definitionPoint);
         //double ang1 = edata.extensionPoint1.angleTo(edata.extensionPoint2)
-        //              + M_PI/2;
+		//              + M_PI_2;
 
         if (edata.extensionPoint1.isInWindow(firstCorner,
                                             secondCorner)) {
@@ -310,14 +310,14 @@ void RS_DimLinear::stretch(const RS_Vector& firstCorner,
 
                 /*
         double ang2 = edata.extensionPoint1.angleTo(edata.extensionPoint2)
-                      + M_PI/2;
+					  + M_PI_2;
 
         double diff = RS_Math::getAngleDifference(ang1, ang2);
         if (diff>M_PI) {
             diff-=2*M_PI;
         }
 
-        if (fabs(diff)>M_PI/2) {
+		if (fabs(diff)>M_PI_2) {
             ang2 = RS_Math::correctAngle(ang2+M_PI);
         }
 

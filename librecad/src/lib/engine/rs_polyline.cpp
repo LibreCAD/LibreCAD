@@ -259,9 +259,9 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
         double h = sqrt(wu);
 
         if (bulge>0.0) {
-            angle+=M_PI/2.0;
+			angle+=M_PI_2;
         } else {
-            angle-=M_PI/2.0;
+			angle-=M_PI_2;
         }
 
         if (fabs(alpha)>M_PI) {

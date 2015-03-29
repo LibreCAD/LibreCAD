@@ -134,7 +134,7 @@ bool RS_Arc::createFrom2PDirectionRadius(const RS_Vector& startPoint,
         double direction1, double radius) {
 
     RS_Vector ortho;
-    ortho.setPolar(radius, direction1 + M_PI/2.0);
+	ortho.setPolar(radius, direction1 + M_PI_2);
     RS_Vector center1 = startPoint + ortho;
     RS_Vector center2 = startPoint - ortho;
 
@@ -173,7 +173,7 @@ bool RS_Arc::createFrom2PDirectionAngle(const RS_Vector& startPoint,
     data.radius=0.5*startPoint.distanceTo(endPoint)/sin(0.5*angleLength);
 
     RS_Vector ortho;
-    ortho.setPolar(data.radius, direction1 + M_PI/2.0);
+	ortho.setPolar(data.radius, direction1 + M_PI_2);
     RS_Vector center1 = startPoint + ortho;
     RS_Vector center2 = startPoint - ortho;
 
@@ -220,9 +220,9 @@ bool RS_Arc::createFrom2PBulge(const RS_Vector& startPoint, const RS_Vector& end
     double angle = startPoint.angleTo(endPoint);
 
     if (bulge>0.0) {
-        angle+=M_PI/2.0;
+		angle+=M_PI_2;
     } else {
-        angle-=M_PI/2.0;
+		angle-=M_PI_2;
     }
 
     if (fabs(alpha)>M_PI) {
@@ -287,10 +287,10 @@ RS_VectorSolutions RS_Arc::getRefPoints() {
 
 double RS_Arc::getDirection1() const {
 	if (!data.reversed) {
-		return RS_Math::correctAngle(data.angle1+M_PI/2.0);
+		return RS_Math::correctAngle(data.angle1+M_PI_2);
 	}
 	else {
-		return RS_Math::correctAngle(data.angle1-M_PI/2.0);
+		return RS_Math::correctAngle(data.angle1-M_PI_2);
 	}
 }
 /**
@@ -299,10 +299,10 @@ double RS_Arc::getDirection1() const {
  */
 double RS_Arc::getDirection2() const {
 	if (!data.reversed) {
-		return RS_Math::correctAngle(data.angle2-M_PI/2.0);
+		return RS_Math::correctAngle(data.angle2-M_PI_2);
 	}
 	else {
-		return RS_Math::correctAngle(data.angle2+M_PI/2.0);
+		return RS_Math::correctAngle(data.angle2+M_PI_2);
 	}
 }
 
@@ -557,7 +557,7 @@ void RS_Arc::moveStartpoint(const RS_Vector& pos) {
     // polyline arcs: move point not angle:
     //if (parent!=NULL && parent->rtti()==RS2::EntityPolyline) {
     double bulge = getBulge();
-    if(fabs(bulge - M_PI/2.)<RS_TOLERANCE_ANGLE) return;
+	if(fabs(bulge - M_PI_2)<RS_TOLERANCE_ANGLE) return;
 
     createFrom2PBulge(pos, getEndpoint(), bulge);
     correctAngles(); // make sure angleLength is no more than 2*M_PI

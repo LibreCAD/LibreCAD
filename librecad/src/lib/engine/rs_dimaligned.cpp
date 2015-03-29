@@ -261,7 +261,7 @@ void RS_DimAligned::stretch(const RS_Vector& firstCorner,
                 //RS_Vector v = data.definitionPoint - edata.extensionPoint2;
 				double len = edata.extensionPoint2.distanceTo(data.definitionPoint);
                 double ang1 = edata.extensionPoint1.angleTo(edata.extensionPoint2)
-                             + M_PI/2;
+							 + M_PI_2;
 
         if (edata.extensionPoint1.isInWindow(firstCorner,
                                       secondCorner)) {
@@ -273,14 +273,14 @@ void RS_DimAligned::stretch(const RS_Vector& firstCorner,
         }
 
                 double ang2 = edata.extensionPoint1.angleTo(edata.extensionPoint2)
-                             + M_PI/2;
+							 + M_PI_2;
 
                 double diff = RS_Math::getAngleDifference(ang1, ang2);
                 if (diff>M_PI) {
                         diff-=2*M_PI;
                 }
 
-                if (fabs(diff)>M_PI/2) {
+				if (fabs(diff)>M_PI_2) {
                         ang2 = RS_Math::correctAngle(ang2+M_PI);
                 }
 
@@ -304,7 +304,7 @@ void RS_DimAligned::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
                 double ad = RS_Math::getAngleDifference(a,
 						edata.extensionPoint2.angleTo(data.definitionPoint+offset));
 
-                if (fabs(ad)>M_PI/2.0 && fabs(ad)<3.0/2.0*M_PI) {
+				if (fabs(ad)>M_PI_2 && fabs(ad)<3.0/2.0*M_PI) {
                         a = RS_Math::correctAngle(a+M_PI);
                 }
 

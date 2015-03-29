@@ -228,8 +228,8 @@ double RS_Math::makeAngleReadable(double angle, bool readable,
  * for texts created with that angle.
  */
 bool RS_Math::isAngleReadable(double angle) {
-    if (angle>M_PI/2.0*3.0+0.001 ||
-            angle<M_PI/2.0+0.001) {
+    if (angle>M_PI_2*3.0+0.001 ||
+            angle<M_PI_2+0.001) {
         return true;
     } else {
         return false;
@@ -822,7 +822,7 @@ bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>&
  */
 double RS_Math::ellipticIntegral_2(const double& k, const double& phi)
 {
-    double a= remainder(phi-M_PI/2.,M_PI);
+    double a= remainder(phi-M_PI_2,M_PI);
     if(a>0.) {
         return boost::math::ellint_2<double,double>(k,a);
     } else {

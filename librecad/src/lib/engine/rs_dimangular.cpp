@@ -411,19 +411,19 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
 
     RS_Vector distV;
     double textAngle;
-    double dimAngle1 = textPos.angleTo(arc->getCenter())-M_PI/2.0;
+	double dimAngle1 = textPos.angleTo(arc->getCenter())-M_PI_2;
 
     // rotate text so it's readable from the bottom or right (ISO)
     // quadrant 1 & 4
-    if (dimAngle1>M_PI/2.0*3.0+0.001 ||
-            dimAngle1<M_PI/2.0+0.001) {
+	if (dimAngle1>M_PI_2*3.0+0.001 ||
+			dimAngle1<M_PI_2+0.001) {
 
-        distV.setPolar(dimgap, dimAngle1+M_PI/2.0);
+		distV.setPolar(dimgap, dimAngle1+M_PI_2);
         textAngle = dimAngle1;
     }
     // quadrant 2 & 3
     else {
-        distV.setPolar(dimgap, dimAngle1-M_PI/2.0);
+		distV.setPolar(dimgap, dimAngle1-M_PI_2);
         textAngle = dimAngle1+M_PI;
     }
 

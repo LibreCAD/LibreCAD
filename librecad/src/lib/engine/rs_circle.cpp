@@ -233,10 +233,10 @@ bool RS_Circle::createFrom3P(const RS_VectorSolutions& sol) {
 //
 //        // intersection of two middle lines
 //        mp1 = (p1 + p2)/2.0;
-//        a1 = p1.angleTo(p2) + M_PI/2.0;
+//        a1 = p1.angleTo(p2) + M_PI_2;
 //        dir1.setPolar(100.0, a1);
 //        mp2 = (p2 + p3)/2.0;
-//        a2 = p2.angleTo(p3) + M_PI/2.0;
+//        a2 = p2.angleTo(p3) + M_PI_2;
 //        dir2.setPolar(100.0, a2);
 //
 //        RS_ConstructionLineData d1(mp1, mp1 + dir1);

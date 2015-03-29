@@ -197,15 +197,15 @@ void RS_DimRadial::updateDim(bool autoText) {
 
     // rotate text so it's readable from the bottom or right (ISO)
     // quadrant 1 & 4
-    if (angle>M_PI/2.0*3.0+0.001 ||
-            angle<M_PI/2.0+0.001) {
+	if (angle>M_PI_2*3.0+0.001 ||
+			angle<M_PI_2+0.001) {
 
-        distV.setPolar(dimgap + dimtxt/2.0, angle+M_PI/2.0);
+		distV.setPolar(dimgap + dimtxt/2.0, angle+M_PI_2);
         textAngle = angle;
     }
     // quadrant 2 & 3
     else {
-        distV.setPolar(dimgap + dimtxt/2.0, angle-M_PI/2.0);
+		distV.setPolar(dimgap + dimtxt/2.0, angle-M_PI_2);
         textAngle = angle+M_PI;
     }
 

@@ -427,7 +427,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDrawLineHorVert(*doc, *gv);
         break;
     case RS2::ActionDrawLineVertical:
-        a = new RS_ActionDrawLineAngle(*doc, *gv, M_PI/2.0, true,
+        a = new RS_ActionDrawLineAngle(*doc, *gv, M_PI_2, true,
                                        RS2::ActionDrawLineVertical);
         break;
     case RS2::ActionDrawLineFree:
@@ -456,10 +456,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDrawLineTangent2(*doc, *gv);
         break;
     case RS2::ActionDrawLineOrthogonal:
-        a = new RS_ActionDrawLineRelAngle(*doc, *gv, M_PI/2.0, true);
+        a = new RS_ActionDrawLineRelAngle(*doc, *gv, M_PI_2, true);
         break;
     case RS2::ActionDrawLineRelAngle:
-        a = new RS_ActionDrawLineRelAngle(*doc, *gv, M_PI/2.0, false);
+        a = new RS_ActionDrawLineRelAngle(*doc, *gv, M_PI_2, false);
         break;
     case RS2::ActionDrawPolyline:
         a = new RS_ActionDrawPolyline(*doc, *gv);
@@ -596,7 +596,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDimLinear(*doc, *gv, 0.0, true, RS2::ActionDimLinearHor);
         break;
     case RS2::ActionDimLinearVer:
-        a = new RS_ActionDimLinear(*doc, *gv, M_PI/2.0, true, RS2::ActionDimLinearVer);
+        a = new RS_ActionDimLinear(*doc, *gv, M_PI_2, true, RS2::ActionDimLinearVer);
         break;
     case RS2::ActionDimRadial:
         a = new RS_ActionDimRadial(*doc, *gv);

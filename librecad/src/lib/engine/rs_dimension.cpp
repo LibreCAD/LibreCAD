@@ -285,9 +285,9 @@ if(dimtsz < 0.01) {
             // rotate text so it's readable from the bottom or right (ISO)
             // quadrant 1 & 4
             if (corrected) {
-                distV.setPolar(dimgap + dimtxt/2.0, dimAngle1-M_PI/2.0);
+				distV.setPolar(dimgap + dimtxt/2.0, dimAngle1-M_PI_2);
             } else {
-                distV.setPolar(dimgap + dimtxt/2.0, dimAngle1+M_PI/2.0);
+				distV.setPolar(dimgap + dimtxt/2.0, dimAngle1+M_PI_2);
             }
 
             // move text away from dimension line:

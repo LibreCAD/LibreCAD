@@ -4077,7 +4077,7 @@ void QC_ApplicationWindow::slotTestInsertBlock() {
 
         // Add one arc with attributes from block:
         RS_ArcData d(RS_Vector(50.0,0.0),
-                     50.0, M_PI/2.0, M_PI,
+					 50.0, M_PI_2, M_PI,
                      false);
         arc = new RS_Arc(block, d);
         arc->setPen(RS_Pen(RS_Color(RS2::FlagByBlock),
