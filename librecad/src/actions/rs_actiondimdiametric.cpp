@@ -254,7 +254,7 @@ void RS_ActionDimDiametric::commandEvent(RS_CommandEvent* e) {
     if (getStatus()==SetPos) {
         bool ok;
         double a = RS_Math::eval(c, &ok);
-        if (ok==true) {
+		if (ok) {
             pos.setPolar(1.0, RS_Math::deg2rad(a));
 			pos += data->definitionPoint;
             trigger();

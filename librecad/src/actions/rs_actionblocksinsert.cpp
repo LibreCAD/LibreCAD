@@ -196,7 +196,7 @@ void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
     case SetAngle: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
 				data->angle = RS_Math::deg2rad(a);
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
@@ -209,7 +209,7 @@ void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
     case SetFactor: {
             bool ok;
             double f = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 setFactor(f);
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
@@ -222,7 +222,7 @@ void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
     case SetColumns: {
             bool ok;
             int cols = (int)RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
 				data->cols = cols;
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
@@ -235,7 +235,7 @@ void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
     case SetRows: {
             bool ok;
             int rows = (int)RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
 				data->rows = rows;
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
@@ -248,7 +248,7 @@ void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
     case SetColumnSpacing: {
             bool ok;
             double cs = (int)RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
 				data->spacing.x = cs;
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
@@ -261,7 +261,7 @@ void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
     case SetRowSpacing: {
             bool ok;
             int rs = (int)RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
 				data->spacing.y = rs;
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));

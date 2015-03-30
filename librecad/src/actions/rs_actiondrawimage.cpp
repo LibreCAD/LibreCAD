@@ -204,7 +204,7 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
     case SetAngle: {
         bool ok;
         double a = RS_Math::eval(c, &ok);
-        if (ok==true) {
+		if (ok) {
             setAngle(RS_Math::deg2rad(a));
         } else {
             RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
@@ -217,7 +217,7 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
     case SetFactor: {
         bool ok;
         double f = RS_Math::eval(c, &ok);
-        if (ok==true) {
+		if (ok) {
             setFactor(f);
         } else {
             RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
@@ -231,7 +231,7 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
         bool ok;
         double dpi = RS_Math::eval(c, &ok);
 
-        if(ok==true) {
+		if(ok) {
             setFactor(RS_Units::dpiToScale(dpi, document->getGraphicUnit()));
         } else {
             RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));

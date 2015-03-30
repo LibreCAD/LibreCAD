@@ -371,7 +371,7 @@ RS_Arc* RS_Creation::createParallelArc(const RS_Vector& coord,
         //double minDist = min(dist1, dist2);
 
         //if (minDist<RS_MAXDOUBLE) {
-        if (ok==true) {
+		if (ok) {
             //if (dist1<dist2) {
             parallelData = parallel1.getData();
             //} else {
@@ -457,7 +457,7 @@ RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
         //double minDist = min(dist1, dist2);
 
         //if (minDist<RS_MAXDOUBLE) {
-        if (ok==true) {
+		if (ok) {
             //if (dist1<dist2) {
             parallelData = parallel1.getData();
             //} else {

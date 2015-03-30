@@ -270,7 +270,7 @@ void RS_ActionDrawLineRelAngle::commandEvent(RS_CommandEvent* e) {
     case SetLength: {
             bool ok;
             double l = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 length = l;
             } else {
                 if (RS_DIALOGFACTORY!=NULL) {
