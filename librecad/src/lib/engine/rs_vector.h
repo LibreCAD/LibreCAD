@@ -79,9 +79,10 @@ public:
     RS_Vector rotate(const RS_Vector& center, const RS_Vector& angleVector);
     RS_Vector scale(const double& factor);
     RS_Vector scale(const RS_Vector& factor);
-    RS_Vector scale(const RS_Vector& center, const RS_Vector& factor);
+	RS_Vector scale(const RS_Vector& factor) const;
+	RS_Vector scale(const RS_Vector& center, const RS_Vector& factor);
     RS_Vector mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
-    double dotP(const RS_Vector& v1);
+	double dotP(const RS_Vector& v1) const;
 
     RS_Vector operator + (const RS_Vector& v) const;
     RS_Vector operator - (const RS_Vector& v) const;
@@ -140,15 +141,15 @@ public:
     RS_VectorSolutions();
     RS_VectorSolutions(const RS_VectorSolutions& s);
     RS_VectorSolutions(int num);
-    RS_VectorSolutions(const RS_Vector& v1);
-    RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2);
-    RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2,
-                       const RS_Vector& v3);
-    RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2,
-                       const RS_Vector& v3, const RS_Vector& v4);
-    RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2,
-                       const RS_Vector& v3, const RS_Vector& v4,
-                       const RS_Vector& v5);
+	RS_VectorSolutions(const RS_Vector& v1);
+	RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2);
+	RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2,
+					   const RS_Vector& v3);
+	RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2,
+					   const RS_Vector& v3, const RS_Vector& v4);
+	RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2,
+					   const RS_Vector& v3, const RS_Vector& v4,
+					   const RS_Vector& v5);
 
     ~RS_VectorSolutions();
 

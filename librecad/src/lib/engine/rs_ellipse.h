@@ -29,14 +29,6 @@
 #ifndef RS_ELLIPSE_H
 #define RS_ELLIPSE_H
 
-// Workaround for Qt bug: https://bugreports.qt-project.org/browse/QTBUG-22829
-// TODO: the Q_MOC_RUN detection shouldn't be necessary after this Qt bug is resolved
-#ifndef Q_MOC_RUN
-#include <boost/version.hpp>
-#include <boost/math/tools/roots.hpp>
-#include <boost/math/special_functions/ellint_2.hpp>
-#endif
-
 class LC_Quadratic;
 #include "rs_atomicentity.h"
 
@@ -89,7 +81,6 @@ public:
         return RS2::EntityEllipse;
     }
 
-
     /**
      * @return Start point of the entity.
      */
@@ -131,9 +122,7 @@ public:
     double getEllipseAngle (const RS_Vector& pos) const;
 
     /** @return Copy of data that defines the ellipse. **/
-    RS_EllipseData getData() const {
-        return data;
-    }
+	const RS_EllipseData& getData() const;
 
     virtual RS_VectorSolutions getRefPoints();
 
@@ -141,64 +130,37 @@ public:
      * @retval true if the arc is reversed (clockwise),
      * @retval false otherwise
      */
-    bool isReversed() const {
-        return data.reversed;
-    }
+	bool isReversed() const;
     /** sets the reversed status. */
-    void setReversed(bool r) {
-        data.reversed = r;
-    }
+	void setReversed(bool r);
 
     /** @return The rotation angle of this ellipse */
-    double getAngle() const {
-        return data.majorP.angle();
-    }
+	double getAngle() const;
 
     /** @return The start angle of this arc */
-    double getAngle1() const {
-        return data.angle1;
-    }
+	double getAngle1() const;
     /** Sets new start angle. */
-    void setAngle1(double a1) {
-        data.angle1 = a1;
-    }
+	void setAngle1(double a1);
     /** @return The end angle of this arc */
-    double getAngle2() const {
-        return data.angle2;
-    }
+	double getAngle2() const;
     /** Sets new end angle. */
-    void setAngle2(double a2) {
-        data.angle2 = a2;
-    }
+	void setAngle2(double a2);
 
 
     /** @return The center point (x) of this arc */
-    virtual RS_Vector getCenter() const {
-        return data.center;
-    }
+	virtual RS_Vector getCenter() const;
     /** Sets new center. */
-    void setCenter(const RS_Vector& c) {
-        data.center = c;
-    }
+	void setCenter(const RS_Vector& c);
 
     /** @return The endpoint of the major axis (relative to center). */
-    RS_Vector getMajorP() const {
-        return data.majorP;
-    }
+	const RS_Vector& getMajorP() const;
     /** Sets new major point (relative to center). */
-    void setMajorP(const RS_Vector& p) {
-        data.majorP = p;
-    }
+	void setMajorP(const RS_Vector& p);
 
     /** @return The ratio of minor to major axis */
-    double getRatio() const {
-        return data.ratio;
-    }
+	double getRatio() const;
     /** Sets new ratio. */
-    void setRatio(double r) {
-        data.ratio = r;
-    }
-
+	void setRatio(double r);
 
     /**
      * @return Angle length in rad.
@@ -206,23 +168,14 @@ public:
     virtual double getAngleLength() const;
 
     /** @return The major radius of this ellipse. Same as getRadius() */
-    double getMajorRadius() const {
-        return data.majorP.magnitude();
-    }
+	double getMajorRadius() const;
 
     /** @return the point by major minor radius directions */
-    RS_Vector getMajorPoint() const{
-        return data.center + data.majorP;
-    }
-    RS_Vector getMinorPoint() const{
-        return data.center +
-                RS_Vector(-data.majorP.y, data.majorP.x)*data.ratio;
-    }
+	RS_Vector getMajorPoint() const;
+	RS_Vector getMinorPoint() const;
 
     /** @return The minor radius of this ellipse */
-    double getMinorRadius() const {
-        return data.majorP.magnitude()*data.ratio;
-    }
+	double getMinorRadius() const;
     bool isArc() const; //is the ellipse an Arc, i.e., angle1/angle2 not both 0
     virtual bool isEdge() const {
         return true;
@@ -287,61 +240,17 @@ public:
     m0 x + m1 y + m2 =0
     **/
     virtual LC_Quadratic getQuadratic() const;
-/**
+	/**
  * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
  * Contour Area =\oint x dy
  * @return line integral \oint x dy along the entity
  * \oint x dy = Cx y + \frac{1}{4}((a^{2}+b^{2})sin(2a)cos^{2}(t)-ab(2sin^{2}(a)sin(2t)-2t-sin(2t)))
  */
-virtual double areaLineIntegral() const;
+	virtual double areaLineIntegral() const;
 
 protected:
     RS_EllipseData data;
-
 };
-
-//functor to solve for distance, used by snapDistance
-class EllipseDistanceFunctor
-{
-public:
-    EllipseDistanceFunctor(RS_Ellipse* ellipse, double const& target) : distance(target)
-    { // Constructor
-        e=ellipse;
-        ra=e->getMajorRadius();
-        k2=1.- e->getRatio()*e->getRatio();
-    }
-    void setDistance(const double& target){
-        distance=target;
-    }
-#if BOOST_VERSION > 104500
-    boost::math::tuple<double, double, double> operator()(double const& z) const {
-#else
-    boost::fusion::tuple<double, double, double> operator()(double const& z) const {
-#endif
-    double cz=cos(z);
-    double sz=sin(z);
-        //delta amplitude
-    double d=sqrt(1-k2*sz*sz);
-        // return f(x), f'(x) and f''(x)
-#if BOOST_VERSION > 104500
-    return boost::math::make_tuple(
-#else
-    return boost::fusion::make_tuple(
-#endif
-                    e->getEllipseLength(z)-distance,
-                    ra*d,
-                    k2*ra*sz*cz/d
-                    );
-    }
-
-private:
-
-    double distance;
-    RS_Ellipse* e;
-    double ra;
-    double k2;
-};
-
 
 #endif
 //EOF

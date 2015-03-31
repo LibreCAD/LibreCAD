@@ -393,6 +393,10 @@ RS_Vector RS_Vector::scale(const RS_Vector& factor) {
     return *this;
 }
 
+RS_Vector RS_Vector::scale(const RS_Vector& factor) const{
+	return RS_Vector(x*factor.x, y*factor.y);
+}
+
 /**
  * Scales this vector by the given factors with the given center.
  */
@@ -537,7 +541,7 @@ RS_Vector RS_Vector::operator - () const {
 /**
  * Scalarproduct (dot product).
  */
-double RS_Vector::dotP(const RS_Vector& v1)
+double RS_Vector::dotP(const RS_Vector& v1) const
 {
     return x*v1.x+y*v1.y;
 }

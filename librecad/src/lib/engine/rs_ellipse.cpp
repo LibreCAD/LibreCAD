@@ -41,6 +41,57 @@
 #ifdef EMU_C99
 #include "emu_c99.h" /* C99 math */
 #endif
+// Workaround for Qt bug: https://bugreports.qt-project.org/browse/QTBUG-22829
+// TODO: the Q_MOC_RUN detection shouldn't be necessary after this Qt bug is resolved
+#ifndef Q_MOC_RUN
+#include <boost/version.hpp>
+#include <boost/math/tools/roots.hpp>
+#include <boost/math/special_functions/ellint_2.hpp>
+#endif
+
+namespace{
+//functor to solve for distance, used by snapDistance
+class EllipseDistanceFunctor
+{
+public:
+	EllipseDistanceFunctor(RS_Ellipse* ellipse, double const& target) : distance(target)
+	{ // Constructor
+		e=ellipse;
+		ra=e->getMajorRadius();
+		k2=1.- e->getRatio()*e->getRatio();
+	}
+	void setDistance(const double& target){
+		distance=target;
+	}
+#if BOOST_VERSION > 104500
+	boost::math::tuple<double, double, double> operator()(double const& z) const {
+#else
+	boost::fusion::tuple<double, double, double> operator()(double const& z) const {
+#endif
+	double cz=cos(z);
+	double sz=sin(z);
+		//delta amplitude
+	double d=sqrt(1-k2*sz*sz);
+		// return f(x), f'(x) and f''(x)
+#if BOOST_VERSION > 104500
+	return boost::math::make_tuple(
+#else
+	return boost::fusion::make_tuple(
+#endif
+					e->getEllipseLength(z)-distance,
+					ra*d,
+					k2*ra*sz*cz/d
+					);
+	}
+
+private:
+
+	double distance;
+	RS_Ellipse* e;
+	double ra;
+	double k2;
+};
+}
 
 RS_EllipseData::RS_EllipseData(const RS_Vector& _center,
 							   const RS_Vector& _majorP,
@@ -1244,6 +1295,12 @@ double RS_Ellipse::getEllipseAngle(const RS_Vector& pos) const {
     return m.angle();
 }
 
+const RS_EllipseData& RS_Ellipse::getData() const
+{
+	return data;
+}
+
+
 
 /* Dongxu Li's Version, 19 Aug 2011
  * scale an ellipse
@@ -1531,9 +1588,59 @@ double RS_Ellipse::areaLineIntegral() const
     return (isReversed()?fStart-fEnd:fEnd-fStart) + 0.5*ab*getAngleLength();
 }
 
-/**
- * @return Angle length in rad.
- */
+bool RS_Ellipse::isReversed() const {
+	return data.reversed;
+}
+
+void RS_Ellipse::setReversed(bool r) {
+	data.reversed = r;
+}
+
+double RS_Ellipse::getAngle() const {
+	return data.majorP.angle();
+}
+
+double RS_Ellipse::getAngle1() const {
+	return data.angle1;
+}
+
+void RS_Ellipse::setAngle1(double a1) {
+	data.angle1 = a1;
+}
+
+double RS_Ellipse::getAngle2() const {
+	return data.angle2;
+}
+
+void RS_Ellipse::setAngle2(double a2) {
+	data.angle2 = a2;
+}
+
+RS_Vector RS_Ellipse::getCenter() const {
+	return data.center;
+}
+
+void RS_Ellipse::setCenter(const RS_Vector& c) {
+	data.center = c;
+}
+
+
+const RS_Vector& RS_Ellipse::getMajorP() const {
+	return data.majorP;
+}
+
+void RS_Ellipse::setMajorP(const RS_Vector& p) {
+	data.majorP = p;
+}
+
+double RS_Ellipse::getRatio() const {
+	return data.ratio;
+}
+
+void RS_Ellipse::setRatio(double r) {
+	data.ratio = r;
+}
+
 double RS_Ellipse::getAngleLength() const {
     double ret;
     if (isReversed()) {
@@ -1545,7 +1652,24 @@ double RS_Ellipse::getAngleLength() const {
     return ret;
 }
 
-/** find the visible part of the arc, and call drawVisible() to draw */
+
+double RS_Ellipse::getMajorRadius() const {
+	return data.majorP.magnitude();
+}
+
+RS_Vector RS_Ellipse::getMajorPoint() const{
+	return data.center + data.majorP;
+}
+
+RS_Vector RS_Ellipse::getMinorPoint() const{
+	return data.center +
+			RS_Vector(-data.majorP.y, data.majorP.x)*data.ratio;
+}
+
+double RS_Ellipse::getMinorRadius() const {
+	return data.majorP.magnitude()*data.ratio;
+}
+
 void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
     if(isArc()==false){
         RS_Ellipse arc(*this);
@@ -1674,7 +1798,7 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
             ds[i]= dpmm * pat->pattern[i] ;//pattern length
             if(fabs(ds[i])<1.)
                 ds[i]=(ds[i]>=0.)?1.:-1.;
-            i++;
+			++i;
         }
         j=i;
     }else {
