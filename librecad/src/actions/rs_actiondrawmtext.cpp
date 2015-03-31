@@ -92,6 +92,7 @@ void RS_ActionDrawMText::init(int status) {
 
 
 void RS_ActionDrawMText::reset() {
+	const QString text=data.get()?data->text:"";
 	data.reset(new RS_MTextData(RS_Vector(0.0,0.0),
                        1.0, 100.0,
                        RS_MTextData::VATop,
@@ -99,7 +100,7 @@ void RS_ActionDrawMText::reset() {
                        RS_MTextData::LeftToRight,
                        RS_MTextData::Exact,
                        1.0,
-					   data->text,
+					   text,
                        "standard",
                        0.0,
 					   RS2::Update)
