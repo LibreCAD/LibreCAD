@@ -36,9 +36,9 @@
  * Constructor.
  */
 RS_Leader::RS_Leader(RS_EntityContainer* parent)
-        :RS_EntityContainer(parent) {
-
-    empty = true;
+		:RS_EntityContainer(parent)
+		,empty(true)
+{
 }
 
 

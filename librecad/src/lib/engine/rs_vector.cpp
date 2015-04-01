@@ -49,8 +49,6 @@ RS_Vector::RS_Vector() {
 #endif
 }
 
-
-
 /**
  * Constructor for a point with given coordinates.
  */
@@ -79,7 +77,6 @@ RS_Vector::RS_Vector(double angle) {
     valid = true;
 }
 
-
 /**
  * Constructor for a point with given coordinates in an array
  * or three doubles.
@@ -87,7 +84,6 @@ RS_Vector::RS_Vector(double angle) {
 //RS_Vector::RS_Vector(double v[]) {
 //    set(v[0], v[1], v[2]);
 //}
-
 
 /**
  * Constructor for a point with given valid flag.
@@ -105,7 +101,6 @@ RS_Vector::RS_Vector(bool valid) {
     this->valid = valid;
 }
 
-
 /**
  * Sets to a unit vector by the direction angle
  */
@@ -117,7 +112,6 @@ void RS_Vector::set(double angle) {
 #endif
     valid = true;
 }
-
 
 /**
  * Sets a new position for the vector.
@@ -135,7 +129,6 @@ void RS_Vector::set(double vx, double vy, double vz) {
     valid = true;
 }
 
-
 /**
  * Sets a new position for the vector in polar coordinates.
  */
@@ -147,8 +140,6 @@ void RS_Vector::setPolar(double radius, double angle) {
 #endif
     valid = true;
 }
-
-
 
 /**
  * @return The angle from zero to this vector (in rad).
@@ -178,8 +169,6 @@ double RS_Vector::angle() const {
 //
 //    return ret;
 }
-
-
 
 /**
  * @return The angle from this and the given coordinate (in rad).
@@ -212,7 +201,6 @@ double RS_Vector::angleBetween(const RS_Vector& v1, const RS_Vector& v2) const {
 //        return RS_Math::correctAngle(vEnd.angle() - vStart.angle());
     }
 }
-
 
 /**
  * @return Magnitude (length) of the vector.
@@ -266,7 +254,6 @@ RS_Vector RS_Vector::lerp(const RS_Vector& v, double t) const {
     return RS_Vector(x+(v.x-x)*t, y+(v.y-y)*t);
 }
 
-
 /**
  * @return The distance between this and the given coordinate.
  */
@@ -278,8 +265,6 @@ double RS_Vector::distanceTo(const RS_Vector& v) const {
         return (*this-v).magnitude();
     }
 }
-
-
 
 /**
  * @return true is this vector is within the given range.
@@ -320,8 +305,6 @@ RS_Vector RS_Vector::move(const RS_Vector& offset) {
     return *this;
 }
 
-
-
 /**
  * Rotates this vector around 0/0 by the given angle.
  */
@@ -361,7 +344,6 @@ RS_Vector RS_Vector::rotate(const RS_Vector& angleVector) {
 
     return *this;
 }
-
 
 /**
  * Rotates this vector around the given center by the given angle.
@@ -430,8 +412,6 @@ RS_Vector RS_Vector::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPo
 
     return *this;
 }
-
-
 
 /**
  * Streams the vector components to stdout. e.g.: "1/4/0"

@@ -43,7 +43,7 @@ class QG_LayerWidget;
 class RS_LayerList {
 public:
     RS_LayerList();
-    virtual ~RS_LayerList() {}
+	virtual ~RS_LayerList() = default;
 
     void clear();
 
