@@ -509,8 +509,6 @@ RS_Vector RS_Vector::operator * (const double& s) const {
 #endif
 }
 
-
-
 /**
  * binary / operator.
  */
@@ -524,8 +522,6 @@ RS_Vector RS_Vector::operator / (const double& s) const {
 	}
 	return *this;
 }
-
-
 
 /**
  * unary - operator.
@@ -554,7 +550,6 @@ double RS_Vector::dotP(const RS_Vector& v1, const RS_Vector& v2) {
 #endif
 }
 
-
 /** switch x,y for all vectors */
 RS_Vector RS_Vector::flipXY(void) const{
         return RS_Vector(y,x);
@@ -572,7 +567,6 @@ RS_Vector RS_Vector::operator += (const RS_Vector& v) {
 	return *this;
 }
 
-
 /**
  * -= operator
  */
@@ -585,7 +579,6 @@ RS_Vector RS_Vector::operator -= (const RS_Vector& v) {
 	return *this;
 }
 
-
 RS_Vector RS_Vector::operator *= (const RS_Vector& v) {
 	x *= v.x;
 	y *= v.y;
@@ -594,7 +587,6 @@ RS_Vector RS_Vector::operator *= (const RS_Vector& v) {
 #endif
 	return *this;
 }
-
 
 RS_Vector RS_Vector::operator /= (const RS_Vector& v) {
 	if(fabs(v.x)> RS_TOLERANCE && fabs(v.y)>RS_TOLERANCE
@@ -610,7 +602,6 @@ RS_Vector RS_Vector::operator /= (const RS_Vector& v) {
 	}
 	return *this;
 }
-
 
 /**
  * *= operator
@@ -637,8 +628,6 @@ RS_Vector RS_Vector::operator /= (const double& s) {
 	return *this;
 }
 
-
-
 /**
  * == operator
  */
@@ -649,8 +638,6 @@ bool RS_Vector::operator == (const RS_Vector& v) const {
     return (x==v.x && y==v.y && z==v.z && valid==v.valid);
 #endif
 }
-
-
 
 /**
  * @return A vector with the minimum components from the vectors v1 and v2.
@@ -665,8 +652,6 @@ RS_Vector RS_Vector::minimum (const RS_Vector& v1, const RS_Vector& v2) {
                       );
 }
 
-
-
 /**
  * @return A vector with the maximum values from the vectors v1 and v2
  */
@@ -678,8 +663,6 @@ RS_Vector RS_Vector::maximum (const RS_Vector& v1, const RS_Vector& v2) {
 #endif
                       );
 }
-
-
 
 /**
  * @return Cross product of two vectors.
@@ -693,7 +676,6 @@ RS_Vector RS_Vector::crossP(const RS_Vector& v1, const RS_Vector& v2) {
 }
 #endif
 
-
 /**
  * Constructor for no solution.
  */
@@ -701,8 +683,6 @@ RS_VectorSolutions::RS_VectorSolutions() {
     vector.clear();
     tangent=false;
 }
-
-
 
 /**
  * Copy constructor
@@ -712,8 +692,6 @@ RS_VectorSolutions::RS_VectorSolutions(const RS_VectorSolutions& s)
     setTangent(s.isTangent());
     vector=s.vector;
 }
-
-
 
 /**
  * Constructor for num solutions.
@@ -739,7 +717,6 @@ RS_VectorSolutions::RS_VectorSolutions(std::initializer_list<RS_Vector> l):
  * Destructor.
  */
 RS_VectorSolutions::~RS_VectorSolutions() {
-    vector.clear();
 }
 
 
@@ -798,8 +775,6 @@ void RS_VectorSolutions::clear() {
     tangent = false;
 }
 
-
-
 /**
  * @return vector solution number i or an invalid vector if there
  * are less solutions.
@@ -808,16 +783,12 @@ const RS_Vector& RS_VectorSolutions::at(size_t i) const {
         return vector[i];
 }
 
-
-
 /**
  * @return Number of solutions available.
  */
 size_t RS_VectorSolutions::getNumber() const {
     return vector.size();
 }
-
-
 
 /**
  * @retval true There's at least one valid solution.
@@ -888,16 +859,12 @@ void RS_VectorSolutions::set(size_t i, const RS_Vector& v) {
     }
 }
 
-
-
 /**
  * Sets the tangent flag.
  */
 void RS_VectorSolutions::setTangent(bool t) {
     tangent = t;
 }
-
-
 
 /**
  * @return true if at least one of the solutions is a double solution
@@ -906,7 +873,6 @@ void RS_VectorSolutions::setTangent(bool t) {
 bool RS_VectorSolutions::isTangent() const {
     return tangent;
 }
-
 
 /**
  * Rotates all vectors around (0,0) by the given angle.
@@ -973,6 +939,7 @@ void RS_VectorSolutions::scale(const RS_Vector& center, const RS_Vector& factor)
 		}
 	}
 }
+
 void RS_VectorSolutions::scale( const RS_Vector& factor) {
 	for (RS_Vector& vp: vector) {
 		if (vp.valid) {
@@ -980,7 +947,6 @@ void RS_VectorSolutions::scale( const RS_Vector& factor) {
         }
     }
 }
-
 
 /**
  * @return vector solution which is the closest to the given coordinate.
@@ -1013,6 +979,7 @@ RS_Vector RS_VectorSolutions::getClosest(const RS_Vector& coord,
     }
     return closestPoint;
 }
+
 /**
   *@ return the closest distance from the first counts rs_vectors
   *@coord, distance to this point
@@ -1049,7 +1016,6 @@ RS_VectorSolutions RS_VectorSolutions::operator = (const RS_VectorSolutions& s) 
     return *this;
 }
 
-
 std::ostream& operator << (std::ostream& os,
                            const RS_VectorSolutions& s) {
 	for (const RS_Vector& vp: s){
@@ -1058,5 +1024,3 @@ std::ostream& operator << (std::ostream& os,
     os << " tangent: " << (int)s.isTangent() << "\n";
     return os;
 }
-
-
