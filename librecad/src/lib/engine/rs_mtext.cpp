@@ -553,8 +553,7 @@ RS_Vector RS_MText::getNearestEndpoint(const RS_Vector& coord, double* dist)cons
 
 
 RS_VectorSolutions RS_MText::getRefPoints() {
-        RS_VectorSolutions ret(data.insertionPoint);
-        return ret;
+		return RS_VectorSolutions({data.insertionPoint});
 }
 
 

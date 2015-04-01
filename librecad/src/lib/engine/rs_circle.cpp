@@ -523,10 +523,9 @@ RS_VectorSolutions RS_Circle::getRefPoints() {
 	RS_Vector v1(data.radius, 0.0);
 	RS_Vector v2(0.0, data.radius);
 
-	RS_VectorSolutions ret(data.center,
+	return RS_VectorSolutions ({data.center,
 						   data.center+v1, data.center+v2,
-						   data.center-v1, data.center-v2);
-    return ret;
+						   data.center-v1, data.center-v2});
 }
 
 

@@ -399,9 +399,7 @@ void RS_Polyline::addEntity(RS_Entity* entity) {
 
 
 RS_VectorSolutions RS_Polyline::getRefPoints() {
-    RS_VectorSolutions ret;
-
-    ret.push_back(data.startpoint);
+	RS_VectorSolutions ret({data.startpoint});
 
     for (RS_Entity* e=firstEntity(RS2::ResolveNone);
          e!=NULL;

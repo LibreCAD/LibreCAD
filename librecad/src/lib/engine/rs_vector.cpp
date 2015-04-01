@@ -729,74 +729,10 @@ RS_VectorSolutions::RS_VectorSolutions(int num) {
 }
 
 
-
-/**
- * Constructor for one solution.
- */
-RS_VectorSolutions::RS_VectorSolutions(const RS_Vector& v1) {
-    vector.push_back(v1);
-    tangent = false;
+RS_VectorSolutions::RS_VectorSolutions(std::initializer_list<RS_Vector> l)
+{
+	vector.insert(vector.end(), l.begin(), l.end());
 }
-
-
-
-/**
- * Constructor for two solutions.
- */
-RS_VectorSolutions::RS_VectorSolutions(const RS_Vector& v1,
-                                       const RS_Vector& v2) {
-    vector.push_back(v1);
-    vector.push_back(v2);
-    tangent = false;
-}
-
-
-
-/**
- * Constructor for three solutions.
- */
-RS_VectorSolutions::RS_VectorSolutions(const RS_Vector& v1,
-                                       const RS_Vector& v2,
-                                       const RS_Vector& v3) {
-    vector.push_back(v1);
-    vector.push_back(v2);
-    vector.push_back(v3);
-    tangent = false;
-}
-
-
-/**
- * Constructor for four solutions.
- */
-RS_VectorSolutions::RS_VectorSolutions(const RS_Vector& v1,
-                                       const RS_Vector& v2,
-                                       const RS_Vector& v3,
-                                       const RS_Vector& v4) {
-    vector.push_back(v1);
-    vector.push_back(v2);
-    vector.push_back(v3);
-    vector.push_back(v4);
-    tangent = false;
-}
-
-
-/**
- * Constructor for four solutions.
- */
-RS_VectorSolutions::RS_VectorSolutions(const RS_Vector& v1,
-                                       const RS_Vector& v2,
-                                       const RS_Vector& v3,
-                                       const RS_Vector& v4,
-                                       const RS_Vector& v5) {
-    vector.push_back(v1);
-    vector.push_back(v2);
-    vector.push_back(v3);
-    vector.push_back(v4);
-    vector.push_back(v5);
-    tangent = false;
-}
-
-
 
 /**
  * Destructor.
@@ -908,6 +844,16 @@ std::vector<RS_Vector>::const_iterator RS_VectorSolutions::begin() const
 }
 
 std::vector<RS_Vector>::const_iterator RS_VectorSolutions::end() const
+{
+	return vector.end();
+}
+
+std::vector<RS_Vector>::iterator RS_VectorSolutions::begin()
+{
+	return vector.begin();
+}
+
+std::vector<RS_Vector>::iterator RS_VectorSolutions::end()
 {
 	return vector.end();
 }

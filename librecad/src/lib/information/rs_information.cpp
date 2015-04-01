@@ -342,7 +342,7 @@ RS_VectorSolutions RS_Information::getIntersectionLineLine(RS_Line* e1,
 
 		double xs = p1.x + u * (p2.x-p1.x);
 		double ys = p1.y + u * (p2.y-p1.y);
-		ret = RS_VectorSolutions(RS_Vector(xs, ys));
+		ret = RS_VectorSolutions({RS_Vector(xs, ys)});
 	}
 
     // lines are parallel
@@ -373,7 +373,7 @@ RS_VectorSolutions RS_Information::getIntersectionLineArc(RS_Line* line,
 
     // special case: arc touches line (tangent):
     if (nearest.valid && fabs(dist - arc->getRadius()) < 1.0e-4) {
-        ret = RS_VectorSolutions(nearest);
+		ret = RS_VectorSolutions({nearest});
         ret.setTangent(true);
         return ret;
     }
@@ -387,7 +387,7 @@ RS_VectorSolutions RS_Information::getIntersectionLineArc(RS_Line* line,
     if (d2<RS_TOLERANCE2) {
         //line too short, still check the whether the line touches the arc
         if ( fabs(delta.squared() - r*r) < 2.*RS_TOLERANCE*r ){
-            return RS_VectorSolutions(line->getMiddlePoint());
+			return RS_VectorSolutions({line->getMiddlePoint()});
         }
         return ret;
     }
@@ -409,14 +409,14 @@ RS_VectorSolutions RS_Information::getIntersectionLineArc(RS_Line* line,
         if( term1 < RS_TOLERANCE * d2 ) {
             //tangential;
 //            ret=RS_VectorSolutions(p - d*(a1/d2));
-            ret=RS_VectorSolutions(line->getNearestPointOnEntity(c, false));
+			ret=RS_VectorSolutions({line->getNearestPointOnEntity(c, false)});
             ret.setTangent(true);
 //        std::cout<<"Tangential point: "<<ret<<std::endl;
             return ret;
         }
         double t = sqrt(fabs(term1));
     //two intersections
-     return RS_VectorSolutions( p + d*(t-a1)/d2, p -d*(t+a1)/d2);
+	 return RS_VectorSolutions({ p + d*(t-a1)/d2, p -d*(t+a1)/d2});
     }
 
 //    // root term:
@@ -518,10 +518,10 @@ RS_VectorSolutions RS_Information::getIntersectionArcArc(RS_Arc* e1,
 
         if (sol1.distanceTo(sol2)<1.0e-4) {
             sol2 = RS_Vector(false);
-            ret = RS_VectorSolutions(sol1);
+			ret = RS_VectorSolutions({sol1});
             tangent = true;
         } else {
-            ret = RS_VectorSolutions(sol1, sol2);
+			ret = RS_VectorSolutions({sol1, sol2});
         }
 
         ret.setTangent(tangent);

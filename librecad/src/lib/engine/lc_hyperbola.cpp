@@ -149,12 +149,11 @@ RS_Entity* LC_Hyperbola::clone() const {
 
 RS_VectorSolutions LC_Hyperbola::getFoci() const {
     RS_Vector vp(getMajorP()*sqrt(1.-getRatio()*getRatio()));
-    return RS_VectorSolutions(getCenter()+vp, getCenter()-vp);
+	return RS_VectorSolutions({getCenter()+vp, getCenter()-vp});
 }
 
 RS_VectorSolutions LC_Hyperbola::getRefPoints() {
-    RS_VectorSolutions ret;
-    ret.push_back(data.center);
+	RS_VectorSolutions ret({data.center});
     ret.appendTo(getFoci());
     return ret;
 }

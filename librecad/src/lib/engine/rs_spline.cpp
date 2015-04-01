@@ -85,11 +85,8 @@ void RS_Spline::calculateBorders() {
 
 RS_VectorSolutions RS_Spline::getRefPoints() {
 
-    RS_VectorSolutions ret(data.controlPoints.size());
-
-    for (int i = 0; i < data.controlPoints.size(); ++i) {
-        ret.set(i, data.controlPoints.at(i));
-    }
+	RS_VectorSolutions ret;
+	std::copy(data.controlPoints.begin(), data.controlPoints.end(), ret.begin());
 
     return ret;
 }

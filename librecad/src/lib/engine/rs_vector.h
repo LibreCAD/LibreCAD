@@ -140,16 +140,8 @@ class RS_VectorSolutions {
 public:
     RS_VectorSolutions();
     RS_VectorSolutions(const RS_VectorSolutions& s);
-    RS_VectorSolutions(int num);
-	RS_VectorSolutions(const RS_Vector& v1);
-	RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2);
-	RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2,
-					   const RS_Vector& v3);
-	RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2,
-					   const RS_Vector& v3, const RS_Vector& v4);
-	RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2,
-					   const RS_Vector& v3, const RS_Vector& v4,
-					   const RS_Vector& v5);
+	RS_VectorSolutions(int num);
+	RS_VectorSolutions(std::initializer_list<RS_Vector> l);
 
     ~RS_VectorSolutions();
 
@@ -182,6 +174,8 @@ void set(size_t i, const RS_Vector& v);
 	const std::vector<RS_Vector>& getVector() const;
 	std::vector<RS_Vector>::const_iterator begin() const;
 	std::vector<RS_Vector>::const_iterator end() const;
+	std::vector<RS_Vector>::iterator begin();
+	std::vector<RS_Vector>::iterator end();
 	void rotate(const double& ang);
     void rotate(const RS_Vector& angleVector);
     void rotate(const RS_Vector& center, const double& ang);

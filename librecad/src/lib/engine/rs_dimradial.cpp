@@ -100,9 +100,8 @@ QString RS_DimRadial::getMeasuredLabel() {
 
 
 RS_VectorSolutions RS_DimRadial::getRefPoints() {
-        RS_VectorSolutions ret(edata.definitionPoint,
-												data.definitionPoint, data.middleOfText);
-        return ret;
+		return RS_VectorSolutions({edata.definitionPoint,
+												data.definitionPoint, data.middleOfText});
 }
 
 

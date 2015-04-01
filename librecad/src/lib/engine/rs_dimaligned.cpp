@@ -93,9 +93,8 @@ RS_Entity* RS_DimAligned::clone() const{
 }
 
 RS_VectorSolutions RS_DimAligned::getRefPoints() {
-        RS_VectorSolutions ret(edata.extensionPoint1, edata.extensionPoint2,
-												data.definitionPoint, data.middleOfText);
-        return ret;
+		return RS_VectorSolutions({edata.extensionPoint1, edata.extensionPoint2,
+												data.definitionPoint, data.middleOfText});
 }
 
 

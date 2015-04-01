@@ -426,7 +426,7 @@ RS_Vector RS_Text::getNearestEndpoint(const RS_Vector& coord, double* dist)const
 
 
 RS_VectorSolutions RS_Text::getRefPoints() {
-        RS_VectorSolutions ret(data.insertionPoint, data.secondPoint);
+		RS_VectorSolutions ret({data.insertionPoint, data.secondPoint});
         return ret;
 }
 

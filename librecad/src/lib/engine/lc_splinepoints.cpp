@@ -416,17 +416,9 @@ RS_VectorSolutions LC_SplinePoints::getRefPoints()
 
 	if(data.cut)
 	{
-		for(int i = 0; i < data.controlPoints.count(); i++)
-		{
-			ret.push_back(data.controlPoints.at(i));
-		}
-	}
-	else
-	{
-		for(int i = 0; i < data.splinePoints.count(); i++)
-		{
-			ret.push_back(data.splinePoints.at(i));
-		}
+		std::copy(data.controlPoints.begin(), data.controlPoints.end(), ret.begin());
+	} else {
+		std::copy(data.splinePoints.begin(), data.splinePoints.end(), ret.begin());
 	}
 
 	return ret;

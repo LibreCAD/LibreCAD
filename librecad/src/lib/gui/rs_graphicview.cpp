@@ -1350,7 +1350,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
     // draw reference points:
     if (e->isSelected()) {
         if (!e->isParentSelected()) {
-            RS_VectorSolutions s = e->getRefPoints();
+			RS_VectorSolutions&& s = e->getRefPoints();
 
 			for (size_t i=0; i<s.getNumber(); ++i) {
                 int sz = -1;

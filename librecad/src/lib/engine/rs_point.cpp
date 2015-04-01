@@ -53,8 +53,7 @@ void RS_Point::calculateBorders () {
 
 
 RS_VectorSolutions RS_Point::getRefPoints() {
-        RS_VectorSolutions ret(data.pos);
-        return ret;
+		return RS_VectorSolutions{data.pos};
 }
 
 

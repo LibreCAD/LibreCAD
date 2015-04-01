@@ -281,8 +281,7 @@ void RS_Arc::calculateBorders() {
 
 
 RS_VectorSolutions RS_Arc::getRefPoints() {
-    RS_VectorSolutions ret(startpoint, endpoint, data.center);
-    return ret;
+	return RS_VectorSolutions({startpoint, endpoint, data.center});
 }
 
 double RS_Arc::getDirection1() const {

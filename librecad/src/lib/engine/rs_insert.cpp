@@ -303,7 +303,7 @@ bool RS_Insert::isVisible() {
 
 
 RS_VectorSolutions RS_Insert::getRefPoints() {
-        RS_VectorSolutions ret(data.insertionPoint);
+		RS_VectorSolutions ret{data.insertionPoint};
         return ret;
 }
 
