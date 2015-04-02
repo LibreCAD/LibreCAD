@@ -78,7 +78,7 @@ RS_Vector RS_Math::pow(RS_Vector vp, double y) {
  * Converts radians to degrees.
  */
 double RS_Math::rad2deg(double a) {
-    return (a/M_PI)*180.0;
+	return 180./M_PI*a;
 }
 
 
@@ -87,7 +87,7 @@ double RS_Math::rad2deg(double a) {
  * Converts degrees to radians.
  */
 double RS_Math::deg2rad(double a) {
-    return (a/180.0)*M_PI;
+	return M_PI/180.0*a;
 }
 
 
@@ -96,9 +96,12 @@ double RS_Math::deg2rad(double a) {
  * Converts radians to gradians.
  */
 double RS_Math::rad2gra(double a) {
-    return (a/M_PI)*200.0;
+	return 200./M_PI*a;
 }
 
+double RS_Math::gra2rad(double a) {
+	return M_PI/200.*a;
+}
 
 
 /**
@@ -228,15 +231,10 @@ double RS_Math::makeAngleReadable(double angle, bool readable,
  * for texts created with that angle.
  */
 bool RS_Math::isAngleReadable(double angle) {
-    if (angle>M_PI_2*3.0+0.001 ||
-            angle<M_PI_2+0.001) {
-        return true;
-    } else {
-        return false;
-    }
+	const double tolerance=0.001;
+	//return true for angle in 1st and 4th quadrants
+	return fabs(remainder(angle, 2.*M_PI)) < M_PI_2 - tolerance;
 }
-
-
 
 /**
  * @param tol Tolerance in rad.
