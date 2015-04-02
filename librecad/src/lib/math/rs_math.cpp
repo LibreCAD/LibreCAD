@@ -44,11 +44,7 @@
  */
 int RS_Math::round(double v) {
     return (int) lrint(v);
-    //return (v-floor(v)<0.5 ? (int)floor(v) : (int)ceil(v));
 }
-
-
-
 
 /**
  * Save pow function
@@ -81,16 +77,12 @@ double RS_Math::rad2deg(double a) {
 	return 180./M_PI*a;
 }
 
-
-
 /**
  * Converts degrees to radians.
  */
 double RS_Math::deg2rad(double a) {
 	return M_PI/180.0*a;
 }
-
-
 
 /**
  * Converts radians to gradians.
@@ -133,36 +125,13 @@ bool RS_Math::isAngleBetween(double a,
                              double a1, double a2,
                              bool reversed) {
 
-    //    bool ret = false;
+	if (reversed) std::swap(a1,a2);
+	if(getAngleDifferenceU(a2, a1 ) < RS_TOLERANCE_ANGLE) return true;
+	const double tol=0.5*RS_TOLERANCE_ANGLE;
+	const double diff0=correctAngle(a2 -a1) + tol;
 
-    if (reversed) std::swap(a1,a2);
-    //a1 and a2 almost the same angle
-        // the |a2-a1| % (2 pi)=0 means the whole angular range
-    if(fabs( remainder(correctAngle(a2 - a1 ) , 2.*M_PI)) < RS_TOLERANCE_ANGLE) return true;
-//    std::cout<<"correctAngle(a2 -a1) ="<<correctAngle(a2 -a1) <<std::endl;
-//    std::cout<<"correctAngle(a -a1) ="<<correctAngle(a -a1) <<std::endl;
-//    std::cout<<"correctAngle(a2 -a) ="<<correctAngle(a2 -a) <<std::endl;
-    if (  correctAngle(a2 -a1) >= correctAngle(a - a1) - 0.5*RS_TOLERANCE_ANGLE
-          || correctAngle(a2 -a1) >= correctAngle(a2 - a) -0.5*RS_TOLERANCE_ANGLE
-          ) return true;
-        return false;
+	return diff0 >= correctAngle(a - a1) || diff0 >= correctAngle(a2 - a);
 }
-
-//    if(a1>=a2-RS_TOLERENCE) {
-//        if(a>=a1-RS_TOLERENCE || a<=a2+RS_TOLERENCE) {
-//            ret = true;
-//        }
-//    } else {
-//        if(a>=a1-RS_TOLERENCE && a<=a2+RS_TOLERENCE) {
-//            ret = true;
-//        }
-//    }
-//RS_DEBUG->print("angle %f is %sbetween %f and %f",
-//                a, ret ? "" : "not ", a1, a2);
-//    return ret;
-//}
-
-
 
 /**
  * Corrects the given angle to the range of 0-2*Pi.
@@ -170,13 +139,10 @@ bool RS_Math::isAngleBetween(double a,
 double RS_Math::correctAngle(double a) {
     return M_PI + remainder(a - M_PI, 2*M_PI);
 }
-//    while (a>2*M_PI)
-//        a-=2*M_PI;
-//    while (a<0)
-//        a+=2*M_PI;
-//    return a;
-//}
 
+double RS_Math::correctAngleU(double a) {
+	return fabs(remainder(a, 2*M_PI));
+}
 
 
 /**
@@ -184,10 +150,13 @@ double RS_Math::correctAngle(double a) {
  *         Always positive and less than 2*pi.
  */
 double RS_Math::getAngleDifference(double a1, double a2, bool reversed) {
-    if(reversed)
-        return M_PI + remainder(a1 -a2 -M_PI, 2*M_PI);
-    else
-        return M_PI + remainder(a2 -a1 -M_PI, 2*M_PI);
+	if(reversed) std::swap(a1, a2);
+	return correctAngle(a2 - a1);
+}
+
+double RS_Math::getAngleDifferenceU(double a1, double a2)
+{
+	return correctAngleU(a1 - a2);
 }
 
 
@@ -241,17 +210,7 @@ bool RS_Math::isAngleReadable(double angle) {
  * @retval true The two angles point in the same direction.
  */
 bool RS_Math::isSameDirection(double dir1, double dir2, double tol) {
-    double diff = fabs(dir1-dir2);
-    if (diff<tol || diff>2*M_PI-tol) {
-        //std::cout << "RS_Math::isSameDirection: " << dir1 << " and " << dir2
-        //	<< " point in the same direction" << "\n";
-        return true;
-    }
-    else {
-        //std::cout << "RS_Math::isSameDirection: " << dir1 << " and " << dir2
-        //	<< " don't point in the same direction" << "\n";
-        return false;
-    }
+	return getAngleDifferenceU(dir1, dir2) < tol;
 }
 
 
@@ -259,7 +218,7 @@ bool RS_Math::isSameDirection(double dir1, double dir2, double tol) {
  * Compares two double values with a tolerance.
  */
 bool RS_Math::cmpDouble(double v1, double v2, double tol) {
-    return (fabs(v2-v1)<tol);
+	return fabs(v2-v1)<tol;
 }
 
 

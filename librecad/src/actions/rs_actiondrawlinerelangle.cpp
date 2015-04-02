@@ -69,6 +69,14 @@ QAction* RS_ActionDrawLineRelAngle::createGUIAction(RS2::ActionType type, QObjec
     return action;
 }
 
+
+RS2::ActionType RS_ActionDrawLineRelAngle::rtti() {
+	if( fixedAngle && RS_Math::getAngleDifference(angle,M_PI_2) < RS_TOLERANCE )
+		return RS2::ActionDrawLineOrthogonal;
+	else
+		return RS2::ActionDrawLineRelAngle;
+}
+
 void RS_ActionDrawLineRelAngle::trigger() {
     RS_PreviewActionInterface::trigger();
 
