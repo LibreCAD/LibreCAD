@@ -78,7 +78,7 @@ RS_Vector RS_Math::pow(RS_Vector vp, double y) {
  * Converts radians to degrees.
  */
 double RS_Math::rad2deg(double a) {
-    return (a/(2.0*M_PI)*360.0);
+    return (a/M_PI)*180.0;
 }
 
 
@@ -87,7 +87,7 @@ double RS_Math::rad2deg(double a) {
  * Converts degrees to radians.
  */
 double RS_Math::deg2rad(double a) {
-    return ((a/360.0)*(2.0*M_PI));
+    return (a/180.0)*M_PI;
 }
 
 
@@ -96,7 +96,7 @@ double RS_Math::deg2rad(double a) {
  * Converts radians to gradians.
  */
 double RS_Math::rad2gra(double a) {
-    return (a/(2.0*M_PI)*400.0);
+    return (a/M_PI)*200.0;
 }
 
 
