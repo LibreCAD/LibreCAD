@@ -87,8 +87,10 @@ enum EErrorCodes
   ecMISSING_ELSE_CLAUSE    = 33, 
   ecMISPLACED_COLON        = 34,
 
+  ecUNREASONABLE_NUMBER_OF_COMPUTATIONS = 35,
+
   // internal errors
-  ecINTERNAL_ERROR         = 35, ///< Internal error of any kind.
+  ecINTERNAL_ERROR         = 36, ///< Internal error of any kind.
   
   // The last two are special entries 
   ecCOUNT,                      ///< This is no error code, It just stores just the total number of error codes
@@ -155,7 +157,7 @@ public:
     void SetFormula(const string_type &a_strFormula);
     const string_type& GetExpr() const;
     const string_type& GetMsg() const;
-    std::size_t GetPos() const;
+    int GetPos() const;
     const string_type& GetToken() const;
     EErrorCodes GetCode() const;
 

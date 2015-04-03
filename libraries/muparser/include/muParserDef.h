@@ -5,7 +5,7 @@
   |  Y Y  \|  |  /|    |     / __ \_|  | \/\___ \ \  ___/ |  | \/
   |__|_|  /|____/ |____|    (____  /|__|  /____  > \___  >|__|   
         \/                       \/            \/      \/        
-  Copyright (C) 2013 Ingo Berg
+  Copyright (C) 2014 Ingo Berg
 
   Permission is hereby granted, free of charge, to any person obtaining a copy of this 
   software and associated documentation files (the "Software"), to deal in the Software
@@ -36,8 +36,8 @@
     \brief This file contains standard definitions used by the parser.
 */
 
-#define MUP_VERSION _T("2.2.3")
-#define MUP_VERSION_DATE _T("20121222; SF")
+#define MUP_VERSION _T("2.2.5")
+#define MUP_VERSION_DATE _T("20150201; GC")
 
 #define MUP_CHARS _T("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 

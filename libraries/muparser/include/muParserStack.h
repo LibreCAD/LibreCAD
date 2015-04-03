@@ -108,7 +108,7 @@ namespace mu
       /** \brief Returns true if stack is empty false otherwise. */
       bool empty() const
       {
-        return m_Stack.size()==0; 
+        return m_Stack.empty(); 
       }
        
       /** \brief Return reference to the top object in the stack. 

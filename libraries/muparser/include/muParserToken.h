@@ -86,6 +86,8 @@ namespace mu
         ,m_pTok(0)
         ,m_iIdx(-1)
         ,m_strTok()
+		,m_strVal()
+		,m_fVal(0)
         ,m_pCallback()
       {}
 

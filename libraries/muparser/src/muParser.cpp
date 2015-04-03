@@ -128,6 +128,16 @@ namespace mu
   }
 
   //---------------------------------------------------------------------------
+  /** \brief Callback for the unary minus operator.
+      \param v The value to negate
+      \return -v
+  */
+  value_type Parser::UnaryPlus(value_type v) 
+  { 
+    return v; 
+  }
+
+  //---------------------------------------------------------------------------
   /** \brief Callback for adding multiple values. 
       \param [in] a_afArg Vector with the function arguments
       \param [in] a_iArgc The size of a_afArg
@@ -285,7 +295,7 @@ namespace mu
       // Logarithm functions
       DefineFun(_T("log2"), Log2);
       DefineFun(_T("log10"), Log10);
-      DefineFun(_T("log"), Log10);
+      DefineFun(_T("log"), Ln);
       DefineFun(_T("ln"), Ln);
       // misc
       DefineFun(_T("exp"), Exp);
@@ -321,6 +331,7 @@ namespace mu
   void Parser::InitOprt()
   {
     DefineInfixOprt(_T("-"), UnaryMinus);
+    DefineInfixOprt(_T("+"), UnaryPlus);
   }
 
   //---------------------------------------------------------------------------
