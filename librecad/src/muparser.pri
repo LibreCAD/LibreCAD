@@ -1,7 +1,6 @@
 
 macx|win32|equals(build_muparser, "true")|!packagesExist(muparser){
     message("Using bundled muparser")
-    LIBS += ../../generated/lib/libmuparser.a
 	MUPARSER_DIR = ../../libraries/muparser
 	DEPENDPATH += $$MUPARSER_DIR/include \
 				$$MUPARSER_DIR/src

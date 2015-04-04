@@ -1820,10 +1820,6 @@ void RS_FilterJWW::writeSpline(DL_WriterA& dw,
                                           flags),
                 attrib);
 
-    // write spline knots:
-    QList<RS_Vector> cp = s->getControlPoints();
-    QList<RS_Vector>::iterator it;
-
         int k = s->getDegree()+1;
         DL_KnotData kd;
         for (int i=1; i<=numKnots; i++) {
@@ -1838,13 +1834,14 @@ void RS_FilterJWW::writeSpline(DL_WriterA& dw,
                                           kd);
         }
 
-        // write spline control points:
-        for (it = cp.begin(); it!=cp.end(); ++it) {
-                jww.writeControlPoint(dw,
-                                                          DL_ControlPointData((*it).x,
-                                                                                                  (*it).y,
-                                                                                                  0.0));
-        }
+		// write spline knots:
+		auto cp = s->getControlPoints();
+
+		// write spline control points:
+		for (const RS_Vector& v: cp) {
+			jww.writeControlPoint(dw,
+								  DL_ControlPointData(v.x, v.y, 0.0));
+		}
 }
 
 

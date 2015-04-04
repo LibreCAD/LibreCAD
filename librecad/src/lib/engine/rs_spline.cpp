@@ -82,13 +82,23 @@ void RS_Spline::calculateBorders() {
 }
 
 
+void RS_Spline::setDegree(size_t deg) {
+	if (deg>=1 && deg<=3) {
+		data.degree = deg;
+	}
+}
+
+/** @return Degree of this spline curve (1-3).*/
+size_t RS_Spline::getDegree() const{
+	return data.degree;
+}
+
+size_t RS_Spline::getNumberOfControlPoints() const {
+	return data.controlPoints.size();
+}
 
 RS_VectorSolutions RS_Spline::getRefPoints() {
-
-	RS_VectorSolutions ret;
-	std::copy(data.controlPoints.begin(), data.controlPoints.end(), ret.begin());
-
-    return ret;
+	return RS_VectorSolutions(data.controlPoints);
 }
 
 RS_Vector RS_Spline::getNearestRef(const RS_Vector& coord,
@@ -132,27 +142,27 @@ void RS_Spline::update() {
 
     resetBorders();
 
-    QList<RS_Vector> tControlPoints = data.controlPoints;
+	std::vector<RS_Vector> tControlPoints = data.controlPoints;
 
     if (data.closed) {
-        for (int i=0; i<data.degree; ++i) {
-            tControlPoints.append(data.controlPoints.at(i));
+		for (size_t i=0; i<data.degree; ++i) {
+			tControlPoints.push_back(data.controlPoints.at(i));
         }
     }
 
-    int i;
-    int npts = tControlPoints.count();
+	size_t i;
+	const size_t npts = tControlPoints.size();
     // order:
-    int k = data.degree+1;
+	const size_t  k = data.degree+1;
     // resolution:
-    int p1 = getGraphicVariableInt("$SPLINESEGS", 8) * npts;
+	const size_t  p1 = getGraphicVariableInt("$SPLINESEGS", 8) * npts;
 
     double* b = new double[npts*3+1];
     double* h = new double[npts+1];
     double* p = new double[p1*3+1];
 
     i = 1;
-    for (int it = 0; it < tControlPoints.size(); ++it) {
+	for (size_t  it = 0; it < tControlPoints.size(); ++it) {
         b[i] = tControlPoints.at(it).x;
         b[i+1] = tControlPoints.at(it).y;
         b[i+2] = 0.0;
@@ -177,7 +187,7 @@ void RS_Spline::update() {
     }
 
     RS_Vector prev(false);
-    for (i = 1; i <= 3*p1; i=i+3) {
+	for (i = 1; i <= 3*p1; i += 3) {
         if (prev.valid) {
             RS_Line* line = new RS_Line(this,
                                         RS_LineData(prev, RS_Vector(p[i], p[i+1])));
@@ -190,16 +200,16 @@ void RS_Spline::update() {
         minV = RS_Vector::minimum(prev, minV);
         maxV = RS_Vector::maximum(prev, maxV);
     }
-
-    delete[] b;
-    delete[] h;
-    delete[] p;
+	delete[] b;
+	delete[] h;
+	delete[] p;
 }
 
 RS_Vector RS_Spline::getStartpoint() const {
    if (data.closed) return RS_Vector(false);
    return static_cast<RS_Line*>(const_cast<RS_Spline*>(this)->firstEntity())->getStartpoint();
 }
+
 RS_Vector RS_Spline::getEndpoint() const {
    if (data.closed) return RS_Vector(false);
    return static_cast<RS_Line*>(const_cast<RS_Spline*>(this)->lastEntity())->getEndpoint();
@@ -287,8 +297,8 @@ RS_Vector RS_Spline::getNearestDist(double /*distance*/,
 
 void RS_Spline::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);
-    for (int i = 0; i < data.controlPoints.size(); ++i) {
-        data.controlPoints[i].move(offset);
+	for (RS_Vector& vp: data.controlPoints) {
+		vp.move(offset);
     }
 //    update();
 }
@@ -302,17 +312,17 @@ void RS_Spline::rotate(const RS_Vector& center, const double& angle) {
 
 
 void RS_Spline::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
-    RS_EntityContainer::rotate(center, angleVector);
-    for (int i = 0; i < data.controlPoints.size(); ++i) {
-        (data.controlPoints[i] ).rotate(center, angleVector);
-    }
+	RS_EntityContainer::rotate(center, angleVector);
+	for (RS_Vector& vp: data.controlPoints) {
+		vp.rotate(center, angleVector);
+	}
 //    update();
 }
 
 void RS_Spline::scale(const RS_Vector& center, const RS_Vector& factor) {
-    for (int i = 0; i < data.controlPoints.size(); ++i) {
-        (data.controlPoints[i] ).scale(center, factor);
-    }
+	for (RS_Vector& vp: data.controlPoints) {
+		vp.scale(center, factor);
+	}
 
     update();
 }
@@ -320,10 +330,9 @@ void RS_Spline::scale(const RS_Vector& center, const RS_Vector& factor) {
 
 
 void RS_Spline::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
-    RS_EntityContainer::mirror(axisPoint1, axisPoint2);
-    for (int i = 0; i < data.controlPoints.size(); ++i) {
-        (data.controlPoints[i] ).mirror(axisPoint1, axisPoint2);
-    }
+	for (RS_Vector& vp: data.controlPoints) {
+		vp.mirror(axisPoint1, axisPoint2);
+	}
 
 //    update();
 }
@@ -331,20 +340,17 @@ void RS_Spline::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 
 
 void RS_Spline::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-    for (int i = 0; i < data.controlPoints.size(); ++i) {
-
-        if (ref.distanceTo(data.controlPoints.at(i))<1.0e-4) {
-            data.controlPoints[i].move(offset);
-        }
-    }
+	for (RS_Vector& vp: data.controlPoints) {
+		if (ref.distanceTo(vp)<1.0e-4) {
+			vp.move(offset);
+		}
+	}
 
     update();
 }
 
 void RS_Spline::revertDirection() {
-	for(int k = 0; k < data.controlPoints.size() / 2; k++) {
-		data.controlPoints.swap(k, data.controlPoints.size() - 1 - k);
-	}
+	std::reverse(data.controlPoints.begin(), data.controlPoints.end());
 }
 
 
@@ -449,7 +455,7 @@ void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view) {
 /**
  * @return The reference points of the spline.
  */
-QList<RS_Vector> RS_Spline::getControlPoints() {
+const std::vector<RS_Vector>& RS_Spline::getControlPoints() const{
     return data.controlPoints;
 }
 
@@ -459,7 +465,7 @@ QList<RS_Vector> RS_Spline::getControlPoints() {
  * Appends the given point to the control points.
  */
 void RS_Spline::addControlPoint(const RS_Vector& v) {
-    data.controlPoints.append(v);
+	data.controlPoints.push_back(v);
 }
 
 

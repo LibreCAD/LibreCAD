@@ -2245,12 +2245,12 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     }
 
     // write spline control points:
-    QList<RS_Vector> cp = s->getControlPoints();
-    for (int i = 0; i < cp.size(); ++i) {
+	auto cp = s->getControlPoints();
+	for (const RS_Vector& v: cp) {
         DRW_Coord *controlpoint = new DRW_Coord();
         sp.controllist.push_back(controlpoint);
-        controlpoint->x = cp.at(i).x;
-        controlpoint->y = cp.at(i).y;
+		controlpoint->x = v.x;
+		controlpoint->y = v.y;
      }
     getEntityAttributes(&sp, s);
     dxfW->writeSpline(&sp);

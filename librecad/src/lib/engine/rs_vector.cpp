@@ -673,6 +673,12 @@ RS_VectorSolutions::RS_VectorSolutions(const RS_VectorSolutions& s)
     vector=s.vector;
 }
 
+RS_VectorSolutions::RS_VectorSolutions(const std::vector<RS_Vector>& l):
+	vector( l.begin(), l.end())
+  ,tangent(false)
+{
+
+}
 /**
  * Constructor for num solutions.
  */

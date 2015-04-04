@@ -37,10 +37,11 @@ greaterThan( QT_MAJOR_VERSION, 4 ) {
 	CONFIG += c++11
 } else {
     CONFIG += help 
-} 
+}
 
-PRE_TARGETDEPS += ../../generated/lib/libdxfrw.a
-PRE_TARGETDEPS += ../../generated/lib/libjwwlib.a
+GEN_LIB_DIR = ../../generated/lib
+PRE_TARGETDEPS += $$GEN_LIB_DIR/libdxfrw.a \
+		$$GEN_LIB_DIR/libjwwlib.a
 
 DESTDIR = $${INSTALLDIR}
 
@@ -86,6 +87,10 @@ win32 {
 LIBS += -L../../generated/lib  \
     -ldxfrw \
     -ljwwlib
+
+macx|win32|equals(build_muparser, "true")|!packagesExist(muparser){
+	LIBS += -lmuparser
+}
 
 DEPENDPATH += \
     ../../libraries/libdxfrw/src \

@@ -28,7 +28,7 @@
 #ifndef RS_SPLINE_H
 #define RS_SPLINE_H
 
-#include <QList>
+#include <vector>
 #include "rs_entitycontainer.h"
 
 /**
@@ -44,11 +44,11 @@ struct RS_SplineData {
 
 
 	/** Degree of the spline (1, 2, 3) */
-	int degree;
+	size_t degree;
 	/** Closed flag. */
 	bool closed;
 	/** Control points of the spline. */
-	QList<RS_Vector> controlPoints;
+	std::vector<RS_Vector> controlPoints;
 };
 
 std::ostream& operator << (std::ostream& os, const RS_SplineData& ld);
@@ -82,16 +82,10 @@ public:
     }
 
         /** Sets the splines degree (1-3). */
-        void setDegree(int deg) {
-                if (deg>=1 && deg<=3) {
-                        data.degree = deg;
-                }
-        }
+		void setDegree(size_t deg);
 
         /** @return Degree of this spline curve (1-3).*/
-        int getDegree() {
-                return data.degree;
-        }
+		size_t getDegree() const;
 
         /** @return 0. */
     int getNumberOfKnots() {
@@ -99,9 +93,7 @@ public:
         }
 
         /** @return Number of control points. */
-        int getNumberOfControlPoints() {
-                return data.controlPoints.count();
-        }
+		size_t getNumberOfControlPoints() const;
 
         /**
          * @retval true if the spline is closed.
@@ -210,7 +202,7 @@ public:
 		virtual void revertDirection();
 
         virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
-        QList<RS_Vector> getControlPoints();
+		const std::vector<RS_Vector>& getControlPoints() const;
 
         friend std::ostream& operator << (std::ostream& os, const RS_Spline& l);
 
