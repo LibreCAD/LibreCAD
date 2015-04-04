@@ -238,12 +238,12 @@ RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist)co
     dist2 = (endpoint-coord).squared();
 
     if (dist2<dist1) {
-        if (dist!=NULL) {
+		if (dist!=nullptr) {
             *dist = sqrt(dist2);
         }
         return endpoint;
     } else {
-        if (dist!=NULL) {
+		if (dist!=nullptr) {
             *dist = sqrt(dist1);
         }
         return startpoint;
@@ -264,7 +264,7 @@ RS_VectorSolutions RS_Ellipse::getTangentPoint(const RS_Vector& point) const {
     RS_VectorSolutions sol;
     double a=getMajorRadius();
     if(a<RS_TOLERANCE || getRatio()<RS_TOLERANCE) return sol;
-    RS_Circle c(NULL, RS_CircleData(RS_Vector(0.,0.),a));
+	RS_Circle c(nullptr, RS_CircleData(RS_Vector(0.,0.),a));
     point2.y /=getRatio();
     sol=c.getTangentPoint(point2);
     sol.scale(RS_Vector(1.,getRatio()));
@@ -280,7 +280,7 @@ RS_Vector RS_Ellipse::getTangentDirection(const RS_Vector& point) const {
     vp.rotate(aV);
     double a=getMajorRadius();
     if(a<RS_TOLERANCE || getRatio()<RS_TOLERANCE) return RS_Vector(false);
-    RS_Circle c(NULL, RS_CircleData(RS_Vector(0.,0.),a));
+	RS_Circle c(nullptr, RS_CircleData(RS_Vector(0.,0.),a));
     RS_Vector direction=c.getTangentDirection(vp);
     direction.y *= getRatio();
     aV.y *= -1.;
@@ -295,7 +295,7 @@ RS_Vector RS_Ellipse::getTangentDirection(const RS_Vector& point) const {
   */
 double RS_Ellipse::getLength() const
 {
-        RS_Ellipse e(NULL, data);
+		RS_Ellipse e(nullptr, data);
         //switch major/minor axis, because we need the ratio smaller than one
     if(e.getRatio()>1.)  e.switchMajorMinor();
     if(e.isReversed()) {
@@ -367,7 +367,7 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
         // no end points for whole ellipse, therefore, no snap by distance from end points.
         return RS_Vector(false);
     }
-    RS_Ellipse e(NULL,data);
+	RS_Ellipse e(nullptr,data);
     if(e.getRatio()>1.) e.switchMajorMinor();
     double ra=e.getMajorRadius();
     double rb=e.getRatio()*ra;
@@ -380,7 +380,7 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
     }
     if(getRatio()<RS_TOLERANCE) {
         //treat the ellipse as a line
-        RS_Line line(NULL,RS_LineData(e.minV,e.maxV));
+		RS_Line line(nullptr,RS_LineData(e.minV,e.maxV));
         return line.getNearestDist(distance,coord,dist);
     }
     double x1=e.getAngle1();
@@ -412,10 +412,10 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
     x1= (vp1-coord).squared();
     x2= (vp2-coord).squared();
     if( x1 > x2 ){
-        if(dist !=NULL)  *dist=sqrt(x2);
+		if(dist !=nullptr)  *dist=sqrt(x2);
         return vp2;
     }else{
-        if(dist !=NULL)  *dist=sqrt(x1);
+		if(dist !=nullptr)  *dist=sqrt(x1);
         return vp1;
     }
 }
@@ -484,12 +484,12 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     RS_Vector ret(false);
 
     if( ! coord.valid ) {
-        if ( dist != NULL ) *dist=RS_MAXDOUBLE;
+		if ( dist != nullptr ) *dist=RS_MAXDOUBLE;
         return ret;
 
     }
 
-    if (entity!=NULL) {
+	if (entity!=nullptr) {
         *entity = const_cast<RS_Ellipse*>(this);
     }
     ret=coord;
@@ -556,7 +556,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
 //        std::cout<<"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
         RS_DEBUG->print(RS_Debug::D_ERROR,"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n");
     }
-    if (dist!=NULL) {
+	if (dist!=nullptr) {
         *dist = sqrt(dDistance);
     }
     ret.rotate(getAngle());
@@ -612,7 +612,7 @@ bool RS_Ellipse::isPointOnEntity(const RS_Vector& coord,
 //                    return false;
 //            }
 //    }
-//    double dist = getDistanceToPoint(coord, NULL, RS2::ResolveNone);
+//    double dist = getDistanceToPoint(coord, nullptr, RS2::ResolveNone);
 //    return (dist<=tolerance);
 }
 
@@ -645,7 +645,7 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
         }
     }
 
-    if (NULL != dist) {
+	if (nullptr != dist) {
         *dist = distCenter;
     }
     return vCenter;
@@ -761,35 +761,28 @@ bool RS_Ellipse::createFromQuadratic(const QVector<double>& dn){
 	if(fabs(dn[0]) <RS_TOLERANCE2 || fabs(dn[2])<RS_TOLERANCE2) return false; //invalid quadratic form
 	RS_DEBUG->print("RS_Ellipse::createFromQuadratic() begin\n");
 
-//		qDebug()<<"Quadratic: ";
-//	for(auto& f: dn){
-//		qDebug()<<"dn: "<<f;
-//	}
 	//eigenvalue and eigen vectors of quadratic form
     // (dn[0] 0.5*dn[1])
-    // (0.5*dn[1] dn[2])
-	double d(dn[0]-dn[2]);
-	bool rotated=false;
-	if(d<0.f && fabs(dn[1])<=10.*RS_TOLERANCE15) {
-		rotated = true;
-		d=fabs(d);
+	// (0.5*dn[1] dn[2])
+	double a=dn[0];
+	const double c=dn[1];
+	double b=dn[2];
+
+	bool flipXY = a < b;
+	if(flipXY){
+		std::swap(a, b);
 	}
-    double s(sqrt(d*d+dn[1]*dn[1]));
-    //        std::cout<<"d="<<d<<std::endl;
-    //        std::cout<<"s="<<s<<std::endl;
-    double lambda1(0.5*(s+dn[0]+dn[2]));
-    double lambda2(0.5*(-s+dn[0]+dn[2]));
-//			std::cout<<"lambda1="<<lambda1<<"\tlambda2="<<lambda2<<std::endl;
-    if(lambda1<RS_TOLERANCE15 || lambda2<RS_TOLERANCE15) return false;
-	RS_Vector mP(-dn[1]/(s+d),1.);
-//	std::cout<<"mP="<<mP<<std::endl;
-	mP /= sqrt(mP.squared()*lambda2);
-//	std::cout<<"mP="<<mP<<std::endl;
-//    ratio=sqrt(lambda2/lambda1);
-//    setCenter(center);
-	if(rotated) mP.rotate(RS_Vector(0., 1.));
-	setMajorP(mP);
-    setRatio(sqrt(lambda2/lambda1));
+
+	//Eigen system
+	const double d = a - b;
+	const double s=sqrt(d*d + c*c);
+	// eigen value: ( a+b - s)/2, eigen vector: ( -c, d + s)
+	// eigen value: ( a+b + s)/2, eigen vector: ( d + s, c)
+	setMajorP(RS_Vector(atan2(d+s, -c))/sqrt(0.5*(a+b-s)));
+	setRatio(sqrt((a+b-s)/(a+b+s)));
+	if(flipXY)
+		mirror(data.center, data.center + RS_Vector(1., 1.));
+
     setAngle1(0.);
     setAngle2(0.);
 //    if(angleVector.valid) {//need to rotate back, for the parallelogram case
@@ -812,14 +805,14 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 	if(lines.size() != 4) return false; //only do 4 lines
 	std::vector<std::unique_ptr<RS_Line> > quad(4);
 	{ //form quadrilateral from intersections
-		RS_EntityContainer c0(NULL, false);
+		RS_EntityContainer c0(nullptr, false);
 		for(RS_Line*const p: lines){//copy the line pointers
 			c0.addEntity(p);
 		}
-		RS_VectorSolutions s0=RS_Information::createQuadrilateral(c0);
+		RS_VectorSolutions&& s0=RS_Information::createQuadrilateral(c0);
 		if(s0.size()!=4) return false;
 		for(size_t i=0; i<4; ++i){
-			quad[i].reset(new RS_Line(NULL, RS_LineData(s0[i], s0[(i+1)%4])));
+			quad[i].reset(new RS_Line(nullptr, RS_LineData(s0[i], s0[(i+1)%4])));
 		}
 	}
 
@@ -827,8 +820,8 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 	RS_Vector centerProjection;
 	{
 		std::vector<RS_Line> diagonal;
-		diagonal.push_back(RS_Line(NULL, RS_LineData(quad[0]->getStartpoint(), quad[1]->getEndpoint())));
-		diagonal.push_back(RS_Line(NULL, RS_LineData(quad[1]->getStartpoint(), quad[2]->getEndpoint())));
+		diagonal.push_back(RS_Line(nullptr, RS_LineData(quad[0]->getStartpoint(), quad[1]->getEndpoint())));
+		diagonal.push_back(RS_Line(nullptr, RS_LineData(quad[1]->getStartpoint(), quad[2]->getEndpoint())));
 		RS_VectorSolutions&& sol=RS_Information::getIntersectionLineLine( & diagonal[0],& diagonal[1]);
 		if(sol.getNumber()==0) {//this should not happen
 			//        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Ellipse::createInscribeQuadrilateral(): can not locate projection Center");
@@ -856,7 +849,7 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 		RS_Line l(centerProjection, centerProjection+direction);
 		for(int k=1;k<=3;k+=2){
 			RS_VectorSolutions sol2=RS_Information::getIntersectionLineLine(&l, quad[(i+k)%4].get());
-			if(sol2.size())  tangent.push_back(sol2.get(0));
+			if(sol2.size()) tangent.push_back(sol2.get(0));
 		}
 	}
 
@@ -892,7 +885,7 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 		double l=((l0->getLength()+l1->getLength()))*0.25;
 		double k= 4.*d/fabs(l0->getLength()-l1->getLength());
 		double theta=d/(l*k);
-		if(theta>1. || d<RS_TOLERANCE) {
+		if(theta>=1. || d<RS_TOLERANCE) {
 			RS_DEBUG->print("RS_Ellipse::createInscribeQuadrilateral(): this should not happen\n");
 			return false;
 		}
@@ -982,8 +975,8 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 		return false; //invalid quadrilateral
 	}
 
-	setCenter(ellipseCenter);
 	if(! createFromQuadratic(dn)) return false;
+	setCenter(ellipseCenter);
 
 	if(angleVector.valid) {//need to rotate back, for the parallelogram case
 		angleVector.y *= -1.;
@@ -1012,7 +1005,7 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     RS_DEBUG->print("RS_Ellpse::getNearestMiddle(): begin\n");
     if ( ! isArc() ) {
         //no middle point for whole ellipse, angle1=angle2=0
-        if (dist!=NULL) {
+		if (dist!=nullptr) {
             *dist = RS_MAXDOUBLE;
         }
         return RS_Vector(false);
@@ -1022,7 +1015,7 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     if ( ra < RS_TOLERANCE || rb < RS_TOLERANCE ) {
         //zero radius, return the center
         RS_Vector vp(getCenter());
-        if (dist!=NULL) {
+		if (dist!=nullptr) {
             *dist = vp.distanceTo(coord);
         }
         return vp;
@@ -1050,7 +1043,7 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     vp.rotate(getAngle());
     vp.move(getCenter());
 
-    if (dist!=NULL) {
+	if (dist!=nullptr) {
         *dist = vp.distanceTo(coord);
     }
     //RS_DEBUG->print("RS_Ellipse::getNearestMiddle: angle1=%g, angle2=%g, middle=%g\n",amin,amax,a);
@@ -1530,8 +1523,8 @@ bool RS_Ellipse::isVisibleInWindow(RS_GraphicView* view) const
     }
     //check for intersection points with viewport
     for(unsigned short i=0;i<4;i++){
-        RS_Line line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));
-        RS_Ellipse e0(NULL, getData());
+		RS_Line line(nullptr,RS_LineData(vps.at(i),vps.at((i+1)%4)));
+		RS_Ellipse e0(nullptr, getData());
         if( RS_Information::getIntersection(&e0, &line, true).size()>0) return true;
     }
     //is startpoint within viewport
@@ -1696,7 +1689,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
 
     double baseAngle=isReversed()?getAngle2():getAngle1();
     for(unsigned short i=0;i<4;i++){
-        RS_Line line(NULL,RS_LineData(vertex.at(i),vertex.at((i+1)%4)));
+		RS_Line line(nullptr,RS_LineData(vertex.at(i),vertex.at((i+1)%4)));
         auto&& vpIts=RS_Information::getIntersection(
                     static_cast<RS_Entity*>(this), &line, true);
 //    std::cout<<"vpIts.size()="<<vpIts.size()<<std::endl;
@@ -1744,7 +1737,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
 void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 //    std::cout<<"RS_Ellipse::drawVisible(): begin\n";
 //    std::cout<<*this<<std::endl;
-    if (painter==NULL || view==NULL) {
+	if (painter==nullptr || view==nullptr) {
         return;
     }
 
@@ -1777,7 +1770,7 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
         pat = view->getPattern(getPen().getLineType());
     }
 
-    if (pat==NULL) {
+	if (pat==nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "Invalid pattern for Ellipse");
         return;
     }
