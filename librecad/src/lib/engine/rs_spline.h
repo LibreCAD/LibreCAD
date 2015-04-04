@@ -76,46 +76,41 @@ public:
         return false;
     }
 
-    /** @return Copy of data that defines the spline. */
-    RS_SplineData getData() const {
-        return data;
-    }
+	/** @return Copy of data that defines the spline. */
+	const RS_SplineData& getData() const {
+		return data;
+	}
 
-        /** Sets the splines degree (1-3). */
-		void setDegree(size_t deg);
+	/** Sets the splines degree (1-3). */
+	void setDegree(size_t deg);
 
-        /** @return Degree of this spline curve (1-3).*/
-		size_t getDegree() const;
+	/** @return Degree of this spline curve (1-3).*/
+	size_t getDegree() const;
 
-        /** @return 0. */
-    int getNumberOfKnots() {
-                return 0;
-        }
+	/** @return 0. */
+	int getNumberOfKnots() {
+		return 0;
+	}
 
-        /** @return Number of control points. */
-		size_t getNumberOfControlPoints() const;
+	/** @return Number of control points. */
+	size_t getNumberOfControlPoints() const;
 
-        /**
-         * @retval true if the spline is closed.
-         * @retval false otherwise.
-         */
-        bool isClosed() {
-                return data.closed;
-        }
+	/**
+		 * @retval true if the spline is closed.
+		 * @retval false otherwise.
+		 */
+	bool isClosed() const;
 
-        /**
-         * Sets the closed falg of this spline.
-         */
-        void setClosed(bool c) {
-                data.closed = c;
-                update();
-        }
+	/**
+		 * Sets the closed falg of this spline.
+		 */
+	void setClosed(bool c);
 
     virtual RS_VectorSolutions getRefPoints();
     virtual RS_Vector getNearestRef(const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = nullptr);
     virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = nullptr);
 
     /** @return Start point of the entity */
     virtual RS_Vector getStartpoint() const ;
@@ -171,21 +166,21 @@ public:
     //}
 
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL)const;
+										 double* dist = nullptr)const;
     //virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-    //        bool onEntity=true, double* dist = NULL, RS_Entity** entity=NULL);
+	//        bool onEntity=true, double* dist = nullptr, RS_Entity** entity=nullptr);
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-                                       double* dist = NULL);
+									   double* dist = nullptr);
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL,
+									   double* dist = nullptr,
                                        int middlePoints = 1)const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = nullptr);
         //virtual RS_Vector getNearestRef(const RS_Vector& coord,
-        //                                 double* dist = NULL);
+		//                                 double* dist = nullptr);
         /*virtual double getDistanceToPoint(const RS_Vector& coord,
-                                      RS_Entity** entity=NULL,
+									  RS_Entity** entity=nullptr,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
                                                                           double solidDist = RS_MAXDOUBLE);*/
 
@@ -208,18 +203,18 @@ public:
 
         virtual void calculateBorders();
 
-        static void rbasis(int c, double t, int npts, int x[], double h[], double r[]);
+		static void rbasis(int c, double t, int npts, const std::vector<int>& x, const std::vector<double>& h, std::vector<double>& r);
 
-        static void knot(int num, int order, int knotVector[]);
-        static void rbspline(int npts, int k, int p1,
-                             double b[], double h[], double p[]);
+		static void knot(int num, int order, std::vector<int>& knotVector);
+		static void rbspline(size_t npts, size_t k, size_t p1,
+							 const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p);
 
-        static void knotu(int num, int order, int knotVector[]);
+		static void knotu(int num, int order, std::vector<int>& knotVector);
         static void rbsplinu(int npts, int k, int p1,
-                             double b[], double h[], double p[]);
+							 const std::vector<double>& b, const std::vector<double>& h, std::vector<double>& p);
 
 protected:
-        RS_SplineData data;
+		RS_SplineData data;
 }
 ;
 
