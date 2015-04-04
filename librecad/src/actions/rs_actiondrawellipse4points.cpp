@@ -185,7 +185,7 @@ void RS_ActionDrawEllipse4Points::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawEllipse4Points::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (e==nullptr) {
         return;
     }
     RS_Vector mouse = e->getCoordinate();

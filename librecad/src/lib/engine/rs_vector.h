@@ -138,13 +138,12 @@ public:
  */
 class RS_VectorSolutions {
 public:
-    RS_VectorSolutions();
-    RS_VectorSolutions(const RS_VectorSolutions& s);
+	RS_VectorSolutions();
 	RS_VectorSolutions(const std::vector<RS_Vector>& s);
-	RS_VectorSolutions(int num);
 	RS_VectorSolutions(std::initializer_list<RS_Vector> l);
+	RS_VectorSolutions(int num);
 
-    ~RS_VectorSolutions();
+	~RS_VectorSolutions()=default;
 
 	void alloc(size_t num);
 	void clean();

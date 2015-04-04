@@ -659,37 +659,25 @@ RS_Vector RS_Vector::crossP(const RS_Vector& v1, const RS_Vector& v2) {
 /**
  * Constructor for no solution.
  */
-RS_VectorSolutions::RS_VectorSolutions() {
-    vector.clear();
-    tangent=false;
-}
-
-/**
- * Copy constructor
- */
-RS_VectorSolutions::RS_VectorSolutions(const RS_VectorSolutions& s)
-    {
-    setTangent(s.isTangent());
-    vector=s.vector;
+RS_VectorSolutions::RS_VectorSolutions():
+	vector(0)
+  ,tangent(false)
+{
 }
 
 RS_VectorSolutions::RS_VectorSolutions(const std::vector<RS_Vector>& l):
 	vector( l.begin(), l.end())
   ,tangent(false)
 {
-
 }
+
 /**
  * Constructor for num solutions.
  */
-RS_VectorSolutions::RS_VectorSolutions(int num) {
-#if QT_VERSION >= 0x040700
-    vector.reserve(num);
-#else
-        for(int i=vector.size();i<num;i++){
-            vector.push_back(RS_Vector(false));
-        }
-#endif
+RS_VectorSolutions::RS_VectorSolutions(int num):
+	vector(num, RS_Vector(false))
+  ,tangent(false)
+{
 }
 
 
@@ -700,29 +688,15 @@ RS_VectorSolutions::RS_VectorSolutions(std::initializer_list<RS_Vector> l):
 }
 
 /**
- * Destructor.
- */
-RS_VectorSolutions::~RS_VectorSolutions() {
-}
-
-
-/**
  * Allocates 'num' vectors.
  */
 void RS_VectorSolutions::alloc(size_t num) {
-#if QT_VERSION >= 0x040700
-    vector.reserve(num);
-#else
-    if(vector.size() <num) {
-		for(size_t i=vector.size();i<num;i++){
-            vector.push_back(RS_Vector(false));
-        }
-    }
-#endif
-    if(vector.size()>num) {
-        vector.erase(vector.begin()+num, vector.end());
-    }
-   // tangent = false;
+	if(num<=vector.size()){
+		vector.resize(num);
+	}else{
+		const std::vector<RS_Vector> v(num - vector.size(), RS_Vector(false));
+		std::copy(v.begin(), v.end(), vector.end());
+	}
 }
 
 
@@ -741,12 +715,12 @@ RS_Vector RS_VectorSolutions::get(size_t i) const
 
 const RS_Vector&  RS_VectorSolutions::operator [] (const size_t i) const
 {
-	return vector.at(i);
+	return vector[i];
 }
 
 RS_Vector&  RS_VectorSolutions::operator [] (const size_t i)
 {
-	return vector.at(i);
+	return vector[i];
 }
 
 size_t RS_VectorSolutions::size() const
@@ -766,7 +740,7 @@ void RS_VectorSolutions::clear() {
  * are less solutions.
  */
 const RS_Vector& RS_VectorSolutions::at(size_t i) const {
-        return vector[i];
+		return vector.at(i);
 }
 
 /**
