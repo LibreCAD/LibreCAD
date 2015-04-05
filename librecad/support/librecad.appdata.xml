@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2014 Ryan Lerch <rlerch@redhat.com> -->
-<!-- Copyright 2014 Dongxu Li <dongxuli2011@gmail.com> -->
+<!-- Copyright 2014-2015 Dongxu Li <dongxuli2011@gmail.com> -->
 
 <application>
   <id type="desktop">librecad.desktop</id>
