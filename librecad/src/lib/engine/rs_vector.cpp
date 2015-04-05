@@ -292,8 +292,8 @@ if(valid==false) return false;
  * move to the closest integer point
  */
 RS_Vector RS_Vector::toInteger() {
-    x= x - remainder(x,1.);
-    y= y - remainder(y,1.);
+	x = rint(x);
+	y = rint(y);
     return *this;
 }
 
