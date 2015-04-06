@@ -750,18 +750,18 @@ bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
     return false; // only for compiler warning
 }
 
-/**create from quadratic form:
+/** \brief create from quadratic form:
   * dn[0] x^2 + dn[1] xy + dn[2] y^2 =1
-  * centered at (0,0)
+  * keep the ellipse center before calling this function
   *
   *@Author: Dongxu Li
   */
 bool RS_Ellipse::createFromQuadratic(const QVector<double>& dn){
-	if(dn.size()<3) return false;
-	if(fabs(dn[0]) <RS_TOLERANCE2 || fabs(dn[2])<RS_TOLERANCE2) return false; //invalid quadratic form
 	RS_DEBUG->print("RS_Ellipse::createFromQuadratic() begin\n");
+	if(dn.size()!=3) return false;
+	if(fabs(dn[0]) <RS_TOLERANCE2 || fabs(dn[2])<RS_TOLERANCE2) return false; //invalid quadratic form
 
-	//eigenvalue and eigen vectors of quadratic form
+	//eigenvalues and eigenvectors of quadratic form
     // (dn[0] 0.5*dn[1])
 	// (0.5*dn[1] dn[2])
 	double a=dn[0];
@@ -770,26 +770,32 @@ bool RS_Ellipse::createFromQuadratic(const QVector<double>& dn){
 
 	bool flipXY = a < b;
 	if(flipXY){
+		//switch x,y to keep a-b>=0
 		std::swap(a, b);
 	}
 
 	//Eigen system
 	const double d = a - b;
 	const double s=sqrt(d*d + c*c);
-	// eigen value: ( a+b - s)/2, eigen vector: ( -c, d + s)
-	// eigen value: ( a+b + s)/2, eigen vector: ( d + s, c)
+	// eigenvalue: ( a+b - s)/2, eigenvector: ( -c, d + s)
+	// eigenvalue: ( a+b + s)/2, eigenvector: ( d + s, c)
+
+	// eigenvalues are required to be positive for ellipses
+	if(s >= a+b ) return false;
+
 	setMajorP(RS_Vector(atan2(d+s, -c))/sqrt(0.5*(a+b-s)));
 	setRatio(sqrt((a+b-s)/(a+b+s)));
-	if(flipXY)
+	if(flipXY) {
+		//switch x,y is mirroring by the line (y=x)
 		mirror(data.center, data.center + RS_Vector(1., 1.));
+	}
 
+	// start/end angle at 0. means a whole ellipse, instead of an elliptic arc
     setAngle1(0.);
-    setAngle2(0.);
-//    if(angleVector.valid) {//need to rotate back, for the parallelogram case
-//        angleVector.y *= -1.;
-//        rotate(angleVector);
-//    }
-    return true;
+	setAngle2(0.);
+
+	RS_DEBUG->print("RS_Ellipse::createFromQuadratic(): successful\n");
+	return true;
 }
 
 /**
