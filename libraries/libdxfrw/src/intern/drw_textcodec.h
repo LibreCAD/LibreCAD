@@ -13,10 +13,10 @@ public:
     std::string fromUtf8(std::string s);
     std::string toUtf8(std::string s);
     int getVersion(){return version;}
-    void setVersion(std::string *v);
-    void setVersion(int v){version = v;}
-    void setCodePage(std::string *c);
-    void setCodePage(std::string c){setCodePage(&c);}
+    void setVersion(std::string *v, bool dxfFormat);
+    void setVersion(int v, bool dxfFormat);
+    void setCodePage(std::string *c, bool dxfFormat);
+    void setCodePage(std::string c, bool dxfFormat){setCodePage(&c, dxfFormat);}
     std::string getCodePage(){return cp;}
 
 private:
@@ -42,6 +42,13 @@ public:
     int decodeNum(std::string s, int *b);
     const int *table;
     int cpLenght;
+};
+
+class DRW_ConvUTF16 : public DRW_Converter {
+public:
+    DRW_ConvUTF16():DRW_Converter(NULL, 0) {}
+    virtual std::string fromUtf8(std::string *s);
+    virtual std::string toUtf8(std::string *s);
 };
 
 class DRW_ConvTable : public DRW_Converter {

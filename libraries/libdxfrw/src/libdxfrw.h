@@ -1,7 +1,7 @@
 /******************************************************************************
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
-**  Copyright (C) 2011 Rallaz, rallazz@gmail.com                             **
+**  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **
@@ -16,6 +16,7 @@
 #include <string>
 #include "drw_entities.h"
 #include "drw_objects.h"
+#include "drw_header.h"
 #include "drw_interface.h"
 
 
@@ -26,6 +27,7 @@ class dxfRW {
 public:
     dxfRW(const char* name);
     ~dxfRW();
+    void setDebug(DRW::DBG_LEVEL lvl);
     /// reads the file specified in constructor
     /*!
      * An interface must be provided. It is used by the class to signal various
@@ -35,7 +37,7 @@ public:
      * @return true for success
      */
     bool read(DRW_Interface *interface_, bool ext);
-    void setBinary(bool b) {binary = b;}
+    void setBinary(bool b) {binFile = b;}
 
     bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
     bool writeLineType(DRW_LType *ent);
@@ -116,13 +118,14 @@ private:
     bool writeBlocks();
     bool writeObjects();
     bool writeExtData(const std::vector<DRW_Variant*> &ed);
-    std::string toHexStr(int n);
+    /*use version from dwgutil.h*/
+    std::string toHexStr(int n);//RLZ removeme
 
 private:
     DRW::Version version;
     std::string fileName;
     std::string codePage;
-    bool binary;
+    bool binFile;
     dxfReader *reader;
     dxfWriter *writer;
     DRW_Interface *iface;

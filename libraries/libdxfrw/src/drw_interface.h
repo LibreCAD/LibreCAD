@@ -1,7 +1,7 @@
 /******************************************************************************
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
-**  Copyright (C) 2011 Rallaz, rallazz@gmail.com                             **
+**  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **
@@ -17,7 +17,7 @@
 
 #include "drw_entities.h"
 #include "drw_objects.h"
-//#include "dl_extrusion.h"
+#include "drw_header.h"
 
 /**
  * Abstract class (interface) for comunicate dxfReader with the application.
@@ -29,10 +29,8 @@
 class DRW_Interface {
 public:
     DRW_Interface() {
-//        extrusion = new DL_Extrusion;
     }
     virtual ~DRW_Interface() {
-//        delete extrusion;
     }
 
     /** Called when header is parsed.  */
@@ -187,17 +185,6 @@ public:
      */
     virtual void addComment(const char* comment) = 0;
 
-    /** Sets the current attributes for entities. */
-/*    void setExtrusion(double dx, double dy, double dz, double elevation) {
-        extrusion->setDirection(dx, dy, dz);
-		extrusion->setElevation(elevation);
-    }*/
-
-    /** @return the current attributes used for new entities. */
-//    DL_Extrusion* getExtrusion() {
-//        return extrusion;
-//    }
-
     virtual void writeHeader(DRW_Header& data) = 0;
     virtual void writeBlocks() = 0;
     virtual void writeBlockRecords() = 0;
@@ -208,9 +195,6 @@ public:
     virtual void writeVports() = 0;
     virtual void writeDimstyles() = 0;
     virtual void writeAppId() = 0;
-protected:
-//    DL_Attributes attributes;
-//    DL_Extrusion *extrusion;
 };
 
 #endif

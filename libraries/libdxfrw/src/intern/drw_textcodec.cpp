@@ -18,26 +18,40 @@ DRW_TextCodec::~DRW_TextCodec() {
     delete conv;
 }
 
-void DRW_TextCodec::setVersion(std::string *v){
-    std::string versionStr = *v;
-    if (versionStr == "AC1009" || versionStr == "AC1006") {
+void DRW_TextCodec::setVersion(int v, bool dxfFormat){
+    if (v == DRW::AC1009 || v == DRW::AC1006) {
         version = DRW::AC1009;
         cp = "ANSI_1252";
-        setCodePage(&cp);
-    } else if (versionStr == "AC1012" || versionStr == "AC1014"
-             || versionStr == "AC1015" || versionStr == "AC1018") {
+        setCodePage(&cp, dxfFormat);
+    } else if (v == DRW::AC1012 || v == DRW::AC1014
+             || v == DRW::AC1015 || v == DRW::AC1018) {
         version = DRW::AC1015;
-        if (cp.empty()) { //codepage not set, initialize
+//        if (cp.empty()) { //codepage not set, initialize
             cp = "ANSI_1252";
-            setCodePage(&cp);
-        }
+            setCodePage(&cp, dxfFormat);
+//        }
     } else {
         version = DRW::AC1021;
-        cp = "ANSI_1252";
+        if (dxfFormat)
+            cp = "UTF-8";//RLZ: can be UCS2 or UTF-16 16bits per char
+        else
+            cp = "UTF-16";//RLZ: can be UCS2 or UTF-16 16bits per char
+        setCodePage(&cp, dxfFormat);
     }
 }
 
-void DRW_TextCodec::setCodePage(std::string *c){
+void DRW_TextCodec::setVersion(std::string *v, bool dxfFormat){
+    std::string versionStr = *v;
+    if (versionStr == "AC1009" || versionStr == "AC1006") {
+        setVersion(DRW::AC1009, dxfFormat);
+    } else if (versionStr == "AC1012" || versionStr == "AC1014"
+             || versionStr == "AC1015" || versionStr == "AC1018") {
+        setVersion(DRW::AC1015, dxfFormat);
+    }
+    setVersion(DRW::AC1021, dxfFormat);
+}
+
+void DRW_TextCodec::setCodePage(std::string *c, bool dxfFormat){
     cp = correctCodePage(*c);
     delete conv;
     if (version == DRW::AC1009 || version == DRW::AC1015) {
@@ -77,7 +91,10 @@ void DRW_TextCodec::setCodePage(std::string *c){
         } else
             conv = new DRW_ConvTable(DRW_Table1252, CPLENGHTCOMMON);
     } else {
-        conv = new DRW_Converter(NULL, 0);
+        if (dxfFormat)
+            conv = new DRW_Converter(NULL, 0);//utf16 to utf8
+        else
+            conv = new DRW_ConvUTF16();//utf16 to utf8
     }
 }
 
@@ -424,6 +441,25 @@ std::string DRW_Conv932Table::toUtf8(std::string *s) {
     return res;
 }
 
+std::string DRW_ConvUTF16::fromUtf8(std::string *s){
+    DRW_UNUSED(s);
+    //RLZ: to be writen (only needed for write dwg 2007+)
+    return std::string();
+}
+
+std::string DRW_ConvUTF16::toUtf8(std::string *s){//RLZ: pending to write
+    std::string res;
+    std::string::iterator it;
+    for ( it=s->begin() ; it < s->end(); ++it ) {
+        unsigned char c1 = *it;
+        unsigned char c2 = *(++it);
+        duint16 ch = (c2 <<8) | c1;
+        res +=encodeNum(ch);
+    } //end for
+
+    return res;
+}
+
 std::string DRW_TextCodec::correctCodePage(const std::string& s) {
     //stringstream cause crash in OS/X, bug#3597944
     std::string cp=s;
@@ -487,11 +523,12 @@ std::string DRW_TextCodec::correctCodePage(const std::string& s) {
        return "ISO8859-14";
     } else if (cp=="TSCII") {
         return "TSCII"; //tamil
-    } else if (cp=="UTF16") {
-        return "UTF16"; */
+    }*/
 
-    } else if (cp=="UTF-8" || cp=="UTF8" || cp=="UTF88-BIT") {
+    } else if (cp=="UTF-8" || cp=="UTF8" || cp=="UTF8-BIT") {
         return "UTF-8";
+    } else if (cp=="UTF-16" || cp=="UTF16" || cp=="UTF16-BIT") {
+        return "UTF-16";
     }
 
     return "ANSI_1252";

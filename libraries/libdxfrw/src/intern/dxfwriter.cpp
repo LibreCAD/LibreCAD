@@ -1,7 +1,7 @@
 /******************************************************************************
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
-**  Copyright (C) 2011 Rallaz, rallazz@gmail.com                             **
+**  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **
@@ -15,13 +15,6 @@
 #include <string>
 #include <algorithm>
 #include "dxfwriter.h"
-
-#ifdef DRW_DBG
-#include <iostream> //for debug
-#define DBG(a) std::cerr << a
-#else
-#define DBG(a)
-#endif
 
 //RLZ TODO change std::endl to x0D x0A (13 10)
 /*bool dxfWriter::readRec(int *codeData, bool skip) {
