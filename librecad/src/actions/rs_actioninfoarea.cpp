@@ -32,6 +32,7 @@
 #include "rs_debug.h"
 #include "rs_line.h"
 #include "rs_infoarea.h"
+#include "rs_graphic.h"
 
 
 
@@ -91,11 +92,14 @@ void RS_ActionInfoArea::display() {
 		for(int i=0;i<ia->size();i++){
 			preview->addEntity(new RS_Line(preview.get(),ia->at(i),ia->at((i+1) % ia->size())));
         }
-		double area = ia->getArea();
-		double circ = ia->getCircumference();
+		QStringList dists;
+		for(double a: {ia->getCircumference(), ia->getArea()}){
+			dists<<RS_Units::formatLinear(a, graphic->getUnit(),
+										  graphic->getLinearFormat(), graphic->getLinearPrecision());
+		}
 
-        RS_DIALOGFACTORY->commandMessage(tr("Circumference: %1").arg(circ));
-        RS_DIALOGFACTORY->commandMessage(tr("Area: %1").arg(area));
+		RS_DIALOGFACTORY->commandMessage(tr("Circumference: %1").arg(dists[0]));
+		RS_DIALOGFACTORY->commandMessage(tr("Area: %1").arg(dists[1]));
         break;
     }
     drawPreview();
