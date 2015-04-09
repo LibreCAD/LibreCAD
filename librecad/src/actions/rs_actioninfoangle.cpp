@@ -31,6 +31,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
+#include "rs_graphic.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -75,15 +76,15 @@ void RS_ActionInfoAngle::trigger() {
             if (intersection.valid && point1.valid && point2.valid) {
                 double angle1 = intersection.angleTo(point1);
                 double angle2 = intersection.angleTo(point2);
-                double angle = RS_Math::rad2deg(remainder(angle2-angle1,2.*M_PI));
+				double angle = remainder(angle2-angle1,2.*M_PI);
 
-                QString str;
-                str.setNum(angle);
-                str += QChar(0xB0);
+				QString str = RS_Units::formatAngle(angle,
+													graphic->getAngleFormat(), graphic->getAnglePrecision());
+
                 if(angle<0.){
-                    QString str2;
-                    str2.setNum(angle+360.); //positive value
-                    str += QString(tr(" or %1%2")).arg(str2).arg(QChar(0xB0));
+					str += " or ";
+					str += RS_Units::formatAngle(angle + 2.*M_PI,
+												 graphic->getAngleFormat(), graphic->getAnglePrecision());
                 }
                 RS_DIALOGFACTORY->commandMessage(tr("Angle: %1").arg(str));
             }
