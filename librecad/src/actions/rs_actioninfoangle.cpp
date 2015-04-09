@@ -42,7 +42,6 @@ RS_ActionInfoAngle::RS_ActionInfoAngle(RS_EntityContainer& container,
         :RS_PreviewActionInterface("Info Angle",
                            container, graphicView) {}
 
-
 QAction* RS_ActionInfoAngle::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 /* RVT_PORT    QAction* action = new QAction(tr("Angle between two lines"),
                                   tr("&Angle between two lines"),
