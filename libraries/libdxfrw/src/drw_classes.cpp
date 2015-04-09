@@ -106,6 +106,10 @@ void DRW_Class::toDwgType(){
         dwgType = 72;*/
     else if (recName == "LAYOUT")
         dwgType = 82;
+    else if (recName == "IMAGE")
+        dwgType = 101;
+    else if (recName == "IMAGEDEF")
+        dwgType = 102;
     else
         dwgType =0;
 }

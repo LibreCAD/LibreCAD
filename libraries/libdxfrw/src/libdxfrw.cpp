@@ -1239,7 +1239,7 @@ DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
         if (id == NULL) {
             id = new DRW_ImageDef();
             imageDef.push_back(id);
-            id->handle = toHexStr(++entCount);
+            id->handle = ++entCount;
         }
         id->name = name;
         std::string idReactor = toHexStr(++entCount);
@@ -1253,12 +1253,12 @@ DRW_ImageDef* dxfRW::writeImage(DRW_Image *ent, std::string name){
         writer->writeDouble(11, ent->secPoint.x);
         writer->writeDouble(21, ent->secPoint.y);
         writer->writeDouble(31, ent->secPoint.z);
-        writer->writeDouble(12, ent->vx);
-        writer->writeDouble(22, ent->vy);
-        writer->writeDouble(32, ent->vz);
+        writer->writeDouble(12, ent->vVector.x);
+        writer->writeDouble(22, ent->vVector.y);
+        writer->writeDouble(32, ent->vVector.z);
         writer->writeDouble(13, ent->sizeu);
         writer->writeDouble(23, ent->sizev);
-        writer->writeString(340, id->handle);
+        writer->writeString(340, toHexStr(id->handle));
         writer->writeInt16(70, 1);
         writer->writeInt16(280, ent->clip);
         writer->writeInt16(281, ent->brightness);
@@ -1718,13 +1718,13 @@ bool dxfRW::writeObjects() {
             f2 =imageDef.at(i)->name.find_last_of('.');
             ++f1;
             writer->writeString(3, imageDef.at(i)->name.substr(f1,f2-f1));
-            writer->writeString(350, imageDef.at(i)->handle);
+            writer->writeString(350, toHexStr(imageDef.at(i)->handle) );
         }
     }
     for (unsigned int i=0; i<imageDef.size(); i++) {
         DRW_ImageDef *id = imageDef.at(i);
         writer->writeString(0, "IMAGEDEF");
-        writer->writeString(5, id->handle);
+        writer->writeString(5, toHexStr(id->handle) );
         if (version > DRW::AC1014) {
 //            writer->writeString(330, "0"); handle to DICTIONARY
         }

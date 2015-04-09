@@ -143,23 +143,29 @@ protected:
     virtual bool readDwgTables(DRW_Header& hdr)=0;
     virtual bool readDwgBlocks(DRW_Interface& intfa) = 0;
     virtual bool readDwgEntities(DRW_Interface& intfa) = 0;
+    virtual bool readDwgObjects(DRW_Interface& intfa) = 0;
 
     virtual bool readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& intfa);
+    bool readDwgObject(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& intfa);
     void parseAttribs(DRW_Entity* e);
     std::string findTableName(DRW::TTYPE table, dint32 handle);
 
     void setCodePage(std::string *c){decoder.setCodePage(c, false);}
     std::string getCodePage(){ return decoder.getCodePage();}
     bool readDwgHeader(DRW_Header& hdr, dwgBuffer *buf, dwgBuffer *hBuf);
+    bool readDwgHandles(dwgBuffer *dbuf, duint32 offset, duint32 size);
     bool readDwgTables(DRW_Header& hdr, dwgBuffer *dbuf);
     bool checkSentinel(dwgBuffer *buf, enum secEnum::DWGSection, bool start);
 
     bool readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf);
     bool readDwgEntities(DRW_Interface& intfa, dwgBuffer *dbuf);
+    bool readDwgObjects(DRW_Interface& intfa, dwgBuffer *dbuf);
     bool readPlineVertex(DRW_Polyline& pline, dwgBuffer *dbuf);
 
 public:
     std::map<duint32, objHandle>ObjectMap;
+    std::map<duint32, objHandle>objObjectMap; //stores the ojects & entities not read in readDwgEntities
+    std::map<duint32, objHandle>remainingMap; //stores the ojects & entities not read in all proces, for debug only
     std::map<duint32, DRW_LType*> ltypemap;
     std::map<duint32, DRW_Layer*> layermap;
     std::map<duint32, DRW_Block*> blockmap;

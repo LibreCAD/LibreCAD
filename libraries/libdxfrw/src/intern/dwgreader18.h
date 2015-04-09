@@ -69,6 +69,12 @@ public:
         ret = dwgReader::readDwgEntities(intfa, &dataBuf);
         return ret;
     }
+    virtual bool readDwgObjects(DRW_Interface& intfa){
+        bool ret = true;
+        dwgBuffer dataBuf(objData, uncompSize, &decoder);
+        ret = dwgReader::readDwgObjects(intfa, &dataBuf);
+        return ret;
+    }
 
 //    bool readDwgEntity(objHandle& obj, DRW_Interface& intfa){
 //        bool ret = true;

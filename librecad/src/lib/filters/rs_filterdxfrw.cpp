@@ -1160,12 +1160,11 @@ void RS_FilterDXFRW::addImage(const DRW_Image *data) {
 
     RS_Vector ip(data->basePoint.x, data->basePoint.y);
     RS_Vector uv(data->secPoint.x, data->secPoint.y);
-    RS_Vector vv(data->vx, data->vy);
+    RS_Vector vv(data->vVector.x, data->vVector.y);
     RS_Vector size(data->sizeu, data->sizev);
 
     RS_Image* image = new RS_Image( currentContainer,
-            RS_ImageData(QString(data->ref.c_str()).toInt(NULL, 16),
-                         ip, uv, vv, size,
+            RS_ImageData(data->ref, ip, uv, vv, size,
                          QString(""), data->brightness,
                          data->contrast, data->fade));
 
@@ -1181,7 +1180,7 @@ void RS_FilterDXFRW::addImage(const DRW_Image *data) {
 void RS_FilterDXFRW::linkImage(const DRW_ImageDef *data) {
     RS_DEBUG->print("RS_FilterDXFRW::linkImage");
 
-    int handle = QString(data->handle.c_str()).toInt(NULL, 16);
+    int handle = data->handle;
     QString sfile(QString::fromUtf8(data->name.c_str()));
     QFileInfo fiDxf(file);
     QFileInfo fiBitmap(sfile);
@@ -2844,8 +2843,8 @@ void RS_FilterDXFRW::writeImage(RS_Image * i) {
     image.basePoint.y = i->getInsertionPoint().y;
     image.secPoint.x = i->getUVector().x;
     image.secPoint.y = i->getUVector().y;
-    image.vx = i->getVVector().x;
-    image.vy = i->getVVector().y;
+    image.vVector.x = i->getVVector().x;
+    image.vVector.y = i->getVVector().y;
     image.sizeu = i->getWidth();
     image.sizev = i->getHeight();
     image.brightness = i->getBrightness();

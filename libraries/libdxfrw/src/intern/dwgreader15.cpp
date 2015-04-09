@@ -163,66 +163,13 @@ bool dwgReader15::readDwgClasses(){
     return buff.isGood();
 }
 
-/*********** objects map ************************/
-/** Note: object map are split in sections with max size 2035?
- *  heach section are 2 bytes size + data bytes + 2 bytes crc
- *  size value are data bytes + 2 and to calculate crc are used
- *  2 bytes size + data bytes
- *  last section are 2 bytes size + 2 bytes crc (size value always 2)
-**/
 bool dwgReader15::readDwgHandles() {
     DRW_DBG("\ndwgReader15::readDwgHandles\n");
     dwgSectionInfo si = sections[secEnum::HANDLES];
     if (si.Id<0)//not found, ends
         return false;
-    if (!fileBuf->setPosition(si.address))
-        return false;
 
-    /****************/
-    duint32 offset = si.address;
-    duint32 maxPos = offset + si.size;
-//    dint32 offset = sections["OBJECTS"].first;
-//    dint32 maxPos = offset + sections["OBJECTS"].second;
-    DRW_DBG("\nSection OBJECTS offset= "); DRW_DBG(offset);
-    DRW_DBG("\nSection OBJECTS size= "); DRW_DBG(si.size);
-    DRW_DBG("\nSection OBJECTS maxPos= "); DRW_DBG(maxPos);
-    if (!fileBuf->setPosition(offset))
-        return false;
-    DRW_DBG("\nSection OBJECTS buf->curPosition()= "); DRW_DBG(fileBuf->getPosition()); DRW_DBG("\n");
-
-    int startPos = offset;
-
-    while (maxPos > fileBuf->getPosition()) {
-        DRW_DBG("start object section buf->curPosition()= "); DRW_DBG(fileBuf->getPosition()); DRW_DBG("\n");
-        duint16 size = fileBuf->getBERawShort16();
-        DRW_DBG("object map section size= "); DRW_DBG(size); DRW_DBG("\n");
-        fileBuf->setPosition(startPos);
-        duint8 byteStr[size];
-        fileBuf->getBytes(byteStr, size);
-        dwgBuffer buff(byteStr, size, &decoder);
-        if (size != 2){
-            buff.setPosition(2);
-            int lastHandle = 0;
-            int lastLoc = 0;
-            //read data
-            while(buff.getPosition()< size){
-                lastHandle += buff.getUModularChar();
-                DRW_DBG("object map lastHandle= "); DRW_DBGH(lastHandle);
-                lastLoc += buff.getModularChar();
-                DRW_DBG("\nobject map lastLoc= "); DRW_DBG(lastLoc); DRW_DBG("\n");
-                ObjectMap[lastHandle]= objHandle(0, lastHandle, lastLoc);
-            }
-        }
-        //verify crc
-        duint16 crcCalc = buff.crc8(0xc0c1,0,size);
-        duint16 crcRead = fileBuf->getBERawShort16();
-        DRW_DBG("object map section crc8 read= "); DRW_DBG(crcRead);
-        DRW_DBG("\nobject map section crc8 calculated= "); DRW_DBG(crcCalc);
-        DRW_DBG("\nobject section buf->curPosition()= "); DRW_DBG(fileBuf->getPosition()); DRW_DBG("\n");
-        startPos = fileBuf->getPosition();
-    }
-
-    bool ret = fileBuf->isGood();
+    bool ret = dwgReader::readDwgHandles(fileBuf, si.address, si.size);
     return ret;
 }
 
@@ -246,121 +193,4 @@ bool dwgReader15::readDwgBlocks(DRW_Interface& intfa) {
     ret = dwgReader::readDwgBlocks(intfa, fileBuf);
     return ret;
 }
-/**
- * Reads a dwg drawing entity (dwg object entity) given its offset in the file
- */
-/*bool dwgReader15::readDwgEntity(objHandle& obj, DRW_Interface& intfa){
-    bool ret = true;
 
-#define ENTRY_PARSE(e) \
-            ret = e.parseDwg(version, &buff); \
-            parseAttribs(&e); \
-    nextEntLink = e.nextEntLink; \
-    prevEntLink = e.prevEntLink;
-
-    nextEntLink = prevEntLink = 0;// set to 0 to skip unimplemented entities
-        fileBuf->setPosition(obj.loc);
-        int size = fileBuf->getModularShort();
-        duint8 byteStr[size];
-        fileBuf->getBytes(byteStr, size);
-        dwgBuffer buff(byteStr, size, &decoder);
-        if (version > DRW::AC1021) {//2010+
-            buff.getUModularChar();
-        }
-        dint16 oType = buff.getObjType(version);
-        buff.resetPosition();
-
-        if (oType > 499){
-            std::map<duint32, DRW_Class*>::iterator it = classesmap.find(oType);
-            if (it == classesmap.end()){//fail, not found in classes set error
-                return false;
-            } else {
-                DRW_Class *cl = it->second;
-                if (cl->dwgType != 0)
-                    oType = cl->dwgType;
-            }
-        }
-
-        switch (oType){
-        case 17: {
-            DRW_Arc e;
-            ENTRY_PARSE(e)
-            intfa.addArc(e);
-            break; }
-        case 18: {
-            DRW_Circle e;
-            ENTRY_PARSE(e)
-            intfa.addCircle(e);
-            break; }
-        case 19:{
-            DRW_Line e;
-            ENTRY_PARSE(e)
-            intfa.addLine(e);
-            break;}
-        case 27: {
-            DRW_Point e;
-            ENTRY_PARSE(e)
-            intfa.addPoint(e);
-            break; }
-        case 35: {
-            DRW_Ellipse e;
-            ENTRY_PARSE(e)
-            intfa.addEllipse(e);
-            break; }
-        case 7: {//minsert = 8
-            DRW_Insert e;
-            ENTRY_PARSE(e)
-            e.name = findTableName(DRW::BLOCK_RECORD, e.blockRecH.ref);
-            intfa.addInsert(e);
-            break; }
-        case 77: {
-            DRW_LWPolyline e;
-            ENTRY_PARSE(e)
-            intfa.addLWPolyline(e);
-            break; }
-        case 1: {
-            DRW_Text e;
-            ENTRY_PARSE(e)
-            e.style = findTableName(DRW::STYLE, e.styleH.ref);
-            intfa.addText(e);
-            break; }
-        case 44: {
-            DRW_MText e;
-            ENTRY_PARSE(e)
-            e.style = findTableName(DRW::STYLE, e.styleH.ref);
-            intfa.addMText(e);
-            break; }
-        case 28: {
-            DRW_3Dface e;
-            ENTRY_PARSE(e)
-            intfa.add3dFace(e);
-            break; }
-        case 31: {
-            DRW_Solid e;
-            ENTRY_PARSE(e)
-            intfa.addSolid(e);
-            break; }
-        case 34: {
-            DRW_Viewport e;
-            ENTRY_PARSE(e)
-            intfa.addViewport(e);
-            break; }
-
-        default:
-            break;
-        }
-
-    return ret;
-}
-//        } else if (it->type == 0x31 || it->type == 0x4 || it->type == 0x5){
-*/
-
-///////////////////////////////////////////////////////////////////////
-
-/*bool dwgReader15::readDwgHeader() {
-return false;
-}*/
-
-/*bool dwgReader15::readDwgClasses() {
-return false;
-}*/

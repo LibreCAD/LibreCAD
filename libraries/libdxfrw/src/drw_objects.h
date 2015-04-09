@@ -34,7 +34,8 @@ namespace DRW {
          DIMSTYLE,
          VPORT,
          BLOCK_RECORD,
-         APPID
+         APPID,
+         IMAGEDEF
      };
 
 //pending VIEW, UCS, APPID, VP_ENT_HDR, GROUP, MLINESTYLE, LONG_TRANSACTION, XRECORD,
@@ -365,6 +366,7 @@ public:
     DRW_Vport() { reset();}
 
     void reset(){
+        tType = DRW::VPORT;
         UpperRight.x = UpperRight.y = 1.0;
         snapSpacing.x = snapSpacing.y = 10.0;
         gridSpacing = snapSpacing;
@@ -426,20 +428,27 @@ public:
 *  Class to handle image definitions object entries
 *  @author Rallaz
 */
-class DRW_ImageDef {
+class DRW_ImageDef : public DRW_TableEntry {//
     SETOBJFRIENDS
 public:
     DRW_ImageDef() {
-        version = 0;
+        reset();
+    }
+
+    void reset(){
+        tType = DRW::IMAGEDEF;
+        imgVersion = 0;
+        DRW_TableEntry::reset();
     }
 
 protected:
     void parseCode(int code, dxfReader *reader);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
-    std::string handle;       /*!< entity identifier, code 5 */
+//    std::string handle;       /*!< entity identifier, code 5 */
     UTF8STRING name;          /*!< File name of image, code 1 */
-    int version;              /*!< class version, code 90, 0=R14 version */
+    int imgVersion;              /*!< class version, code 90, 0=R14 version */
     double u;                 /*!< image size in pixels U value, code 10 */
     double v;                 /*!< image size in pixels V value, code 20 */
     double up;                /*!< default size of one pixel U value, code 11 */

@@ -501,7 +501,6 @@ bool dwgReader18::readDwgClasses(){
     /*******************************/
 
     duint32 endDataPos = maxClassNum-499;
-//    duint32 endDataPos = 18;
     DRW_DBG("\nbuff.getPosition: "); DRW_DBG(dataBuf.getPosition());
     for (duint32 i= 0; i<endDataPos;i++) {
         DRW_Class *cl = new DRW_Class();
@@ -547,71 +546,20 @@ bool dwgReader18::readDwgHandles() {
     dwgSectionInfo si = sections[secEnum::HANDLES];
     if (si.Id<0)//not found, ends
         return false;
-    bool ret = parseDataPage(si/*, objData*/);
+    bool ret = parseDataPage(si);
     //global store for uncompressed data of all pages
     uncompSize=si.size;
     if (ret) {
 
-    dwgBuffer dataBuf(objData, uncompSize, &decoder);
+        dwgBuffer dataBuf(objData, uncompSize, &decoder);
 
-    duint32 offset =  dataBuf.getPosition();
-    duint32 maxPos = dataBuf.size();
-
-    DRW_DBG("\nSection OBJECTS offset= "); DRW_DBG(offset);
-    DRW_DBG("\nSection OBJECTS size= "); DRW_DBG(si.size);
-    DRW_DBG("\nSection OBJECTS maxPos= "); DRW_DBG(maxPos);
-
-//    int startPos = offset;
-    int lastHandle = 0;
-    int lastLoc = 0;
-    duint16 size = 0;
-    duint32 posCRC = 0;
-
-    while ( (size != 2) && maxPos > dataBuf.getPosition()) {
-        DRW_DBG("start object section buf->curPosition()= "); DRW_DBG(dataBuf.getPosition()); DRW_DBG("\n");
-        size = dataBuf.getBERawShort16();
-        DRW_DBG("object map section size= "); DRW_DBG(size); DRW_DBG("\n");
-//        dataBuf.setPosition(startPos);
-//        duint8 byteStr[size];
-//        dataBuf.getBytes(byteStr, size);
-//        dwgBuffer buff(byteStr, size, &decoder);
-        if (size != 2){
-            duint16 readTo = dataBuf.getPosition() + size -3;
-//            buff.setPosition(2);
-            //read data
-            while(dataBuf.getPosition()< readTo){
-                lastHandle += dataBuf.getUModularChar();
-                DRW_DBG("object map lastHandle= "); DRW_DBGH(lastHandle);
-                lastLoc += dataBuf.getModularChar();
-                DRW_DBG(" lastLoc= "); DRW_DBG(lastLoc); DRW_DBG("\n");
-                ObjectMap[lastHandle]= objHandle(0, lastHandle, lastLoc);
-                if (dataBuf.getPosition()> maxPos || dataBuf.getPosition()== dataBuf.size()){
-                    readTo = 0;
-                    size = 2;
-                }
-            }
-        }
-        //verify crc
-        duint16 crcCalc = dataBuf.crc8(0xc0c1,posCRC,size + posCRC);
-        duint16 crcRead = dataBuf.getBERawShort16();
-        posCRC = size+2;
-
-        DRW_DBG("object map section crc8 read= "); DRW_DBG(crcRead);
-        DRW_DBG("\nobject map section crc8 calculated= "); DRW_DBG(crcCalc);
-//        DRW_DBG("\nobject map section crc 8+ = "); DRW_DBG(dataBuf.getBERawShort16());
-//        pppp = fileBuf->getPosition();
-        DRW_DBG("\nobject section buf->curPosition()= "); DRW_DBG(dataBuf.getPosition()); DRW_DBG("\n");
-//        startPos = dataBuf.getPosition();
-    }
-
-    ret = dataBuf.isGood();
-
-//    ret = strBuf->isGood();
+        ret = dwgReader::readDwgHandles(&dataBuf, 0, si.size);
     }
     //Cleanup: global store for uncompressed data of all pages
     if (objData != NULL){
         delete[] objData;
         objData = NULL;
+        uncompSize = 0;
     }
     return ret;
 }
@@ -633,16 +581,12 @@ bool dwgReader18::readDwgTables(DRW_Header& hdr) {
     uncompSize=si.size;
     if (ret) {
 
-    dwgBuffer dataBuf(objData, uncompSize, &decoder);
+        dwgBuffer dataBuf(objData, uncompSize, &decoder);
 
         ret = dwgReader::readDwgTables(hdr, &dataBuf);
 
     }
-    //Do not delete in this point, needed in the remaining code
-/*    if (objData != NULL){
-        delete[] objData;
-        objData = NULL;
-    }*/
+    //Do not delete objData in this point, needed in the remaining code
     return ret;
 }
 

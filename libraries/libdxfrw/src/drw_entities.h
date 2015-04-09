@@ -1031,7 +1031,7 @@ class DRW_Image : public DRW_Line {
 public:
     DRW_Image() {
         eType = DRW::IMAGE;
-        vz = fade = clip = 0;
+        fade = clip = 0;
         brightness = contrast = 50;
     }
 
@@ -1040,10 +1040,11 @@ protected:
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
-    std::string ref;           /*!< Hard reference to imagedef object, code 340 */
-    double vx;                 /*!< V-vector of single pixel, x coordinate, code 12 */
-    double vy;                 /*!< V-vector of single pixel, y coordinate, code 22 */
-    double vz;                 /*!< V-vector of single pixel, z coordinate, code 32 */
+    duint32 ref;               /*!< Hard reference to imagedef object, code 340 */
+    DRW_Coord vVector;         /*!< V-vector of single pixel, x coordinate, code 12, 22 & 32 */
+//    double vx;                 /*!< V-vector of single pixel, x coordinate, code 12 */
+//    double vy;                 /*!< V-vector of single pixel, y coordinate, code 22 */
+//    double vz;                 /*!< V-vector of single pixel, z coordinate, code 32 */
     double sizeu;              /*!< image size in pixels, U value, code 13 */
     double sizev;              /*!< image size in pixels, V value, code 23 */
     double dz;                 /*!< z coordinate, code 33 */

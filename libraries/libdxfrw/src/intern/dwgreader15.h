@@ -35,6 +35,11 @@ public:
         ret = dwgReader::readDwgEntities(intfa, fileBuf);
         return ret;
     }
+    bool readDwgObjects(DRW_Interface& intfa){
+        bool ret = true;
+        ret = dwgReader::readDwgObjects(intfa, fileBuf);
+        return ret;
+    }
 //    bool readDwgEntity(objHandle& obj, DRW_Interface& intfa);
 };
 

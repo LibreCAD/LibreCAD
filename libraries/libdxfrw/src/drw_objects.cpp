@@ -1122,7 +1122,7 @@ void DRW_ImageDef::parseCode(int code, dxfReader *reader){
         name = reader->getUtf8String();
         break;
     case 5:
-        handle = reader->getString();
+        handle = reader->getHandleString();
         break;
     case 10:
         u = reader->getDouble();
@@ -1148,6 +1148,44 @@ void DRW_ImageDef::parseCode(int code, dxfReader *reader){
     default:
         break;
     }
+}
+
+bool DRW_ImageDef::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    dwgBuffer sBuff = *buf;
+    dwgBuffer *sBuf = buf;
+    if (version > DRW::AC1018) {//2007+
+        sBuf = &sBuff; //separate buffer for strings
+    }
+    bool ret = DRW_TableEntry::parseDwg(version, buf, sBuf, bs);
+    DRW_DBG("\n***************************** parsing Image Def *********************************************\n");
+    if (!ret)
+        return ret;
+    dint32 imgVersion = buf->getBitLong();
+    DRW_DBG("class Version: "); DRW_DBG(imgVersion);
+    DRW_Coord size = buf->get2RawDouble();
+    name = sBuf->getVariableText(version, false);
+    DRW_DBG("appId name: "); DRW_DBG(name.c_str()); DRW_DBG("\n");
+    loaded = buf->getBit();
+    resolution = buf->getRawChar8();
+    up = buf->getRawDouble();
+    vp = buf->getRawDouble();
+
+    dwgHandle parentH = buf->getHandle();
+    DRW_DBG(" parentH Handle: "); DRW_DBGHL(parentH.code, parentH.size, parentH.ref); DRW_DBG("\n");
+    parentHandle = parentH.ref;
+    DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
+    //RLZ: Reactors handles
+    if (xDictFlag !=1){
+        dwgHandle XDicObjH = buf->getHandle();
+        DRW_DBG(" XDicObj control Handle: "); DRW_DBGHL(XDicObjH.code, XDicObjH.size, XDicObjH.ref); DRW_DBG("\n");
+        DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
+    }
+/*RLZ: fails verify this part*/    dwgHandle XRefH = buf->getHandle();
+    DRW_DBG(" XRefH control Handle: "); DRW_DBGHL(XRefH.code, XRefH.size, XRefH.ref); DRW_DBG("\n");
+
+    DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n\n");
+    //    RS crc;   //RS */
+    return buf->isGood();
 }
 
 bool DRW_AppId::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){

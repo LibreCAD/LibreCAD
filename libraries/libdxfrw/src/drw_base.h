@@ -90,7 +90,8 @@ BAD_READ_HANDLES,     /*!< error in object map read process. */
 BAD_READ_CLASSES,     /*!< error in classes read process. */
 BAD_READ_TABLES,      /*!< error in tables read process. */
 BAD_READ_BLOCKS,      /*!< error in block read process. */
-BAD_READ_ENTITIES     /*!< error in entities read process. */
+BAD_READ_ENTITIES,    /*!< error in entities read process. */
+BAD_READ_OBJECTS      /*!< error in objects read process. */
 };
 
 enum DBG_LEVEL {

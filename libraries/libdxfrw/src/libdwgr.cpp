@@ -298,14 +298,15 @@ bool dwgR::processDwg() {
         ret = ret2;
     }
 
-/*    for (std::map<duint32, objHandle>::iterator it=reader->ObjectMap.begin(); it != reader->ObjectMap.end(); ++it){
-        DRW_DBG("object map Handle= "); DRW_DBG(it->first); DRW_DBG(" "); DRW_DBG(it->second.loc); DRW_DBG("\n");
-        ret2 = ret2 && reader->readDwgEntity(it->second, *iface);
-    }*/
-
     ret2 = reader->readDwgEntities(*iface);
     if (ret && !ret2) {
         error = DRW::BAD_READ_ENTITIES;
+        ret = ret2;
+    }
+
+    ret2 = reader->readDwgObjects(*iface);
+    if (ret && !ret2) {
+        error = DRW::BAD_READ_OBJECTS;
         ret = ret2;
     }
 
