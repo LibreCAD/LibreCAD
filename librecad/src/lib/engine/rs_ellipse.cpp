@@ -799,6 +799,58 @@ bool RS_Ellipse::createFromQuadratic(const QVector<double>& dn){
 }
 
 /**
+ * The general equation of a conic is Ax^2 + Bxy + Cy^2 + Dx + Ey + F = 0
+ * In matrix form it is: {x, y}.m_mQuad.{{x},{y}} + m_vLinear.{{x},{y}}+m_dConst=0
+ * If the det(m_mQuad) < 0,  then the conic is an ellipse.
+ * This implies that B = 0 and equation becomes Ax^2 + Cy^2 + Dx + Ey + F = 0, A != 0, C != 0, A != C, 
+ * By completing the squares, we have 
+ *              
+ *    (x + D/2A)^2 / KC   +   (y + E/2C)^2 / KA   =   1   , K := ( CD^2 + AE^2 -4ACF )/ 4A^2C^2
+ * 
+ * From this equation's form, we get the data members of the RS_EllipseData viz 
+ * * center := (-D/2A, -E/2C)
+ * * majorP
+ * * ratio
+ * * angle1
+ * * angle2 
+ * * reversed
+ **/
+
+bool RS_Ellipse::createFromQuadratic(const LC_Quadratic& eqn)
+{
+    if (((eqn.isValid() == false) || (eqn.m_mQuad(0,0) < RS_TOLERANCE)) || (eqn.m_mQuad(1,1) < RS_TOLERANCE))
+	return false;
+    
+    // center is (-D/2A, -E/2C)
+    setCenter(RS_Vector(-0.5 * eqn.m_vLinear(0)/eqn.m_mQuad(0,0), -0.5 * eqn.m_vLinear(1)/eqn.m_mQuad(1,1)));
+    
+    // Our ellipse is a whole ellipse - start and end points are the same - as opposed to an elliptical arc
+    setAngle1(0.);
+    setAngle2(0.);
+    
+    // Compute K
+    // Use K to get the majorP and ratio
+    double K, k2, k1 = eqn.m_mQuad(1,1) * pow(eqn.m_vLinear(0), 2) + eqn.m_mQuad(0,0) * pow(eqn.m_vLinear(1),2) - 4 * eqn.m_mQuad(0,0) * eqn.m_mQuad(1,1) * eqn.m_dConst;
+    k2 = 4 * pow(eqn.m_mQuad(0,0),2) * pow(eqn.m_mQuad(1,1),2);
+    K = k1/k2;
+
+    if ((K > 0) && (eqn.m_mQuad(1,1) > eqn.m_mQuad(0,0))) { // Ellipse is wider than it's tall, Semi-major axis is in X-axis direction
+	setMajorP(RS_Vector( data.center.x + sqrt(K * eqn.m_mQuad(1,1)) , 0. ));
+	
+	// ratio = sqrt(KA/KC) = sqrt(A/C)
+	setRatio(sqrt(eqn.m_mQuad(0,0)/eqn.m_mQuad(1,1)));   
+    }
+
+    if ((K > 0) && (eqn.m_mQuad(0,0) > eqn.m_mQuad(1,1))) { // Ellipse is taller than it's wide, Semi-major axis is in Y-direction
+	setMajorP(RS_Vector( 0. , data.center.y + sqrt(K * eqn.m_mQuad(0,0))));
+
+	// ratio = sqrt(KC/KA) = sqrt(C/A)
+	setRatio(1.0/getRatio());
+    }
+    return true;
+}
+
+/**
 //create Ellipse inscribed in a quadrilateral
 *
 *algorithm: http://chrisjones.id.au/Ellipses/ellipse.html
@@ -1315,7 +1367,7 @@ const RS_EllipseData& RS_Ellipse::getData() const
  * x *= kx
  * y *= ky
  * find the maximum and minimum of x^2 + y^2,
- */
+ 
 void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_Vector vpStart;
     RS_Vector vpEnd;
@@ -1364,8 +1416,39 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
 // calculateBorders();
 
 }
+*/
 
+void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) 
+{
+    LC_Quadratic eqn = getQuadratic();
+    
+    setCenter(RS_Vector(center.x * factor.x, center.y * factor.y ));
+    setAngle1(0.);
+    setAngle2(0.);
+    
+    // Compute K
+    // Use K to get the majorP and ratio
+    double K, k2, k1 = eqn.m_mQuad(1,1)*pow(eqn.m_vLinear(0), 2) + eqn.m_mQuad(0,0) * pow(eqn.m_vLinear(1),2) - 4 * eqn.m_mQuad(0,0) * eqn.m_mQuad(1,1) * eqn.m_dConst;
+    k2 = 4 * pow(eqn.m_mQuad(0,0),2) * pow(eqn.m_mQuad(1,1),2);
+    K = k1/k2;
 
+    if (eqn.m_mQuad(1,1) > eqn.m_mQuad(0,0)) { // Ellipse is wider than it's tall, Semi-major axis is in X-axis direction
+	setMajorP(RS_Vector( factor.x * data.center.x + sqrt(K * eqn.m_mQuad(1,1)) / factor.y , getCenter().y));
+	
+	// ratio = sqrt(KA/KC) = sqrt(A/C)
+	setRatio(getRatio() * factor.y / factor.x);
+	return;   
+    }
+
+    if (eqn.m_mQuad(0,0) > eqn.m_mQuad(1,1)) { // Ellipse is taller than it's wide, Semi-major axis is in Y-direction
+	setMajorP(RS_Vector( getCenter().x , data.center.y * factor.y + sqrt(K * eqn.m_mQuad(0,0)) / factor.x ));
+
+	// ratio = sqrt(KC/KA) = sqrt(C/A)
+	setRatio(1.0/getRatio());
+	return;
+    }
+
+}
 /**
  * is the Ellipse an Arc
  * @return false, if both angle1/angle2 are zero
