@@ -3913,6 +3913,8 @@ QString RS_FilterDXFRW::printDwgVersion(int v){
         return "dwg version 2007";
     case DRW::AC1024:
         return "dwg version 2010";
+    case DRW::AC1027:
+        return "dwg version 2013";
     default:
         return "unknown";
     }
@@ -3963,6 +3965,10 @@ void RS_FilterDXFRW::printDwgError(int le){
     case DRW::BAD_READ_ENTITIES:
         RS_DIALOGFACTORY->commandMessage(QObject::tr("error reading entities in dwg file"));
         RS_DEBUG->print("RS_FilterDXFRW::printDwgError: DRW::BAD_READ_ENTITIES");
+        break;
+    case DRW::BAD_READ_OBJECTS:
+        RS_DIALOGFACTORY->commandMessage(QObject::tr("error reading objects in dwg file"));
+        RS_DEBUG->print("RS_FilterDXFRW::printDwgError: DRW::BAD_READ_OBJECTS");
         break;
     default:
         break;
