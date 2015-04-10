@@ -596,6 +596,14 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
         RS_Vector v(vert->x, vert->y);
         spline->addControlPoint(v);
     }
+    if (data->ncontrol== 0 && data->degree != 2){
+        for (unsigned int i=0; i<data->fitlist.size(); i++) {
+            DRW_Coord *vert = data->fitlist.at(i);
+            RS_Vector v(vert->x, vert->y);
+            spline->addControlPoint(v);
+        }
+
+    }
     spline->update();
 }
 

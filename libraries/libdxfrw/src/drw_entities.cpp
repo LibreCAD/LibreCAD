@@ -2090,26 +2090,30 @@ bool DRW_Spline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     duint8 weight = 0; // RLZ ??? flags, weight, code 70, bit 4 (16)
 
     dint32 scenario = buf->getBitLong();
-    DRW_DBG("scenario: "); DRW_DBG(scenario); DRW_DBG("\n");
+    DRW_DBG("scenario: "); DRW_DBG(scenario);
     if (version > DRW::AC1024) {
         dint32 splFlag1 = buf->getBitLong();
         if (splFlag1 & 1)
             scenario = 2;
         dint32 knotParam = buf->getBitLong();
         DRW_DBG("2013 splFlag1: "); DRW_DBG(splFlag1); DRW_DBG(" 2013 knotParam: ");
-        DRW_DBG(knotParam); DRW_DBG("\n");
+        DRW_DBG(knotParam);
 //        DRW_DBG("unk bit: "); DRW_DBG(buf->getBit());
     }
     degree = buf->getBitLong(); //RLZ: code 71, verify with dxf
+    DRW_DBG(" degree: "); DRW_DBG(degree); DRW_DBG("\n");
     if (scenario == 2) {
+        flags = 8;//scenario 2 = not rational & planar
         tolfit = buf->getBitDouble();//BD
+        DRW_DBG("flags: "); DRW_DBG(flags); DRW_DBG(" tolfit: "); DRW_DBG(tolfit);
         tgStart =buf->get3BitDouble();
-        DRW_DBG("Start Tangent: "); DRW_DBGPT(tgStart.x, tgStart.y, tgStart.z);
+        DRW_DBG(" Start Tangent: "); DRW_DBGPT(tgStart.x, tgStart.y, tgStart.z);
         tgEnd =buf->get3BitDouble();
         DRW_DBG("\nEnd Tangent: "); DRW_DBGPT(tgEnd.x, tgEnd.y, tgEnd.z);
         nfit = buf->getBitLong();
         DRW_DBG("\nnumber of fit points: "); DRW_DBG(nfit);
     } else if (scenario == 1) {
+        flags = 8;//scenario 1 = rational & planar
         flags |= buf->getBit() << 2; //flags, rational, code 70, bit 2 (4)
         flags |= buf->getBit(); //flags, closed, code 70, bit 0 (1)
         flags |= buf->getBit() << 1; //flags, periodic, code 70, bit 1 (2)
