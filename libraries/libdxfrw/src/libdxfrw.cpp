@@ -2762,8 +2762,8 @@ bool dxfRW::processImageDef() {
  **/
 std::string dxfRW::toHexStr(int n){
 #if defined(__APPLE__)
-    char buffer(9, '\0');
-    snprintf(& buffer,9, "%X", n);
+    char buffer[9]= {'\0'};
+    snprintf(buffer,9, "%X", n);
     return std::string(buffer);
 #else
     std::ostringstream Convert;
