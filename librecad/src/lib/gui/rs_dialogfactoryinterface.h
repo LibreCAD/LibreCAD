@@ -375,6 +375,21 @@ public:
     virtual void requestOptionsDrawingDialog(RS_Graphic& graphic) = 0;
 
     /**
+     * This virtual method must be overwritten and must present
+     * a dialog for options how to export as MakeCAM SVG.
+     */
+    virtual bool requestOptionsMakerCamDialog() = 0;
+
+    /**
+     * This virtual method must be overwritten and must present
+     * a dialog for saving a file.
+     */
+    virtual QString requestFileSaveAsDialog(const QString& caption = QString(),
+                                            const QString& dir = QString(),
+                                            const QString& filter = QString(), 
+                                            QString* selectedFilter = 0) = 0;
+
+    /**
      * This virtual method must be overwritten if the graphic view has
      * a component that is interested in the current mouse position.
      * The implementation will be called every time the mouse position

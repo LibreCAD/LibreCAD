@@ -189,6 +189,7 @@ public:
         ActionFilePrint,
         ActionFilePrintPDF,
         ActionFilePrintPreview,
+        ActionFileExportMakerCam,
         ActionFileQuit,
 
         ActionPrintPreview,

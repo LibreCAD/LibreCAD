@@ -30,6 +30,7 @@
 #include <qfiledialog.h>
 #include <QImageReader>
 #include <QString>
+#include <QFileDialog>
 
 #include "rs_patternlist.h"
 #include "rs_settings.h"
@@ -67,6 +68,7 @@
 #include "qg_dlgmtext.h"
 #include "qg_dlgoptionsdrawing.h"
 #include "qg_dlgoptionsgeneral.h"
+#include "qg_dlgoptionsmakercam.h"
 #include "qg_dlgpoint.h"
 #include "qg_dlgpolyline.h"
 #include "qg_dlgrotate.h"
@@ -1911,6 +1913,20 @@ void QG_DialogFactory::requestOptionsDrawingDialog(RS_Graphic& graphic) {
     dlg.exec();
 }
 
+bool QG_DialogFactory::requestOptionsMakerCamDialog() {
+
+    QG_DlgOptionsMakerCam dlg(parent);
+
+    return (dlg.exec() == QDialog::Accepted);
+}
+
+QString QG_DialogFactory::requestFileSaveAsDialog(const QString& caption /* = QString() */,
+                                                  const QString& dir /* = QString() */,
+                                                  const QString& filter /* = QString() */,
+                                                  QString* selectedFilter /* = 0 */) {
+
+    return QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter);
+}
 
 /**
  * Back to last menu in cad toolbar.

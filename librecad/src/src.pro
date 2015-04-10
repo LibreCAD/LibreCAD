@@ -20,6 +20,7 @@ GENERATED_DIR = ../../generated/librecad
 # Use common project definitions.
 include(../../common.pri)
 include(./boost.pri)
+include(./libxml++.pri)
 include(./muparser.pri)
 
 #uncomment to use 2D rs_vector instead of 3D
@@ -29,7 +30,6 @@ CONFIG += qt \
      warn_on \
      link_prl \
      verbose
-
 
 greaterThan( QT_MAJOR_VERSION, 4 ) {
     # in Qt5 help is deprecated in CONFIG
@@ -102,6 +102,7 @@ DEPENDPATH += \
     lib/engine \
     lib/fileio \
     lib/filters \
+    lib/generators \
     lib/gui \
     lib/information \
     lib/math \
@@ -191,6 +192,7 @@ HEADERS += \
     lib/filters/rs_filterjww.h \
     lib/filters/rs_filterlff.h \
     lib/filters/rs_filterinterface.h \
+    lib/generators/rs_makercamsvg.h \
     lib/gui/rs_commandevent.h \
     lib/gui/rs_coordinateevent.h \
     lib/gui/rs_dialogfactory.h \
@@ -279,6 +281,7 @@ SOURCES += \
     lib/filters/rs_filterdxf1.cpp \
     lib/filters/rs_filterjww.cpp \
     lib/filters/rs_filterlff.cpp \
+    lib/generators/rs_makercamsvg.cpp \
     lib/gui/rs_dialogfactory.cpp \
     lib/gui/rs_eventhandler.cpp \
     lib/gui/rs_graphicview.cpp \
@@ -372,6 +375,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actioneditcopy.h \
     actions/rs_actioneditpaste.h \
     actions/rs_actioneditundo.h \
+    actions/rs_actionfileexportmakercam.h \
     actions/rs_actionfilenew.h \
     actions/rs_actionfilenewtemplate.h \
     actions/rs_actionfileopen.h \
@@ -507,6 +511,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actioneditcopy.cpp \
     actions/rs_actioneditpaste.cpp \
     actions/rs_actioneditundo.cpp \
+    actions/rs_actionfileexportmakercam.cpp \
     actions/rs_actionfilenew.cpp \
     actions/rs_actionfilenewtemplate.cpp \
     actions/rs_actionfileopen.cpp \
@@ -647,6 +652,7 @@ HEADERS += ui/qg_actionfactory.h \
     ui/forms/qg_dlgmtext.h \
     ui/forms/qg_dlgoptionsdrawing.h \
     ui/forms/qg_dlgoptionsgeneral.h \
+    ui/forms/qg_dlgoptionsmakercam.h \
     ui/forms/qg_dlgpoint.h \
     ui/forms/qg_dlgpolyline.h \
     ui/forms/qg_dlgrotate.h \
@@ -742,6 +748,7 @@ SOURCES += ui/qg_actionfactory.cpp \
     ui/forms/qg_dlgmtext.cpp \
     ui/forms/qg_dlgoptionsdrawing.cpp \
     ui/forms/qg_dlgoptionsgeneral.cpp \
+    ui/forms/qg_dlgoptionsmakercam.cpp \
     ui/forms/qg_dlgpoint.cpp \
     ui/forms/qg_dlgpolyline.cpp \
     ui/forms/qg_dlgrotate.cpp \
@@ -820,6 +827,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_dlgmtext.ui \
     ui/forms/qg_dlgoptionsdrawing.ui \
     ui/forms/qg_dlgoptionsgeneral.ui \
+    ui/forms/qg_dlgoptionsmakercam.ui \
     ui/forms/qg_dlgpoint.ui \
     ui/forms/qg_dlgpolyline.ui \
     ui/forms/qg_dlgrotate.ui \
