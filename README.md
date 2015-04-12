@@ -144,7 +144,8 @@ As an example, for CentOS 6.4, after adding the EPEL repository,
 yum groupinstall 'Desktop Platform Development' 'Development tools'
 ```
 
-```bashyum install qt-devel boost-devel muParser-devel
+```bash
+yum install qt-devel boost-devel muParser-devel
 ```
 
 will install the necessary build dependencies.
