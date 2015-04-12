@@ -94,12 +94,13 @@ void RS_ActionDrawText::init(int status) {
 
 
 void RS_ActionDrawText::reset() {
+	const QString text=data->text;
 	data.reset(new RS_TextData(RS_Vector(0.0,0.0), RS_Vector(0.0,0.0),
                        1.0, 1.0,
                        RS_TextData::VABaseline,
                        RS_TextData::HALeft,
                        RS_TextData::None,
-					   data->text,
+					   text,
                        "standard",
                        0.0,
 					   RS2::Update));
