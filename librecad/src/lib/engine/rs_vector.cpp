@@ -695,7 +695,7 @@ void RS_VectorSolutions::alloc(size_t num) {
 		vector.resize(num);
 	}else{
 		const std::vector<RS_Vector> v(num - vector.size(), RS_Vector(false));
-		std::copy(v.begin(), v.end(), vector.end());
+		vector.insert(vector.end(), v.begin(), v.end());
 	}
 }
 
