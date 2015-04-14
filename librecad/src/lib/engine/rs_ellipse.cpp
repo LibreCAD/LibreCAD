@@ -759,7 +759,7 @@ bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
 bool RS_Ellipse::createFromQuadratic(const QVector<double>& dn){
 	RS_DEBUG->print("RS_Ellipse::createFromQuadratic() begin\n");
 	if(dn.size()!=3) return false;
-	if(fabs(dn[0]) <RS_TOLERANCE2 || fabs(dn[2])<RS_TOLERANCE2) return false; //invalid quadratic form
+//	if(fabs(dn[0]) <RS_TOLERANCE2 || fabs(dn[2])<RS_TOLERANCE2) return false; //invalid quadratic form
 
 	//eigenvalues and eigenvectors of quadratic form
     // (dn[0] 0.5*dn[1])
@@ -768,27 +768,26 @@ bool RS_Ellipse::createFromQuadratic(const QVector<double>& dn){
 	const double c=dn[1];
 	double b=dn[2];
 
-	bool flipXY = a < b;
-	if(flipXY){
-		//switch x,y to keep a-b>=0
-		std::swap(a, b);
-	}
-
 	//Eigen system
 	const double d = a - b;
 	const double s=sqrt(d*d + c*c);
+	// { a>b, d>0
 	// eigenvalue: ( a+b - s)/2, eigenvector: ( -c, d + s)
 	// eigenvalue: ( a+b + s)/2, eigenvector: ( d + s, c)
+	// }
+	// { a<b, d<0
+	// eigenvalue: ( a+b - s)/2, eigenvector: ( s-d,-c)
+	// eigenvalue: ( a+b + s)/2, eigenvector: ( c, s-d)
+	// }
 
 	// eigenvalues are required to be positive for ellipses
 	if(s >= a+b ) return false;
-
-	setMajorP(RS_Vector(atan2(d+s, -c))/sqrt(0.5*(a+b-s)));
-	setRatio(sqrt((a+b-s)/(a+b+s)));
-	if(flipXY) {
-		//switch x,y is mirroring by the line (y=x)
-		mirror(data.center, data.center + RS_Vector(1., 1.));
+	if(a>=b) {
+		setMajorP(RS_Vector(atan2(d+s, -c))/sqrt(0.5*(a+b-s)));
+	}else{
+		setMajorP(RS_Vector(atan2(-c, s-d))/sqrt(0.5*(a+b-s)));
 	}
+	setRatio(sqrt((a+b-s)/(a+b+s)));
 
 	// start/end angle at 0. means a whole ellipse, instead of an elliptic arc
     setAngle1(0.);
