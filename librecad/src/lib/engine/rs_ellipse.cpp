@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <QVector>
+#include <QVector3D>
 #include <array>
 #include "rs_ellipse.h"
 
@@ -916,18 +917,21 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 	}
 	QVector<QVector<double> > mt;
 	mt.clear();
-	const double symTolerance=100.*RS_TOLERANCE;
-	for(const RS_Vector& vp: tangent){//form the linear equation
+	const double symTolerance=20.*RS_TOLERANCE;
+	for(const RS_Vector& vp: tangent){
+		//form the linear equation
+		// need to remove duplicated {x^2, xy, y^2} terms due to symmetry (x => -x, y=> -y)
+		// i.e. rotation of 180 degrees around ellipse center
 		//		std::cout<<"point  : "<<vp<<std::endl;
 		QVector<double> mtRow;
 		mtRow.push_back(vp.x*vp.x);
 		mtRow.push_back(vp.x*vp.y);
 		mtRow.push_back(vp.y*vp.y);
 		bool addRow(true);
-		for(int j=0;j<mt.size();j++){
-			if(fabs(mtRow[0]-mt[j][0])<symTolerance &&
-					fabs(mtRow[1]-mt[j][1])<symTolerance &&
-					fabs(mtRow[2]-mt[j][2])<symTolerance){
+		const QVector3D current(mtRow[0], mtRow[1], mtRow[2]);
+		for(const auto& v: mt){
+			const QVector3D existing(v[0], v[1], v[2]);
+			if( (current-existing).length() < symTolerance*current.length()){
 				//symmetric
 				addRow=false;
 				break;
