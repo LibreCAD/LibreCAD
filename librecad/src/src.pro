@@ -20,7 +20,6 @@ GENERATED_DIR = ../../generated/librecad
 # Use common project definitions.
 include(../../common.pri)
 include(./boost.pri)
-include(./libxml++.pri)
 include(./muparser.pri)
 
 #uncomment to use 2D rs_vector instead of 3D
@@ -36,7 +35,7 @@ greaterThan( QT_MAJOR_VERSION, 4 ) {
 	QT += widgets printsupport help
 	CONFIG += c++11
 } else {
-    CONFIG += help 
+    CONFIG += help
 }
 
 GEN_LIB_DIR = ../../generated/lib
@@ -193,6 +192,8 @@ HEADERS += \
     lib/filters/rs_filterlff.h \
     lib/filters/rs_filterinterface.h \
     lib/generators/rs_makercamsvg.h \
+    lib/generators/rs_xmlwriterinterface.h \
+    lib/generators/rs_xmlwriterqxmlstreamwriter.h \
     lib/gui/rs_commandevent.h \
     lib/gui/rs_coordinateevent.h \
     lib/gui/rs_dialogfactory.h \
@@ -283,6 +284,7 @@ SOURCES += \
     lib/filters/rs_filterjww.cpp \
     lib/filters/rs_filterlff.cpp \
     lib/generators/rs_makercamsvg.cpp \
+    lib/generators/rs_xmlwriterqxmlstreamwriter.cpp \
     lib/gui/rs_dialogfactory.cpp \
     lib/gui/rs_eventhandler.cpp \
     lib/gui/rs_graphicview.cpp \
@@ -919,7 +921,7 @@ contains(QT_MAJOR_VERSION, 4)   {
         !build_pass:verbose:message(Using Qt version $$[QT_VERSION].)
     }
 
-# QT_MAJOR_VERSION = 4 
+# QT_MAJOR_VERSION = 4
 }
 
 RESOURCES += ../res/main/main.qrc
@@ -982,4 +984,3 @@ TRANSLATIONS = ../ts/librecad_ar.ts \
     ../ts/librecad_uk.ts \
     ../ts/librecad_zh_cn.ts \
     ../ts/librecad_zh_tw.ts
-

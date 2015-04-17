@@ -32,6 +32,7 @@
 #include "rs_graphic.h"
 #include "rs_makercamsvg.h"
 #include "rs_settings.h"
+#include "rs_xmlwriterqxmlstreamwriter.h"
 
 RS_ActionFileExportMakerCam::RS_ActionFileExportMakerCam(RS_EntityContainer& container,
                                                          RS_GraphicView& graphicView)
@@ -68,7 +69,8 @@ void RS_ActionFileExportMakerCam::trigger() {
 
                 RS_SETTINGS->beginGroup("/ExportMakerCam");
 
-                RS_MakerCamSVG* generator = new RS_MakerCamSVG((bool)RS_SETTINGS->readNumEntry("/ExportInvisibleLayers"),
+                RS_MakerCamSVG* generator = new RS_MakerCamSVG(new RS_XMLWriterQXmlStreamWriter(),
+                                                               (bool)RS_SETTINGS->readNumEntry("/ExportInvisibleLayers"),
                                                                (bool)RS_SETTINGS->readNumEntry("/ExportConstructionLayers"),
                                                                (bool)RS_SETTINGS->readNumEntry("/WriteBlocksInline"),
                                                                (bool)RS_SETTINGS->readNumEntry("/ConvertEllipsesToBeziers"));
