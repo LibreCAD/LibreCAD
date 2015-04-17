@@ -26,7 +26,6 @@
 
 #include <QVector>
 #include <QVector3D>
-#include <array>
 #include "rs_ellipse.h"
 
 #include "rs_circle.h"
@@ -795,6 +794,38 @@ bool RS_Ellipse::createFromQuadratic(const QVector<double>& dn){
 	setAngle2(0.);
 
 	RS_DEBUG->print("RS_Ellipse::createFromQuadratic(): successful\n");
+	return true;
+}
+
+bool RS_Ellipse::createFromQuadratic(const LC_Quadratic& q){
+	if (!q.isQuadratic()) return false;
+	auto  const& mQ=q.getQuad();
+	double const& a=mQ(0,0);
+	double const& c=2.*mQ(0,1);
+	double const& b=mQ(1,1);
+	auto  const& mL=q.getLinear();
+	double const& d=mL(0);
+	double const& e=mL(1);
+	double determinant=c*c-4.*a*b;
+	if(determinant>=0.) return false;
+	// find center of quadratic
+	// 2 A x + C y = D
+	// C x   + 2 B y = E
+	// x = (2BD - EC)/( 4AB - C^2)
+	// y = (2AE - DC)/(4AB - C^2)
+	const RS_Vector eCenter=RS_Vector(2.*b*d - e*c, 2.*a*e - d*c)/determinant;
+	//generate centered quadratic
+	LC_Quadratic qCentered=q;
+	qCentered.move(-eCenter);
+	if(qCentered.m_dConst>=0.f) return false;
+	const auto& mq2=qCentered.getQuad();
+	const double factor=-1./qCentered.m_dConst;
+	//quadratic terms
+	const QVector<double> dn={mq2(0,0)*factor, 2.*mq2(0,1)*factor, mq2(1,1)*factor};
+	if(!createFromQuadratic(dn)) return false;
+
+	//move back to center
+	move(eCenter);
 	return true;
 }
 

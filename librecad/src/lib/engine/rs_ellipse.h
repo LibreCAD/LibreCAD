@@ -29,8 +29,9 @@
 #ifndef RS_ELLIPSE_H
 #define RS_ELLIPSE_H
 
-class LC_Quadratic;
 #include "rs_atomicentity.h"
+
+class LC_Quadratic;
 
 /**
  * Holds the data that defines an ellipse.
@@ -182,7 +183,12 @@ public:
     }
     bool createFrom4P(const RS_VectorSolutions& sol);
     bool createFromCenter3Points(const RS_VectorSolutions& sol);
-    bool createFromQuadratic(const QVector<double>& dn);//from quadratic form: dn[0] x^2 + dn[1] xy + dn[2] y^2 =1
+	//! \{ \brief from quadratic form
+	/** : dn[0] x^2 + dn[1] xy + dn[2] y^2 =1 */
+	bool createFromQuadratic(const QVector<double>& dn);
+	/** : generic quadratic: A x^2 + C xy + B y^2 + D x + E y + F =0 */
+	bool createFromQuadratic(const LC_Quadratic& q);
+	//! \}
 	bool createInscribeQuadrilateral(const std::vector<RS_Line*>& lines);
     virtual RS_Vector getMiddlePoint(void)const;
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
