@@ -237,15 +237,15 @@ public:
     /**
      * @return Pointer to MdiArea.
      */
-    QMdiArea* getMdiArea() {
-        return mdiAreaCAD;
-    }
+	QMdiArea const* getMdiArea() const;
+	QMdiArea* getMdiArea();
 
     /**
      * @return Pointer to the currently active MDI Window or NULL if no
      * MDI Window is active.
      */
-    QC_MDIWindow* getMDIWindow();
+	const QC_MDIWindow* getMDIWindow() const;
+	QC_MDIWindow* getMDIWindow();
 
     /**
      * Implementation from RS_MainWindowInterface (and QS_ScripterHostInterface).
@@ -253,13 +253,8 @@ public:
      * @return Pointer to the graphic view of the currently active document
      * window or NULL if no window is available.
      */
-    virtual RS_GraphicView* getGraphicView() {
-        QC_MDIWindow* m = getMDIWindow();
-        if (m!=NULL) {
-            return m->getGraphicView();
-        }
-        return NULL;
-    }
+	virtual const RS_GraphicView* getGraphicView() const;
+	virtual RS_GraphicView* getGraphicView();
 
     /**
      * Implementation from RS_MainWindowInterface (and QS_ScripterHostInterface).
@@ -267,43 +262,31 @@ public:
      * @return Pointer to the graphic document of the currently active document
      * window or NULL if no window is available.
      */
-    virtual RS_Document* getDocument() {
-        QC_MDIWindow* m = getMDIWindow();
-        if (m!=NULL) {
-            return m->getDocument();
-        }
-        return NULL;
-    }
+	virtual const RS_Document* getDocument() const;
+	virtual RS_Document* getDocument();
 
         /**
          * Creates a new document. Implementation from RS_MainWindowInterface.
          */
-    virtual void createNewDocument(
-                const QString& fileName = QString::null, RS_Document* doc=NULL) {
-
-                slotFileNew(doc);
-                if (fileName!=QString::null && getDocument()!=NULL) {
-                        getDocument()->setFilename(fileName);
-                }
-        }
+	void createNewDocument(const QString& fileName = QString::null, RS_Document* doc=nullptr);
 
     /**
      * Implementation from QG_MainWindowInterface.
      *
      * @return Pointer to this.
      */
-    virtual QMainWindow* getMainWindow() {
-        return this;
-    }
+	const QMainWindow* getMainWindow() const;
+	QMainWindow* getMainWindow();
 
     /**
      * @return Pointer to action handler. Implementation from QG_MainWindowInterface.
      */
-    virtual QG_ActionHandler* getActionHandler() {
+	QG_ActionHandler const* getActionHandler() const{
         return actionHandler;
     }
-
-
+	QG_ActionHandler* getActionHandler(){
+		return actionHandler;
+	}
 
         //virtual QToolBar* createToolBar(const QString& name);
         //virtual void addToolBarButton(QToolBar* tb);

@@ -47,8 +47,10 @@
 #include "rs_settings.h"
 #include "qg_exitdialog.h"
 #include "qg_filedialog.h"
+#include "qc_graphicview.h"
 #include "rs_insert.h"
 #include "rs_mtext.h"
+#include "rs_pen.h"
 
 int QC_MDIWindow::idCounter = 0;
 
@@ -127,7 +129,40 @@ QC_MDIWindow::~QC_MDIWindow() {
     QC_ApplicationWindow::getAppWindow()->slotWindowActivated(subWindow);
 }
 
+QC_GraphicView* QC_MDIWindow::getGraphicView() const{
+	return graphicView;
+}
 
+/** @return Pointer to document */
+RS_Document* QC_MDIWindow::getDocument() const{
+	return document;
+}
+
+int QC_MDIWindow::getId() const{
+	return id;
+}
+
+void QC_MDIWindow::setForceClosing(bool on) {
+	forceClosing = on;
+}
+
+RS_EventHandler* QC_MDIWindow::getEventHandler() const{
+	if (graphicView) {
+		return graphicView->getEventHandler();
+	}
+	else {
+		return nullptr;
+	}
+}
+
+void QC_MDIWindow::setParentWindow(QC_MDIWindow* p) {
+	RS_DEBUG->print("setParentWindow");
+	parentWindow = p;
+}
+
+RS_Graphic* QC_MDIWindow::getGraphic() const {
+	return document->getGraphic();
+}
 
 /**
  * Adds another MDI window to the list of known windows that
@@ -300,7 +335,7 @@ void QC_MDIWindow::initView() {
  * Called when the current pen (color, style, width) has changed.
  * Sets the active pen for the document in this MDI window.
  */
-void QC_MDIWindow::slotPenChanged(RS_Pen pen) {
+void QC_MDIWindow::slotPenChanged(const RS_Pen& pen) {
     RS_DEBUG->print("QC_MDIWindow::slotPenChanged() begin");
 	if (document) {
         document->setActivePen(pen);

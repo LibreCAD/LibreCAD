@@ -37,14 +37,15 @@
 class RS_MainWindowInterface {
 
 public:
-    RS_MainWindowInterface() {}
-    virtual ~RS_MainWindowInterface() {}
+	RS_MainWindowInterface() = default;
+	virtual ~RS_MainWindowInterface() = default;
 
-    virtual RS_GraphicView* getGraphicView() = 0;
-    virtual RS_Document* getDocument() = 0;
+	virtual RS_GraphicView const* getGraphicView() const = 0;
+	virtual RS_Document const* getDocument() const= 0;
+	virtual RS_GraphicView* getGraphicView() = 0;
+	virtual RS_Document* getDocument() = 0;
 
-	virtual void createNewDocument(
-                const QString& fileName = QString::null, RS_Document* doc=NULL) = 0;
+	virtual void createNewDocument(const QString& fileName = QString::null, RS_Document* doc=nullptr) = 0;
 
 };
 

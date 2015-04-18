@@ -95,6 +95,9 @@
 #include "qg_selectionwidget.h"
 #include "qg_activelayername.h"
 #include "qg_mousewidget.h"
+#include "qc_graphicview.h"
+#include "qg_pentoolbar.h"
+#include "qg_recentfiles.h"
 
 #include "rs_dialogfactory.h"
 #include "qc_dialogfactory.h"
@@ -108,7 +111,7 @@
 #include "rs_point.h"
 
 
-QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
+QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
 
 #ifndef QC_APP_ICON
 # define QC_APP_ICON ":/main/librecad.png"
@@ -248,6 +251,14 @@ QMenu *QC_ApplicationWindow::findMenu(const QString &searchMenu, const QObjectLi
         ++i;
     }
     return 0;
+}
+
+const QMainWindow* QC_ApplicationWindow::getMainWindow() const{
+	return this;
+}
+
+QMainWindow* QC_ApplicationWindow::getMainWindow() {
+	return this;
 }
 
 /**
@@ -612,15 +623,24 @@ void QC_ApplicationWindow::initMDI() {
  * @return Pointer to the currently active MDI Window or NULL if no
  * MDI Window is active.
  */
-QC_MDIWindow* QC_ApplicationWindow::getMDIWindow() {
-    if (mdiAreaCAD!=NULL) {
-        QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
-        if(w!=NULL) {
+QC_MDIWindow const* QC_ApplicationWindow::getMDIWindow() const{
+	if (mdiAreaCAD) {
+		QMdiSubWindow const* w=mdiAreaCAD->currentSubWindow();
+		if(w) {
+			return qobject_cast<QC_MDIWindow*>(w->widget());
+		}
+	}
+	return nullptr;
+}
 
-            return qobject_cast<QC_MDIWindow*>(w->widget());
-        }
-    }
-        return NULL;
+QC_MDIWindow* QC_ApplicationWindow::getMDIWindow(){
+	if (mdiAreaCAD) {
+		QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
+		if(w) {
+			return qobject_cast<QC_MDIWindow*>(w->widget());
+		}
+	}
+	return nullptr;
 }
 
 /*	*
@@ -4878,7 +4898,54 @@ void QC_ApplicationWindow::keyReleaseEvent(QKeyEvent* e) {
     QMainWindow::keyPressEvent(e);
 }
 
+QMdiArea const* QC_ApplicationWindow::getMdiArea() const{
+	return mdiAreaCAD;
+}
 
+QMdiArea* QC_ApplicationWindow::getMdiArea(){
+	return mdiAreaCAD;
+}
+
+RS_GraphicView const* QC_ApplicationWindow::getGraphicView() const{
+	QC_MDIWindow const* m = getMDIWindow();
+	if (m) {
+		return m->getGraphicView();
+	}
+	return nullptr;
+}
+
+RS_GraphicView * QC_ApplicationWindow::getGraphicView() {
+	QC_MDIWindow* m = getMDIWindow();
+	if (m) {
+		return m->getGraphicView();
+	}
+	return nullptr;
+}
+
+RS_Document const* QC_ApplicationWindow::getDocument() const{
+	QC_MDIWindow const* m = getMDIWindow();
+	if (m) {
+		return m->getDocument();
+	}
+	return nullptr;
+}
+
+RS_Document* QC_ApplicationWindow::getDocument(){
+	QC_MDIWindow* m = getMDIWindow();
+	if (m) {
+		return m->getDocument();
+	}
+	return nullptr;
+}
+
+void QC_ApplicationWindow::createNewDocument(
+		const QString& fileName, RS_Document* doc) {
+
+	slotFileNew(doc);
+	if (fileName!=QString::null && getDocument()) {
+		getDocument()->setFilename(fileName);
+	}
+}
 
 void QC_ApplicationWindow::updateWindowTitle(QWidget *w)
 {

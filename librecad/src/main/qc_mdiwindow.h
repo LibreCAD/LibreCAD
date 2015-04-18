@@ -29,16 +29,15 @@
 
 #include <QList>
 #include <QMainWindow>
-
-#include "qc_graphicview.h"
-
-#include "qg_recentfiles.h"
-#include "qg_pentoolbar.h"
 #include <QCloseEvent>
+#include "rs.h"
 
-#include "rs_document.h"
-
+class QC_GraphicView;
+class RS_Document;
+class RS_Graphic;
+class RS_Pen;
 class QMdiArea;
+class RS_EventHandler;
 
 /**
  * MDI document window. Contains a document and a view (window).
@@ -54,12 +53,12 @@ public:
                  Qt::WindowFlags wflags=0);
     ~QC_MDIWindow();
 
-    void initDoc(RS_Document* doc=NULL);
+	void initDoc(RS_Document* doc=nullptr);
     void initView();
 
 public slots:
 
-    void slotPenChanged(RS_Pen p);
+	void slotPenChanged(const RS_Pen& p);
 
     void slotFileNew();
     bool slotFileNewTemplate(const QString& fileName, RS2::FormatType type);
@@ -73,29 +72,16 @@ public slots:
 
 public:
     /** @return Pointer to graphic view */
-    QC_GraphicView* getGraphicView() {
-        return graphicView;
-    }
+	QC_GraphicView* getGraphicView() const;
 
     /** @return Pointer to document */
-    RS_Document* getDocument() {
-        return document;
-    }
+	RS_Document* getDocument() const;
 	
     /** @return Pointer to graphic or NULL */
-    RS_Graphic* getGraphic() {
-        return document->getGraphic();
-    }
+	RS_Graphic* getGraphic() const;
 
 	/** @return Pointer to current event handler */
-	RS_EventHandler* getEventHandler() {
-		if (graphicView!=NULL) {
-			return graphicView->getEventHandler();
-		}
-		else {
-			return NULL;
-		}
-	}
+	RS_EventHandler* getEventHandler() const;
 
     void addChildWindow(QC_MDIWindow* w);
     void removeChildWindow(QC_MDIWindow* w);
@@ -104,23 +90,15 @@ public:
     /**
      * Sets the parent window that will be notified if this 
      */
-    void setParentWindow(QC_MDIWindow* p) {
-        RS_DEBUG->print("setParentWindow");
-        parentWindow = p;
-    }
-
+	void setParentWindow(QC_MDIWindow* p);
     /**
      * @return The MDI window id.
      */
-    int getId() {
-        return id;
-    }
+	int getId() const;
 
 	bool closeMDI(bool force, bool ask=true);
 
-	void setForceClosing(bool on) {
-		forceClosing = on;
-	}
+	void setForceClosing(bool on);
 
     friend std::ostream& operator << (std::ostream& os, QC_MDIWindow& w);
 
