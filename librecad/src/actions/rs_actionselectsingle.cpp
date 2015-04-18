@@ -33,19 +33,19 @@
 
 
 RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
-                                             RS_GraphicView& graphicView,RS_ActionInterface* actionSelect,  QVector<RS2::EntityType>* entityTypeList)
-    :RS_ActionInterface("Select Entities", container, graphicView) {
-    this->entityTypeList=entityTypeList;
+											 RS_GraphicView& graphicView,RS_ActionInterface* actionSelect,  std::vector<RS2::EntityType>* entityTypeList)
+	:RS_ActionInterface("Select Entities", container, graphicView)
+	,entityTypeList(entityTypeList)
+	,en(nullptr)
+{
     if(actionSelect != NULL){
         if(actionSelect->rtti() == RS2::ActionSelect) {
             this->actionSelect=static_cast<RS_ActionSelect*>(actionSelect);
                 this->actionSelect->requestFinish(true);
         }else{
-            this->actionSelect=NULL;
+			this->actionSelect=nullptr;
         }
     }
-
-    en = NULL;
 }
 
 
@@ -61,7 +61,10 @@ void RS_ActionSelectSingle::trigger() {
 //        if(entityTypeList != NULL){
 //                std::cout<<"RS_ActionSelectSingle::trigger(): entityTypeList->contains(en->rtti())="<<entityTypeList->contains(en->rtti())<<std::endl;
 //        }
-    if (en!=NULL && (entityTypeList== NULL || entityTypeList->contains(en->rtti()))) {
+	if (en && (entityTypeList==nullptr ||
+			   std::any_of(entityTypeList->begin(), entityTypeList->end(),[this](RS2::EntityType t)->bool{
+													return this->en->rtti()==t;
+}))) {
         RS_Selection s(*container, graphicView);
         s.selectSingle(en);
 

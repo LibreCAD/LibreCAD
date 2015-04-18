@@ -245,10 +245,10 @@ bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const
     if( getStartpoint().isInWindowOrdered(vpMin, vpMax) ) return true;
     if( getEndpoint().isInWindowOrdered(vpMin, vpMax) ) return true;
     QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
-    QVector<RS_Vector> vps;
+	std::vector<RS_Vector> vps;
     for(unsigned short i=0;i<4;i++){
         const QPointF& vp(visualBox.at(i));
-        vps<<RS_Vector(vp.x(),vp.y());
+		vps.push_back(RS_Vector(vp.x(),vp.y()));
     }
     for(unsigned short i=0;i<4;i++){
         RS_Line line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));

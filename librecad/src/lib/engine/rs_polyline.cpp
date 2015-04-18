@@ -452,7 +452,7 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
     double dist;
     //find the nearest one
     int length=count();
-        QVector<RS_Vector> intersections(length);
+		std::vector<RS_Vector> intersections(length);
     if(length>1){//sort the polyline entity start/end point order
         int i(0);
         double d0,d1;

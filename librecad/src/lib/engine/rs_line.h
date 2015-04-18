@@ -196,7 +196,7 @@ public:
           * implementations must revert the direction of an atomic entity
           */
     virtual void revertDirection();
-     virtual QVector<RS_Entity* > offsetTwoSides(const double& distance) const;
+	 virtual std::vector<RS_Entity* > offsetTwoSides(const double& distance) const;
     /**
       * the modify offset action
       */

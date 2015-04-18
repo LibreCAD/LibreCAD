@@ -268,9 +268,9 @@ bool RS_Circle::createFrom3P(const RS_VectorSolutions& sol) {
   *
   *Author: Dongxu Li
   */
-bool RS_Circle::createInscribe(const RS_Vector& coord, const QVector<RS_Line*>& lines){
+bool RS_Circle::createInscribe(const RS_Vector& coord, const std::vector<RS_Line*>& lines){
     if(lines.size()<3) return false;
-    QVector<RS_Line*> tri(lines);
+	std::vector<RS_Line*> tri(lines);
     RS_VectorSolutions sol=RS_Information::getIntersectionLineLine(tri[0],tri[1]);
     if(sol.getNumber() == 0 ) {//move parallel to opposite
         std::swap(tri[1],tri[2]);
@@ -305,16 +305,16 @@ bool RS_Circle::createInscribe(const RS_Vector& coord, const QVector<RS_Line*>& 
     return createFromCR(sol.get(0),tri[1]->getDistanceToPoint(sol.get(0)));
 }
 
-QVector<RS_Entity* > RS_Circle::offsetTwoSides(const double& distance) const
+std::vector<RS_Entity* > RS_Circle::offsetTwoSides(const double& distance) const
 {
-    QVector<RS_Entity*> ret(0,NULL);
-    ret<<new RS_Circle(NULL,RS_CircleData(getCenter(),getRadius()+distance));
+	std::vector<RS_Entity*> ret(0,NULL);
+	ret.push_back(new RS_Circle(NULL,RS_CircleData(getCenter(),getRadius()+distance)));
 	if(fabs(getRadius()-distance)>RS_TOLERANCE)
-	ret<<new RS_Circle(NULL,RS_CircleData(getCenter(),fabs(getRadius()-distance)));
+	ret.push_back(new RS_Circle(NULL,RS_CircleData(getCenter(),fabs(getRadius()-distance))));
     return ret;
 }
 
-RS_VectorSolutions RS_Circle::createTan1_2P(const RS_AtomicEntity* circle, const QVector<RS_Vector> points)
+RS_VectorSolutions RS_Circle::createTan1_2P(const RS_AtomicEntity* circle, const std::vector<RS_Vector> points)
 {
     RS_VectorSolutions ret;
     if(circle==NULL||points.size()<2) return ret;
@@ -327,13 +327,13 @@ RS_VectorSolutions RS_Circle::createTan1_2P(const RS_AtomicEntity* circle, const
 /**
   * create a circle of radius r and tangential to two given entities
   */
-RS_VectorSolutions RS_Circle::createTan2(const QVector<RS_AtomicEntity*>& circles, const double& r)
+RS_VectorSolutions RS_Circle::createTan2(const std::vector<RS_AtomicEntity*>& circles, const double& r)
 {
     if(circles.size()<2) return false;
     auto&& e0=circles[0]->offsetTwoSides(r);
     auto&& e1=circles[1]->offsetTwoSides(r);
     RS_VectorSolutions centers;
-    if(e0.size()>0 && e1.size()>=0) {
+	if(e0.size() && e1.size()) {
         for(auto it0=e0.begin();it0!=e0.end();it0++){
             for(auto it1=e1.begin();it1!=e1.end();it1++){
                 centers.appendTo(RS_Information::getIntersection(*it0,*it1));
@@ -448,7 +448,7 @@ QList<RS_Circle> RS_Circle::solveAppolloniusSingle(const QList<RS_Circle>& circl
 //    std::cout<<"i="<<i<<"\t center="<<circles[i].getCenter()<<"\tr="<<radii.at(i)<<std::endl;
 //              }
 /** form the linear equation to solve center in radius **/
-    QVector<QVector<double> > mat(2,QVector<double>(3,0.));
+	std::vector<std::vector<double> > mat(2,std::vector<double>(3,0.));
     mat[0][0]=centers[2].x - centers[0].x;
     mat[0][1]=centers[2].y - centers[0].y;
     mat[1][0]=centers[2].x - centers[1].x;
@@ -478,8 +478,8 @@ QList<RS_Circle> RS_Circle::solveAppolloniusSingle(const QList<RS_Circle>& circl
 //    for(unsigned short i=0;i<=1;i++){
 //        std::cout<<"eqs P:"<<i<<" : "<<mat[i][0]<<"*x + "<<mat[i][1]<<"*y = "<<mat[i][2]<<std::endl;
 //    }
-//    QVector<QVector<double> > sm(2,QVector<double>(2,0.));
-    QVector<double> sm(2,0.);
+//    std::vector<std::vector<double> > sm(2,std::vector<double>(2,0.));
+	std::vector<double> sm(2,0.);
     if(RS_Math::linearSolver(mat,sm)==false){
         return ret;
     }
@@ -773,10 +773,10 @@ bool RS_Circle::isVisibleInWindow(RS_GraphicView* view) const
     RS_Vector vpMin(view->toGraph(0,view->getHeight()));
     RS_Vector vpMax(view->toGraph(view->getWidth(),0));
     QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
-    QVector<RS_Vector> vps;
+	std::vector<RS_Vector> vps;
     for(unsigned short i=0;i<4;i++){
         const QPointF& vp(visualBox.at(i));
-        vps<<RS_Vector(vp.x(),vp.y());
+		vps.push_back(RS_Vector(vp.x(),vp.y()));
     }
     for(unsigned short i=0;i<4;i++){
         RS_Line line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));

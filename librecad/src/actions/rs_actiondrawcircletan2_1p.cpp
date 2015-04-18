@@ -57,16 +57,16 @@ void RS_ActionDrawCircleTan2_1P::init(int status) {
     if(status>=0) {
         RS_Snapper::suspend();
     }
-    if(status>circles.size()) status=circles.size();
+	if(status>(int) circles.size()) status=(int) circles.size();
     RS_PreviewActionInterface::init(status);
-    for(int i=0; i<status; ++i){
+	for(size_t i=0; i<status; ++i){
         if(circles[i]==NULL) {
             status=i;
             break;
         }
     }
     bool updateNeeded(false);
-    for(int i=status>=0?status:0; i<circles.size(); ++i){
+	for(size_t i=status>=0?status:0; i<circles.size(); ++i){
         if(circles[i])
             if(circles[i]->isHighlighted()){
                 circles[i]->setHighlighted(false);
@@ -198,16 +198,13 @@ RS_Entity* RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent* e) {
     RS_Entity*  en = catchEntity(e,enTypeList, RS2::ResolveAll);
     if(en == NULL) return ret;
     if(en->isVisible()==false) return ret;
-    for(int i=0; i<circles.size(); ++i) {
-        if(circles[i])
-            if(en->getId() == circles[i]->getId()) return ret; //do not pull in the same line again
+	for(auto p: circles){
+		if(p && en->getId() == p->getId()) return ret; //do not pull in the same line again
     }
-    if(en->getParent() != NULL) {
-        if ( en->getParent()->ignoredOnModification()){
-            return NULL;
-        }
-    }
-    return en;
+	if(en->getParent() && en->getParent()->ignoredOnModification()){
+		return nullptr;
+	}
+	return en;
 }
 
 void RS_ActionDrawCircleTan2_1P::mouseReleaseEvent(QMouseEvent* e) {
@@ -223,7 +220,7 @@ void RS_ActionDrawCircleTan2_1P::mouseReleaseEvent(QMouseEvent* e) {
             if (en==NULL) return;
 //            circle = static_cast<RS_AtomicEntity*>(en);
             en->setHighlighted(true);
-            circles<<en;
+			circles.push_back(en);
             graphicView->redraw(RS2::RedrawDrawing);
             setStatus(getStatus()+1);
         }

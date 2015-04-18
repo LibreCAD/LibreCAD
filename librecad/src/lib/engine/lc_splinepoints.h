@@ -83,8 +83,8 @@ private:
 
     bool offsetCut(const RS_Vector& coord, const double& distance);
     bool offsetSpline(const RS_Vector& coord, const double& distance);
-    QVector<RS_Entity*> offsetTwoSidesSpline(const double& distance) const;
-    QVector<RS_Entity*> offsetTwoSidesCut(const double& distance) const;
+	std::vector<RS_Entity*> offsetTwoSidesSpline(const double& distance) const;
+	std::vector<RS_Entity*> offsetTwoSidesCut(const double& distance) const;
 public:
     LC_SplinePointsData data;
 public:
@@ -242,14 +242,14 @@ public:
 	virtual void calculateBorders();
 
     virtual bool offset(const RS_Vector& coord, const double& distance);
-    virtual QVector<RS_Entity*> offsetTwoSides(const double& distance) const;
+	virtual std::vector<RS_Entity*> offsetTwoSides(const double& distance) const;
 
-	static RS_VectorSolutions getIntersection(RS_Entity* e1, RS_Entity* e2);
+	static RS_VectorSolutions getIntersection(RS_Entity const* e1, RS_Entity const* e2);
 	RS_VectorSolutions getLineIntersect(const RS_Vector& x1, const RS_Vector& x2);
 	void addQuadIntersect(RS_VectorSolutions *pVS, const RS_Vector& x1,
 		const RS_Vector& c1, const RS_Vector& x2);
 	RS_VectorSolutions getSplinePointsIntersect(LC_SplinePoints* l1);
-	RS_VectorSolutions getQuadraticIntersect(RS_Entity* e1);
+	RS_VectorSolutions getQuadraticIntersect(RS_Entity const* e1);
 
 	// we will not enable trimming, maybe in the future
 	//virtual void trimStartpoint(const RS_Vector& pos);

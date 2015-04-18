@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWCIRCLETAN2_H
 #define RS_ACTIONDRAWCIRCLETAN2_H
 
-#include <QVector>
 #include "rs_previewactioninterface.h"
 
 class RS_AtomicEntity;
@@ -81,13 +80,13 @@ public:
 
 protected:
     RS_Entity* catchCircle(QMouseEvent* e);
-    QVector<RS_AtomicEntity*> circles;
+	std::vector<RS_AtomicEntity*> circles;
     private:
 	std::unique_ptr<RS_CircleData> cData;
     RS_Vector coord;
     double radius;
     bool valid;
-	const QVector<RS2::EntityType> enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+	const std::vector<RS2::EntityType> enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
 	RS_VectorSolutions centers;
 
 };

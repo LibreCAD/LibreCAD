@@ -2511,16 +2511,16 @@ bool LC_SplinePoints::offset(const RS_Vector& coord, const double& distance)
 	return offsetSpline(coord, distance);
 }
 
-QVector<RS_Entity*> AddLineOffsets(const RS_Vector& vx1,
+std::vector<RS_Entity*> AddLineOffsets(const RS_Vector& vx1,
 	const RS_Vector& vx2, const double& distance)
 {
-    QVector<RS_Entity*> ret(0,NULL);
+	std::vector<RS_Entity*> ret(0,NULL);
 
 	double dDist = (vx2 - vx1).magnitude();
 
 	if(dDist < RS_TOLERANCE)
 	{
-		ret << new RS_Circle(NULL, RS_CircleData(vx1, distance));
+		ret.push_back(new RS_Circle(NULL, RS_CircleData(vx1, distance)));
 		return ret;
 	}
 
@@ -2538,14 +2538,14 @@ QVector<RS_Entity*> AddLineOffsets(const RS_Vector& vx1,
 	sp1->addPoint(RS_Vector(vx2.x - dDist*(vx2.y - vx1.y), vx2.y + dDist*(vx2.x - vx1.x)));
 	sp2->addPoint(RS_Vector(vx2.x + dDist*(vx2.y - vx1.y), vx2.y - dDist*(vx2.x - vx1.x)));
 
-	ret << sp1;
-	ret << sp2;
+	ret.push_back(sp1);
+	ret.push_back(sp2);
 	return ret;
 }
 
-QVector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& distance) const
+std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& distance) const
 {
-    QVector<RS_Entity*> ret(0,NULL);
+	std::vector<RS_Entity*> ret(0,NULL);
 
 	int iPoints = data.splinePoints.count();
 	int n = data.controlPoints.count();
@@ -2631,7 +2631,7 @@ QVector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& distance
 		vStart = data.controlPoints.at(0);
 		if(n < 2)
 		{
-			ret << new RS_Circle(NULL, RS_CircleData(vStart, distance));
+			ret.push_back(new RS_Circle(NULL, RS_CircleData(vStart, distance)));
 			return ret;
 		}
 
@@ -2682,8 +2682,8 @@ QVector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& distance
 					vEnd.y - distance*vTan.x));
 			}
 
-			ret << sp1;
-			ret << sp2;
+			ret.push_back(sp1);
+			ret.push_back(sp2);
 			return ret;
 		}
 
@@ -2765,14 +2765,14 @@ QVector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& distance
 		}
 	}
 
-    ret << sp1;
-    ret << sp2;
+	ret.push_back(sp1);
+	ret.push_back(sp2);
     return ret;
 }
 
-QVector<RS_Entity*> LC_SplinePoints::offsetTwoSidesCut(const double& distance) const
+std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesCut(const double& distance) const
 {
-    QVector<RS_Entity*> ret(0,NULL);
+	std::vector<RS_Entity*> ret(0,NULL);
 
 	int n = data.controlPoints.count();
 
@@ -2839,7 +2839,7 @@ QVector<RS_Entity*> LC_SplinePoints::offsetTwoSidesCut(const double& distance) c
 		vStart = data.controlPoints.at(0);
 		if(n < 2)
 		{
-			ret << new RS_Circle(NULL, RS_CircleData(vStart, distance));
+			ret.push_back(new RS_Circle(NULL, RS_CircleData(vStart, distance)));
 			return ret;
 		}
 
@@ -2897,8 +2897,8 @@ QVector<RS_Entity*> LC_SplinePoints::offsetTwoSidesCut(const double& distance) c
 			sp2->update();
 			sp2->data.cut = true;
 
-			ret << sp1;
-			ret << sp2;
+			ret.push_back(sp1);
+			ret.push_back(sp2);
 			return ret;
 		}
 
@@ -2972,12 +2972,12 @@ QVector<RS_Entity*> LC_SplinePoints::offsetTwoSidesCut(const double& distance) c
 	sp2->update();
 	sp2->data.cut = true;
 
-    ret << sp1;
-    ret << sp2;
+	ret.push_back(sp1);
+	ret.push_back(sp2);
     return ret;
 }
 
-QVector<RS_Entity*> LC_SplinePoints::offsetTwoSides(const double& distance) const
+std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSides(const double& distance) const
 {
 	if(data.cut) return offsetTwoSidesCut(distance);
 	return offsetTwoSidesSpline(distance);
@@ -3462,7 +3462,7 @@ void addQuadraticQuadIntersect(RS_VectorSolutions *pVS, std::vector<double> dQua
 	}
 }
 
-RS_VectorSolutions LC_SplinePoints::getQuadraticIntersect(RS_Entity* e1)
+RS_VectorSolutions LC_SplinePoints::getQuadraticIntersect(RS_Entity const* e1)
 {
 	RS_VectorSolutions ret;
 
@@ -3539,7 +3539,7 @@ RS_VectorSolutions LC_SplinePoints::getQuadraticIntersect(RS_Entity* e1)
 }
 
 
-RS_VectorSolutions LC_SplinePoints::getIntersection(RS_Entity* e1, RS_Entity* e2)
+RS_VectorSolutions LC_SplinePoints::getIntersection(RS_Entity const* e1, RS_Entity const* e2)
 {
 	RS_VectorSolutions ret;
 

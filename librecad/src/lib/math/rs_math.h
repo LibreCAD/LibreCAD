@@ -34,11 +34,7 @@
 
 #include <cfloat>
 #include <cmath>
-#include <complex>
 
-#include <QVector>
-
-#include "rs.h"
 #include "rs_vector.h"
 
 //tolerance
@@ -114,7 +110,7 @@ public:
       *
       *@Author: Dongxu Li
       */
-    static bool linearSolver(const QVector<QVector<double> >& m, QVector<double>& sn);
+	static bool linearSolver(const std::vector<std::vector<double> >& m, std::vector<double>& sn);
 
     /** solver quadratic simultaneous equations of a set of two **/
     /* solve the following quadratic simultaneous equations,

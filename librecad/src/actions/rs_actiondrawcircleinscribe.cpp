@@ -65,8 +65,8 @@ void RS_ActionDrawCircleInscribe::init(int status) {
 
 void RS_ActionDrawCircleInscribe::finish(bool updateTB){
     if(lines.size()>0){
-        for(int i=0;i<lines.size();i++) {
-            if(lines.at(i) != NULL) lines.at(i)->setHighlighted(false);
+		for(auto p: lines){
+			if(p) p->setHighlighted(false);
         }
         graphicView->redraw(RS2::RedrawDrawing);
         lines.clear();
@@ -91,7 +91,9 @@ void RS_ActionDrawCircleInscribe::trigger() {
         document->endUndoCycle();
     }
 
-    for(int i=0;i<lines.size();i++) lines[i]->setHighlighted(false);
+	for(auto p: lines){
+		if(p) p->setHighlighted(false);
+	}
     graphicView->redraw(RS2::RedrawDrawing);
 //    drawSnapper();
 

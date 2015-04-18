@@ -316,7 +316,7 @@ private:
     // Type of draw order selected command
     RS2::ActionType orderType;
     // a list of entity types accepted by action offset
-    static QVector<RS2::EntityType> offsetEntities;
+	static std::vector<RS2::EntityType> offsetEntities;
 };
 
 

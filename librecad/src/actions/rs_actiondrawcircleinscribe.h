@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWCIRCLEINSCRIBE_H
 #define RS_ACTIONDRAWCIRCLEINSCRIBE_H
 
-#include <QVector>
 #include "rs_previewactioninterface.h"
 
 class RS_Line;
@@ -73,7 +72,7 @@ public:
 //    virtual void updateToolBar();
 
 protected:
-    QVector<RS_Line*> lines;
+	std::vector<RS_Line*> lines;
     private:
 	std::unique_ptr<RS_CircleData> cData;
     RS_Vector coord;

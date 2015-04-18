@@ -166,7 +166,7 @@
 #include "qc_applicationwindow.h"
 
 //a list of EntityTypes which support actionOffset
-QVector<RS2::EntityType> QG_ActionHandler::offsetEntities(0);
+std::vector<RS2::EntityType> QG_ActionHandler::offsetEntities(0);
 
 /**
  * Constructor

@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QVector>
 #include "lc_hyperbola.h"
 
 #include "rs_graphic.h"

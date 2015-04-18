@@ -670,13 +670,14 @@ std::vector<double> RS_Math::quarticSolverFull(const std::vector<double>& ce)
   *@Author: Dongxu Li
   */
 
-bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>& sn){
+bool RS_Math::linearSolver(const std::vector<std::vector<double> >& mt, std::vector<double>& sn){
     //verify the matrix size
-    int mSize(mt.size()); //rows
-    int aSize(mSize+1); //columns of augmented matrix
-    for(int i=0;i<mSize;i++) {
-        if(mt[i].size() != aSize ) return false;
-    }
+	size_t mSize(mt.size()); //rows
+	size_t aSize(mSize+1); //columns of augmented matrix
+	if(std::any_of(mt.begin(), mt.end(), [&aSize](const std::vector<double>& v)->bool{
+				   return v.size() != aSize;
+}))
+		return false;
     sn.resize(mSize);//to hold the solution
     //#ifdef	HAS_BOOST
 #if false
@@ -724,11 +725,11 @@ bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>&
     //    data.ratio=sqrt(dn(0)/dn(2));
 #else
     // solve the linear equation by Gauss-Jordan elimination
-    QVector<QVector<double> > mt0(mt); //copy the matrix;
-    for(int i=0;i<mSize;i++){
-        int imax(i);
+	std::vector<std::vector<double> > mt0(mt); //copy the matrix;
+	for(size_t i=0;i<mSize;++i){
+		size_t imax(i);
         double cmax(fabs(mt0[i][i]));
-        for(int j=i+1;j<mSize;j++) {
+		for(size_t j=i+1;j<mSize;++j) {
             if(fabs(mt0[j][i]) > cmax ) {
                 imax=j;
                 cmax=fabs(mt0[j][i]);
@@ -737,32 +738,29 @@ bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>&
         if(cmax<RS_TOLERANCE2) return false; //singular matrix
         if(imax != i) {//move the line with largest absolute value at column i to row i, to avoid division by zero
             std::swap(mt0[i],mt0[imax]);
-            //            for(int j=i;j<=mSize;j++) {
-            //                std::swap(m[i][j],m[imax][j]);
-            //            }
-        }
-        //        for(int k=i+1;k<5;k++) { //normalize the i-th row
-        for(int k=mSize;k>=i;k--) { //normalize the i-th row
+		}
+		for(size_t k=i+1;k<=mSize;++k) { //normalize the i-th row
             mt0[i][k] /= mt0[i][i];
         }
-        for(int j=0;j<mSize;j++) {//Gauss-Jordan
+		mt0[i][i]=1.;
+		for(size_t j=0;j<mSize;++j) {//Gauss-Jordan
             if(j != i ) {
-                //                for(int k=i+1;k<5;k++) {
-                for(int k=mSize;k>=i;k--) {
-                    mt0[j][k] -= mt0[i][k]*mt0[j][i];
+				double& a = mt0[j][i];
+				for(size_t k=i+1;k<=mSize;++k) {
+					mt0[j][k] -= mt0[i][k]*a;
                 }
+				a=0.;
             }
-        }
-        //output gauss-jordan results for debugging
-        //        std::cout<<"========"<<i<<"==========\n";
-        //        for(int j=0;j<mSize;j++) {//Gauss-Jordan
-        //            for(int k=0;k<=mSize;k++) {
-        //                std::cout<<m[j][k]<<'\t';
-        //            }
-        //            std::cout<<std::endl;
-        //        }
+		}
+		//output gauss-jordan results for debugging
+//		std::cout<<"========"<<i<<"==========\n";
+//		for(auto v0: mt0){
+//			for(auto v1:v0)
+//				std::cout<<v1<<'\t';
+//			std::cout<<std::endl;
+//		}
     }
-    for(int i=0;i<mSize;i++) {
+	for(size_t i=0;i<mSize;++i) {
         sn[i]=mt0[i][mSize];
     }
 #endif
@@ -975,10 +973,10 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverMixed(const std::vector<s
     }
     if(p1->size()==3) {
             //linear
-            QVector<double> sn(2,0.);
-            QVector<QVector<double> > ce;
-            ce << QVector<double>::fromStdVector(m[0]);
-            ce << QVector<double>::fromStdVector(m[1]);
+			std::vector<double> sn(2,0.);
+			std::vector<std::vector<double> > ce;
+			ce.push_back(m[0]);
+			ce.push_back(m[1]);
             ce[0][2]=-ce[0][2];
             ce[1][2]=-ce[1][2];
             if( RS_Math::linearSolver(ce,sn)) ret.push_back(RS_Vector(sn[0],sn[1]));

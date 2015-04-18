@@ -1179,8 +1179,8 @@ int RS_EntityContainer::entityAt() {
 /**
  * Finds the given entity and makes it the current entity if found.
  */
-int RS_EntityContainer::findEntity(RS_Entity* entity) {
-    entIdx = entities.indexOf(entity);
+int RS_EntityContainer::findEntity(RS_Entity const* const entity) {
+	entIdx = entities.indexOf(const_cast<RS_Entity*>(entity));
     return entIdx;
 }
 

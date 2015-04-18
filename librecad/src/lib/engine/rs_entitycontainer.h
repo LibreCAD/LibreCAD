@@ -96,7 +96,7 @@ public:
     virtual RS_Entity* entityAt(int index);
 	virtual void setEntityAt(int index,RS_Entity* en);
 //RLZ unused	virtual int entityAt();
-        virtual int findEntity(RS_Entity* entity);
+		virtual int findEntity(RS_Entity const* const entity);
     virtual void clear();
 
     //virtual unsigned long int count() {

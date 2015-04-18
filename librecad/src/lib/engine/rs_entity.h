@@ -478,9 +478,9 @@ public:
      * Implementations must offset the entity by the distance at both directions
      * used to generate tangential circles
      */
-    virtual QVector<RS_Entity* > offsetTwoSides(const double& /*distance*/) const
+	virtual std::vector<RS_Entity* > offsetTwoSides(const double& /*distance*/) const
     {
-        return QVector<RS_Entity* >();
+		return std::vector<RS_Entity* >();
     }
     /**
           * implementations must revert the direction of an atomic entity

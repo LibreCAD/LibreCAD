@@ -61,8 +61,8 @@ public:
                                 RS2::ResolveLevel level=RS2::ResolveAll) const;
 
 
-    static RS_VectorSolutions getIntersection(RS_Entity* e1,
-            RS_Entity* e2,
+	static RS_VectorSolutions getIntersection(RS_Entity const* e1,
+			RS_Entity const* e2,
             bool onEntities = false);
 
     static RS_VectorSolutions getIntersectionLineLine(RS_Line* e1,

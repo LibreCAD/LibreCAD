@@ -400,13 +400,13 @@ RS_Vector RS_Line::getNormalVector() const
     return RS_Vector(-vp.y,vp.x)/r;
 }
 
-  QVector<RS_Entity* > RS_Line::offsetTwoSides(const double& distance) const
+  std::vector<RS_Entity* > RS_Line::offsetTwoSides(const double& distance) const
 {
-      QVector<RS_Entity*> ret(0,NULL);
+	  std::vector<RS_Entity*> ret(0,NULL);
       RS_Vector&& vp=getNormalVector()*distance;
-      ret<< new RS_Line(NULL,RS_LineData(data.startpoint+vp,data.endpoint+vp));
-      ret<< new RS_Line(NULL,RS_LineData(data.startpoint-vp,data.endpoint-vp));
-      return ret;
+	  ret.push_back(new RS_Line(NULL,RS_LineData(data.startpoint+vp,data.endpoint+vp)));
+	  ret.push_back(new RS_Line(NULL,RS_LineData(data.startpoint-vp,data.endpoint-vp)));
+	  return ret;
 }
 /**
   * revert the direction of line
@@ -543,24 +543,24 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     }
 
     //only draw the visible portion of line
-    QVector<RS_Vector> endPoints(0);
+	std::vector<RS_Vector> endPoints(0);
         RS_Vector vpMin(view->toGraph(0,view->getHeight()));
         RS_Vector vpMax(view->toGraph(view->getWidth(),0));
          QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
-    if( getStartpoint().isInWindowOrdered(vpMin, vpMax) ) endPoints<<getStartpoint();
-    if( getEndpoint().isInWindowOrdered(vpMin, vpMax) ) endPoints<<getEndpoint();
+	if( getStartpoint().isInWindowOrdered(vpMin, vpMax) ) endPoints.push_back(getStartpoint());
+	if( getEndpoint().isInWindowOrdered(vpMin, vpMax) ) endPoints.push_back(getEndpoint());
     if(endPoints.size()<2){
 
-         QVector<RS_Vector> vertex;
+		 std::vector<RS_Vector> vertex;
          for(unsigned short i=0;i<4;i++){
              const QPointF& vp(visualBox.at(i));
-             vertex<<RS_Vector(vp.x(),vp.y());
+			 vertex.push_back(RS_Vector(vp.x(),vp.y()));
          }
          for(unsigned short i=0;i<4;i++){
              RS_Line line(NULL,RS_LineData(vertex.at(i),vertex.at((i+1)%4)));
              auto&& vpIts=RS_Information::getIntersection(static_cast<RS_Entity*>(this), &line, true);
              if( vpIts.size()==0) continue;
-             endPoints<<vpIts.get(0);
+			 endPoints.push_back(vpIts.get(0));
          }
     }
     if(endPoints.size()<2) return;

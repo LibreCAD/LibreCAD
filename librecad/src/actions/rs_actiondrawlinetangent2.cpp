@@ -37,15 +37,11 @@
 RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Tangents 2", container, graphicView),
-          valid(false)
+	:RS_PreviewActionInterface("Draw Tangents 2", container, graphicView)
+	,circle1(nullptr)
+	,circle2(nullptr)
+	,valid(false)
 {
-
-    circle1 = NULL;
-    circle2 = NULL;
-
-    circleType.clear();
-    circleType<<RS2::EntityArc<<RS2::EntityCircle<<RS2::EntityEllipse;
     setStatus(SetCircle1);
 }
 

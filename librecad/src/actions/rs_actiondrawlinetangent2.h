@@ -76,7 +76,7 @@ private:
     RS_Entity* circle1;
     /** 2nd chosen entity */
     RS_Entity* circle2;
-	QVector<RS2::EntityType> circleType;
+	const std::vector<RS2::EntityType> circleType={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse};
     bool valid;
 };
 

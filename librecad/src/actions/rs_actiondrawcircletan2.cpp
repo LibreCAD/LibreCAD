@@ -67,8 +67,8 @@ void RS_ActionDrawCircleTan2::init(int status) {
 
 void RS_ActionDrawCircleTan2::finish(bool updateTB){
     if(circles.size()>0){
-        for(int i=0;i<circles.size();i++) {
-            if(circles.at(i) != NULL) circles.at(i)->setHighlighted(false);
+		for(auto p: circles){
+			if(p) p->setHighlighted(false);
         }
         graphicView->redraw(RS2::RedrawDrawing);
         circles.clear();
@@ -102,7 +102,8 @@ void RS_ActionDrawCircleTan2::trigger() {
         document->endUndoCycle();
     }
 
-    for(int i=0;i<circles.size();i++) circles[i]->setHighlighted(false);
+	for(auto p: circles)
+		p->setHighlighted(false);
     graphicView->redraw(RS2::RedrawDrawing);
     //    drawSnapper();
 

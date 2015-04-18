@@ -121,7 +121,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
     {
         RS_Vector&& mouse=snapPoint(e);
         points.clear();
-        points<<mouse;
+		points.push_back(mouse);
         switch(circle->rtti()){
         case RS2::EntityArc:
         case RS2::EntityCircle:
@@ -156,7 +156,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
     case SetPoint2: {
         RS_Vector&& mouse=snapPoint(e);
         points.resize(1);
-        points<<mouse;
+		points.push_back(mouse);
         deletePreview();
         coord=mouse;
         if(getCenters()==false) return;
@@ -319,13 +319,13 @@ void RS_ActionDrawCircleTan1_2P::coordinateEvent(RS_CoordinateEvent* e) {
 
     case SetPoint1:
         points.clear();
-        points<<mouse;
+		points.push_back(mouse);
         setStatus(getStatus()+1);
         break;
 
     case SetPoint2:
         points.reserve(1);
-        points<<mouse;
+		points.push_back(mouse);
         if(getCenters()) {
             if(centers.size()==1) trigger();
             else setStatus(getStatus()+1);

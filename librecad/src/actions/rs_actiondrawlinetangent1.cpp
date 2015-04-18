@@ -37,16 +37,12 @@
 RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Tangents 1", container, graphicView) {
+		:RS_PreviewActionInterface("Draw Tangents 1", container, graphicView)
+		,tangent(nullptr)
+		,point(false)
+		,circle(nullptr)
+{
 
-    tangent = NULL;
-    point = RS_Vector(false);
-    circle = NULL;
-    circleType.clear();
-    circleType.push_back(RS2::EntityArc);
-    circleType.push_back(RS2::EntityCircle);
-    circleType.push_back(RS2::EntityEllipse);
-    circleType.push_back(RS2::EntitySplinePoints);
 }
 
 

@@ -97,8 +97,8 @@ protected:
         /**
          * Point history (for undo)
          */
-        int historyIndex;
-        QVector<RS_Vector> history;
+		int historyIndex;
+		std::vector<RS_Vector> history;
 
 };
 

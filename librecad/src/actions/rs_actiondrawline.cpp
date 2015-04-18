@@ -259,7 +259,7 @@ void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e) {
 
 QStringList RS_ActionDrawLine::getAvailableCommands() {
     QStringList cmd;
-    if(historyIndex+1<history.size()) {
+	if(historyIndex+1<(int) history.size()) {
         cmd += command("redo");
     }
 
@@ -296,7 +296,7 @@ void RS_ActionDrawLine::updateMouseButtonHints() {
             if (historyIndex>=2) {
                 msg += RS_COMMANDS->command("close");
             }
-            if(historyIndex+1<history.size()) {
+			if(historyIndex+1<(int) history.size()) {
                 if(msg.size()>0)  msg += "/";
                 msg += RS_COMMANDS->command("redo");
             }
@@ -377,7 +377,7 @@ void RS_ActionDrawLine::close() {
 void RS_ActionDrawLine::addHistory(const RS_Vector& v){
     if(historyIndex<-1) historyIndex=-1;
     history.erase(history.begin()+historyIndex+1,history.end());
-    history.append(v);
+	history.push_back(v);
     historyIndex=history.size() - 1;
 }
 void RS_ActionDrawLine::undo() {
@@ -401,7 +401,7 @@ void RS_ActionDrawLine::undo() {
     }
 }
 void RS_ActionDrawLine::redo() {
-    if (history.size()>historyIndex+1) {
+	if ((int) history.size()>historyIndex+1) {
         historyIndex++;
         //        history.removeLast();
         deletePreview();

@@ -68,7 +68,7 @@ private:
     RS_Line* tangent; //holds the tangent line for preview
     /** arc/circle/ellipse to generate tangent */
     RS_Entity* circle;
-	const QVector<RS2::EntityType> circleList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse}; //this holds a list of entity types which supports tangent
+	const std::vector<RS2::EntityType> circleList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse}; //this holds a list of entity types which supports tangent
 
 };
 

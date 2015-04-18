@@ -208,8 +208,8 @@ RS_Entity* RS_Information::getNearestEntity(const RS_Vector& coord,
  * @return All intersections of the two entities. The tangent flag in
  * RS_VectorSolutions is set if one intersection is a tangent point.
  */
-RS_VectorSolutions RS_Information::getIntersection(RS_Entity* e1,
-        RS_Entity* e2, bool onEntities) {
+RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
+		RS_Entity const* e2, bool onEntities) {
 
     RS_VectorSolutions ret;
     const double tol = 1.0e-4;

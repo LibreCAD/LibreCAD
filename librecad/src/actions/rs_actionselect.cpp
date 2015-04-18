@@ -34,13 +34,12 @@
 RS_ActionSelect::RS_ActionSelect(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView,
                                  RS2::ActionType nextAction,
-                                 QVector<RS2::EntityType>* entityTypeList)
-
-    :RS_ActionInterface("Select Entities", container, graphicView) {
-    this->entityTypeList=entityTypeList;
-
-    this->nextAction = nextAction;
-    selectSingle=false;
+								 std::vector<RS2::EntityType>* entityTypeList)
+	:RS_ActionInterface("Select Entities", container, graphicView)
+	,entityTypeList(entityTypeList)
+	,nextAction(nextAction)
+	,selectSingle(false)
+{
 }
 
 
@@ -102,8 +101,9 @@ void RS_ActionSelect::updateToolBar() {
                     for (RS_Entity* e=container->firstEntity();
                          e!=NULL;
                          e=container->nextEntity()) {
-                        if (e!=NULL && e->isSelected()) {
-                            if ( entityTypeList->contains( e->rtti() ) == false ){
+						if (e && e->isSelected()) {
+							auto it=std::find(entityTypeList->begin(), entityTypeList->end(), e->rtti());
+							if ( it == entityTypeList->end() ){
                                 e->setSelected(false);
                             }
                         }

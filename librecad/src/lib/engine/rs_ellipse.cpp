@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QVector>
-#include <QVector3D>
 #include "rs_ellipse.h"
 
 #include "rs_circle.h"
@@ -660,8 +658,8 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
 bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
 {
     if (sol.getNumber() != 4 ) return (false); //only do 4 points
-    QVector<QVector<double> > mt;
-    QVector<double> dn;
+	std::vector<std::vector<double> > mt;
+	std::vector<double> dn;
     int mSize(4);
     mt.resize(mSize);
     for(int i=0;i<mSize;i++) {//form the linear equation, c0 x^2 + c1 x + c2 y^2 + c3 y = 1
@@ -705,7 +703,7 @@ bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
 */
 bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
     if(sol.getNumber()<3) return false; //need one center and 3 points on ellipse
-    QVector<QVector<double> > mt;
+	std::vector<std::vector<double> > mt;
     int mSize(sol.getNumber() -1);
     if( (sol.get(mSize) - sol.get(mSize-1)).squared() < RS_TOLERANCE15 ) {
         //remove the last point
@@ -713,7 +711,7 @@ bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
     }
 
     mt.resize(mSize);
-    QVector<double> dn(mSize);
+	std::vector<double> dn(mSize);
     switch(mSize){
     case 2:
         for(int i=0;i<mSize;i++){//form the linear equation
@@ -743,7 +741,7 @@ bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
         }
         if ( ! RS_Math::linearSolver(mt,dn) ) return false;
         setCenter(sol.get(0));
-        return createFromQuadratic(dn);
+		return createFromQuadratic(dn);
     default:
         return false;
     }
@@ -756,7 +754,7 @@ bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
   *
   *@Author: Dongxu Li
   */
-bool RS_Ellipse::createFromQuadratic(const QVector<double>& dn){
+bool RS_Ellipse::createFromQuadratic(const std::vector<double>& dn){
 	RS_DEBUG->print("RS_Ellipse::createFromQuadratic() begin\n");
 	if(dn.size()!=3) return false;
 //	if(fabs(dn[0]) <RS_TOLERANCE2 || fabs(dn[2])<RS_TOLERANCE2) return false; //invalid quadratic form
@@ -821,7 +819,7 @@ bool RS_Ellipse::createFromQuadratic(const LC_Quadratic& q){
 	const auto& mq2=qCentered.getQuad();
 	const double factor=-1./qCentered.m_dConst;
 	//quadratic terms
-	const QVector<double> dn={mq2(0,0)*factor, 2.*mq2(0,1)*factor, mq2(1,1)*factor};
+	const std::vector<double> dn={mq2(0,0)*factor, 2.*mq2(0,1)*factor, mq2(1,1)*factor};
 	if(!createFromQuadratic(dn)) return false;
 
 	//move back to center
@@ -940,13 +938,13 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 	}
 	//    double ratio;
 	//        std::cout<<"dn="<<dn[0]<<' '<<dn[1]<<' '<<dn[2]<<std::endl;
-	QVector<double> dn(3);
+	std::vector<double> dn(3);
 	RS_Vector angleVector(false);
 
 	for(size_t i=0;i<tangent.size();i++) {
 		tangent[i] -= ellipseCenter;//relative to ellipse center
 	}
-	QVector<QVector<double> > mt;
+	std::vector<std::vector<double> > mt;
 	mt.clear();
 	const double symTolerance=20.*RS_TOLERANCE;
 	for(const RS_Vector& vp: tangent){
@@ -954,15 +952,17 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 		// need to remove duplicated {x^2, xy, y^2} terms due to symmetry (x => -x, y=> -y)
 		// i.e. rotation of 180 degrees around ellipse center
 		//		std::cout<<"point  : "<<vp<<std::endl;
-		QVector<double> mtRow;
+		std::vector<double> mtRow;
 		mtRow.push_back(vp.x*vp.x);
 		mtRow.push_back(vp.x*vp.y);
 		mtRow.push_back(vp.y*vp.y);
+		const double l=sqrt(mtRow[0]*mtRow[0]+mtRow[1]*mtRow[1]+mtRow[2]*mtRow[2]);
 		bool addRow(true);
-		const QVector3D current(mtRow[0], mtRow[1], mtRow[2]);
 		for(const auto& v: mt){
-			const QVector3D existing(v[0], v[1], v[2]);
-			if( (current-existing).length() < symTolerance*current.length()){
+			const double dx=v[0] - mtRow[0];
+			const double dy=v[1] - mtRow[1];
+			const double dz=v[2] - mtRow[2];
+			if( sqrt(dx*dx + dy*dy + dz*dz) < symTolerance*l){
 				//symmetric
 				addRow=false;
 				break;
@@ -1556,10 +1556,10 @@ bool RS_Ellipse::isVisibleInWindow(RS_GraphicView* view) const
     //viewport
     QRectF visualRect(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y);
     QPolygonF visualBox(visualRect);
-    QVector<RS_Vector> vps;
+	std::vector<RS_Vector> vps;
     for(unsigned short i=0;i<4;i++){
         const QPointF& vp(visualBox.at(i));
-        vps<<RS_Vector(vp.x(),vp.y());
+		vps.push_back(RS_Vector(vp.x(),vp.y()));
     }
     //check for intersection points with viewport
     for(unsigned short i=0;i<4;i++){
@@ -1719,13 +1719,13 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
     RS_Vector vpStart(isReversed()?getEndpoint():getStartpoint());
     RS_Vector vpEnd(isReversed()?getStartpoint():getEndpoint());
 
-    QVector<RS_Vector> vertex(0);
+	std::vector<RS_Vector> vertex(0);
     for(unsigned short i=0;i<4;i++){
         const QPointF& vp(visualBox.at(i));
-        vertex<<RS_Vector(vp.x(),vp.y());
+		vertex.push_back(RS_Vector(vp.x(),vp.y()));
     }
     /** angles at cross points */
-    QVector<double> crossPoints(0);
+	std::vector<double> crossPoints(0);
 
     double baseAngle=isReversed()?getAngle2():getAngle1();
     for(unsigned short i=0;i<4;i++){
@@ -1760,7 +1760,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
     arc.setPen(getPen());
     arc.setReversed(false);
     if( crossPoints.size() >= 2) {
-        for(int i=0;i<crossPoints.size()-1;i+=2){
+		for(size_t i=0;i<crossPoints.size()-1;i+=2){
             arc.setAngle1(baseAngle+crossPoints[i]);
             arc.setAngle2(baseAngle+crossPoints[i+1]);
             arc.drawVisible(painter,view,patternOffset);

@@ -408,14 +408,14 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
 //    std::cout<<*p2<<std::endl;
     if(p1->isQuadratic()==false){
         //two lines
-        QVector<QVector<double> > ce(2,QVector<double>(3,0.));
+		std::vector<std::vector<double> > ce(2,std::vector<double>(3,0.));
         ce[0][0]=p1->m_vLinear(0);
         ce[0][1]=p1->m_vLinear(1);
         ce[0][2]=-p1->m_dConst;
         ce[1][0]=p2->m_vLinear(0);
         ce[1][1]=p2->m_vLinear(1);
         ce[1][2]=-p2->m_dConst;
-        QVector<double> sn(2,0.);
+		std::vector<double> sn(2,0.);
         if(RS_Math::linearSolver(ce,sn)){
             ret.push_back(RS_Vector(sn[0],sn[1]));
         }

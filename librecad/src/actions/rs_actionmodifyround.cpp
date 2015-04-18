@@ -36,15 +36,12 @@
 RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Round Entities",
-                           container, graphicView) {
-
-    entity1 = NULL;
-    entity2 = NULL;
-    coord1 = RS_Vector(false);
-    coord2 = RS_Vector(false);
-    eType.reserve(6);
-    eType << RS2::EntityLine << RS2::EntityPolyline << RS2::EntityArc <<
-             RS2::EntityCircle << RS2::EntityEllipse << RS2::EntitySpline;
+						   container, graphicView)
+		,entity1(nullptr)
+		,entity2(nullptr)
+		,coord1(false)
+		,coord2(false)
+{
 }
 
 QAction* RS_ActionModifyRound::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

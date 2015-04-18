@@ -185,7 +185,7 @@ public:
     bool createFromCenter3Points(const RS_VectorSolutions& sol);
 	//! \{ \brief from quadratic form
 	/** : dn[0] x^2 + dn[1] xy + dn[2] y^2 =1 */
-	bool createFromQuadratic(const QVector<double>& dn);
+	bool createFromQuadratic(const std::vector<double>& dn);
 	/** : generic quadratic: A x^2 + C xy + B y^2 + D x + E y + F =0 */
 	bool createFromQuadratic(const LC_Quadratic& q);
 	//! \}

@@ -611,12 +611,12 @@ bool RS_Arc::offset(const RS_Vector& coord, const double& distance) {
     calculateBorders();
     return true;
 }
-QVector<RS_Entity* > RS_Arc::offsetTwoSides(const double& distance) const
+std::vector<RS_Entity* > RS_Arc::offsetTwoSides(const double& distance) const
 {
-    QVector<RS_Entity*> ret(0,NULL);
-    ret<<new RS_Arc(NULL,RS_ArcData(getCenter(),getRadius()+distance,getAngle1(),getAngle2(),isReversed()));
+	std::vector<RS_Entity*> ret(0,NULL);
+	ret.push_back(new RS_Arc(NULL,RS_ArcData(getCenter(),getRadius()+distance,getAngle1(),getAngle2(),isReversed())));
     if(getRadius()>distance)
-    ret<<new RS_Arc(NULL,RS_ArcData(getCenter(),getRadius()-distance,getAngle1(),getAngle2(),isReversed()));
+	ret.push_back(new RS_Arc(NULL,RS_ArcData(getCenter(),getRadius()-distance,getAngle1(),getAngle2(),isReversed())));
     return ret;
 }
 
@@ -902,13 +902,13 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     RS_Vector vpStart(isReversed()?getEndpoint():getStartpoint());
     RS_Vector vpEnd(isReversed()?getStartpoint():getEndpoint());
 
-    QVector<RS_Vector> vertex(0);
+	std::vector<RS_Vector> vertex(0);
     for(unsigned short i=0;i<4;i++){
         const QPointF& vp(visualBox.at(i));
-        vertex<<RS_Vector(vp.x(),vp.y());
+		vertex.push_back(RS_Vector(vp.x(),vp.y()));
     }
     /** angles at cross points */
-    QVector<double> crossPoints(0);
+	std::vector<double> crossPoints(0);
 
     double baseAngle=isReversed()?getAngle2():getAngle1();
     for(unsigned short i=0;i<4;i++){
@@ -938,7 +938,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     arc.setPen(getPen());
     arc.setSelected(isSelected());
     arc.setReversed(false);
-    for(int i=0;i<crossPoints.size()-1;i+=2){
+	for(size_t i=0;i<crossPoints.size()-1;i+=2){
         arc.setAngle1(baseAngle+crossPoints[i]);
         arc.setAngle2(baseAngle+crossPoints[i+1]);
         arc.drawVisible(painter,view,patternOffset);
@@ -1011,7 +1011,7 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
 
 
     // create scaled pattern:
-    QVector<double> da(0);
+	std::vector<double> da(0);
     double patternSegmentLength(pat->totalLength);
     double ira=1./ra;
     int i(0);          // index counter
