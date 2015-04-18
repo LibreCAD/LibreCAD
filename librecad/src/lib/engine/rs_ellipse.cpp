@@ -188,7 +188,10 @@ void RS_Ellipse::calculateBorders() {
   */
 
 RS_VectorSolutions RS_Ellipse::getFoci() const {
-    RS_Vector vp(getMajorP()*sqrt(1.-getRatio()*getRatio()));
+	RS_Ellipse e=*this;
+	if(getRatio()>1.)
+		e.switchMajorMinor();
+	RS_Vector vp(e.getMajorP()*sqrt(1.-e.getRatio()*e.getRatio()));
 	return RS_VectorSolutions({getCenter()+vp, getCenter()-vp});
 }
 
