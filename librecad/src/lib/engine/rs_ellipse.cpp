@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2011-2015 Dongxu Li (dongxuli2011@gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -134,9 +135,9 @@ RS_Entity* RS_Ellipse::clone() const {
 
 /**
  * Calculates the boundary box of this ellipse.
+  * @author Dongxu Li
  */
 void RS_Ellipse::calculateBorders() {
-//    RS_DEBUG->print("RS_Ellipse::calculateBorders");
 
     RS_Vector startpoint = getStartpoint();
     RS_Vector endpoint = getEndpoint();
@@ -176,15 +177,14 @@ void RS_Ellipse::calculateBorders() {
     }
 
     minV.set(minX, minY);
-    maxV.set(maxX, maxY);
-//    RS_DEBUG->print("RS_Ellipse::calculateBorders: OK");
+	maxV.set(maxX, maxY);
 }
 
 
 /**
   * return the foci of ellipse
   *
-  *@Author: Dongxu Li
+  * @author Dongxu Li
   */
 
 RS_VectorSolutions RS_Ellipse::getFoci() const {
@@ -220,12 +220,12 @@ RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist)co
     dist2 = (endpoint-coord).squared();
 
     if (dist2<dist1) {
-		if (dist!=nullptr) {
+		if (dist) {
             *dist = sqrt(dist2);
         }
         return endpoint;
     } else {
-		if (dist!=nullptr) {
+		if (dist) {
             *dist = sqrt(dist1);
         }
         return startpoint;
@@ -236,7 +236,7 @@ RS_Vector RS_Ellipse::getNearestEndpoint(const RS_Vector& coord, double* dist)co
   *find the tangential points from a given point, i.e., the tangent lines should pass
   * the given point and tangential points
   *
-  *Author: Dongxu Li
+  * \author Dongxu Li
   */
 RS_VectorSolutions RS_Ellipse::getTangentPoint(const RS_Vector& point) const {
     RS_Vector point2(point);
@@ -273,7 +273,7 @@ RS_Vector RS_Ellipse::getTangentDirection(const RS_Vector& point) const {
 /**
   * find total length of the ellipse (arc)
   *
-  *Author: Dongxu Li
+  * \author: Dongxu Li
   */
 double RS_Ellipse::getLength() const
 {
@@ -292,6 +292,7 @@ double RS_Ellipse::getLength() const
 *@ x1, ellipse angle
 *@ x2, ellipse angle
 //@return the arc length between ellipse angle x1, x2
+* \author Dongxu Li
 **/
 double RS_Ellipse::getEllipseLength(double x1, double x2) const
 {
@@ -337,7 +338,7 @@ double RS_Ellipse::getEllipseLength( double x2) const
   * the distance is expected to be within 0 and getLength()
   * using Newton-Raphson from boost
   *
-  *Author: Dongxu Li
+  *@author: Dongxu Li
   */
 
 RS_Vector RS_Ellipse::getNearestDist(double distance,
@@ -406,7 +407,7 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
 /**
   * switch the major/minor axis naming
   *
-  *Author: Dongxu Li
+  * \author: Dongxu Li
   */
 bool RS_Ellipse::switchMajorMinor(void)
 //switch naming of major/minor, return true if success
@@ -452,11 +453,12 @@ RS_Vector  RS_Ellipse::getEllipsePoint(const double& a) const {
     p.move(getCenter());
     return p;
 }
-//implemented using an analytical aglorithm
-// find nearest point on ellipse to a given point
-//
-// @author Dongxu Li <dongxuli2011@gmail.com>
-//
+
+/** \brief implemented using an analytical aglorithm
+* find nearest point on ellipse to a given point
+*
+* @author Dongxu Li <dongxuli2011@gmail.com>
+*/
 
 RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         bool onEntity, double* dist, RS_Entity** entity)const
@@ -466,12 +468,12 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     RS_Vector ret(false);
 
     if( ! coord.valid ) {
-		if ( dist != nullptr ) *dist=RS_MAXDOUBLE;
+		if ( dist ) *dist=RS_MAXDOUBLE;
         return ret;
 
     }
 
-	if (entity!=nullptr) {
+	if (entity) {
         *entity = const_cast<RS_Ellipse*>(this);
     }
     ret=coord;
@@ -538,7 +540,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
 //        std::cout<<"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n";
         RS_DEBUG->print(RS_Debug::D_ERROR,"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n");
     }
-	if (dist!=nullptr) {
+	if (dist) {
         *dist = sqrt(dDistance);
     }
     ret.rotate(getAngle());
@@ -585,17 +587,7 @@ bool RS_Ellipse::isPointOnEntity(const RS_Vector& coord,
     vp.scale(RS_Vector(1./a,1./b));
 
     if (fabs(vp.squared()-1.) > t) return false;
-    return RS_Math::isAngleBetween(vp.angle(),getAngle1(),getAngle2(),isReversed());
-
-//    if ( getCenter().distanceTo(coord) < tolerance ) {
-//            if (getMajorRadius() < tolerance || getMinorRadius() < tolerance ) {
-//                    return true;
-//            } else {
-//                    return false;
-//            }
-//    }
-//    double dist = getDistanceToPoint(coord, nullptr, RS2::ResolveNone);
-//    return (dist<=tolerance);
+	return RS_Math::isAngleBetween(vp.angle(),getAngle1(),getAngle2(),isReversed());
 }
 
 
@@ -637,7 +629,7 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
 //create Ellipse with axes in x-/y- directions from 4 points
 *
 *
-*@Author Dongxu Li
+*@author Dongxu Li
 */
 bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
 {
@@ -683,7 +675,7 @@ bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
 //create Ellipse with center and 3 points
 *
 *
-*@Author Dongxu Li
+*@author Dongxu Li
 */
 bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
     if(sol.getNumber()<3) return false; //need one center and 3 points on ellipse
@@ -736,7 +728,7 @@ bool	RS_Ellipse::createFromCenter3Points(const RS_VectorSolutions& sol) {
   * dn[0] x^2 + dn[1] xy + dn[2] y^2 =1
   * keep the ellipse center before calling this function
   *
-  *@Author: Dongxu Li
+  *@author: Dongxu Li
   */
 bool RS_Ellipse::createFromQuadratic(const std::vector<double>& dn){
 	RS_DEBUG->print("RS_Ellipse::createFromQuadratic() begin\n");
@@ -789,7 +781,7 @@ bool RS_Ellipse::createFromQuadratic(const LC_Quadratic& q){
 	double const& d=mL(0);
 	double const& e=mL(1);
 	double determinant=c*c-4.*a*b;
-	if(determinant>=0.) return false;
+	if(determinant>= -DBL_EPSILON) return false;
 	// find center of quadratic
 	// 2 A x + C y = D
 	// C x   + 2 B y = E
@@ -799,12 +791,11 @@ bool RS_Ellipse::createFromQuadratic(const LC_Quadratic& q){
 	//generate centered quadratic
 	LC_Quadratic qCentered=q;
 	qCentered.move(-eCenter);
-	if(qCentered.m_dConst>=0.f) return false;
+	if(qCentered.m_dConst>= -DBL_EPSILON) return false;
 	const auto& mq2=qCentered.getQuad();
 	const double factor=-1./qCentered.m_dConst;
 	//quadratic terms
-	const std::vector<double> dn={mq2(0,0)*factor, 2.*mq2(0,1)*factor, mq2(1,1)*factor};
-	if(!createFromQuadratic(dn)) return false;
+	if(!createFromQuadratic({mq2(0,0)*factor, 2.*mq2(0,1)*factor, mq2(1,1)*factor})) return false;
 
 	//move back to center
 	move(eCenter);
@@ -817,7 +808,7 @@ bool RS_Ellipse::createFromQuadratic(const LC_Quadratic& q){
 *algorithm: http://chrisjones.id.au/Ellipses/ellipse.html
 *finding the tangential points and ellipse center
 *
-*@Author Dongxu Li
+*@author Dongxu Li
 */
 bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 {
@@ -1020,7 +1011,7 @@ RS_Vector RS_Ellipse::getMiddlePoint()const{
 /**
   * get Nearest equidistant point
   *
-  *Author: Dongxu Li
+  *@author: Dongxu Li
   */
 RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
                                        double* dist,
@@ -1081,7 +1072,7 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
   *@ onEntity, should the tangential be required to on entity of the elliptic arc
   *@ coord, current cursor position
   *
-  *Author: Dongxu Li
+  *@author: Dongxu Li
   */
 
 RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
@@ -1388,7 +1379,7 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
  * is the Ellipse an Arc
  * @return false, if both angle1/angle2 are zero
  *
- *Author: Dongxu Li
+ *@author: Dongxu Li
  */
 bool RS_Ellipse::isArc() const{
 #ifndef EMU_C99
@@ -1399,7 +1390,7 @@ bool RS_Ellipse::isArc() const{
 /**
  * mirror by the axis of the line axisPoint1 and axisPoint2
  *
- *Author: Dongxu Li
+ *@author: Dongxu Li
  */
 void RS_Ellipse::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     RS_Vector center=getCenter();
@@ -1431,7 +1422,7 @@ void RS_Ellipse::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2
   * get direction1 and direction2
   * get the tangent pointing outside at end points
   *
-  * Author: Dongxu Li
+  *@author: Dongxu Li
   */
 //getDirection1 for start point
 double RS_Ellipse::getDirection1() const {
@@ -1587,6 +1578,7 @@ LC_Quadratic RS_Ellipse::getQuadratic() const
  * Contour Area =\oint x dy
  * @return line integral \oint x dy along the entity
  * \oint x dy = Cx y + \frac{1}{4}((a^{2}+b^{2})sin(2a)cos^{2}(t)-ab(2sin^{2}(a)sin(2t)-2t-sin(2t)))
+ *@author Dongxu Li
  */
 double RS_Ellipse::areaLineIntegral() const
 {

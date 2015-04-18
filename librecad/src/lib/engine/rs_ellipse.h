@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2011-2012 Dongxu Li (dongxuli2011@gmail.com)
+** Copyright (C) 2011-2015 Dongxu Li (dongxuli2011@gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -192,18 +192,18 @@ public:
 	bool createInscribeQuadrilateral(const std::vector<RS_Line*>& lines);
     virtual RS_Vector getMiddlePoint(void)const;
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL) const;
+										 double* dist = nullptr) const;
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-            bool onEntity = true, double* dist = NULL, RS_Entity** entity=NULL) const;
+			bool onEntity = true, double* dist = nullptr, RS_Entity** entity=nullptr) const;
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-                                       double* dist = NULL);
+									   double* dist = nullptr);
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL,
+									   double* dist = nullptr,
                                        int middlePoints = 1
                                        )const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = nullptr);
     virtual RS_Vector getNearestOrthTan(const RS_Vector& coord,
                                     const RS_Line& normal,
                                      bool onEntity = false);
@@ -224,8 +224,10 @@ public:
     /** whether the entity's bounding box intersects with visible portion of graphic view
     */
     bool isVisibleInWindow(RS_GraphicView* view) const;
+	//! \{ \brief find visible segments of entity and draw only those visible portion
     virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
     virtual void drawVisible(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
+	//! \}
 
     friend std::ostream& operator << (std::ostream& os, const RS_Ellipse& a);
 
@@ -236,10 +238,8 @@ public:
     virtual double getDirection1() const;
     virtual double getDirection2() const;
 
-    /** return the equation of the entity
-    for quadratic,
-
-    return a vector contains:
+	/** \brief return the equation of the entity
+	a quadratic contains coefficients for quadratic:
     m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
 
     for linear:
