@@ -31,7 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_circle.h"
-
+#include "rs_coordinateevent.h"
 
 
 RS_ActionDrawCircle3P::RS_ActionDrawCircle3P(RS_EntityContainer& container,
@@ -42,8 +42,6 @@ RS_ActionDrawCircle3P::RS_ActionDrawCircle3P(RS_EntityContainer& container,
 {
     reset();
 }
-
-
 
 RS_ActionDrawCircle3P::~RS_ActionDrawCircle3P() {}
 

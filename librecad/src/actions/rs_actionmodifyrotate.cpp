@@ -29,15 +29,12 @@
 #include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-//#include "rs_commandevent.h"
-
-
+#include "rs_coordinateevent.h"
 
 RS_ActionModifyRotate::RS_ActionModifyRotate(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Rotate Entities",
                                container, graphicView) {}
-
 
 QAction* RS_ActionModifyRotate::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     // tr("Rotate")

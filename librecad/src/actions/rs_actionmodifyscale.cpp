@@ -29,8 +29,7 @@
 #include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-
-
+#include "rs_coordinateevent.h"
 
 RS_ActionModifyScale::RS_ActionModifyScale(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

@@ -32,6 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
 #include "rs_commandevent.h"
+#include "rs_coordinateevent.h"
 
 /**
  * Constructor.

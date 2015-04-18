@@ -25,10 +25,12 @@
 **********************************************************************/
 #include <QToolButton>
 #include <QLayout>
+#include <QMouseEvent>
 #include "qg_cadtoolbarselect.h"
 #include "qg_cadtoolbar.h"
 #include "rs_actionselect.h"
 #include "qg_actionhandler.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_CadToolBarSelect as a child of 'parent', with the

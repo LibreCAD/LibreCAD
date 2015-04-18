@@ -33,8 +33,7 @@
 #include "rs_line.h"
 #include "rs_infoarea.h"
 #include "rs_graphic.h"
-
-
+#include "rs_coordinateevent.h"
 
 RS_ActionInfoArea::RS_ActionInfoArea(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)

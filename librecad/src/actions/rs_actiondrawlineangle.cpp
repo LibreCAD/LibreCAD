@@ -32,6 +32,7 @@
 #include "rs_commandevent.h"
 #include "rs_settings.h"
 #include "rs_line.h"
+#include "rs_coordinateevent.h"
 
 RS_ActionDrawLineAngle::RS_ActionDrawLineAngle(RS_EntityContainer& container,
         RS_GraphicView& graphicView,

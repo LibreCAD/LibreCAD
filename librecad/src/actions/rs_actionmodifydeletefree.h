@@ -29,6 +29,7 @@
 
 #include "rs_actioninterface.h"
 
+class RS_Polyline;
 
 /**
  * This action class can handle user events to delete entities.

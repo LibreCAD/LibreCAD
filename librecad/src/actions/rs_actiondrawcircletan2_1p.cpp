@@ -29,6 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "lc_quadratic.h"
+#include "rs_coordinateevent.h"
 
 /**
  * Constructor.

@@ -23,6 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include <QMouseEvent>
 #include "qg_cadtoolbar.h"
 #include "rs_dialogfactory.h"
 #include "rs_actioninterface.h"

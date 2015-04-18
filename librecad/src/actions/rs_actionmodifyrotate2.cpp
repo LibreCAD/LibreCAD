@@ -29,8 +29,7 @@
 #include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-
-
+#include "rs_coordinateevent.h"
 
 RS_ActionModifyRotate2::RS_ActionModifyRotate2(
     RS_EntityContainer& container,

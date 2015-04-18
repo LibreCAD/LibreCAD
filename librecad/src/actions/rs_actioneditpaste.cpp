@@ -31,6 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_clipboard.h"
 #include "rs_modification.h"
+#include "rs_coordinateevent.h"
 
 /**
  * Constructor.

@@ -34,6 +34,7 @@
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_line.h"
+#include "rs_coordinateevent.h"
 
 
 RS_ActionDimDiametric::RS_ActionDimDiametric(

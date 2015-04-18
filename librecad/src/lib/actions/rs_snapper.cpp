@@ -34,7 +34,52 @@
 #include "rs_grid.h"
 #include "rs_settings.h"
 #include "rs_overlayline.h"
+#include "rs_entitycontainer.h"
+#include "rs_coordinateevent.h"
 
+/**
+  * Disable all snapping.
+  *
+  * This effectivly puts the object into free snap mode.
+  *
+  * @returns A refrence to itself.
+  */
+ RS_SnapMode const & RS_SnapMode::clear(void) {
+	snapFree     = false;
+	snapGrid     = false;
+	snapEndpoint     = false;
+	snapMiddle       = false;
+	snapDistance       = false;
+	snapCenter       = false;
+	snapOnEntity     = false;
+	snapIntersection = false;
+
+	restriction = RS2::RestrictNothing;
+
+	return *this;
+}
+
+/**
+ * Reset to default settings
+ *
+ * @returns A refrence to itself.
+ */
+RS_SnapMode const & RS_SnapMode::hardReset(void) {
+	snapFree     = false;
+	snapGrid     = false;
+	snapEndpoint     = false;
+	snapMiddle       = false;
+	snapDistance       = false;
+	snapCenter       = false;
+	snapOnEntity     = false;
+	snapIntersection = false;
+
+	restriction = RS2::RestrictNothing;
+
+	distance = 5;
+
+	return *this;
+}
 /**
  * Constructor.
  */
@@ -46,14 +91,6 @@ RS_Snapper::RS_Snapper(RS_EntityContainer& container,
     finished = false;
     init();
 }
-
-
-
-/**
- * Destructor.
- */
-RS_Snapper::~RS_Snapper() {}
-
 
 
 /**

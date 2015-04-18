@@ -31,6 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_graphic.h"
+#include "rs_coordinateevent.h"
 
 
 RS_ActionInfoDist::RS_ActionInfoDist(RS_EntityContainer& container,

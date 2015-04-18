@@ -31,8 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_point.h"
-
-
+#include "rs_coordinateevent.h"
 
 RS_ActionDrawPoint::RS_ActionDrawPoint(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)

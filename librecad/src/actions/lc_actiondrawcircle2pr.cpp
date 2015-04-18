@@ -26,8 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_circle.h"
-
-
+#include "rs_coordinateevent.h"
 
 LC_ActionDrawCircle2PR::LC_ActionDrawCircle2PR(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -36,16 +35,12 @@ LC_ActionDrawCircle2PR::LC_ActionDrawCircle2PR(RS_EntityContainer& container,
     reset();
 }
 
-
-
 QAction* LC_ActionDrawCircle2PR::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
         // "Circle: 2 Points, Radius"
     QAction* action = new QAction(tr("2 Points, Radius"), NULL);
         action->setIcon(QIcon(":/extui/circle2pr.png"));
     return action;
 }
-
-
 
 void LC_ActionDrawCircle2PR::reset() {
 	data->reset();
@@ -54,15 +49,11 @@ void LC_ActionDrawCircle2PR::reset() {
     point2 = RS_Vector(false);
 }
 
-
-
 void LC_ActionDrawCircle2PR::init(int status) {
     RS_PreviewActionInterface::init(status);
 
     reset();
 }
-
-
 
 void LC_ActionDrawCircle2PR::trigger() {
     RS_PreviewActionInterface::trigger();

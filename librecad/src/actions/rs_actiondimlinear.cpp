@@ -33,6 +33,7 @@
 #include "rs_commandevent.h"
 #include "rs_constructionline.h"
 #include "rs_line.h"
+#include "rs_coordinateevent.h"
 
 /**
  * Constructor.

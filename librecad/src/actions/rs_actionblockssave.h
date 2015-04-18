@@ -23,6 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_actioninterface.h"
 
+class RS_Insert;
+
 /**
  * This action class can handle user events to save the active block to a file.
  *

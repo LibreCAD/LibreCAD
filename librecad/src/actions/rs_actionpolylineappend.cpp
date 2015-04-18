@@ -31,6 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_commands.h"
 #include "rs_polyline.h"
+#include "rs_coordinateevent.h"
 
 
 RS_ActionPolylineAppend::RS_ActionPolylineAppend(RS_EntityContainer& container,

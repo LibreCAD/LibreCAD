@@ -24,12 +24,12 @@
 **
 **********************************************************************/
 
-
+#include <QKeyEvent>
 #include "rs_actioninterface.h"
-
 #include "rs_graphicview.h"
 #include "rs_commands.h"
 #include "rs_dialogfactory.h"
+#include "rs_coordinateevent.h"
 
 /**
  * Constructor.
@@ -72,14 +72,6 @@ RS_Snapper(container, graphicView) {
     actionType=RS2::ActionNone;
 
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\": OK", name);
-}
-
-/**
- * Destructor.
- */
-RS_ActionInterface::~RS_ActionInterface() {
-    // would be pure virtual now:
-    // hideOptions();
 }
 
 /**

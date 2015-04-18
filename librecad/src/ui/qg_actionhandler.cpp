@@ -171,44 +171,14 @@ std::vector<RS2::EntityType> QG_ActionHandler::offsetEntities(0);
 /**
  * Constructor
  */
-QG_ActionHandler::QG_ActionHandler(QG_MainWindowInterface* mw) {
-    RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler");
-    mainWindow = mw;
-
-//    snapFree               = NULL;
-//    snapGrid               = NULL;
-//    snapEndpoint           = NULL;
-//    snapOnEntity           = NULL;
-//    snapCenter             = NULL;
-//    snapMiddle             = NULL;
-//    snapDistance               = NULL;
-//    snapIntersection       = NULL;
-//    snapIntersectionManual = NULL;
-
-    snapToolBar= NULL;
-
-//    restrictNothing = NULL;
-//    restrictOrthogonal = NULL;
-//    restrictHorizontal = NULL;
-//    restrictVertical = NULL;
-
-//    lockRelativeZero = NULL;
-//    lockedRelZero=false;
-    orderType = RS2::ActionOrderTop;
+QG_ActionHandler::QG_ActionHandler(QG_MainWindowInterface* mw):
+	mainWindow(mw)
+  ,snapToolBar(nullptr)
+  ,orderType(RS2::ActionOrderTop)
+{
+	RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler");
     RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler: OK");
 }
-
-
-
-/**
- * Destructor
- */
-QG_ActionHandler::~QG_ActionHandler() {
-    RS_DEBUG->print("QG_ActionHandler::~QG_ActionHandler");
-    RS_DEBUG->print("QG_ActionHandler::~QG_ActionHandler: OK");
-}
-
-
 
 /**
  * Kills all running selection actions. Called when a selection action
@@ -217,7 +187,7 @@ QG_ActionHandler::~QG_ActionHandler() {
 void QG_ActionHandler::killSelectActions() {
     RS_GraphicView* gv = mainWindow->getGraphicView();
 
-    if (gv!=NULL) {
+	if (gv) {
         gv->killSelectActions();
     }
 }
@@ -225,12 +195,10 @@ void QG_ActionHandler::killSelectActions() {
 void QG_ActionHandler::killAllActions() {
 	RS_GraphicView* gv = mainWindow->getGraphicView();
 
-	if (gv!=NULL) {
+	if (gv) {
 		gv->killAllActions();
 	}
 }
-
-
 
 /**
  * @return Current action or NULL.
@@ -238,14 +206,12 @@ void QG_ActionHandler::killAllActions() {
 RS_ActionInterface* QG_ActionHandler::getCurrentAction() {
     RS_GraphicView* gv = mainWindow->getGraphicView();
 
-    if (gv!=NULL) {
+	if (gv) {
         return gv->getCurrentAction();
     } else {
         return NULL;
     }
 }
-
-
 
 /**
  * Sets current action.
@@ -295,7 +261,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         // Editing actions:
         //
     case RS2::ActionEditKillAllActions:
-        if (gv!=NULL) {
+		if (gv) {
             // DO we need to call some form of a 'clean' function?
             gv->killAllActions();
             RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
@@ -919,7 +885,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     }
 
-    if (a!=NULL) {
+	if (a) {
         gv->setCurrentAction(a);
     }
 
@@ -935,7 +901,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 QStringList QG_ActionHandler::getAvailableCommands() {
     RS_ActionInterface* currentAction = getCurrentAction();
 
-    if (currentAction!=NULL) {
+	if (currentAction) {
         return currentAction->getAvailableCommands();
     } else {
         QStringList cmd;
@@ -948,7 +914,7 @@ QStringList QG_ActionHandler::getAvailableCommands() {
 //get snap mode from snap toolbar
 RS_SnapMode QG_ActionHandler::getSnaps()
 {
-    if (snapToolBar != NULL) {
+	if (snapToolBar) {
         return snapToolBar->getSnaps();
     }
     //return a free snap mode
@@ -971,7 +937,7 @@ bool QG_ActionHandler::keycode(const QString& code) {
     //RS_keycodeEvent e(cmd);
 
     //RS_GraphicView* gv = mainWindow->getGraphicView();
-    //if (gv!=NULL) {
+	//if (gv) {
     //    gv->keycodeEvent(&e);
     //}
 
@@ -1098,7 +1064,7 @@ bool QG_ActionHandler::command(const QString& cmd) {
 
     if (c=="\n" || c==tr("escape", "escape, go back from action steps")) {
         RS_GraphicView* gv = mainWindow->getGraphicView();
-        if (gv!=NULL) {
+		if (gv) {
             if(c=="\n" ){
                 gv->enter();
                 RS_DEBUG->print("QG_ActionHandler::command: enter");
@@ -1114,7 +1080,7 @@ bool QG_ActionHandler::command(const QString& cmd) {
     RS_CommandEvent e(cmd);
 
     RS_GraphicView* gv = mainWindow->getGraphicView();
-    if (gv!=NULL) {
+	if (gv) {
         RS_DEBUG->print("QG_ActionHandler::command: trigger command event in "
                         " graphic view");
         gv->commandEvent(&e);
@@ -1620,14 +1586,14 @@ void QG_ActionHandler::slotModifyExplodeText() {
 void QG_ActionHandler::slotSetSnaps(RS_SnapMode s) {
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps()");
     updateSnapMode(s);
-    if(snapToolBar != NULL) {
+	if(snapToolBar ) {
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): set snapToolBar");
         snapToolBar->setSnaps(s);
     }else{
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): snapToolBar is NULL");
     }
     RS_GraphicView* view=mainWindow->getGraphicView();
-    if(view != NULL) {
+	if(view ) {
         view->setDefaultSnapMode(s);
     }
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): ok");
@@ -1695,10 +1661,10 @@ void QG_ActionHandler::slotSnapIntersection() {
 
 void QG_ActionHandler::slotSnapIntersectionManual() {
     //disableSnaps();
-    /*if (snapIntersectionManual!=NULL) {
+	/*if (snapIntersectionManual) {
         snapIntersectionManual->setChecked(true);
 }*/
-    /*if (snapToolBar!=NULL) {
+	/*if (snapToolBar) {
         snapToolBar->setSnapMode(RS2::SnapIntersectionManual);
 }*/
     //setCurrentAction(RS2::ActionSnapIntersectionManual);
@@ -1879,18 +1845,10 @@ void QG_ActionHandler::slotOptionsDrawing() {
 
 void QG_ActionHandler::slotFocusNormal() {
     //QG_GraphicView* gv = mainWindow->getGraphicView();
-    //if (gv!=NULL) {
+	//if (gv) {
         //gv->setFocus();
         mainWindow->setFocus2();
     //}
-}
-
-/**
-    * Creates link to snap tool bar so we can update the button
-    * state if the snapping action changes.
-    */
-void QG_ActionHandler::setSnapToolBar(QG_SnapToolBar* tb) {
-    snapToolBar = tb;
 }
 
 // EOF

@@ -32,6 +32,7 @@
 #include "rs_commandevent.h"
 #include "rs_ellipse.h"
 #include "rs_line.h"
+#include "rs_coordinateevent.h"
 
 /**
  * Constructor.

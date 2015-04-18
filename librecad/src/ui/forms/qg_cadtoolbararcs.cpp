@@ -29,6 +29,7 @@
 #include "qg_cadtoolbararcs.h"
 #include "qg_cadtoolbar.h"
 #include "qg_actionhandler.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_CadToolBarArcs as a child of 'parent', with the

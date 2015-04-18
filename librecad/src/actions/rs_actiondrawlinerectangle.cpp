@@ -31,8 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_line.h"
-
-
+#include "rs_coordinateevent.h"
 
 RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
     RS_EntityContainer& container,

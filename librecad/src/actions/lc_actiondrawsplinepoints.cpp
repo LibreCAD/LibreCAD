@@ -34,6 +34,7 @@
 #include "rs_commands.h"
 #include "rs_commandevent.h"
 #include "rs_point.h"
+#include "rs_coordinateevent.h"
 
 LC_ActionDrawSplinePoints::LC_ActionDrawSplinePoints(RS_EntityContainer& container,
 													 RS_GraphicView& graphicView):

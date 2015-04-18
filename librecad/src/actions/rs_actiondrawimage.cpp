@@ -36,6 +36,7 @@
 #include "rs_commandevent.h"
 #include "rs_creation.h"
 #include "rs_actiondrawimage.h"
+#include "rs_coordinateevent.h"
 
 /**
  * Constructor.

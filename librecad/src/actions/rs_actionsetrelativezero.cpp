@@ -29,8 +29,7 @@
 #include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-
-
+#include "rs_coordinateevent.h"
 
 RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

@@ -31,7 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_circle.h"
-
+#include "rs_coordinateevent.h"
 
 /**
  * @param both Trim both entities.

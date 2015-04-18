@@ -31,6 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_line.h"
 #include "rs_point.h"
 #include "lc_quadratic.h"
+#include "rs_coordinateevent.h"
 
 /**
  * Constructor.

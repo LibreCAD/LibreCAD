@@ -31,8 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_creation.h"
 #include "rs_line.h"
-
-
+#include "rs_coordinateevent.h"
 
 RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
     RS_EntityContainer& container,

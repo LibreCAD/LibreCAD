@@ -31,8 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 #include "rs_line.h"
-
-
+#include "rs_coordinateevent.h"
 
 RS_ActionModifyStretch::RS_ActionModifyStretch(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
