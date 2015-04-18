@@ -1672,7 +1672,7 @@ bool DRW_Vertex::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs, doub
         DRW_DBG("basePoint: "); DRW_DBGPT(basePoint.x, basePoint.y, basePoint.z);
         stawidth = buf->getBitDouble();
         if (stawidth < 0)
-            endwidth = stawidth = abs(stawidth);
+			endwidth = stawidth = fabs(stawidth);
         else
             endwidth = buf->getBitDouble();
         bulge = buf->getBitDouble();
