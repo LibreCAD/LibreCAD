@@ -32,7 +32,7 @@ class QG_DlgOptionsMakerCam : public QDialog, public Ui::QG_DlgOptionsMakerCam
 
 public:
     QG_DlgOptionsMakerCam(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
-    ~QG_DlgOptionsMakerCam();
+	~QG_DlgOptionsMakerCam() = default;
 
 public slots:
     virtual void validate();

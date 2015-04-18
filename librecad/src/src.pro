@@ -192,9 +192,6 @@ HEADERS += \
     lib/filters/rs_filterjww.h \
     lib/filters/rs_filterlff.h \
     lib/filters/rs_filterinterface.h \
-    lib/generators/rs_makercamsvg.h \
-    lib/generators/rs_xmlwriterinterface.h \
-    lib/generators/rs_xmlwriterqxmlstreamwriter.h \
     lib/gui/rs_commandevent.h \
     lib/gui/rs_coordinateevent.h \
     lib/gui/rs_dialogfactory.h \
@@ -224,7 +221,11 @@ HEADERS += \
     actions/lc_actiondrawcircle2pr.h \
     ui/forms/qg_activelayername.h \
     ui/forms/lc_cadtoolbarinterface.h \
-    test/lc_simpletests.h
+    test/lc_simpletests.h \
+    lib/generators/lc_makercamsvg.h \
+    lib/generators/lc_xmlwriterinterface.h \
+    lib/generators/lc_xmlwriterqxmlstreamwriter.h \
+    actions/lc_actionfileexportmakercam.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -285,8 +286,6 @@ SOURCES += \
     lib/filters/rs_filterdxf1.cpp \
     lib/filters/rs_filterjww.cpp \
     lib/filters/rs_filterlff.cpp \
-    lib/generators/rs_makercamsvg.cpp \
-    lib/generators/rs_xmlwriterqxmlstreamwriter.cpp \
     lib/gui/rs_dialogfactory.cpp \
     lib/gui/rs_eventhandler.cpp \
     lib/gui/rs_graphicview.cpp \
@@ -313,7 +312,10 @@ SOURCES += \
     actions/lc_actiondrawcircle2pr.cpp \
     ui/forms/qg_activelayername.cpp \
     ui/forms/lc_cadtoolbarinterface.cpp \
-    test/lc_simpletests.cpp
+    test/lc_simpletests.cpp \
+    lib/generators/lc_xmlwriterqxmlstreamwriter.cpp \
+    lib/generators/lc_makercamsvg.cpp \
+    actions/lc_actionfileexportmakercam.cpp
 
 # ################################################################################
 # Command
@@ -382,7 +384,6 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actioneditcopy.h \
     actions/rs_actioneditpaste.h \
     actions/rs_actioneditundo.h \
-    actions/rs_actionfileexportmakercam.h \
     actions/rs_actionfilenew.h \
     actions/rs_actionfilenewtemplate.h \
     actions/rs_actionfileopen.h \
@@ -518,7 +519,6 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actioneditcopy.cpp \
     actions/rs_actioneditpaste.cpp \
     actions/rs_actioneditundo.cpp \
-    actions/rs_actionfileexportmakercam.cpp \
     actions/rs_actionfilenew.cpp \
     actions/rs_actionfilenewtemplate.cpp \
     actions/rs_actionfileopen.cpp \

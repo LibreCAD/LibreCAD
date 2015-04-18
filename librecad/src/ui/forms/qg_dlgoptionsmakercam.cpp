@@ -33,11 +33,6 @@ QG_DlgOptionsMakerCam::QG_DlgOptionsMakerCam(QWidget* parent, bool modal, Qt::Wi
     loadSettings();
 }
 
-QG_DlgOptionsMakerCam::~QG_DlgOptionsMakerCam()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
-
 void QG_DlgOptionsMakerCam::languageChange()
 {
     retranslateUi(this);

@@ -89,7 +89,7 @@
 #include "rs_actioneditcopy.h"
 #include "rs_actioneditpaste.h"
 #include "rs_actioneditundo.h"
-#include "rs_actionfileexportmakercam.h"
+#include "lc_actionfileexportmakercam.h"
 #include "rs_actionfilenewtemplate.h"
 #include "rs_actionfileopen.h"
 #include "rs_actionfilesaveas.h"
@@ -289,7 +289,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionFileSaveAs(*doc, *gv);
         break;
     case RS2::ActionFileExportMakerCam:
-        a = new RS_ActionFileExportMakerCam(*doc, *gv);
+		a = new LC_ActionFileExportMakerCam(*doc, *gv);
         break;
 
         // Editing actions:

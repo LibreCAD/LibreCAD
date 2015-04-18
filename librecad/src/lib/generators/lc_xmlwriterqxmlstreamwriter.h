@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2014 Christian Luginbühl (dinkel@pimprecords.com)
+** Copyright (C) 2015 Christian Luginbühl (dinkel@pimprecords.com)
 **
 **
 ** This program is free software; you can redistribute it and/or modify
@@ -21,22 +21,38 @@
 **
 **********************************************************************/
 
-#ifndef RS_ACTIONFILEEXPORTMAKERCAM_H
-#define RS_ACTIONFILEEXPORTMAKERCAM_H
+#ifndef RS_XMLWRITERQXMLSTREAMWRITER_H
+#define RS_XMLWRITERQXMLSTREAMWRITER_H
 
-#include "rs_actioninterface.h"
+#include <QString>
+#include <memory>
+#include "lc_xmlwriterinterface.h"
 
-class RS_ActionFileExportMakerCam : public RS_ActionInterface {
-    Q_OBJECT
+class QXmlStreamWriter;
+
+class LC_XMLWriterQXmlStreamWriter : public LC_XMLWriterInterface {
 public:
-    RS_ActionFileExportMakerCam(RS_EntityContainer& container, RS_GraphicView& graphicView);
-    ~RS_ActionFileExportMakerCam() {}
+	LC_XMLWriterQXmlStreamWriter();
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+	~LC_XMLWriterQXmlStreamWriter();
 
-    virtual void init(int status=0);
-    virtual void trigger();
+    void createRootElement(const std::string &name, const std::string &namespace_uri = "");
 
+    void addElement(const std::string &name, const std::string &namespace_uri = "");
+
+    void addAttribute(const std::string &name, const std::string &value, const std::string &namespace_uri = "");
+
+    void addNamespaceDeclaration(const std::string &prefix, const std::string &namespace_uri);
+
+    void closeElement();
+
+    std::string documentAsString();
+
+private:
+
+	std::unique_ptr<QXmlStreamWriter> xmlWriter;
+
+    QString xml;
 };
 
 #endif

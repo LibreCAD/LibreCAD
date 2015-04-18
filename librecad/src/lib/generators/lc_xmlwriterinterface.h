@@ -21,36 +21,27 @@
 **
 **********************************************************************/
 
-#ifndef RS_XMLWRITERQXMLSTREAMWRITER_H
-#define RS_XMLWRITERQXMLSTREAMWRITER_H
+#ifndef RS_XMLWRITERINTERFACE_H
+#define RS_XMLWRITERINTERFACE_H
 
-#include <rs_xmlwriterinterface.h>
+#include <string>
 
-#include <QXmlStreamWriter>
-
-class RS_XMLWriterQXmlStreamWriter : public RS_XMLWriterInterface {
+class LC_XMLWriterInterface {
 public:
-    RS_XMLWriterQXmlStreamWriter();
+    virtual void createRootElement(const std::string &name, const std::string &default_namespace_uri = "") = 0;
 
-    ~RS_XMLWriterQXmlStreamWriter();
+    virtual void addElement(const std::string &name, const std::string &namespace_uri = "") = 0;
 
-    void createRootElement(const std::string &name, const std::string &namespace_uri = "");
+    virtual void addAttribute(const std::string &name, const std::string &value, const std::string &namespace_uri = "") = 0;
 
-    void addElement(const std::string &name, const std::string &namespace_uri = "");
+    virtual void addNamespaceDeclaration(const std::string &prefix, const std::string &namespace_uri) = 0;
 
-    void addAttribute(const std::string &name, const std::string &value, const std::string &namespace_uri = "");
+    virtual void closeElement() = 0;
 
-    void addNamespaceDeclaration(const std::string &prefix, const std::string &namespace_uri);
+    virtual std::string documentAsString() = 0;
 
-    void closeElement();
-
-    std::string documentAsString();
-
-private:
-
-    QXmlStreamWriter* xmlWriter;
-
-    QString xml;
+	LC_XMLWriterInterface() = default;
+	virtual ~LC_XMLWriterInterface() = default;
 };
 
 #endif

@@ -21,39 +21,38 @@
 **
 **********************************************************************/
 
-#include "rs_actionfileexportmakercam.h"
+#include "lc_actionfileexportmakercam.h"
 
-#include <iostream>
 #include <fstream>
 
 #include <QAction>
 
 #include "rs_dialogfactory.h"
 #include "rs_graphic.h"
-#include "rs_makercamsvg.h"
+#include "lc_makercamsvg.h"
 #include "rs_settings.h"
-#include "rs_xmlwriterqxmlstreamwriter.h"
+#include "lc_xmlwriterqxmlstreamwriter.h"
 
-RS_ActionFileExportMakerCam::RS_ActionFileExportMakerCam(RS_EntityContainer& container,
+LC_ActionFileExportMakerCam::LC_ActionFileExportMakerCam(RS_EntityContainer& container,
                                                          RS_GraphicView& graphicView)
     : RS_ActionInterface("Export as MakerCAM SVG...", container, graphicView) {}
 
-QAction* RS_ActionFileExportMakerCam::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
+QAction* LC_ActionFileExportMakerCam::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 
-    QAction* action = new QAction(tr("Export as &MakerCAM SVG..."), NULL);
+	QAction* action = new QAction(tr("Export as &MakerCAM SVG..."), nullptr);
 //	action->setIcon(QIcon(":/ui/blockadd.png"));
     return action;
 }
 
-void RS_ActionFileExportMakerCam::init(int status) {
+void LC_ActionFileExportMakerCam::init(int status) {
 
     RS_ActionInterface::init(status);
     trigger();
 }
 
-void RS_ActionFileExportMakerCam::trigger() {
+void LC_ActionFileExportMakerCam::trigger() {
 
-    RS_DEBUG->print("RS_ActionFileExportMakerCam::trigger()");
+	RS_DEBUG->print("LC_ActionFileExportMakerCam::trigger()");
 
     if (graphic != NULL) {
 
@@ -65,15 +64,16 @@ void RS_ActionFileExportMakerCam::trigger() {
                                                                          "",
                                                                          "Scalable Vector Graphics (*.svg)");
 
-            if (filename != "") {
+			if (!filename.isEmpty()) {
 
                 RS_SETTINGS->beginGroup("/ExportMakerCam");
 
-                RS_MakerCamSVG* generator = new RS_MakerCamSVG(new RS_XMLWriterQXmlStreamWriter(),
+				std::unique_ptr<LC_MakerCamSVG> generator(new LC_MakerCamSVG(new LC_XMLWriterQXmlStreamWriter(),
                                                                (bool)RS_SETTINGS->readNumEntry("/ExportInvisibleLayers"),
                                                                (bool)RS_SETTINGS->readNumEntry("/ExportConstructionLayers"),
                                                                (bool)RS_SETTINGS->readNumEntry("/WriteBlocksInline"),
-                                                               (bool)RS_SETTINGS->readNumEntry("/ConvertEllipsesToBeziers"));
+															   (bool)RS_SETTINGS->readNumEntry("/ConvertEllipsesToBeziers"))
+														  );
 
                 RS_SETTINGS->endGroup();
 
@@ -84,9 +84,6 @@ void RS_ActionFileExportMakerCam::trigger() {
                     file << generator->resultAsString();
                     file.close();
                 }
-
-                delete generator;
-                generator = NULL;
             }
         }
     }

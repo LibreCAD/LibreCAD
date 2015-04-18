@@ -21,10 +21,20 @@
 **
 **********************************************************************/
 
-#include "rs_makercamsvg.h"
+#include "lc_makercamsvg.h"
 
-#include <rs_xmlwriterinterface.h>
+#include "lc_xmlwriterinterface.h"
 
+#include "rs_arc.h"
+#include "rs_block.h"
+#include "rs_circle.h"
+#include "rs_ellipse.h"
+#include "rs_hatch.h"
+#include "rs_image.h"
+#include "rs_insert.h"
+#include "rs_layer.h"
+#include "rs_leader.h"
+#include "rs_line.h"
 #include "rs_dimaligned.h"
 #include "rs_dimangular.h"
 #include "rs_dimdiametric.h"
@@ -33,56 +43,49 @@
 #include "rs_hatch.h"
 #include "rs_image.h"
 #include "rs_insert.h"
-#include "rs_layer.h"
-#include "rs_point.h"
-#include "rs_line.h"
-#include "rs_leader.h"
+#include "rs_mtext.h"
 #include "rs_polyline.h"
+#include "rs_point.h"
 #include "rs_spline.h"
 #include "lc_splinepoints.h"
-#include "rs_system.h"
 #include "rs_graphic.h"
-#include "rs_graphicview.h"
-#include "rs_grid.h"
-#include "rs_dialogfactory.h"
+#include "rs_system.h"
+#include "rs_text.h"
 #include "rs_units.h"
 #include "rs_utility.h"
 
-const std::string RS_MakerCamSVG::NAMESPACE_URI_SVG = "http://www.w3.org/2000/svg";
-const std::string RS_MakerCamSVG::NAMESPACE_URI_LC = "http://www.librecad.org";
-const std::string RS_MakerCamSVG::NAMESPACE_URI_XLINK = "http://www.w3.org/1999/xlink";
+const std::string LC_MakerCamSVG::NAMESPACE_URI_SVG = "http://www.w3.org/2000/svg";
+const std::string LC_MakerCamSVG::NAMESPACE_URI_LC = "http://www.librecad.org";
+const std::string LC_MakerCamSVG::NAMESPACE_URI_XLINK = "http://www.w3.org/1999/xlink";
 
-RS_MakerCamSVG::RS_MakerCamSVG(RS_XMLWriterInterface* xmlWriter,
+LC_MakerCamSVG::LC_MakerCamSVG(LC_XMLWriterInterface* xmlWriter,
                                bool writeInvisibleLayers,
                                bool writeConstructionLayers,
-                               bool writeBlocksInline,
-                               bool convertEllipsesToBeziers) {
-
+							   bool writeBlocksInline,
+							   bool convertEllipsesToBeziers):
+	writeInvisibleLayers(writeInvisibleLayers)
+  ,writeConstructionLayers(writeConstructionLayers)
+  ,writeBlocksInline(writeBlocksInline)
+  ,convertEllipsesToBeziers(convertEllipsesToBeziers)
+  ,xmlWriter(xmlWriter)
+  ,offset(0.,0.)
+{
     RS_DEBUG->print("RS_MakerCamSVG::RS_MakerCamSVG()");
-
-    this->writeInvisibleLayers = writeInvisibleLayers;
-    this->writeConstructionLayers = writeConstructionLayers;
-    this->writeBlocksInline = writeBlocksInline;
-    this->convertEllipsesToBeziers = convertEllipsesToBeziers;
-
-    this->xmlWriter = xmlWriter;
-
-    this->offset = RS_Vector(0, 0);
 }
 
-bool RS_MakerCamSVG::generate(RS_Graphic* graphic) {
+bool LC_MakerCamSVG::generate(RS_Graphic* graphic) {
 
     write(graphic);
 
     return true;
 }
 
-std::string RS_MakerCamSVG::resultAsString() {
+std::string LC_MakerCamSVG::resultAsString() {
 
     return xmlWriter->documentAsString();
 }
 
-void RS_MakerCamSVG::write(RS_Graphic* graphic) {
+void LC_MakerCamSVG::write(RS_Graphic* graphic) {
 
     RS_DEBUG->print("RS_MakerCamSVG::write: Writing root node ...");
 
@@ -122,7 +125,7 @@ void RS_MakerCamSVG::write(RS_Graphic* graphic) {
     writeLayers(graphic);
 }
 
-void RS_MakerCamSVG::writeBlocks(RS_Document* document) {
+void LC_MakerCamSVG::writeBlocks(RS_Document* document) {
 
     if (!writeBlocksInline) {
 
@@ -145,7 +148,7 @@ void RS_MakerCamSVG::writeBlocks(RS_Document* document) {
     }
 }
 
-void RS_MakerCamSVG::writeBlock(RS_Block* block) {
+void LC_MakerCamSVG::writeBlock(RS_Block* block) {
 
     RS_DEBUG->print("RS_MakerCamSVG::writeBlock: Writing block with name '%s'",
                     qPrintable(block->getName()));
@@ -160,7 +163,7 @@ void RS_MakerCamSVG::writeBlock(RS_Block* block) {
     xmlWriter->closeElement();
 }
 
-void RS_MakerCamSVG::writeLayers(RS_Document* document) {
+void LC_MakerCamSVG::writeLayers(RS_Document* document) {
 
     RS_DEBUG->print("RS_MakerCamSVG::writeLayers: Writing layers ...");
 
@@ -172,7 +175,7 @@ void RS_MakerCamSVG::writeLayers(RS_Document* document) {
     }
 }
 
-void RS_MakerCamSVG::writeLayer(RS_Document* document, RS_Layer* layer) {
+void LC_MakerCamSVG::writeLayer(RS_Document* document, RS_Layer* layer) {
 
     if (writeInvisibleLayers || !layer->isFrozen()) {
 
@@ -213,7 +216,7 @@ void RS_MakerCamSVG::writeLayer(RS_Document* document, RS_Layer* layer) {
     }
 }
 
-void RS_MakerCamSVG::writeEntities(RS_Document* document, RS_Layer* layer) {
+void LC_MakerCamSVG::writeEntities(RS_Document* document, RS_Layer* layer) {
 
     RS_DEBUG->print("RS_MakerCamSVG::writeEntitiesFromBlock: Writing entities from layer ...");
 
@@ -229,7 +232,7 @@ void RS_MakerCamSVG::writeEntities(RS_Document* document, RS_Layer* layer) {
     }
 }
 
-void RS_MakerCamSVG::writeEntity(RS_Entity* entity) {
+void LC_MakerCamSVG::writeEntity(RS_Entity* entity) {
 
     RS_DEBUG->print("RS_MakerCamSVG::writeEntity: Found entity ...");
 
@@ -263,7 +266,7 @@ void RS_MakerCamSVG::writeEntity(RS_Entity* entity) {
     }
 }
 
-void RS_MakerCamSVG::writeInsert(RS_Insert* insert) {
+void LC_MakerCamSVG::writeInsert(RS_Insert* insert) {
 
     RS_Block* block = insert->getBlockForInsert();
 
@@ -299,7 +302,7 @@ void RS_MakerCamSVG::writeInsert(RS_Insert* insert) {
     }
 }
 
-void RS_MakerCamSVG::writePoint(RS_Point* point) {
+void LC_MakerCamSVG::writePoint(RS_Point* point) {
 
     RS_DEBUG->print("RS_MakerCamSVG::writePoint: Writing point ...");
 
@@ -317,7 +320,7 @@ void RS_MakerCamSVG::writePoint(RS_Point* point) {
     xmlWriter->closeElement();
 }
 
-void RS_MakerCamSVG::writeLine(RS_Line* line) {
+void LC_MakerCamSVG::writeLine(RS_Line* line) {
 
     RS_DEBUG->print("RS_MakerCamSVG::writeLine: Writing line ...");
 
@@ -334,7 +337,7 @@ void RS_MakerCamSVG::writeLine(RS_Line* line) {
     xmlWriter->closeElement();
 }
 
-void RS_MakerCamSVG::writePolyline(RS_Polyline* polyline) {
+void LC_MakerCamSVG::writePolyline(RS_Polyline* polyline) {
 
     RS_DEBUG->print("RS_MakerCamSVG::writePolyline: Writing polyline ...");
 
@@ -368,7 +371,7 @@ void RS_MakerCamSVG::writePolyline(RS_Polyline* polyline) {
     xmlWriter->closeElement();
 }
 
-void RS_MakerCamSVG::writeCircle(RS_Circle* circle) {
+void LC_MakerCamSVG::writeCircle(RS_Circle* circle) {
 
     RS_DEBUG->print("RS_MakerCamSVG::writeCircle: Writing circle ...");
 
@@ -383,7 +386,7 @@ void RS_MakerCamSVG::writeCircle(RS_Circle* circle) {
     xmlWriter->closeElement();
 }
 
-void RS_MakerCamSVG::writeArc(RS_Arc* arc) {
+void LC_MakerCamSVG::writeArc(RS_Arc* arc) {
 
     RS_DEBUG->print("RS_MakerCamSVG::writeArc: Writing arc ...");
 
@@ -397,7 +400,7 @@ void RS_MakerCamSVG::writeArc(RS_Arc* arc) {
     xmlWriter->closeElement();
 }
 
-void RS_MakerCamSVG::writeEllipse(RS_Ellipse* ellipse) {
+void LC_MakerCamSVG::writeEllipse(RS_Ellipse* ellipse) {
 
     RS_Vector center = convertToSvg(ellipse->getCenter());
 
@@ -536,41 +539,41 @@ void RS_MakerCamSVG::writeEllipse(RS_Ellipse* ellipse) {
     }
 }
 
-std::string RS_MakerCamSVG::numXml(double value) {
+std::string LC_MakerCamSVG::numXml(double value) {
 
     return RS_Utility::doubleToString(value, 8).toStdString();
 }
 
-RS_Vector RS_MakerCamSVG::convertToSvg(RS_Vector vector) {
+RS_Vector LC_MakerCamSVG::convertToSvg(RS_Vector vector) {
 
     RS_Vector translated((vector.x - min.x), (max.y - vector.y));
 
     return translated + offset;
 }
 
-std::string RS_MakerCamSVG::svgPathClose() {
+std::string LC_MakerCamSVG::svgPathClose() {
 
     return "Z ";
 }
 
-std::string RS_MakerCamSVG::svgPathCurveTo(RS_Vector point, RS_Vector controlpoint1, RS_Vector controlpoint2) {
+std::string LC_MakerCamSVG::svgPathCurveTo(RS_Vector point, RS_Vector controlpoint1, RS_Vector controlpoint2) {
 
     return "C" + numXml(controlpoint1.x) + "," + numXml(controlpoint1.y) + " " +
            numXml(controlpoint2.x) + "," + numXml(controlpoint2.y) + " " +
            numXml(point.x) + "," + numXml(point.y) + " ";
 }
 
-std::string RS_MakerCamSVG::svgPathLineTo(RS_Vector point) {
+std::string LC_MakerCamSVG::svgPathLineTo(RS_Vector point) {
 
     return "L" + numXml(point.x) + "," + numXml(point.y) + " ";
 }
 
-std::string RS_MakerCamSVG::svgPathMoveTo(RS_Vector point) {
+std::string LC_MakerCamSVG::svgPathMoveTo(RS_Vector point) {
 
     return "M" + numXml(point.x) + "," + numXml(point.y) + " ";
 }
 
-std::string RS_MakerCamSVG::svgPathArc(RS_Arc* arc) {
+std::string LC_MakerCamSVG::svgPathArc(RS_Arc* arc) {
 
     RS_Vector endpoint = convertToSvg(arc->getEndpoint());
     double radius = arc->getRadius();
@@ -595,7 +598,7 @@ std::string RS_MakerCamSVG::svgPathArc(RS_Arc* arc) {
     return svgPathArc(endpoint, radius, radius, 0.0, large_arc_flag, sweep_flag);
 }
 
-std::string RS_MakerCamSVG::svgPathArc(RS_Vector point, double radius_x, double radius_y, double x_axis_rotation, bool large_arc_flag, bool sweep_flag) {
+std::string LC_MakerCamSVG::svgPathArc(RS_Vector point, double radius_x, double radius_y, double x_axis_rotation, bool large_arc_flag, bool sweep_flag) {
 
     return "A" + numXml(radius_x) + "," + numXml(radius_y) + " " +
            numXml(x_axis_rotation) + " " +
@@ -604,7 +607,7 @@ std::string RS_MakerCamSVG::svgPathArc(RS_Vector point, double radius_x, double 
            numXml(point.x) + "," + numXml(point.y) + " ";
 }
 
-RS_Vector RS_MakerCamSVG::calcEllipsePoint(RS_Vector center, double majorradius, double minorradius, double x_axis_rotation, double angle) {
+RS_Vector LC_MakerCamSVG::calcEllipsePoint(RS_Vector center, double majorradius, double minorradius, double x_axis_rotation, double angle) {
 
     RS_Vector point(center.x + (majorradius * cos(x_axis_rotation) * cos(angle)) - (minorradius * sin(x_axis_rotation) * sin(angle)),
                     center.y + (majorradius * sin(x_axis_rotation) * cos(angle)) + (minorradius * cos(x_axis_rotation) * sin(angle)));
@@ -612,7 +615,7 @@ RS_Vector RS_MakerCamSVG::calcEllipsePoint(RS_Vector center, double majorradius,
     return point;
 }
 
-RS_Vector RS_MakerCamSVG::calcEllipsePointDerivative(double majorradius, double minorradius, double x_axis_rotation, double angle) {
+RS_Vector LC_MakerCamSVG::calcEllipsePointDerivative(double majorradius, double minorradius, double x_axis_rotation, double angle) {
 
     RS_Vector vector((-majorradius * cos(x_axis_rotation) * sin(angle)) - (minorradius * sin(x_axis_rotation) * cos(angle)),
                      (-majorradius * sin(x_axis_rotation) * sin(angle)) + (minorradius * cos(x_axis_rotation) * cos(angle)));
@@ -620,7 +623,7 @@ RS_Vector RS_MakerCamSVG::calcEllipsePointDerivative(double majorradius, double 
     return vector;
 }
 
-double RS_MakerCamSVG::calcAlpha(double angle) {
+double LC_MakerCamSVG::calcAlpha(double angle) {
 
     return sin(angle) * ((sqrt(4.0 + 3.0 * pow(tan(angle / 2), 2.0)) - 1.0) / 3.0);
 }

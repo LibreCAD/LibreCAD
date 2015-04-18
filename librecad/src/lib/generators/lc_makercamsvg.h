@@ -21,36 +21,47 @@
 **
 **********************************************************************/
 
-#ifndef RS_MAKERCAMSVG_H
-#define RS_MAKERCAMSVG_H
-
-#include <rs_xmlwriterinterface.h>
+#ifndef LC_MAKERCAMSVG_H
+#define LC_MAKERCAMSVG_H
 
 #include <string>
+#include <memory>
 
-#include <rs_arc.h>
-#include <rs_block.h>
-#include <rs_circle.h>
-#include <rs_document.h>
-#include <rs_entity.h>
-#include <rs_ellipse.h>
-#include <rs_graphic.h>
-#include <rs_insert.h>
-#include <rs_layer.h>
-#include <rs_line.h>
-#include <rs_point.h>
-#include <rs_polyline.h>
-#include <rs_vector.h>
+#include "rs_vector.h"
 
-class RS_MakerCamSVG {
+class RS_Arc;
+class RS_Block;
+class RS_Circle;
+class RS_Ellipse;
+class RS_Entity;
+class RS_Hatch;
+class RS_Image;
+class RS_Insert;
+class RS_Layer;
+class RS_Leader;
+class RS_Line;
+class RS_MText;
+class RS_Point;
+class RS_Polyline;
+class RS_Solid;
+class RS_Spline;
+class LC_SplinePoints;
+class RS_Text;
+
+class LC_XMLWriterInterface;
+
+class RS_Document;
+class RS_Graphic;
+
+class LC_MakerCamSVG {
 public:
-    RS_MakerCamSVG(RS_XMLWriterInterface* xmlWriter,
+	LC_MakerCamSVG(LC_XMLWriterInterface* xmlWriter,
                    bool writeInvisibleLayers = true,
                    bool writeConstructionLayers = true,
                    bool writeBlocksInline = false,
                    bool convertEllipsesToBeziers = false);
 
-    ~RS_MakerCamSVG() {};
+	~LC_MakerCamSVG() = default;
 
     bool generate(RS_Graphic* graphic);
     std::string resultAsString();
@@ -99,7 +110,7 @@ private:
     bool writeBlocksInline;
     bool convertEllipsesToBeziers;
 
-    RS_XMLWriterInterface* xmlWriter;
+	std::unique_ptr<LC_XMLWriterInterface> xmlWriter;
 
     RS_Vector min;
     RS_Vector max;

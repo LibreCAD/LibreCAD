@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2015 Christian Luginbühl (dinkel@pimprecords.com)
+** Copyright (C) 2014 Christian Luginbühl (dinkel@pimprecords.com)
 **
 **
 ** This program is free software; you can redistribute it and/or modify
@@ -21,26 +21,22 @@
 **
 **********************************************************************/
 
-#ifndef RS_XMLWRITERINTERFACE_H
-#define RS_XMLWRITERINTERFACE_H
+#ifndef LC_ACTIONFILEEXPORTMAKERCAM_H
+#define LC_ACTIONFILEEXPORTMAKERCAM_H
 
-#include <string>
+#include "rs_actioninterface.h"
 
-class RS_XMLWriterInterface {
+class LC_ActionFileExportMakerCam : public RS_ActionInterface {
+    Q_OBJECT
 public:
-    virtual void createRootElement(const std::string &name, const std::string &default_namespace_uri = "") = 0;
+	LC_ActionFileExportMakerCam(RS_EntityContainer& container, RS_GraphicView& graphicView);
+	~LC_ActionFileExportMakerCam() = default;
 
-    virtual void addElement(const std::string &name, const std::string &namespace_uri = "") = 0;
+	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-    virtual void addAttribute(const std::string &name, const std::string &value, const std::string &namespace_uri = "") = 0;
+    virtual void init(int status=0);
+    virtual void trigger();
 
-    virtual void addNamespaceDeclaration(const std::string &prefix, const std::string &namespace_uri) = 0;
-
-    virtual void closeElement() = 0;
-
-    virtual std::string documentAsString() = 0;
-
-    virtual ~RS_XMLWriterInterface() {}
 };
 
 #endif
