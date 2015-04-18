@@ -109,10 +109,11 @@ DEPENDPATH += \
     lib/scripting \
     actions \
     main \
-    plugins \
-    ui \
+	test \
+	plugins \
+	ui \
     ui/forms \
-    ../res
+	../res
 
 RESOURCES += ../res/extui/extui.qrc
 
@@ -222,7 +223,8 @@ HEADERS += \
     ui/forms/qg_snaptoolbar.h \
     actions/lc_actiondrawcircle2pr.h \
     ui/forms/qg_activelayername.h \
-    ui/forms/lc_cadtoolbarinterface.h
+    ui/forms/lc_cadtoolbarinterface.h \
+    test/lc_simpletests.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -310,7 +312,8 @@ SOURCES += \
     lib/engine/rs_pen.cpp \
     actions/lc_actiondrawcircle2pr.cpp \
     ui/forms/qg_activelayername.cpp \
-    ui/forms/lc_cadtoolbarinterface.cpp
+    ui/forms/lc_cadtoolbarinterface.cpp \
+    test/lc_simpletests.cpp
 
 # ################################################################################
 # Command
