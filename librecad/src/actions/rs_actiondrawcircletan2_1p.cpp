@@ -59,8 +59,8 @@ void RS_ActionDrawCircleTan2_1P::init(int status) {
     }
 	if(status>(int) circles.size()) status=(int) circles.size();
     RS_PreviewActionInterface::init(status);
-	for(size_t i=0; i<status; ++i){
-        if(circles[i]==NULL) {
+	for(int i=0; i<status; ++i){
+		if(!circles[i]) {
             status=i;
             break;
         }
