@@ -48,8 +48,17 @@ public:
     virtual ~QG_ActionHandler();
 
         RS_ActionInterface* getCurrentAction();
-    RS_ActionInterface* setCurrentAction(RS2::ActionType id);
-        void killSelectActions();
+		RS_ActionInterface* setCurrentAction(RS2::ActionType id);
+
+		/**
+	 * Kills all running selection actions. Called when a selection action
+	  * is launched to reduce confusion.
+	   */
+		void killSelectActions();
+		/**
+		 * @brief killAllActions kill all actions
+		 */
+		void killAllActions();
 
         bool keycode(const QString& code);
         //special handling of actions issued from command line, currently used for snap actions

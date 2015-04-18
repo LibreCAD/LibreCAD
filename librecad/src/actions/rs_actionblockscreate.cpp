@@ -48,10 +48,8 @@ RS_ActionBlocksCreate::RS_ActionBlocksCreate(RS_EntityContainer& container,
 
 
 QAction* RS_ActionBlocksCreate::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // (tr("Create Block"),
-    QAction* action = new QAction(tr("&Create Block"), NULL);
-    //action->zetStatusTip(tr("Create Block"));
-        action->setIcon(QIcon(":/extui/menublock.png"));
+	QAction* action = new QAction(QIcon(":/extui/menublock.png"), tr("&Create Block"), nullptr);
+		action->setData(RS2::ActionBlocksCreate);
     return action;
 }
 
@@ -59,21 +57,14 @@ QAction* RS_ActionBlocksCreate::createGUIAction(RS2::ActionType /*type*/, QObjec
 
 void RS_ActionBlocksCreate::init(int status) {
     RS_PreviewActionInterface::init(status);
-
 }
 
 
 
 void RS_ActionBlocksCreate::trigger() {
-    //deletePreview();
-
-    //RS_Modification m(*container, graphicView);
-    //m.paste(data.insertionPoint);
-    //std::cout << *RS_Clipboard::instance();
-
-    if (graphic!=NULL) {
+	if (graphic!=nullptr) {
         RS_BlockList* blockList = graphic->getBlockList();
-        if (blockList!=NULL) {
+		if (blockList!=nullptr) {
             RS_BlockData d =
                 RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
 
@@ -97,7 +88,7 @@ void RS_ActionBlocksCreate::trigger() {
 
     setStatus(getStatus()+1); // clear mouse button hints
     updateMouseButtonHints();
-//    if(RS_DIALOGFACTORY!=NULL){
+//    if(RS_DIALOGFACTORY!=nullptr){
 //        RS_DIALOGFACTORY->requestPreviousToolBar();
 //    }
     graphicView->killSelectActions();
@@ -112,11 +103,11 @@ void RS_ActionBlocksCreate::mouseMoveEvent(QMouseEvent* e) {
     case SetReferencePoint:
         //data.insertionPoint = snapPoint(e);
 
-        /*if (block!=NULL) {
+		/*if (block!=nullptr) {
             deletePreview();
             //preview->addAllFrom(*block);
             //preview->move(data.insertionPoint);
-                RS_Creation creation(preview, NULL, false);
+				RS_Creation creation(preview, nullptr, false);
                 creation.createInsert(data);
             drawPreview();
     }*/
@@ -141,7 +132,7 @@ void RS_ActionBlocksCreate::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionBlocksCreate::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (e==nullptr) {
         return;
     }
 

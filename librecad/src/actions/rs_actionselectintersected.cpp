@@ -160,25 +160,8 @@ void RS_ActionSelectIntersected::updateMouseButtonHints() {
     }
 }
 
-
-
 void RS_ActionSelectIntersected::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);
-}
-
-
-
-void RS_ActionSelectIntersected::updateToolBar() {
-    //not needed any more
-    return;
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (!isFinished()) {
-            //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
-        } else {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
-        }
-    }
 }
 
 // EOF

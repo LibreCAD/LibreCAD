@@ -39,15 +39,13 @@ RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container,
                            container, graphicView)
         ,m_bShowArea(false)
 {
-    hatch = NULL;
+	hatch = nullptr;
 }
 
 
 QAction* RS_ActionDrawHatch::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Hatch")
-    QAction* action = new QAction(tr("&Hatch"),  NULL);
-	action->setIcon(QIcon(":/extui/menuhatch.png"));
-    //action->zetStatusTip(tr("Draw Hatches and Solid Fills"));
+	QAction* action = new QAction(QIcon(":/extui/menuhatch.png"), tr("&Hatch"), nullptr);
+	action->setData(RS2::ActionDrawHatch);
     return action;
 }
 
@@ -80,7 +78,7 @@ void RS_ActionDrawHatch::trigger() {
 	RS_Entity* e;
 
 	// deselect unhatchable entities:
-    for (e=container->firstEntity(RS2::ResolveNone); e!=NULL;
+	for (e=container->firstEntity(RS2::ResolveNone); e!=nullptr;
             e=container->nextEntity(RS2::ResolveNone)) {
         if (e->isSelected() && 
             (e->rtti()==RS2::EntityHatch ||
@@ -90,7 +88,7 @@ void RS_ActionDrawHatch::trigger() {
 			e->setSelected(false);
         }
     }
-    for (e=container->firstEntity(RS2::ResolveAll); e!=NULL;
+	for (e=container->firstEntity(RS2::ResolveAll); e!=nullptr;
             e=container->nextEntity(RS2::ResolveAll)) {
         if (e->isSelected() && 
             (e->rtti()==RS2::EntityHatch ||
@@ -103,7 +101,7 @@ void RS_ActionDrawHatch::trigger() {
 
 	// look for selected contours:
     bool haveContour = false;
-    for (e=container->firstEntity(RS2::ResolveAll); e!=NULL;
+	for (e=container->firstEntity(RS2::ResolveAll); e!=nullptr;
             e=container->nextEntity(RS2::ResolveAll)) {
         if (e->isSelected()) {
             haveContour = true;
@@ -122,13 +120,13 @@ void RS_ActionDrawHatch::trigger() {
     loop->setPen(RS_Pen(RS2::FlagInvalid));
 
     // add selected contour:
-    for (RS_Entity* e=container->firstEntity(RS2::ResolveAll); e!=NULL;
+	for (RS_Entity* e=container->firstEntity(RS2::ResolveAll); e!=nullptr;
             e=container->nextEntity(RS2::ResolveAll)) {
 
         if (e->isSelected()) {
             e->setSelected(false);
 			// entity is part of a complex entity (spline, polyline, ..):
-            if (e->getParent()!=NULL &&
+			if (e->getParent()!=nullptr &&
 // RVT - Don't de-delect the parent EntityPolyline, this is messing up the getFirst and getNext iterators
 //			    (e->getParent()->rtti()==RS2::EntitySpline ||
 //				 e->getParent()->rtti()==RS2::EntityPolyline)) {
@@ -186,7 +184,7 @@ void RS_ActionDrawHatch::trigger() {
 	}
 	else {
 		delete hatch;
-		hatch = NULL;
+		hatch = nullptr;
 		RS_DIALOGFACTORY->commandMessage(tr("Invalid hatch area. Please check that "
 		"the entities chosen form one or more closed contours."));
 	}
@@ -204,7 +202,7 @@ void RS_ActionDrawHatch::mouseMoveEvent(QMouseEvent*) {
 
 
         deletePreview();
-        if (hatch!=NULL && !hatch->isVisible()) {
+		if (hatch!=nullptr && !hatch->isVisible()) {
             hatch->setVisible(true);
         }
         offset = RS_Vector(graphicView->toGuiDX(pos.x),
@@ -240,19 +238,8 @@ void RS_ActionDrawHatch::updateMouseButtonHints() {
     RS_DIALOGFACTORY->updateMouseWidget("", "");
 }
 
-
-
 void RS_ActionDrawHatch::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-void RS_ActionDrawHatch::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-}
-
 
 // EOF

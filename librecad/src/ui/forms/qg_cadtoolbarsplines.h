@@ -21,43 +21,36 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #ifndef QG_CADTOOLBARSPLINES_H
 #define QG_CADTOOLBARSPLINES_H
-#include "rs.h"
 
 class QG_CadToolBar;
 class QG_ActionHandler;
 
-#include "ui_qg_cadtoolbarsplines.h"
+#include "lc_cadtoolbarinterface.h"
 
-class QG_CadToolBarSplines : public QWidget, public Ui::QG_CadToolBarSplines
+class QG_CadToolBarSplines : public LC_CadToolBarInterface
 {
     Q_OBJECT
 
 public:
-    QG_CadToolBarSplines(QWidget* parent = 0, Qt::WindowFlags fl = 0);
-    ~QG_CadToolBarSplines();
+	QG_CadToolBarSplines(QG_CadToolBar* parent = 0, Qt::WindowFlags fl = 0);
+	~QG_CadToolBarSplines() = default;
     //restore action from checked button
-    void restoreAction();
+	virtual void restoreAction();
+	RS2::ToolBarId rtti() const
+	{
+		return RS2::ToolBarSplines;
+	}
+	virtual void addSubActions(const std::vector<QAction*>& actions, bool addGroup);
+
 
 public slots:
-//    virtual void mousePressEvent( QMouseEvent * e );
-    virtual void contextMenuEvent( QContextMenuEvent * e );
-    virtual void setCadToolBar( QG_CadToolBar * tb );
-    virtual void drawSpline();
-    virtual void drawSplineInt();
-    virtual void back();
     virtual void resetToolBar();
     virtual void showCadToolBar(RS2::ActionType actionType);
 
-protected:
-    QG_ActionHandler* actionHandler;
-    QG_CadToolBar* cadToolBar;
-
-protected slots:
-    virtual void languageChange();
-
+private slots:
+	void on_bBack_clicked();
 private:
-    void init();
-
+	QAction *bSpline=nullptr, *bSplineInt=nullptr;
 };
 
 #endif // QG_CADTOOLBARSPLINES_H

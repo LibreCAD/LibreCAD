@@ -33,6 +33,7 @@
 
 class QMenu;
 class QToolBar;
+class QG_CadToolBar;
 
 /**
  * This class can store recent files in a list.
@@ -41,8 +42,8 @@ class QG_ActionFactory : public QObject {
     Q_OBJECT
 
 public:
-    QG_ActionFactory(QG_ActionHandler* ah, QWidget* w);
-    virtual ~QG_ActionFactory();
+	QG_ActionFactory(QG_ActionHandler* ah, QWidget* w, QG_CadToolBar* toolbar=nullptr);
+	virtual ~QG_ActionFactory() = default;
 
     /**
      * @brief createAction, create GUI action by action type, and connect to slot of QObject obj
@@ -51,7 +52,7 @@ public:
      * @param obj2, a QDockWidget, to accept toggleViewAction() from the current action to show/hide
      * @return a pointer to the action created
      */
-    QAction* createAction(RS2::ActionType id, QObject* obj, QObject* obj2=NULL) const;
+	QAction* createAction(RS2::ActionType id, QObject* obj, QObject* obj2=nullptr) const;
 
     /**
      * @brief addGUI, create action by action type and add the action to menu
@@ -60,7 +61,8 @@ public:
      * @param id, action type
      * @return a pointer to the action created
      */
-    QAction*  addGUI(QMenu* menu, QObject* obj, RS2::ActionType id) const;
+	QAction*  addGUI(QMenu* menu, QObject* obj, RS2::ActionType id,
+					 RS2::ToolBarId toolbarId = RS2::ToolBarNone) const;
     /**
      * @brief addGUI, create action by action type and add the action to menu
      * @param menu, a pointer to QMemu to add the action
@@ -96,7 +98,9 @@ public:
      * @param obj, the QObject used to connect slot per action type
      * @param list, an initializer list of action types
      */
-    void addGUI(QMenu* menu, QObject* obj, const std::initializer_list<RS2::ActionType>& list) const;
+	void addGUI(QMenu* menu, QObject* obj,
+				const std::initializer_list<RS2::ActionType>& list,
+				RS2::ToolBarId id = RS2::ToolBarNone) const;
     /**
      * @brief addGUI, create action by a list of action types and add the actions to menu
      * @param menu, a pointer to QMemu to add the action
@@ -106,10 +110,12 @@ public:
      */
     void addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, const std::initializer_list<RS2::ActionType>& list) const;
 
+	void setCADToolBar(QG_CadToolBar* toolbar);
 
 private:
     QG_ActionHandler* actionHandler;
     QWidget* widget;
+	QG_CadToolBar* m_pCADToolBar;
 };
 
 #endif

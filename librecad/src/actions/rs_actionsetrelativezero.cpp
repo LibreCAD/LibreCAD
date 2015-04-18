@@ -106,17 +106,4 @@ void RS_ActionSetRelativeZero::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-
-void RS_ActionSetRelativeZero::updateToolBar() {
-    //not needed any more
-    /*
-    if (!isFinished()) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-    } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-    }
-    */
-}
-
 // EOF

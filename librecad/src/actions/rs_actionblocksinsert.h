@@ -85,7 +85,6 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
 
 	double getAngle() const;
 

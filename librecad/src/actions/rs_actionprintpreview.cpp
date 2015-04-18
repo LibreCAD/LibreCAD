@@ -243,11 +243,6 @@ void RS_ActionPrintPreview::updateMouseCursor() {
     }
 }
 
-
-
-void RS_ActionPrintPreview::updateToolBar() {}
-
-
 void RS_ActionPrintPreview::center() {
     if (graphic!=NULL) {
         graphic->centerToPage();

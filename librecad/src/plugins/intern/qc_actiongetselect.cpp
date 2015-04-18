@@ -77,8 +77,6 @@ void QC_ActionGetSelect::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
 void QC_ActionGetSelect::updateToolBar() {
     if (RS_DIALOGFACTORY!=NULL) {
         if (!isFinished()) {

@@ -147,17 +147,4 @@ void RS_ActionEditPaste::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-
-void RS_ActionEditPaste::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    if (!isFinished()) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-    } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-    }
-}
-
-
 // EOF

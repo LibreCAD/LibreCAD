@@ -220,7 +220,8 @@ HEADERS += \
     lib/scripting/rs_scriptlist.h \
     ui/forms/qg_snaptoolbar.h \
     actions/lc_actiondrawcircle2pr.h \
-    ui/forms/qg_activelayername.h
+    ui/forms/qg_activelayername.h \
+    ui/forms/lc_cadtoolbarinterface.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -306,7 +307,8 @@ SOURCES += \
     lib/engine/rs_color.cpp \
     lib/engine/rs_pen.cpp \
     actions/lc_actiondrawcircle2pr.cpp \
-    ui/forms/qg_activelayername.cpp
+    ui/forms/qg_activelayername.cpp \
+    ui/forms/lc_cadtoolbarinterface.cpp
 
 # ################################################################################
 # Command
@@ -619,7 +621,6 @@ HEADERS += ui/qg_actionfactory.h \
     ui/forms/qg_cadtoolbarellipses.h \
     ui/forms/qg_cadtoolbarcircles.h \
     ui/forms/qg_cadtoolbarlines.h \
-    ui/forms/qg_cadtoolbarpoints.h \
     ui/forms/qg_cadtoolbarselect.h \
     ui/forms/qg_cadtoolbarpolylines.h \
     ui/forms/qg_cadtoolbarsplines.h \
@@ -719,7 +720,6 @@ SOURCES += ui/qg_actionfactory.cpp \
     ui/forms/qg_cadtoolbarlines.cpp \
     ui/forms/qg_cadtoolbarmain.cpp \
     ui/forms/qg_cadtoolbarmodify.cpp \
-    ui/forms/qg_cadtoolbarpoints.cpp \
     ui/forms/qg_cadtoolbarpolylines.cpp \
     ui/forms/qg_cadtoolbarselect.cpp \
     ui/forms/qg_cadtoolbarsplines.cpp \
@@ -791,18 +791,6 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_beveloptions.ui \
     ui/forms/qg_blockdialog.ui \
     ui/forms/qg_cadtoolbar.ui \
-    ui/forms/qg_cadtoolbararcs.ui \
-    ui/forms/qg_cadtoolbarcircles.ui \
-    ui/forms/qg_cadtoolbardim.ui \
-    ui/forms/qg_cadtoolbarellipses.ui \
-    ui/forms/qg_cadtoolbarinfo.ui \
-    ui/forms/qg_cadtoolbarlines.ui \
-    ui/forms/qg_cadtoolbarmain.ui \
-    ui/forms/qg_cadtoolbarmodify.ui \
-    ui/forms/qg_cadtoolbarpoints.ui \
-    ui/forms/qg_cadtoolbarpolylines.ui \
-    ui/forms/qg_cadtoolbarselect.ui \
-    ui/forms/qg_cadtoolbarsplines.ui \
     ui/forms/qg_circleoptions.ui \
     ui/forms/qg_circletan2options.ui \
     ui/forms/qg_coordinatewidget.ui \

@@ -61,7 +61,7 @@ public:
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
+	virtual void updateToolBar();
 
     void setMesage(QString msg);
     bool isCompleted(){return completed;}

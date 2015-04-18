@@ -656,7 +656,7 @@ void QC_ApplicationWindow::initActions(void)
 {
     RS_DEBUG->print("QC_ApplicationWindow::initActions()");
 
-    QG_ActionFactory actionFactory(actionHandler, this);
+	QG_ActionFactory actionFactory(actionHandler, this, cadToolBar);
     QAction* action;
     QMenu* menu;
     QMenu* subMenu;
@@ -834,7 +834,9 @@ void QC_ApplicationWindow::initActions(void)
                          ,RS2::ActionDeselectIntersected
                          ,RS2::ActionSelectLayer
                          ,RS2::ActionSelectInvert
-                         });
+						 },
+						 RS2::ToolBarSelect
+						 );
 
     // Drawing actions:
     //
@@ -844,7 +846,7 @@ void QC_ApplicationWindow::initActions(void)
     // Points:
 //    subMenu= menu->addMenu(tr("&Point"));
 //    subMenu->setObjectName("Point");
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionDrawPoint);
+	actionFactory.addGUI(menu, actionHandler, RS2::ActionDrawPoint, RS2::ToolBarMain);
 
     // Lines:
     subMenu= menu->addMenu(tr("&Line"));
@@ -864,8 +866,9 @@ void QC_ApplicationWindow::initActions(void)
                                                   ,RS2::ActionDrawLineRelAngle
                                                   ,RS2::ActionDrawLinePolygonCenCor
                                                   ,RS2::ActionDrawLinePolygonCorCor
-                                                  ,RS2::ActionDrawLineFree
-                                                  ,RS2::ActionDrawPolyline});
+												  ,RS2::ActionDrawLineFree},
+						 RS2::ToolBarLines
+						 );
 
     // Arcs:
     subMenu= menu->addMenu(tr("&Arc"));
@@ -873,7 +876,9 @@ void QC_ApplicationWindow::initActions(void)
     actionFactory.addGUI(subMenu, actionHandler, {RS2::ActionDrawArc
                                                   ,RS2::ActionDrawArc3P
                                                   ,RS2::ActionDrawArcParallel
-                                                  ,RS2::ActionDrawArcTangential});
+												  ,RS2::ActionDrawArcTangential},
+						 RS2::ToolBarArcs
+						 );
 
     // Circles:
     subMenu= menu->addMenu(tr("&Circle"));
@@ -888,7 +893,9 @@ void QC_ApplicationWindow::initActions(void)
                                                   ,RS2::ActionDrawCircleTan1_2P
                                                   ,RS2::ActionDrawCircleTan2
                                                   ,RS2::ActionDrawCircleTan2_1P
-                                                  ,RS2::ActionDrawCircleTan3});
+												  ,RS2::ActionDrawCircleTan3},
+						 RS2::ToolBarCircles
+						 );
 
     // Ellipses:
     subMenu= menu->addMenu(tr("&Ellipse"));
@@ -898,13 +905,17 @@ void QC_ApplicationWindow::initActions(void)
                                                   ,RS2::ActionDrawEllipseFociPoint
                                                   ,RS2::ActionDrawEllipse4Points
                                                   ,RS2::ActionDrawEllipseCenter3Points
-                                                  ,RS2::ActionDrawEllipseInscribe});
+												  ,RS2::ActionDrawEllipseInscribe},
+						 RS2::ToolBarEllipses
+						 );
 
     // Splines:
     subMenu= menu->addMenu(tr("&Spline"));
     subMenu->setObjectName("Spline");
     actionFactory.addGUI(subMenu, actionHandler, {RS2::ActionDrawSpline
-                                                  , RS2::ActionDrawSplinePoints});
+												  , RS2::ActionDrawSplinePoints},
+						 RS2::ToolBarSplines
+						 );
 
         // Polylines:
     subMenu= menu->addMenu(tr("&Polyline"));
@@ -916,18 +927,18 @@ void QC_ApplicationWindow::initActions(void)
                                                   ,RS2::ActionPolylineDelBetween
                                                   ,RS2::ActionPolylineTrim
                                                   ,RS2::ActionPolylineEquidistant
-                                                  ,RS2::ActionPolylineSegment});
-
+												  ,RS2::ActionPolylineSegment},
+						 RS2::ToolBarPolylines
+						 );
     // Text:
     subMenu= menu->addMenu(tr("&Text"));
     subMenu->setObjectName("Text");
-    actionFactory.addGUI(subMenu, actionHandler, {RS2::ActionDrawMText
-                                                  , RS2::ActionDrawText});
+	actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawMText, RS2::ToolBarMain);
+	actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawText);
 
     // Hatch:
-    actionFactory.addGUI(menu, actionHandler, {RS2::ActionDrawHatch
-                                               // Image:
-                                               , RS2::ActionDrawImage});
+	actionFactory.addGUI(menu, actionHandler, {RS2::ActionDrawHatch,
+											   RS2::ActionDrawImage}, RS2::ToolBarMain);
     // Dimensioning actions:
     //
 #ifdef __APPLE1__
@@ -944,7 +955,9 @@ void QC_ApplicationWindow::initActions(void)
                                                ,RS2::ActionDimRadial
                                                ,RS2::ActionDimDiametric
                                                ,RS2::ActionDimAngular
-                                               ,RS2::ActionDimLeader});
+											   ,RS2::ActionDimLeader},
+						 RS2::ToolBarDim
+						 );
 
     // Modifying actions:
     //
@@ -970,7 +983,9 @@ void QC_ApplicationWindow::initActions(void)
                                                ,RS2::ActionModifyDelete
                                                ,RS2::ActionModifyDeleteQuick
                                                ,RS2::ActionModifyExplodeText
-                                               ,RS2::ActionBlocksExplode});
+											   ,RS2::ActionBlocksExplode},
+						 RS2::ToolBarModify
+						 );
 
     // Snapping actions:
     //
@@ -990,7 +1005,9 @@ void QC_ApplicationWindow::initActions(void)
                                                ,RS2::ActionInfoDist2
                                                ,RS2::ActionInfoAngle
                                                ,RS2::ActionInfoTotalLength
-                                               ,RS2::ActionInfoArea});
+											   ,RS2::ActionInfoArea},
+						 RS2::ToolBarInfo
+						 );
 
     //action = actionFactory.createAction(RS2::ActionInfoInside,
     //                                    actionHandler);
@@ -1013,17 +1030,17 @@ void QC_ApplicationWindow::initActions(void)
     //
     menu = menuBar()->addMenu(tr("&Block"));
     menu->setObjectName("Block");
-    actionFactory.addGUI(menu, actionHandler, {RS2::ActionBlocksDefreezeAll
-                                               ,RS2::ActionBlocksFreezeAll
-                                               ,RS2::ActionBlocksToggleView
-                                               ,RS2::ActionBlocksAdd
-                                               ,RS2::ActionBlocksRemove
-                                               ,RS2::ActionBlocksAttributes
-                                               ,RS2::ActionBlocksInsert
-                                               ,RS2::ActionBlocksEdit
-                                               ,RS2::ActionBlocksSave
-                                               ,RS2::ActionBlocksCreate
-                                               ,RS2::ActionBlocksExplode});
+	actionFactory.addGUI(menu, actionHandler, {RS2::ActionBlocksDefreezeAll
+											   ,RS2::ActionBlocksFreezeAll
+											   ,RS2::ActionBlocksToggleView
+											   ,RS2::ActionBlocksAdd
+											   ,RS2::ActionBlocksRemove
+											   ,RS2::ActionBlocksAttributes
+											   ,RS2::ActionBlocksInsert
+											   ,RS2::ActionBlocksEdit
+											   ,RS2::ActionBlocksSave});
+	actionFactory.addGUI(menu, actionHandler,RS2::ActionBlocksCreate, RS2::ToolBarMain);
+	actionFactory.addGUI(menu, actionHandler,RS2::ActionBlocksExplode);
 
     QMainWindow::addToolBarBreak(Qt::TopToolBarArea);
     addToolBar(Qt::TopToolBarArea, penToolBar);
@@ -1293,7 +1310,7 @@ void QC_ApplicationWindow::initToolBar() {
         addToolBar(Qt::LeftToolBarArea, t);
 
     cadToolBar = new QG_CadToolBar(t, "CAD Tools");
-    cadToolBar->createSubToolBars(actionHandler);
+    cadToolBar->setActionHandler(actionHandler);
 
     connect(cadToolBar, SIGNAL(signalBack()),
             this, SLOT(slotBack()));

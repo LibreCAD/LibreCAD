@@ -167,13 +167,4 @@ void RS_ActionDrawLineHorVert::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-void RS_ActionDrawLineHorVert::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
-}
-
 // EOF

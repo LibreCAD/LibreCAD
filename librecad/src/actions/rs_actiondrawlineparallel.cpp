@@ -41,8 +41,8 @@ RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw Parallels", container, graphicView) {
 
-    parallel = NULL;
-    entity = NULL;
+	parallel = nullptr;
+	entity = nullptr;
     distance = 1.0;
     number = 1;
     coord = RS_Vector(false);
@@ -51,23 +51,24 @@ RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(
 
 QAction* RS_ActionDrawLineParallel::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
 
-    QAction* action = NULL;
+	QAction* action = nullptr;
     switch(type){
     case RS2::ActionDrawLineParallel:
-        action = new QAction(tr("&Parallel"), NULL);
+		action = new QAction(tr("&Parallel"), nullptr);
         action->setIcon(QIcon(":/extui/linespara.png"));
         break;
     case RS2::ActionDrawArcParallel:
-        action = new QAction(tr("&Concentric"), NULL);
+		action = new QAction(tr("&Concentric"), nullptr);
         action->setIcon(QIcon(":/extui/arcspara.png"));
         break;
     case RS2::ActionDrawCircleParallel:
-        action = new QAction(tr("&Concentric"), NULL);
+		action = new QAction(tr("&Concentric"), nullptr);
         action->setIcon(QIcon(":/extui/circlespara.png"));
         break;
     default:
-        action=NULL;
+		break;
     }
+	if(action) action->setCheckable(true);
     return action;
 }
 
@@ -80,7 +81,7 @@ void RS_ActionDrawLineParallel::trigger() {
                                            distance, number,
                                            entity);
 
-    if (e==NULL) {
+	if (e==nullptr) {
         RS_DEBUG->print("RS_ActionDrawLineParallel::trigger:"
                         " No parallels added\n");
     }
@@ -100,7 +101,7 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent* e) {
     case SetEntity: {
             deletePreview();
 
-			RS_Creation creation(preview.get(), NULL, false);
+			RS_Creation creation(preview.get(), nullptr, false);
             creation.createParallel(coord,
                                     distance, number,
                                     entity);
@@ -129,7 +130,7 @@ void RS_ActionDrawLineParallel::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawLineParallel::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+	if (RS_DIALOGFACTORY!=nullptr) {
         switch (getStatus()) {
         case SetEntity:
             RS_DIALOGFACTORY->updateMouseWidget(
@@ -154,7 +155,7 @@ void RS_ActionDrawLineParallel::updateMouseButtonHints() {
 void RS_ActionDrawLineParallel::showOptions() {
     RS_ActionInterface::showOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+	if (RS_DIALOGFACTORY!=nullptr) {
         RS_DIALOGFACTORY->requestOptions(this, true);
     }
     updateMouseButtonHints();
@@ -165,7 +166,7 @@ void RS_ActionDrawLineParallel::showOptions() {
 void RS_ActionDrawLineParallel::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+	if (RS_DIALOGFACTORY!=nullptr) {
         RS_DIALOGFACTORY->requestOptions(this, false);
     }
 }
@@ -176,7 +177,7 @@ void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+		if (RS_DIALOGFACTORY!=nullptr) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -200,11 +201,11 @@ void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent* e) {
                 if (ok && d>1.0e-10) {
                     distance = d;
                 } else {
-                    if (RS_DIALOGFACTORY!=NULL) {
+					if (RS_DIALOGFACTORY!=nullptr) {
                         RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                     }
                 }
-                if (RS_DIALOGFACTORY!=NULL) {
+				if (RS_DIALOGFACTORY!=nullptr) {
                     RS_DIALOGFACTORY->requestOptions(this, true, true);
                 }
                 updateMouseButtonHints();
@@ -221,17 +222,17 @@ void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent* e) {
                 if (n>0 && n<100) {
                     number = n;
                 } else {
-                    if (RS_DIALOGFACTORY!=NULL) {
+					if (RS_DIALOGFACTORY!=nullptr) {
                         RS_DIALOGFACTORY->commandMessage(tr("Not a valid number. "
                                                             "Try 1..99"));
                     }
                 }
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+				if (RS_DIALOGFACTORY!=nullptr) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
-            if (RS_DIALOGFACTORY!=NULL) {
+			if (RS_DIALOGFACTORY!=nullptr) {
                 RS_DIALOGFACTORY->requestOptions(this, true, true);
             }
             setStatus(SetEntity);
@@ -269,7 +270,7 @@ void RS_ActionDrawLineParallel::updateMouseCursor() {
 
 
 //void RS_ActionDrawLineParallel::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY!=nullptr) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

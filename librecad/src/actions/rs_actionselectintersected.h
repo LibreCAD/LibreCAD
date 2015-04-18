@@ -68,7 +68,6 @@ public:
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
 
 protected:
     RS_Vector v1;

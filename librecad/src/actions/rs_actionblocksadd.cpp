@@ -38,10 +38,8 @@ RS_ActionBlocksAdd::RS_ActionBlocksAdd(RS_EntityContainer& container,
 
 
 QAction* RS_ActionBlocksAdd::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Add Block")
-    QAction* action = new QAction(tr("&Add Block"), NULL);	
-    //action->zetStatusTip(tr("Add Block"));
-	action->setIcon(QIcon(":/ui/blockadd.png"));
+	QAction* action = new QAction(QIcon(":/ui/blockadd.png"), tr("&Add Block"), nullptr);
+	action->setData(RS2::ActionBlocksAdd);
     return action;
 }
 
@@ -49,10 +47,9 @@ QAction* RS_ActionBlocksAdd::createGUIAction(RS2::ActionType /*type*/, QObject* 
 
 void RS_ActionBlocksAdd::trigger() {
     RS_DEBUG->print("adding block");
-    //RS_Block* block = new RS_Block(container, "", RS_Vector(0.0,0.0));
-    if (graphic!=NULL) {
+	if (graphic!=nullptr) {
 		RS_BlockList* blockList = graphic->getBlockList();
-		if (blockList!=NULL) {
+		if (blockList!=nullptr) {
 			RS_BlockData d = 
 				RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
 			if (d.isValid()) {

@@ -48,11 +48,9 @@ RS_ActionDrawMText::~RS_ActionDrawMText(){}
 
 
 QAction* RS_ActionDrawMText::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Text")
-    QAction* action = new QAction(tr("&MText"),  NULL);
-        action->setIcon(QIcon(":/extui/menutext.png"));
-    //action->zetStatusTip(tr("Draw multi-line Text Entities"));
-    return action;
+	QAction* action = new QAction(QIcon(":/extui/menutext.png"), tr("&MText"), nullptr);
+	action->setData(RS2::ActionDrawMText);
+	return action;
 }
 
 
@@ -71,7 +69,7 @@ void RS_ActionDrawMText::init(int status) {
                     showOptions();
                 } else {
                     hideOptions();
-                    setFinished();
+					finish(true);
                 }
             }
             break;

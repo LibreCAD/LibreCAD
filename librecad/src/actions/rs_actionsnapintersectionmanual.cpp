@@ -197,13 +197,4 @@ void RS_ActionSnapIntersectionManual::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-
-void RS_ActionSnapIntersectionManual::updateToolBar() {
-    //not needed any more
-    return;
-    //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-}
-
-
 // EOF

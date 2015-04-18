@@ -458,21 +458,20 @@ public:
      * Toolbar ID's.
      */
     enum ToolBarId {
-        ToolBarMain,        /**< Main (menu). */
-        ToolBarPoints,      /**< Points. */
-        ToolBarLines,       /**< Lines. */
-        ToolBarArcs,        /**< Arcs. */
-        ToolBarCircles,     /**< Circles. */
-        ToolBarEllipses,    /**< Ellipses. */
-        ToolBarSplines,     /**< Splines. */
-        ToolBarPolylines,   /**< Polylines. */
-        ToolBarText,        /**< Text. */
-        ToolBarDim,         /**< Dimensions. */
-        ToolBarSnap,        /**< Snap. */
-        ToolBarModify,      /**< Modify. */
-        ToolBarSelect,      /**< Select. */
-        ToolBarInfo,         /**< Information */
-        ToolBarNone         /**< Invalid toolbar ID */
+		ToolBarMain =0,        /**< Main (menu). */
+		ToolBarPoints =1,      /**< Points. */
+		ToolBarLines =2,       /**< Lines. */
+		ToolBarArcs =3,        /**< Arcs. */
+		ToolBarCircles =4,     /**< Circles. */
+		ToolBarEllipses =5,    /**< Ellipses. */
+		ToolBarSplines =6,     /**< Splines. */
+		ToolBarPolylines =7,   /**< Polylines. */
+		ToolBarText =8,        /**< Text. */
+		ToolBarDim =9,         /**< Dimensions. */
+		ToolBarModify=10,      /**< Modify. */
+		ToolBarSelect=11,      /**< Select. */
+		ToolBarInfo=12,         /**< Information */
+		ToolBarNone         /**< Invalid toolbar ID */
     };
 
     /**

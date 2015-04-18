@@ -29,46 +29,32 @@
 class QG_CadToolBar;
 
 #include "qg_actionhandler.h"
-#include "ui_qg_cadtoolbardim.h"
+#include "lc_cadtoolbarinterface.h"
 
-class QG_CadToolBarDim : public QWidget, public Ui::QG_CadToolBarDim
+class QG_CadToolBarDim : public LC_CadToolBarInterface
 {
     Q_OBJECT
 
 public:
-    QG_CadToolBarDim(QWidget* parent = 0, Qt::WindowFlags fl = 0);
-    ~QG_CadToolBarDim();
-    void restoreAction(); //restore action from checked button
+	QG_CadToolBarDim(QG_CadToolBar* parent = 0, Qt::WindowFlags fl = 0);
+	~QG_CadToolBarDim() = default;
+	virtual void restoreAction(); //restore action from checked button
+	RS2::ToolBarId rtti() const
+	{
+		return RS2::ToolBarDim;
+	}
+	virtual void addSubActions(const std::vector<QAction*>& actions, bool addGroup=true);
 
 public slots:
-    virtual void mousePressEvent( QMouseEvent * e );
-    virtual void contextMenuEvent( QContextMenuEvent * e );
-    virtual void setCadToolBar( QG_CadToolBar * tb );
-    virtual void drawDimAligned();
-    virtual void drawDimLinear();
-    virtual void drawDimLinearHor();
-    virtual void drawDimLinearVer();
-    virtual void drawDimRadial();
-    virtual void drawDimDiametric();
-    virtual void drawDimAngular();
-    virtual void drawDimLeader();
-    //virtual void back();
     virtual void resetToolBar();
     virtual void  showCadToolBar(RS2::ActionType actionType);
-
-protected:
-    QG_CadToolBar* cadToolBar;
-    QG_ActionHandler* actionHandler;
-
-protected slots:
-    virtual void languageChange();
 
 private slots:
     void on_bBack_clicked();
 
 private:
-    void init();
-    QG_CadToolBar* parentTB;
+	QAction *bAligned=nullptr,*bLinear=nullptr,*bLinearHor=nullptr,*bLinearVer=nullptr,
+	*bRadial=nullptr,*bDiametric=nullptr,*bAngular=nullptr,*bLeader=nullptr;
 };
 
 #endif // QG_CADTOOLBARDIM_H

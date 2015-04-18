@@ -241,13 +241,13 @@ void RS_ActionInterface::updateMouseCursor() {}
  * Should be overwritten to set the toolbar for this action.
  */
 void RS_ActionInterface::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }else{
-            RS_DIALOGFACTORY->showCadToolBar(rtti());
-        }
-    }
+	if (RS_DIALOGFACTORY) {
+		if (isFinished()) {
+			RS_DIALOGFACTORY->resetToolBar();
+		}else{
+			RS_DIALOGFACTORY->showCadToolBar(rtti());
+		}
+	}
 }
 
 /**

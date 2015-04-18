@@ -39,8 +39,6 @@ RS_ActionDrawText::RS_ActionDrawText(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw Text",
                            container, graphicView) {
-
-    //text = NULL;
     pos = RS_Vector(false);
     secPos = RS_Vector(false);
     textChanged = true;
@@ -50,11 +48,11 @@ RS_ActionDrawText::~RS_ActionDrawText(){}
 
 
 QAction* RS_ActionDrawText::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Text")
-    QAction* action = new QAction(tr("&Text"),  NULL);
-        action->setIcon(QIcon(":/extui/menutext.png"));
-    //action->zetStatusTip(tr("Draw Text Entities"));
-    return action;
+	// tr("Text")
+	QAction* action = new QAction(tr("&Text"),  NULL);
+	action->setIcon(QIcon(":/extui/menutext.png"));
+	action->setData(RS2::ActionDrawText);
+	return action;
 }
 
 

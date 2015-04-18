@@ -222,6 +222,14 @@ void QG_ActionHandler::killSelectActions() {
     }
 }
 
+void QG_ActionHandler::killAllActions() {
+	RS_GraphicView* gv = mainWindow->getGraphicView();
+
+	if (gv!=NULL) {
+		gv->killAllActions();
+	}
+}
+
 
 
 /**
