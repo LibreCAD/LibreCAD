@@ -133,25 +133,6 @@ RS_Entity* RS_Ellipse::clone() const {
 }
 
 /**
- * Recalculates the endpoints using the angles and the radius.
- */
-/*
-void RS_Ellipse::calculateEndpoints() {
-   double angle = data.majorP.angle();
-   double radius1 = getMajorRadius();
-   double radius2 = getMinorRadius();
-
-   startpoint.set(data.center.x + cos(data.angle1) * radius1,
-                  data.center.y + sin(data.angle1) * radius2);
-   startpoint.rotate(data.center, angle);
-   endpoint.set(data.center.x + cos(data.angle2) * radius1,
-                data.center.y + sin(data.angle2) * radius2);
-   endpoint.rotate(data.center, angle);
-}
-*/
-
-
-/**
  * Calculates the boundary box of this ellipse.
  */
 void RS_Ellipse::calculateBorders() {

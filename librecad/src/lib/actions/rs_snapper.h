@@ -74,14 +74,7 @@ struct RS_SnapMode {
       *
       * @returns A refrence to itself.
       */
-	 RS_SnapMode const &clear(void);
-
-    /**
-     * Reset to default settings
-     *
-     * @returns A refrence to itself.
-     */
-	RS_SnapMode const &hardReset(void);
+	 RS_SnapMode const & clear(void);
 };
 
 /**

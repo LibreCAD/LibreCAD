@@ -37,14 +37,14 @@
  * @param both Trim both entities.
  */
 RS_ActionSnapIntersectionManual::RS_ActionSnapIntersectionManual(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Trim Entity",
-                           container, graphicView) {
-
-    entity2 = NULL;
-    entity1 = NULL;
-    coord = RS_Vector(false);
+		RS_EntityContainer& container,
+		RS_GraphicView& graphicView)
+	:RS_PreviewActionInterface("Trim Entity",
+							   container, graphicView)
+	,entity1(nullptr)
+	,entity2(nullptr)
+	,coord(false)
+{
 }
 
 
@@ -59,9 +59,7 @@ QAction* RS_ActionSnapIntersectionManual::createGUIAction(RS2::ActionType /*type
 
 void RS_ActionSnapIntersectionManual::init(int status) {
     RS_ActionInterface::init(status);
-
-    snapMode.clear();
-    snapMode.restriction = RS2::RestrictNothing;
+	snapMode.clear();
 }
 
 

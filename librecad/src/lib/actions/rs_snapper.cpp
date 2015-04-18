@@ -55,31 +55,11 @@
 	snapIntersection = false;
 
 	restriction = RS2::RestrictNothing;
+	distance = 5.;
 
 	return *this;
 }
 
-/**
- * Reset to default settings
- *
- * @returns A refrence to itself.
- */
-RS_SnapMode const & RS_SnapMode::hardReset(void) {
-	snapFree     = false;
-	snapGrid     = false;
-	snapEndpoint     = false;
-	snapMiddle       = false;
-	snapDistance       = false;
-	snapCenter       = false;
-	snapOnEntity     = false;
-	snapIntersection = false;
-
-	restriction = RS2::RestrictNothing;
-
-	distance = 5;
-
-	return *this;
-}
 /**
  * Constructor.
  */
