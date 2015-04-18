@@ -3696,16 +3696,12 @@ void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
 	LC_SimpleTests::slotTestDumpEntities(d);
 }
 
-
-
 /**
  * Testing function.
  */
 void QC_ApplicationWindow::slotTestDumpUndo() {
 	LC_SimpleTests::slotTestDumpUndo();
 }
-
-
 
 /**
  * Testing function.
@@ -3714,16 +3710,12 @@ void QC_ApplicationWindow::slotTestUpdateInserts() {
 	LC_SimpleTests::slotTestUpdateInserts();
 }
 
-
-
 /**
  * Testing function.
  */
 void QC_ApplicationWindow::slotTestDrawFreehand() {
 	LC_SimpleTests::slotTestDrawFreehand();
 }
-
-
 
 /**
  * Testing function.
@@ -3732,16 +3724,12 @@ void QC_ApplicationWindow::slotTestInsertBlock() {
 	LC_SimpleTests::slotTestInsertBlock();
 }
 
-
-
 /**
  * Testing function.
  */
 void QC_ApplicationWindow::slotTestInsertEllipse() {
 	LC_SimpleTests::slotTestInsertEllipse();
 }
-
-
 
 /**
  * Testing function.
@@ -3750,16 +3738,12 @@ void QC_ApplicationWindow::slotTestInsertMText() {
 	LC_SimpleTests::slotTestInsertMText();
 }
 
-
-
 /**
  * Testing function.
  */
 void QC_ApplicationWindow::slotTestInsertText() {
 	LC_SimpleTests::slotTestInsertText();
 }
-
-
 
 /**
  * Testing function.
@@ -3768,16 +3752,12 @@ void QC_ApplicationWindow::slotTestInsertImage() {
 	LC_SimpleTests::slotTestInsertImage();
 }
 
-
-
 /**
  * Testing function.
  */
 void QC_ApplicationWindow::slotTestUnicode() {
 	LC_SimpleTests::slotTestUnicode();
 }
-
-
 
 /**
  * Testing function.
@@ -3786,17 +3766,12 @@ void QC_ApplicationWindow::slotTestMath01() {
 	LC_SimpleTests::slotTestMath01();
 }
 
-
-
-
 /**
  * Testing function.
  */
 void QC_ApplicationWindow::slotTestResize640() {
 	LC_SimpleTests::slotTestResize640();
 }
-
-
 
 /**
  * Testing function.
@@ -3805,15 +3780,12 @@ void QC_ApplicationWindow::slotTestResize800() {
 	LC_SimpleTests::slotTestResize800();
 }
 
-
 /**
  * Testing function.
  */
 void QC_ApplicationWindow::slotTestResize1024() {
 	LC_SimpleTests::slotTestResize1024();
 }
-
-
 
 /**
  * overloaded for Message box on last window exit.

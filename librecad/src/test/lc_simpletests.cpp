@@ -21,7 +21,6 @@
 #include "rs_text.h"
 #include "rs_entitycontainer.h"
 
-
 /**
  * Testing function.
  */
@@ -318,8 +317,6 @@ void LC_SimpleTests::slotTestDumpEntities(RS_EntityContainer* d) {
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
 
-
-
 /**
  * Testing function.
  */
@@ -334,8 +331,6 @@ void LC_SimpleTests::slotTestDumpUndo() {
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
 
-
-
 /**
  * Testing function.
  */
@@ -348,8 +343,6 @@ void LC_SimpleTests::slotTestUpdateInserts() {
 	}
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
-
-
 
 /**
  * Testing function.
@@ -407,8 +400,6 @@ void LC_SimpleTests::slotTestDrawFreehand() {
 	*/
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
-
-
 
 /**
  * Testing function.
@@ -558,8 +549,6 @@ void LC_SimpleTests::slotTestInsertBlock() {
 	}
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
-
-
 
 /**
  * Testing function.
@@ -713,8 +702,6 @@ void LC_SimpleTests::slotTestInsertEllipse() {
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
 
-
-
 /**
  * Testing function.
  */
@@ -751,8 +738,6 @@ void LC_SimpleTests::slotTestInsertMText() {
 	}
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
-
-
 
 /**
  * Testing function.
@@ -866,8 +851,6 @@ void LC_SimpleTests::slotTestInsertText() {
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
 
-
-
 /**
  * Testing function.
  */
@@ -900,8 +883,6 @@ void LC_SimpleTests::slotTestInsertImage() {
 	}
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
-
-
 
 /**
  * Testing function.
@@ -962,8 +943,6 @@ void LC_SimpleTests::slotTestUnicode() {
 	}
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
-
-
 
 /**
  * Testing function.
@@ -1027,8 +1006,6 @@ void LC_SimpleTests::slotTestMath01() {
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
 
-
-
 /**
  * Testing function.
  */
@@ -1037,8 +1014,6 @@ void LC_SimpleTests::slotTestResize640() {
 	QC_ApplicationWindow::getAppWindow()->resize(640, 480);
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
-
-
 
 /**
  * Testing function.
@@ -1049,8 +1024,6 @@ void LC_SimpleTests::slotTestResize800() {
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
 
-
-
 /**
  * Testing function.
  */
@@ -1059,4 +1032,3 @@ void LC_SimpleTests::slotTestResize1024() {
 	QC_ApplicationWindow::getAppWindow()->resize(1024, 768);
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
-

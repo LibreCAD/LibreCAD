@@ -3,39 +3,35 @@
 
 class RS_EntityContainer;
 
-struct LC_SimpleTests
+namespace LC_SimpleTests
 {
-	LC_SimpleTests() = delete;
-	~LC_SimpleTests() = delete;
-
 	/** dumps entities to file */
-	static void slotTestDumpEntities(RS_EntityContainer* d=nullptr);
+	void slotTestDumpEntities(RS_EntityContainer* d=nullptr);
 	/** dumps undo info to stdout */
-	static void slotTestDumpUndo();
+	void slotTestDumpUndo();
 	/** updates all inserts */
-	static void slotTestUpdateInserts();
+	void slotTestUpdateInserts();
 	/** draws some random lines */
-	static void slotTestDrawFreehand();
+	void slotTestDrawFreehand();
 	/** inserts a test block */
-	static void slotTestInsertBlock();
+	void slotTestInsertBlock();
 	/** inserts a test ellipse */
-	static void slotTestInsertEllipse();
+	void slotTestInsertEllipse();
 	/** inserts a test mtext */
-	static void slotTestInsertMText();
+	void slotTestInsertMText();
 	/** inserts a test text */
-	static void slotTestInsertText();
+	void slotTestInsertText();
 	/** inserts a test image */
-	static void slotTestInsertImage();
+	void slotTestInsertImage();
 	/** unicode table */
-	static void slotTestUnicode();
+	void slotTestUnicode();
 	/** math experimental */
-	static void slotTestMath01();
+	void slotTestMath01();
 	/** resizes window to 640x480 for screen shots */
-	static void slotTestResize640();
+	void slotTestResize640();
 	/** resizes window to 640x480 for screen shots */
-	static void slotTestResize800();
+	void slotTestResize800();
 	/** resizes window to 640x480 for screen shots */
-	static void slotTestResize1024();
-};
-
+	void slotTestResize1024();
+}
 #endif // LC_SIMPLETESTS_H
