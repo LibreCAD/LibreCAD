@@ -28,6 +28,8 @@
 #ifndef RS_ACTIONINTERFACE_H
 #define RS_ACTIONINTERFACE_H
 
+#include <QObject>
+
 #include "rs_snapper.h"
 
 class QKeyEvent;
