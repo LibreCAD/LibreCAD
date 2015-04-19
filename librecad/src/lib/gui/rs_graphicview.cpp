@@ -1778,7 +1778,7 @@ void RS_GraphicView::drawOverlay(RS_Painter *painter) {
  */
 void RS_GraphicView::setDefaultSnapMode(RS_SnapMode sm) {
     defaultSnapMode = sm;
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         eventHandler->setSnapMode(sm);
     }
 }

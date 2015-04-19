@@ -215,7 +215,6 @@ public slots:
 
 	void disableSnaps();
 	void disableRestrictions();
-	void updateSnapMode(RS_SnapMode&);
 
 	void slotSetRelativeZero();
 	void slotLockRelativeZero(bool on);

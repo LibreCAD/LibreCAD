@@ -66,6 +66,9 @@ struct RS_SnapMode {
       */
 	RS_SnapMode()=default;
 	~RS_SnapMode()=default;
+	RS_SnapMode(RS_SnapMode const& ) = default;
+
+	RS_SnapMode& operator =(RS_SnapMode const& ) = default;
 
     /**
       * Disable all snapping.
@@ -75,6 +78,7 @@ struct RS_SnapMode {
       * @returns A refrence to itself.
       */
 	 RS_SnapMode const & clear(void);
+	 bool operator == (RS_SnapMode const& rhs) const;
 };
 
 /**
@@ -198,7 +202,7 @@ protected:
      * Snap distance for snaping to points with a
      * given distance from endpoints.
      */
-    double distance;
+	double m_SnapDistance;
     /**
      * Snap to equidistant middle points
      * default to 1, i.e., equidistant to start/end points

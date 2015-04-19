@@ -598,7 +598,7 @@ void RS_EventHandler::cleanUp() {
         currentActions.last()->resume();
         currentActions.last()->showOptions();
     } else {
-        if (defaultAction!=NULL) {
+		if (defaultAction) {
             defaultAction->resume();
             defaultAction->showOptions();
         }
@@ -618,7 +618,7 @@ void RS_EventHandler::setSnapMode(RS_SnapMode sm) {
         }
     }
 
-    if (defaultAction!=NULL) {
+	if (defaultAction) {
         defaultAction->setSnapMode(sm);
     }
 }

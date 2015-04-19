@@ -352,7 +352,7 @@ public:
         virtual void updateGridStatusWidget(const QString& /*text*/) {}
 
     void setDefaultSnapMode(RS_SnapMode sm);
-    RS_SnapMode getDefaultSnapMode() {
+	RS_SnapMode getDefaultSnapMode() const{
         return defaultSnapMode;
     }
     void setSnapRestriction(RS2::SnapRestriction sr);

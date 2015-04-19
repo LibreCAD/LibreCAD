@@ -978,7 +978,7 @@ void QC_ApplicationWindow::initActions(void)
     //
     menu = menuBar()->addMenu(tr("&Snap"));
     menu->setObjectName("Snap");
-    if(snapToolBar!=NULL) {
+	if(snapToolBar) {
         for(QAction* a : snapToolBar->getActions()){
             menu->addAction(a);
 //            connect(this, SIGNAL(windowsChanged(bool)), a, SLOT(setEnabled(bool)));

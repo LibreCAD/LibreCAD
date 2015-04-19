@@ -44,28 +44,26 @@ public:
     QG_SnapToolBar( const QString & title, QG_ActionHandler* ah, QWidget * parent = 0 );
     virtual ~QG_SnapToolBar();
 
-    RS_SnapMode getSnaps ( void );
+	RS_SnapMode getSnaps ( void ) const;
     void saveSnapMode(void );
     virtual void setActionHandler(QG_ActionHandler* ah);
-    bool lockedRelativeZero();
+	bool lockedRelativeZero() const;
     void setLockedRelativeZero(bool on);
-    const QVector<QAction*>& getActions() const;
+	QList<QAction*> getActions() const;
 
-protected:
-    QG_ActionHandler* actionHandler;
+public slots:
+	void setSnaps(RS_SnapMode);
 
 private slots:
     void actionTriggered(void);
     void slotRestrictOrthogonal(bool checked);
     void slotRestrictNothing(bool checked);
 
-public slots:
-    void setSnaps(RS_SnapMode);
-
-signals:
-    void snapsChanged(RS_SnapMode);
-
 private:
+	void init();
+
+	QG_ActionHandler* actionHandler;
+
     QAction *snapFree;
     QAction *snapGrid;
     QAction *snapEnd;
@@ -82,11 +80,7 @@ private:
     QAction *restrictNothing;
     QAction *bRelZero;
     QAction *bLockRelZero;
-    RS_SnapMode snapMode;
-    QVector<QAction*> m_vSnapActions;
-    int m_iActionCounts;
-
-    void init();
+	RS_SnapMode snapMode;
 
 };
 

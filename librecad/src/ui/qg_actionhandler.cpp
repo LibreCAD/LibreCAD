@@ -1585,7 +1585,6 @@ void QG_ActionHandler::slotModifyExplodeText() {
 
 void QG_ActionHandler::slotSetSnaps(RS_SnapMode s) {
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps()");
-    updateSnapMode(s);
 	if(snapToolBar ) {
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): set snapToolBar");
         snapToolBar->setSnaps(s);
@@ -1708,14 +1707,6 @@ void QG_ActionHandler::disableRestrictions() {
     RS_SnapMode s=getSnaps();
     s.restriction= RS2::RestrictNothing;
     slotSetSnaps(s);
-}
-
-
-/**
- * Updates the snap mode for the current document from the selected menu.
- * Used after the active window changed.
- */
-void QG_ActionHandler::updateSnapMode(RS_SnapMode& /*s*/) {
 }
 
 void QG_ActionHandler::slotSetRelativeZero() {

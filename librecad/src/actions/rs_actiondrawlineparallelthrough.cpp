@@ -40,7 +40,7 @@ RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
 
     parallel = NULL;
     entity = NULL;
-    distance = 1.0;
+	m_SnapDistance = 1.0;
     number = 1;
     coord = RS_Vector(false);
 }

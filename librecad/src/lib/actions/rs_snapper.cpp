@@ -55,9 +55,21 @@
 	snapIntersection = false;
 
 	restriction = RS2::RestrictNothing;
-	distance = 5.;
 
 	return *this;
+}
+
+bool RS_SnapMode::operator ==(RS_SnapMode const& rhs) const{
+	if ( snapFree != rhs.snapFree) return false;
+	if ( snapGrid != rhs.snapGrid) return false;
+	if ( snapEndpoint != rhs.snapEndpoint) return false;
+	if ( snapMiddle != rhs.snapMiddle) return false;
+	if ( snapDistance != rhs.snapDistance) return false;
+	if ( snapCenter != rhs.snapCenter) return false;
+	if ( snapOnEntity != rhs.snapOnEntity) return false;
+	if ( snapIntersection != rhs.snapIntersection) return false;
+	if ( restriction != rhs.restriction) return false;
+	return true;
 }
 
 /**
@@ -81,8 +93,8 @@ void RS_Snapper::init() {
     //snapRes = graphicView->getSnapRestriction();
 	keyEntity = nullptr;
     snapSpot = RS_Vector(false);
-    snapCoord = RS_Vector(false);
-    distance = 1.0;
+	snapCoord = RS_Vector(false);
+	m_SnapDistance = 1.0;
 //    RS_SETTINGS->beginGroup("/Snap");
 //    snapRange = RS_SETTINGS->readNumEntry("/Range", 20);
 //    //middlePoints behaviors weird, add brutal force here
@@ -104,7 +116,7 @@ void RS_Snapper::finish() {
 void RS_Snapper::setSnapMode(const RS_SnapMode& snapMode) {
     this->snapMode = snapMode;
 	if (RS_DIALOGFACTORY==nullptr) return;
-    RS_DIALOGFACTORY->requestSnapDistOptions(distance, snapMode.snapDistance);
+	RS_DIALOGFACTORY->requestSnapDistOptions(m_SnapDistance, snapMode.snapDistance);
     RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, snapMode.snapMiddle);
 //std::cout<<"RS_Snapper::setSnapMode(): middlePoints="<<middlePoints<<std::endl;
 }
@@ -176,7 +188,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
         //this is still brutal force
         //todo: accept value from widget QG_SnapDistOptions
 		if(RS_DIALOGFACTORY != nullptr) {
-            RS_DIALOGFACTORY->requestSnapDistOptions(distance, snapMode.snapDistance);
+			RS_DIALOGFACTORY->requestSnapDistOptions(m_SnapDistance, snapMode.snapDistance);
         }
         t = snapDist(mouseCoord);
         double&& ds2=mouseCoord.squaredTo(t);
@@ -383,7 +395,7 @@ RS_Vector RS_Snapper::snapDist(const RS_Vector& coord) {
     RS_Vector vec;
 
 //std::cout<<" RS_Snapper::snapDist(RS_Vector coord): distance="<<distance<<std::endl;
-    vec = container->getNearestDist(distance,
+	vec = container->getNearestDist(m_SnapDistance,
                                     coord,
 									nullptr);
     return vec;
