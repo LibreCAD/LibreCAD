@@ -54,9 +54,11 @@
 #include "rs_units.h"
 #include "rs_utility.h"
 
-const std::string LC_MakerCamSVG::NAMESPACE_URI_SVG = "http://www.w3.org/2000/svg";
-const std::string LC_MakerCamSVG::NAMESPACE_URI_LC = "http://www.librecad.org";
-const std::string LC_MakerCamSVG::NAMESPACE_URI_XLINK = "http://www.w3.org/1999/xlink";
+namespace {
+const std::string NAMESPACE_URI_SVG = "http://www.w3.org/2000/svg";
+const std::string NAMESPACE_URI_LC = "http://www.librecad.org";
+const std::string NAMESPACE_URI_XLINK = "http://www.w3.org/1999/xlink";
+}
 
 LC_MakerCamSVG::LC_MakerCamSVG(LC_XMLWriterInterface* xmlWriter,
                                bool writeInvisibleLayers,

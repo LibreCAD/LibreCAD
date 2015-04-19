@@ -66,10 +66,6 @@ public:
     bool generate(RS_Graphic* graphic);
     std::string resultAsString();
 
-    static const std::string NAMESPACE_URI_SVG;
-    static const std::string NAMESPACE_URI_LC;
-    static const std::string NAMESPACE_URI_XLINK;
-
 private:
     void write(RS_Graphic* graphic);
 
