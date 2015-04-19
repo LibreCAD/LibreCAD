@@ -19,6 +19,7 @@
 DRW_Header::DRW_Header() {
     linetypeCtrl = layerCtrl = styleCtrl = dimstyleCtrl = appidCtrl = 0;
     blockCtrl = viewCtrl = ucsCtrl = vportCtrl = vpEntHeaderCtrl = 0;
+    version = DRW::AC1021;
 }
 
 void DRW_Header::addComment(std::string c){
@@ -669,19 +670,40 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     if (version < DRW::AC1021) {//2004-
         vars["MENU"]=new DRW_Variant(1, buf->getCP8Text());
     }
-    vars["TDCREATE"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
-    vars["TDCREATE"]=new DRW_Variant(40, buf->getBitLong());
-    vars["TDUPDATE"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
-    vars["TDUPDATE"]=new DRW_Variant(40, buf->getBitLong());
+    ddouble64 msec, day;
+    day = buf->getBitLong();
+    msec = buf->getBitLong();
+    while (msec > 0)
+        msec /=10;
+    vars["TDCREATE"]=new DRW_Variant(40, day+msec);//RLZ: TODO convert to day.msec
+//    vars["TDCREATE"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
+//    vars["TDCREATE"]=new DRW_Variant(40, buf->getBitLong());
+    day = buf->getBitLong();
+    msec = buf->getBitLong();
+    while (msec > 0)
+        msec /=10;
+    vars["TDUPDATE"]=new DRW_Variant(40, day+msec);//RLZ: TODO convert to day.msec
+//    vars["TDUPDATE"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
+//    vars["TDUPDATE"]=new DRW_Variant(40, buf->getBitLong());
     if (version > DRW::AC1015) {//2004+
          DRW_DBG("\nUnknown long 4: "); DRW_DBG(buf->getBitLong());
          DRW_DBG("\nUnknown long 5: "); DRW_DBG(buf->getBitLong());
          DRW_DBG("\nUnknown long 6: "); DRW_DBG(buf->getBitLong());
     }
-    vars["TDINDWG"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
-    vars["TDINDWG"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
-    vars["TDUSRTIMER"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
-    vars["TDUSRTIMER"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
+    day = buf->getBitLong();
+    msec = buf->getBitLong();
+    while (msec > 0)
+        msec /=10;
+    vars["TDINDWG"]=new DRW_Variant(40, day+msec);//RLZ: TODO convert to day.msec
+//    vars["TDINDWG"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
+//    vars["TDINDWG"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
+    day = buf->getBitLong();
+    msec = buf->getBitLong();
+    while (msec > 0)
+        msec /=10;
+    vars["TDUSRTIMER"]=new DRW_Variant(40, day+msec);//RLZ: TODO convert to day.msec
+//    vars["TDUSRTIMER"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
+//    vars["TDUSRTIMER"]=new DRW_Variant(40, buf->getBitLong());//RLZ: TODO convert to day.msec
     vars["CECOLOR"]=new DRW_Variant(62, buf->getCmColor(version));//RLZ: TODO read CMC or EMC color
     dwgHandle HANDSEED = buf->getHandle();//allways present in data stream
     DRW_DBG("\nHANDSEED: "); DRW_DBGHL(HANDSEED.code, HANDSEED.size, HANDSEED.ref);

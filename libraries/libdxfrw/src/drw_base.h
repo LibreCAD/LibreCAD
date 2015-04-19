@@ -240,9 +240,15 @@ public:
     DRW_Variant(const DRW_Variant& d) {
         code = d.code;
         type = d.type;
-        if (d.type == COORD) vdata = d.vdata;
-        if (d.type == STRING) sdata = d.sdata;
         content = d.content;
+        if (d.type == COORD) {
+            vdata = d.vdata;
+            content.v = &vdata;
+        }
+        if (d.type == STRING) {
+            sdata = d.sdata;
+            content.s = &sdata;
+        }
     }
 
     ~DRW_Variant() {

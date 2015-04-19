@@ -36,10 +36,27 @@ class DRW_Header {
 public:
     DRW_Header();
     ~DRW_Header() {
-        for (std::map<std::string,DRW_Variant*>::iterator it=vars.begin(); it!=vars.end(); ++it)
-            delete it->second;
+        clearVars();
+    }
 
-        vars.clear();
+    DRW_Header(const DRW_Header& h){
+        this->version = h.version;
+        this->comments = h.comments;
+        for (std::map<std::string,DRW_Variant*>::const_iterator it=h.vars.begin(); it!=h.vars.end(); ++it){
+            this->vars[it->first] = new DRW_Variant( *(it->second) );
+        }
+        this->curr = NULL;
+    }
+    DRW_Header& operator=(const DRW_Header &h) {
+       if(this != &h) {
+           clearVars();
+           this->version = h.version;
+           this->comments = h.comments;
+           for (std::map<std::string,DRW_Variant*>::const_iterator it=h.vars.begin(); it!=h.vars.end(); ++it){
+               this->vars[it->first] = new DRW_Variant( *(it->second) );
+           }
+       }
+       return *this;
     }
 
     void addDouble(std::string key, double value, int code);
@@ -58,6 +75,12 @@ private:
     bool getInt(std::string key, int *varInt);
     bool getStr(std::string key, std::string *varStr);
     bool getCoord(std::string key, DRW_Coord *varStr);
+    void clearVars(){
+        for (std::map<std::string,DRW_Variant*>::iterator it=vars.begin(); it!=vars.end(); ++it)
+            delete it->second;
+
+        vars.clear();
+    }
 
 public:
     std::map<std::string,DRW_Variant*> vars;

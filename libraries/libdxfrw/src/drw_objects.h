@@ -71,6 +71,19 @@ public:
         extData.clear();
     }
 
+    DRW_TableEntry(const DRW_TableEntry& e) {
+        tType = e.tType;
+        handle = e.handle;
+        parentHandle = e.parentHandle;
+        name = e.name;
+        flags = e.flags;
+        numReactors = e.numReactors;
+        xDictFlag = e.xDictFlag;
+        curr = e.curr;
+        for (std::vector<DRW_Variant*>::const_iterator it=e.extData.begin(); it!=e.extData.end(); ++it){
+            extData.push_back(new DRW_Variant(*(*it)));
+        }
+    }
 
 protected:
     void parseCode(int code, dxfReader *reader);
@@ -85,7 +98,7 @@ protected:
 
 public:
     enum DRW::TTYPE tType;     /*!< enum: entity type, code 0 */
-    int handle;                /*!< entity identifier, code 5 */
+    duint32 handle;            /*!< entity identifier, code 5 */
     int parentHandle;          /*!< Soft-pointer ID/handle to owner object, code 330 */
     UTF8STRING name;           /*!< entry name, code 2 */
     int flags;                 /*!< Flags relevant to entry, code 70 */

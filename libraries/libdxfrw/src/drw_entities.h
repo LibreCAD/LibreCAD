@@ -125,23 +125,26 @@ public:
         eType = e.eType;
         handle = e.handle;
         parentHandle = e.parentHandle; //no handle (0)
-/*        lineType = "BYLAYER";
-        color = DRW::ColorByLayer; // default BYLAYER (256)
-        ltypeScale = 1.0;
-        visible = true;
-        layer = "0";
-        lWeight = DRW_LW_Conv::widthByLayer; // default BYLAYER  (dxf -1, dwg 29)
-        space = DRW::ModelSpace; // default ModelSpace (0)
-        haveExtrusion = false;
-        color24 = -1; //default -1 not set
-        numProxyGraph = 0;
-        shadow = DRW::CastAndReceieveShadows;
-        material = DRW::MaterialByLayer;
-        plotStyle = DRW::DefaultPlotStyle;
-        transparency = DRW::Opaque;
-        nextEntLink = prevEntLink = 0;
-        numReactors = xDictFlag = 0;
-        curr = NULL;*/
+        lineType = e.lineType;
+        color = e.color; // default BYLAYER (256)
+        ltypeScale = e.ltypeScale;
+        visible = e.visible;
+        layer = e.layer;
+        lWeight = e.lWeight;
+        space = e.space;
+        haveExtrusion = e.haveExtrusion;
+        color24 = e.color24; //default -1 not set
+        numProxyGraph = e.numProxyGraph;
+        shadow = e.shadow;
+        material = e.material;
+        plotStyle = e.plotStyle;
+        transparency = e.transparency;
+        nextEntLink = e.nextEntLink;
+        prevEntLink = e.prevEntLink;
+        numReactors = e.numReactors;
+        xDictFlag = e.xDictFlag;
+        curr = NULL;
+//        curr = e.curr;
         for (std::vector<DRW_Variant*>::const_iterator it=e.extData.begin(); it!=e.extData.end(); ++it){
             extData.push_back(new DRW_Variant(*(*it)));
         }
@@ -592,8 +595,8 @@ public:
     }
     ~DRW_LWPolyline() {
         while (!vertlist.empty()) {
-           vertlist.pop_back();
-         }
+            vertlist.pop_back();
+        }
     }
     virtual void applyExtrusion();
     void addVertex (DRW_Vertex2D v) {
