@@ -1736,9 +1736,9 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
     arc.setPen(getPen());
     arc.setReversed(false);
     if( crossPoints.size() >= 2) {
-		for(size_t i=0;i<crossPoints.size()-1;i+=2){
-            arc.setAngle1(baseAngle+crossPoints[i]);
-            arc.setAngle2(baseAngle+crossPoints[i+1]);
+		for(size_t i=1;i<crossPoints.size();i+=2){
+			arc.setAngle1(baseAngle+crossPoints[i-1]);
+			arc.setAngle2(baseAngle+crossPoints[i]);
             arc.drawVisible(painter,view,patternOffset);
         }
         return;
