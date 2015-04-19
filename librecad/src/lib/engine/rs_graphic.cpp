@@ -746,7 +746,7 @@ RS_Vector RS_Graphic::getPaperSize() {
     bool okX,okY;
     double sX = RS_SETTINGS->readEntry("/PaperSizeX", "0.0").toDouble(&okX);
     double sY = RS_SETTINGS->readEntry("/PaperSizeY", "0.0").toDouble(&okY);
-    RS_SETTINGS->endGroup();
+	RS_SETTINGS->endGroup();
     RS_Vector def ;
     if(okX&&okY && sX>RS_TOLERANCE && sY>RS_TOLERANCE) {
         def=RS_Units::convert(RS_Vector(sX,sY),
@@ -791,7 +791,7 @@ RS2::PaperFormat RS_Graphic::getPaperFormat(bool* landscape) {
     RS_Vector size = RS_Units::convert(getPaperSize(),
                                        getUnit(), RS2::Millimeter);
 
-    if (landscape!=NULL) {
+	if (landscape) {
         *landscape = (size.x>size.y);
     }
 
@@ -806,15 +806,11 @@ RS2::PaperFormat RS_Graphic::getPaperFormat(bool* landscape) {
 void RS_Graphic::setPaperFormat(RS2::PaperFormat f, bool landscape) {
     RS_Vector size = RS_Units::paperFormatToSize(f);
 
-    if (landscape) {
-        double tmp = size.x;
-        size.x = size.y;
-        size.y = tmp;
+	if (landscape ^ (size.x > size.y)) {
+		std::swap(size.x, size.y);
     }
 
-        if (f!=RS2::Custom) {
-        setPaperSize(RS_Units::convert(size, RS2::Millimeter, getUnit()));
-        }
+	setPaperSize(RS_Units::convert(size, RS2::Millimeter, getUnit()));
 }
 
 
