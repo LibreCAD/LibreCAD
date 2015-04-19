@@ -582,7 +582,7 @@ namespace mu
     CheckName(a_strName, ValidNameChars());
     
     m_vStringVarBuf.push_back(a_strVal);                // Store variable string in internal buffer
-    m_StrVarDef[a_strName] = m_vStringVarBuf.size()-1;  // bind buffer index to variable name
+	m_StrVarDef[a_strName] = (int) m_vStringVarBuf.size()-1;  // bind buffer index to variable name
 
     ReInit();
   }

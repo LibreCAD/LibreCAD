@@ -898,7 +898,8 @@ RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
  *              \li \p 2 all Entity Containers are resolved
  */
 RS_Entity* RS_EntityContainer::lastEntity(RS2::ResolveLevel level) {
-    RS_Entity* e = NULL;
+	RS_Entity* e = nullptr;
+	if(!entities.size()) return nullptr;
     entIdx = entities.size()-1;
     switch (level) {
     case RS2::ResolveNone:
