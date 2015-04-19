@@ -96,7 +96,6 @@ private:
     std::string svgPathArc(RS_Arc* arc);
     std::string svgPathArc(RS_Vector point, double radius_x, double radius_y, double x_axis_rotation, bool large_arc_flag, bool sweep_flag);
 
-    RS_Vector calcEllipsePoint(RS_Vector center, double majorradius, double minorradius, double x_axis_rotation, double angle);
     RS_Vector calcEllipsePointDerivative(double majorradius, double minorradius, double x_axis_rotation, double angle);
 
     double calcAlpha(double angle);

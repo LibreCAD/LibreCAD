@@ -405,6 +405,7 @@ void LC_MakerCamSVG::writeArc(RS_Arc* arc) {
 void LC_MakerCamSVG::writeEllipse(RS_Ellipse* ellipse) {
 
     RS_Vector center = convertToSvg(ellipse->getCenter());
+	const RS_Vector centerTranslation=center - ellipse->getCenter();
 
     double majorradius = ellipse->getMajorRadius();
     double minorradius = ellipse->getMinorRadius();
@@ -438,7 +439,7 @@ void LC_MakerCamSVG::writeEllipse(RS_Ellipse* ellipse) {
 
             double alpha = calcAlpha(total_angle / segments);
 
-            RS_Vector start_point = calcEllipsePoint(center, majorradius, minorradius, x_axis_rotation, start_angle);
+			RS_Vector start_point = centerTranslation + ellipse->getEllipsePoint(start_angle);
 
             path = svgPathMoveTo(start_point);
 
@@ -446,8 +447,8 @@ void LC_MakerCamSVG::writeEllipse(RS_Ellipse* ellipse) {
                 double segment_start_angle = start_angle + ((i - 1) / (double)segments) * total_angle;
                 double segment_end_angle = start_angle + (i / (double)segments) * total_angle;
 
-                RS_Vector segment_start_point = calcEllipsePoint(center, majorradius, minorradius, x_axis_rotation, segment_start_angle);
-                RS_Vector segment_end_point = calcEllipsePoint(center, majorradius, minorradius, x_axis_rotation, segment_end_angle);
+				RS_Vector segment_start_point = centerTranslation + ellipse->getEllipsePoint(segment_start_angle);
+				RS_Vector segment_end_point = centerTranslation + ellipse->getEllipsePoint(segment_end_angle);
 
                 RS_Vector segment_control_point_1 = segment_start_point + calcEllipsePointDerivative(majorradius, minorradius, x_axis_rotation, segment_start_angle) * alpha;
                 RS_Vector segment_control_point_2 = segment_end_point - calcEllipsePointDerivative(majorradius, minorradius, x_axis_rotation, segment_end_angle) * alpha;
@@ -607,14 +608,6 @@ std::string LC_MakerCamSVG::svgPathArc(RS_Vector point, double radius_x, double 
            (large_arc_flag ? "1" : "0") + "," +
            (sweep_flag ? "1" : "0") + " " +
            numXml(point.x) + "," + numXml(point.y) + " ";
-}
-
-RS_Vector LC_MakerCamSVG::calcEllipsePoint(RS_Vector center, double majorradius, double minorradius, double x_axis_rotation, double angle) {
-
-    RS_Vector point(center.x + (majorradius * cos(x_axis_rotation) * cos(angle)) - (minorradius * sin(x_axis_rotation) * sin(angle)),
-                    center.y + (majorradius * sin(x_axis_rotation) * cos(angle)) + (minorradius * cos(x_axis_rotation) * sin(angle)));
-
-    return point;
 }
 
 RS_Vector LC_MakerCamSVG::calcEllipsePointDerivative(double majorradius, double minorradius, double x_axis_rotation, double angle) {
