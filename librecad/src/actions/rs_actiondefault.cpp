@@ -61,7 +61,7 @@ RS_ActionDefault::~RS_ActionDefault() {
 QAction* RS_ActionDefault::createGUIAction(RS2::ActionType /*type*/,
                                            QObject* /*parent*/) {
 
-    return NULL;
+	return nullptr;
 }
 
 
@@ -145,7 +145,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
             else {
                 // test for an entity to drag:
                 RS_Entity* en = catchEntity(v1);
-                if (en!=NULL && en->isSelected()) {
+				if (en && en->isSelected()) {
                     RS_DEBUG->print("RS_ActionDefault::mouseMoveEvent: "
                                     "moving entity");
                     setStatus(Moving);
@@ -267,7 +267,7 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
             // select single entity:
             RS_Entity* en = catchEntity(e);
 
-            if (en!=NULL) {
+			if (en) {
                 deletePreview();
 
                 RS_Selection s(*container, graphicView);
