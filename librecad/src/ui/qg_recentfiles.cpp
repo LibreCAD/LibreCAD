@@ -32,15 +32,10 @@
  * Constructor
  * @param number Number of files that can be stored in the list at maximum
  */
-QG_RecentFiles::QG_RecentFiles(int number) {
-    this->number = number;
+QG_RecentFiles::QG_RecentFiles(int number):
+	number(number)
+{
 }
-
-
-/**
- * Destructor
- */
-QG_RecentFiles::~QG_RecentFiles() {}
 
 /**
  * Adds a file to the list of recently loaded files if
@@ -51,30 +46,40 @@ void QG_RecentFiles::add(const QString& filename) {
 
     // is the file already in the list?
     int i0=files.indexOf(filename);
-    int j0=files.size()-1;
     if (i0>=0) {
-        if (i0==j0) return; //do nothing, file already being the last in list
+		if (i0+1==files.size()) return; //do nothing, file already being the last in list
         //move the i0 to the last
-        while(i0<j0) {
-            files[i0]=files[i0+1];
-            i0++;
-        }
-        files.last()=filename;
+		files.erase(files.begin() + i0);
+		files.push_back(filename);
         return;
     }
 
     // append
     //files.push_back(filename);
     files.append(filename);
-    while (files.size() > number) {
-        // keep the list short
-        files.pop_front();
-    }
-
-    //for (int i=0; i<(int)files.count(); ++i) {
-    //	printf("recent file[%d]: %s\n", i, files[i].latin1());
-    //}
-        RS_DEBUG->print("QG_RecentFiles::add: OK");
+	if(files.size() > number)
+		files.erase(files.begin(), files.begin() + files.size() - number);
+	RS_DEBUG->print("QG_RecentFiles::add: OK");
 }
 
 
+QString QG_RecentFiles::get(int i) const{
+	if (i<files.size()) {
+		return files[i];
+	} else {
+		return QString("");
+	}
+}
+
+int QG_RecentFiles::count() const {
+	return files.count();
+}
+
+/** @return number of files that can be stored in the list at maximum */
+int QG_RecentFiles::getNumber() const {
+	return number;
+}
+
+int QG_RecentFiles::indexOf(const QString& filename) const{
+	return files.indexOf(filename) ;
+}

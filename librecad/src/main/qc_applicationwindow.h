@@ -379,7 +379,7 @@ private:
     QToolBar* optionWidget;
 
     /** Recent files list */
-    QG_RecentFiles* recentFiles;
+	QG_RecentFiles* recentFiles;
     QStringList openedFiles;
 
     /** Action handler. */
