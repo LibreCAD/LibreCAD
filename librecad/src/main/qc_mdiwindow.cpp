@@ -40,6 +40,7 @@
 #include <QMessageBox>
 #include <QFileInfo>
 #include <QMdiArea>
+#include <QMdiSubWindow>
 #include <QPainter>
 
 #include "qc_applicationwindow.h"

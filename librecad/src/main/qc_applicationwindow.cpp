@@ -367,10 +367,10 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
         delete assistant;
     }
 #else
-    if (helpEngine!=NULL) {
+	if (helpEngine) {
         delete helpEngine;
     }
-    if (helpWindow!=NULL) {
+	if (helpWindow) {
         delete helpWindow;
     }
 #endif // QT_VERSION 0x040400
@@ -401,7 +401,7 @@ void QC_ApplicationWindow::slotRunScript() {
     RS_DEBUG->print("QC_ApplicationWindow::slotRunScript");
 
     const QObject* s = sender();
-    if (s!=NULL) {
+	if (s) {
         QString script = ((QAction*)s)->text();
         RS_DEBUG->print("QC_ApplicationWindow::slotRunScript: %s",
                         script.toLatin1().data());
@@ -453,7 +453,7 @@ void QC_ApplicationWindow::slotRunScript(const QString& name) {
  */
 void QC_ApplicationWindow::slotInsertBlock() {
     const QObject* s = sender();
-    if (s!=NULL) {
+	if (s) {
         QString block = ((QAction*)s)->text();
         RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: %s",
                         block.toLatin1().data());
@@ -474,7 +474,7 @@ void QC_ApplicationWindow::slotInsertBlock(const QString& name) {
 
         RS_GraphicView* graphicView = getGraphicView();
         RS_Document* document = getDocument();
-        if (graphicView!=NULL && document!=NULL) {
+		if (graphicView && document) {
                 RS_ActionLibraryInsert* action =
                         new RS_ActionLibraryInsert(*document, *graphicView);
                 action->setFile(name);
@@ -560,7 +560,7 @@ void QC_ApplicationWindow::closeEvent(QCloseEvent* ce) {
  * Handles right-clicks for moving back to the last cad tool bar.
  */
 void QC_ApplicationWindow::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton && cadToolBar!=NULL) {
+	if (e->button()==Qt::RightButton && cadToolBar) {
         cadToolBar->showToolBarMain();
     }
     e->accept();
@@ -1228,7 +1228,7 @@ void QC_ApplicationWindow::initMenuBar() {
     }
 
     // menuBar configuration
-    recentFiles = new QG_RecentFiles(9);
+	recentFiles.reset(new QG_RecentFiles(9));
     openedFiles.clear();
 }
 
@@ -1340,47 +1340,26 @@ void QC_ApplicationWindow::slotUpdateActiveLayer()
  * config file (unix, mac) or registry (windows).
  */
 void QC_ApplicationWindow::initSettings() {
-    RS_DEBUG->print("QC_ApplicationWindow::initSettings()");
+	RS_DEBUG->print("QC_ApplicationWindow::initSettings()");
+	recentFiles->initSettings();
 
-    //RS_Settings settings(QC_REGISTRY, QC_APPKEY);
-
-    RS_SETTINGS->beginGroup("/RecentFiles");
-    for (int i=0; i<recentFiles->getNumber(); ++i) {
-        QString filename = RS_SETTINGS->readEntry(QString("/File") +
-                           QString::number(i+1));
-        if (QFileInfo(filename).exists()) recentFiles->add(filename);
-    }
-    RS_SETTINGS->endGroup();
-//    QList <QAction*> recentFilesAction;
-
-    for (int i = 0; i < recentFiles->getNumber(); ++i) {
-        recentFilesAction.insert(i, new QAction(this));
-        recentFilesAction[i]->setVisible(false);
-        connect(recentFilesAction[i], SIGNAL(triggered()),
-                this, SLOT(slotFileOpenRecent()));
-        fileMenu->addAction(recentFilesAction[i]);
-    }
-    if (recentFiles->count()>0) {
-        updateRecentFilesMenu();
-    }
-
-    RS_SETTINGS->beginGroup("/Geometry");
-    int windowWidth = RS_SETTINGS->readNumEntry("/WindowWidth", 950);
-    int windowHeight = RS_SETTINGS->readNumEntry("/WindowHeight", 700);
-    int windowX = RS_SETTINGS->readNumEntry("/WindowX", 0);
-    int windowY = RS_SETTINGS->readNumEntry("/WindowY", 30);
-    RS_SETTINGS->endGroup();
+	RS_SETTINGS->beginGroup("/Geometry");
+	int windowWidth = RS_SETTINGS->readNumEntry("/WindowWidth", 950);
+	int windowHeight = RS_SETTINGS->readNumEntry("/WindowHeight", 700);
+	int windowX = RS_SETTINGS->readNumEntry("/WindowX", 0);
+	int windowY = RS_SETTINGS->readNumEntry("/WindowY", 30);
+	RS_SETTINGS->endGroup();
 
 #ifdef __APPLE1__
-    if (windowY<30) {
-        windowY=30;
-    }
+	if (windowY<30) {
+		windowY=30;
+	}
 #endif
 
-    resize(windowWidth, windowHeight);
-    move(windowX, windowY);
+	resize(windowWidth, windowHeight);
+	move(windowX, windowY);
 
-        restoreDocks();
+	restoreDocks();
 }
 
 
@@ -1399,13 +1378,6 @@ void QC_ApplicationWindow::restoreDocks() {
  */
 void QC_ApplicationWindow::storeSettings() {
     RS_DEBUG->print("QC_ApplicationWindow::storeSettings()");
-
-    RS_SETTINGS->beginGroup("/RecentFiles");
-    for (int i=0; i<recentFiles->count(); ++i) {
-        RS_SETTINGS->writeEntry(QString("/File") +
-                                QString::number(i+1), recentFiles->get(i));
-    }
-    RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Geometry");
     RS_SETTINGS->writeEntry("/WindowWidth", width());
@@ -1535,85 +1507,15 @@ void QC_ApplicationWindow::initView() {
 }
 
 
-
-/**
- * Creates a new toolbar.
- * Implementation from QG_MainWindowInterface.
- * Can be called from scripts to add individual GUI elements.
- */
-/*QToolBar* QC_ApplicationWindow::createToolBar(const QString& name) {
-    QToolBar* tb = new QToolBar(name, this);
-        tb->setLabel(name);
-        return tb;
-}*/
-
-
-
-/**
- * Creates a new button in the given tool bar for running a script.
- */
-/*void QC_ApplicationWindow::addToolBarButton(QToolBar* tb) {
-        if (tb!=NULL) {
-        QAction* action = new QAction("Blah",
-                        QIcon(":/actions/zoomwindow.png"),
-            "&Blah", QKeySequence(), NULL);
-        //action->zetStatusTip("Blah blah");
-                action->addTo(tb);
-        }
-}*/
-
-
-
-/**
- * Updates the recent file list in the file menu.
- */
-void QC_ApplicationWindow::updateRecentFilesMenu() {
-    RS_DEBUG->print("QC_ApplicationWindow::updateRecentFilesMenu()");
-
-    RS_DEBUG->print("Updating recent file menu...");
-    int numRecentFiles = qMin(recentFiles->count(), recentFiles->getNumber());
-
-    for (int i = 0; i < numRecentFiles; ++i) {
-        //oldest on top
-//        QString text = tr("&%1 %2").arg(i + 1).arg(recentFiles->get(i));
-        //newest on top
-        QString&& text = tr("&%1 %2").arg(i + 1).arg(recentFiles->get(numRecentFiles-i-1));
-
-        recentFilesAction[i]->setText(text);
-        //newest on top
-        recentFilesAction[i]->setData(recentFiles->get(numRecentFiles-i-1));
-        recentFilesAction[i]->setVisible(true);
-    }
-    for (int j = numRecentFiles; j < recentFiles->getNumber(); ++j)
-        recentFilesAction[j]->setVisible(false);
-
-/*    for (int i=0; i<recentFiles->getNumber(); ++i) {
-        QString label = QString( "&%1 %2" ).
-                        arg(i+1).arg(recentFiles->get(i));
-
-        if (fileMenu->findItem(i)) {
-            RS_DEBUG->print("Changeing item %d", i);
-            fileMenu->changeItem(i, label);
-        } else if (i < int(recentFiles->count())) {
-            RS_DEBUG->print("Adding item %d", i);
-            fileMenu->insertItem(label,
-                                 this, SLOT(slotFileOpenRecent(int)),
-                                 0, i);
-        }
-    }*/
-}
-
-
-
 /**
  * Goes back to the previous menu or one step in the current action.
  */
 void QC_ApplicationWindow::slotBack() {
     RS_GraphicView* graphicView = getGraphicView();
-    if (graphicView!=NULL) {
+	if (graphicView) {
         graphicView->back();
     } else {
-        if (cadToolBar!=NULL) {
+		if (cadToolBar) {
             cadToolBar->showToolBar(RS2::ToolBarMain);
         }
     }
@@ -1622,7 +1524,7 @@ void QC_ApplicationWindow::slotBack() {
 void QC_ApplicationWindow::slotKillAllActions() {
     RS_GraphicView* gv = getGraphicView();
     QC_MDIWindow* m = getMDIWindow();
-    if (gv!=NULL && m!=NULL && m->getDocument()!=NULL) {
+	if (gv && m && m->getDocument()) {
         gv->killAllActions();
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
 
@@ -1645,11 +1547,11 @@ void QC_ApplicationWindow::slotKillAllActions() {
 void QC_ApplicationWindow::slotEnter() {
     RS_DEBUG->print("QC_ApplicationWindow::slotEnter(): begin\n");
 //    if (commandWidget==NULL || !commandWidget->checkFocus()) {
-        if (cadToolBar!=NULL) {
+		if (cadToolBar) {
             cadToolBar->forceNext();
         } else {
             RS_GraphicView* graphicView = getGraphicView();
-            if (graphicView!=NULL) {
+			if (graphicView) {
                 graphicView->enter();
             }
         }
@@ -1686,7 +1588,7 @@ void QC_ApplicationWindow::slotError(const QString& msg) {
  */
 void QC_ApplicationWindow::slotFocus() {
     //QG_GraphicView* graphicView = getGraphicView();
-    /*if (graphicView!=NULL) {
+	/*if (graphicView) {
         graphicView->setFocus();
 }
     else {*/
@@ -1717,7 +1619,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
         mdiAreaCAD->activateNextSubWindow();
         auto w0=mdiAreaCAD->currentSubWindow();
         w0->showNormal();
-        if(w0!=NULL) slotWindowActivated(w0);
+		if(w0) slotWindowActivated(w0);
         return;
     }
     if(w==activedMdiSubWindow) return;
@@ -1728,7 +1630,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 //    int activeIndex=windows.indexOf(w);
 //    std::cout<<"QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w): activated "<< activeIndex <<std::endl;
 
-    if (m!=NULL && m->getDocument()!=NULL) {
+	if (m && m->getDocument()) {
 
         RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated: "
                         "document: %d", m->getDocument()->getId());
@@ -1766,10 +1668,10 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
         slotPenChanged(penToolBar->getPen());
 
         // update toggle button status:
-        if (m->getGraphic()!=NULL) {
+		if (m->getGraphic()) {
             emit(gridChanged(m->getGraphic()->isGridOn()));
         }
-        if (m->getGraphicView()!=NULL) {
+		if (m->getGraphicView()) {
 //            std::cout<<"QC_ApplicationWindow::slotWindowActivated(): emit(printPreviewChanged("<<m->getGraphicView()->isPrintPreview()<<")"<<std::endl;
 
             emit(printPreviewChanged(m->getGraphicView()->isPrintPreview()));
@@ -1777,7 +1679,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
     }
 
     // Disable/Enable menu and toolbar items
-    emit windowsChanged(m!=NULL && m->getDocument()!=NULL);
+	emit windowsChanged(m && m->getDocument());
 //    emit windowsChanged(true);
     RS_DEBUG->print("RVT_PORT emit windowsChanged(true);");
 
@@ -1860,7 +1762,7 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
 
     int ii = qobject_cast<QAction*>(sender())->data().toInt();
     QMdiSubWindow* w = mdiAreaCAD->subWindowList().at(ii);
-    if (w!=NULL) {
+	if (w) {
         if(w==mdiAreaCAD->activeSubWindow()) {
             return;
         }
@@ -2090,7 +1992,7 @@ void QC_ApplicationWindow::slotPenChanged(RS_Pen pen) {
     RS_DEBUG->print("Setting active pen...");
 
     QC_MDIWindow* m = getMDIWindow();
-    if (m!=NULL) {
+	if (m) {
         m->slotPenChanged(pen);
     }
 
@@ -2148,7 +2050,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     if(blockWidget) {
         blockWidget->setBlockList(w->getDocument()->getBlockList());
     }
-    if (graphic!=NULL) {
+	if (graphic) {
         // Link the graphic's layer list to the pen tool bar
         graphic->addLayerListListener(penToolBar);
         // Link the layer list to the layer widget
@@ -2168,7 +2070,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     // Link the dialog factory to the option widget:
     //QG_DIALOGFACTORY->setOptionWidget(optionWidget);
     // Link the dialog factory to the cad tool bar:
-    if (cadToolBar!=NULL) {
+	if (cadToolBar) {
         //set SnapFree to avoid orphaned snapOptions, bug#3407522
             /* setting snap option toolbar pointers to non-static fixes
              * bug#3407522
@@ -2267,7 +2169,7 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow* w) 
         commandWidget->appendHistory(message);
         statusBar()->showMessage(message, 2000);
     }
-    if (w->getGraphic()!=NULL) {
+	if (w->getGraphic()) {
         emit(gridChanged(w->getGraphic()->isGridOn()));
     }
 
@@ -2320,7 +2222,7 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
     QMdiSubWindow* old=activedMdiSubWindow;
     QRect geo;
     bool maximized=false;
-    if(old !=NULL) {//save old geometry
+	if(old ) {//save old geometry
         geo=activedMdiSubWindow->geometry();
         maximized=activedMdiSubWindow->isMaximized();
     }
@@ -2340,7 +2242,7 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
         }
         QMdiSubWindow* active=mdiAreaCAD->currentSubWindow();
         activedMdiSubWindow=NULL; //to allow reactivate the previous active
-        if( active != NULL ){//restore old geometry
+		if( active){//restore old geometry
             mdiAreaCAD->setActiveSubWindow(active);
             active->raise();
             active->setFocus();
@@ -2374,34 +2276,14 @@ void QC_ApplicationWindow::slotFileOpen() {
 }
 
 
-
 /**
- * Called when a recently opened file is chosen from the list in the
- * file menu.
- */
-void QC_ApplicationWindow::slotFileOpenRecent() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileOpenRecent()");
-
-    QAction *action = qobject_cast<QAction *>(sender());
-    if (action) {
-
-    statusBar()->showMessage(tr("Opening recent file..."));
-    QString fileName = action->data().toString();
-
-    slotFileOpen(fileName, RS2::FormatUnknown);
-    }
-}
-
-
-/*	*
- *	Function name:
  *
- *	Description:	- Format a string that hold a file name path
+ *	\brief	- Format a string that hold a file name path
  *						  such a way that it can displayed on the
  *						  windows title bar.
  *
- *	Author(s):		Claude Sylvain
- *	Created:			30 July 2011
+ *	\author		Claude Sylvain
+ *	\date			30 July 2011
  *	Last modified:
  *
  *	Parameters:		const QString &qstring_in:
@@ -2469,7 +2351,7 @@ void QC_ApplicationWindow::
         QMdiSubWindow* old=activedMdiSubWindow;
         QRect geo;
         bool maximized=false;
-        if(old !=NULL) {//save old geometry
+		if(old) {//save old geometry
             geo=activedMdiSubWindow->geometry();
             maximized=activedMdiSubWindow->isMaximized();
         }
@@ -2510,7 +2392,7 @@ void QC_ApplicationWindow::
                w->closeMDI(true,false); //force closing, without asking user for confirmation
                QMdiSubWindow* active=mdiAreaCAD->currentSubWindow();
                activedMdiSubWindow=NULL; //to allow reactivate the previous active
-               if( active != NULL ){//restore old geometry
+			   if( active){//restore old geometry
                    mdiAreaCAD->setActiveSubWindow(active);
                    active->raise();
                    active->setFocus();
@@ -2532,14 +2414,11 @@ void QC_ApplicationWindow::
         recentFiles->add(fileName);
         openedFiles.append(fileName);
         layerWidget->slotUpdateLayerList();
-        if (w->getGraphic()!=NULL) {
+		if (w->getGraphic()) {
             emit(gridChanged(w->getGraphic()->isGridOn()));
-        }
+		}
 
-        RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update recent file menu: 2");
-        updateRecentFilesMenu();
-
-        RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update recent file menu: OK");
+		recentFiles->updateRecentFilesMenu();
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption");
 
@@ -2586,7 +2465,7 @@ void QC_ApplicationWindow::slotFileSave() {
 
     QC_MDIWindow* w = getMDIWindow();
     QString name;
-    if (w!=NULL) {
+	if (w) {
         if (w->getDocument()->getFilename().isEmpty()) {
             slotFileSaveAs();
         } else {
@@ -2629,7 +2508,7 @@ void QC_ApplicationWindow::slotFileSaveAs() {
 
     QC_MDIWindow* w = getMDIWindow();
     QString name;
-    if (w!=NULL) {
+	if (w) {
         bool cancelled;
         if (w->slotFileSaveAs(cancelled)) {
             if (!cancelled) {
@@ -2653,8 +2532,8 @@ void QC_ApplicationWindow::slotFileSaveAs() {
                                      .arg(w->getDocument()->getFilename()),
                                      QMessageBox::Ok);
         }
-    }
-    updateRecentFilesMenu();
+	}
+	recentFiles->updateRecentFilesMenu();
 
     QString message = tr("Saved drawing: %1").arg(name);
     statusBar()->showMessage(message, 2000);
@@ -2672,7 +2551,7 @@ void QC_ApplicationWindow::slotFileAutoSave() {
     statusBar()->showMessage(tr("Auto-saving drawing..."), 2000);
 
     QC_MDIWindow* w = getMDIWindow();
-    if (w!=NULL) {
+	if (w) {
         bool cancelled;
         if (w->slotFileSave(cancelled, true)) {
             // auto-save cannot be cancelled by user, so the
@@ -2704,7 +2583,7 @@ void QC_ApplicationWindow::slotFileExport() {
 
     QC_MDIWindow* w = getMDIWindow();
     QString fn;
-    if (w!=NULL) {
+	if (w) {
 
         // read default settings:
         RS_SETTINGS->beginGroup("/Export");
@@ -2897,7 +2776,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     gv.setContainer(graphic);
     gv.zoomAuto(false);
     for (RS_Entity* e=graphic->firstEntity(RS2::ResolveAll);
-            e!=NULL; e=graphic->nextEntity(RS2::ResolveAll)) {
+			e; e=graphic->nextEntity(RS2::ResolveAll)) {
         gv.drawEntity(&painter, e);
     }
 
@@ -2948,7 +2827,7 @@ void QC_ApplicationWindow::slotFileClose() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClose(): detaching lists");
     QC_MDIWindow* w = getMDIWindow();
 
-    if(w!=NULL){
+	if(w){
         openedFiles.removeAll(w->getDocument()->getFilename());
         //        int pos=openedFiles.indexOf(w->getDocument()->getFilename());
         //        if(pos>=0) {
@@ -2957,7 +2836,7 @@ void QC_ApplicationWindow::slotFileClose() {
 
         //properly close print preview if exists
         QC_MDIWindow *ppv = w->getPrintPreview();
-        if (ppv!=NULL) {
+		if (ppv) {
             mdiAreaCAD->removeSubWindow(ppv->parentWidget());
         }
     }
@@ -2966,7 +2845,7 @@ void QC_ApplicationWindow::slotFileClose() {
     mdiAreaCAD->closeActiveSubWindow();
     activedMdiSubWindow=NULL;
     QMdiSubWindow* m=mdiAreaCAD->currentSubWindow();
-    if(m!=NULL){
+	if(m){
         slotWindowActivated(m);
     }
 
@@ -2985,7 +2864,7 @@ void QC_ApplicationWindow::slotFileClosing() {
     blockWidget->setBlockList(NULL);
     coordinateWidget->setGraphic(NULL);
     QC_MDIWindow* w = getMDIWindow();
-    if(w!=NULL)
+	if(w)
         openedFiles.removeAll(w->getDocument()->getFilename());
 }
 
@@ -3207,7 +3086,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
     else {
         // look for an existing print preview:
         QC_MDIWindow* ppv = parent->getPrintPreview();
-        if (ppv!=NULL) {
+		if (ppv) {
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): show existing");
 
             /*
@@ -3251,7 +3130,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                 // only graphics offer block lists, blocks don't
                 RS_DEBUG->print("  adding listeners");
                 RS_Graphic* graphic = w->getDocument()->getGraphic();
-                if (graphic!=NULL) {
+				if (graphic) {
                     // Link the layer list to the pen tool bar
                     graphic->addLayerListListener(penToolBar);
                     // Link the layer list to the layer widget
@@ -3282,7 +3161,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                     w->show();
                 }
 
-                if(graphic!=NULL){
+				if(graphic){
                     graphic->fitToPage();
                 }
 //                w->getGraphicView()->zoomPage();
@@ -3324,9 +3203,9 @@ void QC_ApplicationWindow::slotViewGrid(bool toggle) {
     RS_DEBUG->print("QC_ApplicationWindow::slotViewGrid()");
 
     QC_MDIWindow* m = getMDIWindow();
-    if (m!=NULL) {
+	if (m) {
         RS_Graphic* g = m->getGraphic();
-        if (g!=NULL) {
+		if (g) {
             g->setGridOn(toggle);
         }
     }
@@ -3384,13 +3263,13 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
  * Redraws all mdi windows.
  */
 void QC_ApplicationWindow::redrawAll() {
-    if (mdiAreaCAD!=NULL) {
+	if (mdiAreaCAD) {
         QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
         for (int i = 0; i < windows.size(); ++i) {
             QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
-            if (m!=NULL) {
+			if (m) {
                 QG_GraphicView* gv = m->getGraphicView();
-                if (gv!=NULL) {
+				if (gv) {
                     gv->redraw();
                 }
             }
@@ -3404,13 +3283,13 @@ void QC_ApplicationWindow::redrawAll() {
  * Updates all grids of all graphic views.
  */
 void QC_ApplicationWindow::updateGrids() {
-    if (mdiAreaCAD!=NULL) {
+	if (mdiAreaCAD) {
         QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
         for (int i = 0; i < windows.size(); ++i) {
             QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
-            if (m!=NULL) {
+			if (m) {
                 QG_GraphicView* gv = m->getGraphicView();
-                if (gv!=NULL) {
+				if (gv) {
                     // gv->updateGrid();
                     gv->redraw(RS2::RedrawGrid);
                 }
@@ -3444,11 +3323,11 @@ void QC_ApplicationWindow::slotBlocksEdit() {
     RS_DEBUG->print("QC_ApplicationWindow::slotBlocksEdit()");
 
     QC_MDIWindow* parent = getMDIWindow();
-    if (parent!=NULL) {
+	if (parent) {
         RS_BlockList* blist = blockWidget->getBlockList();
-        if (blist!=NULL) {
+		if (blist) {
             RS_Block* blk = blist->getActiveBlock();
-            if (blk!=NULL) {
+			if (blk) {
                 QC_MDIWindow* w = slotFileNew(blk);
                 // the parent needs a pointer to the block window and
                 //   vice versa
@@ -3482,9 +3361,9 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
     QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
     for (int i = 0; i < windows.size(); ++i) {
         QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
-        if (m!=NULL) {
+		if (m) {
             QG_GraphicView* gv = m->getGraphicView();
-            if (gv!=NULL) {
+			if (gv) {
                 gv->setBackground(color);
                 gv->setGridColor(gridColor);
                 gv->setMetaGridColor(metaGridColor);
@@ -3514,10 +3393,10 @@ void QC_ApplicationWindow::slotImportBlock() {
     }
 
     if (QFileInfo(dxfPath).isReadable()) {
-        if (actionHandler!=NULL) {
+		if (actionHandler) {
             RS_ActionInterface* a =
                 actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
-            if (a!=NULL) {
+			if (a) {
                 RS_ActionLibraryInsert* action = (RS_ActionLibraryInsert*)a;
                 action->setFile(dxfPath);
             } else {
@@ -3908,7 +3787,7 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
 
             // forward to actions:
             RS_GraphicView* graphicView = getGraphicView();
-            if (graphicView!=NULL) {
+			if (graphicView) {
                 graphicView->keyPressEvent(e);
             }
             e->accept();
@@ -3960,7 +3839,7 @@ void QC_ApplicationWindow::keyReleaseEvent(QKeyEvent* e) {
 
             // forward to actions:
             RS_GraphicView* graphicView = getGraphicView();
-            if (graphicView!=NULL) {
+			if (graphicView) {
                 graphicView->keyReleaseEvent(e);
             }
             e->accept();

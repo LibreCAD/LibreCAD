@@ -27,7 +27,7 @@
 #ifndef QC_APPLICATIONWINDOW_H
 #define QC_APPLICATIONWINDOW_H
 
-#include <QMdiSubWindow>
+#include <memory>
 #include "qc_mdiwindow.h"
 #include "qg_mainwindowinterface.h"
 
@@ -41,6 +41,7 @@ class QAssistantClient;
 #endif
 
 class QMdiArea;
+class QMdiSubWindow;
 class QC_MDIWindow;
 class QG_LibraryWidget;
 class QG_CadToolBar;
@@ -80,8 +81,6 @@ public:
     void initSettings();
         void restoreDocks();
     void storeSettings();
-
-    void updateRecentFilesMenu();
 
     void initMDI();
     void initView();
@@ -130,11 +129,6 @@ public slots:
     /** opens a document */
     void slotFileOpen();
 
-    /**
-    * opens a recent file document
-    * @param id File Menu id of the file
-    */
-    void slotFileOpenRecent();
     /**
      * opens the given file.
      */
@@ -379,7 +373,7 @@ private:
     QToolBar* optionWidget;
 
     /** Recent files list */
-	QG_RecentFiles* recentFiles;
+	std::unique_ptr<QG_RecentFiles> recentFiles;
     QStringList openedFiles;
 
     /** Action handler. */

@@ -23,18 +23,33 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include <QFileInfo>
+#include <QAction>
+#include <QMenu>
+#include <QStatusBar>
+#include "qc_applicationwindow.h"
 #include "qg_recentfiles.h"
 
 #include "rs_debug.h"
+#include "rs_settings.h"
 
 /**
  * Constructor
  * @param number Number of files that can be stored in the list at maximum
  */
-QG_RecentFiles::QG_RecentFiles(int number):
-	number(number)
+QG_RecentFiles::QG_RecentFiles(int number, QWidget* parent):
+	QObject(parent)
+	,number(number)
 {
+}
+
+QG_RecentFiles::~QG_RecentFiles()
+{
+	RS_SETTINGS->beginGroup("/RecentFiles");
+	for (int i=0; i<count(); ++i) {
+		RS_SETTINGS->writeEntry(QString("/File") + QString::number(i+1), get(i));
+	}
+	RS_SETTINGS->endGroup();
 }
 
 /**
@@ -43,6 +58,10 @@ QG_RecentFiles::QG_RecentFiles(int number):
  */
 void QG_RecentFiles::add(const QString& filename) {
     RS_DEBUG->print("QG_RecentFiles::add");
+	if(filename.size()>2048){
+		RS_DEBUG->print(RS_Debug::D_ERROR, "QG_RecentFiles::add filename too long at %d\n", filename.size());
+		return;
+	}
 
     // is the file already in the list?
     int i0=files.indexOf(filename);
@@ -83,3 +102,77 @@ int QG_RecentFiles::getNumber() const {
 int QG_RecentFiles::indexOf(const QString& filename) const{
 	return files.indexOf(filename) ;
 }
+
+void QG_RecentFiles::initSettings() {
+	RS_DEBUG->print("QG_RecentFiles::initSettings()");
+
+	//RS_Settings settings(QC_REGISTRY, QC_APPKEY);
+	auto appWin=QC_ApplicationWindow::getAppWindow();
+	QMenu* fileMenu=appWin->findChild<QMenu*>("File");
+	if(!fileMenu) {
+		RS_DEBUG->print(RS_Debug::D_ERROR, "QC_ApplicationWindow::find file menu failed\n");
+		exit(0);
+	}
+
+	RS_SETTINGS->beginGroup("/RecentFiles");
+	for (int i=0; i<number; ++i) {
+		QString filename = RS_SETTINGS->readEntry(QString("/File") +
+						   QString::number(i+1));
+		if (QFileInfo(filename).exists()) add(filename);
+	}
+	RS_SETTINGS->endGroup();
+//    QList <QAction*> recentFilesAction;
+
+	for (int i = 0; i < number; ++i) {
+		recentFilesAction.push_back(new QAction(appWin));
+		QAction* a=recentFilesAction.back();
+		a->setVisible(false);
+		connect(a, SIGNAL(triggered()),
+				this, SLOT(slotFileOpenRecent()));
+		fileMenu->addAction(a);
+	}
+	if (count()>0) {
+		updateRecentFilesMenu();
+	}
+}
+
+
+void QG_RecentFiles::updateRecentFilesMenu() {
+	RS_DEBUG->print("QG_RecentFiles::updateRecentFilesMenu(): begin\n");
+
+	RS_DEBUG->print("Updating recent file menu...");
+	int numRecentFiles = std::min(count(), getNumber());
+
+	for (int i = 0; i < numRecentFiles; ++i) {
+		//oldest on top
+//        QString text = tr("&%1 %2").arg(i + 1).arg(recentFiles->get(i));
+		//newest on top
+		QString&& text = tr("&%1 %2").arg(i + 1).arg(get(numRecentFiles-i-1));
+
+		recentFilesAction[i]->setText(text);
+		//newest on top
+		recentFilesAction[i]->setData(get(numRecentFiles-i-1));
+		recentFilesAction[i]->setVisible(true);
+	}
+	for (int j = numRecentFiles; j < getNumber(); ++j)
+		recentFilesAction[j]->setVisible(false);
+	RS_DEBUG->print("QG_RecentFiles::updateRecentFilesMenu(): ok\n");
+}
+
+
+void QG_RecentFiles::slotFileOpenRecent() {
+	RS_DEBUG->print("QC_ApplicationWindow::slotFileOpenRecent()");
+
+	auto appWin=QC_ApplicationWindow::getAppWindow();
+
+	QAction *action = qobject_cast<QAction *>(sender());
+	if (action) {
+
+		appWin->statusBar()->showMessage(tr("Opening recent file..."));
+		QString fileName = action->data().toString();
+
+		appWin->slotFileOpen(fileName, RS2::FormatUnknown);
+	}
+}
+
+

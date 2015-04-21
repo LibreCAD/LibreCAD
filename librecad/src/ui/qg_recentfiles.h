@@ -28,15 +28,21 @@
 #define QG_RECENTFILES_H
 
 #include <QStringList>
+#include <QObject>
+
+class QAction;
+class QWidget;
 
 /**
  * This class can store recent files in a list.
  */
-class QG_RecentFiles {
+class QG_RecentFiles: public QObject {
+
+	Q_OBJECT
 
 public:
-    QG_RecentFiles(int number);
-	virtual ~QG_RecentFiles()=default;
+	QG_RecentFiles(int number, QWidget* parent = nullptr);
+	virtual ~QG_RecentFiles();
 
     void add(const QString& filename);
 
@@ -53,10 +59,20 @@ public:
 	int getNumber() const;
 
 	int indexOf(const QString& filename) const;
+	void initSettings();
+	void updateRecentFilesMenu();
+
+private slots:
+	/**
+	* \brief opens a recent file document
+	* @param id File Menu id of the file
+	*/
+	void slotFileOpenRecent();
 
 private:
-    int number;
-    QStringList files;
+	int const number;
+	QStringList files;
+	QList<QAction*> recentFilesAction;
 };
 
 #endif
