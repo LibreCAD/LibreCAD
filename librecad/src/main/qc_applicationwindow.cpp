@@ -1208,24 +1208,24 @@ void QC_ApplicationWindow::initMenuBar() {
     helpMenu->addSeparator();
     helpMenu->addAction(helpAboutApp);
 
-    // menuBar entry test menu
-    if (QC_DEBUGGING) {
-        testMenu = menuBar()->addMenu(tr("De&bugging"));
-        testMenu->setObjectName("Debugging");
-        testMenu->addAction(testDumpEntities);
-        testMenu->addAction(testDumpUndo);
-        testMenu->addAction(testUpdateInserts);
-        testMenu->addAction(testDrawFreehand);
-        testMenu->addAction(testInsertBlock);
-        testMenu->addAction(testInsertText);
-        testMenu->addAction(testInsertImage);
-        testMenu->addAction(testInsertEllipse);
-        testMenu->addAction(testUnicode);
-        testMenu->addAction(testMath01);
-        testMenu->addAction(testResize640);
-        testMenu->addAction(testResize800);
-        testMenu->addAction(testResize1024);
-    }
+#ifdef QC_DEBUGGING
+	// menuBar entry test menu
+	testMenu = menuBar()->addMenu(tr("De&bugging"));
+	testMenu->setObjectName("Debugging");
+	testMenu->addAction(testDumpEntities);
+	testMenu->addAction(testDumpUndo);
+	testMenu->addAction(testUpdateInserts);
+	testMenu->addAction(testDrawFreehand);
+	testMenu->addAction(testInsertBlock);
+	testMenu->addAction(testInsertText);
+	testMenu->addAction(testInsertImage);
+	testMenu->addAction(testInsertEllipse);
+	testMenu->addAction(testUnicode);
+	testMenu->addAction(testMath01);
+	testMenu->addAction(testResize640);
+	testMenu->addAction(testResize800);
+	testMenu->addAction(testResize1024);
+#endif
 
     // menuBar configuration
 	recentFiles.reset(new QG_RecentFiles(9));
@@ -1400,13 +1400,7 @@ void QC_ApplicationWindow::initView() {
     RS_DEBUG->print("QC_ApplicationWindow::initView()");
 
     RS_DEBUG->print("init view..");
-    QDockWidget* dw;
-    layerWidget = NULL;
-    blockWidget = NULL;
-    libraryWidget = NULL;
-    commandWidget = NULL;
-
-
+	QDockWidget* dw;
 
     RS_DEBUG->print("  layer widget..");
     dw = new QDockWidget( "Layer", this);
@@ -1428,7 +1422,6 @@ void QC_ApplicationWindow::initView() {
     // dw->setCloseMode(QDockWidget::Always);
     //dw->resize(120,mdiAreaCAD->height()/2);
     addDockWidget (Qt::RightDockWidgetArea, dw );
-
 
     layerDockWindow = dw;
 
@@ -1475,7 +1468,6 @@ void QC_ApplicationWindow::initView() {
 
     libraryDockWindow = dw;
     libraryDockWindow->hide();
-
 
     RS_DEBUG->print("  command widget..");
     dw = new QDockWidget(tr("Command line"), this);
@@ -1546,7 +1538,6 @@ void QC_ApplicationWindow::slotKillAllActions() {
  */
 void QC_ApplicationWindow::slotEnter() {
     RS_DEBUG->print("QC_ApplicationWindow::slotEnter(): begin\n");
-//    if (commandWidget==NULL || !commandWidget->checkFocus()) {
 		if (cadToolBar) {
             cadToolBar->forceNext();
         } else {
@@ -1558,8 +1549,6 @@ void QC_ApplicationWindow::slotEnter() {
 //    }
     RS_DEBUG->print("QC_ApplicationWindow::slotEnter(): end\n");
 }
-
-
 
 /**
  * Sets the keyboard focus on the command line.
@@ -1579,21 +1568,13 @@ void QC_ApplicationWindow::slotError(const QString& msg) {
         commandWidget->appendHistory(msg);
 }
 
-
-
 /**
  * Hands focus back to the application window. In the rare event
  * of a escape press from the layer widget (e.g after switching desktops
  * in XP).
  */
 void QC_ApplicationWindow::slotFocus() {
-    //QG_GraphicView* graphicView = getGraphicView();
-	/*if (graphicView) {
-        graphicView->setFocus();
-}
-    else {*/
     setFocus();
-    //}
 }
 
 void QC_ApplicationWindow::slotWindowActivated(int index){
