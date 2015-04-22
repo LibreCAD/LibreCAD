@@ -355,8 +355,8 @@ double dwgBuffer::getBitDouble(){
         } else {
         filestr->read (buffer,8);
         }
-        double ret = *reinterpret_cast<double*>( buffer );
-        return ret;
+        double* ret = reinterpret_cast<double*>( buffer );
+        return *ret;
     }
     //    if (b == 2)
     return 0.0;
@@ -416,13 +416,8 @@ double dwgBuffer::getRawDouble(){
         for (int i = 0; i < 8; i++)
             buffer[i] = getRawChar8();
     }
-/*    dint32 tmp = buffer[0]<<24 | buffer[1]<<16 | buffer[2]<<8 | buffer[3];
-    dint32 tmp2 = buffer[4]<<24 | buffer[5]<<16 | buffer[6]<<8 | buffer[7];
-    dint64 tmp3 = tmp <<32 | tmp;
-    double *nOffset = reinterpret_cast<double*>(&tmp3);*/
-//    &nOffset = &tmp;
-    double nOffset = *reinterpret_cast<double*>( buffer );
-    return nOffset;
+    double* nOffset = reinterpret_cast<double*>( buffer );
+    return *nOffset;
 }
 
 /**Reads 2 raw double IEEE standard 64 bits returns a DRW_Coord of floating point double 64 bits (2RD) **/

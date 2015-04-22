@@ -171,8 +171,9 @@ protected:
     void calculateAxis(DRW_Coord extPoint);
     //apply extrusion to @extPoint and return data in @point
     void extrudePoint(DRW_Coord extPoint, DRW_Coord *point);
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0)=0;
     //parses dwg common start part to read entity
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, duint32 bs=0);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, duint32 bs=0);
     //parses dwg common handles part to read entity
     bool parseDwgEntHandle(DRW::Version version, dwgBuffer *buf);
 
@@ -754,7 +755,9 @@ public:
 
 protected:
     void parseCode(int code, dxfReader *reader);
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0, double el=0);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0, double el=0);
+    virtual bool parseDwg(DRW::Version version, dwgBuffer* buf, duint32 bs=0){
+        DRW_UNUSED(version); DRW_UNUSED(buf); DRW_UNUSED(bs); return true;}
 
 public:
     double stawidth;          /*!< Start width, code 40 */
@@ -1109,7 +1112,9 @@ public:
 
 protected:
     void parseCode(int code, dxfReader *reader);
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf);
+    virtual bool parseDwg(DRW::Version version, dwgBuffer* buf, duint32 bs=0){
+        DRW_UNUSED(version); DRW_UNUSED(buf); DRW_UNUSED(bs); return true;}
 
 public:
     DRW_Coord getDefPoint() const {return defPoint;}      /*!< Definition point, code 10, 20 & 30 */

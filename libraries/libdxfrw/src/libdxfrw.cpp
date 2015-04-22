@@ -127,9 +127,11 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
     entCount =FIRSTHANDLE;
     header.write(writer, version);
     writer->writeString(0, "ENDSEC");
+    if (ver > DRW::AC1009) {
     writer->writeString(0, "SECTION");
     writer->writeString(2, "CLASSES");
     writer->writeString(0, "ENDSEC");
+    }
     writer->writeString(0, "SECTION");
     writer->writeString(2, "TABLES");
     writeTables();
@@ -497,6 +499,11 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
 }
 
 bool dxfRW::writeAppId(DRW_AppId *ent){
+    std::string strname = ent->name;
+    transform(strname.begin(), strname.end(), strname.begin(),::toupper);
+//do not write mandatory ACAD appId, handled by library
+    if (strname == "ACAD")
+        return true;
     writer->writeString(0, "APPID");
     if (version > DRW::AC1009) {
         writer->writeString(5, toHexStr(++entCount));
