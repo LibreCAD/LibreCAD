@@ -10,6 +10,9 @@ DEFINES += QC_VERSION="\"master\""
 DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 DEFINES += HAS_BOOST=1
 
+#uncomment to enable a Debugging menu entry for basic unit testing
+#DEFINES += LC_DEBUGGING
+
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 

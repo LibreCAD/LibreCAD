@@ -1,4 +1,5 @@
 #include <fstream>
+#include <QMenuBar>
 #include "lc_simpletests.h"
 #include "qc_applicationwindow.h"
 #include "rs_graphic.h"
@@ -21,21 +22,102 @@
 #include "rs_text.h"
 #include "rs_entitycontainer.h"
 
+LC_SimpleTests::LC_SimpleTests(QWidget *parent):
+	QObject(parent)
+{
+	auto appWin=QC_ApplicationWindow::getAppWindow();
+	QMenu* testMenu=appWin->menuBar()->addMenu(tr("De&bugging"));
+	testMenu->setObjectName("Debugging");
+
+		QAction* action = new QAction("Dump Entities", this);
+		connect(action, SIGNAL(triggered()),
+				this, SLOT(slotTestDumpEntities()));
+		testMenu->addAction(action);
+
+			action = new QAction("Dump Undo Info", this);
+		connect(action, SIGNAL(triggered()),
+				this, SLOT(slotTestDumpUndo()));
+		testMenu->addAction(action);
+
+		action = new QAction("Update Inserts", this);
+		connect(action, SIGNAL(triggered()),
+				this, SLOT(slotTestUpdateInserts()));
+		testMenu->addAction(action);
+
+			 action = new QAction("Draw Freehand", this);
+		connect(action, SIGNAL(triggered()),
+				this, SLOT(slotTestDrawFreehand()));
+		testMenu->addAction(action);
+
+			 action = new QAction("Draw Freehand", this);
+		connect(action, SIGNAL(triggered()),
+				this, SLOT(slotTestDrawFreehand()));
+		testMenu->addAction(action);
+
+		action = new QAction("Insert Block", this);
+
+		connect(action, SIGNAL(triggered()),
+				this, SLOT(slotTestInsertBlock()));
+		testMenu->addAction(action);
+
+		action = new QAction("Insert MText", this);
+		connect(action, SIGNAL(triggered()),
+				this, SLOT(slotTestInsertMText()));
+		testMenu->addAction(action);
+
+		action = new QAction("Insert Text", this);
+		connect(action, SIGNAL(triggered()),
+				this, SLOT(slotTestInsertText()));
+		testMenu->addAction(action);
+
+		action = new QAction(tr("Insert Image"), this);
+		connect(action, SIGNAL(triggered()),
+				this, SLOT(slotTestInsertImage()));
+		testMenu->addAction(action);
+
+		action = new QAction("Unicode", this);
+		connect(action, SIGNAL(triggered()),
+				this, SLOT(slotTestUnicode()));
+		testMenu->addAction(action);
+
+		action = new QAction("Insert Ellipse", this);
+		connect(action, SIGNAL(triggered()),
+				this, SLOT(slotTestInsertEllipse()));
+		testMenu->addAction(action);
+
+		action = new QAction("Math01", this);
+		connect(action, SIGNAL(triggered()),
+				this, SLOT(slotTestMath01()));
+		testMenu->addAction(action);
+
+		action = new QAction("Resize to 640x480", this);
+		connect(action, SIGNAL(triggered()),
+				this, SLOT(slotTestResize640()));
+		testMenu->addAction(action);
+
+		action = new QAction("Resize to 800x600", this);
+		connect(action, SIGNAL(triggered()),
+				this, SLOT(slotTestResize800()));
+		testMenu->addAction(action);
+
+		action = new QAction("Resize to 1024x768", this);
+		connect(action, SIGNAL(triggered()),
+				this, SLOT(slotTestResize1024()));
+		testMenu->addAction(action);
+}
+
 /**
  * Testing function.
  */
-void LC_SimpleTests::slotTestDumpEntities(RS_EntityContainer* d) {
-	RS_DEBUG->print("%s\n: begin\n", __func__);
-	QC_ApplicationWindow* appWin=QC_ApplicationWindow::getAppWindow();
+void LC_SimpleTests::slotTestDumpEntities(RS_EntityContainer* d){
 
-	static int level = 0;
+	int level = 0;
 	std::ofstream dumpFile;
-
 	if (d) {
 		dumpFile.open("debug_entities.html", std::ios::app);
 		++level;
 	} else {
-		d = appWin->getDocument();
+		d = QC_ApplicationWindow::getAppWindow()->getDocument();
 		dumpFile.open("debug_entities.html");
 		level = 0;
 	}
@@ -1012,6 +1094,7 @@ void LC_SimpleTests::slotTestMath01() {
 void LC_SimpleTests::slotTestResize640() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
 	QC_ApplicationWindow::getAppWindow()->resize(640, 480);
+	QC_ApplicationWindow::getAppWindow()->update();
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
 
@@ -1021,6 +1104,7 @@ void LC_SimpleTests::slotTestResize640() {
 void LC_SimpleTests::slotTestResize800() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
 	QC_ApplicationWindow::getAppWindow()->resize(800, 600);
+	QC_ApplicationWindow::getAppWindow()->update();
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }
 
@@ -1030,5 +1114,6 @@ void LC_SimpleTests::slotTestResize800() {
 void LC_SimpleTests::slotTestResize1024() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
 	QC_ApplicationWindow::getAppWindow()->resize(1024, 768);
+	QC_ApplicationWindow::getAppWindow()->update();
 	RS_DEBUG->print("%s\n: end\n", __func__);
 }

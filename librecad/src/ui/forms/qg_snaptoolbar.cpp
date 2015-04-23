@@ -62,7 +62,7 @@ void QG_SnapToolBar::saveSnapMode()
     // no need to delete child widgets, Qt does it all for us
 }
 
-void QG_SnapToolBar::setSnaps ( RS_SnapMode s )
+void QG_SnapToolBar::setSnaps ( RS_SnapMode const& s )
 {
 	if(getSnaps()==s) return;
     snapFree->setChecked(s.snapFree);

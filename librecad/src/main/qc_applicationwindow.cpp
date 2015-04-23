@@ -363,7 +363,7 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
         "deleting assistant..");
 #if QT_VERSION < 0x040400
-    if (assistant != NULL) {
+	if (assistant) {
         delete assistant;
     }
 #else
@@ -1062,95 +1062,15 @@ void QC_ApplicationWindow::initActions(void)
 
     helpManual = new QAction( QIcon(":/main/manual.png"), tr("&Manual"), this);
     connect( helpManual, SIGNAL(triggered()), this, SLOT(slotHelpManual()));
-
-/* RVT_PORT    testDumpEntities = new QAction("Dump Entities",
-                                   "Dump &Entities", 0, this); */
-    testDumpEntities = new QAction("Dump Entities", this);
-    connect(testDumpEntities, SIGNAL(triggered()),
-            this, SLOT(slotTestDumpEntities()));
-
-/* RVT_PORT	testDumpUndo = new QAction("Dump Undo Info",
-                                                           "Undo Info", 0, this); */
-        testDumpUndo = new QAction("Dump Undo Info", this);
-    connect(testDumpUndo, SIGNAL(triggered()),
-            this, SLOT(slotTestDumpUndo()));
-
-/* RVT_PORT    testUpdateInserts = new QAction("Update Inserts",
-                                    "&Update Inserts", 0, this); */
-    testUpdateInserts = new QAction("Update Inserts", this);
-    connect(testUpdateInserts, SIGNAL(triggered()),
-            this, SLOT(slotTestUpdateInserts()));
-
-/* RVT_PORT    testDrawFreehand = new QAction("Draw Freehand",
-         "Draw Freehand", 0, this); */
-         testDrawFreehand = new QAction("Draw Freehand", this);
-    connect(testDrawFreehand, SIGNAL(triggered()),
-            this, SLOT(slotTestDrawFreehand()));
-
-/* RVT_PORT    testInsertBlock = new QAction("Insert Block",
-                                  "Insert Block", 0, this); */
-    testInsertBlock = new QAction("Insert Block", this);
-
-    connect(testInsertBlock, SIGNAL(triggered()),
-            this, SLOT(slotTestInsertBlock()));
-
-/* RVT_PORT    testInsertText = new QAction("Insert Text",
-                                 "Insert Text", 0, this); */
-    testInsertMText = new QAction("Insert MText", this);
-    connect(testInsertMText, SIGNAL(triggered()),
-            this, SLOT(slotTestInsertMText()));
-    testInsertText = new QAction("Insert Text", this);
-    connect(testInsertText, SIGNAL(triggered()),
-            this, SLOT(slotTestInsertText()));
-
-/* RVT_PORT    testInsertImage = new QAction("Insert Image",
-                                  "Insert Image", 0, this); */
-        // "Insert Image",
-    testInsertImage = new QAction(tr("Insert Image"), this);
-    connect(testInsertImage, SIGNAL(triggered()),
-            this, SLOT(slotTestInsertImage()));
-
-/* RVT_PORT    testUnicode = new QAction("Unicode",
-                              "Unicode", 0, this); */
-    testUnicode = new QAction("Unicode", this);
-    connect(testUnicode, SIGNAL(triggered()),
-            this, SLOT(slotTestUnicode()));
-
-/* RVT_PORT    testInsertEllipse = new QAction("Insert Ellipse",
-                                    "Insert Ellipse", 0, this); */
-    testInsertEllipse = new QAction("Insert Ellipse", this);
-    connect(testInsertEllipse, SIGNAL(triggered()),
-            this, SLOT(slotTestInsertEllipse()));
-
-/*  RVT_PORT  testMath01 = new QAction("Math01",
-                             "Math01", 0, this); */
-    testMath01 = new QAction("Math01", this);
-    connect(testMath01, SIGNAL(triggered()),
-            this, SLOT(slotTestMath01()));
-
-/* RVT_PORT    testResize640 = new QAction("Resize to 640x480",
-                                "Resize 1", 0, this); */
-    testResize640 = new QAction("Resize to 640x480", this);
-    connect(testResize640, SIGNAL(triggered()),
-            this, SLOT(slotTestResize640()));
-
-/* RVT_PORT    testResize800 = new QAction("Resize to 800x600",
-                                "Resize 2", 0, this); */
-    testResize800 = new QAction("Resize to 800x600", this);
-    connect(testResize800, SIGNAL(triggered()),
-            this, SLOT(slotTestResize800()));
-
-/* RVT_PORT    testResize1024 = new QAction("Resize to 1024x768",
-                                 "Resize 3", 0, this); */
-    testResize1024 = new QAction("Resize to 1024x768", this);
-    connect(testResize1024, SIGNAL(triggered()),
-            this, SLOT(slotTestResize1024()));
+#ifdef LC_DEBUGGING
+	m_pSimpleTest=new LC_SimpleTests(this);
+#endif
 
 }
 
 void QC_ApplicationWindow::setPreviousZoomEnable(bool enable){
     previousZoomEnable=enable;
-    if(previousZoom != NULL){
+	if(previousZoom){
         previousZoom->setEnabled(enable);
     }
 }
@@ -1158,21 +1078,21 @@ void QC_ApplicationWindow::setPreviousZoomEnable(bool enable){
 
 void QC_ApplicationWindow::setUndoEnable(bool enable){
     undoEnable=enable;
-    if(undoButton != NULL){
+	if(undoButton){
         undoButton->setEnabled(enable);
     }
 }
 
 void QC_ApplicationWindow::setRedoEnable(bool enable){
     redoEnable=enable;
-    if(redoButton != NULL){
+	if(redoButton){
         redoButton->setEnabled(enable);
     }
 }
 
 
 void QC_ApplicationWindow::slotEnableActions(bool enable) {
-    if(previousZoom != NULL){
+	if(previousZoom){
         previousZoom->setEnabled(enable&& previousZoomEnable);
         undoButton->setEnabled(enable&& undoEnable);
         redoButton->setEnabled(enable&& redoEnable);
@@ -1208,31 +1128,10 @@ void QC_ApplicationWindow::initMenuBar() {
     helpMenu->addSeparator();
     helpMenu->addAction(helpAboutApp);
 
-#ifdef QC_DEBUGGING
-	// menuBar entry test menu
-	testMenu = menuBar()->addMenu(tr("De&bugging"));
-	testMenu->setObjectName("Debugging");
-	testMenu->addAction(testDumpEntities);
-	testMenu->addAction(testDumpUndo);
-	testMenu->addAction(testUpdateInserts);
-	testMenu->addAction(testDrawFreehand);
-	testMenu->addAction(testInsertBlock);
-	testMenu->addAction(testInsertText);
-	testMenu->addAction(testInsertImage);
-	testMenu->addAction(testInsertEllipse);
-	testMenu->addAction(testUnicode);
-	testMenu->addAction(testMath01);
-	testMenu->addAction(testResize640);
-	testMenu->addAction(testResize800);
-	testMenu->addAction(testResize1024);
-#endif
-
     // menuBar configuration
 	recentFiles.reset(new QG_RecentFiles(9));
     openedFiles.clear();
 }
-
-
 
 /**
  * Initializes the tool bars (file tool bar and pen tool bar).
@@ -1639,7 +1538,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 
         // set snapmode from snap toolbar
         //actionHandler->updateSnapMode();
-        if(snapToolBar != NULL ){
+		if(snapToolBar ){
             actionHandler->slotSetSnaps(snapToolBar->getSnaps());
         }else {
             RS_DEBUG->print(RS_Debug::D_ERROR,"snapToolBar is NULL\n");
@@ -1685,14 +1584,14 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
         //fixme, this should be auto, by
         //setAttribute(Qt::WA_DeleteOnClose);
 
-        if(windows.at(i) != NULL && windows.at(i)->widget() != NULL){
+		if(windows.at(i) && windows.at(i)->widget()){
             i++;
         }else{
             mdiAreaCAD->removeSubWindow(windows.at(i));
             windows = mdiAreaCAD->subWindowList();
             if(windows.size() > 0){
                 QMdiSubWindow* active= mdiAreaCAD->currentSubWindow();
-                if(active != NULL) {
+				if(active) {
                    mdiAreaCAD->setActiveSubWindow(active);
                    active->raise();
                    active->setFocus();
@@ -1720,7 +1619,7 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
     windowsMenu->addSeparator();
     QMdiSubWindow* active= mdiAreaCAD->activeSubWindow();
 //    int active=windows.indexOf(mdiAreaCAD->activeSubWindow());
-//    std::cout<<" QC_ApplicationWindow::slotWindowsMenuAboutToShow(): has active: "<< (mdiAreaCAD->activeSubWindow() != NULL )<<" index="<<active<<std::endl;
+//    std::cout<<" QC_ApplicationWindow::slotWindowsMenuAboutToShow(): has active: "<< (mdiAreaCAD->activeSubWindow() )<<" index="<<active<<std::endl;
 //    if(active<0) active=windows.size()-1;
     for (int i=0; i<windows.size(); ++i) {
         QAction *id = windowsMenu->addAction(windows.at(i)->windowTitle(),
@@ -2055,7 +1954,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
         //set SnapFree to avoid orphaned snapOptions, bug#3407522
             /* setting snap option toolbar pointers to non-static fixes
              * bug#3407522
-            if (snapToolBar != NULL && getGraphicView() != NULL && getDocument() != NULL ) {
+			if (snapToolBar && getGraphicView() && getDocument() ) {
                     //need to detect graphicView and Document for NULL
 //bug#3408689
                 RS_SnapMode s=snapToolBar->getSnaps();
@@ -3055,7 +2954,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
             emit(printPreviewChanged(false));
             if(mdiAreaCAD->subWindowList().size()>0){
                 QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
-                if(w != NULL){
+				if(w){
                     mdiAreaCAD->setActiveSubWindow(w);
                 }
             }
@@ -3069,16 +2968,6 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
         QC_MDIWindow* ppv = parent->getPrintPreview();
 		if (ppv) {
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): show existing");
-
-            /*
-            QList<QMdiSubWindow*> windows=mdiAreaCAD->subWindowList();
-            for(int i=0;i<windows.size();i++){
-                if( windows.at(i)->widget() == ppv){
-                    windows.at(i)->showMaximized();
-                    mdiAreaCAD->setActiveSubWindow(windows.at(i));
-                    break;
-                }
-            }*/
 
             //no need to search, casting parentWindow works like a charm
             ppv->parentWidget()->showMaximized();
@@ -3198,7 +3087,6 @@ void QC_ApplicationWindow::slotViewGrid(bool toggle) {
 }
 
 
-
 /**
  * Enables / disables the draft mode.
  *
@@ -3295,31 +3183,6 @@ void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
         statusBar()->show();
     }
 }
-
-/**
- * Creates a new MDI window for editing the selected block.
- */
-/*
-void QC_ApplicationWindow::slotBlocksEdit() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotBlocksEdit()");
-
-    QC_MDIWindow* parent = getMDIWindow();
-	if (parent) {
-        RS_BlockList* blist = blockWidget->getBlockList();
-		if (blist) {
-            RS_Block* blk = blist->getActiveBlock();
-			if (blk) {
-                QC_MDIWindow* w = slotFileNew(blk);
-                // the parent needs a pointer to the block window and
-                //   vice versa
-                parent->addChildWindow(w);
-                w->getGraphicView()->zoomAuto();
-            }
-        }
-    }
-} */
-
-
 
 /**
  * Shows the dialog for general application preferences.
@@ -3482,8 +3345,6 @@ void QC_ApplicationWindow::slotHelpAbout() {
     box.resize(500,400);
 }
 
-
-
 /**
  * Menu help -> help.
  */
@@ -3550,104 +3411,6 @@ void QC_ApplicationWindow::slotHelpManual() {
 }
 
 /**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
-	LC_SimpleTests::slotTestDumpEntities(d);
-}
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestDumpUndo() {
-	LC_SimpleTests::slotTestDumpUndo();
-}
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestUpdateInserts() {
-	LC_SimpleTests::slotTestUpdateInserts();
-}
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestDrawFreehand() {
-	LC_SimpleTests::slotTestDrawFreehand();
-}
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestInsertBlock() {
-	LC_SimpleTests::slotTestInsertBlock();
-}
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestInsertEllipse() {
-	LC_SimpleTests::slotTestInsertEllipse();
-}
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestInsertMText() {
-	LC_SimpleTests::slotTestInsertMText();
-}
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestInsertText() {
-	LC_SimpleTests::slotTestInsertText();
-}
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestInsertImage() {
-	LC_SimpleTests::slotTestInsertImage();
-}
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestUnicode() {
-	LC_SimpleTests::slotTestUnicode();
-}
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestMath01() {
-	LC_SimpleTests::slotTestMath01();
-}
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestResize640() {
-	LC_SimpleTests::slotTestResize640();
-}
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestResize800() {
-	LC_SimpleTests::slotTestResize800();
-}
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestResize1024() {
-	LC_SimpleTests::slotTestResize1024();
-}
-
-/**
  * overloaded for Message box on last window exit.
  */
 bool QC_ApplicationWindow::queryExit(bool force) {
@@ -3660,7 +3423,7 @@ bool QC_ApplicationWindow::queryExit(bool force) {
 
          while (!list.isEmpty()) {
              QC_MDIWindow *tmp=qobject_cast<QC_MDIWindow*>(list.takeFirst()->widget());
-             if( tmp != NULL){
+			 if( tmp){
                  succ = tmp->closeMDI(force);
                  if (!succ) {
                      break;
@@ -3676,8 +3439,6 @@ bool QC_ApplicationWindow::queryExit(bool force) {
 
     return succ;
 }
-
-
 
 /**
  * Handle hotkeys. Don't let it to the default handler of Qt.

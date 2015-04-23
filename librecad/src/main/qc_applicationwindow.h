@@ -58,6 +58,7 @@ class QG_PenToolBar;
 class QHelpEngine;
 class QC_PluginInterface;
 class QG_ActiveLayerName;
+class LC_SimpleTests;
 
 /**
  * Main application window. Hold together document, view and controls.
@@ -121,7 +122,7 @@ public slots:
     void slotEnableActions(bool enable);
 
     /** generates a new document for a graphic. */
-    QC_MDIWindow* slotFileNew(RS_Document* doc=NULL);
+	QC_MDIWindow* slotFileNew(RS_Document* doc=nullptr);
     /** generates a new document based in predefined template */
     void slotFileNewNew();
     /** generates a new document based in selected template */
@@ -180,39 +181,12 @@ public slots:
     void slotHelpAbout();
     void slotHelpManual();
 
-    /** dumps entities to file */
-    void slotTestDumpEntities(RS_EntityContainer* d=NULL);
-    /** dumps undo info to stdout */
-    void slotTestDumpUndo();
-    /** updates all inserts */
-    void slotTestUpdateInserts();
-    /** draws some random lines */
-    void slotTestDrawFreehand();
-    /** inserts a test block */
-    void slotTestInsertBlock();
-    /** inserts a test ellipse */
-    void slotTestInsertEllipse();
-    /** inserts a test mtext */
-    void slotTestInsertMText();
-    /** inserts a test text */
-    void slotTestInsertText();
-    /** inserts a test image */
-    void slotTestInsertImage();
-    /** unicode table */
-    void slotTestUnicode();
-    /** math experimental */
-    void slotTestMath01();
-    /** resizes window to 640x480 for screen shots */
-    void slotTestResize640();
-    /** resizes window to 640x480 for screen shots */
-    void slotTestResize800();
-    /** resizes window to 640x480 for screen shots */
-    void slotTestResize1024();
     /**
      * @brief slotUpdateActiveLayer
      * update layer name when active layer changed
      */
     void slotUpdateActiveLayer();
+	void execPlug();
 
 signals:
     void gridChanged(bool on);
@@ -235,7 +209,7 @@ public:
 	QMdiArea* getMdiArea();
 
     /**
-     * @return Pointer to the currently active MDI Window or NULL if no
+	 * @return Pointer to the currently active MDI Window or nullptr if no
      * MDI Window is active.
      */
 	const QC_MDIWindow* getMDIWindow() const;
@@ -245,7 +219,7 @@ public:
      * Implementation from RS_MainWindowInterface (and QS_ScripterHostInterface).
      *
      * @return Pointer to the graphic view of the currently active document
-     * window or NULL if no window is available.
+	 * window or nullptr if no window is available.
      */
 	const RS_GraphicView* getGraphicView() const;
 	RS_GraphicView* getGraphicView();
@@ -254,7 +228,7 @@ public:
      * Implementation from RS_MainWindowInterface (and QS_ScripterHostInterface).
      *
      * @return Pointer to the graphic document of the currently active document
-     * window or NULL if no window is available.
+	 * window or nullptr if no window is available.
      */
 	const RS_Document* getDocument() const;
 	RS_Document* getDocument();
@@ -290,11 +264,11 @@ public:
      */
 #ifdef RS_SCRIPTING
     QSProject* getQSAProject() {
-                if (scripter!=NULL) {
+				if (scripter!=nullptr) {
                 return scripter->getQSAProject();
                 }
                 else {
-                        return NULL;
+						return nullptr;
                 }
     }
 #endif
@@ -332,7 +306,7 @@ private:
 
     QString format_filename_caption(const QString &qstring_in);
     /** Helper function for Menu file -> New & New.... */
-    bool slotFileNewHelper(QString fileName, QC_MDIWindow* w = NULL);
+	bool slotFileNewHelper(QString fileName, QC_MDIWindow* w = nullptr);
 
     /**
      * @brief updateWindowTitle, for draft mode, add "Draft Mode" to window title
@@ -432,33 +406,16 @@ private:
     QAction* helpAboutApp;
     QAction* helpManual;
 
-    QAction *testDumpEntities;
-    QAction *testDumpUndo;
-    QAction *testUpdateInserts;
-    QAction *testDrawFreehand;
-    QAction *testInsertBlock;
-    QAction *testInsertMText;
-    QAction *testInsertText;
-    QAction *testInsertImage;
-    QAction *testUnicode;
-    QAction *testInsertEllipse;
-
-    QAction *testMath01;
-
-    QAction *testResize640;
-    QAction *testResize800;
-    QAction *testResize1024;
-
     //display "Draft Mode" in window title for draft mode
     const QString m_qDraftModeTitle;
+#ifdef LC_DEBUGGING
+	LC_SimpleTests* m_pSimpleTest;
+#endif
 
 //Plugin support
-private:
     void loadPlugins();
     QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
-    QList<QC_PluginInterface*> loadedPlugins;
-public slots:
-    void execPlug();
+	QList<QC_PluginInterface*> loadedPlugins;
 
 };
 
