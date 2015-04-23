@@ -52,7 +52,7 @@ public:
 	QList<QAction*> getActions() const;
 
 public slots:
-	void setSnaps(RS_SnapMode);
+	void setSnaps(RS_SnapMode const & s);
 
 private slots:
     void actionTriggered(void);

@@ -197,7 +197,7 @@ public slots:
 	void slotModifyOffset();
 	void slotModifyExplodeText();
 
-	void slotSetSnaps(RS_SnapMode);
+	void slotSetSnaps(RS_SnapMode const& s);
 	void slotSnapFree();
 	void slotSnapGrid();
 	void slotSnapEndpoint();
@@ -252,7 +252,6 @@ public slots:
 
 private:
 	QG_MainWindowInterface* mainWindow;
-	QG_SnapToolBar* snapToolBar;
 
 	// Type of draw order selected command
 	RS2::ActionType orderType;

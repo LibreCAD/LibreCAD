@@ -173,7 +173,6 @@ std::vector<RS2::EntityType> QG_ActionHandler::offsetEntities(0);
  */
 QG_ActionHandler::QG_ActionHandler(QG_MainWindowInterface* mw):
 	mainWindow(mw)
-  ,snapToolBar(nullptr)
   ,orderType(RS2::ActionOrderTop)
 {
 	RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler");
@@ -914,6 +913,8 @@ QStringList QG_ActionHandler::getAvailableCommands() {
 //get snap mode from snap toolbar
 RS_SnapMode QG_ActionHandler::getSnaps()
 {
+	QG_SnapToolBar* snapToolBar=QC_ApplicationWindow::getAppWindow()->getSnapToolBar();
+
 	if (snapToolBar) {
         return snapToolBar->getSnaps();
     }
@@ -1583,8 +1584,10 @@ void QG_ActionHandler::slotModifyExplodeText() {
     setCurrentAction(RS2::ActionModifyExplodeText);
 }
 
-void QG_ActionHandler::slotSetSnaps(RS_SnapMode s) {
+void QG_ActionHandler::slotSetSnaps(RS_SnapMode const& s) {
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps()");
+	QG_SnapToolBar* snapToolBar=QC_ApplicationWindow::getAppWindow()->getSnapToolBar();
+
 	if(snapToolBar ) {
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): set snapToolBar");
         snapToolBar->setSnaps(s);
@@ -1714,7 +1717,9 @@ void QG_ActionHandler::slotSetRelativeZero() {
 }
 
 void QG_ActionHandler::slotLockRelativeZero(bool on) {
-    if (snapToolBar != NULL) {
+	QG_SnapToolBar* snapToolBar=QC_ApplicationWindow::getAppWindow()->getSnapToolBar();
+
+	if (snapToolBar) {
         snapToolBar->setLockedRelativeZero(on);
     }
     if (on) {

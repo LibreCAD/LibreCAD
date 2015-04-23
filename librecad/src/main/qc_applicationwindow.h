@@ -247,8 +247,8 @@ public:
      * @return Pointer to the graphic view of the currently active document
      * window or NULL if no window is available.
      */
-	virtual const RS_GraphicView* getGraphicView() const;
-	virtual RS_GraphicView* getGraphicView();
+	const RS_GraphicView* getGraphicView() const;
+	RS_GraphicView* getGraphicView();
 
     /**
      * Implementation from RS_MainWindowInterface (and QS_ScripterHostInterface).
@@ -256,8 +256,8 @@ public:
      * @return Pointer to the graphic document of the currently active document
      * window or NULL if no window is available.
      */
-	virtual const RS_Document* getDocument() const;
-	virtual RS_Document* getDocument();
+	const RS_Document* getDocument() const;
+	RS_Document* getDocument();
 
         /**
          * Creates a new document. Implementation from RS_MainWindowInterface.
@@ -312,6 +312,16 @@ public:
         {
             return blockWidget;
         }
+
+		QG_SnapToolBar* getSnapToolBar(void)
+		{
+			return snapToolBar;
+		}
+
+		QG_SnapToolBar const* getSnapToolBar(void) const
+		{
+			return snapToolBar;
+		}
 
 protected:
     void closeEvent(QCloseEvent*);
