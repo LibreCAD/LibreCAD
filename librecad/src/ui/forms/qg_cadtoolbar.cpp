@@ -217,6 +217,7 @@ void QG_CadToolBar::showToolBar(RS2::ToolBarId id, bool restoreAction ) {
 		activeToolbars.push_back(newTb);
 	}
 	showSubToolBar();
+	adjustSize();
 }
 
 void QG_CadToolBar::resetToolBar() {
