@@ -138,6 +138,7 @@ public:
  */
 class RS_VectorSolutions {
 public:
+	typedef RS_Vector value_type;
 	RS_VectorSolutions();
 	RS_VectorSolutions(const std::vector<RS_Vector>& s);
 	RS_VectorSolutions(std::initializer_list<RS_Vector> l);

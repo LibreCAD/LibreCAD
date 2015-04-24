@@ -542,7 +542,7 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
         cubic[2]=q;
         ans.push_back(0.);
         auto&& r=cubicSolver(cubic);
-        std::copy(r.begin(),r.end(),back_inserter(ans));
+		std::copy(r.begin(),r.end(), std::back_inserter(ans));
         for(size_t i=0; i<ans.size(); i++) ans[i] -= shift;
         return ans;
     }
@@ -593,8 +593,10 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
         ce2[0]=	sqrtz0;
         ce2[1]=0.5*(p+r3[0])-0.5*q/sqrtz0;
         auto&& r1=quadraticSolver(ce2);
-        std::copy(r1.begin(),r1.end(),back_inserter(ans));
-        for(size_t i=0; i<ans.size(); i++) ans[i] -= shift;
+		std::copy(r1.begin(),r1.end(),std::back_inserter(ans));
+		for(auto& v: ans){
+			a -= shift;
+		}
         return ans;
     }
     return ans;
