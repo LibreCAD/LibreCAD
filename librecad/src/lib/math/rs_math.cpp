@@ -581,7 +581,9 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
             ce2[1]=0.5*(p+r3[0])-0.5*q/sqrtz0;
             r1=quadraticSolver(ce2);
         }
-        for(size_t i=0; i<r1.size(); i++) r1[i] -= shift;
+		for(auto& x: r1){
+			x -= shift;
+		}
         return r1;
     }
     if ( r3[0]> 0. && r3[1] > 0. ) {
@@ -594,8 +596,8 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
         ce2[1]=0.5*(p+r3[0])-0.5*q/sqrtz0;
         auto&& r1=quadraticSolver(ce2);
 		std::copy(r1.begin(),r1.end(),std::back_inserter(ans));
-		for(auto& v: ans){
-			a -= shift;
+		for(auto& x: ans){
+			x -= shift;
 		}
         return ans;
     }
