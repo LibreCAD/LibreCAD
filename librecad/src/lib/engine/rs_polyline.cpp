@@ -129,7 +129,7 @@ void RS_Polyline::removeLastVertex() {
  */
 RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend) {
 
-    RS_Entity* entity=NULL;
+	RS_Entity* entity=nullptr;
     //static double nextBulge = 0.0;
 
     // very first vertex:
@@ -142,7 +142,7 @@ RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend
     else {
         // add entity to the polyline:
         entity = createVertex(v, nextBulge, prepend);
-        if (entity!=NULL) {
+		if (entity) {
                         if (prepend==false) {
                 RS_EntityContainer::addEntity(entity);
                                 data.endpoint = v;
@@ -210,7 +210,7 @@ void RS_Polyline::appendVertexs(const QList< QPair<RS_Vector*, double> > vl) {
  */
 RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prepend) {
 
-    RS_Entity* entity=NULL;
+	RS_Entity* entity=nullptr;
 
     RS_DEBUG->print("RS_Polyline::createVertex: %f/%f to %f/%f bulge: %f",
                     data.endpoint.x, data.endpoint.y, v.x, v.y, bulge);

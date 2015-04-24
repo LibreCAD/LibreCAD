@@ -38,6 +38,7 @@ RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
 					container, graphicView)
 		,vertex(false)
 {
+	preview->setOwner(false);
 }
 
 RS_ActionDrawLineFree::~RS_ActionDrawLineFree() {}
@@ -51,16 +52,18 @@ QAction* RS_ActionDrawLineFree::createGUIAction(RS2::ActionType /*type*/, QObjec
 }
 
 void RS_ActionDrawLineFree::trigger() {
+	deleteSnapper();
 	if (polyline.get()) {
 		deletePreview();
 
 		polyline->endPolyline();
 		RS_VectorSolutions sol=polyline->getRefPoints();
 		if(sol.getNumber() > 2 ) {
-			container->addEntity(polyline.get());
+			RS_Entity* ent=polyline->clone();
+			container->addEntity(ent);
 			if (document) {
 				document->startUndoCycle();
-				document->addUndoable(polyline.get());
+				document->addUndoable(ent);
 				document->endUndoCycle();
 			}
 			graphicView->redraw(RS2::RedrawDrawing);
@@ -85,7 +88,7 @@ void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
         }
         RS_Entity* ent = polyline->addVertex(v);
         if (polyline->count() > 0){
-            preview->addCloneOf(ent);
+			preview->addEntity(ent);
             drawPreview();
         }
 
@@ -151,20 +154,8 @@ void RS_ActionDrawLineFree::updateMouseButtonHints() {
     }
 }
 
-
-
 void RS_ActionDrawLineFree::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionDrawLineFree::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
 
 // EOF
