@@ -35,25 +35,25 @@
 #include "rs_line.h"
 
 RS_ActionPolylineEquidistant::RS_ActionPolylineEquidistant(RS_EntityContainer& container,
-                RS_GraphicView& graphicView)
-                :RS_PreviewActionInterface("Create Equidistant Polylines",
-                                                   container, graphicView) {
-        dist = 1.0;
-        number = 1;
+														   RS_GraphicView& graphicView)
+	:RS_PreviewActionInterface("Create Equidistant Polylines",
+							   container, graphicView)
+	,dist(1.)
+	,number(1)
+{
 }
 
 
 QAction* RS_ActionPolylineEquidistant::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        QAction* action = new QAction(tr("Create &Equidistant Polylines"), NULL);
-        action->setShortcut(QKeySequence());
-        action->setIcon(QIcon(":/extui/polylineequidstant.png"));
+		QAction* action = new QAction(QIcon(":/extui/polylineequidstant.png"), tr("Create &Equidistant Polylines"), nullptr);
+//		action->setShortcut(QKeySequence());
         action->setStatusTip(tr("Create Equidistant Polylines"));
         return action;
 }
 
 void RS_ActionPolylineEquidistant::init(int status) {
         RS_PreviewActionInterface::init(status);
-        originalEntity = NULL;
+		originalEntity = nullptr;
         targetPoint = RS_Vector(false);
         bRightSide = false;
 }
@@ -95,7 +95,7 @@ RS_Entity* RS_ActionPolylineEquidistant::calculateOffset(RS_Entity* newEntity,RS
         line1->rotate(v0, line0->getAngle1());
         return newEntity;
     }
-    return NULL;
+	return nullptr;
 }
 
 /**
@@ -122,7 +122,7 @@ RS_Vector RS_ActionPolylineEquidistant::calculateIntersection(RS_Entity* first,R
 }
 
 bool RS_ActionPolylineEquidistant::makeContour() {
-    if (container==NULL) {
+	if (!container) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_ActionPolylineEquidistant::makeContour: no valid container");
         return false;
@@ -138,7 +138,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
     if (entities.isEmpty()) {
         return false;
     }
-    if (document!=NULL) {
+	if (document) {
         document->startUndoCycle();
     }
     double neg = 1.0;
