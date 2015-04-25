@@ -172,7 +172,7 @@ public:
                                        int middlePoints = 1)const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-									 double* dist = nullptr);
+									 double* dist = nullptr)const;
         //virtual RS_Vector getNearestRef(const RS_Vector& coord,
 		//                                 double* dist = nullptr);
         /*virtual double getDistanceToPoint(const RS_Vector& coord,

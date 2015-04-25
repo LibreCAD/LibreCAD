@@ -203,7 +203,7 @@ public:
                                        )const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-									 double* dist = nullptr);
+									 double* dist = nullptr)const;
     virtual RS_Vector getNearestOrthTan(const RS_Vector& coord,
                                     const RS_Line& normal,
                                      bool onEntity = false);

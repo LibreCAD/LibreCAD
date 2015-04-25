@@ -677,7 +677,7 @@ RS_Vector RS_Circle::getNearestMiddle(const RS_Vector& coord,
 
 RS_Vector RS_Circle::getNearestDist(double /*distance*/,
                                     const RS_Vector& /*coord*/,
-                                    double* dist) {
+									double* dist) const{
 
     if (dist!=NULL) {
         *dist = RS_MAXDOUBLE;
@@ -686,7 +686,7 @@ RS_Vector RS_Circle::getNearestDist(double /*distance*/,
 }
 
 RS_Vector RS_Circle::getNearestDist(double /*distance*/,
-                                    bool /*startp*/) {
+									bool /*startp*/) const{
 
     return RS_Vector(false);
 }

@@ -207,7 +207,7 @@ public:
    {return RS_Vector(false);}
     virtual RS_Vector getNearestDist(double /*distance*/,
                                      const RS_Vector&/* coord*/,
-                                     double*/* dist = NULL*/)
+									 double*/* dist = NULL*/) const
     {return RS_Vector(false);}
     virtual RS_Vector getNearestOrthTan(const RS_Vector& /*coord*/,
                                     const RS_Line& /*normal*/,

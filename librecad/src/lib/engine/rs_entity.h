@@ -358,7 +358,7 @@ public:
      */
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-									 double* dist = nullptr) = 0;
+									 double* dist = nullptr) const= 0;
 
     /**
      * Must be overwritten to get the point with a given
@@ -370,7 +370,7 @@ public:
      * @return The point with the given distance to the start- or endpoint.
      */
     virtual RS_Vector getNearestDist(double /*distance*/,
-                                     bool /*startp*/) {
+									 bool /*startp*/) const{
         return RS_Vector(false);
     }
 

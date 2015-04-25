@@ -146,9 +146,9 @@ with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are th
                                        int middlePoints = 1 ) const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = NULL)const;
     virtual RS_Vector getNearestDist(double distance,
-                                     bool startp);
+									 bool startp)const;
     virtual RS_Vector getNearestOrthTan(const RS_Vector& coord,
                                         const RS_Line& normal,
                                         bool onEntity = false);

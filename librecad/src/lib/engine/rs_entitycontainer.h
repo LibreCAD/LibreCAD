@@ -136,7 +136,7 @@ public:
 
     RS_Entity* getNearestEntity(const RS_Vector& point,
                                 double* dist = NULL,
-                                RS2::ResolveLevel level=RS2::ResolveAll);
+								RS2::ResolveLevel level=RS2::ResolveAll) const;
 
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
             bool onEntity = true,
@@ -151,7 +151,7 @@ public:
                                        )const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = NULL) const;
     virtual RS_Vector getNearestIntersection(const RS_Vector& coord,
             double* dist = NULL);
     virtual RS_Vector getNearestRef(const RS_Vector& coord,

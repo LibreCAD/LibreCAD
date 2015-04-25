@@ -208,7 +208,7 @@ public:
 	virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
 		double* dist = NULL, int middlePoints = 1) const;
 	virtual RS_Vector getNearestDist(double distance,
-		const RS_Vector& coord, double* dist = NULL);
+		const RS_Vector& coord, double* dist = NULL) const;
 	//virtual RS_Vector getNearestRef(const RS_Vector& coord,
 	//                                 double* dist = NULL);
 	virtual double getDistanceToPoint(const RS_Vector& coord,

@@ -1403,14 +1403,14 @@ RS_Vector RS_EntityContainer::getNearestMiddle(const RS_Vector& coord,
 
 RS_Vector RS_EntityContainer::getNearestDist(double distance,
                                              const RS_Vector& coord,
-                                             double* dist) {
+											 double* dist) const{
 
     RS_Vector point(false);
     RS_Entity* closestEntity;
 
     closestEntity = getNearestEntity(coord, NULL, RS2::ResolveNone);
 
-    if (closestEntity!=NULL) {
+	if (closestEntity) {
         point = closestEntity->getNearestDist(distance, coord, dist);
     }
 
@@ -1578,7 +1578,7 @@ double RS_EntityContainer::getDistanceToPoint(const RS_Vector& coord,
 
 RS_Entity* RS_EntityContainer::getNearestEntity(const RS_Vector& coord,
                                                 double* dist,
-                                                RS2::ResolveLevel level) {
+												RS2::ResolveLevel level) const{
 
     RS_DEBUG->print("RS_EntityContainer::getNearestEntity");
 
@@ -1586,18 +1586,18 @@ RS_Entity* RS_EntityContainer::getNearestEntity(const RS_Vector& coord,
 
     // distance for points inside solids:
     double solidDist = RS_MAXDOUBLE;
-    if (dist!=NULL) {
+	if (dist) {
         solidDist = *dist;
     }
 
     double d = getDistanceToPoint(coord, &e, level, solidDist);
 
-    if (e!=NULL && e->isVisible()==false) {
+	if (e && e->isVisible()==false) {
         e = NULL;
     }
 
     // if d is negative, use the default distance (used for points inside solids)
-    if (dist!=NULL) {
+	if (dist) {
         *dist = d;
     }
     RS_DEBUG->print("RS_EntityContainer::getNearestEntity: OK");

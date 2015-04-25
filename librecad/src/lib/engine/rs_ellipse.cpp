@@ -344,7 +344,7 @@ double RS_Ellipse::getEllipseLength( double x2) const
 
 RS_Vector RS_Ellipse::getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist) {
+									 double* dist) const{
 //    RS_DEBUG->print("RS_Ellipse::getNearestDist() begin\n");
     if( ! isArc() ) {
         // both angles being 0, whole ellipse

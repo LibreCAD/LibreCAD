@@ -964,7 +964,7 @@ RS_Vector LC_SplinePoints::getNearestMiddle(const RS_Vector& coord,
 }
 
 RS_Vector LC_SplinePoints::getNearestDist(double /*distance*/,
-	const RS_Vector& /*coord*/, double* dist)
+	const RS_Vector& /*coord*/, double* dist) const
 {
 printf("getNearestDist\n");
 	if(dist != NULL)

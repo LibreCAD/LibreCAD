@@ -274,7 +274,7 @@ RS_Vector RS_Image::getNearestMiddle(const RS_Vector& coord,
 
 RS_Vector RS_Image::getNearestDist(double distance,
                                    const RS_Vector& coord,
-                                   double* dist) {
+								   double* dist) const{
 
     RS_VectorSolutions corners = getCorners();
     RS_VectorSolutions points(4);

@@ -198,7 +198,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
 
 RS_Vector RS_Line::getNearestDist(double distance,
                                   const RS_Vector& coord,
-                                  double* dist) {
+								  double* dist) const{
 
     RS_Vector dv;
     dv.setPolar(distance, getAngle1());
@@ -220,7 +220,7 @@ RS_Vector RS_Line::getNearestDist(double distance,
 
 
 RS_Vector RS_Line::getNearestDist(double distance,
-                                  bool startp) {
+								  bool startp) const{
 
     double a1 = getAngle1();
 

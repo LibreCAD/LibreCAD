@@ -108,7 +108,7 @@ RS_Vector RS_Point::getNearestMiddle(const RS_Vector& coord,
 
 RS_Vector RS_Point::getNearestDist(double /*distance*/,
                                    const RS_Vector& /*coord*/,
-                                   double* dist) {
+								   double* dist) const{
     if (dist!=NULL) {
         *dist = RS_MAXDOUBLE;
     }

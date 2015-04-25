@@ -161,7 +161,7 @@ RS_Vector RS_ConstructionLine::getNearestMiddle(const RS_Vector& /*coord*/,
 
 RS_Vector RS_ConstructionLine::getNearestDist(double /*distance*/,
         const RS_Vector& /*coord*/,
-        double* dist) {
+		double* dist) const{
     if (dist!=NULL) {
         *dist = RS_MAXDOUBLE;
     }

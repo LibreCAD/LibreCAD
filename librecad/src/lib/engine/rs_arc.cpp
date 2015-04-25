@@ -456,7 +456,7 @@ RS_Vector RS_Arc::getNearestMiddle(const RS_Vector& coord,
 
 RS_Vector RS_Arc::getNearestDist(double distance,
                                  const RS_Vector& coord,
-                                 double* dist) {
+								 double* dist) const{
 
     if (data.radius<RS_TOLERANCE) {
         if (dist!=NULL) {
@@ -486,7 +486,7 @@ RS_Vector RS_Arc::getNearestDist(double distance,
 
 
 RS_Vector RS_Arc::getNearestDist(double distance,
-                                 bool startp) {
+								 bool startp) const{
 
     if (data.radius<RS_TOLERANCE) {
         return RS_Vector(false);
