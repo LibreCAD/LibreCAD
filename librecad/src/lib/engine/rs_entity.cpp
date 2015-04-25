@@ -26,10 +26,11 @@
 **********************************************************************/
 
 
-#include "rs_entity.h"
-
 #include <iostream>
+#include <utility>
+#include <QPolygon>
 
+#include "rs_entity.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
@@ -44,7 +45,6 @@
 #include "rs_text.h"
 #include "rs_information.h"
 #include "lc_quadratic.h"
-#include <QPolygon>
 
 /**
  * Default constructor.
@@ -850,7 +850,9 @@ double RS_Entity::getStyleFactor(RS_GraphicView* view) {
  * @return User defined variable connected to this entity or NULL if not found.
  */
 QString RS_Entity::getUserDefVar(const QString& key) const {
-    return varList.value(key, NULL);
+	auto it=varList.find(key);
+	if(it==varList.end()) return nullptr;
+	return varList.at(key);
 }
 /*
  * @coord
@@ -869,41 +871,41 @@ RS_Vector RS_Entity::getNearestOrthTan(const RS_Vector& /*coord*/,
  * Add a user defined variable to this entity.
  */
 void RS_Entity::setUserDefVar(QString key, QString val) {
-    varList.insert(key, val);
+	varList.insert(std::make_pair(key, val));
 }
-
-
 
 /**
  * Deletes the given user defined variable.
  */
 void RS_Entity::delUserDefVar(QString key) {
-    varList.remove(key);
+	varList.erase(key);
 }
-
-
 
 /**
  * @return A list of all keys connected to this entity.
  */
-QList<QString> RS_Entity::getAllKeys() {
-    return varList.keys();
+std::vector<QString> RS_Entity::getAllKeys() const{
+	std::vector<QString> ret(0);
+	for(auto const& v: varList){
+		ret.push_back(v.first);
+	}
+	return ret;
 }
 
 //! constructionLayer contains entities of infinite length, constructionLayer doesn't show up in print
-bool RS_Entity::isConstruction(bool typeCheck) const  {
-    if(     typeCheck
-        &&  getParent() != NULL
-        &&  RS2::EntityLine != rtti() ){
+bool RS_Entity::isConstruction(bool typeCheck) const{
+	if(typeCheck
+		&&  getParent()
+		&&  rtti() != RS2::EntityLine){
             // do not expand entities on construction layers, except lines
             return false;
     }
-    if (nullptr != layer) return layer->isConstruction();
+	if (layer) return layer->isConstruction();
     return false;
 }
 
 //! whether printing is enabled or disabled for the entity's layer
-bool RS_Entity::isPrint(void) const  {
+bool RS_Entity::isPrint(void) const{
     if (nullptr != layer) return layer->isPrint();
     return true;
 }
@@ -922,6 +924,15 @@ bool RS_Entity::trimmable() const
     }
 }
 
+RS_Vector RS_Entity::getNearestSelectedRef(const RS_Vector& coord,
+										double* dist) {
+	if (isSelected()) {
+		return getNearestRef(coord, dist);
+	}
+	else {
+		return RS_Vector(false);
+	}
+}
 
 /**
  * Dumps the elements data to stdout.
@@ -931,7 +942,7 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
     //return os;
 
     os << " {Entity id: " << e.id;
-    if (e.parent!=NULL) {
+	if (e.parent) {
         os << " | parent id: " << e.parent->getId() << "\n";
     } else {
         os << " | no parent\n";
@@ -952,11 +963,11 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
     os << e.pen << "\n";
 
         os << "variable list:\n";
-    QHash<QString, QString>::const_iterator it = e.varList.constBegin();
-    while (it != e.varList.constEnd() ) {
-        os << it.key().toLatin1().data() << ": " << it.value().toLatin1().data() << ", ";
-        ++it;
-    }
+	for(auto const& v: e.varList){
+		os << v.first.toLatin1().data()<< ": "
+		   << v.second.toLatin1().data()
+			   << ", ";
+	}
 
     // There should be a better way then this...
     switch(e.rtti()) {
