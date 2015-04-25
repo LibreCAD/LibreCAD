@@ -41,7 +41,7 @@ public:
                        RS_GraphicView& graphicView);
 	~RS_ActionBlocksAdd() = default;
 
-	virtual RS2::ActionType rtti() {
+	virtual RS2::ActionType rtti() const{
 			return RS2::ActionBlocksAdd;
 	}
 	

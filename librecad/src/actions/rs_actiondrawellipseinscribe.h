@@ -53,7 +53,7 @@ public:
     ~RS_ActionDrawEllipseInscribe();
 
     static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-    RS2::ActionType rtti(){
+    RS2::ActionType rtti() const{
         return RS2::ActionDrawEllipseInscribe;
     }
     virtual void init(int status=0);

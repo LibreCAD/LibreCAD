@@ -79,7 +79,7 @@ RS_Snapper(container, graphicView) {
 *
 * @todo no default implementation
  */
-RS2::ActionType RS_ActionInterface::rtti()  {
+RS2::ActionType RS_ActionInterface::rtti() const{
     return RS2::ActionNone;
 }
 

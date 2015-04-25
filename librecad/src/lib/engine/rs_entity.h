@@ -69,9 +69,9 @@ public:
 
 	virtual RS_Entity* clone() const = 0;
 
-    virtual void reparent(RS_EntityContainer* parent) {
-        this->parent = parent;
-    }
+	virtual void reparent(RS_EntityContainer* parent) {
+		this->parent = parent;
+	}
 
     void resetBorders();
     void moveBorders(const RS_Vector& offset){
@@ -86,9 +86,9 @@ public:
      * Must be overwritten to return the rtti of this entity
      * (e.g. RS2::EntityArc).
      */
-    virtual RS2::EntityType rtti() const {
-        return RS2::EntityUnknown;
-    }
+	virtual RS2::EntityType rtti() const{
+		return RS2::EntityUnknown;
+	}
 
     /**
      * Identify all entities as undoable entities.

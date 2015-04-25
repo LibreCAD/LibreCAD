@@ -53,7 +53,7 @@ public:
                       RS_GraphicView& graphicView);
 	virtual ~RS_ActionDrawLine();
 
-        virtual RS2::ActionType rtti() {
+        virtual RS2::ActionType rtti() const{
                 return RS2::ActionDrawLine;
         }
 

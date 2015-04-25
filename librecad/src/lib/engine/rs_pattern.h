@@ -42,6 +42,9 @@ class RS_Pattern : public RS_EntityContainer {
 public:
     RS_Pattern(const QString& fileName);
     virtual ~RS_Pattern();
+	RS2::EntityType rtti() const{
+		return RS2::EntityPattern;
+	}
 
     virtual bool loadPattern();
 	

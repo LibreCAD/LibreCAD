@@ -131,7 +131,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
     RS_Polyline* originalPolyline = (RS_Polyline*)originalEntity;
 //create a list of entities to offset without length = 0
     QList<RS_Entity*> entities;
-    for (RS_Entity* en=originalPolyline->firstEntity(); en!=NULL; en=originalPolyline->nextEntity()) {
+	for (RS_Entity* en=originalPolyline->firstEntity(); en; en=originalPolyline->nextEntity()) {
         if (en->getLength() > 1.0e-12)
             entities.append(en);
     }
@@ -264,11 +264,11 @@ bool RS_ActionPolylineEquidistant::makeContour() {
             document->addUndoable(newPolyline);
         }
     }
-    if (document!=NULL) {
+	if (document) {
         document->endUndoCycle();
     }
 
-    if (graphicView!=NULL) {
+	if (graphicView) {
         graphicView->redraw();
     }
 
@@ -279,7 +279,7 @@ void RS_ActionPolylineEquidistant::trigger() {
 
         RS_DEBUG->print("RS_ActionPolylineEquidistant::trigger()");
 
-        if (originalEntity!=NULL && targetPoint.valid ) {
+		if (originalEntity && targetPoint.valid ) {
 
                 originalEntity->setHighlighted(false);
                 graphicView->drawEntity(originalEntity);
@@ -297,22 +297,6 @@ void RS_ActionPolylineEquidistant::trigger() {
                 graphicView->redraw();
 ////////////////////////////////////////
 }
-
-
-
-//void RS_ActionPolylineEquidistant::mouseMoveEvent(QMouseEvent* e) {
-//        RS_DEBUG->print("RS_ActionPolylineEquidistant::mouseMoveEvent begin");
-
-//        switch (getStatus()) {
-//        case ChooseEntity:
-////                snapPoint(e);
-//                break;
-//        default:
-//                break;
-//        }
-
-//        RS_DEBUG->print("RS_ActionPolylineEquidistant::mouseMoveEvent end");
-//}
 
 
 
@@ -354,7 +338,7 @@ void RS_ActionPolylineEquidistant::mouseReleaseEvent(QMouseEvent* e) {
                 }
         } else if (e->button()==Qt::RightButton) {
                 deleteSnapper();
-                if (originalEntity!=NULL) {
+				if (originalEntity) {
                         originalEntity->setHighlighted(false);
                         graphicView->drawEntity(originalEntity);
 ////////////////////////////////////////2006/06/15
@@ -395,11 +379,4 @@ void RS_ActionPolylineEquidistant::updateMouseButtonHints() {
         }
 }
 
-//void RS_ActionPolylineEquidistant::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
 // EOF

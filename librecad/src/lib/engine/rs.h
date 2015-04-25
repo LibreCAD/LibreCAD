@@ -158,6 +158,7 @@ public:
         EntitySplinePoints,       /**< SplinePoints */
         EntityOverlayBox,    /**< OverlayBox */
         EntityPreview    /**< Preview Container */
+		,EntityPattern
     };
 
     static bool isContainer(const EntityType enType){

@@ -94,7 +94,7 @@ QAction* RS_ActionDimLinear::createGUIAction(RS2::ActionType type, QObject* /*pa
     return action;
 }
 
-RS2::ActionType RS_ActionDimLinear::rtti() {
+RS2::ActionType RS_ActionDimLinear::rtti() const{
     return actionType;
 //    if(fixedAngle){
 //        if( fabs(RS_Math::getAngleDifference(0.,data.angle)) < RS_TOLERANCE )

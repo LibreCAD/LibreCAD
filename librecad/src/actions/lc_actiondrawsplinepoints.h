@@ -52,7 +52,7 @@ public:
 		RS_GraphicView& graphicView);
     ~LC_ActionDrawSplinePoints();
 
-	virtual RS2::ActionType rtti()
+	virtual RS2::ActionType rtti() const
 	{
 		return RS2::ActionDrawSplinePoints;
 	}

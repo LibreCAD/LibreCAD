@@ -51,7 +51,7 @@ public:
     ~RS_ActionModifyDelete() = default;
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    RS2::ActionType rtti(){
+    RS2::ActionType rtti() const{
         return RS2::ActionModifyDelete;
     }
 

@@ -69,7 +69,7 @@ QAction* RS_ActionDrawLineRelAngle::createGUIAction(RS2::ActionType type, QObjec
 }
 
 
-RS2::ActionType RS_ActionDrawLineRelAngle::rtti() {
+RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
 	if( fixedAngle && RS_Math::getAngleDifference(angle,M_PI_2) < RS_TOLERANCE )
 		return RS2::ActionDrawLineOrthogonal;
 	else

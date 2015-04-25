@@ -50,7 +50,7 @@ public:
     ~RS_ActionPolylineDel() = default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    virtual RS2::ActionType rtti(){
+    virtual RS2::ActionType rtti() const{
         return RS2::ActionPolylineDel;
     }
     virtual void init(int status=0);

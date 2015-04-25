@@ -56,7 +56,7 @@ public:
                        RS_GraphicView& graphicView);
 	virtual ~RS_ActionInterface() = default;
 
-    virtual RS2::ActionType rtti();
+    virtual RS2::ActionType rtti() const;
 
     void setName(const char* _name);
     QString getName();

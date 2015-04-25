@@ -69,7 +69,7 @@ public:
 	/**
 	 * @return RS2::FormatJWW.
 	 */
-	//RS2::FormatType rtti() {
+	//RS2::FormatType rtti() const{
 	//	return RS2::FormatJWW;
 	//}
 

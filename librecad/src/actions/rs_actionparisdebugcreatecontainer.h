@@ -43,7 +43,7 @@ public:
                          RS_GraphicView& graphicView);
 	virtual ~RS_ActionPARISDebugCreateContainer() = default;
 	
-	virtual RS2::ActionType rtti() {
+	virtual RS2::ActionType rtti() const{
 		return RS2::ActionPARISDebugCreateContainer;
 	}
 };
