@@ -61,8 +61,7 @@ void LC_ActionLayersToggleConstruction::trigger() {
             graphic->toggleLayerConstruction( layer);
 
             // deselect entities on locked layer:
-            for (RS_Entity* e=container->firstEntity(); e!=NULL;
-                 e=container->nextEntity()) {
+			for(auto e: *container){
                 if (e!=NULL && e->isVisible() && e->getLayer()==layer) {
                     if (graphicView!=NULL) {
                         graphicView->deleteEntity(e);

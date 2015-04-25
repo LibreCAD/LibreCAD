@@ -1275,10 +1275,8 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
             new RS_Block(container,
 						 RS_BlockData(*data));
 
-    // copy entities into a block
-    for (RS_Entity* e=container->firstEntity();
-		 e!=nullptr;
-         e=container->nextEntity()) {
+	// copy entities into a block
+	for(auto e: *container){
         //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
 

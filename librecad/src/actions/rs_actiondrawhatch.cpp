@@ -78,8 +78,7 @@ void RS_ActionDrawHatch::trigger() {
 	RS_Entity* e;
 
 	// deselect unhatchable entities:
-	for (e=container->firstEntity(RS2::ResolveNone); e!=nullptr;
-            e=container->nextEntity(RS2::ResolveNone)) {
+	for(auto e: *container){
         if (e->isSelected() && 
             (e->rtti()==RS2::EntityHatch ||
             /* e->rtti()==RS2::EntityEllipse ||*/ e->rtti()==RS2::EntityPoint ||

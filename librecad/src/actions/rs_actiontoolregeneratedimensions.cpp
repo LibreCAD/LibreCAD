@@ -62,10 +62,8 @@ void RS_ActionToolRegenerateDimensions::trigger() {
 
     RS_DEBUG->print("RS_ActionToolRegenerateDimensions::trigger()");
 
-    int num = 0;
-    for (RS_Entity* e = container->firstEntity(RS2::ResolveNone);
-            e != NULL;
-            e = container->nextEntity(RS2::ResolveNone)) {
+	int num = 0;
+	for(auto e: *container){
 
         if (RS_Information::isDimension(e->rtti()) && e->isVisible()) {
 			num++;

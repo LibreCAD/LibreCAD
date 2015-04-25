@@ -117,10 +117,8 @@ void RS_EntityContainer::detach() {
                     (int)autoDel);
     setOwner(false);
 
-    // make deep copies of all entities:
-    for (RS_Entity* e=firstEntity();
-		 e;
-         e=nextEntity()) {
+	// make deep copies of all entities:
+	for(auto e: entities){
         if (!e->getFlag(RS2::FlagTemp)) {
             tmp.append(e->clone());
         }
@@ -1606,9 +1604,7 @@ bool RS_EntityContainer::optimizeContours() {
 
 
 bool RS_EntityContainer::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) {
-    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-		 e;
-         e=nextEntity(RS2::ResolveNone)) {
+	for(auto e: entities){
         if (e->hasEndpointsWithinWindow(v1, v2))  {
             return true;
         }
@@ -1619,9 +1615,8 @@ bool RS_EntityContainer::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_
 
 
 void RS_EntityContainer::move(const RS_Vector& offset) {
-    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-		 e;
-         e=nextEntity(RS2::ResolveNone)) {
+	for(auto e: entities){
+
         e->move(offset);
         if (autoUpdateBorders) {
             e->moveBorders(offset);
@@ -1869,9 +1864,8 @@ std::ostream& operator << (std::ostream& os, RS_EntityContainer& ec) {
 
 
     os << tab << "Entities[" << id << "]: \n";
-    for (RS_Entity* t=ec.firstEntity();
-		 t;
-         t=ec.nextEntity()) {
+	for(auto t: ec){
+
 
         switch (t->rtti()) {
         case RS2::EntityInsert:

@@ -637,8 +637,8 @@ void Plugin_Entity::getPolylineData(QList<Plug_VertexData> *data){
     data->append(Plug_VertexData(QPointF(ae->getStartpoint().x,
                                          ae->getStartpoint().y),bulge));
 
-    for (v=l->firstEntity(RS2::ResolveNone); v!=NULL; v=nextEntity) {
-        nextEntity = l->nextEntity(RS2::ResolveNone);
+	for (v=l->firstEntity(RS2::ResolveNone); v!=NULL; v=nextEntity) {
+		nextEntity = l->nextEntity(RS2::ResolveNone);
         bulge = 0.0;
         if (!v->isAtomic()) {
             continue;
@@ -1186,8 +1186,7 @@ bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& m
 bool Doc_plugin_interface::getAllEntities(QList<Plug_Entity *> *sel, bool visible){
     bool status = false;
 
-    for (RS_Entity* e= doc->firstEntity(RS2::ResolveNone);
-            e!=NULL; e= doc->nextEntity(RS2::ResolveNone)) {
+	for(auto e: *doc){
 
         if (e->isVisible() || !visible) {
             Plugin_Entity *pe = new Plugin_Entity(e, this);

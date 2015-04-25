@@ -804,9 +804,7 @@ void RS_GraphicView::zoomAutoY(bool axis) {
         double maxY = RS_MINDOUBLE;
         bool noChange = false;
 
-        for (RS_Entity* e=container->firstEntity(RS2::ResolveNone);
-             e!=NULL;
-             e = container->nextEntity(RS2::ResolveNone)) {
+		for(auto e: *container){
 
             if (e->rtti()==RS2::EntityLine) {
                 RS_Line* l = (RS_Line*)e;
@@ -1048,10 +1046,8 @@ void RS_GraphicView::zoomPage() {
  */
 void RS_GraphicView::drawWindow_DEPRECATED(RS_Vector v1, RS_Vector v2) {
     RS_DEBUG->print("RS_GraphicView::drawWindow() begin");
-    if (container!=NULL) {
-        for (RS_Entity* se=container->firstEntity(RS2::ResolveNone);
-             se!=NULL;
-             se = container->nextEntity(RS2::ResolveNone)) {
+	if (container!=NULL) {
+		for(auto se: *container){
             if (se->isInWindow(v1, v2)) {
                 drawEntity(NULL, se);
             }

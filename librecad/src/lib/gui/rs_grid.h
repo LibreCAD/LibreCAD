@@ -28,8 +28,9 @@
 #ifndef RS_GRID_H
 #define RS_GRID_H
 
-#include "rs_graphicview.h"
 #include "rs_vector.h"
+
+class RS_GraphicView;
 
 /**
  * This class represents a grid. Grids can be drawn on graphic

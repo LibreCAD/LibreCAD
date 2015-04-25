@@ -130,8 +130,8 @@ bool RS_ActionPolylineEquidistant::makeContour() {
 
     RS_Polyline* originalPolyline = (RS_Polyline*)originalEntity;
 //create a list of entities to offset without length = 0
-    QList<RS_Entity*> entities;
-	for (RS_Entity* en=originalPolyline->firstEntity(); en; en=originalPolyline->nextEntity()) {
+	QList<RS_Entity*> entities;
+	for(auto en: *container){
         if (en->getLength() > 1.0e-12)
             entities.append(en);
     }

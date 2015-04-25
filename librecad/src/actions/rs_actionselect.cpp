@@ -98,9 +98,7 @@ void RS_ActionSelect::updateToolBar() {
                     //only select entity types from the given list
                     //fixme, need to handle resolution level
 
-                    for (RS_Entity* e=container->firstEntity();
-                         e!=NULL;
-                         e=container->nextEntity()) {
+					for(auto e: *container){
 						if (e && e->isSelected()) {
 							auto it=std::find(entityTypeList->begin(), entityTypeList->end(), e->rtti());
 							if ( it == entityTypeList->end() ){

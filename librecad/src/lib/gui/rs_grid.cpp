@@ -26,7 +26,7 @@
 
 
 #include "rs_grid.h"
-
+#include "rs_graphicview.h"
 #include "rs_units.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"

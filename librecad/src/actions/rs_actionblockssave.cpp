@@ -47,9 +47,7 @@ QAction* RS_ActionBlocksSave::createGUIAction(RS2::ActionType /*type*/, QObject*
 /*recursive add blocks in graphic*/
 void RS_ActionBlocksSave::addBlock(RS_Insert* in, RS_Graphic* g) {
 
-    for (RS_Entity* e=in->firstEntity(RS2::ResolveNone);
-         e!=NULL;
-         e = in->nextEntity(RS2::ResolveNone)) {
+	for(auto e: *in){
 
         if (e->rtti() == RS2::EntityInsert) {
             addBlock((RS_Insert *)e,g);

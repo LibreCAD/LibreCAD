@@ -66,7 +66,7 @@ RS_Entity* RS_Leader::clone() const{
 void RS_Leader::update() {
 
     // find and delete arrow:
-    for (RS_Entity* e=firstEntity(); e!=NULL; e=nextEntity()) {
+	for(auto e: entities){
         if (e->rtti()==RS2::EntitySolid) {
             removeEntity(e);
             break;

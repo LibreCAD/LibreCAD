@@ -100,12 +100,10 @@ unsigned long int RS_Graphic::countLayerEntities(RS_Layer* layer) {
 
     int c=0;
 
-    if (layer!=NULL) {
-        for (RS_Entity* t=firstEntity(RS2::ResolveNone);
-                t!=NULL;
-                t=nextEntity(RS2::ResolveNone)) {
+	if (layer!=NULL) {
+		for(auto t: entities){
 
-            if (t->getLayer()!=NULL &&
+			if (t->getLayer() &&
                     t->getLayer()->getName()==layer->getName()) {
                 c+=t->countDeep();
             }
@@ -126,11 +124,9 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
 
         // remove all entities on that layer:
         startUndoCycle();
-        for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-                e!=NULL;
-                e=nextEntity(RS2::ResolveNone)) {
+		for(auto e: entities){
 
-            if (e->getLayer()!=NULL &&
+			if (e->getLayer() &&
                     e->getLayer()->getName()==layer->getName()) {
 
                 e->setUndoState(true);
@@ -145,11 +141,9 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
             RS_Block* blk = blockList.at(bi);
 
             if (blk!=NULL) {
-                for (RS_Entity* e=blk->firstEntity(RS2::ResolveNone);
-                        e!=NULL;
-                        e=blk->nextEntity(RS2::ResolveNone)) {
+				for(auto e: *blk){
 
-                    if (e->getLayer()!=NULL &&
+					if (e->getLayer() &&
                             e->getLayer()->getName()==layer->getName()) {
 
                         e->setUndoState(true);
@@ -914,9 +908,7 @@ void RS_Graphic::addEntity(RS_Entity* entity)
     if( entity->rtti() == RS2::EntityBlock ||
             entity->rtti() == RS2::EntityContainer){
         RS_EntityContainer* e=static_cast<RS_EntityContainer*>(entity);
-        for (RS_Entity* e1=e->firstEntity(RS2::ResolveNone);
-             e1!=NULL;
-             e1= e->nextEntity(RS2::ResolveNone)){
+		for(auto e1: *e){
             addEntity(e1);
         }
     }

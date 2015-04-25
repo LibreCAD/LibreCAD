@@ -128,9 +128,7 @@ void LC_SimpleTests::slotTestDumpEntities(RS_EntityContainer* d){
 			dumpFile << "<body>\n";
 		}
 
-		for (RS_Entity* e=d->firstEntity();
-			 e!=NULL;
-			 e=d->nextEntity()) {
+		for(auto e: *d){
 
 			dumpFile << "<table border=\"1\">\n";
 			dumpFile << "<tr><td>Entity: " << e->getId()

@@ -72,10 +72,8 @@ void RS_ActionBlocksRemove::trigger() {
                 // remove all inserts from the graphic:
                 bool done;
                 do {
-                    done = true;
-                    for (RS_Entity* e=cont->firstEntity(RS2::ResolveNone);
-                            e!=NULL;
-                            e=cont->nextEntity(RS2::ResolveNone)) {
+					done = true;
+					for(auto e: *cont){
 
                         if (e->rtti()==RS2::EntityInsert) {
                             RS_Insert* ins = (RS_Insert*)e;

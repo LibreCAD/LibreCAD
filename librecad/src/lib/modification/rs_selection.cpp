@@ -79,10 +79,8 @@ void RS_Selection::selectAll(bool select) {
         //graphicView->deleteEntity(container);
     }
 
-    //container->setSelected(select);
-    for (RS_Entity* e=container->firstEntity();
-             e!=NULL;
-             e=container->nextEntity()) {
+	//container->setSelected(select);
+	for(auto e: *container){
     //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
 
@@ -107,8 +105,7 @@ void RS_Selection::invertSelection() {
         //graphicView->deleteEntity(container);
     }
 
-    for (RS_Entity* e=container->firstEntity(); e!=NULL;
-            e=container->nextEntity()) {
+	for(auto e: *container){
     //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
 
@@ -157,8 +154,7 @@ void RS_Selection::selectIntersected(const RS_Vector& v1, const RS_Vector& v2,
     RS_Line line(NULL, RS_LineData(v1, v2));
     bool inters;
 
-    for (RS_Entity* e=container->firstEntity(); e!=NULL;
-            e=container->nextEntity()) {
+	for(auto e: *container){
     //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
 
@@ -241,8 +237,7 @@ void RS_Selection::selectContour(RS_Entity* e) {
     do {
         found = false;
 
-        for (RS_Entity* en=container->firstEntity(); en!=NULL;
-                en=container->nextEntity()) {
+		for(auto en: *container){
         //for (unsigned i=0; i<container->count(); ++i) {
             //RS_Entity* en = container->entityAt(i);
 
@@ -321,8 +316,7 @@ void RS_Selection::selectLayer(RS_Entity* e) {
  */
 void RS_Selection::selectLayer(const QString& layerName, bool select) {
 
-    for (RS_Entity* en=container->firstEntity(); en!=NULL;
-            en=container->nextEntity()) {
+	for(auto en: *container){
 
         if (en!=NULL && en->isVisible() && 
 				en->isSelected()!=select && 

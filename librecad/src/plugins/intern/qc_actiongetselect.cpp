@@ -93,8 +93,7 @@ void QC_ActionGetSelect::updateToolBar() {
  * Adds all selected entities from 'container' to the selection.
  */
 void QC_ActionGetSelect::getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d) {
-    for (RS_Entity* e= container->firstEntity();
-            e!=NULL; e= container->nextEntity()) {
+	for(auto e: *container){
 
         if (e->isSelected()) {
             Plugin_Entity *pe = new Plugin_Entity(e, d);

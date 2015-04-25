@@ -823,15 +823,11 @@ QPixmap* QG_GraphicView::getPixmapForView(QPixmap *pm)
 void QG_GraphicView::layerActivated(RS_Layer *layer) {
     if(m_bUpdateLayer==false) return;
     RS_EntityContainer *container = this->getContainer();
-    RS_Entity *entity = container->firstEntity();
-
-    while (entity != NULL) {
-        if (entity->isSelected()) {
-            entity->setLayer(layer);
-        }
-
-        entity = container->nextEntity();
-    }
+	for(auto entity: *container){
+		if (entity->isSelected()) {
+			entity->setLayer(layer);
+		}
+	}
 
     container->setSelected(false);
     redraw(RS2::RedrawDrawing);

@@ -60,9 +60,8 @@ void RS_ActionLayersTogglePrint::trigger() {
         if (layer!=NULL) {
             graphic->toggleLayerPrint( layer);
 
-            // deselect entities on locked layer:
-            for (RS_Entity* e=container->firstEntity(); e!=NULL;
-                 e=container->nextEntity()) {
+			// deselect entities on locked layer:
+			for(auto e: *container){
                 if (e!=NULL && e->isVisible() && e->getLayer()==layer) {
 
                     if (graphicView!=NULL) {

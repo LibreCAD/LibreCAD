@@ -113,7 +113,7 @@ bool RS_Pattern::loadPattern() {
 
     RS_Graphic* gr = new RS_Graphic();
     RS_FileIO::instance()->fileImport(*gr, path);
-    for (RS_Entity* e=gr->firstEntity(); e!=NULL; e=gr->nextEntity()) {
+	for(auto e: *gr){
         if (e->rtti()==RS2::EntityLine || e->rtti()==RS2::EntityArc) {
             RS_Layer* l = e->getLayer();
             RS_Entity* cl = e->clone();

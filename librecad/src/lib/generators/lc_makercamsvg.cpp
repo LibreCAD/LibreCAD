@@ -223,7 +223,7 @@ void LC_MakerCamSVG::writeEntities(RS_Document* document, RS_Layer* layer) {
 
     RS_DEBUG->print("RS_MakerCamSVG::writeEntitiesFromBlock: Writing entities from layer ...");
 
-    for (RS_Entity* e = document->firstEntity(RS2::ResolveNone); e != NULL; e = document->nextEntity(RS2::ResolveNone)) {
+	for(auto e: *document){
 
         if (e->getLayer() == layer) {
 
@@ -346,7 +346,7 @@ void LC_MakerCamSVG::writePolyline(RS_Polyline* polyline) {
 
     std::string path = svgPathMoveTo(convertToSvg(polyline->getStartpoint()));
 
-    for (RS_Entity* entity = polyline->firstEntity(RS2::ResolveNone); entity != NULL; entity = polyline->nextEntity(RS2::ResolveNone)) {
+	for(auto entity: *polyline){
 
         if (!entity->isAtomic()) {
             continue;

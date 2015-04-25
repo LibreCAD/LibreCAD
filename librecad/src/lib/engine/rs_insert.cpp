@@ -130,7 +130,7 @@ void RS_Insert::update() {
         RS_DEBUG->print("RS_Insert::update: block has %d entities",
                 blk->count());
 //int i_en_counts=0;
-	for (RS_Entity* e=blk->firstEntity(); e!=nullptr; e=blk->nextEntity()) {
+		for(auto e: *blk){
         for (int c=0; c<data.cols; ++c) {
 //            RS_DEBUG->print("RS_Insert::update: col %d", c);
             for (int r=0; r<data.rows; ++r) {

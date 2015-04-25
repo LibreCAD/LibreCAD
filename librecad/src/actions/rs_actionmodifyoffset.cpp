@@ -82,8 +82,8 @@ void RS_ActionModifyOffset::mouseMoveEvent(QMouseEvent* e) {
     data.coord=snapPoint(e);
 
 
-    RS_EntityContainer ec(NULL,true);
-    for(RS_Entity* en=container->firstEntity();en!=NULL;en=container->nextEntity()){
+	RS_EntityContainer ec(NULL,true);
+	for(auto en: *container){
         if(en->isSelected()) ec.addEntity(en->clone());
     }
     if(ec.isEmpty()) return;

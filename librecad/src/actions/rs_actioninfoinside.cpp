@@ -40,8 +40,7 @@ RS_ActionInfoInside::RS_ActionInfoInside(RS_EntityContainer& container,
 
     contour = new RS_EntityContainer(NULL, false);
 
-    for (RS_Entity* e=container.firstEntity(); e!=NULL;
-            e=container.nextEntity()) {
+	for(auto e: container){
         if (e->isSelected()) {
             contour->addEntity(e);
         }

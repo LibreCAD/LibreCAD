@@ -930,9 +930,7 @@ RS_VectorSolutions RS_Information::createQuadrilateral(const RS_EntityContainer&
 	if(container.count()!=4) return ret;
 	RS_EntityContainer c(container);
 	std::vector<RS_Line*> lines;
-	for (RS_Entity* e=c.firstEntity(RS2::ResolveNone);
-		 e!=NULL;
-		 e=c.nextEntity(RS2::ResolveNone)) {
+	for(auto e: c){
 		if(e->rtti()!=RS2::EntityLine) return ret;
 		lines.push_back(static_cast<RS_Line*>(e));
 	}
