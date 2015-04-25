@@ -119,7 +119,7 @@ void RS_EntityContainer::detach() {
 
     // make deep copies of all entities:
     for (RS_Entity* e=firstEntity();
-         e!=NULL;
+		 e;
          e=nextEntity()) {
         if (!e->getFlag(RS2::FlagTemp)) {
             tmp.append(e->clone());
@@ -131,8 +131,7 @@ void RS_EntityContainer::detach() {
     setOwner(autoDel);
 
     // point to new deep copies:
-    for (int i = 0; i < tmp.size(); ++i) {
-        RS_Entity* e = tmp.at(i);
+	for(auto e: tmp){
         entities.append(e);
         e->reparent(this);
     }
@@ -144,9 +143,8 @@ void RS_EntityContainer::reparent(RS_EntityContainer* parent) {
     RS_Entity::reparent(parent);
 
     // All sub-entities:
-    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-         e!=NULL;
-         e=nextEntity(RS2::ResolveNone)) {
+
+	for(auto e: entities){
         e->reparent(parent);
     }
 }
@@ -162,14 +160,6 @@ void RS_EntityContainer::reparent(RS_EntityContainer* parent) {
 void RS_EntityContainer::undoStateChanged(bool undone) {
 
     RS_Entity::undoStateChanged(undone);
-
-    // ! don't pass on to subentities. undo list handles them
-    // All sub-entities:
-    /*for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-            e!=NULL;
-            e=nextEntity(RS2::ResolveNone)) {
-        e->setUndoState(undone);
-}*/
 }
 
 
@@ -179,9 +169,8 @@ void RS_EntityContainer::setVisible(bool v) {
     RS_Entity::setVisible(v);
 
     // All sub-entities:
-    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-         e!=NULL;
-         e=nextEntity(RS2::ResolveNone)) {
+
+	for(auto e: entities){
         //        RS_DEBUG->print("RS_EntityContainer::setVisible: subentity: %d", v);
         e->setVisible(v);
     }
@@ -195,9 +184,7 @@ void RS_EntityContainer::setVisible(bool v) {
 double RS_EntityContainer::getLength() const {
     double ret = 0.0;
 
-    for (RS_Entity* e=const_cast<RS_EntityContainer*>(this)->firstEntity(RS2::ResolveNone);
-         e!=NULL;
-         e=const_cast<RS_EntityContainer*>(this)->nextEntity(RS2::ResolveNone)) {
+	for(auto e: entities){
         if (e->isVisible()) {
             double l = e->getLength();
             if (l<0.0) {
@@ -220,10 +207,8 @@ bool RS_EntityContainer::setSelected(bool select) {
     // This entity's select:
     if (RS_Entity::setSelected(select)) {
 
-        // All sub-entity's select:
-        for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-             e!=NULL;
-             e=nextEntity(RS2::ResolveNone)) {
+		// All sub-entity's select:
+		for(auto e: entities){
             if (e->isVisible()) {
                 e->setSelected(select);
             }
@@ -245,7 +230,7 @@ bool RS_EntityContainer::toggleSelected() {
 
         // Toggle all sub-entity's select:
         /*for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-                e!=NULL;
+				e;
                 e=nextEntity(RS2::ResolveNone)) {
             e->toggleSelected();
     }*/
@@ -267,9 +252,7 @@ void RS_EntityContainer::selectWindow(RS_Vector v1, RS_Vector v2,
 
     bool included;
 
-    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-         e!=NULL;
-         e=nextEntity(RS2::ResolveNone)) {
+	for(auto e: entities){
 
         included = false;
 
@@ -290,7 +273,7 @@ void RS_EntityContainer::selectWindow(RS_Vector v1, RS_Vector v2,
                 if (e->isContainer()) {
                     RS_EntityContainer* ec = (RS_EntityContainer*)e;
                     for (RS_Entity* se=ec->firstEntity(RS2::ResolveAll);
-                         se!=NULL && included==false;
+						 se && included==false;
                          se=ec->nextEntity(RS2::ResolveAll)) {
 
                         if (se->rtti() == RS2::EntitySolid){
@@ -336,9 +319,9 @@ void RS_EntityContainer::addEntity(RS_Entity* entity) {
     /*
        if (isDocument()) {
            RS_LayerList* lst = getDocument()->getLayerList();
-           if (lst!=NULL) {
+		   if (lst) {
                RS_Layer* l = lst->getActive();
-               if (l!=NULL && l->isLocked()) {
+			   if (l && l->isLocked()) {
                    return;
                }
            }
@@ -389,7 +372,7 @@ void RS_EntityContainer::prependEntity(RS_Entity* entity){
  * Move a entity list in this container at the given position,
  * the borders of this entity-container if autoUpdateBorders is true.
  */
-void RS_EntityContainer::moveEntity(int index, QList<RS_Entity *> entList){
+void RS_EntityContainer::moveEntity(int index, QList<RS_Entity *>& entList){
     if (entList.isEmpty()) return;
     int ci = 0; //current index for insert without invert order
     bool ret, into = false;
@@ -415,8 +398,7 @@ void RS_EntityContainer::moveEntity(int index, QList<RS_Entity *> entList){
         ci = entities.indexOf(mid);
     }
 
-    for (int i = 0; i < entList.size(); ++i) {
-        RS_Entity *e = entList.at(i);
+	for(auto e: entList){
             entities.insert(ci++, e);
     }
 }
@@ -522,9 +504,7 @@ unsigned int RS_EntityContainer::countDeep() const{
 unsigned int RS_EntityContainer::countSelected() {
     unsigned int c=0;
 
-    for (RS_Entity* t=firstEntity(RS2::ResolveNone);
-         t!=NULL;
-         t=nextEntity(RS2::ResolveNone)) {
+	for (RS_Entity* t: entities){
 
         if (t->isSelected()) {
             c++;
@@ -539,9 +519,7 @@ unsigned int RS_EntityContainer::countSelected() {
  */
 double RS_EntityContainer::totalSelectedLength() {
     double ret(0.0);
-    for (RS_Entity* e = firstEntity(RS2::ResolveNone);
-         e != NULL;
-         e = nextEntity(RS2::ResolveNone)) {
+	for (RS_Entity* e: entities){
 
         if (e->isVisible() && e->isSelected()) {
             double l = e->getLength();
@@ -561,7 +539,7 @@ void RS_EntityContainer::adjustBorders(RS_Entity* entity) {
     //RS_DEBUG->print("RS_EntityContainer::adjustBorders");
     //resetBorders();
 
-    if (entity!=NULL) {
+	if (entity) {
         // make sure a container is not empty (otherwise the border
         //   would get extended to 0/0):
         if (!entity->isContainer() || entity->count()>0) {
@@ -571,7 +549,7 @@ void RS_EntityContainer::adjustBorders(RS_Entity* entity) {
 
         // Notify parents. The border for the parent might
         // also change TODO: Check for efficiency
-        //if(parent!=NULL) {
+		//if(parent) {
         //parent->adjustBorders(this);
         //}
     }
@@ -584,10 +562,8 @@ void RS_EntityContainer::adjustBorders(RS_Entity* entity) {
 void RS_EntityContainer::calculateBorders() {
     RS_DEBUG->print("RS_EntityContainer::calculateBorders");
 
-    resetBorders();
-    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-         e!=NULL;
-         e=nextEntity(RS2::ResolveNone)) {
+	resetBorders();
+	for (RS_Entity* e: entities){
 
         RS_Layer* layer = e->getLayer();
 
@@ -635,10 +611,8 @@ void RS_EntityContainer::calculateBorders() {
 void RS_EntityContainer::forcedCalculateBorders() {
     //RS_DEBUG->print("RS_EntityContainer::calculateBorders");
 
-    resetBorders();
-    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-         e!=NULL;
-         e=nextEntity(RS2::ResolveNone)) {
+	resetBorders();
+	for (RS_Entity* e: entities){
 
         //RS_Layer* layer = e->getLayer();
 
@@ -683,12 +657,10 @@ void RS_EntityContainer::updateDimensions(bool autoText) {
     RS_DEBUG->print("RS_EntityContainer::updateDimensions()");
 
     //for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-    //        e!=NULL;
+	//        e;
     //        e=nextEntity(RS2::ResolveNone)) {
 
-    RS_Entity* e;
-    for (int i = 0; i < entities.size(); ++i) {
-        e = entities.at(i);
+	for (RS_Entity* e: entities){
         if (RS_Information::isDimension(e->rtti())) {
             // update and reposition label:
             ((RS_Dimension*)e)->updateDim(autoText);
@@ -711,12 +683,7 @@ void RS_EntityContainer::updateInserts() {
 
     RS_DEBUG->print("RS_EntityContainer::updateInserts()");
 
-    //for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-    //        e!=NULL;
-    //        e=nextEntity(RS2::ResolveNone)) {
-    RS_Entity* e;
-    for (int i = 0; i < entities.size(); ++i) {
-        e = entities.at(i);
+	for (RS_Entity* e: entities){
         //// Only update our own inserts and not inserts of inserts
         if (e->rtti()==RS2::EntityInsert  /*&& e->getParent()==this*/) {
             ((RS_Insert*)e)->update();
@@ -739,12 +706,10 @@ void RS_EntityContainer::renameInserts(const QString& oldName,
     RS_DEBUG->print("RS_EntityContainer::renameInserts()");
 
     //for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-    //        e!=NULL;
+	//        e;
     //        e=nextEntity(RS2::ResolveNone)) {
 
-    RS_Entity* e;
-    for (int j = 0; j < entities.size(); ++j) {
-        e = entities.at(j);
+	for (RS_Entity* e: entities){
         if (e->rtti()==RS2::EntityInsert) {
             RS_Insert* i = ((RS_Insert*)e);
             if (i->getName()==oldName) {
@@ -766,12 +731,7 @@ void RS_EntityContainer::updateSplines() {
 
     RS_DEBUG->print("RS_EntityContainer::updateSplines()");
 
-    //for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-    //        e!=NULL;
-    //        e=nextEntity(RS2::ResolveNone)) {
-    RS_Entity* e;
-    for (int i = 0; i < entities.size(); ++i) {
-        e = entities.at(i);
+	for (RS_Entity* e: entities){
         //// Only update our own inserts and not inserts of inserts
         if (e->rtti()==RS2::EntitySpline  /*&& e->getParent()==this*/) {
             ((RS_Spline*)e)->update();
@@ -788,11 +748,8 @@ void RS_EntityContainer::updateSplines() {
  * Updates the sub entities of this container.
  */
 void RS_EntityContainer::update() {
-    //for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-    //        e!=NULL;
-    //        e=nextEntity(RS2::ResolveNone)) {
-    for (int i = 0; i < entities.size(); ++i) {
-        entities.at(i)->update();
+	for (RS_Entity* e: entities){
+		e->update();
     }
 }
 
@@ -819,7 +776,7 @@ RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
             entIdx = 0;
             e = entities.first();
         }
-        if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
+		if (e && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
             // emtpy container:
@@ -839,7 +796,7 @@ RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
             entIdx = 0;
             e = entities.first();
         }
-        if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText) {
+		if (e && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
             // emtpy container:
@@ -858,7 +815,7 @@ RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
             entIdx = 0;
             e = entities.first();
         }
-        if (e!=NULL && e->isContainer()) {
+		if (e && e->isContainer()) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
             // emtpy container:
@@ -898,7 +855,7 @@ RS_Entity* RS_EntityContainer::lastEntity(RS2::ResolveLevel level) {
         if (!entities.isEmpty())
             e = entities.last();
         subContainer = NULL;
-        if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
+		if (e && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->lastEntity(level);
         }
@@ -910,7 +867,7 @@ RS_Entity* RS_EntityContainer::lastEntity(RS2::ResolveLevel level) {
         if (!entities.isEmpty())
             e = entities.last();
         subContainer = NULL;
-        if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText) {
+		if (e && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->lastEntity(level);
         }
@@ -922,7 +879,7 @@ RS_Entity* RS_EntityContainer::lastEntity(RS2::ResolveLevel level) {
         if (!entities.isEmpty())
             e = entities.last();
         subContainer = NULL;
-        if (e!=NULL && e->isContainer()) {
+		if (e && e->isContainer()) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->lastEntity(level);
         }
@@ -951,9 +908,9 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
 
     case RS2::ResolveAllButInserts: {
         RS_Entity* e=NULL;
-        if (subContainer!=NULL) {
+		if (subContainer) {
             e = subContainer->nextEntity(level);
-            if (e!=NULL) {
+			if (e) {
                 --entIdx; //return a sub-entity, index not advanced
                 return e;
             } else {
@@ -964,7 +921,7 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
             if ( entIdx < entities.size() )
                 e = entities.at(entIdx);
         }
-        if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
+		if (e && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
             // emtpy container:
@@ -980,9 +937,9 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
     case RS2::ResolveAllButTextImage:
     case RS2::ResolveAllButTexts: {
         RS_Entity* e=NULL;
-        if (subContainer!=NULL) {
+		if (subContainer) {
             e = subContainer->nextEntity(level);
-            if (e!=NULL) {
+			if (e) {
                 --entIdx; //return a sub-entity, index not advanced
                 return e;
             } else {
@@ -993,7 +950,7 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
             if ( entIdx < entities.size() )
                 e = entities.at(entIdx);
         }
-        if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText ) {
+		if (e && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText ) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
             // emtpy container:
@@ -1008,9 +965,9 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
 
     case RS2::ResolveAll: {
         RS_Entity* e=NULL;
-        if (subContainer!=NULL) {
+		if (subContainer) {
             e = subContainer->nextEntity(level);
-            if (e!=NULL) {
+			if (e) {
                 --entIdx; //return a sub-entity, index not advanced
                 return e;
             } else {
@@ -1021,7 +978,7 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
             if ( entIdx < entities.size() )
                 e = entities.at(entIdx);
         }
-        if (e!=NULL && e->isContainer()) {
+		if (e && e->isContainer()) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
             // emtpy container:
@@ -1055,9 +1012,9 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
 
     case RS2::ResolveAllButInserts: {
         RS_Entity* e=NULL;
-        if (subContainer!=NULL) {
+		if (subContainer) {
             e = subContainer->prevEntity(level);
-            if (e!=NULL) {
+			if (e) {
                 return e;
             } else {
                 if (entIdx >= 0)
@@ -1067,7 +1024,7 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
             if (entIdx >= 0)
                 e = entities.at(entIdx);
         }
-        if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
+		if (e && e->isContainer() && e->rtti()!=RS2::EntityInsert) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->lastEntity(level);
             // emtpy container:
@@ -1082,9 +1039,9 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
     case RS2::ResolveAllButTextImage:
     case RS2::ResolveAllButTexts: {
         RS_Entity* e=NULL;
-        if (subContainer!=NULL) {
+		if (subContainer) {
             e = subContainer->prevEntity(level);
-            if (e!=NULL) {
+			if (e) {
                 return e;
             } else {
                 if (entIdx >= 0)
@@ -1094,7 +1051,7 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
             if (entIdx >= 0)
                 e = entities.at(entIdx);
         }
-        if (e!=NULL && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText) {
+		if (e && e->isContainer() && e->rtti()!=RS2::EntityText && e->rtti()!=RS2::EntityMText) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->lastEntity(level);
             // emtpy container:
@@ -1108,9 +1065,9 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
 
     case RS2::ResolveAll: {
         RS_Entity* e=NULL;
-        if (subContainer!=NULL) {
+		if (subContainer) {
             e = subContainer->prevEntity(level);
-            if (e!=NULL) {
+			if (e) {
                 ++entIdx; //return a sub-entity, index not advanced
                 return e;
             } else {
@@ -1121,7 +1078,7 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
             if (entIdx >= 0)
                 e = entities.at(entIdx);
         }
-        if (e!=NULL && e->isContainer()) {
+		if (e && e->isContainer()) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->lastEntity(level);
             // emtpy container:
@@ -1184,32 +1141,16 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
     RS_Vector closestPoint(false);  // closest found endpoint
     RS_Vector point;                // endpoint found
 
-    //QListIterator<RS_Entity> it = createIterator();
-    //RS_Entity* en;
-    //while ( (en = it.current()) != NULL ) {
-    //    ++it;
-    for (RS_Entity* en = const_cast<RS_EntityContainer*>(this)->firstEntity();
-         en != NULL;
-         en = const_cast<RS_EntityContainer*>(this)->nextEntity()) {
+	for (RS_Entity* en: entities){
 
-        if (en->isVisible()
-                //&& en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
-                //&& en->rtti() != RS2::EntityPoint         /**Point*/
-                //&& en->getParent()->rtti() != RS2::EntitySpline
-                //&& en->getParent()->rtti() != RS2::EntityMText        /**< Text 15*/
-                //&& en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
-                && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimRadial    /**< Radial Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimDiametric /**< Diametric Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimAngular   /**< Angular Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimLeader    /**< Leader Dimension */
-                ){//no end point for Insert, text, Dim
+		if (en->isVisible()
+				&& !en->getParent()->ignoredOnModification()
+				){//no end point for Insert, text, Dim
             point = en->getNearestEndpoint(coord, &curDist);
             if (point.valid && curDist<minDist) {
                 closestPoint = point;
                 minDist = curDist;
-                if (dist!=NULL) {
+				if (dist) {
                     *dist = minDist;
                 }
             }
@@ -1239,33 +1180,17 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
     //    ++it;
 
     unsigned i0=0;
-    for (RS_Entity* en = const_cast<RS_EntityContainer*>(this)->firstEntity();
-         en != NULL;
-         en = const_cast<RS_EntityContainer*>(this)->nextEntity()) {
-
-
-        if (/*en->isVisible()*/
-                //&& en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
-                //&& en->rtti() != RS2::EntityPoint         /**Point*/
-                //&& en->getParent()->rtti() != RS2::EntitySpline
-                //&& en->getParent()->rtti() != RS2::EntityMText        /**< Text 15*/
-                //&& en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
-                /*&&*/ en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimRadial    /**< Radial Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimDiametric /**< Diametric Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimAngular   /**< Angular Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimLeader    /**< Leader Dimension */
-                ){//no end point for Insert, text, Dim
+	for(auto en: entities){
+		if (en->isVisible() && !en->getParent()->ignoredOnModification() ){//no end point for Insert, text, Dim
 //            std::cout<<"find nearest for entity "<<i0<<std::endl;
             point = en->getNearestEndpoint(coord, &curDist);
             if (point.valid && curDist<minDist) {
                 closestPoint = point;
                 minDist = curDist;
-                if (dist!=NULL) {
+				if (dist) {
                     *dist = minDist;
                 }
-                if(pEntity!=NULL){
+				if(pEntity){
                     *pEntity=en;
                 }
             }
@@ -1287,22 +1212,12 @@ RS_Vector RS_EntityContainer::getNearestPointOnEntity(const RS_Vector& coord,
 
     RS_Vector point(false);
 
-    RS_Entity* en = const_cast<RS_EntityContainer*>(this)->getNearestEntity(coord, dist, RS2::ResolveNone);
+	RS_Entity* en = getNearestEntity(coord, dist, RS2::ResolveNone);
 
-    if (en!=NULL ) {
+	if (en) {
         if ( en->isVisible()
-             && en->getParent()->rtti() != RS2::EntityInsert         /**Insert*/
-             //&& en->rtti() != RS2::EntityPoint         /**Point*/
-             && en->getParent()->rtti() != RS2::EntitySpline
-             && en->getParent()->rtti() != RS2::EntityMText        /**< Text 15*/
-             && en->getParent()->rtti() != RS2::EntityText         /**< Text 15*/
-             && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
-             && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
-             && en->getParent()->rtti() != RS2::EntityDimRadial    /**< Radial Dimension */
-             && en->getParent()->rtti() != RS2::EntityDimDiametric /**< Diametric Dimension */
-             && en->getParent()->rtti() != RS2::EntityDimAngular   /**< Angular Dimension */
-             && en->getParent()->rtti() != RS2::EntityDimLeader    /**< Leader Dimension */
-             ){//no middle point for Spline, Insert, text, Dim
+			 && !en->getParent()->ignoredOnModification()
+			 ){//no middle point for Spline, Insert, text, Dim
             point = en->getNearestPointOnEntity(coord, onEntity, dist, entity);
         }
     }
@@ -1319,21 +1234,11 @@ RS_Vector RS_EntityContainer::getNearestCenter(const RS_Vector& coord,
     RS_Vector closestPoint(false);  // closest found endpoint
     RS_Vector point;                // endpoint found
 
-    for (RS_Entity* en = const_cast<RS_EntityContainer*>(this)->firstEntity();
-         en != NULL;
-         en = const_cast<RS_EntityContainer*>(this)->nextEntity()) {
+	for(auto en: entities){
 
         if (en->isVisible()
-                && en->getParent()->rtti() != RS2::EntitySpline
-                && en->getParent()->rtti() != RS2::EntityMText        /**< Text 16*/
-                && en->getParent()->rtti() != RS2::EntityText         /**< Text 17*/
-                && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimRadial    /**< Radial Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimDiametric /**< Diametric Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimAngular   /**< Angular Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimLeader    /**< Leader Dimension */
-                ){//no center point for spline, text, Dim
+				&& !en->getParent()->ignoredOnModification()
+				){//no center point for spline, text, Dim
             point = en->getNearestCenter(coord, &curDist);
             if (point.valid && curDist<minDist) {
                 closestPoint = point;
@@ -1341,7 +1246,7 @@ RS_Vector RS_EntityContainer::getNearestCenter(const RS_Vector& coord,
             }
         }
     }
-    if (dist!=NULL) {
+	if (dist) {
         *dist = minDist;
     }
 
@@ -1359,21 +1264,11 @@ RS_Vector RS_EntityContainer::getNearestMiddle(const RS_Vector& coord,
     RS_Vector closestPoint(false);  // closest found endpoint
     RS_Vector point;                // endpoint found
 
-    for (RS_Entity* en = const_cast<RS_EntityContainer*>(this)->firstEntity();
-         en != NULL;
-         en = const_cast<RS_EntityContainer*>(this)->nextEntity()) {
+	for(auto en: entities){
 
         if (en->isVisible()
-                && en->getParent()->rtti() != RS2::EntitySpline
-                && en->getParent()->rtti() != RS2::EntityMText        /**< Text 16*/
-                && en->getParent()->rtti() != RS2::EntityText         /**< Text 17*/
-                && en->getParent()->rtti() != RS2::EntityDimAligned   /**< Aligned Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimLinear    /**< Linear Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimRadial    /**< Radial Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimDiametric /**< Diametric Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimAngular   /**< Angular Dimension */
-                && en->getParent()->rtti() != RS2::EntityDimLeader    /**< Leader Dimension */
-                ){//no midle point for spline, text, Dim
+				&& !en->getParent()->ignoredOnModification()
+				){//no midle point for spline, text, Dim
             point = en->getNearestMiddle(coord, &curDist, middlePoints);
             if (point.valid && curDist<minDist) {
                 closestPoint = point;
@@ -1381,7 +1276,7 @@ RS_Vector RS_EntityContainer::getNearestMiddle(const RS_Vector& coord,
             }
         }
     }
-    if (dist!=NULL) {
+	if (dist) {
         *dist = minDist;
     }
 
@@ -1423,24 +1318,14 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord,
 
     closestEntity = getNearestEntity(coord, NULL, RS2::ResolveAllButTextImage);
 
-    if (closestEntity!=NULL) {
+	if (closestEntity) {
         for (RS_Entity* en = firstEntity(RS2::ResolveAllButTextImage);
              en != NULL;
              en = nextEntity(RS2::ResolveAllButTextImage)) {
             if (
                     !en->isVisible()
-                    || en == closestEntity
-                    || en->rtti() == RS2::EntityPoint         /**Point*/
-                    || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
-                    || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
-                    || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
-                    || en->getParent()->rtti() == RS2::EntityImage    /**< Leader Dimension */
-                    ){//do not do intersection for point, text, Dim
+					|| en->getParent()->ignoredOnModification()
+					){//do not do intersection for point, text, Dim
                 continue;
             }
 
@@ -1456,7 +1341,7 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord,
 
         }
     }
-    if(dist!=NULL && closestPoint.valid) {
+	if(dist && closestPoint.valid) {
         *dist = minDist;
     }
 
@@ -1473,7 +1358,7 @@ RS_Vector RS_EntityContainer::getNearestRef(const RS_Vector& coord,
     RS_Vector closestPoint(false);  // closest found endpoint
     RS_Vector point;                // endpoint found
 
-	for(auto en: *this){
+	for(auto en: entities){
 
         if (en->isVisible()) {
             point = en->getNearestRef(coord, &curDist);
@@ -1499,7 +1384,7 @@ RS_Vector RS_EntityContainer::getNearestSelectedRef(const RS_Vector& coord,
     RS_Vector closestPoint(false);  // closest found endpoint
     RS_Vector point;                // endpoint found
 
-	for(auto en: *this){
+	for(auto en: entities){
 
         if (en->isVisible() && en->isSelected() && !en->isParentSelected()) {
             point = en->getNearestSelectedRef(coord, &curDist);
@@ -1530,10 +1415,7 @@ double RS_EntityContainer::getDistanceToPoint(const RS_Vector& coord,
     RS_Entity* closestEntity = NULL;    // closest entity found
     RS_Entity* subEntity = NULL;
 
-    //int k=0;
-    for (RS_Entity* e =const_cast<RS_EntityContainer*>(this)-> firstEntity(level);
-         e != NULL;
-         e =const_cast<RS_EntityContainer*>(this)-> nextEntity(level)) {
+	for(auto e: entities){
 
         if (e->isVisible()) {
             RS_DEBUG->print("entity: getDistanceToPoint");
@@ -1555,7 +1437,7 @@ double RS_EntityContainer::getDistanceToPoint(const RS_Vector& coord,
         }
     }
 
-    if (entity!=NULL) {
+	if (entity) {
         *entity = closestEntity;
     }
     RS_DEBUG->print("RS_EntityContainer::getDistanceToPoint: OK");
@@ -1660,7 +1542,7 @@ bool RS_EntityContainer::optimizeContours() {
 //    std::cout<<"RS_EntityContainer::optimizeContours: 3"<<std::endl;
     RS_Vector vpStart;
     RS_Vector vpEnd;
-    if(current!=NULL){
+	if(current){
         vpStart=current->getStartpoint();
         vpEnd=current->getEndpoint();
     }
@@ -1709,8 +1591,9 @@ bool RS_EntityContainer::optimizeContours() {
 
 
     // add new sorted entities:
-    for (RS_Entity* en=tmp.firstEntity(); en!=NULL; en=tmp.nextEntity()) {
-        en->setProcessed(false);
+
+	for(auto en: entities){
+		en->setProcessed(false);
         addEntity(en->clone());
     }
 //    std::cout<<"RS_EntityContainer::optimizeContours: 6"<<std::endl;
@@ -1724,7 +1607,7 @@ bool RS_EntityContainer::optimizeContours() {
 
 bool RS_EntityContainer::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) {
     for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-         e!=NULL;
+		 e;
          e=nextEntity(RS2::ResolveNone)) {
         if (e->hasEndpointsWithinWindow(v1, v2))  {
             return true;
@@ -1737,7 +1620,7 @@ bool RS_EntityContainer::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_
 
 void RS_EntityContainer::move(const RS_Vector& offset) {
     for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-         e!=NULL;
+		 e;
          e=nextEntity(RS2::ResolveNone)) {
         e->move(offset);
         if (autoUpdateBorders) {
@@ -1753,9 +1636,8 @@ void RS_EntityContainer::move(const RS_Vector& offset) {
 
 void RS_EntityContainer::rotate(const RS_Vector& center, const double& angle) {
     RS_Vector angleVector(angle);
-    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-         e!=NULL;
-         e=nextEntity(RS2::ResolveNone)) {
+
+	for(auto e: entities){
         e->rotate(center, angleVector);
     }
     if (autoUpdateBorders) {
@@ -1765,9 +1647,8 @@ void RS_EntityContainer::rotate(const RS_Vector& center, const double& angle) {
 
 
 void RS_EntityContainer::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
-    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-         e!=NULL;
-         e=nextEntity(RS2::ResolveNone)) {
+
+	for(auto e: entities){
         e->rotate(center, angleVector);
     }
     if (autoUpdateBorders) {
@@ -1778,9 +1659,8 @@ void RS_EntityContainer::rotate(const RS_Vector& center, const RS_Vector& angleV
 
 void RS_EntityContainer::scale(const RS_Vector& center, const RS_Vector& factor) {
     if (fabs(factor.x)>RS_TOLERANCE && fabs(factor.y)>RS_TOLERANCE) {
-        for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-             e!=NULL;
-             e=nextEntity(RS2::ResolveNone)) {
+
+		for(auto e: entities){
             e->scale(center, factor);
         }
     }
@@ -1793,9 +1673,8 @@ void RS_EntityContainer::scale(const RS_Vector& center, const RS_Vector& factor)
 
 void RS_EntityContainer::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     if (axisPoint1.distanceTo(axisPoint2)>1.0e-6) {
-        for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-             e!=NULL;
-             e=nextEntity(RS2::ResolveNone)) {
+
+		for(auto e: entities){
             e->mirror(axisPoint1, axisPoint2);
         }
     }
@@ -1811,9 +1690,8 @@ void RS_EntityContainer::stretch(const RS_Vector& firstCorner,
 
         move(offset);
     } else {
-        for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-             e!=NULL;
-             e=nextEntity(RS2::ResolveNone)) {
+
+		for(auto e: entities){
             e->stretch(firstCorner, secondCorner, offset);
         }
     }
@@ -1827,9 +1705,8 @@ void RS_EntityContainer::stretch(const RS_Vector& firstCorner,
 void RS_EntityContainer::moveRef(const RS_Vector& ref,
                                  const RS_Vector& offset) {
 
-    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-         e!=NULL;
-         e=nextEntity(RS2::ResolveNone)) {
+
+	for(auto e: entities){
         e->moveRef(ref, offset);
     }
     if (autoUpdateBorders) {
@@ -1841,9 +1718,8 @@ void RS_EntityContainer::moveRef(const RS_Vector& ref,
 void RS_EntityContainer::moveSelectedRef(const RS_Vector& ref,
                                          const RS_Vector& offset) {
 
-    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-         e!=NULL;
-         e=nextEntity(RS2::ResolveNone)) {
+
+	for(auto e: entities){
         e->moveSelectedRef(ref, offset);
     }
     if (autoUpdateBorders) {
@@ -1852,7 +1728,7 @@ void RS_EntityContainer::moveSelectedRef(const RS_Vector& ref,
 }
 
 void RS_EntityContainer::revertDirection() {
-	for(int k = 0; k < entities.size() / 2; k++) {
+	for(int k = 0; k < entities.size() / 2; ++k) {
 		entities.swap(k, entities.size() - 1 - k);
 	}
 
@@ -1873,9 +1749,8 @@ void RS_EntityContainer::draw(RS_Painter* painter, RS_GraphicView* view,
         return;
     }
 
-    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-         e!=NULL;
-         e = nextEntity(RS2::ResolveNone)) {
+
+	for(auto e: entities){
 
         view->drawEntity(painter, e);
     }
@@ -1892,12 +1767,10 @@ double RS_EntityContainer::areaLineIntegral() const
     double contourArea=0.;
     //closed area is always positive
     double closedArea=0.;
-    RS_EntityContainer* loop=const_cast<RS_EntityContainer*>(this);
 
     // edges:
-    for (RS_Entity* e=loop->firstEntity(RS2::ResolveNone);
-         e!=NULL;
-         e=loop->nextEntity(RS2::ResolveNone)) {
+
+	for(auto e: entities){
         e->setLayer(getLayer());
         switch (e->rtti()) {
         case RS2::EntityLine:
@@ -1980,7 +1853,7 @@ std::ostream& operator << (std::ostream& os, RS_EntityContainer& ec) {
        << ec.minV << " - " << ec.maxV << "\n";
     //os << tab << "Unit[" << id << "]: "
     //<< RS_Units::unit2string (ec.unit) << "\n";
-    if (ec.getLayer()!=NULL) {
+	if (ec.getLayer()) {
         os << tab << "Layer[" << id << "]: "
            << ec.getLayer()->getName().toLatin1().data() << "\n";
     } else {
@@ -1997,7 +1870,7 @@ std::ostream& operator << (std::ostream& os, RS_EntityContainer& ec) {
 
     os << tab << "Entities[" << id << "]: \n";
     for (RS_Entity* t=ec.firstEntity();
-         t!=NULL;
+		 t;
          t=ec.nextEntity()) {
 
         switch (t->rtti()) {
