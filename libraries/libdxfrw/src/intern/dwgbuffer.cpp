@@ -858,7 +858,7 @@ duint16 dwgBuffer::crc8(duint16 dx,dint32 start,dint32 end){
     if (!filestr->good())
         return 0;
 
-    register duint8 al;
+	duint8 al;
 
   while (n-- > 0) {
     al = (duint8)((*p) ^ ((dint8)(dx & 0xFF)));

@@ -58,7 +58,7 @@ RScodec::~RScodec() {
    alpha=2 is the primitive element of GF(2^mm)
 */
 void RScodec::RSgenerate_gf(unsigned int pp) {
-    register int i, mask ;
+	int i, mask ;
     int pb;
 
     mask = 1 ;
@@ -88,7 +88,7 @@ void RScodec::RSgenerate_gf(unsigned int pp) {
   nn=(2^mm -1) Reed Solomon code  from the product of (X+alpha**i), i=1..2*tt
 */
 void RScodec::RSgen_poly() {
-    register int i,j ;
+	int i,j ;
     int tmp;
     int bb = nn-kk;; //nn-kk length of parity data
 
@@ -120,7 +120,7 @@ void RScodec::RSgen_poly() {
    Codeword is   c(X) = data(X)*X**(nn-kk)+ b(X)         */
 bool RScodec::encode(unsigned char *data, unsigned char *parity) {
     if (!isOk) return false;
-    register int i,j ;
+	int i,j ;
     int feedback ;
     unsigned char *idata = data;
     unsigned char *bd = parity;
@@ -167,7 +167,7 @@ bool RScodec::encode(unsigned char *data, unsigned char *parity) {
 /** return value: number of corrected errors or -1 if can't correct it */
 int RScodec::decode(unsigned char *data) {
     if (!isOk) return -1;
-    register int i,j,u,q ;
+	int i,j,u,q ;
     int bb = nn-kk;; //nn-kk length of parity data
     int *recd = new (std::nothrow) int[nn];
 
