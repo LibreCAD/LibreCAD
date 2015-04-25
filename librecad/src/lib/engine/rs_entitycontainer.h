@@ -38,6 +38,7 @@
  * @author Andrew Mustun
  */
 class RS_EntityContainer : public RS_Entity {
+	typedef RS_Entity * value_type;
 
 public:
 
@@ -102,12 +103,11 @@ public:
     //virtual unsigned long int count() {
         //	return count(false);
         //}
-    virtual bool isEmpty() {
+	virtual bool isEmpty() const{
         return count()==0;
-    }
-    virtual unsigned int count();
+	}
     virtual unsigned int count() const;
-    virtual unsigned int countDeep();
+	virtual unsigned int countDeep() const;
     //virtual unsigned long int countLayerEntities(RS_Layer* layer);
     virtual unsigned int countSelected();
     virtual double totalSelectedLength();
@@ -207,6 +207,8 @@ public:
 	 */
 	QList<RS_Entity *>::const_iterator begin() const;
 	QList<RS_Entity *>::const_iterator end() const;
+	QList<RS_Entity *>::iterator begin() ;
+	QList<RS_Entity *>::iterator end() ;
 
 protected:
 

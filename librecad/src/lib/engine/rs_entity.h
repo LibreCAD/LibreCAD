@@ -104,13 +104,13 @@ public:
      * This method must be overwritten in subclasses and return the
      * number of <b>atomic</b> entities in this entity.
      */
-    virtual unsigned int count() = 0;
+	virtual unsigned int count() const= 0;
 
     /**
      * This method must be overwritten in subclasses and return the
      * number of <b>atomic</b> entities in this entity including sub containers.
      */
-    virtual unsigned int countDeep() = 0;
+	virtual unsigned int countDeep() const= 0;
 
 
     /**
@@ -254,7 +254,7 @@ public:
     void addGraphicVariable(const QString& key, const QString& val, int code);
 
     double getGraphicVariableDouble(const QString& key, double def);
-    int getGraphicVariableInt(const QString& key, int def);
+	int getGraphicVariableInt(const QString& key, int def) const;
     QString getGraphicVariableString(const QString& key,
 									 const QString& def) const;
 	virtual RS_Vector getStartpoint() const;

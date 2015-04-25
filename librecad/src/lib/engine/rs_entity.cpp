@@ -629,10 +629,10 @@ double RS_Entity::getGraphicVariableDouble(const QString& key, double def) {
  * @return value of variable or default value if the given variable
  *    doesn't exist.
  */
-int RS_Entity::getGraphicVariableInt(const QString& key, int def) {
+int RS_Entity::getGraphicVariableInt(const QString& key, int def) const{
     RS_Graphic* graphic = getGraphic();
     int ret=def;
-    if (graphic!=NULL) {
+	if (graphic) {
         ret = graphic->getVariableInt(key, def);
     }
     return ret;

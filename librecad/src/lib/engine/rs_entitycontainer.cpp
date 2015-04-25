@@ -498,13 +498,6 @@ void RS_EntityContainer::clear() {
     resetBorders();
 }
 
-
-/**
- * Counts all entities (branches of the tree).
- */
-unsigned int RS_EntityContainer::count() {
-    return entities.size();
-}
 unsigned int RS_EntityContainer::count() const{
     return entities.size();
 }
@@ -513,15 +506,11 @@ unsigned int RS_EntityContainer::count() const{
 /**
  * Counts all entities (leaves of the tree).
  */
-unsigned int RS_EntityContainer::countDeep() {
-    unsigned long int c=0;
-
-    for (RS_Entity* t=firstEntity(RS2::ResolveNone);
-         t!=NULL;
-         t=nextEntity(RS2::ResolveNone)) {
-        c+=t->countDeep();
-    }
-
+unsigned int RS_EntityContainer::countDeep() const{
+	unsigned int c=0;
+	for(auto t: *this){
+		c += t->countDeep();
+	}
     return c;
 }
 
@@ -1955,6 +1944,16 @@ QList<RS_Entity *>::const_iterator RS_EntityContainer::begin() const
 }
 
 QList<RS_Entity *>::const_iterator RS_EntityContainer::end() const
+{
+	return entities.end();
+}
+
+QList<RS_Entity *>::iterator RS_EntityContainer::begin()
+{
+	return entities.begin();
+}
+
+QList<RS_Entity *>::iterator RS_EntityContainer::end()
 {
 	return entities.end();
 }

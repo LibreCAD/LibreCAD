@@ -69,14 +69,14 @@ public:
     /**
      * @return Always 1 for atomic entities.
      */
-    virtual unsigned int count() {
+	virtual unsigned int count() const{
         return 1;
     }
 
     /**
      * @return Always 1 for atomic entities.
      */
-    virtual unsigned int countDeep() {
+	virtual unsigned int countDeep() const{
         return 1;
     }
 
