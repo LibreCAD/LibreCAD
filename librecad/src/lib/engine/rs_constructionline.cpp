@@ -116,7 +116,7 @@ RS_Vector RS_ConstructionLine::getNearestPointOnEntity(const RS_Vector& coord,
 
 
 RS_Vector RS_ConstructionLine::getNearestCenter(const RS_Vector& /*coord*/,
-        double* dist) {
+		double* dist) const{
 
     if (dist!=NULL) {
         *dist = RS_MAXDOUBLE;

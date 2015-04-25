@@ -802,7 +802,7 @@ double LC_SplinePoints::getDistanceToPoint(const RS_Vector& coord,
 }
 
 RS_Vector LC_SplinePoints::getNearestCenter(const RS_Vector& /*coord*/,
-	double* dist)
+	double* dist) const
 {
 	if(dist != NULL)
 	{

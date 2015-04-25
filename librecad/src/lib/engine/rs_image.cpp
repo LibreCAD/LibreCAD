@@ -240,7 +240,7 @@ RS_Vector RS_Image::getNearestPointOnEntity(const RS_Vector& coord,
 
 
 RS_Vector RS_Image::getNearestCenter(const RS_Vector& coord,
-                                     double* dist) {
+									 double* dist) const{
 
     RS_VectorSolutions points;
     RS_VectorSolutions corners = getCorners();

@@ -126,7 +126,7 @@ public:
     * @return The closest center point.
     */
    virtual RS_Vector getNearestCenter(const RS_Vector& /*coord*/,
-                                      double* /*dist*/) {
+									  double* /*dist*/) const{
         return RS_Vector(false);
     }
 

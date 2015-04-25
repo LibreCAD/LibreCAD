@@ -249,7 +249,7 @@ RS_Vector RS_Spline::getNearestPointOnEntity(const RS_Vector& coord,
 
 
 RS_Vector RS_Spline::getNearestCenter(const RS_Vector& /*coord*/,
-                                      double* dist) {
+									  double* dist) const{
 
 	if (dist!=nullptr) {
         *dist = RS_MAXDOUBLE;

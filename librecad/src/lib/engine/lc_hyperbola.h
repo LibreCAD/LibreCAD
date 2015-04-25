@@ -198,7 +198,7 @@ public:
             bool /*onEntity = true*/, double*/* dist = NULL*/, RS_Entity**/* entity=NULL*/) const
     {return RS_Vector(false);}
     virtual RS_Vector getNearestCenter(const RS_Vector& /*coord*/,
-                                       double*/* dist = NULL*/)
+									   double*/* dist = NULL*/) const
    {return RS_Vector(false);}
     virtual RS_Vector getNearestMiddle(const RS_Vector& /*coord*/,
                                        double*/* dist = NULL*/,
@@ -211,7 +211,7 @@ public:
     {return RS_Vector(false);}
     virtual RS_Vector getNearestOrthTan(const RS_Vector& /*coord*/,
                                     const RS_Line& /*normal*/,
-                                     bool /*onEntity = false*/)
+									 bool /*onEntity = false*/) const
     {return RS_Vector(false);}
     virtual double getDistanceToPoint(const RS_Vector& /*coord*/,
                                       RS_Entity** /*entity=NULL*/,

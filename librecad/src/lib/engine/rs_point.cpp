@@ -79,7 +79,7 @@ RS_Vector RS_Point::getNearestPointOnEntity(const RS_Vector& coord,
 
 
 
-RS_Vector RS_Point::getNearestCenter(const RS_Vector& coord, double* dist) {
+RS_Vector RS_Point::getNearestCenter(const RS_Vector& coord, double* dist) const{
 
     if (dist!=NULL) {
         *dist = data.pos.distanceTo(coord);

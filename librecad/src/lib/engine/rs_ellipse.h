@@ -196,7 +196,7 @@ public:
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
 			bool onEntity = true, double* dist = nullptr, RS_Entity** entity=nullptr) const;
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-									   double* dist = nullptr);
+									   double* dist = nullptr)const;
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
 									   double* dist = nullptr,
                                        int middlePoints = 1
@@ -206,7 +206,7 @@ public:
 									 double* dist = nullptr)const;
     virtual RS_Vector getNearestOrthTan(const RS_Vector& coord,
                                     const RS_Line& normal,
-                                     bool onEntity = false);
+									 bool onEntity = false) const;
     bool switchMajorMinor(void); //switch major minor axes to keep major the longer ellipse radius
     virtual void correctAngles();//make sure angleLength() is not more than 2*M_PI
     virtual bool isPointOnEntity(const RS_Vector& coord,

@@ -133,7 +133,7 @@ m0 x + m1 y + m2 =0
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
             bool onEntity = true, double* dist = NULL, RS_Entity** entity=NULL)const;
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-                                       double* dist = NULL);
+									   double* dist = NULL)const;
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
                                        double* dist = NULL,
                                        int middlePoints = 1)const;

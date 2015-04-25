@@ -320,7 +320,7 @@ RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& coord,
 
 
 RS_Vector RS_Solid::getNearestCenter(const RS_Vector& /*coord*/,
-                                     double* dist) {
+									 double* dist) const{
 
 	if (dist!=nullptr) {
         *dist = RS_MAXDOUBLE;

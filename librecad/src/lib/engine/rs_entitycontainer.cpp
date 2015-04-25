@@ -1324,7 +1324,7 @@ RS_Vector RS_EntityContainer::getNearestPointOnEntity(const RS_Vector& coord,
 
 
 RS_Vector RS_EntityContainer::getNearestCenter(const RS_Vector& coord,
-                                               double* dist) {
+											   double* dist) const{
     double minDist = RS_MAXDOUBLE;  // minimum measured distance
     double curDist = RS_MAXDOUBLE;  // currently measured distance
     RS_Vector closestPoint(false);  // closest found endpoint

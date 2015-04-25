@@ -397,7 +397,7 @@ RS_Vector RS_Arc::getNearestPointOnEntity(const RS_Vector& coord,
 
 
 RS_Vector RS_Arc::getNearestCenter(const RS_Vector& coord,
-                                   double* dist) {
+								   double* dist) const{
     if (dist!=NULL) {
         *dist = coord.distanceTo(data.center);
     }
@@ -519,7 +519,7 @@ RS_Vector RS_Arc::getNearestDist(double distance,
 
 RS_Vector RS_Arc::getNearestOrthTan(const RS_Vector& coord,
                     const RS_Line& normal,
-                    bool onEntity )
+					bool onEntity ) const
 {
         if ( !coord.valid ) {
                 return RS_Vector(false);

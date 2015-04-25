@@ -594,7 +594,7 @@ bool RS_Ellipse::isPointOnEntity(const RS_Vector& coord,
 
 
 RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
-                                       double* dist) {
+									   double* dist) const{
     RS_Vector   vCenter = data.center;
     double      distCenter = coord.distanceTo(data.center);
 
@@ -1078,7 +1078,7 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
 
 RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
                                         const RS_Line& normal,
-                                        bool onEntity )
+										bool onEntity ) const
 {
     if ( !coord.valid ) {
         return RS_Vector(false);

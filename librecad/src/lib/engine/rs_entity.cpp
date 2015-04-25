@@ -911,7 +911,7 @@ QString RS_Entity::getUserDefVar(const QString& key) const {
  */
 RS_Vector RS_Entity::getNearestOrthTan(const RS_Vector& /*coord*/,
                     const RS_Line& /*normal*/,
-                    bool /*onEntity = false*/){
+					bool /*onEntity = false*/) const{
         return RS_Vector(false);
 }
 

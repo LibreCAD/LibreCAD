@@ -321,7 +321,7 @@ public:
      * @return The closest center point.
      */
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-									   double* dist = nullptr) = 0;
+									   double* dist = nullptr) const= 0;
 
     /**
      * Must be overwritten to get the (nearest) middle point to the
@@ -420,7 +420,7 @@ public:
      */
     virtual RS_Vector getNearestOrthTan(const RS_Vector& /*coord*/,
                                         const RS_Line& /*normal*/,
-                                        bool onEntity = false);
+										bool onEntity = false) const;
     virtual double getDistanceToPoint(const RS_Vector& coord,
 									  RS_Entity** entity = nullptr,
                                       RS2::ResolveLevel level = RS2::ResolveNone,

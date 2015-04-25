@@ -166,7 +166,7 @@ public:
     //virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
 	//        bool onEntity=true, double* dist = nullptr, RS_Entity** entity=nullptr);
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-									   double* dist = nullptr);
+									   double* dist = nullptr)const;
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
 									   double* dist = nullptr,
                                        int middlePoints = 1)const;

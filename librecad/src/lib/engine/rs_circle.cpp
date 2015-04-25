@@ -608,8 +608,8 @@ RS_Vector RS_Circle::getTangentDirection(const RS_Vector& point) const {
 }
 
 RS_Vector RS_Circle::getNearestCenter(const RS_Vector& coord,
-                                      double* dist) {
-    if (dist!=NULL) {
+									  double* dist) const{
+	if (dist) {
 		*dist = coord.distanceTo(data.center);
     }
 	return data.center;
@@ -694,7 +694,7 @@ RS_Vector RS_Circle::getNearestDist(double /*distance*/,
 
 RS_Vector RS_Circle::getNearestOrthTan(const RS_Vector& coord,
                     const RS_Line& normal,
-                    bool /*onEntity = false*/)
+					bool /*onEntity = false*/) const
 {
         if ( !coord.valid) {
                 return RS_Vector(false);
