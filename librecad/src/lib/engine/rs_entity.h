@@ -32,7 +32,6 @@
 #include "rs_math.h"
 #include "rs_pen.h"
 #include "rs_undoable.h"
-#include "rs_vector.h"
 
 class RS_Arc;
 class RS_Block;
@@ -51,6 +50,8 @@ class RS_Layer;
 class LC_Quadratic;
 class RS_GraphicView;
 
+class RS_Vector;
+class RS_VectorSolutions;
 
 /**
  * Base class for an entity (line, arc, circle, ...)
@@ -74,14 +75,8 @@ public:
 	}
 
     void resetBorders();
-    void moveBorders(const RS_Vector& offset){
-        minV.move(offset);
-        maxV.move(offset);
-    }
-    void scaleBorders(const RS_Vector& center, const RS_Vector& factor){
-        minV.scale(center,factor);
-        maxV.scale(center,factor);
-    }
+	void moveBorders(const RS_Vector& offset);
+	void scaleBorders(const RS_Vector& center, const RS_Vector& factor);
     /**
      * Must be overwritten to return the rtti of this entity
      * (e.g. RS2::EntityArc).
@@ -141,17 +136,13 @@ public:
     }
     /** @return The center point (x) of this arc */
     //get center for entities: arc, circle and ellipse
-    virtual RS_Vector getCenter() const {
-        return RS_Vector(false);
-    }
-    virtual double getRadius() const {
-        return RS_MAXDOUBLE;
-    }
+	virtual RS_Vector getCenter() const;
+	virtual double getRadius() const;
 	RS_Graphic* getGraphic() const;
-    RS_Block* getBlock();
-    RS_Insert* getInsert();
+	RS_Block* getBlock() const;
+	RS_Insert* getInsert() const;
 	RS_Entity* getBlockOrInsert() const;
-    RS_Document* getDocument();
+	RS_Document* getDocument() const;
 
     void setLayer(const QString& name);
     void setLayer(RS_Layer* l);
@@ -202,17 +193,17 @@ public:
     virtual bool setSelected(bool select);
     virtual bool toggleSelected();
     virtual bool isSelected() const;
-    virtual bool isParentSelected();
+	bool isParentSelected() const;
     virtual bool isProcessed() const;
     virtual void setProcessed(bool on);
-    virtual bool isInWindow(RS_Vector v1, RS_Vector v2);
+	bool isInWindow(RS_Vector v1, RS_Vector v2) const;
     virtual bool hasEndpointsWithinWindow(const RS_Vector& /*v1*/, const RS_Vector& /*v2*/) {
         return false;
     }
 	virtual bool isVisible() const;
 	virtual void setVisible(bool v);
     virtual void setHighlighted(bool on);
-    virtual bool isHighlighted();
+	virtual bool isHighlighted() const;
 
 	bool isLocked() const;
 
@@ -266,12 +257,8 @@ public:
     int getGraphicVariableInt(const QString& key, int def);
     QString getGraphicVariableString(const QString& key,
 									 const QString& def) const;
-    virtual RS_Vector getStartpoint() const {
-        return RS_Vector(false);
-    }
-    virtual RS_Vector getEndpoint() const {
-        return RS_Vector(false);
-    }
+	virtual RS_Vector getStartpoint() const;
+	virtual RS_Vector getEndpoint() const;
     //find the local direction at end points, derived entities
     // must implement this if direction is supported by the entity type
     virtual double getDirection1() const {
@@ -282,12 +269,8 @@ public:
     }
 
     //find the tangential points seeing from given point
-    virtual RS_VectorSolutions getTangentPoint(const RS_Vector& /*point*/) const {
-        return RS_VectorSolutions();
-    }
-    virtual RS_Vector getTangentDirection(const RS_Vector& /*point*/)const{
-        return RS_Vector(false);
-    }
+	virtual RS_VectorSolutions getTangentPoint(const RS_Vector& /*point*/) const;
+	virtual RS_Vector getTangentDirection(const RS_Vector& /*point*/)const;
 	RS2::Unit getGraphicUnit() const;
 
     /**

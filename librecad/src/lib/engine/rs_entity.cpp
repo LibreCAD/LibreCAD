@@ -32,6 +32,7 @@
 
 #include "rs_entity.h"
 #include "rs_arc.h"
+#include "rs_block.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
 #include "rs_graphic.h"
@@ -43,6 +44,7 @@
 #include "rs_point.h"
 #include "rs_polyline.h"
 #include "rs_text.h"
+#include "rs_vector.h"
 #include "rs_information.h"
 #include "lc_quadratic.h"
 
@@ -109,6 +111,15 @@ void RS_Entity::resetBorders() {
 }
 
 
+void RS_Entity::moveBorders(const RS_Vector& offset){
+	minV.move(offset);
+	maxV.move(offset);
+}
+void RS_Entity::scaleBorders(const RS_Vector& center, const RS_Vector& factor){
+	minV.scale(center,factor);
+	maxV.scale(center,factor);
+}
+
 
 /**
  * Selects or deselects this entity.
@@ -156,15 +167,16 @@ bool RS_Entity::isSelected() const {
 /**
  * @return true if a parent entity of this entity is selected.
  */
-bool RS_Entity::isParentSelected() {
-    RS_Entity* p = this;
+bool RS_Entity::isParentSelected() const
+{
+	RS_Entity const* p = this;
 
-    do {
-        p = p->getParent();
-        if (p!=NULL && p->isSelected()==true) {
-            return true;
-        }
-    } while(p!=NULL);
+	while(p) {
+		p = p->getParent();
+		if (p && p->isSelected()==true) {
+			return true;
+		}
+	}
 
     return false;
 }
@@ -223,7 +235,8 @@ bool RS_Entity::isUndone() const {
 /**
  * @return True if the entity is in the given range.
  */
-bool RS_Entity::isInWindow(RS_Vector v1, RS_Vector v2) {
+bool RS_Entity::isInWindow(RS_Vector v1, RS_Vector v2) const
+{
     double right, left, top, bottom;
 
     right = std::max(v1.x, v2.x);
@@ -391,12 +404,25 @@ void RS_Entity::setHighlighted(bool on) {
     }
 }
 
+RS_Vector RS_Entity::getStartpoint() const {
+	return RS_Vector(false);
+}
 
+RS_Vector RS_Entity::getEndpoint() const {
+	return RS_Vector(false);
+}
 
+RS_VectorSolutions RS_Entity::getTangentPoint(const RS_Vector& /*point*/) const {
+	return RS_VectorSolutions();
+}
+
+RS_Vector RS_Entity::getTangentDirection(const RS_Vector& /*point*/)const{
+	return RS_Vector(false);
+}
 /**
  * @return true if the entity is highlighted.
  */
-bool RS_Entity::isHighlighted() {
+bool RS_Entity::isHighlighted() const{
     return getFlag(RS2::FlagHighlighted);
 }
 
@@ -417,6 +443,13 @@ bool RS_Entity::isLocked() const
     }
 }
 
+RS_Vector RS_Entity::getCenter() const {
+	return RS_Vector(false);
+}
+
+double RS_Entity::getRadius() const {
+	return RS_MAXDOUBLE;
+}
 
 /**
  * @return The parent graphic in which this entity is stored
@@ -440,14 +473,14 @@ RS_Graphic* RS_Entity::getGraphic() const{
  * or the parent's parent block or NULL if none of the parents
  * are stored in a block.
  */
-RS_Block* RS_Entity::getBlock() {
+RS_Block* RS_Entity::getBlock() const{
     if (rtti()==RS2::EntityBlock) {
-        return (RS_Block*)this;
-    } else if (parent==NULL) {
-        return NULL;
-    } else {
-        return parent->getBlock();
-    }
+		RS_Block const* ret=static_cast<RS_Block const*>(this);
+		return const_cast<RS_Block*>(ret);
+	} else if (!parent) {
+		return nullptr;
+	}
+	return parent->getBlock();
 }
 
 
@@ -470,9 +503,11 @@ LC_Quadratic RS_Entity::getQuadratic() const
  * or the parent's parent block or NULL if none of the parents
  * are stored in a block.
  */
-RS_Insert* RS_Entity::getInsert() {
+RS_Insert* RS_Entity::getInsert() const
+{
     if (rtti()==RS2::EntityInsert) {
-        return (RS_Insert*)this;
+		RS_Insert const* ret=static_cast<RS_Insert const*>(this);
+		return const_cast<RS_Insert*>(ret);
 	} else if (!parent) {
 		return nullptr;
     } else {
@@ -507,14 +542,14 @@ RS_Entity* RS_Entity::getBlockOrInsert() const
  * are stored in a document. Note that a document is usually
  * either a Graphic or a Block.
  */
-RS_Document* RS_Entity::getDocument() {
-    if (isDocument()==true) {
-        return (RS_Document*)this;
-    } else if (parent==NULL) {
-        return NULL;
-    } else {
-        return parent->getDocument();
-    }
+RS_Document* RS_Entity::getDocument() const{
+	if (isDocument()) {
+		RS_Document const* ret=static_cast<RS_Document const*>(this);
+		return const_cast<RS_Document*>(ret);
+	} else if (!parent) {
+		return nullptr;
+	}
+	return parent->getDocument();
 }
 
 
