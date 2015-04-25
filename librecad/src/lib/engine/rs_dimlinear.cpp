@@ -83,7 +83,8 @@ RS_Entity* RS_DimLinear::clone() const {
 	return d;
 }
 
-RS_VectorSolutions RS_DimLinear::getRefPoints() {
+RS_VectorSolutions RS_DimLinear::getRefPoints() const
+{
 		return RS_VectorSolutions({edata.extensionPoint1, edata.extensionPoint2,
 												data.definitionPoint, data.middleOfText});
 }

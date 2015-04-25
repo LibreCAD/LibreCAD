@@ -106,11 +106,7 @@ public:
 		 */
 	void setClosed(bool c);
 
-    virtual RS_VectorSolutions getRefPoints();
-    virtual RS_Vector getNearestRef(const RS_Vector& coord,
-									 double* dist = nullptr);
-    virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
-									 double* dist = nullptr);
+	virtual RS_VectorSolutions getRefPoints() const;
 
     /** @return Start point of the entity */
     virtual RS_Vector getStartpoint() const ;

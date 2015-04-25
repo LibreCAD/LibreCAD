@@ -125,7 +125,7 @@ public:
     /** @return Copy of data that defines the ellipse. **/
 	const RS_EllipseData& getData() const;
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     /**
      * @retval true if the arc is reversed (clockwise),

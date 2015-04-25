@@ -85,7 +85,7 @@ public:
         return data;
     }
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     /** Sets new arc parameters. **/
     void setData(RS_ArcData d) {

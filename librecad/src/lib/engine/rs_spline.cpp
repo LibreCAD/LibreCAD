@@ -113,24 +113,10 @@ void RS_Spline::setClosed(bool c) {
 		update();
 }
 
-RS_VectorSolutions RS_Spline::getRefPoints() {
+RS_VectorSolutions RS_Spline::getRefPoints() const
+{
 	return RS_VectorSolutions(data.controlPoints);
 }
-
-RS_Vector RS_Spline::getNearestRef(const RS_Vector& coord,
-                                   double* dist) {
-
-    //return getRefPoints().getClosest(coord, dist);
-    return RS_Entity::getNearestRef(coord, dist);
-}
-
-RS_Vector RS_Spline::getNearestSelectedRef(const RS_Vector& coord,
-        double* dist) {
-
-    //return getRefPoints().getClosest(coord, dist);
-    return RS_Entity::getNearestSelectedRef(coord, dist);
-}
-
 
 /**
  * Updates the internal polygon of this spline. Called when the

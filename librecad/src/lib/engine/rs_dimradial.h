@@ -84,7 +84,7 @@ public:
         return edata;
     }
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     virtual QString getMeasuredLabel();
 

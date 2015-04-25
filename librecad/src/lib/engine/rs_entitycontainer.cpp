@@ -770,8 +770,6 @@ void RS_EntityContainer::renameInserts(const QString& oldName,
 
 }
 
-
-
 /**
  * Updates all Spline entities in this container.
  */
@@ -1479,23 +1477,21 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord,
 
 
 RS_Vector RS_EntityContainer::getNearestRef(const RS_Vector& coord,
-                                            double* dist) {
+											double* dist) const{
 
     double minDist = RS_MAXDOUBLE;  // minimum measured distance
     double curDist;                 // currently measured distance
     RS_Vector closestPoint(false);  // closest found endpoint
     RS_Vector point;                // endpoint found
 
-    for (RS_Entity* en = firstEntity();
-         en != NULL;
-         en = nextEntity()) {
+	for(auto en: *this){
 
         if (en->isVisible()) {
             point = en->getNearestRef(coord, &curDist);
             if (point.valid && curDist<minDist) {
                 closestPoint = point;
                 minDist = curDist;
-                if (dist!=NULL) {
+				if (dist) {
                     *dist = minDist;
                 }
             }
@@ -1507,23 +1503,21 @@ RS_Vector RS_EntityContainer::getNearestRef(const RS_Vector& coord,
 
 
 RS_Vector RS_EntityContainer::getNearestSelectedRef(const RS_Vector& coord,
-                                                    double* dist) {
+													double* dist) const{
 
     double minDist = RS_MAXDOUBLE;  // minimum measured distance
     double curDist;                 // currently measured distance
     RS_Vector closestPoint(false);  // closest found endpoint
     RS_Vector point;                // endpoint found
 
-    for (RS_Entity* en = firstEntity();
-         en != NULL;
-         en = nextEntity()) {
+	for(auto en: *this){
 
         if (en->isVisible() && en->isSelected() && !en->isParentSelected()) {
             point = en->getNearestSelectedRef(coord, &curDist);
             if (point.valid && curDist<minDist) {
                 closestPoint = point;
                 minDist = curDist;
-                if (dist!=NULL) {
+				if (dist) {
                     *dist = minDist;
                 }
             }

@@ -127,8 +127,7 @@ public:
     virtual void updateSplines();
     virtual void update();
         virtual void renameInserts(const QString& oldName,
-                const QString& newName);
-
+				const QString& newName);
 
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL)const;
@@ -156,9 +155,9 @@ public:
     virtual RS_Vector getNearestIntersection(const RS_Vector& coord,
             double* dist = NULL);
     virtual RS_Vector getNearestRef(const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = NULL) const;
     virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = NULL) const;
 
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity,

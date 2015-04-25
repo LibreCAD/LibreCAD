@@ -103,7 +103,8 @@ QString RS_DimDiametric::getMeasuredLabel() {
 
 
 
-RS_VectorSolutions RS_DimDiametric::getRefPoints() {
+RS_VectorSolutions RS_DimDiametric::getRefPoints() const
+{
 		return RS_VectorSolutions({edata.definitionPoint,
 												data.definitionPoint, data.middleOfText});
 }

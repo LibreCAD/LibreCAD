@@ -113,7 +113,7 @@ public:
         return data;
     }
     RS_VectorSolutions getFoci() const ;
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     /**
      * @retval true if the arc is reversed (clockwise),

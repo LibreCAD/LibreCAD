@@ -92,12 +92,11 @@ RS_Entity* RS_DimAligned::clone() const{
 	return d;
 }
 
-RS_VectorSolutions RS_DimAligned::getRefPoints() {
+RS_VectorSolutions RS_DimAligned::getRefPoints() const
+{
 		return RS_VectorSolutions({edata.extensionPoint1, edata.extensionPoint2,
 												data.definitionPoint, data.middleOfText});
 }
-
-
 
 /**
  * @return Automatically creted label for the default

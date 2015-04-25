@@ -50,13 +50,10 @@ void RS_Point::calculateBorders () {
     minV = maxV = data.pos;
 }
 
-
-
-RS_VectorSolutions RS_Point::getRefPoints() {
-		return RS_VectorSolutions{data.pos};
+RS_VectorSolutions RS_Point::getRefPoints() const
+{
+	return RS_VectorSolutions{data.pos};
 }
-
-
 
 RS_Vector RS_Point::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
 

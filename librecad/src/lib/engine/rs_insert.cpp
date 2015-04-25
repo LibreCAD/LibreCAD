@@ -302,15 +302,15 @@ bool RS_Insert::isVisible() {
 }
 
 
-RS_VectorSolutions RS_Insert::getRefPoints() {
-		RS_VectorSolutions ret{data.insertionPoint};
-        return ret;
+RS_VectorSolutions RS_Insert::getRefPoints() const
+{
+	return RS_VectorSolutions{data.insertionPoint};
 }
 
 
 
 RS_Vector RS_Insert::getNearestRef(const RS_Vector& coord,
-                                     double* dist) {
+									 double* dist) const{
 
         return getRefPoints().getClosest(coord, dist);
 }

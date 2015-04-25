@@ -519,7 +519,8 @@ QList<RS_Circle> RS_Circle::solveAppolloniusSingle(const QList<RS_Circle>& circl
     return ret;
 }
 
-RS_VectorSolutions RS_Circle::getRefPoints() {
+RS_VectorSolutions RS_Circle::getRefPoints() const
+{
 	RS_Vector v1(data.radius, 0.0);
 	RS_Vector v2(0.0, data.radius);
 

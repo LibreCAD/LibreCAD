@@ -173,12 +173,12 @@ public:
 
     virtual bool isVisible();
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
     virtual RS_Vector getMiddlePoint(void) const{
             return RS_Vector(false);
     }
     virtual RS_Vector getNearestRef(const RS_Vector& coord,
-                                     double* dist = NULL) ;
+									 double* dist = nullptr) const;
 
     virtual void move(const RS_Vector& offset);
     virtual void rotate(const RS_Vector& center, const double& angle);

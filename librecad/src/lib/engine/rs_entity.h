@@ -301,11 +301,7 @@ public:
     /**
      * Must be overwritten to get all reference points of the entity.
      */
-    virtual RS_VectorSolutions getRefPoints() {
-        RS_VectorSolutions ret;
-        return ret;
-    }
-
+	virtual RS_VectorSolutions getRefPoints() const;
 
     /**
      * Must be overwritten to get the closest endpoint to the
@@ -415,11 +411,7 @@ public:
      * @return The closest point with the given distance to the endpoint.
      */
     virtual RS_Vector getNearestRef(const RS_Vector& coord,
-									double* dist = nullptr) {
-        RS_VectorSolutions s = getRefPoints();
-
-        return s.getClosest(coord, dist);
-    }
+									double* dist = nullptr) const;
 
     /**
      * Gets the nearest reference point of this entity if it is selected.
@@ -435,7 +427,7 @@ public:
      * @return The closest point with the given distance to the endpoint.
      */
     virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
-											double* dist = nullptr);
+											double* dist = nullptr) const;
 
     /**
      * Must be overwritten to get the shortest distance between this

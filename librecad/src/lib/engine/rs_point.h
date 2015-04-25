@@ -88,7 +88,7 @@ public:
         return data;
     }
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     /** @return Position of the point */
     RS_Vector getPos() {

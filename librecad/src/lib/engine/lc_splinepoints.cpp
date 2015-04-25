@@ -410,7 +410,7 @@ void LC_SplinePoints::calculateBorders()
 	return;
 }
 
-RS_VectorSolutions LC_SplinePoints::getRefPoints()
+RS_VectorSolutions LC_SplinePoints::getRefPoints() const
 {
 	RS_VectorSolutions ret;
 
@@ -422,18 +422,6 @@ RS_VectorSolutions LC_SplinePoints::getRefPoints()
 	}
 
 	return ret;
-}
-
-RS_Vector LC_SplinePoints::getNearestRef(const RS_Vector& coord,
-	double* dist)
-{
-    return RS_Entity::getNearestRef(coord, dist);
-}
-
-RS_Vector LC_SplinePoints::getNearestSelectedRef(const RS_Vector& coord,
-	double* dist)
-{
-    return RS_Entity::getNearestSelectedRef(coord, dist);
 }
 
 /** @return Start point of the entity */

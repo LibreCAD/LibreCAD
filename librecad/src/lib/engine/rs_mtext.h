@@ -237,9 +237,7 @@ public:
      */
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL)const;
-    virtual RS_VectorSolutions getRefPoints();
-    virtual RS_Vector getNearestRef(const RS_Vector& coord,
-                                    double* dist = NULL);
+	virtual RS_VectorSolutions getRefPoints() const;
 
     virtual void move(const RS_Vector& offset);
     virtual void rotate(const RS_Vector& center, const double& angle);

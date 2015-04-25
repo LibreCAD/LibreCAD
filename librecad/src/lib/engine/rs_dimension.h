@@ -109,9 +109,6 @@ public:
         return data;
     }
 
-        RS_Vector getNearestRef(const RS_Vector& coord, double* dist);
-        RS_Vector getNearestSelectedRef(const RS_Vector& coord, double* dist);
-
     QString getLabel(bool resolve=true);
         void setLabel(const QString& l);
 

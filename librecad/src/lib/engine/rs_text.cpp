@@ -424,20 +424,10 @@ RS_Vector RS_Text::getNearestEndpoint(const RS_Vector& coord, double* dist)const
     return data.insertionPoint;
 }
 
-
-RS_VectorSolutions RS_Text::getRefPoints() {
-		RS_VectorSolutions ret({data.insertionPoint, data.secondPoint});
-        return ret;
+RS_VectorSolutions RS_Text::getRefPoints() const{
+	RS_VectorSolutions ret({data.insertionPoint, data.secondPoint});
+	return ret;
 }
-
-
-RS_Vector RS_Text::getNearestRef(const RS_Vector& coord,
-                                     double* dist) {
-
-        //return getRefPoints().getClosest(coord, dist);
-        return RS_Entity::getNearestRef(coord, dist);
-}
-
 
 void RS_Text::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);

@@ -195,7 +195,8 @@ RS_VectorSolutions RS_Ellipse::getFoci() const {
 	return RS_VectorSolutions({getCenter()+vp, getCenter()-vp});
 }
 
-RS_VectorSolutions RS_Ellipse::getRefPoints() {
+RS_VectorSolutions RS_Ellipse::getRefPoints() const
+{
     RS_VectorSolutions ret;
     if(isArc()){
         //no start/end point for whole ellipse

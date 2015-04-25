@@ -552,18 +552,9 @@ RS_Vector RS_MText::getNearestEndpoint(const RS_Vector& coord, double* dist)cons
 }
 
 
-RS_VectorSolutions RS_MText::getRefPoints() {
+RS_VectorSolutions RS_MText::getRefPoints() const{
 		return RS_VectorSolutions({data.insertionPoint});
 }
-
-
-RS_Vector RS_MText::getNearestRef(const RS_Vector& coord,
-                                     double* dist) {
-
-        //return getRefPoints().getClosest(coord, dist);
-        return RS_Entity::getNearestRef(coord, dist);
-}
-
 
 void RS_MText::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);

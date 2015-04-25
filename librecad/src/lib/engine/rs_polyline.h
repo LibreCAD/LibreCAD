@@ -116,15 +116,10 @@ public:
 
     void setClosed(bool cl, double bulge);//RLZ: rewrite this:
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
     virtual RS_Vector getMiddlePoint(void)const {
             return RS_Vector(false);
-    }
-    virtual RS_Vector getNearestRef(const RS_Vector& coord,
-                                     double* dist = NULL);
-    virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
-                                     double* dist = NULL);
-
+	}
     virtual RS_Entity* addVertex(const RS_Vector& v,
                 double bulge=0.0, bool prepend=false);
 

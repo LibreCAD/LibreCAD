@@ -397,35 +397,18 @@ void RS_Polyline::addEntity(RS_Entity* /*entity*/) {
 
 
 
-RS_VectorSolutions RS_Polyline::getRefPoints() {
+RS_VectorSolutions RS_Polyline::getRefPoints() const{
 	RS_VectorSolutions ret({data.startpoint});
-
-    for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-		 e;
-         e = nextEntity(RS2::ResolveNone)) {
-        if (e->isAtomic()) {
-            ret.push_back(((RS_AtomicEntity*)e)->getEndpoint());
-        }
-    }
+	for(auto e: *this){
+		if (e->isAtomic()) {
+			ret.push_back((static_cast<RS_AtomicEntity*>(e))->getEndpoint());
+		}
+	}
 
     ret.push_back( data.endpoint);
 
     return ret;
 }
-
-RS_Vector RS_Polyline::getNearestRef(const RS_Vector& coord,
-                                   double* dist) {
-
-    return RS_Entity::getNearestRef(coord, dist);
-}
-
-RS_Vector RS_Polyline::getNearestSelectedRef(const RS_Vector& coord,
-        double* dist) {
-
-    return RS_Entity::getNearestSelectedRef(coord, dist);
-}
-
-
 
 /*
 void RS_Polyline::reorder() {

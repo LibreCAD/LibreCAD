@@ -92,7 +92,7 @@ public:
         return data;
     }
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     /** @return Start point of the entity */
     virtual RS_Vector getStartpoint() const {

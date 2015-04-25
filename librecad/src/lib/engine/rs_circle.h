@@ -81,7 +81,7 @@ public:
         return data;
     }
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     //no start/end point for whole circle
     //        virtual RS_Vector getStartpoint() const {

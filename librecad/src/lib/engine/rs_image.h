@@ -217,6 +217,7 @@ public:
     // whether the the point is within image
     virtual bool containsPoint(const RS_Vector& coord) const;
 
+
 protected:
     RS_ImageData data;
 	std::unique_ptr<QImage> img;

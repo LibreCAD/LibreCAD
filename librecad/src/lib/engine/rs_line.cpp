@@ -93,7 +93,8 @@ void RS_Line::calculateBorders() {
 
 
 
-RS_VectorSolutions RS_Line::getRefPoints() {
+RS_VectorSolutions RS_Line::getRefPoints() const
+{
 	return RS_VectorSolutions({data.startpoint, data.endpoint});
 }
 

@@ -924,8 +924,20 @@ bool RS_Entity::trimmable() const
     }
 }
 
+RS_VectorSolutions RS_Entity::getRefPoints() const
+{
+	return RS_VectorSolutions();
+}
+
+RS_Vector RS_Entity::getNearestRef(const RS_Vector& coord,
+								   double* dist) const{
+	RS_VectorSolutions const&& s = getRefPoints();
+
+	return s.getClosest(coord, dist);
+}
+
 RS_Vector RS_Entity::getNearestSelectedRef(const RS_Vector& coord,
-										double* dist) {
+										   double* dist) const{
 	if (isSelected()) {
 		return getNearestRef(coord, dist);
 	}
