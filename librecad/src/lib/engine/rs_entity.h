@@ -147,10 +147,10 @@ public:
     virtual double getRadius() const {
         return RS_MAXDOUBLE;
     }
-    RS_Graphic* getGraphic();
+	RS_Graphic* getGraphic() const;
     RS_Block* getBlock();
     RS_Insert* getInsert();
-    RS_Entity* getBlockOrInsert();
+	RS_Entity* getBlockOrInsert() const;
     RS_Document* getDocument();
 
     void setLayer(const QString& name);
@@ -209,18 +209,12 @@ public:
     virtual bool hasEndpointsWithinWindow(const RS_Vector& /*v1*/, const RS_Vector& /*v2*/) {
         return false;
     }
-    virtual bool isVisible();
-    virtual void setVisible(bool v) {
-        if (v) {
-            setFlag(RS2::FlagVisible);
-        } else {
-            delFlag(RS2::FlagVisible);
-        }
-    }
+	virtual bool isVisible() const;
+	virtual void setVisible(bool v);
     virtual void setHighlighted(bool on);
     virtual bool isHighlighted();
 
-    virtual bool isLocked();
+	bool isLocked() const;
 
     virtual void undoStateChanged(bool undone);
     virtual bool isUndone() const;
@@ -262,9 +256,7 @@ public:
      * @see getMin()
      * @see getMax()
      */
-    RS_Vector getSize() const {
-        return maxV-minV;
-    }
+	RS_Vector getSize() const;
 
     void addGraphicVariable(const QString& key, double val, int code);
     void addGraphicVariable(const QString& key, int val, int code);
@@ -273,7 +265,7 @@ public:
     double getGraphicVariableDouble(const QString& key, double def);
     int getGraphicVariableInt(const QString& key, int def);
     QString getGraphicVariableString(const QString& key,
-                                     const QString& def);
+									 const QString& def) const;
     virtual RS_Vector getStartpoint() const {
         return RS_Vector(false);
     }
@@ -296,7 +288,7 @@ public:
     virtual RS_Vector getTangentDirection(const RS_Vector& /*point*/)const{
         return RS_Vector(false);
     }
-    RS2::Unit getGraphicUnit();
+	RS2::Unit getGraphicUnit() const;
 
     /**
      * Must be overwritten to get all reference points of the entity.

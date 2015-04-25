@@ -296,7 +296,7 @@ double RS_Entity::getDistanceToPoint(const RS_Vector& coord,
  * The Layer might also be NULL. In that case the layer visiblity
 * is ignored.
  */
-bool RS_Entity::isVisible() {
+bool RS_Entity::isVisible() const{
 
     if (!getFlag(RS2::FlagVisible)) {
         return false;
@@ -371,7 +371,13 @@ bool RS_Entity::isVisible() {
     return false;
 }
 
-
+void RS_Entity::setVisible(bool v) {
+	if (v) {
+		setFlag(RS2::FlagVisible);
+	} else {
+		delFlag(RS2::FlagVisible);
+	}
+}
 
 /**
  * Sets the highlight status of the entity. Highlighted entities
@@ -395,12 +401,16 @@ bool RS_Entity::isHighlighted() {
 }
 
 
+RS_Vector RS_Entity::getSize() const {
+	return maxV-minV;
+}
 
 /**
  * @return true if the layer this entity is on is locked.
  */
-bool RS_Entity::isLocked() {
-    if (getLayer(true)!=NULL && getLayer()->isLocked()) {
+bool RS_Entity::isLocked() const
+{
+	if (getLayer(true) && getLayer()->isLocked()) {
         return true;
     } else {
         return false;
@@ -413,14 +423,14 @@ bool RS_Entity::isLocked() {
  * or the parent's parent graphic or NULL if none of the parents
  * are stored in a graphic.
  */
-RS_Graphic* RS_Entity::getGraphic() {
+RS_Graphic* RS_Entity::getGraphic() const{
     if (rtti()==RS2::EntityGraphic) {
-        return (RS_Graphic*)this;
-    } else if (parent==NULL) {
-        return NULL;
-    } else {
-        return parent->getGraphic();
-    }
+		RS_Graphic const* ret=static_cast<RS_Graphic const*>(this);
+		return const_cast<RS_Graphic*>(ret);
+	} else if (!parent) {
+		return nullptr;
+	}
+	return parent->getGraphic();
 }
 
 
@@ -463,31 +473,33 @@ LC_Quadratic RS_Entity::getQuadratic() const
 RS_Insert* RS_Entity::getInsert() {
     if (rtti()==RS2::EntityInsert) {
         return (RS_Insert*)this;
-    } else if (parent==NULL) {
-        return NULL;
+	} else if (!parent) {
+		return nullptr;
     } else {
         return parent->getInsert();
     }
 }
-
-
 
 /**
  * @return The parent block or insert in which this entity is stored
  * or the parent's parent block or insert or NULL if none of the parents
  * are stored in a block or insert.
  */
-RS_Entity* RS_Entity::getBlockOrInsert() {
-    if (rtti()==RS2::EntityBlock || rtti()==RS2::EntityInsert) {
-        return this;
-    } else if (parent==NULL) {
-        return NULL;
-    } else {
-        return parent->getBlockOrInsert();
-    }
+RS_Entity* RS_Entity::getBlockOrInsert() const
+{
+	RS_Entity* ret=nullptr;
+	switch(rtti()){
+	case RS2::EntityBlock:
+	case RS2::EntityInsert:
+		ret=const_cast<RS_Entity*>(this);
+		break;
+	default:
+		if(parent) {
+			return parent->getBlockOrInsert();
+		}
+	}
+	return ret;
 }
-
-
 
 /**
  * @return The parent document in which this entity is stored
@@ -603,10 +615,11 @@ int RS_Entity::getGraphicVariableInt(const QString& key, int def) {
  *    doesn't exist.
  */
 QString RS_Entity::getGraphicVariableString(const QString& key,
-        const QString&  def) {
+		const QString&  def) const
+{
     RS_Graphic* graphic = getGraphic();
     QString ret=def;
-    if (graphic!=NULL) {
+	if (graphic) {
         ret = graphic->getVariableString(key, def);
     }
     return ret;
@@ -618,10 +631,11 @@ QString RS_Entity::getGraphicVariableString(const QString& key,
  * @return The unit the parent graphic works on or None if there's no
  * parent graphic.
  */
-RS2::Unit RS_Entity::getGraphicUnit() {
+RS2::Unit RS_Entity::getGraphicUnit() const
+{
     RS_Graphic* graphic = getGraphic();
     RS2::Unit ret = RS2::None;
-    if (graphic!=NULL) {
+	if (graphic) {
         ret = graphic->getUnit();
     }
     return ret;

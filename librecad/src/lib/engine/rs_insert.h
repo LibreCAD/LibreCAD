@@ -115,7 +115,7 @@ public:
                 block = NULL;
     }
 
-    RS_Block* getBlockForInsert();
+	RS_Block* getBlockForInsert() const;
 
     virtual void update();
 
@@ -171,7 +171,7 @@ public:
                 data.spacing = s;
         }
 
-    virtual bool isVisible();
+	virtual bool isVisible() const;
 
 	virtual RS_VectorSolutions getRefPoints() const;
     virtual RS_Vector getMiddlePoint(void) const{
@@ -190,7 +190,7 @@ public:
 
 protected:
     RS_InsertData data;
-        RS_Block* block;
+	mutable RS_Block* block;
 };
 
 

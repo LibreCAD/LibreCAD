@@ -91,7 +91,7 @@ void RS_Selection::selectAll(bool select) {
         }
     }
 
-    if (graphicView!=NULL) {
+	if (graphicView) {
         //graphicView->drawEntity(container);
 		graphicView->redraw();
     }
