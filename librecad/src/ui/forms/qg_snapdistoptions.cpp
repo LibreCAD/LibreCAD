@@ -25,7 +25,8 @@
 **********************************************************************/
 #include "qg_snapdistoptions.h"
 
-#include <qvariant.h>
+#include <QVariant>
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_SnapDistOptions as a child of 'parent', with the

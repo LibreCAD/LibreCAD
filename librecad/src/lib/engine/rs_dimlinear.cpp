@@ -31,6 +31,7 @@
 #include "rs_mtext.h"
 #include "rs_solid.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 
 RS_DimLinearData::RS_DimLinearData():
@@ -87,6 +88,9 @@ RS_VectorSolutions RS_DimLinear::getRefPoints() const
 {
 		return RS_VectorSolutions({edata.extensionPoint1, edata.extensionPoint2,
 												data.definitionPoint, data.middleOfText});
+}
+void RS_DimLinear::setAngle(double a) {
+	edata.angle = RS_Math::correctAngle(a);
 }
 
 

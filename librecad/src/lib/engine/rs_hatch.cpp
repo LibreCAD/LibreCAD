@@ -23,8 +23,6 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-
 #include <memory>
 #include <QPainterPath>
 #include <QBrush>
@@ -43,6 +41,7 @@
 #include "rs_painter.h"
 #include "rs_pattern.h"
 #include "rs_patternlist.h"
+#include "rs_math.h"
 
 
 #if QT_VERSION < 0x040400

@@ -57,7 +57,7 @@ public:
 public:
     RS_ActionLibraryInsert(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    virtual ~RS_ActionLibraryInsert();
+	virtual ~RS_ActionLibraryInsert() = default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	

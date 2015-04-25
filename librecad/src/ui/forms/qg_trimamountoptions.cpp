@@ -27,6 +27,7 @@
 
 #include "rs_actionmodifytrimamount.h"
 #include "rs_settings.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_TrimAmountOptions as a child of 'parent', with the

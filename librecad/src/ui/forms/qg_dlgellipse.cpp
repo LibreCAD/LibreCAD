@@ -27,6 +27,7 @@
 
 #include "rs_ellipse.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgEllipse as a child of 'parent', with the

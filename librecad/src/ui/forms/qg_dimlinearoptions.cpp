@@ -26,6 +26,7 @@
 #include "qg_dimlinearoptions.h"
 
 #include "rs_settings.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DimLinearOptions as a child of 'parent', with the

@@ -42,6 +42,7 @@
 #include "rs_text.h"
 #include "rs_layer.h"
 #include "lc_splinepoints.h"
+#include "rs_math.h"
 
 #include "rs_dialogfactory.h"
 

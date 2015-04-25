@@ -26,6 +26,7 @@
 #include "qg_beveloptions.h"
 
 #include "rs_settings.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_BevelOptions as a child of 'parent', with the

@@ -35,6 +35,7 @@
 #include "rs_line.h"
 #include "rs_polyline.h"
 #include "rs_coordinateevent.h"
+#include "rs_math.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"

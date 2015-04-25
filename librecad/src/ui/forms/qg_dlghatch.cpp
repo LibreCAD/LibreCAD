@@ -28,6 +28,7 @@
 #include "rs_settings.h"
 #include "rs_line.h"
 #include "rs_hatch.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgHatch as a child of 'parent', with the

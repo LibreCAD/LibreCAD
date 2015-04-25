@@ -27,6 +27,7 @@
 
 #include "rs_arc.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgArc as a child of 'parent', with the

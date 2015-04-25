@@ -26,6 +26,7 @@
 #include "qg_dlgdimlinear.h"
 
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgDimLinear as a child of 'parent', with the

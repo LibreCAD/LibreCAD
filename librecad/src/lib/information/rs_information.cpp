@@ -35,6 +35,7 @@
 #include "rs_line.h"
 #include "lc_quadratic.h"
 #include "lc_splinepoints.h"
+#include "rs_math.h"
 
 
 /**

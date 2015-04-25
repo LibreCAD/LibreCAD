@@ -33,6 +33,7 @@
 #include "rs_commands.h"
 #include "rs_commandevent.h"
 #include "rs_actiondrawlineparallelthrough.h"
+#include "rs_math.h"
 
 RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(
 		RS_EntityContainer& container,

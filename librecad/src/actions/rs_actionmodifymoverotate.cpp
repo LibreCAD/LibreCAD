@@ -31,6 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
+#include "rs_math.h"
 
 RS_ActionModifyMoveRotate::RS_ActionModifyMoveRotate(
     RS_EntityContainer& container,

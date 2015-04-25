@@ -32,6 +32,7 @@
 #include "rs_commandevent.h"
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
+#include "rs_math.h"
 
 RS_ActionDrawCircle::RS_ActionDrawCircle(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

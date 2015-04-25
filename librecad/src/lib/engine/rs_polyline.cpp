@@ -31,7 +31,7 @@
 #include "rs_line.h"
 #include "rs_arc.h"
 #include "rs_graphicview.h"
-//#include "rs_modification.h"
+#include "rs_math.h"
 #include "rs_information.h"
 
 RS_PolylineData::RS_PolylineData():

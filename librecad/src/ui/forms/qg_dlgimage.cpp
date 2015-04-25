@@ -24,9 +24,9 @@
 **********************************************************************/
 #include "qg_dlgimage.h"
 
-#include <QDoubleValidator>
 #include "rs_image.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgImage as a child of 'parent', with the

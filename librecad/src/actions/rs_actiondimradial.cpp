@@ -34,6 +34,7 @@
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
+#include "rs_math.h"
 
 
 RS_ActionDimRadial::RS_ActionDimRadial(

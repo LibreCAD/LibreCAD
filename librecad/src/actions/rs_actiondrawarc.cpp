@@ -34,6 +34,7 @@
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
+#include "rs_math.h"
 
 RS_ActionDrawArc::RS_ActionDrawArc(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView)

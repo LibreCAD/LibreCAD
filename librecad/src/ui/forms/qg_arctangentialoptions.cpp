@@ -23,11 +23,12 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+
+#include <QAction>
 #include "qg_arctangentialoptions.h"
 
 #include "rs_settings.h"
-
-#include <QDoubleValidator>
+#include "rs_math.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -41,18 +42,8 @@ QG_ArcTangentialOptions::QG_ArcTangentialOptions(QWidget* parent, Qt::WindowFlag
     : QWidget(parent, fl)
 {
     setupUi(this);
-//    leRadius->setValidator(new QDoubleValidator(RS_TOLERANCE,1.e+10,4,leRadius));
-//    leAngle->setValidator(new QDoubleValidator(RS_TOLERANCE_ANGLE,360,4,leAngle));
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_ArcTangentialOptions::~QG_ArcTangentialOptions()
-{
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
-}
 
 /*
  *  Sets the strings of the subwidgets using the current

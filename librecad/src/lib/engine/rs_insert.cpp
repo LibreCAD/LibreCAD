@@ -33,6 +33,7 @@
 #include "rs_block.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
+#include "rs_math.h"
 
 RS_InsertData::RS_InsertData(const QString& _name,
 							 RS_Vector _insertionPoint,

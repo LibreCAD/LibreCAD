@@ -30,6 +30,7 @@
 
 #include "rs_fontlist.h"
 #include "rs_insert.h"
+#include "rs_math.h"
 
 RS_TextData::RS_TextData(const RS_Vector& _insertionPoint,
 						 const RS_Vector& _secondPoint,
@@ -418,7 +419,7 @@ void RS_Text::update() {
 
 
 RS_Vector RS_Text::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
-    if (dist!=NULL) {
+	if (dist) {
         *dist = data.insertionPoint.distanceTo(coord);
     }
     return data.insertionPoint;

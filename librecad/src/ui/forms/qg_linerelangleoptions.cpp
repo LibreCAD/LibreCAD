@@ -27,6 +27,7 @@
 
 #include "rs_actiondrawlinerelangle.h"
 #include "rs_settings.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_LineRelAngleOptions as a child of 'parent', with the

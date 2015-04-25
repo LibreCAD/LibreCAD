@@ -28,6 +28,7 @@
 
 #include "rs_circle.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgCircle as a child of 'parent', with the

@@ -31,6 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
+#include "rs_math.h"
 
 /**
  * Constructor.
@@ -42,15 +43,9 @@ RS_ActionLibraryInsert::RS_ActionLibraryInsert(RS_EntityContainer& container,
 
 
 
-RS_ActionLibraryInsert::~RS_ActionLibraryInsert() {}
-
 
 QAction* RS_ActionLibraryInsert::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Insert Library Object"),
-                                  tr("&Insert Library Object"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Insert Library Object"), NULL);
-    //action->zetStatusTip(tr("Inserts an Object from the part library."));
+   QAction* action = new QAction(tr("Insert Library Object"), NULL);
     return action;
 }
 
@@ -60,13 +55,6 @@ void RS_ActionLibraryInsert::init(int status) {
 
     reset();
 
-    /*if (graphic!=NULL) {
-        block = graphic->getActiveBlock();
-        if (block!=NULL) {
-            data.name = block->getName();
-        }
-}*/
-    //trigger();
 }
 
 
@@ -81,14 +69,6 @@ void RS_ActionLibraryInsert::setFile(const QString& file) {
 
 
 void RS_ActionLibraryInsert::reset() {
-    /*data = RS_InsertData("",
-                         RS_Vector(0.0,0.0),
-                         RS_Vector(1.0,1.0),
-                         0.0,
-                         1, 1,
-                         RS_Vector(1.0,1.0),
-                         NULL,
-                         RS2::Update);*/
 
     data.insertionPoint = RS_Vector(false);
     data.factor = 1.0;

@@ -45,6 +45,7 @@
 #include "rs_layer.h"
 #include "rs_leader.h"
 #include "rs_point.h"
+#include "rs_math.h"
 
 
 /**

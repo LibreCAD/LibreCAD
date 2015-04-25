@@ -26,6 +26,7 @@
 
 
 #include "rs_dimangular.h"
+#include "rs_math.h"
 
 #include "rs_constructionline.h"
 #include "rs_arc.h"

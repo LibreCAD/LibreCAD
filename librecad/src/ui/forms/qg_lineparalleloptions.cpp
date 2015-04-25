@@ -27,6 +27,7 @@
 
 #include "rs_actiondrawlineparallel.h"
 #include "rs_settings.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_LineParallelOptions as a child of 'parent', with the

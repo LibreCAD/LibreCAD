@@ -25,12 +25,12 @@
 **********************************************************************/
 #include "qg_dlgspline.h"
 
-#include <qvariant.h>
 #include "rs_spline.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
 #include "qg_widgetpen.h"
 #include "qg_layerbox.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgSpline as a child of 'parent', with the

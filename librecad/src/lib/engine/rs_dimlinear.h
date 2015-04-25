@@ -97,23 +97,21 @@ public:
 
     virtual void updateDim(bool autoText=false);
 
-    RS_Vector getExtensionPoint1() {
+	RS_Vector getExtensionPoint1() const{
         return edata.extensionPoint1;
     }
 
-    RS_Vector getExtensionPoint2() {
+	RS_Vector getExtensionPoint2() const{
         return edata.extensionPoint2;
     }
 
-    double getAngle() {
+	double getAngle() const{
         return edata.angle;
     }
 
-        void setAngle(double a) {
-                edata.angle = RS_Math::correctAngle(a);
-        }
+	void setAngle(double a);
 
-    double getOblique() {
+	double getOblique() const{
         return edata.oblique;
     }
 

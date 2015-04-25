@@ -9,6 +9,8 @@ TARGET = plugins
 
 QT += gui
 
+include(../librecad/src/muparser.pri)
+
 SUBDIRS     = \
         asciifile \
         align \

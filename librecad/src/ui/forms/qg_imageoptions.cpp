@@ -28,6 +28,7 @@
 #include "rs_actioninterface.h"
 #include "rs_actiondrawimage.h"
 #include "rs_settings.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_ImageOptions as a child of 'parent', with the

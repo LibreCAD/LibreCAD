@@ -30,6 +30,7 @@
 #include "rs_units.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"
+#include "rs_math.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"

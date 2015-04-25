@@ -53,6 +53,7 @@
 #include "rs_spline.h"
 #include "lc_splinepoints.h"
 #include "rs_system.h"
+#include "rs_math.h"
 
 
 /**

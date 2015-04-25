@@ -27,12 +27,12 @@
 #ifndef RS_H
 #define RS_H
 
-#include <qnamespace.h>
-#include <qglobal.h>
+#include <Qt>
+#include <QtGlobal>
 #if QT_VERSION >= 0x050000
 # include <QtPrintSupport/QPrinter>
 #else
-# include <qprinter.h>
+# include <QPrinter>
 #endif 
 
 #define RS_TEST
@@ -44,7 +44,12 @@
 // Windoze XP can't handle the original MAX/MINDOUBLE's
 #define RS_MAXDOUBLE 1.0E+10
 #define RS_MINDOUBLE -1.0E+10
-
+//tolerance
+#define RS_TOLERANCE 1.0e-10
+//squared tolerance
+#define RS_TOLERANCE15 1.5e-15
+#define RS_TOLERANCE2 1.0e-20
+#define RS_TOLERANCE_ANGLE 1.0e-8
 
 /**
  * Class namespace for various enums along with some simple

@@ -35,7 +35,7 @@ class QG_ArcTangentialOptions : public QWidget, public Ui::QG_ArcTangentialOptio
 
 public:
     QG_ArcTangentialOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
-    ~QG_ArcTangentialOptions();
+	~QG_ArcTangentialOptions() = default;
 
 public slots:
     virtual void setAction( RS_ActionInterface * a, bool update );
