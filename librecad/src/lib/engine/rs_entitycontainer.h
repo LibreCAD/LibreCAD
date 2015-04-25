@@ -41,7 +41,7 @@ class RS_EntityContainer : public RS_Entity {
 
 public:
 
-	RS_EntityContainer(RS_EntityContainer* parent=NULL, bool owner=true);
+	RS_EntityContainer(RS_EntityContainer* parent=nullptr, bool owner=true);
     //RS_EntityContainer(const RS_EntityContainer& ec);
     virtual ~RS_EntityContainer();
 
