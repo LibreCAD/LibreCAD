@@ -112,16 +112,10 @@ private:
 	RS_Vector baseGrid; // the left-bottom grid point
 	RS_Vector cellV;// (dx,dy)
 	RS_Vector metaGridWidth;
-	//! Number of points in the array
-	int number;
 	//! Meta grid positions in X
 	std::vector<double> metaX;
-	//! Number of meta grid lines in X
-	int numMetaX;
 	//! Meta grid positions in Y
 	std::vector<double> metaY;
-	//! Number of meta grid lines in Y
-	int numMetaY;
 	bool isometric;
 	RS2::CrosshairType crosshairType;
 

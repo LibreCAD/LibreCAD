@@ -99,9 +99,6 @@ void RS_Grid::updatePointArray() {
 	pt.clear();
 	metaX.clear();
 	metaY.clear();
-	number = 0;
-	numMetaX = 0;
-	numMetaY = 0;
 
 	//        RS_DEBUG->print("RS_Grid::update: 001");
 
@@ -375,13 +372,7 @@ void RS_Grid::createOrthogonalGrid(QRectF const& rect, RS_Vector const& gridWidt
 	cellV.set(fabs(gridWidth.x),fabs(gridWidth.y));
 	int numberX = (RS_Math::round((right-left) / gridWidth.x) + 1);
 	int numberY = (RS_Math::round((top-bottom) / gridWidth.y) + 1);
-	number = numberX*numberY;
-	//                RS_DEBUG->print("RS_Grid::update: 014");
-	//                if(baseGrid.valid){//align to previous grid
-	//                    baseGrid.set(left+remainder(baseGrid.x-left,dx),bottom+remainder(baseGrid.y-bottom,gridWidth.y));
-	//                }else{
-	//                    baseGrid.set(left,bottom);
-	//                }
+	int number = numberX*numberY;
 	//todo, fix baseGrid for orthogonal grid
 	baseGrid.set(left,bottom);
 
@@ -421,8 +412,8 @@ void RS_Grid::createOrthogonalGrid(QRectF const& rect, RS_Vector const& gridWidt
 			mbottom -= metaGridWidth.y;
 
 			// calculate number of visible meta grid lines:
-			numMetaX = (RS_Math::round((mright-mleft) / metaGridWidth.x) + 1);
-			numMetaY = (RS_Math::round((mtop-mbottom) / metaGridWidth.y) + 1);
+			int numMetaX = (RS_Math::round((mright-mleft) / metaGridWidth.x) + 1);
+			int numMetaY = (RS_Math::round((mtop-mbottom) / metaGridWidth.y) + 1);
 
 			if (numMetaX>0 && numMetaY>0) {
 				// create meta grid arrays:
@@ -439,19 +430,14 @@ void RS_Grid::createOrthogonalGrid(QRectF const& rect, RS_Vector const& gridWidt
 				}
 				return;
 			}
-			numMetaX = 0;
 			metaX.clear();
-			numMetaY = 0;
 			metaY.clear();
 		}
 		return;
 
 	}
-	number = 0;
 	pt.clear();
-	numMetaX = 0;
 	metaX.clear();
-	numMetaY = 0;
 	metaY.clear();
 }
 
@@ -468,7 +454,7 @@ void RS_Grid::createIsometricGrid(QRectF const& rect, RS_Vector const& gridWidth
 	double hdx=0.5*dx;
 	double hdy=0.5*gridWidth.y;
 	int numberX = (RS_Math::round((right-left) / dx) + 1);
-	number = 2*numberX*numberY;
+	int number = 2*numberX*numberY;
 	baseGrid.set(left+remainder(-left,dx),bottom+remainder(-bottom,fabs(gridWidth.y)));
 
 	if (number>0 && number<1000000) {
@@ -494,8 +480,8 @@ void RS_Grid::createIsometricGrid(QRectF const& rect, RS_Vector const& gridWidth
 			RS_Vector baseMetaGrid(left+remainder(-left,metaGridWidth.x)-fabs(metaGridWidth.x),bottom+remainder(-bottom,metaGridWidth.y)-fabs(metaGridWidth.y));
 
 			// calculate number of visible meta grid lines:
-			numMetaX = (RS_Math::round((right-left) / metaGridWidth.x) + 1);
-			numMetaY = (RS_Math::round((top-bottom) / metaGridWidth.y) + 1);
+			int numMetaX = (RS_Math::round((right-left) / metaGridWidth.x) + 1);
+			int numMetaY = (RS_Math::round((top-bottom) / metaGridWidth.y) + 1);
 
 			if (numMetaX>0 && numMetaY>0) {
 				// create meta grid arrays:
@@ -513,18 +499,13 @@ void RS_Grid::createIsometricGrid(QRectF const& rect, RS_Vector const& gridWidth
 				return;
 
 			}
-			numMetaX = 0;
 			metaX.clear();
-			numMetaY = 0;
 			metaY.clear();
 			return;
 		}
 	}
-	number = 0;
 	pt.clear();
-	numMetaX = 0;
 	metaX.clear();
-	numMetaY = 0;
 	metaY.clear();
 }
 
@@ -561,9 +542,6 @@ RS_Vector const& RS_Grid::getCellVector() const
 	return cellV;
 }
 
-int RS_Grid::count() const{
-	return number;
-}
 void RS_Grid::setCrosshairType(RS2::CrosshairType chType){
 	crosshairType=chType;
 }
