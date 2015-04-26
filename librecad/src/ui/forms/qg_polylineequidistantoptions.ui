@@ -69,7 +69,7 @@
    <item>
     <widget class="QLineEdit" name="leDist">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -160,7 +160,7 @@
     </hint>
    </hints>
   </connection>
-   <connection>
+  <connection>
    <sender>leNumber</sender>
    <signal>textChanged(QString)</signal>
    <receiver>QG_PolylineEquidistantOptions</receiver>
