@@ -41,11 +41,8 @@
  */
 RS_Grid::RS_Grid(RS_GraphicView* graphicView): baseGrid(false) {
     this->graphicView = graphicView;
-    pt = NULL;
     number = 0;
-    metaX = NULL;
     numMetaX = 0;
-    metaY = NULL;
     numMetaY = 0;
 }
 
@@ -54,15 +51,6 @@ RS_Grid::RS_Grid(RS_GraphicView* graphicView): baseGrid(false) {
  * Destructor.
  */
 RS_Grid::~RS_Grid() {
-    if (pt!=NULL) {
-        delete[] pt;
-    }
-    if (metaX!=NULL) {
-        delete[] metaX;
-    }
-    if (metaY!=NULL) {
-        delete[] metaY;
-    }
 }
 
 /**
@@ -118,18 +106,9 @@ void RS_Grid::updatePointArray() {
 //        std::cout<<"Grid userGrid="<<userGrid<<std::endl;
 
         // delete old grid:
-        if (pt!=NULL) {
-            delete[] pt;
-            pt = NULL;
-        }
-        if (metaX!=NULL) {
-            delete[] metaX;
-            metaX = NULL;
-        }
-        if (metaY!=NULL) {
-            delete[] metaY;
-            metaY = NULL;
-        }
+		pt.clear();
+		metaX.clear();
+		metaY.clear();
         number = 0;
         numMetaX = 0;
         numMetaY = 0;
@@ -369,7 +348,7 @@ void RS_Grid::updatePointArray() {
 
                 if (number>0 && number<1000000) {
 
-                    pt = new RS_Vector[number];
+					pt.resize(number);
 
                     int i=0;
                     RS_Vector bp0(baseGrid),dbp1(hdx,hdy);
@@ -395,8 +374,8 @@ void RS_Grid::updatePointArray() {
 
                         if (numMetaX>0 && numMetaY>0) {
                             // create meta grid arrays:
-                            metaX = new double[numMetaX];
-                            metaY = new double[numMetaY];
+							metaX.resize(numMetaX);
+							metaY.resize(numMetaY);
 
                             double x0(baseMetaGrid.x);
                             for (int i=0; i<numMetaX; x0 += metaGridWidth.x) {
@@ -410,18 +389,18 @@ void RS_Grid::updatePointArray() {
 
                         }
                         numMetaX = 0;
-                        metaX = NULL;
+						metaX.clear();
                         numMetaY = 0;
-                        metaY = NULL;
+						metaY.clear();
                         return;
                     }
                 }
                 number = 0;
-                pt = NULL;
+				pt.clear();
                 numMetaX = 0;
-                metaX = NULL;
+				metaX.clear();
                 numMetaY = 0;
-                metaY = NULL;
+				metaY.clear();
             }else{
                 cellV.set(fabs(gridWidth.x),fabs(gridWidth.y));
                 int numberX = (RS_Math::round((right-left) / gridWidth.x) + 1);
@@ -440,7 +419,7 @@ void RS_Grid::updatePointArray() {
 
                 if (number>0 && number<1000000) {
 
-                    pt = new RS_Vector[number];
+					pt.resize(number);
 
                     int i=0;
                     RS_Vector bp0(baseGrid);
@@ -477,8 +456,8 @@ void RS_Grid::updatePointArray() {
 
                         if (numMetaX>0 && numMetaY>0) {
                             // create meta grid arrays:
-                            metaX = new double[numMetaX];
-                            metaY = new double[numMetaY];
+							metaX.resize(numMetaX);
+							metaY.resize(numMetaY);
 
                             int i=0;
                             for (int x=0; x<numMetaX; ++x) {
@@ -491,19 +470,19 @@ void RS_Grid::updatePointArray() {
                             return;
                         }
                         numMetaX = 0;
-                        metaX = NULL;
+						metaX.clear();
                         numMetaY = 0;
-                        metaY = NULL;
+						metaY.clear();
                     }
                     return;
 
                 }
                 number = 0;
-                pt = NULL;
+				pt.clear();
                 numMetaX = 0;
-                metaX = NULL;
+				metaX.clear();
                 numMetaY = 0;
-                metaY = NULL;
+				metaY.clear();
             }
 
             //                RS_DEBUG->print("RS_Grid::update: 015");
@@ -515,5 +494,23 @@ void RS_Grid::updatePointArray() {
     //        RS_DEBUG->print("RS_Grid::update: OK");
 }
 
+QString RS_Grid::getInfo() const{
+		return QString("%1 / %2").arg(spacing).arg(metaSpacing);
+}
+
+std::vector<RS_Vector> const& RS_Grid::getPoints() const{
+	return pt;
+}
+
+/**
+ * @return Meta grid positions in X.
+ */
+std::vector<double> const& RS_Grid::getMetaX() const{
+		return metaX;
+}
+
+std::vector<double> const& RS_Grid::getMetaY() const{
+		return metaY;
+}
 
 // EOF

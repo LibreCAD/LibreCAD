@@ -48,9 +48,8 @@ public:
         /**
          * @return Array of all visible grid points.
          */
-    RS_Vector* getPoints() {
-        return pt;
-    }
+	std::vector<RS_Vector> const& getPoints() const;
+
     /**
       *@return the closest grid point
       */
@@ -59,62 +58,42 @@ public:
         /**
          * @return Number of visible grid points.
          */
-    int count() {
+	int count() const{
         return number;
     }
     void setCrosshairType(RS2::CrosshairType chType){
         crosshairType=chType;
     }
-    RS2::CrosshairType getCrosshairType(){
+	RS2::CrosshairType getCrosshairType() const{
         return crosshairType;
     }
 
         /**
-         * @return Current grid spacing.
-         */
-        //double getSpacing() {
-        //	return spacing;
-        //}
-
-        /**
-         * @return Current meta grid spacing.
-         */
-        //double getMetaSpacing() {
-        //	return metaSpacing;
-        //}
-
-        /**
          * @return Grid info for status widget.
          */
-        QString getInfo() {
-                return QString("%1 / %2").arg(spacing).arg(metaSpacing);
-        }
+		QString getInfo() const;
 
         /**
          * @return Meta grid positions in X.
          */
-        double* getMetaX() {
-                return metaX;
-        }
+		std::vector<double> const& getMetaX() const;
 
         /**
          * @return Number of visible meta grid lines in X.
          */
-    int countMetaX() {
+	int countMetaX() const{
         return numMetaX;
     }
 
         /**
          * @return Meta grid positions in Y.
          */
-        double* getMetaY() {
-                return metaY;
-        }
+	std::vector<double> const& getMetaY() const;
 
         /**
          * @return Number of visible meta grid lines in Y.
          */
-    int countMetaY() {
+	int countMetaY() const{
         return numMetaY;
     }
     bool isIsometric() const{
@@ -126,7 +105,7 @@ public:
     RS_Vector getMetaGridWidth() const {
         return metaGridWidth;
     }
-    RS_Vector getCellVector()
+	RS_Vector const& getCellVector() const
     {
         return cellV;
     }
@@ -141,18 +120,18 @@ protected:
         double metaSpacing;
 
     //! Pointer to array of grid points
-    RS_Vector* pt;
+	std::vector<RS_Vector> pt;
     RS_Vector baseGrid; // the left-bottom grid point
     RS_Vector cellV;// (dx,dy)
     RS_Vector metaGridWidth;
     //! Number of points in the array
     int number;
         //! Meta grid positions in X
-        double* metaX;
+		std::vector<double> metaX;
         //! Number of meta grid lines in X
         int numMetaX;
         //! Meta grid positions in Y
-        double* metaY;
+		std::vector<double> metaY;
         //! Number of meta grid lines in Y
         int numMetaY;
     bool isometric;

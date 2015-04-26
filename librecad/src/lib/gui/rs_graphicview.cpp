@@ -1658,13 +1658,11 @@ void RS_GraphicView::drawGrid(RS_Painter *painter) {
     //painter->setPen(Qt::gray);
     painter->setPen(gridColor);
 
-//    grid->updatePointArray();
-    RS_Vector* pts = grid->getPoints();
-    if (pts!=NULL) {
-        for (int i=0; i<grid->count(); ++i) {
-            painter->drawGridPoint(toGui(pts[i]));
-        }
-    }
+	//grid->updatePointArray();
+	auto pts = grid->getPoints();
+	for(auto const& v: pts){
+		painter->drawGridPoint(toGui(v));
+	}
 
     // draw grid info:
     //painter->setPen(Qt::white);
@@ -1702,23 +1700,21 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
         RS_Vector dv=grid->getMetaGridWidth().scale(factor);
         double dx=fabs(dv.x);
         double dy=fabs(dv.y); //potential bug, need to recover metaGrid.width
-    // draw meta grid:
-        double* mx = grid->getMetaX();
-        if (mx!=NULL) {
-            for (int i=0; i<grid->countMetaX(); ++i) {
-                painter->drawLine(RS_Vector(toGuiX(mx[i]), 0),
-                                  RS_Vector(toGuiX(mx[i]), getHeight()));
-                if(grid->isIsometric()){
-                    painter->drawLine(RS_Vector(toGuiX(mx[i])+0.5*dx, 0),
-                                      RS_Vector(toGuiX(mx[i])+0.5*dx, getHeight()));
-                }
-            }
-        }
-    double* my = grid->getMetaY();
+		// draw meta grid:
+		auto mx = grid->getMetaX();
+		for(auto const& x: mx){
+			painter->drawLine(RS_Vector(toGuiX(x), 0),
+							  RS_Vector(toGuiX(x), getHeight()));
+			if(grid->isIsometric()){
+				painter->drawLine(RS_Vector(toGuiX(x)+0.5*dx, 0),
+								  RS_Vector(toGuiX(x)+0.5*dx, getHeight()));
+			}
+		}
+	auto my = grid->getMetaY();
     if(grid->isIsometric()){//isometric metaGrid
         dx=fabs(dx);
         dy=fabs(dy);
-        if(my==NULL || dx<1||dy<1) return;
+		if(!my.size()|| dx<1||dy<1) return;
         RS_Vector baseMeta(toGui(RS_Vector(mx[0],my[0])));
         // x-x0=k*dx, x-remainder(x-x0,dx)
         RS_Vector vp0(-remainder(-baseMeta.x,dx)-dx,getHeight()-remainder(getHeight()-baseMeta.y,dy)+dy);
@@ -1748,13 +1744,11 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 
     }else{//orthogonal
 
-        if (my!=NULL) {
-            for (int i=0; i<grid->countMetaY(); ++i) {
-                painter->drawLine(RS_Vector(0, toGuiY(my[i])),
-                                  RS_Vector(getWidth(), toGuiY(my[i])));
-            }
-        }
-    }
+		for(auto const& y: my){
+			painter->drawLine(RS_Vector(0, toGuiY(y)),
+							  RS_Vector(getWidth(), toGuiY(y)));
+		}
+	}
 
 
 }
