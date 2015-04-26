@@ -68,9 +68,7 @@ RS_GraphicView::RS_GraphicView()
 /**
  * Destructor.
  */
-RS_GraphicView::~RS_GraphicView() {
-	DEBUG_HEADER();
-}
+RS_GraphicView::~RS_GraphicView() {}
 
 void RS_GraphicView::init()
 {
