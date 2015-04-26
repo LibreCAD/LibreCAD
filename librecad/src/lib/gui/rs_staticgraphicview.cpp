@@ -36,7 +36,6 @@
  * @param h Height
  */
 RS_StaticGraphicView::RS_StaticGraphicView(int w, int h, RS_Painter* p, QSize b) {
-	init();
 	setBackground(RS_Color(255,255,255));
     width = w;
     height = h;

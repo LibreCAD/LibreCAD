@@ -56,7 +56,6 @@
  */
 QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlags f)
         : QWidget(parent, f), RS_GraphicView() {
-	init();
     setObjectName(name);
     setBackground(background);
 

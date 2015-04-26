@@ -63,6 +63,7 @@ RS_GraphicView::RS_GraphicView()
 	,savedViews(16)
 	,previousViewTime(QDateTime::currentDateTime())
 {
+	init();
 }
 
 /**
@@ -134,7 +135,7 @@ void RS_GraphicView::setOffset(int ox, int oy) {
 /**
  * @return true if the grid is switched on.
  */
-bool RS_GraphicView::isGridOn() {
+bool RS_GraphicView::isGridOn() const{
 	if (container) {
         RS_Graphic* g = container->getGraphic();
 		if (g) {
@@ -149,7 +150,7 @@ bool RS_GraphicView::isGridOn() {
  *
  *@Author: Dongxu Li
  */
-bool RS_GraphicView::isGridIsometric() {
+bool RS_GraphicView::isGridIsometric() const{
     return grid->isIsometric();
 }
 
@@ -158,10 +159,9 @@ void RS_GraphicView::setCrosshairType(RS2::CrosshairType chType){
     grid->setCrosshairType(chType);
 }
 
-RS2::CrosshairType RS_GraphicView::getCrosshairType(){
+RS2::CrosshairType RS_GraphicView::getCrosshairType() const{
     return grid->getCrosshairType();
 }
-
 
 /**
  * Centers the drawing in x-direction.
@@ -1756,7 +1756,7 @@ void RS_GraphicView::setSnapRestriction(RS2::SnapRestriction sr) {
 /**
  * Translates a vector in real coordinates to a vector in screen coordinates.
  */
-RS_Vector RS_GraphicView::toGui(RS_Vector v) {
+RS_Vector RS_GraphicView::toGui(RS_Vector v) const{
     return RS_Vector(toGuiX(v.x), toGuiY(v.y));
 }
 
@@ -1767,7 +1767,7 @@ RS_Vector RS_GraphicView::toGui(RS_Vector v) {
  * @param visible Pointer to a boolean which will contain true
  * after the call if the coordinate is within the visible range.
  */
-double RS_GraphicView::toGuiX(double x) {
+double RS_GraphicView::toGuiX(double x) const{
     return x*factor.x + offsetX;
 }
 
@@ -1776,7 +1776,7 @@ double RS_GraphicView::toGuiX(double x) {
 /**
  * Translates a real coordinate in Y to a screen coordinate Y.
  */
-double RS_GraphicView::toGuiY(double y) {
+double RS_GraphicView::toGuiY(double y) const{
     return -y*factor.y + getHeight() - offsetY;
 }
 
@@ -1785,7 +1785,7 @@ double RS_GraphicView::toGuiY(double y) {
 /**
  * Translates a real coordinate distance to a screen coordinate distance.
  */
-double RS_GraphicView::toGuiDX(double d) {
+double RS_GraphicView::toGuiDX(double d) const{
     return d*factor.x;
 }
 
@@ -1794,7 +1794,7 @@ double RS_GraphicView::toGuiDX(double d) {
 /**
  * Translates a real coordinate distance to a screen coordinate distance.
  */
-double RS_GraphicView::toGuiDY(double d) {
+double RS_GraphicView::toGuiDY(double d) const{
     return d*factor.y;
 }
 
@@ -1803,7 +1803,7 @@ double RS_GraphicView::toGuiDY(double d) {
 /**
  * Translates a vector in screen coordinates to a vector in real coordinates.
  */
-RS_Vector RS_GraphicView::toGraph(RS_Vector v) {
+RS_Vector RS_GraphicView::toGraph(RS_Vector v) const{
     return RS_Vector(toGraphX(RS_Math::round(v.x)),
                      toGraphY(RS_Math::round(v.y)));
 }
@@ -1813,7 +1813,7 @@ RS_Vector RS_GraphicView::toGraph(RS_Vector v) {
 /**
  * Translates two screen coordinates to a vector in real coordinates.
  */
-RS_Vector RS_GraphicView::toGraph(int x, int y) {
+RS_Vector RS_GraphicView::toGraph(int x, int y) const{
     return RS_Vector(toGraphX(x), toGraphY(y));
 }
 
@@ -1821,7 +1821,7 @@ RS_Vector RS_GraphicView::toGraph(int x, int y) {
 /**
  * Translates a screen coordinate in X to a real coordinate X.
  */
-double RS_GraphicView::toGraphX(int x) {
+double RS_GraphicView::toGraphX(int x) const{
     return (x - offsetX)/factor.x;
 }
 
@@ -1830,7 +1830,7 @@ double RS_GraphicView::toGraphX(int x) {
 /**
  * Translates a screen coordinate in Y to a real coordinate Y.
  */
-double RS_GraphicView::toGraphY(int y) {
+double RS_GraphicView::toGraphY(int y) const{
     return -(y - getHeight() + offsetY)/factor.y;
 }
 
@@ -1839,7 +1839,7 @@ double RS_GraphicView::toGraphY(int y) {
 /**
  * Translates a screen coordinate distance to a real coordinate distance.
  */
-double RS_GraphicView::toGraphDX(int d) {
+double RS_GraphicView::toGraphDX(int d) const{
     return d/factor.x;
 }
 
@@ -1848,7 +1848,7 @@ double RS_GraphicView::toGraphDX(int d) {
 /**
  * Translates a screen coordinate distance to a real coordinate distance.
  */
-double RS_GraphicView::toGraphDY(int d) {
+double RS_GraphicView::toGraphDY(int d) const{
     return d/factor.y;
 }
 
@@ -1897,4 +1897,29 @@ RS_EventHandler* RS_GraphicView::getEventHandler() const{
 		return eventHandler.get();
 }
 
+void RS_GraphicView::setBackground(const RS_Color& bg) {
+	   background = bg;
 
+	   // bright background:
+	   if (bg.red()+bg.green()+bg.blue()>380) {
+		   foreground = RS_Color(0,0,0);
+	   } else {
+		   foreground = RS_Color(255,255,255);
+	   }
+   }
+
+void RS_GraphicView::setBorders(int left, int top, int right, int bottom) {
+	borderLeft = left;
+	borderTop = top;
+	borderRight = right;
+	borderBottom = bottom;
+}
+
+RS_Graphic* RS_GraphicView::getGraphic() const{
+	if (container && container->rtti()==RS2::EntityGraphic) {
+		RS_Graphic const*const ret=static_cast<RS_Graphic const*>(container);
+		return const_cast<RS_Graphic *>(ret);
+	} else {
+		return nullptr;
+	}
+}
