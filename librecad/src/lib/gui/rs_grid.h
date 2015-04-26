@@ -31,6 +31,7 @@
 #include "rs_vector.h"
 
 class RS_GraphicView;
+class QRectF;
 
 /**
  * This class represents a grid. Grids can be drawn on graphic
@@ -83,6 +84,14 @@ public:
 	RS_Vector const& getCellVector() const;
 
 private:
+	//! copy ctor disabled
+	RS_Grid(RS_Grid const&) = delete;
+	RS_Grid& operator = (RS_Grid const&) = delete;
+	//! \{ \brief create grid points
+	void createOrthogonalGrid(QRectF const& rect, RS_Vector const& gridWidth);
+	void createIsometricGrid(QRectF const& rect, RS_Vector const& gridWidth);
+	//! \}
+
 	//! Graphic view this grid is connected to.
 	RS_GraphicView* graphicView;
 

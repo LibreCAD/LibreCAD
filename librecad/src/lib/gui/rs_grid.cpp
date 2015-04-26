@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-
+#include <QRectF>
 #include "rs_grid.h"
 #include "rs_graphicview.h"
 #include "rs_units.h"
@@ -111,7 +111,7 @@ void RS_Grid::updatePointArray() {
         // find out unit:
         RS2::Unit unit = RS2::None;
         RS2::LinearFormat format = RS2::Decimal;
-        if (graphic!=NULL) {
+		if (graphic) {
             unit = graphic->getUnit();
             format = graphic->getLinearFormat();
         }
@@ -325,157 +325,15 @@ void RS_Grid::updatePointArray() {
             top += gridWidth.y;
             bottom -= gridWidth.y;
 
-
+			//top/bottom is reversed with RectF definition
+			QRectF const rect(QPointF(left, bottom), QPointF(right, top));
 
             // calculate number of visible grid points
             if(isometric){
-
-                int numberY = (RS_Math::round((top-bottom) / gridWidth.y) + 1);
-                double dx=sqrt(3.)*gridWidth.y;
-                cellV.set(fabs(dx),fabs(gridWidth.y));
-                double hdx=0.5*dx;
-                double hdy=0.5*gridWidth.y;
-                int numberX = (RS_Math::round((right-left) / dx) + 1);
-                number = 2*numberX*numberY;
-                baseGrid.set(left+remainder(-left,dx),bottom+remainder(-bottom,fabs(gridWidth.y)));
-
-                if (number>0 && number<1000000) {
-
-					pt.resize(number);
-
-                    int i=0;
-                    RS_Vector bp0(baseGrid),dbp1(hdx,hdy);
-                    for (int y=0; y<numberY; ++y) {
-                        RS_Vector bp1(bp0);
-                        for (int x=0; x<numberX; ++x) {
-                            pt[i++] = bp1;
-                            pt[i++] = bp1+dbp1;
-                            bp1.x += dx;
-                        }
-                        bp0.y += gridWidth.y;
-                    }
-                    //find metaGrid
-                    if (metaGridWidth.y>1.0e-6 &&
-                            graphicView->toGuiDY(metaGridWidth.y)>2) {
-
-                        metaGridWidth.x=(metaGridWidth.x<0.)?-sqrt(3.)*fabs(metaGridWidth.y):sqrt(3.)*fabs(metaGridWidth.y);
-                        RS_Vector baseMetaGrid(left+remainder(-left,metaGridWidth.x)-fabs(metaGridWidth.x),bottom+remainder(-bottom,metaGridWidth.y)-fabs(metaGridWidth.y));
-
-                        // calculate number of visible meta grid lines:
-                        numMetaX = (RS_Math::round((right-left) / metaGridWidth.x) + 1);
-                        numMetaY = (RS_Math::round((top-bottom) / metaGridWidth.y) + 1);
-
-                        if (numMetaX>0 && numMetaY>0) {
-                            // create meta grid arrays:
-							metaX.resize(numMetaX);
-							metaY.resize(numMetaY);
-
-                            double x0(baseMetaGrid.x);
-                            for (int i=0; i<numMetaX; x0 += metaGridWidth.x) {
-                                metaX[i++] = x0;
-                            }
-                            x0=baseMetaGrid.y;
-                            for (int i=0; i<numMetaY; x0 += metaGridWidth.y) {
-                                metaY[i++] = x0;
-                            }
-                            return;
-
-                        }
-                        numMetaX = 0;
-						metaX.clear();
-                        numMetaY = 0;
-						metaY.clear();
-                        return;
-                    }
-                }
-                number = 0;
-				pt.clear();
-                numMetaX = 0;
-				metaX.clear();
-                numMetaY = 0;
-				metaY.clear();
+				createIsometricGrid(rect, gridWidth);
             }else{
-                cellV.set(fabs(gridWidth.x),fabs(gridWidth.y));
-                int numberX = (RS_Math::round((right-left) / gridWidth.x) + 1);
-                int numberY = (RS_Math::round((top-bottom) / gridWidth.y) + 1);
-                number = numberX*numberY;
-                //                RS_DEBUG->print("RS_Grid::update: 014");
-//                if(baseGrid.valid){//align to previous grid
-//                    baseGrid.set(left+remainder(baseGrid.x-left,dx),bottom+remainder(baseGrid.y-bottom,gridWidth.y));
-//                }else{
-//                    baseGrid.set(left,bottom);
-//                }
-                //todo, fix baseGrid for orthogonal grid
-                baseGrid.set(left,bottom);
+				createOrthogonalGrid(rect, gridWidth);
 
-                // create grid array:
-
-                if (number>0 && number<1000000) {
-
-					pt.resize(number);
-
-                    int i=0;
-                    RS_Vector bp0(baseGrid);
-                    for (int y=0; y<numberY; ++y) {
-                        RS_Vector bp1(bp0);
-                        for (int x=0; x<numberX; ++x) {
-                            pt[i++] = bp1;
-                            bp1.x += gridWidth.x;
-                        }
-                        bp0.y += gridWidth.y;
-                    }
-                    // find meta grid boundaries
-                    if (metaGridWidth.x>1.0e-6 && metaGridWidth.y>1.0e-6 &&
-                            graphicView->toGuiDX(metaGridWidth.x)>2 &&
-                            graphicView->toGuiDY(metaGridWidth.y)>2) {
-
-                        double mleft = (int)(graphicView->toGraphX(0) /
-                                             metaGridWidth.x) * metaGridWidth.x;
-                        double mright = (int)(graphicView->toGraphX(graphicView->getWidth()) /
-                                              metaGridWidth.x) * metaGridWidth.x;
-                        double mtop = (int)(graphicView->toGraphY(0) /
-                                            metaGridWidth.y) * metaGridWidth.y;
-                        double mbottom = (int)(graphicView->toGraphY(graphicView->getHeight()) /
-                                               metaGridWidth.y) * metaGridWidth.y;
-
-                        mleft -= metaGridWidth.x;
-                        mright += metaGridWidth.x;
-                        mtop += metaGridWidth.y;
-                        mbottom -= metaGridWidth.y;
-
-                        // calculate number of visible meta grid lines:
-                        numMetaX = (RS_Math::round((mright-mleft) / metaGridWidth.x) + 1);
-                        numMetaY = (RS_Math::round((mtop-mbottom) / metaGridWidth.y) + 1);
-
-                        if (numMetaX>0 && numMetaY>0) {
-                            // create meta grid arrays:
-							metaX.resize(numMetaX);
-							metaY.resize(numMetaY);
-
-                            int i=0;
-                            for (int x=0; x<numMetaX; ++x) {
-                                metaX[i++] = mleft+x*metaGridWidth.x;
-                            }
-                            i=0;
-                            for (int y=0; y<numMetaY; ++y) {
-                                metaY[i++] = mbottom+y*metaGridWidth.y;
-                            }
-                            return;
-                        }
-                        numMetaX = 0;
-						metaX.clear();
-                        numMetaY = 0;
-						metaY.clear();
-                    }
-                    return;
-
-                }
-                number = 0;
-				pt.clear();
-                numMetaX = 0;
-				metaX.clear();
-                numMetaY = 0;
-				metaY.clear();
             }
 
             //                RS_DEBUG->print("RS_Grid::update: 015");
@@ -485,6 +343,171 @@ void RS_Grid::updatePointArray() {
 
     }
     //        RS_DEBUG->print("RS_Grid::update: OK");
+}
+
+
+void RS_Grid::createOrthogonalGrid(QRectF const& rect, RS_Vector const& gridWidth)
+{
+	double const left=rect.left();
+	double const right=rect.right();
+	//top/bottom reversed
+	double const top=rect.bottom();
+	double const bottom=rect.top();
+
+	cellV.set(fabs(gridWidth.x),fabs(gridWidth.y));
+	int numberX = (RS_Math::round((right-left) / gridWidth.x) + 1);
+	int numberY = (RS_Math::round((top-bottom) / gridWidth.y) + 1);
+	number = numberX*numberY;
+	//                RS_DEBUG->print("RS_Grid::update: 014");
+//                if(baseGrid.valid){//align to previous grid
+//                    baseGrid.set(left+remainder(baseGrid.x-left,dx),bottom+remainder(baseGrid.y-bottom,gridWidth.y));
+//                }else{
+//                    baseGrid.set(left,bottom);
+//                }
+	//todo, fix baseGrid for orthogonal grid
+	baseGrid.set(left,bottom);
+
+	// create grid array:
+
+	if (number>0 && number<1000000) {
+
+		pt.resize(number);
+
+		int i=0;
+		RS_Vector bp0(baseGrid);
+		for (int y=0; y<numberY; ++y) {
+			RS_Vector bp1(bp0);
+			for (int x=0; x<numberX; ++x) {
+				pt[i++] = bp1;
+				bp1.x += gridWidth.x;
+			}
+			bp0.y += gridWidth.y;
+		}
+		// find meta grid boundaries
+		if (metaGridWidth.x>1.0e-6 && metaGridWidth.y>1.0e-6 &&
+				graphicView->toGuiDX(metaGridWidth.x)>2 &&
+				graphicView->toGuiDY(metaGridWidth.y)>2) {
+
+			double mleft = (int)(graphicView->toGraphX(0) /
+								 metaGridWidth.x) * metaGridWidth.x;
+			double mright = (int)(graphicView->toGraphX(graphicView->getWidth()) /
+								  metaGridWidth.x) * metaGridWidth.x;
+			double mtop = (int)(graphicView->toGraphY(0) /
+								metaGridWidth.y) * metaGridWidth.y;
+			double mbottom = (int)(graphicView->toGraphY(graphicView->getHeight()) /
+								   metaGridWidth.y) * metaGridWidth.y;
+
+			mleft -= metaGridWidth.x;
+			mright += metaGridWidth.x;
+			mtop += metaGridWidth.y;
+			mbottom -= metaGridWidth.y;
+
+			// calculate number of visible meta grid lines:
+			numMetaX = (RS_Math::round((mright-mleft) / metaGridWidth.x) + 1);
+			numMetaY = (RS_Math::round((mtop-mbottom) / metaGridWidth.y) + 1);
+
+			if (numMetaX>0 && numMetaY>0) {
+				// create meta grid arrays:
+				metaX.resize(numMetaX);
+				metaY.resize(numMetaY);
+
+				int i=0;
+				for (int x=0; x<numMetaX; ++x) {
+					metaX[i++] = mleft+x*metaGridWidth.x;
+				}
+				i=0;
+				for (int y=0; y<numMetaY; ++y) {
+					metaY[i++] = mbottom+y*metaGridWidth.y;
+				}
+				return;
+			}
+			numMetaX = 0;
+			metaX.clear();
+			numMetaY = 0;
+			metaY.clear();
+		}
+		return;
+
+	}
+	number = 0;
+	pt.clear();
+	numMetaX = 0;
+	metaX.clear();
+	numMetaY = 0;
+	metaY.clear();
+}
+
+void RS_Grid::createIsometricGrid(QRectF const& rect, RS_Vector const& gridWidth)
+{
+	double const left=rect.left();
+	double const right=rect.right();
+	//top/bottom reversed
+	double const top=rect.bottom();
+	double const bottom=rect.top();
+	int numberY = (RS_Math::round((top-bottom) / gridWidth.y) + 1);
+	double dx=sqrt(3.)*gridWidth.y;
+	cellV.set(fabs(dx),fabs(gridWidth.y));
+	double hdx=0.5*dx;
+	double hdy=0.5*gridWidth.y;
+	int numberX = (RS_Math::round((right-left) / dx) + 1);
+	number = 2*numberX*numberY;
+	baseGrid.set(left+remainder(-left,dx),bottom+remainder(-bottom,fabs(gridWidth.y)));
+
+	if (number>0 && number<1000000) {
+
+		pt.resize(number);
+
+		int i=0;
+		RS_Vector bp0(baseGrid),dbp1(hdx,hdy);
+		for (int y=0; y<numberY; ++y) {
+			RS_Vector bp1(bp0);
+			for (int x=0; x<numberX; ++x) {
+				pt[i++] = bp1;
+				pt[i++] = bp1+dbp1;
+				bp1.x += dx;
+			}
+			bp0.y += gridWidth.y;
+		}
+		//find metaGrid
+		if (metaGridWidth.y>1.0e-6 &&
+				graphicView->toGuiDY(metaGridWidth.y)>2) {
+
+			metaGridWidth.x=(metaGridWidth.x<0.)?-sqrt(3.)*fabs(metaGridWidth.y):sqrt(3.)*fabs(metaGridWidth.y);
+			RS_Vector baseMetaGrid(left+remainder(-left,metaGridWidth.x)-fabs(metaGridWidth.x),bottom+remainder(-bottom,metaGridWidth.y)-fabs(metaGridWidth.y));
+
+			// calculate number of visible meta grid lines:
+			numMetaX = (RS_Math::round((right-left) / metaGridWidth.x) + 1);
+			numMetaY = (RS_Math::round((top-bottom) / metaGridWidth.y) + 1);
+
+			if (numMetaX>0 && numMetaY>0) {
+				// create meta grid arrays:
+				metaX.resize(numMetaX);
+				metaY.resize(numMetaY);
+
+				double x0(baseMetaGrid.x);
+				for (int i=0; i<numMetaX; x0 += metaGridWidth.x) {
+					metaX[i++] = x0;
+				}
+				x0=baseMetaGrid.y;
+				for (int i=0; i<numMetaY; x0 += metaGridWidth.y) {
+					metaY[i++] = x0;
+				}
+				return;
+
+			}
+			numMetaX = 0;
+			metaX.clear();
+			numMetaY = 0;
+			metaY.clear();
+			return;
+		}
+	}
+	number = 0;
+	pt.clear();
+	numMetaX = 0;
+	metaX.clear();
+	numMetaY = 0;
+	metaY.clear();
 }
 
 QString RS_Grid::getInfo() const{
