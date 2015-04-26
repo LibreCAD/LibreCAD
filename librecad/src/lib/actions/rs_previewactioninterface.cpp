@@ -100,13 +100,15 @@ void RS_PreviewActionInterface::trigger() {
  * Deletes the preview from the screen.
  */
 void RS_PreviewActionInterface::deletePreview() {
-        graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
 		if (hasPreview){
                 //avoid deletiong NULL or empty preview
             preview->clear();
             hasPreview=false;
         }
-        graphicView->redraw(RS2::RedrawOverlay);
+	if(!graphicView->isCleanUp()){
+		graphicView->getOverlayContainer(RS2::ActionPreviewEntity)->clear();
+		graphicView->redraw(RS2::RedrawOverlay);
+	}
 }
 
 
