@@ -52,8 +52,10 @@ public:
 	std::vector<RS_Vector> const& getPoints() const;
 
 	/**
-	  *@return the closest grid point
-	  */
+	* \brief the closest grid point
+	* \return the closest grid to given point
+	* \param coord the given point
+	*/
 	RS_Vector snapGrid(const RS_Vector& coord) const;
 
 	/**
