@@ -82,7 +82,7 @@ public:
 	RS_Vector getMetaGridWidth() const;
 	RS_Vector const& getCellVector() const;
 
-protected:
+private:
 	//! Graphic view this grid is connected to.
 	RS_GraphicView* graphicView;
 
