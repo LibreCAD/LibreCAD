@@ -188,42 +188,21 @@ public:
 	virtual void setMouseCursor(RS2::CursorType /*c*/) {}
 
 	void setContainer(RS_EntityContainer* container);
-	RS_EntityContainer* getContainer() {
-		return container;
-	}
-	void setFactor(double f) {
-		setFactorX(f);
-		setFactorY(f);
-	}
+	RS_EntityContainer* getContainer() const;
+	void setFactor(double f);
 	void setFactorX(double f);
 	void setFactorY(double f);
-	//double getFactorX() {
-	//    return factor.x;
-	//}
-	//double getFactorY() {
-	//    return factor.y;
-	//}
-	RS_Vector getFactor() const{
-		return factor;
-	}
+	RS_Vector getFactor() const;
 	/**
 	 * @brief setOffset
 	 * @param ox, offset X
 	 * @param oy, offset Y
 	 */
 	virtual void setOffset(int ox, int oy);
-	void setOffsetX(int ox) {
-		offsetX = ox;
-	}
-	void setOffsetY(int oy) {
-		offsetY = oy;
-	}
-	int getOffsetX() {
-		return offsetX;
-	}
-	int getOffsetY() {
-		return offsetY;
-	}
+	void setOffsetX(int ox);
+	void setOffsetY(int oy);
+	int getOffsetX() const;
+	int getOffsetY() const;
 	void centerOffsetX();
 	void centerOffsetY();
 	void centerX(double x);
@@ -235,25 +214,13 @@ public:
 	 */
 	void setBorders(int left, int top, int right, int bottom);
 
-	int getBorderLeft() const{
-		return borderLeft;
-	}
-	int getBorderTop() const{
-		return borderTop;
-	}
-	int getBorderRight() const{
-		return borderRight;
-	}
-	int getBorderBottom() const{
-		return borderBottom;
-	}
+	int getBorderLeft() const;
+	int getBorderTop() const;
+	int getBorderRight() const;
+	int getBorderBottom() const;
 
-	void freezeZoom(bool freeze) {
-		zoomFrozen=freeze;
-	}
-	bool isZoomFrozen() const{
-		return zoomFrozen;
-	}
+	void freezeZoom(bool freeze);
+	bool isZoomFrozen() const;
 
 	void setDefaultAction(RS_ActionInterface* action);
 	RS_ActionInterface*  getDefaultAction();
@@ -330,17 +297,10 @@ public:
 	virtual void updateGridStatusWidget(const QString& /*text*/) {}
 
 	void setDefaultSnapMode(RS_SnapMode sm);
-	RS_SnapMode getDefaultSnapMode() const{
-		return defaultSnapMode;
-	}
+	RS_SnapMode getDefaultSnapMode() const;
 	void setSnapRestriction(RS2::SnapRestriction sr);
-	RS2::SnapRestriction getSnapRestriction()  const{
-		return defaultSnapRes;
-	}
+	RS2::SnapRestriction getSnapRestriction() const;
 
-	//void showGrid(bool on) {
-	//    gridVisible = on;
-	//}
 	bool isGridOn() const;
 	bool isGridIsometric() const;
 	void setCrosshairType(RS2::CrosshairType chType);
@@ -364,24 +324,18 @@ public:
 		 *
 		 * @param lock true: lock, false: unlock
 		 */
-	void lockRelativeZero(bool lock) {
-		relativeZeroLocked=lock;
-	}
+	void lockRelativeZero(bool lock);
 
 	/**
 		 * @return true if the position of the realtive zero point is
 		 * locked.
 		 */
-	bool isRelativeZeroLocked() const{
-		return relativeZeroLocked;
-	}
+	bool isRelativeZeroLocked() const;
 
 	/**
 		 * @return Relative zero coordinate.
 		 */
-	RS_Vector const& getRelativeZero() const{
-		return relativeZero;
-	}
+	RS_Vector const& getRelativeZero() const;
 
 	void setRelativeZero(const RS_Vector& pos);
 	void moveRelativeZero(const RS_Vector& pos);
@@ -391,48 +345,33 @@ public:
 	/**
 		 * Enables or disables print preview.
 		 */
-	void setPrintPreview(bool pv) {
-		printPreview = pv;
-	}
+	void setPrintPreview(bool pv);
 
 	/**
 		 * @retval true This is a print preview graphic view.
 		 * @retval false Otherwise.
 		 */
-	bool isPrintPreview() const{
-		return printPreview;
-	}
+	bool isPrintPreview() const;
 
 	/**
 		 * Enables or disables printing.
 		 */
-	void setPrinting(bool p) {
-		printing = p;
-	}
+	void setPrinting(bool p);
 
 	/**
 		 * @retval true This is a a graphic view for printing.
 		 * @retval false setSnapOtherwise.
 		 */
-	bool isPrinting() const{
-		return printing;
-	}
+	bool isPrinting() const;
 
 	/**
 		 * @retval true Draft mode is on for this view (all lines with 1 pixel / no style scaling).
 		 * @retval false Otherwise.
 		 */
-	bool isDraftMode() const{
-		return draftMode;
-	}
+	bool isDraftMode() const;
 
-	void setDraftMode(bool dm) {
-		draftMode=dm;
-	}
-	bool isCleanUp(void) const
-	{
-		return m_bIsCleanUp;
-	}
+	void setDraftMode(bool dm);
+	bool isCleanUp(void) const;
 
 	virtual RS_EntityContainer* getOverlayContainer(RS2::OverlayGraphics position);
 
