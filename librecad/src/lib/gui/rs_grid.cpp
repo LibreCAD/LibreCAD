@@ -13,12 +13,12 @@
 **
 ** This program is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ** GNU General Public License for more details.
 **
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
-** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 **
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
@@ -48,15 +48,15 @@ const double minimumGridWidth=1.0e-8;
  */
 RS_Grid::RS_Grid(RS_GraphicView* graphicView):
 	graphicView(graphicView)
-  ,baseGrid(false)
+ ,baseGrid(false)
 {
 }
 
 /**
-  * find the closest grid point
-  *@return the closest grid to given point
-  *@coord: the given point
-  */
+ * find the closest grid point
+ *@return the closest grid to given point
+ *@coord: the given point
+ */
 RS_Vector RS_Grid::snapGrid(const RS_Vector& coord) const {
 	if( cellV.x<RS_TOLERANCE || cellV.y<RS_TOLERANCE) return coord;
 	RS_Vector vp(coord-baseGrid);
@@ -91,7 +91,7 @@ void RS_Grid::updatePointArray() {
 		isometric = static_cast<bool>(graphic->getVariableInt("$SNAPSTYLE",0));
 		crosshairType=graphic->getCrosshairType();
 		userGrid = graphic->getVariableVector("$GRIDUNIT",
-											  RS_Vector(-1.0, -1.0));
+											 RS_Vector(-1.0, -1.0));
 	}else {
 		isometric = (bool)RS_SETTINGS->readNumEntry("/IsometricGrid", 0);
 		crosshairType=static_cast<RS2::CrosshairType>(RS_SETTINGS->readNumEntry("/CrosshairType",0));
@@ -101,13 +101,13 @@ void RS_Grid::updatePointArray() {
 	int minGridSpacing = RS_SETTINGS->readNumEntry("/MinGridSpacing", 10);
 	RS_SETTINGS->endGroup();
 
-	//        std::cout<<"Grid userGrid="<<userGrid<<std::endl;
+	// std::cout<<"Grid userGrid="<<userGrid<<std::endl;
 
 	pt.clear();
 	metaX.clear();
 	metaY.clear();
 
-	//        RS_DEBUG->print("RS_Grid::update: 001");
+	// RS_DEBUG->print("RS_Grid::update: 001");
 
 	// find out unit:
 	RS2::Unit unit = RS2::None;
@@ -118,9 +118,9 @@ void RS_Grid::updatePointArray() {
 	}
 
 	RS_Vector gridWidth;
-	//        RS_Vector metaGridWidth;
+	// RS_Vector metaGridWidth;
 
-	//        RS_DEBUG->print("RS_Grid::update: 002");
+	// RS_DEBUG->print("RS_Grid::update: 002");
 
 	// init grid spacing:
 	// metric grid:
@@ -135,7 +135,7 @@ void RS_Grid::updatePointArray() {
 
 	}
 
-	//        RS_DEBUG->print("RS_Grid::update: 013");
+	// RS_DEBUG->print("RS_Grid::update: 013");
 
 	// for grid info:
 	spacing = gridWidth.x;
@@ -153,10 +153,10 @@ void RS_Grid::updatePointArray() {
 		double right = (int)(graphicView->toGraphX(graphicView->getWidth()) /
 							 gridWidth.x) * gridWidth.x;
 		double top = (int)(graphicView->toGraphY(0) /
-						   gridWidth.y) * gridWidth.y;
+						 gridWidth.y) * gridWidth.y;
 		double bottom =
 				(int)(graphicView->toGraphY(graphicView->getHeight()) /
-					  gridWidth.y) * gridWidth.y;
+					 gridWidth.y) * gridWidth.y;
 
 
 		left -= gridWidth.x;
@@ -175,10 +175,10 @@ void RS_Grid::updatePointArray() {
 
 		}
 
-		//                RS_DEBUG->print("RS_Grid::update: 015");
+		// RS_DEBUG->print("RS_Grid::update: 015");
 	}
 
-	//        RS_DEBUG->print("RS_Grid::update: OK");
+	// RS_DEBUG->print("RS_Grid::update: OK");
 }
 
 
@@ -200,11 +200,11 @@ RS_Vector RS_Grid::getMetricGridWidth(RS_Vector const& userGrid, bool scaleGrid,
 		gridWidth.y = minimumGridWidth;
 	}
 
-	//                RS_DEBUG->print("RS_Grid::update: 003");
+	// RS_DEBUG->print("RS_Grid::update: 003");
 
 	// auto scale grid
 	//scale grid by drawing setting as well, bug#3416862
-	//            std::cout<<"RS_Grid::updatePointArray(): userGrid="<<userGrid<<std::endl;
+	// std::cout<<"RS_Grid::updatePointArray(): userGrid="<<userGrid<<std::endl;
 	if (scaleGrid|| userGrid.x<=minimumGridWidth || userGrid.y<=minimumGridWidth) {
 		if(scaleGrid || userGrid.x<=minimumGridWidth) {
 			while (graphicView->toGuiDX(gridWidth.x)<minGridSpacing) {
@@ -217,18 +217,18 @@ RS_Vector RS_Grid::getMetricGridWidth(RS_Vector const& userGrid, bool scaleGrid,
 			}
 		}
 	}
-	//            std::cout<<"RS_Grid::updatePointArray(): gridWidth="<<gridWidth<<std::endl;
+	// std::cout<<"RS_Grid::updatePointArray(): gridWidth="<<gridWidth<<std::endl;
 	metaGridWidth.x = gridWidth.x*10;
 	metaGridWidth.y = gridWidth.y*10;
 
-	//                RS_DEBUG->print("RS_Grid::update: 004");
+	// RS_DEBUG->print("RS_Grid::update: 004");
 	return gridWidth;
 }
 
 RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const& userGrid, bool scaleGrid, int minGridSpacing)
 {
 	RS_Vector gridWidth;
-	//                RS_DEBUG->print("RS_Grid::update: 005");
+	// RS_DEBUG->print("RS_Grid::update: 005");
 
 	if (userGrid.x>0.0) {
 		gridWidth.x = userGrid.x;
@@ -243,7 +243,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const& userGrid, bool scaleGri
 	else {
 		gridWidth.y = 1.0/1024.0;
 	}
-	//                RS_DEBUG->print("RS_Grid::update: 006");
+	// RS_DEBUG->print("RS_Grid::update: 006");
 
 	RS2::Unit unit = RS2::None;
 	RS2::LinearFormat format = RS2::Decimal;
@@ -255,7 +255,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const& userGrid, bool scaleGri
 	}
 
 	if (unit==RS2::Inch) {
-		//                    RS_DEBUG->print("RS_Grid::update: 007");
+		// RS_DEBUG->print("RS_Grid::update: 007");
 
 		// auto scale grid
 		//scale grid by drawing setting as well, bug#3416862
@@ -292,7 +292,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const& userGrid, bool scaleGri
 			}
 		}
 
-		//                    RS_DEBUG->print("RS_Grid::update: 008");
+		// RS_DEBUG->print("RS_Grid::update: 008");
 
 		// metagrid X shows inches..
 		metaGridWidth.x = 1.0;
@@ -307,7 +307,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const& userGrid, bool scaleGri
 
 				// .. or miles (not really..)
 				//if (graphicView->toGuiDX(metaGridWidth.x)<20) {
-				//    metaGridWidth.x = 63360.0;
+				// metaGridWidth.x = 63360.0;
 				//}
 
 				// .. or nothing
@@ -318,7 +318,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const& userGrid, bool scaleGri
 			}
 		}
 
-		//                        RS_DEBUG->print("RS_Grid::update: 009");
+		// RS_DEBUG->print("RS_Grid::update: 009");
 
 		// metagrid Y shows inches..
 		metaGridWidth.y = 1.0;
@@ -333,22 +333,18 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const& userGrid, bool scaleGri
 
 				// .. or miles (not really..)
 				//if (graphicView->toGuiDY(metaGridWidth.y)<20) {
-				//    metaGridWidth.y = 63360.0;
+				// metaGridWidth.y = 63360.0;
 				//}
 
 				// .. or nothing
 				if (graphicView->toGuiDY(metaGridWidth.y)<minGridSpacing*2) {
 					metaGridWidth.y = -1.0;
 				}
-
 			}
 		}
-
-		//                        RS_DEBUG->print("RS_Grid::update: 010");
+		// RS_DEBUG->print("RS_Grid::update: 010");
 	} else {
-
-		//                        RS_DEBUG->print("RS_Grid::update: 011");
-
+		// RS_DEBUG->print("RS_Grid::update: 011");
 		if (scaleGrid) {
 			while (graphicView->toGuiDX(gridWidth.x)<minGridSpacing) {
 				gridWidth.x*=2;
@@ -360,7 +356,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const& userGrid, bool scaleGri
 			}
 			metaGridWidth.y = -1.0;
 		}
-		//                        RS_DEBUG->print("RS_Grid::update: 012");
+		// RS_DEBUG->print("RS_Grid::update: 012");
 	}
 	//gridWidth.y = gridWidth.x;
 	//metaGridWidth.y = metaGridWidth.x;
@@ -385,67 +381,57 @@ void RS_Grid::createOrthogonalGrid(QRectF const& rect, RS_Vector const& gridWidt
 
 	// create grid array:
 
-	if (number>0 && number<maxGridPoints) {
+	if (number<=0 || number>maxGridPoints) return;
 
-		pt.resize(number);
+	pt.resize(number);
+
+	int i=0;
+	RS_Vector bp0(baseGrid);
+	for (int y=0; y<numberY; ++y) {
+		RS_Vector bp1(bp0);
+		for (int x=0; x<numberX; ++x) {
+			pt[i++] = bp1;
+			bp1.x += gridWidth.x;
+		}
+		bp0.y += gridWidth.y;
+	}
+	// find meta grid boundaries
+	if (metaGridWidth.x>minimumGridWidth && metaGridWidth.y>minimumGridWidth &&
+			graphicView->toGuiDX(metaGridWidth.x)>2 &&
+			graphicView->toGuiDY(metaGridWidth.y)>2) {
+
+		double mleft = (int)(graphicView->toGraphX(0) /
+							 metaGridWidth.x) * metaGridWidth.x;
+		double mright = (int)(graphicView->toGraphX(graphicView->getWidth()) /
+							 metaGridWidth.x) * metaGridWidth.x;
+		double mtop = (int)(graphicView->toGraphY(0) /
+							metaGridWidth.y) * metaGridWidth.y;
+		double mbottom = (int)(graphicView->toGraphY(graphicView->getHeight()) /
+							 metaGridWidth.y) * metaGridWidth.y;
+
+		mleft -= metaGridWidth.x;
+		mright += metaGridWidth.x;
+		mtop += metaGridWidth.y;
+		mbottom -= metaGridWidth.y;
+
+		// calculate number of visible meta grid lines:
+		int numMetaX = (RS_Math::round((mright-mleft) / metaGridWidth.x) + 1);
+		int numMetaY = (RS_Math::round((mtop-mbottom) / metaGridWidth.y) + 1);
+
+		if (numMetaX<=0 || numMetaY<=0) return;
+		// create meta grid arrays:
+		metaX.resize(numMetaX);
+		metaY.resize(numMetaY);
 
 		int i=0;
-		RS_Vector bp0(baseGrid);
-		for (int y=0; y<numberY; ++y) {
-			RS_Vector bp1(bp0);
-			for (int x=0; x<numberX; ++x) {
-				pt[i++] = bp1;
-				bp1.x += gridWidth.x;
-			}
-			bp0.y += gridWidth.y;
+		for (int x=0; x<numMetaX; ++x) {
+			metaX[i++] = mleft+x*metaGridWidth.x;
 		}
-		// find meta grid boundaries
-		if (metaGridWidth.x>minimumGridWidth && metaGridWidth.y>minimumGridWidth &&
-				graphicView->toGuiDX(metaGridWidth.x)>2 &&
-				graphicView->toGuiDY(metaGridWidth.y)>2) {
-
-			double mleft = (int)(graphicView->toGraphX(0) /
-								 metaGridWidth.x) * metaGridWidth.x;
-			double mright = (int)(graphicView->toGraphX(graphicView->getWidth()) /
-								  metaGridWidth.x) * metaGridWidth.x;
-			double mtop = (int)(graphicView->toGraphY(0) /
-								metaGridWidth.y) * metaGridWidth.y;
-			double mbottom = (int)(graphicView->toGraphY(graphicView->getHeight()) /
-								   metaGridWidth.y) * metaGridWidth.y;
-
-			mleft -= metaGridWidth.x;
-			mright += metaGridWidth.x;
-			mtop += metaGridWidth.y;
-			mbottom -= metaGridWidth.y;
-
-			// calculate number of visible meta grid lines:
-			int numMetaX = (RS_Math::round((mright-mleft) / metaGridWidth.x) + 1);
-			int numMetaY = (RS_Math::round((mtop-mbottom) / metaGridWidth.y) + 1);
-
-			if (numMetaX>0 && numMetaY>0) {
-				// create meta grid arrays:
-				metaX.resize(numMetaX);
-				metaY.resize(numMetaY);
-
-				int i=0;
-				for (int x=0; x<numMetaX; ++x) {
-					metaX[i++] = mleft+x*metaGridWidth.x;
-				}
-				i=0;
-				for (int y=0; y<numMetaY; ++y) {
-					metaY[i++] = mbottom+y*metaGridWidth.y;
-				}
-				return;
-			}
-			metaX.clear();
-			metaY.clear();
+		i=0;
+		for (int y=0; y<numMetaY; ++y) {
+			metaY[i++] = mbottom+y*metaGridWidth.y;
 		}
-		return;
-
 	}
-	pt.clear();
-	metaX.clear();
-	metaY.clear();
 }
 
 void RS_Grid::createIsometricGrid(QRectF const& rect, RS_Vector const& gridWidth)
@@ -464,56 +450,46 @@ void RS_Grid::createIsometricGrid(QRectF const& rect, RS_Vector const& gridWidth
 	int number = 2*numberX*numberY;
 	baseGrid.set(left+remainder(-left,dx),bottom+remainder(-bottom,fabs(gridWidth.y)));
 
-	if (number>0 && number<maxGridPoints) {
+	if (number<=0 || number>maxGridPoints) return;
 
-		pt.resize(number);
+	pt.resize(number);
 
-		int i=0;
-		RS_Vector bp0(baseGrid),dbp1(hdx,hdy);
-		for (int y=0; y<numberY; ++y) {
-			RS_Vector bp1(bp0);
-			for (int x=0; x<numberX; ++x) {
-				pt[i++] = bp1;
-				pt[i++] = bp1+dbp1;
-				bp1.x += dx;
-			}
-			bp0.y += gridWidth.y;
+	int i=0;
+	RS_Vector bp0(baseGrid),dbp1(hdx,hdy);
+	for (int y=0; y<numberY; ++y) {
+		RS_Vector bp1(bp0);
+		for (int x=0; x<numberX; ++x) {
+			pt[i++] = bp1;
+			pt[i++] = bp1+dbp1;
+			bp1.x += dx;
 		}
-		//find metaGrid
-		if (metaGridWidth.y>minimumGridWidth &&
-				graphicView->toGuiDY(metaGridWidth.y)>2) {
+		bp0.y += gridWidth.y;
+	}
+	//find metaGrid
+	if (metaGridWidth.y>minimumGridWidth &&
+			graphicView->toGuiDY(metaGridWidth.y)>2) {
 
-			metaGridWidth.x=(metaGridWidth.x<0.)?-sqrt(3.)*fabs(metaGridWidth.y):sqrt(3.)*fabs(metaGridWidth.y);
-			RS_Vector baseMetaGrid(left+remainder(-left,metaGridWidth.x)-fabs(metaGridWidth.x),bottom+remainder(-bottom,metaGridWidth.y)-fabs(metaGridWidth.y));
+		metaGridWidth.x=(metaGridWidth.x<0.)?-sqrt(3.)*fabs(metaGridWidth.y):sqrt(3.)*fabs(metaGridWidth.y);
+		RS_Vector baseMetaGrid(left+remainder(-left,metaGridWidth.x)-fabs(metaGridWidth.x),bottom+remainder(-bottom,metaGridWidth.y)-fabs(metaGridWidth.y));
 
-			// calculate number of visible meta grid lines:
-			int numMetaX = (RS_Math::round((right-left) / metaGridWidth.x) + 1);
-			int numMetaY = (RS_Math::round((top-bottom) / metaGridWidth.y) + 1);
+		// calculate number of visible meta grid lines:
+		int numMetaX = (RS_Math::round((right-left) / metaGridWidth.x) + 1);
+		int numMetaY = (RS_Math::round((top-bottom) / metaGridWidth.y) + 1);
 
-			if (numMetaX>0 && numMetaY>0) {
-				// create meta grid arrays:
-				metaX.resize(numMetaX);
-				metaY.resize(numMetaY);
+		if (numMetaX<=0 || numMetaY<=0) return;
+		// create meta grid arrays:
+		metaX.resize(numMetaX);
+		metaY.resize(numMetaY);
 
-				double x0(baseMetaGrid.x);
-				for (int i=0; i<numMetaX; x0 += metaGridWidth.x) {
-					metaX[i++] = x0;
-				}
-				x0=baseMetaGrid.y;
-				for (int i=0; i<numMetaY; x0 += metaGridWidth.y) {
-					metaY[i++] = x0;
-				}
-				return;
-
-			}
-			metaX.clear();
-			metaY.clear();
-			return;
+		double x0(baseMetaGrid.x);
+		for (int i=0; i<numMetaX; x0 += metaGridWidth.x) {
+			metaX[i++] = x0;
+		}
+		x0=baseMetaGrid.y;
+		for (int i=0; i<numMetaY; x0 += metaGridWidth.y) {
+			metaY[i++] = x0;
 		}
 	}
-	pt.clear();
-	metaX.clear();
-	metaY.clear();
 }
 
 QString RS_Grid::getInfo() const{
