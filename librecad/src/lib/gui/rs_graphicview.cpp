@@ -1921,8 +1921,7 @@ void RS_GraphicView::setBorders(int left, int top, int right, int bottom) {
 
 RS_Graphic* RS_GraphicView::getGraphic() const{
 	if (container && container->rtti()==RS2::EntityGraphic) {
-		RS_Graphic const*const ret=static_cast<RS_Graphic const*>(container);
-		return const_cast<RS_Graphic *>(ret);
+		return static_cast<RS_Graphic *>(container);
 	} else {
 		return nullptr;
 	}

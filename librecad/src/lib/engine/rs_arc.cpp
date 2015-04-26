@@ -313,12 +313,12 @@ RS_Vector RS_Arc::getNearestEndpoint(const RS_Vector& coord, double* dist) const
     dist2 = (endpoint-coord).squared();
 
     if (dist2<dist1) {
-        if (dist!=NULL) {
+		if (dist) {
             *dist = sqrt(dist2);
         }
          return endpoint;
     } else {
-        if (dist!=NULL) {
+		if (dist) {
             *dist = sqrt(dist1);
         }
         return startpoint;
@@ -371,10 +371,10 @@ RS_Vector RS_Arc::getTangentDirection(const RS_Vector& point) const {
 }
 
 RS_Vector RS_Arc::getNearestPointOnEntity(const RS_Vector& coord,
-        bool onEntity, double* dist, RS_Entity** entity)const {
+		bool onEntity, double* dist, RS_Entity** entity) const{
 
     RS_Vector vec(false);
-    if (entity!=NULL) {
+	if (entity) {
         *entity = const_cast<RS_Arc*>(this);
     }
 
@@ -386,7 +386,7 @@ RS_Vector RS_Arc::getNearestPointOnEntity(const RS_Vector& coord,
     } else {
             return vec=getNearestEndpoint(coord, dist);
     }
-    if (dist!=NULL) {
+	if (dist) {
         *dist = vec.distanceTo(coord);
 //        RS_DEBUG->print(RS_Debug::D_ERROR, "distance to (%g, %g)=%g\n", coord.x,coord.y,*dist);
     }
@@ -398,7 +398,7 @@ RS_Vector RS_Arc::getNearestPointOnEntity(const RS_Vector& coord,
 
 RS_Vector RS_Arc::getNearestCenter(const RS_Vector& coord,
 								   double* dist) const{
-    if (dist!=NULL) {
+	if (dist) {
         *dist = coord.distanceTo(data.center);
     }
     return data.center;
@@ -447,7 +447,7 @@ RS_Vector RS_Arc::getNearestMiddle(const RS_Vector& coord,
         vp.setPolar(getRadius(), angle);
         vp.move(getCenter());
 
-    if (dist!=NULL) {
+	if (dist) {
         *dist = vp.distanceTo(coord);
     }
     RS_DEBUG->print("RS_Arc::getNearestMiddle(): end\n");
@@ -459,7 +459,7 @@ RS_Vector RS_Arc::getNearestDist(double distance,
 								 double* dist) const{
 
     if (data.radius<RS_TOLERANCE) {
-        if (dist!=NULL) {
+		if (dist) {
             *dist = RS_MAXDOUBLE;
         }
         return RS_Vector(false);
@@ -555,7 +555,7 @@ RS_Vector RS_Arc::getNearestOrthTan(const RS_Vector& coord,
 
 void RS_Arc::moveStartpoint(const RS_Vector& pos) {
     // polyline arcs: move point not angle:
-    //if (parent!=NULL && parent->rtti()==RS2::EntityPolyline) {
+	//if (parent && parent->rtti()==RS2::EntityPolyline) {
     double bulge = getBulge();
 	if(fabs(bulge - M_PI_2)<RS_TOLERANCE_ANGLE) return;
 
@@ -575,7 +575,7 @@ void RS_Arc::moveStartpoint(const RS_Vector& pos) {
 
 void RS_Arc::moveEndpoint(const RS_Vector& pos) {
     // polyline arcs: move point not angle:
-    //if (parent!=NULL && parent->rtti()==RS2::EntityPolyline) {
+	//if (parent && parent->rtti()==RS2::EntityPolyline) {
     double bulge = getBulge();
     createFrom2PBulge(getStartpoint(), pos, bulge);
     correctAngles(); // make sure angleLength is no more than 2*M_PI

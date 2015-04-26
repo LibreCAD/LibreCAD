@@ -264,8 +264,8 @@ bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const
 		vps.push_back(RS_Vector(vp.x(),vp.y()));
     }
     for(unsigned short i=0;i<4;i++){
-        RS_Line line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));
-        if( RS_Information::getIntersection(const_cast<RS_Entity*>(this), &line, true).size()>0) return true;
+		RS_Line const line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));
+		if( RS_Information::getIntersection(this, &line, true).size()>0) return true;
     }
     if( minV.isInWindowOrdered(vpMin,vpMax)||maxV.isInWindowOrdered(vpMin,vpMax)) return true;
     return false;
