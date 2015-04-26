@@ -54,8 +54,8 @@ public:
     QG_GraphicView(QWidget* parent=0, const char* name=0, Qt::WindowFlags f=0);
     virtual ~QG_GraphicView();
 
-    virtual int getWidth();
-    virtual int getHeight();
+	virtual int getWidth() const;
+	virtual int getHeight() const;
 	virtual void redraw(RS2::RedrawMethod method=RS2::RedrawAll);
     virtual void adjustOffsetControls();
     virtual void adjustZoomControls();

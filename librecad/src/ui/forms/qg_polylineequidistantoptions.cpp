@@ -56,7 +56,7 @@ void QG_PolylineEquidistantOptions::languageChange()
 }
 
 void QG_PolylineEquidistantOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionPolylineEquidistant) {
+	if (a && a->rtti()==RS2::ActionPolylineEquidistant) {
         action = (RS_ActionPolylineEquidistant*)a;
 
         QString sd;
@@ -93,14 +93,14 @@ void QG_PolylineEquidistantOptions::saveOptions() {
 }
 
 void QG_PolylineEquidistantOptions::updateDist(const QString& l) {
-    if (action!=NULL) {
+	if (action) {
         bool ok;
         double dist=RS_Math::eval(l,&ok);
         if(ok==false){
             dist=10.;
             leDist->setText(QString::number(dist,'g',3));
         }
-        if (action!=NULL) {
+		if (action) {
             action->setDist(dist);
         }
     }
@@ -113,7 +113,7 @@ void QG_PolylineEquidistantOptions::updateNumber(const QString& l) {
         i=1;
         leNumber->setText(QString::number(i));
     }
-    if (action!=NULL) {
+	if (action) {
         action->setNumber(i);
     }
 }

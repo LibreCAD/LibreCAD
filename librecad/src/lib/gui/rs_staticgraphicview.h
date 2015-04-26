@@ -37,10 +37,10 @@
 class RS_StaticGraphicView: public RS_GraphicView {
 public:
     RS_StaticGraphicView(int w, int h, RS_Painter* p, QSize b = QSize(5,5));
-    virtual ~RS_StaticGraphicView();
+	virtual ~RS_StaticGraphicView()=default;
 
-    virtual int getWidth();
-    virtual int getHeight();
+	virtual int getWidth() const;
+	virtual int getHeight() const;
     virtual void redraw(RS2::RedrawMethod) {}
     virtual void adjustOffsetControls() {}
     virtual void adjustZoomControls() {}

@@ -35,6 +35,7 @@
 #include <QMap>
 #include <QKeyEvent>
 #include <tuple>
+#include <memory>
 
 
 class RS_ActionInterface;
@@ -73,7 +74,7 @@ public:
     }
 
     /**
-     * Sets the drawing mode.
+	 * \brief setDrawingMode Sets the drawing mode.
      */
     void setDrawingMode(RS2::DrawingMode m) {
         drawingMode = m;
@@ -103,10 +104,10 @@ public:
 
     /** This virtual method must be overwritten to return
       the width of the widget the graphic is shown in */
-    virtual int getWidth() = 0;
+	virtual int getWidth() const= 0;
     /** This virtual method must be overwritten to return
       the height of the widget the graphic is shown in */
-    virtual int getHeight() = 0;
+	virtual int getHeight() const= 0;
     /** This virtual method must be overwritten to redraw
       the widget. */
     virtual void redraw(RS2::RedrawMethod method=RS2::RedrawAll) = 0;
@@ -135,14 +136,14 @@ public:
         /**
          * @return Current background color.
          */
-        RS_Color getBackground() {
+		RS_Color getBackground() const{
                 return background;
         }
 
         /**
          * @return Current foreground color.
          */
-        RS_Color getForeground() {
+		RS_Color getForeground() const{
                 return foreground;
         }
 
@@ -217,7 +218,7 @@ public:
     //double getFactorY() {
     //    return factor.y;
     //}
-    RS_Vector getFactor() {
+	RS_Vector getFactor() const{
         return factor;
     }
     /**
@@ -254,23 +255,23 @@ public:
         borderBottom = bottom;
     }
 
-    int getBorderLeft() {
+	int getBorderLeft() const{
         return borderLeft;
     }
-    int getBorderTop() {
+	int getBorderTop() const{
         return borderTop;
     }
-    int getBorderRight() {
+	int getBorderRight() const{
         return borderRight;
     }
-    int getBorderBottom() {
+	int getBorderBottom() const{
         return borderBottom;
     }
 
     void freezeZoom(bool freeze) {
         zoomFrozen=freeze;
     }
-    bool isZoomFrozen() {
+	bool isZoomFrozen() const{
         return zoomFrozen;
     }
 
@@ -345,10 +346,8 @@ public:
     virtual void drawMetaGrid(RS_Painter *painter);
         virtual void drawOverlay(RS_Painter *painter);
 
-    RS_Grid* getGrid() {
-        return grid;
-    }
-        virtual void updateGridStatusWidget(const QString& /*text*/) {}
+	RS_Grid* getGrid() const;
+	virtual void updateGridStatusWidget(const QString& /*text*/) {}
 
     void setDefaultSnapMode(RS_SnapMode sm);
 	RS_SnapMode getDefaultSnapMode() const{
@@ -407,9 +406,7 @@ public:
         void setRelativeZero(const RS_Vector& pos);
         void moveRelativeZero(const RS_Vector& pos);
 
-        RS_EventHandler* getEventHandler() {
-                return eventHandler;
-        }
+		RS_EventHandler* getEventHandler() const;
 
         /**
          * Enables or disables print preview.
@@ -460,14 +457,14 @@ public:
         virtual RS_EntityContainer* getOverlayContainer(RS2::OverlayGraphics position);
 
 protected:
-
+	void init();
 
     RS_EntityContainer* container; // Holds a pointer to all the enties
-    RS_EventHandler* eventHandler;
+	std::unique_ptr<RS_EventHandler> eventHandler;
 
 
-    int mx;   //!< Last known mouse cursor position
-    int my;   //!< Last known mouse cursor position
+	int mx=0;   //!< Last known mouse cursor position
+	int my=0;   //!< Last known mouse cursor position
 
     /** background color (any color) */
     RS_Color background;
@@ -488,7 +485,7 @@ protected:
 	/** End handle color */
 	RS_Color endHandleColor;
     /** Grid */
-    RS_Grid* grid;
+	std::unique_ptr<RS_Grid> grid;
     /**
          * Current default snap mode for this graphic view. Used for new
          * actions.
@@ -502,47 +499,46 @@ protected:
 
     RS2::DrawingMode drawingMode;
 
-        /**
-         * Delete mode. If true, all drawing actions will delete in background color
-         * instead.
-         */
-        bool deleteMode;
+	/**
+		 * Delete mode. If true, all drawing actions will delete in background color
+		 * instead.
+		 */
+	bool deleteMode=false;
 
 private:
-    bool zoomFrozen;
+	bool zoomFrozen=false;
     //bool gridVisible;
-        bool draftMode;
+	bool draftMode=false;
 
-    RS_Vector factor;
-        int offsetX;
-    int offsetY;
-
+	RS_Vector factor=RS_Vector(1.,1.);
+	int offsetX=0;
+	int offsetY=0;
 
         //circular buffer for saved views
     std::vector<std::tuple<int, int, RS_Vector> > savedViews;
-    unsigned short savedViewIndex;
-    unsigned short savedViewCount;
+	unsigned short savedViewIndex=0;
+	unsigned short savedViewCount=0;
     QDateTime previousViewTime;
 //        RS_Vector previousFactor;
 //        int previousOffsetX;
 //    int previousOffsetY;
 
-    int borderLeft;
-    int borderTop;
-    int borderRight;
-    int borderBottom;
+	int borderLeft=0;
+	int borderTop=0;
+	int borderRight=0;
+	int borderBottom=0;
 
-        RS_Vector relativeZero;
-        bool relativeZeroLocked;
-        //! Print preview flag
-        bool printPreview;
-        //! Active when printing only:
-        bool printing;
+	RS_Vector relativeZero=RS_Vector(false);
+	bool relativeZeroLocked=false;
+	//! Print preview flag
+	bool printPreview=false;
+	//! Active when printing only:
+	bool printing=false;
 
-        // Map that will be used for overlaying additional items on top of the main CAD drawing
-        QMap<int, RS_EntityContainer *> overlayEntities;
-        /** if true, graphicView is under cleanup */
-        bool m_bIsCleanUp;
+	// Map that will be used for overlaying additional items on top of the main CAD drawing
+	QMap<int, RS_EntityContainer *> overlayEntities;
+	/** if true, graphicView is under cleanup */
+	bool m_bIsCleanUp=false;
 
 };
 

@@ -56,7 +56,7 @@
  */
 QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlags f)
         : QWidget(parent, f), RS_GraphicView() {
-
+	init();
     setObjectName(name);
     setBackground(background);
 
@@ -152,7 +152,7 @@ QG_GraphicView::~QG_GraphicView() {
 /**
  * @return width of widget.
  */
-int QG_GraphicView::getWidth() {
+int QG_GraphicView::getWidth() const{
     return width() - vScrollBar->sizeHint().width();
 }
 
@@ -161,7 +161,7 @@ int QG_GraphicView::getWidth() {
 /**
  * @return height of widget.
  */
-int QG_GraphicView::getHeight() {
+int QG_GraphicView::getHeight() const{
     return height() - hScrollBar->sizeHint().height();
 }
 

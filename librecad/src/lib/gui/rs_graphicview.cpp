@@ -52,80 +52,47 @@
  * Constructor.
  */
 RS_GraphicView::RS_GraphicView()
-    : background(), foreground(),
-      savedViews(16), savedViewIndex(0),savedViewCount(0),previousViewTime(QDateTime::currentDateTime())
-    ,m_bIsCleanUp(false)
+	:container(nullptr)
+	,eventHandler(new RS_EventHandler(this))
+	,background()
+	,foreground()
+	,gridColor(Qt::gray)
+	,metaGridColor(RS_Color(64,64,64))
+	,grid(new RS_Grid(this))
+	,drawingMode(RS2::ModeFull)
+	,savedViews(16)
+	,previousViewTime(QDateTime::currentDateTime())
 {
-    drawingMode = RS2::ModeFull;
-    printing = false;
-    deleteMode = false;
-    factor = RS_Vector(1.0,1.0);
-    offsetX = 0;
-    offsetY = 0;
-    container = NULL;
-    eventHandler = new RS_EventHandler(this);
-    gridColor = Qt::gray;
-    metaGridColor = RS_Color(64,64,64);
-    grid = new RS_Grid(this);
-    zoomFrozen = false;
-    //gridVisible = true;
-    draftMode = false;
-
-    borderLeft = 0;
-    borderTop = 0;
-    borderRight = 0;
-    borderBottom = 0;
-
-    relativeZero = RS_Vector(false);
-    relativeZeroLocked=false;
-
-    mx = my = 0;
-
-    RS_SETTINGS->beginGroup("/Appearance");
-    setBackground(QColor(RS_SETTINGS->readEntry("/BackgroundColor", "#000000")));
-    setGridColor(QColor(RS_SETTINGS->readEntry("/GridColor", "#7F7F7F")));
-    setMetaGridColor(QColor(RS_SETTINGS->readEntry("/MetaGridColor", "#3F3F3F")));
-    setSelectedColor(QColor(RS_SETTINGS->readEntry("/SelectedColor", "#A54747")));
-	setHighlightedColor(QColor(RS_SETTINGS->readEntry("/HighlightedColor", "#739373")));
-	setStartHandleColor(QColor(RS_SETTINGS->readEntry("/StartHandleColor", "#00FFFF")));
-	setHandleColor(QColor(RS_SETTINGS->readEntry("/HandleColor", "#0000FF")));
-	setEndHandleColor(QColor(RS_SETTINGS->readEntry("/EndHandleColor", "#0000FF")));
-
-    RS_SETTINGS->endGroup();
-
-    printPreview = false;
-
-    QC_ApplicationWindow::getAppWindow()->setPreviousZoomEnable(false);
-    //currentInsert = NULL;
 }
-
-
 
 /**
  * Destructor.
  */
 RS_GraphicView::~RS_GraphicView() {
-    /*
-    //@write default snap mode from prefrences.
-    defaultSnapMode.restriction=defaultSnapRes;
-    unsigned int snapFlags=RS_Snapper::snapModeToInt(defaultSnapMode);
-    RS_SETTINGS->beginGroup("/Snap");
-    RS_SETTINGS->writeEntry("/SnapMode",QString::number(snapFlags));
-    RS_SETTINGS->endGroup();
-    // no need to delete child widgets, Qt does it all for us
-    */
-    delete grid;
+	DEBUG_HEADER();
 }
 
+void RS_GraphicView::init()
+{
+	RS_SETTINGS->beginGroup("/Appearance");
+	setBackground(QColor(RS_SETTINGS->readEntry("/BackgroundColor", "#000000")));
+	setGridColor(QColor(RS_SETTINGS->readEntry("/GridColor", "#7F7F7F")));
+	setMetaGridColor(QColor(RS_SETTINGS->readEntry("/MetaGridColor", "#3F3F3F")));
+	setSelectedColor(QColor(RS_SETTINGS->readEntry("/SelectedColor", "#A54747")));
+	setHighlightedColor(QColor(RS_SETTINGS->readEntry("/HighlightedColor", "#739373")));
+	setStartHandleColor(QColor(RS_SETTINGS->readEntry("/StartHandleColor", "#00FFFF")));
+	setHandleColor(QColor(RS_SETTINGS->readEntry("/HandleColor", "#0000FF")));
+	setEndHandleColor(QColor(RS_SETTINGS->readEntry("/EndHandleColor", "#0000FF")));
 
+	RS_SETTINGS->endGroup();
+	QC_ApplicationWindow::getAppWindow()->setPreviousZoomEnable(false);
+}
 
 /**
  * Must be called by any derrived class in the destructor.
  */
 void RS_GraphicView::cleanUp() {
-    m_bIsCleanUp=true;
-    //delete eventHandler;
-    delete eventHandler;
+	m_bIsCleanUp=true;
 }
 
 /**
@@ -170,9 +137,9 @@ void RS_GraphicView::setOffset(int ox, int oy) {
  * @return true if the grid is switched on.
  */
 bool RS_GraphicView::isGridOn() {
-    if (container!=NULL) {
+	if (container) {
         RS_Graphic* g = container->getGraphic();
-        if (g!=NULL) {
+		if (g) {
             return g->isGridOn();
         }
     }
@@ -202,7 +169,7 @@ RS2::CrosshairType RS_GraphicView::getCrosshairType(){
  * Centers the drawing in x-direction.
  */
 void RS_GraphicView::centerOffsetX() {
-    if (container!=NULL && !zoomFrozen) {
+	if (container && !zoomFrozen) {
         offsetX = (int)(((getWidth()-borderLeft-borderRight)
                          - (container->getSize().x*factor.x))/2.0
                         - (container->getMin().x*factor.x)) + borderLeft;
@@ -215,7 +182,7 @@ void RS_GraphicView::centerOffsetX() {
  * Centers the drawing in y-direction.
  */
 void RS_GraphicView::centerOffsetY() {
-    if (container!=NULL && !zoomFrozen) {
+	if (container && !zoomFrozen) {
         offsetY = (int)((getHeight()-borderTop-borderBottom
                          - (container->getSize().y*factor.y))/2.0
                         - (container->getMin().y*factor.y)) + borderBottom;
@@ -250,7 +217,7 @@ void RS_GraphicView::centerY(double v) {
  * @return Current action or NULL.
  */
 RS_ActionInterface* RS_GraphicView::getDefaultAction() {
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         return eventHandler->getDefaultAction();
     } else {
         return NULL;
@@ -263,7 +230,7 @@ RS_ActionInterface* RS_GraphicView::getDefaultAction() {
  * Sets the default action of the event handler.
  */
 void RS_GraphicView::setDefaultAction(RS_ActionInterface* action) {
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         eventHandler->setDefaultAction(action);
     }
 }
@@ -274,7 +241,7 @@ void RS_GraphicView::setDefaultAction(RS_ActionInterface* action) {
  * @return Current action or NULL.
  */
 RS_ActionInterface* RS_GraphicView::getCurrentAction() {
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         return eventHandler->getCurrentAction();
     } else {
         return NULL;
@@ -288,7 +255,7 @@ RS_ActionInterface* RS_GraphicView::getCurrentAction() {
  */
 void RS_GraphicView::setCurrentAction(RS_ActionInterface* action) {
     RS_DEBUG->print("RS_GraphicView::setCurrentAction");
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         eventHandler->setCurrentAction(action);
     }
     RS_DEBUG->print("RS_GraphicView::setCurrentAction: OK");
@@ -300,7 +267,7 @@ void RS_GraphicView::setCurrentAction(RS_ActionInterface* action) {
  * is launched to reduce confusion.
  */
 void RS_GraphicView::killSelectActions() {
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         eventHandler->killSelectActions();
     }
 }
@@ -311,7 +278,7 @@ void RS_GraphicView::killSelectActions() {
  * Kills all running actions.
  */
 void RS_GraphicView::killAllActions() {
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         eventHandler->killAllActions();
     }
 }
@@ -322,10 +289,10 @@ void RS_GraphicView::killAllActions() {
  * Go back in menu or current action.
  */
 void RS_GraphicView::back() {
-    if (eventHandler!=NULL && eventHandler->hasAction()) {
+	if (eventHandler && eventHandler->hasAction()) {
         eventHandler->back();
     } else {
-        if (RS_DIALOGFACTORY!=NULL) {
+		if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->requestPreviousMenu();
         }
     }
@@ -337,7 +304,7 @@ void RS_GraphicView::back() {
  * Go forward with the current action.
  */
 void RS_GraphicView::enter() {
-    if (eventHandler!=NULL && eventHandler->hasAction()) {
+	if (eventHandler && eventHandler->hasAction()) {
         eventHandler->enter();
     }
 }
@@ -349,7 +316,7 @@ void RS_GraphicView::enter() {
  * interface to notify LibreCAD about mouse events.
  */
 void RS_GraphicView::mousePressEvent(QMouseEvent* e) {
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         eventHandler->mousePressEvent(e);
     }
 }
@@ -362,7 +329,7 @@ void RS_GraphicView::mousePressEvent(QMouseEvent* e) {
  */
 void RS_GraphicView::mouseReleaseEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_GraphicView::mouseReleaseEvent");
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         if (e->button()!=Qt::RightButton ||
                 eventHandler->hasAction()) {
 
@@ -407,26 +374,26 @@ void RS_GraphicView::mouseMoveEvent(QMouseEvent* e) {
 
     RS_DEBUG->print("RS_GraphicView::mouseMoveEvent 001");
 
-    if (e!=NULL) {
+	if (e) {
         mx = e->x();
         my = e->y();
     }
 
     RS_DEBUG->print("RS_GraphicView::mouseMoveEvent 002");
 
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         eventHandler->mouseMoveEvent(e);
     }
 
     RS_DEBUG->print("RS_GraphicView::mouseMoveEvent 003");
 
-    if (	((eventHandler == NULL) || !eventHandler->hasAction()) &&
-                (graphic != NULL))
+	if (	((!eventHandler) || !eventHandler->hasAction()) &&
+				(graphic))
     {
         RS_Vector	mouse		= toGraph(RS_Vector(mx, my));
         RS_Vector	relMouse	= mouse - getRelativeZero();
 
-        if (RS_DIALOGFACTORY!=NULL)
+		if (RS_DIALOGFACTORY)
             RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
     }
 
@@ -440,7 +407,7 @@ void RS_GraphicView::mouseMoveEvent(QMouseEvent* e) {
  * interface to notify LibreCAD about mouse events.
  */
 void RS_GraphicView::mouseLeaveEvent() {
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         eventHandler->mouseLeaveEvent();
     }
 }
@@ -452,7 +419,7 @@ void RS_GraphicView::mouseLeaveEvent() {
  * interface to notify LibreCAD about mouse events.
  */
 void RS_GraphicView::mouseEnterEvent() {
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         eventHandler->mouseEnterEvent();
     }
 }
@@ -464,7 +431,7 @@ void RS_GraphicView::mouseEnterEvent() {
  * interface to notify LibreCAD about key events.
  */
 void RS_GraphicView::keyPressEvent(QKeyEvent* e) {
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         eventHandler->keyPressEvent(e);
     }
 }
@@ -476,7 +443,7 @@ void RS_GraphicView::keyPressEvent(QKeyEvent* e) {
  * interface to notify LibreCAD about key events.
  */
 void RS_GraphicView::keyReleaseEvent(QKeyEvent* e) {
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         eventHandler->keyReleaseEvent(e);
     }
 }
@@ -487,7 +454,7 @@ void RS_GraphicView::keyReleaseEvent(QKeyEvent* e) {
  * Called by the actual GUI class which implements a command line.
  */
 void RS_GraphicView::commandEvent(RS_CommandEvent* e) {
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         eventHandler->commandEvent(e);
     }
 }
@@ -498,7 +465,7 @@ void RS_GraphicView::commandEvent(RS_CommandEvent* e) {
  * Enables coordinate input in the command line.
  */
 void RS_GraphicView::enableCoordinateInput() {
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         eventHandler->enableCoordinateInput();
     }
 }
@@ -509,7 +476,7 @@ void RS_GraphicView::enableCoordinateInput() {
  * Disables coordinate input in the command line.
  */
 void RS_GraphicView::disableCoordinateInput() {
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         eventHandler->disableCoordinateInput();
     }
 }
@@ -637,7 +604,7 @@ void RS_GraphicView::zoomAuto(bool axis, bool keepAspectRatio) {
     RS_DEBUG->print("RS_GraphicView::zoomAuto");
 
 
-    if (container!=NULL) {
+	if (container) {
         container->calculateBorders();
 
         double sx, sy;
@@ -732,7 +699,7 @@ void RS_GraphicView::zoomPrevious() {
 
     RS_DEBUG->print("RS_GraphicView::zoomPrevious");
 
-    if (container!=NULL) {
+	if (container) {
         restoreView();
     }
 }
@@ -798,7 +765,7 @@ void RS_GraphicView::restoreView() {
  *	*/
 
 void RS_GraphicView::zoomAutoY(bool axis) {
-    if (container!=NULL) {
+	if (container) {
         double visibleHeight = 0.0;
         double minY = RS_MAXDOUBLE;
         double maxY = RS_MINDOUBLE;
@@ -1046,7 +1013,7 @@ void RS_GraphicView::zoomPage() {
  */
 void RS_GraphicView::drawWindow_DEPRECATED(RS_Vector v1, RS_Vector v2) {
     RS_DEBUG->print("RS_GraphicView::drawWindow() begin");
-	if (container!=NULL) {
+	if (container) {
 		for(auto se: *container){
             if (se->isInWindow(v1, v2)) {
                 drawEntity(NULL, se);
@@ -1756,7 +1723,7 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 void RS_GraphicView::drawOverlay(RS_Painter *painter) {
     QList<int> keys=overlayEntities.keys();
     for (int i = 0; i < keys.size(); ++i) {
-        if (overlayEntities[i] != NULL) {
+		if (overlayEntities[i]) {
             setPenForEntity(painter, overlayEntities[i] );
             drawEntityPlain(painter, overlayEntities[i]);
         }
@@ -1781,7 +1748,7 @@ void RS_GraphicView::setDefaultSnapMode(RS_SnapMode sm) {
 void RS_GraphicView::setSnapRestriction(RS2::SnapRestriction sr) {
     defaultSnapRes = sr;
 
-    if (eventHandler!=NULL) {
+	if (eventHandler) {
         eventHandler->setSnapRestriction(sr);
     }
 }
@@ -1915,13 +1882,21 @@ void RS_GraphicView::moveRelativeZero(const RS_Vector& pos) {
  */
 RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics position)
 {
-    if (overlayEntities[position]!=NULL) {
+	if (overlayEntities[position]) {
         return overlayEntities[position];
     }
     overlayEntities[position]=new RS_EntityContainer(NULL);
 
     return overlayEntities[position];
 
+}
+
+RS_Grid* RS_GraphicView::getGrid() const{
+	return grid.get();
+}
+
+RS_EventHandler* RS_GraphicView::getEventHandler() const{
+		return eventHandler.get();
 }
 
 
