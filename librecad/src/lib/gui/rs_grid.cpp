@@ -46,13 +46,6 @@ RS_Grid::RS_Grid(RS_GraphicView* graphicView): baseGrid(false) {
     numMetaY = 0;
 }
 
-
-/**
- * Destructor.
- */
-RS_Grid::~RS_Grid() {
-}
-
 /**
   * find the closest grid point
   *@return the closest grid to given point
@@ -502,15 +495,39 @@ std::vector<RS_Vector> const& RS_Grid::getPoints() const{
 	return pt;
 }
 
-/**
- * @return Meta grid positions in X.
- */
 std::vector<double> const& RS_Grid::getMetaX() const{
 		return metaX;
 }
 
 std::vector<double> const& RS_Grid::getMetaY() const{
 		return metaY;
+}
+
+bool RS_Grid::isIsometric() const{
+	return isometric;
+}
+
+void RS_Grid::setIsometric(bool b){
+	isometric=b;
+}
+
+RS_Vector RS_Grid::getMetaGridWidth() const {
+	return metaGridWidth;
+}
+
+RS_Vector const& RS_Grid::getCellVector() const
+{
+return cellV;
+}
+
+int RS_Grid::count() const{
+	return number;
+}
+void RS_Grid::setCrosshairType(RS2::CrosshairType chType){
+	crosshairType=chType;
+}
+RS2::CrosshairType RS_Grid::getCrosshairType() const{
+	return crosshairType;
 }
 
 // EOF
