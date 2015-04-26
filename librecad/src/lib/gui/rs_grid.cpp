@@ -36,6 +36,13 @@
 #include "emu_c99.h"
 #endif
 
+namespace {
+//maximum number grid points to draw, for performance consideration
+const int maxGridPoints=1000000;
+//minimum grid width to consider
+const double minimumGridWidth=1.0e-8;
+}
+
 /**
  * Constructor.
  */
@@ -136,7 +143,7 @@ void RS_Grid::updatePointArray() {
 	//std::cout<<"Grid spacing="<<spacing<<std::endl;
 	//std::cout<<"Grid metaSpacing="<<metaSpacing<<std::endl;
 
-	if (gridWidth.x>1.0e-6 && gridWidth.y>1.0e-6 &&
+	if (gridWidth.x>minimumGridWidth && gridWidth.y>minimumGridWidth &&
 			graphicView->toGuiDX(gridWidth.x)>2 &&
 			graphicView->toGuiDY(gridWidth.y)>2) {
 
@@ -183,14 +190,14 @@ RS_Vector RS_Grid::getMetricGridWidth(RS_Vector const& userGrid, bool scaleGrid,
 		gridWidth.x = userGrid.x;
 	}
 	else {
-		gridWidth.x = 1e-6;
+		gridWidth.x = minimumGridWidth;
 	}
 
 	if (userGrid.y>0.0) {
 		gridWidth.y = userGrid.y;
 	}
 	else {
-		gridWidth.y = 1e-6;
+		gridWidth.y = minimumGridWidth;
 	}
 
 	//                RS_DEBUG->print("RS_Grid::update: 003");
@@ -198,13 +205,13 @@ RS_Vector RS_Grid::getMetricGridWidth(RS_Vector const& userGrid, bool scaleGrid,
 	// auto scale grid
 	//scale grid by drawing setting as well, bug#3416862
 	//            std::cout<<"RS_Grid::updatePointArray(): userGrid="<<userGrid<<std::endl;
-	if (scaleGrid|| userGrid.x<=1e-6 || userGrid.y<=1e-6) {
-		if(scaleGrid || userGrid.x<=1e-6) {
+	if (scaleGrid|| userGrid.x<=minimumGridWidth || userGrid.y<=minimumGridWidth) {
+		if(scaleGrid || userGrid.x<=minimumGridWidth) {
 			while (graphicView->toGuiDX(gridWidth.x)<minGridSpacing) {
 				gridWidth.x*=10;
 			}
 		}
-		if(scaleGrid || userGrid.y<=1e-6) {
+		if(scaleGrid || userGrid.y<=minimumGridWidth) {
 			while (graphicView->toGuiDY(gridWidth.y)<minGridSpacing) {
 				gridWidth.y*=10;
 			}
@@ -252,8 +259,8 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const& userGrid, bool scaleGri
 
 		// auto scale grid
 		//scale grid by drawing setting as well, bug#3416862
-		if (scaleGrid|| userGrid.x<=1e-6 || userGrid.y<=1e-6) {
-			if(scaleGrid || userGrid.x<=1e-6) {
+		if (scaleGrid|| userGrid.x<=minimumGridWidth || userGrid.y<=minimumGridWidth) {
+			if(scaleGrid || userGrid.x<=minimumGridWidth) {
 				while (graphicView->toGuiDX(gridWidth.x)<minGridSpacing) {
 					if (RS_Math::round(gridWidth.x)>=36) {
 						gridWidth.x*=2;
@@ -268,7 +275,7 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const& userGrid, bool scaleGri
 					}
 				}
 			}
-			if(scaleGrid || userGrid.y<=1e-6) {
+			if(scaleGrid || userGrid.y<=minimumGridWidth) {
 				while (graphicView->toGuiDY(gridWidth.y)<minGridSpacing) {
 					if (RS_Math::round(gridWidth.y)>=36) {
 						gridWidth.y*=2;
@@ -378,7 +385,7 @@ void RS_Grid::createOrthogonalGrid(QRectF const& rect, RS_Vector const& gridWidt
 
 	// create grid array:
 
-	if (number>0 && number<1000000) {
+	if (number>0 && number<maxGridPoints) {
 
 		pt.resize(number);
 
@@ -393,7 +400,7 @@ void RS_Grid::createOrthogonalGrid(QRectF const& rect, RS_Vector const& gridWidt
 			bp0.y += gridWidth.y;
 		}
 		// find meta grid boundaries
-		if (metaGridWidth.x>1.0e-6 && metaGridWidth.y>1.0e-6 &&
+		if (metaGridWidth.x>minimumGridWidth && metaGridWidth.y>minimumGridWidth &&
 				graphicView->toGuiDX(metaGridWidth.x)>2 &&
 				graphicView->toGuiDY(metaGridWidth.y)>2) {
 
@@ -457,7 +464,7 @@ void RS_Grid::createIsometricGrid(QRectF const& rect, RS_Vector const& gridWidth
 	int number = 2*numberX*numberY;
 	baseGrid.set(left+remainder(-left,dx),bottom+remainder(-bottom,fabs(gridWidth.y)));
 
-	if (number>0 && number<1000000) {
+	if (number>0 && number<maxGridPoints) {
 
 		pt.resize(number);
 
@@ -473,7 +480,7 @@ void RS_Grid::createIsometricGrid(QRectF const& rect, RS_Vector const& gridWidth
 			bp0.y += gridWidth.y;
 		}
 		//find metaGrid
-		if (metaGridWidth.y>1.0e-6 &&
+		if (metaGridWidth.y>minimumGridWidth &&
 				graphicView->toGuiDY(metaGridWidth.y)>2) {
 
 			metaGridWidth.x=(metaGridWidth.x<0.)?-sqrt(3.)*fabs(metaGridWidth.y):sqrt(3.)*fabs(metaGridWidth.y);
