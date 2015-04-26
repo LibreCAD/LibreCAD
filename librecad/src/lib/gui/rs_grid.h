@@ -92,6 +92,11 @@ private:
 	void createIsometricGrid(QRectF const& rect, RS_Vector const& gridWidth);
 	//! \}
 
+	//! \{ \brief determine grid width
+	RS_Vector getMetricGridWidth(RS_Vector const& userGrid, bool scaleGrid, int minGridSpacing);
+	RS_Vector getImperialGridWidth(RS_Vector const& userGrid, bool scaleGrid, int minGridSpacing);
+	//! \}
+
 	//! Graphic view this grid is connected to.
 	RS_GraphicView* graphicView;
 
