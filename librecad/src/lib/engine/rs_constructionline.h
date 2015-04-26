@@ -82,7 +82,7 @@ public:
 
 	virtual RS_Entity* clone() const;
 
-    virtual ~RS_ConstructionLine();
+	virtual ~RS_ConstructionLine()=default;
 
     /**	@return RS2::EntityConstructionLine */
     virtual RS2::EntityType rtti() const {
