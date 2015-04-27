@@ -103,6 +103,35 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <source>Export as &amp;MakerCAM SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionLayersToggleConstruction</name>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation type="unfinished">De&amp;buggolás</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished">Kép beillesztése</translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -267,7 +296,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>De&amp;bugging</source>
-        <translation>De&amp;buggolás</translation>
+        <translation type="obsolete">De&amp;buggolás</translation>
     </message>
     <message>
         <source>Layer List</source>
@@ -311,7 +340,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation>Utóbbiak megnyitása...</translation>
+        <translation type="obsolete">Utóbbiak megnyitása...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -478,7 +507,7 @@ Most elmentheti a munkáját.</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation>Kép beillesztése</translation>
+        <translation type="obsolete">Kép beillesztése</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
@@ -539,7 +568,7 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
-        <translation>&amp;%1 %2</translation>
+        <translation type="obsolete">&amp;%1 %2</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
@@ -632,6 +661,20 @@ Az automatikus mentés kikapcsolva.</translation>
     <message>
         <source>&amp;Text</source>
         <translation type="unfinished">&amp;Szöveg</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open the file
+%1
+Please check its existence and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2159,7 +2202,7 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>&amp;Export...</source>
-        <translation>&amp;Exportálás...</translation>
+        <translation type="obsolete">&amp;Exportálás...</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -2196,6 +2239,10 @@ Az automatikus mentés kikapcsolva.</translation>
     <message>
         <source>&amp;Block</source>
         <translation type="unfinished">&amp;Blokk</translation>
+    </message>
+    <message>
+        <source>&amp;Export as image</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2435,11 +2482,11 @@ in a separate window</source>
     <name>QG_CadToolBarArcs</name>
     <message>
         <source>Arcs</source>
-        <translation>Ívek</translation>
+        <translation type="obsolete">Ívek</translation>
     </message>
     <message>
         <source>Arc with three points</source>
-        <translation>Körív: három pont</translation>
+        <translation type="obsolete">Körív: három pont</translation>
     </message>
     <message>
         <source>Parallel</source>
@@ -2447,26 +2494,26 @@ in a separate window</source>
     </message>
     <message>
         <source>Arc with Center, Point, Angles</source>
-        <translation>Körív: közép, pont és szög</translation>
+        <translation type="obsolete">Körív: közép, pont és szög</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Vissza a főmenübe</translation>
+        <translation type="obsolete">Vissza a főmenübe</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentrikus</translation>
+        <translation type="obsolete">Koncentrikus</translation>
     </message>
     <message>
         <source>Arc tangential to base entity with radius</source>
-        <translation>Érintő körív elemhez, adott sugárral</translation>
+        <translation type="obsolete">Érintő körív elemhez, adott sugárral</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarCircles</name>
     <message>
         <source>Circles</source>
-        <translation>Körök</translation>
+        <translation type="obsolete">Körök</translation>
     </message>
     <message>
         <source>Circle with distance to another circle</source>
@@ -2474,27 +2521,27 @@ in a separate window</source>
     </message>
     <message>
         <source>Circle with two opposite points</source>
-        <translation>Kör két szemközti ponttal</translation>
+        <translation type="obsolete">Kör két szemközti ponttal</translation>
     </message>
     <message>
         <source>Circle with center and radius</source>
-        <translation>Kör: közép és sugár</translation>
+        <translation type="obsolete">Kör: közép és sugár</translation>
     </message>
     <message>
         <source>Circle with center and point</source>
-        <translation>Kör: közép és egy pont</translation>
+        <translation type="obsolete">Kör: közép és egy pont</translation>
     </message>
     <message>
         <source>Circle with three points</source>
-        <translation>Kör három ponttal</translation>
+        <translation type="obsolete">Kör három ponttal</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Vissza a főmenübe</translation>
+        <translation type="obsolete">Vissza a főmenübe</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentrikus</translation>
+        <translation type="obsolete">Koncentrikus</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -2508,123 +2555,79 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kör rajzolása egy háromszögbe, &lt;span style=&quot; font-style:italic;&quot;&gt;vagyis&lt;/span&gt; 3 érintővel&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circle with 2 Points and Radius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QG_CadToolBarDim</name>
     <message>
         <source>Dimensions</source>
-        <translation>Méretezés</translation>
+        <translation type="obsolete">Méretezés</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Vissza a főmenübe</translation>
+        <translation type="obsolete">Vissza a főmenübe</translation>
     </message>
     <message>
         <source>Diametric Dimension</source>
-        <translation>Átmérő</translation>
+        <translation type="obsolete">Átmérő</translation>
     </message>
     <message>
         <source>Radial Dimension</source>
-        <translation>Sugár</translation>
+        <translation type="obsolete">Sugár</translation>
     </message>
     <message>
         <source>Vertical Dimension</source>
-        <translation>Függőleges méretek</translation>
+        <translation type="obsolete">Függőleges méretek</translation>
     </message>
     <message>
         <source>Horizontal Dimension</source>
-        <translation>Vízszintes méretek</translation>
+        <translation type="obsolete">Vízszintes méretek</translation>
     </message>
     <message>
         <source>Linear Dimension</source>
-        <translation>Hossz, adott szögben</translation>
+        <translation type="obsolete">Hossz, adott szögben</translation>
     </message>
     <message>
         <source>Aligned Dimension</source>
-        <translation>Hossz, elemmel párhuzamosan</translation>
+        <translation type="obsolete">Hossz, elemmel párhuzamosan</translation>
     </message>
     <message>
         <source>Angular Dimension</source>
-        <translation>Közbezárt szög</translation>
+        <translation type="obsolete">Közbezárt szög</translation>
     </message>
     <message>
         <source>Leader</source>
-        <translation>Bevezető</translation>
+        <translation type="obsolete">Bevezető</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentrikus</translation>
+        <translation type="obsolete">Koncentrikus</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarEllipses</name>
     <message>
         <source>Ellipses</source>
-        <translation>Ellipszisek</translation>
+        <translation type="obsolete">Ellipszisek</translation>
     </message>
     <message>
         <source>Ellipse arc with center, two points and angles</source>
-        <translation>Ellipszis: közép, két pont és szögek</translation>
+        <translation type="obsolete">Ellipszis: közép, két pont és szögek</translation>
     </message>
     <message>
         <source>Ellipse with Center and two points</source>
-        <translation>Ellipszis: közép és két pont</translation>
+        <translation type="obsolete">Ellipszis: közép és két pont</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Vissza a főmenübe</translation>
+        <translation type="obsolete">Vissza a főmenübe</translation>
     </message>
     <message>
         <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation>Ellipszis rajzolása gyujtóponttal és az ellipszis egy pontjával</translation>
+        <translation type="obsolete">Ellipszis rajzolása gyujtóponttal és az ellipszis egy pontjával</translation>
     </message>
     <message>
         <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation>Ellipszis rajzolása az ellipszis 4 pontjával</translation>
+        <translation type="obsolete">Ellipszis rajzolása az ellipszis 4 pontjával</translation>
     </message>
     <message>
         <source>Draw Ellipse with by center and 3 points on ellipse</source>
@@ -2636,7 +2639,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -2644,128 +2647,124 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentrikus</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Koncentrikus</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarInfo</name>
     <message>
         <source>Info</source>
-        <translation>Információ</translation>
+        <translation type="obsolete">Információ</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Vissza a főmenübe</translation>
+        <translation type="obsolete">Vissza a főmenübe</translation>
     </message>
     <message>
         <source>Distance (Point, Point)</source>
-        <translation>Távolság (Pont,Pont)</translation>
+        <translation type="obsolete">Távolság (Pont,Pont)</translation>
     </message>
     <message>
         <source>Distance (Entity, Point)</source>
-        <translation>Távolság (Elem,Pont)</translation>
+        <translation type="obsolete">Távolság (Elem,Pont)</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Szög</translation>
+        <translation type="obsolete">Szög</translation>
     </message>
     <message>
         <source>Total length of selected entities</source>
-        <translation>Kijelölt elemek teljes hossza</translation>
+        <translation type="obsolete">Kijelölt elemek teljes hossza</translation>
     </message>
     <message>
         <source>Area of polygon</source>
-        <translation>Poligon területe</translation>
+        <translation type="obsolete">Poligon területe</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentrikus</translation>
+        <translation type="obsolete">Koncentrikus</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarLines</name>
     <message>
         <source>Lines</source>
-        <translation>Vonalak</translation>
+        <translation type="obsolete">Vonalak</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Vissza a főmenübe</translation>
+        <translation type="obsolete">Vissza a főmenübe</translation>
     </message>
     <message>
         <source>Line with two points</source>
-        <translation>Vonal két ponttal</translation>
+        <translation type="obsolete">Vonal két ponttal</translation>
     </message>
     <message>
         <source>Line with given angle</source>
-        <translation>Adott szögben álló vonal</translation>
+        <translation type="obsolete">Adott szögben álló vonal</translation>
     </message>
     <message>
         <source>Horizontal lines</source>
-        <translation>Vízszintes vonalak</translation>
+        <translation type="obsolete">Vízszintes vonalak</translation>
     </message>
     <message>
         <source>Vertical lines</source>
-        <translation>Függőleges vonalak</translation>
+        <translation type="obsolete">Függőleges vonalak</translation>
     </message>
     <message>
         <source>Rectangles</source>
-        <translation>Téglalapok</translation>
+        <translation type="obsolete">Téglalapok</translation>
     </message>
     <message>
         <source>Bisectors</source>
-        <translation>Szögfelezők</translation>
+        <translation type="obsolete">Szögfelezők</translation>
     </message>
     <message>
         <source>Parallels with distance</source>
-        <translation>Párhuzamos adott távolságra</translation>
+        <translation type="obsolete">Párhuzamos adott távolságra</translation>
     </message>
     <message>
         <source>Tangents from point to circle</source>
-        <translation>Kör érintője pontból</translation>
+        <translation type="obsolete">Kör érintője pontból</translation>
     </message>
     <message>
         <source>Tangents from circle to circle</source>
-        <translation>Körök közös érintői</translation>
+        <translation type="obsolete">Körök közös érintői</translation>
     </message>
     <message>
         <source>Orthogonal lines</source>
-        <translation>Merőleges vonalak</translation>
+        <translation type="obsolete">Merőleges vonalak</translation>
     </message>
     <message>
         <source>Lines with relative angles</source>
-        <translation>Adott szögben álló vonalak</translation>
+        <translation type="obsolete">Adott szögben álló vonalak</translation>
     </message>
     <message>
         <source>Polygons with Center and Corner</source>
-        <translation>Poligon középponttal és sarokkal</translation>
+        <translation type="obsolete">Poligon középponttal és sarokkal</translation>
     </message>
     <message>
         <source>Polygons with two Corners</source>
-        <translation>Poligon két sarokkal</translation>
+        <translation type="obsolete">Poligon két sarokkal</translation>
     </message>
     <message>
         <source>Freehand lines</source>
-        <translation>Szabadkézi vonalak</translation>
+        <translation type="obsolete">Szabadkézi vonalak</translation>
     </message>
     <message>
         <source>Parallels through point</source>
-        <translation>Párhuzamos ponton keresztül</translation>
+        <translation type="obsolete">Párhuzamos ponton keresztül</translation>
     </message>
     <message>
         <source>Tangents to a circle, orthogonal to a line</source>
-        <translation>Körhöz húzott érintő, vonalra merőlegesen</translation>
+        <translation type="obsolete">Körhöz húzott érintő, vonalra merőlegesen</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarMain</name>
     <message>
         <source>Main</source>
-        <translation>Eszköztár</translation>
+        <translation type="obsolete">Eszköztár</translation>
     </message>
     <message>
         <source>Show menu &quot;Lines&quot;</source>
@@ -2801,7 +2800,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Create Block</source>
-        <translation>Blokk létrehozás</translation>
+        <translation type="obsolete">Blokk létrehozás</translation>
     </message>
     <message>
         <source>Show menu &quot;Dimensions&quot;</source>
@@ -2833,31 +2832,31 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Show toolbar &quot;Lines&quot;</source>
-        <translation>&quot;Vonalak&quot; eszköztár mutatása</translation>
+        <translation type="obsolete">&quot;Vonalak&quot; eszköztár mutatása</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Arcs&quot;</source>
-        <translation>&quot;Ívek&quot; eszköztár mutatása</translation>
+        <translation type="obsolete">&quot;Ívek&quot; eszköztár mutatása</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Circles&quot;</source>
-        <translation>&quot;Körök&quot; eszköztár mutatása</translation>
+        <translation type="obsolete">&quot;Körök&quot; eszköztár mutatása</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Ellipses&quot;</source>
-        <translation>&quot;Ellipszisek&quot; eszköztár mutatása</translation>
+        <translation type="obsolete">&quot;Ellipszisek&quot; eszköztár mutatása</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Polylines&quot;</source>
-        <translation>&quot;Töröttvonalak&quot; eszköztár mutatása</translation>
+        <translation type="obsolete">&quot;Töröttvonalak&quot; eszköztár mutatása</translation>
     </message>
     <message>
         <source>Draw Splines</source>
-        <translation>Görbe vonalak rajzolása</translation>
+        <translation type="obsolete">Görbe vonalak rajzolása</translation>
     </message>
     <message>
         <source>Draw Points</source>
-        <translation>Pontok rajzolása</translation>
+        <translation type="obsolete">Pontok rajzolása</translation>
     </message>
     <message>
         <source>Insert Text</source>
@@ -2865,50 +2864,46 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Show toolbar &quot;Dimensions&quot;</source>
-        <translation>&quot;Méretek&quot; eszköztár mutatása</translation>
+        <translation type="obsolete">&quot;Méretek&quot; eszköztár mutatása</translation>
     </message>
     <message>
         <source>Create Hatch</source>
-        <translation>Sraffozás készítése</translation>
+        <translation type="obsolete">Sraffozás készítése</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation>Kép beillesztése</translation>
+        <translation type="obsolete">Kép beillesztése</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Modify&quot;</source>
-        <translation>&quot;Módosítás&quot; eszköztár mutatása</translation>
+        <translation type="obsolete">&quot;Módosítás&quot; eszköztár mutatása</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Info&quot;</source>
-        <translation>&quot;Információ&quot; eszköztár mutatása</translation>
+        <translation type="obsolete">&quot;Információ&quot; eszköztár mutatása</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Select&quot;</source>
-        <translation>&quot;Kijelölés&quot; eszköztár mutatása</translation>
-    </message>
-    <message>
-        <source>Insert Multi-line Text</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">&quot;Kijelölés&quot; eszköztár mutatása</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarModify</name>
     <message>
         <source>Modify</source>
-        <translation>Változtatás</translation>
+        <translation type="obsolete">Változtatás</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Vissza a főmenübe</translation>
+        <translation type="obsolete">Vissza a főmenübe</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation>Forgatás</translation>
+        <translation type="obsolete">Forgatás</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation>Átméretezés</translation>
+        <translation type="obsolete">Átméretezés</translation>
     </message>
     <message>
         <source>Move</source>
@@ -2916,11 +2911,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Move and Rotate</source>
-        <translation>Mozgatás és forgatás</translation>
+        <translation type="obsolete">Mozgatás és forgatás</translation>
     </message>
     <message>
         <source>Stretch</source>
-        <translation>Nyújtás</translation>
+        <translation type="obsolete">Nyújtás</translation>
     </message>
     <message>
         <source>Cut</source>
@@ -2932,7 +2927,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bevel</source>
-        <translation>Letörés</translation>
+        <translation type="obsolete">Letörés</translation>
     </message>
     <message>
         <source>Trim by amount</source>
@@ -2940,11 +2935,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim / Extend two</source>
-        <translation>Két elem méretre vágása</translation>
+        <translation type="obsolete">Két elem méretre vágása</translation>
     </message>
     <message>
         <source>Trim / Extend</source>
-        <translation>Méretre vágás</translation>
+        <translation type="obsolete">Méretre vágás</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
@@ -2952,176 +2947,164 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Explode</source>
-        <translation>Felbontás</translation>
+        <translation type="obsolete">Felbontás</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Törlés</translation>
+        <translation type="obsolete">Törlés</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
-        <translation>Elem tulajdonságainak szerkesztése</translation>
+        <translation type="obsolete">Elem tulajdonságainak szerkesztése</translation>
     </message>
     <message>
         <source>Edit Entity Geometry</source>
-        <translation>Elem geometriai szerkesztése</translation>
+        <translation type="obsolete">Elem geometriai szerkesztése</translation>
     </message>
     <message>
         <source>Mirror</source>
-        <translation>Tükrözés</translation>
+        <translation type="obsolete">Tükrözés</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation>Osztás</translation>
+        <translation type="obsolete">Osztás</translation>
     </message>
     <message>
         <source>Explode Text into Letters</source>
-        <translation>Betűkre bontás</translation>
+        <translation type="obsolete">Betűkre bontás</translation>
     </message>
     <message>
         <source>Edit Text</source>
-        <translation>Szöveg szerkesztése</translation>
+        <translation type="obsolete">Szöveg szerkesztése</translation>
     </message>
     <message>
         <source>Move / Copy</source>
-        <translation>Mozgatás / Másolás</translation>
+        <translation type="obsolete">Mozgatás / Másolás</translation>
     </message>
     <message>
         <source>Rotate Two</source>
-        <translation>Többszörös forgatás</translation>
-    </message>
-    <message>
-        <source>Offset (Experimental Feature, work in progress)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Revert direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Többszörös forgatás</translation>
     </message>
     <message>
         <source>Lengthen</source>
-        <translation type="unfinished">Hosszabbítás</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Hosszabbítás</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPoints</name>
     <message>
         <source>Points</source>
-        <translation>Pontok</translation>
+        <translation type="obsolete">Pontok</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Vissza a főmenübe</translation>
+        <translation type="obsolete">Vissza a főmenübe</translation>
     </message>
     <message>
         <source>Single points</source>
-        <translation>Önálló pontok</translation>
+        <translation type="obsolete">Önálló pontok</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPolylines</name>
     <message>
         <source>Polylines</source>
-        <translation>Töröttvonalak</translation>
+        <translation type="obsolete">Töröttvonalak</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Vissza a főmenübe</translation>
+        <translation type="obsolete">Vissza a főmenübe</translation>
     </message>
     <message>
         <source>Create Polyline</source>
-        <translation>Töröttvonal létrehozása</translation>
+        <translation type="obsolete">Töröttvonal létrehozása</translation>
     </message>
     <message>
         <source>Trim segments</source>
-        <translation>Rész levágása</translation>
+        <translation type="obsolete">Rész levágása</translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Törlés két csomópont között</translation>
+        <translation type="obsolete">Törlés két csomópont között</translation>
     </message>
     <message>
         <source>Delete node</source>
-        <translation>Csomópont törlése</translation>
+        <translation type="obsolete">Csomópont törlése</translation>
     </message>
     <message>
         <source>Add node</source>
-        <translation>Csomópont hozzáadása</translation>
+        <translation type="obsolete">Csomópont hozzáadása</translation>
     </message>
     <message>
         <source>Append node</source>
-        <translation>Csomópont hozzáadása</translation>
+        <translation type="obsolete">Csomópont hozzáadása</translation>
     </message>
     <message>
         <source>Polyline equidistant</source>
-        <translation>Töröttvonal egyenlő távolságra</translation>
+        <translation type="obsolete">Töröttvonal egyenlő távolságra</translation>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Töröttvonal készítése meglévő részekből</translation>
+        <translation type="obsolete">Töröttvonal készítése meglévő részekből</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentrikus</translation>
+        <translation type="obsolete">Koncentrikus</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarSelect</name>
     <message>
         <source>Select</source>
-        <translation>Kijelölés</translation>
+        <translation type="obsolete">Kijelölés</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation>Minden kijelölése</translation>
+        <translation type="obsolete">Minden kijelölése</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Vissza a főmenübe</translation>
+        <translation type="obsolete">Vissza a főmenübe</translation>
     </message>
     <message>
         <source>Select intersected entities</source>
-        <translation>Metsző elemek kijelölése</translation>
+        <translation type="obsolete">Metsző elemek kijelölése</translation>
     </message>
     <message>
         <source>Deselect intersected entities</source>
-        <translation>Metsző kijelölések törlése</translation>
+        <translation type="obsolete">Metsző kijelölések törlése</translation>
     </message>
     <message>
         <source>Deselect all</source>
-        <translation>Kijelölések törlése</translation>
+        <translation type="obsolete">Kijelölések törlése</translation>
     </message>
     <message>
         <source>Invert Selection</source>
-        <translation>Kijelölés megfordítása</translation>
+        <translation type="obsolete">Kijelölés megfordítása</translation>
     </message>
     <message>
         <source>Select layer</source>
-        <translation>Fólia kiválasztás</translation>
+        <translation type="obsolete">Fólia kiválasztás</translation>
     </message>
     <message>
         <source>(De-)Select contour</source>
-        <translation>Körvonal kiválasztása</translation>
+        <translation type="obsolete">Körvonal kiválasztása</translation>
     </message>
     <message>
         <source>(De-)Select entity</source>
-        <translation>Elem kiválasztása</translation>
+        <translation type="obsolete">Elem kiválasztása</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation>Kijelölés törlése ablakban</translation>
+        <translation type="obsolete">Kijelölés törlése ablakban</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation>Ablak kijelölése</translation>
+        <translation type="obsolete">Ablak kijelölése</translation>
     </message>
     <message>
         <source>Continue action</source>
-        <translation>Folytatás</translation>
+        <translation type="obsolete">Folytatás</translation>
     </message>
 </context>
 <context>
@@ -3199,19 +3182,15 @@ p, li { white-space: pre-wrap; }
     <name>QG_CadToolBarSplines</name>
     <message>
         <source>Splines</source>
-        <translation>Görbék</translation>
+        <translation type="obsolete">Görbék</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Vissza a főmenübe</translation>
+        <translation type="obsolete">Vissza a főmenübe</translation>
     </message>
     <message>
         <source>Spline</source>
-        <translation>Görbék</translation>
-    </message>
-    <message>
-        <source>Interpolation Spline</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Görbék</translation>
     </message>
 </context>
 <context>
@@ -5676,6 +5655,53 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
 </context>
 <context>
+    <name>QG_DlgOptionsMakerCam</name>
+    <message>
+        <source>Export as MakerCAM SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export invisible layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export visible construction layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert blocks to safe inline SVG content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipses / Ellipse arcs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>&amp;OK</source>
@@ -7251,14 +7277,30 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation>Fólia &amp;szerkesztése</translation>
+        <translation type="obsolete">Fólia &amp;szerkesztése</translation>
     </message>
     <message>
         <source>&amp;Toggle Visibility</source>
-        <translation>Láthatóság &amp;váltása</translation>
+        <translation type="obsolete">Láthatóság &amp;váltása</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Layer &amp;Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7649,7 +7691,15 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="obsolete">...</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7769,6 +7819,17 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <source>fixed</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_RecentFiles</name>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished">&amp;%1 %2</translation>
+    </message>
+    <message>
+        <source>Opening recent file...</source>
+        <translation type="unfinished">Utóbbiak megnyitása...</translation>
     </message>
 </context>
 <context>
@@ -8224,7 +8285,7 @@ p, li { white-space: pre-wrap; }
     <name>QObject</name>
     <message>
         <source>All Image Files (%1)</source>
-        <translation type="obsolete">Minden kép (%1)</translation>
+        <translation type="unfinished">Minden kép (%1)</translation>
     </message>
     <message>
         <source>Open Image</source>
@@ -8446,7 +8507,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>All Image Files (%1) </source>
-        <translation>Minden kép fájl (%1)</translation>
+        <translation type="obsolete">Minden kép fájl (%1)</translation>
     </message>
     <message>
         <source>New Drawing Exchange %1</source>
@@ -8554,6 +8615,27 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Figyelmeztetés</translation>
+    </message>
+    <message>
+        <source>experimental, save your work first.
+Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading file matadata in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading blocks in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading objects in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10782,10 +10864,6 @@ Lecseréli?</translation>
     <message>
         <source>Angle: %1</source>
         <translation>Szög: %1</translation>
-    </message>
-    <message>
-        <source> or %1%2</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -74,6 +74,35 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     </message>
 </context>
 <context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <source>Export as &amp;MakerCAM SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as</source>
+        <translation type="unfinished">Eksportēt kā</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionLayersToggleConstruction</name>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation type="unfinished">Atkļū&amp;došana</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished">Ievietot attēlu</translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -186,7 +215,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     </message>
     <message>
         <source>De&amp;bugging</source>
-        <translation>Atkļū&amp;došana</translation>
+        <translation type="obsolete">Atkļū&amp;došana</translation>
     </message>
     <message>
         <source>&amp;Cascade</source>
@@ -210,7 +239,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation>Atver nesenu datni...</translation>
+        <translation type="obsolete">Atver nesenu datni...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -342,7 +371,7 @@ Pārbaudiet tiesības.</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation>Ievietot attēlu</translation>
+        <translation type="obsolete">Ievietot attēlu</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
@@ -404,7 +433,7 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
-        <translation>&amp;%1 %2</translation>
+        <translation type="obsolete">&amp;%1 %2</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
@@ -518,6 +547,20 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
         <source>&amp;Text</source>
         <translation>&amp;Teksts</translation>
     </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open the file
+%1
+Please check its existence and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -572,7 +615,7 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
     </message>
     <message>
         <source>&amp;Export...</source>
-        <translation>&amp;Eksportēt...</translation>
+        <translation type="obsolete">&amp;Eksportēt...</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -597,6 +640,10 @@ Automātiskā saglabāšana ir deaktivēta.</translation>
     <message>
         <source>&amp;Block</source>
         <translation>&amp;Bloks</translation>
+    </message>
+    <message>
+        <source>&amp;Export as image</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -808,58 +855,58 @@ atsevišķā logā</translation>
     <name>QG_CadToolBarArcs</name>
     <message>
         <source>Arcs</source>
-        <translation>Loki</translation>
+        <translation type="obsolete">Loki</translation>
     </message>
     <message>
         <source>Arc with three points</source>
-        <translation>Loks ar trīs punktiem</translation>
+        <translation type="obsolete">Loks ar trīs punktiem</translation>
     </message>
     <message>
         <source>Arc with Center, Point, Angles</source>
-        <translation>Loks ar centru, punktu, leņķiem</translation>
+        <translation type="obsolete">Loks ar centru, punktu, leņķiem</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Atpakaļ uz galveno izvēlni</translation>
+        <translation type="obsolete">Atpakaļ uz galveno izvēlni</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentriski</translation>
+        <translation type="obsolete">Koncentriski</translation>
     </message>
     <message>
         <source>Arc tangential to base entity with radius</source>
-        <translation>Loka pieskare, uz ko balstīt objektu ar rādiusu</translation>
+        <translation type="obsolete">Loka pieskare, uz ko balstīt objektu ar rādiusu</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarCircles</name>
     <message>
         <source>Circles</source>
-        <translation>Riņķi</translation>
+        <translation type="obsolete">Riņķi</translation>
     </message>
     <message>
         <source>Circle with two opposite points</source>
-        <translation>Riņķis ar diviem pretējiem punktiem</translation>
+        <translation type="obsolete">Riņķis ar diviem pretējiem punktiem</translation>
     </message>
     <message>
         <source>Circle with center and radius</source>
-        <translation>Riņķis ar centru un rādiusu</translation>
+        <translation type="obsolete">Riņķis ar centru un rādiusu</translation>
     </message>
     <message>
         <source>Circle with center and point</source>
-        <translation>Riņķis ar centru un punktu</translation>
+        <translation type="obsolete">Riņķis ar centru un punktu</translation>
     </message>
     <message>
         <source>Circle with three points</source>
-        <translation>Riņķis ar trim punktiem</translation>
+        <translation type="obsolete">Riņķis ar trim punktiem</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Atpakaļ uz galveno izvēlni</translation>
+        <translation type="obsolete">Atpakaļ uz galveno izvēlni</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentriski</translation>
+        <translation type="obsolete">Koncentriski</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -879,7 +926,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -891,7 +938,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -903,7 +950,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -915,7 +962,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -927,7 +974,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -935,81 +982,81 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circle with 2 Points and Radius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aplis ar 2 punktiem un rādiuss&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aplis ar 2 punktiem un rādiuss&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarDim</name>
     <message>
         <source>Dimensions</source>
-        <translation>Dimensijas</translation>
+        <translation type="obsolete">Dimensijas</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Atpakaļ uz galveno izvēlni</translation>
+        <translation type="obsolete">Atpakaļ uz galveno izvēlni</translation>
     </message>
     <message>
         <source>Diametric Dimension</source>
-        <translation>Diametrālā dimensija</translation>
+        <translation type="obsolete">Diametrālā dimensija</translation>
     </message>
     <message>
         <source>Radial Dimension</source>
-        <translation>Radiālā dimensija</translation>
+        <translation type="obsolete">Radiālā dimensija</translation>
     </message>
     <message>
         <source>Vertical Dimension</source>
-        <translation>Vertikālā dimensija</translation>
+        <translation type="obsolete">Vertikālā dimensija</translation>
     </message>
     <message>
         <source>Horizontal Dimension</source>
-        <translation>Horizontālā dimensija</translation>
+        <translation type="obsolete">Horizontālā dimensija</translation>
     </message>
     <message>
         <source>Linear Dimension</source>
-        <translation>Lineārā dimensija</translation>
+        <translation type="obsolete">Lineārā dimensija</translation>
     </message>
     <message>
         <source>Aligned Dimension</source>
-        <translation>Līdzinātā dimensija</translation>
+        <translation type="obsolete">Līdzinātā dimensija</translation>
     </message>
     <message>
         <source>Angular Dimension</source>
-        <translation>Leņķiskā dimensija</translation>
+        <translation type="obsolete">Leņķiskā dimensija</translation>
     </message>
     <message>
         <source>Leader</source>
-        <translation>Norādes līnija</translation>
+        <translation type="obsolete">Norādes līnija</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentriski</translation>
+        <translation type="obsolete">Koncentriski</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarEllipses</name>
     <message>
         <source>Ellipses</source>
-        <translation>Elipses</translation>
+        <translation type="obsolete">Elipses</translation>
     </message>
     <message>
         <source>Ellipse arc with center, two points and angles</source>
-        <translation>Eliptisks loks ar centru, diviem punktiem un leņķiem</translation>
+        <translation type="obsolete">Eliptisks loks ar centru, diviem punktiem un leņķiem</translation>
     </message>
     <message>
         <source>Ellipse with Center and two points</source>
-        <translation>Elipse ar centru un diviem punktiem</translation>
+        <translation type="obsolete">Elipse ar centru un diviem punktiem</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Atpakaļ uz galveno izvēlni</translation>
+        <translation type="obsolete">Atpakaļ uz galveno izvēlni</translation>
     </message>
     <message>
         <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation>Zīmēt elipsi ar fokusu un punktu uz elipses</translation>
+        <translation type="obsolete">Zīmēt elipsi ar fokusu un punktu uz elipses</translation>
     </message>
     <message>
         <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation>Zīmēt elipsi ar asīm x/y virzienos, norādot četrus punktus uz elipses</translation>
+        <translation type="obsolete">Zīmēt elipsi ar asīm x/y virzienos, norādot četrus punktus uz elipses</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1017,7 +1064,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -1025,223 +1072,223 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentriski</translation>
+        <translation type="obsolete">Koncentriski</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zīmēt elipsi ar centru un trīs punktiem uz elipses&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zīmēt elipsi ar centru un trīs punktiem uz elipses&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarInfo</name>
     <message>
         <source>Info</source>
-        <translation>Informācija</translation>
+        <translation type="obsolete">Informācija</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Atpakaļ uz galveno izvēlni</translation>
+        <translation type="obsolete">Atpakaļ uz galveno izvēlni</translation>
     </message>
     <message>
         <source>Distance (Point, Point)</source>
-        <translation>Attālums (punkts, punkts)</translation>
+        <translation type="obsolete">Attālums (punkts, punkts)</translation>
     </message>
     <message>
         <source>Distance (Entity, Point)</source>
-        <translation>Attālums (objekts, punkts)</translation>
+        <translation type="obsolete">Attālums (objekts, punkts)</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Leņķis</translation>
+        <translation type="obsolete">Leņķis</translation>
     </message>
     <message>
         <source>Total length of selected entities</source>
-        <translation>Izvēlēto objektu kopīgais garums</translation>
+        <translation type="obsolete">Izvēlēto objektu kopīgais garums</translation>
     </message>
     <message>
         <source>Area of polygon</source>
-        <translation>Daudzstūra laukums</translation>
+        <translation type="obsolete">Daudzstūra laukums</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentriski</translation>
+        <translation type="obsolete">Koncentriski</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarLines</name>
     <message>
         <source>Lines</source>
-        <translation>Līnijas</translation>
+        <translation type="obsolete">Līnijas</translation>
     </message>
     <message>
         <source>Freehand lines</source>
-        <translation>Brīvi zīmētas līnijas</translation>
+        <translation type="obsolete">Brīvi zīmētas līnijas</translation>
     </message>
     <message>
         <source>Orthogonal lines</source>
-        <translation>Taisnleņķa līnijas</translation>
+        <translation type="obsolete">Taisnleņķa līnijas</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Atpakaļ uz galveno izvēlni</translation>
+        <translation type="obsolete">Atpakaļ uz galveno izvēlni</translation>
     </message>
     <message>
         <source>Bisectors</source>
-        <translation>Bisektrises</translation>
+        <translation type="obsolete">Bisektrises</translation>
     </message>
     <message>
         <source>Tangents from circle to circle</source>
-        <translation>Pieskares no riņķa uz riņķi</translation>
+        <translation type="obsolete">Pieskares no riņķa uz riņķi</translation>
     </message>
     <message>
         <source>Tangents from point to circle</source>
-        <translation>Pieskares no punkta uz riņķi</translation>
+        <translation type="obsolete">Pieskares no punkta uz riņķi</translation>
     </message>
     <message>
         <source>Line with two points</source>
-        <translation>Līnija ar diviem punktiem</translation>
+        <translation type="obsolete">Līnija ar diviem punktiem</translation>
     </message>
     <message>
         <source>Lines with relative angles</source>
-        <translation>Līnijas ar relatīviem leņķiem</translation>
+        <translation type="obsolete">Līnijas ar relatīviem leņķiem</translation>
     </message>
     <message>
         <source>Line with given angle</source>
-        <translation>Līnija ar dotu leņķi</translation>
+        <translation type="obsolete">Līnija ar dotu leņķi</translation>
     </message>
     <message>
         <source>Horizontal lines</source>
-        <translation>Horizontālas līnijas</translation>
+        <translation type="obsolete">Horizontālas līnijas</translation>
     </message>
     <message>
         <source>Vertical lines</source>
-        <translation>Vertikālas līnijas</translation>
+        <translation type="obsolete">Vertikālas līnijas</translation>
     </message>
     <message>
         <source>Rectangles</source>
-        <translation>Taisnstūri</translation>
+        <translation type="obsolete">Taisnstūri</translation>
     </message>
     <message>
         <source>Polygons with Center and Corner</source>
-        <translation>Daudzstūri ar centru un stūri</translation>
+        <translation type="obsolete">Daudzstūri ar centru un stūri</translation>
     </message>
     <message>
         <source>Polygons with two Corners</source>
-        <translation>Daudzstūri ar dieviem stūriem</translation>
+        <translation type="obsolete">Daudzstūri ar dieviem stūriem</translation>
     </message>
     <message>
         <source>Parallels with distance</source>
-        <translation>Paralēlas līnijas ar attālumu</translation>
+        <translation type="obsolete">Paralēlas līnijas ar attālumu</translation>
     </message>
     <message>
         <source>Parallels through point</source>
-        <translation>Paralēlas līnijas caur punktu</translation>
+        <translation type="obsolete">Paralēlas līnijas caur punktu</translation>
     </message>
     <message>
         <source>Tangents to a circle, orthogonal to a line</source>
-        <translation>Pieskares uz riņķi, perpendikulāri līnijai</translation>
+        <translation type="obsolete">Pieskares uz riņķi, perpendikulāri līnijai</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarMain</name>
     <message>
         <source>Main</source>
-        <translation>Galvenais</translation>
+        <translation type="obsolete">Galvenais</translation>
     </message>
     <message>
         <source>Create Block</source>
-        <translation>Izveidot bloku</translation>
+        <translation type="obsolete">Izveidot bloku</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Lines&quot;</source>
-        <translation>Rādīt rīkjoslu “Līnijas”</translation>
+        <translation type="obsolete">Rādīt rīkjoslu “Līnijas”</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Arcs&quot;</source>
-        <translation>Rādīt rīkjoslu “Loki”</translation>
+        <translation type="obsolete">Rādīt rīkjoslu “Loki”</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Circles&quot;</source>
-        <translation>Rādīt rīkjoslu “Riņķi”</translation>
+        <translation type="obsolete">Rādīt rīkjoslu “Riņķi”</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Ellipses&quot;</source>
-        <translation>Rādīt rīkjoslu “Elipses”</translation>
+        <translation type="obsolete">Rādīt rīkjoslu “Elipses”</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Polylines&quot;</source>
-        <translation>Rādīt rīkjoslu “Lauztas līnijas”</translation>
+        <translation type="obsolete">Rādīt rīkjoslu “Lauztas līnijas”</translation>
     </message>
     <message>
         <source>Draw Splines</source>
-        <translation>Zīmēt splainus</translation>
+        <translation type="obsolete">Zīmēt splainus</translation>
     </message>
     <message>
         <source>Draw Points</source>
-        <translation>Zīmēt punktus</translation>
+        <translation type="obsolete">Zīmēt punktus</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Dimensions&quot;</source>
-        <translation>Rādīt rīkjoslu “Dimensijas”</translation>
+        <translation type="obsolete">Rādīt rīkjoslu “Dimensijas”</translation>
     </message>
     <message>
         <source>Create Hatch</source>
-        <translation>Izveidot svītrojumu</translation>
+        <translation type="obsolete">Izveidot svītrojumu</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation>Ievietot attēlu</translation>
+        <translation type="obsolete">Ievietot attēlu</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Modify&quot;</source>
-        <translation>Rādīt rīkjoslu “Modificēt”</translation>
+        <translation type="obsolete">Rādīt rīkjoslu “Modificēt”</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Info&quot;</source>
-        <translation>Rādīt rīkjoslu “Informācija”</translation>
+        <translation type="obsolete">Rādīt rīkjoslu “Informācija”</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Select&quot;</source>
-        <translation>Rādīt rīkjoslu “Izvēle”</translation>
+        <translation type="obsolete">Rādīt rīkjoslu “Izvēle”</translation>
     </message>
     <message>
         <source>Insert Multi-line Text</source>
-        <translation>Ievietot vairāku rindu tekstu</translation>
+        <translation type="obsolete">Ievietot vairāku rindu tekstu</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarModify</name>
     <message>
         <source>Modify</source>
-        <translation>Modificēt</translation>
+        <translation type="obsolete">Modificēt</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Atpakaļ uz galveno izvēlni</translation>
+        <translation type="obsolete">Atpakaļ uz galveno izvēlni</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation>Pagriezt</translation>
+        <translation type="obsolete">Pagriezt</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation>Mainīt izmēru</translation>
+        <translation type="obsolete">Mainīt izmēru</translation>
     </message>
     <message>
         <source>Move and Rotate</source>
-        <translation>Pārvietot un pagriezt</translation>
+        <translation type="obsolete">Pārvietot un pagriezt</translation>
     </message>
     <message>
         <source>Explode</source>
-        <translation>Eksplodēt</translation>
+        <translation type="obsolete">Eksplodēt</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Dzēst</translation>
+        <translation type="obsolete">Dzēst</translation>
     </message>
     <message>
         <source>Stretch</source>
-        <translation>Izstiept</translation>
+        <translation type="obsolete">Izstiept</translation>
     </message>
     <message>
         <source>Round</source>
@@ -1249,7 +1296,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bevel</source>
-        <translation>Slīps</translation>
+        <translation type="obsolete">Slīps</translation>
     </message>
     <message>
         <source>Trim by amount</source>
@@ -1257,195 +1304,195 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim / Extend two</source>
-        <translation>Īsināt / pagarināt divus</translation>
+        <translation type="obsolete">Īsināt / pagarināt divus</translation>
     </message>
     <message>
         <source>Trim / Extend</source>
-        <translation>Īsināt / pagarināt</translation>
+        <translation type="obsolete">Īsināt / pagarināt</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
-        <translation>Rediģēt objekta atribūtus</translation>
+        <translation type="obsolete">Rediģēt objekta atribūtus</translation>
     </message>
     <message>
         <source>Edit Entity Geometry</source>
-        <translation>Rediģēt objekta ģeometriju</translation>
+        <translation type="obsolete">Rediģēt objekta ģeometriju</translation>
     </message>
     <message>
         <source>Mirror</source>
-        <translation>Spoguļot</translation>
+        <translation type="obsolete">Spoguļot</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation>Dalīt</translation>
+        <translation type="obsolete">Dalīt</translation>
     </message>
     <message>
         <source>Explode Text into Letters</source>
-        <translation>Eksplodēt tekstu burtos</translation>
+        <translation type="obsolete">Eksplodēt tekstu burtos</translation>
     </message>
     <message>
         <source>Edit Text</source>
-        <translation>Rediģēt tekstu</translation>
+        <translation type="obsolete">Rediģēt tekstu</translation>
     </message>
     <message>
         <source>Move / Copy</source>
-        <translation>Pārvietot / kopēt</translation>
+        <translation type="obsolete">Pārvietot / kopēt</translation>
     </message>
     <message>
         <source>Rotate Two</source>
-        <translation>Pagriezt divus</translation>
+        <translation type="obsolete">Pagriezt divus</translation>
     </message>
     <message>
         <source>Offset (Experimental Feature, work in progress)</source>
-        <translation>Nobīdīt (eksperimentāla iespēja, darbs vēl notiek)</translation>
+        <translation type="obsolete">Nobīdīt (eksperimentāla iespēja, darbs vēl notiek)</translation>
     </message>
     <message>
         <source>Revert direction</source>
-        <translation>Apgriezt virzienu</translation>
+        <translation type="obsolete">Apgriezt virzienu</translation>
     </message>
     <message>
         <source>Lengthen</source>
-        <translation>Pagarināt</translation>
+        <translation type="obsolete">Pagarināt</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lente, iekšējā vai ārējā stūra noapaļošana&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lente, iekšējā vai ārējā stūra noapaļošana&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPoints</name>
     <message>
         <source>Points</source>
-        <translation>Punkti</translation>
+        <translation type="obsolete">Punkti</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Atpakaļ uz galveno izvēlni</translation>
+        <translation type="obsolete">Atpakaļ uz galveno izvēlni</translation>
     </message>
     <message>
         <source>Single points</source>
-        <translation>Atsevišķi punkti</translation>
+        <translation type="obsolete">Atsevišķi punkti</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPolylines</name>
     <message>
         <source>Polylines</source>
-        <translation>Lauztas līnijas</translation>
+        <translation type="obsolete">Lauztas līnijas</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Atpakaļ uz galveno izvēlni</translation>
+        <translation type="obsolete">Atpakaļ uz galveno izvēlni</translation>
     </message>
     <message>
         <source>Create Polyline</source>
-        <translation>Izveidot lauztu līniju</translation>
+        <translation type="obsolete">Izveidot lauztu līniju</translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Dzēst starp diviem mezgliem</translation>
+        <translation type="obsolete">Dzēst starp diviem mezgliem</translation>
     </message>
     <message>
         <source>Add node</source>
-        <translation>Pievienot mezglu</translation>
+        <translation type="obsolete">Pievienot mezglu</translation>
     </message>
     <message>
         <source>Delete node</source>
-        <translation>Dzēst mezglu</translation>
+        <translation type="obsolete">Dzēst mezglu</translation>
     </message>
     <message>
         <source>Trim segments</source>
-        <translation>Īsināt segmentus</translation>
+        <translation type="obsolete">Īsināt segmentus</translation>
     </message>
     <message>
         <source>Append node</source>
-        <translation>Pielikt mezglu</translation>
+        <translation type="obsolete">Pielikt mezglu</translation>
     </message>
     <message>
         <source>Polyline equidistant</source>
-        <translation>Lauztas līnijas vienāda attāluma</translation>
+        <translation type="obsolete">Lauztas līnijas vienāda attāluma</translation>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Izveidot lauztu līniju no esošiem segmentiem</translation>
+        <translation type="obsolete">Izveidot lauztu līniju no esošiem segmentiem</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentriski</translation>
+        <translation type="obsolete">Koncentriski</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarSelect</name>
     <message>
         <source>Select</source>
-        <translation>Izvēlēties</translation>
+        <translation type="obsolete">Izvēlēties</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation>Izvēlēties visu</translation>
+        <translation type="obsolete">Izvēlēties visu</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Atpakaļ uz galveno izvēlni</translation>
+        <translation type="obsolete">Atpakaļ uz galveno izvēlni</translation>
     </message>
     <message>
         <source>Select intersected entities</source>
-        <translation>Izvēlēties objektus, kas krustojas</translation>
+        <translation type="obsolete">Izvēlēties objektus, kas krustojas</translation>
     </message>
     <message>
         <source>Deselect intersected entities</source>
-        <translation>Neizvēlēties objektus, kas krustojas</translation>
+        <translation type="obsolete">Neizvēlēties objektus, kas krustojas</translation>
     </message>
     <message>
         <source>Deselect all</source>
-        <translation>Neizvēlēties nevienu</translation>
+        <translation type="obsolete">Neizvēlēties nevienu</translation>
     </message>
     <message>
         <source>Invert Selection</source>
-        <translation>Invertēt izvēli</translation>
+        <translation type="obsolete">Invertēt izvēli</translation>
     </message>
     <message>
         <source>Select layer</source>
-        <translation>Izvēlēties slāni</translation>
+        <translation type="obsolete">Izvēlēties slāni</translation>
     </message>
     <message>
         <source>(De-)Select contour</source>
-        <translation>[Ne-]izvēlēties kontūru</translation>
+        <translation type="obsolete">[Ne-]izvēlēties kontūru</translation>
     </message>
     <message>
         <source>(De-)Select entity</source>
-        <translation>[Ne-]izvēlēties objektu</translation>
+        <translation type="obsolete">[Ne-]izvēlēties objektu</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation>Neizvēlēties logu</translation>
+        <translation type="obsolete">Neizvēlēties logu</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation>Izvēlēties logu</translation>
+        <translation type="obsolete">Izvēlēties logu</translation>
     </message>
     <message>
         <source>Continue action</source>
-        <translation>Turpināt darbību</translation>
+        <translation type="obsolete">Turpināt darbību</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarSplines</name>
     <message>
         <source>Splines</source>
-        <translation>Splaini</translation>
+        <translation type="obsolete">Splaini</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Atpakaļ uz galveno izvēlni</translation>
+        <translation type="obsolete">Atpakaļ uz galveno izvēlni</translation>
     </message>
     <message>
         <source>Spline</source>
-        <translation>Splains</translation>
+        <translation type="obsolete">Splains</translation>
     </message>
     <message>
         <source>Interpolation Spline</source>
-        <translation>Interpolācijas splains</translation>
+        <translation type="obsolete">Interpolācijas splains</translation>
     </message>
 </context>
 <context>
@@ -3444,6 +3491,53 @@ Lūdzu, izvēlieties mērvienības, kuras izmantot jauniem zīmējumiem, kā ar�
     </message>
 </context>
 <context>
+    <name>QG_DlgOptionsMakerCam</name>
+    <message>
+        <source>Export as MakerCAM SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export invisible layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export visible construction layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert blocks to safe inline SVG content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipses / Ellipse arcs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgPoint</name>
     <message>
         <source>Point</source>
@@ -4699,15 +4793,31 @@ Konstruēšanas slāņa saturam nevajadzētu parādīties izdrukā.</translation
     </message>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation>R&amp;ediģēt slāni</translation>
+        <translation type="obsolete">R&amp;ediģēt slāni</translation>
     </message>
     <message>
         <source>&amp;Toggle Visibility</source>
-        <translation>Pārslēg&amp;t redzamību</translation>
+        <translation type="obsolete">Pārslēg&amp;t redzamību</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
         <translation>Meklē atbilstošus slāņu nosaukumus</translation>
+    </message>
+    <message>
+        <source>Edit Layer &amp;Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5093,7 +5203,15 @@ Konstruēšanas slāņa saturam nevajadzētu parādīties izdrukā.</translation
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="obsolete">...</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5213,6 +5331,17 @@ Konstruēšanas slāņa saturam nevajadzētu parādīties izdrukā.</translation
     <message>
         <source>fixed</source>
         <translation>fiksēts</translation>
+    </message>
+</context>
+<context>
+    <name>QG_RecentFiles</name>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished">&amp;%1 %2</translation>
+    </message>
+    <message>
+        <source>Opening recent file...</source>
+        <translation type="unfinished">Atver nesenu datni...</translation>
     </message>
 </context>
 <context>
@@ -5858,7 +5987,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source>All Image Files (%1) </source>
-        <translation>Visas attēlu datnes (%1) </translation>
+        <translation type="obsolete">Visas attēlu datnes (%1) </translation>
     </message>
     <message>
         <source>Scalable Vector Graphics</source>
@@ -5963,6 +6092,31 @@ Vai vēlaties to aizvietot?</translation>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation>Svītrojums neizdevās, jo atstarpe=%1 ir starp (%2, %3) un (%4, %5)</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Brīdinājums</translation>
+    </message>
+    <message>
+        <source>experimental, save your work first.
+Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading file matadata in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading blocks in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading objects in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Image Files (%1)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7580,7 +7734,7 @@ Vai vēlaties to aizvietot?</translation>
     </message>
     <message>
         <source> or %1%2</source>
-        <translation> vai %1%2</translation>
+        <translation type="obsolete"> vai %1%2</translation>
     </message>
 </context>
 <context>

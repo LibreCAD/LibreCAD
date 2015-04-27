@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="cs">
 <context>
-    <name/>
+    <name></name>
     <message>
         <source>Loading..</source>
         <translation type="obsolete">Nahrávám..</translation>
@@ -100,6 +101,35 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     <message>
         <source>Cannot undo: Nothing could be redone.</source>
         <translation>Nelze vrátit zpět: Nic by se nedalo provést znovu.</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <source>Export as &amp;MakerCAM SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as</source>
+        <translation type="unfinished">Exportovat jako</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionLayersToggleConstruction</name>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation type="unfinished">Od&amp;ladit</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished">Vložit obrázek</translation>
     </message>
 </context>
 <context>
@@ -235,7 +265,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>De&amp;bugging</source>
-        <translation>Od&amp;ladit</translation>
+        <translation type="obsolete">Od&amp;ladit</translation>
     </message>
     <message>
         <source>&amp;Cascade</source>
@@ -259,7 +289,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation>Otevírá se nedávno použitý soubor...</translation>
+        <translation type="obsolete">Otevírá se nedávno použitý soubor...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -392,8 +422,8 @@ Datum: %1</translation>
         <translation type="obsolete">Spustí on-line manuál</translation>
     </message>
     <message>
-        <source>Block '%1'</source>
-        <translation>Blok '%1'</translation>
+        <source>Block &apos;%1&apos;</source>
+        <translation>Blok &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -458,12 +488,12 @@ Nyní můžete uložit svou práci.</translation>
         <translation>&amp;Okno</translation>
     </message>
     <message>
-        <source>Running script '%1'</source>
-        <translation>Spouští se skript '%1'</translation>
+        <source>Running script &apos;%1&apos;</source>
+        <translation>Spouští se skript &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Inserting block '%1'</source>
-        <translation>Vkládá se blok '%1'</translation>
+        <source>Inserting block &apos;%1&apos;</source>
+        <translation>Vkládá se blok &apos;%1&apos;</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -471,7 +501,7 @@ Nyní můžete uložit svou práci.</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation>Vložit obrázek</translation>
+        <translation type="obsolete">Vložit obrázek</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
@@ -496,7 +526,7 @@ Automatické ukládání bylo vypnuto.</translation>
         <translation>Nápověda</translation>
     </message>
     <message>
-        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
+        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation>Nelze najít soubory nápovědy.</translation>
     </message>
     <message>
@@ -533,7 +563,7 @@ Automatické ukládání bylo vypnuto.</translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
-        <translation>&amp;%1 %2</translation>
+        <translation type="obsolete">&amp;%1 %2</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
@@ -630,6 +660,20 @@ Automatické ukládání bylo vypnuto.</translation>
     <message>
         <source>&amp;Text</source>
         <translation>&amp;Text</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open the file
+%1
+Please check its existence and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1313,11 +1357,11 @@ Automatické ukládání bylo vypnuto.</translation>
     </message>
     <message>
         <source>Delete Freehand</source>
-        <translation type="obsolete">Smazat "od ruky"</translation>
+        <translation type="obsolete">Smazat &quot;od ruky&quot;</translation>
     </message>
     <message>
         <source>&amp;Delete Freehand</source>
-        <translation type="obsolete">&amp;Smazat "od ruky"</translation>
+        <translation type="obsolete">&amp;Smazat &quot;od ruky&quot;</translation>
     </message>
     <message>
         <source>Move</source>
@@ -2133,7 +2177,7 @@ Automatické ukládání bylo vypnuto.</translation>
     </message>
     <message>
         <source>&amp;Export...</source>
-        <translation>&amp;Exportovat...</translation>
+        <translation type="obsolete">&amp;Exportovat...</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -2163,6 +2207,10 @@ Automatické ukládání bylo vypnuto.</translation>
         <source>&amp;Block</source>
         <translation>&amp;Blok</translation>
     </message>
+    <message>
+        <source>&amp;Export as image</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ActionHandler</name>
@@ -2187,16 +2235,16 @@ Automatické ukládání bylo vypnuto.</translation>
         <translation>Aktuální hladina</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Název aktuální aktivní hladiny&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Název aktuální aktivní hladiny&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -2289,8 +2337,8 @@ p, li { white-space: pre-wrap; }
         <translation>Přejmenování bloku</translation>
     </message>
     <message>
-        <source>Could not name block. A block named "%1" already exists.</source>
-        <translation>Nelze pojmenovat blok. Blok "%1" již existuje.</translation>
+        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
+        <translation>Nelze pojmenovat blok. Blok &quot;%1&quot; již existuje.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -2401,381 +2449,381 @@ v samostatném okně</translation>
     <name>QG_CadToolBarArcs</name>
     <message>
         <source>Arcs</source>
-        <translation>Oblouky</translation>
+        <translation type="obsolete">Oblouky</translation>
     </message>
     <message>
         <source>Arc with three points</source>
-        <translation>Oblouk zadaný třemi body</translation>
+        <translation type="obsolete">Oblouk zadaný třemi body</translation>
     </message>
     <message>
         <source>Arc with Center, Point, Angles</source>
-        <translation>Oblouk zadaný středem, bodem, úhly</translation>
+        <translation type="obsolete">Oblouk zadaný středem, bodem, úhly</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Zpět do hlavní nabídky</translation>
+        <translation type="obsolete">Zpět do hlavní nabídky</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Soustředný</translation>
+        <translation type="obsolete">Soustředný</translation>
     </message>
     <message>
         <source>Arc tangential to base entity with radius</source>
-        <translation>Oblouk tečný k základnímu prvku s poloměrem</translation>
+        <translation type="obsolete">Oblouk tečný k základnímu prvku s poloměrem</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarCircles</name>
     <message>
         <source>Circles</source>
-        <translation>Kružnice</translation>
+        <translation type="obsolete">Kružnice</translation>
     </message>
     <message>
         <source>Circle with two opposite points</source>
-        <translation>Kružnice zadaná dvěma protilehlými body</translation>
+        <translation type="obsolete">Kružnice zadaná dvěma protilehlými body</translation>
     </message>
     <message>
         <source>Circle with center and radius</source>
-        <translation>Kružnice zadaná středem a poloměrem</translation>
+        <translation type="obsolete">Kružnice zadaná středem a poloměrem</translation>
     </message>
     <message>
         <source>Circle with center and point</source>
-        <translation>Kružnice zadaná středem a bodem</translation>
+        <translation type="obsolete">Kružnice zadaná středem a bodem</translation>
     </message>
     <message>
         <source>Circle with three points</source>
-        <translation>Kružnice zadaná třemi body</translation>
+        <translation type="obsolete">Kružnice zadaná třemi body</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Zpět do hlavní nabídky</translation>
+        <translation type="obsolete">Zpět do hlavní nabídky</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Soustředná</translation>
+        <translation type="obsolete">Soustředná</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Kreslit kružnici zadanou poloměrem, která je tečná ke dvěma kružnicím&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Kreslit kružnici zadanou poloměrem, která je tečná ke dvěma kružnicím&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Kreslit kružnici zadanou dvěma body, která je tečná ke kružnici&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Kreslit kružnici zadanou dvěma body, která je tečná ke kružnici&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Kreslit kružnici zadanou bodem, která je tečná ke dvěma kružnicím&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Kreslit kružnici zadanou bodem, která je tečná ke dvěma kružnicím&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Kreslit kružnici tečnou ke třem úsečkám/obloukům/kružnicím&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Kreslit kružnici tečnou ke třem úsečkám/obloukům/kružnicím&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:8pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt; font-style:italic;"&gt;i.e.&lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:8pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Kreslit kružnici vepsanou trojúhelníku, tj. tečnou ke třem úsečkám. Použijte místo tohoto novější možnost &amp;quot;Tečná kružnice 3&amp;quot;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Kreslit kružnici vepsanou trojúhelníku, tj. tečnou ke třem úsečkám. Použijte místo tohoto novější možnost &amp;quot;Tečná kružnice 3&amp;quot;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circle with 2 Points and Radius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kružnice zadaná dvěma body a poloměrem&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kružnice zadaná dvěma body a poloměrem&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarDim</name>
     <message>
         <source>Dimensions</source>
-        <translation>Kóty</translation>
+        <translation type="obsolete">Kóty</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Zpět do hlavní nabídky</translation>
+        <translation type="obsolete">Zpět do hlavní nabídky</translation>
     </message>
     <message>
         <source>Diametric Dimension</source>
-        <translation>Kóta průměru</translation>
+        <translation type="obsolete">Kóta průměru</translation>
     </message>
     <message>
         <source>Radial Dimension</source>
-        <translation>Kóta poloměru</translation>
+        <translation type="obsolete">Kóta poloměru</translation>
     </message>
     <message>
         <source>Vertical Dimension</source>
-        <translation>Svislá kóta</translation>
+        <translation type="obsolete">Svislá kóta</translation>
     </message>
     <message>
         <source>Horizontal Dimension</source>
-        <translation>Vodorovná kóta</translation>
+        <translation type="obsolete">Vodorovná kóta</translation>
     </message>
     <message>
         <source>Linear Dimension</source>
-        <translation>Přímá kóta</translation>
+        <translation type="obsolete">Přímá kóta</translation>
     </message>
     <message>
         <source>Aligned Dimension</source>
-        <translation>Zarovnaná kóta</translation>
+        <translation type="obsolete">Zarovnaná kóta</translation>
     </message>
     <message>
         <source>Angular Dimension</source>
-        <translation>Kóta úhlu</translation>
+        <translation type="obsolete">Kóta úhlu</translation>
     </message>
     <message>
         <source>Leader</source>
-        <translation>Odkaz</translation>
+        <translation type="obsolete">Odkaz</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Soustředná</translation>
+        <translation type="obsolete">Soustředná</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarEllipses</name>
     <message>
         <source>Ellipses</source>
-        <translation>Elipsy</translation>
+        <translation type="obsolete">Elipsy</translation>
     </message>
     <message>
         <source>Ellipse arc with center, two points and angles</source>
-        <translation>Elipsovitý oblouk zadaný středem, dvěma body a úhly</translation>
+        <translation type="obsolete">Elipsovitý oblouk zadaný středem, dvěma body a úhly</translation>
     </message>
     <message>
         <source>Ellipse with Center and two points</source>
-        <translation>Elipsa zadaná středem a dvěma body</translation>
+        <translation type="obsolete">Elipsa zadaná středem a dvěma body</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Zpět do hlavní nabídky</translation>
+        <translation type="obsolete">Zpět do hlavní nabídky</translation>
     </message>
     <message>
         <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation>Kreslit elipsu zadanou ohnisky a bodem na elipse</translation>
+        <translation type="obsolete">Kreslit elipsu zadanou ohnisky a bodem na elipse</translation>
     </message>
     <message>
         <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation>Kreslit elipsu s osami ve směru os x/y zadanou čtyřmi body na elipse</translation>
+        <translation type="obsolete">Kreslit elipsu s osami ve směru os x/y zadanou čtyřmi body na elipse</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Kreslit elipsu vepsanou čtyřúhelníku, tj. tečnou ke čtyřem úsečkám&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Kreslit elipsu vepsanou čtyřúhelníku, tj. tečnou ke čtyřem úsečkám&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Soustředná</translation>
+        <translation type="obsolete">Soustředná</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kreslit elipsu zadanou středem a třemi body na elipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kreslit elipsu zadanou středem a třemi body na elipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarInfo</name>
     <message>
         <source>Info</source>
-        <translation>Informace</translation>
+        <translation type="obsolete">Informace</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Zpět do hlavní nabídky</translation>
+        <translation type="obsolete">Zpět do hlavní nabídky</translation>
     </message>
     <message>
         <source>Distance (Point, Point)</source>
-        <translation>Vzdálenost (bod, bod)</translation>
+        <translation type="obsolete">Vzdálenost (bod, bod)</translation>
     </message>
     <message>
         <source>Distance (Entity, Point)</source>
-        <translation>Vzdálenost (prvek, bod)</translation>
+        <translation type="obsolete">Vzdálenost (prvek, bod)</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Úhel</translation>
+        <translation type="obsolete">Úhel</translation>
     </message>
     <message>
         <source>Total length of selected entities</source>
-        <translation>Celková délka vybraných prvků</translation>
+        <translation type="obsolete">Celková délka vybraných prvků</translation>
     </message>
     <message>
         <source>Area of polygon</source>
-        <translation>Obsah mnohoúhelníku</translation>
+        <translation type="obsolete">Obsah mnohoúhelníku</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Soustředné</translation>
+        <translation type="obsolete">Soustředné</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarLines</name>
     <message>
         <source>Lines</source>
-        <translation>Úsečky</translation>
+        <translation type="obsolete">Úsečky</translation>
     </message>
     <message>
         <source>Freehand lines</source>
-        <translation>Čáry od ruky</translation>
+        <translation type="obsolete">Čáry od ruky</translation>
     </message>
     <message>
         <source>Orthogonal lines</source>
-        <translation>Kolmé úsečky</translation>
+        <translation type="obsolete">Kolmé úsečky</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Zpět do hlavní nabídky</translation>
+        <translation type="obsolete">Zpět do hlavní nabídky</translation>
     </message>
     <message>
         <source>Bisectors</source>
-        <translation>Osy úhlu</translation>
+        <translation type="obsolete">Osy úhlu</translation>
     </message>
     <message>
         <source>Tangents from circle to circle</source>
-        <translation>Tečny od kružnice ke kružnici</translation>
+        <translation type="obsolete">Tečny od kružnice ke kružnici</translation>
     </message>
     <message>
         <source>Tangents from point to circle</source>
-        <translation>Tečny z bodu ke kružnici</translation>
+        <translation type="obsolete">Tečny z bodu ke kružnici</translation>
     </message>
     <message>
         <source>Line with two points</source>
-        <translation>Úsečka zadaná dvěma body</translation>
+        <translation type="obsolete">Úsečka zadaná dvěma body</translation>
     </message>
     <message>
         <source>Lines with relative angles</source>
-        <translation>Úsečky zadané relativním úhlem</translation>
+        <translation type="obsolete">Úsečky zadané relativním úhlem</translation>
     </message>
     <message>
         <source>Line with given angle</source>
-        <translation>Úsečka pod daným úhlem</translation>
+        <translation type="obsolete">Úsečka pod daným úhlem</translation>
     </message>
     <message>
         <source>Horizontal lines</source>
-        <translation>Vodorovné úsečky</translation>
+        <translation type="obsolete">Vodorovné úsečky</translation>
     </message>
     <message>
         <source>Vertical lines</source>
-        <translation>Svislé úsečky</translation>
+        <translation type="obsolete">Svislé úsečky</translation>
     </message>
     <message>
         <source>Rectangles</source>
-        <translation>Obdélníky</translation>
+        <translation type="obsolete">Obdélníky</translation>
     </message>
     <message>
         <source>Polygons with Center and Corner</source>
-        <translation>Mnohoúhelníky zadané středem a vrcholem</translation>
+        <translation type="obsolete">Mnohoúhelníky zadané středem a vrcholem</translation>
     </message>
     <message>
         <source>Polygons with two Corners</source>
-        <translation>Mnohoúhelníky zadané dvěma vrcholy</translation>
+        <translation type="obsolete">Mnohoúhelníky zadané dvěma vrcholy</translation>
     </message>
     <message>
         <source>Parallels with distance</source>
-        <translation>Rovnoběžky s danou vzdáleností</translation>
+        <translation type="obsolete">Rovnoběžky s danou vzdáleností</translation>
     </message>
     <message>
         <source>Parallels through point</source>
-        <translation>Rovnoběžky skrz bod</translation>
+        <translation type="obsolete">Rovnoběžky skrz bod</translation>
     </message>
     <message>
         <source>Tangents to a circle, orthogonal to a line</source>
-        <translation>Tečny ke kružnici kolmé na úsečku</translation>
+        <translation type="obsolete">Tečny ke kružnici kolmé na úsečku</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarMain</name>
     <message>
         <source>Main</source>
-        <translation>Hlavní</translation>
+        <translation type="obsolete">Hlavní</translation>
     </message>
     <message>
-        <source>Show menu "Lines"</source>
-        <translation type="obsolete">Zobrazit menu "Úsečky"</translation>
+        <source>Show menu &quot;Lines&quot;</source>
+        <translation type="obsolete">Zobrazit menu &quot;Úsečky&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Arcs"</source>
-        <translation type="obsolete">Zobrazit menu "Oblouky"</translation>
+        <source>Show menu &quot;Arcs&quot;</source>
+        <translation type="obsolete">Zobrazit menu &quot;Oblouky&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Circles"</source>
-        <translation type="obsolete">Zobrazit menu "Kružnice"</translation>
+        <source>Show menu &quot;Circles&quot;</source>
+        <translation type="obsolete">Zobrazit menu &quot;Kružnice&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Points"</source>
-        <translation type="obsolete">Zobrazit menu "Body"</translation>
+        <source>Show menu &quot;Points&quot;</source>
+        <translation type="obsolete">Zobrazit menu &quot;Body&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Measure"</source>
-        <translation type="obsolete">Zobrazit menu "Měření"</translation>
+        <source>Show menu &quot;Measure&quot;</source>
+        <translation type="obsolete">Zobrazit menu &quot;Měření&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Ellipses"</source>
-        <translation type="obsolete">Zobrazit menu "Elipsy"</translation>
+        <source>Show menu &quot;Ellipses&quot;</source>
+        <translation type="obsolete">Zobrazit menu &quot;Elipsy&quot;</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
         <translation type="obsolete">Šrafy / Výplně ploch</translation>
     </message>
     <message>
-        <source>Show menu "Edit"</source>
-        <translation type="obsolete">Zobrazit menu "Úpravy"</translation>
+        <source>Show menu &quot;Edit&quot;</source>
+        <translation type="obsolete">Zobrazit menu &quot;Úpravy&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Dimensions"</source>
-        <translation type="obsolete">Zobrazit menu "Kóty"</translation>
+        <source>Show menu &quot;Dimensions&quot;</source>
+        <translation type="obsolete">Zobrazit menu &quot;Kóty&quot;</translation>
     </message>
     <message>
         <source>Texts</source>
         <translation type="obsolete">Texty</translation>
     </message>
     <message>
-        <source>Show menu "Select"</source>
-        <translation type="obsolete">Zobrazit menu "Výběr"</translation>
+        <source>Show menu &quot;Select&quot;</source>
+        <translation type="obsolete">Zobrazit menu &quot;Výběr&quot;</translation>
     </message>
     <message>
         <source>Create Block</source>
-        <translation>Vytvořit blok</translation>
+        <translation type="obsolete">Vytvořit blok</translation>
     </message>
     <message>
         <source>Raster Image</source>
@@ -2786,79 +2834,79 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Body</translation>
     </message>
     <message>
-        <source>Show toolbar "Lines"</source>
-        <translation>Zobrazit nástrojovou lištu "Úsečky"</translation>
+        <source>Show toolbar &quot;Lines&quot;</source>
+        <translation type="obsolete">Zobrazit nástrojovou lištu &quot;Úsečky&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Arcs"</source>
-        <translation>Zobrazit nástrojovou lištu "Oblouky"</translation>
+        <source>Show toolbar &quot;Arcs&quot;</source>
+        <translation type="obsolete">Zobrazit nástrojovou lištu &quot;Oblouky&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Circles"</source>
-        <translation>Zobrazit nástrojovou lištu "Kružnice"</translation>
+        <source>Show toolbar &quot;Circles&quot;</source>
+        <translation type="obsolete">Zobrazit nástrojovou lištu &quot;Kružnice&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Ellipses"</source>
-        <translation>Zobrazit nástrojovou lištu "Elipsy"</translation>
+        <source>Show toolbar &quot;Ellipses&quot;</source>
+        <translation type="obsolete">Zobrazit nástrojovou lištu &quot;Elipsy&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Polylines"</source>
-        <translation>Zobrazit nástrojovou lištu "Křivky"</translation>
+        <source>Show toolbar &quot;Polylines&quot;</source>
+        <translation type="obsolete">Zobrazit nástrojovou lištu &quot;Křivky&quot;</translation>
     </message>
     <message>
         <source>Draw Splines</source>
-        <translation>Kreslit splajny</translation>
+        <translation type="obsolete">Kreslit splajny</translation>
     </message>
     <message>
         <source>Draw Points</source>
-        <translation>Kreslit body</translation>
+        <translation type="obsolete">Kreslit body</translation>
     </message>
     <message>
-        <source>Show toolbar "Dimensions"</source>
-        <translation>Zobrazit nástrojovou lištu "Kóty"</translation>
+        <source>Show toolbar &quot;Dimensions&quot;</source>
+        <translation type="obsolete">Zobrazit nástrojovou lištu &quot;Kóty&quot;</translation>
     </message>
     <message>
         <source>Create Hatch</source>
-        <translation>Vytvořit šrafy</translation>
+        <translation type="obsolete">Vytvořit šrafy</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation>Vložit obrázek</translation>
+        <translation type="obsolete">Vložit obrázek</translation>
     </message>
     <message>
-        <source>Show toolbar "Modify"</source>
-        <translation>Zobrazit nástrojovou lištu "Modifikace"</translation>
+        <source>Show toolbar &quot;Modify&quot;</source>
+        <translation type="obsolete">Zobrazit nástrojovou lištu &quot;Modifikace&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Info"</source>
-        <translation>Zobrazit nástrojovou lištu "Informace"</translation>
+        <source>Show toolbar &quot;Info&quot;</source>
+        <translation type="obsolete">Zobrazit nástrojovou lištu &quot;Informace&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Select"</source>
-        <translation>Zobrazit nástrojovou lištu "Výběr"</translation>
+        <source>Show toolbar &quot;Select&quot;</source>
+        <translation type="obsolete">Zobrazit nástrojovou lištu &quot;Výběr&quot;</translation>
     </message>
     <message>
         <source>Insert Multi-line Text</source>
-        <translation>Vložit víceřádkový text</translation>
+        <translation type="obsolete">Vložit víceřádkový text</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarModify</name>
     <message>
         <source>Modify</source>
-        <translation>Modifikace</translation>
+        <translation type="obsolete">Modifikace</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Zpět do hlavní nabídky</translation>
+        <translation type="obsolete">Zpět do hlavní nabídky</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation>Otočit</translation>
+        <translation type="obsolete">Otočit</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation>Měřítko</translation>
+        <translation type="obsolete">Měřítko</translation>
     </message>
     <message>
         <source>Move</source>
@@ -2866,19 +2914,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Move and Rotate</source>
-        <translation>Posunout a otočit</translation>
+        <translation type="obsolete">Posunout a otočit</translation>
     </message>
     <message>
         <source>Explode</source>
-        <translation>Rozložit</translation>
+        <translation type="obsolete">Rozložit</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Smazat</translation>
+        <translation type="obsolete">Smazat</translation>
     </message>
     <message>
         <source>Stretch</source>
-        <translation>Natáhnout</translation>
+        <translation type="obsolete">Natáhnout</translation>
     </message>
     <message>
         <source>Cut</source>
@@ -2890,7 +2938,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bevel</source>
-        <translation>Zkosit</translation>
+        <translation type="obsolete">Zkosit</translation>
     </message>
     <message>
         <source>Trim by amount</source>
@@ -2898,11 +2946,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim / Extend two</source>
-        <translation>Zkrátit / Prodloužit dva</translation>
+        <translation type="obsolete">Zkrátit / Prodloužit dva</translation>
     </message>
     <message>
         <source>Trim / Extend</source>
-        <translation>Zkrátit / Prodloužit</translation>
+        <translation type="obsolete">Zkrátit / Prodloužit</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
@@ -2910,168 +2958,168 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Edit Entity Attributes</source>
-        <translation>Upravit vlastnosti prvku</translation>
+        <translation type="obsolete">Upravit vlastnosti prvku</translation>
     </message>
     <message>
         <source>Edit Entity Geometry</source>
-        <translation>Upravit geometrii prvku</translation>
+        <translation type="obsolete">Upravit geometrii prvku</translation>
     </message>
     <message>
         <source>Mirror</source>
-        <translation>Zrcadlit</translation>
+        <translation type="obsolete">Zrcadlit</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation>Rozdělit</translation>
+        <translation type="obsolete">Rozdělit</translation>
     </message>
     <message>
         <source>Explode Text into Letters</source>
-        <translation>Rozložit text na písmena</translation>
+        <translation type="obsolete">Rozložit text na písmena</translation>
     </message>
     <message>
         <source>Edit Text</source>
-        <translation>Upravit text</translation>
+        <translation type="obsolete">Upravit text</translation>
     </message>
     <message>
         <source>Move / Copy</source>
-        <translation>Posunout / Kopírovat</translation>
+        <translation type="obsolete">Posunout / Kopírovat</translation>
     </message>
     <message>
         <source>Rotate Two</source>
-        <translation>Otočit okolo dvou</translation>
+        <translation type="obsolete">Otočit okolo dvou</translation>
     </message>
     <message>
         <source>Offset (Experimental Feature, work in progress)</source>
-        <translation>Ekvidistanta (experimentální, stále ve vývoji)</translation>
+        <translation type="obsolete">Ekvidistanta (experimentální, stále ve vývoji)</translation>
     </message>
     <message>
         <source>Revert direction</source>
-        <translation>Obrátit směr</translation>
+        <translation type="obsolete">Obrátit směr</translation>
     </message>
     <message>
         <source>Lengthen</source>
-        <translation>Prodloužit</translation>
+        <translation type="obsolete">Prodloužit</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zaoblit, zaoblení vnitřního nebo vnějšího rohu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zaoblit, zaoblení vnitřního nebo vnějšího rohu&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPoints</name>
     <message>
         <source>Points</source>
-        <translation>Body</translation>
+        <translation type="obsolete">Body</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Zpět do hlavní nabídky</translation>
+        <translation type="obsolete">Zpět do hlavní nabídky</translation>
     </message>
     <message>
         <source>Single points</source>
-        <translation>Jednotlivé body</translation>
+        <translation type="obsolete">Jednotlivé body</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPolylines</name>
     <message>
         <source>Polylines</source>
-        <translation>Křivky</translation>
+        <translation type="obsolete">Křivky</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Zpět do hlavní nabídky</translation>
+        <translation type="obsolete">Zpět do hlavní nabídky</translation>
     </message>
     <message>
         <source>Create Polyline</source>
-        <translation>Vytvořit křivku</translation>
+        <translation type="obsolete">Vytvořit křivku</translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Smazat mezi dvěma uzly</translation>
+        <translation type="obsolete">Smazat mezi dvěma uzly</translation>
     </message>
     <message>
         <source>Add node</source>
-        <translation>Vložit uzel</translation>
+        <translation type="obsolete">Vložit uzel</translation>
     </message>
     <message>
         <source>Delete node</source>
-        <translation>Smazat uzel</translation>
+        <translation type="obsolete">Smazat uzel</translation>
     </message>
     <message>
         <source>Trim segments</source>
-        <translation>Zkrátit segmenty</translation>
+        <translation type="obsolete">Zkrátit segmenty</translation>
     </message>
     <message>
         <source>Append node</source>
-        <translation>Přidat uzel</translation>
+        <translation type="obsolete">Přidat uzel</translation>
     </message>
     <message>
         <source>Polyline equidistant</source>
-        <translation>Ekvidistanta křivky</translation>
+        <translation type="obsolete">Ekvidistanta křivky</translation>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Vytvořit křivku ze stávajících segmentů</translation>
+        <translation type="obsolete">Vytvořit křivku ze stávajících segmentů</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Soustředná</translation>
+        <translation type="obsolete">Soustředná</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarSelect</name>
     <message>
         <source>Select</source>
-        <translation>Vybrat</translation>
+        <translation type="obsolete">Vybrat</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation>Vybrat vše</translation>
+        <translation type="obsolete">Vybrat vše</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Zpět do hlavní nabídky</translation>
+        <translation type="obsolete">Zpět do hlavní nabídky</translation>
     </message>
     <message>
         <source>Select intersected entities</source>
-        <translation>Vybrat protínající se prvky</translation>
+        <translation type="obsolete">Vybrat protínající se prvky</translation>
     </message>
     <message>
         <source>Deselect intersected entities</source>
-        <translation>Zrušit výběr protínajících se prvků</translation>
+        <translation type="obsolete">Zrušit výběr protínajících se prvků</translation>
     </message>
     <message>
         <source>Deselect all</source>
-        <translation>Zrušit výběr</translation>
+        <translation type="obsolete">Zrušit výběr</translation>
     </message>
     <message>
         <source>Invert Selection</source>
-        <translation>Převrátit výběr</translation>
+        <translation type="obsolete">Převrátit výběr</translation>
     </message>
     <message>
         <source>Select layer</source>
-        <translation>Vybrat hladinu</translation>
+        <translation type="obsolete">Vybrat hladinu</translation>
     </message>
     <message>
         <source>(De-)Select contour</source>
-        <translation>Vybrat (zrušit výběr) obrys</translation>
+        <translation type="obsolete">Vybrat (zrušit výběr) obrys</translation>
     </message>
     <message>
         <source>(De-)Select entity</source>
-        <translation>Vybrat (zrušit výběr) prvek</translation>
+        <translation type="obsolete">Vybrat (zrušit výběr) prvek</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation>Zrušit výběr oknem</translation>
+        <translation type="obsolete">Zrušit výběr oknem</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation>Vybrat oknem</translation>
+        <translation type="obsolete">Vybrat oknem</translation>
     </message>
     <message>
         <source>Continue action</source>
-        <translation>Pokračovat</translation>
+        <translation type="obsolete">Pokračovat</translation>
     </message>
 </context>
 <context>
@@ -3149,19 +3197,19 @@ p, li { white-space: pre-wrap; }
     <name>QG_CadToolBarSplines</name>
     <message>
         <source>Splines</source>
-        <translation>Splajny</translation>
+        <translation type="obsolete">Splajny</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Zpět do hlavní nabídky</translation>
+        <translation type="obsolete">Zpět do hlavní nabídky</translation>
     </message>
     <message>
         <source>Spline</source>
-        <translation>Splajna</translation>
+        <translation type="obsolete">Splajna</translation>
     </message>
     <message>
         <source>Interpolation Spline</source>
-        <translation>Interpolační splajna</translation>
+        <translation type="obsolete">Interpolační splajna</translation>
     </message>
 </context>
 <context>
@@ -3811,12 +3859,12 @@ p, li { white-space: pre-wrap; }
         <translation>Vítejte</translation>
     </message>
     <message>
-        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size="+1"&gt;&lt;b&gt;Vítejte v programu QCAD&lt;/b&gt;
+        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Vítejte v programu QCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Vyberte prosím jednotky, které si přejete používat pro nové výkresy, a upřednostňovaný jazyk.&lt;br&gt;
@@ -4812,7 +4860,7 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
         <translation>Grady</translation>
     </message>
     <message>
-        <source>Surveyor's units</source>
+        <source>Surveyor&apos;s units</source>
         <translation>Zeměměřické jednotky</translation>
     </message>
     <message>
@@ -4820,8 +4868,8 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
         <translation>Vlastnosti</translation>
     </message>
     <message>
-        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
-        <translation>Pro formát délkových měr 'Stojařský' a Stavařský' musí být jednotky nastaveny na palcovou míru.</translation>
+        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <translation>Pro formát délkových měr &apos;Stojařský&apos; a Stavařský&apos; musí být jednotky nastaveny na palcovou míru.</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
@@ -5020,7 +5068,7 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
         <translation>Velikost čárek:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Velikost šikmých čárek na koncích kóty. Při velikosti 0 budou čárky vypnuty. Při zapnutých čárkách se nebudou kreslit kótovací šipky.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5441,6 +5489,53 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
     <message>
         <source>Display Splash</source>
         <translation>Zobrazit spouštěcí okno</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgOptionsMakerCam</name>
+    <message>
+        <source>Export as MakerCAM SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export invisible layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export visible construction layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert blocks to safe inline SVG content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipses / Ellipse arcs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6886,15 +6981,31 @@ Obsah pomocné hladiny se nezobrazí ve výstupu.</translation>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation>&amp;Upravit hladinu</translation>
+        <translation type="obsolete">&amp;Upravit hladinu</translation>
     </message>
     <message>
         <source>&amp;Toggle Visibility</source>
-        <translation>&amp;Přepnout viditelnost</translation>
+        <translation type="obsolete">&amp;Přepnout viditelnost</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
         <translation>Hledání odpovídajících názvů hladin</translation>
+    </message>
+    <message>
+        <source>Edit Layer &amp;Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7284,7 +7395,15 @@ Obsah pomocné hladiny se nezobrazí ve výstupu.</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="obsolete">...</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7411,6 +7530,17 @@ Obsah pomocné hladiny se nezobrazí ve výstupu.</translation>
     </message>
 </context>
 <context>
+    <name>QG_RecentFiles</name>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished">&amp;%1 %2</translation>
+    </message>
+    <message>
+        <source>Opening recent file...</source>
+        <translation type="unfinished">Otevírá se nedávno použitý soubor...</translation>
+    </message>
+</context>
+<context>
     <name>QG_RoundOptions</name>
     <message>
         <source>Round Options</source>
@@ -7452,28 +7582,28 @@ Obsah pomocné hladiny se nezobrazí ve výstupu.</translation>
         <translation>Celková délka</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Počet vybraných prvků&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Počet vybraných prvků&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Celková délka vybraných prvků&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Celková délka vybraných prvků&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7831,12 +7961,12 @@ p, li { white-space: pre-wrap; }
         <translation>Odstranit hladinu</translation>
     </message>
     <message>
-        <source>Layer "%1" and all entities on it will be removed.</source>
-        <translation>Hladina "%1" a všechny prvky v ní budou odstraněny.</translation>
+        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
+        <translation>Hladina &quot;%1&quot; a všechny prvky v ní budou odstraněny.</translation>
     </message>
     <message>
-        <source>Layer "%1" can never be removed.</source>
-        <translation>Hladina "%1" nemůže být nikdy odstraněna.</translation>
+        <source>Layer &quot;%1&quot; can never be removed.</source>
+        <translation>Hladina &quot;%1&quot; nemůže být nikdy odstraněna.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7847,16 +7977,16 @@ p, li { white-space: pre-wrap; }
         <translation>Odstranit blok</translation>
     </message>
     <message>
-        <source>Block "%1" and all its entities will be removed.</source>
-        <translation>Blok "%1" a všechny jeho prvky budou odstraněny.</translation>
+        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
+        <translation>Blok &quot;%1&quot; a všechny jeho prvky budou odstraněny.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Vlastnosti hladiny</translation>
     </message>
     <message>
-        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
-        <translation>Hladina s názvem "%1" již existuje. Zadejte prosím jiný název.</translation>
+        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
+        <translation>Hladina s názvem &quot;%1&quot; již existuje. Zadejte prosím jiný název.</translation>
     </message>
 </context>
 <context>
@@ -7929,7 +8059,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation type="obsolete">Všechny soubory s obrázky (%1)</translation>
+        <translation type="unfinished">Všechny soubory s obrázky (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -8085,7 +8215,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>All Image Files (%1) </source>
-        <translation>Všechny soubory obrázků (%1) </translation>
+        <translation type="obsolete">Všechny soubory obrázků (%1) </translation>
     </message>
     <message>
         <source>Scalable Vector Graphics</source>
@@ -8148,7 +8278,7 @@ Přejete si ho přepsat?</translation>
         <translation>neznámá chyba při otevírání souboru DWG</translation>
     </message>
     <message>
-        <source>can't open this dwg file</source>
+        <source>can&apos;t open this dwg file</source>
         <translation>soubor DWG nelze otevřít</translation>
     </message>
     <message>
@@ -8190,6 +8320,27 @@ Přejete si ho přepsat?</translation>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation>Šrafy nebyly vytvořeny kvůli rozestupu=%1 mezi (%2, %3) a (%4, %5)</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Upozornění</translation>
+    </message>
+    <message>
+        <source>experimental, save your work first.
+Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading file matadata in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading blocks in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading objects in dwg file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8349,8 +8500,8 @@ Přejete si ho přepsat?</translation>
         <translation>V&amp;ložit blok</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -9377,8 +9528,8 @@ Přejete si ho přepsat?</translation>
         <translation type="obsolete">Vložit obrázek (bitmapu)</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Insert &amp;Image</source>
@@ -9765,8 +9916,8 @@ Přejete si ho přepsat?</translation>
         <translation type="obsolete">Kreslí mnohoúhelník zadaný středem a rohem</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -10432,7 +10583,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source> or %1%2</source>
-        <translation> nebo %1%2</translation>
+        <translation type="obsolete"> nebo %1%2</translation>
     </message>
 </context>
 <context>
@@ -10746,12 +10897,12 @@ Přejete si ho přepsat?</translation>
         <translation type="obsolete">Vloží objekt z knihovny součástí.</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
-        <source>Cannot open file '%1'</source>
-        <translation>Nelze otevřít soubor '%1'</translation>
+        <source>Cannot open file &apos;%1&apos;</source>
+        <translation>Nelze otevřít soubor &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -10933,7 +11084,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>&amp;Delete Freehand</source>
-        <translation type="obsolete">&amp;Smazat "od ruky"</translation>
+        <translation type="obsolete">&amp;Smazat &quot;od ruky&quot;</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
@@ -11494,7 +11645,7 @@ Přejete si ho přepsat?</translation>
         <translation>&amp;Vložit uzel</translation>
     </message>
     <message>
-        <source>Add polyline's node</source>
+        <source>Add polyline&apos;s node</source>
         <translation>Vložit uzel křivky</translation>
     </message>
     <message>
@@ -11518,7 +11669,7 @@ Přejete si ho přepsat?</translation>
         <translation>Zadejte křivku pro vkládané uzly</translation>
     </message>
     <message>
-        <source>Specify adding node's point</source>
+        <source>Specify adding node&apos;s point</source>
         <translation>Zadejte vkládané uzly</translation>
     </message>
 </context>
@@ -11533,7 +11684,7 @@ Přejete si ho přepsat?</translation>
         <translation>&amp;Přidat uzel</translation>
     </message>
     <message>
-        <source>Append polyline's node</source>
+        <source>Append polyline&apos;s node</source>
         <translation>Přidat uzel křivky</translation>
     </message>
     <message>
@@ -11588,7 +11739,7 @@ Přejete si ho přepsat?</translation>
         <translation>&amp;Smazat uzel</translation>
     </message>
     <message>
-        <source>Delete polyline's node</source>
+        <source>Delete polyline&apos;s node</source>
         <translation>Smazat uzel křivky</translation>
     </message>
     <message>
@@ -11604,7 +11755,7 @@ Přejete si ho přepsat?</translation>
         <translation>Zadejte křivku s uzlem ke smazání</translation>
     </message>
     <message>
-        <source>Specify deleting node's point</source>
+        <source>Specify deleting node&apos;s point</source>
         <translation>Zadejte uzel ke smazání</translation>
     </message>
     <message>
@@ -11744,7 +11895,7 @@ Přejete si ho přepsat?</translation>
         <translation>&amp;Zkrátit segmenty</translation>
     </message>
     <message>
-        <source>Trim polyline's segments</source>
+        <source>Trim polyline&apos;s segments</source>
         <translation>Zkrátit segmenty křivky</translation>
     </message>
     <message>
@@ -11819,8 +11970,8 @@ Přejete si ho přepsat?</translation>
         <translation>zadejte z příkazového řádku posun výstupu</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring '@'</source>
-        <translation>Posun výstupu ignoruje relativní počátek. Ignoruje se '@'</translation>
+        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <translation>Posun výstupu ignoruje relativní počátek. Ignoruje se &apos;@&apos;</translation>
     </message>
 </context>
 <context>

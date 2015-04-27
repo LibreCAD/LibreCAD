@@ -73,6 +73,35 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <source>Export as &amp;MakerCAM SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionLayersToggleConstruction</name>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation type="unfinished">De&amp;bugging</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished">Wstaw obraz</translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -205,7 +234,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>De&amp;bugging</source>
-        <translation>De&amp;bugging</translation>
+        <translation type="obsolete">De&amp;bugging</translation>
     </message>
     <message>
         <source>&amp;Cascade</source>
@@ -229,7 +258,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation>Otwieranie ostatniego pliku...</translation>
+        <translation type="obsolete">Otwieranie ostatniego pliku...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -468,7 +497,7 @@ Możesz teraz zapisać Twoją pracę.
     </message>
     <message>
         <source>Insert Image</source>
-        <translation>Wstaw obraz</translation>
+        <translation type="obsolete">Wstaw obraz</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
@@ -542,7 +571,7 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
-        <translation>&amp;%1 %2</translation>
+        <translation type="obsolete">&amp;%1 %2</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
@@ -635,6 +664,20 @@ Autozapis wyłączony.</translation>
     <message>
         <source>&amp;Text</source>
         <translation type="unfinished">&amp;Tekst</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open the file
+%1
+Please check its existence and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2126,7 +2169,7 @@ Autozapis wyłączony.</translation>
     </message>
     <message>
         <source>&amp;Export...</source>
-        <translation>&amp;Eksportuj...</translation>
+        <translation type="obsolete">&amp;Eksportuj...</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -2167,6 +2210,10 @@ Autozapis wyłączony.</translation>
     <message>
         <source>&amp;Block</source>
         <translation type="unfinished">&amp;Blok</translation>
+    </message>
+    <message>
+        <source>&amp;Export as image</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2402,58 +2449,58 @@ w oddzielnym oknie</translation>
     <name>QG_CadToolBarArcs</name>
     <message>
         <source>Arcs</source>
-        <translation>Łuki</translation>
+        <translation type="obsolete">Łuki</translation>
     </message>
     <message>
         <source>Arc with three points</source>
-        <translation>Łuk z trzema punktami</translation>
+        <translation type="obsolete">Łuk z trzema punktami</translation>
     </message>
     <message>
         <source>Arc with Center, Point, Angles</source>
-        <translation>Łuk ze środkiem, punktem, kątami</translation>
+        <translation type="obsolete">Łuk ze środkiem, punktem, kątami</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Powrót do głównego menu</translation>
+        <translation type="obsolete">Powrót do głównego menu</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentryczny</translation>
+        <translation type="obsolete">Koncentryczny</translation>
     </message>
     <message>
         <source>Arc tangential to base entity with radius</source>
-        <translation>Łuk styczny do głównego obiektu z promieniem</translation>
+        <translation type="obsolete">Łuk styczny do głównego obiektu z promieniem</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarCircles</name>
     <message>
         <source>Circles</source>
-        <translation>Okręgi</translation>
+        <translation type="obsolete">Okręgi</translation>
     </message>
     <message>
         <source>Circle with two opposite points</source>
-        <translation>Okrąg z dwoma przeciwnymi punktami</translation>
+        <translation type="obsolete">Okrąg z dwoma przeciwnymi punktami</translation>
     </message>
     <message>
         <source>Circle with center and radius</source>
-        <translation>Okrąg z środkiem i promieniem</translation>
+        <translation type="obsolete">Okrąg z środkiem i promieniem</translation>
     </message>
     <message>
         <source>Circle with center and point</source>
-        <translation>Okrąg ze środkiem i punktem</translation>
+        <translation type="obsolete">Okrąg ze środkiem i punktem</translation>
     </message>
     <message>
         <source>Circle with three points</source>
-        <translation>Okrąg z trzema punktami</translation>
+        <translation type="obsolete">Okrąg z trzema punktami</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Powrót do głównego menu</translation>
+        <translation type="obsolete">Powrót do głównego menu</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentryczny</translation>
+        <translation type="obsolete">Koncentryczny</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -2467,256 +2514,204 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Narysuj okrąg wpisany w trójkąt, &lt;span style=&quot; font-style:italic;&quot;&gt;np.&lt;/span&gt;, styczny do 3 linii&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circle with 2 Points and Radius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QG_CadToolBarDim</name>
     <message>
         <source>Dimensions</source>
-        <translation>Wymiarowanie</translation>
+        <translation type="obsolete">Wymiarowanie</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Powrót do głównego menu</translation>
+        <translation type="obsolete">Powrót do głównego menu</translation>
     </message>
     <message>
         <source>Diametric Dimension</source>
-        <translation>Wymiar średnicy</translation>
+        <translation type="obsolete">Wymiar średnicy</translation>
     </message>
     <message>
         <source>Radial Dimension</source>
-        <translation>Wymiar promienia</translation>
+        <translation type="obsolete">Wymiar promienia</translation>
     </message>
     <message>
         <source>Vertical Dimension</source>
-        <translation>Wymiar pionowy</translation>
+        <translation type="obsolete">Wymiar pionowy</translation>
     </message>
     <message>
         <source>Horizontal Dimension</source>
-        <translation>Wymiar poziomy</translation>
+        <translation type="obsolete">Wymiar poziomy</translation>
     </message>
     <message>
         <source>Linear Dimension</source>
-        <translation>Wymiar liniowy</translation>
+        <translation type="obsolete">Wymiar liniowy</translation>
     </message>
     <message>
         <source>Aligned Dimension</source>
-        <translation>Wymiar dopasowany</translation>
+        <translation type="obsolete">Wymiar dopasowany</translation>
     </message>
     <message>
         <source>Angular Dimension</source>
-        <translation>Wymiar kątowy</translation>
+        <translation type="obsolete">Wymiar kątowy</translation>
     </message>
     <message>
         <source>Leader</source>
-        <translation>Odnośnik</translation>
+        <translation type="obsolete">Odnośnik</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentryczny</translation>
+        <translation type="obsolete">Koncentryczny</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarEllipses</name>
     <message>
         <source>Ellipses</source>
-        <translation>Elipsy</translation>
+        <translation type="obsolete">Elipsy</translation>
     </message>
     <message>
         <source>Ellipse arc with center, two points and angles</source>
-        <translation>Elipsa ze środkiem, dwoma punktami i kątem</translation>
+        <translation type="obsolete">Elipsa ze środkiem, dwoma punktami i kątem</translation>
     </message>
     <message>
         <source>Ellipse with Center and two points</source>
-        <translation>Elipsa ze środkiem oraz dwoma punktami</translation>
+        <translation type="obsolete">Elipsa ze środkiem oraz dwoma punktami</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Powrót do głównego menu</translation>
+        <translation type="obsolete">Powrót do głównego menu</translation>
     </message>
     <message>
         <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation>Rysuj Elipsę za pomocą ogniska i punktu na elipsie</translation>
+        <translation type="obsolete">Rysuj Elipsę za pomocą ogniska i punktu na elipsie</translation>
     </message>
     <message>
         <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation>Rysuj Elipsę za pomocą osi w kierunkach x i y przez 4 punkty na elipsie</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Rysuj Elipsę za pomocą osi w kierunkach x i y przez 4 punkty na elipsie</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentryczny</translation>
+        <translation type="obsolete">Koncentryczny</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rysuj elipsę na podstawie środka i 3 punktów&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rysuj elipsę na podstawie środka i 3 punktów&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarInfo</name>
     <message>
         <source>Info</source>
-        <translation>Informacja</translation>
+        <translation type="obsolete">Informacja</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Powrót do głównego menu</translation>
+        <translation type="obsolete">Powrót do głównego menu</translation>
     </message>
     <message>
         <source>Distance (Point, Point)</source>
-        <translation>Odległość (Punkt, Punkt)</translation>
+        <translation type="obsolete">Odległość (Punkt, Punkt)</translation>
     </message>
     <message>
         <source>Distance (Entity, Point)</source>
-        <translation>Odległość (Obiekt, Punkt)</translation>
+        <translation type="obsolete">Odległość (Obiekt, Punkt)</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Kąt</translation>
+        <translation type="obsolete">Kąt</translation>
     </message>
     <message>
         <source>Total length of selected entities</source>
-        <translation>Całkowita długość zaznaczonych obiektów</translation>
+        <translation type="obsolete">Całkowita długość zaznaczonych obiektów</translation>
     </message>
     <message>
         <source>Area of polygon</source>
-        <translation>Obszar wieloboku</translation>
+        <translation type="obsolete">Obszar wieloboku</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentryczny</translation>
+        <translation type="obsolete">Koncentryczny</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarLines</name>
     <message>
         <source>Lines</source>
-        <translation>Linie</translation>
+        <translation type="obsolete">Linie</translation>
     </message>
     <message>
         <source>Freehand lines</source>
-        <translation>Linie odręczne</translation>
+        <translation type="obsolete">Linie odręczne</translation>
     </message>
     <message>
         <source>Orthogonal lines</source>
-        <translation>Linie prostopadłe</translation>
+        <translation type="obsolete">Linie prostopadłe</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Powrót do głównego menu</translation>
+        <translation type="obsolete">Powrót do głównego menu</translation>
     </message>
     <message>
         <source>Bisectors</source>
-        <translation>Dwusieczne</translation>
+        <translation type="obsolete">Dwusieczne</translation>
     </message>
     <message>
         <source>Tangents from circle to circle</source>
-        <translation>Styczna od okręgu do okręgu</translation>
+        <translation type="obsolete">Styczna od okręgu do okręgu</translation>
     </message>
     <message>
         <source>Tangents from point to circle</source>
-        <translation>Styczna od punktu do okręgu</translation>
+        <translation type="obsolete">Styczna od punktu do okręgu</translation>
     </message>
     <message>
         <source>Line with two points</source>
-        <translation>Linia z dwoma punktami</translation>
+        <translation type="obsolete">Linia z dwoma punktami</translation>
     </message>
     <message>
         <source>Lines with relative angles</source>
-        <translation>Linie z kątami względnymi</translation>
+        <translation type="obsolete">Linie z kątami względnymi</translation>
     </message>
     <message>
         <source>Line with given angle</source>
-        <translation>Linia z podanym kątem</translation>
+        <translation type="obsolete">Linia z podanym kątem</translation>
     </message>
     <message>
         <source>Horizontal lines</source>
-        <translation>Linie poziome</translation>
+        <translation type="obsolete">Linie poziome</translation>
     </message>
     <message>
         <source>Vertical lines</source>
-        <translation>Linie pionowe</translation>
+        <translation type="obsolete">Linie pionowe</translation>
     </message>
     <message>
         <source>Rectangles</source>
-        <translation>Prostokąty</translation>
+        <translation type="obsolete">Prostokąty</translation>
     </message>
     <message>
         <source>Polygons with Center and Corner</source>
-        <translation>Wieloboki ze środkiem i wierzchołkiem</translation>
+        <translation type="obsolete">Wieloboki ze środkiem i wierzchołkiem</translation>
     </message>
     <message>
         <source>Polygons with two Corners</source>
-        <translation>Wieloboki z dwoma wierzchołkami</translation>
+        <translation type="obsolete">Wieloboki z dwoma wierzchołkami</translation>
     </message>
     <message>
         <source>Parallels with distance</source>
-        <translation>Równoległe z daną odległością</translation>
+        <translation type="obsolete">Równoległe z daną odległością</translation>
     </message>
     <message>
         <source>Parallels through point</source>
-        <translation>Równoległe poprzez punkt</translation>
+        <translation type="obsolete">Równoległe poprzez punkt</translation>
     </message>
     <message>
         <source>Tangents to a circle, orthogonal to a line</source>
-        <translation>Styczne do okręgu, prostopadłe do linii</translation>
+        <translation type="obsolete">Styczne do okręgu, prostopadłe do linii</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarMain</name>
     <message>
         <source>Main</source>
-        <translation>Główne</translation>
+        <translation type="obsolete">Główne</translation>
     </message>
     <message>
         <source>Show menu &quot;Lines&quot;</source>
@@ -2764,7 +2759,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Create Block</source>
-        <translation>Utwórz blok</translation>
+        <translation type="obsolete">Utwórz blok</translation>
     </message>
     <message>
         <source>Raster Image</source>
@@ -2784,31 +2779,31 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Show toolbar &quot;Lines&quot;</source>
-        <translation>Pokaż pasek narzędzi &quot;Linie&quot;</translation>
+        <translation type="obsolete">Pokaż pasek narzędzi &quot;Linie&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Arcs&quot;</source>
-        <translation>Pokaż pasek narzędzi &quot;Łuki&quot;</translation>
+        <translation type="obsolete">Pokaż pasek narzędzi &quot;Łuki&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Circles&quot;</source>
-        <translation>Pokaż pasek narzędzi &quot;Okręgi&quot;</translation>
+        <translation type="obsolete">Pokaż pasek narzędzi &quot;Okręgi&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Ellipses&quot;</source>
-        <translation>Pokaż pasek narzędzi &quot;Elipsy&quot;</translation>
+        <translation type="obsolete">Pokaż pasek narzędzi &quot;Elipsy&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Polylines&quot;</source>
-        <translation>Pokaż pasek narzędzi &quot;Polilinie&quot;</translation>
+        <translation type="obsolete">Pokaż pasek narzędzi &quot;Polilinie&quot;</translation>
     </message>
     <message>
         <source>Draw Splines</source>
-        <translation>Rysuj splajn</translation>
+        <translation type="obsolete">Rysuj splajn</translation>
     </message>
     <message>
         <source>Draw Points</source>
-        <translation>Rysuj punkty</translation>
+        <translation type="obsolete">Rysuj punkty</translation>
     </message>
     <message>
         <source>Insert Text</source>
@@ -2816,50 +2811,50 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Show toolbar &quot;Dimensions&quot;</source>
-        <translation>Pokaż pasek narzędzi &quot;Wymiary&quot;</translation>
+        <translation type="obsolete">Pokaż pasek narzędzi &quot;Wymiary&quot;</translation>
     </message>
     <message>
         <source>Create Hatch</source>
-        <translation>Tworzenie wypełnienia</translation>
+        <translation type="obsolete">Tworzenie wypełnienia</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation>Wstaw obraz</translation>
+        <translation type="obsolete">Wstaw obraz</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Modify&quot;</source>
-        <translation>Pokaż pasek narzędzi &quot;Modyfikuj&quot;</translation>
+        <translation type="obsolete">Pokaż pasek narzędzi &quot;Modyfikuj&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Info&quot;</source>
-        <translation>Pokaż pasek narzędzi &quot;Info&quot;</translation>
+        <translation type="obsolete">Pokaż pasek narzędzi &quot;Info&quot;</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Select&quot;</source>
-        <translation>Pokaż pasek narzędzi &quot;Zaznacz&quot;</translation>
+        <translation type="obsolete">Pokaż pasek narzędzi &quot;Zaznacz&quot;</translation>
     </message>
     <message>
         <source>Insert Multi-line Text</source>
-        <translation>Wstaw Tekst Wielowierszowy</translation>
+        <translation type="obsolete">Wstaw Tekst Wielowierszowy</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarModify</name>
     <message>
         <source>Modify</source>
-        <translation>Zmień</translation>
+        <translation type="obsolete">Zmień</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Powrót do głównego menu</translation>
+        <translation type="obsolete">Powrót do głównego menu</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation>Obracaj</translation>
+        <translation type="obsolete">Obracaj</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation>Skaluj</translation>
+        <translation type="obsolete">Skaluj</translation>
     </message>
     <message>
         <source>Move</source>
@@ -2867,19 +2862,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Move and Rotate</source>
-        <translation>Przesuń i obróć</translation>
+        <translation type="obsolete">Przesuń i obróć</translation>
     </message>
     <message>
         <source>Explode</source>
-        <translation>Wybuch</translation>
+        <translation type="obsolete">Wybuch</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Usuń</translation>
+        <translation type="obsolete">Usuń</translation>
     </message>
     <message>
         <source>Stretch</source>
-        <translation>Rozciągaj</translation>
+        <translation type="obsolete">Rozciągaj</translation>
     </message>
     <message>
         <source>Cut</source>
@@ -2891,7 +2886,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bevel</source>
-        <translation>Zetnij</translation>
+        <translation type="obsolete">Zetnij</translation>
     </message>
     <message>
         <source>Trim by amount</source>
@@ -2899,11 +2894,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim / Extend two</source>
-        <translation>Przytnij / przedłuż dwa</translation>
+        <translation type="obsolete">Przytnij / przedłuż dwa</translation>
     </message>
     <message>
         <source>Trim / Extend</source>
-        <translation>Przytnij / przedłuż</translation>
+        <translation type="obsolete">Przytnij / przedłuż</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
@@ -2911,168 +2906,156 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Edit Entity Attributes</source>
-        <translation>Edytuj atrybuty obiektu</translation>
+        <translation type="obsolete">Edytuj atrybuty obiektu</translation>
     </message>
     <message>
         <source>Edit Entity Geometry</source>
-        <translation>Edytuj geometrię obiektu</translation>
+        <translation type="obsolete">Edytuj geometrię obiektu</translation>
     </message>
     <message>
         <source>Mirror</source>
-        <translation>Odbij</translation>
+        <translation type="obsolete">Odbij</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation>Podzielona</translation>
+        <translation type="obsolete">Podzielona</translation>
     </message>
     <message>
         <source>Explode Text into Letters</source>
-        <translation>Podziel tekst na litery</translation>
+        <translation type="obsolete">Podziel tekst na litery</translation>
     </message>
     <message>
         <source>Edit Text</source>
-        <translation>Edytuj tekst</translation>
+        <translation type="obsolete">Edytuj tekst</translation>
     </message>
     <message>
         <source>Move / Copy</source>
-        <translation>Przesuń / kopiuj</translation>
+        <translation type="obsolete">Przesuń / kopiuj</translation>
     </message>
     <message>
         <source>Rotate Two</source>
-        <translation>Obróć dwa</translation>
-    </message>
-    <message>
-        <source>Offset (Experimental Feature, work in progress)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Revert direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Obróć dwa</translation>
     </message>
     <message>
         <source>Lengthen</source>
-        <translation type="unfinished">Wydłuż</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Wydłuż</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPoints</name>
     <message>
         <source>Points</source>
-        <translation>Punkty</translation>
+        <translation type="obsolete">Punkty</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Powrót do głównego menu</translation>
+        <translation type="obsolete">Powrót do głównego menu</translation>
     </message>
     <message>
         <source>Single points</source>
-        <translation>Pojedyncze punkty</translation>
+        <translation type="obsolete">Pojedyncze punkty</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPolylines</name>
     <message>
         <source>Polylines</source>
-        <translation>Łamane</translation>
+        <translation type="obsolete">Łamane</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Powrót do głównego menu</translation>
+        <translation type="obsolete">Powrót do głównego menu</translation>
     </message>
     <message>
         <source>Create Polyline</source>
-        <translation>Utwórz łamaną</translation>
+        <translation type="obsolete">Utwórz łamaną</translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Usuń pomiędzy dwoma wierzchołkami</translation>
+        <translation type="obsolete">Usuń pomiędzy dwoma wierzchołkami</translation>
     </message>
     <message>
         <source>Add node</source>
-        <translation>Dodaj wierzchołek</translation>
+        <translation type="obsolete">Dodaj wierzchołek</translation>
     </message>
     <message>
         <source>Delete node</source>
-        <translation>Usuń wierzchołek</translation>
+        <translation type="obsolete">Usuń wierzchołek</translation>
     </message>
     <message>
         <source>Trim segments</source>
-        <translation>Przytnij odcinek</translation>
+        <translation type="obsolete">Przytnij odcinek</translation>
     </message>
     <message>
         <source>Append node</source>
-        <translation>Dołącz wierzchołek</translation>
+        <translation type="obsolete">Dołącz wierzchołek</translation>
     </message>
     <message>
         <source>Polyline equidistant</source>
-        <translation>Polilinie równoodległe</translation>
+        <translation type="obsolete">Polilinie równoodległe</translation>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Utwórz linię łamaną z istniejących obiektów</translation>
+        <translation type="obsolete">Utwórz linię łamaną z istniejących obiektów</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentryczny</translation>
+        <translation type="obsolete">Koncentryczny</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarSelect</name>
     <message>
         <source>Select</source>
-        <translation>Zaznacz</translation>
+        <translation type="obsolete">Zaznacz</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation>Zaznacz wszystko</translation>
+        <translation type="obsolete">Zaznacz wszystko</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Powrót do głównego menu</translation>
+        <translation type="obsolete">Powrót do głównego menu</translation>
     </message>
     <message>
         <source>Select intersected entities</source>
-        <translation>Zaznacz obiekty, które się przecinają</translation>
+        <translation type="obsolete">Zaznacz obiekty, które się przecinają</translation>
     </message>
     <message>
         <source>Deselect intersected entities</source>
-        <translation>Odznacz obiekty, które się przecinają</translation>
+        <translation type="obsolete">Odznacz obiekty, które się przecinają</translation>
     </message>
     <message>
         <source>Deselect all</source>
-        <translation>Odznacz wszystko</translation>
+        <translation type="obsolete">Odznacz wszystko</translation>
     </message>
     <message>
         <source>Invert Selection</source>
-        <translation>Odwróć zaznaczenie</translation>
+        <translation type="obsolete">Odwróć zaznaczenie</translation>
     </message>
     <message>
         <source>Select layer</source>
-        <translation>Zaznacz warstwę</translation>
+        <translation type="obsolete">Zaznacz warstwę</translation>
     </message>
     <message>
         <source>(De-)Select contour</source>
-        <translation>(Za/Od)znacz kontur</translation>
+        <translation type="obsolete">(Za/Od)znacz kontur</translation>
     </message>
     <message>
         <source>(De-)Select entity</source>
-        <translation>(Za/Od)znacz obiekt</translation>
+        <translation type="obsolete">(Za/Od)znacz obiekt</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation>Odznacz okno</translation>
+        <translation type="obsolete">Odznacz okno</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation>Zaznacz okno</translation>
+        <translation type="obsolete">Zaznacz okno</translation>
     </message>
     <message>
         <source>Continue action</source>
-        <translation>Kontynuuj działanie</translation>
+        <translation type="obsolete">Kontynuuj działanie</translation>
     </message>
 </context>
 <context>
@@ -3150,19 +3133,15 @@ p, li { white-space: pre-wrap; }
     <name>QG_CadToolBarSplines</name>
     <message>
         <source>Splines</source>
-        <translation>Krzywe składane</translation>
+        <translation type="obsolete">Krzywe składane</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Powrót do głównego menu</translation>
+        <translation type="obsolete">Powrót do głównego menu</translation>
     </message>
     <message>
         <source>Spline</source>
-        <translation>Krzywa składana</translation>
-    </message>
-    <message>
-        <source>Interpolation Spline</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Krzywa składana</translation>
     </message>
 </context>
 <context>
@@ -5449,6 +5428,53 @@ Powyższe ustawienia możesz później zmienić w oknie dialogowym opcji QCada.<
     </message>
 </context>
 <context>
+    <name>QG_DlgOptionsMakerCam</name>
+    <message>
+        <source>Export as MakerCAM SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export invisible layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export visible construction layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert blocks to safe inline SVG content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipses / Ellipse arcs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>Drawing Variables</source>
@@ -6896,14 +6922,30 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation>&amp;Edytuj warstwę</translation>
+        <translation type="obsolete">&amp;Edytuj warstwę</translation>
     </message>
     <message>
         <source>&amp;Toggle Visibility</source>
-        <translation>&amp;Zmień widoczność</translation>
+        <translation type="obsolete">&amp;Zmień widoczność</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Layer &amp;Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7294,7 +7336,15 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="obsolete">...</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7418,6 +7468,17 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <source>fixed</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_RecentFiles</name>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished">&amp;%1 %2</translation>
+    </message>
+    <message>
+        <source>Opening recent file...</source>
+        <translation type="unfinished">Otwieranie ostatniego pliku...</translation>
     </message>
 </context>
 <context>
@@ -7931,7 +7992,7 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation type="obsolete">Wszystkie pliki obrazów (%1)</translation>
+        <translation type="unfinished">Wszystkie pliki obrazów (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -8087,7 +8148,7 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>All Image Files (%1) </source>
-        <translation>Wszystkie pliki rysunku (%1)</translation>
+        <translation type="obsolete">Wszystkie pliki rysunku (%1)</translation>
     </message>
     <message>
         <source>Scalable Vector Graphics</source>
@@ -8191,6 +8252,27 @@ Czy chcesz zastąpić?</translation>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Uwaga</translation>
+    </message>
+    <message>
+        <source>experimental, save your work first.
+Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading file matadata in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading blocks in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading objects in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10443,10 +10525,6 @@ Czy chcesz zastąpić?</translation>
     <message>
         <source>Angle: %1</source>
         <translation>Kąt: %1</translation>
-    </message>
-    <message>
-        <source> or %1%2</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -88,6 +88,35 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <source>Export as &amp;MakerCAM SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionLayersToggleConstruction</name>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation type="unfinished">&amp;Hata Ayıklama</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -244,7 +273,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>De&amp;bugging</source>
-        <translation>&amp;Hata Ayıklama</translation>
+        <translation type="obsolete">&amp;Hata Ayıklama</translation>
     </message>
     <message>
         <source>Layer List</source>
@@ -292,7 +321,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation>Son kullanılan dosya açılıyor...</translation>
+        <translation type="obsolete">Son kullanılan dosya açılıyor...</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -440,10 +469,6 @@ adresinden temin edin. Şimdi çalışmanızı kaydedin.</translation>
         <translation type="unfinished">&amp;Yamuk</translation>
     </message>
     <message>
-        <source>Insert Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Auto-saving drawing...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -496,10 +521,6 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>SCM Revision: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -597,6 +618,20 @@ Auto-save disabled.</source>
     <message>
         <source>&amp;Text</source>
         <translation type="unfinished">&amp;Yazı</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open the file
+%1
+Please check its existence and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -863,7 +898,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Export...</source>
-        <translation>&amp;Dışa Aktar...</translation>
+        <translation type="obsolete">&amp;Dışa Aktar...</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -892,6 +927,10 @@ Auto-save disabled.</source>
     <message>
         <source>&amp;Block</source>
         <translation type="unfinished">&amp;Blok</translation>
+    </message>
+    <message>
+        <source>&amp;Export as image</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1128,309 +1167,233 @@ için açar</translation>
     <name>QG_CadToolBarArcs</name>
     <message>
         <source>Arcs</source>
-        <translation>Yaylar</translation>
+        <translation type="obsolete">Yaylar</translation>
     </message>
     <message>
         <source>Arc with three points</source>
-        <translation>Üç noktasıyla yay</translation>
+        <translation type="obsolete">Üç noktasıyla yay</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Ana menüye dön</translation>
+        <translation type="obsolete">Ana menüye dön</translation>
     </message>
     <message>
         <source>Arc with Center, Point, Angles</source>
-        <translation>Merkez, Nokta ve Açı ile Yay</translation>
+        <translation type="obsolete">Merkez, Nokta ve Açı ile Yay</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Paralel</translation>
-    </message>
-    <message>
-        <source>Arc tangential to base entity with radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Paralel</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarCircles</name>
     <message>
         <source>Circles</source>
-        <translation>Çemberler</translation>
+        <translation type="obsolete">Çemberler</translation>
     </message>
     <message>
         <source>Circle with two opposite points</source>
-        <translation>İki zıt noktasıyla çember</translation>
+        <translation type="obsolete">İki zıt noktasıyla çember</translation>
     </message>
     <message>
         <source>Circle with center and radius</source>
-        <translation>Merkezi ve yarıçapıyla çember</translation>
+        <translation type="obsolete">Merkezi ve yarıçapıyla çember</translation>
     </message>
     <message>
         <source>Circle with center and point</source>
-        <translation>Merkezi ve bir noktası ile çember</translation>
+        <translation type="obsolete">Merkezi ve bir noktası ile çember</translation>
     </message>
     <message>
         <source>Circle with three points</source>
-        <translation>Üç noktasıyla çember</translation>
+        <translation type="obsolete">Üç noktasıyla çember</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Ana menüye dön</translation>
+        <translation type="obsolete">Ana menüye dön</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Paralel</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circle with 2 Points and Radius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Paralel</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarDim</name>
     <message>
         <source>Dimensions</source>
-        <translation>Boyutlar</translation>
+        <translation type="obsolete">Boyutlar</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Ana menüye dön</translation>
+        <translation type="obsolete">Ana menüye dön</translation>
     </message>
     <message>
         <source>Aligned Dimension</source>
-        <translation>Hizalı Ölçülendirme</translation>
+        <translation type="obsolete">Hizalı Ölçülendirme</translation>
     </message>
     <message>
         <source>Linear Dimension</source>
-        <translation>Doğrusal Ölçülendirme</translation>
+        <translation type="obsolete">Doğrusal Ölçülendirme</translation>
     </message>
     <message>
         <source>Horizontal Dimension</source>
-        <translation>Yatay Ölçülendirme</translation>
+        <translation type="obsolete">Yatay Ölçülendirme</translation>
     </message>
     <message>
         <source>Vertical Dimension</source>
-        <translation>Düşey Ölçülendirme</translation>
+        <translation type="obsolete">Düşey Ölçülendirme</translation>
     </message>
     <message>
         <source>Radial Dimension</source>
-        <translation>Yarıçap</translation>
+        <translation type="obsolete">Yarıçap</translation>
     </message>
     <message>
         <source>Diametric Dimension</source>
-        <translation>Çap</translation>
+        <translation type="obsolete">Çap</translation>
     </message>
     <message>
         <source>Angular Dimension</source>
-        <translation>Açısal Ölçülendirme</translation>
+        <translation type="obsolete">Açısal Ölçülendirme</translation>
     </message>
     <message>
         <source>Leader</source>
-        <translation>Uzakta Ölçülendirme</translation>
+        <translation type="obsolete">Uzakta Ölçülendirme</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">Paralel</translation>
+        <translation type="obsolete">Paralel</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarEllipses</name>
     <message>
         <source>Ellipses</source>
-        <translation>Elipsler</translation>
+        <translation type="obsolete">Elipsler</translation>
     </message>
     <message>
         <source>Ellipse arc with center, two points and angles</source>
-        <translation>Merkezi, iki noktası ve açısıyla elips yayı</translation>
+        <translation type="obsolete">Merkezi, iki noktası ve açısıyla elips yayı</translation>
     </message>
     <message>
         <source>Ellipse with Center and two points</source>
-        <translation>Merkezi ve iki noktasıyla elips</translation>
+        <translation type="obsolete">Merkezi ve iki noktasıyla elips</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Ana menüye dön</translation>
-    </message>
-    <message>
-        <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Ana menüye dön</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">Paralel</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Paralel</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarInfo</name>
     <message>
         <source>Info</source>
-        <translation>Bilgi</translation>
+        <translation type="obsolete">Bilgi</translation>
     </message>
     <message>
         <source>Distance (Point, Point)</source>
-        <translation>Mesafe (Nokta, Nokta)</translation>
+        <translation type="obsolete">Mesafe (Nokta, Nokta)</translation>
     </message>
     <message>
         <source>Distance (Entity, Point)</source>
-        <translation>Mesafe (Öğe, Nokta)</translation>
+        <translation type="obsolete">Mesafe (Öğe, Nokta)</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Ana menüye dön</translation>
+        <translation type="obsolete">Ana menüye dön</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Açı</translation>
+        <translation type="obsolete">Açı</translation>
     </message>
     <message>
         <source>Total length of selected entities</source>
-        <translation>Seçili öğelerin toplam uzunluğu</translation>
-    </message>
-    <message>
-        <source>Area of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Seçili öğelerin toplam uzunluğu</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">Paralel</translation>
+        <translation type="obsolete">Paralel</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarLines</name>
     <message>
         <source>Lines</source>
-        <translation>Çizgiler</translation>
+        <translation type="obsolete">Çizgiler</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Ana menüye dön</translation>
+        <translation type="obsolete">Ana menüye dön</translation>
     </message>
     <message>
         <source>Line with two points</source>
-        <translation>İki noktasıyla çizgiler</translation>
+        <translation type="obsolete">İki noktasıyla çizgiler</translation>
     </message>
     <message>
         <source>Line with given angle</source>
-        <translation>Açısı belirtilen çizgiler</translation>
+        <translation type="obsolete">Açısı belirtilen çizgiler</translation>
     </message>
     <message>
         <source>Horizontal lines</source>
-        <translation>Yatay çizgiler</translation>
+        <translation type="obsolete">Yatay çizgiler</translation>
     </message>
     <message>
         <source>Vertical lines</source>
-        <translation>Düşey Çizgiler</translation>
+        <translation type="obsolete">Düşey Çizgiler</translation>
     </message>
     <message>
         <source>Rectangles</source>
-        <translation>Dikdörtgenler</translation>
+        <translation type="obsolete">Dikdörtgenler</translation>
     </message>
     <message>
         <source>Bisectors</source>
-        <translation>Açıortaylar</translation>
+        <translation type="obsolete">Açıortaylar</translation>
     </message>
     <message>
         <source>Parallels with distance</source>
-        <translation>Mesafeyle paralel çizgiler</translation>
+        <translation type="obsolete">Mesafeyle paralel çizgiler</translation>
     </message>
     <message>
         <source>Tangents from point to circle</source>
-        <translation>Noktadan çembere teğet</translation>
+        <translation type="obsolete">Noktadan çembere teğet</translation>
     </message>
     <message>
         <source>Tangents from circle to circle</source>
-        <translation>Çemberlerin ortak teğeti</translation>
+        <translation type="obsolete">Çemberlerin ortak teğeti</translation>
     </message>
     <message>
         <source>Orthogonal lines</source>
-        <translation>Kesişen çizgiler</translation>
+        <translation type="obsolete">Kesişen çizgiler</translation>
     </message>
     <message>
         <source>Lines with relative angles</source>
-        <translation>Eğik çizgiler</translation>
+        <translation type="obsolete">Eğik çizgiler</translation>
     </message>
     <message>
         <source>Polygons with Center and Corner</source>
-        <translation>Merkezi ve Köşesiyle çokgenler</translation>
+        <translation type="obsolete">Merkezi ve Köşesiyle çokgenler</translation>
     </message>
     <message>
         <source>Polygons with two Corners</source>
-        <translation>İki Köşesi ile çokgenler</translation>
+        <translation type="obsolete">İki Köşesi ile çokgenler</translation>
     </message>
     <message>
         <source>Freehand lines</source>
-        <translation>Karalama çizgileri</translation>
+        <translation type="obsolete">Karalama çizgileri</translation>
     </message>
     <message>
         <source>Parallels through point</source>
-        <translation>Noktada paralel çizgiler</translation>
-    </message>
-    <message>
-        <source>Tangents to a circle, orthogonal to a line</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Noktada paralel çizgiler</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarMain</name>
     <message>
         <source>Main</source>
-        <translation>Ana</translation>
+        <translation type="obsolete">Ana</translation>
     </message>
     <message>
         <source>Show menu &quot;Lines&quot;</source>
@@ -1466,7 +1429,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Create Block</source>
-        <translation>Blok Oluştur</translation>
+        <translation type="obsolete">Blok Oluştur</translation>
     </message>
     <message>
         <source>Show menu &quot;Dimensions&quot;</source>
@@ -1489,75 +1452,23 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Noktalar</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Lines&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Arcs&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Circles&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Ellipses&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Polylines&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Draw Splines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Draw Points</source>
-        <translation type="unfinished">Nokta çizer</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Dimensions&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create Hatch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Insert Image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Modify&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Info&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Select&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Insert Multi-line Text</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Nokta çizer</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarModify</name>
     <message>
         <source>Modify</source>
-        <translation>Değiştir</translation>
+        <translation type="obsolete">Değiştir</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Ana menüye dön</translation>
+        <translation type="obsolete">Ana menüye dön</translation>
     </message>
     <message>
         <source>Stretch</source>
-        <translation>Uzat</translation>
+        <translation type="obsolete">Uzat</translation>
     </message>
     <message>
         <source>Round</source>
@@ -1565,7 +1476,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bevel</source>
-        <translation>Kır</translation>
+        <translation type="obsolete">Kır</translation>
     </message>
     <message>
         <source>Trim by amount</source>
@@ -1573,35 +1484,35 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim / Extend</source>
-        <translation>Kırp</translation>
+        <translation type="obsolete">Kırp</translation>
     </message>
     <message>
         <source>Explode</source>
-        <translation>Patlat</translation>
+        <translation type="obsolete">Patlat</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Sil</translation>
+        <translation type="obsolete">Sil</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
-        <translation>Öğe Özniteliklerini Düzenle</translation>
+        <translation type="obsolete">Öğe Özniteliklerini Düzenle</translation>
     </message>
     <message>
         <source>Edit Entity Geometry</source>
-        <translation>Öğe Geometrisini Düzenle</translation>
+        <translation type="obsolete">Öğe Geometrisini Düzenle</translation>
     </message>
     <message>
         <source>Mirror</source>
-        <translation>Yansıla</translation>
+        <translation type="obsolete">Yansıla</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation>Oranla</translation>
+        <translation type="obsolete">Oranla</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation>Döndür</translation>
+        <translation type="obsolete">Döndür</translation>
     </message>
     <message>
         <source>Move</source>
@@ -1609,7 +1520,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Move and Rotate</source>
-        <translation>Taşı ve Döndür</translation>
+        <translation type="obsolete">Taşı ve Döndür</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
@@ -1617,160 +1528,112 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim / Extend two</source>
-        <translation>İkili kırp</translation>
+        <translation type="obsolete">İkili kırp</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation>Böl</translation>
+        <translation type="obsolete">Böl</translation>
     </message>
     <message>
         <source>Explode Text into Letters</source>
-        <translation>Metni Harflerine Ayır</translation>
+        <translation type="obsolete">Metni Harflerine Ayır</translation>
     </message>
     <message>
         <source>Edit Text</source>
-        <translation>Metni Düzenle</translation>
+        <translation type="obsolete">Metni Düzenle</translation>
     </message>
     <message>
         <source>Move / Copy</source>
-        <translation type="unfinished">Taşı / Kopyala</translation>
+        <translation type="obsolete">Taşı / Kopyala</translation>
     </message>
     <message>
         <source>Rotate Two</source>
-        <translation type="unfinished">İkili Döndür</translation>
-    </message>
-    <message>
-        <source>Offset (Experimental Feature, work in progress)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Revert direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">İkili Döndür</translation>
     </message>
     <message>
         <source>Lengthen</source>
-        <translation type="unfinished">Kısalt</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Kısalt</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPoints</name>
     <message>
         <source>Points</source>
-        <translation>Noktalar</translation>
+        <translation type="obsolete">Noktalar</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Ana menüye dön</translation>
+        <translation type="obsolete">Ana menüye dön</translation>
     </message>
     <message>
         <source>Single points</source>
-        <translation>Tek nokta</translation>
+        <translation type="obsolete">Tek nokta</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPolylines</name>
     <message>
-        <source>Polylines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Back to main menu</source>
-        <translation type="unfinished">Ana menüye dön</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete between two nodes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trim segments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Append node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polyline equidistant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Ana menüye dön</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">Paralel</translation>
+        <translation type="obsolete">Paralel</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarSelect</name>
     <message>
         <source>Select</source>
-        <translation>Seç</translation>
+        <translation type="obsolete">Seç</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation>Tümünü seç</translation>
+        <translation type="obsolete">Tümünü seç</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Ana menüye dön</translation>
+        <translation type="obsolete">Ana menüye dön</translation>
     </message>
     <message>
         <source>Select intersected entities</source>
-        <translation>Kesişen öğeleri seç</translation>
+        <translation type="obsolete">Kesişen öğeleri seç</translation>
     </message>
     <message>
         <source>Deselect intersected entities</source>
-        <translation>Kesişen öğeleri bırak</translation>
+        <translation type="obsolete">Kesişen öğeleri bırak</translation>
     </message>
     <message>
         <source>Deselect all</source>
-        <translation>Tümünü bırak</translation>
+        <translation type="obsolete">Tümünü bırak</translation>
     </message>
     <message>
         <source>Invert Selection</source>
-        <translation>Seçimi tersle</translation>
+        <translation type="obsolete">Seçimi tersle</translation>
     </message>
     <message>
         <source>Select layer</source>
-        <translation>Katmanı seç</translation>
+        <translation type="obsolete">Katmanı seç</translation>
     </message>
     <message>
         <source>(De-)Select contour</source>
-        <translation>Sınırları Seç/Bırak</translation>
+        <translation type="obsolete">Sınırları Seç/Bırak</translation>
     </message>
     <message>
         <source>(De-)Select entity</source>
-        <translation>Öğeyi Seç/Bırak</translation>
+        <translation type="obsolete">Öğeyi Seç/Bırak</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation>Pencere içindekileri bırak</translation>
+        <translation type="obsolete">Pencere içindekileri bırak</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation>Pencere Seç</translation>
+        <translation type="obsolete">Pencere Seç</translation>
     </message>
     <message>
         <source>Continue action</source>
-        <translation>İşleme devam et</translation>
+        <translation type="obsolete">İşleme devam et</translation>
     </message>
 </context>
 <context>
@@ -1847,20 +1710,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_CadToolBarSplines</name>
     <message>
-        <source>Splines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Back to main menu</source>
-        <translation type="unfinished">Ana menüye dön</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Interpolation Spline</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Ana menüye dön</translation>
     </message>
 </context>
 <context>
@@ -4119,6 +3970,53 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
 </context>
 <context>
+    <name>QG_DlgOptionsMakerCam</name>
+    <message>
+        <source>Export as MakerCAM SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export invisible layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export visible construction layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert blocks to safe inline SVG content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipses / Ellipse arcs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>&amp;OK</source>
@@ -5542,14 +5440,30 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation>Katmanı &amp;Düzenle</translation>
+        <translation type="obsolete">Katmanı &amp;Düzenle</translation>
     </message>
     <message>
         <source>&amp;Toggle Visibility</source>
-        <translation>&amp;Gizle/Göster</translation>
+        <translation type="obsolete">&amp;Gizle/Göster</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Layer &amp;Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5939,7 +5853,11 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>Sol</translation>
     </message>
     <message>
-        <source>...</source>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6064,6 +5982,17 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <source>fixed</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_RecentFiles</name>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opening recent file...</source>
+        <translation type="unfinished">Son kullanılan dosya açılıyor...</translation>
     </message>
 </context>
 <context>
@@ -6511,7 +6440,7 @@ p, li { white-space: pre-wrap; }
     <name>QObject</name>
     <message>
         <source>All Image Files (%1)</source>
-        <translation type="obsolete">Tüm Resim Dosyaları (%1)</translation>
+        <translation type="unfinished">Tüm Resim Dosyaları (%1)</translation>
     </message>
     <message>
         <source>All Files (*.*)</source>
@@ -6731,10 +6660,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All Image Files (%1) </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Scalable Vector Graphics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6836,6 +6761,27 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Uyarı</translation>
+    </message>
+    <message>
+        <source>experimental, save your work first.
+Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading file matadata in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading blocks in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading objects in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9040,10 +8986,6 @@ Do you want to replace it?</source>
     <message>
         <source>Angle: %1</source>
         <translation type="unfinished">Açı: %1 %2 {1?}</translation>
-    </message>
-    <message>
-        <source> or %1%2</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

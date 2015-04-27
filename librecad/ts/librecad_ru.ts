@@ -104,6 +104,35 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <source>Export as &amp;MakerCAM SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as</source>
+        <translation type="unfinished">Экспортировать</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionLayersToggleConstruction</name>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation type="unfinished">От&amp;ладка</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished">Вставить изображение</translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -236,7 +265,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>De&amp;bugging</source>
-        <translation>От&amp;ладка</translation>
+        <translation type="obsolete">От&amp;ладка</translation>
     </message>
     <message>
         <source>&amp;Cascade</source>
@@ -260,7 +289,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation>Открытие последнего файла...</translation>
+        <translation type="obsolete">Открытие последнего файла...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -476,7 +505,7 @@ You can save your work now.</source>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation>Вставить изображение</translation>
+        <translation type="obsolete">Вставить изображение</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
@@ -542,7 +571,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;%1 %2</source>
-        <translation>&amp;%1 %2</translation>
+        <translation type="obsolete">&amp;%1 %2</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
@@ -639,6 +668,20 @@ Auto-save disabled.</source>
     <message>
         <source>&amp;Text</source>
         <translation>&amp;Текст</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open the file
+%1
+Please check its existence and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2134,7 +2177,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Export...</source>
-        <translation>&amp;Экспорт...</translation>
+        <translation type="obsolete">&amp;Экспорт...</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -2171,6 +2214,10 @@ Auto-save disabled.</source>
     <message>
         <source>&amp;Block</source>
         <translation>&amp;Блок</translation>
+    </message>
+    <message>
+        <source>&amp;Export as image</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2410,58 +2457,58 @@ in a separate window</source>
     <name>QG_CadToolBarArcs</name>
     <message>
         <source>Arcs</source>
-        <translation>Дуги</translation>
+        <translation type="obsolete">Дуги</translation>
     </message>
     <message>
         <source>Arc with three points</source>
-        <translation>Дуга по трём точкам</translation>
+        <translation type="obsolete">Дуга по трём точкам</translation>
     </message>
     <message>
         <source>Arc with Center, Point, Angles</source>
-        <translation>Дуга по центру, точке и углам</translation>
+        <translation type="obsolete">Дуга по центру, точке и углам</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Назад в главное меню</translation>
+        <translation type="obsolete">Назад в главное меню</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Концентрическая</translation>
+        <translation type="obsolete">Концентрическая</translation>
     </message>
     <message>
         <source>Arc tangential to base entity with radius</source>
-        <translation>Дуга по касательной к объекту и радиусу</translation>
+        <translation type="obsolete">Дуга по касательной к объекту и радиусу</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarCircles</name>
     <message>
         <source>Circles</source>
-        <translation>Окружности</translation>
+        <translation type="obsolete">Окружности</translation>
     </message>
     <message>
         <source>Circle with two opposite points</source>
-        <translation>Окружность по двум точкам диаметра</translation>
+        <translation type="obsolete">Окружность по двум точкам диаметра</translation>
     </message>
     <message>
         <source>Circle with center and radius</source>
-        <translation>Окружность по центру и радиусу</translation>
+        <translation type="obsolete">Окружность по центру и радиусу</translation>
     </message>
     <message>
         <source>Circle with center and point</source>
-        <translation>Окружность по центру и точке</translation>
+        <translation type="obsolete">Окружность по центру и точке</translation>
     </message>
     <message>
         <source>Circle with three points</source>
-        <translation>Окружность по трём точкам</translation>
+        <translation type="obsolete">Окружность по трём точкам</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Назад в главное меню</translation>
+        <translation type="obsolete">Назад в главное меню</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Концентрическая</translation>
+        <translation type="obsolete">Концентрическая</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -2481,7 +2528,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -2505,7 +2552,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -2517,7 +2564,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -2529,7 +2576,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -2541,7 +2588,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -2549,81 +2596,81 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circle with 2 Points and Radius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Окружность по двум точкам и радиусу&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Окружность по двум точкам и радиусу&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarDim</name>
     <message>
         <source>Dimensions</source>
-        <translation>Размеры</translation>
+        <translation type="obsolete">Размеры</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Назад в главное меню</translation>
+        <translation type="obsolete">Назад в главное меню</translation>
     </message>
     <message>
         <source>Diametric Dimension</source>
-        <translation>Диаметральный размер</translation>
+        <translation type="obsolete">Диаметральный размер</translation>
     </message>
     <message>
         <source>Radial Dimension</source>
-        <translation>Радиальный размер</translation>
+        <translation type="obsolete">Радиальный размер</translation>
     </message>
     <message>
         <source>Vertical Dimension</source>
-        <translation>Вертикальный размер</translation>
+        <translation type="obsolete">Вертикальный размер</translation>
     </message>
     <message>
         <source>Horizontal Dimension</source>
-        <translation>Горизонтальный размер</translation>
+        <translation type="obsolete">Горизонтальный размер</translation>
     </message>
     <message>
         <source>Linear Dimension</source>
-        <translation>Линейный размер</translation>
+        <translation type="obsolete">Линейный размер</translation>
     </message>
     <message>
         <source>Aligned Dimension</source>
-        <translation>Выровненный размер</translation>
+        <translation type="obsolete">Выровненный размер</translation>
     </message>
     <message>
         <source>Angular Dimension</source>
-        <translation>Угловой размер</translation>
+        <translation type="obsolete">Угловой размер</translation>
     </message>
     <message>
         <source>Leader</source>
-        <translation>Полка-выноска</translation>
+        <translation type="obsolete">Полка-выноска</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Концентрический</translation>
+        <translation type="obsolete">Концентрический</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarEllipses</name>
     <message>
         <source>Ellipses</source>
-        <translation>Эллипсы</translation>
+        <translation type="obsolete">Эллипсы</translation>
     </message>
     <message>
         <source>Ellipse arc with center, two points and angles</source>
-        <translation>Дуга эллипса по центру, двум точкам и углам</translation>
+        <translation type="obsolete">Дуга эллипса по центру, двум точкам и углам</translation>
     </message>
     <message>
         <source>Ellipse with Center and two points</source>
-        <translation>Эллипс по центру и двум точкам</translation>
+        <translation type="obsolete">Эллипс по центру и двум точкам</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Назад в главное меню</translation>
+        <translation type="obsolete">Назад в главное меню</translation>
     </message>
     <message>
         <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation>Эллипс по фокусам и точке на эллипсе</translation>
+        <translation type="obsolete">Эллипс по фокусам и точке на эллипсе</translation>
     </message>
     <message>
         <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation>Эллипс с осями в направлении x/y и четырём точкам на эллипсе</translation>
+        <translation type="obsolete">Эллипс с осями в направлении x/y и четырём точкам на эллипсе</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -2631,7 +2678,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -2639,128 +2686,128 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Концентрично</translation>
+        <translation type="obsolete">Концентрично</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Начертить эллипс по центру и трём точкам&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Начертить эллипс по центру и трём точкам&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarInfo</name>
     <message>
         <source>Info</source>
-        <translation>Информация</translation>
+        <translation type="obsolete">Информация</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Назад в главное меню</translation>
+        <translation type="obsolete">Назад в главное меню</translation>
     </message>
     <message>
         <source>Distance (Point, Point)</source>
-        <translation>Расстояние (точка, точка)</translation>
+        <translation type="obsolete">Расстояние (точка, точка)</translation>
     </message>
     <message>
         <source>Distance (Entity, Point)</source>
-        <translation>Расстояние (объект, точка)</translation>
+        <translation type="obsolete">Расстояние (объект, точка)</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Угол</translation>
+        <translation type="obsolete">Угол</translation>
     </message>
     <message>
         <source>Total length of selected entities</source>
-        <translation>Суммарная длина выбранных объектов</translation>
+        <translation type="obsolete">Суммарная длина выбранных объектов</translation>
     </message>
     <message>
         <source>Area of polygon</source>
-        <translation>Площадь полигона</translation>
+        <translation type="obsolete">Площадь полигона</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Концентрично</translation>
+        <translation type="obsolete">Концентрично</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarLines</name>
     <message>
         <source>Lines</source>
-        <translation>Линии</translation>
+        <translation type="obsolete">Линии</translation>
     </message>
     <message>
         <source>Freehand lines</source>
-        <translation>Произвольные линии (кривые)</translation>
+        <translation type="obsolete">Произвольные линии (кривые)</translation>
     </message>
     <message>
         <source>Orthogonal lines</source>
-        <translation>Ортогональные линии</translation>
+        <translation type="obsolete">Ортогональные линии</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Назад в главное меню</translation>
+        <translation type="obsolete">Назад в главное меню</translation>
     </message>
     <message>
         <source>Bisectors</source>
-        <translation>Бисектриссы</translation>
+        <translation type="obsolete">Бисектриссы</translation>
     </message>
     <message>
         <source>Tangents from circle to circle</source>
-        <translation>Касательные к двум окружностям</translation>
+        <translation type="obsolete">Касательные к двум окружностям</translation>
     </message>
     <message>
         <source>Tangents from point to circle</source>
-        <translation>Касательные от точки к окружности</translation>
+        <translation type="obsolete">Касательные от точки к окружности</translation>
     </message>
     <message>
         <source>Line with two points</source>
-        <translation>Линия по двум точкам</translation>
+        <translation type="obsolete">Линия по двум точкам</translation>
     </message>
     <message>
         <source>Lines with relative angles</source>
-        <translation>Линии под относительным углом</translation>
+        <translation type="obsolete">Линии под относительным углом</translation>
     </message>
     <message>
         <source>Line with given angle</source>
-        <translation>Линия под заданным углом</translation>
+        <translation type="obsolete">Линия под заданным углом</translation>
     </message>
     <message>
         <source>Horizontal lines</source>
-        <translation>Горизонтальные линии</translation>
+        <translation type="obsolete">Горизонтальные линии</translation>
     </message>
     <message>
         <source>Vertical lines</source>
-        <translation>Вертикальные линии</translation>
+        <translation type="obsolete">Вертикальные линии</translation>
     </message>
     <message>
         <source>Rectangles</source>
-        <translation>Прямоугольники</translation>
+        <translation type="obsolete">Прямоугольники</translation>
     </message>
     <message>
         <source>Polygons with Center and Corner</source>
-        <translation>Многоугольники по центру и углу</translation>
+        <translation type="obsolete">Многоугольники по центру и углу</translation>
     </message>
     <message>
         <source>Polygons with two Corners</source>
-        <translation>Многоугольники по двум углам</translation>
+        <translation type="obsolete">Многоугольники по двум углам</translation>
     </message>
     <message>
         <source>Parallels with distance</source>
-        <translation>Параллельные на расстоянии</translation>
+        <translation type="obsolete">Параллельные на расстоянии</translation>
     </message>
     <message>
         <source>Parallels through point</source>
-        <translation>Параллельные через точку</translation>
+        <translation type="obsolete">Параллельные через точку</translation>
     </message>
     <message>
         <source>Tangents to a circle, orthogonal to a line</source>
-        <translation>Касательная к окружности, перпендикулярно отрезку</translation>
+        <translation type="obsolete">Касательная к окружности, перпендикулярно отрезку</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarMain</name>
     <message>
         <source>Main</source>
-        <translation>Главная</translation>
+        <translation type="obsolete">Главная</translation>
     </message>
     <message>
         <source>Show menu &quot;Lines&quot;</source>
@@ -2808,7 +2855,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Create Block</source>
-        <translation>Создать блок</translation>
+        <translation type="obsolete">Создать блок</translation>
     </message>
     <message>
         <source>Raster Image</source>
@@ -2820,31 +2867,31 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Show toolbar &quot;Lines&quot;</source>
-        <translation>Показать панель «Линии»</translation>
+        <translation type="obsolete">Показать панель «Линии»</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Arcs&quot;</source>
-        <translation>Показать панель «Дуги»</translation>
+        <translation type="obsolete">Показать панель «Дуги»</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Circles&quot;</source>
-        <translation>Показать панель «Окружности»</translation>
+        <translation type="obsolete">Показать панель «Окружности»</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Ellipses&quot;</source>
-        <translation>Показать панель «Эллипсы»</translation>
+        <translation type="obsolete">Показать панель «Эллипсы»</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Polylines&quot;</source>
-        <translation>Показать панель «Ломаные»</translation>
+        <translation type="obsolete">Показать панель «Ломаные»</translation>
     </message>
     <message>
         <source>Draw Splines</source>
-        <translation>Начертить сплайны</translation>
+        <translation type="obsolete">Начертить сплайны</translation>
     </message>
     <message>
         <source>Draw Points</source>
-        <translation>Начертить точки</translation>
+        <translation type="obsolete">Начертить точки</translation>
     </message>
     <message>
         <source>Insert Text</source>
@@ -2852,50 +2899,50 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Show toolbar &quot;Dimensions&quot;</source>
-        <translation>Показать панель «Размеры»</translation>
+        <translation type="obsolete">Показать панель «Размеры»</translation>
     </message>
     <message>
         <source>Create Hatch</source>
-        <translation>Создать штриховку</translation>
+        <translation type="obsolete">Создать штриховку</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation>Вставить изображение</translation>
+        <translation type="obsolete">Вставить изображение</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Modify&quot;</source>
-        <translation>Показать панель «Редактирование»</translation>
+        <translation type="obsolete">Показать панель «Редактирование»</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Info&quot;</source>
-        <translation>Показать панель «Инфо»</translation>
+        <translation type="obsolete">Показать панель «Инфо»</translation>
     </message>
     <message>
         <source>Show toolbar &quot;Select&quot;</source>
-        <translation>Показать панель «Выделение»</translation>
+        <translation type="obsolete">Показать панель «Выделение»</translation>
     </message>
     <message>
         <source>Insert Multi-line Text</source>
-        <translation>Вставить многострочный текст</translation>
+        <translation type="obsolete">Вставить многострочный текст</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarModify</name>
     <message>
         <source>Modify</source>
-        <translation>Редактирование</translation>
+        <translation type="obsolete">Редактирование</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Назад в главное меню</translation>
+        <translation type="obsolete">Назад в главное меню</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation>Повернуть</translation>
+        <translation type="obsolete">Повернуть</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation>Масштабировать</translation>
+        <translation type="obsolete">Масштабировать</translation>
     </message>
     <message>
         <source>Move</source>
@@ -2903,19 +2950,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Move and Rotate</source>
-        <translation>Сдвиг и поворот</translation>
+        <translation type="obsolete">Сдвиг и поворот</translation>
     </message>
     <message>
         <source>Explode</source>
-        <translation>Разрушить</translation>
+        <translation type="obsolete">Разрушить</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Удалить</translation>
+        <translation type="obsolete">Удалить</translation>
     </message>
     <message>
         <source>Stretch</source>
-        <translation>Вытянуть</translation>
+        <translation type="obsolete">Вытянуть</translation>
     </message>
     <message>
         <source>Cut</source>
@@ -2927,7 +2974,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bevel</source>
-        <translation>Фаска</translation>
+        <translation type="obsolete">Фаска</translation>
     </message>
     <message>
         <source>Trim by amount</source>
@@ -2935,11 +2982,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim / Extend two</source>
-        <translation>Подогнать / растянуть два объекта</translation>
+        <translation type="obsolete">Подогнать / растянуть два объекта</translation>
     </message>
     <message>
         <source>Trim / Extend</source>
-        <translation>Подогнать / растянуть</translation>
+        <translation type="obsolete">Подогнать / растянуть</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
@@ -2947,168 +2994,168 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Edit Entity Attributes</source>
-        <translation>Редактировать атрибуты объекта</translation>
+        <translation type="obsolete">Редактировать атрибуты объекта</translation>
     </message>
     <message>
         <source>Edit Entity Geometry</source>
-        <translation>Редактировать геометрию объекта</translation>
+        <translation type="obsolete">Редактировать геометрию объекта</translation>
     </message>
     <message>
         <source>Mirror</source>
-        <translation>Зеркалирование</translation>
+        <translation type="obsolete">Зеркалирование</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation>Разделить</translation>
+        <translation type="obsolete">Разделить</translation>
     </message>
     <message>
         <source>Explode Text into Letters</source>
-        <translation>Разрушить текст на буквы</translation>
+        <translation type="obsolete">Разрушить текст на буквы</translation>
     </message>
     <message>
         <source>Edit Text</source>
-        <translation>Редактировать текст</translation>
+        <translation type="obsolete">Редактировать текст</translation>
     </message>
     <message>
         <source>Move / Copy</source>
-        <translation>Перемещение / Копирование</translation>
+        <translation type="obsolete">Перемещение / Копирование</translation>
     </message>
     <message>
         <source>Rotate Two</source>
-        <translation>Повернуть вокруг двух центров</translation>
+        <translation type="obsolete">Повернуть вокруг двух центров</translation>
     </message>
     <message>
         <source>Offset (Experimental Feature, work in progress)</source>
-        <translation>Эквидистанта (инструмент ещё в разработке)</translation>
+        <translation type="obsolete">Эквидистанта (инструмент ещё в разработке)</translation>
     </message>
     <message>
         <source>Revert direction</source>
-        <translation>Обратить направление</translation>
+        <translation type="obsolete">Обратить направление</translation>
     </message>
     <message>
         <source>Lengthen</source>
-        <translation>Удлинить</translation>
+        <translation type="obsolete">Удлинить</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Скругление внутреннего или внешнего угла&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Скругление внутреннего или внешнего угла&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPoints</name>
     <message>
         <source>Points</source>
-        <translation>Точки</translation>
+        <translation type="obsolete">Точки</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Назад в главное меню</translation>
+        <translation type="obsolete">Назад в главное меню</translation>
     </message>
     <message>
         <source>Single points</source>
-        <translation>Одиночные точки</translation>
+        <translation type="obsolete">Одиночные точки</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPolylines</name>
     <message>
         <source>Polylines</source>
-        <translation>Ломаные</translation>
+        <translation type="obsolete">Ломаные</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Назад в главное меню</translation>
+        <translation type="obsolete">Назад в главное меню</translation>
     </message>
     <message>
         <source>Create Polyline</source>
-        <translation>Создать ломаную</translation>
+        <translation type="obsolete">Создать ломаную</translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Удалить между двумя узлами</translation>
+        <translation type="obsolete">Удалить между двумя узлами</translation>
     </message>
     <message>
         <source>Add node</source>
-        <translation>Добавить вершину</translation>
+        <translation type="obsolete">Добавить вершину</translation>
     </message>
     <message>
         <source>Delete node</source>
-        <translation>Удалить вершину</translation>
+        <translation type="obsolete">Удалить вершину</translation>
     </message>
     <message>
         <source>Trim segments</source>
-        <translation>Обрезать сегменты</translation>
+        <translation type="obsolete">Обрезать сегменты</translation>
     </message>
     <message>
         <source>Append node</source>
-        <translation>Добавить вершину</translation>
+        <translation type="obsolete">Добавить вершину</translation>
     </message>
     <message>
         <source>Polyline equidistant</source>
-        <translation>Эквидистанта ломаной</translation>
+        <translation type="obsolete">Эквидистанта ломаной</translation>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Создать ломаную из существующих отрезков</translation>
+        <translation type="obsolete">Создать ломаную из существующих отрезков</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Концентрично</translation>
+        <translation type="obsolete">Концентрично</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarSelect</name>
     <message>
         <source>Select</source>
-        <translation>Выбрать</translation>
+        <translation type="obsolete">Выбрать</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation>Выбрать все</translation>
+        <translation type="obsolete">Выбрать все</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Назад в главное меню</translation>
+        <translation type="obsolete">Назад в главное меню</translation>
     </message>
     <message>
         <source>Select intersected entities</source>
-        <translation>Выбрать пересеченные объекты</translation>
+        <translation type="obsolete">Выбрать пересеченные объекты</translation>
     </message>
     <message>
         <source>Deselect intersected entities</source>
-        <translation>Отменить выбор пересеченных объектов</translation>
+        <translation type="obsolete">Отменить выбор пересеченных объектов</translation>
     </message>
     <message>
         <source>Deselect all</source>
-        <translation>Отменить выбор всех объектов</translation>
+        <translation type="obsolete">Отменить выбор всех объектов</translation>
     </message>
     <message>
         <source>Invert Selection</source>
-        <translation>Инвертировать выбор</translation>
+        <translation type="obsolete">Инвертировать выбор</translation>
     </message>
     <message>
         <source>Select layer</source>
-        <translation>Выбрать слой</translation>
+        <translation type="obsolete">Выбрать слой</translation>
     </message>
     <message>
         <source>(De-)Select contour</source>
-        <translation>Выбрать замкнутый контур (отм. выбор)</translation>
+        <translation type="obsolete">Выбрать замкнутый контур (отм. выбор)</translation>
     </message>
     <message>
         <source>(De-)Select entity</source>
-        <translation>Выбрать объект (отм. выбор)</translation>
+        <translation type="obsolete">Выбрать объект (отм. выбор)</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation>Отменить выбор рамкой</translation>
+        <translation type="obsolete">Отменить выбор рамкой</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation>Выбрать рамкой</translation>
+        <translation type="obsolete">Выбрать рамкой</translation>
     </message>
     <message>
         <source>Continue action</source>
-        <translation>Продолжить действие</translation>
+        <translation type="obsolete">Продолжить действие</translation>
     </message>
 </context>
 <context>
@@ -3186,19 +3233,19 @@ p, li { white-space: pre-wrap; }
     <name>QG_CadToolBarSplines</name>
     <message>
         <source>Splines</source>
-        <translation>Сплайны</translation>
+        <translation type="obsolete">Сплайны</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Назад в главное меню</translation>
+        <translation type="obsolete">Назад в главное меню</translation>
     </message>
     <message>
         <source>Spline</source>
-        <translation>Сплайн</translation>
+        <translation type="obsolete">Сплайн</translation>
     </message>
     <message>
         <source>Interpolation Spline</source>
-        <translation>Интерполяция сплайна</translation>
+        <translation type="obsolete">Интерполяция сплайна</translation>
     </message>
 </context>
 <context>
@@ -5477,6 +5524,53 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
 </context>
 <context>
+    <name>QG_DlgOptionsMakerCam</name>
+    <message>
+        <source>Export as MakerCAM SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export invisible layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export visible construction layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert blocks to safe inline SVG content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipses / Ellipse arcs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>&amp;OK</source>
@@ -6919,15 +7013,31 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation>&amp;Редактировать слой</translation>
+        <translation type="obsolete">&amp;Редактировать слой</translation>
     </message>
     <message>
         <source>&amp;Toggle Visibility</source>
-        <translation>Изменить &amp;видимость</translation>
+        <translation type="obsolete">Изменить &amp;видимость</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
         <translation>Поиск подходящих названий слоёв</translation>
+    </message>
+    <message>
+        <source>Edit Layer &amp;Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7317,7 +7427,15 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>...</source>
-        <translation>…</translation>
+        <translation type="obsolete">…</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7441,6 +7559,17 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <source>fixed</source>
         <translation>Зафиксировать</translation>
+    </message>
+</context>
+<context>
+    <name>QG_RecentFiles</name>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished">&amp;%1 %2</translation>
+    </message>
+    <message>
+        <source>Opening recent file...</source>
+        <translation type="unfinished">Открытие последнего файла...</translation>
     </message>
 </context>
 <context>
@@ -7962,7 +8091,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation type="obsolete">Все файлы изображений (%1)</translation>
+        <translation type="unfinished">Все файлы изображений (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -8118,7 +8247,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>All Image Files (%1) </source>
-        <translation>Все файлы изображений (%1) </translation>
+        <translation type="obsolete">Все файлы изображений (%1) </translation>
     </message>
     <message>
         <source>Scalable Vector Graphics</source>
@@ -8223,6 +8352,27 @@ Do you want to replace it?</source>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation>Ошибка штриховки из-за расстояния %1 между (%2; %3) и (%4; %5)</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Предупреждение</translation>
+    </message>
+    <message>
+        <source>experimental, save your work first.
+Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading file matadata in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading blocks in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading objects in dwg file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10453,7 +10603,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source> or %1%2</source>
-        <translation> или %1%2</translation>
+        <translation type="obsolete"> или %1%2</translation>
     </message>
 </context>
 <context>

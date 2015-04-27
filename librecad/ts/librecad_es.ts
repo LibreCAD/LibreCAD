@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="es">
 <context>
-    <name/>
+    <name></name>
     <message>
         <source>Loading..</source>
         <translation type="obsolete">Cargando...</translation>
@@ -96,6 +97,35 @@ distancia entre puntos=%2 es mayor que el diámetro=%3</translation>
     <message>
         <source>Cannot undo: Nothing could be redone.</source>
         <translation>No se puede deshacer: Nada puede ser rehecho.</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <source>Export as &amp;MakerCAM SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as</source>
+        <translation type="unfinished">Exportar como</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionLayersToggleConstruction</name>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation type="unfinished">Depu&amp;rando</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -231,7 +261,7 @@ distancia entre puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>De&amp;bugging</source>
-        <translation>Depu&amp;rando</translation>
+        <translation type="obsolete">Depu&amp;rando</translation>
     </message>
     <message>
         <source>&amp;Cascade</source>
@@ -255,7 +285,7 @@ distancia entre puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation>Abriendo archivo reciente...</translation>
+        <translation type="obsolete">Abriendo archivo reciente...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -399,8 +429,8 @@ Date: %1</source>
         <translation type="obsolete">Controles de Simulación</translation>
     </message>
     <message>
-        <source>Block '%1'</source>
-        <translation>Bloque '%1'</translation>
+        <source>Block &apos;%1&apos;</source>
+        <translation>Bloque &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -457,12 +487,12 @@ Ahora puede guardar su trabajo.</translation>
         <translation>&amp;Spline</translation>
     </message>
     <message>
-        <source>Running script '%1'</source>
-        <translation>Corriendo script '%1'</translation>
+        <source>Running script &apos;%1&apos;</source>
+        <translation>Corriendo script &apos;%1&apos;</translation>
     </message>
     <message>
-        <source>Inserting block '%1'</source>
-        <translation>Insertando bloque '%1'</translation>
+        <source>Inserting block &apos;%1&apos;</source>
+        <translation>Insertando bloque &apos;%1&apos;</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -474,7 +504,7 @@ Ahora puede guardar su trabajo.</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation>Insertar imagen</translation>
+        <translation type="obsolete">Insertar imagen</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
@@ -503,7 +533,7 @@ Guardado automático desactivado.</translation>
         <translation>Ayuda</translation>
     </message>
     <message>
-        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
+        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
         <translation>Error, no se pueden encontrar los archivos de ayuda.</translation>
     </message>
     <message>
@@ -543,12 +573,12 @@ Guardado automático desactivado.</translation>
         <translation>Revisión SCM: %1</translation>
     </message>
     <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it's website.</source>
+        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
         <translation type="obsolete">Por favor done a LibreCAD para ayudar a mantener el codigo fuente y el sitio web.</translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
-        <translation>&amp;%1 %2</translation>
+        <translation type="obsolete">&amp;%1 %2</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
@@ -641,6 +671,20 @@ Guardado automático desactivado.</translation>
     <message>
         <source>&amp;Text</source>
         <translation>&amp;Texto</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open the file
+%1
+Please check its existence and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2093,7 +2137,7 @@ Guardado automático desactivado.</translation>
     </message>
     <message>
         <source>&amp;Export...</source>
-        <translation>&amp;Exportar...</translation>
+        <translation type="obsolete">&amp;Exportar...</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -2179,6 +2223,10 @@ Guardado automático desactivado.</translation>
         <source>&amp;Block</source>
         <translation>&amp;Bloques</translation>
     </message>
+    <message>
+        <source>&amp;Export as image</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_ActionHandler</name>
@@ -2203,16 +2251,16 @@ Guardado automático desactivado.</translation>
         <translation>Capa Actual</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Nombre de la Capa Actual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Nombre de la Capa Actual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -2305,8 +2353,8 @@ p, li { white-space: pre-wrap; }
         <translation>Renombrando bloque</translation>
     </message>
     <message>
-        <source>Could not name block. A block named "%1" already exists.</source>
-        <translation>No se pudo nombrar el bloque. El bloque llamado "%1" ya existe.</translation>
+        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
+        <translation>No se pudo nombrar el bloque. El bloque llamado &quot;%1&quot; ya existe.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -2417,372 +2465,372 @@ en otra ventana</translation>
     <name>QG_CadToolBarArcs</name>
     <message>
         <source>Arcs</source>
-        <translation>Arcos</translation>
+        <translation type="obsolete">Arcos</translation>
     </message>
     <message>
         <source>Arc with three points</source>
-        <translation>Arcos con tres puntos</translation>
+        <translation type="obsolete">Arcos con tres puntos</translation>
     </message>
     <message>
         <source>Arc with Center, Point, Angles</source>
-        <translation>Arco con centro, punto, ángulos</translation>
+        <translation type="obsolete">Arco con centro, punto, ángulos</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Volver al menú principal</translation>
+        <translation type="obsolete">Volver al menú principal</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Concéntrico</translation>
+        <translation type="obsolete">Concéntrico</translation>
     </message>
     <message>
         <source>Arc tangential to base entity with radius</source>
-        <translation>Arco tangente a entidad con radio</translation>
+        <translation type="obsolete">Arco tangente a entidad con radio</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarCircles</name>
     <message>
         <source>Circles</source>
-        <translation>Círculos</translation>
+        <translation type="obsolete">Círculos</translation>
     </message>
     <message>
         <source>Circle with two opposite points</source>
-        <translation>Círculo con dos puntos opuestos</translation>
+        <translation type="obsolete">Círculo con dos puntos opuestos</translation>
     </message>
     <message>
         <source>Circle with center and radius</source>
-        <translation>Círculo con centro y radio</translation>
+        <translation type="obsolete">Círculo con centro y radio</translation>
     </message>
     <message>
         <source>Circle with center and point</source>
-        <translation>Círculo con centro y punto</translation>
+        <translation type="obsolete">Círculo con centro y punto</translation>
     </message>
     <message>
         <source>Circle with three points</source>
-        <translation>Círculo con tres puntos</translation>
+        <translation type="obsolete">Círculo con tres puntos</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Volver al menú principal</translation>
+        <translation type="obsolete">Volver al menú principal</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Concéntrico</translation>
+        <translation type="obsolete">Concéntrico</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Circle inscribed in a triangle, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Circle inscribed in a triangle, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Dibujar Circulo inscrito en un triangulo, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangencial a 3 lineas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dibujar Circulo inscrito en un triangulo, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangencial a 3 lineas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Dibujar un círculo tangencial a dos círculos, dado el radio&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Dibujar un círculo tangencial a dos círculos, dado el radio&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Dibujar un círculo tangencial a otro círculo, pasando por dos puntos dados&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Dibujar un círculo tangencial a otro círculo, pasando por dos puntos dados&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Dibuje un círculo tangencial a dos círculos, pasando por un punto dado&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Dibuje un círculo tangencial a dos círculos, pasando por un punto dado&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Dibuje un círculo tangente a tres líneas/arcos/círculos&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Dibuje un círculo tangente a tres líneas/arcos/círculos&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:8pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt; font-style:italic;"&gt;i.e.&lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:8pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Dibuje un círculo inscrito en un triángulo, &lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt; font-style:italic;"&gt;o lo que es lo mismo&lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;, tangente a 3 líneas. Por favor use la nueva característica &amp;quot;Círculo tangencial 3&amp;quot; en lugar de esto.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Dibuje un círculo inscrito en un triángulo, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;o lo que es lo mismo&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangente a 3 líneas. Por favor use la nueva característica &amp;quot;Círculo tangencial 3&amp;quot; en lugar de esto.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circle with 2 Points and Radius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Círculo con 2 puntos y radio&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Círculo con 2 puntos y radio&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarDim</name>
     <message>
         <source>Dimensions</source>
-        <translation>Cotas</translation>
+        <translation type="obsolete">Cotas</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Volver al menú principal</translation>
+        <translation type="obsolete">Volver al menú principal</translation>
     </message>
     <message>
         <source>Diametric Dimension</source>
-        <translation>Cota del diámetro</translation>
+        <translation type="obsolete">Cota del diámetro</translation>
     </message>
     <message>
         <source>Radial Dimension</source>
-        <translation>Cota del radio</translation>
+        <translation type="obsolete">Cota del radio</translation>
     </message>
     <message>
         <source>Vertical Dimension</source>
-        <translation>Cota vertical</translation>
+        <translation type="obsolete">Cota vertical</translation>
     </message>
     <message>
         <source>Horizontal Dimension</source>
-        <translation>Cota horizontal</translation>
+        <translation type="obsolete">Cota horizontal</translation>
     </message>
     <message>
         <source>Linear Dimension</source>
-        <translation>Cota lineal</translation>
+        <translation type="obsolete">Cota lineal</translation>
     </message>
     <message>
         <source>Aligned Dimension</source>
-        <translation>Cota alineada</translation>
+        <translation type="obsolete">Cota alineada</translation>
     </message>
     <message>
         <source>Angular Dimension</source>
-        <translation>Cota angular</translation>
+        <translation type="obsolete">Cota angular</translation>
     </message>
     <message>
         <source>Leader</source>
-        <translation>Directriz</translation>
+        <translation type="obsolete">Directriz</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Concéntrico</translation>
+        <translation type="obsolete">Concéntrico</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarEllipses</name>
     <message>
         <source>Ellipses</source>
-        <translation>Elipses</translation>
+        <translation type="obsolete">Elipses</translation>
     </message>
     <message>
         <source>Ellipse arc with center, two points and angles</source>
-        <translation>Arco de elipse con centro, dos puntos y ángulos</translation>
+        <translation type="obsolete">Arco de elipse con centro, dos puntos y ángulos</translation>
     </message>
     <message>
         <source>Ellipse with Center and two points</source>
-        <translation>Elipse con centro y dos puntos</translation>
+        <translation type="obsolete">Elipse con centro y dos puntos</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Volver al menú principal</translation>
+        <translation type="obsolete">Volver al menú principal</translation>
     </message>
     <message>
         <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation>Dibujar elipse con focos y un punto de la elipse</translation>
+        <translation type="obsolete">Dibujar elipse con focos y un punto de la elipse</translation>
     </message>
     <message>
         <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation>Dibujar elipse con ejes en dirección-x-/-y mediante cuatro puntos de la elipse</translation>
+        <translation type="obsolete">Dibujar elipse con ejes en dirección-x-/-y mediante cuatro puntos de la elipse</translation>
     </message>
     <message>
         <source>Draw Ellipse with by center and 3 points on ellipse</source>
         <translation type="obsolete">Dibujar elipse con centro y 3 puntos en la elipse</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Dibujar elipse inscrita en un cuadrilátero, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangencial a cuatro líneas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Dibujar elipse inscrita en un cuadrilátero, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangencial a cuatro líneas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Concéntrico</translation>
+        <translation type="obsolete">Concéntrico</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dibujar una elipse mediante su centro y tres puntos de la elipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dibujar una elipse mediante su centro y tres puntos de la elipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarInfo</name>
     <message>
         <source>Info</source>
-        <translation>Información</translation>
+        <translation type="obsolete">Información</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Volver al menú principal</translation>
+        <translation type="obsolete">Volver al menú principal</translation>
     </message>
     <message>
         <source>Distance (Point, Point)</source>
-        <translation>Distancia (Punto, Punto)</translation>
+        <translation type="obsolete">Distancia (Punto, Punto)</translation>
     </message>
     <message>
         <source>Distance (Entity, Point)</source>
-        <translation>Distancia (Entidad, Punto)</translation>
+        <translation type="obsolete">Distancia (Entidad, Punto)</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Ángulo</translation>
+        <translation type="obsolete">Ángulo</translation>
     </message>
     <message>
         <source>Total length of selected entities</source>
-        <translation>Longitud total de las entidades seleccionadas</translation>
+        <translation type="obsolete">Longitud total de las entidades seleccionadas</translation>
     </message>
     <message>
         <source>Area of polygon</source>
-        <translation>Área del polígono</translation>
+        <translation type="obsolete">Área del polígono</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Concéntrico</translation>
+        <translation type="obsolete">Concéntrico</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarLines</name>
     <message>
         <source>Lines</source>
-        <translation>Líneas</translation>
+        <translation type="obsolete">Líneas</translation>
     </message>
     <message>
         <source>Freehand lines</source>
-        <translation>Líneas a mano alzada</translation>
+        <translation type="obsolete">Líneas a mano alzada</translation>
     </message>
     <message>
         <source>Orthogonal lines</source>
-        <translation>Líneas ortogonales</translation>
+        <translation type="obsolete">Líneas ortogonales</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Volver al menú principal</translation>
+        <translation type="obsolete">Volver al menú principal</translation>
     </message>
     <message>
         <source>Bisectors</source>
-        <translation>Bisectores</translation>
+        <translation type="obsolete">Bisectores</translation>
     </message>
     <message>
         <source>Tangents from circle to circle</source>
-        <translation>Tangentes a dos círculos</translation>
+        <translation type="obsolete">Tangentes a dos círculos</translation>
     </message>
     <message>
         <source>Tangents from point to circle</source>
-        <translation>Tangentes a círculo desde un punto</translation>
+        <translation type="obsolete">Tangentes a círculo desde un punto</translation>
     </message>
     <message>
         <source>Line with two points</source>
-        <translation>Línea con dos puntos</translation>
+        <translation type="obsolete">Línea con dos puntos</translation>
     </message>
     <message>
         <source>Lines with relative angles</source>
-        <translation>Líneas con ángulo relativo</translation>
+        <translation type="obsolete">Líneas con ángulo relativo</translation>
     </message>
     <message>
         <source>Line with given angle</source>
-        <translation>Línea con ángulo dado</translation>
+        <translation type="obsolete">Línea con ángulo dado</translation>
     </message>
     <message>
         <source>Horizontal lines</source>
-        <translation>Líneas horizontales</translation>
+        <translation type="obsolete">Líneas horizontales</translation>
     </message>
     <message>
         <source>Vertical lines</source>
-        <translation>Líneas verticales</translation>
+        <translation type="obsolete">Líneas verticales</translation>
     </message>
     <message>
         <source>Rectangles</source>
-        <translation>Rectángulos</translation>
+        <translation type="obsolete">Rectángulos</translation>
     </message>
     <message>
         <source>Polygons with Center and Corner</source>
-        <translation>Polígonos con centro y vértice</translation>
+        <translation type="obsolete">Polígonos con centro y vértice</translation>
     </message>
     <message>
         <source>Polygons with two Corners</source>
-        <translation>Polígonos con dos vértices</translation>
+        <translation type="obsolete">Polígonos con dos vértices</translation>
     </message>
     <message>
         <source>Parallels with distance</source>
-        <translation>Paralelas a una distancia dada</translation>
+        <translation type="obsolete">Paralelas a una distancia dada</translation>
     </message>
     <message>
         <source>Parallels through point</source>
-        <translation>Paralela por un punto</translation>
+        <translation type="obsolete">Paralela por un punto</translation>
     </message>
     <message>
         <source>Tangents to a circle, orthogonal to a line</source>
-        <translation>Tangentes a un círculo, ortogonal a una línea</translation>
+        <translation type="obsolete">Tangentes a un círculo, ortogonal a una línea</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarMain</name>
     <message>
         <source>Main</source>
-        <translation>Principal</translation>
+        <translation type="obsolete">Principal</translation>
     </message>
     <message>
-        <source>Show menu "Lines"</source>
+        <source>Show menu &quot;Lines&quot;</source>
         <translation type="obsolete">Mostrar menú Líneas</translation>
     </message>
     <message>
-        <source>Show menu "Arcs"</source>
+        <source>Show menu &quot;Arcs&quot;</source>
         <translation type="obsolete">Mostrar menú Arcos</translation>
     </message>
     <message>
-        <source>Show menu "Circles"</source>
+        <source>Show menu &quot;Circles&quot;</source>
         <translation type="obsolete">Mostrar menú Círculos</translation>
     </message>
     <message>
-        <source>Show menu "Points"</source>
-        <translation type="obsolete">"Puntos"</translation>
+        <source>Show menu &quot;Points&quot;</source>
+        <translation type="obsolete">&quot;Puntos&quot;</translation>
     </message>
     <message>
-        <source>Show menu "Measure"</source>
+        <source>Show menu &quot;Measure&quot;</source>
         <translation type="obsolete">Mostrar menú Medir</translation>
     </message>
     <message>
-        <source>Show menu "Ellipses"</source>
+        <source>Show menu &quot;Ellipses&quot;</source>
         <translation type="obsolete">Mostrar menú Elipses</translation>
     </message>
     <message>
@@ -2790,11 +2838,11 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Sombreado / Relleno solido</translation>
     </message>
     <message>
-        <source>Show menu "Edit"</source>
+        <source>Show menu &quot;Edit&quot;</source>
         <translation type="obsolete">Mostrar menú Edición</translation>
     </message>
     <message>
-        <source>Show menu "Dimensions"</source>
+        <source>Show menu &quot;Dimensions&quot;</source>
         <translation type="obsolete">Mostrar menú Acotar</translation>
     </message>
     <message>
@@ -2802,12 +2850,12 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Textos</translation>
     </message>
     <message>
-        <source>Show menu "Select"</source>
+        <source>Show menu &quot;Select&quot;</source>
         <translation type="obsolete">Mostrar menú Selección</translation>
     </message>
     <message>
         <source>Create Block</source>
-        <translation>Crear un bloque</translation>
+        <translation type="obsolete">Crear un bloque</translation>
     </message>
     <message>
         <source>Raster Image</source>
@@ -2826,83 +2874,83 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Polilíneas</translation>
     </message>
     <message>
-        <source>Show toolbar "Lines"</source>
-        <translation>Mostrar la barra de herramientas: "Líneas"</translation>
+        <source>Show toolbar &quot;Lines&quot;</source>
+        <translation type="obsolete">Mostrar la barra de herramientas: &quot;Líneas&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Arcs"</source>
-        <translation>Mostrar la barra de herramientas "Arcos"</translation>
+        <source>Show toolbar &quot;Arcs&quot;</source>
+        <translation type="obsolete">Mostrar la barra de herramientas &quot;Arcos&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Circles"</source>
-        <translation>Mostrar la barra herramientas "Círculos"</translation>
+        <source>Show toolbar &quot;Circles&quot;</source>
+        <translation type="obsolete">Mostrar la barra herramientas &quot;Círculos&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Ellipses"</source>
-        <translation>Mostrar la barra de herramientas "Elipses"</translation>
+        <source>Show toolbar &quot;Ellipses&quot;</source>
+        <translation type="obsolete">Mostrar la barra de herramientas &quot;Elipses&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Polylines"</source>
-        <translation>Mostrar la barra de herramientas "Polilíneas"</translation>
+        <source>Show toolbar &quot;Polylines&quot;</source>
+        <translation type="obsolete">Mostrar la barra de herramientas &quot;Polilíneas&quot;</translation>
     </message>
     <message>
         <source>Draw Splines</source>
-        <translation>Dibujar splines</translation>
+        <translation type="obsolete">Dibujar splines</translation>
     </message>
     <message>
         <source>Draw Points</source>
-        <translation>Dibujar puntos</translation>
+        <translation type="obsolete">Dibujar puntos</translation>
     </message>
     <message>
         <source>Insert Text</source>
         <translation type="obsolete">Insertar Texto</translation>
     </message>
     <message>
-        <source>Show toolbar "Dimensions"</source>
-        <translation>Mostrar la barra de herramientas "Acotación"</translation>
+        <source>Show toolbar &quot;Dimensions&quot;</source>
+        <translation type="obsolete">Mostrar la barra de herramientas &quot;Acotación&quot;</translation>
     </message>
     <message>
         <source>Create Hatch</source>
-        <translation>Crear un sombreado</translation>
+        <translation type="obsolete">Crear un sombreado</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation>Insertar una imagen</translation>
+        <translation type="obsolete">Insertar una imagen</translation>
     </message>
     <message>
-        <source>Show toolbar "Modify"</source>
-        <translation>Mostrar la barra de herramientas "Modificar"</translation>
+        <source>Show toolbar &quot;Modify&quot;</source>
+        <translation type="obsolete">Mostrar la barra de herramientas &quot;Modificar&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Info"</source>
-        <translation>Mostrar la barra de herramientas "Info"</translation>
+        <source>Show toolbar &quot;Info&quot;</source>
+        <translation type="obsolete">Mostrar la barra de herramientas &quot;Info&quot;</translation>
     </message>
     <message>
-        <source>Show toolbar "Select"</source>
-        <translation>Mostrar la barra de herramientas "Seleccionar"</translation>
+        <source>Show toolbar &quot;Select&quot;</source>
+        <translation type="obsolete">Mostrar la barra de herramientas &quot;Seleccionar&quot;</translation>
     </message>
     <message>
         <source>Insert Multi-line Text</source>
-        <translation>Insertar  texto de múltiples líneas</translation>
+        <translation type="obsolete">Insertar  texto de múltiples líneas</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarModify</name>
     <message>
         <source>Modify</source>
-        <translation>Modificar</translation>
+        <translation type="obsolete">Modificar</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Volver al menú principal</translation>
+        <translation type="obsolete">Volver al menú principal</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation>Girar</translation>
+        <translation type="obsolete">Girar</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation>Escalar</translation>
+        <translation type="obsolete">Escalar</translation>
     </message>
     <message>
         <source>Move</source>
@@ -2910,19 +2958,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Move and Rotate</source>
-        <translation>Desplazar y Girar</translation>
+        <translation type="obsolete">Desplazar y Girar</translation>
     </message>
     <message>
         <source>Explode</source>
-        <translation>Descomponer</translation>
+        <translation type="obsolete">Descomponer</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Eliminar</translation>
+        <translation type="obsolete">Eliminar</translation>
     </message>
     <message>
         <source>Stretch</source>
-        <translation>Estirar</translation>
+        <translation type="obsolete">Estirar</translation>
     </message>
     <message>
         <source>Round</source>
@@ -2930,7 +2978,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bevel</source>
-        <translation>Chaflán</translation>
+        <translation type="obsolete">Chaflán</translation>
     </message>
     <message>
         <source>Trim by amount</source>
@@ -2938,11 +2986,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim / Extend two</source>
-        <translation>Recortar / Alargar dos</translation>
+        <translation type="obsolete">Recortar / Alargar dos</translation>
     </message>
     <message>
         <source>Trim / Extend</source>
-        <translation>Recortar / Alargar</translation>
+        <translation type="obsolete">Recortar / Alargar</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
@@ -2950,168 +2998,168 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Edit Entity Attributes</source>
-        <translation>Editar atributos de la entidad</translation>
+        <translation type="obsolete">Editar atributos de la entidad</translation>
     </message>
     <message>
         <source>Edit Entity Geometry</source>
-        <translation>Editar geometría de la entidad</translation>
+        <translation type="obsolete">Editar geometría de la entidad</translation>
     </message>
     <message>
         <source>Mirror</source>
-        <translation>Simetría</translation>
+        <translation type="obsolete">Simetría</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation>Dividir</translation>
+        <translation type="obsolete">Dividir</translation>
     </message>
     <message>
         <source>Explode Text into Letters</source>
-        <translation>Descomponer un texto en letras</translation>
+        <translation type="obsolete">Descomponer un texto en letras</translation>
     </message>
     <message>
         <source>Edit Text</source>
-        <translation>Editar texto</translation>
+        <translation type="obsolete">Editar texto</translation>
     </message>
     <message>
         <source>Move / Copy</source>
-        <translation>Mover / Copiar</translation>
+        <translation type="obsolete">Mover / Copiar</translation>
     </message>
     <message>
         <source>Rotate Two</source>
-        <translation>Rotar dos</translation>
+        <translation type="obsolete">Rotar dos</translation>
     </message>
     <message>
         <source>Offset (Experimental Feature, work in progress)</source>
-        <translation>Desplazamiento ( Característica Experimental, trabajo en progreso)</translation>
+        <translation type="obsolete">Desplazamiento ( Característica Experimental, trabajo en progreso)</translation>
     </message>
     <message>
         <source>Revert direction</source>
-        <translation>Invertir dirección</translation>
+        <translation type="obsolete">Invertir dirección</translation>
     </message>
     <message>
         <source>Lengthen</source>
-        <translation>Alargar</translation>
+        <translation type="obsolete">Alargar</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Empalme, redondear el interior o exterior de una esquina&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Empalme, redondear el interior o exterior de una esquina&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPoints</name>
     <message>
         <source>Points</source>
-        <translation>Puntos</translation>
+        <translation type="obsolete">Puntos</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Volver al menú principal</translation>
+        <translation type="obsolete">Volver al menú principal</translation>
     </message>
     <message>
         <source>Single points</source>
-        <translation>Puntos aislados</translation>
+        <translation type="obsolete">Puntos aislados</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPolylines</name>
     <message>
         <source>Polylines</source>
-        <translation>Polilíneas</translation>
+        <translation type="obsolete">Polilíneas</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Volver al menú principal</translation>
+        <translation type="obsolete">Volver al menú principal</translation>
     </message>
     <message>
         <source>Create Polyline</source>
-        <translation>Crear una polilínea</translation>
+        <translation type="obsolete">Crear una polilínea</translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>Borrar entre dos nodos</translation>
+        <translation type="obsolete">Borrar entre dos nodos</translation>
     </message>
     <message>
         <source>Add node</source>
-        <translation>Añadir nodo</translation>
+        <translation type="obsolete">Añadir nodo</translation>
     </message>
     <message>
         <source>Delete node</source>
-        <translation>Borrar nodo</translation>
+        <translation type="obsolete">Borrar nodo</translation>
     </message>
     <message>
         <source>Trim segments</source>
-        <translation>Recortar segmentos</translation>
+        <translation type="obsolete">Recortar segmentos</translation>
     </message>
     <message>
         <source>Append node</source>
-        <translation>Añadir punto</translation>
+        <translation type="obsolete">Añadir punto</translation>
     </message>
     <message>
         <source>Polyline equidistant</source>
-        <translation>Polilínea equidistante</translation>
+        <translation type="obsolete">Polilínea equidistante</translation>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>Crear una polilínea desde segmentos existentes</translation>
+        <translation type="obsolete">Crear una polilínea desde segmentos existentes</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Concéntrico</translation>
+        <translation type="obsolete">Concéntrico</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarSelect</name>
     <message>
         <source>Select</source>
-        <translation>Seleccionar</translation>
+        <translation type="obsolete">Seleccionar</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation>Seleccionar todo</translation>
+        <translation type="obsolete">Seleccionar todo</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Volver al menú principal</translation>
+        <translation type="obsolete">Volver al menú principal</translation>
     </message>
     <message>
         <source>Select intersected entities</source>
-        <translation>Seleccionar entidades intersectadas</translation>
+        <translation type="obsolete">Seleccionar entidades intersectadas</translation>
     </message>
     <message>
         <source>Deselect intersected entities</source>
-        <translation>(De-)seleccionar entidades intersectadas</translation>
+        <translation type="obsolete">(De-)seleccionar entidades intersectadas</translation>
     </message>
     <message>
         <source>Deselect all</source>
-        <translation>(De-)seleccionar todo</translation>
+        <translation type="obsolete">(De-)seleccionar todo</translation>
     </message>
     <message>
         <source>Invert Selection</source>
-        <translation>Invertir selección</translation>
+        <translation type="obsolete">Invertir selección</translation>
     </message>
     <message>
         <source>Select layer</source>
-        <translation>Seleccionar capa</translation>
+        <translation type="obsolete">Seleccionar capa</translation>
     </message>
     <message>
         <source>(De-)Select contour</source>
-        <translation>(De-)Seleccionar contorno</translation>
+        <translation type="obsolete">(De-)Seleccionar contorno</translation>
     </message>
     <message>
         <source>(De-)Select entity</source>
-        <translation>(De-)Seleccionar entidad</translation>
+        <translation type="obsolete">(De-)Seleccionar entidad</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation>(De-)seleccionar ventana</translation>
+        <translation type="obsolete">(De-)seleccionar ventana</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation>Seleccionar ventana</translation>
+        <translation type="obsolete">Seleccionar ventana</translation>
     </message>
     <message>
         <source>Continue action</source>
-        <translation>Continuar la acción</translation>
+        <translation type="obsolete">Continuar la acción</translation>
     </message>
 </context>
 <context>
@@ -3189,19 +3237,19 @@ p, li { white-space: pre-wrap; }
     <name>QG_CadToolBarSplines</name>
     <message>
         <source>Splines</source>
-        <translation>Splines</translation>
+        <translation type="obsolete">Splines</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Volver al menú principal</translation>
+        <translation type="obsolete">Volver al menú principal</translation>
     </message>
     <message>
         <source>Spline</source>
-        <translation>Spline</translation>
+        <translation type="obsolete">Spline</translation>
     </message>
     <message>
         <source>Interpolation Spline</source>
-        <translation>Spline de interpolación</translation>
+        <translation type="obsolete">Spline de interpolación</translation>
     </message>
 </context>
 <context>
@@ -3361,8 +3409,9 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
+        <translatorcomment>atrás</translatorcomment>
         <translation>atrás</translation>
-    <translatorcomment>atrás</translatorcomment></message>
+    </message>
 </context>
 <context>
     <name>QG_CoordinateWidget</name>
@@ -3855,12 +3904,12 @@ p, li { white-space: pre-wrap; }
         <translation>Bienvenido</translation>
     </message>
     <message>
-        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size="+1"&gt;&lt;b&gt;Bienvenidos a LibreCAD&lt;/b&gt;
+        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Bienvenidos a LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Por favor seleccione la unidad a utilizar en sus nuevos dibujos y el idioma preferido.&lt;br&gt;
@@ -4321,7 +4370,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>[1720-173F] Hanunoo</source>
-        <translation>[1720-173F] Hanuno'o</translation>
+        <translation>[1720-173F] Hanuno&apos;o</translation>
     </message>
     <message>
         <source>[1740-175F] Buhid</source>
@@ -4856,7 +4905,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
         <translation>Gradianes</translation>
     </message>
     <message>
-        <source>Surveyor's units</source>
+        <source>Surveyor&apos;s units</source>
         <translation>Unidades topográficas</translation>
     </message>
     <message>
@@ -4864,8 +4913,8 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
         <translation>Opciones</translation>
     </message>
     <message>
-        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
-        <translation>Para mediciones de "Ingenieria" y "Arquitectónicas", la unidad debe ser la Pulgada.</translation>
+        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
+        <translation>Para mediciones de &quot;Ingenieria&quot; y &quot;Arquitectónicas&quot;, la unidad debe ser la Pulgada.</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
@@ -5060,7 +5109,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
         <translation>Tamaño de las marcas:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tamaño de la marca de Dimensión. Configurarlo en 0 deshabilitará la marca de Dimensión. La flecha de dimensión no se dibujará cuando la marca de dimensión esté habilitada.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -5493,6 +5542,53 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     <message>
         <source>Display Splash</source>
         <translation>Mostrar inicio</translation>
+    </message>
+</context>
+<context>
+    <name>QG_DlgOptionsMakerCam</name>
+    <message>
+        <source>Export as MakerCAM SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export invisible layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export visible construction layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert blocks to safe inline SVG content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipses / Ellipse arcs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6132,7 +6228,7 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>[1720-173F] Hanunoo</source>
-        <translation>[1720-173F] Hanuno'o</translation>
+        <translation>[1720-173F] Hanuno&apos;o</translation>
     </message>
     <message>
         <source>[1740-175F] Buhid</source>
@@ -6948,15 +7044,31 @@ Los contenidos de una Capa de Construción no deberán aparecer en la impresión
     </message>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation>&amp;Editar</translation>
+        <translation type="obsolete">&amp;Editar</translation>
     </message>
     <message>
         <source>&amp;Toggle Visibility</source>
-        <translation>&amp;Alternar visibilidad</translation>
+        <translation type="obsolete">&amp;Alternar visibilidad</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
         <translation>Buscando coincidencias en nombres de capas</translation>
+    </message>
+    <message>
+        <source>Edit Layer &amp;Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7346,7 +7458,15 @@ Los contenidos de una Capa de Construción no deberán aparecer en la impresión
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="obsolete">...</translation>
+    </message>
+    <message>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7473,6 +7593,17 @@ Los contenidos de una Capa de Construción no deberán aparecer en la impresión
     </message>
 </context>
 <context>
+    <name>QG_RecentFiles</name>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished">&amp;%1 %2</translation>
+    </message>
+    <message>
+        <source>Opening recent file...</source>
+        <translation type="unfinished">Abriendo archivo reciente...</translation>
+    </message>
+</context>
+<context>
     <name>QG_RoundOptions</name>
     <message>
         <source>Round Options</source>
@@ -7514,28 +7645,28 @@ Los contenidos de una Capa de Construción no deberán aparecer en la impresión
         <translation>Longitud total</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Número de entidades seleccionados&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Número de entidades seleccionados&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
-&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Longitud total de las entidades seleccionadas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Longitud total de las entidades seleccionadas&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -7893,12 +8024,12 @@ p, li { white-space: pre-wrap; }
         <translation>Eliminar Capa</translation>
     </message>
     <message>
-        <source>Layer "%1" and all entities on it will be removed.</source>
-        <translation>La capa "%1" y todas sus entidades serán eliminadas.</translation>
+        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
+        <translation>La capa &quot;%1&quot; y todas sus entidades serán eliminadas.</translation>
     </message>
     <message>
-        <source>Layer "%1" can never be removed.</source>
-        <translation>La capa "%1" no podrá ser eliminada.</translation>
+        <source>Layer &quot;%1&quot; can never be removed.</source>
+        <translation>La capa &quot;%1&quot; no podrá ser eliminada.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -7909,16 +8040,16 @@ p, li { white-space: pre-wrap; }
         <translation>Eliminar Bloque</translation>
     </message>
     <message>
-        <source>Block "%1" and all its entities will be removed.</source>
-        <translation>El bloque "%1" y todas sus entidades serán eliminadas.</translation>
+        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
+        <translation>El bloque &quot;%1&quot; y todas sus entidades serán eliminadas.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
         <translation>Propiedades de capa</translation>
     </message>
     <message>
-        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
-        <translation>Ya existe una capa "%1". Por favor especifique otro nombre.</translation>
+        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
+        <translation>Ya existe una capa &quot;%1&quot;. Por favor especifique otro nombre.</translation>
     </message>
 </context>
 <context>
@@ -7991,7 +8122,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation type="obsolete">Todos los archivos (%1)</translation>
+        <translation type="unfinished">Todos los archivos (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -8147,7 +8278,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>All Image Files (%1) </source>
-        <translation>Todos los archivos de imágen (%1) </translation>
+        <translation type="obsolete">Todos los archivos de imágen (%1) </translation>
     </message>
     <message>
         <source>New Drawing Exchange %1</source>
@@ -8214,7 +8345,7 @@ Do you want to replace it?</source>
         <translation>Error desconocido abriendo el fichero dwg</translation>
     </message>
     <message>
-        <source>can't open this dwg file</source>
+        <source>can&apos;t open this dwg file</source>
         <translation>No se puede abrir este fichero dwg</translation>
     </message>
     <message>
@@ -8256,6 +8387,27 @@ Do you want to replace it?</source>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation>Falló el rayado debido al espaciado=%1 entre (%2, %3) y (%4, %5)</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Advertencia</translation>
+    </message>
+    <message>
+        <source>experimental, save your work first.
+Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading file matadata in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading blocks in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading objects in dwg file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8415,8 +8567,8 @@ Do you want to replace it?</source>
         <translation>Espacio entre filas:</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -9440,8 +9592,8 @@ Do you want to replace it?</source>
         <translation>Factor:</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Insert &amp;Image</source>
@@ -9824,8 +9976,8 @@ Do you want to replace it?</source>
         <translation type="obsolete">Expresión no válida</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -10503,7 +10655,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source> or %1%2</source>
-        <translation> o %1%2</translation>
+        <translation type="obsolete"> o %1%2</translation>
     </message>
 </context>
 <context>
@@ -10833,12 +10985,12 @@ Do you want to replace it?</source>
         <translation>Factor:</translation>
     </message>
     <message>
-        <source/>
-        <translation/>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
-        <source>Cannot open file '%1'</source>
-        <translation>No se puede abrir el archivo '%1'</translation>
+        <source>Cannot open file &apos;%1&apos;</source>
+        <translation>No se puede abrir el archivo &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -11569,7 +11721,7 @@ Do you want to replace it?</source>
         <translation>&amp;Añadir punto</translation>
     </message>
     <message>
-        <source>Add polyline's node</source>
+        <source>Add polyline&apos;s node</source>
         <translation>Añadir nodo en Polilínea</translation>
     </message>
     <message>
@@ -11593,7 +11745,7 @@ Do you want to replace it?</source>
         <translation>Seleccione polilínea para añadir puntos</translation>
     </message>
     <message>
-        <source>Specify adding node's point</source>
+        <source>Specify adding node&apos;s point</source>
         <translation>Especifique los puntos a añadir</translation>
     </message>
     <message>
@@ -11612,7 +11764,7 @@ Do you want to replace it?</source>
         <translation>&amp;Añadir punto</translation>
     </message>
     <message>
-        <source>Append polyline's node</source>
+        <source>Append polyline&apos;s node</source>
         <translation>Añadir punto a polilínea</translation>
     </message>
     <message>
@@ -11663,7 +11815,7 @@ Do you want to replace it?</source>
         <translation>&amp;Borrar punto</translation>
     </message>
     <message>
-        <source>Delete polyline's node</source>
+        <source>Delete polyline&apos;s node</source>
         <translation>Borrar punto en polilínea</translation>
     </message>
     <message>
@@ -11687,7 +11839,7 @@ Do you want to replace it?</source>
         <translation>Especifique polilínea para borrar nodo</translation>
     </message>
     <message>
-        <source>Specify deleting node's point</source>
+        <source>Specify deleting node&apos;s point</source>
         <translation>Especifique nodos a borrar</translation>
     </message>
     <message>
@@ -11831,7 +11983,7 @@ Do you want to replace it?</source>
         <translation>Recor&amp;tar segmentos</translation>
     </message>
     <message>
-        <source>Trim polyline's segments</source>
+        <source>Trim polyline&apos;s segments</source>
         <translation>Recortar segmentos de polilínea</translation>
     </message>
     <message>
@@ -11910,8 +12062,8 @@ Do you want to replace it?</source>
         <translation>introduzca desplazamiento desde la línea de comandos para el desplazamiento de impresión</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring '@'</source>
-        <translation>Desplazamiento de impresión ignora el origen relativo. Ignorando '@'</translation>
+        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <translation>Desplazamiento de impresión ignora el origen relativo. Ignorando &apos;@&apos;</translation>
     </message>
 </context>
 <context>
@@ -13376,8 +13528,9 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>rz</source>
+        <translatorcomment>do</translatorcomment>
         <translation>do</translation>
-    <translatorcomment>do</translatorcomment></message>
+    </message>
     <message>
         <source>paperoffset</source>
         <translation>desplazahoja</translation>

@@ -73,6 +73,35 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <source>Export as &amp;MakerCAM SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as</source>
+        <translation type="unfinished">다른이름으로 내보내기</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionLayersToggleConstruction</name>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation type="unfinished">디버깅(&amp;b)</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished">그림 삽입</translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -185,7 +214,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>De&amp;bugging</source>
-        <translation>디버깅(&amp;b)</translation>
+        <translation type="obsolete">디버깅(&amp;b)</translation>
     </message>
     <message>
         <source>&amp;Cascade</source>
@@ -209,7 +238,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation>최근 파일 열기...</translation>
+        <translation type="obsolete">최근 파일 열기...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -341,7 +370,7 @@ Please check the permissions.</source>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation>그림 삽입</translation>
+        <translation type="obsolete">그림 삽입</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
@@ -400,10 +429,6 @@ Auto-save disabled.</source>
     <message>
         <source>SCM Revision: %1</source>
         <translation>SCM 개정: %1</translation>
-    </message>
-    <message>
-        <source>&amp;%1 %2</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
@@ -517,6 +542,20 @@ Auto-save disabled.</source>
         <source>&amp;Text</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open the file
+%1
+Please check its existence and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -571,7 +610,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Export...</source>
-        <translation>내보내기(&amp;E)</translation>
+        <translation type="obsolete">내보내기(&amp;E)</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -596,6 +635,10 @@ Auto-save disabled.</source>
     <message>
         <source>&amp;Block</source>
         <translation type="unfinished">블록(&amp;B)</translation>
+    </message>
+    <message>
+        <source>&amp;Export as image</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -807,58 +850,54 @@ in a separate window</source>
     <name>QG_CadToolBarArcs</name>
     <message>
         <source>Arcs</source>
-        <translation>원호</translation>
+        <translation type="obsolete">원호</translation>
     </message>
     <message>
         <source>Arc with three points</source>
-        <translation>3점 원호</translation>
+        <translation type="obsolete">3점 원호</translation>
     </message>
     <message>
         <source>Arc with Center, Point, Angles</source>
-        <translation>중심, 점, 각도로된 호</translation>
+        <translation type="obsolete">중심, 점, 각도로된 호</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>주 메뉴로 돌아가기</translation>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>동심</translation>
-    </message>
-    <message>
-        <source>Arc tangential to base entity with radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">동심</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarCircles</name>
     <message>
         <source>Circles</source>
-        <translation>원</translation>
+        <translation type="obsolete">원</translation>
     </message>
     <message>
         <source>Circle with two opposite points</source>
-        <translation>두 반대 지점으로 원 그리기</translation>
+        <translation type="obsolete">두 반대 지점으로 원 그리기</translation>
     </message>
     <message>
         <source>Circle with center and radius</source>
-        <translation>중심과 반지름으로 원 그리기</translation>
+        <translation type="obsolete">중심과 반지름으로 원 그리기</translation>
     </message>
     <message>
         <source>Circle with center and point</source>
-        <translation>중심과 점으로 원그리기</translation>
+        <translation type="obsolete">중심과 점으로 원그리기</translation>
     </message>
     <message>
         <source>Circle with three points</source>
-        <translation>3점으로 원그리기</translation>
+        <translation type="obsolete">3점으로 원그리기</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>주 메뉴로 돌아가기</translation>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>동심</translation>
+        <translation type="obsolete">동심</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -866,7 +905,7 @@ in a separate window</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
  p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -878,7 +917,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
  p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -890,7 +929,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
  p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
@@ -902,521 +941,225 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;3개 선분/호/원들에 접하는 원그리기&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circle with 2 Points and Radius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarDim</name>
     <message>
         <source>Dimensions</source>
-        <translation>치수</translation>
+        <translation type="obsolete">치수</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>주 메뉴로 돌아가기</translation>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
     </message>
     <message>
         <source>Diametric Dimension</source>
-        <translation>지름 치수</translation>
+        <translation type="obsolete">지름 치수</translation>
     </message>
     <message>
         <source>Radial Dimension</source>
-        <translation>반지름 치수</translation>
+        <translation type="obsolete">반지름 치수</translation>
     </message>
     <message>
         <source>Vertical Dimension</source>
-        <translation>수직 치수</translation>
+        <translation type="obsolete">수직 치수</translation>
     </message>
     <message>
         <source>Horizontal Dimension</source>
-        <translation>수평 치수</translation>
+        <translation type="obsolete">수평 치수</translation>
     </message>
     <message>
         <source>Linear Dimension</source>
-        <translation>선분 치수</translation>
+        <translation type="obsolete">선분 치수</translation>
     </message>
     <message>
         <source>Aligned Dimension</source>
-        <translation>정렬된 치수</translation>
+        <translation type="obsolete">정렬된 치수</translation>
     </message>
     <message>
         <source>Angular Dimension</source>
-        <translation>각도 치수</translation>
-    </message>
-    <message>
-        <source>Leader</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">각도 치수</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>동심</translation>
+        <translation type="obsolete">동심</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarEllipses</name>
     <message>
         <source>Ellipses</source>
-        <translation>타원</translation>
+        <translation type="obsolete">타원</translation>
     </message>
     <message>
         <source>Ellipse arc with center, two points and angles</source>
-        <translation>중심, 두개 점과 각으로된 타원</translation>
+        <translation type="obsolete">중심, 두개 점과 각으로된 타원</translation>
     </message>
     <message>
         <source>Ellipse with Center and two points</source>
-        <translation>중심과 두개 점으로 된 타원</translation>
+        <translation type="obsolete">중심과 두개 점으로 된 타원</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>주 메뉴로 돌아가기</translation>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
     </message>
     <message>
         <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation>타원상의 한점과 초점으로 타원그리기</translation>
+        <translation type="obsolete">타원상의 한점과 초점으로 타원그리기</translation>
     </message>
     <message>
         <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation>타원상의 4점으로 x/y 방향 축에 타원그리기</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">타원상의 4점으로 x/y 방향 축에 타원그리기</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>동심</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">동심</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarInfo</name>
     <message>
         <source>Info</source>
-        <translation>정보</translation>
+        <translation type="obsolete">정보</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>주 메뉴로 돌아가기</translation>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
     </message>
     <message>
         <source>Distance (Point, Point)</source>
-        <translation>거리(엔터티, 점)</translation>
+        <translation type="obsolete">거리(엔터티, 점)</translation>
     </message>
     <message>
         <source>Distance (Entity, Point)</source>
-        <translation>거리(엔터티, 점)</translation>
+        <translation type="obsolete">거리(엔터티, 점)</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>각도</translation>
+        <translation type="obsolete">각도</translation>
     </message>
     <message>
         <source>Total length of selected entities</source>
-        <translation>선택된 엔터티의 총 길이</translation>
+        <translation type="obsolete">선택된 엔터티의 총 길이</translation>
     </message>
     <message>
         <source>Area of polygon</source>
-        <translation>다각형의 면적</translation>
+        <translation type="obsolete">다각형의 면적</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>동심</translation>
+        <translation type="obsolete">동심</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarLines</name>
     <message>
         <source>Lines</source>
-        <translation>선분</translation>
+        <translation type="obsolete">선분</translation>
     </message>
     <message>
         <source>Freehand lines</source>
-        <translation>자유형 선</translation>
+        <translation type="obsolete">자유형 선</translation>
     </message>
     <message>
         <source>Orthogonal lines</source>
-        <translation>직교 선분</translation>
+        <translation type="obsolete">직교 선분</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>주 메뉴로 돌아가기</translation>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
     </message>
     <message>
         <source>Bisectors</source>
-        <translation>이등분선</translation>
+        <translation type="obsolete">이등분선</translation>
     </message>
     <message>
         <source>Tangents from circle to circle</source>
-        <translation>원과 원의 접선</translation>
+        <translation type="obsolete">원과 원의 접선</translation>
     </message>
     <message>
         <source>Tangents from point to circle</source>
-        <translation>점과 원의 접선</translation>
+        <translation type="obsolete">점과 원의 접선</translation>
     </message>
     <message>
         <source>Line with two points</source>
-        <translation>두점간선</translation>
-    </message>
-    <message>
-        <source>Lines with relative angles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line with given angle</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">두점간선</translation>
     </message>
     <message>
         <source>Horizontal lines</source>
-        <translation>수평선</translation>
+        <translation type="obsolete">수평선</translation>
     </message>
     <message>
         <source>Vertical lines</source>
-        <translation>수직선</translation>
+        <translation type="obsolete">수직선</translation>
     </message>
     <message>
         <source>Rectangles</source>
-        <translation>직사각형</translation>
+        <translation type="obsolete">직사각형</translation>
     </message>
     <message>
         <source>Polygons with Center and Corner</source>
-        <translation>중심과 모서리를 갖는 다각형</translation>
+        <translation type="obsolete">중심과 모서리를 갖는 다각형</translation>
     </message>
     <message>
         <source>Polygons with two Corners</source>
-        <translation>두 모서리를 갖는 다각형</translation>
-    </message>
-    <message>
-        <source>Parallels with distance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parallels through point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tangents to a circle, orthogonal to a line</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">두 모서리를 갖는 다각형</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarMain</name>
     <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Create Block</source>
-        <translation type="unfinished">블록 만들기</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Lines&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Arcs&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Circles&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Ellipses&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Polylines&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Draw Splines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Draw Points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Dimensions&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create Hatch</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">블록 만들기</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished">그림 삽입</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Modify&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Info&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Select&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Insert Multi-line Text</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">그림 삽입</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarModify</name>
     <message>
-        <source>Modify</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Back to main menu</source>
-        <translation type="unfinished">주 메뉴로 돌아가기</translation>
-    </message>
-    <message>
-        <source>Rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Move and Rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Explode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trim / Extend two</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trim / Extend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Entity Attributes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Entity Geometry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mirror</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Explode Text into Letters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Move / Copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotate Two</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Offset (Experimental Feature, work in progress)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Revert direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lengthen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPoints</name>
     <message>
-        <source>Points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Back to main menu</source>
-        <translation type="unfinished">주 메뉴로 돌아가기</translation>
-    </message>
-    <message>
-        <source>Single points</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPolylines</name>
     <message>
-        <source>Polylines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Back to main menu</source>
-        <translation type="unfinished">주 메뉴로 돌아가기</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete between two nodes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trim segments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Append node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polyline equidistant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">동심</translation>
+        <translation type="obsolete">동심</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarSelect</name>
     <message>
-        <source>Select</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Back to main menu</source>
-        <translation type="unfinished">주 메뉴로 돌아가기</translation>
-    </message>
-    <message>
-        <source>Select intersected entities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deselect intersected entities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deselect all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invert Selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(De-)Select contour</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(De-)Select entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deselect Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Continue action</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarSplines</name>
     <message>
-        <source>Splines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Back to main menu</source>
-        <translation type="unfinished">주 메뉴로 돌아가기</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Interpolation Spline</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">주 메뉴로 돌아가기</translation>
     </message>
 </context>
 <context>
@@ -3223,6 +2966,53 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
 </context>
 <context>
+    <name>QG_DlgOptionsMakerCam</name>
+    <message>
+        <source>Export as MakerCAM SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export invisible layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export visible construction layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert blocks to safe inline SVG content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipses / Ellipse arcs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgPoint</name>
     <message>
         <source>Point</source>
@@ -4374,15 +4164,27 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Edit Layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Toggle Visibility</source>
-        <translation type="unfinished">보이기 토글(&amp;T)</translation>
+        <translation type="obsolete">보이기 토글(&amp;T)</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Layer &amp;Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4768,7 +4570,11 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>...</source>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4889,6 +4695,17 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <source>fixed</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_RecentFiles</name>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Opening recent file...</source>
+        <translation type="unfinished">최근 파일 열기...</translation>
     </message>
 </context>
 <context>
@@ -5508,10 +5325,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All Image Files (%1) </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Scalable Vector Graphics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5613,6 +5426,31 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>experimental, save your work first.
+Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading file matadata in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading blocks in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading objects in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Image Files (%1)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7226,10 +7064,6 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Angle: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> or %1%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

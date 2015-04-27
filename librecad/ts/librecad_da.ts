@@ -103,6 +103,35 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <source>Export as &amp;MakerCAM SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as</source>
+        <translation type="unfinished">Eksporter som</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionLayersToggleConstruction</name>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation type="unfinished">De&amp;bugging</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished">Indsæt billede </translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -263,7 +292,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>De&amp;bugging</source>
-        <translation>De&amp;bugging</translation>
+        <translation type="obsolete">De&amp;bugging</translation>
     </message>
     <message>
         <source>Layer List</source>
@@ -295,7 +324,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation>Genåbner sidste fil...</translation>
+        <translation type="obsolete">Genåbner sidste fil...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -471,7 +500,7 @@ Du kan gemme dit arbejde nu.</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation>Indsæt billede </translation>
+        <translation type="obsolete">Indsæt billede </translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
@@ -530,7 +559,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;%1 %2</source>
-        <translation>&amp;%1 %2</translation>
+        <translation type="obsolete">&amp;%1 %2</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
@@ -627,6 +656,20 @@ Auto-save disabled.</source>
     <message>
         <source>&amp;Text</source>
         <translation type="unfinished">&amp;Tekst</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open the file
+%1
+Please check its existence and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1166,7 +1209,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Export...</source>
-        <translation>&amp;Exporter...</translation>
+        <translation type="obsolete">&amp;Exporter...</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -1195,6 +1238,10 @@ Auto-save disabled.</source>
     <message>
         <source>&amp;Block</source>
         <translation type="unfinished">&amp;Blok</translation>
+    </message>
+    <message>
+        <source>&amp;Export as image</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1430,309 +1477,233 @@ i et nyt vindue</translation>
     <name>QG_CadToolBarArcs</name>
     <message>
         <source>Arcs</source>
-        <translation>Buer</translation>
+        <translation type="obsolete">Buer</translation>
     </message>
     <message>
         <source>Arc with three points</source>
-        <translation>Buer med tre punkter</translation>
+        <translation type="obsolete">Buer med tre punkter</translation>
     </message>
     <message>
         <source>Arc with Center, Point, Angles</source>
-        <translation>Bue med centum, punkt, vinkler</translation>
+        <translation type="obsolete">Bue med centum, punkt, vinkler</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Tilbage til hovedmenu</translation>
+        <translation type="obsolete">Tilbage til hovedmenu</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentrisk</translation>
-    </message>
-    <message>
-        <source>Arc tangential to base entity with radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Koncentrisk</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarCircles</name>
     <message>
         <source>Circles</source>
-        <translation>Cirkler</translation>
+        <translation type="obsolete">Cirkler</translation>
     </message>
     <message>
         <source>Circle with two opposite points</source>
-        <translation>Cirkler med to modsatte punkter</translation>
+        <translation type="obsolete">Cirkler med to modsatte punkter</translation>
     </message>
     <message>
         <source>Circle with center and radius</source>
-        <translation>Cirkel med centrum og radius</translation>
+        <translation type="obsolete">Cirkel med centrum og radius</translation>
     </message>
     <message>
         <source>Circle with center and point</source>
-        <translation>Cirkel med centrum og punkt</translation>
+        <translation type="obsolete">Cirkel med centrum og punkt</translation>
     </message>
     <message>
         <source>Circle with three points</source>
-        <translation>Cirkel med tre punkter</translation>
+        <translation type="obsolete">Cirkel med tre punkter</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Tilbage til hovedmenu</translation>
+        <translation type="obsolete">Tilbage til hovedmenu</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentrisk</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circle with 2 Points and Radius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Koncentrisk</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarDim</name>
     <message>
         <source>Dimensions</source>
-        <translation>Dimensioner</translation>
+        <translation type="obsolete">Dimensioner</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Tilbage til hovedmenu</translation>
+        <translation type="obsolete">Tilbage til hovedmenu</translation>
     </message>
     <message>
         <source>Diametric Dimension</source>
-        <translation>Målsæt diameter</translation>
+        <translation type="obsolete">Målsæt diameter</translation>
     </message>
     <message>
         <source>Radial Dimension</source>
-        <translation>Målsæt radius</translation>
+        <translation type="obsolete">Målsæt radius</translation>
     </message>
     <message>
         <source>Vertical Dimension</source>
-        <translation>Målsæt vertikalt</translation>
+        <translation type="obsolete">Målsæt vertikalt</translation>
     </message>
     <message>
         <source>Horizontal Dimension</source>
-        <translation>Målsæt horisontalt</translation>
+        <translation type="obsolete">Målsæt horisontalt</translation>
     </message>
     <message>
         <source>Linear Dimension</source>
-        <translation>Målsæt lineært</translation>
+        <translation type="obsolete">Målsæt lineært</translation>
     </message>
     <message>
         <source>Aligned Dimension</source>
-        <translation>Tilpasset målsætning</translation>
+        <translation type="obsolete">Tilpasset målsætning</translation>
     </message>
     <message>
         <source>Angular Dimension</source>
-        <translation>Målsæt vinkel</translation>
+        <translation type="obsolete">Målsæt vinkel</translation>
     </message>
     <message>
         <source>Leader</source>
-        <translation>Pil</translation>
+        <translation type="obsolete">Pil</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">Koncentrisk</translation>
+        <translation type="obsolete">Koncentrisk</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarEllipses</name>
     <message>
         <source>Ellipses</source>
-        <translation>Ellipser</translation>
+        <translation type="obsolete">Ellipser</translation>
     </message>
     <message>
         <source>Ellipse arc with center, two points and angles</source>
-        <translation>Ellipsebue udfra centrum, to punkter og vinkler</translation>
+        <translation type="obsolete">Ellipsebue udfra centrum, to punkter og vinkler</translation>
     </message>
     <message>
         <source>Ellipse with Center and two points</source>
-        <translation>Ellipse udfra centrum og to punkter</translation>
+        <translation type="obsolete">Ellipse udfra centrum og to punkter</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Tilbage til hovedmenu</translation>
-    </message>
-    <message>
-        <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Tilbage til hovedmenu</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">Koncentrisk</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Koncentrisk</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarInfo</name>
     <message>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation type="obsolete">Info</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Tilbage til hovedmenu</translation>
+        <translation type="obsolete">Tilbage til hovedmenu</translation>
     </message>
     <message>
         <source>Distance (Point, Point)</source>
-        <translation>Afstand (punkt, punkt)</translation>
+        <translation type="obsolete">Afstand (punkt, punkt)</translation>
     </message>
     <message>
         <source>Distance (Entity, Point)</source>
-        <translation>Afstand (enhed, punkt)</translation>
+        <translation type="obsolete">Afstand (enhed, punkt)</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Vinkel</translation>
+        <translation type="obsolete">Vinkel</translation>
     </message>
     <message>
         <source>Total length of selected entities</source>
-        <translation>Total længde for valgte enheder</translation>
-    </message>
-    <message>
-        <source>Area of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Total længde for valgte enheder</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">Koncentrisk</translation>
+        <translation type="obsolete">Koncentrisk</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarLines</name>
     <message>
         <source>Lines</source>
-        <translation>Linier</translation>
+        <translation type="obsolete">Linier</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Tilbage til hovedmenu</translation>
+        <translation type="obsolete">Tilbage til hovedmenu</translation>
     </message>
     <message>
         <source>Line with two points</source>
-        <translation>Linie med to punkter</translation>
+        <translation type="obsolete">Linie med to punkter</translation>
     </message>
     <message>
         <source>Line with given angle</source>
-        <translation>Linie med en given vinkel</translation>
+        <translation type="obsolete">Linie med en given vinkel</translation>
     </message>
     <message>
         <source>Horizontal lines</source>
-        <translation>Horisontale linier</translation>
+        <translation type="obsolete">Horisontale linier</translation>
     </message>
     <message>
         <source>Vertical lines</source>
-        <translation>Vertikale linier</translation>
+        <translation type="obsolete">Vertikale linier</translation>
     </message>
     <message>
         <source>Rectangles</source>
-        <translation>Rektangler</translation>
+        <translation type="obsolete">Rektangler</translation>
     </message>
     <message>
         <source>Bisectors</source>
-        <translation>Vinkeldelinger</translation>
+        <translation type="obsolete">Vinkeldelinger</translation>
     </message>
     <message>
         <source>Parallels with distance</source>
-        <translation>Paralleler med afstand</translation>
+        <translation type="obsolete">Paralleler med afstand</translation>
     </message>
     <message>
         <source>Tangents from point to circle</source>
-        <translation>Tangent fra punkt til cirkel</translation>
+        <translation type="obsolete">Tangent fra punkt til cirkel</translation>
     </message>
     <message>
         <source>Tangents from circle to circle</source>
-        <translation>Tangent fra cirkel til cirkel</translation>
+        <translation type="obsolete">Tangent fra cirkel til cirkel</translation>
     </message>
     <message>
         <source>Orthogonal lines</source>
-        <translation>Ortogonale linier</translation>
+        <translation type="obsolete">Ortogonale linier</translation>
     </message>
     <message>
         <source>Lines with relative angles</source>
-        <translation>Linier med relative vinkler</translation>
+        <translation type="obsolete">Linier med relative vinkler</translation>
     </message>
     <message>
         <source>Polygons with Center and Corner</source>
-        <translation>Polygoner udfra centrum og hjørne</translation>
+        <translation type="obsolete">Polygoner udfra centrum og hjørne</translation>
     </message>
     <message>
         <source>Polygons with two Corners</source>
-        <translation>Polygoner udfra to hjørner</translation>
+        <translation type="obsolete">Polygoner udfra to hjørner</translation>
     </message>
     <message>
         <source>Freehand lines</source>
-        <translation>Linier i frihånd</translation>
+        <translation type="obsolete">Linier i frihånd</translation>
     </message>
     <message>
         <source>Parallels through point</source>
-        <translation>Paralleler gennem punkt</translation>
-    </message>
-    <message>
-        <source>Tangents to a circle, orthogonal to a line</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Paralleler gennem punkt</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarMain</name>
     <message>
         <source>Main</source>
-        <translation>Hovedmenu</translation>
+        <translation type="obsolete">Hovedmenu</translation>
     </message>
     <message>
         <source>Show menu &quot;Lines&quot;</source>
@@ -1780,7 +1751,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Create Block</source>
-        <translation>Lav blok</translation>
+        <translation type="obsolete">Lav blok</translation>
     </message>
     <message>
         <source>Raster Image</source>
@@ -1791,79 +1762,31 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Punkter</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Lines&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Arcs&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Circles&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Ellipses&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Polylines&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Draw Splines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Draw Points</source>
-        <translation type="unfinished">Tegner punkter</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Dimensions&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create Hatch</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Tegner punkter</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished">Indsæt billede </translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Modify&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Info&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Select&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Insert Multi-line Text</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Indsæt billede </translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarModify</name>
     <message>
         <source>Modify</source>
-        <translation>Ændre</translation>
+        <translation type="obsolete">Ændre</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Tilbage til hovedmenu</translation>
+        <translation type="obsolete">Tilbage til hovedmenu</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation>Drej</translation>
+        <translation type="obsolete">Drej</translation>
     </message>
     <message>
         <source>Scale</source>
-        <translation>Skaler</translation>
+        <translation type="obsolete">Skaler</translation>
     </message>
     <message>
         <source>Move</source>
@@ -1871,11 +1794,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Move and Rotate</source>
-        <translation>Flyt og drej</translation>
+        <translation type="obsolete">Flyt og drej</translation>
     </message>
     <message>
         <source>Stretch</source>
-        <translation>Stræk</translation>
+        <translation type="obsolete">Stræk</translation>
     </message>
     <message>
         <source>Round</source>
@@ -1883,7 +1806,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bevel</source>
-        <translation>Affase</translation>
+        <translation type="obsolete">Affase</translation>
     </message>
     <message>
         <source>Trim by amount</source>
@@ -1891,11 +1814,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim / Extend two</source>
-        <translation>Trim / forlæng til</translation>
+        <translation type="obsolete">Trim / forlæng til</translation>
     </message>
     <message>
         <source>Trim / Extend</source>
-        <translation>Trim / forlæng</translation>
+        <translation type="obsolete">Trim / forlæng</translation>
     </message>
     <message>
         <source>Rotate around two centers</source>
@@ -1903,176 +1826,128 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Explode</source>
-        <translation>Eksploder</translation>
+        <translation type="obsolete">Eksploder</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Slet</translation>
+        <translation type="obsolete">Slet</translation>
     </message>
     <message>
         <source>Edit Entity Attributes</source>
-        <translation>Rediger enhedens egenskaber</translation>
+        <translation type="obsolete">Rediger enhedens egenskaber</translation>
     </message>
     <message>
         <source>Edit Entity Geometry</source>
-        <translation>Rediger enhedens geometri</translation>
+        <translation type="obsolete">Rediger enhedens geometri</translation>
     </message>
     <message>
         <source>Mirror</source>
-        <translation>Spejl</translation>
+        <translation type="obsolete">Spejl</translation>
     </message>
     <message>
         <source>Divide</source>
-        <translation>Del</translation>
+        <translation type="obsolete">Del</translation>
     </message>
     <message>
         <source>Explode Text into Letters</source>
-        <translation>Eksploder tekst til bogstaver</translation>
+        <translation type="obsolete">Eksploder tekst til bogstaver</translation>
     </message>
     <message>
         <source>Edit Text</source>
-        <translation>Rediger Tekst</translation>
+        <translation type="obsolete">Rediger Tekst</translation>
     </message>
     <message>
         <source>Move / Copy</source>
-        <translation type="unfinished">Flyt / kopier</translation>
+        <translation type="obsolete">Flyt / kopier</translation>
     </message>
     <message>
         <source>Rotate Two</source>
-        <translation type="unfinished">Drej to</translation>
-    </message>
-    <message>
-        <source>Offset (Experimental Feature, work in progress)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Revert direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Drej to</translation>
     </message>
     <message>
         <source>Lengthen</source>
-        <translation type="unfinished">Forlænger</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Forlænger</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPoints</name>
     <message>
         <source>Points</source>
-        <translation>Punkter</translation>
+        <translation type="obsolete">Punkter</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Tilbage til hovedmenu</translation>
+        <translation type="obsolete">Tilbage til hovedmenu</translation>
     </message>
     <message>
         <source>Single points</source>
-        <translation>Enkelte punkter</translation>
+        <translation type="obsolete">Enkelte punkter</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPolylines</name>
     <message>
-        <source>Polylines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Back to main menu</source>
-        <translation type="unfinished">Tilbage til hovedmenu</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete between two nodes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trim segments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Append node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polyline equidistant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Tilbage til hovedmenu</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">Koncentrisk</translation>
+        <translation type="obsolete">Koncentrisk</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarSelect</name>
     <message>
         <source>Select</source>
-        <translation>Vælg</translation>
+        <translation type="obsolete">Vælg</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation>Vælg alt</translation>
+        <translation type="obsolete">Vælg alt</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Tilbage til hovedmenu</translation>
+        <translation type="obsolete">Tilbage til hovedmenu</translation>
     </message>
     <message>
         <source>Select intersected entities</source>
-        <translation>Vælg gennemskårede enheder</translation>
+        <translation type="obsolete">Vælg gennemskårede enheder</translation>
     </message>
     <message>
         <source>Deselect intersected entities</source>
-        <translation>Fravælg gennemskårede enheder</translation>
+        <translation type="obsolete">Fravælg gennemskårede enheder</translation>
     </message>
     <message>
         <source>Deselect all</source>
-        <translation>Fravælg alt</translation>
+        <translation type="obsolete">Fravælg alt</translation>
     </message>
     <message>
         <source>Invert Selection</source>
-        <translation>Omvend valgt/fravalgt</translation>
+        <translation type="obsolete">Omvend valgt/fravalgt</translation>
     </message>
     <message>
         <source>Select layer</source>
-        <translation>Vælg lag</translation>
+        <translation type="obsolete">Vælg lag</translation>
     </message>
     <message>
         <source>(De-)Select contour</source>
-        <translation>(Fra-)Vælg figur</translation>
+        <translation type="obsolete">(Fra-)Vælg figur</translation>
     </message>
     <message>
         <source>(De-)Select entity</source>
-        <translation>(Fra-)Vælg enhed</translation>
+        <translation type="obsolete">(Fra-)Vælg enhed</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation>Fravælg vindue</translation>
+        <translation type="obsolete">Fravælg vindue</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation>Vælg vindue</translation>
+        <translation type="obsolete">Vælg vindue</translation>
     </message>
     <message>
         <source>Continue action</source>
-        <translation>Fortsæt opgaven</translation>
+        <translation type="obsolete">Fortsæt opgaven</translation>
     </message>
 </context>
 <context>
@@ -2149,20 +2024,8 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_CadToolBarSplines</name>
     <message>
-        <source>Splines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Back to main menu</source>
-        <translation type="unfinished">Tilbage til hovedmenu</translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Interpolation Spline</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Tilbage til hovedmenu</translation>
     </message>
 </context>
 <context>
@@ -4429,6 +4292,53 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
     </message>
 </context>
 <context>
+    <name>QG_DlgOptionsMakerCam</name>
+    <message>
+        <source>Export as MakerCAM SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export invisible layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export visible construction layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert blocks to safe inline SVG content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipses / Ellipse arcs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgOptionsVariables</name>
     <message>
         <source>&amp;OK</source>
@@ -5860,14 +5770,30 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation>R&amp;ediger lag</translation>
+        <translation type="obsolete">R&amp;ediger lag</translation>
     </message>
     <message>
         <source>&amp;Toggle Visibility</source>
-        <translation>Skif&amp;t synlighed</translation>
+        <translation type="obsolete">Skif&amp;t synlighed</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Layer &amp;Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6257,7 +6183,11 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>Venstre</translation>
     </message>
     <message>
-        <source>...</source>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6382,6 +6312,17 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <source>fixed</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_RecentFiles</name>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished">&amp;%1 %2</translation>
+    </message>
+    <message>
+        <source>Opening recent file...</source>
+        <translation type="unfinished">Genåbner sidste fil...</translation>
     </message>
 </context>
 <context>
@@ -6895,7 +6836,7 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
-        <translation type="obsolete">Alle billed filer (%1)</translation>
+        <translation type="unfinished">Alle billed filer (%1)</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
@@ -7050,10 +6991,6 @@ Vil du overskrive den?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All Image Files (%1) </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Scalable Vector Graphics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7155,6 +7092,27 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Advarsel</translation>
+    </message>
+    <message>
+        <source>experimental, save your work first.
+Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading file matadata in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading blocks in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading objects in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9371,10 +9329,6 @@ Vil du overskrive den?</translation>
     <message>
         <source>Angle: %1</source>
         <translation type="unfinished">Vinkel: %1</translation>
-    </message>
-    <message>
-        <source> or %1%2</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -73,6 +73,35 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionFileExportMakerCam</name>
+    <message>
+        <source>Export as &amp;MakerCAM SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as</source>
+        <translation type="unfinished">Izvozi kot</translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionLayersToggleConstruction</name>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_SimpleTests</name>
+    <message>
+        <source>De&amp;bugging</source>
+        <translation type="unfinished">De&amp;bugging</translation>
+    </message>
+    <message>
+        <source>Insert Image</source>
+        <translation type="unfinished">Vstavi sliko</translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -185,7 +214,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>De&amp;bugging</source>
-        <translation>De&amp;bugging</translation>
+        <translation type="obsolete">De&amp;bugging</translation>
     </message>
     <message>
         <source>&amp;Cascade</source>
@@ -209,7 +238,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation>Odpiram zadnjo datoteko...</translation>
+        <translation type="obsolete">Odpiram zadnjo datoteko...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -341,7 +370,7 @@ Prosim, preverite dovoljenja.</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation>Vstavi sliko</translation>
+        <translation type="obsolete">Vstavi sliko</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
@@ -403,7 +432,7 @@ Samodejno shranjevanje zaustalvjeno.</translation>
     </message>
     <message>
         <source>&amp;%1 %2</source>
-        <translation>&amp;%1 %2</translation>
+        <translation type="obsolete">&amp;%1 %2</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
@@ -517,6 +546,20 @@ Samodejno shranjevanje zaustalvjeno.</translation>
         <source>&amp;Text</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open the file
+%1
+Please check its existence and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QC_MDIWindow</name>
@@ -571,7 +614,7 @@ Samodejno shranjevanje zaustalvjeno.</translation>
     </message>
     <message>
         <source>&amp;Export...</source>
-        <translation>&amp;Izvoz</translation>
+        <translation type="obsolete">&amp;Izvoz</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
@@ -596,6 +639,10 @@ Samodejno shranjevanje zaustalvjeno.</translation>
     <message>
         <source>&amp;Block</source>
         <translation type="unfinished">&amp;Blok</translation>
+    </message>
+    <message>
+        <source>&amp;Export as image</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -803,600 +850,161 @@ v ločenem oknu</translation>
     <name>QG_CadToolBarArcs</name>
     <message>
         <source>Arcs</source>
-        <translation>Loki</translation>
+        <translation type="obsolete">Loki</translation>
     </message>
     <message>
         <source>Arc with three points</source>
-        <translation>Lok s tremi točkami</translation>
+        <translation type="obsolete">Lok s tremi točkami</translation>
     </message>
     <message>
         <source>Arc with Center, Point, Angles</source>
-        <translation>Lok s središčem, točko in kotom</translation>
+        <translation type="obsolete">Lok s središčem, točko in kotom</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Nazaj v glavni meni</translation>
+        <translation type="obsolete">Nazaj v glavni meni</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentrično</translation>
+        <translation type="obsolete">Koncentrično</translation>
     </message>
     <message>
         <source>Arc tangential to base entity with radius</source>
-        <translation>Lok tangencialen na začetni predmet s polmerom</translation>
+        <translation type="obsolete">Lok tangencialen na začetni predmet s polmerom</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarCircles</name>
     <message>
         <source>Circles</source>
-        <translation>Krožnice</translation>
+        <translation type="obsolete">Krožnice</translation>
     </message>
     <message>
         <source>Circle with two opposite points</source>
-        <translation>Krožnica z dvema nasprotnima točkama</translation>
+        <translation type="obsolete">Krožnica z dvema nasprotnima točkama</translation>
     </message>
     <message>
         <source>Circle with center and radius</source>
-        <translation>Krožnica s središčem in polmerom</translation>
+        <translation type="obsolete">Krožnica s središčem in polmerom</translation>
     </message>
     <message>
         <source>Circle with center and point</source>
-        <translation>Krožnica s tremi točkami</translation>
+        <translation type="obsolete">Krožnica s tremi točkami</translation>
     </message>
     <message>
         <source>Circle with three points</source>
-        <translation>Nazaj v glavni meni</translation>
+        <translation type="obsolete">Nazaj v glavni meni</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Nazaj na glavni meni</translation>
+        <translation type="obsolete">Nazaj na glavni meni</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentrično</translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circle with 2 Points and Radius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Koncentrično</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarDim</name>
     <message>
         <source>Dimensions</source>
-        <translation>Dimenzije</translation>
+        <translation type="obsolete">Dimenzije</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Nazaj v glavni meni</translation>
+        <translation type="obsolete">Nazaj v glavni meni</translation>
     </message>
     <message>
         <source>Diametric Dimension</source>
-        <translation>Diametrične dimenzije</translation>
+        <translation type="obsolete">Diametrične dimenzije</translation>
     </message>
     <message>
         <source>Radial Dimension</source>
-        <translation>Radialne dimenzije</translation>
+        <translation type="obsolete">Radialne dimenzije</translation>
     </message>
     <message>
         <source>Vertical Dimension</source>
-        <translation>Vertikalne dimenzije</translation>
+        <translation type="obsolete">Vertikalne dimenzije</translation>
     </message>
     <message>
         <source>Horizontal Dimension</source>
-        <translation>Vodoravne dimenzije</translation>
+        <translation type="obsolete">Vodoravne dimenzije</translation>
     </message>
     <message>
         <source>Linear Dimension</source>
-        <translation>Linearne dimenzije</translation>
+        <translation type="obsolete">Linearne dimenzije</translation>
     </message>
     <message>
         <source>Aligned Dimension</source>
-        <translation>Poravnane dimenzije</translation>
+        <translation type="obsolete">Poravnane dimenzije</translation>
     </message>
     <message>
         <source>Angular Dimension</source>
-        <translation>Kotne dimenzije</translation>
+        <translation type="obsolete">Kotne dimenzije</translation>
     </message>
     <message>
         <source>Leader</source>
-        <translation>Vodilo</translation>
+        <translation type="obsolete">Vodilo</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation>Koncentrično</translation>
+        <translation type="obsolete">Koncentrično</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarEllipses</name>
     <message>
         <source>Ellipses</source>
-        <translation>Elipse</translation>
+        <translation type="obsolete">Elipse</translation>
     </message>
     <message>
         <source>Ellipse arc with center, two points and angles</source>
-        <translation>Eliptični lok s središčem, dvema točkama in kotom</translation>
+        <translation type="obsolete">Eliptični lok s središčem, dvema točkama in kotom</translation>
     </message>
     <message>
         <source>Ellipse with Center and two points</source>
-        <translation>Elipsa s središčem in dvema točkama</translation>
+        <translation type="obsolete">Elipsa s središčem in dvema točkama</translation>
     </message>
     <message>
         <source>Back to main menu</source>
-        <translation>Nazaj v glavni meni</translation>
+        <translation type="obsolete">Nazaj v glavni meni</translation>
     </message>
     <message>
         <source>Draw Ellipse by foci and a point on ellipse</source>
-        <translation>Nariši elipso z goriščema in točko na elipsi</translation>
-    </message>
-    <message>
-        <source>Draw Ellipse with axes in x-/y-directions by four points on ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Nariši elipso z goriščema in točko na elipsi</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">Koncentrično</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Draw Ellipse by center and 3 points on ellipse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Koncentrično</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarInfo</name>
     <message>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distance (Point, Point)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distance (Entity, Point)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Angle</source>
-        <translation type="unfinished">Kot</translation>
-    </message>
-    <message>
-        <source>Total length of selected entities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Area of polygon</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Kot</translation>
     </message>
     <message>
         <source>Concentric</source>
-        <translation type="unfinished">Koncentrično</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarLines</name>
-    <message>
-        <source>Lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Freehand lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Orthogonal lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bisectors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tangents from circle to circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tangents from point to circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line with two points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lines with relative angles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line with given angle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Horizontal lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vertical lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rectangles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polygons with Center and Corner</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polygons with two Corners</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parallels with distance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parallels through point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tangents to a circle, orthogonal to a line</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Koncentrično</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarMain</name>
     <message>
-        <source>Main</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Create Block</source>
-        <translation type="unfinished">Izdelaj blok</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Lines&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Arcs&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Circles&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Ellipses&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Polylines&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Draw Splines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Draw Points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Dimensions&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create Hatch</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Izdelaj blok</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished">Vstavi sliko</translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Modify&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Info&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show toolbar &quot;Select&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Insert Multi-line Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarModify</name>
-    <message>
-        <source>Modify</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Move and Rotate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Explode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trim / Extend two</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trim / Extend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Entity Attributes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Entity Geometry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mirror</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Explode Text into Letters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Move / Copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rotate Two</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Offset (Experimental Feature, work in progress)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Revert direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lengthen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Fillet, rounding of an interior or exterior corner&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarPoints</name>
-    <message>
-        <source>Points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Single points</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Vstavi sliko</translation>
     </message>
 </context>
 <context>
     <name>QG_CadToolBarPolylines</name>
     <message>
-        <source>Polylines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete between two nodes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Trim segments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Append node</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polyline equidistant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Concentric</source>
-        <translation type="unfinished">Koncentrično</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSelect</name>
-    <message>
-        <source>Select</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select intersected entities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deselect intersected entities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deselect all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invert Selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(De-)Select contour</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(De-)Select entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deselect Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Continue action</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSplines</name>
-    <message>
-        <source>Splines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Spline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Interpolation Spline</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Koncentrično</translation>
     </message>
 </context>
 <context>
@@ -3203,6 +2811,53 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
 </context>
 <context>
+    <name>QG_DlgOptionsMakerCam</name>
+    <message>
+        <source>Export as MakerCAM SVG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export invisible layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export visible construction layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Convert blocks to safe inline SVG content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipses / Ellipse arcs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_DlgPoint</name>
     <message>
         <source>Point</source>
@@ -4354,15 +4009,27 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Edit Layer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Toggle Visibility</source>
-        <translation type="unfinished">&amp;Spremeni vidljivost</translation>
+        <translation type="obsolete">&amp;Spremeni vidljivost</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Layer &amp;Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4748,7 +4415,11 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>...</source>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4869,6 +4540,17 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <source>fixed</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QG_RecentFiles</name>
+    <message>
+        <source>&amp;%1 %2</source>
+        <translation type="unfinished">&amp;%1 %2</translation>
+    </message>
+    <message>
+        <source>Opening recent file...</source>
+        <translation type="unfinished">Odpiram zadnjo datoteko...</translation>
     </message>
 </context>
 <context>
@@ -5488,10 +5170,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All Image Files (%1) </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Scalable Vector Graphics</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5593,6 +5271,31 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>experimental, save your work first.
+Continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading file matadata in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading blocks in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading objects in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Image Files (%1)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7206,10 +6909,6 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Angle: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> or %1%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
