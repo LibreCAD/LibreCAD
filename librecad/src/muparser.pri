@@ -5,6 +5,9 @@ macx|win32|equals(build_muparser, "true")|!packagesExist(muparser){
 	DEPENDPATH += $$MUPARSER_DIR/include \
 				$$MUPARSER_DIR/src
 	INCLUDEPATH += $$MUPARSER_DIR/include
+	GEN_LIB_DIR = ../../generated/lib
+	LIBS += -L$$GEN_LIB_DIR -lmuparser
+
 }else{
     message("Using external muparser")
     CONFIG += link_pkgconfig
