@@ -54,7 +54,7 @@ public:
 public:
     RS_ActionDefault(RS_EntityContainer& container,
                      RS_GraphicView& graphicView);
-    virtual ~RS_ActionDefault();
+	virtual ~RS_ActionDefault() = default;
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

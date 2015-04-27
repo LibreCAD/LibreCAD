@@ -52,15 +52,8 @@ RS_ActionDefault::RS_ActionDefault(RS_EntityContainer& container,
 }
 
 
-
-RS_ActionDefault::~RS_ActionDefault() {
-}
-
-
-
 QAction* RS_ActionDefault::createGUIAction(RS2::ActionType /*type*/,
                                            QObject* /*parent*/) {
-
 	return nullptr;
 }
 
@@ -313,6 +306,7 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
         }
     } else if (e->button()==Qt::RightButton) {
         //cleanup
+		RS_DIALOGFACTORY->requestPreviousToolBar();
         setStatus(Neutral);
         e->accept();
     }
