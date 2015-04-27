@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="es">
 <context>
@@ -224,7 +223,7 @@
     <message>
         <location filename="../list/list.cpp" line="178"/>
         <source>INSERT</source>
-        <translation>INSERCIÓN</translation>
+        <translation>INSERTAR</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="181"/>
@@ -283,12 +282,12 @@
     <message>
         <location filename="../list/list.cpp" line="213"/>
         <source>DIMLEADER</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMGUÍA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>DIMALIGNED</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMALINEADO</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="219"/>
@@ -439,7 +438,7 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="264"/>
         <source>Draw point code</source>
-        <translation> Dibujar codigo del punto</translation>
+        <translation>Dibuje el código del punto</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="278"/>
@@ -479,7 +478,7 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="328"/>
         <source>Point elevation separation is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>La separación del punto de elevación está vacía</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="331"/>
@@ -489,27 +488,27 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="332"/>
         <source>Point number height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>La altura del punto de elevación está vacía</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="333"/>
         <source>Point number separation is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>La separación del número del punto está vacía</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="336"/>
         <source>Point code layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Capa en referencia de punto está vacía</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="337"/>
         <source>Point code height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Altitud en referencia de punto está vacía</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="338"/>
         <source>Point code separation is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Separación en referencia de punto está vacía</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="366"/>
@@ -518,7 +517,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>No se puede abrir el archivo %1</translation>
     </message>
 </context>
@@ -542,7 +541,7 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="56"/>
         <source>Import ESRI Shapefile</source>
-        <translation type="unfinished">Importar archivo Shapefile de ESRI</translation>
+        <translation>Importar archivo Shape de ESRI</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="68"/>
@@ -590,12 +589,12 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="128"/>
         <source>as Point</source>
-        <translation>como punto</translation>
+        <translation>como Punto</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="129"/>
         <source>as Label:</source>
-        <translation>como etiqueta</translation>
+        <translation>como Etiqueta:</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="141"/>
@@ -731,22 +730,22 @@
     <message>
         <location filename="../sample/sample.cpp" line="107"/>
         <source>Start X is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>X inicial está vacío</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="108"/>
         <source>Start Y is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Y inicial está vacío</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="109"/>
         <source>End X is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>X final está vacío</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="110"/>
         <source>End Y is empty</source>
-        <translation>Falta la Y final</translation>
+        <translation>Y final está vacío.</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="132"/>
@@ -760,12 +759,12 @@
         <location filename="../plotequation/plot.cpp" line="20"/>
         <location filename="../plotequation/plot.cpp" line="27"/>
         <source>Plot plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Plugin de trazado</translation>
     </message>
     <message>
         <location filename="../plotequation/plot.cpp" line="27"/>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujar</translation>
     </message>
 </context>
 <context>
@@ -773,51 +772,55 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="6"/>
         <source>Plot equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Trazar ecuación</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="9"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+If you don't want to use the parametric form, just leave out "Equation2".
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Este plugin permite trazar ecuaciones matemáticas.
+Si no quiere usar la forma paramétrica, deje sin cubrir "Ecuación2".
+Puede usar pi cuando necesite el valor de pi (ex. (3 *pi)).
+Use t o x en su ecuación como una variable/parámetro.
+</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="13"/>
         <source>Equation 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ecuación 1:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="14"/>
         <source>Equation 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ecuación 2:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="17"/>
         <source>start value:</source>
-        <translation type="unfinished"></translation>
+        <translation>valor inicial:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>end value:</source>
-        <translation type="unfinished"></translation>
+        <translation>valor final:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="19"/>
         <source>step size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Distancia de paso:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="23"/>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujar</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="24"/>
         <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
