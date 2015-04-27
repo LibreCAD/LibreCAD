@@ -41,13 +41,16 @@ QG_CadToolBarPolylines::QG_CadToolBarPolylines(QG_CadToolBar* parent, Qt::Window
 void QG_CadToolBarPolylines::addSubActions(const std::vector<QAction*>& actions, bool addGroup)
 {
 	LC_CadToolBarInterface::addSubActions(actions, addGroup);
-	std::vector<QAction*> buttons=	{bPolyline, bPolylineAdd, bPolylineAppend, bPolylineDel,
-									 bPolylineDelBetween, bPolylineTrim, bPolylineEquidistant, bPolylineSegment};
+	std::vector<QAction**> const buttons={
+		&bPolyline, &bPolylineAdd, &bPolylineAppend, &bPolylineDel,
+		&bPolylineDelBetween, &bPolylineTrim, &bPolylineEquidistant,
+		&bPolylineSegment
+	};
 
 	assert(buttons.size()==actions.size());
 
 	for(size_t i=0; i<buttons.size(); ++i)
-		buttons[i]=actions[i];
+		*buttons[i]=actions[i];
 }
 
 //restore action from checked button

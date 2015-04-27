@@ -41,14 +41,16 @@ QG_CadToolBarCircles::QG_CadToolBarCircles(QG_CadToolBar* parent, Qt::WindowFlag
 void QG_CadToolBarCircles::addSubActions(const std::vector<QAction*>& actions, bool addGroup)
 {
 	LC_CadToolBarInterface::addSubActions(actions, addGroup);
-	std::vector<QAction*> buttons=	{bCircle, bCircleCR, bCircle2P, bCircle2PR, bCircle3P,
-									 bCircleParallel, bCircleInscribe, bCircleTan1_2P, bCircleTan2,
-									 bCircleTan2_1P, bCircleTan3};
+	std::vector<QAction**> const buttons=	{
+		&bCircle, &bCircleCR, &bCircle2P, &bCircle2PR, &bCircle3P,
+		&bCircleParallel, &bCircleInscribe, &bCircleTan1_2P, &bCircleTan2,
+		&bCircleTan2_1P, &bCircleTan3
+	};
 
 	assert(buttons.size()==actions.size());
 
 	for(size_t i=0; i<buttons.size(); ++i)
-		buttons[i]=actions[i];
+		*buttons[i]=actions[i];
 }
 
 void QG_CadToolBarCircles::back() {

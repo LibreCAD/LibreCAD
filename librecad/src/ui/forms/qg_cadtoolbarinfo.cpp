@@ -40,12 +40,14 @@ QG_CadToolBarInfo::QG_CadToolBarInfo(QG_CadToolBar* parent, Qt::WindowFlags fl)
 void QG_CadToolBarInfo::addSubActions(const std::vector<QAction*>& actions, bool addGroup)
 {
 	LC_CadToolBarInterface::addSubActions(actions, addGroup);
-	std::vector<QAction*> buttons=	{ bDist, bDist2, bAngle, bTotalLength, bArea};
+	std::vector<QAction**> const buttons={
+		 &bDist, &bDist2, &bAngle, &bTotalLength, &bArea
+	};
 
 	assert(buttons.size()==actions.size());
 
 	for(size_t i=0; i<buttons.size(); ++i)
-		buttons[i]=actions[i];
+		*buttons[i]=actions[i];
 }
 
 //restore action from checked button

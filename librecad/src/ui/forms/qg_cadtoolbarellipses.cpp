@@ -41,12 +41,15 @@ QG_CadToolBarEllipses::QG_CadToolBarEllipses(QG_CadToolBar* parent, Qt::WindowFl
 void QG_CadToolBarEllipses::addSubActions(const std::vector<QAction*>& actions, bool addGroup)
 {
 	LC_CadToolBarInterface::addSubActions(actions, addGroup);
-	std::vector<QAction*> buttons=	{bEllipseAxes, bEllipseArcAxes , bEllipseFociPoint , bEllipse4Points , bEllipseCenter3Points , bEllipseInscribe};
+	std::vector<QAction**> const buttons={
+		&bEllipseAxes, &bEllipseArcAxes , &bEllipseFociPoint ,
+		&bEllipse4Points , &bEllipseCenter3Points , &bEllipseInscribe
+	};
 
 	assert(buttons.size()==actions.size());
 
 	for(size_t i=0; i<buttons.size(); ++i)
-		buttons[i]=actions[i];
+		*buttons[i]=actions[i];
 }
 
 //restore action from checked button

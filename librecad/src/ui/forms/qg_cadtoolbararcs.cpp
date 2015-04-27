@@ -45,11 +45,13 @@ void QG_CadToolBarArcs::addSubActions(const std::vector<QAction*>& actions, bool
 {
 	RS_DEBUG->print("QG_CadToolBarArcs::addSubActions(): begin\n");
 	LC_CadToolBarInterface::addSubActions(actions, addGroup);
-	std::vector<QAction*> buttons={bArc, bArc3P, bArcParallel, bArcTangential};
+	std::vector<QAction**> const buttons={
+		 &bArc, &bArc3P, &bArcParallel, &bArcTangential
+	};
 	assert(buttons.size()==actions.size());
 
 	for(size_t i=0; i<buttons.size(); ++i)
-		buttons[i]=actions[i];
+		*buttons[i]=actions[i];
 	RS_DEBUG->print("QG_CadToolBarArcs::addSubActions(): end\n");
 
 }

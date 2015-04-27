@@ -36,11 +36,11 @@ QG_CadToolBarSplines::QG_CadToolBarSplines(QG_CadToolBar* parent, Qt::WindowFlag
 void QG_CadToolBarSplines::addSubActions(const std::vector<QAction*>& actions, bool addGroup)
 {
 	LC_CadToolBarInterface::addSubActions(actions, addGroup);
-	std::vector<QAction*> buttons={bSpline, bSplineInt};
+	std::vector<QAction**> const buttons={&bSpline, &bSplineInt};
 	assert(buttons.size()==actions.size());
 
 	for(size_t i=0; i<buttons.size(); ++i)
-		buttons[i]=actions[i];
+		*buttons[i]=actions[i];
 
 }
 

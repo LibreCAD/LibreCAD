@@ -40,15 +40,17 @@ QG_CadToolBarModify::QG_CadToolBarModify(QG_CadToolBar* parent, Qt::WindowFlags 
 void QG_CadToolBarModify::addSubActions(const std::vector<QAction*>& actions, bool addGroup)
 {
 	LC_CadToolBarInterface::addSubActions(actions, addGroup);
-	std::vector<QAction*> buttons=	{bMove, bRotate, bScale, bMirror, bMoveRotate, bRotate2, bRevertDirection,
-									 bTrim, bTrim2, bTrimAmount, bOffset,  bBevel, bRound, bCut, bStretch, bEntity,
-									 bAttributes, bDelete, bDeleteQuick, bExplodeText,bExplode
-									 };
+	std::vector<QAction**> const buttons={
+		&bMove, &bRotate, &bScale, &bMirror, &bMoveRotate, &bRotate2,
+		&bRevertDirection, &bTrim, &bTrim2, &bTrimAmount, &bOffset, &bBevel,
+		&bRound, &bCut, &bStretch, &bEntity, &bAttributes, &bDelete,
+		&bDeleteQuick, &bExplodeText, &bExplode
+	};
 
 	assert(buttons.size()==actions.size());
 
 	for(size_t i=0; i<buttons.size(); ++i)
-		buttons[i]=actions[i];
+		*buttons[i]=actions[i];
 }
 
 

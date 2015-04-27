@@ -41,14 +41,16 @@ QG_CadToolBarLines::QG_CadToolBarLines(QG_CadToolBar* parent, Qt::WindowFlags fl
 void QG_CadToolBarLines::addSubActions(const std::vector<QAction*>& actions, bool addGroup)
 {
 	LC_CadToolBarInterface::addSubActions(actions, addGroup);
-	std::vector<QAction*> buttons=	{bNormal, bAngle, bHorizontal, bVertical, bRectangle, bBisector,
-									 bParallel, bParallelThrough, bTangent1, bTangent2, bOrthTan,
-									 bOrthogonal, bRelAngle, bPolygon, bPolygon2, bFree};
+	std::vector<QAction**> const &buttons=	{
+		&bNormal, &bAngle, &bHorizontal, &bVertical, &bRectangle, &bBisector,
+		&bParallel, &bParallelThrough, &bTangent1, &bTangent2, &bOrthTan,
+		&bOrthogonal, &bRelAngle, &bPolygon, &bPolygon2, &bFree
+	};
 
 	assert(buttons.size()==actions.size());
 
 	for(size_t i=0; i<buttons.size(); ++i)
-		buttons[i]=actions[i];
+		*buttons[i]=actions[i];
 }
 
 void QG_CadToolBarLines::drawLine() {
