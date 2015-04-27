@@ -3944,7 +3944,7 @@ void RS_FilterDXFRW::printDwgError(int le){
         RS_DEBUG->print("RS_FilterDXFRW::printDwgError: DRW::BAD_VERSION");
         break;
     case DRW::BAD_READ_METADATA:
-        RS_DIALOGFACTORY->commandMessage(QObject::tr("error reading file matadata in dwg file"));
+        RS_DIALOGFACTORY->commandMessage(QObject::tr("error reading file metadata in dwg file"));
         RS_DEBUG->print("RS_FilterDXFRW::printDwgError: DRW::BAD_READ_FILE_HEADER");
         break;
     case DRW::BAD_READ_FILE_HEADER:
