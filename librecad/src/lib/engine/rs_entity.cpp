@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -25,11 +26,13 @@
 **********************************************************************/
 
 
-#include "rs_entity.h"
-
 #include <iostream>
+#include <utility>
+#include <QPolygon>
 
+#include "rs_entity.h"
 #include "rs_arc.h"
+#include "rs_block.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
 #include "rs_graphic.h"
@@ -41,9 +44,9 @@
 #include "rs_point.h"
 #include "rs_polyline.h"
 #include "rs_text.h"
+#include "rs_vector.h"
 #include "rs_information.h"
 #include "lc_quadratic.h"
-#include <QPolygon>
 
 /**
  * Default constructor.
@@ -71,15 +74,6 @@ RS_Entity::RS_Entity(RS_EntityContainer* parent) {
     maxV = e.maxV;
     pen = e.pen;
 }*/
-
-
-
-/**
- * Destructor.
- */
-RS_Entity::~RS_Entity() {}
-
-
 
 /**
  * Initialisation. Called from all constructors.
@@ -116,6 +110,15 @@ void RS_Entity::resetBorders() {
     maxV.set(mind, mind);
 }
 
+
+void RS_Entity::moveBorders(const RS_Vector& offset){
+	minV.move(offset);
+	maxV.move(offset);
+}
+void RS_Entity::scaleBorders(const RS_Vector& center, const RS_Vector& factor){
+	minV.scale(center,factor);
+	maxV.scale(center,factor);
+}
 
 
 /**
@@ -164,15 +167,16 @@ bool RS_Entity::isSelected() const {
 /**
  * @return true if a parent entity of this entity is selected.
  */
-bool RS_Entity::isParentSelected() {
-    RS_Entity* p = this;
+bool RS_Entity::isParentSelected() const
+{
+	RS_Entity const* p = this;
 
-    do {
-        p = p->getParent();
-        if (p!=NULL && p->isSelected()==true) {
-            return true;
-        }
-    } while(p!=NULL);
+	while(p) {
+		p = p->getParent();
+		if (p && p->isSelected()==true) {
+			return true;
+		}
+	}
 
     return false;
 }
@@ -231,7 +235,8 @@ bool RS_Entity::isUndone() const {
 /**
  * @return True if the entity is in the given range.
  */
-bool RS_Entity::isInWindow(RS_Vector v1, RS_Vector v2) {
+bool RS_Entity::isInWindow(RS_Vector v1, RS_Vector v2) const
+{
     double right, left, top, bottom;
 
     right = std::max(v1.x, v2.x);
@@ -253,14 +258,14 @@ bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const
     if( getStartpoint().isInWindowOrdered(vpMin, vpMax) ) return true;
     if( getEndpoint().isInWindowOrdered(vpMin, vpMax) ) return true;
     QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
-    QVector<RS_Vector> vps;
+	std::vector<RS_Vector> vps;
     for(unsigned short i=0;i<4;i++){
         const QPointF& vp(visualBox.at(i));
-        vps<<RS_Vector(vp.x(),vp.y());
+		vps.push_back(RS_Vector(vp.x(),vp.y()));
     }
     for(unsigned short i=0;i<4;i++){
-        RS_Line line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));
-        if( RS_Information::getIntersection(const_cast<RS_Entity*>(this), &line, true).size()>0) return true;
+		RS_Line const line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));
+		if( RS_Information::getIntersection(this, &line, true).size()>0) return true;
     }
     if( minV.isInWindowOrdered(vpMin,vpMax)||maxV.isInWindowOrdered(vpMin,vpMax)) return true;
     return false;
@@ -304,7 +309,7 @@ double RS_Entity::getDistanceToPoint(const RS_Vector& coord,
  * The Layer might also be NULL. In that case the layer visiblity
 * is ignored.
  */
-bool RS_Entity::isVisible() {
+bool RS_Entity::isVisible() const{
 
     if (!getFlag(RS2::FlagVisible)) {
         return false;
@@ -379,7 +384,13 @@ bool RS_Entity::isVisible() {
     return false;
 }
 
-
+void RS_Entity::setVisible(bool v) {
+	if (v) {
+		setFlag(RS2::FlagVisible);
+	} else {
+		delFlag(RS2::FlagVisible);
+	}
+}
 
 /**
  * Sets the highlight status of the entity. Highlighted entities
@@ -393,42 +404,66 @@ void RS_Entity::setHighlighted(bool on) {
     }
 }
 
+RS_Vector RS_Entity::getStartpoint() const {
+	return RS_Vector(false);
+}
 
+RS_Vector RS_Entity::getEndpoint() const {
+	return RS_Vector(false);
+}
 
+RS_VectorSolutions RS_Entity::getTangentPoint(const RS_Vector& /*point*/) const {
+	return RS_VectorSolutions();
+}
+
+RS_Vector RS_Entity::getTangentDirection(const RS_Vector& /*point*/)const{
+	return RS_Vector(false);
+}
 /**
  * @return true if the entity is highlighted.
  */
-bool RS_Entity::isHighlighted() {
+bool RS_Entity::isHighlighted() const{
     return getFlag(RS2::FlagHighlighted);
 }
 
 
+RS_Vector RS_Entity::getSize() const {
+	return maxV-minV;
+}
 
 /**
  * @return true if the layer this entity is on is locked.
  */
-bool RS_Entity::isLocked() {
-    if (getLayer(true)!=NULL && getLayer()->isLocked()) {
+bool RS_Entity::isLocked() const
+{
+	if (getLayer(true) && getLayer()->isLocked()) {
         return true;
     } else {
         return false;
     }
 }
 
+RS_Vector RS_Entity::getCenter() const {
+	return RS_Vector(false);
+}
+
+double RS_Entity::getRadius() const {
+	return RS_MAXDOUBLE;
+}
 
 /**
  * @return The parent graphic in which this entity is stored
  * or the parent's parent graphic or NULL if none of the parents
  * are stored in a graphic.
  */
-RS_Graphic* RS_Entity::getGraphic() {
+RS_Graphic* RS_Entity::getGraphic() const{
     if (rtti()==RS2::EntityGraphic) {
-        return (RS_Graphic*)this;
-    } else if (parent==NULL) {
-        return NULL;
-    } else {
-        return parent->getGraphic();
-    }
+		RS_Graphic const* ret=static_cast<RS_Graphic const*>(this);
+		return const_cast<RS_Graphic*>(ret);
+	} else if (!parent) {
+		return nullptr;
+	}
+	return parent->getGraphic();
 }
 
 
@@ -438,14 +473,14 @@ RS_Graphic* RS_Entity::getGraphic() {
  * or the parent's parent block or NULL if none of the parents
  * are stored in a block.
  */
-RS_Block* RS_Entity::getBlock() {
+RS_Block* RS_Entity::getBlock() const{
     if (rtti()==RS2::EntityBlock) {
-        return (RS_Block*)this;
-    } else if (parent==NULL) {
-        return NULL;
-    } else {
-        return parent->getBlock();
-    }
+		RS_Block const* ret=static_cast<RS_Block const*>(this);
+		return const_cast<RS_Block*>(ret);
+	} else if (!parent) {
+		return nullptr;
+	}
+	return parent->getBlock();
 }
 
 
@@ -468,34 +503,38 @@ LC_Quadratic RS_Entity::getQuadratic() const
  * or the parent's parent block or NULL if none of the parents
  * are stored in a block.
  */
-RS_Insert* RS_Entity::getInsert() {
+RS_Insert* RS_Entity::getInsert() const
+{
     if (rtti()==RS2::EntityInsert) {
-        return (RS_Insert*)this;
-    } else if (parent==NULL) {
-        return NULL;
+		RS_Insert const* ret=static_cast<RS_Insert const*>(this);
+		return const_cast<RS_Insert*>(ret);
+	} else if (!parent) {
+		return nullptr;
     } else {
         return parent->getInsert();
     }
 }
-
-
 
 /**
  * @return The parent block or insert in which this entity is stored
  * or the parent's parent block or insert or NULL if none of the parents
  * are stored in a block or insert.
  */
-RS_Entity* RS_Entity::getBlockOrInsert() {
-    if (rtti()==RS2::EntityBlock || rtti()==RS2::EntityInsert) {
-        return this;
-    } else if (parent==NULL) {
-        return NULL;
-    } else {
-        return parent->getBlockOrInsert();
-    }
+RS_Entity* RS_Entity::getBlockOrInsert() const
+{
+	RS_Entity* ret=nullptr;
+	switch(rtti()){
+	case RS2::EntityBlock:
+	case RS2::EntityInsert:
+		ret=const_cast<RS_Entity*>(this);
+		break;
+	default:
+		if(parent) {
+			return parent->getBlockOrInsert();
+		}
+	}
+	return ret;
 }
-
-
 
 /**
  * @return The parent document in which this entity is stored
@@ -503,14 +542,14 @@ RS_Entity* RS_Entity::getBlockOrInsert() {
  * are stored in a document. Note that a document is usually
  * either a Graphic or a Block.
  */
-RS_Document* RS_Entity::getDocument() {
-    if (isDocument()==true) {
-        return (RS_Document*)this;
-    } else if (parent==NULL) {
-        return NULL;
-    } else {
-        return parent->getDocument();
-    }
+RS_Document* RS_Entity::getDocument() const{
+	if (isDocument()) {
+		RS_Document const* ret=static_cast<RS_Document const*>(this);
+		return const_cast<RS_Document*>(ret);
+	} else if (!parent) {
+		return nullptr;
+	}
+	return parent->getDocument();
 }
 
 
@@ -590,10 +629,10 @@ double RS_Entity::getGraphicVariableDouble(const QString& key, double def) {
  * @return value of variable or default value if the given variable
  *    doesn't exist.
  */
-int RS_Entity::getGraphicVariableInt(const QString& key, int def) {
+int RS_Entity::getGraphicVariableInt(const QString& key, int def) const{
     RS_Graphic* graphic = getGraphic();
     int ret=def;
-    if (graphic!=NULL) {
+	if (graphic) {
         ret = graphic->getVariableInt(key, def);
     }
     return ret;
@@ -611,10 +650,11 @@ int RS_Entity::getGraphicVariableInt(const QString& key, int def) {
  *    doesn't exist.
  */
 QString RS_Entity::getGraphicVariableString(const QString& key,
-        const QString&  def) {
+		const QString&  def) const
+{
     RS_Graphic* graphic = getGraphic();
     QString ret=def;
-    if (graphic!=NULL) {
+	if (graphic) {
         ret = graphic->getVariableString(key, def);
     }
     return ret;
@@ -626,10 +666,11 @@ QString RS_Entity::getGraphicVariableString(const QString& key,
  * @return The unit the parent graphic works on or None if there's no
  * parent graphic.
  */
-RS2::Unit RS_Entity::getGraphicUnit() {
+RS2::Unit RS_Entity::getGraphicUnit() const
+{
     RS_Graphic* graphic = getGraphic();
     RS2::Unit ret = RS2::None;
-    if (graphic!=NULL) {
+	if (graphic) {
         ret = graphic->getUnit();
     }
     return ret;
@@ -858,7 +899,9 @@ double RS_Entity::getStyleFactor(RS_GraphicView* view) {
  * @return User defined variable connected to this entity or NULL if not found.
  */
 QString RS_Entity::getUserDefVar(const QString& key) const {
-    return varList.value(key, NULL);
+	auto it=varList.find(key);
+	if(it==varList.end()) return nullptr;
+	return varList.at(key);
 }
 /*
  * @coord
@@ -868,7 +911,7 @@ QString RS_Entity::getUserDefVar(const QString& key) const {
  */
 RS_Vector RS_Entity::getNearestOrthTan(const RS_Vector& /*coord*/,
                     const RS_Line& /*normal*/,
-                    bool /*onEntity = false*/){
+					bool /*onEntity = false*/) const{
         return RS_Vector(false);
 }
 
@@ -877,37 +920,43 @@ RS_Vector RS_Entity::getNearestOrthTan(const RS_Vector& /*coord*/,
  * Add a user defined variable to this entity.
  */
 void RS_Entity::setUserDefVar(QString key, QString val) {
-    varList.insert(key, val);
+	varList.insert(std::make_pair(key, val));
 }
-
-
 
 /**
  * Deletes the given user defined variable.
  */
 void RS_Entity::delUserDefVar(QString key) {
-    varList.remove(key);
+	varList.erase(key);
 }
-
-
 
 /**
  * @return A list of all keys connected to this entity.
  */
-QList<QString> RS_Entity::getAllKeys() {
-    return varList.keys();
+std::vector<QString> RS_Entity::getAllKeys() const{
+	std::vector<QString> ret(0);
+	for(auto const& v: varList){
+		ret.push_back(v.first);
+	}
+	return ret;
 }
 
 //! constructionLayer contains entities of infinite length, constructionLayer doesn't show up in print
-bool RS_Entity::isConstructionLayer(bool typeCheck) const  {
-    if(     typeCheck
-        &&  getParent() != NULL
-        &&  RS2::EntityLine != rtti() ){
+bool RS_Entity::isConstruction(bool typeCheck) const{
+	if(typeCheck
+		&&  getParent()
+		&&  rtti() != RS2::EntityLine){
             // do not expand entities on construction layers, except lines
             return false;
     }
-    if(layer != NULL) return layer->isConstructionLayer();
+	if (layer) return layer->isConstruction();
     return false;
+}
+
+//! whether printing is enabled or disabled for the entity's layer
+bool RS_Entity::isPrint(void) const{
+    if (nullptr != layer) return layer->isPrint();
+    return true;
 }
 
 bool RS_Entity::trimmable() const
@@ -924,6 +973,27 @@ bool RS_Entity::trimmable() const
     }
 }
 
+RS_VectorSolutions RS_Entity::getRefPoints() const
+{
+	return RS_VectorSolutions();
+}
+
+RS_Vector RS_Entity::getNearestRef(const RS_Vector& coord,
+								   double* dist) const{
+	RS_VectorSolutions const&& s = getRefPoints();
+
+	return s.getClosest(coord, dist);
+}
+
+RS_Vector RS_Entity::getNearestSelectedRef(const RS_Vector& coord,
+										   double* dist) const{
+	if (isSelected()) {
+		return getNearestRef(coord, dist);
+	}
+	else {
+		return RS_Vector(false);
+	}
+}
 
 /**
  * Dumps the elements data to stdout.
@@ -933,7 +1003,7 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
     //return os;
 
     os << " {Entity id: " << e.id;
-    if (e.parent!=NULL) {
+	if (e.parent) {
         os << " | parent id: " << e.parent->getId() << "\n";
     } else {
         os << " | no parent\n";
@@ -954,11 +1024,11 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
     os << e.pen << "\n";
 
         os << "variable list:\n";
-    QHash<QString, QString>::const_iterator it = e.varList.constBegin();
-    while (it != e.varList.constEnd() ) {
-        os << it.key().toLatin1().data() << ": " << it.value().toLatin1().data() << ", ";
-        ++it;
-    }
+	for(auto const& v: e.varList){
+		os << v.first.toLatin1().data()<< ": "
+		   << v.second.toLatin1().data()
+			   << ", ";
+	}
 
     // There should be a better way then this...
     switch(e.rtti()) {

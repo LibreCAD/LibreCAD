@@ -34,18 +34,10 @@
 /**
  * Constructor.
  */
-RS_InfoArea::RS_InfoArea() {
-    calculationNeeded=true;
+RS_InfoArea::RS_InfoArea():
+	calculationNeeded(true)
+{
 }
-
-
-
-/**
- * Destructor.
- */
-RS_InfoArea::~RS_InfoArea() {}
-
-
 
 /**
  * Adds a point to the internal list
@@ -76,7 +68,6 @@ void RS_InfoArea::reset() {
     circumference = 0.0;
 }
 
-
 /**
   * whether a point is already in contour
   *@return true if the point is a duplicate
@@ -84,11 +75,10 @@ void RS_InfoArea::reset() {
   **/
 bool RS_InfoArea::duplicated(const RS_Vector& p){
     if(thePoints.size()<1) return false;
-    for(int i=0;i<thePoints.size();i++){
-        if( (thePoints.at(i)-p).squared() < RS_TOLERANCE2) {
-            return true;
-        }
-    }
+	for(const RS_Vector& v: thePoints){
+		if((v-p).squared()<RS_TOLERANCE2) return true;
+	}
+
     return false;
 }
 
@@ -101,8 +91,8 @@ void RS_InfoArea::calculate() {
     circumference = 0.0;
     if(thePoints.size()<3) return;
 
-    RS_Vector p1=thePoints.first();
-    for(int i=0;i<thePoints.size();i++){
+	RS_Vector p1=thePoints.front();
+	for(size_t i=0;i<thePoints.size();++i){
 //        std::cout<<"RS_InfoArea::calculate(): "<<i<<" , "<<p1<<std::endl;
         RS_Vector p2=thePoints.at( (i+1)%thePoints.size());
         area += calcSubArea(p1, p2);
@@ -127,8 +117,6 @@ double RS_InfoArea::getArea(const QPolygon& polygon)
     return 0.5*fabs(ret);
 }
 
-
-
 /**
  * Calculates a sub area.
  *
@@ -143,5 +131,19 @@ double RS_InfoArea::calcSubArea(const RS_Vector& p1, const RS_Vector& p2) {
 }
 
 
+double RS_InfoArea::getArea() const{
+	return area;
+}
+double RS_InfoArea::getCircumference() {
+	if(calculationNeeded) calculate();
+	return circumference;
+}
+int RS_InfoArea::size() {
+	if(calculationNeeded) calculate();
+	return thePoints.size();
+}
+const RS_Vector& RS_InfoArea::at(int i) const{
+	return thePoints.at(i);
+}
 
 // EOF

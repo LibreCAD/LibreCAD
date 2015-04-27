@@ -26,36 +26,38 @@
 #ifndef QG_CADTOOLBARMAIN_H
 #define QG_CADTOOLBARMAIN_H
 
+#include "lc_cadtoolbarinterface.h"
 
-#include "ui_qg_cadtoolbarmain.h"
-#include "qg_actionhandler.h"
 class QG_CadToolBar;
+class QG_ActionHandler;
 
-class QG_CadToolBarMain : public QWidget, public Ui::QG_CadToolBarMain
+class QG_CadToolBarMain : public LC_CadToolBarInterface
 {
     Q_OBJECT
 
 public:
-    QG_CadToolBarMain(QWidget* parent = 0, Qt::WindowFlags fl = 0);
-    ~QG_CadToolBarMain();
-    void restoreAction(); //restore action from checked button
+	QG_CadToolBarMain(QG_CadToolBar* parent = 0, Qt::WindowFlags fl = 0);
+	~QG_CadToolBarMain() = default;
+	virtual void restoreAction(); //restore action from checked button
     void finishCurrentAction(bool resetToolBar=false); //clear current action
     void resetToolBar();
+	virtual void setActionHandler(QG_ActionHandler* ah);
     virtual void showCadToolBar(RS2::ActionType actionType);
+	RS2::ToolBarId rtti() const
+	{
+		return RS2::ToolBarMain;
+	}
+	virtual void addSubActions(const std::vector<QAction*>& actions, bool addGroup=true);
 
 public slots:
-    virtual void init();
-    virtual void setCadToolBar( QG_CadToolBar * tb );
+	virtual void mousePressEvent( QMouseEvent * e );
 
-protected slots:
-    virtual void languageChange();
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-
-private:
-    QG_ActionHandler* actionHandler;
 private slots:
     void slotDrawMText();
-    void slotDrawImage();
+	void slotDrawImage();
+private:
+	QAction *bMenuImage=nullptr, *bMenuPoint=nullptr, *bMenuText=nullptr, *bMenuBlock=nullptr;
+	QAction *bMenuLine=nullptr, *bMenuArc=nullptr, *bMenuCircle=nullptr, *bMenuEllipse=nullptr, *bMenuSpline=nullptr, *bMenuPolyline=nullptr, *bMenuDim=nullptr, *bMenuHatch=nullptr, *bMenuModify=nullptr, *bMenuInfo=nullptr,
+	*bMenuSelect=nullptr;
 };
-
 #endif

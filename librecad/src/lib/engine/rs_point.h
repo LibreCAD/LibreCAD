@@ -61,11 +61,7 @@ public:
     RS_Point(RS_EntityContainer* parent,
              const RS_PointData& d);
 
-    virtual RS_Entity* clone() {
-        RS_Point* p = new RS_Point(*this);
-        p->initId();
-        return p;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS_ENTITY_POINT */
     virtual RS2::EntityType rtti() const {
@@ -92,7 +88,7 @@ public:
         return data;
     }
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     /** @return Position of the point */
     RS_Vector getPos() {
@@ -110,13 +106,13 @@ public:
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
             bool onEntity = true, double* dist = NULL, RS_Entity** entity = NULL)const;
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-                                       double* dist = NULL);
+									   double* dist = NULL)const;
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
                                        double* dist = NULL,
                                        int middlePoints = 1)const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = NULL)const;
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,

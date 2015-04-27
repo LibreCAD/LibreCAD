@@ -30,6 +30,7 @@
 #include <QDebug>
 
 #include <QSplashScreen>
+
 QSplashScreen *splash=nullptr;
 
 #ifdef RS_SCRIPTING

@@ -30,7 +30,8 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
-
+#include "rs_coordinateevent.h"
+#include "rs_math.h"
 
 /**
  * Constructor.
@@ -42,15 +43,9 @@ RS_ActionLibraryInsert::RS_ActionLibraryInsert(RS_EntityContainer& container,
 
 
 
-RS_ActionLibraryInsert::~RS_ActionLibraryInsert() {}
-
 
 QAction* RS_ActionLibraryInsert::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Insert Library Object"),
-                                  tr("&Insert Library Object"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Insert Library Object"), NULL);
-    //action->zetStatusTip(tr("Inserts an Object from the part library."));
+   QAction* action = new QAction(tr("Insert Library Object"), NULL);
     return action;
 }
 
@@ -60,13 +55,6 @@ void RS_ActionLibraryInsert::init(int status) {
 
     reset();
 
-    /*if (graphic!=NULL) {
-        block = graphic->getActiveBlock();
-        if (block!=NULL) {
-            data.name = block->getName();
-        }
-}*/
-    //trigger();
 }
 
 
@@ -81,14 +69,6 @@ void RS_ActionLibraryInsert::setFile(const QString& file) {
 
 
 void RS_ActionLibraryInsert::reset() {
-    /*data = RS_InsertData("",
-                         RS_Vector(0.0,0.0),
-                         RS_Vector(1.0,1.0),
-                         0.0,
-                         1, 1,
-                         RS_Vector(1.0,1.0),
-                         NULL,
-                         RS2::Update);*/
 
     data.insertionPoint = RS_Vector(false);
     data.factor = 1.0;
@@ -188,7 +168,7 @@ void RS_ActionLibraryInsert::commandEvent(RS_CommandEvent* e) {
     case SetAngle: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 data.angle = RS_Math::deg2rad(a);
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
@@ -201,7 +181,7 @@ void RS_ActionLibraryInsert::commandEvent(RS_CommandEvent* e) {
     case SetFactor: {
             bool ok;
             double f = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 setFactor(f);
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
@@ -275,18 +255,5 @@ void RS_ActionLibraryInsert::updateMouseButtonHints() {
 void RS_ActionLibraryInsert::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-void RS_ActionLibraryInsert::updateToolBar() {
-    //not needed any more
-    return;
-    if (!isFinished()) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-    } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-    }
-}
-
 
 // EOF

@@ -24,20 +24,24 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawarctangential.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_arc.h"
 #include "ui_qg_arctangentialoptions.h"
-
+#include "rs_coordinateevent.h"
+#include "rs_math.h"
 
 
 RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(RS_EntityContainer& container,
                                                        RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw arcs tangential",
-                               container, graphicView) {
+							   container, graphicView)
+	,data(new RS_ArcData())
+{
     reset();
 }
 
@@ -50,8 +54,9 @@ QAction* RS_ActionDrawArcTangential::createGUIAction(RS2::ActionType /*type*/, Q
     /*RVT_PORT    QAction* action = new QAction(tr("Arc: Tangential"),
                                   tr("&Tangential"),
                                   QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Arc &Tangential"), NULL);
+	QAction* action = new QAction(QIcon(":/extui/arcstangential.png"), tr("Arc &Tangential"), nullptr);
     //action->zetStatusTip(tr("Draw arcs tangential to base entity"));
+	action->setCheckable(true);
     return action;
 }
 
@@ -86,7 +91,7 @@ void RS_ActionDrawArcTangential::trigger() {
     }
 
     preparePreview();
-    RS_Arc* arc = new RS_Arc(container, data);
+	RS_Arc* arc = new RS_Arc(container, *data);
     arc->setLayerToActive();
     arc->setPenToActive();
     container->addEntity(arc);
@@ -122,12 +127,12 @@ void RS_ActionDrawArcTangential::preparePreview() {
         RS_Arc arc(NULL, RS_ArcData());
         bool suc;
         if (byRadius) {
-            suc = arc.createFrom2PDirectionRadius(startPoint, point, direction, data.radius);
+			suc = arc.createFrom2PDirectionRadius(startPoint, point, direction, data->radius);
         } else {
             suc = arc.createFrom2PDirectionAngle(startPoint, point, direction, angleLength);
         }
         if (suc) {
-            data = arc.getData();
+			data.reset(new RS_ArcData(arc.getData()));
             if(RS_DIALOGFACTORY != NULL) {
                 if(byRadius){
                     RS_DIALOGFACTORY->updateArcTangentialOptions(arc.getAngleLength()*180./M_PI,true);
@@ -144,8 +149,8 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
     if(getStatus() == SetEndAngle) {
         point = snapPoint(e);
         preparePreview();
-        if (data.isValid()) {
-            RS_Arc* arc = new RS_Arc(preview, data);
+		if (data->isValid()) {
+			RS_Arc* arc = new RS_Arc(preview.get(), *data);
             deletePreview();
             preview->addEntity(arc);
             drawPreview();
@@ -288,6 +293,13 @@ void RS_ActionDrawArcTangential::updateMouseCursor() {
 }
 
 
+void RS_ActionDrawArcTangential::setRadius(double r){
+	data->radius = r;
+}
+
+double RS_ActionDrawArcTangential::getRadius() const {
+	return data->radius;
+}
 
 //void RS_ActionDrawArcTangential::updateToolBar() {
 //    if (RS_DIALOGFACTORY!=NULL) {

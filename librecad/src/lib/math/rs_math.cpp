@@ -44,11 +44,7 @@
  */
 int RS_Math::round(double v) {
     return (int) lrint(v);
-    //return (v-floor(v)<0.5 ? (int)floor(v) : (int)ceil(v));
 }
-
-
-
 
 /**
  * Save pow function
@@ -78,27 +74,26 @@ RS_Vector RS_Math::pow(RS_Vector vp, double y) {
  * Converts radians to degrees.
  */
 double RS_Math::rad2deg(double a) {
-    return (a/(2.0*M_PI)*360.0);
+	return 180./M_PI*a;
 }
-
-
 
 /**
  * Converts degrees to radians.
  */
 double RS_Math::deg2rad(double a) {
-    return ((a/360.0)*(2.0*M_PI));
+	return M_PI/180.0*a;
 }
-
-
 
 /**
  * Converts radians to gradians.
  */
 double RS_Math::rad2gra(double a) {
-    return (a/(2.0*M_PI)*400.0);
+	return 200./M_PI*a;
 }
 
+double RS_Math::gra2rad(double a) {
+	return M_PI/200.*a;
+}
 
 
 /**
@@ -130,36 +125,13 @@ bool RS_Math::isAngleBetween(double a,
                              double a1, double a2,
                              bool reversed) {
 
-    //    bool ret = false;
+	if (reversed) std::swap(a1,a2);
+	if(getAngleDifferenceU(a2, a1 ) < RS_TOLERANCE_ANGLE) return true;
+	const double tol=0.5*RS_TOLERANCE_ANGLE;
+	const double diff0=correctAngle(a2 -a1) + tol;
 
-    if (reversed) std::swap(a1,a2);
-    //a1 and a2 almost the same angle
-        // the |a2-a1| % (2 pi)=0 means the whole angular range
-    if(fabs( remainder(correctAngle(a2 - a1 ) , 2.*M_PI)) < RS_TOLERANCE_ANGLE) return true;
-//    std::cout<<"correctAngle(a2 -a1) ="<<correctAngle(a2 -a1) <<std::endl;
-//    std::cout<<"correctAngle(a -a1) ="<<correctAngle(a -a1) <<std::endl;
-//    std::cout<<"correctAngle(a2 -a) ="<<correctAngle(a2 -a) <<std::endl;
-    if (  correctAngle(a2 -a1) >= correctAngle(a - a1) - 0.5*RS_TOLERANCE_ANGLE
-          || correctAngle(a2 -a1) >= correctAngle(a2 - a) -0.5*RS_TOLERANCE_ANGLE
-          ) return true;
-        return false;
+	return diff0 >= correctAngle(a - a1) || diff0 >= correctAngle(a2 - a);
 }
-
-//    if(a1>=a2-RS_TOLERENCE) {
-//        if(a>=a1-RS_TOLERENCE || a<=a2+RS_TOLERENCE) {
-//            ret = true;
-//        }
-//    } else {
-//        if(a>=a1-RS_TOLERENCE && a<=a2+RS_TOLERENCE) {
-//            ret = true;
-//        }
-//    }
-//RS_DEBUG->print("angle %f is %sbetween %f and %f",
-//                a, ret ? "" : "not ", a1, a2);
-//    return ret;
-//}
-
-
 
 /**
  * Corrects the given angle to the range of 0-2*Pi.
@@ -167,13 +139,10 @@ bool RS_Math::isAngleBetween(double a,
 double RS_Math::correctAngle(double a) {
     return M_PI + remainder(a - M_PI, 2*M_PI);
 }
-//    while (a>2*M_PI)
-//        a-=2*M_PI;
-//    while (a<0)
-//        a+=2*M_PI;
-//    return a;
-//}
 
+double RS_Math::correctAngleU(double a) {
+	return fabs(remainder(a, 2*M_PI));
+}
 
 
 /**
@@ -181,10 +150,13 @@ double RS_Math::correctAngle(double a) {
  *         Always positive and less than 2*pi.
  */
 double RS_Math::getAngleDifference(double a1, double a2, bool reversed) {
-    if(reversed)
-        return M_PI + remainder(a1 -a2 -M_PI, 2*M_PI);
-    else
-        return M_PI + remainder(a2 -a1 -M_PI, 2*M_PI);
+	if(reversed) std::swap(a1, a2);
+	return correctAngle(a2 - a1);
+}
+
+double RS_Math::getAngleDifferenceU(double a1, double a2)
+{
+	return correctAngleU(a1 - a2);
 }
 
 
@@ -228,32 +200,17 @@ double RS_Math::makeAngleReadable(double angle, bool readable,
  * for texts created with that angle.
  */
 bool RS_Math::isAngleReadable(double angle) {
-    if (angle>M_PI/2.0*3.0+0.001 ||
-            angle<M_PI/2.0+0.001) {
-        return true;
-    } else {
-        return false;
-    }
+	const double tolerance=0.001;
+	//return true for angle in 1st and 4th quadrants
+	return fabs(remainder(angle, 2.*M_PI)) < M_PI_2 - tolerance;
 }
-
-
 
 /**
  * @param tol Tolerance in rad.
  * @retval true The two angles point in the same direction.
  */
 bool RS_Math::isSameDirection(double dir1, double dir2, double tol) {
-    double diff = fabs(dir1-dir2);
-    if (diff<tol || diff>2*M_PI-tol) {
-        //std::cout << "RS_Math::isSameDirection: " << dir1 << " and " << dir2
-        //	<< " point in the same direction" << "\n";
-        return true;
-    }
-    else {
-        //std::cout << "RS_Math::isSameDirection: " << dir1 << " and " << dir2
-        //	<< " don't point in the same direction" << "\n";
-        return false;
-    }
+	return getAngleDifferenceU(dir1, dir2) < tol;
 }
 
 
@@ -261,7 +218,7 @@ bool RS_Math::isSameDirection(double dir1, double dir2, double tol) {
  * Compares two double values with a tolerance.
  */
 bool RS_Math::cmpDouble(double v1, double v2, double tol) {
-    return (fabs(v2-v1)<tol);
+	return fabs(v2-v1)<tol;
 }
 
 
@@ -585,7 +542,7 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
         cubic[2]=q;
         ans.push_back(0.);
         auto&& r=cubicSolver(cubic);
-        std::copy(r.begin(),r.end(),back_inserter(ans));
+		std::copy(r.begin(),r.end(), std::back_inserter(ans));
         for(size_t i=0; i<ans.size(); i++) ans[i] -= shift;
         return ans;
     }
@@ -624,7 +581,9 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
             ce2[1]=0.5*(p+r3[0])-0.5*q/sqrtz0;
             r1=quadraticSolver(ce2);
         }
-        for(size_t i=0; i<r1.size(); i++) r1[i] -= shift;
+		for(auto& x: r1){
+			x -= shift;
+		}
         return r1;
     }
     if ( r3[0]> 0. && r3[1] > 0. ) {
@@ -636,8 +595,10 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
         ce2[0]=	sqrtz0;
         ce2[1]=0.5*(p+r3[0])-0.5*q/sqrtz0;
         auto&& r1=quadraticSolver(ce2);
-        std::copy(r1.begin(),r1.end(),back_inserter(ans));
-        for(size_t i=0; i<ans.size(); i++) ans[i] -= shift;
+		std::copy(r1.begin(),r1.end(),std::back_inserter(ans));
+		for(auto& x: ans){
+			x -= shift;
+		}
         return ans;
     }
     return ans;
@@ -713,13 +674,14 @@ std::vector<double> RS_Math::quarticSolverFull(const std::vector<double>& ce)
   *@Author: Dongxu Li
   */
 
-bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>& sn){
+bool RS_Math::linearSolver(const std::vector<std::vector<double> >& mt, std::vector<double>& sn){
     //verify the matrix size
-    int mSize(mt.size()); //rows
-    int aSize(mSize+1); //columns of augmented matrix
-    for(int i=0;i<mSize;i++) {
-        if(mt[i].size() != aSize ) return false;
-    }
+	size_t mSize(mt.size()); //rows
+	size_t aSize(mSize+1); //columns of augmented matrix
+	if(std::any_of(mt.begin(), mt.end(), [&aSize](const std::vector<double>& v)->bool{
+				   return v.size() != aSize;
+}))
+		return false;
     sn.resize(mSize);//to hold the solution
     //#ifdef	HAS_BOOST
 #if false
@@ -767,11 +729,11 @@ bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>&
     //    data.ratio=sqrt(dn(0)/dn(2));
 #else
     // solve the linear equation by Gauss-Jordan elimination
-    QVector<QVector<double> > mt0(mt); //copy the matrix;
-    for(int i=0;i<mSize;i++){
-        int imax(i);
+	std::vector<std::vector<double> > mt0(mt); //copy the matrix;
+	for(size_t i=0;i<mSize;++i){
+		size_t imax(i);
         double cmax(fabs(mt0[i][i]));
-        for(int j=i+1;j<mSize;j++) {
+		for(size_t j=i+1;j<mSize;++j) {
             if(fabs(mt0[j][i]) > cmax ) {
                 imax=j;
                 cmax=fabs(mt0[j][i]);
@@ -780,32 +742,29 @@ bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>&
         if(cmax<RS_TOLERANCE2) return false; //singular matrix
         if(imax != i) {//move the line with largest absolute value at column i to row i, to avoid division by zero
             std::swap(mt0[i],mt0[imax]);
-            //            for(int j=i;j<=mSize;j++) {
-            //                std::swap(m[i][j],m[imax][j]);
-            //            }
-        }
-        //        for(int k=i+1;k<5;k++) { //normalize the i-th row
-        for(int k=mSize;k>=i;k--) { //normalize the i-th row
+		}
+		for(size_t k=i+1;k<=mSize;++k) { //normalize the i-th row
             mt0[i][k] /= mt0[i][i];
         }
-        for(int j=0;j<mSize;j++) {//Gauss-Jordan
+		mt0[i][i]=1.;
+		for(size_t j=0;j<mSize;++j) {//Gauss-Jordan
             if(j != i ) {
-                //                for(int k=i+1;k<5;k++) {
-                for(int k=mSize;k>=i;k--) {
-                    mt0[j][k] -= mt0[i][k]*mt0[j][i];
+				double& a = mt0[j][i];
+				for(size_t k=i+1;k<=mSize;++k) {
+					mt0[j][k] -= mt0[i][k]*a;
                 }
+				a=0.;
             }
-        }
-        //output gauss-jordan results for debugging
-        //        std::cout<<"========"<<i<<"==========\n";
-        //        for(int j=0;j<mSize;j++) {//Gauss-Jordan
-        //            for(int k=0;k<=mSize;k++) {
-        //                std::cout<<m[j][k]<<'\t';
-        //            }
-        //            std::cout<<std::endl;
-        //        }
+		}
+		//output gauss-jordan results for debugging
+//		std::cout<<"========"<<i<<"==========\n";
+//		for(auto v0: mt0){
+//			for(auto v1:v0)
+//				std::cout<<v1<<'\t';
+//			std::cout<<std::endl;
+//		}
     }
-    for(int i=0;i<mSize;i++) {
+	for(size_t i=0;i<mSize;++i) {
         sn[i]=mt0[i][mSize];
     }
 #endif
@@ -822,7 +781,7 @@ bool RS_Math::linearSolver(const QVector<QVector<double> >& mt, QVector<double>&
  */
 double RS_Math::ellipticIntegral_2(const double& k, const double& phi)
 {
-    double a= remainder(phi-M_PI/2.,M_PI);
+    double a= remainder(phi-M_PI_2,M_PI);
     if(a>0.) {
         return boost::math::ellint_2<double,double>(k,a);
     } else {
@@ -944,10 +903,10 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
     //y^0
     qy[0]=-d2*g*l + a*d*j*l - a2*l2
             - ( f2*g2 - d*f*g*j + a*f*j2 - 2.*a*f*g*l);
-    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
+//    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
         DEBUG_HEADER();
         std::cout<<qy[4]<<"*y^4 +("<<qy[3]<<")*y^3+("<<qy[2]<<")*y^2+("<<qy[1]<<")*y+("<<qy[0]<<")==0"<<std::endl;
-    }
+//    }
     //quarticSolver
     auto&& roots=quarticSolverFull(qy);
     if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
@@ -1001,10 +960,10 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
         RS_Vector vp(-ce[2]/ce[1],roots[i0]);
         if(simultaneousQuadraticVerify(m,vp)) ret.push_back(vp);
     }
-    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
+//    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
         DEBUG_HEADER();
         std::cout<<"ret="<<ret<<std::endl;
-    }
+//    }
     return ret;
 }
 
@@ -1018,15 +977,19 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverMixed(const std::vector<s
     }
     if(p1->size()==3) {
             //linear
-            QVector<double> sn(2,0.);
-            QVector<QVector<double> > ce;
-            ce << QVector<double>::fromStdVector(m[0]);
-            ce << QVector<double>::fromStdVector(m[1]);
+			std::vector<double> sn(2,0.);
+			std::vector<std::vector<double> > ce;
+			ce.push_back(m[0]);
+			ce.push_back(m[1]);
             ce[0][2]=-ce[0][2];
             ce[1][2]=-ce[1][2];
             if( RS_Math::linearSolver(ce,sn)) ret.push_back(RS_Vector(sn[0],sn[1]));
             return ret;
     }
+//    DEBUG_HEADER();
+//    std::cout<<"p0: size="<<p0->size()<<"\n Solve[{("<< p0->at(0)<<")*x + ("<<p0->at(1)<<")*y + ("<<p0->at(2)<<")==0,";
+//    std::cout<<"("<< p1->at(0)<<")*x^2 + ("<<p1->at(1)<<")*x*y + ("<<p1->at(2)<<")*y^2 + ("<<p1->at(3)<<")*x +("<<p1->at(4)<<")*y+("
+//            <<p1->at(5)<<")==0},{x,y}]"<<std::endl;
     const double& a=p0->at(0);
     const double& b=p0->at(1);
     const double& c=p0->at(2);
@@ -1046,20 +1009,28 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverMixed(const std::vector<s
     ce[0]= -f*a2+a*b*e-b2*d;
     ce[1]=a*b*g-a2*h- (2*b*c*d-a*c*e);
     ce[2]=a*c*g-c2*d-a2*i;
+//    DEBUG_HEADER();
+//    std::cout<<"("<<ce[0]<<") y^2 + ("<<ce[1]<<") y + ("<<ce[2]<<")==0"<<std::endl;
     std::vector<double> roots(0,0.);
-    if(fabs(ce[0])<1e-75){
-        if(fabs(ce[1])>1e-75){
+    if( fabs(ce[1])>RS_TOLERANCE15 && fabs(ce[0]/ce[1])<RS_TOLERANCE15){
         roots.push_back( - ce[2]/ce[1]);
-        }
     }else{
         std::vector<double> ce2(2,0.);
         ce2[0]=ce[1]/ce[0];
         ce2[1]=ce[2]/ce[0];
         roots=quadraticSolver(ce2);
     }
-    if(roots.size()==0)  return RS_VectorSolutions();
+//    for(size_t i=0;i<roots.size();i++){
+//    std::cout<<"x="<<roots.at(i)<<std::endl;
+//    }
+
+
+    if(roots.size()==0)  {
+        return RS_VectorSolutions();
+    }
     for(size_t i=0;i<roots.size();i++){
         ret.push_back(RS_Vector(-(b*roots.at(i)+c)/a,roots.at(i)));
+//        std::cout<<ret.at(ret.size()-1).x<<", "<<ret.at(ret.size()-1).y<<std::endl;
     }
 
     return ret;

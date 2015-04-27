@@ -687,14 +687,22 @@ DBFCreateLL( const char * pszFilename, const char * pszCodePage, SAHooks *psHook
 /* -------------------------------------------------------------------- */
     fp = psHooks->FOpen( pszFullname, "wb" );
     if( fp == NULL )
+    {
+        free ( pszBasename );
+        free ( pszFullname );
         return( NULL );
+    }
     
     psHooks->FWrite( &chZero, 1, 1, fp );
     psHooks->FClose( fp );
 
     fp = psHooks->FOpen( pszFullname, "rb+" );
     if( fp == NULL )
+    {
+        free ( pszBasename );
+        free ( pszFullname );
         return( NULL );
+    }
 
 
     sprintf( pszFullname, "%s.cpg", pszBasename );

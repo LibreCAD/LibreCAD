@@ -53,8 +53,4 @@ QC_GraphicView::QC_GraphicView(RS_Document* doc, QWidget* parent)
 	}
 }
 
-
-QC_GraphicView::~QC_GraphicView() {
-}
-
 // EOF

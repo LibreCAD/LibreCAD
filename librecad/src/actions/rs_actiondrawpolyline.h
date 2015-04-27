@@ -28,8 +28,10 @@
 #define RS_ACTIONDRAWPOLYLINE_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_polyline.h"
 
+struct RS_PolylineData;
+struct RS_ArcData;
+class RS_Polyline;
 
 /**
  * This action class can handle user events to draw 
@@ -64,7 +66,7 @@ public:
                       RS_GraphicView& graphicView);
     virtual ~RS_ActionDrawPolyline();
 
-	virtual RS2::ActionType rtti() {
+	virtual RS2::ActionType rtti() const{
 		return RS2::ActionDrawPolyline;
 	}
 
@@ -142,8 +144,8 @@ protected:
     /**
      * Line data defined so far.
      */
-    RS_PolylineData data;
-    RS_ArcData arc_data;	
+	std::unique_ptr<RS_PolylineData> data;
+	std::unique_ptr<RS_ArcData> arc_data;
     /**
      * Polyline entity we're working on.
      */

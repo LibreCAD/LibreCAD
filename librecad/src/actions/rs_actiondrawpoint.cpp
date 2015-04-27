@@ -31,8 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_point.h"
-
-
+#include "rs_coordinateevent.h"
 
 RS_ActionDrawPoint::RS_ActionDrawPoint(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
@@ -41,12 +40,12 @@ RS_ActionDrawPoint::RS_ActionDrawPoint(RS_EntityContainer& container,
 
 
 QAction* RS_ActionDrawPoint::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // (tr("Points")
-        QAction* action = new QAction(tr("&Points"),  NULL);
-        action->setIcon(QIcon(":/extui/points.png"));
-    //action->zetStatusTip(tr("Draw Points"));
+	// (tr("Points")
+	QAction* action = new QAction(tr("&Points"),  NULL);
+	action->setIcon(QIcon(":/extui/points.png"));
+	action->setData(RS2::ActionDrawPoint);
 
-    return action;
+	return action;
 }
 
 

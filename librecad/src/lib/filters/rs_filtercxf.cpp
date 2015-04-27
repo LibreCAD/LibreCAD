@@ -25,16 +25,19 @@
 **********************************************************************/
 
 
+#include <QStringList>
 #include "rs_filtercxf.h"
 
 #include <iostream>
 #include <fstream>
 
+#include "rs_arc.h"
+#include "rs_line.h"
 #include "rs_font.h"
 #include "rs_utility.h"
 #include "rs_system.h"
 #include "rs_block.h"
-#include <QStringList>
+#include "rs_math.h"
 
 
 /**
@@ -241,8 +244,9 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                                     a->getCenter().x,
                                     a->getCenter().y,
                                     a->getRadius(),
-                                    a->getAngle1()*ARAD,
-                                    a->getAngle2()*ARAD);
+									RS_Math::rad2deg(a->getAngle1()),
+									RS_Math::rad2deg(a->getAngle2())
+													 );
                         }
                         // Ignore entities other than arcs / lines
                         else {}

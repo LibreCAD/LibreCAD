@@ -38,34 +38,12 @@
  * @param fileName File name of a DXF file defining the pattern
  */
 RS_Pattern::RS_Pattern(const QString& fileName)
-        : RS_EntityContainer(NULL) {
-
-    RS_DEBUG->print("RS_Pattern::RS_Pattern() ");
-
-    this->fileName = fileName;
-    loaded = false;
+		: RS_EntityContainer(NULL)
+		,fileName(fileName)
+		,loaded(false)
+{
+	RS_DEBUG->print("RS_Pattern::RS_Pattern() ");
 }
-
-
-
-/**
- * Constructor.
- *
- * @param fileName File name of a PAT file which defines this
- *         pattern among others.
- * @param name Pattern name.
- *
- */
-/*RS_Pattern::RS_Pattern(const QString& fileName, const QString& name)
-        : RS_EntityContainer(NULL) {
-    this->fileName = fileName;
-    this->name = name;
-    loaded = false;
-}*/
-
-
-
-RS_Pattern::~RS_Pattern() {}
 
 
 /**
@@ -111,24 +89,27 @@ bool RS_Pattern::loadPattern() {
         return false;
     }
 
-    RS_Graphic* gr = new RS_Graphic();
-    RS_FileIO::instance()->fileImport(*gr, path);
-    for (RS_Entity* e=gr->firstEntity(); e!=NULL; e=gr->nextEntity()) {
+	RS_Graphic gr;
+	RS_FileIO::instance()->fileImport(gr, path);
+	for(auto e: gr){
         if (e->rtti()==RS2::EntityLine || e->rtti()==RS2::EntityArc) {
             RS_Layer* l = e->getLayer();
             RS_Entity* cl = e->clone();
             cl->reparent(this);
-            if (l!=NULL) {
+			if (l) {
                 cl->setLayer(l->getName());
             }
             addEntity(cl);
         }
-    }
-    delete gr;
+	}
 
     loaded = true;
     RS_DEBUG->print("RS_Pattern::loadPattern: OK");
 
     return true;
+}
+
+QString RS_Pattern::getFileName() const {
+	return fileName;
 }
 

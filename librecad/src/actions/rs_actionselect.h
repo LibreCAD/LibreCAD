@@ -42,11 +42,11 @@ public:
     RS_ActionSelect(RS_EntityContainer& container,
                     RS_GraphicView& graphicView,
                     RS2::ActionType nextAction,
-                    QVector<RS2::EntityType>* entityTypeList=NULL);
-    ~RS_ActionSelect() {}
+					std::vector<RS2::EntityType>* entityTypeList=NULL);
+	~RS_ActionSelect()=default;
 
     virtual void init(int status);
-    virtual RS2::ActionType rtti(){
+    virtual RS2::ActionType rtti() const{
             return RS2::ActionSelect;
     }
     virtual void resume();
@@ -59,7 +59,7 @@ public:
     void requestFinish(bool keep=false);
 
 private:
-    QVector<RS2::EntityType>* entityTypeList;
+	std::vector<RS2::EntityType>* entityTypeList;
     RS2::ActionType nextAction;
     bool selectSingle;
 };

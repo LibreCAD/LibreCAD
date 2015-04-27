@@ -29,46 +29,32 @@
 class QG_CadToolBar;
 
 #include "qg_actionhandler.h"
-#include "ui_qg_cadtoolbarinfo.h"
+#include "lc_cadtoolbarinterface.h"
 
-class QG_CadToolBarInfo : public QWidget, public Ui::QG_CadToolBarInfo
+class QG_CadToolBarInfo : public LC_CadToolBarInterface
 {
     Q_OBJECT
 
 public:
-    QG_CadToolBarInfo(QWidget* parent = 0, Qt::WindowFlags fl = 0);
-    ~QG_CadToolBarInfo();
+	QG_CadToolBarInfo(QG_CadToolBar* parent = 0, Qt::WindowFlags fl = 0);
+	~QG_CadToolBarInfo() = default;
     //restore action from checked button
-    void restoreAction();
+	virtual void restoreAction();
+	RS2::ToolBarId rtti() const
+	{
+		return RS2::ToolBarInfo;
+	}
+	virtual void addSubActions(const std::vector<QAction*>& actions, bool addGroup=true);
+
 
 public slots:
-    virtual void mousePressEvent( QMouseEvent * e );
-    virtual void contextMenuEvent( QContextMenuEvent * e );
-    virtual void setCadToolBar( QG_CadToolBar * tb );
-    virtual void infoDist();
-    virtual void infoDist2();
-    virtual void infoAngle();
-    virtual void infoTotalLength();
-    virtual void infoArea();
-//    virtual void back();
     virtual void resetToolBar();
     virtual void showCadToolBar(RS2::ActionType actionType);
 
-
-protected:
-    QG_ActionHandler* actionHandler;
-    QG_CadToolBar* cadToolBar;
-
-protected slots:
-    virtual void languageChange();
-
 private slots:
     void on_bBack_clicked();
-
 private:
-    void init();
-    QG_CadToolBar* parentTB;
-
+	QAction *bDist=nullptr, *bDist2=nullptr, *bAngle=nullptr, *bTotalLength=nullptr, *bArea=nullptr;
 };
 
 #endif // QG_CADTOOLBARINFO_H

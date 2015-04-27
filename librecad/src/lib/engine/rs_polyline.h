@@ -36,38 +36,18 @@
 /**
  * Holds the data that defines a polyline.
  */
-class RS_PolylineData : public RS_Flags {
-public:
-    RS_PolylineData() {
-        startpoint = endpoint = RS_Vector(false);
-    }
-    RS_PolylineData(const RS_Vector& startpoint,
+struct RS_PolylineData : public RS_Flags {
+	RS_PolylineData();
+	~RS_PolylineData()=default;
+	RS_PolylineData(const RS_Vector& startpoint,
                     const RS_Vector& endpoint,
-                    bool closed) {
+					bool closed);
 
-        this->startpoint = startpoint;
-        this->endpoint = endpoint;
-        if (closed==true) {
-            setFlag(RS2::FlagClosed);
-        }
-    }
-
-    friend class RS_Polyline;
-
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_PolylineData& pd) {
-        os << "(" << pd.startpoint <<
-        "/" << pd.endpoint <<
-        ")";
-        return os;
-    }
-
-private:
     RS_Vector startpoint;
     RS_Vector endpoint;
 };
 
-
+std::ostream& operator << (std::ostream& os, const RS_PolylineData& pd);
 
 /**
  * Class for a poly line entity (lots of connected lines and arcs).
@@ -79,15 +59,9 @@ public:
     RS_Polyline(RS_EntityContainer* parent=NULL);
     RS_Polyline(RS_EntityContainer* parent,
                 const RS_PolylineData& d);
-    virtual ~RS_Polyline();
+	virtual ~RS_Polyline() = default;
 
-    virtual RS_Entity* clone() {
-        RS_Polyline* p = new RS_Polyline(*this);
-        p->setOwner(isOwner());
-        p->initId();
-        p->detach();
-        return p;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityPolyline */
     virtual RS2::EntityType rtti() const {
@@ -142,15 +116,10 @@ public:
 
     void setClosed(bool cl, double bulge);//RLZ: rewrite this:
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
     virtual RS_Vector getMiddlePoint(void)const {
             return RS_Vector(false);
-    }
-    virtual RS_Vector getNearestRef(const RS_Vector& coord,
-                                     double* dist = NULL);
-    virtual RS_Vector getNearestSelectedRef(const RS_Vector& coord,
-                                     double* dist = NULL);
-
+	}
     virtual RS_Entity* addVertex(const RS_Vector& v,
                 double bulge=0.0, bool prepend=false);
 

@@ -29,49 +29,32 @@
 class QG_CadToolBar;
 class QG_ActionHandler;
 
-#include "ui_qg_cadtoolbarpolylines.h"
-#include "rs.h"
+#include "lc_cadtoolbarinterface.h"
 
-class QG_CadToolBarPolylines : public QWidget, public Ui::QG_CadToolBarPolylines
+class QG_CadToolBarPolylines : public LC_CadToolBarInterface
 {
     Q_OBJECT
 
 public:
-    QG_CadToolBarPolylines(QWidget* parent = 0, Qt::WindowFlags fl = 0);
-    ~QG_CadToolBarPolylines();
+	QG_CadToolBarPolylines(QG_CadToolBar* parent = 0, Qt::WindowFlags fl = 0);
+	~QG_CadToolBarPolylines() = default;
     //restore action from checked button
-    void restoreAction();
+	virtual void restoreAction();
+	RS2::ToolBarId rtti() const
+	{
+		return RS2::ToolBarPolylines;
+	}
+	virtual void addSubActions(const std::vector<QAction*>& actions, bool addGroup=true);
 
 public slots:
-    virtual void mousePressEvent( QMouseEvent * e );
-    virtual void contextMenuEvent( QContextMenuEvent * e );
-    virtual void setCadToolBar( QG_CadToolBar * tb );
-    virtual void drawPolyline();
-    virtual void polylineAdd();
-    virtual void polylineAppend();
-    virtual void polylineDel();
-    virtual void polylineDelBetween();
-    virtual void polylineTrim();
-    virtual void polylineEquidistant();
-    virtual void polylineSegment();
-    virtual void back();
     virtual void resetToolBar();
     virtual void showCadToolBar(RS2::ActionType actionType);
 
-protected:
-    QG_ActionHandler* actionHandler;
-    QG_CadToolBar* cadToolBar;
-
-protected slots:
-    virtual void languageChange();
-
 private slots:
     void on_bBack_clicked();
-
 private:
-    void init();
-    QG_CadToolBar* parentTB;
-
+	QAction *bPolyline=nullptr,*bPolylineAdd=nullptr,*bPolylineAppend=nullptr,*bPolylineDel=nullptr,
+	*bPolylineDelBetween=nullptr,*bPolylineTrim=nullptr,*bPolylineEquidistant=nullptr,*bPolylineSegment=nullptr;
 };
 
 #endif // QG_CADTOOLBARPOLYLINES_H

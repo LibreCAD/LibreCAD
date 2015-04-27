@@ -88,6 +88,7 @@
 #include "rs_actioneditcopy.h"
 #include "rs_actioneditpaste.h"
 #include "rs_actioneditundo.h"
+#include "lc_actionfileexportmakercam.h"
 #include "rs_actionfilenew.h"
 #include "rs_actionfilenewtemplate.h"
 #include "rs_actionfileopen.h"
@@ -105,6 +106,8 @@
 #include "rs_actionlayersremove.h"
 #include "rs_actionlayerstogglelock.h"
 #include "rs_actionlayerstoggleview.h"
+#include "rs_actionlayerstoggleprint.h"
+#include "lc_actionlayerstoggleconstruction.h"
 #include "rs_actionlockrelativezero.h"
 #include "rs_actionmodifyattributes.h"
 #include "rs_actionmodifybevel.h"
@@ -154,6 +157,7 @@
 #include "rs_actionpolylineequidistant.h"
 #include "rs_actionpolylinesegment.h"
 #include "rs_actionorder.h"
+#include "qg_cadtoolbar.h"
 
 /**
  * Constructor.
@@ -161,20 +165,12 @@
  * @param ah Action handler which provides the slots.
  * @param w Widget through which the events come in.
  */
-QG_ActionFactory::QG_ActionFactory(QG_ActionHandler* ah, QWidget* w):
+QG_ActionFactory::QG_ActionFactory(QG_ActionHandler* ah, QWidget* w, QG_CadToolBar* toolbar):
     actionHandler(ah)
   ,widget(w)
+  ,m_pCADToolBar(toolbar)
 {
 }
-
-
-
-/**
- * Destructor
- */
-QG_ActionFactory::~QG_ActionFactory() {}
-
-
 
 /* *
  *	Description:	- Creates a new action object and links it to the
@@ -256,12 +252,8 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
         break;
 
     case RS2::ActionFileExport:
-                        // tr("Export Drawing")
-                        action = new QAction(tr("&Export..."), NULL);
-                        //action->zetStatusTip(tr("Exports the current drawing as bitmap"));
-
-        connect(action, SIGNAL(triggered()),
-                obj, SLOT(slotFileExport()));
+		action = new QAction( QIcon(":/actions/fileexport.png"), tr("&Export as image"), NULL);
+        connect( action, SIGNAL( triggered()), obj, SLOT(slotFileExport()));
         break;
 
     case RS2::ActionFileClose:
@@ -308,6 +300,11 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                 obj, SLOT(slotFilePrintPreview(bool)));
         break;
 
+    case RS2::ActionFileExportMakerCam:
+		action = LC_ActionFileExportMakerCam::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()), obj, SLOT(slotFileExportMakerCam()));
+        break;
+
     case RS2::ActionFileQuit:
                         action = new QAction(tr("&Quit"), mw);
 #if QT_VERSION >= 0x040600
@@ -347,6 +344,8 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
         action = new QAction(tr("&Statusbar"), mw);
         //action->zetStatusTip(tr("Enables/disables the statusbar"));
         action->setCheckable(true);
+        // StatusBar is displayed by default
+        action->setChecked(true);
 
         connect(action, SIGNAL(toggled(bool)),
                 obj, SLOT(slotViewStatusBar(bool)));
@@ -1328,6 +1327,16 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                 obj, SLOT(slotLayersToggleView()));
         break;
 
+    case RS2::ActionLayersTogglePrint:
+        action = RS_ActionLayersTogglePrint::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()), obj, SLOT(slotLayersTogglePrint()));
+        break;
+
+    case RS2::ActionLayersToggleConstruction:
+        action = LC_ActionLayersToggleConstruction::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()), obj, SLOT(slotLayersToggleConstruction()));
+        break;
+
         // Block actions:
         //
     case RS2::ActionBlocksDefreezeAll:
@@ -1457,17 +1466,28 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
 }
 
 
-QAction*  QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, RS2::ActionType id) const
+QAction*  QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, RS2::ActionType id,
+								   RS2::ToolBarId toolbarId ) const
 {
     QAction* const action=createAction(id, obj);
     if(action) menu->addAction(action);
+	if(m_pCADToolBar && toolbarId != RS2::ToolBarNone){
+		m_pCADToolBar->populateSubToolBar({action}, toolbarId);
+	   }
     return action;
 }
 
-void QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, const std::initializer_list<RS2::ActionType>& list) const
+void QG_ActionFactory::addGUI(QMenu* menu, QObject* obj,
+							  const std::initializer_list<RS2::ActionType>& list,
+							  RS2::ToolBarId id) const
 {
-    for(RS2::ActionType type: list)
-        addGUI(menu, obj, type);
+	std::vector<QAction*> actions;
+	for(RS2::ActionType type: list){
+		actions.push_back(addGUI(menu, obj, type));
+	}
+	if(actions.size() && m_pCADToolBar && id != RS2::ToolBarNone){
+		m_pCADToolBar->populateSubToolBar(actions, id);
+	}
 }
 
 QAction*  QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, QObject* obj2, RS2::ActionType id) const
@@ -1493,7 +1513,7 @@ void QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, cons
         addGUI(menu, toolbar, obj, type);
 }
 
-QAction*  QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, QObject* obj2, RS2::ActionType id) const
+QAction* QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, QObject* obj2, RS2::ActionType id) const
 {
     QAction* const action=createAction(id, obj, obj2);
     if(action){
@@ -1501,6 +1521,12 @@ QAction*  QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj,
         toolbar->addAction(action);
     }
     return action;
+}
+
+
+void QG_ActionFactory::setCADToolBar(QG_CadToolBar* toolbar)
+{
+	m_pCADToolBar=toolbar;
 }
 
 

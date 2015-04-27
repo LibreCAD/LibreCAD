@@ -45,7 +45,7 @@ public:
 /**
 * @return RS2::FormatLFF.
 */
-RS2::FormatType rtti() {
+RS2::FormatType rtti() const{
         return RS2::FormatLFF;
 }
 	

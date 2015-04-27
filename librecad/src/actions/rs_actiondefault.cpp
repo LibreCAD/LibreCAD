@@ -52,16 +52,9 @@ RS_ActionDefault::RS_ActionDefault(RS_EntityContainer& container,
 }
 
 
-
-RS_ActionDefault::~RS_ActionDefault() {
-}
-
-
-
 QAction* RS_ActionDefault::createGUIAction(RS2::ActionType /*type*/,
                                            QObject* /*parent*/) {
-
-    return NULL;
+	return nullptr;
 }
 
 
@@ -145,7 +138,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
             else {
                 // test for an entity to drag:
                 RS_Entity* en = catchEntity(v1);
-                if (en!=NULL && en->isSelected()) {
+				if (en && en->isSelected()) {
                     RS_DEBUG->print("RS_ActionDefault::mouseMoveEvent: "
                                     "moving entity");
                     setStatus(Moving);
@@ -190,7 +183,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
             deletePreview();
 
-            RS_OverlayBox* ob=new RS_OverlayBox(preview, RS_OverlayBoxData(v1, v2));
+			RS_OverlayBox* ob=new RS_OverlayBox(preview.get(), RS_OverlayBoxData(v1, v2));
             preview->addEntity(ob);
 
             drawPreview();
@@ -267,7 +260,7 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
             // select single entity:
             RS_Entity* en = catchEntity(e);
 
-            if (en!=NULL) {
+			if (en) {
                 deletePreview();
 
                 RS_Selection s(*container, graphicView);
@@ -313,6 +306,7 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
         }
     } else if (e->button()==Qt::RightButton) {
         //cleanup
+		RS_DIALOGFACTORY->requestPreviousToolBar();
         setStatus(Neutral);
         e->accept();
     }

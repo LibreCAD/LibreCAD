@@ -81,34 +81,42 @@ bool QG_CommandWidget::checkFocus() {
 
 bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
 {
-    if (event->type() == QEvent::KeyPress) {
-        QKeyEvent* e=static_cast<QKeyEvent*>(event);
-        switch(e->key()){
-        case Qt::Key_Return:
-        case Qt::Key_Enter:
-        case Qt::Key_Escape:
-            return false;
-        default:
-        {
-            //detect Ctl- Alt- modifier, but not Shift
-            //This should avoid filtering shortcuts, such as Ctl-C
-            if(e->modifiers() & (Qt::KeyboardModifierMask ^ Qt::ShiftModifier)) return false;
-//            DEBUG_HEADER();
-            leCommand->setFocus(Qt::OtherFocusReason);
-            event->accept();
-            QKeyEvent * newEvent = new QKeyEvent(*static_cast<QKeyEvent*>(event));
-            QApplication::postEvent(leCommand, newEvent);
-            return true;
-        }
-        }
-
-    }
-    return false;
+	if (event->type() == QEvent::KeyPress) {
+		QKeyEvent* e=static_cast<QKeyEvent*>(event);
+		//		qDebug()<<QString::number(e->key(), 16);
+		switch(e->key()){
+		case Qt::Key_Return:
+		case Qt::Key_Enter:
+			if(!leCommand->text().size())
+				return false;
+			else
+				break;
+		case Qt::Key_Escape:
+			//			DEBUG_HEADER();
+			//			qDebug()<<"Not filtered";
+			return false;
+		default:
+			break;
+		}
+		//detect Ctl- Alt- modifier, but not Shift
+		//This should avoid filtering shortcuts, such as Ctl-C
+		if(e->modifiers() & (Qt::KeyboardModifierMask ^ Qt::ShiftModifier)) return false;
+		event->accept();
+		QKeyEvent * newEvent = new QKeyEvent(*static_cast<QKeyEvent*>(event));
+		QApplication::postEvent(leCommand, newEvent);
+		this->setFocus();
+		//			DEBUG_HEADER();
+		//			qDebug()<<"Filtered";
+		return true;
+	}
+	return false;
 }
 
 
 void QG_CommandWidget::setFocus() {
     //setCommandMode();
+	QFocusEvent* newEvent=new QFocusEvent(QEvent::FocusIn);
+	QApplication::postEvent(leCommand, newEvent);
     leCommand->setFocus();
 }
 

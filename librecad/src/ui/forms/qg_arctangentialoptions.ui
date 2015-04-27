@@ -136,9 +136,9 @@
  <connections>
   <connection>
    <sender>leRadius</sender>
-   <signal>textChanged(QString)</signal>
+   <signal>returnPressed()</signal>
    <receiver>QG_ArcTangentialOptions</receiver>
-   <slot>updateRadius(QString)</slot>
+   <slot>on_leRadius_textEdited()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>70</x>
@@ -152,9 +152,9 @@
   </connection>
   <connection>
    <sender>leAngle</sender>
-   <signal>textChanged(QString)</signal>
+   <signal>returnPressed()</signal>
    <receiver>QG_ArcTangentialOptions</receiver>
-   <slot>updateAngle(QString)</slot>
+   <slot>on_leAngle_textEdited()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>70</x>

@@ -31,8 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_creation.h"
-
-
+#include "rs_coordinateevent.h"
 
 RS_ActionDrawLinePolygonCorCor::RS_ActionDrawLinePolygonCorCor(
     RS_EntityContainer& container,
@@ -84,7 +83,7 @@ void RS_ActionDrawLinePolygonCorCor::mouseMoveEvent(QMouseEvent* e) {
             corner2 = mouse;
             deletePreview();
 
-            RS_Creation creation(preview, NULL, false);
+			RS_Creation creation(preview.get(), NULL, false);
             creation.createPolygon2(corner1, corner2, number);
 
             drawPreview();

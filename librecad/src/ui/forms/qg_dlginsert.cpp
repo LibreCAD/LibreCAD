@@ -27,6 +27,7 @@
 
 #include "rs_insert.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgInsert as a child of 'parent', with the

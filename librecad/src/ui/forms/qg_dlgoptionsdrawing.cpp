@@ -25,11 +25,11 @@
 **********************************************************************/
 #include "qg_dlgoptionsdrawing.h"
 
-#include <qmessagebox.h>
+#include <QMessageBox>
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"
-//#include "rs_units.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgOptionsDrawing as a child of 'parent', with the
@@ -117,54 +117,6 @@ void QG_DlgOptionsDrawing::init() {
         cbPaperFormat->addItem(RS_Units::paperFormatToString((RS2::PaperFormat)i));
     }
 
-    // Encodings:
-    /*
-    QStringList encodingList;
-    encodingList << "Latin1"
-    << "Big5"
-    << "Big5-HKSCS"
-    << "eucJP"
-    << "eucKR"
-    << "GB2312"
-    << "GBK"
-    << "GB18030"
-    << "JIS7"
-    << "Shift-JIS"
-    << "TSCII"
-    << "utf88-bit "
-    << "utf16"
-    << "KOI8-R"
-    << "KOI8-U"
-    << "ISO8859-1"
-    << "ISO8859-2"
-    << "ISO8859-3"
-    << "ISO8859-4"
-    << "ISO8859-5"
-    << "ISO8859-6"
-    << "ISO8859-7"
-    << "ISO8859-8"
-    << "ISO8859-8-i"
-    << "ISO8859-9"
-    << "ISO8859-10 "
-    << "ISO8859-13 "
-    << "ISO8859-14 "
-    << "ISO8859-15"
-    << "IBM 850 "
-    << "IBM 866 "
-    << "CP874 "
-    << "CP1250"
-    << "CP1251"
-    << "CP1252"
-    << "CP1253"
-    << "CP1254"
-    << "CP1255"
-    << "CP1256"
-    << "CP1257"
-    << "CP1258 "
-    << "Apple Roman "
-    << "TIS-620";
-    cbEncoding->insertItems(0, encodingList);
-    */
 }
 
 
@@ -205,7 +157,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     // paper format:
     bool landscape;
     RS2::PaperFormat format = graphic->getPaperFormat(&landscape);
-    RS_DEBUG->print("QG_DlgOptionsDrawing::setGraphic: paper format is: %d", (int)format);
+	RS_DEBUG->print("QG_DlgOptionsDrawing::setGraphic: paper format is: %d", (int)format);
     cbPaperFormat->setCurrentIndex((int)format);
 
     // paper orientation:
@@ -214,6 +166,16 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     } else {
         rbPortrait->setChecked(true);
     }
+	if(format==RS2::Custom){
+		RS_Vector s=graphic->getPaperSize();
+		lePaperWidth->setText(QString("%1").setNum(s.x,'g',5));
+		lePaperHeight->setText(QString("%1").setNum(s.y,'g',5));
+		lePaperWidth->setEnabled(true);
+		lePaperHeight->setEnabled(true);
+	}else{
+		lePaperWidth->setEnabled(false);
+		lePaperHeight->setEnabled(false);
+	}
 
     // Grid:
     cbGridOn->setChecked(graphic->isGridOn());
@@ -328,8 +290,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     cbEncoding->setEditText(encoding);
     */
 
-    updatePaperSize();
-    updatePreview();
+	updatePaperSize();
     updateUnitLabels();
 }
 
@@ -350,7 +311,7 @@ void QG_DlgOptionsDrawing::validate() {
         }
     }
 
-    if (graphic!=NULL) {
+	if (graphic) {
         // units:
         graphic->setUnit((RS2::Unit)cbUnit->currentIndex());
 
@@ -374,7 +335,11 @@ void QG_DlgOptionsDrawing::validate() {
                             RS_Vector(RS_Math::eval(lePaperWidth->text()),
                                       RS_Math::eval(lePaperHeight->text())),
                             (RS2::Unit) cbUnit->currentIndex(),
-                            RS2::Millimeter));
+							RS2::Millimeter)
+						);
+			bool landscape;
+			graphic->getPaperFormat(&landscape);
+			rbLandscape->setChecked(landscape);
         }
 
         // grid:
@@ -434,7 +399,12 @@ void QG_DlgOptionsDrawing::validate() {
         graphic->addVariable("$DIMTSZ",
                              RS_Math::eval(cbDimTsz->currentText()), 40);
         //DIMTIH, dimension text, horizontal or aligned
-        graphic->addVariable("$DIMTIH", cbDimTih->currentIndex(), 70);
+        int iOldIndex = graphic->getVariableInt("$DIMTIH",0);
+        int iNewIndex = cbDimTih->currentIndex();
+        if( iOldIndex != iNewIndex) {
+            ok1 = true;
+            graphic->addVariable("$DIMTIH", iNewIndex, 70);
+        }
         //DIMLFAC, general factor for linear dimensions
         double dimFactor = RS_Math::eval(cbDimFactor->currentText());
         if( RS_TOLERANCE > fabs(dimFactor)) {
@@ -633,27 +603,32 @@ void QG_DlgOptionsDrawing::updatePreview() {
 void  QG_DlgOptionsDrawing::updatePaperSize() {
     RS2::PaperFormat format = (RS2::PaperFormat)cbPaperFormat->currentIndex();
 
+	RS_Vector s; //paper size: width, height
     if (format==RS2::Custom) {
-        RS_Vector s = RS_Units::convert(
+		s = RS_Units::convert(
                     graphic->getPaperSize(),
                     RS2::Millimeter,
                     (RS2::Unit) cbUnit->currentIndex()
-                    );
+					);
         //RS_Vector plimmin = graphic->getVariableVector("$PLIMMIN", RS_Vector(0,0));
-        //RS_Vector plimmax = graphic->getVariableVector("$PLIMMAX", RS_Vector(100,100));
-        lePaperWidth->setText(QString("%1").arg(s.x));
-        lePaperHeight->setText(QString("%1").arg(s.y));
+		//RS_Vector plimmax = graphic->getVariableVector("$PLIMMAX", RS_Vector(100,100));
     }
     else {
         //display paper size according to current units
-        RS_Vector s = RS_Units::convert(
+		s = RS_Units::convert(
                     RS_Units::paperFormatToSize(format),
                     RS2::Millimeter,
                     (RS2::Unit) cbUnit->currentIndex()
-                    );
-        lePaperWidth->setText(QString("%1").setNum(s.x,'g',5));
-        lePaperHeight->setText(QString("%1").setNum(s.y,'g',5));
-    }
+					);
+	}
+
+	if (rbLandscape->isChecked() ^ (s.x > s.y)) {
+		std::swap(s.x, s.y);
+	}
+	graphic->setPaperSize(s);
+
+	lePaperWidth->setText(QString("%1").setNum(s.x,'g',5));
+	lePaperHeight->setText(QString("%1").setNum(s.y,'g',5));
 
     if (cbPaperFormat->currentIndex()==0) {
         lePaperWidth->setEnabled(true);
@@ -662,6 +637,7 @@ void  QG_DlgOptionsDrawing::updatePaperSize() {
         lePaperWidth->setEnabled(false);
         lePaperHeight->setEnabled(false);
     }
+	updatePreview();
 }
 
 
@@ -736,4 +712,11 @@ void QG_DlgOptionsDrawing::on_cbGridOn_toggled(bool checked)
     cbXSpacing->setEnabled(checked && rbOrthogonalGrid->isChecked());
     cbYSpacing->setEnabled(checked);
 }
+
+
+void QG_DlgOptionsDrawing::on_rbLandscape_toggled(bool /*checked*/)
+{
+	updatePaperSize();
+}
+
 //EOF

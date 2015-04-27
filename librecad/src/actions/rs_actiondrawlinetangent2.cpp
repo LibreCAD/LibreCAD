@@ -24,29 +24,29 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawlinetangent2.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_creation.h"
+#include "rs_line.h"
 
 
 
 RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Tangents 2", container, graphicView),
-          valid(false)
+	:RS_PreviewActionInterface("Draw Tangents 2", container, graphicView)
+	,circle1(nullptr)
+	,circle2(nullptr)
+	,valid(false)
 {
-
-    circle1 = NULL;
-    circle2 = NULL;
-
-    circleType.clear();
-    circleType<<RS2::EntityArc<<RS2::EntityCircle<<RS2::EntityEllipse;
     setStatus(SetCircle1);
 }
+
+RS_ActionDrawLineTangent2::~RS_ActionDrawLineTangent2(){}
+
 
 QAction* RS_ActionDrawLineTangent2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
         // tr("Tan&gent (C,C)"),
@@ -76,7 +76,7 @@ void RS_ActionDrawLineTangent2::trigger() {
 
     RS_Entity* newEntity = NULL;
 
-    newEntity = new RS_Line(container, lineData);
+	newEntity = new RS_Line(container, *lineData);
 
     if (newEntity!=NULL) {
         newEntity->setLayerToActive();
@@ -125,10 +125,10 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
         return;
     }
     valid=true;
-    lineData=tangent->getData();
+	lineData.reset(new RS_LineData(tangent->getData()));
 
     deletePreview();
-    preview->addEntity(new RS_Line(preview, lineData));
+	preview->addEntity(new RS_Line(preview.get(), *lineData));
     drawPreview();
 }
 

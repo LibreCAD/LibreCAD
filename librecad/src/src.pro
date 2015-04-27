@@ -10,7 +10,10 @@ DEFINES += QC_VERSION="\"master\""
 DEFINES += QC_DELAYED_SPLASH_SCREEN=1
 DEFINES += HAS_BOOST=1
 
-DEFINES -= DWGSUPPORT
+#uncomment to enable a Debugging menu entry for basic unit testing
+#DEFINES += LC_DEBUGGING
+
+DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
 SCMREVISION="2.0.7"
@@ -30,17 +33,17 @@ CONFIG += qt \
      link_prl \
      verbose
 
-
 greaterThan( QT_MAJOR_VERSION, 4 ) {
     # in Qt5 help is deprecated in CONFIG
-    QT += widgets printsupport help
-    CONFIG += c++11
+	QT += widgets printsupport help
+	CONFIG += c++11
 } else {
-    CONFIG += help 
-} 
+    CONFIG += help
+}
 
-PRE_TARGETDEPS += ../../generated/lib/libdxfrw.a
-PRE_TARGETDEPS += ../../generated/lib/libjwwlib.a
+GEN_LIB_DIR = ../../generated/lib
+PRE_TARGETDEPS += $$GEN_LIB_DIR/libdxfrw.a \
+		$$GEN_LIB_DIR/libjwwlib.a
 
 DESTDIR = $${INSTALLDIR}
 
@@ -87,6 +90,10 @@ LIBS += -L../../generated/lib  \
     -ldxfrw \
     -ljwwlib
 
+macx|win32|equals(build_muparser, "true")|!packagesExist(muparser){
+	LIBS += -lmuparser
+}
+
 DEPENDPATH += \
     ../../libraries/libdxfrw/src \
     ../../libraries/jwwlib/src \
@@ -97,6 +104,7 @@ DEPENDPATH += \
     lib/engine \
     lib/fileio \
     lib/filters \
+    lib/generators \
     lib/gui \
     lib/information \
     lib/math \
@@ -104,10 +112,11 @@ DEPENDPATH += \
     lib/scripting \
     actions \
     main \
-    plugins \
-    ui \
+	test \
+	plugins \
+	ui \
     ui/forms \
-    ../res
+	../res
 
 RESOURCES += ../res/extui/extui.qrc
 
@@ -213,7 +222,13 @@ HEADERS += \
     lib/scripting/rs_scriptlist.h \
     ui/forms/qg_snaptoolbar.h \
     actions/lc_actiondrawcircle2pr.h \
-    ui/forms/qg_activelayername.h
+    ui/forms/qg_activelayername.h \
+    ui/forms/lc_cadtoolbarinterface.h \
+    test/lc_simpletests.h \
+    lib/generators/lc_makercamsvg.h \
+    lib/generators/lc_xmlwriterinterface.h \
+    lib/generators/lc_xmlwriterqxmlstreamwriter.h \
+    actions/lc_actionfileexportmakercam.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -298,7 +313,12 @@ SOURCES += \
     lib/engine/rs_color.cpp \
     lib/engine/rs_pen.cpp \
     actions/lc_actiondrawcircle2pr.cpp \
-    ui/forms/qg_activelayername.cpp
+    ui/forms/qg_activelayername.cpp \
+    ui/forms/lc_cadtoolbarinterface.cpp \
+    test/lc_simpletests.cpp \
+    lib/generators/lc_xmlwriterqxmlstreamwriter.cpp \
+    lib/generators/lc_makercamsvg.cpp \
+    actions/lc_actionfileexportmakercam.cpp
 
 # ################################################################################
 # Command
@@ -385,6 +405,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actionlayerstogglelock.h \
     actions/rs_actionlayerstoggleview.h \
     actions/rs_actionlayerstoggleprint.h \
+    actions/lc_actionlayerstoggleconstruction.h \
     actions/rs_actionlibraryinsert.h \
     actions/rs_actionlockrelativezero.h \
     actions/rs_actionmodifyattributes.h \
@@ -519,6 +540,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionlayerstogglelock.cpp \
     actions/rs_actionlayerstoggleview.cpp \
     actions/rs_actionlayerstoggleprint.cpp \
+    actions/lc_actionlayerstoggleconstruction.cpp \
     actions/rs_actionlibraryinsert.cpp \
     actions/rs_actionlockrelativezero.cpp \
     actions/rs_actionmodifyattributes.cpp \
@@ -607,7 +629,6 @@ HEADERS += ui/qg_actionfactory.h \
     ui/forms/qg_cadtoolbarellipses.h \
     ui/forms/qg_cadtoolbarcircles.h \
     ui/forms/qg_cadtoolbarlines.h \
-    ui/forms/qg_cadtoolbarpoints.h \
     ui/forms/qg_cadtoolbarselect.h \
     ui/forms/qg_cadtoolbarpolylines.h \
     ui/forms/qg_cadtoolbarsplines.h \
@@ -640,6 +661,7 @@ HEADERS += ui/qg_actionfactory.h \
     ui/forms/qg_dlgmtext.h \
     ui/forms/qg_dlgoptionsdrawing.h \
     ui/forms/qg_dlgoptionsgeneral.h \
+    ui/forms/qg_dlgoptionsmakercam.h \
     ui/forms/qg_dlgpoint.h \
     ui/forms/qg_dlgpolyline.h \
     ui/forms/qg_dlgrotate.h \
@@ -706,7 +728,6 @@ SOURCES += ui/qg_actionfactory.cpp \
     ui/forms/qg_cadtoolbarlines.cpp \
     ui/forms/qg_cadtoolbarmain.cpp \
     ui/forms/qg_cadtoolbarmodify.cpp \
-    ui/forms/qg_cadtoolbarpoints.cpp \
     ui/forms/qg_cadtoolbarpolylines.cpp \
     ui/forms/qg_cadtoolbarselect.cpp \
     ui/forms/qg_cadtoolbarsplines.cpp \
@@ -735,6 +756,7 @@ SOURCES += ui/qg_actionfactory.cpp \
     ui/forms/qg_dlgmtext.cpp \
     ui/forms/qg_dlgoptionsdrawing.cpp \
     ui/forms/qg_dlgoptionsgeneral.cpp \
+    ui/forms/qg_dlgoptionsmakercam.cpp \
     ui/forms/qg_dlgpoint.cpp \
     ui/forms/qg_dlgpolyline.cpp \
     ui/forms/qg_dlgrotate.cpp \
@@ -777,18 +799,6 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_beveloptions.ui \
     ui/forms/qg_blockdialog.ui \
     ui/forms/qg_cadtoolbar.ui \
-    ui/forms/qg_cadtoolbararcs.ui \
-    ui/forms/qg_cadtoolbarcircles.ui \
-    ui/forms/qg_cadtoolbardim.ui \
-    ui/forms/qg_cadtoolbarellipses.ui \
-    ui/forms/qg_cadtoolbarinfo.ui \
-    ui/forms/qg_cadtoolbarlines.ui \
-    ui/forms/qg_cadtoolbarmain.ui \
-    ui/forms/qg_cadtoolbarmodify.ui \
-    ui/forms/qg_cadtoolbarpoints.ui \
-    ui/forms/qg_cadtoolbarpolylines.ui \
-    ui/forms/qg_cadtoolbarselect.ui \
-    ui/forms/qg_cadtoolbarsplines.ui \
     ui/forms/qg_circleoptions.ui \
     ui/forms/qg_circletan2options.ui \
     ui/forms/qg_coordinatewidget.ui \
@@ -813,6 +823,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_dlgmtext.ui \
     ui/forms/qg_dlgoptionsdrawing.ui \
     ui/forms/qg_dlgoptionsgeneral.ui \
+    ui/forms/qg_dlgoptionsmakercam.ui \
     ui/forms/qg_dlgpoint.ui \
     ui/forms/qg_dlgpolyline.ui \
     ui/forms/qg_dlgrotate.ui \
@@ -916,7 +927,7 @@ contains(QT_MAJOR_VERSION, 4)   {
         !build_pass:verbose:message(Using Qt version $$[QT_VERSION].)
     }
 
-# QT_MAJOR_VERSION = 4 
+# QT_MAJOR_VERSION = 4
 }
 
 RESOURCES += ../res/main/main.qrc
@@ -979,4 +990,3 @@ TRANSLATIONS = ../ts/librecad_ar.ts \
     ../ts/librecad_uk.ts \
     ../ts/librecad_zh_cn.ts \
     ../ts/librecad_zh_tw.ts
-

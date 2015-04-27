@@ -84,7 +84,7 @@ public:
 private:
 
     RS_Settings();
-    RS_Settings(RS_Settings&) = delete;
+    RS_Settings(RS_Settings&) = default;
         QVariant readEntryCache(const QString& key);
         void addToCache(const QString& key, const QVariant& value);
 

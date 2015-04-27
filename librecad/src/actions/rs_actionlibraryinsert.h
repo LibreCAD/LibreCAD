@@ -57,11 +57,11 @@ public:
 public:
     RS_ActionLibraryInsert(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    virtual ~RS_ActionLibraryInsert();
+	virtual ~RS_ActionLibraryInsert() = default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	
-	virtual RS2::ActionType rtti() {
+	virtual RS2::ActionType rtti() const{
 		return RS2::ActionLibraryInsert;
 	}
 
@@ -83,7 +83,6 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
 
         void setFile(const QString& file);
 

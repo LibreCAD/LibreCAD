@@ -24,23 +24,24 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawcircle3p.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
-
+#include "rs_circle.h"
+#include "rs_coordinateevent.h"
 
 
 RS_ActionDrawCircle3P::RS_ActionDrawCircle3P(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw circles",
-                           container, graphicView) {
+						   container, graphicView)
+		,data(new RS_CircleData())
+{
     reset();
 }
-
-
 
 RS_ActionDrawCircle3P::~RS_ActionDrawCircle3P() {}
 
@@ -56,7 +57,7 @@ QAction* RS_ActionDrawCircle3P::createGUIAction(RS2::ActionType /*type*/, QObjec
 
 
 void RS_ActionDrawCircle3P::reset() {
-    data.reset();
+	data->reset();
     point1 = RS_Vector(false);
     point2 = RS_Vector(false);
     point3 = RS_Vector(false);
@@ -76,9 +77,9 @@ void RS_ActionDrawCircle3P::trigger() {
     RS_PreviewActionInterface::trigger();
 
     preparePreview();
-    if (data.isValid()) {
+	if (data->isValid()) {
         RS_Circle* circle = new RS_Circle(container,
-                                          data);
+										  *data);
         circle->setLayerToActive();
         circle->setPenToActive();
         container->addEntity(circle);
@@ -103,12 +104,12 @@ void RS_ActionDrawCircle3P::trigger() {
 
 
 void RS_ActionDrawCircle3P::preparePreview() {
-    data.reset();
+	data->reset();
     if (point1.valid && point2.valid && point3.valid) {
-        RS_Circle circle(NULL, data);
+		RS_Circle circle(NULL, *data);
         bool suc = circle.createFrom3P(point1, point2, point3);
         if (suc) {
-            data = circle.getData();
+			data.reset(new RS_CircleData(circle.getData()));
         }
     }
 }
@@ -130,8 +131,8 @@ void RS_ActionDrawCircle3P::mouseMoveEvent(QMouseEvent* e) {
     case SetPoint3:
         point3 = mouse;
         preparePreview();
-        if (data.isValid()) {
-            RS_Circle* circle = new RS_Circle(preview, data);
+		if (data->isValid()) {
+			RS_Circle* circle = new RS_Circle(preview.get(), *data);
 
             deletePreview();
             preview->addEntity(circle);

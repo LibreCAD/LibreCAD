@@ -28,7 +28,8 @@
 #define RS_ACTIONDRAWCIRCLE2P_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_circle.h"
+
+struct RS_CircleData;
 
 /**
  * This action class can handle user events to draw 
@@ -54,7 +55,7 @@ public:
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-    virtual RS2::ActionType rtti() {
+    virtual RS2::ActionType rtti() const{
         return RS2::ActionDrawCircle2P;
     }
     void reset();
@@ -79,7 +80,7 @@ protected:
     /**
      * Circle data defined so far.
      */
-    RS_CircleData data;
+	std::unique_ptr<RS_CircleData> data;
     /**
      * 1st point.
      */

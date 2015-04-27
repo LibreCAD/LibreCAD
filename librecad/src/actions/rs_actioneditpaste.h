@@ -62,8 +62,7 @@ public:
     virtual void coordinateEvent(RS_CoordinateEvent* e);
 
     virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
-    virtual void updateToolBar();
+	virtual void updateMouseCursor();
 
 protected:
     RS_Vector targetPoint;

@@ -30,6 +30,7 @@
 #include "rs_previewactioninterface.h"
 
 
+
 /**
  * This action class can handle user events to draw parallel 
  * lines, arcs and circles.
@@ -48,11 +49,11 @@ private:
 public:
     RS_ActionDrawLineParallelThrough(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineParallelThrough() {}
+    ~RS_ActionDrawLineParallelThrough() = default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	
-	virtual RS2::ActionType rtti() {
+	virtual RS2::ActionType rtti() const{
 		return RS2::ActionDrawLineParallelThrough;
 	}
 
@@ -83,8 +84,6 @@ public:
 private:
     /** Closest parallel. */
     RS_Entity* parallel;
-    /** Data of new line */
-    RS_LineData data;
 	/** Number of parallels. */
 	int number;
 	/** Coordinate of the mouse. */

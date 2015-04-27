@@ -27,17 +27,22 @@
 #ifndef QG_RECENTFILES_H
 #define QG_RECENTFILES_H
 
-#include <qstring.h>
-#include <qstringlist.h>
+#include <QStringList>
+#include <QObject>
+
+class QAction;
+class QWidget;
 
 /**
  * This class can store recent files in a list.
  */
-class QG_RecentFiles {
+class QG_RecentFiles: public QObject {
+
+	Q_OBJECT
 
 public:
-    QG_RecentFiles(int number);
-    virtual ~QG_RecentFiles();
+	QG_RecentFiles(int number, QWidget* parent = nullptr);
+	virtual ~QG_RecentFiles();
 
     void add(const QString& filename);
 
@@ -45,32 +50,29 @@ public:
      * @return complete path and name of the file stored in the
      * list at index i
      */
-    QString get(int i) {
-        if (i<(int)files.count()) {
-            return files[i];
-        } else {
-            return QString("");
-        }
-    }
+	QString get(int i) const;
 
     /** @return number of files currently stored in the list */
-    int count() {
-        return files.count();
-    }
+	int count() const;
 
     /** @return number of files that can be stored in the list at maximum */
-    int getNumber() {
-        return number;
-    }
+	int getNumber() const;
 
-    int indexOf(const QString& filename) {
-        return files.indexOf(filename) ;
-    }
+	int indexOf(const QString& filename) const;
+	void initSettings();
+	void updateRecentFilesMenu();
 
+private slots:
+	/**
+	* \brief opens a recent file document
+	* @param id File Menu id of the file
+	*/
+	void slotFileOpenRecent();
 
 private:
-    int number;
-    QStringList files;
+	int const number;
+	QStringList files;
+	QList<QAction*> recentFilesAction;
 };
 
 #endif

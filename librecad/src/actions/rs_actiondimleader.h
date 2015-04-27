@@ -51,11 +51,11 @@ public:
 public:
     RS_ActionDimLeader(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-    ~RS_ActionDimLeader();
+	~RS_ActionDimLeader() = default;
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-	virtual RS2::ActionType rtti() {
+	virtual RS2::ActionType rtti() const{
 		return RS2::ActionDimLeader;
 	}
 
@@ -70,11 +70,7 @@ public:
 	
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
     virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
-	
-	virtual void showOptions();
-	virtual void hideOptions();
-	
+	virtual QStringList getAvailableCommands();
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 
@@ -86,7 +82,7 @@ protected:
 	/**
 	 * Points set so far.
 	 */
-        QList<RS_Vector> points;
+	std::vector<RS_Vector> points;
 
 };
 

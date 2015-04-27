@@ -76,12 +76,13 @@ private:
  */
 class RS_ConstructionLine : public RS_AtomicEntity {
 public:
+	RS_ConstructionLine()=default;
     RS_ConstructionLine(RS_EntityContainer* parent,
                         const RS_ConstructionLineData& d);
 
-    virtual RS_Entity* clone();
+	virtual RS_Entity* clone() const;
 
-    virtual ~RS_ConstructionLine();
+	virtual ~RS_ConstructionLine()=default;
 
     /**	@return RS2::EntityConstructionLine */
     virtual RS2::EntityType rtti() const {
@@ -132,13 +133,13 @@ m0 x + m1 y + m2 =0
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
             bool onEntity = true, double* dist = NULL, RS_Entity** entity=NULL)const;
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-                                       double* dist = NULL);
+									   double* dist = NULL)const;
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
                                        double* dist = NULL,
                                        int middlePoints = 1)const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = NULL)const;
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,

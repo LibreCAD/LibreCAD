@@ -28,14 +28,25 @@
 #ifndef RS_CREATION_H
 #define RS_CREATION_H
 
-#include "rs_entitycontainer.h"
-#include "rs_line.h"
-#include "rs_polyline.h"
-#include "rs_insert.h"
-#include "rs_image.h"
-#include "rs_block.h"
-#include "lc_splinepoints.h"
+#include <QString>
+#include "rs_vector.h"
 
+class RS_Document;
+class RS_EntityContainer;
+class RS_GraphicView;
+class RS_Graphic;
+class RS_Entity;
+class RS_Arc;
+class RS_Circle;
+class RS_Ellipse;
+class RS_Line;
+class LC_SplinePoints;
+struct RS_BlockData;
+struct RS_ImageData;
+class RS_Image;
+struct RS_InsertData;
+class RS_Insert;
+class RS_Block;
 
 /**
  * Data needed to insert library items.
@@ -125,11 +136,11 @@ public:
                             const RS_Vector& corner2,
                             int number);
 
-    RS_Insert* createInsert(RS_InsertData& data);
+	RS_Insert* createInsert(const RS_InsertData* pdata);
 	
-    RS_Image* createImage(RS_ImageData& data);
+	RS_Image* createImage(const RS_ImageData* pdata);
 
-    RS_Block* createBlock(const RS_BlockData& data,
+	RS_Block* createBlock(const RS_BlockData* data,
                           const RS_Vector& referencePoint,
                           const bool remove);
 						  

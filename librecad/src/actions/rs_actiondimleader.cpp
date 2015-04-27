@@ -24,13 +24,15 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondimleader.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_leader.h"
+#include "rs_line.h"
+#include "rs_coordinateevent.h"
 
 
 RS_ActionDimLeader::RS_ActionDimLeader(RS_EntityContainer& container,
@@ -41,16 +43,9 @@ RS_ActionDimLeader::RS_ActionDimLeader(RS_EntityContainer& container,
     reset();
 }
 
-
-
-RS_ActionDimLeader::~RS_ActionDimLeader() {}
-
-
 QAction* RS_ActionDimLeader::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Leader")
-    QAction* action = new QAction(tr("&Leader"), NULL);
-	action->setIcon(QIcon(":/extui/dimleader.png"));
-    //action->zetStatusTip(tr("Leader Dimension"));
+	QAction* action = new QAction(QIcon(":/extui/dimleader.png"), tr("&Leader"), nullptr);
     return action;
 }
 
@@ -74,20 +69,20 @@ void RS_ActionDimLeader::init(int status) {
 void RS_ActionDimLeader::trigger() {
     RS_PreviewActionInterface::trigger();
 
-    if (points.count()>0) {
+	if (points.size()){
 
         RS_Leader* leader = new RS_Leader(container, RS_LeaderData(true));
         leader->setLayerToActive();
         leader->setPenToActive();
 
-        for (int i = 0; i < points.size(); ++i) {
-            leader->addVertex(points.at(i));
-        }
+		for(const auto& vp: points){
+			leader->addVertex(vp);
+		}
 
         container->addEntity(leader);
 
         // upd. undo list:
-        if (document!=NULL) {
+		if (document) {
             document->startUndoCycle();
             document->addUndoable(leader);
             document->endUndoCycle();
@@ -110,23 +105,22 @@ void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDimLeader::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-    if (getStatus()==SetEndpoint && !points.isEmpty()) {
+	if (getStatus()==SetEndpoint && points.size()) {
         deletePreview();
 
-        // fill in lines that were already set:
-        RS_Vector last(false);
-        for (int i = 0; i < points.size(); ++i) {
-            RS_Vector v = points.at(i);
-            if (last.valid) {
-                preview->addEntity(new RS_Line(preview,
-                                               RS_LineData(last, v)));
-            }
-            last = v;
-        }
+		// fill in lines that were already set:
+		RS_Vector last(false);
+		for(const auto& v: points){
+			if (last.valid) {
+				preview->addEntity(new RS_Line(preview.get(),
+											   RS_LineData(last, v)));
+			}
+			last = v;
+		}
 
-        if ( !points.isEmpty() ) {
-            RS_Vector p = points.last();
-            preview->addEntity(new RS_Line(preview,
+		if ( points.size() ) {
+			RS_Vector p = points.back();
+			preview->addEntity(new RS_Line(preview.get(),
                                        RS_LineData(p, mouse)));
         }
         drawPreview();
@@ -166,7 +160,7 @@ void RS_ActionDimLeader::keyPressEvent(QKeyEvent* e) {
 
 
 void RS_ActionDimLeader::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (!e) {
         return;
     }
 
@@ -176,7 +170,7 @@ void RS_ActionDimLeader::coordinateEvent(RS_CoordinateEvent* e) {
     case SetStartpoint:
         //data.startpoint = mouse;
         points.clear();
-        points.append(mouse);
+		points.push_back(mouse);
         //start = data.startpoint;
         setStatus(SetEndpoint);
         graphicView->moveRelativeZero(mouse);
@@ -184,7 +178,7 @@ void RS_ActionDimLeader::coordinateEvent(RS_CoordinateEvent* e) {
 
     case SetEndpoint:
         //data.endpoint = mouse;
-        points.append(mouse);
+		points.push_back(mouse);
         //trigger();
         //data.startpoint = data.endpoint;
         graphicView->moveRelativeZero(mouse);
@@ -201,7 +195,7 @@ void RS_ActionDimLeader::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+		if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -228,7 +222,7 @@ QStringList RS_ActionDimLeader::getAvailableCommands() {
 
 
 void RS_ActionDimLeader::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+	if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetStartpoint:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
@@ -243,21 +237,6 @@ void RS_ActionDimLeader::updateMouseButtonHints() {
             break;
         }
     }
-}
-
-
-void RS_ActionDimLeader::showOptions() {
-    RS_ActionInterface::showOptions();
-
-    //RS_DIALOGFACTORY->requestOptions(this, true);
-}
-
-
-
-void RS_ActionDimLeader::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
-    //RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
 

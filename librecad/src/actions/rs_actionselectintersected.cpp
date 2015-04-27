@@ -24,12 +24,13 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actionselectintersected.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_selection.h"
+#include "rs_line.h"
 
 
 
@@ -98,7 +99,7 @@ void RS_ActionSelectIntersected::mouseMoveEvent(QMouseEvent* e) {
     if (getStatus()==SetPoint2 && v1.valid) {
         v2 = snapPoint(e);
         deletePreview();
-        preview->addEntity(new RS_Line(preview,
+		preview->addEntity(new RS_Line(preview.get(),
                                        RS_LineData(RS_Vector(v1.x, v1.y),
                                                    RS_Vector(v2.x, v2.y))));
         drawPreview();
@@ -159,25 +160,8 @@ void RS_ActionSelectIntersected::updateMouseButtonHints() {
     }
 }
 
-
-
 void RS_ActionSelectIntersected::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);
-}
-
-
-
-void RS_ActionSelectIntersected::updateToolBar() {
-    //not needed any more
-    return;
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (!isFinished()) {
-            //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
-        } else {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
-        }
-    }
 }
 
 // EOF

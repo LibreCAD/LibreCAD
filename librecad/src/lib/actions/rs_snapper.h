@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 Dongxu Li (dongxuli2011@gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -24,20 +25,18 @@
 **
 **********************************************************************/
 
-#pragma once
-//#ifndef RS_SNAPPER_H
-//#define RS_SNAPPER_H
-
-#include "rs_entitycontainer.h"
+#ifndef RS_SNAPPER_H
+#define RS_SNAPPER_H
 
 #include "rs.h"
-#include "rs_coordinateevent.h"
+#include "rs_vector.h"
 
 class RS_Entity;
 class RS_GraphicView;
 class RS_Vector;
 class RS_Preview;
 class QMouseEvent;
+class RS_EntityContainer;
 
 /**
   * This class holds information on how to snap the mouse.
@@ -45,20 +44,19 @@ class QMouseEvent;
   * @author Kevin Cox
   */
 struct RS_SnapMode {
-public:
-    bool snapFree;     /// Whether to snap freely
-    bool snapGrid;     /// Whether to snap to grid or not.
-    bool snapEndpoint;     /// Whether to snap to endpoints or not.
-    bool snapMiddle;       /// Whether to snap to midpoints or not.
-    bool snapDistance;       /// Whether to snap to distance from endpoints or not.
-    bool snapCenter;       /// Whether to snap to centers or not.
-    bool snapIntersection; /// Whether to snap to intersections or not.
+	bool snapFree= false;     /// Whether to snap freely
+	bool snapGrid= false;     /// Whether to snap to grid or not.
+	bool snapEndpoint= false;     /// Whether to snap to endpoints or not.
+	bool snapMiddle= false;       /// Whether to snap to midpoints or not.
+	bool snapDistance= false;       /// Whether to snap to distance from endpoints or not.
+	bool snapCenter= false;       /// Whether to snap to centers or not.
+	bool snapIntersection= false; /// Whether to snap to intersections or not.
 
-    bool snapOnEntity;     /// Whether to snap to entities or not.
+	bool snapOnEntity= false;     /// Whether to snap to entities or not.
 
-    RS2::SnapRestriction restriction; /// The restriction on the free snap.
+	RS2::SnapRestriction restriction= RS2::RestrictNothing; /// The restriction on the free snap.
 
-    double distance; /// The distance to snap before defaulting to free snaping.
+	double distance=5.; /// The distance to snap before defaulting to free snaping.
 
     /**
       * Default Constructor
@@ -66,7 +64,11 @@ public:
       * Creates a RS_SnapMode that specifies only free snapping.
       *
       */
-    RS_SnapMode() { hardReset(); }
+	RS_SnapMode()=default;
+	~RS_SnapMode()=default;
+	RS_SnapMode(RS_SnapMode const& ) = default;
+
+	RS_SnapMode& operator =(RS_SnapMode const& ) = default;
 
     /**
       * Disable all snapping.
@@ -75,42 +77,8 @@ public:
       *
       * @returns A refrence to itself.
       */
-    RS_SnapMode &clear(void) {
-        snapFree     = false;
-        snapGrid     = false;
-        snapEndpoint     = false;
-        snapMiddle       = false;
-        snapDistance       = false;
-        snapCenter       = false;
-        snapOnEntity     = false;
-        snapIntersection = false;
-
-        restriction = RS2::RestrictNothing;
-
-        return *this;
-    }
-
-    /**
-     * Reset to default settings
-     *
-     * @returns A refrence to itself.
-     */
-    RS_SnapMode &hardReset(void) {
-        snapFree     = false;
-        snapGrid     = false;
-        snapEndpoint     = false;
-        snapMiddle       = false;
-        snapDistance       = false;
-        snapCenter       = false;
-        snapOnEntity     = false;
-        snapIntersection = false;
-
-        restriction = RS2::RestrictNothing;
-
-        distance = 5;
-
-        return *this;
-    }
+	 RS_SnapMode const & clear(void);
+	 bool operator == (RS_SnapMode const& rhs) const;
 };
 
 /**
@@ -125,8 +93,9 @@ public:
  */
 class RS_Snapper {
 public:
+	RS_Snapper() = delete;
     RS_Snapper(RS_EntityContainer& container, RS_GraphicView& graphicView);
-    virtual ~RS_Snapper();
+	virtual ~RS_Snapper() = default;
 
     void init();
         void finish();
@@ -193,7 +162,7 @@ public:
                            RS2::ResolveLevel level=RS2::ResolveNone);
     RS_Entity* catchEntity(QMouseEvent* e, RS2::EntityType enType,
                            RS2::ResolveLevel level=RS2::ResolveNone);
-    RS_Entity* catchEntity(QMouseEvent* e, const QVector<RS2::EntityType>& enTypeList,
+	RS_Entity* catchEntity(QMouseEvent* e, const std::vector<RS2::EntityType>& enTypeList,
                            RS2::ResolveLevel level=RS2::ResolveNone);
 
     /**
@@ -233,7 +202,7 @@ protected:
      * Snap distance for snaping to points with a
      * given distance from endpoints.
      */
-    double distance;
+	double m_SnapDistance;
     /**
      * Snap to equidistant middle points
      * default to 1, i.e., equidistant to start/end points
@@ -250,5 +219,5 @@ protected:
         bool finished;
 };
 
-//#endif
+#endif
 //EOF

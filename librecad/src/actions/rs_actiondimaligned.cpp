@@ -24,15 +24,16 @@
 **
 **********************************************************************/
 
-#include "rs_actiondimaligned.h"
-
 #include <QAction>
+#include "rs_actiondimaligned.h"
+#include "rs_dimaligned.h"
+
 #include "rs_dialogfactory.h"
+#include "rs_line.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_constructionline.h"
-
-
+#include "rs_coordinateevent.h"
 
 RS_ActionDimAligned::RS_ActionDimAligned(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -58,8 +59,9 @@ QAction* RS_ActionDimAligned::createGUIAction(RS2::ActionType /*type*/, QObject*
 void RS_ActionDimAligned::reset() {
     RS_ActionDimension::reset();
 
-    edata = RS_DimAlignedData(RS_Vector(false),
-                              RS_Vector(false));
+	edata.reset(new RS_DimAlignedData(RS_Vector(false),
+							  RS_Vector(false))
+				);
     lastStatus = SetExtPoint1;
     if (RS_DIALOGFACTORY!=NULL) {
         RS_DIALOGFACTORY->requestOptions(this, true, true);
@@ -72,11 +74,11 @@ void RS_ActionDimAligned::trigger() {
     RS_ActionDimension::trigger();
 
     preparePreview();
-    graphicView->moveRelativeZero(data.definitionPoint);
+    graphicView->moveRelativeZero(data->definitionPoint);
 
-        //data.text = getText();
+		//data->text = getText();
     RS_DimAligned* dim =
-        new RS_DimAligned(container, data, edata);
+		new RS_DimAligned(container, *data, *edata);
     dim->setLayerToActive();
     dim->setPenToActive();
     dim->update();
@@ -102,16 +104,16 @@ void RS_ActionDimAligned::trigger() {
 void RS_ActionDimAligned::preparePreview() {
     RS_Vector dirV;
     dirV.setPolar(100.0,
-                  edata.extensionPoint1.angleTo(
-                      edata.extensionPoint2)
-                  +M_PI/2.0);
+				  edata->extensionPoint1.angleTo(
+					  edata->extensionPoint2)
+				  +M_PI_2);
     RS_ConstructionLine cl(NULL,
                            RS_ConstructionLineData(
-                               edata.extensionPoint2,
-                               edata.extensionPoint2+dirV));
+							   edata->extensionPoint2,
+							   edata->extensionPoint2+dirV));
 
-    data.definitionPoint =
-        cl.getNearestPointOnEntity(data.definitionPoint);
+    data->definitionPoint =
+        cl.getNearestPointOnEntity(data->definitionPoint);
 }
 
 
@@ -126,25 +128,25 @@ void RS_ActionDimAligned::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetExtPoint2:
-        if (edata.extensionPoint1.valid) {
+		if (edata->extensionPoint1.valid) {
             deletePreview();
             preview->addEntity(
-                new RS_Line(preview,
-                            RS_LineData(edata.extensionPoint1, mouse))
+				new RS_Line(preview.get(),
+							RS_LineData(edata->extensionPoint1, mouse))
             );
             drawPreview();
         }
         break;
 
     case SetDefPoint:
-        if (edata.extensionPoint1.valid && edata.extensionPoint2.valid) {
+		if (edata->extensionPoint1.valid && edata->extensionPoint2.valid) {
             deletePreview();
-            data.definitionPoint = mouse;
+			data->definitionPoint = mouse;
 
             preparePreview();
 
-                        //data.text = getText();
-            RS_DimAligned* dim = new RS_DimAligned(preview, data, edata);
+						//data->text = getText();
+			RS_DimAligned* dim = new RS_DimAligned(preview.get(), *data, *edata);
             preview->addEntity(dim);
             dim->update();
             drawPreview();
@@ -181,19 +183,19 @@ void RS_ActionDimAligned::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetExtPoint1:
-        edata.extensionPoint1 = pos;
+		edata->extensionPoint1 = pos;
         graphicView->moveRelativeZero(pos);
         setStatus(SetExtPoint2);
         break;
 
     case SetExtPoint2:
-        edata.extensionPoint2 = pos;
+		edata->extensionPoint2 = pos;
         graphicView->moveRelativeZero(pos);
         setStatus(SetDefPoint);
         break;
 
     case SetDefPoint:
-        data.definitionPoint = pos;
+		data->definitionPoint = pos;
         trigger();
         reset();
         setStatus(SetExtPoint1);

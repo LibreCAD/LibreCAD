@@ -30,25 +30,29 @@
 
 #include "rs_filterinterface.h"
 
-#include "rs_block.h"
 #include "rs_color.h"
 #include "rs_dimension.h"
-#include "rs_hatch.h"
-#include "rs_insert.h"
-#include "rs_layer.h"
-#include "rs_layer.h"
-#include "rs_leader.h"
-#include "rs_polyline.h"
-#include "rs_spline.h"
-#include "lc_splinepoints.h"
-#include "rs_solid.h"
-#include "rs_mtext.h"
-#include "rs_image.h"
 
 #include "dl_creationinterface.h"
 #include "dl_jww.h"
 
 
+class RS_Point;
+class RS_Line;
+class RS_Circle;
+class RS_Arc;
+class RS_Ellipse;
+class RS_Solid;
+class RS_Polyline;
+class RS_Spline;
+class LC_SplinePoints;
+class RS_Insert;
+class RS_MText;
+class RS_Text;
+class RS_Hatch;
+class RS_Image;
+class RS_Leader;
+class RS_Polyline;
 class DL_WriterA;
 
 /**
@@ -65,7 +69,7 @@ public:
 	/**
 	 * @return RS2::FormatJWW.
 	 */
-	//RS2::FormatType rtti() {
+	//RS2::FormatType rtti() const{
 	//	return RS2::FormatJWW;
 	//}
 

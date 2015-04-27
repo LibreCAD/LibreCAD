@@ -24,11 +24,13 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actioninfodist2.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_graphic.h"
+#include "rs_coordinateevent.h"
 
 
 RS_ActionInfoDist2::RS_ActionInfoDist2(RS_EntityContainer& container,
@@ -42,9 +44,7 @@ RS_ActionInfoDist2::RS_ActionInfoDist2(RS_EntityContainer& container,
 
 QAction* RS_ActionInfoDist2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
         // (tr("Distance Entity to Point")
-    QAction* action = new QAction(tr("&Distance Entity to Point"), NULL);
-    //action->zetStatusTip(tr("Measures the distance between an entity and a point"));
-        action->setIcon(QIcon(":/extui/infodist2.png"));
+	QAction* action = new QAction(QIcon(":/extui/infodist2.png"), tr("&Distance Entity to Point"), nullptr);
     return action;
 }
 
@@ -69,8 +69,8 @@ void RS_ActionInfoDist2::trigger() {
 
     if (point.valid && entity!=NULL) {
         double dist = entity->getDistanceToPoint(point);
-        QString str;
-        str.sprintf("%.6f", dist);
+		QString str = RS_Units::formatLinear(dist, graphic->getUnit(),
+											 graphic->getLinearFormat(), graphic->getLinearPrecision());
         RS_DIALOGFACTORY->commandMessage(tr("Distance: %1").arg(str));
         entity->setHighlighted(false);
         graphicView->redraw(RS2::RedrawDrawing);

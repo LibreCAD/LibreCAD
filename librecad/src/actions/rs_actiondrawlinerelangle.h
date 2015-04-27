@@ -29,7 +29,6 @@
 
 #include "rs_previewactioninterface.h"
 
-
 /**
  * This action class can handle user events to draw lines with a given angle
  * to a given entity.
@@ -51,16 +50,11 @@ public:
                               RS_GraphicView& graphicView,
                               double angle=0.0,
                               bool fixedAngle=false);
-    ~RS_ActionDrawLineRelAngle() {}
+	~RS_ActionDrawLineRelAngle() = default;
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	
-    virtual RS2::ActionType rtti() {
-        if( fixedAngle && RS_Math::getAngleDifference(angle,M_PI/2.) < RS_TOLERANCE )
-            return RS2::ActionDrawLineOrthogonal;
-        else
-            return RS2::ActionDrawLineRelAngle;
-	}
+	virtual RS2::ActionType rtti() const;
 
     virtual void trigger();
 
@@ -69,7 +63,7 @@ public:
 	
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
     virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	virtual QStringList getAvailableCommands();
 	
     virtual void hideOptions();
     virtual void showOptions();
@@ -105,8 +99,6 @@ private:
     RS_Entity* entity;
     /** Chosen position */
     RS_Vector pos;
-    /** Data of new line */
-    RS_LineData data;
     /**
      * Line angle.
      */

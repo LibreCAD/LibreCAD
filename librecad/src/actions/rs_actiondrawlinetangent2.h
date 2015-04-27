@@ -27,10 +27,10 @@
 #ifndef RS_ACTIONDRAWLINETANGENT2_H
 #define RS_ACTIONDRAWLINETANGENT2_H
 
-#include <memory>
 #include "rs_previewactioninterface.h"
 
-
+class RS_Line;
+struct RS_LineData;
 /**
  * This action class can handle user events to draw tangents from circle to
  * circle.
@@ -48,11 +48,11 @@ private:
 public:
     RS_ActionDrawLineTangent2(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineTangent2() {}
+	~RS_ActionDrawLineTangent2();
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-    virtual RS2::ActionType rtti(){
+    virtual RS2::ActionType rtti() const{
         return RS2::ActionDrawLineTangent2;
     }
 //    virtual void init(int status=0);
@@ -71,14 +71,12 @@ public:
 private:
     /** Closest tangent. */
     std::unique_ptr<RS_Line> tangent;
-    RS_LineData lineData;
-    /** 1st chosen entity */
+	std::unique_ptr<RS_LineData> lineData;
+	/** 1st chosen entity */
     RS_Entity* circle1;
     /** 2nd chosen entity */
     RS_Entity* circle2;
-    /** Data of new tangent */
-    RS_LineData data;
-    QVector<RS2::EntityType> circleType;
+	const std::vector<RS2::EntityType> circleType={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse};
     bool valid;
 };
 

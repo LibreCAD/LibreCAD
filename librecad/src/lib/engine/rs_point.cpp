@@ -40,20 +40,20 @@ RS_Point::RS_Point(RS_EntityContainer* parent,
     calculateBorders ();
 }
 
-
+RS_Entity* RS_Point::clone() const {
+	RS_Point* p = new RS_Point(*this);
+	p->initId();
+	return p;
+}
 
 void RS_Point::calculateBorders () {
     minV = maxV = data.pos;
 }
 
-
-
-RS_VectorSolutions RS_Point::getRefPoints() {
-        RS_VectorSolutions ret(data.pos);
-        return ret;
+RS_VectorSolutions RS_Point::getRefPoints() const
+{
+	return RS_VectorSolutions{data.pos};
 }
-
-
 
 RS_Vector RS_Point::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
 
@@ -79,7 +79,7 @@ RS_Vector RS_Point::getNearestPointOnEntity(const RS_Vector& coord,
 
 
 
-RS_Vector RS_Point::getNearestCenter(const RS_Vector& coord, double* dist) {
+RS_Vector RS_Point::getNearestCenter(const RS_Vector& coord, double* dist) const{
 
     if (dist!=NULL) {
         *dist = data.pos.distanceTo(coord);
@@ -108,7 +108,7 @@ RS_Vector RS_Point::getNearestMiddle(const RS_Vector& coord,
 
 RS_Vector RS_Point::getNearestDist(double /*distance*/,
                                    const RS_Vector& /*coord*/,
-                                   double* dist) {
+								   double* dist) const{
     if (dist!=NULL) {
         *dist = RS_MAXDOUBLE;
     }

@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -47,9 +48,6 @@
 #include <QtSvg>
 #endif
 
-#include <fstream>
-
-
 #if QT_VERSION >= 0x050000
 # include <QtPrintSupport/QPrinter>
 # include <QtPrintSupport/QPrintDialog>
@@ -66,13 +64,6 @@
 #include <QPluginLoader>
 
 #include "rs_actionprintpreview.h"
-#include "rs_dimaligned.h"
-#include "rs_dimlinear.h"
-#include "rs_hatch.h"
-#include "rs_image.h"
-#include "rs_insert.h"
-#include "rs_mtext.h"
-#include "rs_text.h"
 #include "rs_settings.h"
 #include "rs_staticgraphicview.h"
 #include "rs_system.h"
@@ -94,25 +85,26 @@
 #include "qg_selectionwidget.h"
 #include "qg_activelayername.h"
 #include "qg_mousewidget.h"
+#include "qc_graphicview.h"
+#include "qg_pentoolbar.h"
+#include "qg_recentfiles.h"
 
 #include "rs_dialogfactory.h"
 #include "qc_dialogfactory.h"
 #include "main.h"
+#include "lc_simpletests.h"
 #include "doc_plugin_interface.h"
 #include "qc_plugininterface.h"
 #include "rs_commands.h"
 
 
-QC_ApplicationWindow* QC_ApplicationWindow::appWindow = NULL;
+QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
 
 #ifndef QC_APP_ICON
 # define QC_APP_ICON ":/main/librecad.png"
 #endif
 #ifndef QC_ABOUT_ICON
 # define QC_ABOUT_ICON ":/main/intro_librecad.png"
-#endif
-#ifndef QC_APP_ICON16
-# define QC_APP_ICON16 ":/main/librecad16.png"
 #endif
 
 #include <QSplashScreen>
@@ -243,9 +235,17 @@ QMenu *QC_ApplicationWindow::findMenu(const QString &searchMenu, const QObjectLi
                 return foundMenu;
             }
         }
-        i++;
+        ++i;
     }
     return 0;
+}
+
+const QMainWindow* QC_ApplicationWindow::getMainWindow() const{
+	return this;
+}
+
+QMainWindow* QC_ApplicationWindow::getMainWindow() {
+	return this;
 }
 
 /**
@@ -255,18 +255,26 @@ void QC_ApplicationWindow::loadPlugins() {
 
     loadedPlugins.clear();
     QStringList lst = RS_SYSTEM->getDirectoryList("plugins");
+    // Keep track of plugin filenames loaded to skip duplicate plugins.
+    QStringList loadedPluginFileNames;
 
     for (int i = 0; i < lst.size(); ++i) {
         QDir pluginsDir(lst.at(i));
-        foreach (QString fileName, pluginsDir.entryList(QDir::Files)) {
+		for(const QString& fileName: pluginsDir.entryList(QDir::Files)) {
+            // Skip loading a plugin if a plugin with the same
+            // filename has already been loaded.
+            if (loadedPluginFileNames.contains(fileName)) {
+                continue;
+            }
             QPluginLoader pluginLoader(pluginsDir.absoluteFilePath(fileName));
             QObject *plugin = pluginLoader.instance();
             if (plugin) {
                 QC_PluginInterface *pluginInterface = qobject_cast<QC_PluginInterface *>(plugin);
                 if (pluginInterface) {
                     loadedPlugins.append(pluginInterface);
+                    loadedPluginFileNames.append(fileName);
                     PluginCapabilities pluginCapabilities=pluginInterface->getCapabilities();
-                    foreach (PluginMenuLocation loc,  pluginCapabilities.menuEntryPoints) {
+					for(const PluginMenuLocation& loc: pluginCapabilities.menuEntryPoints) {
                         QAction *actpl = new QAction(loc.menuEntryActionName, plugin);
                         actpl->setData(loc.menuEntryActionName);
                         connect(actpl, SIGNAL(triggered()), this, SLOT(execPlug()));
@@ -355,14 +363,14 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
         "deleting assistant..");
 #if QT_VERSION < 0x040400
-    if (assistant != NULL) {
+	if (assistant) {
         delete assistant;
     }
 #else
-    if (helpEngine!=NULL) {
+	if (helpEngine) {
         delete helpEngine;
     }
-    if (helpWindow!=NULL) {
+	if (helpWindow) {
         delete helpWindow;
     }
 #endif // QT_VERSION 0x040400
@@ -393,7 +401,7 @@ void QC_ApplicationWindow::slotRunScript() {
     RS_DEBUG->print("QC_ApplicationWindow::slotRunScript");
 
     const QObject* s = sender();
-    if (s!=NULL) {
+	if (s) {
         QString script = ((QAction*)s)->text();
         RS_DEBUG->print("QC_ApplicationWindow::slotRunScript: %s",
                         script.toLatin1().data());
@@ -445,7 +453,7 @@ void QC_ApplicationWindow::slotRunScript(const QString& name) {
  */
 void QC_ApplicationWindow::slotInsertBlock() {
     const QObject* s = sender();
-    if (s!=NULL) {
+	if (s) {
         QString block = ((QAction*)s)->text();
         RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: %s",
                         block.toLatin1().data());
@@ -466,7 +474,7 @@ void QC_ApplicationWindow::slotInsertBlock(const QString& name) {
 
         RS_GraphicView* graphicView = getGraphicView();
         RS_Document* document = getDocument();
-        if (graphicView!=NULL && document!=NULL) {
+		if (graphicView && document) {
                 RS_ActionLibraryInsert* action =
                         new RS_ActionLibraryInsert(*document, *graphicView);
                 action->setFile(name);
@@ -552,7 +560,7 @@ void QC_ApplicationWindow::closeEvent(QCloseEvent* ce) {
  * Handles right-clicks for moving back to the last cad tool bar.
  */
 void QC_ApplicationWindow::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton && cadToolBar!=NULL) {
+	if (e->button()==Qt::RightButton && cadToolBar) {
         cadToolBar->showToolBarMain();
     }
     e->accept();
@@ -567,7 +575,7 @@ void QC_ApplicationWindow::initMDI() {
     RS_DEBUG->print("QC_ApplicationWindow::initMDI() begin");
 
     QFrame *vb = new QFrame(this);
-    vb->setSizePolicy(QSizePolicy::Maximum,QSizePolicy::Maximum);
+	vb->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     QVBoxLayout *layout = new QVBoxLayout;
     vb->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     layout->setContentsMargins ( 0, 0, 0, 0 );
@@ -579,7 +587,7 @@ void QC_ApplicationWindow::initMDI() {
     mdiAreaCAD->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     mdiAreaCAD->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     mdiAreaCAD->setFocusPolicy(Qt::ClickFocus);
-    mdiAreaCAD->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+	mdiAreaCAD->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
 #if QT_VERSION >= 0x040800
     mdiAreaCAD->setTabsClosable(true);
 #endif
@@ -593,7 +601,7 @@ void QC_ApplicationWindow::initMDI() {
     // Since this nice feature causes a bug of lost key events when the command widget is on
     // a screen different from the main window, disabled for the time being
     //send key events for mdiAreaCAD to command widget by default
-//    mdiAreaCAD->installEventFilter(commandWidget);
+	mdiAreaCAD->installEventFilter(commandWidget);
 
     RS_DEBUG->print("QC_ApplicationWindow::initMDI() end");
 
@@ -602,15 +610,24 @@ void QC_ApplicationWindow::initMDI() {
  * @return Pointer to the currently active MDI Window or NULL if no
  * MDI Window is active.
  */
-QC_MDIWindow* QC_ApplicationWindow::getMDIWindow() {
-    if (mdiAreaCAD!=NULL) {
-        QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
-        if(w!=NULL) {
+QC_MDIWindow const* QC_ApplicationWindow::getMDIWindow() const{
+	if (mdiAreaCAD) {
+		QMdiSubWindow const* w=mdiAreaCAD->currentSubWindow();
+		if(w) {
+			return qobject_cast<QC_MDIWindow*>(w->widget());
+		}
+	}
+	return nullptr;
+}
 
-            return qobject_cast<QC_MDIWindow*>(w->widget());
-        }
-    }
-        return NULL;
+QC_MDIWindow* QC_ApplicationWindow::getMDIWindow(){
+	if (mdiAreaCAD) {
+		QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
+		if(w) {
+			return qobject_cast<QC_MDIWindow*>(w->widget());
+		}
+	}
+	return nullptr;
 }
 
 /*	*
@@ -626,7 +643,7 @@ void QC_ApplicationWindow::initActions(void)
 {
     RS_DEBUG->print("QC_ApplicationWindow::initActions()");
 
-    QG_ActionFactory actionFactory(actionHandler, this);
+	QG_ActionFactory actionFactory(actionHandler, this, cadToolBar);
     QAction* action;
     QMenu* menu;
     QMenu* subMenu;
@@ -637,14 +654,13 @@ void QC_ApplicationWindow::initActions(void)
     menu->setObjectName("File");
     fileToolBar->setWindowTitle(tr("File"));
 
-    actionFactory.addGUI(menu, fileToolBar, this, {RS2::ActionFileNew
+	actionFactory.addGUI(menu, fileToolBar, this, {RS2::ActionFileNew
                                                    ,RS2::ActionFileNewTemplate
                                                    ,RS2::ActionFileOpen
                                                    ,RS2::ActionFileSave
-                                                   ,RS2::ActionFileSaveAs
-                                                   ,RS2::ActionFileExport});
+													,RS2::ActionFileSaveAs});
 
-    subMenu = menu->addMenu(tr("Import"));
+    subMenu = menu->addMenu( QIcon(":/actions/fileimport.png"), tr("Import"));
     subMenu->setObjectName("Import");
 
     //insert images
@@ -653,16 +669,21 @@ void QC_ApplicationWindow::initActions(void)
 
     // Import Block:
     actionFactory.addGUI(subMenu, this, RS2::ActionBlocksImport);
+	subMenu = menu->addMenu( QIcon(":/actions/fileimport.png"), tr("Export"));
+	subMenu->setObjectName("Export");
+	actionFactory.addGUI(subMenu, actionHandler, RS2::ActionFileExportMakerCam);
+	actionFactory.addGUI(subMenu, this, {RS2::ActionFilePrintPDF
+										, RS2::ActionFileExport});
 
     menu->addSeparator();
-    actionFactory.addGUI(menu, this, {RS2::ActionFileClose
-                                      ,RS2::ActionFilePrint
-                                      ,RS2::ActionFilePrintPDF});
-    action= actionFactory.addGUI(menu, fileToolBar, this, RS2::ActionFilePrintPreview);
-    connect(this, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
+
+	action= actionFactory.addGUI(menu, fileToolBar, this, RS2::ActionFilePrintPreview);
+	action= actionFactory.addGUI(menu, fileToolBar, this, RS2::ActionFilePrint);
+	connect(this, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
 
     menu->addSeparator();
-    actionFactory.addGUI(menu, this, RS2::ActionFileQuit);
+	actionFactory.addGUI(menu, this, RS2::ActionFileClose);
+	actionFactory.addGUI(menu, this, RS2::ActionFileQuit);
     menu->addSeparator();
     addToolBar(Qt::TopToolBarArea, fileToolBar); //tr("File");
 
@@ -800,7 +821,9 @@ void QC_ApplicationWindow::initActions(void)
                          ,RS2::ActionDeselectIntersected
                          ,RS2::ActionSelectLayer
                          ,RS2::ActionSelectInvert
-                         });
+						 },
+						 RS2::ToolBarSelect
+						 );
 
     // Drawing actions:
     //
@@ -810,7 +833,7 @@ void QC_ApplicationWindow::initActions(void)
     // Points:
 //    subMenu= menu->addMenu(tr("&Point"));
 //    subMenu->setObjectName("Point");
-    actionFactory.addGUI(menu, actionHandler, RS2::ActionDrawPoint);
+	actionFactory.addGUI(menu, actionHandler, RS2::ActionDrawPoint, RS2::ToolBarMain);
 
     // Lines:
     subMenu= menu->addMenu(tr("&Line"));
@@ -830,8 +853,9 @@ void QC_ApplicationWindow::initActions(void)
                                                   ,RS2::ActionDrawLineRelAngle
                                                   ,RS2::ActionDrawLinePolygonCenCor
                                                   ,RS2::ActionDrawLinePolygonCorCor
-                                                  ,RS2::ActionDrawLineFree
-                                                  ,RS2::ActionDrawPolyline});
+												  ,RS2::ActionDrawLineFree},
+						 RS2::ToolBarLines
+						 );
 
     // Arcs:
     subMenu= menu->addMenu(tr("&Arc"));
@@ -839,7 +863,9 @@ void QC_ApplicationWindow::initActions(void)
     actionFactory.addGUI(subMenu, actionHandler, {RS2::ActionDrawArc
                                                   ,RS2::ActionDrawArc3P
                                                   ,RS2::ActionDrawArcParallel
-                                                  ,RS2::ActionDrawArcTangential});
+												  ,RS2::ActionDrawArcTangential},
+						 RS2::ToolBarArcs
+						 );
 
     // Circles:
     subMenu= menu->addMenu(tr("&Circle"));
@@ -854,7 +880,9 @@ void QC_ApplicationWindow::initActions(void)
                                                   ,RS2::ActionDrawCircleTan1_2P
                                                   ,RS2::ActionDrawCircleTan2
                                                   ,RS2::ActionDrawCircleTan2_1P
-                                                  ,RS2::ActionDrawCircleTan3});
+												  ,RS2::ActionDrawCircleTan3},
+						 RS2::ToolBarCircles
+						 );
 
     // Ellipses:
     subMenu= menu->addMenu(tr("&Ellipse"));
@@ -864,13 +892,17 @@ void QC_ApplicationWindow::initActions(void)
                                                   ,RS2::ActionDrawEllipseFociPoint
                                                   ,RS2::ActionDrawEllipse4Points
                                                   ,RS2::ActionDrawEllipseCenter3Points
-                                                  ,RS2::ActionDrawEllipseInscribe});
+												  ,RS2::ActionDrawEllipseInscribe},
+						 RS2::ToolBarEllipses
+						 );
 
     // Splines:
     subMenu= menu->addMenu(tr("&Spline"));
     subMenu->setObjectName("Spline");
     actionFactory.addGUI(subMenu, actionHandler, {RS2::ActionDrawSpline
-                                                  , RS2::ActionDrawSplinePoints});
+												  , RS2::ActionDrawSplinePoints},
+						 RS2::ToolBarSplines
+						 );
 
         // Polylines:
     subMenu= menu->addMenu(tr("&Polyline"));
@@ -882,18 +914,18 @@ void QC_ApplicationWindow::initActions(void)
                                                   ,RS2::ActionPolylineDelBetween
                                                   ,RS2::ActionPolylineTrim
                                                   ,RS2::ActionPolylineEquidistant
-                                                  ,RS2::ActionPolylineSegment});
-
+												  ,RS2::ActionPolylineSegment},
+						 RS2::ToolBarPolylines
+						 );
     // Text:
     subMenu= menu->addMenu(tr("&Text"));
     subMenu->setObjectName("Text");
-    actionFactory.addGUI(subMenu, actionHandler, {RS2::ActionDrawMText
-                                                  , RS2::ActionDrawText});
+	actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawMText, RS2::ToolBarMain);
+	actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawText);
 
     // Hatch:
-    actionFactory.addGUI(menu, actionHandler, {RS2::ActionDrawHatch
-                                               // Image:
-                                               , RS2::ActionDrawImage});
+	actionFactory.addGUI(menu, actionHandler, {RS2::ActionDrawHatch,
+											   RS2::ActionDrawImage}, RS2::ToolBarMain);
     // Dimensioning actions:
     //
 #ifdef __APPLE1__
@@ -910,7 +942,9 @@ void QC_ApplicationWindow::initActions(void)
                                                ,RS2::ActionDimRadial
                                                ,RS2::ActionDimDiametric
                                                ,RS2::ActionDimAngular
-                                               ,RS2::ActionDimLeader});
+											   ,RS2::ActionDimLeader},
+						 RS2::ToolBarDim
+						 );
 
     // Modifying actions:
     //
@@ -936,14 +970,16 @@ void QC_ApplicationWindow::initActions(void)
                                                ,RS2::ActionModifyDelete
                                                ,RS2::ActionModifyDeleteQuick
                                                ,RS2::ActionModifyExplodeText
-                                               ,RS2::ActionBlocksExplode});
+											   ,RS2::ActionBlocksExplode},
+						 RS2::ToolBarModify
+						 );
 
     // Snapping actions:
     //
     menu = menuBar()->addMenu(tr("&Snap"));
     menu->setObjectName("Snap");
-    if(snapToolBar!=NULL) {
-        foreach(QAction* a, snapToolBar->getActions()){
+	if(snapToolBar) {
+        for(QAction* a : snapToolBar->getActions()){
             menu->addAction(a);
 //            connect(this, SIGNAL(windowsChanged(bool)), a, SLOT(setEnabled(bool)));
         }
@@ -956,7 +992,9 @@ void QC_ApplicationWindow::initActions(void)
                                                ,RS2::ActionInfoDist2
                                                ,RS2::ActionInfoAngle
                                                ,RS2::ActionInfoTotalLength
-                                               ,RS2::ActionInfoArea});
+											   ,RS2::ActionInfoArea},
+						 RS2::ToolBarInfo
+						 );
 
     //action = actionFactory.createAction(RS2::ActionInfoInside,
     //                                    actionHandler);
@@ -971,23 +1009,25 @@ void QC_ApplicationWindow::initActions(void)
                                                ,RS2::ActionLayersRemove
                                                ,RS2::ActionLayersEdit
                                                ,RS2::ActionLayersToggleLock
-                                               ,RS2::ActionLayersToggleView});
+                                               ,RS2::ActionLayersToggleView
+                                               ,RS2::ActionLayersTogglePrint
+                                               ,RS2::ActionLayersToggleConstruction});
 
     // Block actions:
     //
     menu = menuBar()->addMenu(tr("&Block"));
     menu->setObjectName("Block");
-    actionFactory.addGUI(menu, actionHandler, {RS2::ActionBlocksDefreezeAll
-                                               ,RS2::ActionBlocksFreezeAll
-                                               ,RS2::ActionBlocksToggleView
-                                               ,RS2::ActionBlocksAdd
-                                               ,RS2::ActionBlocksRemove
-                                               ,RS2::ActionBlocksAttributes
-                                               ,RS2::ActionBlocksInsert
-                                               ,RS2::ActionBlocksEdit
-                                               ,RS2::ActionBlocksSave
-                                               ,RS2::ActionBlocksCreate
-                                               ,RS2::ActionBlocksExplode});
+	actionFactory.addGUI(menu, actionHandler, {RS2::ActionBlocksDefreezeAll
+											   ,RS2::ActionBlocksFreezeAll
+											   ,RS2::ActionBlocksToggleView
+											   ,RS2::ActionBlocksAdd
+											   ,RS2::ActionBlocksRemove
+											   ,RS2::ActionBlocksAttributes
+											   ,RS2::ActionBlocksInsert
+											   ,RS2::ActionBlocksEdit
+											   ,RS2::ActionBlocksSave});
+	actionFactory.addGUI(menu, actionHandler,RS2::ActionBlocksCreate, RS2::ToolBarMain);
+	actionFactory.addGUI(menu, actionHandler,RS2::ActionBlocksExplode);
 
     QMainWindow::addToolBarBreak(Qt::TopToolBarArea);
     addToolBar(Qt::TopToolBarArea, penToolBar);
@@ -1013,108 +1053,24 @@ void QC_ApplicationWindow::initActions(void)
 
     // Help menu:
     //
-    /*RVT_PORThelpAboutApp = new QAction(tr("About"),
-                                                           QC_APP_ICON16), tr("&About %1").arg(QC_APPNAME), 0, this); */
-    helpAboutApp = new QAction(QIcon(QC_APP_ICON16), tr("About"), this);
+    helpAboutApp = new QAction( QIcon(QC_APP_ICON), tr("About"), this);
 
     //helpAboutApp->zetStatusTip(tr("About the application"));
     //helpAboutApp->setWhatsThis(tr("About\n\nAbout the application"));
     connect(helpAboutApp, SIGNAL(triggered()),
             this, SLOT(slotHelpAbout()));
 
-    helpManual = new QAction(QIcon(":/main/contents.png"), tr("&Manual"), this);
-    //helpManual->zetStatusTip(tr("Launch the online manual"));
-    connect(helpManual, SIGNAL(triggered()),
-            this, SLOT(slotHelpManual()));
-
-/* RVT_PORT    testDumpEntities = new QAction("Dump Entities",
-                                   "Dump &Entities", 0, this); */
-    testDumpEntities = new QAction("Dump Entities", this);
-    connect(testDumpEntities, SIGNAL(triggered()),
-            this, SLOT(slotTestDumpEntities()));
-
-/* RVT_PORT	testDumpUndo = new QAction("Dump Undo Info",
-                                                           "Undo Info", 0, this); */
-        testDumpUndo = new QAction("Dump Undo Info", this);
-    connect(testDumpUndo, SIGNAL(triggered()),
-            this, SLOT(slotTestDumpUndo()));
-
-/* RVT_PORT    testUpdateInserts = new QAction("Update Inserts",
-                                    "&Update Inserts", 0, this); */
-    testUpdateInserts = new QAction("Update Inserts", this);
-    connect(testUpdateInserts, SIGNAL(triggered()),
-            this, SLOT(slotTestUpdateInserts()));
-
-/* RVT_PORT    testDrawFreehand = new QAction("Draw Freehand",
-         "Draw Freehand", 0, this); */
-         testDrawFreehand = new QAction("Draw Freehand", this);
-    connect(testDrawFreehand, SIGNAL(triggered()),
-            this, SLOT(slotTestDrawFreehand()));
-
-/* RVT_PORT    testInsertBlock = new QAction("Insert Block",
-                                  "Insert Block", 0, this); */
-    testInsertBlock = new QAction("Insert Block", this);
-
-    connect(testInsertBlock, SIGNAL(triggered()),
-            this, SLOT(slotTestInsertBlock()));
-
-/* RVT_PORT    testInsertText = new QAction("Insert Text",
-                                 "Insert Text", 0, this); */
-    testInsertMText = new QAction("Insert MText", this);
-    connect(testInsertMText, SIGNAL(triggered()),
-            this, SLOT(slotTestInsertMText()));
-    testInsertText = new QAction("Insert Text", this);
-    connect(testInsertText, SIGNAL(triggered()),
-            this, SLOT(slotTestInsertText()));
-
-/* RVT_PORT    testInsertImage = new QAction("Insert Image",
-                                  "Insert Image", 0, this); */
-        // "Insert Image",
-    testInsertImage = new QAction(tr("Insert Image"), this);
-    connect(testInsertImage, SIGNAL(triggered()),
-            this, SLOT(slotTestInsertImage()));
-
-/* RVT_PORT    testUnicode = new QAction("Unicode",
-                              "Unicode", 0, this); */
-    testUnicode = new QAction("Unicode", this);
-    connect(testUnicode, SIGNAL(triggered()),
-            this, SLOT(slotTestUnicode()));
-
-/* RVT_PORT    testInsertEllipse = new QAction("Insert Ellipse",
-                                    "Insert Ellipse", 0, this); */
-    testInsertEllipse = new QAction("Insert Ellipse", this);
-    connect(testInsertEllipse, SIGNAL(triggered()),
-            this, SLOT(slotTestInsertEllipse()));
-
-/*  RVT_PORT  testMath01 = new QAction("Math01",
-                             "Math01", 0, this); */
-    testMath01 = new QAction("Math01", this);
-    connect(testMath01, SIGNAL(triggered()),
-            this, SLOT(slotTestMath01()));
-
-/* RVT_PORT    testResize640 = new QAction("Resize to 640x480",
-                                "Resize 1", 0, this); */
-    testResize640 = new QAction("Resize to 640x480", this);
-    connect(testResize640, SIGNAL(triggered()),
-            this, SLOT(slotTestResize640()));
-
-/* RVT_PORT    testResize800 = new QAction("Resize to 800x600",
-                                "Resize 2", 0, this); */
-    testResize800 = new QAction("Resize to 800x600", this);
-    connect(testResize800, SIGNAL(triggered()),
-            this, SLOT(slotTestResize800()));
-
-/* RVT_PORT    testResize1024 = new QAction("Resize to 1024x768",
-                                 "Resize 3", 0, this); */
-    testResize1024 = new QAction("Resize to 1024x768", this);
-    connect(testResize1024, SIGNAL(triggered()),
-            this, SLOT(slotTestResize1024()));
+    helpManual = new QAction( QIcon(":/main/manual.png"), tr("&Manual"), this);
+    connect( helpManual, SIGNAL(triggered()), this, SLOT(slotHelpManual()));
+#ifdef LC_DEBUGGING
+	m_pSimpleTest=new LC_SimpleTests(this);
+#endif
 
 }
 
 void QC_ApplicationWindow::setPreviousZoomEnable(bool enable){
     previousZoomEnable=enable;
-    if(previousZoom != NULL){
+	if(previousZoom){
         previousZoom->setEnabled(enable);
     }
 }
@@ -1122,21 +1078,21 @@ void QC_ApplicationWindow::setPreviousZoomEnable(bool enable){
 
 void QC_ApplicationWindow::setUndoEnable(bool enable){
     undoEnable=enable;
-    if(undoButton != NULL){
+	if(undoButton){
         undoButton->setEnabled(enable);
     }
 }
 
 void QC_ApplicationWindow::setRedoEnable(bool enable){
     redoEnable=enable;
-    if(redoButton != NULL){
+	if(redoButton){
         redoButton->setEnabled(enable);
     }
 }
 
 
 void QC_ApplicationWindow::slotEnableActions(bool enable) {
-    if(previousZoom != NULL){
+	if(previousZoom){
         previousZoom->setEnabled(enable&& previousZoomEnable);
         undoButton->setEnabled(enable&& undoEnable);
         redoButton->setEnabled(enable&& redoEnable);
@@ -1172,31 +1128,10 @@ void QC_ApplicationWindow::initMenuBar() {
     helpMenu->addSeparator();
     helpMenu->addAction(helpAboutApp);
 
-    // menuBar entry test menu
-    if (QC_DEBUGGING) {
-        testMenu = menuBar()->addMenu(tr("De&bugging"));
-        testMenu->setObjectName("Debugging");
-        testMenu->addAction(testDumpEntities);
-        testMenu->addAction(testDumpUndo);
-        testMenu->addAction(testUpdateInserts);
-        testMenu->addAction(testDrawFreehand);
-        testMenu->addAction(testInsertBlock);
-        testMenu->addAction(testInsertText);
-        testMenu->addAction(testInsertImage);
-        testMenu->addAction(testInsertEllipse);
-        testMenu->addAction(testUnicode);
-        testMenu->addAction(testMath01);
-        testMenu->addAction(testResize640);
-        testMenu->addAction(testResize800);
-        testMenu->addAction(testResize1024);
-    }
-
     // menuBar configuration
-    recentFiles = new QG_RecentFiles(9);
+	recentFiles.reset(new QG_RecentFiles(9));
     openedFiles.clear();
 }
-
-
 
 /**
  * Initializes the tool bars (file tool bar and pen tool bar).
@@ -1251,7 +1186,7 @@ void QC_ApplicationWindow::initToolBar() {
     QToolBar* t = new QToolBar(tr("CAD Tools"), this);
 
     t->setMinimumSize(66,400);
-        QSizePolicy policy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
+		QSizePolicy policy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         t->setSizePolicy(policy);
         t->setObjectName ( "CADTB" );
     t->setFixedWidth(66);
@@ -1261,7 +1196,7 @@ void QC_ApplicationWindow::initToolBar() {
         addToolBar(Qt::LeftToolBarArea, t);
 
     cadToolBar = new QG_CadToolBar(t, "CAD Tools");
-    cadToolBar->createSubToolBars(actionHandler);
+    cadToolBar->setActionHandler(actionHandler);
 
     connect(cadToolBar, SIGNAL(signalBack()),
             this, SLOT(slotBack()));
@@ -1304,49 +1239,26 @@ void QC_ApplicationWindow::slotUpdateActiveLayer()
  * config file (unix, mac) or registry (windows).
  */
 void QC_ApplicationWindow::initSettings() {
-    RS_DEBUG->print("QC_ApplicationWindow::initSettings()");
+	RS_DEBUG->print("QC_ApplicationWindow::initSettings()");
+	recentFiles->initSettings();
 
-    //RS_Settings settings(QC_REGISTRY, QC_APPKEY);
-
-    RS_SETTINGS->beginGroup("/RecentFiles");
-    for (int i=0; i<recentFiles->getNumber(); ++i) {
-        QString filename = RS_SETTINGS->readEntry(QString("/File") +
-                           QString::number(i+1));
-        if (!filename.isEmpty()) {
-            recentFiles->add(filename);
-        }
-    }
-    RS_SETTINGS->endGroup();
-//    QList <QAction*> recentFilesAction;
-
-    for (int i = 0; i < recentFiles->getNumber(); ++i) {
-        recentFilesAction.insert(i, new QAction(this));
-        recentFilesAction[i]->setVisible(false);
-        connect(recentFilesAction[i], SIGNAL(triggered()),
-                this, SLOT(slotFileOpenRecent()));
-        fileMenu->addAction(recentFilesAction[i]);
-    }
-    if (recentFiles->count()>0) {
-        updateRecentFilesMenu();
-    }
-
-    RS_SETTINGS->beginGroup("/Geometry");
-    int windowWidth = RS_SETTINGS->readNumEntry("/WindowWidth", 950);
-    int windowHeight = RS_SETTINGS->readNumEntry("/WindowHeight", 700);
-    int windowX = RS_SETTINGS->readNumEntry("/WindowX", 0);
-    int windowY = RS_SETTINGS->readNumEntry("/WindowY", 30);
-    RS_SETTINGS->endGroup();
+	RS_SETTINGS->beginGroup("/Geometry");
+	int windowWidth = RS_SETTINGS->readNumEntry("/WindowWidth", 950);
+	int windowHeight = RS_SETTINGS->readNumEntry("/WindowHeight", 700);
+	int windowX = RS_SETTINGS->readNumEntry("/WindowX", 0);
+	int windowY = RS_SETTINGS->readNumEntry("/WindowY", 30);
+	RS_SETTINGS->endGroup();
 
 #ifdef __APPLE1__
-    if (windowY<30) {
-        windowY=30;
-    }
+	if (windowY<30) {
+		windowY=30;
+	}
 #endif
 
-    resize(windowWidth, windowHeight);
-    move(windowX, windowY);
+	resize(windowWidth, windowHeight);
+	move(windowX, windowY);
 
-        restoreDocks();
+	restoreDocks();
 }
 
 
@@ -1365,13 +1277,6 @@ void QC_ApplicationWindow::restoreDocks() {
  */
 void QC_ApplicationWindow::storeSettings() {
     RS_DEBUG->print("QC_ApplicationWindow::storeSettings()");
-
-    RS_SETTINGS->beginGroup("/RecentFiles");
-    for (int i=0; i<recentFiles->count(); ++i) {
-        RS_SETTINGS->writeEntry(QString("/File") +
-                                QString::number(i+1), recentFiles->get(i));
-    }
-    RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Geometry");
     RS_SETTINGS->writeEntry("/WindowWidth", width());
@@ -1394,16 +1299,11 @@ void QC_ApplicationWindow::initView() {
     RS_DEBUG->print("QC_ApplicationWindow::initView()");
 
     RS_DEBUG->print("init view..");
-    QDockWidget* dw;
-    layerWidget = NULL;
-    blockWidget = NULL;
-    libraryWidget = NULL;
-    commandWidget = NULL;
-
-
+	QDockWidget* dw;
 
     RS_DEBUG->print("  layer widget..");
     dw = new QDockWidget( "Layer", this);
+    dw->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         dw->setObjectName ( "LayerDW" );
     layerWidget = new QG_LayerWidget(actionHandler, dw, "Layer");
     layerWidget->setFocusPolicy(Qt::NoFocus);
@@ -1422,11 +1322,11 @@ void QC_ApplicationWindow::initView() {
     //dw->resize(120,mdiAreaCAD->height()/2);
     addDockWidget (Qt::RightDockWidgetArea, dw );
 
-
     layerDockWindow = dw;
 
     RS_DEBUG->print("  block widget..");
     dw = new QDockWidget("Block", this);
+	dw->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         dw->setObjectName ( "BlockDW" );
     // dw->setResizeEnabled(true);
     blockWidget = new QG_BlockWidget(actionHandler, dw, "Block");
@@ -1446,7 +1346,9 @@ void QC_ApplicationWindow::initView() {
 
     RS_DEBUG->print("  library widget..");
     dw = new QDockWidget("Library", this);
-        dw->setObjectName ( "LibraryDW" );
+	dw->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+		dw->setObjectName ( "BlockDW" );
+		dw->setObjectName ( "LibraryDW" );
     libraryWidget = new QG_LibraryWidget(dw, "Library");
     libraryWidget->setActionHandler(actionHandler);
     libraryWidget->setFocusPolicy(Qt::NoFocus);
@@ -1466,10 +1368,11 @@ void QC_ApplicationWindow::initView() {
     libraryDockWindow = dw;
     libraryDockWindow->hide();
 
-
     RS_DEBUG->print("  command widget..");
     dw = new QDockWidget(tr("Command line"), this);
-    dw->setFeatures(QDockWidget::DockWidgetVerticalTitleBar|QDockWidget::AllDockWidgetFeatures);
+	dw->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+		dw->setObjectName ( "BlockDW" );
+	dw->setFeatures(QDockWidget::DockWidgetVerticalTitleBar|QDockWidget::AllDockWidgetFeatures);
     dw->setObjectName ( "CommandDW" );
     // dw->setResizeEnabled(true);
     commandWidget = new QG_CommandWidget(dw, "Command");
@@ -1495,84 +1398,15 @@ void QC_ApplicationWindow::initView() {
 }
 
 
-
-/**
- * Creates a new toolbar.
- * Implementation from QG_MainWindowInterface.
- * Can be called from scripts to add individual GUI elements.
- */
-/*QToolBar* QC_ApplicationWindow::createToolBar(const QString& name) {
-    QToolBar* tb = new QToolBar(name, this);
-        tb->setLabel(name);
-        return tb;
-}*/
-
-
-
-/**
- * Creates a new button in the given tool bar for running a script.
- */
-/*void QC_ApplicationWindow::addToolBarButton(QToolBar* tb) {
-        if (tb!=NULL) {
-        QAction* action = new QAction("Blah",
-                        QIcon(":/actions/zoomwindow.png"),
-            "&Blah", QKeySequence(), NULL);
-        //action->zetStatusTip("Blah blah");
-                action->addTo(tb);
-        }
-}*/
-
-
-
-/**
- * Updates the recent file list in the file menu.
- */
-void QC_ApplicationWindow::updateRecentFilesMenu() {
-    RS_DEBUG->print("QC_ApplicationWindow::updateRecentFilesMenu()");
-
-    RS_DEBUG->print("Updating recent file menu...");
-    int numRecentFiles = qMin(recentFiles->count(), recentFiles->getNumber());
-
-    for (int i = 0; i < numRecentFiles; ++i) {
-        //oldest on top
-//        QString text = tr("&%1 %2").arg(i + 1).arg(recentFiles->get(i));
-        //newest on top
-        QString text = tr("&%1 %2").arg(i + 1).arg(recentFiles->get(numRecentFiles-i-1));
-        recentFilesAction[i]->setText(text);
-        //newest on top
-        recentFilesAction[i]->setData(recentFiles->get(numRecentFiles-i-1));
-        recentFilesAction[i]->setVisible(true);
-    }
-    for (int j = numRecentFiles; j < recentFiles->getNumber(); ++j)
-        recentFilesAction[j]->setVisible(false);
-
-/*    for (int i=0; i<recentFiles->getNumber(); ++i) {
-        QString label = QString( "&%1 %2" ).
-                        arg(i+1).arg(recentFiles->get(i));
-
-        if (fileMenu->findItem(i)) {
-            RS_DEBUG->print("Changeing item %d", i);
-            fileMenu->changeItem(i, label);
-        } else if (i < int(recentFiles->count())) {
-            RS_DEBUG->print("Adding item %d", i);
-            fileMenu->insertItem(label,
-                                 this, SLOT(slotFileOpenRecent(int)),
-                                 0, i);
-        }
-    }*/
-}
-
-
-
 /**
  * Goes back to the previous menu or one step in the current action.
  */
 void QC_ApplicationWindow::slotBack() {
     RS_GraphicView* graphicView = getGraphicView();
-    if (graphicView!=NULL) {
+	if (graphicView) {
         graphicView->back();
     } else {
-        if (cadToolBar!=NULL) {
+		if (cadToolBar) {
             cadToolBar->showToolBar(RS2::ToolBarMain);
         }
     }
@@ -1581,7 +1415,7 @@ void QC_ApplicationWindow::slotBack() {
 void QC_ApplicationWindow::slotKillAllActions() {
     RS_GraphicView* gv = getGraphicView();
     QC_MDIWindow* m = getMDIWindow();
-    if (gv!=NULL && m!=NULL && m->getDocument()!=NULL) {
+	if (gv && m && m->getDocument()) {
         gv->killAllActions();
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
 
@@ -1603,12 +1437,11 @@ void QC_ApplicationWindow::slotKillAllActions() {
  */
 void QC_ApplicationWindow::slotEnter() {
     RS_DEBUG->print("QC_ApplicationWindow::slotEnter(): begin\n");
-//    if (commandWidget==NULL || !commandWidget->checkFocus()) {
-        if (cadToolBar!=NULL) {
+		if (cadToolBar) {
             cadToolBar->forceNext();
         } else {
             RS_GraphicView* graphicView = getGraphicView();
-            if (graphicView!=NULL) {
+			if (graphicView) {
                 graphicView->enter();
             }
         }
@@ -1616,15 +1449,14 @@ void QC_ApplicationWindow::slotEnter() {
     RS_DEBUG->print("QC_ApplicationWindow::slotEnter(): end\n");
 }
 
-
-
 /**
  * Sets the keyboard focus on the command line.
  */
 void QC_ApplicationWindow::slotFocusCommandLine() {
-    if (commandWidget->isVisible()) {
+//    if (commandWidget->isVisible()) {
+        commandWidget->show();
         commandWidget->setFocus();
-    }
+//    }
 }
 
 
@@ -1635,21 +1467,13 @@ void QC_ApplicationWindow::slotError(const QString& msg) {
         commandWidget->appendHistory(msg);
 }
 
-
-
 /**
  * Hands focus back to the application window. In the rare event
  * of a escape press from the layer widget (e.g after switching desktops
  * in XP).
  */
 void QC_ApplicationWindow::slotFocus() {
-    //QG_GraphicView* graphicView = getGraphicView();
-    /*if (graphicView!=NULL) {
-        graphicView->setFocus();
-}
-    else {*/
     setFocus();
-    //}
 }
 
 void QC_ApplicationWindow::slotWindowActivated(int index){
@@ -1675,7 +1499,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
         mdiAreaCAD->activateNextSubWindow();
         auto w0=mdiAreaCAD->currentSubWindow();
         w0->showNormal();
-        if(w0!=NULL) slotWindowActivated(w0);
+		if(w0) slotWindowActivated(w0);
         return;
     }
     if(w==activedMdiSubWindow) return;
@@ -1686,7 +1510,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 //    int activeIndex=windows.indexOf(w);
 //    std::cout<<"QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w): activated "<< activeIndex <<std::endl;
 
-    if (m!=NULL && m->getDocument()!=NULL) {
+	if (m && m->getDocument()) {
 
         RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated: "
                         "document: %d", m->getDocument()->getId());
@@ -1714,7 +1538,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 
         // set snapmode from snap toolbar
         //actionHandler->updateSnapMode();
-        if(snapToolBar != NULL ){
+		if(snapToolBar ){
             actionHandler->slotSetSnaps(snapToolBar->getSnaps());
         }else {
             RS_DEBUG->print(RS_Debug::D_ERROR,"snapToolBar is NULL\n");
@@ -1724,10 +1548,10 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
         slotPenChanged(penToolBar->getPen());
 
         // update toggle button status:
-        if (m->getGraphic()!=NULL) {
+		if (m->getGraphic()) {
             emit(gridChanged(m->getGraphic()->isGridOn()));
         }
-        if (m->getGraphicView()!=NULL) {
+		if (m->getGraphicView()) {
 //            std::cout<<"QC_ApplicationWindow::slotWindowActivated(): emit(printPreviewChanged("<<m->getGraphicView()->isPrintPreview()<<")"<<std::endl;
 
             emit(printPreviewChanged(m->getGraphicView()->isPrintPreview()));
@@ -1735,7 +1559,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
     }
 
     // Disable/Enable menu and toolbar items
-    emit windowsChanged(m!=NULL && m->getDocument()!=NULL);
+	emit windowsChanged(m && m->getDocument());
 //    emit windowsChanged(true);
     RS_DEBUG->print("RVT_PORT emit windowsChanged(true);");
 
@@ -1760,14 +1584,14 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
         //fixme, this should be auto, by
         //setAttribute(Qt::WA_DeleteOnClose);
 
-        if(windows.at(i) != NULL && windows.at(i)->widget() != NULL){
+		if(windows.at(i) && windows.at(i)->widget()){
             i++;
         }else{
             mdiAreaCAD->removeSubWindow(windows.at(i));
             windows = mdiAreaCAD->subWindowList();
             if(windows.size() > 0){
                 QMdiSubWindow* active= mdiAreaCAD->currentSubWindow();
-                if(active != NULL) {
+				if(active) {
                    mdiAreaCAD->setActiveSubWindow(active);
                    active->raise();
                    active->setFocus();
@@ -1795,7 +1619,7 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
     windowsMenu->addSeparator();
     QMdiSubWindow* active= mdiAreaCAD->activeSubWindow();
 //    int active=windows.indexOf(mdiAreaCAD->activeSubWindow());
-//    std::cout<<" QC_ApplicationWindow::slotWindowsMenuAboutToShow(): has active: "<< (mdiAreaCAD->activeSubWindow() != NULL )<<" index="<<active<<std::endl;
+//    std::cout<<" QC_ApplicationWindow::slotWindowsMenuAboutToShow(): has active: "<< (mdiAreaCAD->activeSubWindow() )<<" index="<<active<<std::endl;
 //    if(active<0) active=windows.size()-1;
     for (int i=0; i<windows.size(); ++i) {
         QAction *id = windowsMenu->addAction(windows.at(i)->windowTitle(),
@@ -1818,7 +1642,7 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
 
     int ii = qobject_cast<QAction*>(sender())->data().toInt();
     QMdiSubWindow* w = mdiAreaCAD->subWindowList().at(ii);
-    if (w!=NULL) {
+	if (w) {
         if(w==mdiAreaCAD->activeSubWindow()) {
             return;
         }
@@ -2048,7 +1872,7 @@ void QC_ApplicationWindow::slotPenChanged(RS_Pen pen) {
     RS_DEBUG->print("Setting active pen...");
 
     QC_MDIWindow* m = getMDIWindow();
-    if (m!=NULL) {
+	if (m) {
         m->slotPenChanged(pen);
     }
 
@@ -2106,7 +1930,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     if(blockWidget) {
         blockWidget->setBlockList(w->getDocument()->getBlockList());
     }
-    if (graphic!=NULL) {
+	if (graphic) {
         // Link the graphic's layer list to the pen tool bar
         graphic->addLayerListListener(penToolBar);
         // Link the layer list to the layer widget
@@ -2126,11 +1950,11 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     // Link the dialog factory to the option widget:
     //QG_DIALOGFACTORY->setOptionWidget(optionWidget);
     // Link the dialog factory to the cad tool bar:
-    if (cadToolBar!=NULL) {
+	if (cadToolBar) {
         //set SnapFree to avoid orphaned snapOptions, bug#3407522
             /* setting snap option toolbar pointers to non-static fixes
              * bug#3407522
-            if (snapToolBar != NULL && getGraphicView() != NULL && getDocument() != NULL ) {
+			if (snapToolBar && getGraphicView() && getDocument() ) {
                     //need to detect graphicView and Document for NULL
 //bug#3408689
                 RS_SnapMode s=snapToolBar->getSnaps();
@@ -2225,7 +2049,7 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow* w) 
         commandWidget->appendHistory(message);
         statusBar()->showMessage(message, 2000);
     }
-    if (w->getGraphic()!=NULL) {
+	if (w->getGraphic()) {
         emit(gridChanged(w->getGraphic()->isGridOn()));
     }
 
@@ -2278,7 +2102,7 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
     QMdiSubWindow* old=activedMdiSubWindow;
     QRect geo;
     bool maximized=false;
-    if(old !=NULL) {//save old geometry
+	if(old ) {//save old geometry
         geo=activedMdiSubWindow->geometry();
         maximized=activedMdiSubWindow->isMaximized();
     }
@@ -2298,7 +2122,7 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
         }
         QMdiSubWindow* active=mdiAreaCAD->currentSubWindow();
         activedMdiSubWindow=NULL; //to allow reactivate the previous active
-        if( active != NULL ){//restore old geometry
+		if( active){//restore old geometry
             mdiAreaCAD->setActiveSubWindow(active);
             active->raise();
             active->setFocus();
@@ -2332,34 +2156,14 @@ void QC_ApplicationWindow::slotFileOpen() {
 }
 
 
-
 /**
- * Called when a recently opened file is chosen from the list in the
- * file menu.
- */
-void QC_ApplicationWindow::slotFileOpenRecent() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileOpenRecent()");
-
-    QAction *action = qobject_cast<QAction *>(sender());
-    if (action) {
-
-    statusBar()->showMessage(tr("Opening recent file..."));
-    QString fileName = action->data().toString();
-
-    slotFileOpen(fileName, RS2::FormatUnknown);
-    }
-}
-
-
-/*	*
- *	Function name:
  *
- *	Description:	- Format a string that hold a file name path
+ *	\brief	- Format a string that hold a file name path
  *						  such a way that it can displayed on the
  *						  windows title bar.
  *
- *	Author(s):		Claude Sylvain
- *	Created:			30 July 2011
+ *	\author		Claude Sylvain
+ *	\date			30 July 2011
  *	Last modified:
  *
  *	Parameters:		const QString &qstring_in:
@@ -2415,7 +2219,7 @@ void QC_ApplicationWindow::
 
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
-    if (!fileName.isEmpty())
+    if ( QFileInfo(fileName).exists())
          {
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: creating new doc window");
         if (openedFiles.indexOf(fileName) >=0) {
@@ -2427,7 +2231,7 @@ void QC_ApplicationWindow::
         QMdiSubWindow* old=activedMdiSubWindow;
         QRect geo;
         bool maximized=false;
-        if(old !=NULL) {//save old geometry
+		if(old) {//save old geometry
             geo=activedMdiSubWindow->geometry();
             maximized=activedMdiSubWindow->isMaximized();
         }
@@ -2449,11 +2253,14 @@ void QC_ApplicationWindow::
         qApp->processEvents(QEventLoop::AllEvents, 1000);
 
         // open the file in the new view:
-        if (w->slotFileOpen(fileName, type)==false) {
+        bool success=false;
+        if(QFileInfo(fileName).exists())
+            success=w->slotFileOpen(fileName, type);
+        if (!success) {
                // error
                QApplication::restoreOverrideCursor();
                QString msg=tr("Cannot open the file\n%1\nPlease "
-                              "check the permissions.")
+                              "check its existence and permissions.")
                        .arg(fileName);
                commandWidget->appendHistory(msg);
                QMessageBox::information(this, QMessageBox::tr("Warning"),
@@ -2465,7 +2272,7 @@ void QC_ApplicationWindow::
                w->closeMDI(true,false); //force closing, without asking user for confirmation
                QMdiSubWindow* active=mdiAreaCAD->currentSubWindow();
                activedMdiSubWindow=NULL; //to allow reactivate the previous active
-               if( active != NULL ){//restore old geometry
+			   if( active){//restore old geometry
                    mdiAreaCAD->setActiveSubWindow(active);
                    active->raise();
                    active->setFocus();
@@ -2487,14 +2294,11 @@ void QC_ApplicationWindow::
         recentFiles->add(fileName);
         openedFiles.append(fileName);
         layerWidget->slotUpdateLayerList();
-        if (w->getGraphic()!=NULL) {
+		if (w->getGraphic()) {
             emit(gridChanged(w->getGraphic()->isGridOn()));
-        }
+		}
 
-        RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update recent file menu: 2");
-        updateRecentFilesMenu();
-
-        RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update recent file menu: OK");
+		recentFiles->updateRecentFilesMenu();
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption");
 
@@ -2522,6 +2326,7 @@ void QC_ApplicationWindow::
     }
          else
          {
+        QG_DIALOGFACTORY->commandMessage(tr("File '%1' does not exist. Opening aborted").arg(fileName));
         statusBar()->showMessage(tr("Opening aborted"), 2000);
     }
 
@@ -2540,7 +2345,7 @@ void QC_ApplicationWindow::slotFileSave() {
 
     QC_MDIWindow* w = getMDIWindow();
     QString name;
-    if (w!=NULL) {
+	if (w) {
         if (w->getDocument()->getFilename().isEmpty()) {
             slotFileSaveAs();
         } else {
@@ -2583,7 +2388,7 @@ void QC_ApplicationWindow::slotFileSaveAs() {
 
     QC_MDIWindow* w = getMDIWindow();
     QString name;
-    if (w!=NULL) {
+	if (w) {
         bool cancelled;
         if (w->slotFileSaveAs(cancelled)) {
             if (!cancelled) {
@@ -2607,8 +2412,8 @@ void QC_ApplicationWindow::slotFileSaveAs() {
                                      .arg(w->getDocument()->getFilename()),
                                      QMessageBox::Ok);
         }
-    }
-    updateRecentFilesMenu();
+	}
+	recentFiles->updateRecentFilesMenu();
 
     QString message = tr("Saved drawing: %1").arg(name);
     statusBar()->showMessage(message, 2000);
@@ -2626,7 +2431,7 @@ void QC_ApplicationWindow::slotFileAutoSave() {
     statusBar()->showMessage(tr("Auto-saving drawing..."), 2000);
 
     QC_MDIWindow* w = getMDIWindow();
-    if (w!=NULL) {
+	if (w) {
         bool cancelled;
         if (w->slotFileSave(cancelled, true)) {
             // auto-save cannot be cancelled by user, so the
@@ -2658,7 +2463,7 @@ void QC_ApplicationWindow::slotFileExport() {
 
     QC_MDIWindow* w = getMDIWindow();
     QString fn;
-    if (w!=NULL) {
+	if (w) {
 
         // read default settings:
         RS_SETTINGS->beginGroup("/Export");
@@ -2674,7 +2479,7 @@ void QC_ApplicationWindow::slotFileExport() {
     #if QT_VERSION >= 0x040300
         supportedImageFormats.append("svg"); // add svg
     #endif
-        foreach (QString format, supportedImageFormats) {
+		for (QString format: supportedImageFormats) {
             format = format.toLower();
             QString st;
             if (format=="jpeg" || format=="tiff") {
@@ -2851,7 +2656,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     gv.setContainer(graphic);
     gv.zoomAuto(false);
     for (RS_Entity* e=graphic->firstEntity(RS2::ResolveAll);
-            e!=NULL; e=graphic->nextEntity(RS2::ResolveAll)) {
+			e; e=graphic->nextEntity(RS2::ResolveAll)) {
         gv.drawEntity(&painter, e);
     }
 
@@ -2902,7 +2707,7 @@ void QC_ApplicationWindow::slotFileClose() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClose(): detaching lists");
     QC_MDIWindow* w = getMDIWindow();
 
-    if(w!=NULL){
+	if(w){
         openedFiles.removeAll(w->getDocument()->getFilename());
         //        int pos=openedFiles.indexOf(w->getDocument()->getFilename());
         //        if(pos>=0) {
@@ -2911,7 +2716,7 @@ void QC_ApplicationWindow::slotFileClose() {
 
         //properly close print preview if exists
         QC_MDIWindow *ppv = w->getPrintPreview();
-        if (ppv!=NULL) {
+		if (ppv) {
             mdiAreaCAD->removeSubWindow(ppv->parentWidget());
         }
     }
@@ -2920,7 +2725,7 @@ void QC_ApplicationWindow::slotFileClose() {
     mdiAreaCAD->closeActiveSubWindow();
     activedMdiSubWindow=NULL;
     QMdiSubWindow* m=mdiAreaCAD->currentSubWindow();
-    if(m!=NULL){
+	if(m){
         slotWindowActivated(m);
     }
 
@@ -2939,7 +2744,7 @@ void QC_ApplicationWindow::slotFileClosing() {
     blockWidget->setBlockList(NULL);
     coordinateWidget->setGraphic(NULL);
     QC_MDIWindow* w = getMDIWindow();
-    if(w!=NULL)
+	if(w)
         openedFiles.removeAll(w->getDocument()->getFilename());
 }
 
@@ -2975,14 +2780,15 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     emu_qt44_QPrinter_setPaperSize(printer, RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape)));
 #else
     QPrinter::PageSize paperSize=RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape));
-    printer.setPaperSize(paperSize);
 #endif // QT_VERSION 0x040400
     if(paperSize==QPrinter::Custom){
-        RS_Vector&& s=graphic->getPaperSize()*RS_Units::getFactorToMM(graphic->getUnit());
+        RS_Vector&& s=graphic->getPaperSize();
         if(landscape) s=s.flipXY();
         printer.setPaperSize(QSizeF(s.x,s.y),QPrinter::Millimeter);
 //        RS_DEBUG->print(RS_Debug::D_ERROR, "set paper size to (%g, %g)\n", s.x,s.y);
-    }
+    }else
+        printer.setPaperSize(paperSize);
+//    qDebug()<<"paper size=("<<printer.paperSize(QPrinter::Millimeter).width()<<", "<<printer.paperSize(QPrinter::Millimeter).height()<<")";
     if (landscape) {
         printer.setOrientation(QPrinter::Landscape);
     } else {
@@ -2999,7 +2805,8 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     bool    bStartPrinting = false;
     if(printPDF) {
         printer.setOutputFormat(QPrinter::PdfFormat);
-        QFileInfo   infDefaultFile(strDefaultFile);
+		printer.setColorMode(QPrinter::Color);
+		QFileInfo   infDefaultFile(strDefaultFile);
         QString     strPdfFileName("");
         QFileDialog fileDlg(this, tr("Export as PDF"));
         QString     defFilter("PDF files (*.pdf)");
@@ -3016,6 +2823,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         fileDlg.setFileMode(QFileDialog::AnyFile);
         fileDlg.selectNameFilter(defFilter);
         fileDlg.setAcceptMode(QFileDialog::AcceptSave);
+        fileDlg.setDefaultSuffix("pdf");
         fileDlg.setDirectory(infDefaultFile.dir().path());
         strPdfFileName = infDefaultFile.baseName();
         if( strPdfFileName.isEmpty())
@@ -3035,6 +2843,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
 
         QPrintDialog printDialog(&printer, this);
         printDialog.setOption(QAbstractPrintDialog::PrintToFile);
+        printDialog.setOption(QAbstractPrintDialog::PrintShowPageSize);
         bStartPrinting = (QDialog::Accepted == printDialog.exec());
     }
 
@@ -3145,7 +2954,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
             emit(printPreviewChanged(false));
             if(mdiAreaCAD->subWindowList().size()>0){
                 QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
-                if(w != NULL){
+				if(w){
                     mdiAreaCAD->setActiveSubWindow(w);
                 }
             }
@@ -3157,18 +2966,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
     else {
         // look for an existing print preview:
         QC_MDIWindow* ppv = parent->getPrintPreview();
-        if (ppv!=NULL) {
+		if (ppv) {
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): show existing");
-
-            /*
-            QList<QMdiSubWindow*> windows=mdiAreaCAD->subWindowList();
-            for(int i=0;i<windows.size();i++){
-                if( windows.at(i)->widget() == ppv){
-                    windows.at(i)->showMaximized();
-                    mdiAreaCAD->setActiveSubWindow(windows.at(i));
-                    break;
-                }
-            }*/
 
             //no need to search, casting parentWindow works like a charm
             ppv->parentWidget()->showMaximized();
@@ -3201,7 +3000,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                 // only graphics offer block lists, blocks don't
                 RS_DEBUG->print("  adding listeners");
                 RS_Graphic* graphic = w->getDocument()->getGraphic();
-                if (graphic!=NULL) {
+				if (graphic) {
                     // Link the layer list to the pen tool bar
                     graphic->addLayerListListener(penToolBar);
                     // Link the layer list to the layer widget
@@ -3232,7 +3031,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
                     w->show();
                 }
 
-                if(graphic!=NULL){
+				if(graphic){
                     graphic->fitToPage();
                 }
 //                w->getGraphicView()->zoomPage();
@@ -3274,9 +3073,9 @@ void QC_ApplicationWindow::slotViewGrid(bool toggle) {
     RS_DEBUG->print("QC_ApplicationWindow::slotViewGrid()");
 
     QC_MDIWindow* m = getMDIWindow();
-    if (m!=NULL) {
+	if (m) {
         RS_Graphic* g = m->getGraphic();
-        if (g!=NULL) {
+		if (g) {
             g->setGridOn(toggle);
         }
     }
@@ -3286,7 +3085,6 @@ void QC_ApplicationWindow::slotViewGrid(bool toggle) {
 
     RS_DEBUG->print("QC_ApplicationWindow::slotViewGrid() OK");
 }
-
 
 
 /**
@@ -3334,13 +3132,13 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
  * Redraws all mdi windows.
  */
 void QC_ApplicationWindow::redrawAll() {
-    if (mdiAreaCAD!=NULL) {
+	if (mdiAreaCAD) {
         QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
         for (int i = 0; i < windows.size(); ++i) {
             QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
-            if (m!=NULL) {
+			if (m) {
                 QG_GraphicView* gv = m->getGraphicView();
-                if (gv!=NULL) {
+				if (gv) {
                     gv->redraw();
                 }
             }
@@ -3354,13 +3152,13 @@ void QC_ApplicationWindow::redrawAll() {
  * Updates all grids of all graphic views.
  */
 void QC_ApplicationWindow::updateGrids() {
-    if (mdiAreaCAD!=NULL) {
+	if (mdiAreaCAD) {
         QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
         for (int i = 0; i < windows.size(); ++i) {
             QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
-            if (m!=NULL) {
+			if (m) {
                 QG_GraphicView* gv = m->getGraphicView();
-                if (gv!=NULL) {
+				if (gv) {
                     // gv->updateGrid();
                     gv->redraw(RS2::RedrawGrid);
                 }
@@ -3387,31 +3185,6 @@ void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
 }
 
 /**
- * Creates a new MDI window for editing the selected block.
- */
-/*
-void QC_ApplicationWindow::slotBlocksEdit() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotBlocksEdit()");
-
-    QC_MDIWindow* parent = getMDIWindow();
-    if (parent!=NULL) {
-        RS_BlockList* blist = blockWidget->getBlockList();
-        if (blist!=NULL) {
-            RS_Block* blk = blist->getActiveBlock();
-            if (blk!=NULL) {
-                QC_MDIWindow* w = slotFileNew(blk);
-                // the parent needs a pointer to the block window and
-                //   vice versa
-                parent->addChildWindow(w);
-                w->getGraphicView()->zoomAuto();
-            }
-        }
-    }
-} */
-
-
-
-/**
  * Shows the dialog for general application preferences.
  */
 void QC_ApplicationWindow::slotOptionsGeneral() {
@@ -3432,9 +3205,9 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
     QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
     for (int i = 0; i < windows.size(); ++i) {
         QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
-        if (m!=NULL) {
+		if (m) {
             QG_GraphicView* gv = m->getGraphicView();
-            if (gv!=NULL) {
+			if (gv) {
                 gv->setBackground(color);
                 gv->setGridColor(gridColor);
                 gv->setMetaGridColor(metaGridColor);
@@ -3464,10 +3237,10 @@ void QC_ApplicationWindow::slotImportBlock() {
     }
 
     if (QFileInfo(dxfPath).isReadable()) {
-        if (actionHandler!=NULL) {
+		if (actionHandler) {
             RS_ActionInterface* a =
                 actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
-            if (a!=NULL) {
+			if (a) {
                 RS_ActionLibraryInsert* action = (RS_ActionLibraryInsert*)a;
                 action->setFile(dxfPath);
             } else {
@@ -3515,7 +3288,7 @@ void QC_ApplicationWindow::slotHelpAbout() {
     /**
       * Show all plugin that has been loaded
       */
-    foreach (QC_PluginInterface *pluginInterface, loadedPlugins)
+	for (QC_PluginInterface * const pluginInterface: loadedPlugins)
         modules.append(pluginInterface->name());
 
     QString modulesString=tr("None");
@@ -3571,8 +3344,6 @@ void QC_ApplicationWindow::slotHelpAbout() {
     box.exec();
     box.resize(500,400);
 }
-
-
 
 /**
  * Menu help -> help.
@@ -3640,1035 +3411,6 @@ void QC_ApplicationWindow::slotHelpManual() {
 }
 
 /**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestDumpEntities(RS_EntityContainer* d) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotTestDumpEntities()");
-    static int level = 0;
-    std::ofstream dumpFile;
-
-    if (d==NULL) {
-        d = getDocument();
-        dumpFile.open("debug_entities.html");
-        level = 0;
-    } else {
-        dumpFile.open("debug_entities.html", std::ios::app);
-        level++;
-    }
-
-    if (d!=NULL) {
-        if (level==0) {
-            dumpFile << "<html>\n";
-            dumpFile << "<body>\n";
-        }
-
-        for (RS_Entity* e=d->firstEntity();
-                e!=NULL;
-                e=d->nextEntity()) {
-
-            dumpFile << "<table border=\"1\">\n";
-            dumpFile << "<tr><td>Entity: " << e->getId()
-            << "</td></tr>\n";
-
-            dumpFile
-            << "<tr><td><table><tr>"
-            << "<td>VIS:" << e->isVisible() << "</td>"
-            << "<td>UND:" << e->isUndone() << "</td>"
-            << "<td>SEL:" << e->isSelected() << "</td>"
-            << "<td>TMP:" << e->getFlag(RS2::FlagTemp) << "</td>";
-            QString lay = "NULL";
-            if (e->getLayer()!=NULL) {
-                lay = e->getLayer()->getName();
-            }
-            dumpFile
-            << "<td>Layer: " << lay.toLatin1().data() << "</td>"
-            << "<td>Width: " << (int)e->getPen(false).getWidth() << "</td>"
-            << "<td>Parent: " << e->getParent()->getId() << "</td>"
-            << "</tr></table>";
-
-            dumpFile
-            << "<tr><td>\n";
-
-            switch (e->rtti()) {
-            case RS2::EntityPoint: {
-                    RS_Point* p = (RS_Point*)e;
-                    dumpFile
-                    << "<table><tr><td>"
-                    << "<b>Point:</b>"
-                    << "</td></tr>";
-                    dumpFile
-                    << "<tr>"
-                    << "<td>"
-                    << p->getPos()
-                    << "</td>"
-                    << "</tr></table>";
-                }
-                break;
-
-            case RS2::EntityLine: {
-                    RS_Line* l = (RS_Line*)e;
-                    dumpFile
-                    << "<table><tr><td>"
-                    << "<b>Line:</b>"
-                    << "</td></tr>";
-                    dumpFile
-                    << "<tr>"
-                    << "<td>"
-                    << l->getStartpoint()
-                    << "</td>"
-                    << "<td>"
-                    << l->getEndpoint()
-                    << "</td>"
-                    << "</tr></table>";
-                }
-                break;
-
-            case RS2::EntityArc: {
-                    RS_Arc* a = (RS_Arc*)e;
-                    dumpFile
-                    << "<table><tr><td>"
-                    << "<b>Arc:</b>"
-                    << "</td></tr>";
-                    dumpFile
-                    << "<tr>"
-                    << "<td>Center: "
-                    << a->getCenter()
-                    << "</td>"
-                    << "<td>Radius: "
-                    << a->getRadius()
-                    << "</td>"
-                    << "<td>Angle 1: "
-                    << a->getAngle1()
-                    << "</td>"
-                    << "<td>Angle 2: "
-                    << a->getAngle2()
-                    << "</td>"
-                    << "<td>Startpoint: "
-                    << a->getStartpoint()
-                    << "</td>"
-                    << "<td>Endpoint: "
-                    << a->getEndpoint()
-                    << "</td>"
-                    << "<td>reversed: "
-                    << (int)a->isReversed()
-                    << "</td>"
-                    << "</tr></table>";
-                }
-                break;
-
-            case RS2::EntityCircle: {
-                    RS_Circle* c = (RS_Circle*)e;
-                    dumpFile
-                    << "<table><tr><td>"
-                    << "<b>Circle:</b>"
-                    << "</td></tr>";
-                    dumpFile
-                    << "<tr>"
-                    << "<td>Center: "
-                    << c->getCenter()
-                    << "</td>"
-                    << "<td>Radius: "
-                    << c->getRadius()
-                    << "</td>"
-                    << "</tr></table>";
-                }
-                break;
-
-            case RS2::EntityDimAligned: {
-                    RS_DimAligned* d = (RS_DimAligned*)e;
-                    dumpFile
-                    << "<table><tr><td>"
-                    << "<b>Dimension / Aligned:</b>"
-                    << "</td></tr>";
-                    dumpFile
-                    << "<tr>"
-                    << "<td>"
-                    << d->getDefinitionPoint()
-                    << "</td>"
-                    << "<td>"
-                    << d->getExtensionPoint1()
-                    << "</td>"
-                    << "<td>"
-                    << d->getExtensionPoint2()
-                    << "</td>"
-                    << "<td>Text: "
-                    << d->getText().toLatin1().data()
-                    << "</td>"
-                    << "<td>Label: "
-                    << d->getLabel().toLatin1().data()
-                    << "</td>"
-                    << "</tr></table>";
-                }
-                break;
-
-            case RS2::EntityDimLinear: {
-                    RS_DimLinear* d = (RS_DimLinear*)e;
-                    dumpFile
-                    << "<table><tr><td>"
-                    << "<b>Dimension / Linear:</b>"
-                    << "</td></tr>";
-                    dumpFile
-                    << "<tr>"
-                    << "<td>"
-                    << d->getDefinitionPoint()
-                    << "</td>"
-                    << "<td>"
-                    << d->getExtensionPoint1()
-                    << "</td>"
-                    << "<td>"
-                    << d->getExtensionPoint2()
-                    << "</td>"
-                    << "<td>Text: "
-                    << d->getText().toLatin1().data()
-                    << "</td>"
-                    << "<td>Label: "
-                    << d->getLabel().toLatin1().data()
-                    << "</td>"
-                    << "</tr></table>";
-                }
-                break;
-
-            case RS2::EntityInsert: {
-                    RS_Insert* i = (RS_Insert*)e;
-                    dumpFile
-                    << "<table><tr><td>"
-                    << "<b>Insert:</b>"
-                    << "</td></tr>";
-                    dumpFile
-                    << "<tr>"
-                    << "<td>Insertion point:"
-                    << i->getInsertionPoint()
-                    << "</td>"
-                    << "</tr></table>";
-                }
-                break;
-
-            case RS2::EntityMText: {
-                    RS_MText* t = (RS_MText*)e;
-                    dumpFile
-                    << "<table><tr><td>"
-                    << "<b>Text:</b>"
-                    << "</td></tr>";
-                    dumpFile
-                    << "<tr>"
-                    << "<td>Text:"
-                    << t->getText().toLatin1().data()
-                    << "</td>"
-                    << "<td>Height:"
-                    << t->getHeight()
-                    << "</td>"
-                    << "</tr></table>";
-                }
-                break;
-
-            case RS2::EntityText: {
-                    RS_Text* t = (RS_Text*)e;
-                    dumpFile
-                    << "<table><tr><td>"
-                    << "<b>Text:</b>"
-                    << "</td></tr>";
-                    dumpFile
-                    << "<tr>"
-                    << "<td>Text:"
-                    << t->getText().toLatin1().data()
-                    << "</td>"
-                    << "<td>Height:"
-                    << t->getHeight()
-                    << "</td>"
-                    << "</tr></table>";
-                }
-                break;
-
-            case RS2::EntityHatch: {
-                    RS_Hatch* h = (RS_Hatch*)e;
-                    dumpFile
-                    << "<table><tr><td>"
-                    << "<b>Hatch:</b>"
-                    << "</td></tr>";
-                    dumpFile
-                    << "<tr>"
-                    << "<td>Pattern:"
-                    << h->getPattern().toLatin1().data()
-                    << "</td>"
-                    << "<td>Scale:"
-                    << h->getScale()
-                    << "</td>"
-                    << "<td>Solid:"
-                    << (int)h->isSolid()
-                    << "</td>"
-                    << "</tr></table>";
-                }
-                break;
-
-            default:
-                dumpFile
-                << "<tr><td>"
-                << "<b>Unknown Entity: " << e->rtti() << "</b>"
-                << "</td></tr>";
-                break;
-            }
-
-            if (e->isContainer() || e->rtti()==RS2::EntityHatch) {
-                RS_EntityContainer* ec = (RS_EntityContainer*)e;
-                dumpFile << "<table><tr><td valign=\"top\">&nbsp;&nbsp;&nbsp;&nbsp;Contents:</td><td>\n";
-                dumpFile.close();
-                slotTestDumpEntities(ec);
-                dumpFile.open("debug_entities.html", std::ios::app);
-                dumpFile << "</td></tr></table>\n";
-            }
-
-            dumpFile
-            << "</td></tr>"
-            << "</table>\n"
-            << "<br><br>";
-        }
-
-        if (level==0) {
-            dumpFile << "</body>\n";
-            dumpFile << "</html>\n";
-        } else {
-            level--;
-        }
-    }
-}
-
-
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestDumpUndo() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotTestDumpUndo()");
-
-    RS_Document* d = getDocument();
-        if (d!=NULL) {
-                std::cout << *(RS_Undo*)d;
-                std::cout << std::endl;
-        }
-}
-
-
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestUpdateInserts() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotTestUpdateInserts()");
-
-    RS_Document* d = getDocument();
-    if (d!=NULL) {
-        d->updateInserts();
-    }
-}
-
-
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestDrawFreehand() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotTestDrawFreehand()");
-
-
-    //RS_Graphic* g = document->getMarking();
-    /*
-
-       RS_ActionDrawLineFree* action =
-          new RS_ActionDrawLineFree(*document->getGraphic(),
-                                    *graphicView);
-
-       for (int i=0; i<100; ++i) {
-
-           int posx = (random()%600);
-           int posy = (random()%400);
-
-           //QMouseEvent rsm1(posx, posy, LEFT);
-        QMouseEvent rsm1(QEvent::MouseButtonPress,
-                           QPoint(posx,posy),
-                           RS2::LeftButton,
-                           RS2::LeftButton);
-           action->mousePressEvent(&rsm1);
-
-           int speedx = 0;
-           int speedy = 0;
-
-           for (int k=0; k<100; ++k) {
-               int accx = (random()%40)-20;
-               int accy = (random()%40)-20;
-
-               speedx+=accx;
-               speedy+=accy;
-
-               posx+=speedx;
-               posy+=speedy;
-
-               //QMouseEvent rsm2(posx, posy, LEFT);
-
-            QMouseEvent rsm2(QEvent::MouseMove,
-                           QPoint(posx,posy),
-                           RS2::LeftButton,
-                           RS2::LeftButton);
-               action->mouseMoveEvent(&rsm2);
-           }
-
-           action->mouseReleaseEvent(NULL);
-
-           slotFileSave();
-       }
-
-       delete action;
-    */
-}
-
-
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestInsertBlock() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotTestInsertBlock()");
-
-    RS_Document* d = getDocument();
-    if (d!=NULL && d->rtti()==RS2::EntityGraphic) {
-        RS_Graphic* graphic = (RS_Graphic*)d;
-        if (graphic==NULL) {
-            return;
-        }
-
-        graphic->addLayer(new RS_Layer("default"));
-        RS_Block* block = new RS_Block(graphic, RS_BlockData("debugblock",
-                                       RS_Vector(0.0,0.0), true));
-
-        RS_Line* line;
-        RS_Arc* arc;
-        RS_Circle* circle;
-
-        // Add one red line:
-        line = new RS_Line(block,
-                           RS_LineData(RS_Vector(0.0,0.0),
-                                       RS_Vector(50.0,0.0)));
-        line->setLayerToActive();
-        line->setPen(RS_Pen(RS_Color(255, 0, 0),
-                            RS2::Width01,
-                            RS2::SolidLine));
-        block->addEntity(line);
-
-        // Add one line with attributes from block:
-        line = new RS_Line(block,
-                           RS_LineData(RS_Vector(50.0,0.0),
-                                       RS_Vector(50.0,50.0)));
-        line->setPen(RS_Pen(RS_Color(RS2::FlagByBlock),
-                            RS2::WidthByBlock,
-                            RS2::LineByBlock));
-        block->addEntity(line);
-
-        // Add one arc with attributes from block:
-        RS_ArcData d(RS_Vector(50.0,0.0),
-                     50.0, M_PI/2.0, M_PI,
-                     false);
-        arc = new RS_Arc(block, d);
-        arc->setPen(RS_Pen(RS_Color(RS2::FlagByBlock),
-                           RS2::WidthByBlock,
-                           RS2::LineByBlock));
-        block->addEntity(arc);
-
-        // Add one blue circle:
-        RS_CircleData circleData(RS_Vector(20.0,15.0),
-                                 12.5);
-        circle = new RS_Circle(block, circleData);
-        circle->setLayerToActive();
-        circle->setPen(RS_Pen(RS_Color(0, 0, 255),
-                              RS2::Width01,
-                              RS2::SolidLine));
-        block->addEntity(circle);
-
-
-        graphic->addBlock(block);
-
-
-
-        RS_Insert* ins;
-        RS_InsertData insData("debugblock",
-                              RS_Vector(0.0,0.0),
-                              RS_Vector(1.0,1.0), 0.0,
-                              1, 1, RS_Vector(0.0, 0.0),
-                              NULL, RS2::NoUpdate);
-
-        // insert one magenta instance of the block (original):
-        ins = new RS_Insert(graphic, insData);
-        ins->setLayerToActive();
-        ins->setPen(RS_Pen(RS_Color(255, 0, 255),
-                           RS2::Width02,
-                           RS2::SolidLine));
-        ins->update();
-        graphic->addEntity(ins);
-
-        // insert one green instance of the block (rotate):
-        insData = RS_InsertData("debugblock",
-                                RS_Vector(-50.0,20.0),
-                                RS_Vector(1.0,1.0), 30.0/ARAD,
-                                1, 1, RS_Vector(0.0, 0.0),
-                                NULL, RS2::NoUpdate);
-        ins = new RS_Insert(graphic, insData);
-        ins->setLayerToActive();
-        ins->setPen(RS_Pen(RS_Color(0, 255, 0),
-                           RS2::Width02,
-                           RS2::SolidLine));
-        ins->update();
-        graphic->addEntity(ins);
-
-        // insert one cyan instance of the block (move):
-        insData = RS_InsertData("debugblock",
-                                RS_Vector(10.0,20.0),
-                                RS_Vector(1.0,1.0), 0.0,
-                                1, 1, RS_Vector(0.0, 0.0),
-                                NULL, RS2::NoUpdate);
-        ins = new RS_Insert(graphic, insData);
-        ins->setLayerToActive();
-        ins->setPen(RS_Pen(RS_Color(0, 255, 255),
-                           RS2::Width02,
-                           RS2::SolidLine));
-        ins->update();
-        graphic->addEntity(ins);
-
-        // insert one blue instance of the block:
-        for (double a=0.0; a<360.0; a+=45.0) {
-            insData = RS_InsertData("debugblock",
-                                    RS_Vector(60.0,0.0),
-                                    RS_Vector(2.0/5,2.0/5), a/ARAD,
-                                    1, 1, RS_Vector(0.0, 0.0),
-                                    NULL, RS2::NoUpdate);
-            ins = new RS_Insert(graphic, insData);
-            ins->setLayerToActive();
-            ins->setPen(RS_Pen(RS_Color(0, 0, 255),
-                               RS2::Width05,
-                               RS2::SolidLine));
-            ins->update();
-            graphic->addEntity(ins);
-        }
-
-        // insert an array of yellow instances of the block:
-        insData = RS_InsertData("debugblock",
-                                RS_Vector(-100.0,-100.0),
-                                RS_Vector(0.2,0.2), M_PI/6.0,
-                                6, 4, RS_Vector(100.0, 100.0),
-                                NULL, RS2::NoUpdate);
-        ins = new RS_Insert(graphic, insData);
-        ins->setLayerToActive();
-        ins->setPen(RS_Pen(RS_Color(255, 255, 0),
-                           RS2::Width01,
-                           RS2::SolidLine));
-        ins->update();
-        graphic->addEntity(ins);
-
-
-        RS_GraphicView* v = getGraphicView();
-        if (v!=NULL) {
-            v->redraw();
-        }
-    }
-}
-
-
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestInsertEllipse() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotTestInsertEllipse()");
-
-
-    RS_Document* d = getDocument();
-    if (d!=NULL) {
-        RS_Graphic* graphic = (RS_Graphic*)d;
-        if (graphic==NULL) {
-            return;
-        }
-
-        RS_Ellipse* ellipse;
-        RS_Line* line;
-
-        for (double a=0.0; a<2*M_PI; a+=0.1) {
-            RS_Vector v;
-            v.setPolar(50.0, a);
-            double xp = 1000.0*a;
-
-            RS_EllipseData ellipseData(RS_Vector(xp,0.0),
-                                       v,
-                                       0.5,
-                                       0.0, 2*M_PI,
-                                       false);
-            ellipse = new RS_Ellipse(graphic, ellipseData);
-
-            ellipse->setPen(RS_Pen(RS_Color(255, 0, 255),
-                                   RS2::Width01,
-                                   RS2::SolidLine));
-
-            graphic->addEntity(ellipse);
-            //graphic->addEntity(new RS_Point(graphic, ellipse->getMax()));
-            //graphic->addEntity(new RS_Point(graphic, ellipse->getMin()));
-
-            line = new RS_Line(graphic,
-                               RS_LineData(RS_Vector(xp,0.0),
-                                           RS_Vector(xp,0.0)+v));
-            line->setPen(RS_Pen(RS_Color(128, 128, 128),
-                                RS2::Width01,
-                                RS2::SolidLine));
-            graphic->addEntity(line);
-
-
-            /*
-                     for (double mx=-60.0; mx<60.0; mx+=1.0) {
-                         //for (double mx=0.0; mx<1.0; mx+=2.5) {
-                         RS_VectorSolutions sol = ellipse->mapX(xp + mx);
-                         //graphic->addEntity(new RS_Point(graphic,
-                         //                   sol.vector2 + RS_Vector(a*500.0, 0.0)));
-                         //graphic->addEntity(new RS_Point(graphic,
-                         //                   sol.vector3 + RS_Vector(a*500.0, 0.0)));
-                         //graphic->addEntity(new RS_Point(graphic,
-                         //                   sol.vector4 + RS_Vector(a*500.0, 0.0)));
-
-                         line = new RS_Line(graphic,
-                                            RS_LineData(RS_Vector(xp+mx,-50.0),
-                                                        RS_Vector(xp+mx,50.0)));
-                         line->setPen(RS_Pen(RS_Color(60, 60, 60),
-                                             RS2::Width01,
-                                             RS2::SolidLine));
-                         graphic->addEntity(line);
-
-                         graphic->addEntity(new RS_Point(graphic,
-                                                         sol.get(0)));
-                     }
-            */
-        }
-
-
-        // different minor/minor relations
-        /*
-              double x, y;
-              for (y=-250.0; y<=250.0; y+=50.0) {
-                  for (x=-250.0; x<=250.0; x+=50.0) {
-                      RS_Vector v(x, y);
-
-                      ellipse = new RS_Ellipse(graphic,
-                                               v,
-                                               RS_Vector((x/5+50.0)/2.0, 0.0),
-                                         fabs(x/y),
-                                               0.0, 2*M_PI,
-                                               false);
-
-                ellipse->setPen(RS_Pen(RS_Color(255, 255, 0),
-                                       RS2::Width01,
-                                       RS2::DashDotLine));
-
-                      graphic->addEntity(ellipse);
-                      graphic->addEntity(new RS_Point(graphic, ellipse->getMax()));
-                      graphic->addEntity(new RS_Point(graphic, ellipse->getMin()));
-
-                ellipse = new RS_Ellipse(graphic,
-                                               v + RS_Vector(750.0, 0.0),
-                                               RS_Vector((x/5+50.0)/2.0, 0.0),
-                                               fabs(x/y),
-                                               2*M_PI, 0.0,
-                                               true);
-
-                      graphic->addEntity(ellipse);
-                      graphic->addEntity(new RS_Point(graphic, ellipse->getMax()));
-                      graphic->addEntity(new RS_Point(graphic, ellipse->getMin()));
-                  }
-              }
-        */
-
-        /*
-              // different rotation angles:
-              double rot;
-              for (rot=0.0; rot<=2*M_PI+0.1; rot+=(M_PI/8)) {
-                  ellipse = new RS_Ellipse(graphic,
-                                           RS_Vector(rot*200, 500.0),
-                                           RS_Vector(50.0, 0.0).rotate(rot),
-                                           0.3,
-                                           0.0, 2*M_PI,
-                                           false);
-                  graphic->addEntity(ellipse);
-                  graphic->addEntity(new RS_Point(graphic, ellipse->getMax()));
-                  graphic->addEntity(new RS_Point(graphic, ellipse->getMin()));
-              }
-
-
-              // different arc angles:
-              double a1, a2;
-              for (rot=0.0; rot<=2*M_PI+0.1; rot+=(M_PI/8)) {
-                  for (a1=0.0; a1<=2*M_PI+0.1; a1+=(M_PI/8)) {
-                      for (a2=a1+M_PI/8; a2<=2*M_PI+a1+0.1; a2+=(M_PI/8)) {
-                          ellipse = new RS_Ellipse(graphic,
-                                                   RS_Vector(-500.0-a1*200.0-5000.0*rot,
-                                                             500.0-a2*200.0),
-                                                   RS_Vector(50.0, 0.0).rotate(rot),
-                                                   0.3,
-                                                   a1, a2,
-                                                   false);
-                          graphic->addEntity(ellipse);
-                          graphic->addEntity(new RS_Point(graphic, ellipse->getMax()));
-                          graphic->addEntity(new RS_Point(graphic, ellipse->getMin()));
-                      }
-                  }
-              }
-        */
-
-        RS_GraphicView* v = getGraphicView();
-        if (v!=NULL) {
-            v->redraw();
-        }
-    }
-}
-
-
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestInsertMText() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotTestInsertMText()");
-
-
-    RS_Document* d = getDocument();
-    if (d!=NULL) {
-        RS_Graphic* graphic = (RS_Graphic*)d;
-        if (graphic==NULL) {
-            return;
-        }
-
-        RS_MText* text;
-        RS_MTextData textData;
-
-        textData = RS_MTextData(RS_Vector(10.0,10.0),
-                               10.0, 100.0,
-                               RS_MTextData::VATop,
-                               RS_MTextData::HALeft,
-                               RS_MTextData::LeftToRight,
-                               RS_MTextData::Exact,
-                               1.0,
-                               "LibreCAD",
-                               "iso",
-                               0.0);
-        text = new RS_MText(graphic, textData);
-
-        text->setLayerToActive();
-        text->setPen(RS_Pen(RS_Color(255, 0, 0),
-                            RS2::Width01,
-                            RS2::SolidLine));
-        graphic->addEntity(text);
-    }
-}
-
-
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestInsertText() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotTestInsertMText()");
-
-
-    RS_Document* d = getDocument();
-    if (d!=NULL) {
-        RS_Graphic* graphic = (RS_Graphic*)d;
-        if (graphic==NULL) {
-            return;
-        }
-
-        RS_Text* text;
-        RS_TextData textData;
-
-        textData = RS_TextData(RS_Vector(10.0,10.0),RS_Vector(10.0,10.0),
-                               10.0, 1.0,
-                               RS_TextData::VABaseline,
-                               RS_TextData::HALeft,
-                               RS_TextData::None,
-                               "LibreCAD",
-                               "iso",
-                               0.0);
-        text = new RS_Text(graphic, textData);
-
-        text->setLayerToActive();
-        text->setPen(RS_Pen(RS_Color(255, 0, 0),
-                            RS2::Width01,
-                            RS2::SolidLine));
-        graphic->addEntity(text);
-
-        /*
-              double x, y;
-              for (y=-250.0; y<=250.0; y+=50.0) {
-                  for (x=-250.0; x<=250.0; x+=50.0) {
-                      RS_Vector v(x, y);
-
-                      textData = RS_TextData(v,
-                                             10.0, 100.0,
-                                             RS2::VAlignTop,
-                                             RS2::HAlignLeft,
-                                             RS2::LeftToRight,
-                                             RS2::Exact,
-                                             1.0,
-                                             "Andrew",
-                                             "normal",
-                                             0.0);
-
-                      text = new RS_Text(graphic, textData);
-
-                      text->setLayerToActive();
-                      text->setPen(RS_Pen(RS_Color(255, 0, 0),
-                                          RS2::Width01,
-                                          RS2::SolidLine));
-                      graphic->addEntity(text);
-                  }
-              }
-
-              RS_Line* line;
-              for (x=0.0; x<M_PI*2.0; x+=0.2) {
-                  RS_Vector v(600.0+cos(x)*50.0, 0.0+sin(x)*50.0);
-
-                  line = new RS_Line(graphic,
-                                     RS_LineData(RS_Vector(600.0,0.0),
-                                                 v));
-                  line->setLayerToActive();
-                  line->setPenToActive();
-                  graphic->addEntity(line);
-
-                  textData = RS_TextData(v,
-                                         5.0, 50.0,
-                                         RS2::VAlignTop,
-                                         RS2::HAlignLeft,
-                                         RS2::LeftToRight,
-                                         RS2::Exact,
-                                         1.0,
-                                         "Andrew",
-                                         "normal",
-                                         x);
-
-                  text = new RS_Text(graphic, textData);
-
-                  text->setLayerToActive();
-                  text->setPen(RS_Pen(RS_Color(255, 0, 0),
-                                      RS2::Width01,
-                                      RS2::SolidLine));
-                  graphic->addEntity(text);
-              }
-
-              RS_SolidData solidData = RS_SolidData(RS_Vector(5.0, 10.0),
-                                                    RS_Vector(25.0, 15.0),
-                                                    RS_Vector(15.0, 30.0));
-
-              RS_Solid* s = new RS_Solid(graphic, solidData);
-
-              s->setLayerToActive();
-              s->setPen(RS_Pen(RS_Color(255, 255, 0),
-                               RS2::Width01,
-                               RS2::SolidLine));
-              graphic->addEntity(s);
-
-              RS_GraphicView* v = getGraphicView();
-              if (v!=NULL) {
-                  v->redraw();
-              }
-        */
-    }
-}
-
-
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestInsertImage() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotTestInsertImage()");
-
-
-    RS_Document* d = getDocument();
-    if (d!=NULL) {
-        RS_Graphic* graphic = (RS_Graphic*)d;
-        if (graphic==NULL) {
-            return;
-        }
-
-        RS_Image* image;
-        RS_ImageData imageData;
-
-        imageData = RS_ImageData(0, RS_Vector(50.0,30.0),
-                                 RS_Vector(0.5,0.5),
-                                 RS_Vector(-0.5,0.5),
-                                 RS_Vector(640,480),
-                                 "/home/andrew/data/image.png",
-                                 50, 50, 0);
-        image = new RS_Image(graphic, imageData);
-
-        image->setLayerToActive();
-        image->setPen(RS_Pen(RS_Color(255, 0, 0),
-                             RS2::Width01,
-                             RS2::SolidLine));
-        graphic->addEntity(image);
-    }
-}
-
-
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestUnicode() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotTestUnicode()");
-
-    slotFileOpen("./fonts/unicode.cxf", RS2::FormatCXF);
-    RS_Document* d = getDocument();
-    if (d!=NULL) {
-        RS_Graphic* graphic = (RS_Graphic*)d;
-        if (graphic==NULL) {
-            return;
-        }
-
-        RS_Insert* ins;
-
-        int col;
-        int row;
-        QChar uCode;       // e.g. 65 (or 'A')
-        QString strCode;   // unicde as string e.g. '[0041] A'
-
-        graphic->setAutoUpdateBorders(false);
-
-        for (col=0x0000; col<=0xFFF0; col+=0x10) {
-            printf("col: %X\n", col);
-            for (row=0x0; row<=0xF; row++) {
-                //printf("  row: %X\n", row);
-
-                uCode = QChar(col+row);
-                //printf("  code: %X\n", uCode.unicode());
-
-                strCode.setNum(uCode.unicode(), 16);
-                while (strCode.length()<4) {
-                    strCode="0"+strCode;
-                }
-                strCode = "[" + strCode + "] " + uCode;
-
-                if (graphic->findBlock(strCode)!=NULL) {
-                    RS_InsertData d(strCode,
-                                    RS_Vector(col/0x10*20.0,row*20.0),
-                                    RS_Vector(1.0,1.0), 0.0,
-                                    1, 1, RS_Vector(0.0, 0.0),
-                                    NULL, RS2::NoUpdate);
-                    ins = new RS_Insert(graphic, d);
-                    ins->setLayerToActive();
-                    ins->setPen(RS_Pen(RS_Color(255, 255, 255),
-                                       RS2::Width01,
-                                       RS2::SolidLine));
-                    ins->update();
-                    graphic->addEntity(ins);
-                }
-            }
-        }
-        graphic->setAutoUpdateBorders(true);
-        graphic->calculateBorders();
-    }
-}
-
-
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestMath01() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotTestMath01()");
-
-    RS_Document* d = getDocument();
-    if (d!=NULL) {
-        RS_Graphic* graphic = (RS_Graphic*)d;
-        if (graphic==NULL) {
-            return;
-        }
-
-        // axis
-        graphic->addEntity(new RS_Line(graphic,
-                                       RS_LineData(RS_Vector(0.0,0.0),
-                                                   RS_Vector(2*M_PI,0.0))));
-        graphic->addEntity(new RS_Line(graphic,
-                                       RS_LineData(RS_Vector(0.0,-1.0),
-                                                   RS_Vector(0.0,1.0))));
-
-        // cos
-        double a;
-        double x = 59.0/ARAD;
-        double x_0 = 60.0/ARAD;
-        for (a=0.01; a<2*M_PI; a+=0.01) {
-            // cos curve:
-            RS_Line* line = new RS_Line(graphic,
-                                        RS_LineData(RS_Vector(a-0.01, cos(a-0.01)),
-                                                    RS_Vector(a, cos(a))));
-            graphic->addEntity(line);
-
-            // tangent:
-            graphic->addEntity(new RS_Line(graphic,
-                                           RS_LineData(RS_Vector(a-0.01,cos(x_0)-sin(x_0)*(a-0.01-x_0)),
-                                                       RS_Vector(a,cos(x_0)-sin(x_0)*(a-x_0)))));
-        }
-
-        // 59.0 deg
-        graphic->addEntity(new RS_Line(graphic,
-                                       RS_LineData(RS_Vector(x,0.0),
-                                                   RS_Vector(x,1.0))));
-
-        // 60.0 deg
-        graphic->addEntity(new RS_Line(graphic,
-                                       RS_LineData(RS_Vector(x_0,0.0),
-                                                   RS_Vector(x_0,1.0))));
-
-        // tangent
-        //graphic->addEntity(new RS_Line(graphic,
-        //                   RS_Vector(0.0,cos(x_0)-sin(x_0)*(0.0-x_0)),
-        //                   RS_Vector(6.0,cos(x_0)-sin(x_0)*(6.0-x_0))));
-
-
-        RS_GraphicView* v = getGraphicView();
-        if (v!=NULL) {
-            v->redraw();
-        }
-    }
-}
-
-
-
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestResize640() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotTestResize640()");
-
-    resize(640, 480);
-}
-
-
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestResize800() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotTestResize800()");
-
-    resize(800, 600);
-}
-
-
-
-/**
- * Testing function.
- */
-void QC_ApplicationWindow::slotTestResize1024() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotTestResize1024()");
-
-    resize(1024, 768);
-}
-
-
-
-/**
  * overloaded for Message box on last window exit.
  */
 bool QC_ApplicationWindow::queryExit(bool force) {
@@ -4681,7 +3423,7 @@ bool QC_ApplicationWindow::queryExit(bool force) {
 
          while (!list.isEmpty()) {
              QC_MDIWindow *tmp=qobject_cast<QC_MDIWindow*>(list.takeFirst()->widget());
-             if( tmp != NULL){
+			 if( tmp){
                  succ = tmp->closeMDI(force);
                  if (!succ) {
                      break;
@@ -4697,8 +3439,6 @@ bool QC_ApplicationWindow::queryExit(bool force) {
 
     return succ;
 }
-
-
 
 /**
  * Handle hotkeys. Don't let it to the default handler of Qt.
@@ -4789,7 +3529,7 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
 
             // forward to actions:
             RS_GraphicView* graphicView = getGraphicView();
-            if (graphicView!=NULL) {
+			if (graphicView) {
                 graphicView->keyPressEvent(e);
             }
             e->accept();
@@ -4841,7 +3581,7 @@ void QC_ApplicationWindow::keyReleaseEvent(QKeyEvent* e) {
 
             // forward to actions:
             RS_GraphicView* graphicView = getGraphicView();
-            if (graphicView!=NULL) {
+			if (graphicView) {
                 graphicView->keyReleaseEvent(e);
             }
             e->accept();
@@ -4852,7 +3592,54 @@ void QC_ApplicationWindow::keyReleaseEvent(QKeyEvent* e) {
     QMainWindow::keyPressEvent(e);
 }
 
+QMdiArea const* QC_ApplicationWindow::getMdiArea() const{
+	return mdiAreaCAD;
+}
 
+QMdiArea* QC_ApplicationWindow::getMdiArea(){
+	return mdiAreaCAD;
+}
+
+RS_GraphicView const* QC_ApplicationWindow::getGraphicView() const{
+	QC_MDIWindow const* m = getMDIWindow();
+	if (m) {
+		return m->getGraphicView();
+	}
+	return nullptr;
+}
+
+RS_GraphicView * QC_ApplicationWindow::getGraphicView() {
+	QC_MDIWindow* m = getMDIWindow();
+	if (m) {
+		return m->getGraphicView();
+	}
+	return nullptr;
+}
+
+RS_Document const* QC_ApplicationWindow::getDocument() const{
+	QC_MDIWindow const* m = getMDIWindow();
+	if (m) {
+		return m->getDocument();
+	}
+	return nullptr;
+}
+
+RS_Document* QC_ApplicationWindow::getDocument(){
+	QC_MDIWindow* m = getMDIWindow();
+	if (m) {
+		return m->getDocument();
+	}
+	return nullptr;
+}
+
+void QC_ApplicationWindow::createNewDocument(
+		const QString& fileName, RS_Document* doc) {
+
+	slotFileNew(doc);
+	if (fileName!=QString::null && getDocument()) {
+		getDocument()->setFilename(fileName);
+	}
+}
 
 void QC_ApplicationWindow::updateWindowTitle(QWidget *w)
 {

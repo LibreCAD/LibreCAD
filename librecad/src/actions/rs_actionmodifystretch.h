@@ -51,10 +51,10 @@ public:
 public:
     RS_ActionModifyStretch(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyStretch() {}
+    ~RS_ActionModifyStretch() = default;
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    RS2::ActionType rtti(){
+    RS2::ActionType rtti() const{
         return RS2::ActionModifyStretch;
     }
     virtual void init(int status=0);

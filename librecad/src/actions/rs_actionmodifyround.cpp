@@ -31,20 +31,17 @@
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_information.h"
-
+#include "rs_math.h"
 
 RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Round Entities",
-                           container, graphicView) {
-
-    entity1 = NULL;
-    entity2 = NULL;
-    coord1 = RS_Vector(false);
-    coord2 = RS_Vector(false);
-    eType.reserve(6);
-    eType << RS2::EntityLine << RS2::EntityPolyline << RS2::EntityArc <<
-             RS2::EntityCircle << RS2::EntityEllipse << RS2::EntitySpline;
+						   container, graphicView)
+		,entity1(nullptr)
+		,entity2(nullptr)
+		,coord1(false)
+		,coord2(false)
+{
 }
 
 QAction* RS_ActionModifyRound::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
@@ -121,8 +118,8 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent* e) {
             //preview->move(targetPoint-referencePoint);
             RS_Entity* tmp1 = entity1->clone();
             RS_Entity* tmp2 = entity2->clone();
-            tmp1->reparent(preview);
-            tmp2->reparent(preview);
+			tmp1->reparent(preview.get());
+			tmp2->reparent(preview.get());
             preview->addEntity(tmp1);
             preview->addEntity(tmp2);
 

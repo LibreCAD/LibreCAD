@@ -34,31 +34,9 @@
 
 #include <cfloat>
 #include <cmath>
-#include <complex>
-#include <errno.h>
 
-// RVT port abs issue on latest compiler?
-#include <cstdlib>
-
-#include <QRegExp>
-#include <QVector>
-
-#include "rs.h"
 #include "rs_vector.h"
 
-
-//#ifdef __GNUC__
-//#define min(x,y) (x<y ? x : y)
-//#define max(x,y) (x>y ? x : y)
-//#endif
-
-#define ARAD 57.29577951308232
-//tolerance
-#define RS_TOLERANCE 1.0e-10
-//squared tolerance
-#define RS_TOLERANCE15 1.5e-15
-#define RS_TOLERANCE2 1.0e-20
-#define RS_TOLERANCE_ANGLE 1.0e-8
 
 //typedef unsigned int uint;
 
@@ -72,18 +50,28 @@ public:
     static double pow(double x, double y);
     static RS_Vector pow(RS_Vector x, double y);
 
-    //static double abs(double v);
-    //static int abs(int v);
     static double rad2deg(double a);
     static double deg2rad(double a);
     static double rad2gra(double a);
-    static int findGCD(int a, int b);
+	static double gra2rad(double a);
+	static int findGCD(int a, int b);
     static bool isAngleBetween(double a,
                                double a1, double a2,
                                bool reversed = false);
+	//! \brief correct angle to be within [0, 2 Pi)
     static double correctAngle(double a);
-    static double getAngleDifference(double a1, double a2, bool reversed = false);
-    static double makeAngleReadable(double angle, bool readable=true,
+	//! \brief correct angle to be undirectional [0, Pi)
+	static double correctAngleU(double a);
+
+	//! \brief angular difference
+	static double getAngleDifference(double a1, double a2, bool reversed = false);
+	/**
+	 * @brief getAngleDifferenceU abs of minimum angular differenct, unsigned version of angular difference
+	 * @param a1,a2 angles
+	 * @return the minimum of angular difference a1-a2 and a2-a1
+	 */
+	static double getAngleDifferenceU(double a1, double a2);
+	static double makeAngleReadable(double angle, bool readable=true,
                                     bool* corrected=NULL);
     static bool isAngleReadable(double angle);
     static bool isSameDirection(double dir1, double dir2, double tol);
@@ -116,7 +104,7 @@ public:
       *
       *@Author: Dongxu Li
       */
-    static bool linearSolver(const QVector<QVector<double> >& m, QVector<double>& sn);
+	static bool linearSolver(const std::vector<std::vector<double> >& m, std::vector<double>& sn);
 
     /** solver quadratic simultaneous equations of a set of two **/
     /* solve the following quadratic simultaneous equations,

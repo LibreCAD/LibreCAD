@@ -28,6 +28,7 @@
 #include "rs_actioninterface.h"
 #include "rs_actionblocksinsert.h"
 #include "rs_settings.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_InsertOptions as a child of 'parent', with the

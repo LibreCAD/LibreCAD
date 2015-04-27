@@ -33,128 +33,107 @@
 /**
  * Holds the data that defines a text entity.
  */
-class RS_MTextData {
-public:
-    /**
-     * Vertical alignments.
-     */
-    enum VAlign {
-        VATop,      /**< Top. */
-        VAMiddle,   /**< Middle */
-        VABottom    /**< Bottom */
-    };
+struct RS_MTextData {
+	/**
+	 * Vertical alignments.
+	 */
+	enum VAlign {
+		VATop,      /**< Top. */
+		VAMiddle,   /**< Middle */
+		VABottom    /**< Bottom */
+	};
 
-    /**
-     * Horizontal alignments.
-     */
-    enum HAlign {
-        HALeft,     /**< Left */
-        HACenter,   /**< Centered */
-        HARight     /**< Right */
-    };
+	/**
+	 * Horizontal alignments.
+	 */
+	enum HAlign {
+		HALeft,     /**< Left */
+		HACenter,   /**< Centered */
+		HARight     /**< Right */
+	};
 
-    /**
-     * MText drawing direction.
-     */
-    enum MTextDrawingDirection {
-        LeftToRight,     /**< Left to right */
-        TopToBottom,     /**< Top to bottom */
-        ByStyle          /**< Inherited from associated text style */
-    };
+	/**
+	 * MText drawing direction.
+	 */
+	enum MTextDrawingDirection {
+		LeftToRight,     /**< Left to right */
+		TopToBottom,     /**< Top to bottom */
+		ByStyle          /**< Inherited from associated text style */
+	};
 
-    /**
-     * Line spacing style for MTexts.
-     */
-    enum MTextLineSpacingStyle {
-        AtLeast,        /**< Taller characters will override */
-        Exact           /**< Taller characters will not override */
-    };
+	/**
+	 * Line spacing style for MTexts.
+	 */
+	enum MTextLineSpacingStyle {
+		AtLeast,        /**< Taller characters will override */
+		Exact           /**< Taller characters will not override */
+	};
 
-    /**
-     * Default constructor. Leaves the data object uninitialized.
-     */
-    RS_MTextData() {}
+	/**
+	 * Default constructor. Leaves the data object uninitialized.
+	 */
+	RS_MTextData() = default;
 
-    /**
-     * Constructor with initialisation.
-     *
-     * @param insertionPoint Insertion point
-     * @param height Nominal (initial) text height
-     * @param width Reference rectangle width
-     * @param valign Vertical alignment
-     * @param halign Horizontal alignment
-     * @param drawingDirection Drawing direction
-     * @param lineSpacingStyle Line spacing style
-     * @param lineSpacingFactor Line spacing factor
-     * @param text Text string
-     * @param style Text style name
-     * @param angle Rotation angle
-     * @param updateMode RS2::Update will update the text entity instantly
-     *    RS2::NoUpdate will not update the entity. You can update
-     *    it later manually using the update() method. This is
-     *    often the case since you might want to adjust attributes
-     *    after creating a text entity.
-     */
-    RS_MTextData(const RS_Vector& insertionPoint,
-                double height,
-                double width,
-                VAlign valign,
-                HAlign halign,
-                MTextDrawingDirection drawingDirection,
-                MTextLineSpacingStyle lineSpacingStyle,
-                double lineSpacingFactor,
-                const QString& text,
-                const QString& style,
-                double angle,
-                RS2::UpdateMode updateMode = RS2::Update) {
-        this->insertionPoint = insertionPoint;
-        this->height = height;
-        this->width = width;
-        this->valign = valign;
-        this->halign = halign;
-        this->drawingDirection = drawingDirection;
-        this->lineSpacingStyle = lineSpacingStyle;
-        this->lineSpacingFactor = lineSpacingFactor;
-        this->style = style;
-        this->angle = angle;
-        this->text = text;
-        this->updateMode = updateMode;
-    }
+	/**
+	 * Constructor with initialisation.
+	 *
+	 * @param insertionPoint Insertion point
+	 * @param height Nominal (initial) text height
+	 * @param width Reference rectangle width
+	 * @param valign Vertical alignment
+	 * @param halign Horizontal alignment
+	 * @param drawingDirection Drawing direction
+	 * @param lineSpacingStyle Line spacing style
+	 * @param lineSpacingFactor Line spacing factor
+	 * @param text Text string
+	 * @param style Text style name
+	 * @param angle Rotation angle
+	 * @param updateMode RS2::Update will update the text entity instantly
+	 *    RS2::NoUpdate will not update the entity. You can update
+	 *    it later manually using the update() method. This is
+	 *    often the case since you might want to adjust attributes
+	 *    after creating a text entity.
+	 */
+	RS_MTextData(const RS_Vector& insertionPoint,
+				 double height,
+				 double width,
+				 VAlign valign,
+				 HAlign halign,
+				 MTextDrawingDirection drawingDirection,
+				 MTextLineSpacingStyle lineSpacingStyle,
+				 double lineSpacingFactor,
+				 const QString& text,
+				 const QString& style,
+				 double angle,
+				 RS2::UpdateMode updateMode = RS2::Update);
 
-    friend class RS_MText;
-
-    friend std::ostream& operator << (std::ostream& os, const RS_MTextData& td) {
-        os << "(" << td.text.toLatin1().data() << ")";
-        return os;
-    }
-
-public:
-    /** Insertion point */
-    RS_Vector insertionPoint;
-    /** Nominal (initial) text height */
-    double height;
-    /** Reference rectangle width */
-    double width;
-    /** Vertical alignment */
-    VAlign valign;
-    /** Horizontal alignment */
-    HAlign halign;
-    /** Drawing direction */
-    MTextDrawingDirection drawingDirection;
-    /** Line spacing style */
-    MTextLineSpacingStyle lineSpacingStyle;
-    /** Line spacing factor */
-    double lineSpacingFactor;
-    /** Text string */
-    QString text;
-    /** Text style name */
-    QString style;
-    /** Rotation angle */
-    double angle;
-    /** Update mode */
-    RS2::UpdateMode updateMode;
+	/** Insertion point */
+	RS_Vector insertionPoint;
+	/** Nominal (initial) text height */
+	double height;
+	/** Reference rectangle width */
+	double width;
+	/** Vertical alignment */
+	VAlign valign;
+	/** Horizontal alignment */
+	HAlign halign;
+	/** Drawing direction */
+	MTextDrawingDirection drawingDirection;
+	/** Line spacing style */
+	MTextLineSpacingStyle lineSpacingStyle;
+	/** Line spacing factor */
+	double lineSpacingFactor;
+	/** Text string */
+	QString text;
+	/** Text style name */
+	QString style;
+	/** Rotation angle */
+	double angle;
+	/** Update mode */
+	RS2::UpdateMode updateMode;
 };
 
+std::ostream& operator << (std::ostream& os, const RS_MTextData& td);
 
 
 /**
@@ -169,15 +148,9 @@ class RS_MText : public RS_EntityContainer {
 public:
     RS_MText(RS_EntityContainer* parent,
             const RS_MTextData& d);
-    virtual ~RS_MText() {}
+	virtual ~RS_MText() = default;
 
-    virtual RS_Entity* clone() {
-        RS_MText* t = new RS_MText(*this);
-        t->setOwner(isOwner());
-        t->initId();
-        t->detach();
-        return t;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityText */
     virtual RS2::EntityType rtti() const {
@@ -264,9 +237,7 @@ public:
      */
     virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
                                          double* dist = NULL)const;
-    virtual RS_VectorSolutions getRefPoints();
-    virtual RS_Vector getNearestRef(const RS_Vector& coord,
-                                    double* dist = NULL);
+	virtual RS_VectorSolutions getRefPoints() const;
 
     virtual void move(const RS_Vector& offset);
     virtual void rotate(const RS_Vector& center, const double& angle);

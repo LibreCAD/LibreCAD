@@ -44,7 +44,7 @@ public:
                     RS2::Axis axis = RS2::Both,
                     const RS_Vector& center = RS_Vector(false),
                     double factor = 1.25);
-    ~RS_ActionZoomIn() {}
+    ~RS_ActionZoomIn() = default;
 
 	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 

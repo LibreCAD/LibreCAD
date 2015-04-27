@@ -25,9 +25,9 @@
 **********************************************************************/
 #include "qg_dlgline.h"
 
-//#include <qvariant.h>
 #include "rs_line.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgLine as a child of 'parent', with the

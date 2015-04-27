@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -88,6 +89,7 @@
 #include "rs_actioneditcopy.h"
 #include "rs_actioneditpaste.h"
 #include "rs_actioneditundo.h"
+#include "lc_actionfileexportmakercam.h"
 #include "rs_actionfilenewtemplate.h"
 #include "rs_actionfileopen.h"
 #include "rs_actionfilesaveas.h"
@@ -104,6 +106,7 @@
 #include "rs_actionlayerstogglelock.h"
 #include "rs_actionlayerstoggleview.h"
 #include "rs_actionlayerstoggleprint.h"
+#include "lc_actionlayerstoggleconstruction.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_actionlockrelativezero.h"
 #include "rs_actionmodifyattributes.h"
@@ -163,49 +166,18 @@
 #include "qc_applicationwindow.h"
 
 //a list of EntityTypes which support actionOffset
-QVector<RS2::EntityType> QG_ActionHandler::offsetEntities(0);
+std::vector<RS2::EntityType> QG_ActionHandler::offsetEntities(0);
 
 /**
  * Constructor
  */
-QG_ActionHandler::QG_ActionHandler(QG_MainWindowInterface* mw) {
-    RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler");
-    mainWindow = mw;
-
-//    snapFree               = NULL;
-//    snapGrid               = NULL;
-//    snapEndpoint           = NULL;
-//    snapOnEntity           = NULL;
-//    snapCenter             = NULL;
-//    snapMiddle             = NULL;
-//    snapDistance               = NULL;
-//    snapIntersection       = NULL;
-//    snapIntersectionManual = NULL;
-
-    snapToolBar= NULL;
-
-//    restrictNothing = NULL;
-//    restrictOrthogonal = NULL;
-//    restrictHorizontal = NULL;
-//    restrictVertical = NULL;
-
-//    lockRelativeZero = NULL;
-//    lockedRelZero=false;
-    orderType = RS2::ActionOrderTop;
+QG_ActionHandler::QG_ActionHandler(QG_MainWindowInterface* mw):
+	mainWindow(mw)
+  ,orderType(RS2::ActionOrderTop)
+{
+	RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler");
     RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler: OK");
 }
-
-
-
-/**
- * Destructor
- */
-QG_ActionHandler::~QG_ActionHandler() {
-    RS_DEBUG->print("QG_ActionHandler::~QG_ActionHandler");
-    RS_DEBUG->print("QG_ActionHandler::~QG_ActionHandler: OK");
-}
-
-
 
 /**
  * Kills all running selection actions. Called when a selection action
@@ -214,12 +186,18 @@ QG_ActionHandler::~QG_ActionHandler() {
 void QG_ActionHandler::killSelectActions() {
     RS_GraphicView* gv = mainWindow->getGraphicView();
 
-    if (gv!=NULL) {
+	if (gv) {
         gv->killSelectActions();
     }
 }
 
+void QG_ActionHandler::killAllActions() {
+	RS_GraphicView* gv = mainWindow->getGraphicView();
 
+	if (gv) {
+		gv->killAllActions();
+	}
+}
 
 /**
  * @return Current action or NULL.
@@ -227,14 +205,12 @@ void QG_ActionHandler::killSelectActions() {
 RS_ActionInterface* QG_ActionHandler::getCurrentAction() {
     RS_GraphicView* gv = mainWindow->getGraphicView();
 
-    if (gv!=NULL) {
+	if (gv) {
         return gv->getCurrentAction();
     } else {
         return NULL;
     }
 }
-
-
 
 /**
  * Sets current action.
@@ -277,11 +253,14 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionFileSaveAs:
         a = new RS_ActionFileSaveAs(*doc, *gv);
         break;
+    case RS2::ActionFileExportMakerCam:
+		a = new LC_ActionFileExportMakerCam(*doc, *gv);
+        break;
 
         // Editing actions:
         //
     case RS2::ActionEditKillAllActions:
-        if (gv!=NULL) {
+		if (gv) {
             // DO we need to call some form of a 'clean' function?
             gv->killAllActions();
             RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
@@ -425,7 +404,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDrawLineHorVert(*doc, *gv);
         break;
     case RS2::ActionDrawLineVertical:
-        a = new RS_ActionDrawLineAngle(*doc, *gv, M_PI/2.0, true,
+        a = new RS_ActionDrawLineAngle(*doc, *gv, M_PI_2, true,
                                        RS2::ActionDrawLineVertical);
         break;
     case RS2::ActionDrawLineFree:
@@ -454,10 +433,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDrawLineTangent2(*doc, *gv);
         break;
     case RS2::ActionDrawLineOrthogonal:
-        a = new RS_ActionDrawLineRelAngle(*doc, *gv, M_PI/2.0, true);
+        a = new RS_ActionDrawLineRelAngle(*doc, *gv, M_PI_2, true);
         break;
     case RS2::ActionDrawLineRelAngle:
-        a = new RS_ActionDrawLineRelAngle(*doc, *gv, M_PI/2.0, false);
+        a = new RS_ActionDrawLineRelAngle(*doc, *gv, M_PI_2, false);
         break;
     case RS2::ActionDrawPolyline:
         a = new RS_ActionDrawPolyline(*doc, *gv);
@@ -594,7 +573,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDimLinear(*doc, *gv, 0.0, true, RS2::ActionDimLinearHor);
         break;
     case RS2::ActionDimLinearVer:
-        a = new RS_ActionDimLinear(*doc, *gv, M_PI/2.0, true, RS2::ActionDimLinearVer);
+        a = new RS_ActionDimLinear(*doc, *gv, M_PI_2, true, RS2::ActionDimLinearVer);
         break;
     case RS2::ActionDimRadial:
         a = new RS_ActionDimRadial(*doc, *gv);
@@ -837,6 +816,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionLayersTogglePrint:
         a = new RS_ActionLayersTogglePrint(*doc, *gv);
         break;
+    case RS2::ActionLayersToggleConstruction:
+        a = new LC_ActionLayersToggleConstruction(*doc, *gv);
+        break;
         // Block actions:
         //
     case RS2::ActionBlocksDefreezeAll:
@@ -902,7 +884,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     }
 
-    if (a!=NULL) {
+	if (a) {
         gv->setCurrentAction(a);
     }
 
@@ -918,7 +900,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 QStringList QG_ActionHandler::getAvailableCommands() {
     RS_ActionInterface* currentAction = getCurrentAction();
 
-    if (currentAction!=NULL) {
+	if (currentAction) {
         return currentAction->getAvailableCommands();
     } else {
         QStringList cmd;
@@ -931,7 +913,9 @@ QStringList QG_ActionHandler::getAvailableCommands() {
 //get snap mode from snap toolbar
 RS_SnapMode QG_ActionHandler::getSnaps()
 {
-    if (snapToolBar != NULL) {
+	QG_SnapToolBar* snapToolBar=QC_ApplicationWindow::getAppWindow()->getSnapToolBar();
+
+	if (snapToolBar) {
         return snapToolBar->getSnaps();
     }
     //return a free snap mode
@@ -954,7 +938,7 @@ bool QG_ActionHandler::keycode(const QString& code) {
     //RS_keycodeEvent e(cmd);
 
     //RS_GraphicView* gv = mainWindow->getGraphicView();
-    //if (gv!=NULL) {
+	//if (gv) {
     //    gv->keycodeEvent(&e);
     //}
 
@@ -1081,7 +1065,7 @@ bool QG_ActionHandler::command(const QString& cmd) {
 
     if (c=="\n" || c==tr("escape", "escape, go back from action steps")) {
         RS_GraphicView* gv = mainWindow->getGraphicView();
-        if (gv!=NULL) {
+		if (gv) {
             if(c=="\n" ){
                 gv->enter();
                 RS_DEBUG->print("QG_ActionHandler::command: enter");
@@ -1097,7 +1081,7 @@ bool QG_ActionHandler::command(const QString& cmd) {
     RS_CommandEvent e(cmd);
 
     RS_GraphicView* gv = mainWindow->getGraphicView();
-    if (gv!=NULL) {
+	if (gv) {
         RS_DEBUG->print("QG_ActionHandler::command: trigger command event in "
                         " graphic view");
         gv->commandEvent(&e);
@@ -1161,6 +1145,10 @@ void QG_ActionHandler::slotFilePrint() {
         setCurrentAction(RS2::ActionFilePrint);
 }
 */
+
+void QG_ActionHandler::slotFileExportMakerCam() {
+    setCurrentAction(RS2::ActionFileExportMakerCam);
+}
 
 void QG_ActionHandler::slotZoomIn() {
     setCurrentAction(RS2::ActionZoomIn);
@@ -1596,17 +1584,18 @@ void QG_ActionHandler::slotModifyExplodeText() {
     setCurrentAction(RS2::ActionModifyExplodeText);
 }
 
-void QG_ActionHandler::slotSetSnaps(RS_SnapMode s) {
+void QG_ActionHandler::slotSetSnaps(RS_SnapMode const& s) {
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps()");
-    updateSnapMode(s);
-    if(snapToolBar != NULL) {
+	QG_SnapToolBar* snapToolBar=QC_ApplicationWindow::getAppWindow()->getSnapToolBar();
+
+	if(snapToolBar ) {
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): set snapToolBar");
         snapToolBar->setSnaps(s);
     }else{
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): snapToolBar is NULL");
     }
     RS_GraphicView* view=mainWindow->getGraphicView();
-    if(view != NULL) {
+	if(view ) {
         view->setDefaultSnapMode(s);
     }
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): ok");
@@ -1674,10 +1663,10 @@ void QG_ActionHandler::slotSnapIntersection() {
 
 void QG_ActionHandler::slotSnapIntersectionManual() {
     //disableSnaps();
-    /*if (snapIntersectionManual!=NULL) {
+	/*if (snapIntersectionManual) {
         snapIntersectionManual->setChecked(true);
 }*/
-    /*if (snapToolBar!=NULL) {
+	/*if (snapToolBar) {
         snapToolBar->setSnapMode(RS2::SnapIntersectionManual);
 }*/
     //setCurrentAction(RS2::ActionSnapIntersectionManual);
@@ -1723,20 +1712,14 @@ void QG_ActionHandler::disableRestrictions() {
     slotSetSnaps(s);
 }
 
-
-/**
- * Updates the snap mode for the current document from the selected menu.
- * Used after the active window changed.
- */
-void QG_ActionHandler::updateSnapMode(RS_SnapMode& /*s*/) {
-}
-
 void QG_ActionHandler::slotSetRelativeZero() {
     setCurrentAction(RS2::ActionSetRelativeZero);
 }
 
 void QG_ActionHandler::slotLockRelativeZero(bool on) {
-    if (snapToolBar != NULL) {
+	QG_SnapToolBar* snapToolBar=QC_ApplicationWindow::getAppWindow()->getSnapToolBar();
+
+	if (snapToolBar) {
         snapToolBar->setLockedRelativeZero(on);
     }
     if (on) {
@@ -1802,6 +1785,10 @@ void QG_ActionHandler::slotLayersTogglePrint() {
     setCurrentAction(RS2::ActionLayersTogglePrint);
 }
 
+void QG_ActionHandler::slotLayersToggleConstruction() {
+    setCurrentAction(RS2::ActionLayersToggleConstruction);
+}
+
 
 void QG_ActionHandler::slotBlocksDefreezeAll() {
     setCurrentAction(RS2::ActionBlocksDefreezeAll);
@@ -1854,18 +1841,10 @@ void QG_ActionHandler::slotOptionsDrawing() {
 
 void QG_ActionHandler::slotFocusNormal() {
     //QG_GraphicView* gv = mainWindow->getGraphicView();
-    //if (gv!=NULL) {
+	//if (gv) {
         //gv->setFocus();
         mainWindow->setFocus2();
     //}
-}
-
-/**
-    * Creates link to snap tool bar so we can update the button
-    * state if the snapping action changes.
-    */
-void QG_ActionHandler::setSnapToolBar(QG_SnapToolBar* tb) {
-    snapToolBar = tb;
 }
 
 // EOF

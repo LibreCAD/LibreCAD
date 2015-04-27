@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -41,7 +42,7 @@ class RS_Vector;
 class RS_VariableDict {
 public:
     RS_VariableDict();
-    virtual ~RS_VariableDict() {}
+    virtual ~RS_VariableDict() {};
 
     void clear();
     /**
@@ -63,9 +64,9 @@ public:
 
     virtual void remove(const QString& key);
 
-        QHash<QString, RS_Variable>& getVariableDict() {
-		return variables;
-	}
+    QHash<QString, RS_Variable>& getVariableDict() {
+        return variables;
+    }
 
     //void addVariableDictListener(RS_VariableDictListener* listener);
 
@@ -74,7 +75,6 @@ public:
 private:
     //! Variables for the graphic
     QHash<QString, RS_Variable> variables;
-}
-;
+};
 
 #endif

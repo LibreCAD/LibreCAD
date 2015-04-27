@@ -27,7 +27,7 @@
 #ifndef RS_INFOAREA_H
 #define RS_INFOAREA_H
 
-#include <QVector>
+#include <vector>
 #include "rs_vector.h"
 
 class QPolygon;
@@ -39,27 +39,17 @@ class QPolygon;
 class RS_InfoArea {
 public:
     RS_InfoArea();
-    ~RS_InfoArea();
+	~RS_InfoArea() = default;
 
     void reset();
     void push_back(const RS_Vector& p);
     //whether the point p is already in contour
     bool duplicated(const RS_Vector& p);
     void pop_back();
-    double getArea() {
-        return area;
-    }
-    double getCircumference() {
-        if(calculationNeeded) calculate();
-        return circumference;
-    }
-    int size() {
-        if(calculationNeeded) calculate();
-        return thePoints.size();
-    }
-    RS_Vector at(int i){
-        return thePoints.at(i);
-    }
+	double getArea() const;
+	double getCircumference();
+	int size();
+	const RS_Vector& at(int i) const;
     /**
      * @brief getArea of polygon
      * @param polygon
@@ -71,7 +61,7 @@ private:
     void calculate();
     double calcSubArea(const RS_Vector& p1, const RS_Vector& p2);
 
-    QList<RS_Vector> thePoints;
+	std::vector<RS_Vector> thePoints;
     double baseY;
     double area;
     double circumference;

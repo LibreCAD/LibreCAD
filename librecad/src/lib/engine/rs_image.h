@@ -23,23 +23,23 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-
 #ifndef RS_IMAGE_H
 #define RS_IMAGE_H
 
-#include <QImage>
+#include <memory>
 #include "rs_atomicentity.h"
+
+class QImage;
 
 /**
  * Holds the data that defines a line.
  */
-class RS_ImageData {
-public:
+struct RS_ImageData {
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-    RS_ImageData() {}
+	RS_ImageData() = default;
+	~RS_ImageData() = default;
 
     RS_ImageData(int handle,
                                 const RS_Vector& insertionPoint,
@@ -49,43 +49,26 @@ public:
                                 const QString& file,
                                 int brightness,
                                 int contrast,
-                                int fade) {
+								int fade);
 
-                this->handle = handle;
-        this->insertionPoint = insertionPoint;
-        this->uVector = uVector;
-        this->vVector = vVector;
-        this->size = size;
-        this->file = file;
-                this->brightness = brightness;
-                this->contrast = contrast;
-                this->fade = fade;
-    }
-
-    friend std::ostream& operator << (std::ostream& os, const RS_ImageData& ld) {
-        os << "(" << ld.insertionPoint << ")";
-        return os;
-    }
-
-public:
-        /** Handle of image definition. */
-        int handle;
-        /** Insertion point. */
-    RS_Vector insertionPoint;
-        /** u vector. Points along visual bottom of image. */
-    RS_Vector uVector;
-        /** v vector. Points along visual left of image. */
-    RS_Vector vVector;
-        /** Image size in pixel. */
-        RS_Vector size;
-        /** Path to image file. */
-        QString file;
-        /** Brightness (0..100, default: 50). */
-        int brightness;
-        /** Contrast (0..100, default: 50). */
-        int contrast;
-        /** Fade (0..100, default: 0). */
-        int fade;
+	/** Handle of image definition. */
+	int handle;
+	/** Insertion point. */
+	RS_Vector insertionPoint;
+	/** u vector. Points along visual bottom of image. */
+	RS_Vector uVector;
+	/** v vector. Points along visual left of image. */
+	RS_Vector vVector;
+	/** Image size in pixel. */
+	RS_Vector size;
+	/** Path to image file. */
+	QString file;
+	/** Brightness (0..100, default: 50). */
+	int brightness;
+	/** Contrast (0..100, default: 50). */
+	int contrast;
+	/** Fade (0..100, default: 0). */
+	int fade;
 };
 
 
@@ -99,10 +82,11 @@ class RS_Image : public RS_AtomicEntity {
 public:
     RS_Image(RS_EntityContainer* parent,
             const RS_ImageData& d);
+	RS_Image(const RS_Image& _image);
+	RS_Image operator = (const RS_Image& _image);
+	virtual ~RS_Image() = default;
 
-    virtual RS_Entity* clone();
-
-    virtual ~RS_Image();
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityImage */
     virtual RS2::EntityType rtti() const {
@@ -200,13 +184,13 @@ public:
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
             bool onEntity=true, double* dist = NULL, RS_Entity** entity=NULL)const;
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-                                       double* dist = NULL);
+									   double* dist = NULL)const;
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
                                        double* dist = NULL,
                                        int middlePoints=1)const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = NULL)const;
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity=NULL,
                                       RS2::ResolveLevel level=RS2::ResolveNone,
@@ -233,9 +217,10 @@ public:
     // whether the the point is within image
     virtual bool containsPoint(const RS_Vector& coord) const;
 
+
 protected:
     RS_ImageData data;
-        QImage img;
+	std::unique_ptr<QImage> img;
         //QImage** img;
         //int nx;
         //int ny;

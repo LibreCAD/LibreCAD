@@ -34,41 +34,31 @@
 /**
  * Holds the data that defines a hatch entity.
  */
-class RS_HatchData {
-public:
+struct RS_HatchData {
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-    RS_HatchData() {}
+	RS_HatchData() = default;
+	~RS_HatchData() = default;
 
         /**
          * @param solid true: solid fill, false: pattern.
          * @param scale Pattern scale or spacing.
          * @param pattern Pattern name.
          */
-    RS_HatchData(bool solid,
-                     double scale,
-                                 double angle,
-                     const QString& pattern) {
-                this->solid = solid;
-                this->scale = scale;
-                this->angle = angle;
-                this->pattern = pattern;
+	RS_HatchData(bool solid,
+				 double scale,
+				 double angle,
+				 const QString& pattern);
 
-                //std::cout << "RS_HatchData: " << pattern.latin1() << "\n";
-        }
 
-    friend std::ostream& operator << (std::ostream& os, const RS_HatchData& td) {
-        os << "(" << td.pattern.toLatin1().data() << ")";
-        return os;
-    }
-
-public:
-        bool solid;
-        double scale;
-        double angle;
-        QString pattern;
+	bool solid;
+	double scale;
+	double angle;
+	QString pattern;
 };
+
+std::ostream& operator << (std::ostream& os, const RS_HatchData& td);
 
 
 
@@ -86,12 +76,13 @@ public:
                          HATCH_TOO_SMALL,
                          HATCH_AREA_TOO_BIG };
 
+	RS_Hatch() = default;
 
     RS_Hatch(RS_EntityContainer* parent,
             const RS_HatchData& d);
-    virtual ~RS_Hatch() {}
+	virtual ~RS_Hatch() = default;
 
-    virtual RS_Entity* clone();
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityHatch */
     virtual RS2::EntityType rtti() const {
@@ -102,14 +93,7 @@ public:
      * @return true: if this is a hatch with lines (hatch pattern),
      *         false: if this is filled with a solid color.
      */
-    virtual bool isContainer() const {
-                if (isSolid()) {
-                        return false;
-                }
-                else {
-                return true;
-                }
-    }
+	virtual bool isContainer() const;
 
     /** @return Copy of data that defines the hatch. */
     RS_HatchData getData() const {
@@ -118,7 +102,7 @@ public:
 
         bool validate();
 
-        int countLoops();
+		int countLoops() const;
 
         /** @return true if this is a solid fill. false if it is a pattern hatch. */
         bool isSolid() const {

@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphic.h"
 #include "rs_dialogfactory.h"
 #include "rs_insert.h"
+#include "rs_coordinateevent.h"
 
 
 
@@ -46,9 +47,7 @@ QAction* RS_ActionBlocksSave::createGUIAction(RS2::ActionType /*type*/, QObject*
 /*recursive add blocks in graphic*/
 void RS_ActionBlocksSave::addBlock(RS_Insert* in, RS_Graphic* g) {
 
-    for (RS_Entity* e=in->firstEntity(RS2::ResolveNone);
-         e!=NULL;
-         e = in->nextEntity(RS2::ResolveNone)) {
+	for(auto e: *in){
 
         if (e->rtti() == RS2::EntityInsert) {
             addBlock((RS_Insert *)e,g);

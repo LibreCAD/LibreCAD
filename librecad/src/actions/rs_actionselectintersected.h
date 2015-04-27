@@ -28,7 +28,6 @@
 #define RS_ACTIONSELECTINTERSECTED_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_vector.h"
 
 
 /**
@@ -51,11 +50,11 @@ public:
     RS_ActionSelectIntersected(RS_EntityContainer& container,
                          RS_GraphicView& graphicView,
                          bool select);
-    ~RS_ActionSelectIntersected() {}
+	~RS_ActionSelectIntersected()=default;
 
 	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 
-	virtual RS2::ActionType rtti() {
+	virtual RS2::ActionType rtti() const{
 		return RS2::ActionSelectIntersected;
 	}
 
@@ -69,7 +68,6 @@ public:
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
 
 protected:
     RS_Vector v1;

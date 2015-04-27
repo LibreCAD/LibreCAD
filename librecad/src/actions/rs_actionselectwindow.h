@@ -50,11 +50,11 @@ public:
     RS_ActionSelectWindow(RS_EntityContainer& container,
                          RS_GraphicView& graphicView,
                          bool select);
-    ~RS_ActionSelectWindow() {}
+	~RS_ActionSelectWindow()=default;
 
 	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 
-	virtual RS2::ActionType rtti() {
+	virtual RS2::ActionType rtti() const{
 		return RS2::ActionSelectWindow;
 	}
 
@@ -68,7 +68,6 @@ public:
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
 
 protected:
     RS_Vector v1;

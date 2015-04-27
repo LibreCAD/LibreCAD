@@ -189,5 +189,6 @@
         <file>reverse.png</file>
         <file>circle2pr.png</file>
         <file>splinepoints.png</file>
+        <file>menusplinepoints.png</file>
     </qresource>
 </RCC>

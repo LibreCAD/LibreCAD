@@ -26,11 +26,34 @@
 
 
 #include "rs_dimradial.h"
-//#include "rs_constructionline.h"
+#include "rs_line.h"
 #include "rs_mtext.h"
 #include "rs_solid.h"
 #include "rs_graphic.h"
 
+RS_DimRadialData::RS_DimRadialData():
+	definitionPoint(false),
+	leader(0.0)
+{}
+
+/**
+ * Constructor with initialisation.
+ *
+ * @param definitionPoint Definition point of the radial dimension.
+ * @param leader Leader length.
+ */
+RS_DimRadialData::RS_DimRadialData(const RS_Vector& _definitionPoint,
+				 double _leader):
+	definitionPoint(_definitionPoint)
+	,leader(_leader)
+{
+}
+
+std::ostream& operator << (std::ostream& os,
+								  const RS_DimRadialData& dd) {
+	os << "(" << dd.definitionPoint << "/" << dd.leader << ")";
+	return os;
+}
 
 /**
  * Constructor.
@@ -44,6 +67,13 @@ RS_DimRadial::RS_DimRadial(RS_EntityContainer* parent,
                            const RS_DimRadialData& ed)
         : RS_Dimension(parent, d), edata(ed) {}
 
+RS_Entity* RS_DimRadial::clone() const {
+	RS_DimRadial* d = new RS_DimRadial(*this);
+	d->setOwner(isOwner());
+	d->initId();
+	d->detach();
+	return d;
+}
 
 
 /**
@@ -53,7 +83,7 @@ RS_DimRadial::RS_DimRadial(RS_EntityContainer* parent,
 QString RS_DimRadial::getMeasuredLabel() {
 
     // Definitive dimension line:
-    double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
+	double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
 
     RS_Graphic* graphic = getGraphic();
 
@@ -69,10 +99,10 @@ QString RS_DimRadial::getMeasuredLabel() {
 }
 
 
-RS_VectorSolutions RS_DimRadial::getRefPoints() {
-        RS_VectorSolutions ret(edata.definitionPoint,
-                                                data.definitionPoint, data.middleOfText);
-        return ret;
+RS_VectorSolutions RS_DimRadial::getRefPoints() const
+{
+		return RS_VectorSolutions({edata.definitionPoint,
+												data.definitionPoint, data.middleOfText});
 }
 
 
@@ -99,7 +129,7 @@ void RS_DimRadial::updateDim(bool autoText) {
     // general scale (DIMSCALE)
     double dimscale = getGeneralScale();
 
-    RS_Vector p1 = data.definitionPoint;
+	RS_Vector p1 = data.definitionPoint;
     RS_Vector p2 = edata.definitionPoint;
     double angle = p1.angleTo(p2);
 
@@ -167,15 +197,15 @@ void RS_DimRadial::updateDim(bool autoText) {
 
     // rotate text so it's readable from the bottom or right (ISO)
     // quadrant 1 & 4
-    if (angle>M_PI/2.0*3.0+0.001 ||
-            angle<M_PI/2.0+0.001) {
+	if (angle>M_PI_2*3.0+0.001 ||
+			angle<M_PI_2+0.001) {
 
-        distV.setPolar(dimgap + dimtxt/2.0, angle+M_PI/2.0);
+		distV.setPolar(dimgap + dimtxt/2.0, angle+M_PI_2);
         textAngle = angle;
     }
     // quadrant 2 & 3
     else {
-        distV.setPolar(dimgap + dimtxt/2.0, angle-M_PI/2.0);
+		distV.setPolar(dimgap + dimtxt/2.0, angle-M_PI_2);
         textAngle = angle+M_PI;
     }
 
@@ -252,12 +282,12 @@ void RS_DimRadial::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoin
 void RS_DimRadial::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 
     if (ref.distanceTo(edata.definitionPoint)<1.0e-4) {
-                double d = data.definitionPoint.distanceTo(edata.definitionPoint);
-                double a = data.definitionPoint.angleTo(edata.definitionPoint + offset);
+				double d = data.definitionPoint.distanceTo(edata.definitionPoint);
+				double a = data.definitionPoint.angleTo(edata.definitionPoint + offset);
 
                 RS_Vector v;
                 v.setPolar(d, a);
-        edata.definitionPoint = data.definitionPoint + v;
+		edata.definitionPoint = data.definitionPoint + v;
                 updateDim(true);
     }
         else if (ref.distanceTo(data.middleOfText)<1.0e-4) {

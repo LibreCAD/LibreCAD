@@ -27,10 +27,38 @@
 
 #include "rs_insert.h"
 
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_ellipse.h"
 #include "rs_block.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
+#include "rs_math.h"
 
+RS_InsertData::RS_InsertData(const QString& _name,
+							 RS_Vector _insertionPoint,
+							 RS_Vector _scaleFactor,
+							 double _angle,
+							 int _cols, int _rows, RS_Vector _spacing,
+							 RS_BlockList* _blockSource ,
+							 RS2::UpdateMode _updateMode ):
+	name(_name)
+  ,insertionPoint(_insertionPoint)
+  ,scaleFactor(_scaleFactor)
+  ,angle(_angle)
+  ,cols(_cols)
+  ,rows(_rows)
+  ,spacing(_spacing)
+  ,blockSource(_blockSource)
+  ,updateMode(_updateMode)
+{
+}
+
+std::ostream& operator << (std::ostream& os,
+									 const RS_InsertData& d) {
+	   os << "(" << d.name.toLatin1().data() << ")";
+	   return os;
+   }
 /**
  * @param parent The graphic this block belongs to.
  */
@@ -38,7 +66,7 @@ RS_Insert::RS_Insert(RS_EntityContainer* parent,
                      const RS_InsertData& d)
         : RS_EntityContainer(parent), data(d) {
 
-        block = NULL;
+		block = nullptr;
 
     if (data.updateMode!=RS2::NoUpdate) {
         update();
@@ -47,10 +75,13 @@ RS_Insert::RS_Insert(RS_EntityContainer* parent,
 }
 
 
-/**
- * Destructor.
- */
-RS_Insert::~RS_Insert() {}
+RS_Entity* RS_Insert::clone() const{
+	RS_Insert* i = new RS_Insert(*this);
+	i->setOwner(isOwner());
+	i->initId();
+	i->detach();
+	return i;
+}
 
 
 /**
@@ -71,9 +102,9 @@ void RS_Insert::update() {
     clear();
 
     RS_Block* blk = getBlockForInsert();
-    if (blk==NULL) {
-        //return NULL;
-                RS_DEBUG->print("RS_Insert::update: Block is NULL");
+	if (blk==nullptr) {
+		//return nullptr;
+				RS_DEBUG->print("RS_Insert::update: Block is nullptr");
         return;
     }
 
@@ -91,7 +122,7 @@ void RS_Insert::update() {
 
         /*QListIterator<RS_Entity> it = createIterator();
     RS_Entity* e;
-    while ( (e = it.current()) != NULL ) {
+	while ( (e = it.current()) != nullptr ) {
         ++it;*/
 
         RS_DEBUG->print("RS_Insert::update: cols: %d, rows: %d",
@@ -99,7 +130,7 @@ void RS_Insert::update() {
         RS_DEBUG->print("RS_Insert::update: block has %d entities",
                 blk->count());
 //int i_en_counts=0;
-    for (RS_Entity* e=blk->firstEntity(); e!=NULL; e=blk->nextEntity()) {
+		for(auto e: *blk){
         for (int c=0; c<data.cols; ++c) {
 //            RS_DEBUG->print("RS_Insert::update: col %d", c);
             for (int r=0; r<data.rows; ++r) {
@@ -139,7 +170,7 @@ void RS_Insert::update() {
                 ne->setUpdateEnabled(false);
                 // if entity layer are 0 set to insert layer to allow "1 layer control" bug ID #3602152
                 RS_Layer *l= ne->getLayer();//special fontchar block don't have
-                if (l != NULL && ne->getLayer()->getName() == "0")
+				if (l != nullptr && ne->getLayer()->getName() == "0")
                     ne->setLayer(this->getLayer());
                 ne->setParent(this);
                 ne->setVisible(getFlag(RS2::FlagVisible));
@@ -215,33 +246,34 @@ void RS_Insert::update() {
 
 /**
  * @return Pointer to the block associated with this Insert or
- *   NULL if the block couldn't be found. Blocks are requested
+ *   nullptr if the block couldn't be found. Blocks are requested
  *   from the blockSource if one was supplied and otherwise from
  *   the closest parent graphic.
  */
-RS_Block* RS_Insert::getBlockForInsert() {
-        if (block!=NULL) {
-                return block;
+RS_Block* RS_Insert::getBlockForInsert() const{
+	RS_Block* blk = nullptr;
+		if (block) {
+			blk=block;
+			return blk;
         }
 
     RS_BlockList* blkList;
 
-    if (data.blockSource==NULL) {
-        if (getGraphic()!=NULL) {
+	if (data.blockSource==nullptr) {
+		if (getGraphic()) {
             blkList = getGraphic()->getBlockList();
         } else {
-            blkList = NULL;
+			blkList = nullptr;
         }
     } else {
         blkList = data.blockSource;
     }
 
-    RS_Block* blk = NULL;
-    if (blkList!=NULL) {
+	if (blkList) {
         blk = blkList->find(data.name);
     }
 
-    if (blk!=NULL) {
+	if (blk) {
     }
 
         block = blk;
@@ -255,14 +287,15 @@ RS_Block* RS_Insert::getBlockForInsert() {
  *
  * @return true Only if the entity and the block and the layer it is on
  * are visible.
- * The Layer might also be NULL. In that case the layer visiblity
+ * The Layer might also be nullptr. In that case the layer visiblity
  * is ignored.
- * The Block might also be NULL. In that case the block visiblity
+ * The Block might also be nullptr. In that case the block visiblity
  * is ignored.
  */
-bool RS_Insert::isVisible() {
+bool RS_Insert::isVisible() const
+{
     RS_Block* blk = getBlockForInsert();
-    if (blk!=NULL) {
+	if (blk) {
         if (blk->isFrozen()) {
             return false;
         }
@@ -272,15 +305,15 @@ bool RS_Insert::isVisible() {
 }
 
 
-RS_VectorSolutions RS_Insert::getRefPoints() {
-        RS_VectorSolutions ret(data.insertionPoint);
-        return ret;
+RS_VectorSolutions RS_Insert::getRefPoints() const
+{
+	return RS_VectorSolutions{data.insertionPoint};
 }
 
 
 
 RS_Vector RS_Insert::getNearestRef(const RS_Vector& coord,
-                                     double* dist) {
+									 double* dist) const{
 
         return getRefPoints().getClosest(coord, dist);
 }

@@ -30,7 +30,7 @@
 
 #include "rs_entity.h"
 
-class RS_CircleData;
+struct RS_CircleData;
 
 /**
  * Class representing an atomic entity
@@ -48,7 +48,7 @@ public:
     /**
      * Destrutor.
      */
-    virtual ~RS_AtomicEntity() {}
+	virtual ~RS_AtomicEntity() = default;
 
     /**
      * @return false because entities made from subclasses are
@@ -69,14 +69,14 @@ public:
     /**
      * @return Always 1 for atomic entities.
      */
-    virtual unsigned int count() {
+	virtual unsigned int count() const{
         return 1;
     }
 
     /**
      * @return Always 1 for atomic entities.
      */
-    virtual unsigned int countDeep() {
+	virtual unsigned int countDeep() const{
         return 1;
     }
 
@@ -126,7 +126,7 @@ public:
     * @return The closest center point.
     */
    virtual RS_Vector getNearestCenter(const RS_Vector& /*coord*/,
-                                      double* /*dist*/) {
+									  double* /*dist*/) const{
         return RS_Vector(false);
     }
 

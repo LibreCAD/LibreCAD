@@ -30,6 +30,52 @@
 
 #include "rs_fontlist.h"
 #include "rs_insert.h"
+#include "rs_math.h"
+
+RS_MTextData::RS_MTextData(const RS_Vector& _insertionPoint,
+			double _height,
+			double _width,
+			VAlign _valign,
+			HAlign _halign,
+			MTextDrawingDirection _drawingDirection,
+			MTextLineSpacingStyle _lineSpacingStyle,
+			double _lineSpacingFactor,
+			const QString& _text,
+			const QString& _style,
+			double _angle,
+			RS2::UpdateMode _updateMode):
+	insertionPoint(_insertionPoint)
+	,height(_height)
+	,width(_width)
+	,valign(_valign)
+	,halign(_halign)
+	,drawingDirection(_drawingDirection)
+	,lineSpacingStyle(_lineSpacingStyle)
+	,lineSpacingFactor(_lineSpacingFactor)
+	,text(_text)
+	,style(_style)
+	,angle(_angle)
+	,updateMode(_updateMode)
+{
+}
+
+std::ostream& operator << (std::ostream& os, const RS_MTextData& td) {
+	os << "("
+	   <<td.insertionPoint<<','
+	  <<td.height<<','
+	 <<td.width<<','
+	<<td.valign<<','
+	<<td.halign<<','
+	<<td.drawingDirection<<','
+	<<td.lineSpacingStyle<<','
+	<<td.lineSpacingFactor<<','
+	<<td.text.toLatin1().data() <<','
+	<<td.style.toLatin1().data()<<','
+	<<td.angle<<','
+	<<td.updateMode<<','
+	<<")";
+	return os;
+}
 
 /**
  * Constructor.
@@ -43,7 +89,13 @@ RS_MText::RS_MText(RS_EntityContainer* parent,
     setText(data.text);
 }
 
-
+RS_Entity* RS_MText::clone() const{
+	RS_MText* t = new RS_MText(*this);
+	t->setOwner(isOwner());
+	t->initId();
+	t->detach();
+	return t;
+}
 
 /**
  * Sets a new text. The entities representing the
@@ -501,19 +553,9 @@ RS_Vector RS_MText::getNearestEndpoint(const RS_Vector& coord, double* dist)cons
 }
 
 
-RS_VectorSolutions RS_MText::getRefPoints() {
-        RS_VectorSolutions ret(data.insertionPoint);
-        return ret;
+RS_VectorSolutions RS_MText::getRefPoints() const{
+		return RS_VectorSolutions({data.insertionPoint});
 }
-
-
-RS_Vector RS_MText::getNearestRef(const RS_Vector& coord,
-                                     double* dist) {
-
-        //return getRefPoints().getClosest(coord, dist);
-        return RS_Entity::getNearestRef(coord, dist);
-}
-
 
 void RS_MText::move(const RS_Vector& offset) {
     RS_EntityContainer::move(offset);

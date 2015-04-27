@@ -26,10 +26,13 @@
 
 #include "rs_modification.h"
 
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_ellipse.h"
+#include "rs_line.h"
 #include "rs_graphicview.h"
 #include "rs_clipboard.h"
 #include "rs_creation.h"
-//#include "rs_entity.h"
 #include "rs_graphic.h"
 #include "rs_information.h"
 #include "rs_insert.h"
@@ -39,12 +42,26 @@
 #include "rs_text.h"
 #include "rs_layer.h"
 #include "lc_splinepoints.h"
+#include "rs_math.h"
 
 #include "rs_dialogfactory.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
+
+RS_PasteData::RS_PasteData(RS_Vector _insertionPoint,
+		double _factor,
+		double _angle,
+		bool _asInsert,
+		const QString& _blockName):
+		insertionPoint(_insertionPoint)
+		,factor(_factor)
+		,angle(_angle)
+		,asInsert(_asInsert)
+		,blockName(_blockName)
+{
+}
 
 /**
  * Default constructor.
@@ -82,9 +99,8 @@ void RS_Modification::remove() {
         document->startUndoCycle();
     }
 
-    // not safe (?)
-    for (RS_Entity* e=container->firstEntity(); e!=NULL;
-            e=container->nextEntity()) {
+	// not safe (?)
+	for(auto e: *container){
 
         if (e!=NULL && e->isSelected()) {
             e->setSelected(false);
@@ -117,12 +133,12 @@ void RS_Modification::revertDirection()
 		document->startUndoCycle();
 	}
 
-	QList<RS_Entity*> addList;
-	for (RS_Entity* e=container->firstEntity(); e!=NULL; e=container->nextEntity()) {
+	std::vector<RS_Entity*> addList;
+	for(auto e: *container){
 		if (e!=NULL && e->isSelected()) {
 			RS_Entity* ec = e->clone();
 			ec->revertDirection();
-			addList.append(ec);
+			addList.push_back(ec);
 		}
 	}
 	deselectOriginals(true);
@@ -148,14 +164,13 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data) {
         return false;
     }
 
-    QList<RS_Entity*> addList;
+	std::vector<RS_Entity*> addList;
 
     if (document!=NULL) {
         document->startUndoCycle();
     }
 
-    for (RS_Entity* e=container->firstEntity(); e!=NULL;
-            e=container->nextEntity()) {
+	for(auto e: *container){
         //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
         if (e!=NULL && e->isSelected()) {
@@ -190,7 +205,7 @@ bool RS_Modification::changeAttributes(RS_AttributesData& data) {
             //    ((RS_Insert*)ec)->update();
             //}
             ec->update();
-            addList.append(ec);
+			addList.push_back(ec);
         }
     }
 
@@ -238,9 +253,8 @@ void RS_Modification::copy(const RS_Vector& ref, const bool cut) {
         document->startUndoCycle();
     }
 
-    // copy entities / layers / blocks
-    for (RS_Entity* e=container->firstEntity(); e!=NULL;
-            e=container->nextEntity()) {
+	// copy entities / layers / blocks
+	for(auto e: *container){
         //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
 
@@ -335,9 +349,8 @@ void RS_Modification::copyLayers(RS_Entity* e) {
     if (e->rtti()==RS2::EntityInsert) {
         // insert: add layer(s) of subentities:
         RS_Block* b = ((RS_Insert*)e)->getBlockForInsert();
-        if (b!=NULL) {
-            for (RS_Entity* e2=b->firstEntity(); e2!=NULL;
-                    e2=b->nextEntity()) {
+		if (b) {
+			for(auto e2: *b){
                 //for (unsigned i=0; i<b->count(); ++i) {
                 //RS_Entity* e2 = b->entityAt(i);
                 copyLayers(e2);
@@ -365,9 +378,8 @@ void RS_Modification::copyBlocks(RS_Entity* e) {
             if (!RS_CLIPBOARD->hasBlock(b->getName())) {
                 RS_CLIPBOARD->addBlock((RS_Block*)b->clone());
             }
-            //find insert into insert
-            for (RS_Entity* e2=b->firstEntity(); e2!=NULL;
-                    e2=b->nextEntity()) {
+			//find insert into insert
+			for(auto e2: *b){
                 //call copyBlocks only if entity are insert
                 if (e->rtti()==RS2::EntityInsert) {
                     copyBlocks(e2);
@@ -509,11 +521,9 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
 
     int noBlockIndex = 0;
     // insert entities:
-    for (RS_Entity* e=((RS_EntityContainer*)source)->firstEntity();
-            e!=NULL;
-            e=((RS_EntityContainer*)source)->nextEntity()) {
+	for(auto e: * static_cast<RS_EntityContainer*>(source)){
 
-        if (e!=NULL) {
+		if (e) {
 
             QString layerName = "0";
             RS_Layer* layer = e->getLayer();
@@ -560,8 +570,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
             if (e2->isContainer()) {
                 RS_EntityContainer* ec = (RS_EntityContainer*)e2;
 
-                for (RS_Entity* e3 = ec->firstEntity(RS2::ResolveAll); e3!=NULL;
-                        e3 = ec->nextEntity(RS2::ResolveAll)) {
+				for(auto e3: *ec){
 
                     //RS_Entity* e3 = ec->entityAt(i);
                     RS_Layer* l2 = e3->getLayer();
@@ -652,9 +661,7 @@ bool RS_Modification::splitPolyline(RS_Polyline& polyline,
         *polyline2 = pl2;
     }
 
-    for (RS_Entity* e = polyline.firstEntity();
-            e != NULL;
-            e = polyline.nextEntity()) {
+	for(auto e: polyline){
 
         if (e->rtti()==RS2::EntityLine) {
             line = (RS_Line*)e;
@@ -744,8 +751,7 @@ RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
     // copy polyline and add new node:
     bool first = true;
     RS_Entity* lastEntity = polyline.lastEntity();
-    for (RS_Entity* e=polyline.firstEntity(); e!=NULL;
-            e=polyline.nextEntity()) {
+	for(auto e: polyline){
 
         if (e->isAtomic()) {
             RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
@@ -883,8 +889,7 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
     bool first = true;
     bool lastDropped = false;
     RS_Entity* lastEntity = polyline.lastEntity();
-    for (RS_Entity* e=polyline.firstEntity(); e!=NULL;
-            e=polyline.nextEntity()) {
+	for(auto e: polyline){
 
         if (e->isAtomic()) {
             RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
@@ -1001,8 +1006,7 @@ RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline& polyline,
     }
 
     // check if there's nothing to delete:
-    for (RS_Entity* e=polyline.firstEntity(); e!=NULL;
-            e=polyline.nextEntity()) {
+	for(auto e: polyline){
 
         if (e->isAtomic()) {
             RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
@@ -1086,9 +1090,8 @@ RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline& polyline,
     bool nextIsStraight = false;
     RS_Entity* lastEntity = polyline.lastEntity();
     int i=0;
-    double bulge = 0.0;
-    for (RS_Entity* e=polyline.firstEntity(); e!=NULL;
-            e=polyline.nextEntity()) {
+	double bulge = 0.0;
+	for(auto e: polyline){
 
         RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: entity: %d", i++);
         RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: removing: %d", (int)removing);
@@ -1258,9 +1261,9 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
     // find out if we need to trim towards the open part of the polyline
     bool reverseTrim;
     reverseTrim = !RS_Math::isSameDirection(firstSegment->getDirection1(),
-                                            firstSegment->getStartpoint().angleTo(sol.get(0)), M_PI/2.0);
+											firstSegment->getStartpoint().angleTo(sol.get(0)), M_PI_2);
     //reverseTrim = reverseTrim || !RS_Math::isSameDirection(segment2.getDirection1(),
-    //	segment2.getStartpoint().angleTo(sol.get(0)), M_PI/2.0);
+	//	segment2.getStartpoint().angleTo(sol.get(0)), M_PI_2);
 
     RS_Polyline* newPolyline = new RS_Polyline(container);
     newPolyline->setClosed(polyline.isClosed());
@@ -1274,9 +1277,8 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
         bool first = true;
         bool removing = false;
         bool nextIsStraight = false;
-        RS_Entity* lastEntity = polyline.lastEntity();
-        for (RS_Entity* e=polyline.firstEntity(); e!=NULL;
-                e=polyline.nextEntity()) {
+		RS_Entity* lastEntity = polyline.lastEntity();
+		for(auto e: polyline){
 
             if (e->isAtomic()) {
                 RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
@@ -1349,9 +1351,8 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
         //bool first = true;
         bool removing = true;
         bool nextIsStraight = false;
-        RS_Entity* lastEntity = polyline.lastEntity();
-        for (RS_Entity* e=polyline.firstEntity(); e!=NULL;
-                e=polyline.nextEntity()) {
+		RS_Entity* lastEntity = polyline.lastEntity();
+		for(auto e: polyline){
 
             if (e->isAtomic()) {
                 RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
@@ -1452,7 +1453,7 @@ bool RS_Modification::move(RS_MoveData& data) {
         return false;
     }
 
-    QList<RS_Entity*> addList;
+	std::vector<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
@@ -1464,11 +1465,9 @@ bool RS_Modification::move(RS_MoveData& data) {
             num++) {
         // too slow:
         //for (unsigned i=0; i<container->count(); ++i) {
-        //RS_Entity* e = container->entityAt(i);
-        for (RS_Entity* e=container->firstEntity();
-                e!=NULL;
-                e=container->nextEntity()) {
-            if (e!=NULL && e->isSelected()) {
+		//RS_Entity* e = container->entityAt(i);
+		for(auto e: *container){
+			if (e && e->isSelected()) {
                 RS_Entity* ec = e->clone();
 
                 ec->move(data.offset*num);
@@ -1483,7 +1482,7 @@ bool RS_Modification::move(RS_MoveData& data) {
                 }
                 // since 2.0.4.0: keep selection
                 ec->setSelected(true);
-                addList.append(ec);
+				addList.push_back(ec);
             }
         }
     }
@@ -1514,7 +1513,7 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
         return false;
     }
 
-    QList<RS_Entity*> addList;
+	std::vector<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
@@ -1527,10 +1526,8 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
         // too slow:
         //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
-        for (RS_Entity* e=container->firstEntity();
-                e!=NULL;
-                e=container->nextEntity()) {
-            if (e!=NULL && e->isSelected()) {
+		for(auto e: *container){
+			if (e && e->isSelected()) {
                 RS_Entity* ec = e->clone();
 
                 if(! ec->offset(data.coord,num*data.distance)){
@@ -1548,7 +1545,7 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
                 }
                 // since 2.0.4.0: keep selection
                 ec->setSelected(true);
-                addList.append(ec);
+				addList.push_back(ec);
             }
         }
     }
@@ -1579,7 +1576,7 @@ bool RS_Modification::rotate(RS_RotateData& data) {
         return false;
     }
 
-    QList<RS_Entity*> addList;
+	std::vector<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
@@ -1588,10 +1585,8 @@ bool RS_Modification::rotate(RS_RotateData& data) {
     // Create new entites
     for (int num=1;
             num<=data.number || (data.number==0 && num<=1);
-            num++) {
-        for (RS_Entity* e=container->firstEntity();
-                e!=NULL;
-                e=container->nextEntity()) {
+			num++) {
+		for(auto e: *container){
             //for (unsigned i=0; i<container->count(); ++i) {
             //RS_Entity* e = container->entityAt(i);
 
@@ -1609,7 +1604,7 @@ bool RS_Modification::rotate(RS_RotateData& data) {
                 if (ec->rtti()==RS2::EntityInsert) {
                     ((RS_Insert*)ec)->update();
                 }
-                addList.append(ec);
+				addList.push_back(ec);
             }
         }
     }
@@ -1640,14 +1635,12 @@ bool RS_Modification::scale(RS_ScaleData& data) {
         return false;
     }
 
-    QList<RS_Entity*> selectedList,addList;
+	std::vector<RS_Entity*> selectedList,addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
-    }
-    for (RS_Entity* ec=container->firstEntity();
-            ec!=NULL;
-            ec=container->nextEntity()) {
+	}
+	for(auto ec: *container){
         if (ec->isSelected() ) {
             if ( fabs(data.factor.x - data.factor.y) > RS_TOLERANCE ) {
                     if ( ec->rtti() == RS2::EntityCircle ) {
@@ -1674,7 +1667,7 @@ bool RS_Modification::scale(RS_ScaleData& data) {
                 ec= new RS_Ellipse(container,d);
             }
             }
-            selectedList.append(ec);
+			selectedList.push_back(ec);
 
         }
     }
@@ -1685,16 +1678,13 @@ bool RS_Modification::scale(RS_ScaleData& data) {
             num<=data.number || (data.number==0 && num<=1);
             num++) {
 
-        for(QList<RS_Entity*>::iterator pe=selectedList.begin();
-                pe != selectedList.end();
-                pe++ ) {
-            RS_Entity* e= *pe;
+		for(RS_Entity* e: selectedList) {
             //for (RS_Entity* e=container->firstEntity();
             //        e!=NULL;
             //        e=container->nextEntity()) {
             //for (unsigned i=0; i<container->count(); ++i) {
             //RS_Entity* e = container->entityAt(i);
-            if (e!=NULL ) {
+			if (e) {
                 RS_Entity* ec = e->clone();
                 ec->setSelected(false);
 
@@ -1708,7 +1698,7 @@ bool RS_Modification::scale(RS_ScaleData& data) {
                 if (ec->rtti()==RS2::EntityInsert) {
                     ((RS_Insert*)ec)->update();
                 }
-                addList.append(ec);
+				addList.push_back(ec);
             }
         }
     }
@@ -1739,7 +1729,7 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
         return false;
     }
 
-    QList<RS_Entity*> addList;
+	std::vector<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
@@ -1748,10 +1738,8 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
     // Create new entites
     for (int num=1;
             num<=(int)data.copy || (data.copy==false && num<=1);
-            num++) {
-        for (RS_Entity* e=container->firstEntity();
-                e!=NULL;
-                e=container->nextEntity()) {
+			++num) {
+		for(auto e: *container){
             //for (unsigned i=0; i<container->count(); ++i) {
             //RS_Entity* e = container->entityAt(i);
 
@@ -1769,7 +1757,7 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
                 if (ec->rtti()==RS2::EntityInsert) {
                     ((RS_Insert*)ec)->update();
                 }
-                addList.append(ec);
+				addList.push_back(ec);
             }
         }
     }
@@ -1799,7 +1787,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
         return false;
     }
 
-    QList<RS_Entity*> addList;
+	std::vector<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
@@ -1810,9 +1798,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
             num<=data.number || (data.number==0 && num<=1);
             num++) {
 
-        for (RS_Entity* e=container->firstEntity();
-                e!=NULL;
-                e=container->nextEntity()) {
+		for(auto e: *container){
             //for (unsigned i=0; i<container->count(); ++i) {
             //RS_Entity* e = container->entityAt(i);
 
@@ -1834,7 +1820,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
                 if (ec->rtti()==RS2::EntityInsert) {
                     ((RS_Insert*)ec)->update();
                 }
-                addList.append(ec);
+				addList.push_back(ec);
             }
         }
     }
@@ -1864,19 +1850,17 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
         return false;
     }
 
-    QList<RS_Entity*> addList;
+	std::vector<RS_Entity*> addList;
 
-    if (document!=NULL && handleUndo) {
+	if (document && handleUndo) {
         document->startUndoCycle();
     }
 
     // Create new entites
     for (int num=1;
             num<=data.number || (data.number==0 && num<=1);
-            num++) {
-        for (RS_Entity* e=container->firstEntity();
-                e!=NULL;
-                e=container->nextEntity()) {
+			++num) {
+		for(auto e: *container){
             //for (unsigned i=0; i<container->count(); ++i) {
             //RS_Entity* e = container->entityAt(i);
 
@@ -1896,7 +1880,7 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
                 if (ec->rtti()==RS2::EntityInsert) {
                     ((RS_Insert*)ec)->update();
                 }
-                addList.append(ec);
+				addList.push_back(ec);
             }
         }
     }
@@ -1922,10 +1906,8 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
  * @param remove true: Remove entites.
  */
 void RS_Modification::deselectOriginals(bool remove
-                                       ) {
-    for (RS_Entity* e=container->firstEntity();
-            e!=NULL;
-            e=container->nextEntity()) {
+									   ) {
+	for(auto e: *container){
 
         //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
@@ -1977,12 +1959,12 @@ void RS_Modification::deselectOriginals(bool remove
  *
  * @param addList Entities to add.
  */
-void RS_Modification::addNewEntities(QList<RS_Entity*>& addList) {
-    for (int i = 0; i < addList.size(); ++i) {
-        if (addList.at(i) != NULL) {
-            container->addEntity(addList.at(i));
+void RS_Modification::addNewEntities(std::vector<RS_Entity*>& addList) {
+	for(RS_Entity* e: addList){
+		if (e) {
+			container->addEntity(e);
             if (document!=NULL && handleUndo) {
-                document->addUndoable(addList.at(i));
+				document->addUndoable(e);
             }
             //if (graphicView!=NULL) {
             //    graphicView->drawEntity(e);
@@ -2043,10 +2025,10 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
                                         e, false);
 
                 if (s2.hasValid()) {
-                    for (int k=0; k<s2.getNumber(); ++k) {
-                        if (s2.get(k).valid) {
-                            if (e->isPointOnEntity(s2.get(k), 1.0e-4)) {
-                                sol.push_back(s2.get(k));
+					for (const RS_Vector& vp: s2){
+						if (vp.valid) {
+							if (e->isPointOnEntity(vp, 1.0e-4)) {
+								sol.push_back(vp);
                             }
                         }
                     }
@@ -2089,15 +2071,15 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
         default:
         case 2:
             //trim according to intersections
-            QVector<double> angles;
+			std::vector<double> angles;
             const auto& center0=c->getCenter();
-            for(RS_Vector& vp : sol.getVector()){
-                angles<< center0.angleTo(vp);
+			for(const RS_Vector& vp : sol){
+				angles.push_back(center0.angleTo(vp));
             }
             //sort intersections by angle to circle center
             std::sort(angles.begin(), angles.end());
             const double a0=center0.angleTo(trimCoord);
-            for(int i=0; i<angles.size(); ++i){
+			for(size_t i=0; i<angles.size(); ++i){
                 aStart=angles.at(i);
                 aEnd=angles.at( (i+1)%angles.size());
                 if(RS_Math::isAngleBetween(a0, aStart, aEnd, false))
@@ -2117,7 +2099,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     }
 
     // trim trim entity
-    int ind = 0;
+	size_t ind = 0;
     RS_Vector is, is2;
 
     //RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
@@ -2417,17 +2399,15 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
         return false;
     }
 
-    QList<RS_Entity*> addList;
+	std::vector<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
     }
 
-    // Create new entites
-    for (RS_Entity* e=container->firstEntity();
-            e!=NULL;
-            e=container->nextEntity()) {
-        if (e!=NULL &&
+	// Create new entites
+	for(auto e: *container){
+		if (e &&
                 e->isVisible() &&
                 !e->isLocked() ) {
 //            &&
@@ -2436,7 +2416,7 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
 
                 RS_Entity* ec = e->clone();
                 ec->stretch(firstCorner, secondCorner, offset);
-                addList.append(ec);
+				addList.push_back(ec);
                 e->setSelected(true);
             }
         }
@@ -2973,15 +2953,13 @@ bool RS_Modification::explode() {
     }
     if(container->isLocked() || ! container->isVisible()) return false;
 
-    QList<RS_Entity*> addList;
+	std::vector<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
     }
 
-    for (RS_Entity* e=container->firstEntity();
-            e!=NULL;
-            e=container->nextEntity()) {
+	for(auto e: *container){
         //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
 
@@ -3049,7 +3027,7 @@ bool RS_Modification::explode() {
 
                         clone->setPen(ec->getPen(resolvePen));
 
-                        addList.append(clone);
+						addList.push_back(clone);
 
                         clone->update();
                     }
@@ -3084,14 +3062,12 @@ bool RS_Modification::explodeTextIntoLetters() {
     }
     if(container->isLocked() || ! container->isVisible()) return false;
 
-    QList<RS_Entity*> addList;
+	std::vector<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
-    }
-    for (RS_Entity* e=container->firstEntity();
-            e!=NULL;
-            e=container->nextEntity()) {
+	}
+	for(auto e: *container){
         if (e!=NULL && e->isSelected()) {
             if (e->rtti()==RS2::EntityMText) {
                 // add letters of text:
@@ -3122,7 +3098,7 @@ bool RS_Modification::explodeTextIntoLetters() {
 }
 
 
-bool RS_Modification::explodeTextIntoLetters(RS_MText* text, QList<RS_Entity*>& addList) {
+bool RS_Modification::explodeTextIntoLetters(RS_MText* text, std::vector<RS_Entity*>& addList) {
 
     if (text==NULL) {
         return false;
@@ -3131,8 +3107,7 @@ bool RS_Modification::explodeTextIntoLetters(RS_MText* text, QList<RS_Entity*>& 
     if(text->isLocked() || ! text->isVisible()) return false;
 
     // iterate though lines:
-    for (RS_Entity* e2 = text->firstEntity(); e2!=NULL;
-            e2 = text->nextEntity()) {
+	for(auto e2: *text){
 
         if (e2==NULL) {
             break;
@@ -3145,8 +3120,7 @@ bool RS_Modification::explodeTextIntoLetters(RS_MText* text, QList<RS_Entity*>& 
             RS_EntityContainer* line = (RS_EntityContainer*)e2;
 
             // iterate though letters:
-            for (RS_Entity* e3 = line->firstEntity(); e3!=NULL;
-                    e3 = line->nextEntity()) {
+			for(auto e3: *line){
 
                 if (e3==NULL) {
                     break;
@@ -3178,7 +3152,7 @@ bool RS_Modification::explodeTextIntoLetters(RS_MText* text, QList<RS_Entity*>& 
                     tl->setLayer(text->getLayer());
                     tl->setPen(text->getPen());
 
-                    addList.append(tl);
+					addList.push_back(tl);
                     tl->update();
                 }
             }
@@ -3188,7 +3162,7 @@ bool RS_Modification::explodeTextIntoLetters(RS_MText* text, QList<RS_Entity*>& 
     return true;
 }
 
-bool RS_Modification::explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& addList) {
+bool RS_Modification::explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entity*>& addList) {
 
     if (text==NULL) {
         return false;
@@ -3197,8 +3171,7 @@ bool RS_Modification::explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& a
     if(text->isLocked() || ! text->isVisible()) return false;
 
     // iterate though letters:
-    for (RS_Entity* e2 = text->firstEntity(); e2!=NULL;
-            e2 = text->nextEntity()) {
+	for(auto e2: *text){
 
         if (e2==NULL) {
             break;
@@ -3223,7 +3196,7 @@ bool RS_Modification::explodeTextIntoLetters(RS_Text* text, QList<RS_Entity*>& a
             tl->setLayer(text->getLayer());
             tl->setPen(text->getPen());
 
-            addList.append(tl);
+			addList.push_back(tl);
             tl->update();
         }
     }
@@ -3243,23 +3216,21 @@ bool RS_Modification::moveRef(RS_MoveRefData& data) {
     }
     if(container->isLocked() || ! container->isVisible()) return false;
 
-    QList<RS_Entity*> addList;
+	std::vector<RS_Entity*> addList;
 
     if (document!=NULL && handleUndo) {
         document->startUndoCycle();
     }
 
     // Create new entites
-    for (RS_Entity* e=container->firstEntity();
-            e!=NULL;
-            e=container->nextEntity()) {
-        if (e!=NULL && e->isSelected()) {
+	for(auto e: *container){
+		if (e && e->isSelected()) {
             RS_Entity* ec = e->clone();
 
             ec->moveRef(data.ref, data.offset);
             // since 2.0.4.0: keep it selected
             ec->setSelected(true);
-            addList.append(ec);
+			addList.push_back(ec);
         }
     }
 

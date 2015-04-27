@@ -59,8 +59,7 @@ void RS_ActionLayersToggleLock::trigger() {
 
             // deselect entities on locked layer:
             if (layer->isLocked()) {
-                for (RS_Entity* e=container->firstEntity(); e!=NULL;
-                        e=container->nextEntity()) {
+				for(auto e: *container){
                     if (e!=NULL && e->isVisible() && e->getLayer()==layer) {
 
                         if (graphicView!=NULL) {

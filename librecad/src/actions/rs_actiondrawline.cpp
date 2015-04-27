@@ -24,30 +24,30 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawline.h"
 
-#include <QAction>
 #include "rs_actioneditundo.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commands.h"
 #include "rs_commandevent.h"
-
-
+#include "rs_line.h"
+#include "rs_coordinateevent.h"
 
 RS_ActionDrawLine::RS_ActionDrawLine(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw lines",
-                               container, graphicView) {
+							   container, graphicView)
+	,data(new RS_LineData())
+{
 
     RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine");
     reset();
     RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine: OK");
 }
 
-
-
-RS_ActionDrawLine::~RS_ActionDrawLine() {}
+RS_ActionDrawLine::~RS_ActionDrawLine(){}
 
 
 QAction* RS_ActionDrawLine::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
@@ -61,8 +61,8 @@ QAction* RS_ActionDrawLine::createGUIAction(RS2::ActionType /*type*/, QObject* /
 
 
 void RS_ActionDrawLine::reset() {
-    RS_DEBUG->print("RS_ActionDrawLine::reset");
-    data = RS_LineData(RS_Vector(false), RS_Vector(false));
+	RS_DEBUG->print("RS_ActionDrawLine::reset");
+	data.reset(new RS_LineData());
     start = RS_Vector(false);
     history.clear();
     historyIndex=-1;
@@ -85,7 +85,7 @@ void RS_ActionDrawLine::init(int status) {
 void RS_ActionDrawLine::trigger() {
     RS_PreviewActionInterface::trigger();
 
-    RS_Line* line = new RS_Line(container, data);
+	RS_Line* line = new RS_Line(container, *data);
     line->setLayerToActive();
     line->setPenToActive();
     container->addEntity(line);
@@ -115,15 +115,15 @@ RS_Vector RS_ActionDrawLine::snapToAngle(const RS_Vector &currentCoord)
             snapMode.snapGrid) {
         return currentCoord;
     }
-    double angle = data.startpoint.angleTo(currentCoord)*180.0/M_PI;
+	double angle = data->startpoint.angleTo(currentCoord)*180.0/M_PI;
     /*Snapping to angle(15*) if shift key is pressed*/
     const double angularResolution=15.;
     angle -= remainder(angle,angularResolution);
     angle *= M_PI/180.;
     RS_Vector res = currentCoord;
-    res.setPolar(data.startpoint.distanceTo(currentCoord),
+	res.setPolar(data->startpoint.distanceTo(currentCoord),
                  angle);
-    res += data.startpoint;
+	res += data->startpoint;
     snapPoint(res, true);
     return res;
 }
@@ -136,7 +136,7 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
     //    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: snap point");
     RS_Vector mouse = snapPoint(e);
     //    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: snap point: OK");
-    if (getStatus()==SetEndpoint && data.startpoint.valid) {
+	if (getStatus()==SetEndpoint && data->startpoint.valid) {
         RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: update preview");
 
         /*Snapping to angle(15*) if shift key is pressed*/
@@ -144,8 +144,8 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
             mouse = snapToAngle(mouse);
 
         deletePreview();
-        preview->addEntity(new RS_Line(preview,
-                                       RS_LineData(data.startpoint, mouse)));
+		preview->addEntity(new RS_Line(preview.get(),
+									   RS_LineData(data->startpoint, mouse)));
         RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: draw preview");
         drawPreview();
     }
@@ -180,25 +180,25 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
     }
 
     RS_Vector mouse = e->getCoordinate();
-    if(data.startpoint.valid == false && getStatus()==SetEndpoint) setStatus(SetStartpoint);
+	if(data->startpoint.valid == false && getStatus()==SetEndpoint) setStatus(SetStartpoint);
     switch (getStatus()) {
     case SetStartpoint:
-        data.startpoint = mouse;
+		data->startpoint = mouse;
         addHistory(mouse);
 
-        start = data.startpoint;
+		start = data->startpoint;
         setStatus(SetEndpoint);
         graphicView->moveRelativeZero(mouse);
         updateMouseButtonHints();
         break;
 
     case SetEndpoint:
-        if((mouse-data.startpoint).squared() > RS_TOLERANCE2) {
+		if((mouse-data->startpoint).squared() > RS_TOLERANCE2) {
             //refuse zero length lines
-            data.endpoint = mouse;
+			data->endpoint = mouse;
             addHistory(mouse);
             trigger();
-            data.startpoint = data.endpoint;
+			data->startpoint = data->endpoint;
             if(history.size()>=2) updateMouseButtonHints();
         }
         //graphicView->moveRelativeZero(mouse);
@@ -258,7 +258,7 @@ void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e) {
 
 QStringList RS_ActionDrawLine::getAvailableCommands() {
     QStringList cmd;
-    if(historyIndex+1<history.size()) {
+	if(historyIndex+1<(int) history.size()) {
         cmd += command("redo");
     }
 
@@ -295,7 +295,7 @@ void RS_ActionDrawLine::updateMouseButtonHints() {
             if (historyIndex>=2) {
                 msg += RS_COMMANDS->command("close");
             }
-            if(historyIndex+1<history.size()) {
+			if(historyIndex+1<(int) history.size()) {
                 if(msg.size()>0)  msg += "/";
                 msg += RS_COMMANDS->command("redo");
             }
@@ -358,9 +358,9 @@ void RS_ActionDrawLine::updateMouseCursor() {
 //}
 
 void RS_ActionDrawLine::close() {
-    if (historyIndex>2 && start.valid && (data.startpoint - start).squared() > RS_TOLERANCE2 ) {
-        data.endpoint = start;
-        addHistory(data.endpoint);
+	if (historyIndex>2 && start.valid && (data->startpoint - start).squared() > RS_TOLERANCE2 ) {
+		data->endpoint = start;
+		addHistory(data->endpoint);
         trigger();
         setStatus(SetStartpoint);
         //        graphicView->moveRelativeZero(start);
@@ -376,7 +376,7 @@ void RS_ActionDrawLine::close() {
 void RS_ActionDrawLine::addHistory(const RS_Vector& v){
     if(historyIndex<-1) historyIndex=-1;
     history.erase(history.begin()+historyIndex+1,history.end());
-    history.append(v);
+	history.push_back(v);
     historyIndex=history.size() - 1;
 }
 void RS_ActionDrawLine::undo() {
@@ -386,8 +386,8 @@ void RS_ActionDrawLine::undo() {
         deletePreview();
         graphicView->setCurrentAction(
                     new RS_ActionEditUndo(true, *container, *graphicView));
-        data.startpoint = history.at(historyIndex);
-        graphicView->moveRelativeZero(data.startpoint);
+		data->startpoint = history.at(historyIndex);
+		graphicView->moveRelativeZero(data->startpoint);
     } else {
         RS_DIALOGFACTORY->commandMessage(
                     tr("Cannot undo: "
@@ -400,14 +400,14 @@ void RS_ActionDrawLine::undo() {
     }
 }
 void RS_ActionDrawLine::redo() {
-    if (history.size()>historyIndex+1) {
+	if ((int) history.size()>historyIndex+1) {
         historyIndex++;
         //        history.removeLast();
         deletePreview();
         graphicView->setCurrentAction(
                     new RS_ActionEditUndo(false, *container, *graphicView));
-        data.startpoint = history.at(historyIndex);
-        graphicView->moveRelativeZero(data.startpoint);
+		data->startpoint = history.at(historyIndex);
+		graphicView->moveRelativeZero(data->startpoint);
     } else {
         RS_DIALOGFACTORY->commandMessage(
                     tr("Cannot redo: "

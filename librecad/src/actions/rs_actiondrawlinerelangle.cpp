@@ -31,8 +31,9 @@
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_creation.h"
-
-
+#include "rs_line.h"
+#include "rs_coordinateevent.h"
+#include "rs_math.h"
 
 RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(
     RS_EntityContainer& container,
@@ -66,6 +67,14 @@ QAction* RS_ActionDrawLineRelAngle::createGUIAction(RS2::ActionType type, QObjec
         //action->zetStatusTip(tr("Draw orthogonal line"));
         }
     return action;
+}
+
+
+RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
+	if( fixedAngle && RS_Math::getAngleDifference(angle,M_PI_2) < RS_TOLERANCE )
+		return RS2::ActionDrawLineOrthogonal;
+	else
+		return RS2::ActionDrawLineRelAngle;
 }
 
 void RS_ActionDrawLineRelAngle::trigger() {
@@ -136,7 +145,7 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent* e) {
 
             deletePreview();
 
-            RS_Creation creation(preview, NULL, false);
+			RS_Creation creation(preview.get(), NULL, false);
             creation.createLineRelAngle(pos,
                                         entity,
                                         angle,
@@ -269,7 +278,7 @@ void RS_ActionDrawLineRelAngle::commandEvent(RS_CommandEvent* e) {
     case SetLength: {
             bool ok;
             double l = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 length = l;
             } else {
                 if (RS_DIALOGFACTORY!=NULL) {

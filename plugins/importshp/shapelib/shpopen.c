@@ -2226,6 +2226,7 @@ int SHPAPI_CALL
 SHPRewindObject( SHPHandle hSHP, SHPObject * psObject )
 
 {
+	(void) hSHP;
     int  iOpRing, bAltered = 0;
 
 /* -------------------------------------------------------------------- */

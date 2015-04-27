@@ -27,6 +27,7 @@
 
 #include "rs_actionmodifyround.h"
 #include "rs_settings.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_RoundOptions as a child of 'parent', with the

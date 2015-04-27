@@ -23,11 +23,10 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-
 #ifndef RS_SOLID_H
 #define RS_SOLID_H
 
+#include <array>
 #include "rs_atomicentity.h"
 #include "rs_vector.h"
 
@@ -35,29 +34,19 @@
 /**
  * Holds the data that defines a solid.
  */
-class RS_SolidData {
-public:
+struct RS_SolidData {
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-    RS_SolidData() {
-        for (int i=0; i<4; ++i) {
-            corner[i] = RS_Vector(false);
-        }
-    }
+	RS_SolidData();
+	~RS_SolidData() = default;
 
     /**
      * Constructor for a solid with 3 corners.
      */
     RS_SolidData(const RS_Vector& corner1,
                  const RS_Vector& corner2,
-                 const RS_Vector& corner3) {
-
-        corner[0] = corner1;
-        corner[1] = corner2;
-        corner[2] = corner3;
-        corner[3] = RS_Vector(false);
-    }
+				 const RS_Vector& corner3);
 
     /**
      * Constructor for a solid with 4 corners.
@@ -65,31 +54,14 @@ public:
     RS_SolidData(const RS_Vector& corner1,
                  const RS_Vector& corner2,
                  const RS_Vector& corner3,
-                 const RS_Vector& corner4) {
+				 const RS_Vector& corner4);
 
-        corner[0] = corner1;
-        corner[1] = corner2;
-        corner[2] = corner3;
-        corner[3] = corner4;
-    }
 
-    friend class RS_Solid;
-
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_SolidData& pd) {
-        os << "(";
-        for (int i=0; i<4; i++) {
-            os << pd.corner[i];
-        }
-        os << ")";
-        return os;
-    }
-
-private:
-    RS_Vector corner[4];
+	std::array<RS_Vector, 4> corner;
 };
 
 
+std::ostream& operator << (std::ostream& os, const RS_SolidData& pd);
 
 /**
  * Class for a solid entity (e.g. dimension arrows).
@@ -100,12 +72,9 @@ class RS_Solid : public RS_AtomicEntity {
 public:
     RS_Solid(RS_EntityContainer* parent,
              const RS_SolidData& d);
+	~RS_Solid() = default;
 
-    virtual RS_Entity* clone() {
-        RS_Solid* s = new RS_Solid(*this);
-        s->initId();
-        return s;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS_ENTITY_POINT */
     virtual RS2::EntityType rtti() const {
@@ -147,13 +116,13 @@ public:
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
             bool onEntity = true, double* dist = NULL, RS_Entity** entity = NULL)const;
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-                                       double* dist = NULL);
+									   double* dist = NULL) const;
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
                                        double* dist = NULL,
                                        int middlePoints = 1)const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = NULL)const;
 
     virtual double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity=NULL,

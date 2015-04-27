@@ -26,6 +26,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_ellipse.h"
+#include "rs_coordinateevent.h"
+#include "rs_math.h"
 
 /**
  * Constructor.
@@ -43,9 +46,6 @@ RS_ActionDrawEllipseFociPoint::RS_ActionDrawEllipseFociPoint(
 
 }
 
-
-
-RS_ActionDrawEllipseFociPoint::~RS_ActionDrawEllipseFociPoint() {}
 
 
 QAction* RS_ActionDrawEllipseFociPoint::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
@@ -117,7 +117,7 @@ void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent* e) {
                               major*d,
                               sqrt(d*d-c*c)/d,
                               0., 0.,false);
-            preview->addEntity(new RS_Ellipse(preview, ed));
+			preview->addEntity(new RS_Ellipse(preview.get(), ed));
             drawPreview();
         }
         break;
@@ -204,7 +204,7 @@ void RS_ActionDrawEllipseFociPoint::commandEvent(RS_CommandEvent* e) {
     //    case SetFocus1: {
     //            bool ok;
     //            double m = RS_Math::eval(c, &ok);
-    //            if (ok==true) {
+    //            if (ok) {
     //                ratio = m / major.magnitude();
     //                if (!isArc) {
     //                    trigger();
@@ -222,7 +222,7 @@ void RS_ActionDrawEllipseFociPoint::commandEvent(RS_CommandEvent* e) {
     //    case SetFocus2: {
     //            bool ok;
     //            double a = RS_Math::eval(c, &ok);
-    //            if (ok==true) {
+    //            if (ok) {
     //                angle1 = RS_Math::deg2rad(a);
     //                setStatus(SetAngle2);
     //            } else {

@@ -36,24 +36,17 @@
  * @param h Height
  */
 RS_StaticGraphicView::RS_StaticGraphicView(int w, int h, RS_Painter* p, QSize b) {
-    setBackground(RS_Color(255,255,255));
+	setBackground(RS_Color(255,255,255));
     width = w;
     height = h;
     painter = p;
     setBorders(b.width(), b.height(), b.width(), b.height());
 }
 
-
-/**
- * Destructor
- */
-RS_StaticGraphicView::~RS_StaticGraphicView() {}
-
-
 /**
  * @return width of widget.
  */
-int RS_StaticGraphicView::getWidth() {
+int RS_StaticGraphicView::getWidth() const{
     return width;
 }
 
@@ -61,7 +54,7 @@ int RS_StaticGraphicView::getWidth() {
 /**
  * @return height of widget.
  */
-int RS_StaticGraphicView::getHeight() {
+int RS_StaticGraphicView::getHeight() const{
     return height;
 }
 

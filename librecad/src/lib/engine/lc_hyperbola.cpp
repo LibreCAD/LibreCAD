@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QVector>
 #include "lc_hyperbola.h"
 
 #include "rs_graphic.h"
@@ -34,6 +33,29 @@
 #include "rs_linetypepattern.h"
 #include "lc_quadratic.h"
 
+LC_HyperbolaData::LC_HyperbolaData(const RS_Vector& _center,
+			   const RS_Vector& _majorP,
+			   double _ratio,
+			   double _angle1, double _angle2,
+			   bool _reversed):
+	center(_center)
+	,majorP(_majorP)
+	,ratio(_ratio)
+	,angle1(_angle1)
+	,angle2(_angle2)
+	,reversed(_reversed)
+{
+}
+
+std::ostream& operator << (std::ostream& os, const LC_HyperbolaData& ed) {
+	os << "(" << ed.center <<
+	   "/" << ed.majorP <<
+	   " " << ed.ratio <<
+	   " " << ed.angle1 <<
+	   "," << ed.angle2 <<
+	   ")";
+	return os;
+}
 
 #ifdef EMU_C99
 #include "emu_c99.h" /* C99 math */
@@ -111,6 +133,12 @@ void LC_Hyperbola::calculateEndpoints() {
  */
 
 
+RS_Entity* LC_Hyperbola::clone() const {
+	LC_Hyperbola* e = new LC_Hyperbola(*this);
+	e->initId();
+	return e;
+}
+
 
 /**
   * return the foci of ellipse
@@ -120,12 +148,11 @@ void LC_Hyperbola::calculateEndpoints() {
 
 RS_VectorSolutions LC_Hyperbola::getFoci() const {
     RS_Vector vp(getMajorP()*sqrt(1.-getRatio()*getRatio()));
-    return RS_VectorSolutions(getCenter()+vp, getCenter()-vp);
+	return RS_VectorSolutions({getCenter()+vp, getCenter()-vp});
 }
 
-RS_VectorSolutions LC_Hyperbola::getRefPoints() {
-    RS_VectorSolutions ret;
-    ret.push_back(data.center);
+RS_VectorSolutions LC_Hyperbola::getRefPoints() const{
+	RS_VectorSolutions ret({data.center});
     ret.appendTo(getFoci());
     return ret;
 }

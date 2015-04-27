@@ -29,7 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
-
+class RS_Line;
 /**
  * This action class can handle user events to draw tangents from points
  * to circles.
@@ -47,11 +47,11 @@ private:
 public:
     RS_ActionDrawLineTangent1(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineTangent1() {}
+	~RS_ActionDrawLineTangent1()=default;
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-    virtual RS2::ActionType rtti(){
+    virtual RS2::ActionType rtti() const{
         return RS2::ActionDrawLineTangent1;
     }
 
@@ -73,9 +73,9 @@ private:
     RS_Vector point;
     /** Chosen entity */
     RS_Entity* circle;
-    /** Data of new tangent */
-    RS_LineData data;
-    QVector<RS2::EntityType> circleType;
+	const std::vector<RS2::EntityType> circleType={RS2::EntityArc,RS2::EntityCircle,
+												   RS2::EntityEllipse, RS2::EntitySplinePoints
+												  };
 };
 
 #endif

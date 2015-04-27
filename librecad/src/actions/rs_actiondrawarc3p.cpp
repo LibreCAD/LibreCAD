@@ -24,21 +24,24 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawarc3p.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_actiondrawarc.h"
 #include "rs_commands.h"
 #include "rs_commandevent.h"
-
-
+#include "rs_arc.h"
+#include "rs_line.h"
+#include "rs_coordinateevent.h"
 
 RS_ActionDrawArc3P::RS_ActionDrawArc3P(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw arcs 3P",
-                           container, graphicView) {
+						   container, graphicView)
+		,data(new RS_ArcData())
+{
     reset();
 }
 
@@ -49,15 +52,17 @@ RS_ActionDrawArc3P::~RS_ActionDrawArc3P() {}
 
 QAction* RS_ActionDrawArc3P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
         // tr("Arc: 3 Points"
-        QAction* action = new QAction(tr("&3 Points"), NULL);
+		QAction* action = new QAction(tr("&3 Points"), nullptr);
         action->setIcon(QIcon(":/extui/arcs3p.png"));
         //action->zetStatusTip(tr("Draw arcs with 3 points"));
+		action->setCheckable(true);
+
                 return action;
 }
 
 
 void RS_ActionDrawArc3P::reset() {
-    data.reset();
+	data->reset();
     point1 = RS_Vector(false);
     point2 = RS_Vector(false);
     point3 = RS_Vector(false);
@@ -77,9 +82,9 @@ void RS_ActionDrawArc3P::trigger() {
     RS_PreviewActionInterface::trigger();
 
     preparePreview();
-    if (data.isValid()) {
+	if (data->isValid()) {
         RS_Arc* arc = new RS_Arc(container,
-                                 data);
+								 *data);
         arc->setLayerToActive();
         arc->setPenToActive();
         container->addEntity(arc);
@@ -105,12 +110,12 @@ void RS_ActionDrawArc3P::trigger() {
 
 
 void RS_ActionDrawArc3P::preparePreview() {
-    data.reset();
+	data->reset();
     if (point1.valid && point2.valid && point3.valid) {
-        RS_Arc arc(NULL, data);
+		RS_Arc arc(NULL, *data);
         bool suc = arc.createFrom3P(point1, point2, point3);
         if (suc) {
-            data = arc.getData();
+			data.reset(new RS_ArcData(arc.getData()));
         }
     }
 }
@@ -127,7 +132,7 @@ void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent* e) {
     case SetPoint2:
         point2 = mouse;
         if (point1.valid) {
-            RS_Line* line = new RS_Line(preview, RS_LineData(point1, point2));
+			RS_Line* line = new RS_Line(preview.get(), RS_LineData(point1, point2));
 
             deletePreview();
             preview->addEntity(line);
@@ -138,8 +143,8 @@ void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent* e) {
     case SetPoint3:
         point3 = mouse;
         preparePreview();
-        if (data.isValid()) {
-            RS_Arc* arc = new RS_Arc(preview, data);
+		if (data->isValid()) {
+			RS_Arc* arc = new RS_Arc(preview.get(), *data);
 
             deletePreview();
             preview->addEntity(arc);

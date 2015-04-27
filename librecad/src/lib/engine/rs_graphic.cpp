@@ -100,12 +100,10 @@ unsigned long int RS_Graphic::countLayerEntities(RS_Layer* layer) {
 
     int c=0;
 
-    if (layer!=NULL) {
-        for (RS_Entity* t=firstEntity(RS2::ResolveNone);
-                t!=NULL;
-                t=nextEntity(RS2::ResolveNone)) {
+	if (layer!=NULL) {
+		for(auto t: entities){
 
-            if (t->getLayer()!=NULL &&
+			if (t->getLayer() &&
                     t->getLayer()->getName()==layer->getName()) {
                 c+=t->countDeep();
             }
@@ -126,11 +124,9 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
 
         // remove all entities on that layer:
         startUndoCycle();
-        for (RS_Entity* e=firstEntity(RS2::ResolveNone);
-                e!=NULL;
-                e=nextEntity(RS2::ResolveNone)) {
+		for(auto e: entities){
 
-            if (e->getLayer()!=NULL &&
+			if (e->getLayer() &&
                     e->getLayer()->getName()==layer->getName()) {
 
                 e->setUndoState(true);
@@ -145,11 +141,9 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
             RS_Block* blk = blockList.at(bi);
 
             if (blk!=NULL) {
-                for (RS_Entity* e=blk->firstEntity(RS2::ResolveNone);
-                        e!=NULL;
-                        e=blk->nextEntity(RS2::ResolveNone)) {
+				for(auto e: *blk){
 
-                    if (e->getLayer()!=NULL &&
+					if (e->getLayer() &&
                             e->getLayer()->getName()==layer->getName()) {
 
                         e->setUndoState(true);
@@ -300,30 +294,27 @@ bool RS_Graphic::save(bool isAutoSave)
          *	  coding error that make LibreCAD not aware of modification
          *	  when some kind of drawing modification is done.
          *	----------------------------------------------------------- */
-    if (isModified() == true)
+	if (isModified())
     {
-        const QString		*actualName;
+		QString actualName;
         RS2::FormatType	actualType;
 
         actualType	= formatType;
 
-        if (isAutoSave == true)
+		if (isAutoSave)
         {
-            actualName = new QString(autosaveFilename);
+			actualName = autosaveFilename;
 
             if (formatType == RS2::FormatUnknown)
                 actualType = RS2::FormatDXFRW;
-        }
-        //	- This is not an AutoSave operation.  This is a manual
-        //	  save operation.  So, ...
-        //		- Set working file name to the drawing file name.
-        //		- Backup drawing file (if necessary).
-        //	------------------------------------------------------
-        else
-        {
-            QFileInfo	*finfo				= new QFileInfo(filename);
-            QDateTime m=finfo->lastModified();
-            delete finfo;
+		} else {
+			//	- This is not an AutoSave operation.  This is a manual
+			//	  save operation.  So, ...
+			//		- Set working file name to the drawing file name.
+			//		- Backup drawing file (if necessary).
+			//	------------------------------------------------------
+			QFileInfo	finfo(filename);
+			QDateTime m=finfo.lastModified();
             //bug#3414993
             //modifiedTime should only be used for the same filename
 //            DEBUG_HEADER();
@@ -341,28 +332,24 @@ bool RS_Graphic::save(bool isAutoSave)
                 return false;
             }
 
-            actualName = new QString(filename);
+			actualName = filename;
             if (RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)!=0)
                 BackupDrawingFile(filename);
         }
 
         /*	Save drawing file if able to created associated object.
                  *	------------------------------------------------------- */
-        if (actualName != NULL)
+		if (!actualName.isEmpty())
         {
-            RS_DEBUG->print("RS_Graphic::save: File: %s", actualName->toLatin1().data());
+			RS_DEBUG->print("RS_Graphic::save: File: %s", actualName.toLatin1().data());
             RS_DEBUG->print("RS_Graphic::save: Format: %d", (int) actualType);
             RS_DEBUG->print("RS_Graphic::save: Export...");
 
-            ret = RS_FileIO::instance()->fileExport(*this, *actualName, actualType);
-            QFileInfo	*finfo				= new QFileInfo(*actualName);
-            modifiedTime=finfo->lastModified();
-            currentFileName=*actualName;
-            delete finfo;
-            delete actualName;
-        }
-        else
-        {
+			ret = RS_FileIO::instance()->fileExport(*this, actualName, actualType);
+			QFileInfo	finfo(actualName);
+			modifiedTime=finfo.lastModified();
+			currentFileName=actualName;
+		} else {
             RS_DEBUG->print("RS_Graphic::save: Can't create object!");
             RS_DEBUG->print("RS_Graphic::save: File not saved!");
         }
@@ -373,39 +360,28 @@ bool RS_Graphic::save(bool isAutoSave)
         {
             /*	Autosave file object.
                          *	*/
-            QFile	*qf_file	= new QFile(autosaveFilename);
+			QFile	qf_file(autosaveFilename);
 
-            /*	Tell that drawing file is no more modified.
-                         *	------------------------------------------- */
-            setModified(false);
-            layerList.setModified(false);
-            blockList.setModified(false);
+			/*	Tell that drawing file is no more modified.
+						 *	------------------------------------------- */
+			setModified(false);
+			layerList.setModified(false);
+			blockList.setModified(false);
 
-            /*	- Remove autosave file, if able to create associated object,
-                         *	  and if autosave file exist.
-                         *	------------------------------------------------------------ */
-            if (qf_file != NULL)
-            {
-                if (qf_file->exists())
-                {
-                    RS_DEBUG->print(	"RS_Graphic::save: Removing old autosave file %s",
-                                        autosaveFilename.toLatin1().data());
-                    qf_file->remove();
-                }
+			/*	- Remove autosave file, if able to create associated object,
+						 *	  and if autosave file exist.
+						 *	------------------------------------------------------------ */
+			if (qf_file.exists())
+			{
+				RS_DEBUG->print(	"RS_Graphic::save: Removing old autosave file %s",
+									autosaveFilename.toLatin1().data());
+				qf_file.remove();
+			}
 
-                delete qf_file;
-            }
-            else
-            {
-                RS_DEBUG->print("RS_Graphic::save: Can't create object!");
-                RS_DEBUG->print("RS_Graphic::save: Autosave file not removed");
-            }
         }
 
         RS_DEBUG->print("RS_Graphic::save: Done!");
-    }
-    else
-    {
+	} else {
         RS_DEBUG->print("RS_Graphic::save: File not modified, not saved");
         ret = true;
     }
@@ -764,7 +740,7 @@ RS_Vector RS_Graphic::getPaperSize() {
     bool okX,okY;
     double sX = RS_SETTINGS->readEntry("/PaperSizeX", "0.0").toDouble(&okX);
     double sY = RS_SETTINGS->readEntry("/PaperSizeY", "0.0").toDouble(&okY);
-    RS_SETTINGS->endGroup();
+	RS_SETTINGS->endGroup();
     RS_Vector def ;
     if(okX&&okY && sX>RS_TOLERANCE && sY>RS_TOLERANCE) {
         def=RS_Units::convert(RS_Vector(sX,sY),
@@ -809,7 +785,7 @@ RS2::PaperFormat RS_Graphic::getPaperFormat(bool* landscape) {
     RS_Vector size = RS_Units::convert(getPaperSize(),
                                        getUnit(), RS2::Millimeter);
 
-    if (landscape!=NULL) {
+	if (landscape) {
         *landscape = (size.x>size.y);
     }
 
@@ -824,15 +800,11 @@ RS2::PaperFormat RS_Graphic::getPaperFormat(bool* landscape) {
 void RS_Graphic::setPaperFormat(RS2::PaperFormat f, bool landscape) {
     RS_Vector size = RS_Units::paperFormatToSize(f);
 
-    if (landscape) {
-        double tmp = size.x;
-        size.x = size.y;
-        size.y = tmp;
+	if (landscape ^ (size.x > size.y)) {
+		std::swap(size.x, size.y);
     }
 
-        if (f!=RS2::Custom) {
-        setPaperSize(RS_Units::convert(size, RS2::Millimeter, getUnit()));
-        }
+	setPaperSize(RS_Units::convert(size, RS2::Millimeter, getUnit()));
 }
 
 
@@ -936,9 +908,7 @@ void RS_Graphic::addEntity(RS_Entity* entity)
     if( entity->rtti() == RS2::EntityBlock ||
             entity->rtti() == RS2::EntityContainer){
         RS_EntityContainer* e=static_cast<RS_EntityContainer*>(entity);
-        for (RS_Entity* e1=e->firstEntity(RS2::ResolveNone);
-             e1!=NULL;
-             e1= e->nextEntity(RS2::ResolveNone)){
+		for(auto e1: *e){
             addEntity(e1);
         }
     }

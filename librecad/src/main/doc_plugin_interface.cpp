@@ -33,6 +33,10 @@
 #include "rs_actioninterface.h"
 #include "rs_eventhandler.h"
 #include "rs_actionselect.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_line.h"
+#include "rs_point.h"
 #include "rs_mtext.h"
 #include "rs_text.h"
 #include "rs_layer.h"
@@ -44,6 +48,7 @@
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetselect.h"
 #include "intern/qc_actiongetent.h"
+#include "rs_math.h"
 
 #if QT_VERSION < 0x040500
 #include "emu_qt45.h"
@@ -632,8 +637,8 @@ void Plugin_Entity::getPolylineData(QList<Plug_VertexData> *data){
     data->append(Plug_VertexData(QPointF(ae->getStartpoint().x,
                                          ae->getStartpoint().y),bulge));
 
-    for (v=l->firstEntity(RS2::ResolveNone); v!=NULL; v=nextEntity) {
-        nextEntity = l->nextEntity(RS2::ResolveNone);
+	for (v=l->firstEntity(RS2::ResolveNone); v!=NULL; v=nextEntity) {
+		nextEntity = l->nextEntity(RS2::ResolveNone);
         bulge = 0.0;
         if (!v->isAtomic()) {
             continue;
@@ -849,8 +854,8 @@ void Doc_plugin_interface::addArc(QPointF *start, qreal radius, qreal a1, qreal 
     if (doc!=NULL) {
         RS_Vector v(start->x(), start->y());
         RS_ArcData d(v, radius,
-                 a1/ARAD,
-                 a2/ARAD,
+				 RS_Math::deg2rad(a1),
+				 RS_Math::deg2rad(a2),
                  false);
         RS_Arc* entity = new RS_Arc(doc, d);
         doc->addEntity(entity);
@@ -1181,8 +1186,7 @@ bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& m
 bool Doc_plugin_interface::getAllEntities(QList<Plug_Entity *> *sel, bool visible){
     bool status = false;
 
-    for (RS_Entity* e= doc->firstEntity(RS2::ResolveNone);
-            e!=NULL; e= doc->nextEntity(RS2::ResolveNone)) {
+	for(auto e: *doc){
 
         if (e->isVisible() || !visible) {
             Plugin_Entity *pe = new Plugin_Entity(e, this);

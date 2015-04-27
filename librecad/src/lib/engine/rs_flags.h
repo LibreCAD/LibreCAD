@@ -36,8 +36,7 @@
  *
  * @author Andrew Mustun
  */
-class RS_Flags {
-public:
+struct RS_Flags {
     /** Default constructor. Resets all flags to 0. */
     RS_Flags() {
         flags = 0;

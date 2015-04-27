@@ -34,52 +34,27 @@ class LC_Quadratic;
 /**
  * Holds the data that defines an arc.
  */
-class RS_ArcData {
-public:
-    RS_ArcData() {}
+struct RS_ArcData {
+	RS_ArcData() = default;
+	~RS_ArcData() = default;
 
-    RS_ArcData(const RS_Vector& center,
-               double radius,
-               double angle1, double angle2,
-               bool reversed) {
+	RS_ArcData(const RS_Vector& center,
+			   double radius,
+			   double angle1, double angle2,
+			   bool reversed);
 
-        this->center = center;
-        this->radius = radius;
-        this->angle1 = angle1;
-        this->angle2 = angle2;
-        this->reversed = reversed;
-    }
+	void reset();
 
-    void reset() {
-        center = RS_Vector(false);
-        radius = 0.0;
-        angle1 = 0.0;
-        angle2 = 0.0;
-        reversed = false;
-    }
+	bool isValid() const;
 
-    bool isValid() {
-        return (center.valid && radius>RS_TOLERANCE &&
-                fabs(angle1-angle2)>RS_TOLERANCE_ANGLE);
-    }
-
-    friend std::ostream& operator << (std::ostream& os, const RS_ArcData& ad) {
-        os << "(" << ad.center <<
-           "/" << ad.radius <<
-           " " << ad.angle1 <<
-           "," << ad.angle2 <<
-           ")";
-        return os;
-    }
-
-public:
-    RS_Vector center;
-    double radius;
-    double angle1;
-    double angle2;
-    bool reversed;
+	RS_Vector center;
+	double radius;
+	double angle1;
+	double angle2;
+	bool reversed;
 };
 
+std::ostream& operator << (std::ostream& os, const RS_ArcData& ad);
 
 
 /**
@@ -89,15 +64,12 @@ public:
  */
 class RS_Arc : public RS_AtomicEntity {
 public:
+	RS_Arc()=default;
     RS_Arc(RS_EntityContainer* parent,
            const RS_ArcData& d);
-    virtual ~RS_Arc() {}
+	virtual ~RS_Arc() = default;
 
-    virtual RS_Entity* clone() {
-        RS_Arc* a = new RS_Arc(*this);
-        a->initId();
-        return a;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityArc */
     virtual RS2::EntityType rtti() const {
@@ -113,7 +85,7 @@ public:
         return data;
     }
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     /** Sets new arc parameters. **/
     void setData(RS_ArcData d) {
@@ -162,26 +134,12 @@ public:
      * @return Direction 1. The angle at which the arc starts at
      * the startpoint.
      */
-    double getDirection1() const {
-        if (!data.reversed) {
-            return RS_Math::correctAngle(data.angle1+M_PI/2.0);
-        }
-        else {
-            return RS_Math::correctAngle(data.angle1-M_PI/2.0);
-        }
-    }
+	double getDirection1() const;
     /**
      * @return Direction 2. The angle at which the arc starts at
      * the endpoint.
      */
-    double getDirection2() const {
-        if (!data.reversed) {
-            return RS_Math::correctAngle(data.angle2-M_PI/2.0);
-        }
-        else {
-            return RS_Math::correctAngle(data.angle2+M_PI/2.0);
-        }
-    }
+	double getDirection2() const;
 
     /**
      * @retval true if the arc is reversed (clockwise),
@@ -203,7 +161,7 @@ public:
     virtual RS_Vector getEndpoint() const {
         return endpoint;
     }
-    virtual QVector<RS_Entity* > offsetTwoSides(const double& distance) const;
+	virtual std::vector<RS_Entity* > offsetTwoSides(const double& distance) const;
     /**
           * implementations must revert the direction of an atomic entity
           */
@@ -243,19 +201,19 @@ public:
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
             bool onEntity = true, double* dist = NULL, RS_Entity** entity=NULL)const;
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-                                       double* dist = NULL);
+									   double* dist = NULL) const;
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
                                        double* dist = NULL,
                                        int middlePoints = 1
                                        )const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = NULL) const;
     virtual RS_Vector getNearestDist(double distance,
-                                     bool startp);
+									 bool startp) const;
     virtual RS_Vector getNearestOrthTan(const RS_Vector& coord,
                     const RS_Line& normal,
-                    bool onEntity = false);
+					bool onEntity = false) const;
     virtual RS_VectorSolutions getTangentPoint(const RS_Vector& point) const;//find the tangential points seeing from given point
     virtual RS_Vector getTangentDirection(const RS_Vector& point)const;
     virtual void move(const RS_Vector& offset);

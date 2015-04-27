@@ -38,7 +38,7 @@
  */
 class RS_LeaderData {
 public:
-    RS_LeaderData() {}
+	RS_LeaderData() = default;
     RS_LeaderData(bool arrowHeadFlag) {
         arrowHead = arrowHeadFlag;
     }
@@ -65,15 +65,9 @@ public:
     RS_Leader(RS_EntityContainer* parent=NULL);
     RS_Leader(RS_EntityContainer* parent,
                 const RS_LeaderData& d);
-    virtual ~RS_Leader();
+	virtual ~RS_Leader() = default;
 
-    virtual RS_Entity* clone() {
-        RS_Leader* p = new RS_Leader(*this);
-        p->setOwner(isOwner());
-        p->initId();
-        p->detach();
-        return p;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityDimLeader */
     virtual RS2::EntityType rtti() const {

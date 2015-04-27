@@ -28,6 +28,7 @@
 #include "rs_preview.h"
 
 #include "rs_entitycontainer.h"
+#include "rs_line.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_settings.h"
@@ -37,7 +38,7 @@
  * Constructor.
  */
 RS_Preview::RS_Preview(RS_EntityContainer* parent)
-        : RS_EntityContainer(parent) {
+		: RS_EntityContainer(parent, true) {
 
     RS_SETTINGS->beginGroup("/Appearance");
     maxEntities = RS_SETTINGS->readNumEntry("/MaxPreview", 100);
@@ -143,9 +144,8 @@ void RS_Preview::addCloneOf(RS_Entity* entity) {
  * Adds all entities from 'container' to the preview (unselected).
  */
 void RS_Preview::addAllFrom(RS_EntityContainer& container) {
-    int c=0;
-    for (RS_Entity* e=container.firstEntity();
-            e!=NULL; e=container.nextEntity()) {
+	int c=0;
+	for(auto e: container){
 
         if (c<maxEntities) {
             RS_Entity* clone = e->clone();
@@ -164,9 +164,8 @@ void RS_Preview::addAllFrom(RS_EntityContainer& container) {
  * Adds all selected entities from 'container' to the preview (unselected).
  */
 void RS_Preview::addSelectionFrom(RS_EntityContainer& container) {
-    int c=0;
-    for (RS_Entity* e=container.firstEntity();
-            e!=NULL; e=container.nextEntity()) {
+	int c=0;
+	for(auto e: container){
 
         if (e->isSelected() && c<maxEntities) {
             RS_Entity* clone = e->clone();
@@ -190,8 +189,7 @@ void RS_Preview::addStretchablesFrom(RS_EntityContainer& container,
 
     int c=0;
 
-    for (RS_Entity* e=container.firstEntity();
-            e!=NULL; e=container.nextEntity()) {
+	for(auto e: container){
 
         if (e->isVisible() &&
                 e->rtti()!=RS2::EntityHatch &&

@@ -33,52 +33,35 @@
 /**
  * Holds the data that defines a angular dimension entity.
  */
-class RS_DimAngularData {
-public:
-    /**
+struct RS_DimAngularData {
+	/**
 	 * Default constructor
-     */
-	RS_DimAngularData():
-		definitionPoint1(false),
-		definitionPoint2(false),
-		definitionPoint3(false),
-		definitionPoint4(false)
-	{}
+	 */
+	RS_DimAngularData();
 
-    /**
-     * Constructor with initialisation.
-     *
-     * @param definitionPoint Definition point of the angular dimension.
-     * @param leader Leader length.
-     */
-    RS_DimAngularData(const RS_Vector& definitionPoint1,
-                      const RS_Vector& definitionPoint2,
-                                          const RS_Vector& definitionPoint3,
-                                          const RS_Vector& definitionPoint4) {
-        this->definitionPoint1 = definitionPoint1;
-        this->definitionPoint2 = definitionPoint2;
-        this->definitionPoint3 = definitionPoint3;
-        this->definitionPoint4 = definitionPoint4;
-    }
+	/**
+	 * Constructor with initialisation.
+	 *
+	 * @param definitionPoint Definition point of the angular dimension.
+	 * @param leader Leader length.
+	 */
+	RS_DimAngularData(const RS_Vector& definitionPoint1,
+					  const RS_Vector& definitionPoint2,
+					  const RS_Vector& definitionPoint3,
+					  const RS_Vector& definitionPoint4);
 
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_DimAngularData& dd) {
-        os << "(" << dd.definitionPoint1 << "/" << dd.definitionPoint2 << "/"
-                          << dd.definitionPoint3 << "/" << dd.definitionPoint3 << ")";
-        return os;
-    }
-
-public:
-    /** Definition point 1. */
-    RS_Vector definitionPoint1;
-    /** Definition point 2. */
-    RS_Vector definitionPoint2;
-    /** Definition point 3. */
-    RS_Vector definitionPoint3;
-    /** Definition point 4. */
-    RS_Vector definitionPoint4;
+	/** Definition point 1. */
+	RS_Vector definitionPoint1;
+	/** Definition point 2. */
+	RS_Vector definitionPoint2;
+	/** Definition point 3. */
+	RS_Vector definitionPoint3;
+	/** Definition point 4. */
+	RS_Vector definitionPoint4;
 };
 
+std::ostream& operator << (std::ostream& os,
+									  const RS_DimAngularData& dd);
 
 
 /**
@@ -91,15 +74,9 @@ public:
     RS_DimAngular(RS_EntityContainer* parent,
                  const RS_DimensionData& d,
                  const RS_DimAngularData& ed);
-    virtual ~RS_DimAngular() {}
+	virtual ~RS_DimAngular() = default;
 
-    virtual RS_Entity* clone() {
-        RS_DimAngular* d = new RS_DimAngular(*this);
-        d->setOwner(isOwner());
-        d->initId();
-        d->detach();
-        return d;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityDimAngular */
     virtual RS2::EntityType rtti() const {

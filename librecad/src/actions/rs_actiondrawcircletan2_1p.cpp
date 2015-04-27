@@ -20,16 +20,16 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawcircletan2_1p.h"
 
-#include <QAction>
-#include <QDebug>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "lc_quadratic.h"
+#include "rs_coordinateevent.h"
 
 /**
  * Constructor.
@@ -40,19 +40,11 @@ RS_ActionDrawCircleTan2_1P::RS_ActionDrawCircleTan2_1P(
         RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw tangent circle 2P",
                                container, graphicView),
-      cData(RS_Vector(0.,0.),1.),
-      enTypeList()
+	  cData(new RS_CircleData(RS_Vector(0.,0.),1.))
 {
-    //    supported types
-    enTypeList<<RS2::EntityLine<<RS2::EntityArc<<RS2::EntityCircle;
 }
 
-
-
-RS_ActionDrawCircleTan2_1P::~RS_ActionDrawCircleTan2_1P() {
-}
-
-
+RS_ActionDrawCircleTan2_1P::~RS_ActionDrawCircleTan2_1P(){}
 
 QAction* RS_ActionDrawCircleTan2_1P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
@@ -66,16 +58,16 @@ void RS_ActionDrawCircleTan2_1P::init(int status) {
     if(status>=0) {
         RS_Snapper::suspend();
     }
-    if(status>circles.size()) status=circles.size();
+	if(status>(int) circles.size()) status=(int) circles.size();
     RS_PreviewActionInterface::init(status);
-    for(int i=0; i<status; ++i){
-        if(circles[i]==NULL) {
+	for(int i=0; i<status; ++i){
+		if(!circles[i]) {
             status=i;
             break;
         }
     }
     bool updateNeeded(false);
-    for(int i=status>=0?status:0; i<circles.size(); ++i){
+	for(size_t i=status>=0?status:0; i<circles.size(); ++i){
         if(circles[i])
             if(circles[i]->isHighlighted()){
                 circles[i]->setHighlighted(false);
@@ -89,7 +81,7 @@ void RS_ActionDrawCircleTan2_1P::init(int status) {
 
 void RS_ActionDrawCircleTan2_1P::finish(bool updateTB){
     if( circles.size() >0) {
-        foreach(RS_AtomicEntity* circle, circles)
+		for(RS_AtomicEntity*const circle: circles)
             circle->setHighlighted(false);
         graphicView->redraw(RS2::RedrawDrawing);
     }
@@ -111,7 +103,7 @@ void RS_ActionDrawCircleTan2_1P::trigger() {
     RS_PreviewActionInterface::trigger();
 
 
-    RS_Circle* c=new RS_Circle(container, cData);
+	RS_Circle* c=new RS_Circle(container, *cData);
 
     container->addEntity(c);
 
@@ -123,7 +115,7 @@ void RS_ActionDrawCircleTan2_1P::trigger() {
     }
 
 
-    foreach(RS_AtomicEntity* circle, circles)
+	for(RS_AtomicEntity*const circle: circles)
         circle->setHighlighted(false);
     graphicView->redraw(RS2::RedrawDrawing);
     circles.clear();
@@ -143,8 +135,7 @@ bool RS_ActionDrawCircleTan2_1P::getCenters()
 
     auto&& list=LC_Quadratic::getIntersection(lc0,lc1);
     centers.clean();
-    for(unsigned int i=0;i<list.size();i++){
-        auto&& vp=list.get(i);
+	for(const RS_Vector& vp: list){
         auto&& ds=vp.distanceTo(point)-RS_TOLERANCE;
         bool validBranch(true);
         for(int j=0;j<2;j++){
@@ -176,7 +167,7 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent* e) {
     }
     deletePreview();
     if(preparePreview()){
-        RS_Circle* e=new RS_Circle(preview, cData);
+		RS_Circle* e=new RS_Circle(preview.get(), *cData);
         preview->addEntity(e);
         drawPreview();
     }
@@ -198,8 +189,8 @@ bool RS_ActionDrawCircleTan2_1P::preparePreview(){
 //        double ds2=(centers[i]-point).squared();
 //        if( (centers[i]-circles[0]).squared()<ds2
 //    }
-    cData.center=centers.getClosest(coord);
-    cData.radius=point.distanceTo(cData.center);
+	cData->center=centers.getClosest(coord);
+	cData->radius=point.distanceTo(cData->center);
     return true;
 }
 
@@ -208,16 +199,13 @@ RS_Entity* RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent* e) {
     RS_Entity*  en = catchEntity(e,enTypeList, RS2::ResolveAll);
     if(en == NULL) return ret;
     if(en->isVisible()==false) return ret;
-    for(int i=0; i<circles.size(); ++i) {
-        if(circles[i])
-            if(en->getId() == circles[i]->getId()) return ret; //do not pull in the same line again
+	for(auto p: circles){
+		if(p && en->getId() == p->getId()) return ret; //do not pull in the same line again
     }
-    if(en->getParent() != NULL) {
-        if ( en->getParent()->ignoredOnModification()){
-            return NULL;
-        }
-    }
-    return en;
+	if(en->getParent() && en->getParent()->ignoredOnModification()){
+		return nullptr;
+	}
+	return en;
 }
 
 void RS_ActionDrawCircleTan2_1P::mouseReleaseEvent(QMouseEvent* e) {
@@ -233,7 +221,7 @@ void RS_ActionDrawCircleTan2_1P::mouseReleaseEvent(QMouseEvent* e) {
             if (en==NULL) return;
 //            circle = static_cast<RS_AtomicEntity*>(en);
             en->setHighlighted(true);
-            circles<<en;
+			circles.push_back(en);
             graphicView->redraw(RS2::RedrawDrawing);
             setStatus(getStatus()+1);
         }
@@ -285,6 +273,11 @@ void RS_ActionDrawCircleTan2_1P::coordinateEvent(RS_CoordinateEvent* e) {
 
 }
 
+double RS_ActionDrawCircleTan2_1P::getRadius() const
+{
+	return cData->radius;
+}
+
 //fixme, support command line
 
 /*
@@ -303,7 +296,7 @@ void RS_ActionDrawCircleTan2_1P::commandEvent(RS_CommandEvent* e) {
     case SetFocus1: {
             bool ok;
             double m = RS_Math::eval(c, &ok);
-            if (ok==true) {
+			if (ok) {
                 ratio = m / major.magnitude();
                 if (!isArc) {
                     trigger();
@@ -321,7 +314,7 @@ void RS_ActionDrawCircleTan2_1P::commandEvent(RS_CommandEvent* e) {
     case SetAngle1: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+			if (ok) {
                 angle1 = RS_Math::deg2rad(a);
                 setStatus(SetAngle2);
             } else {
@@ -335,7 +328,7 @@ void RS_ActionDrawCircleTan2_1P::commandEvent(RS_CommandEvent* e) {
     case SetAngle2: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+			if (ok) {
                 angle2 = RS_Math::deg2rad(a);
                 trigger();
             } else {

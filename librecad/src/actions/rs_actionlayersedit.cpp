@@ -61,9 +61,8 @@ void RS_ActionLayersEdit::trigger() {
             graphic->editLayer(graphic->getActiveLayer(), *layer);
 
             // update updateable entities on the layer that has changed
-            for (RS_Entity* e=graphic->firstEntity(RS2::ResolveNone);
-                    e!=NULL;
-                    e=graphic->nextEntity(RS2::ResolveNone)) {
+
+			for(auto e: *graphic){
 
                 RS_Layer* l = e->getLayer();
                 if (l!=NULL && l->getName()==layer->getName()) {

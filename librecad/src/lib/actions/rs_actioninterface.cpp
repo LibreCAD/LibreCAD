@@ -24,12 +24,12 @@
 **
 **********************************************************************/
 
-
+#include <QKeyEvent>
 #include "rs_actioninterface.h"
-
 #include "rs_graphicview.h"
 #include "rs_commands.h"
 #include "rs_dialogfactory.h"
+#include "rs_coordinateevent.h"
 
 /**
  * Constructor.
@@ -75,19 +75,11 @@ RS_Snapper(container, graphicView) {
 }
 
 /**
- * Destructor.
- */
-RS_ActionInterface::~RS_ActionInterface() {
-    // would be pure virtual now:
-    // hideOptions();
-}
-
-/**
  * Must be implemented to return the ID of this action.
 *
 * @todo no default implementation
  */
-RS2::ActionType RS_ActionInterface::rtti()  {
+RS2::ActionType RS_ActionInterface::rtti() const{
     return RS2::ActionNone;
 }
 
@@ -241,13 +233,13 @@ void RS_ActionInterface::updateMouseCursor() {}
  * Should be overwritten to set the toolbar for this action.
  */
 void RS_ActionInterface::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }else{
-            RS_DIALOGFACTORY->showCadToolBar(rtti());
-        }
-    }
+	if (RS_DIALOGFACTORY) {
+		if (isFinished()) {
+			RS_DIALOGFACTORY->resetToolBar();
+		}else{
+			RS_DIALOGFACTORY->showCadToolBar(rtti());
+		}
+	}
 }
 
 /**

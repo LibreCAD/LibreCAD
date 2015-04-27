@@ -36,9 +36,9 @@
  * Constructor.
  */
 RS_Leader::RS_Leader(RS_EntityContainer* parent)
-        :RS_EntityContainer(parent) {
-
-    empty = true;
+		:RS_EntityContainer(parent)
+		,empty(true)
+{
 }
 
 
@@ -52,14 +52,13 @@ RS_Leader::RS_Leader(RS_EntityContainer* parent,
     empty = true;
 }
 
-
-
-/**
- * Destructor
- */
-RS_Leader::~RS_Leader() {}
-
-
+RS_Entity* RS_Leader::clone() const{
+	RS_Leader* p = new RS_Leader(*this);
+	p->setOwner(isOwner());
+	p->initId();
+	p->detach();
+	return p;
+}
 
 /**
  * Implementation of update. Updates the arrow.
@@ -67,7 +66,7 @@ RS_Leader::~RS_Leader() {}
 void RS_Leader::update() {
 
     // find and delete arrow:
-    for (RS_Entity* e=firstEntity(); e!=NULL; e=nextEntity()) {
+	for(auto e: entities){
         if (e->rtti()==RS2::EntitySolid) {
             removeEntity(e);
             break;

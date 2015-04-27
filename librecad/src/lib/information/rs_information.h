@@ -28,8 +28,8 @@
 #define RS_INFORMATION_H
 
 #include "rs_entitycontainer.h"
-#include "rs_line.h"
-#include "rs_arc.h"
+
+class RS_Ellipse;
 
 
 
@@ -60,8 +60,9 @@ public:
                                 double* dist = NULL,
                                 RS2::ResolveLevel level=RS2::ResolveAll) const;
 
-    static RS_VectorSolutions getIntersection(RS_Entity* e1,
-            RS_Entity* e2,
+
+	static RS_VectorSolutions getIntersection(RS_Entity const* e1,
+			RS_Entity const* e2,
             bool onEntities = false);
 
     static RS_VectorSolutions getIntersectionLineLine(RS_Line* e1,
@@ -82,6 +83,12 @@ public:
     
 	static RS_VectorSolutions getIntersectionEllipseLine(RS_Line* line,
             RS_Ellipse* ellipse);
+	/**
+	 * @brief createQuadrilateral form quadrilateral from 4 straight lines
+	 * @param container contains 4 straight lines
+	 * @return ordered vertices of quadrilateral formed by the 4 lines
+	 */
+	static RS_VectorSolutions createQuadrilateral(const RS_EntityContainer& container);
 
     static bool isPointInsideContour(const RS_Vector& point,
                                      RS_EntityContainer* contour,

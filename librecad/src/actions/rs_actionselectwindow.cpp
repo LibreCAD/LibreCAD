@@ -99,7 +99,7 @@ void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
     if (getStatus()==SetCorner2 && v1.valid) {
         v2 = snapFree(e);
         deletePreview();
-        RS_OverlayBox* ob=new RS_OverlayBox(preview, RS_OverlayBoxData(v1, v2));
+		RS_OverlayBox* ob=new RS_OverlayBox(preview.get(), RS_OverlayBoxData(v1, v2));
         preview->addEntity(ob);
 
         //RLZ: not needed overlay have contour
@@ -183,19 +183,6 @@ void RS_ActionSelectWindow::updateMouseButtonHints() {
 
 void RS_ActionSelectWindow::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);
-}
-
-
-
-void RS_ActionSelectWindow::updateToolBar() {
-    //not needed any more
-    return;
-    if (!isFinished()) {
-        //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
-    } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSelect);
-    }
 }
 
 // EOF

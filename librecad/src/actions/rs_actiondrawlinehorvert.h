@@ -28,7 +28,8 @@
 #define RS_ACTIONDRAWLINEHORVERT_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_line.h"
+
+struct RS_LineData;
 
 /**
  * This action class can handle user events to draw 
@@ -64,13 +65,12 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
 
 protected:
     /**
      * Line data.
      */
-    RS_LineData data;
+	std::unique_ptr<RS_LineData> data;
     /**
      * 2 points
      */

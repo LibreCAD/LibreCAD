@@ -31,15 +31,15 @@
 #include "rs.h"
 
 class RS_ActionInterface;
-class RS_ArcData;
+struct RS_ArcData;
 class RS_AttributesData;
 class RS_BevelData;
 class RS_Block;
-class RS_BlockData;
+struct RS_BlockData;
 class RS_BlockList;
-class RS_CircleData;
-class RS_DimLinearData;
-class RS_DimensionData;
+struct RS_CircleData;
+struct RS_DimLinearData;
+struct RS_DimensionData;
 class RS_Document;
 class RS_Entity;
 class RS_EventHandler;
@@ -373,6 +373,21 @@ public:
          * @param graphic Graphic document.
      */
     virtual void requestOptionsDrawingDialog(RS_Graphic& graphic) = 0;
+
+    /**
+     * This virtual method must be overwritten and must present
+     * a dialog for options how to export as MakeCAM SVG.
+     */
+    virtual bool requestOptionsMakerCamDialog() = 0;
+
+    /**
+     * This virtual method must be overwritten and must present
+     * a dialog for saving a file.
+     */
+    virtual QString requestFileSaveAsDialog(const QString& caption = QString(),
+                                            const QString& dir = QString(),
+                                            const QString& filter = QString(), 
+                                            QString* selectedFilter = 0) = 0;
 
     /**
      * This virtual method must be overwritten if the graphic view has

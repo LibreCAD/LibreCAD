@@ -24,9 +24,9 @@
 **
 **********************************************************************/
 
-#include "rs_actiondrawlinefree.h"
-
 #include <QAction>
+#include "rs_actiondrawlinefree.h"
+#include "rs_polyline.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 
@@ -35,16 +35,13 @@
 RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw freehand lines",
-                    container, graphicView) {
-    vertex = RS_Vector(false);
-    polyline = NULL;
+					container, graphicView)
+		,vertex(false)
+{
+	preview->setOwner(false);
 }
 
-RS_ActionDrawLineFree::~RS_ActionDrawLineFree() {
-    if (polyline!=NULL) {
-        delete polyline;
-    }
-}
+RS_ActionDrawLineFree::~RS_ActionDrawLineFree() {}
 
 QAction* RS_ActionDrawLineFree::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
         // tr(""Line: Freehand"),
@@ -55,27 +52,27 @@ QAction* RS_ActionDrawLineFree::createGUIAction(RS2::ActionType /*type*/, QObjec
 }
 
 void RS_ActionDrawLineFree::trigger() {
-    if (polyline!=NULL) {
-        deletePreview();
+	deleteSnapper();
+	if (polyline.get()) {
+		deletePreview();
 
-            polyline->endPolyline();
-            RS_VectorSolutions sol=polyline->getRefPoints();
-            if(sol.getNumber() > 2 ) {
-                container->addEntity(polyline);
-                if (document) {
-                        document->startUndoCycle();
-                        document->addUndoable(polyline);
-                        document->endUndoCycle();
-                }
-                graphicView->redraw(RS2::RedrawDrawing);
-        RS_DEBUG->print("RS_ActionDrawLineFree::trigger():"
-                        " polyline added: %d", polyline->getId());
-            } else {
-            delete polyline;
-            }
-        polyline = NULL;
-    }
-    setStatus(SetStartpoint);
+		polyline->endPolyline();
+		RS_VectorSolutions sol=polyline->getRefPoints();
+		if(sol.getNumber() > 2 ) {
+			RS_Entity* ent=polyline->clone();
+			container->addEntity(ent);
+			if (document) {
+				document->startUndoCycle();
+				document->addUndoable(ent);
+				document->endUndoCycle();
+			}
+			graphicView->redraw(RS2::RedrawDrawing);
+			RS_DEBUG->print("RS_ActionDrawLineFree::trigger():"
+							" polyline added: %d", ent->getId());
+		}
+		polyline.reset();
+	}
+	setStatus(SetStartpoint);
 }
 
 /*
@@ -83,7 +80,7 @@ void RS_ActionDrawLineFree::trigger() {
  */
 
 void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
-    if (getStatus()==Dragging && polyline!=NULL) {
+	if (getStatus()==Dragging && polyline.get()) {
         RS_Vector v = snapPoint(e);
         if( (graphicView->toGui(v) - graphicView->toGui(vertex)).squared()< 1. ){
             //do not add the same mouse position
@@ -91,7 +88,7 @@ void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
         }
         RS_Entity* ent = polyline->addVertex(v);
         if (polyline->count() > 0){
-            preview->addCloneOf(ent);
+			preview->addEntity(ent);
             drawPreview();
         }
 
@@ -111,8 +108,9 @@ void RS_ActionDrawLineFree::mousePressEvent(QMouseEvent* e) {
             setStatus(Dragging);
         case Dragging:
             vertex = snapPoint(e);
-            polyline = new RS_Polyline(container,
-                                       RS_PolylineData(vertex, vertex, 0));
+			polyline.reset(new RS_Polyline(container,
+									   RS_PolylineData(vertex, vertex, 0))
+						   );
             polyline->setLayerToActive();
             polyline->setPenToActive();
             break;
@@ -134,9 +132,8 @@ void RS_ActionDrawLineFree::mouseReleaseEvent(QMouseEvent* e) {
         trigger();
         }
     } else if (e->button()==Qt::RightButton) {
-        if (polyline!=NULL) {
-            delete polyline;
-            polyline = NULL;
+		if (polyline.get()) {
+			polyline.reset();
         }
         init(getStatus()-1);
     }
@@ -157,20 +154,8 @@ void RS_ActionDrawLineFree::updateMouseButtonHints() {
     }
 }
 
-
-
 void RS_ActionDrawLineFree::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionDrawLineFree::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
 
 // EOF

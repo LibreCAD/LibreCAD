@@ -1,7 +1,7 @@
 /******************************************************************************
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
-**  Copyright (C) 2011 Rallaz, rallazz@gmail.com                             **
+**  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
 **  General Public License as published by the Free Software Foundation,     **
@@ -16,6 +16,7 @@
 #include <string>
 #include "drw_entities.h"
 #include "drw_objects.h"
+#include "drw_header.h"
 #include "drw_interface.h"
 
 
@@ -26,6 +27,7 @@ class dxfRW {
 public:
     dxfRW(const char* name);
     ~dxfRW();
+    void setDebug(DRW::DBG_LEVEL lvl);
     /// reads the file specified in constructor
     /*!
      * An interface must be provided. It is used by the class to signal various
@@ -35,7 +37,7 @@ public:
      * @return true for success
      */
     bool read(DRW_Interface *interface_, bool ext);
-    void setBinary(bool b) {binary = b;}
+    void setBinary(bool b) {binFile = b;}
 
     bool write(DRW_Interface *interface_, DRW::Version ver, bool bin);
     bool writeLineType(DRW_LType *ent);
@@ -43,6 +45,7 @@ public:
     bool writeDimstyle(DRW_Dimstyle *ent);
     bool writeTextstyle(DRW_Textstyle *ent);
     bool writeVport(DRW_Vport *ent);
+    bool writeAppId(DRW_AppId *ent);
     bool writePoint(DRW_Point *ent);
     bool writeLine(DRW_Line *ent);
     bool writeRay(DRW_Ray *ent);
@@ -83,6 +86,7 @@ private:
     bool processDimStyle();
     bool processTextStyle();
     bool processVports();
+    bool processAppId();
 
     bool processPoint();
     bool processLine();
@@ -113,13 +117,15 @@ private:
     bool writeTables();
     bool writeBlocks();
     bool writeObjects();
-    std::string toHexStr(int n);
+    bool writeExtData(const std::vector<DRW_Variant*> &ed);
+    /*use version from dwgutil.h*/
+    std::string toHexStr(int n);//RLZ removeme
 
 private:
     DRW::Version version;
     std::string fileName;
     std::string codePage;
-    bool binary;
+    bool binFile;
     dxfReader *reader;
     dxfWriter *writer;
     DRW_Interface *iface;

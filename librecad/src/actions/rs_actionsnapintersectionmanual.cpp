@@ -24,26 +24,27 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actionsnapintersectionmanual.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
-
+#include "rs_circle.h"
+#include "rs_coordinateevent.h"
 
 /**
  * @param both Trim both entities.
  */
 RS_ActionSnapIntersectionManual::RS_ActionSnapIntersectionManual(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Trim Entity",
-                           container, graphicView) {
-
-    entity2 = NULL;
-    entity1 = NULL;
-    coord = RS_Vector(false);
+		RS_EntityContainer& container,
+		RS_GraphicView& graphicView)
+	:RS_PreviewActionInterface("Trim Entity",
+							   container, graphicView)
+	,entity1(nullptr)
+	,entity2(nullptr)
+	,coord(false)
+{
 }
 
 
@@ -58,9 +59,7 @@ QAction* RS_ActionSnapIntersectionManual::createGUIAction(RS2::ActionType /*type
 
 void RS_ActionSnapIntersectionManual::init(int status) {
     RS_ActionInterface::init(status);
-
-    snapMode.clear();
-    snapMode.restriction = RS2::RestrictNothing;
+	snapMode.clear();
 }
 
 
@@ -119,7 +118,7 @@ void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent* e) {
             if (ip.valid) {
                 deletePreview();
                 preview->addEntity(
-                    new RS_Circle(preview,
+					new RS_Circle(preview.get(),
                                   RS_CircleData(
                                       ip,
                                       graphicView->toGraphDX(4))));
@@ -195,14 +194,5 @@ void RS_ActionSnapIntersectionManual::updateMouseButtonHints() {
 void RS_ActionSnapIntersectionManual::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-void RS_ActionSnapIntersectionManual::updateToolBar() {
-    //not needed any more
-    return;
-    //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-}
-
 
 // EOF

@@ -35,35 +35,20 @@ class LC_Quadratic;
 /**
  * Holds the data that defines a line.
  */
-class RS_LineData {
-public:
+struct RS_LineData {
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-    RS_LineData() {}
+	RS_LineData() = default;
 
     RS_LineData(const RS_Vector& startpoint,
-                const RS_Vector& endpoint) {
+				const RS_Vector& endpoint);
 
-        this->startpoint = startpoint;
-        this->endpoint = endpoint;
-    }
-
-    friend class RS_Line;
-    friend class RS_ActionDrawLine;
-
-    friend std::ostream& operator << (std::ostream& os, const RS_LineData& ld) {
-        os << "(" << ld.startpoint <<
-           "/" << ld.endpoint <<
-           ")";
-        return os;
-    }
-
-public:
     RS_Vector startpoint;
     RS_Vector endpoint;
 };
 
+std::ostream& operator << (std::ostream& os, const RS_LineData& ld);
 
 /**
  * Class for a line entity.
@@ -74,13 +59,13 @@ class RS_Line : public RS_AtomicEntity {
 public:
     //RS_Line(RS_EntityContainer* parent);
     //RS_Line(const RS_Line& l);
-    RS_Line(){}
+	RS_Line() = default;
     RS_Line(RS_EntityContainer* parent,
             const RS_LineData& d);
     RS_Line(RS_EntityContainer* parent, const RS_Vector& pStart, const RS_Vector& pEnd);
     RS_Line(const RS_Vector& pStart, const RS_Vector& pEnd);
 
-    virtual RS_Entity* clone();
+	virtual RS_Entity* clone() const;
     /*{
         cout << "cloning line\n";
         return new RS_Line(*this);
@@ -91,7 +76,7 @@ public:
            //}
        }*/
 
-    virtual ~RS_Line();
+	virtual ~RS_Line() = default;
 
     /**	@return RS2::EntityLine */
     virtual RS2::EntityType rtti() const {
@@ -107,7 +92,7 @@ public:
         return data;
     }
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     /** @return Start point of the entity */
     virtual RS_Vector getStartpoint() const {
@@ -201,9 +186,9 @@ public:
                                        )const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-                                     double* dist = NULL);
+									 double* dist = NULL)const;
     virtual RS_Vector getNearestDist(double distance,
-                                     bool startp);
+									 bool startp)const;
     //virtual RS_Vector getNearestRef(const RS_Vector& coord,
     //                                 double* dist = NULL);
 
@@ -211,7 +196,7 @@ public:
           * implementations must revert the direction of an atomic entity
           */
     virtual void revertDirection();
-     virtual QVector<RS_Entity* > offsetTwoSides(const double& distance) const;
+	 virtual std::vector<RS_Entity* > offsetTwoSides(const double& distance) const;
     /**
       * the modify offset action
       */

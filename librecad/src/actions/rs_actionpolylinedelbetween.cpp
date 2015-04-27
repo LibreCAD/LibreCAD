@@ -24,13 +24,14 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actionpolylinedelbetween.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
+#include "rs_atomicentity.h"
 
 
 
@@ -50,7 +51,8 @@ QAction* RS_ActionPolylineDelBetween::createGUIAction(RS2::ActionType /*type*/, 
 
 void RS_ActionPolylineDelBetween::init(int status) {
         RS_ActionInterface::init(status);
-        delEntity = delSegment = NULL;
+		delEntity = nullptr;
+		delSegment = NULL;
         nodePoint1 = nodePoint2 = RS_Vector(false);
 }
 
@@ -116,7 +118,7 @@ void RS_ActionPolylineDelBetween::mouseReleaseEvent(QMouseEvent* e) {
                                 RS_DIALOGFACTORY->commandMessage(
                                         tr("Entity must be a polyline."));
                         } else {
-                                RS_Vector clickCoord = snapPoint(e);
+							snapPoint(e);
                                 delSegment = NULL;
                                 double dist = graphicView->toGraphDX(snapRange)*0.9;
                                 delSegment =  (RS_AtomicEntity*)((RS_Polyline*)delEntity)->getNearestEntity( RS_Vector(graphicView->toGraphX(e->x()),

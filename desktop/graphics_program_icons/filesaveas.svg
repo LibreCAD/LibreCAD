@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="150"
+   height="150"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="filesaveas.svg"
+   inkscape:export-filename="../../librecad/res/actions/filesaveas.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <title
+     id="title3051">LibreCAD File Save As Icon</title>
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.959798"
+     inkscape:cx="-4.2114983"
+     inkscape:cy="100.05012"
+     inkscape:document-units="px"
+     inkscape:current-layer="g3900"
+     showgrid="true"
+     inkscape:window-width="1773"
+     inkscape:window-height="996"
+     inkscape:window-x="63"
+     inkscape:window-y="34"
+     inkscape:window-maximized="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2985"
+       empspacing="8"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true"
+       spacingx="1.25px"
+       spacingy="1.25px"
+       originx="2.5px"
+       originy="2.5px" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>LibreCAD File Save As Icon</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Armin Stebich (librecad@mail.lordofbikes.de)</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>LibreCAD (http://librecad.org/)</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title>LibreCAD (http://librecad.org/)</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:contributor>
+          <cc:Agent>
+            <dc:title>Armin Stebich (librecad@mail.lordofbikes.de)</dc:title>
+          </cc:Agent>
+        </dc:contributor>
+        <cc:license
+           rdf:resource="gpl-2.0greater.txt (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-902.36218)">
+    <image
+       y="902.36218"
+       x="0"
+       id="image3065"
+       xlink:href="data:image/png;base64,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 TkSuQmCC "
+       height="150"
+       width="150"
+       style="display:none" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:3.7410543;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 17.316606,934.99789 95.590484,0.34145 0.32454,95.01176 -8.36818,6.1518 -71.77325,0.6837 -15.448497,-14.0125 z"
+       id="path3217"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/prar/Descargas/linux/librecad/trunk/src/ui/forms/png/fileopen.png"
+       inkscape:export-xdpi="299.79181"
+       inkscape:export-ydpi="299.79181" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3.7410543;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 50.829905,1024.8521 -0.123455,-15.0379 6.960044,-0.046 0.158995,15.2087 z"
+       id="path3211"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/prar/Descargas/linux/librecad/trunk/src/ui/forms/png/fileopen.png"
+       inkscape:export-xdpi="299.79181"
+       inkscape:export-ydpi="299.79181" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3.7410543;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 39.524627,1035.447 -0.324351,-30.7594 8.045699,-6.49345 37.335159,-0.34139 8.046447,8.20224 0.641591,29.0505"
+       id="path3213"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/prar/Descargas/linux/librecad/trunk/src/ui/forms/png/fileopen.png"
+       inkscape:export-xdpi="299.79181"
+       inkscape:export-ydpi="299.79181" />
+    <path
+       style="fill:#7cfc00;fill-opacity:1;stroke:#000000;stroke-width:3.7410543;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 97.779573,935.38888 -64.670107,0.17844 0.302091,40.87221 8.046633,7.07769 47.312177,0.35297 9.012012,-7.0777 0.0823,-41.22732"
+       id="path3215"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccc"
+       inkscape:export-filename="/home/prar/Descargas/linux/librecad/trunk/src/ui/forms/png/fileopen.png"
+       inkscape:export-xdpi="299.79181"
+       inkscape:export-ydpi="299.79181" />
+    <path
+       style="color:#000000;fill:#7cfc00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.20000005;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 43.159808,1029.0565 c -3.74e-4,-3.0362 -0.06547,-9.3266 -0.138419,-13.9788 l -0.138418,-8.4584 2.750048,-2.1961 2.750236,-2.1962 7.553189,-0.1609 c 4.154253,-0.087 12.001863,-0.1609 17.439111,-0.1609 l 9.88611,0 2.846381,2.9725 2.846381,2.9727 0.295731,13.0377 c 0.162735,7.1709 0.279643,13.055 0.259441,13.0757 -0.02058,0.022 -6.283474,0.1032 -13.918778,0.1815 -7.635492,0.08 -18.056012,0.2081 -23.156752,0.2871 l -9.274073,0.1422 -3.74e-4,-5.5204 z m 18.357727,-6.7892 c -0.0823,-3.6883 -0.149642,-8.9084 -0.151512,-11.5999 l -3.74e-4,-4.8939 -6.31546,0 c -3.47357,0 -6.699481,0.069 -7.168796,0.1515 l -0.853522,0.1496 0,9.8413 c 0,5.4127 0.06547,10.5071 0.145902,11.3207 l 0.1459,1.4796 3.552693,0.077 c 1.953765,0.039 5.182108,0.097 7.173659,0.1273 l 3.620965,0.055 -0.149641,-6.7064 z"
+       id="path3223"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/prar/Descargas/linux/librecad/trunk/src/ui/forms/png/fileopen.png"
+       inkscape:export-xdpi="299.79181"
+       inkscape:export-ydpi="299.79181" />
+    <g
+       id="g3900"
+       transform="matrix(1.0447108,0,0,0.97975857,-12.617442,19.626726)">
+      <path
+         sodipodi:nodetypes="cccccc"
+         inkscape:connector-curvature="0"
+         id="path3878"
+         d="M 100.90902,905.93389 62.620912,945.48445 58.75,963.61218 76.978952,960.79435 115.26706,919.96796 100.90902,905.93389"
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:3.95368817;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         style="fill:#7cfc00;fill-opacity:1;stroke:none"
+         d="m 95.592901,11.061665 -35.604781,34.305431 1.196503,5.103298 4.786014,1.275824 33.211774,-36.85708 z"
+         id="path4848"
+         inkscape:connector-curvature="0"
+         transform="translate(9.8118123,901.39318)"
+         sodipodi:nodetypes="cccccc" />
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path3880"
+         d="M 62.311812,953.89318 60,962.36218 l 8.561812,-2.219 z"
+         style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3882"
+         d="m 63.817415,945.48445 5.982517,1.27583 1.196504,5.10329 4.786013,1.27583 1.196503,2.55165 3.589511,1.27582"
+         style="fill:none;stroke:#000000;stroke-width:2.96526623;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:nodetypes="cccccc" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3884"
+         d="M 69.509612,948.17793 105.40471,911.17902"
+         style="fill:none;stroke:#000000;stroke-width:2.96526623;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:nodetypes="cc" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3886"
+         d="M 75.782449,953.1394 111.38723,915.00649"
+         style="fill:none;stroke:#000000;stroke-width:2.96526623;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         sodipodi:nodetypes="cc" />
+    </g>
+  </g>
+</svg>

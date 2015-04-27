@@ -24,11 +24,12 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actionzoomwindow.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_line.h"
 
 
 /**
@@ -96,16 +97,16 @@ void RS_ActionZoomWindow::mouseMoveEvent(QMouseEvent* e) {
     if (getStatus()==SetSecondCorner && v1.valid) {
         v2 = snapFree(e);
         deletePreview();
-        preview->addEntity(new RS_Line(preview,
+		preview->addEntity(new RS_Line(preview.get(),
                                        RS_LineData(RS_Vector(v1.x, v1.y),
                                                    RS_Vector(v2.x, v1.y))));
-        preview->addEntity(new RS_Line(preview,
+		preview->addEntity(new RS_Line(preview.get(),
                                        RS_LineData(RS_Vector(v2.x, v1.y),
                                                    RS_Vector(v2.x, v2.y))));
-        preview->addEntity(new RS_Line(preview,
+		preview->addEntity(new RS_Line(preview.get(),
                                        RS_LineData(RS_Vector(v2.x, v2.y),
                                                    RS_Vector(v1.x, v2.y))));
-        preview->addEntity(new RS_Line(preview,
+		preview->addEntity(new RS_Line(preview.get(),
                                        RS_LineData(RS_Vector(v1.x, v2.y),
                                                    RS_Vector(v1.x, v1.y))));
         drawPreview();

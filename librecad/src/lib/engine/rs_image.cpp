@@ -24,15 +24,41 @@
 **
 **********************************************************************/
 
-
+#include <QImage>
 #include "rs_image.h"
+#include "rs_line.h"
+#include "rs_settings.h"
 
 #include "rs_constructionline.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
-#include "rs_painter.h"
 #include "rs_painterqt.h"
 
+RS_ImageData::RS_ImageData(int _handle,
+						   const RS_Vector& _insertionPoint,
+						   const RS_Vector& _uVector,
+						   const RS_Vector& _vVector,
+						   const RS_Vector& _size,
+						   const QString& _file,
+						   int _brightness,
+						   int _contrast,
+						   int _fade):
+	handle(_handle)
+  , insertionPoint(_insertionPoint)
+  , uVector(_uVector)
+  , vVector(_vVector)
+  , size(_size)
+  , file(_file)
+  , brightness(_brightness)
+  , contrast(_contrast)
+  , fade(_fade)
+{
+}
+
+std::ostream& operator << (std::ostream& os, const RS_ImageData& ld) {
+	os << "(" << ld.insertionPoint << ")";
+	return os;
+}
 
 /**
  * Constructor.
@@ -45,21 +71,25 @@ RS_Image::RS_Image(RS_EntityContainer* parent,
     calculateBorders();
 }
 
-
-
-/**
- * Destructor.
- */
-RS_Image::~RS_Image() {
-    /*if (img!=NULL) {
-        delete[] img;
-    }*/
+RS_Image::RS_Image(const RS_Image& _image):
+	RS_AtomicEntity(_image.getParent())
+  ,data(_image.data)
+  ,img(_image.img.get()?new QImage(*_image.img):nullptr)
+{
 }
 
+RS_Image RS_Image::operator = (const RS_Image& _image)
+{
+	data=_image.data;
+	if(_image.img.get()){
+		img.reset(new QImage(*_image.img));
+	}else{
+		img.reset();
+	}
+	return *this;
+}
 
-
-
-RS_Entity* RS_Image::clone() {
+RS_Entity* RS_Image::clone() const {
     RS_Image* i = new RS_Image(*this);
         i->setHandle(getHandle());
     i->initId();
@@ -83,9 +113,9 @@ void RS_Image::update() {
 
     // the whole image:
     //QImage image = QImage(data.file);
-    img = QImage(data.file);
-    if (!img.isNull()) {
-        data.size = RS_Vector(img.width(), img.height());
+	img.reset(new QImage(data.file));
+	if (!img->isNull()) {
+		data.size = RS_Vector(img->width(), img->height());
     }
 
     RS_DEBUG->print("RS_Image::update: OK");
@@ -161,8 +191,8 @@ RS_VectorSolutions RS_Image::getCorners() const {
 bool RS_Image::containsPoint(const RS_Vector& coord) const{
     QPolygonF paf;
     RS_VectorSolutions corners =getCorners();
-    for(int i=0;i<corners.getNumber();i++){
-        paf.push_back(QPointF(corners.get(i).x,corners.get(i).y));
+	for(const RS_Vector& vp: corners){
+		paf.push_back(QPointF(vp.x, vp.y));
     }
     paf.push_back(paf.at(0));
     return paf.containsPoint(QPointF(coord.x,coord.y),Qt::OddEvenFill);
@@ -210,7 +240,7 @@ RS_Vector RS_Image::getNearestPointOnEntity(const RS_Vector& coord,
 
 
 RS_Vector RS_Image::getNearestCenter(const RS_Vector& coord,
-                                     double* dist) {
+									 double* dist) const{
 
     RS_VectorSolutions points;
     RS_VectorSolutions corners = getCorners();
@@ -237,14 +267,14 @@ RS_Vector RS_Image::getNearestCenter(const RS_Vector& coord,
 RS_Vector RS_Image::getNearestMiddle(const RS_Vector& coord,
                                      double* dist,
                                      const int /*middlePoints*/) const{
-    return const_cast<RS_Image*>(this)->getNearestCenter(coord, dist);
+	return getNearestCenter(coord, dist);
 }
 
 
 
 RS_Vector RS_Image::getNearestDist(double distance,
                                    const RS_Vector& coord,
-                                   double* dist) {
+								   double* dist) const{
 
     RS_VectorSolutions corners = getCorners();
     RS_VectorSolutions points(4);
@@ -277,10 +307,14 @@ double RS_Image::getDistanceToPoint(const RS_Vector& coord,
     RS_VectorSolutions corners = getCorners();
 
     //allow selecting image by clicking within images, bug#3464626
-    if(containsPoint(coord)){
-        //if coord is on image
-        return double(0.);
-    }
+	if(containsPoint(coord)){
+		//if coord is on image
+
+		RS_SETTINGS->beginGroup("/Appearance");
+		bool draftMode = (bool)RS_SETTINGS->readNumEntry("/DraftMode", 0);
+		RS_SETTINGS->endGroup();
+		if(!draftMode) return double(0.);
+	}
     //continue to allow selecting by image edges
     double dist;
     double minDist = RS_MAXDOUBLE;
@@ -349,7 +383,7 @@ void RS_Image::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
 
 
 void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-    if (painter==NULL || view==NULL || img.isNull()) {
+	if (painter==NULL || view==NULL || !img.get() || img->isNull()) {
         return;
     }
 
@@ -363,7 +397,7 @@ void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                                 view->toGuiDY(data.vVector.magnitude()));
     double angle = data.uVector.angle();
 
-    painter->drawImg(img,
+	painter->drawImg(*img,
                      view->toGui(data.insertionPoint),
                      angle, scale);
 

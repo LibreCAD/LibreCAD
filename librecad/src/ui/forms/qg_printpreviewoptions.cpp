@@ -27,7 +27,8 @@
 #include "rs_settings.h"
 
 #include "rs_actionprintpreview.h"
-#include <QDebug>
+#include "rs_math.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_PrintPreviewOptions as a child of 'parent', with the

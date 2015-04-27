@@ -30,7 +30,9 @@
 #include "rs_actioninterface.h"
 #include "rs_dialogfactory.h"
 #include "rs_commandevent.h"
+#include "rs_coordinateevent.h"
 #include "rs_commands.h"
+#include "rs_math.h"
 
 /**
  * Constructor.
@@ -540,20 +542,15 @@ void RS_EventHandler::killSelectActions() {
  * Kills all running actions. Called when a window is closed.
  */
 void RS_EventHandler::killAllActions() {
+	RS_DEBUG->print(__FILE__ ": %s: line %d: begin\n", __func__, __LINE__);
+	for(auto p: currentActions){
+		if ( ! p->isFinished() ){
+			p->finish();
+		}
+	}
 
-    while(currentActions.size()>0){
-        if ( ! currentActions.first()->isFinished() ){
-            currentActions.first()->finish();
-        }
-        //need to check the size again after finish(), bug#3451525, 3451415
-        if(currentActions.size()==0) return;
-        delete currentActions.takeFirst();
-    }
-//    if(defaultAction->rtti() == RS2::ActionDefault){
-
-//    }
-    //cleanup default action, issue#285
-    defaultAction->init(0);
+	RS_DEBUG->print(__FILE__ ": %s: line %d: begin\n", __func__, __LINE__);
+	defaultAction->init(0);
 }
 
 
@@ -602,7 +599,7 @@ void RS_EventHandler::cleanUp() {
         currentActions.last()->resume();
         currentActions.last()->showOptions();
     } else {
-        if (defaultAction!=NULL) {
+		if (defaultAction) {
             defaultAction->resume();
             defaultAction->showOptions();
         }
@@ -622,7 +619,7 @@ void RS_EventHandler::setSnapMode(RS_SnapMode sm) {
         }
     }
 
-    if (defaultAction!=NULL) {
+	if (defaultAction) {
         defaultAction->setSnapMode(sm);
     }
 }

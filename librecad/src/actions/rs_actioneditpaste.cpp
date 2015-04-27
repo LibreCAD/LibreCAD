@@ -31,6 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_clipboard.h"
 #include "rs_modification.h"
+#include "rs_coordinateevent.h"
 
 /**
  * Constructor.
@@ -146,18 +147,5 @@ void RS_ActionEditPaste::updateMouseButtonHints() {
 void RS_ActionEditPaste::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-void RS_ActionEditPaste::updateToolBar() {
-    //not needed any more with new snap
-    return;
-    if (!isFinished()) {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-    } else {
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-    }
-}
-
 
 // EOF

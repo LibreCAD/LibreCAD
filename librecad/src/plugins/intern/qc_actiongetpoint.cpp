@@ -29,8 +29,8 @@
 #include "rs_snapper.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-
-
+#include "rs_line.h"
+#include "rs_coordinateevent.h"
 
 QC_ActionGetPoint::QC_ActionGetPoint(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -58,7 +58,7 @@ void QC_ActionGetPoint::mouseMoveEvent(QMouseEvent* e) {
             if (referencePoint.valid) {
                 targetPoint = mouse;
                 deletePreview();
-                RS_Line *line =new RS_Line(preview,
+				RS_Line *line =new RS_Line(preview.get(),
                                        RS_LineData(referencePoint, mouse));
                 line->setPen(RS_Pen(RS_Color(0,0,0), RS2::Width00, RS2::DotLine ));
                 preview->addEntity(line);

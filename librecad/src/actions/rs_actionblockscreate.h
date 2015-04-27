@@ -49,11 +49,11 @@ public:
 public:
     RS_ActionBlocksCreate(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionBlocksCreate();
+	~RS_ActionBlocksCreate() = default;
 
         static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-        virtual RS2::ActionType rtti() {
+        virtual RS2::ActionType rtti() const{
                 return RS2::ActionBlocksCreate;
         }
 

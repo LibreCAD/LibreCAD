@@ -28,7 +28,8 @@
 #define RS_ACTIONDIMENSION_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_dimension.h"
+
+struct RS_DimensionData;
 
 /**
  * Base class for dimension actions.
@@ -53,58 +54,18 @@ public:
     virtual void updateMouseCursor();
 //    virtual void updateToolBar();
 
-    QString getText() {
-		if (!data.text.isEmpty()) {
-			return data.text;
-		}
+	QString getText() const;
 	
-        QString l = label;
+	void setText(const QString& t);
 
-        if (l.isEmpty() &&
-            (diameter==true || !tol1.isEmpty() || !tol2.isEmpty())) {
-            l = "<>";
-        }
-
-        if (diameter==true) {
-            l = QChar(0x2205) + l;
-        }
-
-        if (!tol1.isEmpty() || !tol2.isEmpty()) {
-            l += QString("\\S%1\\%2;").arg(tol1).arg(tol2);
-        }
-
-        return l;
-    }
-	
-    void setText(const QString& t) {
-        data.text = t;
-	}
-
-        QString getLabel() {
-		return label;
-	}
-    void setLabel(const QString& t) {
-        //data.text = t;
-        label = t;
-    }
-        QString getTol1() {
-		return tol1;
-	}
-    void setTol1(const QString& t) {
-        tol1 = t;
-    }
-        QString getTol2() {
-		return tol2;
-	}
-    void setTol2(const QString& t) {
-        tol2 = t;
-    }
-	bool getDiameter() {
-		return diameter;
-	}
-    void setDiameter(bool d) {
-        diameter = d;
-    }
+	const QString& getLabel() const;
+	void setLabel(const QString& t);
+	const QString& getTol1() const;
+	void setTol1(const QString& t);
+	const QString& getTol2() const;
+	void setTol2(const QString& t);
+	bool getDiameter() const;
+	void setDiameter(bool d);
 
     static bool isDimensionAction(RS2::ActionType type);
 
@@ -112,13 +73,12 @@ protected:
     /**
      * Generic dimension data.
      */
-    RS_DimensionData data;
+	std::unique_ptr<RS_DimensionData> data;
 
     QString label;
     QString tol1;
     QString tol2;
     bool diameter;
-
 
     /**
      * Commands.

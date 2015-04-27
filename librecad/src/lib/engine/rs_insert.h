@@ -35,69 +35,50 @@ class RS_BlockList;
 /**
  * Holds the data that defines an insert.
  */
-class RS_InsertData {
-public:
-        /**
-         * Default constructor.
-         */
-    RS_InsertData() {}
+struct RS_InsertData {
+	/**
+		 * Default constructor.
+		 */
+	RS_InsertData() = default;
+	~RS_InsertData() = default;
 
-    /**
-     * @param name The name of the block used as an identifier.
-     * @param insertionPoint Insertion point of the block.
-     * @param scaleFactor Scale factor in x / y.
-     * @param angle Rotation angle.
-     * @param cols Number of cols if we insert a whole array.
-     * @param rows Number of rows if we insert a whole array.
-     * @param spacing Spacing between rows and cols.
-     * @param blockSource Source for the block to insert if other than parent.
-     *    Normally blocks are requested from the entity's parent but the
-     *    block can also come from another resource. RS_Text uses that
-     *    to share the blocks (letters) from a font.
-     * @param updateMode RS2::Update will update the insert entity instantly
-     *    RS2::NoUpdate will not update the insert. You can update
-     *	  it later manually using the update() method. This is
-     *    often the case since you might want to adjust attributes
-     *    after creating an insert entity.
-     */
-    RS_InsertData(const QString& name,
-                  RS_Vector insertionPoint,
-                  RS_Vector scaleFactor,
-                  double angle,
-                  int cols, int rows, RS_Vector spacing,
-                  RS_BlockList* blockSource = NULL,
-                  RS2::UpdateMode updateMode = RS2::Update) {
-        this->name = name;
-        this->insertionPoint = insertionPoint;
-        this->scaleFactor = scaleFactor;
-        this->angle = angle;
-        this->cols = cols;
-        this->rows = rows;
-        this->spacing = spacing;
-        this->blockSource = blockSource;
-        this->updateMode = updateMode;
+	/**
+	 * @param name The name of the block used as an identifier.
+	 * @param insertionPoint Insertion point of the block.
+	 * @param scaleFactor Scale factor in x / y.
+	 * @param angle Rotation angle.
+	 * @param cols Number of cols if we insert a whole array.
+	 * @param rows Number of rows if we insert a whole array.
+	 * @param spacing Spacing between rows and cols.
+	 * @param blockSource Source for the block to insert if other than parent.
+	 *    Normally blocks are requested from the entity's parent but the
+	 *    block can also come from another resource. RS_Text uses that
+	 *    to share the blocks (letters) from a font.
+	 * @param updateMode RS2::Update will update the insert entity instantly
+	 *    RS2::NoUpdate will not update the insert. You can update
+	 *	  it later manually using the update() method. This is
+	 *    often the case since you might want to adjust attributes
+	 *    after creating an insert entity.
+	 */
+	RS_InsertData(const QString& name,
+				  RS_Vector insertionPoint,
+				  RS_Vector scaleFactor,
+				  double angle,
+				  int cols, int rows, RS_Vector spacing,
+				  RS_BlockList* blockSource = NULL,
+				  RS2::UpdateMode updateMode = RS2::Update);
 
-    }
-
-    friend class RS_Insert;
-
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_InsertData& d) {
-        os << "(" << d.name.toLatin1().data() << ")";
-        return os;
-    }
-
-    QString name;
-    RS_Vector insertionPoint;
-    RS_Vector scaleFactor;
-    double angle;
-    int cols, rows;
-    RS_Vector spacing;
-    RS_BlockList* blockSource;
-    RS2::UpdateMode updateMode;
+	QString name;
+	RS_Vector insertionPoint;
+	RS_Vector scaleFactor;
+	double angle;
+	int cols, rows;
+	RS_Vector spacing;
+	RS_BlockList* blockSource;
+	RS2::UpdateMode updateMode;
 };
 
-
+std::ostream& operator << (std::ostream& os, const RS_InsertData& d);
 
 /**
  * An insert inserts a block into the drawing at a certain location
@@ -112,15 +93,9 @@ class RS_Insert : public RS_EntityContainer {
 public:
     RS_Insert(RS_EntityContainer* parent,
               const RS_InsertData& d);
-    virtual ~RS_Insert();
+	virtual ~RS_Insert() = default;
 
-    virtual RS_Entity* clone() {
-        RS_Insert* i = new RS_Insert(*this);
-        i->setOwner(isOwner());
-        i->initId();
-        i->detach();
-        return i;
-    }
+	virtual RS_Entity* clone() const;
 
     /** @return RS2::EntityInsert */
     virtual RS2::EntityType rtti() const {
@@ -140,7 +115,7 @@ public:
                 block = NULL;
     }
 
-    RS_Block* getBlockForInsert();
+	RS_Block* getBlockForInsert() const;
 
     virtual void update();
 
@@ -196,14 +171,14 @@ public:
                 data.spacing = s;
         }
 
-    virtual bool isVisible();
+	virtual bool isVisible() const;
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
     virtual RS_Vector getMiddlePoint(void) const{
             return RS_Vector(false);
     }
     virtual RS_Vector getNearestRef(const RS_Vector& coord,
-                                     double* dist = NULL) ;
+									 double* dist = nullptr) const;
 
     virtual void move(const RS_Vector& offset);
     virtual void rotate(const RS_Vector& center, const double& angle);
@@ -215,7 +190,7 @@ public:
 
 protected:
     RS_InsertData data;
-        RS_Block* block;
+	mutable RS_Block* block;
 };
 
 

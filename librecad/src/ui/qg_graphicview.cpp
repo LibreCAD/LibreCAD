@@ -56,7 +56,6 @@
  */
 QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlags f)
         : QWidget(parent, f), RS_GraphicView() {
-
     setObjectName(name);
     setBackground(background);
 
@@ -152,7 +151,7 @@ QG_GraphicView::~QG_GraphicView() {
 /**
  * @return width of widget.
  */
-int QG_GraphicView::getWidth() {
+int QG_GraphicView::getWidth() const{
     return width() - vScrollBar->sizeHint().width();
 }
 
@@ -161,7 +160,7 @@ int QG_GraphicView::getWidth() {
 /**
  * @return height of widget.
  */
-int QG_GraphicView::getHeight() {
+int QG_GraphicView::getHeight() const{
     return height() - hScrollBar->sizeHint().height();
 }
 
@@ -823,15 +822,11 @@ QPixmap* QG_GraphicView::getPixmapForView(QPixmap *pm)
 void QG_GraphicView::layerActivated(RS_Layer *layer) {
     if(m_bUpdateLayer==false) return;
     RS_EntityContainer *container = this->getContainer();
-    RS_Entity *entity = container->firstEntity();
-
-    while (entity != NULL) {
-        if (entity->isSelected()) {
-            entity->setLayer(layer);
-        }
-
-        entity = container->nextEntity();
-    }
+	for(auto entity: *container){
+		if (entity->isSelected()) {
+			entity->setLayer(layer);
+		}
+	}
 
     container->setSelected(false);
     redraw(RS2::RedrawDrawing);

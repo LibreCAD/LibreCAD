@@ -31,7 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_information.h"
-
+#include "rs_math.h"
 
 RS_ActionModifyBevel::RS_ActionModifyBevel(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -186,7 +186,7 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent* e) {
     case SetLength2: {
             bool ok;
             double l = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 data.length2 = l;
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));

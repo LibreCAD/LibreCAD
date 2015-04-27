@@ -33,15 +33,11 @@
 /**
  * Holds the data that defines a radial dimension entity.
  */
-class RS_DimRadialData {
-public:
+struct RS_DimRadialData {
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-	RS_DimRadialData():
-		definitionPoint(false),
-		leader(0.0)
-	{}
+	RS_DimRadialData();
 
     /**
      * Constructor with initialisation.
@@ -50,28 +46,16 @@ public:
      * @param leader Leader length.
      */
     RS_DimRadialData(const RS_Vector& definitionPoint,
-                     double leader) {
-        this->definitionPoint = definitionPoint;
-        this->leader = leader;
-    }
+					 double leader);
 
-    friend class RS_DimRadial;
-    //friend class RS_ActionDimRadial;
-
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_DimRadialData& dd) {
-        os << "(" << dd.definitionPoint << "/" << dd.leader << ")";
-        return os;
-    }
-
-public:
     /** Definition point. */
     RS_Vector definitionPoint;
     /** Leader length. */
     double leader;
 };
 
-
+std::ostream& operator << (std::ostream& os,
+									  const RS_DimRadialData& dd);
 
 /**
  * Class for radial dimension entities.
@@ -83,15 +67,9 @@ public:
     RS_DimRadial(RS_EntityContainer* parent,
                  const RS_DimensionData& d,
                  const RS_DimRadialData& ed);
-    virtual ~RS_DimRadial() {}
+	virtual ~RS_DimRadial() = default;
 
-    virtual RS_Entity* clone() {
-        RS_DimRadial* d = new RS_DimRadial(*this);
-        d->setOwner(isOwner());
-        d->initId();
-        d->detach();
-        return d;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityDimRadial */
     virtual RS2::EntityType rtti() const {
@@ -106,7 +84,7 @@ public:
         return edata;
     }
 
-    virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     virtual QString getMeasuredLabel();
 

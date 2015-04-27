@@ -26,6 +26,7 @@
 #include "qg_mtextoptions.h"
 
 #include "rs_actiondrawmtext.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_TextOptions as a child of 'parent', with the

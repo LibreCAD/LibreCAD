@@ -25,12 +25,14 @@
 **********************************************************************/
 
 
-#include "rs_filterlff.h"
-
 #include <QTextStream>
 #include <QStringList>
 #include <QDate>
 
+#include "rs_filterlff.h"
+
+#include "rs_arc.h"
+#include "rs_line.h"
 #include "rs_font.h"
 #include "rs_utility.h"
 #include "rs_system.h"

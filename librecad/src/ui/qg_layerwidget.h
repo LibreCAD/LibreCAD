@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2011 Rallaz (rallazz@gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 **
@@ -46,12 +47,13 @@ public:
     enum {
         VISIBLE,
         LOCKED,
-        ConstructionLayer,
+        PRINT,
+        CONSTRUCTION,
         NAME,
         LAST
     };
-    QG_LayerModel(QObject * parent = 0);
-    ~QG_LayerModel();
+	QG_LayerModel(QObject * parent = nullptr);
+	~QG_LayerModel() = default;
     Qt::ItemFlags flags ( const QModelIndex & /*index*/ ) const {
             return Qt::ItemIsSelectable|Qt::ItemIsEnabled;}
     int columnCount(const QModelIndex &/*parent*/) const {return LAST;}
@@ -69,7 +71,8 @@ private:
     QIcon layerHidden;
     QIcon layerDefreeze;
     QIcon layerFreeze;
-    QIcon constructionLayer;
+    QIcon layerPrint;
+    QIcon layerConstruction;
 };
 
 
@@ -83,7 +86,7 @@ class QG_LayerWidget: public QWidget, public RS_LayerListListener {
 public:
     QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
                    const char* name=0, Qt::WindowFlags f = 0);
-    ~QG_LayerWidget();
+	~QG_LayerWidget() = default;
 
     void setLayerList(RS_LayerList* layerList, bool showByBlock);
 
@@ -111,6 +114,9 @@ public:
         update();
     }
     virtual void layerToggledPrint(RS_Layer*) {
+        update();
+    }
+    virtual void layerToggledConstruction(RS_Layer*) {
         update();
     }
 

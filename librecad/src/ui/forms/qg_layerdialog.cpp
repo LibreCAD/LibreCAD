@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -69,7 +70,7 @@ void QG_LayerDialog::setLayer(RS_Layer* l) {
 	layerName = layer->getName();
     leName->setText(layerName);
     wPen->setPen(layer->getPen(), false, false, tr("Default Pen"));
-    cbConstructionLayer->setChecked(l->isConstructionLayer());
+    cbConstructionLayer->setChecked(l->isConstruction());
 
     if (layer->getName()=="0") {
         leName->setEnabled(false);
@@ -79,7 +80,7 @@ void QG_LayerDialog::setLayer(RS_Layer* l) {
 void QG_LayerDialog::updateLayer() {
     layer->setName(leName->text());
     layer->setPen(wPen->getPen());
-    layer->setConstructionLayer(cbConstructionLayer->isChecked());
+    layer->setConstruction(cbConstructionLayer->isChecked());
 }
 
 void QG_LayerDialog::validate() {

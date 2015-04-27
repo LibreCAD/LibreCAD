@@ -27,10 +27,48 @@
 
 #include "rs_solid.h"
 
+#include "rs_line.h"
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 #include "rs_information.h"
 
+RS_SolidData::RS_SolidData():
+	corner{{RS_Vector(false), RS_Vector(false), RS_Vector(false), RS_Vector(false)}}
+{
+}
+
+/**
+ * Constructor for a solid with 3 corners.
+ */
+RS_SolidData::RS_SolidData(const RS_Vector& corner1,
+			 const RS_Vector& corner2,
+			 const RS_Vector& corner3):
+	corner{{corner1, corner2, corner3, RS_Vector(false)}}
+{
+}
+
+/**
+ * Constructor for a solid with 4 corners.
+ */
+RS_SolidData::RS_SolidData(const RS_Vector& corner1,
+			 const RS_Vector& corner2,
+			 const RS_Vector& corner3,
+			 const RS_Vector& corner4):
+	corner{{corner1, corner2, corner3, corner4}}
+{
+}
+
+std::ostream& operator << (std::ostream& os,
+								  const RS_SolidData& pd) {
+	os << "(";
+	for (int i=0; i<4; i++) {
+		os << pd.corner[i];
+	}
+	os << ")";
+	return os;
+}
+
+RS_Vector corner[4];
 
 /**
  * Default constructor.
@@ -41,7 +79,11 @@ RS_Solid::RS_Solid(RS_EntityContainer* parent,
     calculateBorders();
 }
 
-
+RS_Entity* RS_Solid::clone() const {
+	RS_Solid* s = new RS_Solid(*this);
+	s->initId();
+	return s;
+}
 
 /**
  * @return Corner number 'num'.
@@ -116,7 +158,7 @@ RS_Vector RS_Solid::getNearestEndpoint(const RS_Vector& coord, double* dist)cons
         }
     }
 
-    if (dist!=NULL) {
+	if (dist!=nullptr) {
         *dist = minDist;
     }
 
@@ -147,47 +189,47 @@ bool RS_Solid::isInCrossWindow(const RS_Vector& v1,const RS_Vector& v2)const {
            || getMin().y > vTR.y || getMax().y < vBL.y) {
         return false;
     }
-    QVector<RS_Line> l;
-    l << RS_Line(NULL, RS_LineData(data.corner[0], data.corner[1]));
-    l << RS_Line(NULL, RS_LineData(data.corner[1], data.corner[2]));
+	std::vector<RS_Line> l;
+	l.push_back(RS_Line(nullptr, RS_LineData(data.corner[0], data.corner[1])));
+	l.push_back(RS_Line(nullptr, RS_LineData(data.corner[1], data.corner[2])));
     if (data.corner[3].valid) {
-        l << RS_Line(NULL, RS_LineData(data.corner[2], data.corner[3]));
-        l << RS_Line(NULL, RS_LineData(data.corner[3], data.corner[0]));
+		l.push_back(RS_Line(nullptr, RS_LineData(data.corner[2], data.corner[3])));
+		l.push_back(RS_Line(nullptr, RS_LineData(data.corner[3], data.corner[0])));
     } else {
-        l << RS_Line(NULL, RS_LineData(data.corner[2], data.corner[0]));
+		l.push_back(RS_Line(nullptr, RS_LineData(data.corner[2], data.corner[0])));
     }
     //Find crossing edge
     if (getMax().x > vBL.x && getMin().x < vBL.x) {//left
-        RS_Line edge = RS_Line(NULL, RS_LineData(vBL, RS_Vector(vBL.x, vTR.y)));
-        for (int i=0; i<l.size(); ++i) {
-            sol = RS_Information::getIntersection(&edge, &l[i], true);
+		RS_Line edge = RS_Line(nullptr, RS_LineData(vBL, RS_Vector(vBL.x, vTR.y)));
+		for(auto const& l0: l) {
+			sol = RS_Information::getIntersection(&edge, &l0, true);
             if (sol.hasValid()) {
                 return true;
             }
         }
     }
     if (getMax().x > vTR.x && getMin().x < vTR.x) {//right
-        RS_Line edge = RS_Line(NULL, RS_LineData(RS_Vector(vTR.x, vBL.y), vTR));
-        for (int i=0; i<l.size(); ++i) {
-            sol = RS_Information::getIntersection(&edge, &l[i], true);
+		RS_Line edge = RS_Line(nullptr, RS_LineData(RS_Vector(vTR.x, vBL.y), vTR));
+		for(auto const& l0: l) {
+			sol = RS_Information::getIntersection(&edge, &l0, true);
             if (sol.hasValid()) {
                 return true;
             }
         }
     }
     if (getMax().y > vBL.y && getMin().y < vBL.y) {//bottom
-        RS_Line edge = RS_Line(NULL, RS_LineData(vBL, RS_Vector(vTR.x, vBL.y)));
-        for (int i=0; i<l.size(); ++i) {
-            sol = RS_Information::getIntersection(&edge, &l[i], true);
+		RS_Line edge = RS_Line(nullptr, RS_LineData(vBL, RS_Vector(vTR.x, vBL.y)));
+		for(auto const& l0: l) {
+			sol = RS_Information::getIntersection(&edge, &l0, true);
             if (sol.hasValid()) {
                 return true;
             }
         }
     }
     if(getMax().y > vTR.y && getMin().y < vTR.y) {//top
-        RS_Line edge = RS_Line(NULL, RS_LineData(RS_Vector(vBL.x, vTR.y), vTR));
-        for (int i=0; i<l.size(); ++i) {
-            sol = RS_Information::getIntersection(&edge, &l[i], true);
+		RS_Line edge = RS_Line(nullptr, RS_LineData(RS_Vector(vBL.x, vTR.y), vTR));
+		for(auto const& l0: l) {
+			sol = RS_Information::getIntersection(&edge, &l0, true);
             if (sol.hasValid()) {
                 return true;
             }
@@ -215,7 +257,7 @@ RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& coord,
     bool s2 = sign(data.corner[1], data.corner[2], coord);
     bool s3 = sign(data.corner[2], data.corner[0], coord);
     if ( (s1 == s2) && (s2 == s3) ) {
-        if (dist!=NULL)
+		if (dist!=nullptr)
             *dist = 0.0;
         return coord;
     }
@@ -224,7 +266,7 @@ RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& coord,
         s2 = sign(data.corner[2], data.corner[3], coord);
         s3 = sign(data.corner[3], data.corner[0], coord);
         if ( (s1 == s2) && (s2 == s3) ) {
-            if (dist!=NULL)
+			if (dist!=nullptr)
                 *dist = 0.0;
             return coord;
         }
@@ -233,7 +275,7 @@ RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& coord,
     RS_Vector ret(false);
     double currDist = RS_MAXDOUBLE;
     double tmpDist;
-    if (entity!=NULL) {
+	if (entity!=nullptr) {
         *entity = const_cast<RS_Solid*>(this);
     }
     //Find nearest distance from each edge
@@ -268,7 +310,7 @@ RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& coord,
         currDist = ret.distanceTo(coord);
     }
 
-    if (dist!=NULL) {
+	if (dist!=nullptr) {
         *dist = currDist;
     }
 
@@ -278,9 +320,9 @@ RS_Vector RS_Solid::getNearestPointOnEntity(const RS_Vector& coord,
 
 
 RS_Vector RS_Solid::getNearestCenter(const RS_Vector& /*coord*/,
-                                     double* dist) {
+									 double* dist) const{
 
-    if (dist!=NULL) {
+	if (dist!=nullptr) {
         *dist = RS_MAXDOUBLE;
     }
 
@@ -292,7 +334,7 @@ RS_Vector RS_Solid::getNearestCenter(const RS_Vector& /*coord*/,
 RS_Vector RS_Solid::getNearestMiddle(const RS_Vector& /*coord*/,
                                      double* dist,
                                      const int /*middlePoints*/)const {
-    if (dist!=NULL) {
+	if (dist!=nullptr) {
         *dist = RS_MAXDOUBLE;
     }
     return RS_Vector(false);
@@ -302,8 +344,8 @@ RS_Vector RS_Solid::getNearestMiddle(const RS_Vector& /*coord*/,
 
 RS_Vector RS_Solid::getNearestDist(double /*distance*/,
                                    const RS_Vector& /*coord*/,
-                                   double* dist) {
-    if (dist!=NULL) {
+								   double* dist) const{
+	if (dist!=nullptr) {
         *dist = RS_MAXDOUBLE;
     }
     return RS_Vector(false);
@@ -319,7 +361,7 @@ double RS_Solid::getDistanceToPoint(const RS_Vector& coord,
                                     RS_Entity** entity,
                                     RS2::ResolveLevel /*level*/,
                                     double /*solidDist*/)const {
-    if (entity!=NULL) {
+	if (entity!=nullptr) {
         *entity = const_cast<RS_Solid*>(this);
     }
     double ret;
@@ -376,11 +418,11 @@ void RS_Solid::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
 void RS_Solid::draw(RS_Painter* painter, RS_GraphicView* view,
         double& /*patternOffset*/) {
 
-    if (painter==NULL || view==NULL) {
+	if (painter==nullptr || view==nullptr) {
         return;
     }
 
-    RS_SolidData d = getData();
+//    RS_SolidData d = getData();
     if (isTriangle()) {
         painter->fillTriangle(view->toGui(getCorner(0)),
                               view->toGui(getCorner(1)),

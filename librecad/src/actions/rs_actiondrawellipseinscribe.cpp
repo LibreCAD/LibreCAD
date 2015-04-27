@@ -20,12 +20,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawellipseinscribe.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_ellipse.h"
+#include "rs_line.h"
 
 /**
  * Constructor.
@@ -35,17 +37,12 @@ RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw ellipse inscribed",
-                           container, graphicView),
-          eData(RS_Vector(0.,0.),RS_Vector(1.,0),1.,0.,0.,false)
+						   container, graphicView)
+		,eData(new RS_EllipseData())
 {
 }
 
-
-
-RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe() {
-
-}
-
+RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe(){}
 
 QAction* RS_ActionDrawEllipseInscribe::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
@@ -67,9 +64,9 @@ void RS_ActionDrawEllipseInscribe::init(int status) {
 
 void RS_ActionDrawEllipseInscribe::finish(bool updateTB){
     if(lines.size()>0){
-        for(int i=0;i<lines.size();i++) {
-            if(lines.at(i) != NULL) lines.at(i)->setHighlighted(false);
-        }
+		for(RS_Line* const p: lines){
+			if(p) p->setHighlighted(false);
+		}
         graphicView->redraw(RS2::RedrawDrawing);
         lines.clear();
     }
@@ -81,7 +78,7 @@ void RS_ActionDrawEllipseInscribe::trigger() {
     RS_PreviewActionInterface::trigger();
 
 
-    RS_Ellipse* ellipse=new RS_Ellipse(container, eData);
+	RS_Ellipse* ellipse=new RS_Ellipse(container, *eData);
 
     deletePreview();
     container->addEntity(ellipse);
@@ -93,7 +90,7 @@ void RS_ActionDrawEllipseInscribe::trigger() {
         document->endUndoCycle();
     }
 
-    for(int i=0;i<lines.size();i++) lines[i]->setHighlighted(false);
+	for(RS_Line*const p: lines) p->setHighlighted(false);
     graphicView->redraw(RS2::RedrawDrawing);
     drawSnapper();
 
@@ -117,17 +114,7 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
             if(en->getId() == lines[i]->getId()) return; //do not pull in the same line again
         }
         if(en->getParent() != NULL) {
-            if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
-                 || en->getParent()->rtti() == RS2::EntitySpline
-                 || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
-                 || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
-                 || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
-                 || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
-                 || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
-                 || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
-                 || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
-                 || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
-                 ){
+			if ( en->getParent()->ignoredOnModification()){
                 return;
             }
         }
@@ -136,7 +123,7 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
 //        lines[getStatus()]=static_cast<RS_Line*>(en);
         if(preparePreview()) {
             deletePreview();
-            RS_Ellipse* e=new RS_Ellipse(preview, eData);
+			RS_Ellipse* e=new RS_Ellipse(preview.get(), *eData);
             preview->addEntity(e);
             drawPreview();
         }
@@ -149,10 +136,10 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
 bool RS_ActionDrawEllipseInscribe::preparePreview(){
     valid=false;
     if(getStatus() == SetLine4) {
-        RS_Ellipse e(preview,eData);
+		RS_Ellipse e(preview.get(), RS_EllipseData());
         valid= e.createInscribeQuadrilateral(lines);
         if(valid){
-            eData=e.getData();
+			eData.reset(new RS_EllipseData(e.getData()));
         }else if( RS_DIALOGFACTORY){
             RS_DIALOGFACTORY->commandMessage(tr("Can not determine uniquely an ellipse"));
         }
@@ -173,19 +160,7 @@ void RS_ActionDrawEllipseInscribe::mouseReleaseEvent(QMouseEvent* e) {
             if(en->getId() == lines[i]->getId()) return; //do not pull in the same line again
         }
         if(en->getParent() != NULL) {
-            if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
-                    || en->getParent()->rtti() == RS2::EntitySpline
-                    || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
-                    || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
-                    || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
-                    ){
-                return;
-        }
+			if ( en->getParent()->ignoredOnModification()) return;
         }
         lines.resize(getStatus());
         lines.push_back(static_cast<RS_Line*>(en));
@@ -242,7 +217,7 @@ void RS_ActionDrawEllipse4Line::commandEvent(RS_CommandEvent* e) {
     case SetFocus1: {
             bool ok;
             double m = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 ratio = m / major.magnitude();
                 if (!isArc) {
                     trigger();
@@ -260,7 +235,7 @@ void RS_ActionDrawEllipse4Line::commandEvent(RS_CommandEvent* e) {
     case SetAngle1: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 angle1 = RS_Math::deg2rad(a);
                 setStatus(SetAngle2);
             } else {
@@ -274,7 +249,7 @@ void RS_ActionDrawEllipse4Line::commandEvent(RS_CommandEvent* e) {
     case SetAngle2: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 angle2 = RS_Math::deg2rad(a);
                 trigger();
             } else {

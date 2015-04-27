@@ -29,7 +29,7 @@
 #define RS_VECTOR_H
 
 #include <iostream>
-#include <QVector>
+#include <vector>
 #include "rs.h"
 
 /**
@@ -48,7 +48,7 @@ public:
     explicit RS_Vector(double angle);
     //RS_Vector(double v[]);
     explicit RS_Vector(bool valid);
-    ~RS_Vector();
+	~RS_Vector()=default;
 
     void set(double angle); // set to unit vector by the direction of angle
 #ifdef  RS_VECTOR2D
@@ -79,20 +79,25 @@ public:
     RS_Vector rotate(const RS_Vector& center, const RS_Vector& angleVector);
     RS_Vector scale(const double& factor);
     RS_Vector scale(const RS_Vector& factor);
-    RS_Vector scale(const RS_Vector& center, const RS_Vector& factor);
+	RS_Vector scale(const RS_Vector& factor) const;
+	RS_Vector scale(const RS_Vector& center, const RS_Vector& factor);
     RS_Vector mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
-    double dotP(const RS_Vector& v1);
+	double dotP(const RS_Vector& v1) const;
 
     RS_Vector operator + (const RS_Vector& v) const;
     RS_Vector operator - (const RS_Vector& v) const;
+	RS_Vector operator * (const RS_Vector& v) const;
+	RS_Vector operator / (const RS_Vector& v) const;
     RS_Vector operator * (const double& s) const;
     RS_Vector operator / (const double& s) const;
     RS_Vector operator - () const;
 
-    void operator += (const RS_Vector& v);
-    void operator -= (const RS_Vector& v);
-    void operator *= (const double& s);
-    void operator /= (const double& s);
+	RS_Vector operator += (const RS_Vector& v);
+	RS_Vector operator -= (const RS_Vector& v);
+	RS_Vector operator *= (const RS_Vector& v);
+	RS_Vector operator /= (const RS_Vector& v);
+	RS_Vector operator *= (const double& s);
+	RS_Vector operator /= (const double& s);
 
     bool operator == (const RS_Vector& v) const;
     bool operator != (const RS_Vector& v) const {
@@ -133,55 +138,46 @@ public:
  */
 class RS_VectorSolutions {
 public:
-    RS_VectorSolutions();
-    RS_VectorSolutions(const RS_VectorSolutions& s);
-    RS_VectorSolutions(int num);
-    RS_VectorSolutions(const RS_Vector& v1);
-    RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2);
-    RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2,
-                       const RS_Vector& v3);
-    RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2,
-                       const RS_Vector& v3, const RS_Vector& v4);
-    RS_VectorSolutions(const RS_Vector& v1, const RS_Vector& v2,
-                       const RS_Vector& v3, const RS_Vector& v4,
-                       const RS_Vector& v5);
+	typedef RS_Vector value_type;
+	RS_VectorSolutions();
+	RS_VectorSolutions(const std::vector<RS_Vector>& s);
+	RS_VectorSolutions(std::initializer_list<RS_Vector> l);
+	RS_VectorSolutions(int num);
 
-    ~RS_VectorSolutions();
+	~RS_VectorSolutions()=default;
 
-    void alloc(int num);
-    void clean()
-    {
-        clear();
-    }
+	void alloc(size_t num);
+	void clean();
     void clear();
-    RS_Vector get(int i) const
-    {
-        return at(i);
-    }
-    RS_Vector at(int i) const;
-    RS_Vector operator [] (const int i) const
-    {
-        return at(i);
-    }
-    int getNumber() const;
-    size_t size() const
-    {
-        return vector.size();
-    }
+	/**
+	 * @brief get range safe method of member access
+	 * @param i member index
+	 * @return indexed member, or invalid vector, if out of range
+	 */
+	RS_Vector get(size_t i) const;
+	const RS_Vector& at(size_t i) const;
+	const RS_Vector&  operator [] (const size_t i) const;
+	RS_Vector&  operator [] (const size_t i);
+	size_t getNumber() const;
+	size_t size() const;
     void resize(size_t n);
     bool hasValid() const;
-    void set(int i, const RS_Vector& v);
+void set(size_t i, const RS_Vector& v);
     void push_back(const RS_Vector& v);
-    void removeAt(const int i);
+	void removeAt(const size_t i);
     RS_VectorSolutions appendTo(const RS_VectorSolutions& v);
     void setTangent(bool t);
     bool isTangent() const;
     RS_Vector getClosest(const RS_Vector& coord,
-                         double* dist=NULL, int* index=NULL) const;
+						 double* dist=NULL, size_t* index=NULL) const;
     double getClosestDistance(const RS_Vector& coord,
                               int counts = -1); //default to search all
-    QVector<RS_Vector> getVector() const;
-    void rotate(const double& ang);
+	const std::vector<RS_Vector>& getVector() const;
+	std::vector<RS_Vector>::const_iterator begin() const;
+	std::vector<RS_Vector>::const_iterator end() const;
+	std::vector<RS_Vector>::iterator begin();
+	std::vector<RS_Vector>::iterator end();
+	void rotate(const double& ang);
     void rotate(const RS_Vector& angleVector);
     void rotate(const RS_Vector& center, const double& ang);
     void rotate(const RS_Vector& center, const RS_Vector& angleVector);
@@ -198,7 +194,7 @@ public:
                                       const RS_VectorSolutions& s);
 
 private:
-    QVector<RS_Vector> vector;
+	std::vector<RS_Vector> vector;
     bool tangent;
 };
 

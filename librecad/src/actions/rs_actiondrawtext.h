@@ -28,8 +28,8 @@
 #define RS_ACTIONDRAWTEXT_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_text.h"
 
+struct RS_TextData;
 
 /**
  * This action class can handle user events to draw texts.
@@ -52,11 +52,11 @@ public:
 public:
     RS_ActionDrawText(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-    ~RS_ActionDrawText() {}
+	~RS_ActionDrawText();
 
         static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-        virtual RS2::ActionType rtti() {
+        virtual RS2::ActionType rtti() const{
                 return RS2::ActionDrawText;
         }
 
@@ -82,13 +82,13 @@ public:
 //    virtual void updateToolBar();
 
         void setText(const QString& t);
-        QString getText();
+		const QString& getText() const;
 
         void setAngle(double a);
-        double getAngle();
+		double getAngle() const;
 
 private:
-    RS_TextData data;
+	std::unique_ptr<RS_TextData> data;
         //RS_Text* text;
     RS_Vector pos;
     RS_Vector secPos;

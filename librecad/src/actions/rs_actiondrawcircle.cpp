@@ -24,19 +24,22 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawcircle.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
-
-
+#include "rs_circle.h"
+#include "rs_coordinateevent.h"
+#include "rs_math.h"
 
 RS_ActionDrawCircle::RS_ActionDrawCircle(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw circles",
-                           container, graphicView) {
+						   container, graphicView)
+		,data(new RS_CircleData())
+{
     reset();
 }
 
@@ -57,7 +60,7 @@ QAction* RS_ActionDrawCircle::createGUIAction(RS2::ActionType /*type*/, QObject*
 }
 
 void RS_ActionDrawCircle::reset() {
-    data = RS_CircleData(RS_Vector(false), 0.0);
+	data.reset(new RS_CircleData(RS_Vector(false), 0.0));
 }
 
 
@@ -74,7 +77,7 @@ void RS_ActionDrawCircle::trigger() {
     RS_PreviewActionInterface::trigger();
 
     RS_Circle* circle = new RS_Circle(container,
-                                      data);
+									  *data);
     circle->setLayerToActive();
     circle->setPenToActive();
     container->addEntity(circle);
@@ -103,15 +106,15 @@ void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
     case SetCenter:
-        data.center = mouse;
+		data->center = mouse;
         break;
 
     case SetRadius:
-        if (data.center.valid) {
-            data.radius = data.center.distanceTo(mouse);
+		if (data->center.valid) {
+			data->radius = data->center.distanceTo(mouse);
             deletePreview();
-            preview->addEntity(new RS_Circle(preview,
-                                             data));
+			preview->addEntity(new RS_Circle(preview.get(),
+											 *data));
             drawPreview();
         }
         break;
@@ -143,15 +146,15 @@ void RS_ActionDrawCircle::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetCenter:
-        data.center = mouse;
+		data->center = mouse;
         graphicView->moveRelativeZero(mouse);
         setStatus(SetRadius);
         break;
 
     case SetRadius:
-        if (data.center.valid) {
+		if (data->center.valid) {
             graphicView->moveRelativeZero(mouse);
-            data.radius = data.center.distanceTo(mouse);
+			data->radius = data->center.distanceTo(mouse);
             trigger();
         }
         //setStatus(SetCenter);
@@ -181,7 +184,7 @@ void RS_ActionDrawCircle::commandEvent(RS_CommandEvent* e) {
             bool ok;
             double r = RS_Math::eval(c, &ok);
             if (ok) {
-                data.radius = r;
+				data->radius = r;
                 e->accept();
                 trigger();
             } else {

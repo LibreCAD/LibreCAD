@@ -38,7 +38,7 @@ public:
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-    RS_OverlayBoxData() {}
+	RS_OverlayBoxData() = default;
 
     RS_OverlayBoxData(const RS_Vector& corner1, const RS_Vector& corner2) {
 
@@ -69,8 +69,8 @@ public:
 class RS_OverlayBox : public RS_AtomicEntity {
 public:
     RS_OverlayBox(RS_EntityContainer* parent, const RS_OverlayBoxData& d);
-    virtual RS_Entity* clone();
-    virtual ~RS_OverlayBox();
+	virtual RS_Entity* clone() const;
+	virtual ~RS_OverlayBox() = default;
 
     /**	@return RS2::EntityLine */
     virtual RS2::EntityType rtti() const {
@@ -100,9 +100,9 @@ public:
     virtual void calculateBorders(){}
     virtual RS_Vector getNearestEndpoint(const RS_Vector&, double*)const{return RS_Vector(false);}
     virtual RS_Vector getNearestPointOnEntity(const RS_Vector&, bool, double*, RS_Entity**)const{return RS_Vector();}
-    virtual RS_Vector getNearestCenter(const RS_Vector&, double*){return RS_Vector();}
+	virtual RS_Vector getNearestCenter(const RS_Vector&, double*)const{return RS_Vector();}
     virtual RS_Vector getNearestMiddle(const RS_Vector&, double*,int)const{return RS_Vector();}
-    virtual RS_Vector getNearestDist(double, const RS_Vector&, double*){return RS_Vector();}
+	virtual RS_Vector getNearestDist(double, const RS_Vector&, double*)const{return RS_Vector();}
     virtual double getDistanceToPoint(const RS_Vector&, RS_Entity**, RS2::ResolveLevel, double)const{return -1;}//is -1 right here
 
 protected:

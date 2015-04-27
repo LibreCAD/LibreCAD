@@ -30,6 +30,7 @@
 #include "qc_dialogfactory.h"
 #include "qc_applicationwindow.h"
 #include "qg_blockwidget.h"
+#include "qc_graphicview.h"
 
 #include "rs_blocklist.h"
 

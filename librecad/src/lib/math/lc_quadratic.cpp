@@ -408,14 +408,14 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
 //    std::cout<<*p2<<std::endl;
     if(p1->isQuadratic()==false){
         //two lines
-        QVector<QVector<double> > ce(2,QVector<double>(3,0.));
+		std::vector<std::vector<double> > ce(2,std::vector<double>(3,0.));
         ce[0][0]=p1->m_vLinear(0);
         ce[0][1]=p1->m_vLinear(1);
         ce[0][2]=-p1->m_dConst;
         ce[1][0]=p2->m_vLinear(0);
         ce[1][1]=p2->m_vLinear(1);
         ce[1][2]=-p2->m_dConst;
-        QVector<double> sn(2,0.);
+		std::vector<double> sn(2,0.);
         if(RS_Math::linearSolver(ce,sn)){
             ret.push_back(RS_Vector(sn[0],sn[1]));
         }
@@ -424,10 +424,37 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
     if(p2->isQuadratic()==false){
         //one line, one quadratic
         //avoid division by zero
-        if(fabs(p2->m_vLinear(0))<fabs(p2->m_vLinear(1))){
-            return getIntersection(p1->flipXY(),p2->flipXY()).flipXY();
+        if(fabs(p2->m_vLinear(0))+DBL_EPSILON<fabs(p2->m_vLinear(1))){
+            ret=getIntersection(p1->flipXY(),p2->flipXY()).flipXY();
+//            for(size_t j=0;j<ret.size();j++){
+//                DEBUG_HEADER();
+//                std::cout<<j<<": ("<<ret[j].x<<", "<< ret[j].y<<")"<<std::endl;
+//            }
+            return ret;
         }
-
+        std::vector<std::vector<double> >  ce(0);
+		if(fabs(p2->m_vLinear(1))<RS_TOLERANCE){
+            const double angle=0.25*M_PI;
+            LC_Quadratic p11(*p1);
+            LC_Quadratic p22(*p2);
+            ce.push_back(p11.rotate(angle).getCoefficients());
+            ce.push_back(p22.rotate(angle).getCoefficients());
+            ret=RS_Math::simultaneousQuadraticSolverMixed(ce);
+            ret.rotate(-angle);
+//            for(size_t j=0;j<ret.size();j++){
+//                DEBUG_HEADER();
+//                std::cout<<j<<": ("<<ret[j].x<<", "<< ret[j].y<<")"<<std::endl;
+//            }
+            return ret;
+        }
+        ce.push_back(p1->getCoefficients());
+        ce.push_back(p2->getCoefficients());
+        ret=RS_Math::simultaneousQuadraticSolverMixed(ce);
+//        for(size_t j=0;j<ret.size();j++){
+//            DEBUG_HEADER();
+//            std::cout<<j<<": ("<<ret[j].x<<", "<< ret[j].y<<")"<<std::endl;
+//        }
+        return ret;
     }
     if( fabs(p1->m_mQuad(0,0))<RS_TOLERANCE && fabs(p1->m_mQuad(0,1))<RS_TOLERANCE
             &&
@@ -457,8 +484,26 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
         std::cout<<*p1<<std::endl;
         std::cout<<*p2<<std::endl;
     }
-    return RS_Math::simultaneousQuadraticSolverFull(ce);
-
+    auto&& sol= RS_Math::simultaneousQuadraticSolverFull(ce);
+    bool valid= sol.size()>0;
+    for(size_t i=0; i<sol.size(); ++i){
+        if(sol.at(i).magnitude()>=RS_MAXDOUBLE){
+            valid=false;
+            break;
+        }
+    }
+    if(valid) return sol;
+    ce.clear();
+    ce.push_back(p1->flipXY().getCoefficients());
+    ce.push_back(p2->flipXY().getCoefficients());
+    sol=RS_Math::simultaneousQuadraticSolverFull(ce);
+    ret.clear();
+    for(size_t i=0; i<sol.size(); ++i){
+        if(sol.at(i).magnitude()<=RS_MAXDOUBLE){
+            ret.push_back(sol.at(i));
+        }
+    }
+    return ret;
 }
 
 /**

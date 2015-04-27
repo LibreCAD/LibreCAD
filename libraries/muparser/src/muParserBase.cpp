@@ -28,6 +28,7 @@
 
 //--- Standard includes ------------------------------------------------------------------------
 #include <cassert>
+#include <algorithm>
 #include <cmath>
 #include <memory>
 #include <vector>
@@ -268,8 +269,6 @@ namespace mu
   */
   string_type ParserBase::GetVersion(EParserVersionInfo eInfo) const
   {
-    string_type sCompileTimeSettings;
-    
     stringstream_type ss;
 
     ss << MUP_VERSION;
@@ -582,8 +581,8 @@ namespace mu
 
     CheckName(a_strName, ValidNameChars());
     
-    m_vStringVarBuf.push_back(a_strVal);           // Store variable string in internal buffer
-    m_StrVarDef[a_strName] = m_vStringBuf.size();  // bind buffer index to variable name
+    m_vStringVarBuf.push_back(a_strVal);                // Store variable string in internal buffer
+	m_StrVarDef[a_strName] = (int) m_vStringVarBuf.size()-1;  // bind buffer index to variable name
 
     ReInit();
   }
@@ -698,13 +697,13 @@ namespace mu
       m_pParseFormula = &ParserBase::ParseString;
       m_pTokenReader->IgnoreUndefVar(false);
     }
-    catch(exception_type &e)
+    catch(exception_type & /*e*/)
     {
       // Make sure to stay in string parse mode, dont call ReInit()
       // because it deletes the array with the used variables
       m_pParseFormula = &ParserBase::ParseString;
       m_pTokenReader->IgnoreUndefVar(false);
-      throw e;
+      throw;
     }
     
     return m_pTokenReader->GetUsedVar();
@@ -1048,7 +1047,12 @@ namespace mu
       case  cmLOR:  --sidx; Stack[sidx]  = Stack[sidx] || Stack[sidx+1]; continue;
 
       case  cmASSIGN: 
-            --sidx; Stack[sidx] = *pTok->Oprt.ptr = Stack[sidx+1]; continue;
+          // Bugfix for Bulkmode:
+          // for details see:
+          //    https://groups.google.com/forum/embed/?place=forum/muparser-dev&showsearch=true&showpopout=true&showtabs=false&parenturl=http://muparser.beltoforion.de/mup_forum.html&afterlogin&pli=1#!topic/muparser-dev/szgatgoHTws
+          --sidx; Stack[sidx] = *(pTok->Oprt.ptr + nOffset) = Stack[sidx + 1]; continue;
+          // original code:
+          //--sidx; Stack[sidx] = *pTok->Oprt.ptr = Stack[sidx+1]; continue;
 
       //case  cmBO:  // unused, listed for compiler optimization purposes
       //case  cmBC:
@@ -1162,16 +1166,6 @@ namespace mu
                 }
               }
 
-        //case  cmSTRING:
-        //case  cmOPRT_BIN:
-        //case  cmOPRT_POSTFIX:
-        //case  cmOPRT_INFIX:
-        //      MUP_FAIL(INVALID_CODE_IN_BYTECODE);
-        //      continue;
-
-        //case  cmEND:
-	       //     return Stack[m_nFinalResultIdx];  
-
         default:
               Error(ecINTERNAL_ERROR, 3);
               return 0;
@@ -1191,7 +1185,6 @@ namespace mu
     ParserStack<int> stArgCount;
     token_type opta, opt;  // for storing operators
     token_type val, tval;  // for storing value
-    string_type strBuf;    // buffer for string function arguments
 
     ReInit();
     
@@ -1220,7 +1213,7 @@ namespace mu
                 break;
 
         case cmVAL:
-		            stVal.push(opt);
+		        stVal.push(opt);
                 m_vRPN.AddVal( opt.GetVal() );
                 break;
 
@@ -1725,6 +1718,16 @@ namespace mu
   //---------------------------------------------------------------------------
   void ParserBase::Eval(value_type *results, int nBulkSize)
   {
+/* <ibg 2014-09-24/> Commented because it is making a unit test impossible
+
+    // Parallelization does not make sense for fewer than 10000 computations 
+    // due to thread creation overhead. If the bulk size is below 2000
+    // computation is refused. 
+    if (nBulkSize<2000)
+    {
+      throw ParserError(ecUNREASONABLE_NUMBER_OF_COMPUTATIONS);
+    }
+*/
     CreateRPN();
 
     int i = 0;
@@ -1737,7 +1740,7 @@ namespace mu
     #endif
 
     int nMaxThreads = std::min(omp_get_max_threads(), s_MaxNumOpenMPThreads);
-    int nThreadID, ct=0;
+	int nThreadID = 0, ct = 0;
     omp_set_num_threads(nMaxThreads);
 
     #pragma omp parallel for schedule(static, nBulkSize/nMaxThreads) private(nThreadID)

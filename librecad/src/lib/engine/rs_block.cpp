@@ -29,6 +29,19 @@
 
 #include "rs_graphic.h"
 
+RS_BlockData::RS_BlockData(const QString& _name,
+						   const RS_Vector& _basePoint,
+						   bool _frozen):
+	name(_name)
+  ,basePoint(_basePoint)
+  ,frozen(_frozen)
+{
+}
+
+bool RS_BlockData::isValid() const{
+	return (!name.isEmpty() && basePoint.valid);
+}
+
 /**
  * @param parent The graphic this block belongs to.
  * @param name The name of the block used as an identifier.
@@ -42,12 +55,7 @@ RS_Block::RS_Block(RS_EntityContainer* parent,
 }
 
 
-
-RS_Block::~RS_Block() {}
-
-
-
-RS_Entity* RS_Block::clone() {
+RS_Entity* RS_Block::clone() const {
     RS_Block* blk = new RS_Block(*this);
     blk->setOwner(isOwner());
     blk->detach();

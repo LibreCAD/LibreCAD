@@ -24,10 +24,11 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actioninfototallength.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
+#include "rs_graphic.h"
 
 
 RS_ActionInfoTotalLength::RS_ActionInfoTotalLength(RS_EntityContainer& container,
@@ -53,10 +54,12 @@ void RS_ActionInfoTotalLength::init(int status) {
 void RS_ActionInfoTotalLength::trigger() {
 
     RS_DEBUG->print("RS_ActionInfoTotalLength::trigger()");
+	double l=container->totalSelectedLength();
 
-    double len (container->totalSelectedLength());
-
-    if (len>0.0) {
+	if (l>0.0) {
+		QString len= RS_Units::formatLinear(l,
+											graphic->getUnit(),
+											graphic->getLinearFormat(), graphic->getLinearPrecision());
         RS_DIALOGFACTORY->commandMessage(
             tr("Total Length of selected entities: %1").arg(len));
     } else {

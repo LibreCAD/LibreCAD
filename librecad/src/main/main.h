@@ -27,11 +27,7 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include <qstringlist.h>
-
-#ifndef QC_DEBUGGING
-# define QC_DEBUGGING false
-#endif
+#include<QStringList>
 
 #define STR(x)   #x
 #define XSTR(x)  STR(x)
@@ -46,6 +42,3 @@
 QStringList handleArgs(int argc, char** argv, const QList<int>& argClean);
 
 #endif
-
-
-

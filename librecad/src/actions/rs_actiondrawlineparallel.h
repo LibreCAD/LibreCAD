@@ -49,11 +49,11 @@ private:
 public:
     RS_ActionDrawLineParallel(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineParallel() {}
+	~RS_ActionDrawLineParallel() = default;
 
 	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 	
-	virtual RS2::ActionType rtti() {
+	virtual RS2::ActionType rtti() const{
         return actionType;
 	}
 
@@ -91,8 +91,6 @@ public:
 private:
     /** Closest parallel. */
     RS_Entity* parallel;
-    /** Data of new line */
-    RS_LineData data;
     /** Distance of the parallel. */
     double distance;
 	/** Number of parallels. */

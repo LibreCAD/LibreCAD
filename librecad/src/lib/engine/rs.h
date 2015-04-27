@@ -27,12 +27,12 @@
 #ifndef RS_H
 #define RS_H
 
-#include <qnamespace.h>
-#include <qglobal.h>
+#include <Qt>
+#include <QtGlobal>
 #if QT_VERSION >= 0x050000
 # include <QtPrintSupport/QPrinter>
 #else
-# include <qprinter.h>
+# include <QPrinter>
 #endif 
 
 #define RS_TEST
@@ -44,7 +44,12 @@
 // Windoze XP can't handle the original MAX/MINDOUBLE's
 #define RS_MAXDOUBLE 1.0E+10
 #define RS_MINDOUBLE -1.0E+10
-
+//tolerance
+#define RS_TOLERANCE 1.0e-10
+//squared tolerance
+#define RS_TOLERANCE15 1.5e-15
+#define RS_TOLERANCE2 1.0e-20
+#define RS_TOLERANCE_ANGLE 1.0e-8
 
 /**
  * Class namespace for various enums along with some simple
@@ -158,6 +163,7 @@ public:
         EntitySplinePoints,       /**< SplinePoints */
         EntityOverlayBox,    /**< OverlayBox */
         EntityPreview    /**< Preview Container */
+		,EntityPattern
     };
 
     static bool isContainer(const EntityType enType){
@@ -189,6 +195,7 @@ public:
         ActionFilePrint,
         ActionFilePrintPDF,
         ActionFilePrintPreview,
+        ActionFileExportMakerCam,
         ActionFileQuit,
 
         ActionPrintPreview,
@@ -377,6 +384,7 @@ public:
         ActionLayersToggleView,
         ActionLayersToggleLock,
         ActionLayersTogglePrint,
+        ActionLayersToggleConstruction,
 
         ActionBlocksDefreezeAll,
         ActionBlocksFreezeAll,
@@ -456,21 +464,20 @@ public:
      * Toolbar ID's.
      */
     enum ToolBarId {
-        ToolBarMain,        /**< Main (menu). */
-        ToolBarPoints,      /**< Points. */
-        ToolBarLines,       /**< Lines. */
-        ToolBarArcs,        /**< Arcs. */
-        ToolBarCircles,     /**< Circles. */
-        ToolBarEllipses,    /**< Ellipses. */
-        ToolBarSplines,     /**< Splines. */
-        ToolBarPolylines,   /**< Polylines. */
-        ToolBarText,        /**< Text. */
-        ToolBarDim,         /**< Dimensions. */
-        ToolBarSnap,        /**< Snap. */
-        ToolBarModify,      /**< Modify. */
-        ToolBarSelect,      /**< Select. */
-        ToolBarInfo,         /**< Information */
-        ToolBarNone         /**< Invalid toolbar ID */
+		ToolBarMain =0,        /**< Main (menu). */
+		ToolBarPoints =1,      /**< Points. */
+		ToolBarLines =2,       /**< Lines. */
+		ToolBarArcs =3,        /**< Arcs. */
+		ToolBarCircles =4,     /**< Circles. */
+		ToolBarEllipses =5,    /**< Ellipses. */
+		ToolBarSplines =6,     /**< Splines. */
+		ToolBarPolylines =7,   /**< Polylines. */
+		ToolBarText =8,        /**< Text. */
+		ToolBarDim =9,         /**< Dimensions. */
+		ToolBarModify=10,      /**< Modify. */
+		ToolBarSelect=11,      /**< Select. */
+		ToolBarInfo=12,         /**< Information */
+		ToolBarNone         /**< Invalid toolbar ID */
     };
 
     /**
@@ -722,31 +729,37 @@ public:
             return Qt::SolidLine;
             break;
         case DotLine:
+        case DotLineTiny:
         case DotLine2:
         case DotLineX2:
             return Qt::DotLine;
             break;
         case DashLine:
+        case DashLineTiny:
         case DashLine2:
         case DashLineX2:
             return Qt::DashLine;
             break;
         case DashDotLine:
+        case DashDotLineTiny:
         case DashDotLine2:
         case DashDotLineX2:
             return Qt::DashDotLine;
             break;
         case DivideLine:
+        case DivideLineTiny:
         case DivideLine2:
         case DivideLineX2:
             return Qt::DashDotDotLine;
             break;
         case CenterLine:
+        case CenterLineTiny:
         case CenterLine2:
         case CenterLineX2:
             return Qt::DashDotLine;
             break;
         case BorderLine:
+        case BorderLineTiny:
         case BorderLine2:
         case BorderLineX2:
             return Qt::DashDotLine;

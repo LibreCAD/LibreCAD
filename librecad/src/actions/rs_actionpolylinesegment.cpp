@@ -24,11 +24,13 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actionpolylinesegment.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_arc.h"
+#include "rs_line.h"
 #include "rs_polyline.h"
 
 
@@ -64,7 +66,8 @@ void RS_ActionPolylineSegment::init(int status) {
 RS_Vector RS_ActionPolylineSegment::appendPol(RS_Polyline *current, RS_Polyline *toAdd, bool reversed) {
 
     QList<RS_Entity*> entities;
-    for (RS_Entity*v=toAdd->firstEntity(RS2::ResolveNone); v!=NULL; v=toAdd->nextEntity(RS2::ResolveNone)) {
+
+	for(auto v: *toAdd){
         if (reversed)
             entities.prepend(v);
         else

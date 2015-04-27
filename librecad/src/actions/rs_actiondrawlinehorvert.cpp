@@ -24,11 +24,12 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawlinehorvert.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_line.h"
 
 
 
@@ -36,7 +37,9 @@ RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw horizontal/vertical lines",
-                           container, graphicView) {
+						   container, graphicView)
+		,data(new RS_LineData())
+{
     reset();
     RS_DEBUG->print("RS_ActionDrawLineHorVert::constructor");
 }
@@ -56,8 +59,7 @@ QAction* RS_ActionDrawLineHorVert::createGUIAction(RS2::ActionType /*type*/, QOb
 }
 
 void RS_ActionDrawLineHorVert::reset() {
-    data = RS_LineData(RS_Vector(false),
-                       RS_Vector(false));
+	data.reset(new RS_LineData());
 }
 
 
@@ -74,7 +76,7 @@ void RS_ActionDrawLineHorVert::init(int status) {
 void RS_ActionDrawLineHorVert::trigger() {
     RS_PreviewActionInterface::trigger();
 
-    RS_Line* line = new RS_Line(container, data);
+	RS_Line* line = new RS_Line(container, *data);
     line->setLayerToActive();
     line->setPenToActive();
     container->addEntity(line);
@@ -107,8 +109,8 @@ void RS_ActionDrawLineHorVert::mouseMoveEvent(QMouseEvent* e) {
         else
             p2 = p2y;
         deletePreview();
-        data = RS_LineData(p1, p2);
-        preview->addEntity(new RS_Line(preview, data));
+		data.reset(new RS_LineData(p1, p2));
+		preview->addEntity(new RS_Line(preview.get(), *data));
         drawPreview();
     }
 
@@ -163,15 +165,6 @@ void RS_ActionDrawLineHorVert::updateMouseButtonHints() {
 
 void RS_ActionDrawLineHorVert::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
-}
-
-
-void RS_ActionDrawLineHorVert::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
-        if (isFinished()) {
-            RS_DIALOGFACTORY->resetToolBar();
-        }
-    }
 }
 
 // EOF

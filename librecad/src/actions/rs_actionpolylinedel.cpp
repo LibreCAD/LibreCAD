@@ -113,7 +113,7 @@ void RS_ActionPolylineDel::mouseReleaseEvent(QMouseEvent* e) {
                         RS_DIALOGFACTORY->commandMessage(
                             tr("Entity must be a polyline."));
                     } else {
-                            RS_Vector clickCoord = snapPoint(e);
+							snapPoint(e);
                                 delEntity->setHighlighted(true);
                                 graphicView->drawEntity(delEntity);
                                 setStatus(SetDelPoint);

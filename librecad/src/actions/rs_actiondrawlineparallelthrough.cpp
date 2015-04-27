@@ -24,15 +24,14 @@
 **
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawlineparallelthrough.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_creation.h"
 #include "rs_commandevent.h"
-
-
+#include "rs_coordinateevent.h"
 
 RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
     RS_EntityContainer& container,
@@ -41,7 +40,7 @@ RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
 
     parallel = NULL;
     entity = NULL;
-    distance = 1.0;
+	m_SnapDistance = 1.0;
     number = 1;
     coord = RS_Vector(false);
 }
@@ -97,7 +96,7 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent* e) {
             //                  graphicView->toGraphY(e->y()));
             deletePreview();
 
-            RS_Creation creation(preview, NULL, false);
+			RS_Creation creation(preview.get(), NULL, false);
             creation.createParallelThrough(coord,
                                            number,
                                            entity);

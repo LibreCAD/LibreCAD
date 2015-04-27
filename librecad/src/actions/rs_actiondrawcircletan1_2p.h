@@ -23,11 +23,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWCIRCLETAN1_2P_H
 #define RS_ACTIONDRAWCIRCLETAN1_2P_H
 
-#include <QVector>
 #include "rs_previewactioninterface.h"
-//#include "rs_ellipse.h"
 
-class RS_Circle;
+class RS_AtomicEntity;
+struct RS_CircleData;
 
 /**
  * Draw tangential circle passing 2 points
@@ -50,11 +49,11 @@ public:
 public:
     RS_ActionDrawCircleTan1_2P(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView);
-    ~RS_ActionDrawCircleTan1_2P();
+	~RS_ActionDrawCircleTan1_2P();
 
     static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 
-    virtual RS2::ActionType rtti() {
+    virtual RS2::ActionType rtti() const{
         return RS2::ActionDrawCircleTan1_2P;
     }
     virtual void init(int status=0);
@@ -77,21 +76,19 @@ public:
 //    virtual void showOptions();
 //    virtual void hideOptions();
 //    void setRadius(const double& r);
-    double getRadius(){
-        return cData.radius;
-    }
+	double getRadius() const;
 
 
 protected:
     RS_Entity* catchCircle(QMouseEvent* e);
     RS_AtomicEntity* circle;
-    QVector<RS_Vector> points;
+	std::vector<RS_Vector> points;
     private:
-    RS_CircleData cData;
+	std::unique_ptr<RS_CircleData> cData;
     RS_Vector coord;
     double radius;
     bool valid;
-    QVector<RS2::EntityType> enTypeList;
+	const std::vector<RS2::EntityType> enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
     //keep a list of centers found
     RS_VectorSolutions centers;
 

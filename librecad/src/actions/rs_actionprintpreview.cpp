@@ -27,11 +27,12 @@
 #include "rs_actionprintpreview.h"
 
 #include <QAction>
-#include <QDebug>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
 #include "rs_commandevent.h"
+#include "rs_coordinateevent.h"
+#include "rs_math.h"
 
 /**
  * Constructor.
@@ -134,10 +135,13 @@ void RS_ActionPrintPreview::coordinateEvent(RS_CoordinateEvent* e) {
 //    qDebug()<<"coordinateEvent= ("<<mouse.x<<", "<<mouse.y<<")";
 
     if(m_bPaperOffset) {
-        RS_DIALOGFACTORY->commandMessage(tr("Printout offset in paper coordinates by (%1, %2)").arg(mouse.x,mouse.y));
+        RS_DIALOGFACTORY->commandMessage(tr("Printout offset in paper coordinates by (%1, %2)").arg(mouse.x).arg(mouse.y));
         mouse *= graphic->getPaperScale();
     }else
-        RS_DIALOGFACTORY->commandMessage(tr("Printout offset in graph coordinates by (%1, %2)").arg(mouse.x,mouse.y));
+        RS_DIALOGFACTORY->commandMessage(tr("Printout offset in graph coordinates by (%1, %2)").arg(mouse.x).arg(mouse.y));
+
+//    RS_DIALOGFACTORY->commandMessage(tr("old insertion base (%1, %2)").arg(pinsbase.x).arg(pinsbase.y));
+//    RS_DIALOGFACTORY->commandMessage(tr("new insertion base (%1, %2)").arg((pinsbase-mouse).x).arg((pinsbase-mouse).y));
 
     graphic->setPaperInsertionBase(pinsbase-mouse);
     graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
@@ -239,11 +243,6 @@ void RS_ActionPrintPreview::updateMouseCursor() {
         graphicView->setMouseCursor(RS2::OpenHandCursor);
     }
 }
-
-
-
-void RS_ActionPrintPreview::updateToolBar() {}
-
 
 void RS_ActionPrintPreview::center() {
     if (graphic!=NULL) {

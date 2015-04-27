@@ -25,14 +25,14 @@
 **********************************************************************/
 #include "qg_dlgmtext.h"
 
-//#include "qg_fontbox.h"
-#include <qtextcodec.h>
+#include <QTextCodec>
 #include <QTextStream>
 #include <QFileDialog>
 #include "rs_system.h"
 #include "rs_settings.h"
 #include "rs_font.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgMText as a child of 'parent', with the

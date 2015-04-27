@@ -33,15 +33,11 @@
 /**
  * Holds the data that defines a diametric dimension entity.
  */
-class RS_DimDiametricData {
-public:
+struct RS_DimDiametricData {
     /**
 	 * Default constructor
      */
-	RS_DimDiametricData():
-		definitionPoint(false),
-		leader(0.0)
-	{}
+	RS_DimDiametricData();
 
     /**
      * Constructor with initialisation.
@@ -50,28 +46,16 @@ public:
      * @param leader Leader length.
      */
     RS_DimDiametricData(const RS_Vector& definitionPoint,
-                     double leader) {
-        this->definitionPoint = definitionPoint;
-        this->leader = leader;
-    }
+					 double leader);
 
-    friend class RS_DimDiametric;
-    //friend class RS_ActionDimDiametric;
 
-    friend std::ostream& operator << (std::ostream& os,
-                                      const RS_DimDiametricData& dd) {
-        os << "(" << dd.definitionPoint << "/" << dd.leader << ")";
-        return os;
-    }
-
-public:
     /** Definition point. */
     RS_Vector definitionPoint;
     /** Leader length. */
     double leader;
 };
 
-
+std::ostream& operator << (std::ostream& os, const RS_DimDiametricData& dd);
 
 /**
  * Class for diametric dimension entities.
@@ -83,15 +67,9 @@ public:
     RS_DimDiametric(RS_EntityContainer* parent,
                  const RS_DimensionData& d,
                  const RS_DimDiametricData& ed);
-    virtual ~RS_DimDiametric() {}
+	virtual ~RS_DimDiametric() = default;
 
-    virtual RS_Entity* clone() {
-        RS_DimDiametric* d = new RS_DimDiametric(*this);
-        d->setOwner(isOwner());
-        d->initId();
-        d->detach();
-        return d;
-    }
+	virtual RS_Entity* clone() const;
 
     /**	@return RS2::EntityDimDiametric */
     virtual RS2::EntityType rtti() const {
@@ -106,7 +84,7 @@ public:
         return edata;
     }
 
-        virtual RS_VectorSolutions getRefPoints();
+	virtual RS_VectorSolutions getRefPoints() const;
 
     virtual QString getMeasuredLabel();
 

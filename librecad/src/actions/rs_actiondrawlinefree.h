@@ -29,7 +29,8 @@
 #define RS_ACTIONDRAWLINEFREE_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_polyline.h"
+
+class RS_Polyline;
 
 /**
  * This action class can handle user events to draw freehand lines.
@@ -52,7 +53,7 @@ public:
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-    virtual RS2::ActionType rtti(){
+    virtual RS2::ActionType rtti() const{
         return RS2::ActionDrawLineFree;
     }
     virtual void trigger();
@@ -65,7 +66,7 @@ public:
 
 protected:
     RS_Vector vertex;
-    RS_Polyline* polyline;
+	std::unique_ptr<RS_Polyline> polyline;
 };
 
 #endif

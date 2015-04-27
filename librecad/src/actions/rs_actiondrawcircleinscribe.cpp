@@ -20,12 +20,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <QAction>
 #include "rs_actiondrawcircleinscribe.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
+#include "rs_circle.h"
+#include "rs_line.h"
 
 /**
  * Constructor.
@@ -36,16 +38,11 @@ RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw circle inscribed",
                            container, graphicView),
-          cData(RS_Vector(0.,0.),1.)
+		  cData(new RS_CircleData(RS_Vector(0.,0.),1.))
 {
 }
 
-
-
-RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe() {
-
-}
-
+RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe(){}
 
 QAction* RS_ActionDrawCircleInscribe::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
@@ -68,8 +65,8 @@ void RS_ActionDrawCircleInscribe::init(int status) {
 
 void RS_ActionDrawCircleInscribe::finish(bool updateTB){
     if(lines.size()>0){
-        for(int i=0;i<lines.size();i++) {
-            if(lines.at(i) != NULL) lines.at(i)->setHighlighted(false);
+		for(auto p: lines){
+			if(p) p->setHighlighted(false);
         }
         graphicView->redraw(RS2::RedrawDrawing);
         lines.clear();
@@ -82,7 +79,7 @@ void RS_ActionDrawCircleInscribe::trigger() {
     RS_PreviewActionInterface::trigger();
 
 
-    RS_Circle* circle=new RS_Circle(container, cData);
+	RS_Circle* circle=new RS_Circle(container, *cData);
 
     deletePreview();
     container->addEntity(circle);
@@ -94,7 +91,9 @@ void RS_ActionDrawCircleInscribe::trigger() {
         document->endUndoCycle();
     }
 
-    for(int i=0;i<lines.size();i++) lines[i]->setHighlighted(false);
+	for(auto p: lines){
+		if(p) p->setHighlighted(false);
+	}
     graphicView->redraw(RS2::RedrawDrawing);
 //    drawSnapper();
 
@@ -118,19 +117,8 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
             if(en->getId() == lines[i]->getId()) return; //do not pull in the same line again
         }
         if(en->getParent() != NULL) {
-            if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
-                 || en->getParent()->rtti() == RS2::EntitySpline
-                 || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
-                 || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
-                 || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
-                 || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
-                 || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
-                 || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
-                 || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
-                 || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
-                 ){
+			if ( en->getParent()->ignoredOnModification())
                 return;
-            }
         }
         coord= graphicView->toGraph(e->x(), e->y());
         lines.resize(getStatus());
@@ -138,7 +126,7 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
 //        lines[getStatus()]=static_cast<RS_Line*>(en);
         if(preparePreview()) {
             deletePreview();
-            RS_Circle* e=new RS_Circle(preview, cData);
+			RS_Circle* e=new RS_Circle(preview.get(), *cData);
             preview->addEntity(e);
             drawPreview();
         }
@@ -151,10 +139,10 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
 bool RS_ActionDrawCircleInscribe::preparePreview(){
     valid=false;
     if(getStatus() == SetLine3) {
-        RS_Circle c(preview,cData);
+		RS_Circle c(preview.get(), *cData);
         valid= c.createInscribe(coord, lines);
         if(valid){
-            cData=c.getData();
+			cData.reset(new RS_CircleData(c.getData()));
         }
     }
     return valid;
@@ -173,19 +161,7 @@ void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent* e) {
             if(en->getId() == lines[i]->getId()) return; //do not pull in the same line again
         }
         if(en->getParent() != NULL) {
-            if ( en->getParent()->rtti() == RS2::EntityInsert         /**Insert*/
-                    || en->getParent()->rtti() == RS2::EntitySpline
-                    || en->getParent()->rtti() == RS2::EntityMText        /**< Text 15*/
-                    || en->getParent()->rtti() == RS2::EntityText         /**< Text 15*/
-                    || en->getParent()->rtti() == RS2::EntityDimAligned   /**< Aligned Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimLinear    /**< Linear Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimRadial    /**< Radial Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimDiametric /**< Diametric Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimAngular   /**< Angular Dimension */
-                    || en->getParent()->rtti() == RS2::EntityDimLeader    /**< Leader Dimension */
-                    ){
-                return;
-        }
+			if ( en->getParent()->ignoredOnModification()) return;
         }
         lines.resize(getStatus());
         lines.push_back(static_cast<RS_Line*>(en));
@@ -241,7 +217,7 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
     case SetFocus1: {
             bool ok;
             double m = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 ratio = m / major.magnitude();
                 if (!isArc) {
                     trigger();
@@ -259,7 +235,7 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
     case SetAngle1: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 angle1 = RS_Math::deg2rad(a);
                 setStatus(SetAngle2);
             } else {
@@ -273,7 +249,7 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
     case SetAngle2: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok==true) {
+            if (ok) {
                 angle2 = RS_Math::deg2rad(a);
                 trigger();
             } else {

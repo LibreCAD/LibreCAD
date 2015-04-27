@@ -41,14 +41,15 @@ class RS_PatternList;
 class RS_Pattern : public RS_EntityContainer {
 public:
     RS_Pattern(const QString& fileName);
-    virtual ~RS_Pattern();
+	virtual ~RS_Pattern()=default;
+	RS2::EntityType rtti() const{
+		return RS2::EntityPattern;
+	}
 
     virtual bool loadPattern();
 	
     /** @return the fileName of this pattern. */
-    QString getFileName() const {
-        return fileName;
-    }
+	QString getFileName() const;
 
 protected:
     //! Pattern file name

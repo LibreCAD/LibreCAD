@@ -28,7 +28,8 @@
 #define RS_ACTIONDRAWARC3P_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_arc.h"
+
+struct RS_ArcData;
 
 /**
  * This action class can handle user events to draw 
@@ -54,7 +55,7 @@ public:
     ~RS_ActionDrawArc3P();
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    virtual RS2::ActionType rtti() {
+    virtual RS2::ActionType rtti() const{
         return RS2::ActionDrawArc3P;
     }
     void reset();
@@ -79,7 +80,7 @@ protected:
     /**
      * Arc data defined so far.
      */
-    RS_ArcData data;
+	std::unique_ptr<RS_ArcData> data;
     /**
      * 1st point.
      */

@@ -27,6 +27,7 @@
 
 #include "rs_actiondrawlinebisector.h"
 #include "rs_settings.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_LineBisectorOptions as a child of 'parent', with the
