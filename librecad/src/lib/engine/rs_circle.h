@@ -43,6 +43,7 @@ struct RS_CircleData {
 
 	RS_CircleData(const RS_Vector& m_vCenter,
 				  double radius);
+	bool operator == (RS_CircleData const& rhs) const;
 
 	void reset();
 

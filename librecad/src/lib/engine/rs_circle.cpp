@@ -29,7 +29,6 @@
 #include <QDebug>
 #include "rs_circle.h"
 
-
 #include "rs_arc.h"
 #include "rs_line.h"
 #include "rs_constructionline.h"
@@ -53,6 +52,13 @@ void RS_CircleData::reset() {
 
 bool RS_CircleData::isValid() const{
 	return (center.valid && radius>RS_TOLERANCE);
+}
+
+bool RS_CircleData::operator == (RS_CircleData const& rhs) const
+{
+	if(! (center.valid && rhs.center.valid)) return false;
+	if( center.squaredTo(rhs.center) > RS_TOLERANCE2) return false;
+	return fabs(radius - rhs.radius)< RS_TOLERANCE;
 }
 
 std::ostream& operator << (std::ostream& os, const RS_CircleData& ad)
