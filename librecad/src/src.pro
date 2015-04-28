@@ -90,10 +90,6 @@ LIBS += -L../../generated/lib  \
     -ldxfrw \
     -ljwwlib
 
-macx|win32|equals(build_muparser, "true")|!packagesExist(muparser){
-	LIBS += -lmuparser
-}
-
 DEPENDPATH += \
     ../../libraries/libdxfrw/src \
     ../../libraries/jwwlib/src \
