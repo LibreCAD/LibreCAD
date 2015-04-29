@@ -2,7 +2,7 @@
 *
 This file is part of the LibreCAD project, a 2D CAD program
 
-Copyright (C) 2014 Dongxu Li (dongxuli2011 at gmail.com)
+Copyright (C) 2014-2015 Dongxu Li (dongxuli2011 at gmail.com)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -38,12 +38,12 @@ LC_ActionDrawCircle2PR::LC_ActionDrawCircle2PR(RS_EntityContainer& container,
 
 QAction* LC_ActionDrawCircle2PR::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// "Circle: 2 Points, Radius"
-	QAction* action = new QAction(tr("2 Points, Radius"), NULL);
-	action->setIcon(QIcon(":/extui/circle2pr.png"));
+	QAction* action = new QAction(QIcon(":/extui/circle2pr.png"), tr("2 Points, Radius"), NULL);
 	return action;
 }
 
 void LC_ActionDrawCircle2PR::reset() {
+	deletePreview();
 	data->reset();
 	data->radius=0.;
 	point1 = RS_Vector(false);

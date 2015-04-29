@@ -2,7 +2,7 @@
 **
  * Draw circle, given its radius and two points on circle
 
-Copyright (C) 2014 Dongxu Li (dongxuli2011 at gmail.com)
+Copyright (C) 2014-2015 Dongxu Li (dongxuli2011 at gmail.com)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -68,13 +68,8 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 protected:
-    /**
-     * Circle data defined so far.
-     */
-//    RS_CircleData data;
     /**
      * 1st point.
      */
