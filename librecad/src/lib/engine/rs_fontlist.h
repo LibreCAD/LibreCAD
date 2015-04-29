@@ -23,13 +23,10 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-
-
 #ifndef RS_FONTLIST_H
 #define RS_FONTLIST_H
-
-
 #include <QList>
+
 class RS_Font;
 
 #define RS_FONTLIST RS_FontList::instance()
@@ -41,21 +38,14 @@ class RS_Font;
  * @author Andrew Mustun
  */
 class RS_FontList {
-protected:
-    RS_FontList();
 
 public:
     /**
      * @return Instance to the unique font list.
      */
-    static RS_FontList* instance() {
-        if (uniqueInstance==NULL) {
-            uniqueInstance = new RS_FontList();
-        }
-        return uniqueInstance;
-    }
+	static RS_FontList* instance();
 
-    virtual ~RS_FontList() {}
+	virtual ~RS_FontList() = default;
 
     void init();
 
@@ -73,10 +63,11 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, RS_FontList& l);
 
-protected:
-    static RS_FontList* uniqueInstance;
-
 private:
+	RS_FontList()=default;
+	RS_FontList(RS_FontList const&)=delete;
+	RS_FontList& operator = (RS_FontList const&)=delete;
+	static RS_FontList* uniqueInstance;
     //! fonts in the graphic
     QList<RS_Font *> fonts;
 };

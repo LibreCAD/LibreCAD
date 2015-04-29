@@ -27,8 +27,9 @@
 #define QG_BLOCKDIALOG_H
 
 #include "rs_block.h"
-#include "rs_blocklist.h"
 #include "ui_qg_blockdialog.h"
+
+class RS_BlockList;
 
 class QG_BlockDialog : public QDialog, public Ui::QG_BlockDialog
 {
@@ -36,7 +37,7 @@ class QG_BlockDialog : public QDialog, public Ui::QG_BlockDialog
 
 public:
     QG_BlockDialog(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
-    ~QG_BlockDialog();
+	~QG_BlockDialog()=default;
 
     virtual RS_BlockData getBlockData();
 

@@ -39,14 +39,6 @@
 QG_FontBox::QG_FontBox(QWidget* parent)
         : QComboBox(parent) {}
 
-
-
-/**
- * Destructor
- */
-QG_FontBox::~QG_FontBox() {}
-
-
 /**
  * Initialisation (called from constructor or manually but only
  * once).
@@ -95,7 +87,7 @@ void QG_FontBox::slotFontChanged(int index) {
 
     currentFont = RS_FONTLIST->requestFont(currentText());
 
-    if (currentFont!=NULL) {
+	if (currentFont) {
         RS_DEBUG->print("Current font is (%d): %s\n",
                         index, currentFont->getFileName().toLatin1().data());
     }

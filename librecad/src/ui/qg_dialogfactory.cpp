@@ -105,7 +105,7 @@
 #include "qg_layerwidget.h"
 #include "qg_mainwindowinterface.h"
 #include "rs_actionprintpreview.h"
-#include <QDebug>
+#include "rs_blocklist.h"
 
 #if QT_VERSION < 0x040400
 #include "emu_qt44.h"

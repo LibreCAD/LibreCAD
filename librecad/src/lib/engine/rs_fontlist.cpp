@@ -37,14 +37,12 @@
 
 RS_FontList* RS_FontList::uniqueInstance = NULL;
 
-
-
-/**
- * Default constructor.
- */
-RS_FontList::RS_FontList() {
+RS_FontList* RS_FontList::instance() {
+	if (!uniqueInstance) {
+		uniqueInstance = new RS_FontList();
+	}
+	return uniqueInstance;
 }
-
 
 
 /**
@@ -76,7 +74,6 @@ void RS_FontList::init() {
         RS_DEBUG->print("base: %s", fi.baseName().toLatin1().data());
     }
 }
-
 
 
 /**

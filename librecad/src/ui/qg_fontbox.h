@@ -39,7 +39,7 @@ class QG_FontBox: public QComboBox {
 
 public:
     QG_FontBox(QWidget* parent=0);
-    virtual ~QG_FontBox();
+	virtual ~QG_FontBox()=default;
 
     RS_Font* getFont() {
         return currentFont;
