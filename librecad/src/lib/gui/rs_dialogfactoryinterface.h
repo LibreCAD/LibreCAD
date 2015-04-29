@@ -409,11 +409,9 @@ public:
      *
      * @param left Help text for the left mouse button.
      * @param right Help text for the right mouse button.
-     */
-    virtual void updateMouseWidget(const QString& left,
-                                   const QString& right,
-                                   bool keeping=true) = 0;
-    virtual void restoreMouseWidget(void)=0;
+	 */
+	virtual void updateMouseWidget(const QString& = QString::null,
+								   const QString& = QString::null)=0;
     virtual void updateArcTangentialOptions(const double& d, bool byRadius)=0;
 
     /**

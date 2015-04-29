@@ -214,7 +214,7 @@ void RS_ActionDrawCircle2P::updateMouseButtonHints() {
                 tr("Specify second point"), tr("Back"));
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+            RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }

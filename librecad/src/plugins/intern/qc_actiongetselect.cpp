@@ -47,7 +47,7 @@ void QC_ActionGetSelect::updateMouseButtonHints() {
         RS_DIALOGFACTORY->updateMouseWidget(mesage, tr("Cancel"));
             break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+		RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
@@ -72,7 +72,7 @@ void QC_ActionGetSelect::init(int status) {
 
 void QC_ActionGetSelect::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+		RS_DIALOGFACTORY->updateMouseWidget();
         completed = true;
     }
 }
@@ -83,7 +83,7 @@ void QC_ActionGetSelect::updateToolBar() {
             RS_DIALOGFACTORY->requestToolBarSelect(this, RS2::ActionDefault);
         } else {
             RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+			RS_DIALOGFACTORY->updateMouseWidget();
             completed = true;
         }
     }

@@ -124,7 +124,7 @@ void RS_ActionDrawPoint::updateMouseButtonHints() {
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify location"), tr("Cancel"));
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+            RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }

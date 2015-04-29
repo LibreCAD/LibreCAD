@@ -91,7 +91,7 @@ void RS_ActionModifyAttributes::updateMouseButtonHints() {
         //RS_DIALOGFACTORY->updateMouseWidget(tr("Acknowledge"), tr("Cancel"));
         //break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }

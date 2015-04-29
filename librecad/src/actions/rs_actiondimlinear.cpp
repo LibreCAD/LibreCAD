@@ -360,7 +360,7 @@ void RS_ActionDimLinear::updateMouseButtonHints() {
                 tr("Enter dimension line angle:"), "");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+			RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }

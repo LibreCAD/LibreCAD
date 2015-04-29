@@ -80,7 +80,7 @@ void RS_ActionModifyDelete::updateMouseButtonHints() {
             //	tr("Cancel"));
             //    break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+            RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }

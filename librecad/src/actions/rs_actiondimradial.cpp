@@ -296,7 +296,7 @@ void RS_ActionDimRadial::updateMouseButtonHints() {
         RS_DIALOGFACTORY->updateMouseWidget(tr("Enter dimension text:"), "");
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+		RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }

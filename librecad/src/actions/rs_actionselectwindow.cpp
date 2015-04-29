@@ -174,7 +174,7 @@ void RS_ActionSelectWindow::updateMouseButtonHints() {
         RS_DIALOGFACTORY->updateMouseWidget(tr("Choose second edge"), tr("Back"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }

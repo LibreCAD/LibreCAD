@@ -234,7 +234,7 @@ void RS_ActionDrawHatch::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawHatch::updateMouseButtonHints() {
-    RS_DIALOGFACTORY->updateMouseWidget("", "");
+	RS_DIALOGFACTORY->updateMouseWidget();
 }
 
 void RS_ActionDrawHatch::updateMouseCursor() {

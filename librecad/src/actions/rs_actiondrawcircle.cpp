@@ -224,7 +224,7 @@ void RS_ActionDrawCircle::updateMouseButtonHints() {
         break;
     default:
         if (RS_DIALOGFACTORY!=NULL) {
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+			RS_DIALOGFACTORY->updateMouseWidget();
         }
         break;
     }

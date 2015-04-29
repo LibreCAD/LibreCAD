@@ -309,7 +309,7 @@ void RS_ActionDrawEllipseCenter3Points::updateMouseButtonHints() {
             break;
 
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+            RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }

@@ -165,7 +165,7 @@ void QG_CadToolBar::showSubToolBar(){
 
 void QG_CadToolBar::showPreviousToolBar(bool cleanup) {
 	// cleanup mouse hint when showing previous tool bar, bug#3480121
-	RS_DIALOGFACTORY->updateMouseWidget("","",false);
+	RS_DIALOGFACTORY->updateMouseWidget();
 	for(auto p: activeToolbars){
 		qDebug()<<"QG_CadToolBar::showPreviousToolBar():begin "<<p->rtti();
 	}

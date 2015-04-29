@@ -149,7 +149,7 @@ void RS_ActionDrawLineFree::updateMouseButtonHints() {
             tr("Click and drag to draw a line"), tr("Cancel"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }

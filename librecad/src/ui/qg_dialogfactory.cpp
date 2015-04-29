@@ -106,6 +106,10 @@
 #include "qg_mainwindowinterface.h"
 #include "rs_actionprintpreview.h"
 #include "rs_blocklist.h"
+#include "qg_polylineequidistantoptions.h"
+#include "qg_snapmiddleoptions.h"
+#include "qg_snapdistoptions.h"
+#include "rs_vector.h"
 
 #if QT_VERSION < 0x040400
 #include "emu_qt44.h"
@@ -133,12 +137,7 @@ QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* ow)
     selectionWidget = NULL;
     cadToolBar = NULL;
     commandWidget = NULL;
-    mainWindow = NULL;
-    leftHintCurrent=new QString("");
-    rightHintCurrent=new QString("");
-    leftHintSaved=new QString("");
-    rightHintSaved=new QString("");
-    hintKeeping=new bool(true);
+	mainWindow = NULL;
     polylineEquidistantOptions=NULL;
     snapMiddleOptions=NULL;
     snapDistOptions=NULL;
@@ -153,16 +152,15 @@ QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* ow)
  * Destructor
  */
 QG_DialogFactory::~QG_DialogFactory() {
-    delete leftHintCurrent;
-    delete rightHintCurrent;
-    delete leftHintSaved;
-    delete rightHintSaved;
-    delete hintKeeping;
     RS_DEBUG->print("QG_DialogFactory::~QG_DialogFactory");
     RS_DEBUG->print("QG_DialogFactory::~QG_DialogFactory: OK");
 }
 
-
+void QG_DialogFactory::setOptionWidget(QToolBar* ow) {
+	RS_DEBUG->print("QG_DialogFactory::setOptionWidget");
+	optionWidget = ow;
+	RS_DEBUG->print("QG_DialogFactory::setOptionWidget: OK");
+}
 
 
 /**
@@ -1949,48 +1947,14 @@ void QG_DialogFactory::updateCoordinateWidget(const RS_Vector& abs,
     }
 }
 
-
-
-/**
- * Called when an action has a mouse hint.
- * @left mouse hint for left button
- * @right mouse hint for right button
- * @keeping whether to keep the mouse hints to be restored after interruption, default to true
- */
-
 void QG_DialogFactory::updateMouseWidget(const QString& left,
-        const QString& right, bool keeping /* = true */) {
-
-    if ( left != *leftHintCurrent || right != *rightHintCurrent ) {
-         if ( *hintKeeping ) {//whether the current hints should be save to HintSaved
-            *leftHintSaved=*leftHintCurrent;
-            *rightHintSaved=*rightHintCurrent;
-         }
-         *leftHintCurrent= left.isNull()? QString(""):left;
-         *rightHintCurrent=right.isNull()? QString(""):right;
-         *hintKeeping=keeping;
-		if (mouseWidget) {
-            mouseWidget->setHelp(*leftHintCurrent, *rightHintCurrent);
-            }
-	if (commandWidget) {
-        commandWidget->setCommand(*leftHintCurrent);
-    }
-   }
-}
-
-/**
- * Called to restore saved mouse hints
- */
-void QG_DialogFactory::restoreMouseWidget(void) {
-    *leftHintCurrent=*leftHintSaved;
-    *rightHintCurrent=*rightHintSaved;
+										 const QString& right) {
 	if (mouseWidget) {
-   // || leftHintSaved->isNull() || rightHintSaved->isNull())) {
-        mouseWidget->setHelp(*leftHintCurrent, *rightHintCurrent);
-    }
+		mouseWidget->setHelp(left, right);
+	}
 	if (commandWidget) {
-        commandWidget->setCommand(*leftHintCurrent);
-    }
+		commandWidget->setCommand(left);
+	}
 }
 
 /**

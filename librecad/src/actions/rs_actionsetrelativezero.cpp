@@ -91,10 +91,10 @@ void RS_ActionSetRelativeZero::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionSetRelativeZero::updateMouseButtonHints() {
     switch (getStatus()) {
     case 0:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Set relative Zero"), tr("Cancel"),false);
+		RS_DIALOGFACTORY->updateMouseWidget(tr("Set relative Zero"), tr("Cancel"));
         break;
     default:
-        RS_DIALOGFACTORY->restoreMouseWidget();
+		RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }

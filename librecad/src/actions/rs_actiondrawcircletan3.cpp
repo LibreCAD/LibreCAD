@@ -433,7 +433,7 @@ void RS_ActionDrawCircleTan3::updateMouseButtonHints() {
                                                 tr("Back"));
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+            RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }

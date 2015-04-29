@@ -31,21 +31,11 @@
 #include <QToolBar>
 
 #include "rs_dialogfactoryinterface.h"
-#include "rs_vector.h"
-#include "rs_debug.h"
 
-/*
-#include "qg_cadtoolbar.h"
-#include "qg_coordinatewidget.h"
-#include "qg_arctangentialoptions.h"
-#include "qg_selectionwidget.h"
-#include "qg_mousewidget.h"
-#include "qg_printpreviewoptions.h"
-*/
-#include "qg_polylineequidistantoptions.h"
-#include "qg_snapmiddleoptions.h"
-#include "qg_snapdistoptions.h"
-#include "qg_modifyoffsetoptions.h"
+class QG_PolylineEquidistantOptions;
+class QG_SnapMiddleOptions;
+class QG_SnapDistOptions;
+class QG_ModifyOffsetOptions;
 
 class QG_CadToolBar;
 class QToolBar;
@@ -59,6 +49,7 @@ class QG_CommandWidget;
 class QG_MainWindowInterface;
 class RS_Document;
 class QG_LineAngleOptions;
+class RS_Vector;
 
 #define QG_DIALOGFACTORY (RS_DialogFactory::instance()->getFactoryObject()->isAdapter()==false ? ((QG_DialogFactory*)RS_DialogFactory::instance()->getFactoryObject()) : NULL)
 
@@ -75,11 +66,7 @@ protected:
     /**
      * Links factory to a widget that can host tool options.
      */
-    virtual void setOptionWidget(QToolBar* ow) {
-        RS_DEBUG->print("QG_DialogFactory::setOptionWidget");
-        optionWidget = ow;
-        RS_DEBUG->print("QG_DialogFactory::setOptionWidget: OK");
-    }
+	virtual void setOptionWidget(QToolBar* ow);
 public:
     /**
      * Links this dialog factory to a coordinate widget.
@@ -271,10 +258,13 @@ public:
 
     virtual void requestPreviousMenu();
     virtual void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false);
-    virtual void updateMouseWidget(const QString& left,
-                                   const QString& right,
-                                   bool keeping=true);
-    virtual void restoreMouseWidget(void);
+	/**
+	 * \brief updateMouseWidget Called when an action has a mouse hint.
+	 * \param left mouse hint for left button
+	 * \param right mouse hint for right button
+	 */
+	virtual void updateMouseWidget(const QString& left=QString::null,
+								   const QString& right=QString::null);
     virtual void updateSelectionWidget(int num, double length);//updated for total number of selected, and total length of selected
     virtual void commandMessage(const QString& message);
         virtual bool isAdapter() { return false; }
@@ -305,9 +295,6 @@ protected:
     //! Pointer to the main app window
     QG_MainWindowInterface* mainWindow;
 private:
-    QString *leftHintCurrent, *rightHintCurrent;
-    QString *leftHintSaved, *rightHintSaved;
-    bool *hintKeeping;
     // pointers to snap option widgets
     QG_SnapMiddleOptions* snapMiddleOptions;
     QG_SnapDistOptions* snapDistOptions;

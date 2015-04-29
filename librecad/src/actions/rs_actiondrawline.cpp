@@ -316,7 +316,7 @@ void RS_ActionDrawLine::updateMouseButtonHints() {
         }
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+            RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }

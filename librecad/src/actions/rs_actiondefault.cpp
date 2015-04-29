@@ -342,14 +342,14 @@ QStringList RS_ActionDefault::getAvailableCommands() {
 void RS_ActionDefault::updateMouseButtonHints() {
     switch (getStatus()) {
     case Neutral:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+		RS_DIALOGFACTORY->updateMouseWidget();
         break;
     case SetCorner2:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Choose second edge"),
                                             tr("Back"));
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+		RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }

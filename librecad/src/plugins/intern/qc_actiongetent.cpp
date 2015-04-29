@@ -44,7 +44,7 @@ void QC_ActionGetEnt::updateMouseButtonHints() {
     if (!completed)
         RS_DIALOGFACTORY->updateMouseWidget(mesage, tr("Cancel"));
     else
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+        RS_DIALOGFACTORY->updateMouseWidget();
 }
 
 

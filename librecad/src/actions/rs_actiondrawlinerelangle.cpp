@@ -330,7 +330,7 @@ void RS_ActionDrawLineRelAngle::updateMouseButtonHints() {
                                                 tr("Back"));
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+			RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }

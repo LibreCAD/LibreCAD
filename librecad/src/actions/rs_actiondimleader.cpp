@@ -233,7 +233,7 @@ void RS_ActionDimLeader::updateMouseButtonHints() {
                                                 tr("Finish"));
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget("", "");
+            RS_DIALOGFACTORY->updateMouseWidget();
             break;
         }
     }

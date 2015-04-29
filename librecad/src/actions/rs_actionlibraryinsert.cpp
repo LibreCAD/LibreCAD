@@ -245,7 +245,7 @@ void RS_ActionLibraryInsert::updateMouseButtonHints() {
                                             "");
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget("", "");
+		RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }

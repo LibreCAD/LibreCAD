@@ -92,10 +92,8 @@ public:
                                             const QString& = QString::null,
                                             QString* = 0) { return ""; }
     virtual void updateCoordinateWidget(const RS_Vector& , const RS_Vector& , bool =false) {}
-    virtual void updateMouseWidget(const QString& ,
-                                   const QString& ,
-                                   bool) {}
-    virtual void restoreMouseWidget(void) {}
+	virtual void updateMouseWidget(const QString& = QString::null,
+								   const QString& = QString::null){}
     virtual void updateSelectionWidget(int /*c*/, double /*l*/ ) {}
     virtual void updateArcTangentialOptions(const double& , bool ){}
     virtual void commandMessage(const QString& ) {}
