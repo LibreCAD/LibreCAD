@@ -39,7 +39,7 @@ private:
 
 class dxfWriterBinary : public dxfWriter {
 public:
-    dxfWriterBinary(std::ofstream *stream):dxfWriter(stream){ }
+    dxfWriterBinary(std::ofstream *stream):dxfWriter(stream){}
     virtual ~dxfWriterBinary() {}
     virtual bool writeString(int code, std::string text);
     virtual bool writeInt16(int code, int data);
@@ -51,7 +51,7 @@ public:
 
 class dxfWriterAscii : public dxfWriter {
 public:
-    dxfWriterAscii(std::ofstream *stream):dxfWriter(stream){ }
+    dxfWriterAscii(std::ofstream *stream);
     virtual ~dxfWriterAscii(){}
     virtual bool writeString(int code, std::string text);
     virtual bool writeInt16(int code, int data);

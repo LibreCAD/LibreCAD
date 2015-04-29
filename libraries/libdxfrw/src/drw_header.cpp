@@ -297,7 +297,6 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
             writer->writeUtf8Caps(6, varStr);
         else
             writer->writeUtf8String(6, varStr);
-
     else
         writer->writeString(7, "BYLAYER");
     writer->writeString(9, "$CECOLOR");
@@ -308,9 +307,9 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
     if (ver > DRW::AC1009){
         writer->writeString(9, "$CELTSCALE");
         if (getDouble("$CELTSCALE", &varDouble))
-        writer->writeDouble(40, varDouble);
-    else
-        writer->writeDouble(40, 1.0);
+            writer->writeDouble(40, varDouble);
+        else
+            writer->writeDouble(40, 1.0);
         writer->writeString(9, "$DISPSILH");
         if (getInt("$DISPSILH", &varInt))
             writer->writeInt16(70, varInt);
@@ -660,20 +659,20 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         else
             writer->writeString(1, "STANDARD");
     //verify if exist "$DIMLUNIT" or obsolete "$DIMUNIT" (pre v2000)
-    if ( !getInt("$DIMLUNIT", &varInt) ){
-        if (!getInt("$DIMUNIT", &varInt))
+        if ( !getInt("$DIMLUNIT", &varInt) ){
+            if (!getInt("$DIMUNIT", &varInt))
+                varInt = 2;
+        }
+        //verify valid values from 1 to 6
+        if (varInt<1 || varInt>6)
             varInt = 2;
-    }
-    //verify valid values from 1 to 6
-    if (varInt<1 || varInt>6)
-        varInt = 2;
-    if (ver > DRW::AC1014) {
-        writer->writeString(9, "$DIMLUNIT");
-        writer->writeInt16(70, varInt);
-    } else {
-        writer->writeString(9, "$DIMUNIT");
-        writer->writeInt16(70, varInt);
-    }
+        if (ver > DRW::AC1014) {
+            writer->writeString(9, "$DIMLUNIT");
+            writer->writeInt16(70, varInt);
+        } else {
+            writer->writeString(9, "$DIMUNIT");
+            writer->writeInt16(70, varInt);
+        }
         writer->writeString(9, "$DIMLWD");
         if (getInt("$DIMLWD", &varInt))
             writer->writeInt16(70, varInt);
@@ -723,11 +722,11 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
                 writer->writeInt16(70, 0);
             writer->writeString(9, "$DIMLTYPE");
             if (getStr("$DIMLTYPE", &varStr))
-        if (ver == DRW::AC1009)
+                if (ver == DRW::AC1009)
                     writer->writeUtf8Caps(6, varStr);
-        else
+                else
                     writer->writeUtf8String(6, varStr);
-    else
+            else
                 writer->writeString(6, "");
             writer->writeString(9, "$DIMLTEX1");
             if (getStr("$DIMLTEX1", &varStr))
@@ -743,17 +742,18 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
                     writer->writeUtf8Caps(6, varStr);
                 else
                     writer->writeUtf8String(6, varStr);
-    else
+            else
                 writer->writeString(6, "");
             if (ver > DRW::AC1021) {// and post v2007 dim vars
                 writer->writeString(9, "$DIMTXTDIRECTION");
                 if (getInt("$DIMTXTDIRECTION", &varInt))
-        writer->writeInt16(70, varInt);
-    else
-        writer->writeInt16(70, 0);
+                    writer->writeInt16(70, varInt);
+                else
+                    writer->writeInt16(70, 0);
             }
         }// end post v2004 dim vars
     }//end post r12 dim vars
+
     writer->writeString(9, "$LUNITS");
     if (getInt("$LUNITS", &varInt))
         writer->writeInt16(70, varInt);
@@ -1003,7 +1003,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
             writer->writeString(2, "");
         writer->writeString(9, "$UCSORTHOVIEW");
         if (getInt("$UCSORTHOVIEW", &varInt))
-        writer->writeInt16(70, varInt);
+            writer->writeInt16(70, varInt);
         else
             writer->writeInt16(70, 0);
         writer->writeString(9, "$UCSORGTOP");
@@ -1055,7 +1055,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
             writer->writeDouble(10, 0.0);
             writer->writeDouble(20, 0.0);
             writer->writeDouble(30, 0.0);
-    }
+        }
         writer->writeString(9, "$UCSORGBACK");
         if (getCoord("$UCSORGBACK", &varCoord)) {
             writer->writeDouble(10, varCoord.x);
@@ -1124,7 +1124,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
             writer->writeString(2, "");
         writer->writeString(9, "$PUCSORTHOVIEW");
         if (getInt("$PUCSORTHOVIEW", &varInt))
-        writer->writeInt16(70, varInt);
+            writer->writeInt16(70, varInt);
         else
             writer->writeInt16(70, 0);
         writer->writeString(9, "$PUCSORGTOP");
@@ -1146,7 +1146,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
             writer->writeDouble(10, 0.0);
             writer->writeDouble(20, 0.0);
             writer->writeDouble(30, 0.0);
-    }
+        }
         writer->writeString(9, "$PUCSORGLEFT");
         if (getCoord("$PUCSORGLEFT", &varCoord)) {
             writer->writeDouble(10, varCoord.x);
@@ -1159,8 +1159,8 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         }
         writer->writeString(9, "$PUCSORGRIGHT");
         if (getCoord("$PUCSORGRIGHT", &varCoord)) {
-        writer->writeDouble(10, varCoord.x);
-        writer->writeDouble(20, varCoord.y);
+            writer->writeDouble(10, varCoord.x);
+            writer->writeDouble(20, varCoord.y);
             writer->writeDouble(30, varCoord.z);
         } else {
             writer->writeDouble(10, 0.0);
@@ -1176,17 +1176,17 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
             writer->writeDouble(10, 0.0);
             writer->writeDouble(20, 0.0);
             writer->writeDouble(30, 0.0);
-    }
+        }
         writer->writeString(9, "$PUCSORGBACK");
         if (getCoord("$PUCSORGBACK", &varCoord)) {
-        writer->writeDouble(10, varCoord.x);
-        writer->writeDouble(20, varCoord.y);
+            writer->writeDouble(10, varCoord.x);
+            writer->writeDouble(20, varCoord.y);
             writer->writeDouble(30, varCoord.z);
         } else {
             writer->writeDouble(10, 0.0);
             writer->writeDouble(20, 0.0);
             writer->writeDouble(30, 0.0);
-    }
+        }
     } //end post r12 PUCS vars
 
     writer->writeString(9, "$USERI1");
@@ -1206,16 +1206,15 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         writer->writeInt16(70, 0);
     writer->writeString(9, "$USERI4");
     if (getInt("$USERI4", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 0);
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
     writer->writeString(9, "$USERI5");
     if (getInt("$USERI5", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 0);
+        writer->writeInt16(70, varInt);
+    else
+        writer->writeInt16(70, 0);
     writer->writeString(9, "$USERR1");
-
     if (getDouble("$USERR1", &varDouble))
         writer->writeDouble(40, varDouble);
     else
@@ -1252,13 +1251,13 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         writer->writeInt16(70, 3);
     writer->writeString(9, "$SHADEDIF");
     if (getInt("$SHADEDIF", &varInt))
-            writer->writeInt16(70, varInt);
-        else
+        writer->writeInt16(70, varInt);
+    else
         writer->writeInt16(70, 70);
     writer->writeString(9, "$TILEMODE");
     if (getInt("$TILEMODE", &varInt))
-            writer->writeInt16(70, varInt);
-        else
+        writer->writeInt16(70, varInt);
+    else
         writer->writeInt16(70, 1);
     writer->writeString(9, "$MAXACTVP");
     if (getInt("$MAXACTVP", &varInt))
@@ -1271,7 +1270,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
             writer->writeDouble(10, varCoord.x);
             writer->writeDouble(20, varCoord.y);
             writer->writeDouble(30, varCoord.z);
-    } else {
+        } else {
             writer->writeDouble(10, 0.0);
             writer->writeDouble(20, 0.0);
             writer->writeDouble(30, 0.0);
@@ -1414,13 +1413,13 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
             writer->writeInt16(290, varInt);
         else
             writer->writeInt16(290, 0);
-    if (ver > DRW::AC1014) {
-        writer->writeString(9, "$INSUNITS");
-        if (getInt("$INSUNITS", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 0);
-    }
+        if (ver > DRW::AC1014) {
+            writer->writeString(9, "$INSUNITS");
+            if (getInt("$INSUNITS", &varInt))
+                writer->writeInt16(70, varInt);
+            else
+                writer->writeInt16(70, 0);
+        }
         writer->writeString(9, "$HYPERLINKBASE");
         if (getStr("$HYPERLINKBASE", &varStr))
             if (ver == DRW::AC1009)
@@ -1678,6 +1677,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         else
             writer->writeDouble(40, 0.0);
     }
+
 #ifdef DRW_DBG
     std::map<std::string,DRW_Variant *>::const_iterator it;
     for ( it=vars.begin() ; it != vars.end(); ++it ){
@@ -1724,6 +1724,7 @@ bool DRW_Header::getDouble(std::string key, double *varDouble){
             *varDouble = var->content.d;
             result = true;
         }
+        delete var;
         vars.erase (it);
     }
     return result;
@@ -1739,6 +1740,7 @@ bool DRW_Header::getInt(std::string key, int *varInt){
             *varInt = var->content.i;
             result = true;
         }
+        delete var;
         vars.erase (it);
     }
     return result;
@@ -1754,6 +1756,7 @@ bool DRW_Header::getStr(std::string key, std::string *varStr){
             *varStr = *var->content.s;
             result = true;
         }
+        delete var;
         vars.erase (it);
     }
     return result;
@@ -1769,6 +1772,7 @@ bool DRW_Header::getCoord(std::string key, DRW_Coord *varCoord){
             *varCoord = *var->content.v;
             result = true;
         }
+        delete var;
         vars.erase (it);
     }
     return result;

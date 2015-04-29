@@ -214,38 +214,27 @@ bool dxfWriterBinary::writeBool(int code, bool data) {
     return (filestr->good());
 }
 
+dxfWriterAscii::dxfWriterAscii(std::ofstream *stream):dxfWriter(stream){
+    filestr->precision(16);
+}
+
 bool dxfWriterAscii::writeString(int code, std::string text) {
-    *filestr << code << std::endl << text << std::endl ;
+//    *filestr << code << std::endl << text << std::endl ;
+    filestr->width(3);
+    *filestr << std::right << code << std::endl;
+    filestr->width(0);
+    *filestr << std::left << text << std::endl;
     /*    std::getline(*filestr, strData, '\0');
     DBG(strData); DBG("\n");*/
     return (filestr->good());
 }
 
-/*bool dxfWriterAscii::readCode(int *code) {
-    std::string text;
-    std::getline(*filestr, text);
-    *code = atoi(text.c_str());
-    DBG(*code); DBG("\n");
-    return (filestr->good());
-}*/
-/*bool dxfWriterAscii::readString(std::string *text) {
-    std::getline(*filestr, *text);
-    if (text->at(text->size()-1) == '\r')
-        text->erase(text->size()-1);
-    return (filestr->good());
-}*/
-
-/*bool dxfWriterAscii::readString() {
-    std::getline(*filestr, strData);
-    if (strData.at(strData.size()-1) == '\r')
-        strData.erase(strData.size()-1);
-    DBG(strData); DBG("\n");
-    return (filestr->good());
-}*/
-
 bool dxfWriterAscii::writeInt16(int code, int data) {
-//    *filestr << code << "\r\n" << data << "\r\n";
-    *filestr << code << std::endl << data << std::endl;
+//    *filestr << std::right << code << std::endl << data << std::endl;
+    filestr->width(3);
+    *filestr << std::right << code << std::endl;
+    filestr->width(5);
+    *filestr << data << std::endl;
     return (filestr->good());
 }
 
@@ -254,15 +243,22 @@ bool dxfWriterAscii::writeInt32(int code, int data) {
 }
 
 bool dxfWriterAscii::writeInt64(int code, unsigned long long int data) {
-    *filestr << code << std::endl << data << std::endl;
+//    *filestr << code << std::endl << data << std::endl;
+    filestr->width(3);
+    *filestr << std::right << code << std::endl;
+    filestr->width(5);
+    *filestr << data << std::endl;
     return (filestr->good());
 }
 
 bool dxfWriterAscii::writeDouble(int code, double data) {
-    std::streamsize prec = filestr->precision();
-    filestr->precision(12);
-    *filestr << code << std::endl << data << std::endl;
-    filestr->precision(prec);
+//    std::streamsize prec = filestr->precision();
+//    filestr->precision(12);
+//    *filestr << code << std::endl << data << std::endl;
+    filestr->width(3);
+    *filestr << std::right << code << std::endl;
+    *filestr << data << std::endl;
+//    filestr->precision(prec);
     return (filestr->good());
 }
 

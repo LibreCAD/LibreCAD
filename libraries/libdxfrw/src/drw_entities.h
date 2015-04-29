@@ -150,12 +150,13 @@ public:
         }
     }
 
-    virtual~DRW_Entity() {
+    virtual ~DRW_Entity() {
         for (std::vector<DRW_Variant*>::iterator it=extData.begin(); it!=extData.end(); ++it)
             delete *it;
 
         extData.clear();
     }
+
     void reset(){
         for (std::vector<DRW_Variant*>::iterator it=extData.begin(); it!=extData.end(); ++it)
             delete *it;
@@ -594,6 +595,21 @@ public:
         extPoint.z = 1;
         vertex = NULL;
     }
+    
+    DRW_LWPolyline(const DRW_LWPolyline& p):DRW_Entity(p){
+        this->eType = DRW::LWPOLYLINE;
+        this->elevation = p.elevation;
+        this->thickness = p.thickness;
+        this->width = p.width;
+        this->flags = p.flags;
+        this->extPoint = p.extPoint;
+        this->vertex = NULL;
+        for (unsigned i=0; i<p.vertlist.size(); i++)// RLZ ok or new
+          this->vertlist.push_back( new DRW_Vertex2D( *(p.vertlist.at(i)) ) );
+
+        this->vertex = NULL;
+    }
+
     ~DRW_LWPolyline() {
         while (!vertlist.empty()) {
             vertlist.pop_back();

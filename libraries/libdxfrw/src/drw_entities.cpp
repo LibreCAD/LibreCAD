@@ -159,7 +159,7 @@ bool DRW_Entity::parseDxfGroups(int code, dxfReader *reader){
     int nc;
     std::string appName= reader->getString();
     if (!appName.empty() && appName.at(0)== '{'){
-		curr.addString(appName.substr(1, (int) appName.size()-1));
+        curr.addString(appName.substr(1, (int) appName.size()-1));
         curr.code = code;
         ls.push_back(curr);
         while (code !=102 && appName.at(0)== '}'){

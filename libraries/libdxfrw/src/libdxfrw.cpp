@@ -128,9 +128,9 @@ bool dxfRW::write(DRW_Interface *interface_, DRW::Version ver, bool bin){
     header.write(writer, version);
     writer->writeString(0, "ENDSEC");
     if (ver > DRW::AC1009) {
-    writer->writeString(0, "SECTION");
-    writer->writeString(2, "CLASSES");
-    writer->writeString(0, "ENDSEC");
+        writer->writeString(0, "SECTION");
+        writer->writeString(2, "CLASSES");
+        writer->writeString(0, "ENDSEC");
     }
     writer->writeString(0, "SECTION");
     writer->writeString(2, "TABLES");
