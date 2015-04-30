@@ -247,7 +247,7 @@ bool RS_EventHandler::cliCalculator(const QString& cmd) const
     bool ok=true;
     double result=RS_Math::eval(str,&ok);
     if(ok)
-        RS_DIALOGFACTORY->commandMessage(str + " = "+QString::number(result));
+		RS_DIALOGFACTORY->commandMessage(str + " = "+QString::number(result, 'g', 12));
     else
         RS_DIALOGFACTORY->commandMessage("Calculator error for input: "+ str);
     return true;
