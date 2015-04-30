@@ -129,13 +129,13 @@ RS2::FormatType RS_FileIO::detectFormat(QString const& file, bool forRead)
 			RS_DEBUG->print(RS_Debug::D_WARNING,
 							"%s:"
 							"Cannot open file: %s",
-							__FUNCTION__,
+							__func__,
 							file.toLatin1().data());
 			type = RS2::FormatUnknown;
 		} else {
 			RS_DEBUG->print("%s:"
 							"Successfully opened DXF file: %s",
-							__FUNCTION__,
+							__func__,
 							file.toLatin1().data());
 
 			QTextStream ts(&f);
