@@ -43,11 +43,6 @@ QSplashScreen *splash=nullptr;
 #include "rs_settings.h"
 #include "rs_system.h"
 #include "rs_fileio.h"
-#include "rs_filtercxf.h"
-#include "rs_filterdxf1.h"
-#include "rs_filterjww.h"
-#include "rs_filterlff.h"
-#include "rs_filterdxfrw.h"
 #include "qg_dlginitial.h"
 
 #include "qc_applicationwindow.h"
@@ -239,12 +234,6 @@ int main(int argc, char** argv) {
         QString prgDir(prgInfo.absolutePath());
     RS_SETTINGS->init(XSTR(QC_COMPANYKEY), XSTR(QC_APPKEY));
     RS_SYSTEM->init(XSTR(QC_APPNAME), XSTR(QC_VERSION), XSTR(QC_APPDIR), prgDir);
-
-		RS_FileIO::instance()->registerFilter( &(RS_FilterLFF::createFilter));
-        RS_FileIO::instance()->registerFilter( &(RS_FilterDXFRW::createFilter));
-        RS_FileIO::instance()->registerFilter( &(RS_FilterCXF::createFilter));
-        RS_FileIO::instance()->registerFilter( &(RS_FilterJWW::createFilter));
-        RS_FileIO::instance()->registerFilter( &(RS_FilterDXF1::createFilter));
 
         // parse command line arguments that might not need a launched program:
         QStringList fileList = handleArgs(argc, argv, argClean);

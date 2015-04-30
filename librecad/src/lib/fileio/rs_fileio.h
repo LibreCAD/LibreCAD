@@ -42,7 +42,7 @@ typedef  RS_FilterInterface* (*createFilter)();
 class RS_FileIO {
 private:
     //singleton
-	RS_FileIO()=default;
+	RS_FileIO();
     RS_FileIO(RS_FileIO&) = delete;
     RS_FileIO& operator = (RS_FileIO&) = delete;
 	
@@ -51,11 +51,6 @@ public:
      * @return Instance to the unique import object.
      */
 	static RS_FileIO* instance();
-
-    /**
-     * Registers a new import filter.
-     */
-	void registerFilter(createFilter f);
 
 	/**
 	 * @return Filter which can import the given file type.
@@ -74,13 +69,17 @@ public:
 		
     bool fileExport(RS_Graphic& graphic, const QString& file,
 		RS2::FormatType type = RS2::FormatUnknown);
+	/** \brief extension2Type convert extension to file format type
+	 * \param file type
+	 * \param forRead read the file to verify dxf/dxfrw type, default to true
+	 * \return file format type
+	 */
+	static RS2::FormatType detectFormat(QString const& file, bool forRead=true);
 
-        RS2::FormatType detectFormat(const QString& file);
-
-protected:
+private:
 
 /** a list of pointers to static functions to create file filters **/
-    QList<createFilter> filters;
+	QList<createFilter> const filters;
 };
 
 

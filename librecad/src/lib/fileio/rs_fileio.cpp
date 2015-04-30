@@ -30,9 +30,24 @@
 #include <QMessageBox>
 #include <QApplication>
 #endif
-#include <memory>
 #include <cstddef>
 #include "rs_fileio.h"
+#include "rs_filtercxf.h"
+#include "rs_filterdxf1.h"
+#include "rs_filterjww.h"
+#include "rs_filterlff.h"
+#include "rs_filterdxfrw.h"
+
+
+RS_FileIO::RS_FileIO():
+	filters({&(RS_FilterLFF::createFilter)
+			,&(RS_FilterDXFRW::createFilter)
+			,&(RS_FilterCXF::createFilter)
+			,&(RS_FilterJWW::createFilter)
+			,&(RS_FilterDXF1::createFilter)
+			})
+{
+}
 
 /**
  * Calls the import method of the filter responsible for the format
@@ -84,6 +99,64 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
 }
 
 
+/** \brief extension2Type convert extension to file format type
+ * \param file type
+ * \param verifyRead read the file to verify dxf/dxfrw type, default to false
+ * \return file format type
+ */
+RS2::FormatType RS_FileIO::detectFormat(QString const& file, bool forRead)
+{
+	// look up table
+	std::map<QString, RS2::FormatType> list{
+		{"dxf", RS2::FormatDXFRW},
+		{"cxf", RS2::FormatCXF},
+		{"lff", RS2::FormatLFF}
+	};
+	// only read support for dwg
+	if(forRead) list["dwg"]=RS2::FormatDWG;
+
+	QString const extension = QFileInfo(file).suffix().toLower();
+	RS2::FormatType type=(list.find(extension)!=
+			list.end()) ? list[extension]:RS2::FormatUnknown;
+
+	//only read dxf to verify
+	if (forRead && type==RS2::FormatDXFRW) {
+		type = RS2::FormatDXFRW;
+		QFile f(file);
+
+		if (!f.open(QIODevice::ReadOnly)) {
+			// Error opening file:
+			RS_DEBUG->print(RS_Debug::D_WARNING,
+							"%s:"
+							"Cannot open file: %s",
+							__FUNCTION__,
+							file.toLatin1().data());
+			type = RS2::FormatUnknown;
+		} else {
+			RS_DEBUG->print("%s:"
+							"Successfully opened DXF file: %s",
+							__FUNCTION__,
+							file.toLatin1().data());
+
+			QTextStream ts(&f);
+			QString line;
+			int c=0;
+			while (!ts.atEnd() && ++c<100) {
+				line = ts.readLine();
+				if (line=="$ACADVER" || line=="ENTITIES") {
+					type = RS2::FormatDXFRW;
+					break;
+				}
+				// very simple reduced DXF:
+				//                if (line=="ENTITIES" && c<10) {
+				//                    type = RS2::FormatDXFRW;
+				//                }
+			}
+			f.close();
+		}
+	}
+	return type;
+}
 
 /**
  * Calls the export method of the object responsible for the format
@@ -98,18 +171,7 @@ bool RS_FileIO::fileExport(RS_Graphic& graphic, const QString& file,
     //RS_DEBUG->print("Trying to export file '%s'...", file.latin1());
 
     if (type==RS2::FormatUnknown) {
-        QString extension;
-        extension = QFileInfo(file).suffix().toLower();
-
-        if (extension=="dxf") {
-            type = RS2::FormatDXFRW;
-        }
-        else if (extension=="cxf") {
-            type = RS2::FormatCXF;
-        }
-        else if (extension=="lff") {
-            type = RS2::FormatLFF;
-        }
+		type=detectFormat(file, false);
     }
 
 	std::unique_ptr<RS_FilterInterface>&& filter(getExportFilter(file, type));
@@ -122,71 +184,12 @@ bool RS_FileIO::fileExport(RS_Graphic& graphic, const QString& file,
 }
 
 
-/**
- * Detects and returns the file format of the given file.
- */
-RS2::FormatType RS_FileIO::detectFormat(const QString& file) {
-    RS2::FormatType type = RS2::FormatUnknown;
-    QFileInfo fi(file);
-
-    QString ext = fi.suffix().toLower();
-    if (ext=="lff") {
-        type = RS2::FormatLFF;
-    } else if (ext=="cxf") {
-        type = RS2::FormatCXF;
-#ifdef DWGSUPPORT
-    } else if (ext=="dwg") {
-        type = RS2::FormatDWG;
-#endif
-    } else if (ext=="dxf") {
-        type = RS2::FormatDXFRW;
-        QFile f(file);
-
-        if (!f.open(QIODevice::ReadOnly)) {
-            // Error opening file:
-            RS_DEBUG->print(RS_Debug::D_WARNING,
-                                "RS_FileIO::detectFormat: Cannot open file: %s", file.toLatin1().data());
-            type = RS2::FormatUnknown;
-        } else {
-            RS_DEBUG->print("RS_FileIO::detectFormat: "
-                "Successfully opened DXF file: %s",
-                file.toLatin1().data());
-
-            QTextStream ts(&f);
-            QString line;
-            int c=0;
-            while (!ts.atEnd() && ++c<100) {
-                line = ts.readLine();
-                if (line=="$ACADVER" || line=="ENTITIES") {
-                    type = RS2::FormatDXFRW;
-                    break;
-                }
-                // very simple reduced DXF:
-//                if (line=="ENTITIES" && c<10) {
-//                    type = RS2::FormatDXFRW;
-//                }
-            }
-            f.close();
-        }
-    }
-
-    return type;
-}
-
-
 RS_FileIO* RS_FileIO::instance() {
 	static RS_FileIO* uniqueInstance=nullptr;
 	if (!uniqueInstance) {
 		uniqueInstance = new RS_FileIO();
 	}
 	return uniqueInstance;
-}
-
-/**
- * Registers a new import filter.
- */
-void RS_FileIO::registerFilter(createFilter f) {
-	filters.append(f);
 }
 
 /**
