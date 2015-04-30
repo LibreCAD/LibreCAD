@@ -240,7 +240,7 @@ int main(int argc, char** argv) {
     RS_SETTINGS->init(XSTR(QC_COMPANYKEY), XSTR(QC_APPKEY));
     RS_SYSTEM->init(XSTR(QC_APPNAME), XSTR(QC_VERSION), XSTR(QC_APPDIR), prgDir);
 
-        RS_FileIO::instance()->registerFilter(&( RS_FilterLFF::createFilter));
+		RS_FileIO::instance()->registerFilter( &(RS_FilterLFF::createFilter));
         RS_FileIO::instance()->registerFilter( &(RS_FilterDXFRW::createFilter));
         RS_FileIO::instance()->registerFilter( &(RS_FilterCXF::createFilter));
         RS_FileIO::instance()->registerFilter( &(RS_FilterJWW::createFilter));

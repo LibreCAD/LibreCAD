@@ -43,13 +43,12 @@ public:
     /**
      * Constructor.
      */
-    RS_FilterInterface() {
-    }
+	RS_FilterInterface() = default;
 
     /**
      * Destructor.
      */
-    virtual ~RS_FilterInterface() {}
+	virtual ~RS_FilterInterface()=default;
 
     /**
      * Checks if this filter can import the given file type.
