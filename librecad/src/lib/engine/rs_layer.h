@@ -42,19 +42,13 @@
 /**
  * Holds the data that defines a layer.
  */
-class RS_LayerData {
-public:
-    RS_LayerData() {}
+struct RS_LayerData {
+	RS_LayerData() = default;
 
     RS_LayerData(const QString& name,
                  const RS_Pen& pen,
                  bool frozen,
-                 bool locked) {
-        this->name = name;
-        this->pen = pen;
-        this->frozen = frozen;
-        this->locked = locked;
-    }
+				 bool locked);
 
     //! Layer name
     QString name;
@@ -69,13 +63,13 @@ public:
     bool locked;
 
     //! Print flag
-    bool print;
+	bool print=true;
 
     //! Converted flag (cam)
     bool converted;
 
     //! a construction layer has entities of infinite length, and will never be printed out
-    bool construction;
+	bool construction=false;
 
     //! visible in layer list
     bool visibleInLayerList;
@@ -93,160 +87,114 @@ public:
     explicit RS_Layer(const QString& name);
     //RS_Layer(const char* name);
 
-    RS_Layer* clone() {
-        return new RS_Layer(*this);
-    }
+	RS_Layer* clone() const;
 
     /** sets a new name for this layer. */
-    void setName(const QString& name) {
-        data.name = name;
-    }
+	void setName(const QString& name);
 
     /** @return the name of this layer. */
-    QString getName() const {
-        return data.name;
-    }
+	QString getName() const;
 
     /** sets the default pen for this layer. */
-    void setPen(const RS_Pen& pen) {
-        data.pen = pen;
-    }
+	void setPen(const RS_Pen& pen);
 
     /** @return default pen for this layer. */
-    RS_Pen getPen() const {
-        return data.pen;
-    }
+	RS_Pen getPen() const;
 
     /**
      * @retval true if this layer is frozen (invisible)
      * @retval false if this layer isn't frozen (visible)
      */
-    bool isFrozen() const {
-        return data.frozen;
-        //getFlag(RS2::FlagFrozen);
-    }
+	bool isFrozen() const;
 
     /**
      * @retval true the layer has been converted already
      * @retval false the layer still needs to be converted
      */
-    bool isConverted() const {
-        return data.converted;
-    }
+	bool isConverted() const;
 
     /**
      * Sets the converted flag
      */
-    void setConverted(bool c) {
-        data.converted = c;
-    }
+	void setConverted(bool c);
 
     /**
      * Toggles the visibility of this layer.
      * Freezes the layer if it's not frozen, thaws the layer otherwise
      */
-    void toggle() {
-        //toggleFlag(RS2::FlagFrozen);
-        data.frozen = !data.frozen;
-    }
+	void toggle();
 
     /**
      * (De-)freezes this layer.
      *
      * @param freeze true: freeze, false: defreeze
      */
-    void freeze(bool freeze) {
-        data.frozen = freeze;
-    }
+	void freeze(bool freeze);
 
     /**
      * Toggles the lock of this layer.
      */
-    void toggleLock() {
-        //toggleFlag(RS2::FlagFrozen);
-        data.locked = !data.locked;
-    }
+	void toggleLock();
 
     /**
      * Toggles printing of this layer on / off.
      */
-    void togglePrint() {
-        data.print = !data.print;
-    }
+	void togglePrint();
 
     /**
      * Toggles construction attribute of this layer on / off.
      */
-    void toggleConstruction() {
-        data.construction = !data.construction;
-    }
+	void toggleConstruction();
 
     /**
      * Locks/Unlocks this layer.
      *
      * @param l true: lock, false: unlock
      */
-    void lock(bool l) {
-        data.locked = l;
-    }
+	void lock(bool l);
 
     /**
      * return the LOCK state of the Layer
      */
-    bool isLocked() {
-        return data.locked;
-    }
+	bool isLocked() const;
 
     /**
      * set visibility of layer in layer list
      *
      * @param l true: visible, false: invisible
      */
-    void visibleInLayerList(bool l) {
-        data.visibleInLayerList = l;
-    }
+	void visibleInLayerList(bool l);
 
     /**
      * return the visibility of the Layer in layer list
      */
-    bool isVisibleInLayerList() {
-        return data.visibleInLayerList;
-    }
+	bool isVisibleInLayerList() const;
 
     /**
      * set the PRINT state of the Layer
      *
      * @param print true: print layer, false: don't print layer
      */
-    bool setPrint( const bool print) {
-        return data.print = print;
-    }
+	bool setPrint( const bool print);
 
     /**
      * return the PRINT state of the Layer
      */
-    bool isPrint() {
-        return data.print;
-    }
+	bool isPrint() const;
 
     /**
      * whether the layer is a construction layer
      * The construction layer property is stored
      * in extended data in the DXF layer table
      */
-    bool isConstruction(){
-        return data.construction;
-    }
+	bool isConstruction() const;
 
     /**
      * set the construction attribute for the layer
      *
      * @param construction true: infinite lines, false: normal layer
      */
-    bool setConstruction( const bool construction){
-        data.construction = construction;
-        return construction;
-    }
+	bool setConstruction( const bool construction);
 
     friend std::ostream& operator << (std::ostream& os, const RS_Layer& l);
 
