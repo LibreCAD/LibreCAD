@@ -166,9 +166,9 @@ void QG_CadToolBar::showSubToolBar(){
 void QG_CadToolBar::showPreviousToolBar(bool cleanup) {
 	// cleanup mouse hint when showing previous tool bar, bug#3480121
 	RS_DIALOGFACTORY->updateMouseWidget();
-	for(auto p: activeToolbars){
-		qDebug()<<"QG_CadToolBar::showPreviousToolBar():begin "<<p->rtti();
-	}
+//	for(auto p: activeToolbars){
+//		qDebug()<<"QG_CadToolBar::showPreviousToolBar():begin "<<p->rtti();
+//	}
 	if(cleanup){
 		if(actionHandler) {
 			RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
@@ -194,9 +194,9 @@ void QG_CadToolBar::showPreviousToolBar(bool cleanup) {
 		//        std::cout<<"QG_CadToolBar::showPreviousToolBar(false): toolbars.size()="<<toolbars.size()<<std::endl;
 		showSubToolBar();
 	}
-	for(auto p: activeToolbars){
-		qDebug()<<"QG_CadToolBar::showPreviousToolBar():end "<<p->rtti();
-	}
+//	for(auto p: activeToolbars){
+//		qDebug()<<"QG_CadToolBar::showPreviousToolBar():end "<<p->rtti();
+//	}
 }
 
 void QG_CadToolBar::showToolBar(RS2::ToolBarId id, bool restoreAction ) {
