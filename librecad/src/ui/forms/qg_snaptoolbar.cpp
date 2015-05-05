@@ -172,6 +172,7 @@ void QG_SnapToolBar::init()
     restrictOrthogonal->setCheckable(true);
     connect(restrictOrthogonal, SIGNAL(triggered(bool)), this,
             SLOT(slotRestrictOrthogonal(bool)));
+	this->addAction(restrictOrthogonal);
 
     restrictNothing = new QAction(QIcon(":/extui/restrictnothing.png"),
                                    tr("Restrict Nothing"), this);
