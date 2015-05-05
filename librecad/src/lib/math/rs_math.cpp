@@ -443,7 +443,7 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
         ce2[1]=-1./27*p*p*p;
         auto&& r=quadraticSolver(ce2);
         if ( r.size()==0 ) { //should not happen
-            std::cerr<<__FILE__<<" : "<<__FUNCTION__<<" : line"<<__LINE__<<" :cubicSolver()::Error cubicSolver("<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<")\n";
+			std::cerr<<__FILE__<<" : "<<__func__<<" : line"<<__LINE__<<" :cubicSolver()::Error cubicSolver("<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<")\n";
         }
         double u,v;
         u= (q<=0) ? pow(r[0], 1./3): -pow(-r[1],1./3);
@@ -455,22 +455,35 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
 
 //        DEBUG_HEADER();
 //        std::cout<<"cubic: one root: "<<ans[0]<<std::endl;
-        return ans;
-    }
-    std::complex<double> u(q,0),rt[3];
-    u=std::pow(-0.5*u-sqrt(0.25*u*u+p*p*p/27),1./3);
-    rt[0]=u-p/(3.*u)-shift;
-    std::complex<double> w(-0.5,sqrt(3.)/2);
-    rt[1]=u*w-p/(3.*u*w)-shift;
-    rt[2]=u/w-p*w/(3.*u)-shift;
-//        DEBUG_HEADER();
-//        std::cout<<"Roots:\n";
-//        std::cout<<rt[0]<<std::endl;
-//        std::cout<<rt[1]<<std::endl;
-//        std::cout<<rt[2]<<std::endl;
-    ans.push_back(rt[0].real());
-    ans.push_back(rt[1].real());
-    ans.push_back(rt[2].real());
+	}else{
+		std::complex<double> u(q,0),rt[3];
+		u=std::pow(-0.5*u-sqrt(0.25*u*u+p*p*p/27),1./3);
+		rt[0]=u-p/(3.*u)-shift;
+		std::complex<double> w(-0.5,sqrt(3.)/2);
+		rt[1]=u*w-p/(3.*u*w)-shift;
+		rt[2]=u/w-p*w/(3.*u)-shift;
+		//        DEBUG_HEADER();
+		//        std::cout<<"Roots:\n";
+		//        std::cout<<rt[0]<<std::endl;
+		//        std::cout<<rt[1]<<std::endl;
+		//        std::cout<<rt[2]<<std::endl;
+		ans.push_back(rt[0].real());
+		ans.push_back(rt[1].real());
+		ans.push_back(rt[2].real());
+	}
+	// newton-raphson
+	for(double& x0: ans){
+		double dx=0.;
+		for(size_t i=0; i<20; ++i){
+			double f=( (x0 + ce[0])*x0 + ce[1])*x0 +ce[2];
+			double df=(3.*x0+2.*ce[0])*x0 +ce[1];
+			if(fabs(df)>fabs(f)+RS_TOLERANCE){
+				dx=f/df;
+				x0 -= dx;
+			}else
+				break;
+		}
+	}
 
     return ans;
 }
@@ -565,10 +578,11 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
     //std::cout<<"quartic_solver:: real roots from cubic: "<<ret<<std::endl;
     //for(unsigned int i=0; i<ret; i++)
     //   std::cout<<"cubic["<<i<<"]="<<cubic[i]<<" x= "<<croots[i]<<std::endl;
+	//newton-raphson
     if (r3.size()==1) { //one real root from cubic
         if (r3[0]< 0.) {//this should not happen
-            std::cerr<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
-            std::cerr<<"Quartic Error:: Found one real root for cubic, but negative\n";
+			DEBUG_HEADER();
+			qDebug()<<"Quartic Error:: Found one real root for cubic, but negative\n";
             return ans;
         }
         double sqrtz0=sqrt(r3[0]);
@@ -599,8 +613,24 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
 		for(auto& x: ans){
 			x -= shift;
 		}
-        return ans;
     }
+	// newton-raphson
+	for(double& x0: ans){
+		double dx=0.;
+		for(size_t i=0; i<20; ++i){
+			double f=(( (x0 + ce[0])*x0 + ce[1])*x0 +ce[2])*x0 + ce[3] ;
+			double df=((4.*x0+3.*ce[0])*x0 +2.*ce[1])*x0+ce[2];
+//			DEBUG_HEADER();
+//			qDebug()<<"i="<<i<<"\tx0="<<x0<<"\tf="<<f<<"\tdf="<<df;
+			if(fabs(df)>RS_TOLERANCE2){
+				dx=f/df;
+				x0 -= dx;
+			}else
+				break;
+		}
+	}
+
+
     return ans;
 }
 
@@ -697,7 +727,7 @@ bool RS_Math::linearSolver(const std::vector<std::vector<double> >& mt, std::vec
     //solve the linear equation set by LU decomposition in boost ublas
 
     if ( boost::numeric::ublas::lu_factorize<boost::numeric::ublas::matrix<double> >(bm) ) {
-        std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+		std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
         std::cout<<" linear solver failed"<<std::endl;
         //        RS_DEBUG->print(RS_Debug::D_WARNING, "linear solver failed");
         return false;
@@ -774,10 +804,10 @@ bool RS_Math::linearSolver(const std::vector<std::vector<double> >& mt, std::vec
 
 /**
  * wrapper of elliptic integral of the second type, Legendre form
- *@k the elliptic modulus or eccentricity
- *@phi elliptic angle, must be within range of [0, M_PI]
+ * @param k the elliptic modulus or eccentricity
+ * @param phi elliptic angle, must be within range of [0, M_PI]
  *
- *Author: Dongxu Li
+ * @author: Dongxu Li
  */
 double RS_Math::ellipticIntegral_2(const double& k, const double& phi)
 {
@@ -903,10 +933,10 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
     //y^0
     qy[0]=-d2*g*l + a*d*j*l - a2*l2
             - ( f2*g2 - d*f*g*j + a*f*j2 - 2.*a*f*g*l);
-//    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
+	if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
         DEBUG_HEADER();
         std::cout<<qy[4]<<"*y^4 +("<<qy[3]<<")*y^3+("<<qy[2]<<")*y^2+("<<qy[1]<<")*y+("<<qy[0]<<")==0"<<std::endl;
-//    }
+	}
     //quarticSolver
     auto&& roots=quarticSolverFull(qy);
     if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
@@ -960,10 +990,10 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
         RS_Vector vp(-ce[2]/ce[1],roots[i0]);
         if(simultaneousQuadraticVerify(m,vp)) ret.push_back(vp);
     }
-//    if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
+	if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
         DEBUG_HEADER();
         std::cout<<"ret="<<ret<<std::endl;
-//    }
+	}
     return ret;
 }
 
@@ -1042,40 +1072,69 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverMixed(const std::vector<s
   *@v, a candidate to verify
   *@return true, for a valid solution
   **/
-bool RS_Math::simultaneousQuadraticVerify(const std::vector<std::vector<double> >& m, const RS_Vector& v)
+bool RS_Math::simultaneousQuadraticVerify(const std::vector<std::vector<double> >& m, RS_Vector& v)
 {
-    const double& x=v.x;
-    const double& y=v.y;
-    const double x2=x*x;
-    const double y2=y*y;
-    auto& a=m[0][0];
-    auto& b=m[0][1];
-    auto& c=m[0][2];
-    auto& d=m[0][3];
-    auto& e=m[0][4];
-    auto& f=m[0][5];
+	RS_Vector v0=v;
+	auto& a=m[0][0];
+	auto& b=m[0][1];
+	auto& c=m[0][2];
+	auto& d=m[0][3];
+	auto& e=m[0][4];
+	auto& f=m[0][5];
 
-    auto& g=m[1][0];
-    auto& h=m[1][1];
-    auto& i=m[1][2];
-    auto& j=m[1][3];
-    auto& k=m[1][4];
-    auto& l=m[1][5];
+	auto& g=m[1][0];
+	auto& h=m[1][1];
+	auto& i=m[1][2];
+	auto& j=m[1][3];
+	auto& k=m[1][4];
+	auto& l=m[1][5];
     /**
       * tolerance test for bug#3606099
       * verifying the equations to floating point tolerance by terms
       */
-    double terms0[12]={ a*x2, b*x*y, c*y2, d*x, e*y, f, g*x2, h*x*y, i*y2, j*x, k*y, l};
-    double amax0=fabs(terms0[0]), amax1=fabs(terms0[6]);
-    double sum0=0., sum1=0.;
-    for(int i=0; i<6; i++) {
-        if(amax0<fabs(terms0[i])) amax0=fabs(terms0[i]);
-        sum0 += terms0[i];
-    }
-    for(int i=6; i<12; i++) {
-        if(amax1<fabs(terms0[i])) amax1=fabs(terms0[i]);
-        sum1 += terms0[i];
-    }
+	double sum0=0., sum1=0.;
+	double f00,f01;
+	double amax0, amax1;
+	for(size_t i0=0; i0<20; ++i0){
+		double& x=v.x;
+		double& y=v.y;
+		double x2=x*x;
+		double y2=y*y;
+		double const terms0[12]={ a*x2, b*x*y, c*y2, d*x, e*y, f, g*x2, h*x*y, i*y2, j*x, k*y, l};
+		amax0=fabs(terms0[0]), amax1=fabs(terms0[6]);
+		double px=2.*a*x+b*y+d;
+		double py=b*x+2.*c*y+e;
+		sum0=0.;
+		for(int i=0; i<6; i++) {
+			if(amax0<fabs(terms0[i])) amax0=fabs(terms0[i]);
+			sum0 += terms0[i];
+		}
+		std::vector<std::vector<double>> nrCe;
+		nrCe.push_back(std::vector<double>{px, py, sum0});
+		px=2.*g*x+h*y+j;
+		py=h*x+2.*i*y+k;
+		sum1=0.;
+		for(int i=6; i<12; i++) {
+			if(amax1<fabs(terms0[i])) amax1=fabs(terms0[i]);
+			sum1 += terms0[i];
+		}
+		nrCe.push_back(std::vector<double>{px, py, sum1});
+		std::vector<double> dn;
+		bool ret=linearSolver(nrCe, dn);
+//		DEBUG_HEADER();
+//		qDebug()<<"i0="<<i0<<"\tf=("<<sum0<<','<<sum1<<")\tdn=("<<dn[0]<<","<<dn[1]<<")";
+		if(!i0){
+			f00=sum0;
+			f01=sum1;
+		}
+		if(!ret) break;
+		v -= RS_Vector(dn[0], dn[1]);
+	}
+	if( fabs(sum0)> fabs(f00) && fabs(sum1)>fabs(f01)){
+		v=v0;
+		sum0=f00;
+		sum1=f01;
+	}
 
 //    DEBUG_HEADER();
 //    std::cout<<"verifying: x="<<x<<"\ty="<<y<<std::endl;

@@ -51,7 +51,7 @@ void RS_ActionBlocksEdit::trigger() {
     if (graphic!=NULL) {
         if (RS_DIALOGFACTORY!=NULL) {
             if(graphic->getBlockList() != NULL){
-//                std::cout<<__FUNCTION__<<" : "<<__LINE__<<" : graphic->getBlockList()->count()="<<graphic->getBlockList()->count()<<std::endl;
+//                std::cout<<__func__<<" : "<<__LINE__<<" : graphic->getBlockList()->count()="<<graphic->getBlockList()->count()<<std::endl;
                 RS_DIALOGFACTORY->requestEditBlockWindow(graphic->getBlockList());
             }
         }

@@ -130,7 +130,7 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
         action = static_cast<RS_ActionPrintPreview*>(a);
         /** fixed scale **/
         if(update){
-//                        std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//                        std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //                        std::cout<<"update="<<update<<" : updateDisabled="<<updateDisabled <<std::endl;
 //                        std::cout<<"update="<<update<<" : action->getPaperScaleFixed()="<<action->getPaperScaleFixed() <<std::endl;
             if(updateDisabled||action->getPaperScaleFixed()){

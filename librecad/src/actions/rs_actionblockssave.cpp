@@ -82,11 +82,11 @@ void RS_ActionBlocksSave::trigger() {
                     g.addBlock(in->getBlockForInsert());
                     addBlock((RS_Insert *)e,&g);
                 }
-//           std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line: "<<__LINE__<<" : "<<e->rtti()<<std::endl;
+//           std::cout<<__FILE__<<" : "<<__func__<<" : line: "<<__LINE__<<" : "<<e->rtti()<<std::endl;
 //                g.addLayer(e->getLayer());
-//           std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line: "<<__LINE__<<" : "<<e->rtti()<<std::endl;
+//           std::cout<<__FILE__<<" : "<<__func__<<" : line: "<<__LINE__<<" : "<<e->rtti()<<std::endl;
             }
-//           std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line: "<<__LINE__<<std::endl;
+//           std::cout<<__FILE__<<" : "<<__func__<<" : line: "<<__LINE__<<std::endl;
 //           std::cout<<"add layer name="<<qPrintable(b->getLayer()->getName())<<std::endl;
 
             RS2::FormatType t = RS2::FormatDXFRW;

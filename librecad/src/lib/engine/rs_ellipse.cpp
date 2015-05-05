@@ -1487,7 +1487,7 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
             if(k<RS_TOLERANCE2 || d < RS_TOLERANCE ||
                     c >= d - RS_TOLERANCE) return;
             //            DEBUG_HEADER();
-            //            std::cout<<__FUNCTION__<<" : moving focus";
+            //            std::cout<<__func__<<" : moving focus";
             majorP *= d/k;
             setCenter(center);
             setMajorP(majorP);

@@ -135,7 +135,7 @@ public:
       *@v, a candidate to verify
       *@return true, for a valid solution
       **/
-    static bool simultaneousQuadraticVerify(const std::vector<std::vector<double> >& m, const RS_Vector& v);
+	static bool simultaneousQuadraticVerify(const std::vector<std::vector<double> >& m, RS_Vector& v);
     /** wrapper for elliptic integral **/
     /**
      * wrapper of elliptic integral of the second type, Legendre form

@@ -1196,7 +1196,7 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
         i0++;
     }
 
-//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //    std::cout<<"count()="<<const_cast<RS_EntityContainer*>(this)->count()<<"\tminDist= "<<minDist<<"\tclosestPoint="<<closestPoint;
 //    if(pEntity != NULL) std::cout<<"\t*pEntity="<<*pEntity;
 //    std::cout<<std::endl;

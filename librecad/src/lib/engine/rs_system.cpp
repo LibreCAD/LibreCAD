@@ -707,7 +707,7 @@ QString RS_System::symbolToLanguage(const QString& symb) {
     }
 #endif
 
-//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" :  line "<<__LINE__<<" :  symb="<<qPrintable(symb)<<" name="<<qPrintable(ret)<<std::endl;
+//    std::cout<<__FILE__<<" : "<<__func__<<" :  line "<<__LINE__<<" :  symb="<<qPrintable(symb)<<" name="<<qPrintable(ret)<<std::endl;
 
         return ret;
 

@@ -85,7 +85,7 @@ void RS_ActionDrawCircleTan2::finish(bool updateTB){
 
 
 void RS_ActionDrawCircleTan2::trigger() {
-    //    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+    //    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
     //    std::cout<<"begin"<<std::endl;
 
     RS_PreviewActionInterface::trigger();

@@ -783,7 +783,7 @@ void QG_GraphicView::slotVScrolled(int value) {
     //if (!running) {
     //running = true;
 //    DEBUG_HEADER();
-    RS_DEBUG->print(/*RS_Debug::D_WARNING,*/ "%s %s(): set vertical offset from %d to %d\n", __FILE__, __FUNCTION__, getOffsetY(), value);
+	RS_DEBUG->print(/*RS_Debug::D_WARNING,*/ "%s %s(): set vertical offset from %d to %d\n", __FILE__, __func__, getOffsetY(), value);
     if (vScrollBar->maximum()==vScrollBar->minimum()) {
         centerOffsetY();
     } else {

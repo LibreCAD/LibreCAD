@@ -334,7 +334,7 @@ RS_Vector RS_Snapper::snapGrid(const RS_Vector& coord) {
 
 //    RS_DEBUG->print("RS_Snapper::snapGrid begin");
 
-//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //    std::cout<<" mouse: = "<<coord<<std::endl;
 //    std::cout<<" snapGrid: = "<<graphicView->getGrid()->snapGrid(coord)<<std::endl;
     return  graphicView->getGrid()->snapGrid(coord);
@@ -615,7 +615,7 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, const std::vector<RS2::Entity
 			RS_Entity* en=catchEntity(coord, t0, level);
 			if(en!=nullptr) ec.addEntity(en);
 			if(en!=nullptr) {
-//            std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : lines "<<__LINE__<<std::endl;
+//            std::cout<<__FILE__<<" : "<<__func__<<" : lines "<<__LINE__<<std::endl;
 //            std::cout<<"caught id= "<<en->getId()<<std::endl;
             }
         }

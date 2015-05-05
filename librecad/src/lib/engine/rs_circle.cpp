@@ -390,7 +390,7 @@ std::vector<RS_Circle> RS_Circle::createTan3(const std::vector<RS_AtomicEntity*>
 
 
     }while(++flags<8u);
-//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //    std::cout<<"before testing, ret.size()="<<ret.size()<<std::endl;
 	for(size_t i=0;i<ret.size();){
         if(ret[i].testTan3(circles) == false) {
@@ -410,7 +410,7 @@ bool RS_Circle::testTan3(const std::vector<RS_AtomicEntity*>& circles)
     if(circles.size()!=3) return false;
 
     const auto itEnd=circles.end();
-//        std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//        std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //        std::cout<<"to verify Center = ( "<<data.center.x<<" , "<<data.center.y<<" ), r= "<<data.radius<<std::endl;
     for(auto it=circles.begin();it!=itEnd;it++){
 		const double r0 = fabs(data.radius);
@@ -436,7 +436,7 @@ with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are th
 **/
 QList<RS_Circle> RS_Circle::solveAppolloniusSingle(const QList<RS_Circle>& circles)
 {
-//          std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//          std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //          for(int i=0;i<circles.size();i++){
 //std::cout<<"i="<<i<<"\t center="<<circles[i].getCenter()<<"\tr="<<circles[i].getRadius()<<std::endl;
 //          }
@@ -480,7 +480,7 @@ QList<RS_Circle> RS_Circle::solveAppolloniusSingle(const QList<RS_Circle>& circl
     // r^0 term
     mat[0][2]=0.5*(centers[2].squared()-centers[0].squared()+radii[0]*radii[0]-radii[2]*radii[2]);
     mat[1][2]=0.5*(centers[2].squared()-centers[1].squared()+radii[1]*radii[1]-radii[2]*radii[2]);
-//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //    for(unsigned short i=0;i<=1;i++){
 //        std::cout<<"eqs P:"<<i<<" : "<<mat[i][0]<<"*x + "<<mat[i][1]<<"*y = "<<mat[i][2]<<std::endl;
 //    }
@@ -491,7 +491,7 @@ QList<RS_Circle> RS_Circle::solveAppolloniusSingle(const QList<RS_Circle>& circl
     }
 
     RS_Vector vp(sm[0],sm[1]);
-//      std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//      std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //      std::cout<<"vp="<<vp<<std::endl;
 
     // r term
@@ -519,7 +519,7 @@ QList<RS_Circle> RS_Circle::solveAppolloniusSingle(const QList<RS_Circle>& circl
         if(vr.at(i)<RS_TOLERANCE) continue;
         ret<<RS_Circle(NULL,RS_CircleData(vp+vq*vr.at(i),fabs(vr.at(i))));
     }
-//    std::cout<<__FILE__<<" : "<<__FUNCTION__<<" : line "<<__LINE__<<std::endl;
+//    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //    std::cout<<"Found "<<ret.size()<<" solutions"<<std::endl;
 
     return ret;
