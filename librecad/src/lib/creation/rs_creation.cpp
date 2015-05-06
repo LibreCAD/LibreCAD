@@ -565,14 +565,12 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
                                      RS_Line* l2) {
 
     RS_VectorSolutions sol;
-DEBUG_HEADER();
     // check given entities:
 	if (l1==nullptr || l2==nullptr ||
             l1->rtti()!=RS2::EntityLine || l2->rtti()!=RS2::EntityLine) {
 		return nullptr;
     }
 
-	DEBUG_HEADER();
     // intersection between entities:
     sol = RS_Information::getIntersection(l1, l2, false);
     RS_Vector inters = sol.get(0);
@@ -592,7 +590,6 @@ DEBUG_HEADER();
         document->startUndoCycle();
     }
 
-	DEBUG_HEADER();
     for (int n=1; n<=num; ++n) {
 
         double angle = angle1 +
