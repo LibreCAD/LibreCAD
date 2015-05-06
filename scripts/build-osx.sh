@@ -34,7 +34,9 @@ find . -iname makefile -exec sed -i '' \
 	-e 's:MacOSX10.[1-9].sdk:MacOSX10.8.sdk:g'  \
 	'{}' ';'
 
-make -j
+#to make it auto, use "make -j"
+#hardcoded to 4 jobs, because "make -j" crashes our mac building box
+make -j4
 
 APP_FILE=LibreCAD
 OUTPUT_DMG=${APP_FILE}.dmg
