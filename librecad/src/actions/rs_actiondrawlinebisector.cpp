@@ -38,65 +38,73 @@ RS_ActionDrawLineBisector::RS_ActionDrawLineBisector(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
 		:RS_PreviewActionInterface("Draw Bisectors", container, graphicView)
+		,bisector(nullptr)
+		,line1(nullptr)
+		,line2(nullptr)
+		,length(10.)
+		,number(1)
+		,coord1(false)
+		,coord2(false)
+		,lastStatus(SetLine1)
 {
-
-    bisector = NULL;
-    length = 10.0;
-    line1 = NULL;
-    line2 = NULL;
-    number = 1;
-    coord1 = RS_Vector(false);
-    coord2 = RS_Vector(false);
-    lastStatus = SetLine1;
 }
 
 QAction* RS_ActionDrawLineBisector::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("&Bisector"),
-    QAction* action = new QAction(tr("Bisector"), NULL);
-        action->setIcon(QIcon(":/extui/linesbisector.png"));
-    //action->zetStatusTip(tr("Draw bisectors"));
-    return action;
+	QAction* action = new QAction(QIcon(":/extui/linesbisector.png"),tr("Bisector"), nullptr);
+	return action;
 }
 
+void RS_ActionDrawLineBisector::setLength(double l) {
+	length = l;
+}
+
+double RS_ActionDrawLineBisector::getLength() const{
+	return length;
+}
+
+void RS_ActionDrawLineBisector::setNumber(int n) {
+	number = n;
+}
+
+int RS_ActionDrawLineBisector::getNumber() const {
+	return number;
+}
+
+
+void RS_ActionDrawLineBisector::init(int status) {
+	RS_PreviewActionInterface::init(status);
+	if(status>=0) {
+		RS_Snapper::suspend();
+	}
+
+	if (status<SetLine2) {
+		if(line2 && line2->isHighlighted()){
+			line2->setHighlighted(false);
+		}
+		if(status<0 && line1 && line1->isHighlighted()){
+			line1->setHighlighted(false);
+		}
+		graphicView->redraw(RS2::RedrawDrawing);
+	}
+}
 
 void RS_ActionDrawLineBisector::trigger() {
     RS_PreviewActionInterface::trigger();
 
-    //if (bisector!=NULL) {
+	for(auto p: {line1, line2}){
+		if(p && p->isHighlighted()){
+			p->setHighlighted(false);
+		}
+	}
+	graphicView->redraw(RS2::RedrawDrawing);
+
     RS_Creation creation(container, graphicView);
     creation.createBisector(coord1,
                             coord2,
                             length,
                             number,
                             line1,
-                            line2);
-    /*RS_Entity* newEntity = NULL;
-
-    newEntity = new RS_Line(container,
-                            bisector->getData());
-
-    if (newEntity!=NULL) {
-        newEntity->setLayerToActive();
-        newEntity->setPenToActive();
-        container->addEntity(newEntity);
-
-        // upd. undo list:
-        if (document!=NULL) {
-            document->startUndoCycle();
-            document->addUndoable(newEntity);
-            document->endUndoCycle();
-        }
-        graphicView->redraw(RS2::RedrawDrawing);
-        setStatus(SetLine1);
-}
-    //reset();
-    delete bisector;
-    bisector = NULL;
-    */
-    /*} else {
-        RS_DEBUG->print("RS_ActionDrawLineBisector::trigger:"
-                        " Entity is NULL\n");
-}*/
+							line2);
 }
 
 
@@ -114,12 +122,18 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent* e) {
     case SetLine2: {
             coord2 = mouse;
             RS_Entity* en = catchEntity(e, RS2::ResolveAll);
-            if (en!=NULL && en->rtti()==RS2::EntityLine) {
-                line2 = (RS_Line*)en;
+			if(en==line1) break;
+			if (en && en->rtti()==RS2::EntityLine) {
+				if(line2 && line2->isHighlighted()){
+					line2->setHighlighted(false);
+				}
+				line2 = static_cast<RS_Line*>(en);
+				line2->setHighlighted(true);
+				graphicView->redraw(RS2::RedrawDrawing);
 
                 deletePreview();
 
-				RS_Creation creation(preview.get(), NULL, false);
+				RS_Creation creation(preview.get(), nullptr, false);
                 creation.createBisector(coord1,
                                         coord2,
                                         length,
@@ -127,7 +141,14 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent* e) {
                                         line1,
                                         line2);
                 drawPreview();
-            }
+			}else{
+				if(line2 && line2->isHighlighted()){
+					line2->setHighlighted(false);
+					graphicView->redraw(RS2::RedrawDrawing);
+				}
+				line2=nullptr;
+
+			}
         }
         break;
 
@@ -154,11 +175,14 @@ void RS_ActionDrawLineBisector::mouseReleaseEvent(QMouseEvent* e) {
         case SetLine1: {
                 coord1 = mouse;
                 RS_Entity* en = catchEntity(e, RS2::ResolveAll);
-                if (en!=NULL && en->rtti()==RS2::EntityLine) {
-                    line1 = (RS_Line*)en;
-                }
+				if (en && en->rtti()==RS2::EntityLine) {
+					line1 = static_cast<RS_Line*>(en);
+					line1->setHighlighted(true);
+					graphicView->redraw(RS2::RedrawDrawing);
+					line2=nullptr;
+					setStatus(SetLine2);
+				}
             }
-            setStatus(SetLine2);
             break;
 
         case SetLine2:

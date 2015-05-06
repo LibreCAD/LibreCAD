@@ -57,6 +57,8 @@ public:
 		return RS2::ActionDrawLineBisector;
 	}
 
+	virtual void init(int status=0);
+
     virtual void trigger();
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
@@ -71,21 +73,13 @@ public:
     virtual void updateMouseCursor();
 //    virtual void updateToolBar();
 	
-	void setLength(double l) {
-		length = l;
-	}
+	void setLength(double l);
 
-	double getLength() {
-		return length;
-	}
+	double getLength() const;
 	
-	void setNumber(int n) {
-		number = n;
-	}
+	void setNumber(int n);
 
-	int getNumber() {
-		return number;
-	}
+	int getNumber() const;
 
 private:
     /** Closest bisector. */

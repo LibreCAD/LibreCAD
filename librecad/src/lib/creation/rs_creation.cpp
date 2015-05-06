@@ -565,13 +565,14 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
                                      RS_Line* l2) {
 
     RS_VectorSolutions sol;
-
+DEBUG_HEADER();
     // check given entities:
 	if (l1==nullptr || l2==nullptr ||
             l1->rtti()!=RS2::EntityLine || l2->rtti()!=RS2::EntityLine) {
 		return nullptr;
     }
 
+	DEBUG_HEADER();
     // intersection between entities:
     sol = RS_Information::getIntersection(l1, l2, false);
     RS_Vector inters = sol.get(0);
@@ -587,10 +588,11 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
     }
 	RS_Line* ret = nullptr;
 
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->startUndoCycle();
     }
 
+	DEBUG_HEADER();
     for (int n=1; n<=num; ++n) {
 
         double angle = angle1 +
@@ -599,27 +601,26 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
         RS_LineData d;
         RS_Vector v;
 
-        RS_Vector c;
         v.setPolar(length, angle);
         d = RS_LineData(inters, inters + v);
 
         RS_Line* newLine = new RS_Line(container, d);
-		if (container!=nullptr) {
+		if (container) {
             newLine->setLayerToActive();
             newLine->setPenToActive();
             container->addEntity(newLine);
         }
-		if (document!=nullptr && handleUndo) {
+		if (document && handleUndo) {
             document->addUndoable(newLine);
         }
-		if (graphicView!=nullptr) {
+		if (graphicView) {
             graphicView->drawEntity(newLine);
         }
 		if (ret==nullptr) {
             ret = newLine;
         }
     }
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->endUndoCycle();
     }
 
