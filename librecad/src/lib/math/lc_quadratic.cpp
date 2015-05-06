@@ -403,9 +403,11 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
     if(p1->isQuadratic()==false){
         std::swap(p1,p2);
     }
-//    DEBUG_HEADER();
-//    std::cout<<*p1<<std::endl;
-//    std::cout<<*p2<<std::endl;
+	if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
+		DEBUG_HEADER();
+		std::cout<<*p1<<std::endl;
+		std::cout<<*p2<<std::endl;
+	}
     if(p1->isQuadratic()==false){
         //two lines
 		std::vector<std::vector<double> > ce(2,std::vector<double>(3,0.));
@@ -498,11 +500,15 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
     ce.push_back(p2->flipXY().getCoefficients());
     sol=RS_Math::simultaneousQuadraticSolverFull(ce);
     ret.clear();
-    for(size_t i=0; i<sol.size(); ++i){
-        if(sol.at(i).magnitude()<=RS_MAXDOUBLE){
-            ret.push_back(sol.at(i));
-        }
-    }
+	for(auto const& v: sol){
+		if(v.magnitude()<=RS_MAXDOUBLE){
+			ret.push_back(v);
+			if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
+				DEBUG_HEADER();
+				std::cout<<v<<std::endl;
+			}
+		}
+	}
     return ret;
 }
 

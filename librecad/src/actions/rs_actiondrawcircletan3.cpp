@@ -86,7 +86,7 @@ void RS_ActionDrawCircleTan3::trigger() {
     container->addEntity(circle);
 
     // upd. undo list:
-    if (document!=NULL) {
+	if (document) {
         document->startUndoCycle();
         document->addUndoable(circle);
         document->endUndoCycle();
