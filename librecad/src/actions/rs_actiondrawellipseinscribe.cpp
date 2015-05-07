@@ -84,7 +84,7 @@ void RS_ActionDrawEllipseInscribe::trigger() {
     container->addEntity(ellipse);
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(ellipse);
         document->endUndoCycle();
@@ -108,17 +108,23 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
 
     if(getStatus() == SetLine4) {
         RS_Entity*  en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
-        if(en == NULL) return;
+        if(!en) return;
         if(!(en->isVisible() && en->rtti()== RS2::EntityLine)) return;
-        for(int i=0;i<3;i++) {
-            if(en->getId() == lines[i]->getId()) return; //do not pull in the same line again
+        for(auto p: lines){
+            if(en == p) return; //do not pull in the same line again
         }
-        if(en->getParent() != NULL) {
-			if ( en->getParent()->ignoredOnModification()){
+
+        if(en->getParent() && en->getParent()->ignoredOnModification()){
                 return;
             }
+
+        en->setHighlighted(true);
+        if(lines.size()==4){
+            deletePreview();
+            lines.back()->setHighlighted(false);
+            lines.pop_back();
         }
-        lines.resize(3);
+        graphicView->redraw(RS2::RedrawDrawing);
         lines.push_back(static_cast<RS_Line*>(en));
 //        lines[getStatus()]=static_cast<RS_Line*>(en);
         if(preparePreview()) {
@@ -150,16 +156,14 @@ bool RS_ActionDrawEllipseInscribe::preparePreview(){
 void RS_ActionDrawEllipseInscribe::mouseReleaseEvent(QMouseEvent* e) {
     // Proceed to next status
     if (e->button()==Qt::LeftButton) {
-        if (e==NULL) {
-            return;
-        }
+        if (!e) return;
         RS_Entity*  en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
-        if(en == NULL) return;
+        if(!en) return;
         if(!(en->isVisible() && en->rtti()== RS2::EntityLine)) return;
         for(int i=0;i<getStatus();i++) {
             if(en->getId() == lines[i]->getId()) return; //do not pull in the same line again
         }
-        if(en->getParent() != NULL) {
+        if(en->getParent()) {
 			if ( en->getParent()->ignoredOnModification()) return;
         }
         lines.resize(getStatus());
@@ -275,7 +279,7 @@ QStringList RS_ActionDrawEllipseInscribe::getAvailableCommands() {
 
 
 void RS_ActionDrawEllipseInscribe::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetLine1:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first line"),
@@ -304,20 +308,8 @@ void RS_ActionDrawEllipseInscribe::updateMouseButtonHints() {
     }
 }
 
-
-
 void RS_ActionDrawEllipseInscribe::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionDrawEllipseInscribe::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
 
 // EOF
