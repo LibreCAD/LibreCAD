@@ -308,7 +308,13 @@ bool RS_Circle::createInscribe(const RS_Vector& coord, const std::vector<RS_Line
     RS_Line line1(vp1, vp1+RS_Vector(angle0));//second bisection line
     sol=RS_Information::getIntersectionLineLine(&line0,&line1);
     if(sol.getNumber() == 0 ) return false;
-    return createFromCR(sol.get(0),tri[1]->getDistanceToPoint(sol.get(0)));
+
+	bool ret=createFromCR(sol.get(0),tri[1]->getDistanceToPoint(sol.get(0)));
+	if(!ret) return false;
+	for(auto p: lines){
+		if(! p->isTangent(data)) return false;
+	}
+	return true;
 }
 
 std::vector<RS_Entity* > RS_Circle::offsetTwoSides(const double& distance) const
