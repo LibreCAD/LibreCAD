@@ -64,14 +64,14 @@ void RS_ActionDrawCircleInscribe::init(int status) {
 }
 
 void RS_ActionDrawCircleInscribe::finish(bool updateTB){
-    if(lines.size()>0){
+	if(lines.size()){
 		for(auto p: lines){
 			if(p) p->setHighlighted(false);
-        }
-        graphicView->redraw(RS2::RedrawDrawing);
-        lines.clear();
-    }
-    RS_PreviewActionInterface::finish(updateTB);
+		}
+		graphicView->redraw(RS2::RedrawDrawing);
+		lines.clear();
+	}
+	RS_PreviewActionInterface::finish(updateTB);
 }
 
 
@@ -85,7 +85,7 @@ void RS_ActionDrawCircleInscribe::trigger() {
     container->addEntity(circle);
 
     // upd. undo list:
-    if (document!=NULL) {
+	if (document) {
         document->startUndoCycle();
         document->addUndoable(circle);
         document->endUndoCycle();
@@ -111,21 +111,24 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
 
     if(getStatus() == SetLine3) {
         RS_Entity*  en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
-        if(en == NULL) return;
+		if(!en) return;
         if(!(en->isVisible() && en->rtti()== RS2::EntityLine)) return;
         for(int i=0;i<getStatus();i++) {
             if(en->getId() == lines[i]->getId()) return; //do not pull in the same line again
         }
-        if(en->getParent() != NULL) {
-			if ( en->getParent()->ignoredOnModification())
-                return;
-        }
+		if(en->getParent() && en->getParent()->ignoredOnModification())
+			return;
         coord= graphicView->toGraph(e->x(), e->y());
-        lines.resize(getStatus());
-        lines.push_back(static_cast<RS_Line*>(en));
-//        lines[getStatus()]=static_cast<RS_Line*>(en);
+		if(lines.size()==3){
+			deletePreview();
+			lines.back()->setHighlighted(false);
+			lines.pop_back();
+		}
+		en->setHighlighted(true);
+		lines.push_back(static_cast<RS_Line*>(en));
+		graphicView->redraw(RS2::RedrawDrawing);
         if(preparePreview()) {
-            deletePreview();
+			deletePreview();
 			RS_Circle* e=new RS_Circle(preview.get(), *cData);
             preview->addEntity(e);
             drawPreview();
@@ -151,16 +154,16 @@ bool RS_ActionDrawCircleInscribe::preparePreview(){
 void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent* e) {
     // Proceed to next status
     if (e->button()==Qt::LeftButton) {
-        if (e==NULL) {
+		if (!e) {
             return;
         }
         RS_Entity*  en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
-        if(en == NULL) return;
+		if(!en) return;
         if(!(en->isVisible() && en->rtti()== RS2::EntityLine)) return;
         for(int i=0;i<getStatus();i++) {
             if(en->getId() == lines[i]->getId()) return; //do not pull in the same line again
         }
-        if(en->getParent() != NULL) {
+		if(en->getParent()) {
 			if ( en->getParent()->ignoredOnModification()) return;
         }
         lines.resize(getStatus());
@@ -184,7 +187,7 @@ void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent* e) {
     } else if (e->button()==Qt::RightButton) {
         // Return to last status:
         if(getStatus()>0){
-            lines[getStatus()-1]->setHighlighted(false);
+			lines.back()->setHighlighted(false);
             lines.pop_back();
             graphicView->redraw(RS2::RedrawDrawing);
             deletePreview();

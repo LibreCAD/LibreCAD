@@ -40,7 +40,7 @@ public:
      * Action States.
      */
     enum Status {
-        SetLine1,   //  Setting the First Line.  */
+		SetLine1,   //  Setting the First Line.  */
         SetLine2,   //  Setting the Second Line.  */
         SetLine3   //  Setting the Third Line.  */
     };

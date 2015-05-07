@@ -188,7 +188,7 @@ void RS_ActionDrawEllipseInscribe::mouseReleaseEvent(QMouseEvent* e) {
     } else if (e->button()==Qt::RightButton) {
         // Return to last status:
         if(getStatus()>0){
-            lines[getStatus()-1]->setHighlighted(false);
+			lines.back()->setHighlighted(false);
             lines.pop_back();
             graphicView->redraw(RS2::RedrawDrawing);
             deletePreview();
