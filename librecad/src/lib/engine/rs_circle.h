@@ -95,16 +95,12 @@ public:
          * @return Direction 1. The angle at which the arc starts at
          * the startpoint.
          */
-    double getDirection1() const {
-        return M_PI/2.0;
-    }
+    double getDirection1() const; 
     /**
          * @return Direction 2. The angle at which the arc starts at
          * the endpoint.
          */
-    double getDirection2() const {
-        return M_PI/2.0*3.0;
-    }
+    double getDirection2() const;
 
     /** @return The center point (x) of this arc */
 	virtual RS_Vector getCenter() const;

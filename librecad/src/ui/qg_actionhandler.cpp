@@ -25,6 +25,7 @@
 **
 **********************************************************************/
 
+#include<cmath>
 #include "qg_actionhandler.h"
 
 #include "rs_dialogfactory.h"

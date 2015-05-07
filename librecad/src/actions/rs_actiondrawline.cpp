@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include<cmath>
 #include <QAction>
 #include "rs_actiondrawline.h"
 

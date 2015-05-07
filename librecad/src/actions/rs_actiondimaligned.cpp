@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<cmath>
 #include <QAction>
 #include "rs_actiondimaligned.h"
 #include "rs_dimaligned.h"

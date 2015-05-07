@@ -763,6 +763,14 @@ void RS_Circle::scale(const RS_Vector& center, const RS_Vector& factor) {
 //    calculateBorders();
 }
 
+double RS_Circle::getDirection1() const{
+        return M_PI/2.0;
+}
+
+double RS_Circle::getDirection2() const{
+        return M_PI/2.0*3.0;
+}
+
 
 
 void RS_Circle::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {

@@ -25,6 +25,7 @@
 **********************************************************************/
 
 
+#include <cmath>
 #include <QObject>
 
 #include "rs_dialogfactory.h"
