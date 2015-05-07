@@ -25,9 +25,9 @@ cd "${SCRIPTPATH}"/..
 # have to clean up any existing binary files to avoid crashes of bug#422
 rm -rf LibreCAD.app
 
-$QMAKE_CMD -r
+$QMAKE_CMD -r -spec mkspec/macports
 make distclean
-$QMAKE_CMD -r
+$QMAKE_CMD -r -spec mkspec/macports
 #undefined symbol x86_64: https://qt-project.org/forums/viewthread/35646
 find . -iname makefile -exec sed -i '' \
 	-e 's:mmacosx-version-min=10.[1-9]:mmacosx-version-min=10.8:g' \
