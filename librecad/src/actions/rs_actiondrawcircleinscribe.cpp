@@ -52,25 +52,28 @@ QAction* RS_ActionDrawCircleInscribe::createGUIAction(RS2::ActionType /*type*/, 
     return action;
 }
 
+void RS_ActionDrawCircleInscribe::clearLines(bool checkStatus)
+{
+	while(lines.size() ){
+		if(checkStatus && (int) lines.size()<=getStatus() )
+			break;
+		lines.back()->setHighlighted(false);
+		lines.pop_back();
+	}
+	graphicView->redraw(RS2::RedrawDrawing);
+}
+
+
 void RS_ActionDrawCircleInscribe::init(int status) {
     RS_PreviewActionInterface::init(status);
     if(status>=0) {
         RS_Snapper::suspend();
-    }
-
-    if (status==SetLine1) {
-        lines.clear();
-    }
+	}
+	clearLines(true);
 }
 
 void RS_ActionDrawCircleInscribe::finish(bool updateTB){
-	if(lines.size()){
-		for(auto p: lines){
-			if(p) p->setHighlighted(false);
-		}
-		graphicView->redraw(RS2::RedrawDrawing);
-		lines.clear();
-	}
+	clearLines();
 	RS_PreviewActionInterface::finish(updateTB);
 }
 
@@ -91,13 +94,8 @@ void RS_ActionDrawCircleInscribe::trigger() {
         document->endUndoCycle();
     }
 
-	for(auto p: lines){
-		if(p) p->setHighlighted(false);
-	}
-    graphicView->redraw(RS2::RedrawDrawing);
-//    drawSnapper();
+	clearLines(false);
 
-    lines.clear();
     setStatus(SetLine1);
 
     RS_DEBUG->print("RS_ActionDrawCircle4Line::trigger():"
@@ -119,8 +117,8 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
 		if(en->getParent() && en->getParent()->ignoredOnModification())
 			return;
         coord= graphicView->toGraph(e->x(), e->y());
-		if(lines.size()==3){
-			deletePreview();
+		deletePreview();
+		while(lines.size()==3){
 			lines.back()->setHighlighted(false);
 			lines.pop_back();
 		}
@@ -128,7 +126,6 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
 		lines.push_back(static_cast<RS_Line*>(en));
 		graphicView->redraw(RS2::RedrawDrawing);
         if(preparePreview()) {
-			deletePreview();
 			RS_Circle* e=new RS_Circle(preview.get(), *cData);
             preview->addEntity(e);
             drawPreview();
@@ -166,7 +163,10 @@ void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent* e) {
 		if(en->getParent()) {
 			if ( en->getParent()->ignoredOnModification()) return;
         }
-        lines.resize(getStatus());
+		while((int) lines.size()>getStatus()){
+			lines.back()->setHighlighted(false);
+			lines.pop_back();
+		}
         lines.push_back(static_cast<RS_Line*>(en));
         coord= graphicView->toGraph(e->x(), e->y());
         switch (getStatus()) {
@@ -186,12 +186,12 @@ void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent* e) {
         }
     } else if (e->button()==Qt::RightButton) {
         // Return to last status:
-        if(getStatus()>0){
+		if(getStatus()>0){
+			clearLines(true);
 			lines.back()->setHighlighted(false);
-            lines.pop_back();
+			lines.pop_back();
             graphicView->redraw(RS2::RedrawDrawing);
             deletePreview();
-
         }
         init(getStatus()-1);
     }
