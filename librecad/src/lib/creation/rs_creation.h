@@ -69,7 +69,7 @@ struct RS_LibraryInsertData {
 class RS_Creation {
 public:
     RS_Creation(RS_EntityContainer* container,
-                RS_GraphicView* graphicView=NULL,
+				RS_GraphicView* graphicView=nullptr,
                 bool handleUndo=true);
 
     RS_Entity* createParallelThrough(const RS_Vector& coord,
@@ -118,7 +118,7 @@ public:
                             RS_Entity* circle2);
     /**
       * create the path of centers of common tangent circles of the two given circles
-      *@ return NULL, if failed
+	  *@ return nullptr, if failed
       *@ at success return either an ellipse or hyperbola
       */
     std::vector<RS_Entity*> createCircleTangent2( RS_Entity* circle1,RS_Entity* circle2);

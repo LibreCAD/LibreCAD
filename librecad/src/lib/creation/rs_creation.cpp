@@ -57,7 +57,7 @@ RS_Creation::RS_Creation(RS_EntityContainer* container,
     this->container = container;
     this->graphicView = graphicView;
     this->handleUndo = handleUndo;
-	if (container!=nullptr) {
+	if (container) {
         graphic = container->getGraphic();
         document = container->getDocument();
     } else {
@@ -261,7 +261,7 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
     RS_LineData parallelData;
 	RS_Line* ret = nullptr;
 
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->startUndoCycle();
     }
 
@@ -299,20 +299,20 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
 			if (ret==nullptr) {
                 ret = newLine;
             }
-			if (container!=nullptr) {
+			if (container) {
                 container->addEntity(newLine);
             }
-			if (document!=nullptr && handleUndo) {
+			if (document && handleUndo) {
                 document->addUndoable(newLine);
                 //document->endUndoCycle();
             }
-			if (graphicView!=nullptr) {
+			if (graphicView) {
                 graphicView->drawEntity(newLine);
             }
         }
     }
 
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->endUndoCycle();
     }
 
@@ -379,7 +379,7 @@ RS_Arc* RS_Creation::createParallelArc(const RS_Vector& coord,
             //    parallelData = parallel2.getData();
             //}
 
-			if (document!=nullptr && handleUndo) {
+			if (document && handleUndo) {
                 document->startUndoCycle();
             }
 
@@ -389,14 +389,14 @@ RS_Arc* RS_Creation::createParallelArc(const RS_Vector& coord,
 			if (ret==nullptr) {
                 ret = newArc;
             }
-			if (container!=nullptr) {
+			if (container) {
                 container->addEntity(newArc);
             }
-			if (document!=nullptr && handleUndo) {
+			if (document && handleUndo) {
                 document->addUndoable(newArc);
                 document->endUndoCycle();
             }
-			if (graphicView!=nullptr) {
+			if (graphicView) {
                 graphicView->drawEntity(newArc);
             }
         }
@@ -465,7 +465,7 @@ RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
             //    parallelData = parallel2.getData();
             //}
 
-			if (document!=nullptr && handleUndo) {
+			if (document && handleUndo) {
                 document->startUndoCycle();
             }
 
@@ -475,14 +475,14 @@ RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
 			if (ret==nullptr) {
                 ret = newCircle;
             }
-			if (container!=nullptr) {
+			if (container) {
                 container->addEntity(newCircle);
             }
-			if (document!=nullptr && handleUndo) {
+			if (document && handleUndo) {
                 document->addUndoable(newCircle);
                 document->endUndoCycle();
             }
-			if (graphicView!=nullptr) {
+			if (graphicView) {
                 graphicView->drawEntity(newCircle);
             }
         }
@@ -582,7 +582,7 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
     double angle2 = inters.angleTo(l2->getNearestPointOnEntity(coord2));
     double angleDiff = RS_Math::getAngleDifference(angle1, angle2);
     if (angleDiff>M_PI) {
-        angleDiff = angleDiff - 2*M_PI;
+		angleDiff = angleDiff - 2.*M_PI;
     }
 	RS_Line* ret = nullptr;
 
@@ -666,7 +666,7 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
             vp += RS_Vector(-direction.y,direction.x);
         }
     }
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->startUndoCycle();
     }
     ret = new RS_Line(container, RS_LineData(vp,t0));
@@ -715,21 +715,21 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
 
     // create the closest tangent:
 
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->startUndoCycle();
     }
 
     ret = new RS_Line(container, d);
     ret->setLayerToActive();
     ret->setPenToActive();
-	if (container!=nullptr) {
+	if (container) {
         container->addEntity(ret);
     }
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->addUndoable(ret);
         document->endUndoCycle();
     }
-	if (graphicView!=nullptr) {
+	if (graphicView) {
         graphicView->drawEntity(ret);
     }
 
@@ -912,7 +912,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
     double dist;
     int idx = -1;
 	for (size_t i=0; i<poss.size(); ++i) {
-		if (poss[i]!=nullptr) {
+		if (poss[i]) {
             poss[i]->getNearestPointOnEntity(coord,false,&dist);
 //        std::cout<<poss.size()<<": i="<<i<<" dist="<<dist<<"\n";
             if (dist<minDist) {
@@ -925,26 +925,26 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
     if (idx!=-1) {
         RS_LineData d = poss[idx]->getData();
 		for (size_t i=0; i<poss.size(); ++i) {
-			if (poss[i]!=nullptr) {
+			if (poss[i]) {
                 delete poss[i];
             }
         }
 
-		if (document!=nullptr && handleUndo) {
+		if (document && handleUndo) {
             document->startUndoCycle();
         }
 
         ret = new RS_Line(container, d);
         ret->setLayerToActive();
         ret->setPenToActive();
-		if (container!=nullptr) {
+		if (container) {
             container->addEntity(ret);
         }
-		if (document!=nullptr && handleUndo) {
+		if (document && handleUndo) {
             document->addUndoable(ret);
             document->endUndoCycle();
         }
-		if (graphicView!=nullptr) {
+		if (graphicView) {
             graphicView->drawEntity(ret);
         }
     } else {
@@ -1041,21 +1041,21 @@ RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord,
     RS_LineData d(coord-v1, coord+v1);
     RS_Line* ret;
 
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->startUndoCycle();
     }
 
     ret = new RS_Line(container, d);
     ret->setLayerToActive();
     ret->setPenToActive();
-	if (container!=nullptr) {
+	if (container) {
         container->addEntity(ret);
     }
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->addUndoable(ret);
         document->endUndoCycle();
     }
-	if (graphicView!=nullptr) {
+	if (graphicView) {
         graphicView->drawEntity(ret);
     }
 
@@ -1081,7 +1081,7 @@ RS_Line* RS_Creation::createPolygon(const RS_Vector& center,
 
 	RS_Line* ret = nullptr;
 
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->startUndoCycle();
     }
 
@@ -1091,7 +1091,7 @@ RS_Line* RS_Creation::createPolygon(const RS_Vector& center,
 
     for (int n=1; n<=number; ++n) {
         c1 = c2;
-        c2 = c2.rotate(center, (M_PI*2)/number);
+		c2 = c2.rotate(center, (2.*M_PI)/number);
 
         line = new RS_Line(container, RS_LineData(c1, c2));
         line->setLayerToActive();
@@ -1101,18 +1101,18 @@ RS_Line* RS_Creation::createPolygon(const RS_Vector& center,
             ret = line;
         }
 
-		if (container!=nullptr) {
+		if (container) {
             container->addEntity(line);
         }
-		if (document!=nullptr && handleUndo) {
+		if (document && handleUndo) {
             document->addUndoable(line);
         }
-		if (graphicView!=nullptr) {
+		if (graphicView) {
             graphicView->drawEntity(line);
         }
     }
 
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->endUndoCycle();
     }
 
@@ -1139,7 +1139,7 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
 
 	RS_Line* ret = nullptr;
 
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->startUndoCycle();
     }
 
@@ -1165,21 +1165,21 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
             ret = line;
         }
 
-		if (container!=nullptr) {
+		if (container) {
             container->addEntity(line);
         }
-		if (document!=nullptr && handleUndo) {
+		if (document && handleUndo) {
             document->addUndoable(line);
         }
-		if (graphicView!=nullptr) {
+		if (graphicView) {
             graphicView->drawEntity(line);
         }
 
         // more accurate than incrementing the angle:
-        ang = ang1 + (2*M_PI)/number*n;
+		ang = ang1 + (2.*M_PI)/number*n;
     }
 
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->endUndoCycle();
     }
 
@@ -1197,7 +1197,7 @@ RS_Insert* RS_Creation::createInsert(const RS_InsertData* pdata) {
 
     RS_DEBUG->print("RS_Creation::createInsert");
 
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->startUndoCycle();
     }
 
@@ -1206,14 +1206,14 @@ RS_Insert* RS_Creation::createInsert(const RS_InsertData* pdata) {
     ins->setLayerToActive();
     ins->setPenToActive();
 
-	if (container!=nullptr) {
+	if (container) {
         container->addEntity(ins);
     }
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->addUndoable(ins);
         document->endUndoCycle();
     }
-	if (graphicView!=nullptr) {
+	if (graphicView) {
         graphicView->drawEntity(ins);
     }
 
@@ -1229,7 +1229,7 @@ RS_Insert* RS_Creation::createInsert(const RS_InsertData* pdata) {
      */
 RS_Image* RS_Creation::createImage(const RS_ImageData* data) {
 
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->startUndoCycle();
     }
 
@@ -1238,14 +1238,14 @@ RS_Image* RS_Creation::createImage(const RS_ImageData* data) {
     img->setPenToActive();
     img->update();
 
-	if (container!=nullptr) {
+	if (container) {
         container->addEntity(img);
     }
-	if (document!=nullptr && handleUndo) {
+	if (document && handleUndo) {
         document->addUndoable(img);
         document->endUndoCycle();
     }
-	if (graphicView!=nullptr) {
+	if (graphicView) {
         graphicView->drawEntity(img);
     }
 
@@ -1265,7 +1265,7 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
                                    const bool remove) {
 
     // start undo cycle for the container if we're deleting the existing entities
-	if (remove && document!=nullptr) {
+	if (remove && document) {
         document->startUndoCycle();
     }
 
@@ -1278,20 +1278,20 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
         //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
 
-		if (e!=nullptr && e->isSelected()) {
+		if (e && e->isSelected()) {
 
             // delete / redraw entity in graphic view:
             if (remove) {
-				if (graphicView!=nullptr) {
+				if (graphicView) {
                     graphicView->deleteEntity(e);
                 }
                 e->setSelected(false);
             } else {
-				if (graphicView!=nullptr) {
+				if (graphicView) {
                     graphicView->deleteEntity(e);
                 }
                 e->setSelected(false);
-				if (graphicView!=nullptr) {
+				if (graphicView) {
                     graphicView->drawEntity(e);
                 }
             }
@@ -1305,18 +1305,18 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
                 //container->removeEntity(e);
                 //i=0;
                 e->changeUndoState();
-				if (document!=nullptr) {
+				if (document) {
                     document->addUndoable(e);
                 }
             }
         }
     }
 
-	if (remove && document!=nullptr) {
+	if (remove && document) {
         document->endUndoCycle();
     }
 
-	if (graphic!=nullptr) {
+	if (graphic) {
         graphic->addBlock(block);
     }
 
@@ -1340,7 +1340,7 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
     }
 
     // unit conversion:
-	if (graphic!=nullptr) {
+	if (graphic) {
         double uf = RS_Units::convert(1.0, g.getUnit(),
                                       graphic->getUnit());
         g.scale(RS_Vector(0.0, 0.0), RS_Vector(uf, uf));
