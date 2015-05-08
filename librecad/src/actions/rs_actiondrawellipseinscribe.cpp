@@ -47,9 +47,19 @@ RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe(){}
 QAction* RS_ActionDrawEllipseInscribe::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
 
-    action = new QAction(tr("Ellipse &Inscribed"), NULL);
-    action->setIcon(QIcon(":/extui/ellipseinscribed.png"));
+	action = new QAction(QIcon(":/extui/ellipseinscribed.png"), tr("Ellipse &Inscribed"), nullptr);
     return action;
+}
+
+void RS_ActionDrawEllipseInscribe::clearLines(bool checkStatus)
+{
+	while(lines.size() ){
+		if(checkStatus && (int) lines.size()<=getStatus() )
+			break;
+		lines.back()->setHighlighted(false);
+		lines.pop_back();
+	}
+	graphicView->redraw(RS2::RedrawDrawing);
 }
 
 void RS_ActionDrawEllipseInscribe::init(int status) {
@@ -57,19 +67,11 @@ void RS_ActionDrawEllipseInscribe::init(int status) {
     if(status>=0) {
         RS_Snapper::suspend();
     }
-    if (status==SetLine1) {
-        lines.clear();
-    }
+	clearLines(true);
 }
 
 void RS_ActionDrawEllipseInscribe::finish(bool updateTB){
-    if(lines.size()>0){
-		for(RS_Line* const p: lines){
-			if(p) p->setHighlighted(false);
-		}
-        graphicView->redraw(RS2::RedrawDrawing);
-        lines.clear();
-    }
+	clearLines(false);
     RS_PreviewActionInterface::finish(updateTB);
 }
 
@@ -91,11 +93,10 @@ void RS_ActionDrawEllipseInscribe::trigger() {
     }
 
 	for(RS_Line*const p: lines) p->setHighlighted(false);
-    graphicView->redraw(RS2::RedrawDrawing);
     drawSnapper();
 
-    lines.clear();
-    setStatus(SetLine1);
+	clearLines(false);
+	setStatus(SetLine1);
 
     RS_DEBUG->print("RS_ActionDrawEllipse4Line::trigger():"
                     " entity added: %d", ellipse->getId());
@@ -118,17 +119,13 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
                 return;
             }
 
-        en->setHighlighted(true);
-        if(lines.size()==4){
-            deletePreview();
-            lines.back()->setHighlighted(false);
-            lines.pop_back();
-        }
-        graphicView->redraw(RS2::RedrawDrawing);
+		deletePreview();
+
+		clearLines(true);
+		en->setHighlighted(true);
         lines.push_back(static_cast<RS_Line*>(en));
-//        lines[getStatus()]=static_cast<RS_Line*>(en);
-        if(preparePreview()) {
-            deletePreview();
+		graphicView->redraw(RS2::RedrawDrawing);
+		if(preparePreview()) {
 			RS_Ellipse* e=new RS_Ellipse(preview.get(), *eData);
             preview->addEntity(e);
             drawPreview();
@@ -166,8 +163,10 @@ void RS_ActionDrawEllipseInscribe::mouseReleaseEvent(QMouseEvent* e) {
         if(en->getParent()) {
 			if ( en->getParent()->ignoredOnModification()) return;
         }
-        lines.resize(getStatus());
-        lines.push_back(static_cast<RS_Line*>(en));
+		clearLines(true);
+		en->setHighlighted(true);
+		lines.push_back(static_cast<RS_Line*>(en));
+		graphicView->redraw(RS2::RedrawDrawing);
 
         switch (getStatus()) {
         case SetLine1:
@@ -188,11 +187,11 @@ void RS_ActionDrawEllipseInscribe::mouseReleaseEvent(QMouseEvent* e) {
     } else if (e->button()==Qt::RightButton) {
         // Return to last status:
         if(getStatus()>0){
+			clearLines(true);
 			lines.back()->setHighlighted(false);
             lines.pop_back();
             graphicView->redraw(RS2::RedrawDrawing);
             deletePreview();
-
         }
         init(getStatus()-1);
     }

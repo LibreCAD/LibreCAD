@@ -74,7 +74,9 @@ public:
 protected:
     // 4 points on ellipse
 	std::vector<RS_Line*> lines;
-    private:
+	private:
+	void clearLines(bool checkStatus=false);
+
 	std::unique_ptr<RS_EllipseData> eData;
     bool valid;
 };
