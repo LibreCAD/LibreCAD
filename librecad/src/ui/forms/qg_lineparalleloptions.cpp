@@ -66,7 +66,7 @@ void QG_LineParallelOptions::destroy() {
 }
 
 void QG_LineParallelOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawLineParallel) {
+    if (a && a->rtti()==RS2::ActionDrawLineParallel) {
         action = (RS_ActionDrawLineParallel*)a;
 
         QString sd;
@@ -91,13 +91,13 @@ void QG_LineParallelOptions::setAction(RS_ActionInterface* a, bool update) {
 }
 
 void QG_LineParallelOptions::updateDist(const QString& d) {
-    if (action!=NULL) {
+    if (action) {
         action->setDistance(RS_Math::eval(d));
     }
 }
 
 void QG_LineParallelOptions::updateNumber(int n) {
-    if (action!=NULL) {
+    if (action) {
         action->setNumber(n);
     }
 }

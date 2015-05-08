@@ -73,7 +73,7 @@ void RS_ActionInfoTotalLength::trigger() {
 
 
 //void RS_ActionInfoTotalLength::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

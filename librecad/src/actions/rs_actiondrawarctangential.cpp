@@ -97,7 +97,7 @@ void RS_ActionDrawArcTangential::trigger() {
     container->addEntity(arc);
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(arc);
         document->endUndoCycle();
@@ -113,7 +113,7 @@ void RS_ActionDrawArcTangential::trigger() {
 
 
 void RS_ActionDrawArcTangential::preparePreview() {
-    if (baseEntity!=NULL && point.valid) {
+    if (baseEntity && point.valid) {
         RS_Vector startPoint;
         double direction;
         if (isStartPoint) {
@@ -168,7 +168,7 @@ void RS_ActionDrawArcTangential::mouseReleaseEvent(QMouseEvent* e) {
         case SetBaseEntity: {
             RS_Vector coord = graphicView->toGraph(e->x(), e->y());
             RS_Entity* entity = catchEntity(coord, RS2::ResolveAll);
-            if (entity!=NULL) {
+            if (entity) {
                 if (entity->isAtomic()) {
                     baseEntity = (RS_AtomicEntity*)entity;
                     if (baseEntity->getStartpoint().distanceTo(coord) <
@@ -246,7 +246,7 @@ QStringList RS_ActionDrawArcTangential::getAvailableCommands() {
 void RS_ActionDrawArcTangential::showOptions() {
     RS_ActionInterface::showOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, true);
     }
     updateMouseButtonHints();
@@ -257,7 +257,7 @@ void RS_ActionDrawArcTangential::showOptions() {
 void RS_ActionDrawArcTangential::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, false);
     }
 }
@@ -302,7 +302,7 @@ double RS_ActionDrawArcTangential::getRadius() const {
 }
 
 //void RS_ActionDrawArcTangential::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

@@ -60,7 +60,7 @@ void RS_ActionModifyCut::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyCut::trigger()");
 
-    if (cutEntity!=NULL && cutEntity->isAtomic() && cutCoord.valid &&
+    if (cutEntity && cutEntity->isAtomic() && cutCoord.valid &&
             cutEntity->isPointOnEntity(cutCoord)) {
 
         cutEntity->setHighlighted(false);
@@ -134,7 +134,7 @@ void RS_ActionModifyCut::mouseReleaseEvent(QMouseEvent* e) {
             break;
         }
     } else if (e->button()==Qt::RightButton) {
-        if (cutEntity!=NULL) {
+        if (cutEntity) {
             cutEntity->setHighlighted(false);
             graphicView->drawEntity(cutEntity);
         }

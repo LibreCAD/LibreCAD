@@ -243,8 +243,8 @@ namespace mu
                    (m_vRPN[sz-1].Cmd == cmVARMUL && m_vRPN[sz-2].Cmd == cmVAR    && m_vRPN[sz-2].Val.ptr == m_vRPN[sz-1].Val.ptr) ||
                    (m_vRPN[sz-1].Cmd == cmVARMUL && m_vRPN[sz-2].Cmd == cmVARMUL && m_vRPN[sz-2].Val.ptr == m_vRPN[sz-1].Val.ptr) )
               {
-                assert( (m_vRPN[sz-2].Val.ptr==NULL && m_vRPN[sz-1].Val.ptr!=NULL) ||
-                        (m_vRPN[sz-2].Val.ptr!=NULL && m_vRPN[sz-1].Val.ptr==NULL) || 
+                assert( (m_vRPN[sz-2].Val.ptr==NULL && m_vRPN[sz-1].Val.ptr) ||
+                        (m_vRPN[sz-2].Val.ptr && m_vRPN[sz-1].Val.ptr==NULL) || 
                         (m_vRPN[sz-2].Val.ptr == m_vRPN[sz-1].Val.ptr) );
 
                 m_vRPN[sz-2].Cmd = cmVARMUL;

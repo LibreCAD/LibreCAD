@@ -66,11 +66,11 @@ void QG_DlgEllipse::setEllipse(RS_Ellipse& e) {
     //pen = ellipse->getPen();
     wPen->setPen(ellipse->getPen(false), true, false, "Pen");
     RS_Graphic* graphic = ellipse->getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
     RS_Layer* lay = ellipse->getLayer(false);
-    if (lay!=NULL) {
+    if (lay) {
         cbLayer->setLayer(*lay);
     }
     QString s;

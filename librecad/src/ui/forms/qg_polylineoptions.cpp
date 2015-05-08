@@ -69,7 +69,7 @@ void QG_PolylineOptions::destroy() {
 }
 
 void QG_PolylineOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawPolyline) {
+    if (a && a->rtti()==RS2::ActionDrawPolyline) {
         action = (RS_ActionDrawPolyline*)a;
 
         QString sd1,sd2;
@@ -104,25 +104,25 @@ void QG_PolylineOptions::setAction(RS_ActionInterface* a, bool update) {
 }
 
 void QG_PolylineOptions::close() {
-    if (action!=NULL) {
+    if (action) {
         action->close();
     }
 }
 
 void QG_PolylineOptions::undo() {
-    if (action!=NULL) {
+    if (action) {
         action->undo();
     }
 }
 
 void QG_PolylineOptions::updateRadius(const QString& s) {
-    if (action!=NULL) {
+    if (action) {
         action->setRadius(RS_Math::eval(s));
     }
 }
 
 void QG_PolylineOptions::updateAngle(const QString& s) {
-    if (action!=NULL) {
+    if (action) {
         double a=RS_Math::eval(s);
 //	QString sr;
         if (a>359.999) {
@@ -138,7 +138,7 @@ void QG_PolylineOptions::updateAngle(const QString& s) {
 }
 
 void QG_PolylineOptions::updateDirection(bool /*pos*/) {
-    if (action!=NULL) {
+    if (action) {
         action->setReversed(!(rbPos->isChecked()));
     }
 }
@@ -156,7 +156,7 @@ void QG_PolylineOptions::updateMode( int m )
 ////	RadAngCenp
 //    };
 
-    if (action!=NULL) {
+    if (action) {
         action->setMode((RS_ActionDrawPolyline::SegmentMode) m);
     }
     switch((RS_ActionDrawPolyline::SegmentMode) m) {

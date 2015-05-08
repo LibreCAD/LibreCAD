@@ -65,16 +65,16 @@ void RS_ActionBlocksSave::trigger() {
         return;
     }
     RS_BlockList* bList = appWindow->getBlockWidget() -> getBlockList();
-    if (bList!=NULL) {
+    if (bList) {
         auto b=bList->getActive();
-        if(b!=NULL) {
+        if(b) {
             RS_Graphic g(NULL);
             g.setOwner(false);
 
            g.clearLayers();
 //           g.addLayer(b->getLayer());
             for (RS_Entity* e=b->firstEntity(RS2::ResolveNone);
-                 e!=NULL;
+                 e;
                  e = b->nextEntity(RS2::ResolveNone)) {
                 g.addEntity(e);
                 if (e->rtti() == RS2::EntityInsert) {
@@ -98,7 +98,7 @@ void RS_ActionBlocksSave::trigger() {
             g.saveAs(fn, t);
             QApplication::restoreOverrideCursor();
         }else{
-            if (RS_DIALOGFACTORY!=NULL) {
+            if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->commandMessage(tr("No block activated to save"));
             }
         }

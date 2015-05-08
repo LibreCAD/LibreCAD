@@ -64,7 +64,7 @@ void QG_LineParallelThroughOptions::destroy() {
 }
 
 void QG_LineParallelThroughOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawLineParallelThrough) {
+    if (a && a->rtti()==RS2::ActionDrawLineParallelThrough) {
         action = (RS_ActionDrawLineParallelThrough*)a;
 
         QString sn;
@@ -85,7 +85,7 @@ void QG_LineParallelThroughOptions::setAction(RS_ActionInterface* a, bool update
 }
 
 void QG_LineParallelThroughOptions::updateNumber(int n) {
-    if (action!=NULL) {
+    if (action) {
         action->setNumber(n);
     }
 }

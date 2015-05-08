@@ -546,7 +546,7 @@ double RS_MText::updateAddLine(RS_EntityContainer* textLine, int lineCounter) {
 
 
 RS_Vector RS_MText::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
-    if (dist!=NULL) {
+    if (dist) {
         *dist = data.insertionPoint.distanceTo(coord);
     }
     return data.insertionPoint;

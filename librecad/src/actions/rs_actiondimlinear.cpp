@@ -114,7 +114,7 @@ void RS_ActionDimLinear::reset() {
 							 (fixedAngle ? edata->angle : 0.0), 0.0)
 				);
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, true, true);
     }
 }
@@ -132,7 +132,7 @@ void RS_ActionDimLinear::trigger() {
     container->addEntity(dim);
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(dim);
         document->endUndoCycle();
@@ -263,7 +263,7 @@ void RS_ActionDimLinear::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -273,7 +273,7 @@ void RS_ActionDimLinear::commandEvent(RS_CommandEvent* e) {
     switch (getStatus()) {
     case SetText:
         setText(c);
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->requestOptions(this, true, true);
         }
         graphicView->enableCoordinateInput();
@@ -286,11 +286,11 @@ void RS_ActionDimLinear::commandEvent(RS_CommandEvent* e) {
 			if (ok) {
                 setAngle(RS_Math::deg2rad(a));
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
-            if (RS_DIALOGFACTORY!=NULL) {
+            if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->requestOptions(this, true, true);
             }
             setStatus(lastStatus);
@@ -335,7 +335,7 @@ QStringList RS_ActionDimLinear::getAvailableCommands() {
 
 
 void RS_ActionDimLinear::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetExtPoint1:
             RS_DIALOGFACTORY->updateMouseWidget(
@@ -371,7 +371,7 @@ void RS_ActionDimLinear::updateMouseButtonHints() {
 void RS_ActionDimLinear::showOptions() {
     RS_ActionInterface::showOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, true, true);
     }
 }
@@ -381,7 +381,7 @@ void RS_ActionDimLinear::showOptions() {
 void RS_ActionDimLinear::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, false);
     }
 }

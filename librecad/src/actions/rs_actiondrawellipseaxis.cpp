@@ -111,7 +111,7 @@ void RS_ActionDrawEllipseAxis::trigger() {
     container->addEntity(ellipse);
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(ellipse);
         document->endUndoCycle();
@@ -297,7 +297,7 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -317,7 +317,7 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent* e) {
                     setStatus(SetAngle1);
                 }
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -332,7 +332,7 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent* e) {
                 angle1 = RS_Math::deg2rad(a);
                 setStatus(SetAngle2);
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -347,7 +347,7 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent* e) {
                 angle2 = RS_Math::deg2rad(a);
                 trigger();
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -369,7 +369,7 @@ QStringList RS_ActionDrawEllipseAxis::getAvailableCommands() {
 
 
 void RS_ActionDrawEllipseAxis::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetCenter:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify ellipse center"),
@@ -413,7 +413,7 @@ void RS_ActionDrawEllipseAxis::updateMouseCursor() {
 
 
 //void RS_ActionDrawEllipseAxis::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

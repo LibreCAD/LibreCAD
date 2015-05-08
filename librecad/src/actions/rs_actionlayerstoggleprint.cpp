@@ -55,20 +55,20 @@ QAction* RS_ActionLayersTogglePrint::createGUIAction(RS2::ActionType /*type*/, Q
 
 void RS_ActionLayersTogglePrint::trigger() {
     RS_DEBUG->print("toggle layer printing");
-    if (graphic!=NULL) {
+    if (graphic) {
         RS_Layer* layer = graphic->getActiveLayer();
-        if (layer!=NULL) {
+        if (layer) {
             graphic->toggleLayerPrint( layer);
 
 			// deselect entities on locked layer:
 			for(auto e: *container){
-                if (e!=NULL && e->isVisible() && e->getLayer()==layer) {
+                if (e && e->isVisible() && e->getLayer()==layer) {
 
-                    if (graphicView!=NULL) {
+                    if (graphicView) {
                         graphicView->deleteEntity(e);
                     }
 
-                    if (graphicView!=NULL) {
+                    if (graphicView) {
                         graphicView->drawEntity(e);
                     }
                 }

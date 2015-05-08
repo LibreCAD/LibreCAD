@@ -67,7 +67,7 @@ RS_Entity* RS_Block::clone() const {
 
 RS_LayerList* RS_Block::getLayerList() {
     RS_Graphic* g = getGraphic();
-    if (g!=NULL) {
+    if (g) {
         return g->getLayerList();
     } else {
         return NULL;
@@ -78,7 +78,7 @@ RS_LayerList* RS_Block::getLayerList() {
 
 RS_BlockList* RS_Block::getBlockList() {
     RS_Graphic* g = getGraphic();
-    if (g!=NULL) {
+    if (g) {
         return g->getBlockList();
     } else {
         return NULL;
@@ -88,7 +88,7 @@ RS_BlockList* RS_Block::getBlockList() {
 
 bool RS_Block::save(bool isAutoSave) {
     RS_Graphic* g = getGraphic();
-    if (g!=NULL) {
+    if (g) {
         return g->save(isAutoSave);
     } else {
         return false;
@@ -98,7 +98,7 @@ bool RS_Block::save(bool isAutoSave) {
 
 bool RS_Block::saveAs(const QString& filename, RS2::FormatType type, bool force) {
     RS_Graphic* g = getGraphic();
-    if (g!=NULL) {
+    if (g) {
         return g->saveAs(filename, type, force);
     } else {
         return false;

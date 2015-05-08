@@ -126,7 +126,7 @@ void QG_PrintPreviewOptions::setScaleFixed(bool fixed)
 
 void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
 
-    if (a!=NULL && a->rtti()==RS2::ActionPrintPreview) {
+    if (a && a->rtti()==RS2::ActionPrintPreview) {
         action = static_cast<RS_ActionPrintPreview*>(a);
         /** fixed scale **/
         if(update){
@@ -178,7 +178,7 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
 }
 
 void QG_PrintPreviewOptions::updateData() {
-    if (action!=NULL) {
+    if (action) {
         /*
         action->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
         action->setFactor(RS_Math::eval(leFactor->text()));
@@ -187,13 +187,13 @@ void QG_PrintPreviewOptions::updateData() {
 }
 
 void QG_PrintPreviewOptions::center() {
-    if (action!=NULL) {
+    if (action) {
         action->center();
     }
 }
 
 void QG_PrintPreviewOptions::setBlackWhite(bool on) {
-    if (action!=NULL) {
+    if (action) {
         if(bBlackWhite->isChecked() != on) {
             bBlackWhite->setChecked(on);
         }
@@ -204,7 +204,7 @@ void QG_PrintPreviewOptions::setBlackWhite(bool on) {
 
 void QG_PrintPreviewOptions::fit() {
     if(updateDisabled) return;
-    if (action!=NULL) {
+    if (action) {
         action->fit();
         updateScaleBox();
     }

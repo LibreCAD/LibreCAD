@@ -67,11 +67,11 @@ void QG_DlgImage::setImage(RS_Image& e) {
     //pen = spline->getPen();
     wPen->setPen(image->getPen(false), true, false, "Pen");
     RS_Graphic* graphic = image->getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
     RS_Layer* lay = image->getLayer(false);
-    if (lay!=NULL) {
+    if (lay) {
         cbLayer->setLayer(*lay);
     }
     leInsertX->setValidator(val);

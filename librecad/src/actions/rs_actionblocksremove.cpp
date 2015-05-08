@@ -49,7 +49,7 @@ QAction* RS_ActionBlocksRemove::createGUIAction(RS2::ActionType /*type*/, QObjec
 void RS_ActionBlocksRemove::trigger() {
     RS_DEBUG->print("RS_ActionBlocksRemove::trigger");
 
-    if (graphic!=NULL) {
+    if (graphic) {
         RS_Block* block =
             RS_DIALOGFACTORY->requestBlockRemovalDialog(graphic->getBlockList());
 
@@ -61,8 +61,8 @@ void RS_ActionBlocksRemove::trigger() {
             containerList.append(blkLst->at(bi));
         }
 
-        if (block!=NULL) {
-            if (document!=NULL) {
+        if (block) {
+            if (document) {
                 document->startUndoCycle();
             }
 
@@ -89,7 +89,7 @@ void RS_ActionBlocksRemove::trigger() {
             }
 
                         // close all windows that are editing this block:
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->closeEditBlockWindow(block);
             }
 

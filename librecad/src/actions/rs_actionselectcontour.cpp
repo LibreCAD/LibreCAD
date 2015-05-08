@@ -51,16 +51,16 @@ QAction* RS_ActionSelectContour::createGUIAction(RS2::ActionType /*type*/, QObje
 
 
 void RS_ActionSelectContour::trigger() {
-    if (en!=NULL) {
+    if (en) {
         if (en->isAtomic()) {
             RS_Selection s(*container, graphicView);
             s.selectContour(en);
 
-            if (RS_DIALOGFACTORY!=NULL) {
+            if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
             }
         } else {
-            if (RS_DIALOGFACTORY!=NULL) {
+            if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->commandMessage(
                     tr("Entity must be an Atomic Entity."));
             }

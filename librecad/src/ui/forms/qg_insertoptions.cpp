@@ -71,7 +71,7 @@ void QG_InsertOptions::destroy() {
 }
 
 void QG_InsertOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionBlocksInsert) {
+    if (a && a->rtti()==RS2::ActionBlocksInsert) {
         action = (RS_ActionBlocksInsert*)a;
 
         QString sAngle;
@@ -111,7 +111,7 @@ void QG_InsertOptions::setAction(RS_ActionInterface* a, bool update) {
 }
 
 void QG_InsertOptions::updateData() {
-    if (action!=NULL) {
+    if (action) {
         action->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
         action->setFactor(RS_Math::eval(leFactor->text()));
         action->setColumns(sbColumns->value());

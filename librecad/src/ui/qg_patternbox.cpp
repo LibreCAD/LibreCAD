@@ -95,7 +95,7 @@ void QG_PatternBox::slotPatternChanged(int index) {
 
     currentPattern = RS_PATTERNLIST->requestPattern(currentText());
 
-    if (currentPattern!=NULL) {
+    if (currentPattern) {
         RS_DEBUG->print("Current pattern is (%d): %s\n",
                         index, currentPattern->getFileName().toLatin1().data());
     }

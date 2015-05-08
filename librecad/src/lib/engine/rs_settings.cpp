@@ -116,7 +116,7 @@ QString RS_Settings::readEntry(const QString& key,
         QSettings s(companyKey, appKey);
     	// RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
 		
-		if (ok!=NULL) {
+		if (ok) {
 			*ok=s.contains(QString("%1%2").arg(group).arg(key));
 		}
 		
@@ -138,7 +138,7 @@ QByteArray RS_Settings::readByteArrayEntry(const QString& key,
         QSettings s(companyKey, appKey);
         // RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
 
-                if (ok!=NULL) {
+                if (ok) {
                         *ok=s.contains(QString("%1%2").arg(group).arg(key));
                 }
 
@@ -159,7 +159,7 @@ int RS_Settings::readNumEntry(const QString& key, int def, bool* ok) {
         QSettings s(companyKey, appKey);
     	// RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
 
-		if (ok!=NULL) {
+		if (ok) {
 			*ok=s.contains(QString("%1%2").arg(group).arg(key));
 		}
         ret = s.value(QString("%1%2").arg(group).arg(key), QVariant(def));

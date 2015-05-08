@@ -335,7 +335,7 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* e) {
     //QWidget::mouseReleaseEvent(e);
 
     if (!e->isAccepted()) {
-        if (QG_DIALOGFACTORY!=NULL && QG_DIALOGFACTORY->getCadToolBar()!=NULL) {
+        if (QG_DIALOGFACTORY && QG_DIALOGFACTORY->getCadToolBar()) {
                         RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: "
                                 "fwd to cadtoolbar");
             QG_DIALOGFACTORY->getCadToolBar()->mouseReleaseEvent(e);
@@ -354,7 +354,7 @@ void QG_GraphicView::mouseMoveEvent(QMouseEvent* e) {
 
 #ifdef Q_OS_WIN32
         // make sure that we can still use hotkeys and the mouse wheel
-        if (parent()!=NULL) {
+        if (parent()) {
                 ((QWidget*)parent())->setFocus();
         }
 #endif
@@ -401,7 +401,7 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
         switch (e->device()) {
         case QTabletEvent::Eraser:
             if (e->type()==QEvent::TabletRelease) {
-                if (container!=NULL) {
+                if (container) {
 
                     RS_ActionSelectSingle* a =
                         new RS_ActionSelectSingle(*container, *this);

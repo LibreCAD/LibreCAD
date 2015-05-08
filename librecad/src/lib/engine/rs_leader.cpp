@@ -78,7 +78,7 @@ void RS_Leader::update() {
         }
 
     RS_Entity* fe = firstEntity();
-    if (fe!=NULL && fe->isAtomic()) {
+    if (fe && fe->isAtomic()) {
         RS_Vector p1 = ((RS_AtomicEntity*)fe)->getStartpoint();
         RS_Vector p2 = ((RS_AtomicEntity*)fe)->getEndpoint();
 

@@ -67,8 +67,8 @@ void RS_ActionModifyBevel::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyBevel::trigger()");
 
-    if (entity1!=NULL && entity1->isAtomic() &&
-            entity2!=NULL && entity2->isAtomic()) {
+    if (entity1 && entity1->isAtomic() &&
+            entity2 && entity2->isAtomic()) {
 
         RS_Modification m(*container, graphicView);
         m.bevel(coord1, (RS_AtomicEntity*)entity1,
@@ -98,7 +98,7 @@ void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetEntity2:
-                if (entity1!=NULL && RS_Information::isTrimmable(entity1)) {
+                if (entity1 && RS_Information::isTrimmable(entity1)) {
                 coord2 = mouse;
                 entity2 = se;
                 }
@@ -117,13 +117,13 @@ void RS_ActionModifyBevel::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetEntity1:
-            if (entity1!=NULL && entity1->isAtomic()) {
+            if (entity1 && entity1->isAtomic()) {
                 setStatus(SetEntity2);
             }
             break;
 
         case SetEntity2:
-            if (entity2!=NULL && entity2->isAtomic() &&
+            if (entity2 && entity2->isAtomic() &&
                             RS_Information::isTrimmable(entity1, entity2)) {
                 trigger();
             }

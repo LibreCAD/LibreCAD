@@ -100,7 +100,7 @@ unsigned long int RS_Graphic::countLayerEntities(RS_Layer* layer) {
 
     int c=0;
 
-	if (layer!=NULL) {
+	if (layer) {
 		for(auto t: entities){
 
 			if (t->getLayer() &&
@@ -120,7 +120,7 @@ unsigned long int RS_Graphic::countLayerEntities(RS_Layer* layer) {
  */
 void RS_Graphic::removeLayer(RS_Layer* layer) {
 
-    if (layer!=NULL && layer->getName()!="0") {
+    if (layer && layer->getName()!="0") {
 
         // remove all entities on that layer:
         startUndoCycle();
@@ -140,7 +140,7 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
         for (int bi=0; bi<blockList.count(); bi++) {
             RS_Block* blk = blockList.at(bi);
 
-            if (blk!=NULL) {
+            if (blk) {
 				for(auto e: *blk){
 
 					if (e->getLayer() &&

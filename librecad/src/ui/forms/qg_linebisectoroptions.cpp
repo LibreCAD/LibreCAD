@@ -66,7 +66,7 @@ void QG_LineBisectorOptions::destroy() {
 }
 
 void QG_LineBisectorOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawLineBisector) {
+    if (a && a->rtti()==RS2::ActionDrawLineBisector) {
         action = (RS_ActionDrawLineBisector*)a;
 
         QString sl;
@@ -90,13 +90,13 @@ void QG_LineBisectorOptions::setAction(RS_ActionInterface* a, bool update) {
 }
 
 void QG_LineBisectorOptions::updateLength(const QString& l) {
-    if (action!=NULL) {
+    if (action) {
         action->setLength(RS_Math::eval(l));
     }
 }
 
 void QG_LineBisectorOptions::updateNumber(int n) {
-    if (action!=NULL) {
+    if (action) {
         action->setNumber(n);
     }
 }

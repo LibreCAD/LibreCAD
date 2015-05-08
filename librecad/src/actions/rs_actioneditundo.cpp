@@ -99,7 +99,7 @@ void RS_ActionEditUndo::trigger() {
         }
     }
 
-    if (graphic!=NULL) {
+    if (graphic) {
         graphic->addBlockNotification();
     }
     document->updateInserts();

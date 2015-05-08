@@ -64,7 +64,7 @@ void QG_CircleOptions::destroy() {
 }
 
 void QG_CircleOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && ( a->rtti()==RS2::ActionDrawCircleCR ||  a->rtti()==RS2::ActionDrawCircle2PR) ) {
+    if (a && ( a->rtti()==RS2::ActionDrawCircleCR ||  a->rtti()==RS2::ActionDrawCircle2PR) ) {
         action = static_cast<RS_ActionDrawCircleCR*>(a);
 
         QString sr;
@@ -97,7 +97,7 @@ void QG_CircleOptions::setAction(RS_ActionInterface* a, bool update) {
 }*/
 
 void QG_CircleOptions::updateRadius(const QString& r) {
-    if (action!=NULL) {
+    if (action) {
         action->setRadius(RS_Math::eval(r));
     }
 }

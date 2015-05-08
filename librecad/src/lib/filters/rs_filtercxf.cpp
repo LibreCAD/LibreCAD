@@ -201,7 +201,7 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
             RS_DEBUG->print("block: %d", i);
             RS_DEBUG->print("001");
 
-            if (blk!=NULL && !blk->isUndone()) {
+            if (blk && !blk->isUndone()) {
                 RS_DEBUG->print("002");
                 RS_DEBUG->print("002a: %s",
                                 (blk->getName().toLocal8Bit().data()));
@@ -212,7 +212,7 @@ bool RS_FilterCXF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 
                 // iterate through entities of this letter:
                 for (RS_Entity* e=blk->firstEntity(RS2::ResolveAll);
-                        e!=NULL;
+                        e;
                         e=blk->nextEntity(RS2::ResolveAll)) {
 
                     if (!e->isUndone()) {

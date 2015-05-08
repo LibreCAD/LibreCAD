@@ -81,7 +81,7 @@ void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case Moving:
         v2 = graphicView->toGraph(e->x(), e->y());
-        if (graphic!=NULL) {
+        if (graphic) {
             RS_Vector pinsbase = graphic->getPaperInsertionBase();
 
             double scale = graphic->getPaperScale();
@@ -245,7 +245,7 @@ void RS_ActionPrintPreview::updateMouseCursor() {
 }
 
 void RS_ActionPrintPreview::center() {
-    if (graphic!=NULL) {
+    if (graphic) {
         graphic->centerToPage();
         graphicView->zoomPage();
         graphicView->redraw();
@@ -254,7 +254,7 @@ void RS_ActionPrintPreview::center() {
 
 
 void RS_ActionPrintPreview::fit() {
-    if (graphic!=NULL) {
+    if (graphic) {
         RS_Vector&& paperSize=RS_Units::convert(graphic->getPaperSize(),
                                                 RS2::Millimeter, getUnit());
 
@@ -263,7 +263,7 @@ void RS_ActionPrintPreview::fit() {
                          " Paper is too small for fitting to page\n"
                          "Please set paper size by Menu: Edit->Current Drawing Preferences->Paper");
         //        double f0=graphic->getPaperScale();
-        if( graphic->fitToPage()==false && RS_DIALOGFACTORY!=NULL){
+        if( graphic->fitToPage()==false && RS_DIALOGFACTORY){
             RS_DIALOGFACTORY->commandMessage(
                         tr("RS_ActionPrintPreview::fit(): Invalid paper size")
                         );
@@ -278,7 +278,7 @@ void RS_ActionPrintPreview::fit() {
 }
 
 bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
-    if (graphic!=NULL) {
+    if (graphic) {
         if( fabs(f - graphic->getPaperScale()) < RS_TOLERANCE ) return false;
         graphic->setPaperScale(f);
 //        graphic->centerToPage();
@@ -293,7 +293,7 @@ bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
 
 double RS_ActionPrintPreview::getScale() {
     double ret = 1.0;
-    if (graphic!=NULL) {
+    if (graphic) {
         ret = graphic->getPaperScale();
     }
     return ret;
@@ -313,7 +313,7 @@ void RS_ActionPrintPreview::setBlackWhite(bool bw) {
 
 
 RS2::Unit RS_ActionPrintPreview::getUnit() {
-    if (graphic!=NULL) {
+    if (graphic) {
         return graphic->getUnit();
     }
     else {

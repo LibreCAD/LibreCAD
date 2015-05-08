@@ -66,7 +66,7 @@ void QG_TrimAmountOptions::destroy() {
 }
 
 void QG_TrimAmountOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionModifyTrimAmount) {
+    if (a && a->rtti()==RS2::ActionModifyTrimAmount) {
         action = (RS_ActionModifyTrimAmount*)a;
 
         QString sd;
@@ -94,14 +94,14 @@ void QG_TrimAmountOptions::setAction(RS_ActionInterface* a, bool update) {
 }
 
 void QG_TrimAmountOptions::updateDist(const QString& d) {
-    if (action!=NULL) {
+    if (action) {
         action->setDistance(RS_Math::eval(d, 1.0));
     }
 }
 
 void QG_TrimAmountOptions::on_cbTotalLength_toggled(bool checked)
 {
-    if (action!=NULL) {
+    if (action) {
         action->setByTotal(checked);
     }
 }

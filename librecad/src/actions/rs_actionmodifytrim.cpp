@@ -96,8 +96,8 @@ void RS_ActionModifyTrim::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyTrim::trigger()");
 
-    if (trimEntity!=NULL && trimEntity->isAtomic() &&
-            limitEntity!=NULL /* && limitEntity->isAtomic()*/) {
+    if (trimEntity && trimEntity->isAtomic() &&
+            limitEntity /* && limitEntity->isAtomic()*/) {
 
         RS_Modification m(*container, graphicView);
         m.trim(trimCoord, (RS_AtomicEntity*)trimEntity,
@@ -155,7 +155,7 @@ void RS_ActionModifyTrim::mouseReleaseEvent(QMouseEvent* e) {
         case ChooseLimitEntity:
             limitCoord = mouse;
             limitEntity = se;
-            if (limitEntity!=NULL && limitEntity->rtti() != RS2::EntityPolyline/*&& limitEntity->isAtomic()*/) {
+            if (limitEntity && limitEntity->rtti() != RS2::EntityPolyline/*&& limitEntity->isAtomic()*/) {
                 limitEntity->setHighlighted(true);
                 graphicView->drawEntity(limitEntity);
                 setStatus(ChooseTrimEntity);
@@ -165,7 +165,7 @@ void RS_ActionModifyTrim::mouseReleaseEvent(QMouseEvent* e) {
         case ChooseTrimEntity:
             trimCoord = mouse;
             trimEntity = se;
-            if (trimEntity!=NULL && trimEntity->isAtomic()) {
+            if (trimEntity && trimEntity->isAtomic()) {
                 trigger();
             }
             break;
@@ -175,7 +175,7 @@ void RS_ActionModifyTrim::mouseReleaseEvent(QMouseEvent* e) {
         }
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
-        if (limitEntity!=NULL) {
+        if (limitEntity) {
             limitEntity->setHighlighted(false);
             graphicView->drawEntity(limitEntity);
         }

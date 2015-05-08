@@ -48,11 +48,11 @@ QAction* RS_ActionLayersAdd::createGUIAction(RS2::ActionType /*type*/, QObject* 
 void RS_ActionLayersAdd::trigger() {
     RS_DEBUG->print("add layer");
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         if (graphic) {
             RS_Layer* layer = RS_DIALOGFACTORY->requestNewLayerDialog(
                                   graphic->getLayerList());
-            if (layer!=NULL)
+            if (layer)
                 graphic->addLayer(layer);
                 graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
         }

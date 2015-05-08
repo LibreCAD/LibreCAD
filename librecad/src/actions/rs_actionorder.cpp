@@ -89,7 +89,7 @@ void RS_ActionOrder::trigger() {
             entList.append(e);
     }
 
-    if (targetEntity!=NULL) {
+    if (targetEntity) {
         targetEntity->setHighlighted(false);
         graphicView->drawEntity(targetEntity);
 
@@ -158,7 +158,7 @@ void RS_ActionOrder::mouseReleaseEvent(QMouseEvent* e) {
         }
     } else if (e->button()==Qt::RightButton) {
         deleteSnapper();
-        if (targetEntity!=NULL) {
+        if (targetEntity) {
             targetEntity->setHighlighted(false);
             graphicView->drawEntity(targetEntity);
                 graphicView->redraw();

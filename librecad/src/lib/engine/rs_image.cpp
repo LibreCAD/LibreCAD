@@ -209,7 +209,7 @@ RS_Vector RS_Image::getNearestEndpoint(const RS_Vector& coord,
 RS_Vector RS_Image::getNearestPointOnEntity(const RS_Vector& coord,
         bool onEntity, double* dist, RS_Entity** entity) const{
 
-    if (entity!=NULL) {
+    if (entity) {
         *entity = const_cast<RS_Image*>(this);
     }
 
@@ -217,7 +217,7 @@ RS_Vector RS_Image::getNearestPointOnEntity(const RS_Vector& coord,
     //allow selecting image by clicking within images, bug#3464626
     if(containsPoint(coord)){
         //if coord is within image
-        if(dist!=NULL) *dist=0.;
+        if(dist) *dist=0.;
         return coord;
     }
     RS_VectorSolutions points(4);
@@ -247,7 +247,7 @@ RS_Vector RS_Image::getNearestCenter(const RS_Vector& coord,
     //bug#485, there's no clear reason to ignore snapping to center within an image
 //    if(containsPoint(coord)){
 //        //if coord is within image
-//        if(dist!=NULL) *dist=0.;
+//        if(dist) *dist=0.;
 //        return coord;
 //    }
 
@@ -300,7 +300,7 @@ double RS_Image::getDistanceToPoint(const RS_Vector& coord,
                                     RS_Entity** entity,
                                     RS2::ResolveLevel /*level*/,
                                                                         double /*solidDist*/) const{
-    if (entity!=NULL) {
+    if (entity) {
         *entity = const_cast<RS_Image*>(this);
     }
 

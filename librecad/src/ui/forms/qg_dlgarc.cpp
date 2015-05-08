@@ -66,11 +66,11 @@ void QG_DlgArc::setArc(RS_Arc& a) {
     //pen = arc->getPen();
     wPen->setPen(arc->getPen(false), true, false, "Pen");
     RS_Graphic* graphic = arc->getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
     RS_Layer* lay = arc->getLayer(false);
-    if (lay!=NULL) {
+    if (lay) {
         cbLayer->setLayer(*lay);
     }
     QString s;

@@ -55,7 +55,7 @@ void RS_ActionFileNew::trigger() {
     RS_DEBUG->print("RS_ActionFileNew::trigger");
 
     QString fileName; //= RS_DIALOGFACTORY->requestFileNewDialog();
-    if (graphic!=NULL && !fileName.isEmpty()) {
+    if (graphic && !fileName.isEmpty()) {
         graphic->open(fileName, );
 }
     */

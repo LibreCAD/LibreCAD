@@ -61,7 +61,7 @@ void RS_ActionPolylineAdd::trigger() {
         RS_PreviewActionInterface::trigger();
         RS_DEBUG->print("RS_ActionPolylineAdd::trigger()");
 
-        if (addEntity!=NULL && addSegment->isAtomic() && addCoord.valid &&
+        if (addEntity && addSegment->isAtomic() && addCoord.valid &&
                 addSegment->isPointOnEntity(addCoord)) {
 
                 addEntity->setHighlighted(false);
@@ -146,7 +146,7 @@ void RS_ActionPolylineAdd::mouseReleaseEvent(QMouseEvent* e) {
                 }
         } else if (e->button()==Qt::RightButton) {
                 deleteSnapper();
-                if (addEntity!=NULL) {
+                if (addEntity) {
                         addEntity->setHighlighted(false);
                         graphicView->drawEntity(addEntity);
 ////////////////////////////////////////2006/06/15
@@ -183,7 +183,7 @@ void RS_ActionPolylineAdd::updateMouseCursor() {
 
 
 //void RS_ActionPolylineAdd::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

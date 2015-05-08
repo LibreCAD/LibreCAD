@@ -305,7 +305,7 @@ QStringList RS_ActionDrawImage::getAvailableCommands() {
 void RS_ActionDrawImage::showOptions() {
     RS_ActionInterface::showOptions();
 
-    if(RS_DIALOGFACTORY!=NULL){
+    if(RS_DIALOGFACTORY){
         RS_DIALOGFACTORY->requestOptions(this, true);
     }
 }
@@ -314,7 +314,7 @@ void RS_ActionDrawImage::showOptions() {
 
 void RS_ActionDrawImage::hideOptions() {
     RS_ActionInterface::hideOptions();
-    if(RS_DIALOGFACTORY!=NULL){
+    if(RS_DIALOGFACTORY){
         RS_DIALOGFACTORY->requestOptions(this, false);
     }
 }

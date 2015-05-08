@@ -560,7 +560,7 @@ RS_Vector RS_Circle::getNearestEndpoint(const RS_Vector& coord, double* dist /*=
 RS_Vector RS_Circle::getNearestPointOnEntity(const RS_Vector& coord,
         bool /*onEntity*/, double* dist, RS_Entity** entity)const {
 
-    if (entity!=NULL) {
+	if (entity) {
         *entity = const_cast<RS_Circle*>(this);
     }
 	RS_Vector vp(coord - data.center);
@@ -569,7 +569,7 @@ RS_Vector RS_Circle::getNearestPointOnEntity(const RS_Vector& coord,
 	vp =data.center+vp*(data.radius/d);
 //    RS_DEBUG->print(RS_Debug::D_ERROR, "circle(%g, %g), r=%g: distance to point (%g, %g)\n",data.center.x,data.center.y,coord.x,coord.y);
 
-    if(dist!=NULL){
+	if(dist){
         *dist=coord.distanceTo(vp);
 //        RS_DEBUG->print(RS_Debug::D_ERROR, "circle(%g, %g), r=%g: distance to point (%g, %g)=%g\n",data.center.x,data.center.y,coord.x,coord.y,*dist);
     }
@@ -691,7 +691,7 @@ RS_Vector RS_Circle::getNearestDist(double /*distance*/,
                                     const RS_Vector& /*coord*/,
 									double* dist) const{
 
-    if (dist!=NULL) {
+	if (dist) {
         *dist = RS_MAXDOUBLE;
     }
     return RS_Vector(false);

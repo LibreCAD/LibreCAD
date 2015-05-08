@@ -56,7 +56,7 @@ void QG_LineOptions::languageChange()
 }
 
 void QG_LineOptions::setAction(RS_ActionInterface* a) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawLine) {
+    if (a && a->rtti()==RS2::ActionDrawLine) {
         action = (RS_ActionDrawLine*)a;
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
@@ -66,20 +66,20 @@ void QG_LineOptions::setAction(RS_ActionInterface* a) {
 }
 
 void QG_LineOptions::close() {
-    if (action!=NULL) {
+    if (action) {
         action->close();
     }
 }
 
 void QG_LineOptions::undo() {
-    if (action!=NULL) {
+    if (action) {
         action->undo();
     }
 }
 
 
 void QG_LineOptions::redo() {
-    if (action!=NULL) {
+    if (action) {
         action->redo();
     }
 }

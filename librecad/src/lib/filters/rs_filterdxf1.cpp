@@ -1046,7 +1046,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                         }
                     } while(dxfCode.size() && code!=0);
                     char* i=strchr(vtextStyle, '#');
-                    if (i!=NULL) {
+                    if (i) {
                         i[0] = '\0';
                     }
                     graphic->addEntity(
@@ -1835,7 +1835,7 @@ bool RS_FilterDXF1::readFileInBuffer(char* _name, int _bNum) {
 //
 bool RS_FilterDXF1::readFileInBuffer(int _bNum) {
     fPointer = fopen(name.toLatin1().data(), "rb");//RLZ verify with locales
-    if(fPointer!=NULL) {
+    if(fPointer) {
         if(file.open(fPointer, QIODevice::ReadOnly)) {
             fSize=file.size();
             if(_bNum==-1)

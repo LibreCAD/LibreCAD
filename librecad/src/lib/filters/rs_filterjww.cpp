@@ -210,7 +210,7 @@ void RS_FilterJWW::addBlock(const DL_BlockData& data) {
                         // get the codec for Japanese
                         QString blName = data.name.c_str();
                         QTextCodec *codec = QTextCodec::codecForName(enc.toLatin1());
-                        if(codec!=NULL)
+                        if(codec)
                                 blName = codec->toUnicode(data.name.c_str());
 //////////////////////////////
                         RS_Block* block =
@@ -378,7 +378,7 @@ void RS_FilterJWW::addVertex(const DL_VertexData& data) {
 
         RS_Vector v(data.x, data.y);
 
-        if (polyline!=NULL) {
+        if (polyline) {
                 polyline->addVertex(v, data.bulge);
         }
 }
@@ -424,11 +424,11 @@ void RS_FilterJWW::addControlPoint(const DL_ControlPointData& data) {
 
         RS_Vector v(data.x, data.y);
 
-        if (spline!=NULL) {
+        if (spline) {
                 spline->addControlPoint(v);
                 spline->update();
         }
-        else if (splinePoints!=NULL) {
+        else if (splinePoints) {
                 splinePoints->addControlPoint(v);
                 splinePoints->update();
         }
@@ -908,7 +908,7 @@ void RS_FilterJWW::addLeaderVertex(const DL_LeaderVertexData& data) {
 
         RS_Vector v(data.x, data.y);
 
-        if (leader!=NULL) {
+        if (leader) {
                 leader->addVertex(v);
         }
 }
@@ -938,7 +938,7 @@ void RS_FilterJWW::addHatch(const DL_HatchData& data) {
  */
 void RS_FilterJWW::addHatchLoop(const DL_HatchLoopData& /*data*/) {
         RS_DEBUG->print("RS_FilterJWW::addHatchLoop()");
-        if (hatch!=NULL) {
+        if (hatch) {
                 hatchLoop = new RS_EntityContainer(hatch);
                 hatchLoop->setLayer(NULL);
                 hatch->addEntity(hatchLoop);
@@ -953,7 +953,7 @@ void RS_FilterJWW::addHatchLoop(const DL_HatchLoopData& /*data*/) {
 void RS_FilterJWW::addHatchEdge(const DL_HatchEdgeData& data) {
         RS_DEBUG->print("RS_FilterJWW::addHatchEdge()");
 
-        if (hatchLoop!=NULL) {
+        if (hatchLoop) {
                 RS_Entity* e = NULL;
                 switch (data.type) {
                 case 1:
@@ -993,7 +993,7 @@ void RS_FilterJWW::addHatchEdge(const DL_HatchEdgeData& data) {
                         break;
                 }
 
-                if (e!=NULL) {
+                if (e) {
                         e->setLayer(NULL);
                         hatchLoop->addEntity(e);
                 }
@@ -1065,7 +1065,7 @@ void RS_FilterJWW::linkImage(const DL_ImageDefData& data) {
 
         // Also link images in subcontainers (e.g. inserts):
         for (RS_Entity* e=graphic->firstEntity(RS2::ResolveNone);
-                        e!=NULL; e=graphic->nextEntity(RS2::ResolveNone)) {
+                        e; e=graphic->nextEntity(RS2::ResolveNone)) {
                 if (e->rtti()==RS2::EntityImage) {
                         RS_Image* img = (RS_Image*)e;
                         if (img->getHandle()==handle) {
@@ -1080,7 +1080,7 @@ void RS_FilterJWW::linkImage(const DL_ImageDefData& data) {
         for (unsigned i=0; i<graphic->countBlocks(); ++i) {
                 RS_Block* b = graphic->blockAt(i);
                 for (RS_Entity* e=b->firstEntity(RS2::ResolveNone);
-                                e!=NULL; e=b->nextEntity(RS2::ResolveNone)) {
+                                e; e=b->nextEntity(RS2::ResolveNone)) {
                         if (e->rtti()==RS2::EntityImage) {
                                 RS_Image* img = (RS_Image*)e;
                                 if (img->getHandle()==handle) {
@@ -1103,7 +1103,7 @@ void RS_FilterJWW::linkImage(const DL_ImageDefData& data) {
 void RS_FilterJWW::endEntity() {
         RS_DEBUG->print("RS_FilterJWW::endEntity");
 
-        if (hatch!=NULL) {
+        if (hatch) {
 
                 RS_DEBUG->print("hatch->update()");
 
@@ -1370,7 +1370,7 @@ bool RS_FilterJWW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         RS_DEBUG->print("writing section ENTITIES...");
         dw->sectionEntities();
         for (RS_Entity* e=graphic->firstEntity(RS2::ResolveNone);
-                        e!=NULL;
+                        e;
                         e=graphic->nextEntity(RS2::ResolveNone)) {
 
                 writeEntity(*dw, e);
@@ -1387,7 +1387,7 @@ bool RS_FilterJWW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                 for (unsigned i=0; i<graphic->countBlocks(); ++i) {
                         RS_Block* block = graphic->blockAt(i);
                         for (RS_Entity* e=block->firstEntity(RS2::ResolveAll);
-                                        e!=NULL;
+                                        e;
                                         e=block->nextEntity(RS2::ResolveAll)) {
 
                                 if (e->rtti()==RS2::EntityImage) {
@@ -1400,7 +1400,7 @@ bool RS_FilterJWW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                         }
                 }
                 for (RS_Entity* e=graphic->firstEntity(RS2::ResolveNone);
-                                e!=NULL;
+                                e;
                                 e=graphic->nextEntity(RS2::ResolveNone)) {
 
                         if (e->rtti()==RS2::EntityImage) {
@@ -1575,7 +1575,7 @@ void RS_FilterJWW::writeBlock(DL_WriterA& dw, RS_Block* blk) {
                                                                 blk->getBasePoint().z));
 #endif
         for (RS_Entity* e=blk->firstEntity(RS2::ResolveNone);
-                        e!=NULL;
+                        e;
                         e=blk->nextEntity(RS2::ResolveNone)) {
                 writeEntity(dw, e);
         }
@@ -1726,7 +1726,7 @@ void RS_FilterJWW::writePolyline(DL_WriterA& dw,
         RS_AtomicEntity* ae = NULL;
         RS_Entity* lastEntity = l->lastEntity(RS2::ResolveNone);
         for (RS_Entity* v=l->firstEntity(RS2::ResolveNone);
-                        v!=NULL;
+                        v;
                         v=nextEntity) {
 
                 nextEntity = l->nextEntity(RS2::ResolveNone);
@@ -1752,7 +1752,7 @@ void RS_FilterJWW::writePolyline(DL_WriterA& dw,
                 }
 
                 //if (jww.getVersion()==VER_R12) {
-                        if (nextEntity!=NULL) {
+                        if (nextEntity) {
                                 if (nextEntity->rtti()==RS2::EntityArc) {
                                         bulge = ((RS_Arc*)nextEntity)->getBulge();
                                 }
@@ -2217,7 +2217,7 @@ void RS_FilterJWW::writeLeader(DL_WriterA& dw, RS_Leader* l,
                         attrib);
                 bool first = true;
                 for (RS_Entity* v=l->firstEntity(RS2::ResolveNone);
-                                v!=NULL;
+                                v;
                                 v=l->nextEntity(RS2::ResolveNone)) {
 
                         // Write line verties:
@@ -2258,7 +2258,7 @@ void RS_FilterJWW::writeHatch(DL_WriterA& dw, RS_Hatch* h,
         if (h->countLoops()>0) {
                 // check if all of the loops contain entities:
                 for (RS_Entity* l=h->firstEntity(RS2::ResolveNone);
-                                l!=NULL;
+                                l;
                                 l=h->nextEntity(RS2::ResolveNone)) {
 
                         if (l->isContainer() && !l->getFlag(RS2::FlagTemp)) {
@@ -2283,7 +2283,7 @@ void RS_FilterJWW::writeHatch(DL_WriterA& dw, RS_Hatch* h,
                 jww.writeHatch1(dw, data, attrib);
 
                 for (RS_Entity* l=h->firstEntity(RS2::ResolveNone);
-                                l!=NULL;
+                                l;
                                 l=h->nextEntity(RS2::ResolveNone)) {
 
                         // Write hatch loops:
@@ -2293,7 +2293,7 @@ void RS_FilterJWW::writeHatch(DL_WriterA& dw, RS_Hatch* h,
                                 jww.writeHatchLoop1(dw, lData);
 
                                 for (RS_Entity* ed=loop->firstEntity(RS2::ResolveNone);
-                                                ed!=NULL;
+                                                ed;
                                                 ed=loop->nextEntity(RS2::ResolveNone)) {
 
                                         // Write hatch loop edges:
@@ -2451,7 +2451,7 @@ void RS_FilterJWW::writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c,
                                                                            RS2::ResolveLevel level) {
 
         for (RS_Entity* e=c->firstEntity(level);
-                        e!=NULL;
+                        e;
                         e=c->nextEntity(level)) {
 
                 writeEntity(dw, e, attrib);
@@ -2511,7 +2511,7 @@ void RS_FilterJWW::setEntityAttributes(RS_Entity* entity,
                 // get the codec for Japanese
                 QString lName = attrib.getLayer().c_str();
                 QTextCodec *codec = QTextCodec::codecForName(enc.toLatin1());
-                if(codec!=NULL)
+                if(codec)
                         lName = codec->toUnicode(attrib.getLayer().c_str());
                 if (graphic->findLayer(lName)==NULL) {
                         addLayer(DL_LayerData(attrib.getLayer(), 0));
@@ -2549,7 +2549,7 @@ DL_Attributes RS_FilterJWW::getEntityAttributes(RS_Entity* entity) {
         // Layer:
         RS_Layer* layer = entity->getLayer();
         QString layerName;
-        if (layer!=NULL) {
+        if (layer) {
                 layerName = layer->getName();
         } else {
                 layerName = "NULL";

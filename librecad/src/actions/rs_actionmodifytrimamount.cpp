@@ -67,7 +67,7 @@ void RS_ActionModifyTrimAmount::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyTrimAmount::trigger()");
 
-    if (trimEntity!=NULL && trimEntity->isAtomic()) {
+    if (trimEntity && trimEntity->isAtomic()) {
 
         RS_Modification m(*container, graphicView);
         double d;
@@ -97,7 +97,7 @@ void RS_ActionModifyTrimAmount::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case ChooseTrimEntity:
-            if (trimEntity!=NULL && trimEntity->isAtomic()) {
+            if (trimEntity && trimEntity->isAtomic()) {
                 trigger();
             } else {
                 if (trimEntity==NULL) {

@@ -141,7 +141,7 @@ void LC_SimpleTests::slotTestDumpEntities(RS_EntityContainer* d){
 					<< "<td>SEL:" << e->isSelected() << "</td>"
 					<< "<td>TMP:" << e->getFlag(RS2::FlagTemp) << "</td>";
 			QString lay = "NULL";
-			if (e->getLayer()!=NULL) {
+			if (e->getLayer()) {
 				lay = e->getLayer()->getName();
 			}
 			dumpFile
@@ -623,7 +623,7 @@ void LC_SimpleTests::slotTestInsertBlock() {
 
 
 		RS_GraphicView* v = appWin->getGraphicView();
-		if (v!=NULL) {
+		if (v) {
 			v->redraw();
 		}
 	}
@@ -775,7 +775,7 @@ void LC_SimpleTests::slotTestInsertEllipse() {
 		*/
 
 		RS_GraphicView* v = appWin->getGraphicView();
-		if (v!=NULL) {
+		if (v) {
 			v->redraw();
 		}
 	}
@@ -923,7 +923,7 @@ void LC_SimpleTests::slotTestInsertText() {
 			  graphic->addEntity(s);
 
 			  RS_GraphicView* v = getGraphicView();
-			  if (v!=NULL) {
+			  if (v) {
 				  v->redraw();
 			  }
 		*/
@@ -1002,7 +1002,7 @@ void LC_SimpleTests::slotTestUnicode() {
 				}
 				strCode = "[" + strCode + "] " + uCode;
 
-				if (graphic->findBlock(strCode)!=NULL) {
+				if (graphic->findBlock(strCode)) {
 					RS_InsertData d(strCode,
 									RS_Vector(col/0x10*20.0,row*20.0),
 									RS_Vector(1.0,1.0), 0.0,
@@ -1079,7 +1079,7 @@ void LC_SimpleTests::slotTestMath01() {
 
 
 		RS_GraphicView* v = appWin->getGraphicView();
-		if (v!=NULL) {
+		if (v) {
 			v->redraw();
 		}
 	}

@@ -68,7 +68,7 @@ void QG_SplineOptions::destroy() {
 void QG_SplineOptions::setAction(RS_ActionInterface* a, bool update) {
     int degree;
     bool closed;
-    if (a!=NULL && (
+    if (a && (
                 a->rtti()==RS2::ActionDrawSpline||a->rtti()==RS2::ActionDrawSplinePoints
                 )) {
         action = (RS_ActionDrawSpline*)a;

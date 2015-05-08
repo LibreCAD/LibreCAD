@@ -85,7 +85,7 @@ void QG_ModifyOffsetOptions::setDist(double& d, bool initial) {
 }
 
 void QG_ModifyOffsetOptions::updateDist(const QString& d) {
-    if (dist!=NULL) {
+    if (dist) {
         *dist=RS_Math::eval(d);
     }
 }

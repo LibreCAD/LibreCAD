@@ -187,7 +187,7 @@ double RS_Math::makeAngleReadable(double angle, bool readable,
         ret = correctAngle(angle+M_PI);
     }
 
-    if (corrected!=NULL) {
+    if (corrected) {
         *corrected = cor;
     }
 

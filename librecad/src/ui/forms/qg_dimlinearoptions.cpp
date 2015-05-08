@@ -64,7 +64,7 @@ void QG_DimLinearOptions::destroy() {
 }
 
 void QG_DimLinearOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDimLinear) {
+    if (a && a->rtti()==RS2::ActionDimLinear) {
         action = (RS_ActionDimLinear*)a;
 
         QString sa;
@@ -84,7 +84,7 @@ void QG_DimLinearOptions::setAction(RS_ActionInterface* a, bool update) {
 }
 
 void QG_DimLinearOptions::updateAngle(const QString & a) {
-    if (action!=NULL) {
+    if (action) {
         action->setAngle(RS_Math::deg2rad(RS_Math::eval(a)));
     }
 }

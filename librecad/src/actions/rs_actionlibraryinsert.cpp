@@ -93,14 +93,14 @@ void RS_ActionLibraryInsert::mouseMoveEvent(QMouseEvent* e) {
     case SetTargetPoint:
         data.insertionPoint = snapPoint(e);
 
-        //if (block!=NULL) {
+        //if (block) {
         deletePreview();
         preview->addAllFrom(prev);
         preview->move(data.insertionPoint);
         preview->scale(data.insertionPoint,
                        RS_Vector(data.factor, data.factor));
         // unit conversion:
-        if (graphic!=NULL) {
+        if (graphic) {
             double uf = RS_Units::convert(1.0, prev.getUnit(),
                                           graphic->getUnit());
             preview->scale(data.insertionPoint,

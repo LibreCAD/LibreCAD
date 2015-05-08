@@ -131,7 +131,7 @@ void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
 }
 
 void QG_DlgHatch::updateHatch() {
-    if (hatch!=NULL) {
+    if (hatch) {
         hatch->setSolid(cbSolid->isChecked());
         hatch->setPattern(cbPattern->currentText());
         hatch->setScale(RS_Math::eval(leScale->text()));
@@ -170,7 +170,7 @@ void QG_DlgHatch::updatePreview(RS_Pattern* ) {
     double scale = RS_Math::eval(leScale->text(), 1.0);
     double angle = RS_Math::deg2rad(RS_Math::eval(leAngle->text(), 0.0));
     double prevSize = 1.0;
-    if (pattern!=NULL) {
+    if (pattern) {
         pattern->calculateBorders();
         prevSize = pattern->getSize().x;
     }

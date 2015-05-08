@@ -57,7 +57,7 @@ RS_VectorSolutions RS_Point::getRefPoints() const
 
 RS_Vector RS_Point::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
 
-    if (dist!=NULL) {
+    if (dist) {
         *dist = data.pos.distanceTo(coord);
     }
 
@@ -68,10 +68,10 @@ RS_Vector RS_Point::getNearestEndpoint(const RS_Vector& coord, double* dist)cons
 
 RS_Vector RS_Point::getNearestPointOnEntity(const RS_Vector& coord,
         bool /*onEntity*/, double* dist, RS_Entity** entity) const{
-    if (dist!=NULL) {
+    if (dist) {
         *dist = data.pos.distanceTo(coord);
     }
-    if (entity!=NULL) {
+    if (entity) {
         *entity = const_cast<RS_Point*>(this);
     }
     return data.pos;
@@ -81,7 +81,7 @@ RS_Vector RS_Point::getNearestPointOnEntity(const RS_Vector& coord,
 
 RS_Vector RS_Point::getNearestCenter(const RS_Vector& coord, double* dist) const{
 
-    if (dist!=NULL) {
+    if (dist) {
         *dist = data.pos.distanceTo(coord);
     }
 
@@ -97,7 +97,7 @@ RS_Vector RS_Point::getMiddlePoint()const{
 RS_Vector RS_Point::getNearestMiddle(const RS_Vector& coord,
                                      double* dist,
                                      const int /*middlePoints*/)const {
-    if (dist!=NULL) {
+    if (dist) {
         *dist = data.pos.distanceTo(coord);
     }
 
@@ -109,7 +109,7 @@ RS_Vector RS_Point::getNearestMiddle(const RS_Vector& coord,
 RS_Vector RS_Point::getNearestDist(double /*distance*/,
                                    const RS_Vector& /*coord*/,
 								   double* dist) const{
-    if (dist!=NULL) {
+    if (dist) {
         *dist = RS_MAXDOUBLE;
     }
     return RS_Vector(false);
@@ -121,7 +121,7 @@ double RS_Point::getDistanceToPoint(const RS_Vector& coord,
                                     RS_Entity** entity,
                                     RS2::ResolveLevel /*level*/,
                                                                         double /*solidDist*/)const {
-    if (entity!=NULL) {
+    if (entity) {
         *entity = const_cast<RS_Point*>(this);
     }
     return data.pos.distanceTo(coord);

@@ -172,7 +172,7 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
         }
         fn = QDir::toNativeSeparators( QFileInfo(fn).absoluteFilePath() );
 
-        if (type!=NULL) {
+        if (type) {
 #if QT_VERSION < 0x040400
             getType( emu_qt44_QFileDialog_selectedNameFilter(this) );
 #else
@@ -273,7 +273,7 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
 #else
     getType(selectedNameFilter());
 #endif
-    if (type!=NULL)
+    if (type)
         *type = ftype;
 
     // append default extension:
@@ -370,7 +370,7 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
             }
 
             // set format:
-            if (type!=NULL) {
+            if (type) {
                 if (fileDlg->selectedNameFilter()=="LFF Font (*.lff)") {
                     *type = RS2::FormatLFF;
                 } else if (fileDlg->selectedNameFilter()=="Font (*.cxf)") {
@@ -511,7 +511,7 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
         if (!fl.isEmpty())
             fn = fl[0];
         fn = QDir::toNativeSeparators( QFileInfo(fn).absoluteFilePath() );
-        if (type!=NULL) {
+        if (type) {
             if (fileDlg->selectedNameFilter()==fDxf1) {
                 *type = RS2::FormatDXF1;
             } else if (fileDlg->selectedNameFilter()==fDxfrw) {

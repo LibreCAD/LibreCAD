@@ -65,7 +65,7 @@ void RS_ActionModifyDelete::trigger() {
 
     finish(false);
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
 }
@@ -73,7 +73,7 @@ void RS_ActionModifyDelete::trigger() {
 
 
 void RS_ActionModifyDelete::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
             //case Acknowledge:
             //    RS_DIALOGFACTORY->updateMouseWidget(tr("Acknowledge"),

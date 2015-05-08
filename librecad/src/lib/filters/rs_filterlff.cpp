@@ -194,7 +194,7 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 
             RS_DEBUG->print("block: %d", i);
 
-            if (blk!=NULL && !blk->isUndone()) {
+            if (blk && !blk->isUndone()) {
                 RS_DEBUG->print("002a: %s",
                                 (blk->getName().toLocal8Bit().data()));
 
@@ -202,7 +202,7 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 
                 // iterate through entities of this letter:
                 for (RS_Entity* e=blk->firstEntity(RS2::ResolveNone);
-                     e!=NULL;
+                     e;
                      e=blk->nextEntity(RS2::ResolveNone)) {
 
                     if (!e->isUndone()) {
@@ -238,7 +238,7 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
                             ts << clearZeros(p->getStartpoint().x, 5) << ',';
                             ts << clearZeros(p->getStartpoint().y, 5);
                             for (RS_Entity* e2=p->firstEntity(RS2::ResolveNone);
-                                 e2!=NULL;
+                                 e2;
                                  e2=p->nextEntity(RS2::ResolveNone)) {
                                 if (e2->rtti()==RS2::EntityLine){
                                     RS_Line* l = (RS_Line*)e2;

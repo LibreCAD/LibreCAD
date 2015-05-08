@@ -83,7 +83,7 @@ void RS_ActionDrawCircle2P::trigger() {
         container->addEntity(circle);
 
         // upd. undo list:
-        if (document!=NULL) {
+        if (document) {
             document->startUndoCycle();
             document->addUndoable(circle);
             document->endUndoCycle();
@@ -96,7 +96,7 @@ void RS_ActionDrawCircle2P::trigger() {
         setStatus(SetPoint1);
         reset();
     } else {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->requestWarningDialog(tr("Invalid Circle data."));
         }
     }
@@ -184,7 +184,7 @@ void RS_ActionDrawCircle2P::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -203,7 +203,7 @@ QStringList RS_ActionDrawCircle2P::getAvailableCommands() {
 
 
 void RS_ActionDrawCircle2P::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetPoint1:
             RS_DIALOGFACTORY->updateMouseWidget(
@@ -229,7 +229,7 @@ void RS_ActionDrawCircle2P::updateMouseCursor() {
 
 
 //void RS_ActionDrawCircle2P::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

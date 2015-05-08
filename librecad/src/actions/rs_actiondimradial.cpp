@@ -73,7 +73,7 @@ void RS_ActionDimRadial::trigger() {
     RS_ActionDimension::trigger();
 
     preparePreview();
-    if (entity!=NULL) {
+    if (entity) {
         RS_DimRadial* newEntity = NULL;
 
         newEntity = new RS_DimRadial(container,
@@ -86,7 +86,7 @@ void RS_ActionDimRadial::trigger() {
         container->addEntity(newEntity);
 
         // upd. undo list:
-        if (document!=NULL) {
+        if (document) {
             document->startUndoCycle();
             document->addUndoable(newEntity);
             document->endUndoCycle();
@@ -105,7 +105,7 @@ void RS_ActionDimRadial::trigger() {
 
 
 void RS_ActionDimRadial::preparePreview() {
-    if (entity!=NULL) {
+    if (entity) {
 		double angle = data->definitionPoint.angleTo(pos);
         double radius=0.0;
         if (entity->rtti()==RS2::EntityArc) {
@@ -133,7 +133,7 @@ void RS_ActionDimRadial::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetPos:
-        if (entity!=NULL) {
+        if (entity) {
             pos = snapPoint(e);
 
             preparePreview();
@@ -162,7 +162,7 @@ void RS_ActionDimRadial::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case SetEntity: {
                 RS_Entity* en = catchEntity(e, RS2::ResolveAll);
-                if (en!=NULL) {
+                if (en) {
                     if (en->rtti()==RS2::EntityArc ||
                             en->rtti()==RS2::EntityCircle) {
                         entity = en;

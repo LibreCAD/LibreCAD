@@ -50,19 +50,19 @@ QAction* RS_ActionLayersRemove::createGUIAction(RS2::ActionType /*type*/, QObjec
 void RS_ActionLayersRemove::trigger() {
     RS_DEBUG->print("RS_ActionLayersRemove::trigger");
 
-    if (graphic!=NULL) {
+    if (graphic) {
         RS_Layer* layer =
             RS_DIALOGFACTORY->requestLayerRemovalDialog(graphic->getLayerList());
 
         /*
-              if (layer!=NULL && layer->getName()!="0") {
+              if (layer && layer->getName()!="0") {
 
                   graphic->startUndoCycle();
                   for (RS_Entity* e=graphic->firstEntity(RS2::ResolveNone);
-                          e!=NULL;
+                          e;
                           e=graphic->nextEntity(RS2::ResolveNone)) {
 
-                      if (e->getLayer()!=NULL &&
+                      if (e->getLayer() &&
                               e->getLayer()->getName()==layer->getName()) {
 
                           e->setUndoState(true);

@@ -66,7 +66,7 @@ void QG_RoundOptions::destroy() {
 }
 
 void QG_RoundOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionModifyRound) {
+    if (a && a->rtti()==RS2::ActionModifyRound) {
         action = (RS_ActionModifyRound*)a;
 
         QString sr;
@@ -91,7 +91,7 @@ void QG_RoundOptions::setAction(RS_ActionInterface* a, bool update) {
 
 
 void QG_RoundOptions::updateData() {
-    if (action!=NULL) {
+    if (action) {
         action->setTrim(cbTrim->isChecked());
         action->setRadius(RS_Math::eval(leRadius->text()));
     }

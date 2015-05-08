@@ -117,7 +117,7 @@ void RS_ActionInfoInside::updateMouseCursor() {
 
 
 //void RS_ActionInfoInside::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

@@ -63,7 +63,7 @@ void QG_ArcOptions::destroy() {
 }
 
 void QG_ArcOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawArc) {
+    if (a && a->rtti()==RS2::ActionDrawArc) {
         action = (RS_ActionDrawArc*)a;
 
         bool reversed;
@@ -101,7 +101,7 @@ void QG_ArcOptions::setAction(RS_ActionInterface* a, bool update) {
 }*/
 
 void QG_ArcOptions::updateDirection(bool /*pos*/) {
-    if (action!=NULL) {
+    if (action) {
         action->setReversed(!(rbPos->isChecked()));
     }
 }

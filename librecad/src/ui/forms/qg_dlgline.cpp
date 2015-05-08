@@ -66,11 +66,11 @@ void QG_DlgLine::setLine(RS_Line& l) {
     //pen = line->getPen();
     wPen->setPen(line->getPen(false), true, false, "Pen");
     RS_Graphic* graphic = line->getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
     RS_Layer* lay = line->getLayer(false);
-    if (lay!=NULL) {
+    if (lay) {
         cbLayer->setLayer(*lay);
     }
     QString s;

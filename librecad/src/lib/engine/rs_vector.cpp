@@ -931,10 +931,10 @@ RS_Vector RS_VectorSolutions::getClosest(const RS_Vector& coord,
             }
         }
     }
-    if (dist!=NULL) {
+	if (dist) {
         *dist = sqrt(minDist);
     }
-    if (index!=NULL) {
+	if (index) {
         *index = pos;
     }
     return closestPoint;

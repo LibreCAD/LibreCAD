@@ -81,7 +81,7 @@ void RS_ActionDrawEllipseFociPoint::trigger() {
     container->addEntity(ellipse);
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(ellipse);
         document->endUndoCycle();
@@ -193,7 +193,7 @@ void RS_ActionDrawEllipseFociPoint::commandEvent(RS_CommandEvent* e) {
     QString cmd = e->getCommand().toLower();
 
     if (checkCommand("help", cmd)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -212,7 +212,7 @@ void RS_ActionDrawEllipseFociPoint::commandEvent(RS_CommandEvent* e) {
     //                    setStatus(SetAngle1);
     //                }
     //            } else {
-    //                if (RS_DIALOGFACTORY!=NULL) {
+    //                if (RS_DIALOGFACTORY) {
     //                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
     //                }
     //            }
@@ -226,7 +226,7 @@ void RS_ActionDrawEllipseFociPoint::commandEvent(RS_CommandEvent* e) {
     //                angle1 = RS_Math::deg2rad(a);
     //                setStatus(SetAngle2);
     //            } else {
-    //                if (RS_DIALOGFACTORY!=NULL) {
+    //                if (RS_DIALOGFACTORY) {
     //                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
     //                }
     //            }
@@ -246,7 +246,7 @@ void RS_ActionDrawEllipseFociPoint::commandEvent(RS_CommandEvent* e) {
                 RS_DIALOGFACTORY->commandMessage(QString::number(fabs(a))+" is smaller than distance between foci");
             }
         } else {
-            if (RS_DIALOGFACTORY!=NULL) {
+            if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
             }
         }
@@ -267,7 +267,7 @@ QStringList RS_ActionDrawEllipseFociPoint::getAvailableCommands() {
 
 
 void RS_ActionDrawEllipseFociPoint::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetFocus1:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first focus of ellipse"),
@@ -301,7 +301,7 @@ void RS_ActionDrawEllipseFociPoint::updateMouseCursor() {
 
 
 //void RS_ActionDrawEllipseFociPoint::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

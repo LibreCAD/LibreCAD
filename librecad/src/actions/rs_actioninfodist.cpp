@@ -183,7 +183,7 @@ void RS_ActionInfoDist::updateMouseCursor() {
 
 
 //void RS_ActionInfoDist::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

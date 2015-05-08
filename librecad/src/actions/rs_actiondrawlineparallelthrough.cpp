@@ -57,7 +57,7 @@ QAction* RS_ActionDrawLineParallelThrough::createGUIAction(RS2::ActionType /*typ
 void RS_ActionDrawLineParallelThrough::trigger() {
     RS_PreviewActionInterface::trigger();
 
-    if (entity!=NULL) {
+    if (entity) {
         RS_Creation creation(container, graphicView);
         RS_Entity* e = creation.createParallelThrough(coord,
                        number,
@@ -119,7 +119,7 @@ void RS_ActionDrawLineParallelThrough::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case SetEntity:
             entity = catchEntity(e, RS2::ResolveAll);
-            if (entity!=NULL) {
+            if (entity) {
                 entity->setHighlighted(true);
                 graphicView->drawEntity(entity);
                 setStatus(SetPos);
@@ -135,7 +135,7 @@ void RS_ActionDrawLineParallelThrough::mouseReleaseEvent(QMouseEvent* e) {
         }
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
-        if (entity!=NULL) {
+        if (entity) {
             entity->setHighlighted(false);
             graphicView->drawEntity(entity);
             entity=NULL;
@@ -275,7 +275,7 @@ void RS_ActionDrawLineParallelThrough::updateMouseCursor() {
 
 
 //void RS_ActionDrawLineParallelThrough::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

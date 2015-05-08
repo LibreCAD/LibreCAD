@@ -59,7 +59,7 @@ void QG_LineRelAngleOptions::languageChange()
 }
 
 void QG_LineRelAngleOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL &&
+    if (a &&
             ( a->rtti()==RS2::ActionDrawLineRelAngle
               ||
               a->rtti()==RS2::ActionDrawLineOrthogonal )
@@ -103,7 +103,7 @@ void QG_LineRelAngleOptions::setAction(RS_ActionInterface* a, bool update) {
 }
 
 void QG_LineRelAngleOptions::destroy() {
-    if (action!=NULL) {
+    if (action) {
         RS_SETTINGS->beginGroup("/Draw");
         if (!action->hasFixedAngle()) {
             RS_SETTINGS->writeEntry("/LineRelAngleAngle", 
@@ -115,13 +115,13 @@ void QG_LineRelAngleOptions::destroy() {
 }
 
 void QG_LineRelAngleOptions::updateAngle(const QString& a) {
-    if (action!=NULL && !action->hasFixedAngle()) {
+    if (action && !action->hasFixedAngle()) {
         action->setAngle(RS_Math::deg2rad(RS_Math::eval(a)));
     }
 }
 
 void QG_LineRelAngleOptions::updateLength(const QString& l) {
-    if (action!=NULL) {
+    if (action) {
         action->setLength(RS_Math::eval(l));
     }
 }

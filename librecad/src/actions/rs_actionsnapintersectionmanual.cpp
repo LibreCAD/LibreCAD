@@ -68,15 +68,15 @@ void RS_ActionSnapIntersectionManual::trigger() {
 
     RS_DEBUG->print("RS_ActionSnapIntersectionManual::trigger()");
 
-    if (entity2!=NULL && entity2->isAtomic() &&
-            entity1!=NULL && entity1->isAtomic()) {
+    if (entity2 && entity2->isAtomic() &&
+            entity1 && entity1->isAtomic()) {
 
         RS_VectorSolutions sol =
             RS_Information::getIntersection(entity1, entity2, false);
 
         entity2 = NULL;
         entity1 = NULL;
-        if (predecessor!=NULL) {
+        if (predecessor) {
             RS_Vector ip = sol.getClosest(coord);
 
             if (ip.valid) {
@@ -149,7 +149,7 @@ void RS_ActionSnapIntersectionManual::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case ChooseEntity1:
             entity1 = se;
-            if (entity1!=NULL && entity1->isAtomic()) {
+            if (entity1 && entity1->isAtomic()) {
                 setStatus(ChooseEntity2);
             }
             break;
@@ -157,7 +157,7 @@ void RS_ActionSnapIntersectionManual::mouseReleaseEvent(QMouseEvent* e) {
         case ChooseEntity2:
             entity2 = se;
             coord = mouse;
-            if (entity2!=NULL && entity2->isAtomic() && coord.valid) {
+            if (entity2 && entity2->isAtomic() && coord.valid) {
                 trigger();
             }
             break;

@@ -57,7 +57,7 @@ QAction* RS_ActionDrawText::createGUIAction(RS2::ActionType /*type*/, QObject* /
 
 void RS_ActionDrawText::init(int status) {
     RS_ActionInterface::init(status);
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
 
         switch (status) {
         case ShowDialog: {
@@ -222,7 +222,7 @@ void RS_ActionDrawText::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -240,7 +240,7 @@ void RS_ActionDrawText::commandEvent(RS_CommandEvent* e) {
 
     case SetText: {
             setText(e->getCommand());
-            if (RS_DIALOGFACTORY!=NULL) {
+            if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->requestOptions(this, true, true);
             }
             graphicView->enableCoordinateInput();
@@ -268,7 +268,7 @@ QStringList RS_ActionDrawText::getAvailableCommands() {
 void RS_ActionDrawText::showOptions() {
     RS_ActionInterface::showOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, true, true);
     }
 }
@@ -278,7 +278,7 @@ void RS_ActionDrawText::showOptions() {
 void RS_ActionDrawText::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, false);
     }
 }
@@ -286,7 +286,7 @@ void RS_ActionDrawText::hideOptions() {
 
 
 void RS_ActionDrawText::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetPos:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify insertion point"),
@@ -316,14 +316,14 @@ void RS_ActionDrawText::updateMouseCursor() {
 
 //void RS_ActionDrawText::updateToolBar() {
 //    if(isFinished()) {
-//        if (RS_DIALOGFACTORY!=NULL) {
+//        if (RS_DIALOGFACTORY) {
 //            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
 //        }
 //    }
 //    /*
 //    //not needed any more with new snap
 //    return;
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        switch (getStatus()) {
 //        case SetPos:
 //            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);

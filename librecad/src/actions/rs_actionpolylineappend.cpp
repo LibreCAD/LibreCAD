@@ -62,7 +62,7 @@ void RS_ActionPolylineAppend::trigger() {
 	polyline->setPenToActive();
 
 	// upd. undo list:
-	if (document!=NULL) {
+	if (document) {
 		document->startUndoCycle();
                 // RVT_PORT need to decide on how to handle undo cycles
                 originalPolyline->setUndoState(true);
@@ -162,7 +162,7 @@ void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent* e) {
 			polyline = new RS_Polyline(container, *data);
 			polyline->addVertex(start, 0.0, prepend);
 		}
-		if (polyline!=NULL) {
+		if (polyline) {
 			polyline->addVertex(mouse, 0.0, prepend);
 //			polyline->setEndpoint(mouse);
 			if (polyline->count()==1) {

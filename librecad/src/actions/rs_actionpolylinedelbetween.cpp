@@ -62,7 +62,7 @@ void RS_ActionPolylineDelBetween::trigger() {
 
         RS_DEBUG->print("RS_ActionPolylineDelBetween::trigger()");
 
-        if (delEntity!=NULL && delSegment->isAtomic() && nodePoint1.valid && nodePoint2.valid) {
+        if (delEntity && delSegment->isAtomic() && nodePoint1.valid && nodePoint2.valid) {
 
                 delEntity->setHighlighted(false);
                 graphicView->drawEntity(delEntity);
@@ -167,7 +167,7 @@ void RS_ActionPolylineDelBetween::mouseReleaseEvent(QMouseEvent* e) {
                 }
         } else if (e->button()==Qt::RightButton) {
                 deleteSnapper();
-                if (delEntity!=NULL) {
+                if (delEntity) {
                         delEntity->setHighlighted(false);
                         graphicView->drawEntity(delEntity);
 ////////////////////////////////////////2006/06/15
@@ -208,7 +208,7 @@ void RS_ActionPolylineDelBetween::updateMouseCursor() {
 
 
 //void RS_ActionPolylineDelBetween::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

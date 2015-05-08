@@ -86,7 +86,7 @@ void RS_LayerList::activate(const QString& name, bool notify) {
 void RS_LayerList::activate(RS_Layer* layer, bool notify) {
     RS_DEBUG->print("RS_LayerList::activate notify: %d begin", notify);
 
-    /*if (layer!=NULL) {
+    /*if (layer) {
         RS_DEBUG->print("RS_LayerList::activate: %s",
                         layer->getName().latin1());
 } else {

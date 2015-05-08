@@ -66,8 +66,8 @@ void RS_ActionModifyRound::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyRound::trigger()");
 
-    if (entity1!=NULL && entity1->isAtomic() &&
-            entity2!=NULL && entity2->isAtomic()) {
+    if (entity1 && entity1->isAtomic() &&
+            entity2 && entity2->isAtomic()) {
 
         deletePreview();
 
@@ -86,7 +86,7 @@ void RS_ActionModifyRound::trigger() {
         entity2 = NULL;
         setStatus(SetEntity1);
 
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
         }
     }
@@ -110,7 +110,7 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent* e) {
         entity2 = se;
         coord2 = mouse;
 
-        if (entity1!=NULL && entity2!=NULL && entity2->isAtomic() &&
+        if (entity1 && entity2 && entity2->isAtomic() &&
                         RS_Information::isTrimmable(entity1, entity2)) {
 
             deletePreview();
@@ -158,7 +158,7 @@ void RS_ActionModifyRound::mouseReleaseEvent(QMouseEvent* e) {
         case SetEntity1:
             entity1 = se;
             coord1 = mouse;
-            if (entity1!=NULL && entity1->isAtomic() &&
+            if (entity1 && entity1->isAtomic() &&
                                 RS_Information::isTrimmable(entity1)) {
                 setStatus(SetEntity2);
             }
@@ -167,7 +167,7 @@ void RS_ActionModifyRound::mouseReleaseEvent(QMouseEvent* e) {
         case SetEntity2:
             entity2 = se;
             coord2 = mouse;
-            if (entity2!=NULL && entity2->isAtomic() &&
+            if (entity2 && entity2->isAtomic() &&
                             RS_Information::isTrimmable(entity1, entity2)) {
                 //setStatus(ChooseRounding);
                 trigger();
@@ -189,7 +189,7 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -208,7 +208,7 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
             lastStatus = (Status)getStatus();
             setStatus(SetTrim);
             data.trim = !data.trim;
-            if (RS_DIALOGFACTORY!=NULL) {
+            if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->requestOptions(this, true, true);
             }
         }
@@ -221,11 +221,11 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
                 e->accept();
                 data.radius = r;
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
-            if (RS_DIALOGFACTORY!=NULL) {
+            if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->requestOptions(this, true, true);
             }
             setStatus(lastStatus);
@@ -272,7 +272,7 @@ QStringList RS_ActionModifyRound::getAvailableCommands() {
 void RS_ActionModifyRound::showOptions() {
     RS_ActionInterface::showOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, true);
     }
 }
@@ -282,7 +282,7 @@ void RS_ActionModifyRound::showOptions() {
 void RS_ActionModifyRound::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, false);
     }
 }
@@ -290,7 +290,7 @@ void RS_ActionModifyRound::hideOptions() {
 
 
 void RS_ActionModifyRound::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetEntity1:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first entity"),
@@ -326,7 +326,7 @@ void RS_ActionModifyRound::updateMouseCursor() {
 //void RS_ActionModifyRound::updateToolBar() {
 //    //not needed any more with new snap
 //    return;
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
 //    }
 //}

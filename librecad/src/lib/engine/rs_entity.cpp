@@ -320,7 +320,7 @@ bool RS_Entity::isVisible() const{
     }
 
         /*RS_EntityCotnainer* parent = getParent();
-        if (parent!=NULL && parent->isUndone()) {
+        if (parent && parent->isUndone()) {
                 return false;
         }*/
 
@@ -339,7 +339,7 @@ bool RS_Entity::isVisible() const{
         return true;
     }
 
-    if (layer!=NULL /*&& layer->getName()!="ByBlock"*/) {
+    if (layer /*&& layer->getName()!="ByBlock"*/) {
 
         if (!layer->isFrozen()) {
             return true;
@@ -562,7 +562,7 @@ RS_Document* RS_Entity::getDocument() const{
  */
 void RS_Entity::addGraphicVariable(const QString& key, double val, int code) {
     RS_Graphic* graphic = getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         graphic->addVariable(key, val, code);
     }
 }
@@ -577,7 +577,7 @@ void RS_Entity::addGraphicVariable(const QString& key, double val, int code) {
  */
 void RS_Entity::addGraphicVariable(const QString& key, int val, int code) {
     RS_Graphic* graphic = getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         graphic->addVariable(key, val, code);
     }
 }
@@ -593,7 +593,7 @@ void RS_Entity::addGraphicVariable(const QString& key, int val, int code) {
 void RS_Entity::addGraphicVariable(const QString& key,
                                    const QString& val, int code) {
     RS_Graphic* graphic = getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         graphic->addVariable(key, val, code);
     }
 }
@@ -612,7 +612,7 @@ void RS_Entity::addGraphicVariable(const QString& key,
 double RS_Entity::getGraphicVariableDouble(const QString& key, double def) {
     RS_Graphic* graphic = getGraphic();
     double ret=def;
-    if (graphic!=NULL) {
+    if (graphic) {
         ret = graphic->getVariableDouble(key, def);
     }
     return ret;
@@ -695,7 +695,7 @@ RS_Layer* RS_Entity::getLayer(bool resolve) const {
         // we have no layer but a parent that might have one.
         // return parent's layer instead:
         if (layer==NULL /*|| layer->getName()=="ByBlock"*/) {
-            if (parent!=NULL) {
+            if (parent) {
                 return parent->getLayer(true);
             } else {
                 return NULL;
@@ -714,7 +714,7 @@ RS_Layer* RS_Entity::getLayer(bool resolve) const {
  */
 void RS_Entity::setLayer(const QString& name) {
     RS_Graphic* graphic = getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         layer = graphic->findLayer(name);
     } else {
         layer = NULL;
@@ -740,7 +740,7 @@ void RS_Entity::setLayer(RS_Layer* l) {
 void RS_Entity::setLayerToActive() {
     RS_Graphic* graphic = getGraphic();
 
-    if (graphic!=NULL) {
+    if (graphic) {
         layer = graphic->getActiveLayer();
     } else {
         layer = NULL;
@@ -772,15 +772,15 @@ RS_Pen RS_Entity::getPen(bool resolve) const {
         // use parental attributes (e.g. vertex of a polyline, block
         // entities when they are drawn in block documents):
         if (!p.isValid() || p.getColor().isByBlock()) {
-            if (parent!=NULL) {
+            if (parent) {
                 p = parent->getPen();
             }
         }
         // use layer attributes:
-        else if (l!=NULL) {
+        else if (l) {
 
             // layer is "ByBlock":
-            /*if (layer->getName()=="ByBlock" && getBlockOrInsert()!=NULL) {
+            /*if (layer->getName()=="ByBlock" && getBlockOrInsert()) {
                 p = getBlockOrInsert()->getPen();
         } else {*/
 
@@ -814,7 +814,7 @@ RS_Pen RS_Entity::getPen(bool resolve) const {
  */
 void RS_Entity::setPenToActive() {
     RS_Document* doc = getDocument();
-    if (doc!=NULL) {
+    if (doc) {
         pen = doc->getActivePen();
     } else {
         //RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Entity::setPenToActive(): "
@@ -853,7 +853,7 @@ void RS_Entity::stretch(const RS_Vector& firstCorner,
 double RS_Entity::getStyleFactor(RS_GraphicView* view) {
     double styleFactor = 1.0;
 
-    if (view!=NULL) {
+    if (view) {
         if (view->isPrinting()==false && view->isDraftMode()) {
             styleFactor = 1.0/view->getFactor().x;
         } else {
@@ -861,7 +861,7 @@ double RS_Entity::getStyleFactor(RS_GraphicView* view) {
             // the factor caused by the unit:
             RS2::Unit unit = RS2::None;
             RS_Graphic* g = getGraphic();
-            if (g!=NULL) {
+            if (g) {
                 unit = g->getUnit();
                 //double scale = g->getPaperScale();
                 styleFactor = RS_Units::convert(1.0, RS2::Millimeter, unit);
@@ -878,7 +878,7 @@ double RS_Entity::getStyleFactor(RS_GraphicView* view) {
 
         if (view->isPrinting() || view->isPrintPreview() || view->isDraftMode()==false) {
             RS_Graphic* graphic = getGraphic();
-            if (graphic!=NULL && graphic->getPaperScale()>1.0e-6) {
+            if (graphic && graphic->getPaperScale()>1.0e-6) {
                 styleFactor /= graphic->getPaperScale();
             }
         }

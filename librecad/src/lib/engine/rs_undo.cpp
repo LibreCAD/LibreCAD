@@ -97,7 +97,7 @@ void RS_Undo::startUndoCycle() {
         RS_UndoCycle* l = NULL;
         if (!( undoList.isEmpty()) )
             l = undoList.last();
-        if (l!=NULL) {
+        if (l) {
             RS_Undoable* u=NULL;
             bool done = false;
             do {
@@ -105,7 +105,7 @@ void RS_Undo::startUndoCycle() {
                     u = l->undoables.first();
                 else
                    u = NULL;
-                if (u!=NULL) {
+                if (u) {
                     // Remove the pointer from _all_ cycles:
                                         for (int i = 0; i < undoList.size(); ++i) {
                                             (undoList.at(i))->removeUndoable(u);
@@ -136,7 +136,7 @@ void RS_Undo::startUndoCycle() {
 void RS_Undo::addUndoable(RS_Undoable* u) {
     RS_DEBUG->print("RS_Undo::addUndoable");
 
-    if (currentCycle!=NULL) {
+    if (currentCycle) {
         currentCycle->addUndoable(u);
     } else {
         RS_DEBUG->print(RS_Debug::D_WARNING,

@@ -64,7 +64,7 @@ void RS_ActionDrawCircleTan1_2P::init(int status) {
     }
 
     if (status<=SetCircle1) {
-        if(circle!=NULL) {
+        if(circle) {
             if(circle->isHighlighted()){
                 circle->setHighlighted(false);
                 graphicView->redraw(RS2::RedrawDrawing);
@@ -95,7 +95,7 @@ void RS_ActionDrawCircleTan1_2P::trigger() {
     container->addEntity(c);
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(c);
         document->endUndoCycle();
@@ -343,7 +343,7 @@ void RS_ActionDrawCircleTan1_2P::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -362,7 +362,7 @@ void RS_ActionDrawCircleTan1_2P::commandEvent(RS_CommandEvent* e) {
                     setStatus(SetAngle1);
                 }
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -376,7 +376,7 @@ void RS_ActionDrawCircleTan1_2P::commandEvent(RS_CommandEvent* e) {
                 angle1 = RS_Math::deg2rad(a);
                 setStatus(SetAngle2);
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -390,7 +390,7 @@ void RS_ActionDrawCircleTan1_2P::commandEvent(RS_CommandEvent* e) {
                 angle2 = RS_Math::deg2rad(a);
                 trigger();
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -433,7 +433,7 @@ QStringList RS_ActionDrawCircleTan1_2P::getAvailableCommands() {
 
 
 void RS_ActionDrawCircleTan1_2P::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetCircle1:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify a line/arc/circle"),
@@ -472,7 +472,7 @@ double RS_ActionDrawCircleTan1_2P::getRadius() const{
 }
 
 //void RS_ActionDrawCircleTan1_2P::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

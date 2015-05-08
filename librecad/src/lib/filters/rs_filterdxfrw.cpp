@@ -184,7 +184,7 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
     RS_DEBUG->print("RS_FilterDXF::addLayer: creating layer");
 
     QString name = QString::fromUtf8(data.name.c_str());
-    if (name != "0" && graphic->findLayer(name)!=NULL) {
+    if (name != "0" && graphic->findLayer(name)) {
         return;
     }
     RS_Layer* layer = new RS_Layer(name);
@@ -1063,7 +1063,7 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                     DRW_Vertex2D *vert = pline->vertlist.at(j);
                     polyline->addVertex(RS_Vector(vert->x, vert->y), vert->bulge);
             }
-            for (RS_Entity* e=polyline->firstEntity(); e!=NULL;
+            for (RS_Entity* e=polyline->firstEntity(); e;
                     e=polyline->nextEntity()) {
                 RS_Entity* tmp = e->clone();
                 tmp->reparent(hatchLoop);
@@ -1141,7 +1141,7 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                 default:
                     break;
                 }
-                if (e!=NULL) {
+                if (e) {
                     e->setLayer(NULL);
                     hatchLoop->addEntity(e);
                 }
@@ -1218,7 +1218,7 @@ void RS_FilterDXFRW::linkImage(const DRW_ImageDef *data) {
 
     // Also link images in subcontainers (e.g. inserts):
     for (RS_Entity* e=graphic->firstEntity(RS2::ResolveNone);
-            e!=NULL; e=graphic->nextEntity(RS2::ResolveNone)) {
+            e; e=graphic->nextEntity(RS2::ResolveNone)) {
         if (e->rtti()==RS2::EntityImage) {
             RS_Image* img = (RS_Image*)e;
             if (img->getHandle()==handle) {
@@ -1233,7 +1233,7 @@ void RS_FilterDXFRW::linkImage(const DRW_ImageDef *data) {
     for (unsigned i=0; i<graphic->countBlocks(); ++i) {
         RS_Block* b = graphic->blockAt(i);
         for (RS_Entity* e=b->firstEntity(RS2::ResolveNone);
-                e!=NULL; e=b->nextEntity(RS2::ResolveNone)) {
+                e; e=b->nextEntity(RS2::ResolveNone)) {
             if (e->rtti()==RS2::EntityImage) {
                 RS_Image* img = (RS_Image*)e;
                 if (img->getHandle()==handle) {
@@ -1491,7 +1491,7 @@ void RS_FilterDXFRW::writeBlocks() {
         dxfW->writeBlock(&block);
         RS_EntityContainer *ct = (RS_EntityContainer *)it.key();
         for (RS_Entity* e=ct->firstEntity(RS2::ResolveNone);
-             e!=NULL; e=ct->nextEntity(RS2::ResolveNone)) {
+             e; e=ct->nextEntity(RS2::ResolveNone)) {
             if ( !(e->getFlag(RS2::FlagUndone)) ) {
                 writeEntity(e);
             }
@@ -1514,7 +1514,7 @@ void RS_FilterDXFRW::writeBlocks() {
 #endif
             dxfW->writeBlock(&block);
             for (RS_Entity* e=blk->firstEntity(RS2::ResolveNone);
-                 e!=NULL; e=blk->nextEntity(RS2::ResolveNone)) {
+                 e; e=blk->nextEntity(RS2::ResolveNone)) {
                 if ( !(e->getFlag(RS2::FlagUndone)) ) {
                     writeEntity(e);
                 }
@@ -2123,7 +2123,7 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
     double bulge=0.0;
 
     for (RS_Entity* e=l->firstEntity(RS2::ResolveNone);
-         e!=NULL; e=nextEntity) {
+         e; e=nextEntity) {
 
         currEntity = e;
         nextEntity = l->nextEntity(RS2::ResolveNone);
@@ -2167,7 +2167,7 @@ void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
     double bulge=0.0;
 
     for (RS_Entity* e=p->firstEntity(RS2::ResolveNone);
-         e!=NULL; e=nextEntity) {
+         e; e=nextEntity) {
 
         currEntity = e;
         nextEntity = p->nextEntity(RS2::ResolveNone);
@@ -2217,7 +2217,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
         DRW_Polyline pol;
         RS_Entity* e;
         for (e=s->firstEntity(RS2::ResolveNone);
-             e!=NULL; e=s->nextEntity(RS2::ResolveNone)) {
+             e; e=s->nextEntity(RS2::ResolveNone)) {
             pol.addVertex( DRW_Vertex(e->getStartpoint().x,
                                       e->getStartpoint().y, 0.0, 0.0));
         }
@@ -2667,7 +2667,7 @@ void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
     leader.vertnum = l->count();
     RS_Line* li =NULL;
     for (RS_Entity* v=l->firstEntity(RS2::ResolveNone);
-            v!=NULL;   v=l->nextEntity(RS2::ResolveNone)) {
+            v;   v=l->nextEntity(RS2::ResolveNone)) {
         if (v->rtti()==RS2::EntityLine) {
             li = (RS_Line*)v;
             leader.vertexlist.push_back(new DRW_Coord(li->getStartpoint().x, li->getStartpoint().y, 0.0));
@@ -2710,7 +2710,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
     if (h->countLoops()>0) {
         // check if all of the loops contain entities:
         for (RS_Entity* l=h->firstEntity(RS2::ResolveNone);
-                l!=NULL;
+                l;
                 l=h->nextEntity(RS2::ResolveNone)) {
 
             if (l->isContainer() && !l->getFlag(RS2::FlagTemp)) {
@@ -2741,7 +2741,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
     ha.loopsnum = h->countLoops();
 
     for (RS_Entity* l=h->firstEntity(RS2::ResolveNone);
-         l!=NULL;
+         l;
          l=h->nextEntity(RS2::ResolveNone)) {
 
         // Write hatch loops:
@@ -2750,7 +2750,7 @@ void RS_FilterDXFRW::writeHatch(RS_Hatch * h) {
             DRW_HatchLoop *lData = new DRW_HatchLoop(0);
 
             for (RS_Entity* ed=loop->firstEntity(RS2::ResolveNone);
-                 ed!=NULL;
+                 ed;
                  ed=loop->nextEntity(RS2::ResolveNone)) {
 
                 // Write hatch loop edges:
@@ -2927,7 +2927,7 @@ void RS_FilterDXFRW::writeImage(RS_Image * i) {
                                        RS2::ResolveLevel level) {
 
     for (RS_Entity* e=c->firstEntity(level);
-            e!=NULL;
+            e;
             e=c->nextEntity(level)) {
 
         writeEntity(dw, e, attrib);
@@ -2985,7 +2985,7 @@ void RS_FilterDXFRW::getEntityAttributes(DRW_Entity* ent, const RS_Entity* entit
     // Layer:
     RS_Layer* layer = entity->getLayer();
     QString layerName;
-    if (layer!=NULL) {
+    if (layer) {
         layerName = layer->getName();
     } else {
         layerName = "0";

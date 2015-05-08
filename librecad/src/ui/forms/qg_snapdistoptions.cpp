@@ -78,7 +78,7 @@ void QG_SnapDistOptions::setDist(double& d, bool initial) {
 }
 
 void QG_SnapDistOptions::updateDist(const QString& d) {
-    if (dist!=NULL) {
+    if (dist) {
         *dist = RS_Math::eval(d, 1.0);/*
         //a brutal force
         //todo cleanup distance value for rs_snapper

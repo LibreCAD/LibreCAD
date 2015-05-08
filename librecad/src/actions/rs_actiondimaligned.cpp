@@ -63,7 +63,7 @@ void RS_ActionDimAligned::reset() {
 							  RS_Vector(false))
 				);
     lastStatus = SetExtPoint1;
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, true, true);
     }
 }
@@ -85,7 +85,7 @@ void RS_ActionDimAligned::trigger() {
     container->addEntity(dim);
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(dim);
         document->endUndoCycle();
@@ -212,7 +212,7 @@ void RS_ActionDimAligned::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -222,7 +222,7 @@ void RS_ActionDimAligned::commandEvent(RS_CommandEvent* e) {
     switch (getStatus()) {
     case SetText: {
             setText(c);
-            if (RS_DIALOGFACTORY!=NULL) {
+            if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->requestOptions(this, true, true);
             }
             setStatus(lastStatus);
@@ -262,7 +262,7 @@ QStringList RS_ActionDimAligned::getAvailableCommands() {
 
 
 void RS_ActionDimAligned::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetExtPoint1:
             RS_DIALOGFACTORY->updateMouseWidget(
@@ -292,7 +292,7 @@ void RS_ActionDimAligned::updateMouseButtonHints() {
 
 
 void RS_ActionDimAligned::hideOptions() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, false);
     }
 
@@ -304,7 +304,7 @@ void RS_ActionDimAligned::hideOptions() {
 void RS_ActionDimAligned::showOptions() {
     RS_ActionDimension::showOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, true);
     }
 }

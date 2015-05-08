@@ -48,7 +48,7 @@ void QG_MoveRotateOptions::destroy() {
 
 
 void QG_MoveRotateOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionModifyMoveRotate) {
+    if (a && a->rtti()==RS2::ActionModifyMoveRotate) {
         action = (RS_ActionModifyMoveRotate*)a;
 
         QString sa;
@@ -70,7 +70,7 @@ void QG_MoveRotateOptions::setAction(RS_ActionInterface* a, bool update) {
 }
 
 void QG_MoveRotateOptions::updateAngle(const QString& a) {
-    if (action!=NULL) {
+    if (action) {
         action->setAngle(RS_Math::deg2rad(RS_Math::eval(a)));
     }
 }

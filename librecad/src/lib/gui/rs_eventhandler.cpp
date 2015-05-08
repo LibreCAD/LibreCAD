@@ -55,7 +55,7 @@ RS_EventHandler::RS_EventHandler(RS_GraphicView* graphicView) {
  */
 RS_EventHandler::~RS_EventHandler() {
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler");
-    if (defaultAction!=NULL) {
+    if (defaultAction) {
         defaultAction->finish();
         delete defaultAction;
         defaultAction = NULL;
@@ -67,7 +67,7 @@ RS_EventHandler::~RS_EventHandler() {
         delete currentActions[i];
     }
     //    for (int i=0; i<RS_MAXACTIONS; ++i) {
-    //        if (currentActions[i]!=NULL) {
+    //        if (currentActions[i]) {
     //            currentActions[i]->setFinished();
     //        }
     //    }
@@ -105,7 +105,7 @@ void RS_EventHandler::mousePressEvent(QMouseEvent* e) {
         currentActions.last()->mousePressEvent(e);
         e->accept();
     } else {
-        if (defaultAction!=NULL) {
+        if (defaultAction) {
             defaultAction->mousePressEvent(e);
             e->accept();
         } else {
@@ -122,7 +122,7 @@ void RS_EventHandler::mousePressEvent(QMouseEvent* e) {
  */
 void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
     if(hasAction()){
-        //    if (actionIndex>=0 && currentActions[actionIndex]!=NULL &&
+        //    if (actionIndex>=0 && currentActions[actionIndex] &&
         //            !currentActions[actionIndex]->isFinished()) {
         RS_DEBUG->print("call action %s",
                         currentActions.last()->getName().toLatin1().data());
@@ -133,7 +133,7 @@ void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
         cleanUp();
         e->accept();
     } else {
-        if (defaultAction!=NULL) {
+        if (defaultAction) {
             defaultAction->mouseReleaseEvent(e);
         } else {
             e->ignore();
@@ -151,7 +151,7 @@ void RS_EventHandler::mouseMoveEvent(QMouseEvent* e) {
         currentActions.last()->mouseMoveEvent(e);
         e->accept();
     } else {
-        if (defaultAction!=NULL) {
+        if (defaultAction) {
             defaultAction->mouseMoveEvent(e);
             e->accept();
         } else {
@@ -171,7 +171,7 @@ void RS_EventHandler::mouseLeaveEvent() {
     if(hasAction()){
         currentActions.last()->suspend();
     } else {
-        if (defaultAction!=NULL) {
+        if (defaultAction) {
             defaultAction->suspend();
         }
         //RS_DEBUG->print("currently no action defined");
@@ -188,7 +188,7 @@ void RS_EventHandler::mouseEnterEvent() {
     if(hasAction()){
         currentActions.last()->resume();
     } else {
-        if (defaultAction!=NULL) {
+        if (defaultAction) {
             defaultAction->resume();
         }
     }
@@ -204,7 +204,7 @@ void RS_EventHandler::keyPressEvent(QKeyEvent* e) {
     if(hasAction()){
         currentActions.last()->keyPressEvent(e);
     } else {
-        if (defaultAction!=NULL) {
+        if (defaultAction) {
             defaultAction->keyPressEvent(e);
         }
         else {
@@ -225,7 +225,7 @@ void RS_EventHandler::keyReleaseEvent(QKeyEvent* e) {
     if(hasAction()){
         currentActions.last()->keyReleaseEvent(e);
     } else {
-        if (defaultAction!=NULL) {
+        if (defaultAction) {
             defaultAction->keyReleaseEvent(e);
         }
         else {
@@ -290,7 +290,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         RS_DEBUG->print("RS_EventHandler::commandEvent: 006");
                         currentActions.last()->coordinateEvent(&ce);
                     } else {
-                        if (RS_DIALOGFACTORY!=NULL) {
+                        if (RS_DIALOGFACTORY) {
                             RS_DIALOGFACTORY->commandMessage(
                                         "Expression Syntax Error");
                         }
@@ -313,7 +313,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                             currentActions.last()->coordinateEvent(&ce);
                             //                            currentActions[actionIndex]->coordinateEvent(&ce);
                         } else {
-                            if (RS_DIALOGFACTORY!=NULL) {
+                            if (RS_DIALOGFACTORY) {
                                 RS_DIALOGFACTORY->commandMessage(
                                             "Expression Syntax Error");
                             }
@@ -336,7 +336,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                             RS_CoordinateEvent ce(pos);
                             currentActions.last()->coordinateEvent(&ce);
                         } else {
-                            if (RS_DIALOGFACTORY!=NULL) {
+                            if (RS_DIALOGFACTORY) {
                                 RS_DIALOGFACTORY->commandMessage(
                                             "Expression Syntax Error");
                             }
@@ -360,7 +360,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                                                   graphicView->getRelativeZero());
                             currentActions.last()->coordinateEvent(&ce);
                         } else {
-                            if (RS_DIALOGFACTORY!=NULL) {
+                            if (RS_DIALOGFACTORY) {
                                 RS_DIALOGFACTORY->commandMessage(
                                             "Expression Syntax Error");
                             }
@@ -376,7 +376,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                 }
             }else{
             //send the command to default action
-                if (defaultAction!=NULL) {
+                if (defaultAction) {
                     defaultAction->commandEvent(e);
                 }
             }
@@ -434,7 +434,7 @@ RS_ActionInterface* RS_EventHandler::getDefaultAction() {
  * Sets the default action.
  */
 void RS_EventHandler::setDefaultAction(RS_ActionInterface* action) {
-    if (defaultAction!=NULL) {
+    if (defaultAction) {
         defaultAction->finish();
         delete defaultAction;
         //        defaultAction = NULL;
@@ -464,7 +464,7 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
         predecessor->hideOptions();
     }
     else {
-        if (defaultAction!=NULL) {
+        if (defaultAction) {
             predecessor = defaultAction;
             predecessor->suspend();
             predecessor->hideOptions();
@@ -474,7 +474,7 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     //    // Forget about the oldest action and make space for the new action:
     //    if (actionIndex==RS_MAXACTIONS-1) {
     //        // delete oldest action if necessary (usually never happens):
-    //        if (currentActions[0]!=NULL) {
+    //        if (currentActions[0]) {
     //            currentActions[0]->finish();
     //            delete currentActions[0];
     //            currentActions[0] = NULL;
@@ -635,7 +635,7 @@ void RS_EventHandler::setSnapRestriction(RS2::SnapRestriction sr) {
         }
     }
 
-    if (defaultAction!=NULL) {
+    if (defaultAction) {
         defaultAction->setSnapRestriction(sr);
     }
 }

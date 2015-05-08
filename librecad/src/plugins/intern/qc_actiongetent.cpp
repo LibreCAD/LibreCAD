@@ -57,7 +57,7 @@ void QC_ActionGetEnt::setMesage(QString msg){
 }
 
 void QC_ActionGetEnt::trigger() {
-    if (en!=NULL) {
+    if (en) {
         RS_Selection s(*container, graphicView);
         s.selectSingle(en);
         completed = true;

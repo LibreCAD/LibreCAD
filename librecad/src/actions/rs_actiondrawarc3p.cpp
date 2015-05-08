@@ -90,7 +90,7 @@ void RS_ActionDrawArc3P::trigger() {
         container->addEntity(arc);
 
         // upd. undo list:
-        if (document!=NULL) {
+        if (document) {
             document->startUndoCycle();
             document->addUndoable(arc);
             document->endUndoCycle();
@@ -257,7 +257,7 @@ void RS_ActionDrawArc3P::updateMouseCursor() {
 
 
 //void RS_ActionDrawArc3P::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }else{

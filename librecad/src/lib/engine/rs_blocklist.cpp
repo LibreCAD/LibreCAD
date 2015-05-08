@@ -80,7 +80,7 @@ void RS_BlockList::activate(RS_Block* block) {
     /*
        for (unsigned i=0; i<blockListListeners.count(); ++i) {
            RS_BlockListListener* l = blockListListeners.at(i);
-    	if (l!=NULL) {
+    	if (l) {
            	l->blockActivated(activeBlock);
     	}
        }
@@ -187,7 +187,7 @@ void RS_BlockList::remove(RS_Block* block) {
  * @retval false block couldn't be renamed.
  */
 bool RS_BlockList::rename(RS_Block* block, const QString& name) {
-	if (block!=NULL) {
+	if (block) {
 		if (find(name)==NULL) {
 			block->setName(name);
 			setModified(true);

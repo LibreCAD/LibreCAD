@@ -92,7 +92,7 @@ void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
         preview->addAllFrom(*RS_CLIPBOARD->getGraphic());
         preview->move(targetPoint);
 
-		if (graphic!=NULL) {
+		if (graphic) {
 			RS2::Unit sourceUnit = RS_CLIPBOARD->getGraphic()->getUnit();
 			RS2::Unit targetUnit = graphic->getUnit();
 			double f = RS_Units::convert(1.0, sourceUnit, targetUnit);

@@ -70,7 +70,7 @@ public:
      * from RS_Undo.
      */
     virtual void removeUndoable(RS_Undoable* u) {
-        if (u!=NULL && u->undoRtti()==RS2::UndoableEntity) {
+        if (u && u->undoRtti()==RS2::UndoableEntity) {
             removeEntity((RS_Entity*)u);
         }
     }

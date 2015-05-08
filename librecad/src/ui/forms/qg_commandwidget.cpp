@@ -145,7 +145,7 @@ void QG_CommandWidget::trigger() {
         appendHistory(cmd);
     }
 
-    if (actionHandler!=NULL) {
+    if (actionHandler) {
         isAction=actionHandler->command(cmd);
     }
 
@@ -157,7 +157,7 @@ void QG_CommandWidget::trigger() {
 }
 
 void QG_CommandWidget::tabPressed() {
-    if (actionHandler!=NULL) {
+    if (actionHandler) {
         QStringList reducedChoice;
         QString typed = leCommand->text();
         QStringList choice;
@@ -187,7 +187,7 @@ void QG_CommandWidget::tabPressed() {
 void QG_CommandWidget::escape() {
     //leCommand->clearFocus();
 
-    if (actionHandler!=NULL) {
+    if (actionHandler) {
         actionHandler->slotFocusNormal();
         actionHandler->command(QString(tr("escape", "escape, go back from action steps")));
 

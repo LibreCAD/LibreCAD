@@ -68,7 +68,7 @@ void RS_ActionModifyOffset::init(int status) {
 void RS_ActionModifyOffset::trigger() {
     RS_Modification m(*container, graphicView);
     m.offset(data);
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
@@ -109,7 +109,7 @@ void RS_ActionModifyOffset::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionModifyOffset::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetPosition:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify direction of offset"), tr("Back"));
@@ -126,7 +126,7 @@ void RS_ActionModifyOffset::updateMouseButtonHints() {
 
 void RS_ActionModifyOffset::showOptions() {
     RS_ActionInterface::showOptions();
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestModifyOffsetOptions(data.distance, true);
     }
 }
@@ -136,7 +136,7 @@ void RS_ActionModifyOffset::showOptions() {
 void RS_ActionModifyOffset::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestModifyOffsetOptions(data.distance, false);
     }
 }
@@ -150,7 +150,7 @@ void RS_ActionModifyOffset::updateMouseCursor() {
 
 
 //void RS_ActionModifyOffset::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
 //        }

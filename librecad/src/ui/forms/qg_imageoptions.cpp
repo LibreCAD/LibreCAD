@@ -67,7 +67,7 @@ void QG_ImageOptions::destroy() {
 }
 
 void QG_ImageOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawImage) {
+    if (a && a->rtti()==RS2::ActionDrawImage) {
         action = (RS_ActionDrawImage*)a;
 
         QString sAngle;
@@ -93,13 +93,13 @@ void QG_ImageOptions::setAction(RS_ActionInterface* a, bool update) {
 }
 
 void QG_ImageOptions::updateData() {
-    if (action!=NULL) {
+    if (action) {
         action->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
     }
 }
 
 void QG_ImageOptions::updateDPI() {
-    if (action!=NULL) {
+    if (action) {
 
         double f = action->dpiToScale(RS_Math::eval(leDPI->text()));
         leFactor->blockSignals(true);
@@ -110,7 +110,7 @@ void QG_ImageOptions::updateDPI() {
 }
 
 void QG_ImageOptions::updateFactor() {
-    if (action!=NULL) {
+    if (action) {
         double f = RS_Math::eval(leFactor->text());
         double dpi = action->scaleToDpi(f);
         leDPI->blockSignals(true);

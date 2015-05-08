@@ -67,7 +67,7 @@ RS_Debug* RS_Debug::instance() {
  */
 void
 RS_Debug::deleteInstance() {
-    if (uniqueInstance!=NULL) {
+    if (uniqueInstance) {
         fclose(uniqueInstance->stream);
         delete uniqueInstance;
     }

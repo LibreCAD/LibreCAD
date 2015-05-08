@@ -154,10 +154,10 @@ void QG_LibraryWidget::insert() {
     QString dxfPath = getItemPath(item);
 
     if (QFileInfo(dxfPath).isReadable()) {
-        if (actionHandler!=NULL) {
+        if (actionHandler) {
             RS_ActionInterface* a =
                 actionHandler->setCurrentAction(RS2::ActionLibraryInsert);
-            if (a!=NULL) {
+            if (a) {
                 RS_ActionLibraryInsert* action = (RS_ActionLibraryInsert*)a;
                 action->setFile(dxfPath);
             } else {
@@ -315,7 +315,7 @@ QString QG_LibraryWidget::getItemPath(QStandardItem* item) {
     QStandardItem * dirItem = dirModel->itemFromIndex ( idx );
     QString dir = getItemDir(dirItem);
 
-    if (item!=NULL) {
+    if (item) {
         // List of all directories that contain part libraries:
         QStringList directoryList = RS_SYSTEM->getDirectoryList("library");
         QStringList::Iterator it;
@@ -439,7 +439,7 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
         // gv.drawEntity(&graphic, true);
 
         for (RS_Entity* e=graphic.firstEntity(RS2::ResolveAll);
-                e!=NULL; e=graphic.nextEntity(RS2::ResolveAll)) {
+                e; e=graphic.nextEntity(RS2::ResolveAll)) {
             if (e->rtti() != RS2::EntityHatch){
                 RS_Pen pen = e->getPen();
                 pen.setColor(Qt::black);

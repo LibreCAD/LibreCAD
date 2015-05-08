@@ -295,7 +295,7 @@ void LC_ActionDrawSplinePoints::updateMouseCursor()
 }
 
 //void RS_ActionDrawSplinePoints::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }
@@ -308,7 +308,7 @@ void RS_ActionDrawSplinePoints::close() {
     if (history.count()>2 && start.valid) {
         //data.endpoint = start;
         //trigger();
-                if (spline!=NULL) {
+                if (spline) {
                         RS_CoordinateEvent e(spline->getStartpoint());
                         coordinateEvent(&e);
                 }

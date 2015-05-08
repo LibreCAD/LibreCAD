@@ -62,9 +62,9 @@ void RS_ActionModifyDeleteFree::init(int status) {
 
 
 void RS_ActionModifyDeleteFree::trigger() {
-    if (e1!=NULL && e2!=NULL) {
+    if (e1 && e2) {
         RS_EntityContainer* parent = e2->getParent();
-        if (parent!=NULL) {
+        if (parent) {
             if (parent->rtti()==RS2::EntityPolyline) {
                 if(parent->getId() == polyline->getId()) {
 
@@ -120,9 +120,9 @@ void RS_ActionModifyDeleteFree::mouseReleaseEvent(QMouseEvent* e) {
         case 0: {
                 v1 = snapPoint(e);
                 e1 = getKeyEntity();
-                if (e1!=NULL) {
+                if (e1) {
                     RS_EntityContainer* parent = e1->getParent();
-                    if (parent!=NULL) {
+                    if (parent) {
                         if (parent->rtti()==RS2::EntityPolyline) {
                             polyline = (RS_Polyline*)parent;
                             setStatus(1);
@@ -145,7 +145,7 @@ void RS_ActionModifyDeleteFree::mouseReleaseEvent(QMouseEvent* e) {
                 v2 = snapPoint(e);
                 e2 = getKeyEntity();
 
-                if (e2!=NULL) {
+                if (e2) {
                     trigger();
                 } else {
                                 RS_DIALOGFACTORY->commandMessage(tr("Second entity is NULL"));

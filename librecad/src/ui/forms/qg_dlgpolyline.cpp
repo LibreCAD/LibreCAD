@@ -67,11 +67,11 @@ void QG_DlgPolyline::setPolyline(RS_Polyline& e) {
     //pen = spline->getPen();
     wPen->setPen(polyline->getPen(false), true, false, "Pen");
     RS_Graphic* graphic = polyline->getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
     RS_Layer* lay = polyline->getLayer(false);
-    if (lay!=NULL) {
+    if (lay) {
         cbLayer->setLayer(*lay);
     }
 	

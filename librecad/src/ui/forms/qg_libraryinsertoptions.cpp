@@ -67,7 +67,7 @@ void QG_LibraryInsertOptions::destroy() {
 }
 
 void QG_LibraryInsertOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionLibraryInsert) {
+    if (a && a->rtti()==RS2::ActionLibraryInsert) {
         action = (RS_ActionLibraryInsert*)a;
 
         QString sAngle;
@@ -91,7 +91,7 @@ void QG_LibraryInsertOptions::setAction(RS_ActionInterface* a, bool update) {
 }
 
 void QG_LibraryInsertOptions::updateData() {
-    if (action!=NULL) {
+    if (action) {
         action->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
         action->setFactor(RS_Math::eval(leFactor->text()));
     }

@@ -49,7 +49,7 @@ QAction* RS_ActionModifyEntity::createGUIAction(RS2::ActionType /*type*/, QObjec
 }
 
 void RS_ActionModifyEntity::trigger() {
-    if (en!=NULL) {
+    if (en) {
         RS_Entity* clone = en->clone();
         if (RS_DIALOGFACTORY->requestModifyEntityDialog(clone)) {
             container->addEntity(clone);
@@ -60,7 +60,7 @@ void RS_ActionModifyEntity::trigger() {
                         clone->setSelected(false);
             graphicView->drawEntity(clone);
 
-            if (document!=NULL) {
+            if (document) {
                 document->startUndoCycle();
 
                 document->addUndoable(clone);

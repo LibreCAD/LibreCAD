@@ -52,23 +52,23 @@ QAction* RS_ActionLayersToggleLock::createGUIAction(RS2::ActionType /*type*/, QO
 
 void RS_ActionLayersToggleLock::trigger() {
     RS_DEBUG->print("toggle layer");
-    if (graphic!=NULL) {
+    if (graphic) {
         RS_Layer* layer = graphic->getActiveLayer();
-        if (layer!=NULL) {
+        if (layer) {
             graphic->toggleLayerLock(layer);
 
             // deselect entities on locked layer:
             if (layer->isLocked()) {
 				for(auto e: *container){
-                    if (e!=NULL && e->isVisible() && e->getLayer()==layer) {
+                    if (e && e->isVisible() && e->getLayer()==layer) {
 
-                        if (graphicView!=NULL) {
+                        if (graphicView) {
                             graphicView->deleteEntity(e);
                         }
 
                         e->setSelected(false);
 
-                        if (graphicView!=NULL) {
+                        if (graphicView) {
                             graphicView->drawEntity(e);
                         }
                     }

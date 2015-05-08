@@ -83,7 +83,7 @@ void RS_ActionDrawLineRectangle::trigger() {
     }
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         for (int i=0; i<4; ++i) {
             document->addUndoable(line[i]);
@@ -169,7 +169,7 @@ void RS_ActionDrawLineRectangle::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -186,7 +186,7 @@ QStringList RS_ActionDrawLineRectangle::getAvailableCommands() {
 
 
 void RS_ActionDrawLineRectangle::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetCorner1:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first corner"),
@@ -210,7 +210,7 @@ void RS_ActionDrawLineRectangle::updateMouseCursor() {
 
 
 //void RS_ActionDrawLineRectangle::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

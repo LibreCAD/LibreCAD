@@ -53,11 +53,11 @@ void RS_ActionLayersEdit::trigger() {
 
     RS_Layer* layer = NULL;
 
-    if (graphic!=NULL) {
+    if (graphic) {
         layer =
             RS_DIALOGFACTORY->requestEditLayerDialog(graphic->getLayerList());
 
-        if (layer!=NULL) {
+        if (layer) {
             graphic->editLayer(graphic->getActiveLayer(), *layer);
 
             // update updateable entities on the layer that has changed
@@ -65,7 +65,7 @@ void RS_ActionLayersEdit::trigger() {
 			for(auto e: *graphic){
 
                 RS_Layer* l = e->getLayer();
-                if (l!=NULL && l->getName()==layer->getName()) {
+                if (l && l->getName()==layer->getName()) {
                     e->update();
                 }
             }

@@ -60,7 +60,7 @@ void RS_ActionPolylineDel::trigger() {
 
     RS_DEBUG->print("RS_ActionPolylineDel::trigger()");
 
-        if (delEntity!=NULL && delPoint.valid &&
+        if (delEntity && delPoint.valid &&
             delEntity->isPointOnEntity(delPoint)) {
 
                 delEntity->setHighlighted(false);
@@ -143,7 +143,7 @@ void RS_ActionPolylineDel::mouseReleaseEvent(QMouseEvent* e) {
                 }
     } else if (e->button()==Qt::RightButton) {
                 deleteSnapper();
-                if (delEntity!=NULL) {
+                if (delEntity) {
                 delEntity->setHighlighted(false);
                 graphicView->drawEntity(delEntity);
 ////////////////////////////////////////2006/06/15
@@ -179,7 +179,7 @@ void RS_ActionPolylineDel::updateMouseCursor() {
 
 
 //void RS_ActionPolylineDel::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

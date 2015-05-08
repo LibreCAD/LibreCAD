@@ -67,11 +67,11 @@ void QG_DlgCircle::setCircle(RS_Circle& c) {
     //pen = circle->getPen();
     wPen->setPen(circle->getPen(false), true, false, "Pen");
     RS_Graphic* graphic = circle->getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
     RS_Layer* lay = circle->getLayer(false);
-    if (lay!=NULL) {
+    if (lay) {
         cbLayer->setLayer(*lay);
     }
     QString s;

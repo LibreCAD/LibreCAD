@@ -73,7 +73,7 @@ void RS_ActionDimDiametric::trigger() {
     RS_PreviewActionInterface::trigger();
 
     preparePreview();
-    if (entity!=NULL) {
+    if (entity) {
         RS_DimDiametric* newEntity = NULL;
 
         newEntity = new RS_DimDiametric(container,
@@ -86,7 +86,7 @@ void RS_ActionDimDiametric::trigger() {
         container->addEntity(newEntity);
 
         // upd. undo list:
-        if (document!=NULL) {
+        if (document) {
             document->startUndoCycle();
             document->addUndoable(newEntity);
             document->endUndoCycle();
@@ -104,7 +104,7 @@ void RS_ActionDimDiametric::trigger() {
 
 
 void RS_ActionDimDiametric::preparePreview() {
-    if (entity!=NULL) {
+    if (entity) {
         double radius=0.0;
         RS_Vector center = RS_Vector(false);
         if (entity->rtti()==RS2::EntityArc) {
@@ -138,7 +138,7 @@ void RS_ActionDimDiametric::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetPos:
-        if (entity!=NULL) {
+        if (entity) {
             pos = snapPoint(e);
 
             preparePreview();
@@ -166,7 +166,7 @@ void RS_ActionDimDiametric::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case SetEntity: {
                 RS_Entity* en = catchEntity(e, RS2::ResolveAll);
-                if (en!=NULL) {
+                if (en) {
                     if (en->rtti()==RS2::EntityArc ||
                             en->rtti()==RS2::EntityCircle) {
 

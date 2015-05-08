@@ -57,7 +57,7 @@ void QG_TextOptions::languageChange()
 }
 
 void QG_TextOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawText) {
+    if (a && a->rtti()==RS2::ActionDrawText) {
         action = (RS_ActionDrawText*)a;
 
         QString st;
@@ -73,7 +73,7 @@ void QG_TextOptions::setAction(RS_ActionInterface* a, bool update) {
 /*#if defined(OOPL_VERSION) && defined(Q_WS_WIN)
         QCString iso = RS_System::localeToISO( QTextCodec::locale() );
         QTextCodec *codec = QTextCodec::codecForName(iso);
-        if (codec!=NULL) {
+        if (codec) {
             st = codec->toUnicode(RS_FilterDXF::toNativeString(action->getText().local8Bit()));
         } else {
             st = RS_FilterDXF::toNativeString(action->getText().local8Bit());
@@ -91,7 +91,7 @@ void QG_TextOptions::setAction(RS_ActionInterface* a, bool update) {
 }
 
 void QG_TextOptions::updateText() {
-    if (action!=NULL) {
+    if (action) {
 /*#if defined(OOPL_VERSION) && defined(Q_WS_WIN)
         QCString iso = RS_System::localeToISO( QTextCodec::locale() );
         action->setText(
@@ -106,7 +106,7 @@ void QG_TextOptions::updateText() {
 }
 
 void QG_TextOptions::updateAngle() {
-    if (action!=NULL) {
+    if (action) {
         action->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
     }
 }

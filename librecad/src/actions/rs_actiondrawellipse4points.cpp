@@ -74,7 +74,7 @@ void RS_ActionDrawEllipse4Points::trigger() {
     // update undo list:
     deletePreview();
     container->addEntity(en);
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(en);
         document->endUndoCycle();
@@ -156,7 +156,7 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
                 m_bUniqueEllipse=false;
             }else{
                 evalid=false;
-                if (RS_DIALOGFACTORY!=NULL && m_bUniqueEllipse==false) {
+                if (RS_DIALOGFACTORY && m_bUniqueEllipse==false) {
                     RS_DIALOGFACTORY->commandMessage(tr("Can not determine uniquely an ellipse"));
                     m_bUniqueEllipse=true;
                 }
@@ -225,7 +225,7 @@ void RS_ActionDrawEllipse4Point::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -244,7 +244,7 @@ void RS_ActionDrawEllipse4Point::commandEvent(RS_CommandEvent* e) {
                     setStatus(SetAngle1);
                 }
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -258,7 +258,7 @@ void RS_ActionDrawEllipse4Point::commandEvent(RS_CommandEvent* e) {
                 angle1 = RS_Math::deg2rad(a);
                 setStatus(SetAngle2);
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -272,7 +272,7 @@ void RS_ActionDrawEllipse4Point::commandEvent(RS_CommandEvent* e) {
                 angle2 = RS_Math::deg2rad(a);
                 trigger();
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -294,7 +294,7 @@ QStringList RS_ActionDrawEllipse4Points::getAvailableCommands() {
 
 
 void RS_ActionDrawEllipse4Points::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetPoint1:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first point on ellipse"),
@@ -332,7 +332,7 @@ void RS_ActionDrawEllipse4Points::updateMouseCursor() {
 
 
 //void RS_ActionDrawEllipse4Points::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

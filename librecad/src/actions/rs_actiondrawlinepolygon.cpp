@@ -136,7 +136,7 @@ void RS_ActionDrawLinePolygonCenCor::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDrawLinePolygonCenCor::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetCenter:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify center"),
@@ -163,7 +163,7 @@ void RS_ActionDrawLinePolygonCenCor::updateMouseButtonHints() {
 void RS_ActionDrawLinePolygonCenCor::showOptions() {
     RS_ActionInterface::showOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, true);
     }
 }
@@ -173,7 +173,7 @@ void RS_ActionDrawLinePolygonCenCor::showOptions() {
 void RS_ActionDrawLinePolygonCenCor::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, false);
     }
 }
@@ -184,7 +184,7 @@ void RS_ActionDrawLinePolygonCenCor::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -209,17 +209,17 @@ void RS_ActionDrawLinePolygonCenCor::commandEvent(RS_CommandEvent* e) {
                 if (n>0 && n<10000) {
                     number = n;
                 } else {
-                    if (RS_DIALOGFACTORY!=NULL) {
+                    if (RS_DIALOGFACTORY) {
                         RS_DIALOGFACTORY->commandMessage(tr("Not a valid number. "
                                                             "Try 1..9999"));
                     }
                 }
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
-            if (RS_DIALOGFACTORY!=NULL) {
+            if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->requestOptions(this, true, true);
             }
             setStatus(lastStatus);
@@ -257,7 +257,7 @@ void RS_ActionDrawLinePolygonCenCor::updateMouseCursor() {
 
 
 //void RS_ActionDrawLinePolygonCenCor::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

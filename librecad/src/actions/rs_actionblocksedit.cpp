@@ -48,8 +48,8 @@ QAction* RS_ActionBlocksEdit::createGUIAction(RS2::ActionType /*type*/, QObject*
 
 void RS_ActionBlocksEdit::trigger() {
     RS_DEBUG->print("edit block");
-    if (graphic!=NULL) {
-        if (RS_DIALOGFACTORY!=NULL) {
+    if (graphic) {
+        if (RS_DIALOGFACTORY) {
             if(graphic->getBlockList() != NULL){
 //                std::cout<<__func__<<" : "<<__LINE__<<" : graphic->getBlockList()->count()="<<graphic->getBlockList()->count()<<std::endl;
                 RS_DIALOGFACTORY->requestEditBlockWindow(graphic->getBlockList());

@@ -291,7 +291,7 @@ public:
      * default valud (def) if value is NULL or empty.
      */
     static double toReal(const char* value, double def=0.0) {
-       if (value!=NULL && value[0] != '\0') {
+       if (value && value[0] != '\0') {
             double ret;
             if (strchr(value, ',') != NULL) {
                char* tmp = new char[strlen(value)+1];
@@ -313,7 +313,7 @@ public:
      * default valud (def) if value is NULL or empty.
      */
     static int toInt(const char* value, int def=0) {
-        if (value!=NULL && value[0] != '\0') {
+        if (value && value[0] != '\0') {
             return atoi(value);
         } else {
             return def;
@@ -324,7 +324,7 @@ public:
      * default valud (def) if value is NULL or empty.
      */
     static const char* toString(const char* value, const char* def="") {
-        if (value!=NULL && value[0] != '\0') {
+        if (value && value[0] != '\0') {
             return value;
         } else {
             return def;

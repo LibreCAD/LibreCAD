@@ -69,7 +69,7 @@ void RS_ActionModifyAttributes::trigger() {
     data.changeWidth = false;
     data.changeLayer = false;
 
-    if (graphic!=NULL) {
+    if (graphic) {
         if (RS_DIALOGFACTORY->requestAttributesDialog(data,
                 *graphic->getLayerList())) {
             RS_Modification m(*container, graphicView);

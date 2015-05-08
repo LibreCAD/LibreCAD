@@ -38,7 +38,7 @@ QC_GraphicView::QC_GraphicView(RS_Document* doc, QWidget* parent)
     RS_DEBUG->print("QC_GraphicView::QC_GraphicView()..");
 
     RS_DEBUG->print("  Setting Container..");
-    if (doc!=NULL) {
+    if (doc) {
         setContainer(doc);
         doc->setGraphicView(this);
     }
@@ -48,7 +48,7 @@ QC_GraphicView::QC_GraphicView(RS_Document* doc, QWidget* parent)
     setOffset(50, 50);
     setBorders(10, 10, 10, 10);
 	
-	if (doc!=NULL) {
+	if (doc) {
 		setDefaultAction(new RS_ActionDefault(*doc, *this));
 	}
 }

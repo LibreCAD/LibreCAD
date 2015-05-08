@@ -70,12 +70,12 @@ void QG_DlgAttributes::setData(RS_AttributesData* data, RS_LayerList& layerList)
     wPen->setPen(data->pen, true, true, "Pen");
 
     //RS_Graphic* graphic = line->getGraphic();
-    //if (graphic!=NULL) {
+    //if (graphic) {
         cbLayer->init(layerList, false, true);
     //}
     //cbLayer->setLayer(data->layer);
     //RS_Layer* lay = line->getLayer(false);
-    //if (lay!=NULL) {
+    //if (lay) {
     //    cbLayer->setLayer(*lay);
     //}
 }

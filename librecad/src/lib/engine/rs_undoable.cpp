@@ -44,7 +44,7 @@ RS_Undoable::RS_Undoable() {
  * its undo cycle before it is deleted.
  */
 RS_Undoable::~RS_Undoable() {
-    if (cycle!=NULL) {
+    if (cycle) {
         cycle->removeUndoable(this);
     }
 }

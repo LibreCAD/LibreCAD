@@ -74,7 +74,7 @@ void RS_ActionDimAngular::reset() {
 void RS_ActionDimAngular::trigger() {
     RS_PreviewActionInterface::trigger();
 
-    if (line1!=NULL && line2!=NULL) {
+    if (line1 && line2) {
         RS_DimAngular* newEntity = NULL;
 
         newEntity = new RS_DimAngular(container,
@@ -87,7 +87,7 @@ void RS_ActionDimAngular::trigger() {
         container->addEntity(newEntity);
 
         // upd. undo list:
-        if (document!=NULL) {
+        if (document) {
             document->startUndoCycle();
             document->addUndoable(newEntity);
             document->endUndoCycle();
@@ -120,7 +120,7 @@ void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetPos:
-        if (line1!=NULL && line2!=NULL && center.valid) {
+        if (line1 && line2 && center.valid) {
             RS_Vector mouse = snapPoint(e);
 			edata->definitionPoint4 = mouse;
 
@@ -146,7 +146,7 @@ void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case SetLine1: {
                 RS_Entity* en = catchEntity(e, RS2::ResolveAll);
-                if (en!=NULL &&
+                if (en &&
                         en->rtti()==RS2::EntityLine) {
                     line1 = (RS_Line*)en;
                     setStatus(SetLine2);
@@ -156,7 +156,7 @@ void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e) {
 
         case SetLine2: {
                 RS_Entity* en = catchEntity(e, RS2::ResolveAll);
-                if (en!=NULL &&
+                if (en &&
                         en->rtti()==RS2::EntityLine) {
                     line2 = (RS_Line*)en;
 

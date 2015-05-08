@@ -97,7 +97,7 @@ void RS_ActionDrawPolyline::trigger() {
     //container->addEntity(polyline);
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(polyline);
         document->endUndoCycle();
@@ -172,7 +172,7 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 //        b=0.0;
 //        break;
      case Tangential:
-        if (polyline!=NULL){
+        if (polyline){
             lastentity = (RS_AtomicEntity*)polyline->lastEntity();
             direction = RS_Math::correctAngle(
                 lastentity->getDirection2()+M_PI);
@@ -206,7 +206,7 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 //            b=0;
 //        break;
      case TanRad:
-        if (polyline!=NULL){
+        if (polyline){
             lastentity = (RS_AtomicEntity*)polyline->lastEntity();
             direction = RS_Math::correctAngle(
                 lastentity->getDirection2()+M_PI);
@@ -285,7 +285,7 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
 						polyline = new RS_Polyline(container, *data);
                         polyline->addVertex(start, 0.0);
                 }
-                if (polyline!=NULL) {
+                if (polyline) {
                         polyline->setNextBulge(bulge);
                         polyline->addVertex(mouse, 0.0);
                         polyline->setEndpoint(mouse);
@@ -427,7 +427,7 @@ void RS_ActionDrawPolyline::updateMouseCursor() {
 
 
 //void RS_ActionDrawPolyline::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }
@@ -438,7 +438,7 @@ void RS_ActionDrawPolyline::close() {
     if (history.size()>2 && start.valid) {
         //data.endpoint = start;
         //trigger();
-                if (polyline!=NULL) {
+                if (polyline) {
                         if (Mode==TanRad)
                                 Mode=Line;
                         RS_CoordinateEvent e(polyline->getStartpoint());
@@ -470,7 +470,7 @@ void RS_ActionDrawPolyline::undo() {
             polyline = NULL;
             graphicView->drawEntity(polyline);
         }
-        if (polyline!=NULL) {
+        if (polyline) {
             polyline->removeLastVertex();
             graphicView->moveRelativeZero(polyline->getEndpoint());
             graphicView->drawEntity(polyline);

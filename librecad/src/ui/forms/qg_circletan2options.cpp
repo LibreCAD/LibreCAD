@@ -61,7 +61,7 @@ void QG_CircleTan2Options::destroy() {
 }
 
 void QG_CircleTan2Options::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawCircleTan2) {
+    if (a && a->rtti()==RS2::ActionDrawCircleTan2) {
         action = (RS_ActionDrawCircleTan2*)a;
 
         QString sr;
@@ -81,7 +81,7 @@ void QG_CircleTan2Options::setAction(RS_ActionInterface* a, bool update) {
 }
 
 void QG_CircleTan2Options::updateRadius(const QString& r) {
-    if (action!=NULL) {
+    if (action) {
         bool ok;
         double radius=RS_Math::eval(r,&ok);
         if(ok){

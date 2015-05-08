@@ -117,7 +117,7 @@ QString RS_DimLinear::getMeasuredLabel() {
         RS_Graphic* graphic = getGraphic();
 
     QString ret;
-        if (graphic!=NULL) {
+        if (graphic) {
                 ret = RS_Units::formatLinear(dist, graphic->getUnit(),
                         graphic->getLinearFormat(), graphic->getLinearPrecision());
         }

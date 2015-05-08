@@ -61,7 +61,7 @@ QAction* RS_ActionLayersFreezeAll::createGUIAction(RS2::ActionType type, QObject
 
 void RS_ActionLayersFreezeAll::trigger() {
     RS_DEBUG->print("RS_ActionLayersFreezeAll::trigger");
-    if (graphic!=NULL) {
+    if (graphic) {
         //RS_Layer* layer = graphic->getActiveLayer();
         graphic->freezeAllLayers(freeze);
     }

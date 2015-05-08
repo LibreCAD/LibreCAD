@@ -85,7 +85,7 @@ void RS_ActionDrawCircle3P::trigger() {
         container->addEntity(circle);
 
         // upd. undo list:
-        if (document!=NULL) {
+        if (document) {
             document->startUndoCycle();
             document->addUndoable(circle);
             document->endUndoCycle();
@@ -234,7 +234,7 @@ void RS_ActionDrawCircle3P::updateMouseCursor() {
 
 
 //void RS_ActionDrawCircle3P::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

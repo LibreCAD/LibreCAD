@@ -43,13 +43,13 @@ void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* /*blockList*/) {
 
     QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
     QC_MDIWindow* parent = appWindow->getMDIWindow();
-    if (parent!=NULL) {
+    if (parent) {
         //get blocklist from block widget, bug#3497154
         RS_BlockList* blist = appWindow->getBlockWidget() -> getBlockList();
-        if (blist !=NULL) {
+        if (blist ) {
             RS_Block* blk = blist->getActive();
 //            std::cout<<"QC_DialogFactory::requestEditBlockWindow(): size()="<<((blk==NULL)?0:blk->count() )<<std::endl;
-            if (blk!=NULL) {
+            if (blk) {
                 QC_MDIWindow* w = appWindow->slotFileNew(blk);
                 // the parent needs a pointer to the block window and
                 //   vice versa

@@ -64,7 +64,7 @@ QAction* RS_ActionBlocksFreezeAll::createGUIAction(RS2::ActionType type, QObject
 
 void RS_ActionBlocksFreezeAll::trigger() {
     RS_DEBUG->print("RS_ActionBlocksFreezeAll::trigger");
-    if (graphic!=NULL) {
+    if (graphic) {
         graphic->freezeAllBlocks(freeze);
     }
         graphicView->redraw(RS2::RedrawDrawing);

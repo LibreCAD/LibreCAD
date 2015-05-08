@@ -74,8 +74,8 @@ bool RS_Information::isDimension(RS2::EntityType type) {
  * i.e. it is in a graphic or in a polyline.
  */
 bool RS_Information::isTrimmable(RS_Entity* e) {
-    if (e!=NULL) {
-        if (e->getParent()!=NULL) {
+	if (e) {
+		if (e->getParent()) {
             if (e->getParent()->rtti()==RS2::EntityPolyline) {
                 return true;
             }
@@ -98,8 +98,8 @@ bool RS_Information::isTrimmable(RS_Entity* e) {
  * i.e. they are in a graphic or in the same polyline.
  */
 bool RS_Information::isTrimmable(RS_Entity* e1, RS_Entity* e2) {
-    if (e1!=NULL && e2!=NULL) {
-        if (e1->getParent()!=NULL && e2->getParent()!=NULL) {
+	if (e1 && e2) {
+		if (e1->getParent() && e2->getParent()) {
             if (e1->getParent()->rtti()==RS2::EntityPolyline &&
                     e2->getParent()->rtti()==RS2::EntityPolyline &&
                     e1->getParent()==e2->getParent()) {
@@ -246,7 +246,7 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
 
     //avoid intersections between line segments the same spline
     /* ToDo: 24 Aug 2011, Dongxu Li, if rtti() is not defined for the parent, the following check for splines may still cause segfault */
-    if ( e1->getParent() != NULL && e1->getParent() == e2->getParent()) {
+	if ( e1->getParent() != NULL && e1->getParent() == e2->getParent()) {
         if ( e1->getParent()->rtti()==RS2::EntitySpline ) {
             //do not calculate intersections from neighboring lines of a spline
             if ( abs(e1->getParent()->findEntity(e1) - e1->getParent()->findEntity(e2)) <= 1 ) {
@@ -773,12 +773,12 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
         counter = 0;
         RS_VectorSolutions sol;
 
-        if (onContour!=NULL) {
+		if (onContour) {
             *onContour = false;
         }
 
         for (RS_Entity* e = contour->firstEntity(RS2::ResolveAll);
-                e!=NULL;
+				e;
                 e = contour->nextEntity(RS2::ResolveAll)) {
 
             // intersection(s) from ray with contour entity:
@@ -790,7 +790,7 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
                 if (p.valid) {
                     // point is on the contour itself
                     if (p.distanceTo(point)<1.0e-5) {
-                        if (onContour!=NULL) {
+						if (onContour) {
                             *onContour = true;
                         }
                     } else {
@@ -905,7 +905,7 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
            double minDist = RS_MAXDOUBLE;
            double dist;
         av = NULL;
-           for (RS_Vector* v = is.first(); v!=NULL; v = is.next()) {
+		   for (RS_Vector* v = is.first(); v; v = is.next()) {
                dist = point.distanceTo(*v);
                if (dist<minDist) {
                    minDist = dist;
@@ -914,7 +914,7 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
                }
            }
 
-        if (!done && av!=NULL) {
+		if (!done && av) {
                 is2.append(*av);
         }
        } while (!done);

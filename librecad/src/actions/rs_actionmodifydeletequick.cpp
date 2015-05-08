@@ -59,10 +59,10 @@ void RS_ActionModifyDeleteQuick::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyDeleteQuick::trigger()");
 
-    if (en!=NULL) {
+    if (en) {
         RS_DEBUG->print("Entity found");
         RS_EntityContainer* parent = en->getParent();
-        if (parent!=NULL) {
+        if (parent) {
             en->setSelected(false);
             graphicView->deleteEntity(en);
             en->changeUndoState();

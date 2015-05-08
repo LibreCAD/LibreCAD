@@ -252,7 +252,7 @@ void QG_BlockWidget::update() {
     int yPos = blockView->verticalScrollBar()->value();
     RS_Block* activeBlock;
 
-    if (blockList!=NULL) {
+    if (blockList) {
         activeBlock = blockList->getActive();
     } else {
         activeBlock = NULL;

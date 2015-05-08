@@ -49,10 +49,10 @@ QAction* RS_ActionSelectLayer::createGUIAction(RS2::ActionType /*type*/, QObject
 
 
 void RS_ActionSelectLayer::trigger() {
-    if (en!=NULL) {
+    if (en) {
         RS_Selection s(*container, graphicView);
         s.selectLayer(en);
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
         }
     } else {

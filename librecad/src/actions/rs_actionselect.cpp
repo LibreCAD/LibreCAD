@@ -77,14 +77,14 @@ void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
 
 int RS_ActionSelect::countSelected() {
         int ret=container->countSelected();
-        if(ret==0 && RS_DIALOGFACTORY!=NULL){
+        if(ret==0 && RS_DIALOGFACTORY){
             RS_DIALOGFACTORY->commandMessage(tr("No entity selected!"));
         }
         return ret;
 }
 
 void RS_ActionSelect::updateToolBar() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         if (isFinished()){
             if(container->countSelected()==0){
                 //some nextAction segfault with empty selection
@@ -177,7 +177,7 @@ void RS_ActionSelect::updateMouseButtonHints() {
 
 
 void RS_ActionSelect::updateMouseCursor() {
-    if(graphicView!=NULL){
+    if(graphicView){
         if(isFinished()){
             graphicView->setMouseCursor(RS2::ArrowCursor);
         }else{

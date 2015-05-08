@@ -83,7 +83,7 @@ void RS_ActionDrawCircleCR::trigger() {
     container->addEntity(circle);
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(circle);
         document->endUndoCycle();
@@ -254,7 +254,7 @@ double RS_ActionDrawCircleCR::getRadius() const{
 }
 
 //void RS_ActionDrawCircleCR::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

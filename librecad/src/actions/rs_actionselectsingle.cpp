@@ -91,7 +91,7 @@ void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e) {
         }
         init(getStatus()-1);
     } else {
-        if(entityTypeList!=NULL && entityTypeList->size()>0) {
+        if(entityTypeList && entityTypeList->size()>0) {
 //            std::cout<<"RS_ActionSelectSingle::mouseReleaseEvent(): entityTypeList->size()="<< entityTypeList->size()<<std::endl;
             en = catchEntity(e,*entityTypeList);
         }else{

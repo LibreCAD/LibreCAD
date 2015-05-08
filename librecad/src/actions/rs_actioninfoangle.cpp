@@ -65,7 +65,7 @@ void RS_ActionInfoAngle::trigger() {
 
     RS_DEBUG->print("RS_ActionInfoAngle::trigger()");
 
-    if (entity1!=NULL && entity2!=NULL) {
+    if (entity1 && entity2) {
         RS_VectorSolutions sol =
             RS_Information::getIntersection(entity1, entity2, false);
 
@@ -123,7 +123,7 @@ void RS_ActionInfoAngle::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case SetEntity1:
             entity1 = catchEntity(e, RS2::ResolveAll);
-            if (entity1!=NULL && entity1->rtti()==RS2::EntityLine) {
+            if (entity1 && entity1->rtti()==RS2::EntityLine) {
                 point1 = entity1->getNearestPointOnEntity(mouse);
                 setStatus(SetEntity2);
             }
@@ -131,7 +131,7 @@ void RS_ActionInfoAngle::mouseReleaseEvent(QMouseEvent* e) {
 
         case SetEntity2:
             entity2 = catchEntity(e, RS2::ResolveAll);
-            if (entity2!=NULL && entity2->rtti()==RS2::EntityLine) {
+            if (entity2 && entity2->rtti()==RS2::EntityLine) {
                 point2 = entity2->getNearestPointOnEntity(mouse);
                 trigger();
                 setStatus(SetEntity1);
@@ -176,7 +176,7 @@ void RS_ActionInfoAngle::updateMouseCursor() {
 
 
 //void RS_ActionInfoAngle::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

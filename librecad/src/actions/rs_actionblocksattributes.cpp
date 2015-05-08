@@ -53,10 +53,10 @@ QAction* RS_ActionBlocksAttributes::createGUIAction(RS2::ActionType /*type*/, QO
 void RS_ActionBlocksAttributes::trigger() {
     RS_DEBUG->print("editing block attributes");
 
-    if (graphic!=NULL && RS_DIALOGFACTORY!=NULL) {
+    if (graphic && RS_DIALOGFACTORY) {
         RS_Block* block = graphic->getActiveBlock();
         RS_BlockList* blockList = graphic->getBlockList();
-        if (blockList!=NULL && block!=NULL) {
+        if (blockList && block) {
             QString oldName = block->getName();
 
             RS_BlockData d;

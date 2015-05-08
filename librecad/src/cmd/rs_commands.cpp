@@ -520,7 +520,7 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) {
             QHash<QString, RS2::ActionType>::const_iterator it = mainCommands.constBegin();
             while (it != mainCommands.constEnd()) {
                 if (it.value()==ret) {
-                    if (RS_DIALOGFACTORY!=NULL) {
+                    if (RS_DIALOGFACTORY) {
                         RS_DEBUG->print("RS_Commands::cmdToAction: commandMessage");
                         //RS_DIALOGFACTORY->commandMessage(tr("Command: %1")
                         //	.arg(full));
@@ -573,14 +573,14 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
         //not found, searching for main commands
         it = mainCommands.find(c);
         if( it == mainCommands.end() ){
-            if (RS_DIALOGFACTORY!=NULL) {
+            if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->commandMessage(tr("Command not found: %1").arg(c));
             }
             return RS2::ActionNone;
         }
     }
     //found
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->commandMessage(tr("Accepted keycode: %1").arg(c));
     }
     //fixme, need to handle multiple hits
@@ -596,7 +596,7 @@ QString RS_Commands::command(const QString& cmd) {
     if(it != instance()->cmdTranslation.end()){
         return instance()->cmdTranslation[cmd];
     }
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->commandMessage(tr("Command not found: %1").arg(cmd));
     }
     RS_DEBUG->print(RS_Debug::D_WARNING,

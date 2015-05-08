@@ -117,7 +117,7 @@ void RS_ActionDrawLineAngle::trigger() {
     container->addEntity(line);
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(line);
         document->endUndoCycle();
@@ -318,7 +318,7 @@ void RS_ActionDrawLineAngle::updateMouseCursor() {
 
 
 //void RS_ActionDrawLineAngle::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

@@ -48,7 +48,7 @@ QAction* RS_ActionLayersToggleView::createGUIAction(RS2::ActionType /*type*/, QO
 
 void RS_ActionLayersToggleView::trigger() {
     RS_DEBUG->print("toggle layer");
-    if (graphic!=NULL) {
+    if (graphic) {
         RS_Layer* layer = graphic->getActiveLayer();
         graphic->toggleLayer(layer);
     }

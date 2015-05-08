@@ -162,7 +162,7 @@ void QG_CoordinateWidget::setCoordinates(const RS_Vector& abs,
 void QG_CoordinateWidget::setCoordinates(double x, double y,
         double rx, double ry, bool updateFormat) {
 
-    if (graphic!=NULL) {
+    if (graphic) {
         if (updateFormat) {
             format = graphic->getLinearFormat();
             prec = graphic->getLinearPrecision();

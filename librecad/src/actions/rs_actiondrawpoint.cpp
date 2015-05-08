@@ -101,7 +101,7 @@ void RS_ActionDrawPoint::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -118,7 +118,7 @@ QStringList RS_ActionDrawPoint::getAvailableCommands() {
 
 
 void RS_ActionDrawPoint::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case 0:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify location"), tr("Cancel"));
@@ -139,7 +139,7 @@ void RS_ActionDrawPoint::updateMouseCursor() {
 
 
 //void RS_ActionDrawPoint::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

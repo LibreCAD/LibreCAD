@@ -92,7 +92,7 @@ void RS_ActionDrawLine::trigger() {
     container->addEntity(line);
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(line);
         document->endUndoCycle();
@@ -351,7 +351,7 @@ void RS_ActionDrawLine::updateMouseCursor() {
 
 
 //void RS_ActionDrawLine::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }
@@ -366,7 +366,7 @@ void RS_ActionDrawLine::close() {
         setStatus(SetStartpoint);
         //        graphicView->moveRelativeZero(start);
     } else {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(
                         tr("Cannot close sequence of lines: "
                            "Not enough entities defined yet, or already closed."));

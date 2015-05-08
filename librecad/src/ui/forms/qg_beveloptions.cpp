@@ -66,7 +66,7 @@ void QG_BevelOptions::destroy() {
 }
 
 void QG_BevelOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionModifyBevel) {
+    if (a && a->rtti()==RS2::ActionModifyBevel) {
         action = (RS_ActionModifyBevel*)a;
 
         QString sd1;
@@ -94,7 +94,7 @@ void QG_BevelOptions::setAction(RS_ActionInterface* a, bool update) {
 }
 
 void QG_BevelOptions::updateData() {
-    if (action!=NULL) {
+    if (action) {
         action->setTrim(cbTrim->isChecked());
         action->setLength1(RS_Math::eval(leLength1->text()));
         action->setLength2(RS_Math::eval(leLength2->text()));

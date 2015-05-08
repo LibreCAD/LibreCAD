@@ -92,7 +92,7 @@ void RS_ActionDrawSpline::trigger() {
     container->addEntity(spline);
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(spline);
         document->endUndoCycle();
@@ -312,7 +312,7 @@ void RS_ActionDrawSpline::updateMouseCursor() {
 
 
 //void RS_ActionDrawSpline::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }
@@ -325,7 +325,7 @@ void RS_ActionDrawSpline::close() {
     if (history.count()>2 && start.valid) {
         //data.endpoint = start;
         //trigger();
-                if (spline!=NULL) {
+                if (spline) {
                         RS_CoordinateEvent e(spline->getStartpoint());
                         coordinateEvent(&e);
                 }
@@ -350,7 +350,7 @@ void RS_ActionDrawSpline::undo() {
                 if (!history.isEmpty()) {
                 //point = *history.last();
                 }
-                if (spline!=NULL) {
+                if (spline) {
                         spline->removeLastControlPoint();
                         if (!history.isEmpty()) {
                             RS_Vector v = history.last();

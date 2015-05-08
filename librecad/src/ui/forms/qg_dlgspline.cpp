@@ -69,11 +69,11 @@ void QG_DlgSpline::setSpline(RS_Spline& e) {
     //pen = spline->getPen();
     wPen->setPen(spline->getPen(false), true, false, "Pen");
     RS_Graphic* graphic = spline->getGraphic();
-    if (graphic!=NULL) {
+    if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
     RS_Layer* lay = spline->getLayer(false);
-    if (lay!=NULL) {
+    if (lay) {
         cbLayer->setLayer(*lay);
     }
 	

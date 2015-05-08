@@ -83,7 +83,7 @@ void RS_ActionDrawCircle::trigger() {
     container->addEntity(circle);
 
     // upd. undo list:
-    if (document!=NULL) {
+    if (document) {
         document->startUndoCycle();
         document->addUndoable(circle);
         document->endUndoCycle();
@@ -171,7 +171,7 @@ void RS_ActionDrawCircle::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -188,7 +188,7 @@ void RS_ActionDrawCircle::commandEvent(RS_CommandEvent* e) {
                 e->accept();
                 trigger();
             } else {
-                if (RS_DIALOGFACTORY!=NULL) {
+                if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(
                         tr("Not a valid expression"));
                 }
@@ -212,18 +212,18 @@ QStringList RS_ActionDrawCircle::getAvailableCommands() {
 void RS_ActionDrawCircle::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetCenter:
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->updateMouseWidget(
                 tr("Specify center"), tr("Cancel"));
         }
         break;
     case SetRadius:
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify radius"), tr("Back"));
         }
         break;
     default:
-        if (RS_DIALOGFACTORY!=NULL) {
+        if (RS_DIALOGFACTORY) {
 			RS_DIALOGFACTORY->updateMouseWidget();
         }
         break;
@@ -251,7 +251,7 @@ void RS_ActionDrawCircle::updateMouseCursor() {
 
 
 //void RS_ActionDrawCircle::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

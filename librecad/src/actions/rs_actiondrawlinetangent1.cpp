@@ -56,19 +56,19 @@ QAction* RS_ActionDrawLineTangent1::createGUIAction(RS2::ActionType /*type*/, QO
 void RS_ActionDrawLineTangent1::trigger() {
     RS_PreviewActionInterface::trigger();
 
-    if (tangent!=NULL) {
+    if (tangent) {
         RS_Entity* newEntity = NULL;
 
         newEntity = new RS_Line(container,
                                 tangent->getData());
 
-        if (newEntity!=NULL) {
+        if (newEntity) {
             newEntity->setLayerToActive();
             newEntity->setPenToActive();
             container->addEntity(newEntity);
 
             // upd. undo list:
-            if (document!=NULL) {
+            if (document) {
                 document->startUndoCycle();
                 document->addUndoable(newEntity);
                 document->endUndoCycle();
@@ -101,7 +101,7 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
 
     case SetCircle: {
             RS_Entity* en = catchEntity(e, circleType, RS2::ResolveAll);
-            if (en!=NULL && (en->rtti()==RS2::EntityCircle ||
+            if (en && (en->rtti()==RS2::EntityCircle ||
                              en->rtti()==RS2::EntityArc ||
                              en->rtti()==RS2::EntityEllipse ||
                              en->rtti()==RS2::EntitySplinePoints)) {
@@ -112,8 +112,8 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
                                                      point,
                                                      circle);
 
-                if (t!=NULL) {
-                    if (tangent!=NULL) {
+                if (t) {
+                    if (tangent) {
                         delete tangent;
                     }
                     tangent = (RS_Line*)t->clone();
@@ -178,7 +178,7 @@ void RS_ActionDrawLineTangent1::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionDrawLineTangent1::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetPoint:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify point"),
@@ -204,7 +204,7 @@ void RS_ActionDrawLineTangent1::updateMouseCursor() {
 
 
 //void RS_ActionDrawLineTangent1::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

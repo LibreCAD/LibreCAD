@@ -279,7 +279,7 @@ void QG_LayerWidget::update() {
     int yPos = layerView->verticalScrollBar()->value();
 
     RS_Layer* activeLayer;
-    if (layerList!=NULL) {
+    if (layerList) {
         activeLayer = layerList->getActive();
     } else {
         activeLayer = NULL;
@@ -410,7 +410,7 @@ void QG_LayerWidget::slotUpdateLayerList() {
  */
 void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
 
-    if (actionHandler!=NULL) {
+    if (actionHandler) {
         QMenu* contextMenu = new QMenu(this);
         QLabel* caption = new QLabel(tr("Layer Menu"), this);
         QPalette palette;

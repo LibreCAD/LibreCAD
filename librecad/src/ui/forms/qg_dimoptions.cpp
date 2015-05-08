@@ -65,7 +65,7 @@ void QG_DimOptions::destroy() {
 }
 
 void QG_DimOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && RS_ActionDimension::isDimensionAction(a->rtti())) {
+    if (a && RS_ActionDimension::isDimensionAction(a->rtti())) {
         action = (RS_ActionDimension*)a;
 
         QString st;
@@ -100,7 +100,7 @@ void QG_DimOptions::setAction(RS_ActionInterface* a, bool update) {
 
 
 void QG_DimOptions::updateLabel() {
-    if (action!=NULL) {
+    if (action) {
         action->setText("");
         action->setLabel(leLabel->text());
         action->setDiameter(bDiameter->isChecked());

@@ -69,7 +69,7 @@ void QG_ArcTangentialOptions::destroy() {
 }
 
 void QG_ArcTangentialOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawArcTangential) {
+    if (a && a->rtti()==RS2::ActionDrawArcTangential) {
         action = (RS_ActionDrawArcTangential*)a;
 
         QString sr,sa;

@@ -64,7 +64,7 @@ QAction* RS_ActionDrawLineTangent2::createGUIAction(RS2::ActionType /*type*/, QO
 //}
 
 void RS_ActionDrawLineTangent2::finish(bool updateTB){
-    if(circle1!=NULL){
+    if(circle1){
         circle1->setHighlighted(false);
         graphicView->redraw(RS2::RedrawDrawing);
     }
@@ -78,18 +78,18 @@ void RS_ActionDrawLineTangent2::trigger() {
 
 	newEntity = new RS_Line(container, *lineData);
 
-    if (newEntity!=NULL) {
+    if (newEntity) {
         newEntity->setLayerToActive();
         newEntity->setPenToActive();
         container->addEntity(newEntity);
 
         // upd. undo list:
-        if (document!=NULL) {
+        if (document) {
             document->startUndoCycle();
             document->addUndoable(newEntity);
             document->endUndoCycle();
         }
-        if(circle1!=NULL){
+        if(circle1){
             circle1->setHighlighted(false);
             graphicView->redraw(RS2::RedrawDrawing);
             circle1=NULL;
@@ -140,7 +140,7 @@ void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e) {
         deletePreview();
         if(getStatus()>=0){
             init(getStatus()-1);
-            if(circle1!=NULL){
+            if(circle1){
                 circle1->setHighlighted(false);
                 graphicView->redraw(RS2::RedrawDrawing);
                 deletePreview();
@@ -176,7 +176,7 @@ void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawLineTangent2::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetCircle1:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Select first circle or ellipse"),
@@ -202,7 +202,7 @@ void RS_ActionDrawLineTangent2::updateMouseCursor() {
 
 
 //void RS_ActionDrawLineTangent2::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        if (isFinished()) {
 //            RS_DIALOGFACTORY->resetToolBar();
 //        }

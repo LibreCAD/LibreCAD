@@ -64,7 +64,7 @@ void QG_LinePolygonOptions::destroy() {
 }
 
 void QG_LinePolygonOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a!=NULL && a->rtti()==RS2::ActionDrawLinePolygonCenCor) {
+    if (a && a->rtti()==RS2::ActionDrawLinePolygonCenCor) {
         action = (RS_ActionDrawLinePolygonCenCor*)a;
 
         QString sn;
@@ -85,7 +85,7 @@ void QG_LinePolygonOptions::setAction(RS_ActionInterface* a, bool update) {
 }
 
 void QG_LinePolygonOptions::updateNumber(int n) {
-    if (action!=NULL) {
+    if (action) {
         action->setNumber(n);
     }
 }

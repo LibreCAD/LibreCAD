@@ -171,7 +171,7 @@ void RS_Hatch::update() {
     updateRunning = true;
 
     // delete old hatch:
-    if (hatch!=NULL) {
+    if (hatch) {
         removeEntity(hatch);
         hatch = NULL;
     }
@@ -416,7 +416,7 @@ void RS_Hatch::update() {
                 }
 
                 // copy to sorted list, removing double points
-                if (!done && av.get()!=NULL) {
+                if (!done && av.get()) {
                     if (last.valid==false || last.distanceTo(*av)>RS_TOLERANCE) {
                         is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(*av)));
                         last = *av;
@@ -440,11 +440,11 @@ is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(endPoint)));
                 auto v2 = is2.at(i);
 
 
-                if (line!=NULL) {
+                if (line) {
 
                     tmp2.addEntity(new RS_Line(&tmp2,
                                                RS_LineData(*v1, *v2)));
-                } else if (arc!=NULL || circle!=NULL) {
+                } else if (arc || circle) {
                     if(fabs(center.angleTo(*v2)-center.angleTo(*v1)) > RS_TOLERANCE_ANGLE)
                     {//don't create an arc with a too small angle
                         tmp2.addEntity(new RS_Arc(&tmp2,
@@ -738,7 +738,7 @@ double RS_Hatch::getDistanceToPoint(
     double solidDist) const {
 
     if (data.solid==true) {
-        if (entity!=NULL) {
+        if (entity) {
             *entity = const_cast<RS_Hatch*>(this);
         }
 

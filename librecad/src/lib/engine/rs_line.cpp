@@ -105,12 +105,12 @@ RS_Vector RS_Line::getNearestEndpoint(const RS_Vector& coord,
     double dist2((data.endpoint-coord).squared());
 
     if (dist2<dist1) {
-        if (dist!=NULL) {
+		if (dist) {
             *dist = sqrt(dist2);
         }
         return data.endpoint;
     } else {
-        if (dist!=NULL) {
+		if (dist) {
             *dist = sqrt(dist1);
         }
         return data.startpoint;
@@ -123,7 +123,7 @@ RS_Vector RS_Line::getNearestEndpoint(const RS_Vector& coord,
 RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
                                            bool onEntity, double* dist, RS_Entity** entity)const {
 
-    if (entity!=NULL) {
+	if (entity) {
         *entity = const_cast<RS_Line*>(this);
     }
     RS_Vector direction = data.endpoint-data.startpoint;
@@ -146,7 +146,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
         vpc = data.startpoint + direction*t;
     }
 
-    if (dist!=NULL) {
+	if (dist) {
         *dist = vpc.distanceTo(coord);
     }
     return vpc;
@@ -175,7 +175,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
         if(i==counts) i--;
         vp0=getStartpoint() + dvp*(double(i)/double(counts));
 
-        if(dist != NULL) {
+		if(dist != NULL) {
             *dist=vp0.distanceTo(coord);
         }
 //        RS_DEBUG->print("RS_Line::getNearestMiddle(): end\n");
@@ -188,7 +188,7 @@ RS_Vector RS_Line::getNearestPointOnEntity(const RS_Vector& coord,
 
 //    RS_Vector p = (data.startpoint + data.endpoint)*0.5;
 
-//    if (dist!=NULL) {
+//    if (dist) {
 //        *dist = p.distanceTo(coord);
 //    }
 
@@ -210,7 +210,7 @@ RS_Vector RS_Line::getNearestDist(double distance,
     }else{
         ret = getEndpoint() - dv;
     }
-    if(dist != NULL) {
+	if(dist != NULL) {
         *dist=coord.distanceTo(ret);
     }
 
@@ -255,7 +255,7 @@ RS_Vector RS_Line::getNearestDist(double distance,
         p = p2;
     }
 
-    if (dist!=NULL) {
+	if (dist) {
         *dist = d;
     }
 
@@ -650,8 +650,8 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     double patternSegmentLength = pat->totalLength;
 
     // create pattern:
-    RS_Vector* dp=new RS_Vector[pat->num > 0?pat->num:0];
-    double* ds=new double[pat->num > 0?pat->num:0];
+	std::vector<RS_Vector> dp(pat->num > 0?pat->num:0);
+	double ds[pat->num > 0?pat->num:0];
     if (pat->num >0 ){
         double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
         for (i=0; i<pat->num; ++i) {
@@ -662,9 +662,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
             if( fabs(ds[i]) < 1. ) ds[i] = (ds[i]>=0.)?1.:-1.;
             dp[i] = direction*fabs(ds[i]);
         }
-    }else {
-        delete[] dp;
-        delete[] ds;
+	}else {
         RS_DEBUG->print(RS_Debug::D_WARNING,"invalid line pattern for line, draw solid line instread");
         painter->drawLine(view->toGui(getStartpoint()),
                           view->toGui(getEndpoint()));
@@ -690,9 +688,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
         }
         total=t2;
         curP=p3;
-    }
-    delete[] dp;
-    delete[] ds;
+	}
 
 }
 

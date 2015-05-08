@@ -59,7 +59,7 @@ void RS_ActionModifyMirror::trigger() {
     RS_Modification m(*container, graphicView);
     m.mirror(data);
 
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
 }
@@ -135,7 +135,7 @@ void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent* e) {
             axisPoint2 = mouse;
             setStatus(ShowDialog);
                 graphicView->moveRelativeZero(mouse);
-            if (RS_DIALOGFACTORY!=NULL) {
+            if (RS_DIALOGFACTORY) {
                 if (RS_DIALOGFACTORY->requestMirrorDialog(data)) {
                     data.axisPoint1 = axisPoint1;
                     data.axisPoint2 = axisPoint2;
@@ -154,7 +154,7 @@ void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent* e) {
 
 
 void RS_ActionModifyMirror::updateMouseButtonHints() {
-    if (RS_DIALOGFACTORY!=NULL) {
+    if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
             /*case Select:
                 RS_DIALOGFACTORY->updateMouseWidget(tr("Pick entities to move"),
@@ -188,7 +188,7 @@ void RS_ActionModifyMirror::updateMouseCursor() {
 //void RS_ActionModifyMirror::updateToolBar() {
 //    //not needed any more
 //    return;
-//    if (RS_DIALOGFACTORY!=NULL) {
+//    if (RS_DIALOGFACTORY) {
 //        switch (getStatus()) {
 //        case SetAxisPoint1:
 //        case SetAxisPoint2:
