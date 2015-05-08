@@ -126,7 +126,7 @@ double RS_Circle::getLength() const {
 	return 2*M_PI*data.radius;
 }
 
-bool RS_Circle::isTangent(const RS_CircleData&  circleData){
+bool RS_Circle::isTangent(const RS_CircleData&  circleData) const{
 	const double d=circleData.center.distanceTo(data.center);
 //    DEBUG_HEADER();
 	const double r0=fabs(circleData.radius);

@@ -167,7 +167,7 @@ public:
     virtual double getAngle2() const {
         return data.endpoint.angleTo(data.startpoint);
     }
-    virtual bool isTangent(const RS_CircleData&  circleData);
+	virtual bool isTangent(const RS_CircleData&  circleData) const;
 
 /**
   * @return a perpendicular vector

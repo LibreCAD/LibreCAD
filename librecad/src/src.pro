@@ -314,7 +314,8 @@ SOURCES += \
     test/lc_simpletests.cpp \
     lib/generators/lc_xmlwriterqxmlstreamwriter.cpp \
     lib/generators/lc_makercamsvg.cpp \
-    actions/lc_actionfileexportmakercam.cpp
+    actions/lc_actionfileexportmakercam.cpp \
+    lib/engine/rs_atomicentity.cpp
 
 # ################################################################################
 # Command

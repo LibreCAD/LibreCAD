@@ -386,7 +386,7 @@ bool RS_Line::offset(const RS_Vector& coord, const double& distance) {
     return true;
 }
 
-bool RS_Line::isTangent(const RS_CircleData&  circleData){
+bool RS_Line::isTangent(const RS_CircleData&  circleData) const{
     double d;
 	getNearestPointOnEntity(circleData.center,false,&d);
 	if(fabs(d-circleData.radius)<20.*RS_TOLERANCE) return true;
