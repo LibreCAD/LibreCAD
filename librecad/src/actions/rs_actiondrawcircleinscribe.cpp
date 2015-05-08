@@ -45,11 +45,7 @@ RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(
 RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe(){}
 
 QAction* RS_ActionDrawCircleInscribe::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action;
-
-    action = new QAction(tr("Circle &Inscribed"), NULL);
-    action->setIcon(QIcon(":/extui/circleinscribe.png"));
-    return action;
+	return new QAction(QIcon(":/extui/circleinscribe.png"), tr("Circle &Inscribed"), NULL);
 }
 
 void RS_ActionDrawCircleInscribe::clearLines(bool checkStatus)
@@ -58,9 +54,9 @@ void RS_ActionDrawCircleInscribe::clearLines(bool checkStatus)
 		if(checkStatus && (int) lines.size()<=getStatus() )
 			break;
 		lines.back()->setHighlighted(false);
+		graphicView->drawEntity(lines.back());
 		lines.pop_back();
 	}
-	graphicView->redraw(RS2::RedrawDrawing);
 }
 
 
@@ -120,11 +116,12 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
 		deletePreview();
 		while(lines.size()==3){
 			lines.back()->setHighlighted(false);
+			graphicView->drawEntity(lines.back());
 			lines.pop_back();
 		}
 		en->setHighlighted(true);
 		lines.push_back(static_cast<RS_Line*>(en));
-		graphicView->redraw(RS2::RedrawDrawing);
+		graphicView->drawEntity(lines.back());
         if(preparePreview()) {
 			RS_Circle* e=new RS_Circle(preview.get(), *cData);
             preview->addEntity(e);
@@ -165,17 +162,18 @@ void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent* e) {
         }
 		while((int) lines.size()>getStatus()){
 			lines.back()->setHighlighted(false);
+			graphicView->drawEntity(lines.back());
 			lines.pop_back();
 		}
-        lines.push_back(static_cast<RS_Line*>(en));
-        coord= graphicView->toGraph(e->x(), e->y());
+		lines.push_back(static_cast<RS_Line*>(en));
+		coord= graphicView->toGraph(e->x(), e->y());
         switch (getStatus()) {
         case SetLine1:
         case SetLine2:
-            en->setHighlighted(true);
-            setStatus(getStatus()+1);
-            graphicView->redraw(RS2::RedrawDrawing);
-            break;
+			en->setHighlighted(true);
+			setStatus(getStatus()+1);
+			graphicView->redraw(RS2::RedrawDrawing);
+			break;
         case SetLine3:
             if( preparePreview()) {
                 trigger();
@@ -307,15 +305,5 @@ void RS_ActionDrawCircleInscribe::updateMouseButtonHints() {
 void RS_ActionDrawCircleInscribe::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionDrawCircleInscribe::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=NULL) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
 
 // EOF

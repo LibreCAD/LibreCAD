@@ -57,9 +57,9 @@ void RS_ActionDrawEllipseInscribe::clearLines(bool checkStatus)
 		if(checkStatus && (int) lines.size()<=getStatus() )
 			break;
 		lines.back()->setHighlighted(false);
+		graphicView->drawEntity(lines.back());
 		lines.pop_back();
 	}
-	graphicView->redraw(RS2::RedrawDrawing);
 }
 
 void RS_ActionDrawEllipseInscribe::init(int status) {
@@ -92,7 +92,12 @@ void RS_ActionDrawEllipseInscribe::trigger() {
         document->endUndoCycle();
     }
 
-	for(RS_Line*const p: lines) p->setHighlighted(false);
+	for(RS_Line*const p: lines) {
+		if(!p) continue;
+		p->setHighlighted(false);
+		graphicView->drawEntity(p);
+
+	}
     drawSnapper();
 
 	clearLines(false);
@@ -122,10 +127,10 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
 		deletePreview();
 
 		clearLines(true);
-		en->setHighlighted(true);
-        lines.push_back(static_cast<RS_Line*>(en));
-		graphicView->redraw(RS2::RedrawDrawing);
+		lines.push_back(static_cast<RS_Line*>(en));
 		if(preparePreview()) {
+			lines.back()->setHighlighted(true);
+			graphicView->drawEntity(lines.back());
 			RS_Ellipse* e=new RS_Ellipse(preview.get(), *eData);
             preview->addEntity(e);
             drawPreview();
@@ -164,17 +169,15 @@ void RS_ActionDrawEllipseInscribe::mouseReleaseEvent(QMouseEvent* e) {
 			if ( en->getParent()->ignoredOnModification()) return;
         }
 		clearLines(true);
-		en->setHighlighted(true);
 		lines.push_back(static_cast<RS_Line*>(en));
-		graphicView->redraw(RS2::RedrawDrawing);
 
         switch (getStatus()) {
         case SetLine1:
         case SetLine2:
         case SetLine3:
             en->setHighlighted(true);
-            setStatus(getStatus()+1);
-            graphicView->redraw(RS2::RedrawDrawing);
+			graphicView->drawEntity(en);
+			setStatus(getStatus()+1);
             break;
         case SetLine4:
             if( preparePreview()) {
@@ -189,8 +192,8 @@ void RS_ActionDrawEllipseInscribe::mouseReleaseEvent(QMouseEvent* e) {
         if(getStatus()>0){
 			clearLines(true);
 			lines.back()->setHighlighted(false);
+			graphicView->drawEntity(lines.back());
             lines.pop_back();
-            graphicView->redraw(RS2::RedrawDrawing);
             deletePreview();
         }
         init(getStatus()-1);
