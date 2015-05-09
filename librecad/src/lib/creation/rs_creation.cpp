@@ -52,13 +52,13 @@
  *        it can also be a polyline, text, ...
  */
 RS_Creation::RS_Creation(RS_EntityContainer* container,
-                         RS_GraphicView* graphicView,
+						 RS_GraphicView* graphicView,
 						 bool handleUndo):
 	container(container)
-  ,graphicView(graphicView)
-  ,handleUndo(handleUndo)
   ,graphic(container?container->getGraphic():nullptr)
   ,document(container?container->getDocument():nullptr)
+  ,graphicView(graphicView)
+  ,handleUndo(handleUndo)
 {
 }
 
@@ -530,34 +530,12 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
 	RS_Line* ret = nullptr;
 
     // check given entities:
-	if (circle==nullptr||normal==nullptr
-            ||!coord.valid ||
-            (   circle->rtti()!=RS2::EntityArc
-                && circle->rtti()!=RS2::EntityCircle
-                && circle->rtti()!=RS2::EntityEllipse)) {
-
-        return ret;
-    }
+	if(! (circle && normal)) return ret;
+	if(! circle->isArc()) return ret;
     //if( normal->getLength()<RS_TOLERANCE) return ret;//line too short
-    RS_Vector t0;
-
-    // calculate tangent points for arcs / circles:
-    t0= circle->getNearestOrthTan(coord,*normal,false);
+	RS_Vector t0 = circle->getNearestOrthTan(coord,*normal,false);
     if(!t0.valid) return ret;
-    RS_Vector vp(normal->getStartpoint());
-    RS_Vector direction(normal->getEndpoint() - vp);
-    RS_Vector vpt(t0 - vp);
-    double a=direction.squared();
-    if( a <RS_TOLERANCE2) {
-		return nullptr;//undefined direction
-    } else {
-        //find projection on the normal line
-        vp += direction*( RS_Vector::dotP(direction,vpt)/a);
-        if( fabs(vp.x - t0.x) <=RS_TOLERANCE || fabs(vp.y-t0.y)<=RS_TOLERANCE) {
-            //t0 already on the given line, need to extend in the normal direction
-            vp += RS_Vector(-direction.y,direction.x);
-        }
-    }
+	RS_Vector vp=normal->getNearestPointOnEntity(t0, false);
 	if (document && handleUndo) {
         document->startUndoCycle();
     }
