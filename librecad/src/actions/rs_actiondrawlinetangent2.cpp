@@ -97,7 +97,7 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
 	e->accept();
     if(getStatus() != SetCircle2) return;
 	RS_Entity* en= catchEntity(e, circleType, RS2::ResolveAll);
-	if(!en) return;
+	if(!en || en==circle1) return;
 	if(circle2){
 		circle2->setHighlighted(false);
 		graphicView->drawEntity(circle2);
