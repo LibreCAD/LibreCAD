@@ -206,7 +206,6 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
                 parallelData = parallel2.getData();
             }
 
-
             RS_Line* newLine = new RS_Line(container, parallelData);
 			if (ret==nullptr) {
 				ret = newLine;
@@ -362,21 +361,10 @@ RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
             }
 
             RS_Circle* newCircle = new RS_Circle(container, parallelData);
-            newCircle->setLayerToActive();
-            newCircle->setPenToActive();
 			if (ret==nullptr) {
-                ret = newCircle;
-            }
-			if (container) {
-                container->addEntity(newCircle);
-            }
-			if (document && handleUndo) {
-                document->addUndoable(newCircle);
-                document->endUndoCycle();
-            }
-			if (graphicView) {
-                graphicView->drawEntity(newCircle);
-            }
+				ret = newCircle;
+			}
+			setEntity(newCircle);
         }
     }
     return ret;
@@ -403,7 +391,7 @@ LC_SplinePoints* RS_Creation::createParallelSplinePoints(const RS_Vector& coord,
 
 	LC_SplinePoints *psp, *ret = nullptr;
 
-	for(int i = 1; i <= number; i++)
+	for(int i = 1; i <= number; ++i)
 	{
 		psp = (LC_SplinePoints*)e->clone();
 		psp->offset(coord, i*distance);
@@ -414,20 +402,8 @@ LC_SplinePoints* RS_Creation::createParallelSplinePoints(const RS_Vector& coord,
 		}
 
 		psp->setParent(container);
-		psp->setLayerToActive();
-		psp->setPenToActive();
-
 		if(!ret) ret = psp;
-
-		if(container) container->addEntity(psp);
-
-		if(document && handleUndo)
-		{
-			document->addUndoable(psp);
-			document->endUndoCycle();
-		}
-
-		if(graphicView)graphicView->drawEntity(psp);
+		setEntity(psp);
 	}
 
 	return ret;
@@ -458,10 +434,8 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
 
     RS_VectorSolutions sol;
     // check given entities:
-	if (l1==nullptr || l2==nullptr ||
-            l1->rtti()!=RS2::EntityLine || l2->rtti()!=RS2::EntityLine) {
-		return nullptr;
-    }
+	if( ! (l1 && l2)) return nullptr;
+	if(! (l1->rtti()==RS2::EntityLine && l1->rtti()==RS2::EntityLine)) return nullptr;
 
     // intersection between entities:
     sol = RS_Information::getIntersection(l1, l2, false);
@@ -494,20 +468,10 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
         d = RS_LineData(inters, inters + v);
 
         RS_Line* newLine = new RS_Line(container, d);
-		if (container) {
-            newLine->setLayerToActive();
-            newLine->setPenToActive();
-            container->addEntity(newLine);
-        }
-		if (document && handleUndo) {
-            document->addUndoable(newLine);
-        }
-		if (graphicView) {
-            graphicView->drawEntity(newLine);
-        }
 		if (ret==nullptr) {
-            ret = newLine;
-        }
+			ret = newLine;
+		}
+		setEntity(newLine);
     }
 	if (document && handleUndo) {
         document->endUndoCycle();
@@ -562,13 +526,9 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
     //RS_Vector circleCenter;
 
     // check given entities:
-	if (circle==nullptr || !point.valid ||
-            (circle->rtti()!=RS2::EntityArc && circle->rtti()!=RS2::EntityCircle
-             && circle->rtti()!=RS2::EntityEllipse
-			&& circle->rtti()!=RS2::EntitySplinePoints)) {
-
+	if(! (circle && point.valid)) return nullptr;
+	if( !( circle->isArc() || circle->rtti()==RS2::EntitySplinePoints))
 		return nullptr;
-    }
 
     // the two tangent points:
     RS_VectorSolutions sol=circle->getTangentPoint(point);
