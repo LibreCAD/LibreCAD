@@ -55,7 +55,6 @@ public:
     virtual RS2::ActionType rtti() const{
         return RS2::ActionDrawLineTangent2;
     }
-//    virtual void init(int status=0);
 
     virtual void trigger();
     virtual void mouseMoveEvent(QMouseEvent* e);
@@ -63,12 +62,10 @@ public:
     virtual void updateMouseButtonHints();
     virtual void finish(bool updateTB);
 
-    //virtual void hideOptions();
-    //virtual void showOptions();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 private:
+	void clearHighlighted();
     /** Closest tangent. */
     std::unique_ptr<RS_Line> tangent;
 	std::unique_ptr<RS_LineData> lineData;

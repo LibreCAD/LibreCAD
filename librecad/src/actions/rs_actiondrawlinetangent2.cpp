@@ -32,8 +32,6 @@
 #include "rs_creation.h"
 #include "rs_line.h"
 
-
-
 RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
@@ -49,24 +47,13 @@ RS_ActionDrawLineTangent2::~RS_ActionDrawLineTangent2(){}
 
 
 QAction* RS_ActionDrawLineTangent2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Tan&gent (C,C)"),
-    QAction* action = new QAction(tr("Tangent (C,C)"), NULL);
-        action->setIcon(QIcon(":/extui/linestan2.png"));
-    //action->zetStatusTip(tr("Draw tangent (circle, circle)"));
-
-    return action;
+	return new QAction(QIcon(":/extui/linestan2.png"), tr("Tangent (C,C)"), nullptr);
 }
-
-//void RS_ActionDrawLineTangent2::init(int status) {
-//    RS_PreviewActionInterface::init(status);
-//    circle1->setHighlighted(false);
-//    graphicView->redraw(RS2::RedrawDrawing);
-//}
 
 void RS_ActionDrawLineTangent2::finish(bool updateTB){
     if(circle1){
         circle1->setHighlighted(false);
-        graphicView->redraw(RS2::RedrawDrawing);
+		graphicView->drawEntity(circle1);
     }
     RS_PreviewActionInterface::finish(updateTB);
 }
@@ -74,9 +61,7 @@ void RS_ActionDrawLineTangent2::finish(bool updateTB){
 void RS_ActionDrawLineTangent2::trigger() {
     RS_PreviewActionInterface::trigger();
 
-    RS_Entity* newEntity = NULL;
-
-	newEntity = new RS_Line(container, *lineData);
+	RS_Entity* newEntity = new RS_Line(container, *lineData);
 
     if (newEntity) {
         newEntity->setLayerToActive();
@@ -88,39 +73,45 @@ void RS_ActionDrawLineTangent2::trigger() {
             document->startUndoCycle();
             document->addUndoable(newEntity);
             document->endUndoCycle();
-        }
-        if(circle1){
-            circle1->setHighlighted(false);
-            graphicView->redraw(RS2::RedrawDrawing);
-            circle1=NULL;
-        }
+		}
+		clearHighlighted();
 
         setStatus(SetCircle1);
     }
     tangent.reset();
 }
 
-
+void RS_ActionDrawLineTangent2::clearHighlighted()
+{
+	for(RS_Entity** p: {&circle1, &circle2}){
+		if(*p){
+			(*p)->setHighlighted(false);
+			graphicView->drawEntity(*p);
+			*p=nullptr;
+		}
+	}
+}
 
 void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
 //    RS_DEBUG->print("RS_ActionDrawLineTangent2::mouseMoveEvent begin");
+	e->accept();
     if(getStatus() != SetCircle2) return;
-    circle2= catchEntity(e, circleType, RS2::ResolveAll);
-    if(circle2==NULL) return;
-    if(circle2->rtti()!=RS2::EntityCircle &&
-            circle2->rtti()!=RS2::EntityEllipse &&
-            circle2->rtti()!=RS2::EntityArc
-            ) {
-        circle2=NULL;
-        return;
-    }
-    RS_Creation creation(NULL, NULL);
+	RS_Entity* en= catchEntity(e, circleType, RS2::ResolveAll);
+	if(!en) return;
+	if(circle2){
+		circle2->setHighlighted(false);
+		graphicView->drawEntity(circle2);
+	}
+	circle2=en;
+	circle2->setHighlighted(true);
+	graphicView->drawEntity(circle2);
+	RS_Creation creation(nullptr, nullptr);
     RS_Vector mouse(graphicView->toGraphX(e->x()),
                     graphicView->toGraphY(e->y()));
     tangent.reset(creation.createTangent2(mouse,
                                           circle1,
                                           circle2));
-    if(tangent.get()==NULL) {
+	if(!tangent.get()){
         valid=false;
         return;
     }
@@ -132,19 +123,13 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
     drawPreview();
 }
 
-
-
 void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e) {
 
     if (e->button()==Qt::RightButton) {
         deletePreview();
-        if(getStatus()>=0){
-            init(getStatus()-1);
-            if(circle1){
-                circle1->setHighlighted(false);
-                graphicView->redraw(RS2::RedrawDrawing);
-                deletePreview();
-            }
+		init(getStatus()-1);
+		if(getStatus()>=0){
+			clearHighlighted();
         }
         return;
     }
@@ -152,17 +137,10 @@ void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e) {
     case SetCircle1:
     {
         circle1 = catchEntity(e, circleType, RS2::ResolveAll);
-        if(circle1==NULL) return;
-        if(circle1->rtti()!=RS2::EntityCircle &&
-                circle1->rtti()!=RS2::EntityEllipse &&
-                circle1->rtti()!=RS2::EntityArc
-                ) {
-            circle1=NULL;
-            return;
-        }
+		if(!circle1) return;
         circle1->setHighlighted(true);
+		graphicView->drawEntity(circle1);
         setStatus(getStatus()+1);
-        graphicView->redraw(RS2::RedrawDrawing);
     }
         break;
 
@@ -170,10 +148,7 @@ void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e) {
         if(valid) trigger();
         break;
     }
-
 }
-
-
 
 void RS_ActionDrawLineTangent2::updateMouseButtonHints() {
     if (RS_DIALOGFACTORY) {
@@ -193,22 +168,8 @@ void RS_ActionDrawLineTangent2::updateMouseButtonHints() {
     }
 }
 
-
-
 void RS_ActionDrawLineTangent2::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionDrawLineTangent2::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
-
 
 // EOF
