@@ -34,9 +34,10 @@
 /**
  * Default constructor.
  */
-RS_Undo::RS_Undo() {
-    undoPointer = -1;
-    currentCycle = NULL;
+RS_Undo::RS_Undo():
+	undoPointer(-1)
+  ,currentCycle(nullptr)
+{
 }
 
 RS_Undo::~RS_Undo() {
@@ -176,10 +177,10 @@ bool RS_Undo::undo() {
         if(undoPointer==-1) {
             QC_ApplicationWindow::getAppWindow()->setUndoEnable(false);
        }
-        if (uc != NULL) {
-            for (int i = 0; i < uc->undoables.size(); ++i) {
-                (uc->undoables.at(i))->changeUndoState();
-            }
+		if (uc) {
+			for(RS_Undoable* p: uc->undoables){
+				p->changeUndoState();
+			}
              QC_ApplicationWindow::getAppWindow()->setRedoEnable(true);
             return true;
         }
@@ -202,10 +203,10 @@ bool RS_Undo::redo() {
             if (uc == NULL ) continue;
             break;
         }
-        if (uc != NULL) {
-            for (int i = 0; i < uc->undoables.size(); ++i) {
-                (uc->undoables.at(i))->changeUndoState();
-            }
+		if (uc) {
+			for(RS_Undoable* p: uc->undoables){
+				p->changeUndoState();
+			}
             if(undoPointer+1==undoList.size()) {
                 QC_ApplicationWindow::getAppWindow()->setRedoEnable(false);
             }
@@ -256,7 +257,7 @@ RS_UndoCycle* RS_Undo::getRedoCycle() {
   **/
 void RS_Undo::setGUIButtons()
 {
-    if(QC_ApplicationWindow::getAppWindow() != NULL){
+	if(QC_ApplicationWindow::getAppWindow()){
         QC_ApplicationWindow::getAppWindow()->setRedoEnable(undoList.size()>0  && undoPointer+1< undoList.size());
         QC_ApplicationWindow::getAppWindow()->setUndoEnable(undoList.size()>0 && undoPointer>=0 );
     }
