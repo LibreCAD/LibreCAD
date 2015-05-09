@@ -540,9 +540,7 @@ m0 x + m1 y + m2 =0
      * Contour Area =\oint x dy
      * @return line integral \oint x dy along the entity
      */
-    virtual double areaLineIntegral() const{
-        return 0.;
-    }
+	virtual double areaLineIntegral() const;
 
     /**
      * @brief trimmable, whether the entity type can be trimmed
@@ -550,7 +548,11 @@ m0 x + m1 y + m2 =0
      * currently, trimmable types are: RS_Line, RS_Circle, RS_Arc, RS_Ellipse
      */
     bool trimmable() const;
-
+	/**
+	 * @brief isArc is the entity of type Arc, Circle, or Ellipse
+	 * @return true for Arc, Circle, or Ellipse
+	 */
+	bool isArc() const;
 
 protected:
 	//! Entity's parent entity or nullptr is this entity has no parent.

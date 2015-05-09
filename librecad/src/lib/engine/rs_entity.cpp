@@ -250,6 +250,23 @@ bool RS_Entity::isInWindow(RS_Vector v1, RS_Vector v2) const
             getMax().y<=top);
 }
 
+double RS_Entity::areaLineIntegral() const
+{
+	return 0.;
+}
+
+bool RS_Entity::isArc() const
+{
+	switch (rtti()) {
+	case RS2::EntityArc:
+	case RS2::EntityCircle:
+	case RS2::EntityEllipse:
+		return true;
+	default:
+		return false;
+	}
+}
+
 /** whether the entity's bounding box intersects with visible portion of graphic view */
 bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const
 {

@@ -71,6 +71,7 @@ public:
     RS_Creation(RS_EntityContainer* container,
 				RS_GraphicView* graphicView=nullptr,
                 bool handleUndo=true);
+	~RS_Creation()=default;
 
     RS_Entity* createParallelThrough(const RS_Vector& coord,
                               int number,
@@ -144,19 +145,16 @@ public:
                           const RS_Vector& referencePoint,
                           const bool remove);
 						  
-    RS_Insert* createLibraryInsert(RS_LibraryInsertData& data);
-
-    //void createPoint(const RS_Vector& p);
-    //void createLine2P(const RS_Vector& p1, const RS_Vector& p2);
-    //void createRectangle(const RS_Vector& e1, const RS_Vector& e2);
-    //RS_Polyline* createPolyline(const RS_Vector& p);
+	RS_Insert* createLibraryInsert(RS_LibraryInsertData& data);
 
 protected:
     RS_EntityContainer* container;
-    RS_Graphic* graphic;
-    RS_Document* document;
+	RS_Graphic* graphic;
+	RS_Document* document;
     RS_GraphicView* graphicView;
     bool handleUndo;
+private:
+	void setEntity(RS_Entity* en) const;
 };
 
 #endif

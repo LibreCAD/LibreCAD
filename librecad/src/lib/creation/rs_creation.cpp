@@ -53,98 +53,14 @@
  */
 RS_Creation::RS_Creation(RS_EntityContainer* container,
                          RS_GraphicView* graphicView,
-                         bool handleUndo) {
-    this->container = container;
-    this->graphicView = graphicView;
-    this->handleUndo = handleUndo;
-	if (container) {
-        graphic = container->getGraphic();
-        document = container->getDocument();
-    } else {
-		graphic = nullptr;
-		document = nullptr;
-    }
+						 bool handleUndo):
+	container(container)
+  ,graphicView(graphicView)
+  ,handleUndo(handleUndo)
+  ,graphic(container?container->getGraphic():nullptr)
+  ,document(container?container->getDocument():nullptr)
+{
 }
-
-
-/**
- * Creates a point entity.
- *
- * E.g.:<br>
- * <code>
- * creation.createPoint(RS_Vector(10.0, 15.0));
- * </code>
- *
- * @param p position
- */
-/*void RS_Creation::createPoint(const RS_Vector& p) {
-    entityContainer->addEntity(new RS_Point(entityContainer, p));
-}*/
-
-
-/**
- * Creates a line with two points given.
- *
- * E.g.:<br>
- * <code>
- * creation.createLine2P(RS_Vector(10.0, 10.0), RS_Vector(100.0, 200.0));
- * </code>
- *
- * @param p1 start point
- * @param p2 end point
- */
-/*void RS_Creation::createLine2P(const RS_Vector& p1, const RS_Vector& p2) {
-    entityContainer->addEntity(new RS_Line(entityContainer,
-                                           RS_LineData(p1, p2)));
-}*/
-
-/**
- * Creates a rectangle with two edge points given.
- *
- * E.g.:<br>
- * <code>
- * creation.createRectangle(RS_Vector(5.0, 2.0), RS_Vector(7.5, 3.0));
- * </code>
- *
- * @param p1 edge one
- * @param p2 edge two
- */
-/*void RS_Creation::createRectangle(const RS_Vector& e1, const RS_Vector& e2) {
-    RS_Vector e21(e2.x, e1.y);
-    RS_Vector e12(e1.x, e2.y);
-    entityContainer->addEntity(new RS_Line(entityContainer,
-                                           RS_LineData(e1, e12)));
-    entityContainer->addEntity(new RS_Line(entityContainer,
-                                           RS_LineData(e12, e2)));
-    entityContainer->addEntity(new RS_Line(entityContainer,
-                                           RS_LineData(e2, e21)));
-    entityContainer->addEntity(new RS_Line(entityContainer,
-                                           RS_LineData(e21, e1)));
-}*/
-
-
-/**
- * Creates a polyline from the given array of entities.
- * No checking if the entities actually fit together.
- * Currently this is like a group.
- *
- * E.g.:<br>
- * <code>
- * RS_Polyline *pl = creation.createPolyline(RS_Vector(25.0, 55.0));<br>
- * pl->addVertex(RS_Vector(50.0, 75.0));<br>
- * </code>
- *
- * @param entities array of entities
- * @param startPoint Start point of the polyline
- */
-/*RS_Polyline* RS_Creation::createPolyline(const RS_Vector& startPoint) {
-    RS_Polyline* pl = new RS_Polyline(entityContainer,
-                RS_PolylineData(startPoint, RS_Vector(0.0,0.0), 0));
-    entityContainer->addEntity(pl);
-    return pl;
-}*/
-
-
 
 /**
  * Creates an entity parallel to the given entity e through the given
@@ -232,8 +148,6 @@ RS_Entity* RS_Creation::createParallel(const RS_Vector& coord,
 	return nullptr;
 }
 
-
-
 /**
  * Creates a line parallel to the given line e.
  * Out of the 2 possible parallels, the one closest to
@@ -294,21 +208,10 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
 
 
             RS_Line* newLine = new RS_Line(container, parallelData);
-            newLine->setLayerToActive();
-            newLine->setPenToActive();
 			if (ret==nullptr) {
-                ret = newLine;
-            }
-			if (container) {
-                container->addEntity(newLine);
-            }
-			if (document && handleUndo) {
-                document->addUndoable(newLine);
-                //document->endUndoCycle();
-            }
-			if (graphicView) {
-                graphicView->drawEntity(newLine);
-            }
+				ret = newLine;
+			}
+			setEntity(newLine);
         }
     }
 
@@ -384,21 +287,10 @@ RS_Arc* RS_Creation::createParallelArc(const RS_Vector& coord,
             }
 
             RS_Arc* newArc = new RS_Arc(container, parallelData);
-            newArc->setLayerToActive();
-            newArc->setPenToActive();
 			if (ret==nullptr) {
-                ret = newArc;
-            }
-			if (container) {
-                container->addEntity(newArc);
-            }
-			if (document && handleUndo) {
-                document->addUndoable(newArc);
-                document->endUndoCycle();
-            }
-			if (graphicView) {
-                graphicView->drawEntity(newArc);
-            }
+				ret = newArc;
+			}
+			setEntity(newArc);
         }
     }
 
@@ -720,18 +612,7 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
     }
 
     ret = new RS_Line(container, d);
-    ret->setLayerToActive();
-    ret->setPenToActive();
-	if (container) {
-        container->addEntity(ret);
-    }
-	if (document && handleUndo) {
-        document->addUndoable(ret);
-        document->endUndoCycle();
-    }
-	if (graphicView) {
-        graphicView->drawEntity(ret);
-    }
+	setEntity(ret);
 
     return ret;
 }
@@ -756,16 +637,10 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
     double circleRadius2 = 0.0;
 
     // check given entities:
-	if (circle1==nullptr || circle2==nullptr ||
-            ((circle1->rtti()!=RS2::EntityArc &&
-              circle1->rtti()!=RS2::EntityEllipse &&
-              circle1->rtti()!=RS2::EntityCircle) ||
-             (circle2->rtti()!=RS2::EntityArc &&
-              circle2->rtti()!=RS2::EntityEllipse &&
-              circle2->rtti()!=RS2::EntityCircle) )) {
-
+	if(! (circle1 && circle2))
 		return nullptr;
-    }
+	if( !(circle1->isArc() && circle2->isArc()))
+		return nullptr;
 
 	std::vector<RS_Line*> poss;
     //        for (int i=0; i<4; ++i) {
@@ -924,29 +799,17 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
 //idx=static_cast<int>(poss.size()*(random()/(double(1.0)+RAND_MAX)));
     if (idx!=-1) {
         RS_LineData d = poss[idx]->getData();
-		for (size_t i=0; i<poss.size(); ++i) {
-			if (poss[i]) {
-                delete poss[i];
-            }
-        }
+		for(auto p: poss){
+			if(p)
+				delete p;
+		}
 
 		if (document && handleUndo) {
             document->startUndoCycle();
         }
 
         ret = new RS_Line(container, d);
-        ret->setLayerToActive();
-        ret->setPenToActive();
-		if (container) {
-            container->addEntity(ret);
-        }
-		if (document && handleUndo) {
-            document->addUndoable(ret);
-            document->endUndoCycle();
-        }
-		if (graphicView) {
-            graphicView->drawEntity(ret);
-        }
+		setEntity(ret);
     } else {
 		ret = nullptr;
     }
@@ -1046,18 +909,7 @@ RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord,
     }
 
     ret = new RS_Line(container, d);
-    ret->setLayerToActive();
-    ret->setPenToActive();
-	if (container) {
-        container->addEntity(ret);
-    }
-	if (document && handleUndo) {
-        document->addUndoable(ret);
-        document->endUndoCycle();
-    }
-	if (graphicView) {
-        graphicView->drawEntity(ret);
-    }
+	setEntity(ret);
 
     return ret;
 }
@@ -1203,19 +1055,7 @@ RS_Insert* RS_Creation::createInsert(const RS_InsertData* pdata) {
 
 	RS_Insert* ins = new RS_Insert(container, *pdata);
     // inserts are also on layers
-    ins->setLayerToActive();
-    ins->setPenToActive();
-
-	if (container) {
-        container->addEntity(ins);
-    }
-	if (document && handleUndo) {
-        document->addUndoable(ins);
-        document->endUndoCycle();
-    }
-	if (graphicView) {
-        graphicView->drawEntity(ins);
-    }
+	setEntity(ins);
 
     RS_DEBUG->print("RS_Creation::createInsert: OK");
 
@@ -1234,20 +1074,8 @@ RS_Image* RS_Creation::createImage(const RS_ImageData* data) {
     }
 
 	RS_Image* img = new RS_Image(container, *data);
-    img->setLayerToActive();
-    img->setPenToActive();
     img->update();
-
-	if (container) {
-        container->addEntity(img);
-    }
-	if (document && handleUndo) {
-        document->addUndoable(img);
-        document->endUndoCycle();
-    }
-	if (graphicView) {
-        graphicView->drawEntity(img);
-    }
+	setEntity(img);
 
     return img;
 }
@@ -1364,5 +1192,23 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
 
 	return nullptr;
 }
+
+void RS_Creation::setEntity(RS_Entity* en) const
+{
+	en->setLayerToActive();
+	en->setPenToActive();
+
+	if (container) {
+		container->addEntity(en);
+	}
+	if (document && handleUndo) {
+		document->addUndoable(en);
+		document->endUndoCycle();
+	}
+	if (graphicView) {
+		graphicView->drawEntity(en);
+	}
+}
+
 
 // EOF
