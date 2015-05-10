@@ -448,17 +448,10 @@ QString RS_Units::formatLinear(double length, RS2::Unit unit,
 QString RS_Units::formatScientific(double length, RS2::Unit unit,
                                      int prec, bool showUnit) {
 
-    QString ret;
-
-    // unit appended to value (e.g. 'mm'):
-    QString unitString = "";
-    if (showUnit) {
-        unitString = unitToSign(unit);
-    }
-
-    ret = QString("%1%2").arg(length,0,'E', prec).arg(unitString);
-
-    return ret;
+	QString const ret= QString("%1").arg(length,0,'E', prec);
+	if(showUnit)
+		return ret + unitToSign(unit);
+	return ret;
 }
 
 
@@ -472,21 +465,11 @@ QString RS_Units::formatScientific(double length, RS2::Unit unit,
  */
 QString RS_Units::formatDecimal(double length, RS2::Unit unit,
                                   int prec, bool showUnit) {
+	QString const ret=RS_Math::doubleToString(length, prec);
 
-    QString ret;
-
-    // unit appended to value (e.g. 'mm'):
-    QString unitString = "";
-    if (showUnit) {
-        unitString = unitToSign(unit);
-    }
-
-    ret = RS_Math::doubleToString(length, prec);
-    if(showUnit) {
-        ret+=unitString;
-    }
-
-    return ret;
+	if(showUnit)
+		return ret+unitToSign(unit);
+	return ret;
 }
 
 
@@ -513,7 +496,7 @@ QString RS_Units::formatEngineering(double length, RS2::Unit /*unit*/,
         sInches="0";
     }
 
-    if (feet!=0) {
+	if (feet) {
         ret = QString("%1'-%2\"").arg(feet).arg(sInches);
     } else {
         ret = QString("%1\"").arg(sInches);
