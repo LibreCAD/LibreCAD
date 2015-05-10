@@ -25,11 +25,10 @@
 **********************************************************************/
 
 
-#include "rs_units.h"
-
 #include <QObject>
-
+#include "rs_units.h"
 #include "rs_math.h"
+#include "rs_vector.h"
 #include "rs_debug.h"
 
 /**
@@ -429,7 +428,7 @@ double RS_Units::convert(double val, RS2::Unit src, RS2::Unit dest) {
 /**
  * Converts the given vector 'val' from unit 'src' to unit 'dest'.
  */
-RS_Vector RS_Units::convert(const RS_Vector val, RS2::Unit src, RS2::Unit dest) {
+RS_Vector RS_Units::convert(const RS_Vector& val, RS2::Unit src, RS2::Unit dest) {
     return RS_Vector(convert(val.x, src, dest),
                      convert(val.y, src, dest)
 #ifndef RS_VECTOR2D
@@ -987,7 +986,7 @@ RS_Vector RS_Units::paperFormatToSize(RS2::PaperFormat p) {
  * Gets the paper format which matches the given size. If no
  * format matches, RS2::Custom is returned.
  */
-RS2::PaperFormat RS_Units::paperSizeToFormat(const RS_Vector s) {
+RS2::PaperFormat RS_Units::paperSizeToFormat(const RS_Vector& s) {
     RS_Vector ts1;
     RS_Vector ts2;
 

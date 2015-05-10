@@ -94,64 +94,6 @@ void QG_CoordinateWidget::setGraphic(RS_Graphic* graphic) {
     setCoordinates(RS_Vector(0.0,0.0), RS_Vector(0.0,0.0), true);
 }
 
-/*void QG_CoordinateWidget::setAbsCoordinates(double x, double y) {
-    setAbsCoordinates(RS_Vector(x, y));
-}
-
-void QG_CoordinateWidget::setAbsCoordinates(const RS_Vector& v) {
-    QString str;
-
-    str.sprintf("%.4f / %.4f", v.x, v.y);
-    lCoord1->setText(str);
-
-    double ang = RS_Math::rad2deg(v.angle());
-    double rad = v.magnitude();
-    str.sprintf("%.4f < %.4f", rad, ang);
-    lCoord1b->setText(str);
-}
-
-void QG_CoordinateWidget::setAbsCoordinates(const QString& x, const QString& y) {
-    lCoord1->setText(x);
-    lCoord1b->setText(y);
-}
-
-void QG_CoordinateWidget::setRelCoordinates(double x, double y) {
-    setRelCoordinates(RS_Vector(x, y));
-}
-
-void QG_CoordinateWidget::setRelCoordinates(const RS_Vector& v) {
-    QString str;
-    str.sprintf("@%.4f / %.4f", v.x, v.y);
-    lCoord2->setText(str);
-
-    double ang = RS_Math::rad2deg(v.angle());
-    double rad = v.magnitude();
-    str.sprintf("@%.4f < %.4f", rad, ang);
-    lCoord2b->setText(str);
-}
-
-void QG_CoordinateWidget::setRelCoordinates(const QString& x, const QString& y) {
-    lCoord2->setText(x);
-    lCoord2b->setText(y);
-}
-
-void QG_CoordinateWidget::setCoordinates(double x, double y,
-        double rx, double ry) {
-    setAbsCoordinates(x, y);
-    setRelCoordinates(rx, ry);
-}*/
-
-/*void QG_CoordinateWidget::setAbsCoordinates(const QString& x,
-                                            const QString& y,
-                                            const QString& rx,
-                                            const QString& ry) {
-    lCoord1->setText(x);
-    lCoord1b->setText(y);
-    lCoord2->setText(rx);
-    lCoord2b->setText(ry);
-}*/
-
-
 
 void QG_CoordinateWidget::setCoordinates(const RS_Vector& abs,
                                          const RS_Vector& rel, bool updateFormat) {
