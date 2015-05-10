@@ -171,79 +171,54 @@ QString RS_Units::unitToSign(RS2::Unit u) {
  *      translated if @a t is true (the default).
  */
 QString RS_Units::unitToString(RS2::Unit u, bool t) {
-    QString ret = "";
-
     switch (u) {
     case RS2::None:
-        ret = t ? QObject::tr("None") : QString("None");
-        break;
+		return t ? QObject::tr("None", "unknown length unit") : "None";
     case RS2::Inch:
-        ret = t ? QObject::tr("Inch") : QString("Inch");
-        break;
+		return t ? QObject::tr("Inch") : "Inch";
     case RS2::Foot:
-        ret = t ? QObject::tr("Foot") : QString("Foot");
-        break;
+		return t ? QObject::tr("Foot") : "Foot";
     case RS2::Mile:
-        ret = t ? QObject::tr("Mile") : QString("Mile");
-        break;
+		return t ? QObject::tr("Mile") : "Mile";
     case RS2::Millimeter:
-        ret = t ? QObject::tr("Millimeter") : QString("Millimeter");
-        break;
+		return t ? QObject::tr("Millimeter") : "Millimeter";
     case RS2::Centimeter:
-        ret = t ? QObject::tr("Centimeter") : QString("Centimeter");
-        break;
+		return t ? QObject::tr("Centimeter") : "Centimeter";
     case RS2::Meter:
-        ret = t ? QObject::tr("Meter") : QString("Meter");
-        break;
+		return t ? QObject::tr("Meter") : "Meter";
     case RS2::Kilometer:
-        ret = t ? QObject::tr("Kilometer") : QString("Kilometer");
-        break;
+		return t ? QObject::tr("Kilometer") : "Kilometer";
     case RS2::Microinch:
-        ret = t ? QObject::tr("Microinch") : QString("Microinch");
-        break;
+		return t ? QObject::tr("Microinch") : "Microinch";
     case RS2::Mil:
-        ret = t ? QObject::tr("Mil") : QString("Mil");
-        break;
+		return t ? QObject::tr("Mil") : "Mil";
     case RS2::Yard:
-        ret = t ? QObject::tr("Yard") : QString("Yard");
-        break;
+		return t ? QObject::tr("Yard") : "Yard";
     case RS2::Angstrom:
-        ret = t ? QObject::tr("Angstrom") : QString("Angstrom");
-        break;
+		return t ? QObject::tr("Angstrom") : "Angstrom";
     case RS2::Nanometer:
-        ret = t ? QObject::tr("Nanometer") : QString("Nanometer");
-        break;
+		return t ? QObject::tr("Nanometer") : "Nanometer";
     case RS2::Micron:
-        ret = t ? QObject::tr("Micron") : QString("Micron");
-        break;
+		return t ? QObject::tr("Micron") : "Micron";
     case RS2::Decimeter:
-        ret = t ? QObject::tr("Decimeter") : QString("Decimeter");
-        break;
+		return t ? QObject::tr("Decimeter") : "Decimeter";
     case RS2::Decameter:
-        ret = t ? QObject::tr("Decameter") : QString("Decameter");
-        break;
+		return t ? QObject::tr("Decameter") : "Decameter";
     case RS2::Hectometer:
-        ret = t ? QObject::tr("Hectometer") : QString("Hectometer");
-        break;
+		return t ? QObject::tr("Hectometer") : "Hectometer";
     case RS2::Gigameter:
-        ret = t ? QObject::tr("Gigameter") : QString("Gigameter");
-        break;
+		return t ? QObject::tr("Gigameter") : "Gigameter";
     case RS2::Astro:
-        ret = t ? QObject::tr("Astro") : QString("Astro");
-        break;
+		return t ? QObject::tr("Astro") : "Astro";
     case RS2::Lightyear:
-        ret = t ? QObject::tr("Lightyear") : QString("Lightyear");
-        break;
+		return t ? QObject::tr("Lightyear") : "Lightyear";
     case RS2::Parsec:
-        ret = t ? QObject::tr("Parsec") : QString("Parsec");
-        break;
+		return t ? QObject::tr("Parsec") : "Parsec";
 
     default:
-        ret = "";
-        break;
+		return "";
     }
 
-    return ret;
 }
 
 
@@ -308,104 +283,76 @@ RS2::Unit RS_Units::stringToUnit(const QString& u) {
  * @return true: the unit is metric, false: the unit is imperial.
  */
 bool RS_Units::isMetric(RS2::Unit u) {
-    if (u==RS2::Millimeter ||
-            u==RS2::Centimeter ||
-            u==RS2::Meter ||
-            u==RS2::Kilometer ||
-            u==RS2::Angstrom ||
-            u==RS2::Nanometer ||
-            u==RS2::Micron ||
-            u==RS2::Decimeter ||
-            u==RS2::Decameter ||
-            u==RS2::Hectometer ||
-            u==RS2::Gigameter ||
-            u==RS2::Astro ||
-            u==RS2::Lightyear ||
-            u==RS2::Parsec) {
-
-        return true;
-    } else {
-        return false;
-    }
+	switch (u) {
+	case RS2::Millimeter:
+	case RS2::Centimeter:
+	case RS2::Meter:
+	case RS2::Kilometer:
+	case RS2::Angstrom:
+	case RS2::Nanometer:
+	case RS2::Micron:
+	case RS2::Decimeter:
+	case RS2::Decameter:
+	case RS2::Hectometer:
+	case RS2::Gigameter:
+	case RS2::Astro:
+	case RS2::Lightyear:
+	case RS2::Parsec:
+		return true;
+	default:
+		return false;
+	}
 }
-
-
 
 /**
  * @return factor to convert the given unit to Millimeters.
  */
 double RS_Units::getFactorToMM(RS2::Unit u) {
-    double ret = 1.0;
-
     switch (u) {
-    case RS2::None:
-        ret = 1.0;
-        break;
+	default:
+	case RS2::None:
+	case RS2::Millimeter:
+		return 1.0;
     case RS2::Inch:
-        ret = 25.4;
-        break;
+		return 25.4;
     case RS2::Foot:
-        ret = 304.8;
-        break;
+		return 304.8;
     case RS2::Mile:
-        ret = 1609344;
-        break;
-    case RS2::Millimeter:
-        ret = 1.0;
-        break;
+		return 1.609344e6; //international mile
     case RS2::Centimeter:
-        ret = 10;
-        break;
+		return 10;
     case RS2::Meter:
-        ret = 1000;
-        break;
+		return 1e3;
     case RS2::Kilometer:
-        ret = 1000000;
-        break;
+		return 1e6;
     case RS2::Microinch:
-        ret = 0.0000254;
-        break;
+		return 2.54e-5;
     case RS2::Mil:
-        ret = 0.0254;
-        break;
+		return 0.0254;
     case RS2::Yard:
-        ret = 914.4;
-        break;
+		return 914.4;
     case RS2::Angstrom:
-        ret = 0.0000001;
-        break;
+		return 1e-7;
     case RS2::Nanometer:
-        ret = 0.000001;
-        break;
+		return 1e-6;
     case RS2::Micron:
-        ret = 0.001;
-        break;
+		return 1e-3;
     case RS2::Decimeter:
-        ret = 100.0;
-        break;
+		return 100.0;
     case RS2::Decameter:
-        ret = 10000.0;
-        break;
+		return 1e4;
     case RS2::Hectometer:
-        ret = 100000.0;
-        break;
+		return 1e5;
     case RS2::Gigameter:
-        ret = 1000000000.0;
-        break;
+		return 1e9;
     case RS2::Astro:
-        return 1.495978707e14;
+		return 1.495978707e14;
     case RS2::Lightyear:
-        return 9.4607304725808e18;
-        break;
+		return 9.4607304725808e18;
     case RS2::Parsec:
-        return 3.0856776e19;
-        break;
-    default:
-        ret = 1.0;
-        break;
+		return 3.0856776e19;
     }
 
-    return ret;
 }
 
 
@@ -664,11 +611,11 @@ QString RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
         }
     }
 
-    if( num!=0 && nominator!=0 ) {
+	if( num && nominator ) {
         ret = QString("%1%2 %3/%4").arg(neg).arg(num).arg(nominator).arg(denominator);
-    } else if(nominator!=0) {
+	} else if(nominator) {
         ret = QString("%1%2/%3").arg(neg).arg(nominator).arg(denominator);
-    } else if(num!=0) {
+	} else if(num) {
         ret = QString("%1%2").arg(neg).arg(num);
     } else {
         ret = "0";

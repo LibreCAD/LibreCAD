@@ -78,9 +78,9 @@ public:
 
 	static RS_Vector paperFormatToSize(RS2::PaperFormat p);
 	static RS2::PaperFormat paperSizeToFormat(const RS_Vector& s);
-	
-        static QString paperFormatToString(RS2::PaperFormat p);
-        static RS2::PaperFormat stringToPaperFormat(const QString& p);
+
+	static QString paperFormatToString(RS2::PaperFormat p);
+	static RS2::PaperFormat stringToPaperFormat(const QString& p);
 
 	static void test();
     static double dpiToScale(double dpi, RS2::Unit unit);
