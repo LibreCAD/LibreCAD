@@ -88,6 +88,7 @@ void RS_ActionDefault::keyPressEvent(QKeyEvent* e) {
         restrBak = snapMode.restriction;
         setSnapRestriction(RS2::RestrictOrthogonal);
         e->accept();
+		break; //avoid clearing command line at shift key
         //cleanup default action, issue#285
     case Qt::Key_Escape:
         //        std::cout<<"RS_ActionDefault::keyPressEvent(): Qt::Key_Escape"<<std::endl;
