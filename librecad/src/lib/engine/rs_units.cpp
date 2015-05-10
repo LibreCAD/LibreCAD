@@ -393,13 +393,12 @@ double RS_Units::getFactorToMM(RS2::Unit u) {
         ret = 1000000000.0;
         break;
     case RS2::Astro:
-        ret = 149600000000000.0;
-        break;
+        return 1.495978707e14;
     case RS2::Lightyear:
-        ret = 9460731798000000000.0;
+        return 9.4607304725808e18;
         break;
     case RS2::Parsec:
-        ret = 30857000000000000000.0;
+        return 3.0856776e19;
         break;
     default:
         ret = 1.0;
