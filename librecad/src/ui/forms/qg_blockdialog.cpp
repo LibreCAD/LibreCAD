@@ -23,9 +23,10 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
+#include <QMessageBox>
 #include "qg_blockdialog.h"
 #include "rs_blocklist.h"
-#include <QMessageBox>
+#include "rs_block.h"
 
 /*
  *  Constructs a QG_BlockDialog as a child of 'parent', with the

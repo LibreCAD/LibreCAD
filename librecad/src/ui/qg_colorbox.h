@@ -28,8 +28,9 @@
 #define QG_COLORBOX_H
 
 #include <QComboBox>
+#include <memory>
 
-#include "rs_color.h"
+class RS_Color;
 
 /**
  * A combobox for choosing a color.
@@ -38,14 +39,12 @@ class QG_ColorBox: public QComboBox {
     Q_OBJECT
 
 public:
-    QG_ColorBox(QWidget* parent=0, const char* name=0);
-    QG_ColorBox(bool showByLayer, bool showUnchanged, 
-		QWidget* parent=0, const char* name=0);
+    QG_ColorBox(QWidget* parent=nullptr, const char* name=nullptr);
+    QG_ColorBox(bool showByLayer, bool showUnchanged,
+                QWidget* parent=nullptr, const char* name=nullptr);
     virtual ~QG_ColorBox();
 
-    RS_Color getColor() {
-        return currentColor;
-    }
+    RS_Color getColor() const;
 
     void addColor(Qt::GlobalColor color, QString text);
     void setColor(const RS_Color& color);
@@ -53,9 +52,7 @@ public:
 
     void init(bool showByLayer, bool showUnchanged);
 
-	bool isUnchanged() {
-		return unchanged;
-	}
+    bool isUnchanged() const;
 
 private slots:
     void slotColorChanged(int index);
@@ -64,7 +61,7 @@ signals:
     void colorChanged(const RS_Color& color);
 
 private:
-    RS_Color currentColor;
+    std::unique_ptr<RS_Color> currentColor;
     int colorIndexStart;
     bool showByLayer;
 	bool showUnchanged;

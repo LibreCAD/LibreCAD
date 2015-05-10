@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "qg_snapmiddleoptions.h"
 
-#include <qvariant.h>
+#include <QVariant>
 
 /*
  *  Constructs a QG_SnapMiddleOptions as a child of 'parent'

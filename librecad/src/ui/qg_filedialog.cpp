@@ -39,7 +39,8 @@
 #include "emu_qt44.h"
 #endif
 
-void QG_FileDialog::getType(const QString filter) {
+void QG_FileDialog::getType(const QString filter)
+{
     if (filter== fLff) {
         ftype = RS2::FormatLFF;
     } else if (filter == fCxf) {
@@ -110,7 +111,7 @@ QG_FileDialog::QG_FileDialog(QWidget* parent, Qt::WindowFlags f, FileType type)
 QG_FileDialog::~QG_FileDialog(){
 }
 
-QString QG_FileDialog::getExtension (RS2::FormatType type){
+QString QG_FileDialog::getExtension (RS2::FormatType type) const{
     switch (type) {
     case RS2::FormatLFF:
         return QString(".lff");

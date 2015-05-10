@@ -34,7 +34,7 @@ class QG_DlgInitial : public QDialog, public Ui::QG_DlgInitial
 
 public:
     QG_DlgInitial(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
-    ~QG_DlgInitial();
+    ~QG_DlgInitial()=default;
 
 public slots:
     virtual void setText( const QString & t );

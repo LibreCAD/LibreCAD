@@ -26,10 +26,10 @@
 #ifndef QG_BLOCKDIALOG_H
 #define QG_BLOCKDIALOG_H
 
-#include "rs_block.h"
 #include "ui_qg_blockdialog.h"
 
 class RS_BlockList;
+struct RS_BlockData;
 
 class QG_BlockDialog : public QDialog, public Ui::QG_BlockDialog
 {

@@ -25,7 +25,7 @@
 **********************************************************************/
 #include "qg_widgetpen.h"
 
-#include <qvariant.h>
+#include <QVariant>
 #include "qg_colorbox.h"
 #include "qg_widthbox.h"
 #include "qg_linetypebox.h"

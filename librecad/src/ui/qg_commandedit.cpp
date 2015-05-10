@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include "qg_commandedit.h"
+#include <QKeyEvent>
 
 
 /**
@@ -33,15 +34,6 @@
  */
 QG_CommandEdit::QG_CommandEdit(QWidget* parent)
         : QLineEdit(parent) {}
-
-
-
-/**
- * Destructor
- */
-QG_CommandEdit::~QG_CommandEdit() {
-}
-
 
 /**
  * Bypass for key press events from the tab key.

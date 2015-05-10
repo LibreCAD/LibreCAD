@@ -34,7 +34,7 @@ class QG_ExitDialog : public QDialog, public Ui::QG_ExitDialog
 
 public:
     QG_ExitDialog(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
-    ~QG_ExitDialog();
+    ~QG_ExitDialog()=default;
 
 public slots:
     virtual void setText( const QString & text );

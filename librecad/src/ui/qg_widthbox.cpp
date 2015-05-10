@@ -53,12 +53,13 @@ QG_WidthBox::QG_WidthBox(bool showByLayer, bool showUnchanged,
     init(showByLayer, showUnchanged);
 }
 
+RS2::LineWidth QG_WidthBox::getWidth() const{
+    return currentWidth;
+}
 
-/**
- * Destructor
- */
-QG_WidthBox::~QG_WidthBox() {}
-
+bool QG_WidthBox::isUnchanged() const{
+    return unchanged;
+}
 
 /**
  * Initialisation (called from constructor or manually but only

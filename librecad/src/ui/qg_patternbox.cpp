@@ -26,9 +26,11 @@
 
 #include "qg_patternbox.h"
 
-#include <qpixmap.h>
-#include <qstringlist.h>
+#include <QPixmap>
+#include <QStringList>
 
+#include "rs_pattern.h"
+#include "rs_patternlist.h"
 #include "rs_debug.h"
 
 
@@ -39,8 +41,6 @@
 QG_PatternBox::QG_PatternBox(QWidget* parent)
         : QComboBox(parent) {
 }
-
-
 
 /**
  * Destructor

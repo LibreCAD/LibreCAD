@@ -27,11 +27,9 @@
 #ifndef QG_PATTERNBOX_H
 #define QG_PATTERNBOX_H
 
-#include <qcombobox.h>
+#include <QComboBox>
 
-#include "rs.h"
-#include "rs_pattern.h"
-#include "rs_patternlist.h"
+class RS_Pattern;
 
 /**
  * A combobox for choosing a pattern name.

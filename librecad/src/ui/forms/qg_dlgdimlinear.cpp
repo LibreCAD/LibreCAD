@@ -25,6 +25,7 @@
 **********************************************************************/
 #include "qg_dlgdimlinear.h"
 
+#include "rs_dimlinear.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
 

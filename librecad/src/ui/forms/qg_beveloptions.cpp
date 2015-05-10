@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 #include "qg_beveloptions.h"
+#include "rs_actionmodifybevel.h"
 
 #include "rs_settings.h"
 #include "rs_math.h"

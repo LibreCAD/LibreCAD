@@ -41,8 +41,8 @@
 #include "rs_actionselectsingle.h"
 #include "rs_settings.h"
 #include "rs_painterqt.h"
-#include "qg_cadtoolbar.h"
 #include "rs_dialogfactory.h"
+#include "qg_cadtoolbar.h"
 #include "qg_dialogfactory.h"
 
 

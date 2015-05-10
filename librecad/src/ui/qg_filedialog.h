@@ -46,15 +46,15 @@ public:
     QG_FileDialog(QWidget* parent=0, Qt::WindowFlags f=0, FileType type = DrawingFile);
     virtual ~QG_FileDialog();
 
-    QString getOpenFile(RS2::FormatType* type=NULL);
-    QString getSaveFile(RS2::FormatType* type=NULL);
+    QString getOpenFile(RS2::FormatType* type=nullptr);
+    QString getSaveFile(RS2::FormatType* type=nullptr);
 
-    static QString getOpenFileName(QWidget* parent, RS2::FormatType* type=NULL);
-    static QString getSaveFileName(QWidget* parent, RS2::FormatType* type=NULL);
+    static QString getOpenFileName(QWidget* parent, RS2::FormatType* type=nullptr);
+    static QString getSaveFileName(QWidget* parent, RS2::FormatType* type=nullptr);
 
 private:
     void getType(const QString filter);
-    QString getExtension (RS2::FormatType type);
+    QString getExtension (RS2::FormatType type) const;
     RS2::FormatType ftype;
     QString fDxfrw2007;
     QString fDxfrw2004;

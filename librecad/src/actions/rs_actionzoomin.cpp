@@ -112,7 +112,4 @@ void RS_ActionZoomIn::trigger() {
     finish(false);
 }
 
-
-
-
 // EOF

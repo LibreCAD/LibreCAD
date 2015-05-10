@@ -25,7 +25,7 @@
 **********************************************************************/
 #include "qg_mousewidget.h"
 
-#include <qvariant.h>
+#include <QVariant>
 #include "rs_settings.h"
 
 /*

@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 #include "qg_commandwidget.h"
+#include <QKeyEvent>
 
 #include "qg_actionhandler.h"
 #include "rs_commands.h"
