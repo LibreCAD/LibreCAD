@@ -557,9 +557,9 @@ QString RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
 
     QString ret;
 
-    int num;            // number of complete inches (num' 7/128")
-    int nominator;      // number of fractions (nominator/128)
-    int denominator;    // (4/denominator)
+	unsigned num;            // number of complete inches (num' 7/128")
+	unsigned nominator;      // number of fractions (nominator/128)
+	unsigned denominator;    // (4/denominator)
 
     // sign:
     QString neg = "";
@@ -568,10 +568,10 @@ QString RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
         length = fabs(length);
     }
 
-    num = (int)floor(length);
+	num = (unsigned)floor(length);
 
-    denominator = (int)RS_Math::pow(2, prec);
-    nominator = RS_Math::round((length-num)*denominator);
+	denominator = 2<<prec;
+	nominator = (unsigned) RS_Math::round((length-num)*denominator);
 
     // fraction rounds up to 1:
     if (nominator==denominator) {
@@ -581,9 +581,9 @@ QString RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
     }
 
     // Simplify the fraction
-    if (nominator!=0 && denominator!=0) {
-        int gcd = RS_Math::findGCD(nominator, denominator);
-        if (gcd!=0) {
+	if (nominator && denominator) {
+		unsigned gcd = RS_Math::findGCD(nominator, denominator);
+		if (gcd) {
             nominator = nominator / gcd;
             denominator = denominator / gcd;
         } else {

@@ -99,11 +99,10 @@ double RS_Math::gra2rad(double a) {
 /**
  * Finds greatest common divider using Euclid's algorithm.
  */
-int RS_Math::findGCD(int a, int b) {
-    int rem;
+unsigned RS_Math::findGCD(unsigned a, unsigned b) {
 
-    while (b!=0) {
-        rem = a % b;
+	while (b) {
+		unsigned rem = a % b;
         a = b;
         b = rem;
     }

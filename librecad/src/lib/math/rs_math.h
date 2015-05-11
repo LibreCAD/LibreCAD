@@ -54,7 +54,7 @@ public:
     static double deg2rad(double a);
     static double rad2gra(double a);
 	static double gra2rad(double a);
-	static int findGCD(int a, int b);
+	static unsigned findGCD(unsigned a, unsigned b);
     static bool isAngleBetween(double a,
                                double a1, double a2,
                                bool reversed = false);
