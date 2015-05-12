@@ -37,7 +37,7 @@ class QG_LayerDialog : public QDialog, public Ui::QG_LayerDialog
 
 public:
     QG_LayerDialog(QWidget* parent = 0, QString name = 0, bool modal = false, Qt::WindowFlags fl = 0);
-    ~QG_LayerDialog();
+	~QG_LayerDialog()=default;
 
 public slots:
     virtual void setLayer( RS_Layer * l );

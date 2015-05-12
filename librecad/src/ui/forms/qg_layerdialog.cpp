@@ -48,13 +48,6 @@ QG_LayerDialog::QG_LayerDialog(QWidget* parent, QString name, bool modal, Qt::Wi
     init();
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_LayerDialog::~QG_LayerDialog()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -84,10 +77,10 @@ void QG_LayerDialog::updateLayer() {
 }
 
 void QG_LayerDialog::validate() {
-	if (layerList != NULL && 
+	if (layerList &&
                 (editLayer == false || layerName != leName->text())) {
                 RS_Layer* l = layerList->find(leName->text());
-		if (l != NULL) {
+		if (l) {
 			QMessageBox::information(parentWidget(),
 									 QMessageBox::tr("Layer Properties"),
 									 QMessageBox::tr("Layer with a name \"%1\" "
