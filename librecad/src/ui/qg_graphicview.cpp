@@ -62,8 +62,6 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlag
     redrawMethod=RS2::RedrawAll;
     isSmoothScrolling = false;
 
-    PixmapLayer1=PixmapLayer2=PixmapLayer3=NULL;
-
     layout = new QGridLayout(this);
     layout->setMargin(0);
     layout->setSpacing(0);
@@ -126,12 +124,6 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlag
 
     // See https://sourceforge.net/tracker/?func=detail&aid=3289298&group_id=342582&atid=1433844 (Left-mouse drag shrinks window)
     setAttribute(Qt::WA_NoMousePropagation);
-
-    //update entities to selected entities to the current active layer
-    RS_SETTINGS->beginGroup("/Modify");
-    m_bUpdateLayer=(RS_SETTINGS->readEntry("/ModifyEntitiesToActiveLayer", "0")=="1");
-    RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", m_bUpdateLayer?1:0);
-    RS_SETTINGS->endGroup();
 }
 
 
@@ -140,10 +132,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlag
  * Destructor
  */
 QG_GraphicView::~QG_GraphicView() {
-    cleanUp();
-        delete PixmapLayer1;
-        delete PixmapLayer2;
-        delete PixmapLayer3;
+	cleanUp();
 }
 
 
@@ -806,21 +795,20 @@ void QG_GraphicView::setOffset(int ox, int oy) {
     adjustOffsetControls();
 }
 
-QPixmap* QG_GraphicView::getPixmapForView(QPixmap *pm)
+void QG_GraphicView::getPixmapForView(std::unique_ptr<QPixmap>& pm)
 {
-
-        if (pm==NULL) {
-                return new QPixmap(getWidth(), getHeight());
-        } else if (pm->width()!=getWidth() || pm->height()!=getHeight()) {
-                delete pm;
-                return new QPixmap(getWidth(), getHeight());
-        } else {
-                return pm;
-        }
+	QSize const s0(getWidth(), getHeight());
+	if(pm && pm->size()==s0)
+		return;
+	pm.reset(new QPixmap(getWidth(), getHeight()));
 }
 
 void QG_GraphicView::layerActivated(RS_Layer *layer) {
-    if(m_bUpdateLayer==false) return;
+	RS_SETTINGS->beginGroup("/Modify");
+	bool toActivated= (RS_SETTINGS->readNumEntry("/ModifyEntitiesToActiveLayer", 0)==1);
+	RS_SETTINGS->endGroup();
+
+	if(!toActivated) return;
     RS_EntityContainer *container = this->getContainer();
 	for(auto entity: *container){
 		if (entity->isSelected()) {
@@ -847,14 +835,14 @@ void QG_GraphicView::paintEvent(QPaintEvent *) {
 
 
         // Re-Create or get the layering pixmaps
-        PixmapLayer1=getPixmapForView(PixmapLayer1);
-        PixmapLayer2=getPixmapForView(PixmapLayer2);
-        PixmapLayer3=getPixmapForView(PixmapLayer3);
+		getPixmapForView(PixmapLayer1);
+		getPixmapForView(PixmapLayer2);
+		getPixmapForView(PixmapLayer3);
 
     // Draw Layer 1
         if (redrawMethod & RS2::RedrawGrid) {
                 PixmapLayer1->fill(background);
-                RS_PainterQt painter1(PixmapLayer1);
+				RS_PainterQt painter1(PixmapLayer1.get());
                 //painter1->setBackgroundMode(Qt::OpaqueMode);
                 //painter1->setBackgroundColor(background);
                 //painter1->eraseRect(0,0,getWidth(), getHeight());
@@ -866,7 +854,7 @@ void QG_GraphicView::paintEvent(QPaintEvent *) {
         if (redrawMethod & RS2::RedrawDrawing) {
                 // DRaw layer 2
                 PixmapLayer2->fill(Qt::transparent);
-                RS_PainterQt painter2(PixmapLayer2);
+				RS_PainterQt painter2(PixmapLayer2.get());
                 painter2.setDrawingMode(drawingMode);
                 setDraftMode(draftMode);
         painter2.setDrawSelectedOnly(false);
@@ -880,7 +868,7 @@ void QG_GraphicView::paintEvent(QPaintEvent *) {
 
     if (redrawMethod & RS2::RedrawOverlay) {
         PixmapLayer3->fill(Qt::transparent);
-        RS_PainterQt painter3(PixmapLayer3);
+		RS_PainterQt painter3(PixmapLayer3.get());
         drawLayer3((RS_Painter*)&painter3);
         painter3.end();
     }

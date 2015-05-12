@@ -27,7 +27,7 @@
 #ifndef QG_WIDTHBOX_H
 #define QG_WIDTHBOX_H
 
-#include <qcombobox.h>
+#include <QComboBox>
 
 #include "rs.h"
 

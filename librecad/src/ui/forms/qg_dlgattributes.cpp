@@ -25,12 +25,6 @@
 **********************************************************************/
 #include "qg_dlgattributes.h"
 
-/*#include <qvariant.h>
-#include "rs_graphic.h"
-#include "rs_layer.h"
-#include "qg_widgetpen.h"
-#include "qg_layerbox.h"*/
-
 /*
  *  Constructs a QG_DlgAttributes as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.

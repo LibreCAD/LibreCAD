@@ -26,7 +26,7 @@
 **********************************************************************/
 #include "qg_layerdialog.h"
 
-#include <qmessagebox.h>
+#include <QMessageBox>
 #include "rs_layer.h"
 #include "rs_layerlist.h"
 

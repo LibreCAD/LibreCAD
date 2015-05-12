@@ -27,7 +27,7 @@
 #ifndef QG_PENTOOLBAR_H
 #define QG_PENTOOLBAR_H
 
-#include <qtoolbar.h>
+#include <QToolBar>
 
 #include "rs_layerlistlistener.h"
 #include "rs_pen.h"

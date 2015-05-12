@@ -27,7 +27,7 @@
 #ifndef QG_DIALOGFACTORY_H
 #define QG_DIALOGFACTORY_H
 
-#include <qwidget.h>
+#include <QWidget>
 #include <QToolBar>
 
 #include "rs_dialogfactoryinterface.h"

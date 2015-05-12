@@ -27,7 +27,7 @@
 #ifndef QG_MAINWINDOWINTERFACE_H
 #define QG_MAINWINDOWINTERFACE_H
 
-#include <qmainwindow.h>
+#include <QMainWindow>
 
 #include "rs_document.h"
 #include "rs_mainwindowinterface.h"

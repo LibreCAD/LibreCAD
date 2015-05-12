@@ -63,7 +63,7 @@ public:
     virtual void setMouseCursor(RS2::CursorType c);
         virtual void updateGridStatusWidget(const QString& text);
 
-		virtual	QPixmap* getPixmapForView(QPixmap *pm);
+	virtual	void getPixmapForView(std::unique_ptr<QPixmap>& pm);
 		
     // Methods from RS_LayerListListener Interface:
     virtual void layerEdited(RS_Layer*) {
@@ -128,16 +128,11 @@ protected:
     QCursor* curHand;
 		
 	// Used for buffering different paint layers
-	QPixmap *PixmapLayer1;  // Used for grids and absolute 0
-	QPixmap *PixmapLayer2;  // Used for teh actual CAD drawing
-	QPixmap *PixmapLayer3;  // USed for crosshair and actionitems
+	std::unique_ptr<QPixmap> PixmapLayer1;  // Used for grids and absolute 0
+	std::unique_ptr<QPixmap> PixmapLayer2;  // Used for teh actual CAD drawing
+	std::unique_ptr<QPixmap> PixmapLayer3;  // USed for crosshair and actionitems
 	
 	RS2::RedrawMethod redrawMethod;
-    /**
-     * @brief m_bUpdateLayer
-     * if true, update selected entities, when a layer is selected in the layerwidget
-     */
-    bool m_bUpdateLayer;
 		
     //! Keep tracks of if we are currently doing a high-resolution scrolling
     bool isSmoothScrolling;

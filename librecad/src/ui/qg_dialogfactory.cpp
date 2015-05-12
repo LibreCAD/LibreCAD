@@ -26,8 +26,8 @@
 
 #include "qg_dialogfactory.h"
 
-#include <qmessagebox.h>
-#include <qfiledialog.h>
+#include <QMessageBox>
+#include <QFileDialog>
 #include <QImageReader>
 #include <QString>
 #include <QFileDialog>

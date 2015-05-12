@@ -25,7 +25,7 @@
 **********************************************************************/
 #include "qg_dlgoptionsgeneral.h"
 
-#include <qmessagebox.h>
+#include <QMessageBox>
 #include "rs_system.h"
 #include "rs_settings.h"
 #include "rs_units.h"
@@ -74,18 +74,16 @@ void QG_DlgOptionsGeneral::init() {
     QStringList languageList = RS_SYSTEM->getLanguageList();
     languageList.sort();
     languageList.prepend("en");
-    for (QStringList::Iterator it = languageList.begin();
-         it!=languageList.end();
-         it++) {
+	for(auto const& lang: languageList){
 
         RS_DEBUG->print("QG_DlgOptionsGeneral::init: adding %s to combobox",
-                        (*it).toLatin1().data());
+						lang.toLatin1().data());
 
-        QString l = RS_SYSTEM->symbolToLanguage(*it);
-        if (l.isEmpty()==false && cbLanguage->findData(*it)==-1) {
+		QString l = RS_SYSTEM->symbolToLanguage(lang);
+		if (l.isEmpty()==false && cbLanguage->findData(lang)==-1) {
             RS_DEBUG->print("QG_DlgOptionsGeneral::init: %s", l.toLatin1().data());
-            cbLanguage->addItem(l,*it);
-            cbLanguageCmd->addItem(l,*it);
+			cbLanguage->addItem(l,lang);
+			cbLanguageCmd->addItem(l, lang);
         }
     }
 
@@ -164,6 +162,13 @@ void QG_DlgOptionsGeneral::init() {
     cbAutoBackup->setChecked(RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)?true:false);
     RS_SETTINGS->endGroup();
 
+	//update entities to selected entities to the current active layer
+	RS_SETTINGS->beginGroup("/Modify");
+	auto toActive=RS_SETTINGS->readNumEntry("/ModifyEntitiesToActiveLayer", 0);
+	cbToActiveLayer->setChecked(toActive==1);
+	RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked()?1:0);
+	RS_SETTINGS->endGroup();
+
     restartNeeded = false;
 }
 
@@ -226,6 +231,11 @@ void QG_DlgOptionsGeneral::ok() {
     RS_SETTINGS->writeEntry("/AutoSaveTime", cbAutoSaveTime->value() );
     RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked()?1:0 );
     RS_SETTINGS->endGroup();
+
+	//update entities to selected entities to the current active layer
+	RS_SETTINGS->beginGroup("/Modify");
+	RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked()?1:0);
+	RS_SETTINGS->endGroup();
 
     if (restartNeeded==true) {
         QMessageBox::warning( this, tr("Preferences"),
