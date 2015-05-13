@@ -31,6 +31,8 @@
 #include <QString>
 #include <map>
 
+class QVariant;
+
 #define RS_SETTINGS RS_Settings::instance()
 
 /**
@@ -44,7 +46,8 @@
 class RS_Settings {
 
 public:
-    /**
+	~RS_Settings();
+	/**
      * @return Instance to the unique settings object.
      */
 	static RS_Settings* instance();
@@ -71,13 +74,8 @@ public:
                         const QString& def = QString::null,
                         bool* ok = 0);
     int readNumEntry(const QString& key, int def=0, bool* ok=0);
-	
-
-public:
-    ~RS_Settings();
 
 private:
-
     RS_Settings();
 	RS_Settings(RS_Settings const&) = delete;
 	RS_Settings& operator = (RS_Settings const&) = delete;
