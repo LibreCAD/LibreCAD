@@ -65,18 +65,12 @@ public:
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
 
-            virtual void coordinateEvent(RS_CoordinateEvent* e);
+	virtual void coordinateEvent(RS_CoordinateEvent* e);
 //        virtual void commandEvent(RS_CommandEvent* e);
     virtual QStringList getAvailableCommands();
     virtual void finish(bool updateTB=true);
     virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
-//    virtual void updateToolBar();
-
-//    virtual void showOptions();
-//    virtual void hideOptions();
-//    void setRadius(const double& r);
-	double getRadius() const;
+	virtual void updateMouseCursor();
 
 
 protected:

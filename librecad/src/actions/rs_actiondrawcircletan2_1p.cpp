@@ -75,7 +75,7 @@ void RS_ActionDrawCircleTan2_1P::init(int status) {
             }
     }
     if(updateNeeded) graphicView->redraw(RS2::RedrawDrawing);
-    circles.resize(status);
+	circles.resize(status>=0?status:0);
 }
 
 
@@ -88,21 +88,8 @@ void RS_ActionDrawCircleTan2_1P::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-//void RS_ActionDrawCircleTan2_1P::finish(bool updateTB){
-////    for(int i=0;i<circles.size();i++) circles[i]->setHighlighted(false);
-////    graphicView->redraw(RS2::RedrawDrawing);
-////    circles.clear();
-//    RS_PreviewActionInterface::finish(updateTB);
-//}
-
-
 void RS_ActionDrawCircleTan2_1P::trigger() {
-    //    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
-    //    std::cout<<"begin"<<std::endl;
-
     RS_PreviewActionInterface::trigger();
-
-
 	RS_Circle* c=new RS_Circle(container, *cData);
 
     container->addEntity(c);
@@ -174,21 +161,8 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawCircleTan2_1P::mouseMoveEvent end");
 }
 
-//void RS_ActionDrawCircleTan2_1P::setRadius(const double& r)
-//{
-//    cData.radius=r;
-//    if(getStatus() == SetPoint2){
-//        RS_Circle c(NULL,cData);
-//        centers=c.createTan2_1P(circle,cData.radius);
-//    }
-//}
-
 bool RS_ActionDrawCircleTan2_1P::preparePreview(){
-    if( getCenters() ==false) return false;
-//    for(int i=0;i<centers.size();i++){
-//        double ds2=(centers[i]-point).squared();
-//        if( (centers[i]-circles[0]).squared()<ds2
-//    }
+	if( getCenters() ==false) return false;
 	cData->center=centers.getClosest(coord);
 	cData->radius=point.distanceTo(cData->center);
     return true;
@@ -273,11 +247,6 @@ void RS_ActionDrawCircleTan2_1P::coordinateEvent(RS_CoordinateEvent* e) {
 
 }
 
-double RS_ActionDrawCircleTan2_1P::getRadius() const
-{
-	return cData->radius;
-}
-
 //fixme, support command line
 
 /*
@@ -345,34 +314,10 @@ void RS_ActionDrawCircleTan2_1P::commandEvent(RS_CommandEvent* e) {
 }
 */
 
-
-//void RS_ActionDrawCircleTan2_1P::showOptions() {
-//    RS_DEBUG->print("RS_ActionDrawCircleTan2_1P::showOptions");
-//    if(RS_DIALOGFACTORY != NULL){
-//        RS_ActionInterface::showOptions();
-
-//        RS_DIALOGFACTORY->requestOptions(this, true);
-//    }
-//    RS_DEBUG->print("RS_ActionDrawCircleTan2_1P::showOptions: OK");
-//}
-
-
-
-//void RS_ActionDrawCircleTan2_1P::hideOptions() {
-//    if(RS_DIALOGFACTORY != NULL){
-//        RS_ActionInterface::hideOptions();
-
-//        RS_DIALOGFACTORY->requestOptions(this, false);
-//    }
-//}
-
-
 QStringList RS_ActionDrawCircleTan2_1P::getAvailableCommands() {
     QStringList cmd;
     return cmd;
 }
-
-
 
 void RS_ActionDrawCircleTan2_1P::updateMouseButtonHints() {
     if (RS_DIALOGFACTORY) {
@@ -402,20 +347,8 @@ void RS_ActionDrawCircleTan2_1P::updateMouseButtonHints() {
     }
 }
 
-
-
 void RS_ActionDrawCircleTan2_1P::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionDrawCircleTan2_1P::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
 
 // EOF
