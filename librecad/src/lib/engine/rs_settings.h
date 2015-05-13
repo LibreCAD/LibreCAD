@@ -28,8 +28,8 @@
 #ifndef RS_SETTINGS_H
 #define RS_SETTINGS_H
 
-#include <QHash>
-#include <QSettings>
+#include <QString>
+#include <map>
 
 #define RS_SETTINGS RS_Settings::instance()
 
@@ -47,12 +47,7 @@ public:
     /**
      * @return Instance to the unique settings object.
      */
-    static RS_Settings* instance() {
-        if (uniqueInstance==NULL) {
-            uniqueInstance = new RS_Settings();
-        }
-        return uniqueInstance;
-    }
+	static RS_Settings* instance();
 
     /**
      * Initialize the system.
@@ -84,14 +79,15 @@ public:
 private:
 
     RS_Settings();
-    RS_Settings(RS_Settings&) = default;
-        QVariant readEntryCache(const QString& key);
-        void addToCache(const QString& key, const QVariant& value);
+	RS_Settings(RS_Settings const&) = delete;
+	RS_Settings& operator = (RS_Settings const&) = delete;
+	QVariant readEntryCache(const QString& key);
+	void addToCache(const QString& key, const QVariant& value);
 
 protected:
     static RS_Settings* uniqueInstance;
 
-    QHash<QString, QVariant*> cache;
+	std::map<QString, QVariant> cache;
     QString companyKey;
     QString appKey;
     QString group;
