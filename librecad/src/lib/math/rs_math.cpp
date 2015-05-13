@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#ifdef  HAS_BOOST
+#ifdef HAS_BOOST
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/lu.hpp>
@@ -33,6 +33,7 @@
 #include <muParser.h>
 
 #include "rs_math.h"
+#include "rs_vector.h"
 #include "rs_debug.h"
 
 #ifdef EMU_C99
@@ -211,16 +212,6 @@ bool RS_Math::isAngleReadable(double angle) {
 bool RS_Math::isSameDirection(double dir1, double dir2, double tol) {
 	return getAngleDifferenceU(dir1, dir2) < tol;
 }
-
-
-/**
- * Compares two double values with a tolerance.
- */
-bool RS_Math::cmpDouble(double v1, double v2, double tol) {
-	return fabs(v2-v1)<tol;
-}
-
-
 
 /**
  * Evaluates a mathematical expression and returns the result.

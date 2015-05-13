@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <cfloat>
 #include <QDebug>
 #include "rs_math.h"
 #include "rs_information.h"

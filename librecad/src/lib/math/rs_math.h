@@ -28,18 +28,16 @@
 #define RS_MATH_H
 
 // no idea why, but doesn't link without that under win32 / bcc55:
-#ifndef _MT
-#define _MT
-#endif
+//#ifndef _MT
+//#define _MT
+//#endif
 
-#include <cfloat>
 #include <cmath>
+#include <vector>
 
-#include "rs_vector.h"
-
-
-//typedef unsigned int uint;
-
+class RS_Vector;
+class RS_VectorSolutions;
+class QString;
 
 /**
  * Math functions.
@@ -72,14 +70,14 @@ public:
 	 */
 	static double getAngleDifferenceU(double a1, double a2);
 	static double makeAngleReadable(double angle, bool readable=true,
-                                    bool* corrected=NULL);
+									bool* corrected=nullptr);
     static bool isAngleReadable(double angle);
     static bool isSameDirection(double dir1, double dir2, double tol);
+
+	//! \{ \brief evaluate a math string
     static double eval(const QString& expr, double def=0.0);
-
-    static bool cmpDouble(double v1, double v2, double tol=0.001);
-
     static double eval(const QString& expr, bool* ok);
+	//! \}
 
     static std::vector<double> quadraticSolver(const std::vector<double>& ce);
     static std::vector<double> cubicSolver(const std::vector<double>& ce);
@@ -98,11 +96,11 @@ public:
     //solver for linear equation set
     /**
       * Solve linear equation set
-      *@ mt holds the augmented matrix
-      *@ sn holds the solution
-      *@ return true, if the equation set has a unique solution, return false otherwise
+	  *@param mt holds the augmented matrix
+	  *@param sn holds the solution
+	  *@param return true, if the equation set has a unique solution, return false otherwise
       *
-      *@Author: Dongxu Li
+	  *@author: Dongxu Li
       */
 	static bool linearSolver(const std::vector<std::vector<double> >& m, std::vector<double>& sn);
 
@@ -118,11 +116,11 @@ public:
     static RS_VectorSolutions simultaneousQuadraticSolver(const std::vector<double>& m);
 
     /** solver quadratic simultaneous equations of a set of two **/
-    /* solve the following quadratic simultaneous equations,
+	/** solve the following quadratic simultaneous equations,
       * ma000 x^2 + ma001 xy + ma011 y^2 + mb00 x + mb01 y + mc0 =0
       * ma100 x^2 + ma101 xy + ma111 y^2 + mb10 x + mb11 y + mc1 =0
       *
-  *@m, a vector of size 2 each contains a vector of size 6 coefficients in the strict order of:
+  *@param m a vector of size 2 each contains a vector of size 6 coefficients in the strict order of:
   ma000 ma001 ma011 mb00 mb01 mc0
   ma100 ma101 ma111 mb10 mb11 mc1
       *@return a RS_VectorSolutions contains real roots (x,y)
@@ -130,9 +128,9 @@ public:
     static RS_VectorSolutions simultaneousQuadraticSolverFull(const std::vector<std::vector<double> >& m);
     static RS_VectorSolutions simultaneousQuadraticSolverMixed(const std::vector<std::vector<double> >& m);
 
-    /** verify a solution for simultaneousQuadratic
-      *@m the coefficient matrix
-      *@v, a candidate to verify
+	/** \brief verify simultaneousQuadraticVerify a solution for simultaneousQuadratic
+	  *@param m the coefficient matrix
+	  *@param v a candidate to verify
       *@return true, for a valid solution
       **/
 	static bool simultaneousQuadraticVerify(const std::vector<std::vector<double> >& m, RS_Vector& v);
@@ -142,7 +140,7 @@ public:
      *@k the elliptic modulus or eccentricity
      *@phi elliptic angle, must be within range of [0, M_PI]
      *
-     *Author: Dongxu Li
+	 *@\author: Dongxu Li
      */
     static double ellipticIntegral_2(const double& k, const double& phi);
 

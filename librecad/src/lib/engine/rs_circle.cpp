@@ -27,6 +27,7 @@
 **********************************************************************/
 
 #include <QDebug>
+#include <cfloat>
 #include "rs_circle.h"
 
 #include "rs_arc.h"
