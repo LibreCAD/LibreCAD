@@ -24,7 +24,7 @@ void LC_CadToolBarInterface::initToolBars()
 {
 	switch(rtti()){
 	case RS2::ToolBarSelect:
-		m_pButtonForward=new QAction(QIcon(":/extui/forward.png"), "Back", this);
+        m_pButtonForward = new QAction( QIcon(":/extui/forward.png"), "Continue", this);
 		//continue to default, no break by design
 	default:
 		m_pButtonBack = new QAction(QIcon(":/extui/back.png"), "Back", this);
