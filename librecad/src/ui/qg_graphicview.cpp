@@ -47,6 +47,7 @@
 
 
 #include "qg_scrollbar.h"
+#include "rs_modification.h"
 
 #define QG_SCROLLMARGIN 400
 
@@ -810,11 +811,17 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
 
 	if(!toActivated) return;
     RS_EntityContainer *container = this->getContainer();
-	for(auto entity: *container){
-		if (entity->isSelected()) {
-			entity->setLayer(layer);
-		}
-	}
+
+	//allow undo cycle for layer change of selected
+	RS_AttributesData data;
+	data.pen = RS_Pen();
+	data.layer = layer->getName();
+	data.changeColor = false;
+	data.changeLineType = false;
+	data.changeWidth = false;
+	data.changeLayer = true;
+	RS_Modification m(*container, this);
+	m.changeAttributes(data);
 
     container->setSelected(false);
     redraw(RS2::RedrawDrawing);
