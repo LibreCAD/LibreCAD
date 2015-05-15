@@ -1015,7 +1015,7 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
 	std::vector<double> da(0);
     double patternSegmentLength(pat->totalLength);
     double ira=1./ra;
-    int i(0);          // index counter
+	size_t i(0);          // index counter
     if(pat->num>0) {
         double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
         da.resize(pat->num);

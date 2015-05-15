@@ -28,20 +28,22 @@
 #ifndef RS_LINETYPEPATTERN_H
 #define RS_LINETYPEPATTERN_H
 
-#include <stdarg.h>
-#include <cmath>
+#include <initializer_list>
+#include <vector>
+#include <cstddef>
 
 /**
  * Stores a line type pattern.
  */
 struct RS_LineTypePattern {
-    RS_LineTypePattern(int count ...);
+	RS_LineTypePattern()=delete;
+	RS_LineTypePattern(std::initializer_list<double> const& pattern);
 
-    ~RS_LineTypePattern();
+	~RS_LineTypePattern()=default;
 
-    double* pattern;
+	std::vector<double> pattern;
     double totalLength;
-    int num;
+	size_t num;
     //define all line patterns in pixels
     static const RS_LineTypePattern patternSolidLine;
 

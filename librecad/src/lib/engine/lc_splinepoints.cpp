@@ -1604,8 +1604,8 @@ void LC_SplinePoints::drawPattern(RS_Painter* painter, RS_GraphicView* view,
 	if(n < 2) return;
 
 	double dpmm = static_cast<RS_PainterQt*>(painter)->getDpmm();
-	double* ds = new double[pat->num];
-	for(int i = 0; i < pat->num; i++)
+	double ds[pat->num];
+	for(size_t i = 0; i < pat->num; i++)
 	{
 		ds[i] = dpmm*pat->pattern[i];
 		if(fabs(ds[i]) < 1.0) ds[i] = (ds[i] >= 0.0) ? 1.0 : -1.0;
@@ -1629,7 +1629,6 @@ void LC_SplinePoints::drawPattern(RS_Painter* painter, RS_GraphicView* view,
 			vx2 = view->toGui(vEnd);
 			DrawPatternLine(ds, pat->num, dCurOffset, qPath, vx1, vx2);
 			painter->drawPath(qPath);
-			delete[] ds;
 			return;
 		}
 
@@ -1669,7 +1668,6 @@ void LC_SplinePoints::drawPattern(RS_Painter* painter, RS_GraphicView* view,
 			vx2 = view->toGui(vEnd);
 			DrawPatternLine(ds, pat->num, dCurOffset, qPath, vx1, vx2);
 			painter->drawPath(qPath);
-			delete[] ds;
 			return;
 		}
 
@@ -1682,7 +1680,6 @@ void LC_SplinePoints::drawPattern(RS_Painter* painter, RS_GraphicView* view,
 			vc1 = view->toGui(vControl);
 			DrawPatternQuad(ds, pat->num, dCurOffset, qPath, vx1, vc1, vx2);
 			painter->drawPath(qPath);
-			delete[] ds;
 			return;
 		}
 
@@ -1710,7 +1707,6 @@ void LC_SplinePoints::drawPattern(RS_Painter* painter, RS_GraphicView* view,
 	}
 
 	painter->drawPath(qPath);
-	delete[] ds;
 }
 
 void LC_SplinePoints::drawSimple(RS_Painter* painter, RS_GraphicView* view)

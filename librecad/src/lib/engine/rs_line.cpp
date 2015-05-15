@@ -644,7 +644,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     painter->setPen(pen);
 
     // index counter
-    int i;
+	size_t i;
 
     // pattern segment length:
     double patternSegmentLength = pat->totalLength;

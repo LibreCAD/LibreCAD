@@ -1800,7 +1800,7 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
     if (isReversed()) std::swap(a1,a2);
     if(a2 <a1+RS_TOLERANCE_ANGLE) a2 +=2.*M_PI;
     painter->setPen(pen);
-    int i(0),j(0);
+	size_t i(0),j(0);
     double* ds = new double[pat->num>0?pat->num:0];
     if(pat->num>0){
         double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
