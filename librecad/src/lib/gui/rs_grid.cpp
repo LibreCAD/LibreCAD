@@ -246,12 +246,12 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const& userGrid, bool scaleGri
 	// RS_DEBUG->print("RS_Grid::update: 006");
 
 	RS2::Unit unit = RS2::None;
-	RS2::LinearFormat format = RS2::Decimal;
+//	RS2::LinearFormat format = RS2::Decimal;
 	RS_Graphic* graphic = graphicView->getGraphic();
 
 	if (graphic) {
 		unit = graphic->getUnit();
-		format = graphic->getLinearFormat();
+//		format = graphic->getLinearFormat();
 	}
 
 	if (unit==RS2::Inch) {
