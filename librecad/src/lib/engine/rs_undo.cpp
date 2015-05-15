@@ -36,14 +36,10 @@
  */
 RS_Undo::RS_Undo():
 	undoPointer(-1)
-  ,currentCycle(nullptr)
 {
 }
 
 RS_Undo::~RS_Undo() {
-//clear undolist
-while (!undoList.isEmpty())
-     delete undoList.takeFirst();
 }
 
 
@@ -74,7 +70,7 @@ int RS_Undo::countRedoCycles() {
  * All Cycles after the new one are removed and the Undoabels
  * on them deleted.
  */
-void RS_Undo::addUndoCycle(RS_UndoCycle* i) {
+void RS_Undo::addUndoCycle(std::shared_ptr<RS_UndoCycle> const& i) {
     RS_DEBUG->print("RS_Undo::addUndoCycle");
 
     undoList.insert(++undoPointer, i);
@@ -95,17 +91,17 @@ void RS_Undo::startUndoCycle() {
     //   that cannot be redone now:
     while (undoList.size()>undoPointer+1 && undoList.size()>0) {
 
-        RS_UndoCycle* l = NULL;
+		std::shared_ptr<RS_UndoCycle> l;
         if (!( undoList.isEmpty()) )
             l = undoList.last();
         if (l) {
-            RS_Undoable* u=NULL;
+			RS_Undoable* u=nullptr;
             bool done = false;
             do {
                 if (!( l->undoables.isEmpty()) )
                     u = l->undoables.first();
                 else
-                   u = NULL;
+				   u=nullptr;
                 if (u) {
                     // Remove the pointer from _all_ cycles:
                                         for (int i = 0; i < undoList.size(); ++i) {
@@ -123,10 +119,10 @@ void RS_Undo::startUndoCycle() {
         }
 
         // Remove obsolete undo cycles:
-        delete undoList.takeLast();
+		undoList.takeLast();
     }
 
-    currentCycle = new RS_UndoCycle();
+	currentCycle.reset(new RS_UndoCycle());
 }
 
 
@@ -167,11 +163,11 @@ bool RS_Undo::undo() {
 
     if (undoPointer>=0) {
 
-        RS_UndoCycle* uc=NULL;
+		std::shared_ptr<RS_UndoCycle> uc;
         while( undoPointer>=0 && undoPointer < undoList.size() ) {
             uc = undoList[undoPointer--];
 
-            if (uc == NULL )  continue;
+			if (!uc)  continue;
             break;
         }
         if(undoPointer==-1) {
@@ -197,10 +193,10 @@ bool RS_Undo::redo() {
 
     if (undoPointer+1 < undoList.size()) {
 
-        RS_UndoCycle* uc = NULL;
+		std::shared_ptr<RS_UndoCycle> uc;
         while( ++undoPointer < undoList.size()) {
             uc = undoList[undoPointer];
-            if (uc == NULL ) continue;
+			if (!uc) continue;
             break;
         }
 		if (uc) {
@@ -222,8 +218,8 @@ bool RS_Undo::redo() {
  * @return The undo item that is next if we're about to undo
  * or NULL.
  */
-RS_UndoCycle* RS_Undo::getUndoCycle() {
-        RS_UndoCycle* ret = NULL;
+std::shared_ptr<RS_UndoCycle> RS_Undo::getUndoCycle() {
+		std::shared_ptr<RS_UndoCycle> ret;
 
     RS_DEBUG->print("RS_Undo::getUndoCycle");
 
@@ -241,14 +237,14 @@ RS_UndoCycle* RS_Undo::getUndoCycle() {
  * @return The redo item that is next if we're about to redo
  * or NULL.
  */
-RS_UndoCycle* RS_Undo::getRedoCycle() {
+std::shared_ptr<RS_UndoCycle> RS_Undo::getRedoCycle() {
     RS_DEBUG->print("RS_Undo::getRedoCycle");
 
     if ( (undoPointer+1>=0) && (undoPointer+1 < undoList.size()) ) {
         return undoList.at(undoPointer+1);
     }
 
-    return NULL;
+	return std::shared_ptr<RS_UndoCycle>();
 }
 
 /**

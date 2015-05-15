@@ -315,7 +315,8 @@ SOURCES += \
     lib/generators/lc_xmlwriterqxmlstreamwriter.cpp \
     lib/generators/lc_makercamsvg.cpp \
     actions/lc_actionfileexportmakercam.cpp \
-    lib/engine/rs_atomicentity.cpp
+    lib/engine/rs_atomicentity.cpp \
+    lib/engine/rs_undocycle.cpp
 
 # ################################################################################
 # Command
