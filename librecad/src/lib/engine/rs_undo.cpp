@@ -85,42 +85,26 @@ void RS_Undo::addUndoCycle(std::shared_ptr<RS_UndoCycle> const& i) {
  * added after calling this method goes into this cycle.
  */
 void RS_Undo::startUndoCycle() {
-    RS_DEBUG->print("RS_Undo::startUndoCycle");
-
+	RS_DEBUG->print("RS_Undo::startUndoCycle");
     // definitely delete Undo Cycles and all Undoables in them
-    //   that cannot be redone now:
-    while (undoList.size()>undoPointer+1 && undoList.size()>0) {
-
-		std::shared_ptr<RS_UndoCycle> l;
-        if (!( undoList.isEmpty()) )
-            l = undoList.last();
-        if (l) {
-			RS_Undoable* u=nullptr;
-            bool done = false;
-            do {
-                if (!( l->undoables.isEmpty()) )
-                    u = l->undoables.first();
-                else
-				   u=nullptr;
-                if (u) {
-                    // Remove the pointer from _all_ cycles:
-                                        for (int i = 0; i < undoList.size(); ++i) {
-                                            (undoList.at(i))->removeUndoable(u);
-                                        }
-
-                    // Delete the Undoable for good:
-                    if (u->isUndone()) {
-                        removeUndoable(u);
-                    }
-                } else {
-                    done = true;
-                }
-            } while(!done);
-        }
-
-        // Remove obsolete undo cycles:
-		undoList.takeLast();
-    }
+	//   that cannot be redone now:
+	while (undoList.size()>undoPointer+1) {
+		std::shared_ptr<RS_UndoCycle> l = undoList.back();
+		undoList.pop_back();
+		if(!l) continue;
+		//remove the undoable in the current cyle
+		for(auto u: l->undoables){
+			if(!u) continue;
+			// Remove the pointer from _all_ other cycles:
+			for(auto& cycle: undoList){
+				cycle->removeUndoable(u);
+			}
+			// Delete the Undoable for good:
+			if (u->isUndone()) {
+				removeUndoable(u);
+			}
+		}
+	}
 
 	currentCycle.reset(new RS_UndoCycle());
 }
