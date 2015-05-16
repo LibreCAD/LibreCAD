@@ -439,30 +439,19 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     }
 
     //hash to store pairs af block name & newname even if it is the same
-    QHash<QString, QString>blocksDict;
+	QHash<QString, QString>blocksDict;
     // find block names and rename if it exist:
     if (graphic) {
-        for(unsigned i=0; i<source->countBlocks(); ++i) {
-            RS_Block* b = source->blockAt(i);
-            if (b) {
-                QString newName = b->getName();
-                int i=0;
-                //find an unique name in graphic & source
-                while (graphic->findBlock(newName)) {
-                    newName = QString("%1-%2").arg(b->getName()).arg(i);
-                    //if the new name already exist in source do not use
-                    if (source->findBlock(newName))
-                        newName = b->getName();
-                    i++;
-                }
-                blocksDict[b->getName()] = newName;
-                if (b->getName() !=newName) {
-                    RS_DIALOGFACTORY->commandMessage( QString(
-                           QObject::tr("Block %1 already exist, renamed to: %2")).arg(b->getName()).arg(newName));
-                    b->setName( newName );
-                }
-            }
-        }
+		RS_BlockList* blks=source->getBlockList();
+		for(RS_Block* b: *blks){
+			if(!b) continue;
+			QString name = b->getName();
+			while (graphic->findBlock(name)) {
+				name=blks->newName(name);
+			}
+			blocksDict[b->getName()] = name;
+			b->setName(name);
+		}
 
         //add new blocks with new names
         for(unsigned i=0; i<source->countBlocks(); ++i) {
