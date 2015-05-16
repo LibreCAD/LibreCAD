@@ -122,37 +122,42 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
 
     if (layer && layer->getName()!="0") {
 
-        // remove all entities on that layer:
-        startUndoCycle();
+		std::vector<RS_Entity*> toRemove;
+		//find entities on layer
 		for(auto e: entities){
-
 			if (e->getLayer() &&
                     e->getLayer()->getName()==layer->getName()) {
-
-                e->setUndoState(true);
-                e->setLayer("0");
-                addUndoable(e);
+				toRemove.push_back(e);
             }
         }
-        endUndoCycle();
+		// remove all entities on that layer:
+		if(toRemove.size()){
+			startUndoCycle();
+			for(auto e: toRemove){
+				e->setUndoState(true);
+				e->setLayer("0");
+				addUndoable(e);
+			}
+			endUndoCycle();
+		}
 
+		toRemove.clear();
         // remove all entities in blocks that are on that layer:
-        for (int bi=0; bi<blockList.count(); bi++) {
-            RS_Block* blk = blockList.at(bi);
+		for(RS_Block* blk: blockList){
+			if(!blk) continue;
+			for(auto e: *blk){
 
-            if (blk) {
-				for(auto e: *blk){
+				if (e->getLayer() &&
+						e->getLayer()->getName()==layer->getName()) {
+					toRemove.push_back(e);
+				}
+			}
+		}
 
-					if (e->getLayer() &&
-                            e->getLayer()->getName()==layer->getName()) {
-
-                        e->setUndoState(true);
-                        e->setLayer("0");
-                        //addUndoable(e);
-                    }
-                }
-            }
-        }
+		for(auto e: toRemove){
+			e->setUndoState(true);
+			e->setLayer("0");
+		}
 
         layerList.remove(layer);
     }

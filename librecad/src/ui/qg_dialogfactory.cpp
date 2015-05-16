@@ -263,7 +263,8 @@ RS_Layer* QG_DialogFactory::requestLayerRemovalDialog(RS_LayerList* layerList) {
                     QMessageBox::Warning,
                     QMessageBox::tr("Remove Layer"),
                     QMessageBox::tr("Layer \"%1\" and all "
-                                    "entities on it will be removed.")
+									"entities on it will be removed.\n"
+									"This action can NOT be undone.")
                     .arg(layer->getName()),
                     QMessageBox::Ok | QMessageBox::Cancel);
             if (msgBox.exec()==QMessageBox::Ok) {}
