@@ -991,7 +991,7 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
     }
 
     if (pat==NULL|| ra<0.5) {//avoid division by zero from small ra
-        RS_DEBUG->print(RS_Debug::D_WARNING, "Invalid line pattern, drawing arc using solid line");
+		RS_DEBUG->print("%s: Invalid line pattern or radius too small, drawing arc using solid line", __func__);
         painter->drawArc(cp, ra,
                          getAngle1(),getAngle2(),
                          isReversed());
