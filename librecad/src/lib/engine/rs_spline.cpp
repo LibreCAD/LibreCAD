@@ -161,7 +161,7 @@ void RS_Spline::update() {
 
 	std::vector<double> b(npts*3+1, 0.);
 	std::vector<double> h(npts+1, 1.);
-	std::vector<double> p(3*p1, 0.);
+    std::vector<double> p(3*p1+1, 0.);
 
     i = 1;
 	for (size_t  it = 0; it < tControlPoints.size(); ++it) {
