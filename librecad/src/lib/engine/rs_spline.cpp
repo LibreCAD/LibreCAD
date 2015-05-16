@@ -159,14 +159,14 @@ void RS_Spline::update() {
     // resolution:
 	const size_t  p1 = getGraphicVariableInt("$SPLINESEGS", 8) * npts;
 
-	std::vector<double> b(npts*3+1, 0.);
-	std::vector<double> h(npts+1, 1.);
-    std::vector<double> p(3*p1+1, 0.);
+	std::vector<double> b(npts*3+2, 0.);
+	std::vector<double> h(npts+2, 1.);
+	std::vector<double> p(3*p1+2, 0.);
 
     i = 1;
-	for (size_t  it = 0; it < tControlPoints.size(); ++it) {
-        b[i] = tControlPoints.at(it).x;
-        b[i+1] = tControlPoints.at(it).y;
+	for(auto const& vp: tControlPoints){
+		b[i] = vp.x;
+		b[i+1] = vp.y;
 
         RS_DEBUG->print("RS_Spline::update: b[%d]: %f/%f", i, b[i], b[i+1]);
         i+=3;
