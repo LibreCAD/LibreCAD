@@ -46,25 +46,15 @@ RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
 	reset();
 }
 
-
-
 RS_ActionDrawSpline::~RS_ActionDrawSpline() {}
 
-
 QAction* RS_ActionDrawSpline::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Spline")
-    QAction* action = new QAction(tr("&Spline"),  NULL);
-        action->setIcon(QIcon(":/extui/menuspline.png"));
-    return action;
+	return new QAction(QIcon(":/extui/menuspline.png"), tr("&Spline"), nullptr);
 }
 
-
-
 void RS_ActionDrawSpline::reset() {
-		spline = nullptr;
-    //start = RS_Vector(false);
-    history.clear();
-    //bHistory.clear();
+	spline = nullptr;
+	history.clear();
 }
 
 
@@ -108,8 +98,6 @@ void RS_ActionDrawSpline::trigger() {
 		spline = nullptr;
     //history.clear();
 }
-
-
 
 void RS_ActionDrawSpline::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawSpline::mouseMoveEvent begin");
@@ -309,16 +297,6 @@ void RS_ActionDrawSpline::hideOptions() {
 void RS_ActionDrawSpline::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-//void RS_ActionDrawSpline::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
 
 /*
 void RS_ActionDrawSpline::close() {
