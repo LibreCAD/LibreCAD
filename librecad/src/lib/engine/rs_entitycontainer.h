@@ -58,9 +58,9 @@ public:
 
     /**
      * @return true: because entities made from this class
-     *         and subclasses are containers for other entities.
+	 *         and subclasses are containers for other entities.
      */
-    virtual bool isContainer() const {
+	virtual bool isContainer() const {
         return true;
     }
 
@@ -108,8 +108,12 @@ public:
 	}
     virtual unsigned int count() const;
 	virtual unsigned int countDeep() const;
-    //virtual unsigned long int countLayerEntities(RS_Layer* layer);
-    virtual unsigned int countSelected();
+	//virtual unsigned long int countLayerEntities(RS_Layer* layer);
+	/** \brief countSelected number of selected
+	* @param deep count sub-containers, if true
+	* @param types if is not empty, only counts by types listed
+	*/
+	virtual unsigned int countSelected(bool deep=true, QList<RS2::EntityType> const& types = {});
     virtual double totalSelectedLength();
 
     /**

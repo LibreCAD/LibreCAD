@@ -500,14 +500,17 @@ unsigned int RS_EntityContainer::countDeep() const{
 /**
  * Counts the selected entities in this container.
  */
-unsigned int RS_EntityContainer::countSelected() {
+unsigned int RS_EntityContainer::countSelected(bool deep, QList<RS2::EntityType> const& types) {
     unsigned int c=0;
 
 	for (RS_Entity* t: entities){
 
-        if (t->isSelected()) {
-            c++;
+		if (t->isSelected()) {
+			if(!types.size() || types.contains(t->rtti()))
+				c++;
         }
+		if(t->isContainer())
+			c += static_cast<RS_EntityContainer*>(t)->countSelected(deep);
     }
 
     return c;
