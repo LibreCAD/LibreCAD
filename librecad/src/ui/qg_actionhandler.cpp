@@ -278,14 +278,18 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionEditUndo(false, *doc, *gv);
         break;
     case RS2::ActionEditCut:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionEditCutNoSelect);
-        break;
+		if(!doc->countSelected()){
+			a = new RS_ActionSelect(*doc, *gv, RS2::ActionEditCutNoSelect);
+			break;
+		}
     case RS2::ActionEditCutNoSelect:
         a = new RS_ActionEditCopy(false, *doc, *gv);
         break;
-    case RS2::ActionEditCopy:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionEditCopyNoSelect);
-        break;
+	case RS2::ActionEditCopy:
+		if(!doc->countSelected()){
+			a = new RS_ActionSelect(*doc, *gv, RS2::ActionEditCopyNoSelect);
+			break;
+		}
     case RS2::ActionEditCopyNoSelect:
         a = new RS_ActionEditCopy(true, *doc, *gv);
         break;
@@ -305,9 +309,11 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
         break;
     case RS2::ActionOrderTop:
-        orderType = RS2::ActionOrderTop;
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
-        break;
+		if(!doc->countSelected()){
+			orderType = RS2::ActionOrderTop;
+			a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
+			break;
+		}
     case RS2::ActionOrderNoSelect:
         a = new RS_ActionOrder(*doc, *gv, orderType);
         break;
@@ -551,12 +557,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDrawHatch:
         a = new RS_ActionSelect(*doc, *gv, RS2::ActionDrawHatchNoSelect);
         break;
-    case RS2::ActionDrawHatchNoSelect:
-    {
-        auto p = new RS_ActionDrawHatch(*doc, *gv);
-        p->setShowArea(true);
-        a=p;
-    }
+	case RS2::ActionDrawHatchNoSelect:
+	{
+		auto p = new RS_ActionDrawHatch(*doc, *gv);
+		p->setShowArea(true);
+		a=p;
+	}
         break;
     case RS2::ActionDrawImage:
         a = new RS_ActionDrawImage(*doc, *gv);
@@ -592,8 +598,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         // Modifying actions:
         //
     case RS2::ActionModifyAttributes:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyAttributesNoSelect);
-        break;
+		if(!doc->countSelected()){
+			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyAttributesNoSelect);
+			break;
+		}
     case RS2::ActionModifyAttributesNoSelect:
         a = new RS_ActionModifyAttributes(*doc, *gv);
         break;
@@ -610,51 +618,65 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionModifyDeleteFree(*doc, *gv);
         break;
     case RS2::ActionModifyMove:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyMoveNoSelect);
-        break;
+		if(!doc->countSelected()){
+			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyMoveNoSelect);
+			break;
+		}
     case RS2::ActionModifyMoveNoSelect:
         a = new RS_ActionModifyMove(*doc, *gv);
         break;
 	case RS2::ActionModifyRevertDirection:
-		a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyRevertDirectionNoSelect);
-		break;
+		if(!doc->countSelected()){
+			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyRevertDirectionNoSelect);
+			break;
+		}
 	case RS2::ActionModifyRevertDirectionNoSelect:
 		a = new RS_ActionModifyRevertDirection(*doc, *gv);
 		break;
 	case RS2::ActionModifyRotate:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyRotateNoSelect);
-        break;
+		if(!doc->countSelected()){
+			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyRotateNoSelect);
+			break;
+		}
     case RS2::ActionModifyRotateNoSelect:
         a = new RS_ActionModifyRotate(*doc, *gv);
         break;
     case RS2::ActionModifyScale:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyScaleNoSelect);
-        break;
+		if(!doc->countSelected()){
+			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyScaleNoSelect);
+			break;
+		}
     case RS2::ActionModifyScaleNoSelect:
-        a = new RS_ActionModifyScale(*doc, *gv);
-        break;
+		a = new RS_ActionModifyScale(*doc, *gv);
+		break;
     case RS2::ActionModifyMirror:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyMirrorNoSelect);
-        break;
+		if(!doc->countSelected()){
+			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyMirrorNoSelect);
+			break;
+		}
     case RS2::ActionModifyMirrorNoSelect:
         a = new RS_ActionModifyMirror(*doc, *gv);
         break;
-    case RS2::ActionModifyMoveRotate:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyMoveRotateNoSelect);
-        break;
+	case RS2::ActionModifyMoveRotate:
+		if(!doc->countSelected()){
+			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyMoveRotateNoSelect);
+			break;
+		}
     case RS2::ActionModifyMoveRotateNoSelect:
         a = new RS_ActionModifyMoveRotate(*doc, *gv);
         break;
-    case RS2::ActionModifyRotate2:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyRotate2NoSelect);
-        break;
+	case RS2::ActionModifyRotate2:
+		if(!doc->countSelected()){
+			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyRotate2NoSelect);
+			break;
+		}
     case RS2::ActionModifyRotate2NoSelect:
         a = new RS_ActionModifyRotate2(*doc, *gv);
-        break;
-    case RS2::ActionModifyEntity:
-        a = new RS_ActionModifyEntity(*doc, *gv);
-        break;
-    case RS2::ActionModifyTrim:
+		break;
+	case RS2::ActionModifyEntity:
+		a = new RS_ActionModifyEntity(*doc, *gv);
+		break;
+	case RS2::ActionModifyTrim:
         a = new RS_ActionModifyTrim(*doc, *gv, false);
         a->setActionType(id);
         break;
@@ -678,22 +700,26 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionModifyRound(*doc, *gv);
         break;
     case RS2::ActionModifyOffset:
-    if (offsetEntities.size() == 0){
-        //list all supported Entity types here
-        //fixme, handle this initialization better
-        offsetEntities.push_back(RS2::EntityArc);
-        offsetEntities.push_back(RS2::EntityCircle);
-        offsetEntities.push_back(RS2::EntityLine);
-        offsetEntities.push_back(RS2::EntityPolyline);
-    }
-        a = new RS_ActionSelect(*doc, *gv,RS2::ActionModifyOffsetNoSelect,&offsetEntities);
-        break;
+		if(!doc->countSelected(true, {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline})){
+			if (offsetEntities.size() == 0){
+				//list all supported Entity types here
+				//fixme, handle this initialization better
+				offsetEntities.push_back(RS2::EntityArc);
+				offsetEntities.push_back(RS2::EntityCircle);
+				offsetEntities.push_back(RS2::EntityLine);
+				offsetEntities.push_back(RS2::EntityPolyline);
+			}
+			a = new RS_ActionSelect(*doc, *gv,RS2::ActionModifyOffsetNoSelect,&offsetEntities);
+			break;
+		}
     case RS2::ActionModifyOffsetNoSelect:
         a = new RS_ActionModifyOffset(*doc, *gv);
-        break;
-    case RS2::ActionModifyExplodeText:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyExplodeTextNoSelect);
-        break;
+		break;
+	case RS2::ActionModifyExplodeText:
+		if(!doc->countSelected(false, {RS2::EntityText, RS2::EntityMText})){
+			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyExplodeTextNoSelect);
+			break;
+		}
     case RS2::ActionModifyExplodeTextNoSelect:
         a = new RS_ActionModifyExplodeText(*doc, *gv);
         break;
@@ -781,9 +807,11 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionInfoAngle:
         a = new RS_ActionInfoAngle(*doc, *gv);
         break;
-    case RS2::ActionInfoTotalLength:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionInfoTotalLengthNoSelect);
-        break;
+	case RS2::ActionInfoTotalLength:
+		if(!doc->countSelected()){
+			a = new RS_ActionSelect(*doc, *gv, RS2::ActionInfoTotalLengthNoSelect);
+			break;
+		}
     case RS2::ActionInfoTotalLengthNoSelect:
         a = new RS_ActionInfoTotalLength(*doc, *gv);
         break;
@@ -850,14 +878,18 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionBlocksToggleView(*doc, *gv);
         break;
     case RS2::ActionBlocksCreate:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionBlocksCreateNoSelect);
-        break;
+		if(!doc->countSelected()){
+			a = new RS_ActionSelect(*doc, *gv, RS2::ActionBlocksCreateNoSelect);
+			break;
+		}
     case RS2::ActionBlocksCreateNoSelect:
         a = new RS_ActionBlocksCreate(*doc, *gv);
         break;
-    case RS2::ActionBlocksExplode:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionBlocksExplodeNoSelect);
-        break;
+	case RS2::ActionBlocksExplode:
+		if(!doc->countSelected(true, {RS2::EntityBlock})){
+			a = new RS_ActionSelect(*doc, *gv, RS2::ActionBlocksExplodeNoSelect);
+			break;
+		}
     case RS2::ActionBlocksExplodeNoSelect:
         a = new RS_ActionBlocksExplode(*doc, *gv);
         break;
