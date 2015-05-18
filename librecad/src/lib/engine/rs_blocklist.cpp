@@ -228,6 +228,8 @@ RS_Block* RS_BlockList::find(const QString& name) {
  */
 QString RS_BlockList::newName(const QString& suggestion) {
 //	qDebug()<<"suggestion: "<<suggestion;
+	if(!find(suggestion))
+		return suggestion;
 	QString name=suggestion;
 	QRegExp const rx(R"(\b(-?\d+)\b$)");
 	int index=name.lastIndexOf(rx);

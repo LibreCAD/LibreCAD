@@ -46,12 +46,15 @@ QG_FontBox::QG_FontBox(QWidget* parent)
 void QG_FontBox::init() {
     QStringList fonts;
 
-    QListIterator<RS_Font *> i = RS_FONTLIST->getIteretor();
-    while (i.hasNext()) {
-        fonts.append( i.next()->getFileName() );
-    }
+	for(auto const& f: * RS_FONTLIST){
+		if(fonts.contains(f->getFileName())){
+			DEBUG_HEADER();
+			qDebug()<<__func__<<": WARNING: duplicated font: "<<f->getFileName();
+			continue;
+		}
 
-    fonts.sort();
+		fonts.append(f->getFileName());
+	}
     addItems(fonts);
 
     connect(this, SIGNAL(activated(int)),
@@ -76,6 +79,9 @@ void QG_FontBox::setFont(const QString& fName) {
 }
 
 
+RS_Font* QG_FontBox::getFont() const{
+	return currentFont;
+}
 
 /**
  * Called when the font has changed. This method 

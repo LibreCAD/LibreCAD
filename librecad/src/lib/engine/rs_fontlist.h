@@ -25,7 +25,8 @@
 **********************************************************************/
 #ifndef RS_FONTLIST_H
 #define RS_FONTLIST_H
-#include <QList>
+#include <memory>
+#include <vector>
 
 class RS_Font;
 
@@ -50,16 +51,10 @@ public:
     void init();
 
     void clearFonts();
-    int countFonts() {
-        return fonts.count();
-    }
-    virtual void removeFont(RS_Font* font);
+	size_t countFonts() const;
     RS_Font* requestFont(const QString& name);
-
-    //! @return a const iterator for the font list.
-    QListIterator<RS_Font *> getIteretor(){
-        return QListIterator<RS_Font *>(fonts);
-    }
+	std::vector<std::unique_ptr<RS_Font> >::const_iterator begin() const;
+	std::vector<std::unique_ptr<RS_Font> >::const_iterator end() const;
 
     friend std::ostream& operator << (std::ostream& os, RS_FontList& l);
 
@@ -69,7 +64,7 @@ private:
 	RS_FontList& operator = (RS_FontList const&)=delete;
 	static RS_FontList* uniqueInstance;
     //! fonts in the graphic
-    QList<RS_Font *> fonts;
+	std::vector<std::unique_ptr<RS_Font>> fonts;
 };
 
 #endif

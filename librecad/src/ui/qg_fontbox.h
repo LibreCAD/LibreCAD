@@ -41,9 +41,7 @@ public:
     QG_FontBox(QWidget* parent=0);
 	virtual ~QG_FontBox()=default;
 
-    RS_Font* getFont() {
-        return currentFont;
-    }
+	RS_Font* getFont() const;
     void setFont(const QString& fName);
 
     void init();

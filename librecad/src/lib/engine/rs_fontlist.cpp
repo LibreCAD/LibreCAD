@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #include <QHash>
 #include "rs_fontlist.h"
 #include "rs_debug.h"
@@ -35,7 +34,7 @@
 #include "emu_qt45.h"
 #endif
 
-RS_FontList* RS_FontList::uniqueInstance = NULL;
+RS_FontList* RS_FontList::uniqueInstance = nullptr;
 
 RS_FontList* RS_FontList::instance() {
 	if (!uniqueInstance) {
@@ -59,15 +58,13 @@ void RS_FontList::init() {
     list.append(RS_SYSTEM->getFontList());
 #endif
     QHash<QString, int> added; //used to remember added fonts (avoid duplication)
-    RS_Font* font;
 
     for (int i = 0; i < list.size(); ++i) {
         RS_DEBUG->print("font: %s:", list.at(i).toLatin1().data());
 
         QFileInfo fi( list.at(i) );
         if ( !added.contains(fi.baseName()) ) {
-            font = new RS_Font(fi.baseName());
-            fonts.append(font);
+			fonts.emplace_back(new RS_Font(fi.baseName()));
             added.insert(fi.baseName(), 1);
         }
 
@@ -75,35 +72,26 @@ void RS_FontList::init() {
     }
 }
 
+size_t RS_FontList::countFonts() const{
+	return fonts.size();
+}
+
+std::vector<std::unique_ptr<RS_Font> >::const_iterator RS_FontList::begin() const
+{
+	return fonts.begin();
+}
+
+std::vector<std::unique_ptr<RS_Font> >::const_iterator RS_FontList::end() const
+{
+	return fonts.end();
+}
 
 /**
  * Removes all fonts in the fontlist.
  */
 void RS_FontList::clearFonts() {
-    while (!fonts.isEmpty())
-        delete fonts.takeFirst();
+	fonts.clear();
 }
-
-
-
-/**
- * Removes a font from the list.
- * The font was removed from the list and is deleted.
- */
-void RS_FontList::removeFont(RS_Font* font) {
-    RS_DEBUG->print("RS_FontList::removeFont()");
-
-    int i = fonts.indexOf(font);
-    if (i != -1)
-        delete fonts.takeAt(i);
-
-    //for (unsigned i=0; i<fontListListeners.count(); ++i) {
-    //    RS_FontListListener* l = fontListListeners.at(i);
-    //    l->fontRemoved(font);
-    //}
-}
-
-
 
 /**
  * @return Pointer to the font with the given name or
@@ -125,26 +113,23 @@ RS_Font* RS_FontList::requestFont(const QString& name) {
 
     RS_DEBUG->print("name2: %s", name2.toLatin1().data());
 
-    // Search our list of available fonts:
-    for (int i = 0; i < fonts.size(); ++i) {
-        RS_Font* f = fonts.at(i);
+	// Search our list of available fonts:
+	for( auto const& f: fonts){
 
         if (f->getFileName()==name2) {
             // Make sure this font is loaded into memory:
             f->loadFont();
-            foundFont = f;
+			foundFont = f.get();
             break;
         }
     }
 
-    if (foundFont==NULL && name!="standard") {
+	if (!foundFont && name!="standard") {
         foundFont = requestFont("standard");
     }
 
     return foundFont;
 }
-
-
 
 /**
  * Dumps the fonts to stdout.
@@ -152,9 +137,7 @@ RS_Font* RS_FontList::requestFont(const QString& name) {
 std::ostream& operator << (std::ostream& os, RS_FontList& l) {
 
     os << "Fontlist: \n";
-    for (int i = 0; i < l.fonts.size(); ++i) {
-        RS_Font* f = l.fonts.at(i);
-
+	for(auto const& f: l.fonts){
         os << *f << "\n";
     }
 

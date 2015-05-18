@@ -945,15 +945,7 @@ QString Doc_plugin_interface::addBlockfromFromdisk(QString fullName){
     QFileInfo fi(fullName);
     QString s = fi.completeBaseName();
 
-    QString name = s;
-    if(blockList->find(name)){
-        for (int i=0; i<1e5; ++i) {
-            name = QString("%1-%2").arg(s).arg(i);
-            if (blockList->find(name)==NULL) {
-                break;
-            }
-        }
-    }
+	QString name = blockList->newName(s);
 
     if (fi.isReadable()) {
         RS_BlockData d(name, RS_Vector(0,0), false);
