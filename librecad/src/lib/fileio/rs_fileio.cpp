@@ -24,30 +24,19 @@
 **
 **********************************************************************/
 
+#include <cstddef>
 #include <QFileInfo>
 #include <QTextStream>
 #ifdef DWGSUPPORT
 #include <QMessageBox>
 #include <QApplication>
 #endif
-#include <cstddef>
 #include "rs_fileio.h"
 #include "rs_filtercxf.h"
 #include "rs_filterdxf1.h"
 #include "rs_filterjww.h"
 #include "rs_filterlff.h"
 #include "rs_filterdxfrw.h"
-
-
-RS_FileIO::RS_FileIO():
-	filters({&(RS_FilterLFF::createFilter)
-			,&(RS_FilterDXFRW::createFilter)
-			,&(RS_FilterCXF::createFilter)
-			,&(RS_FilterJWW::createFilter)
-			,&(RS_FilterDXF1::createFilter)
-			})
-{
-}
 
 /**
  * Calls the import method of the filter responsible for the format
@@ -197,8 +186,8 @@ RS_FileIO* RS_FileIO::instance() {
  */
 std::unique_ptr<RS_FilterInterface> RS_FileIO::getImportFilter(const QString &fileName,
 									RS2::FormatType t) const{
-	for(auto f: filters){
-		std::unique_ptr<RS_FilterInterface> filter((*f)());
+	for(auto f: getFilters()){
+		std::unique_ptr<RS_FilterInterface> filter(f());
 		if(filter &&
 				filter->canImport(fileName, t)){
 			return filter;
@@ -212,8 +201,8 @@ std::unique_ptr<RS_FilterInterface> RS_FileIO::getImportFilter(const QString &fi
  */
 std::unique_ptr<RS_FilterInterface> RS_FileIO::getExportFilter(const QString &fileName,
 									RS2::FormatType t) const{
-	for(auto f: filters){
-		std::unique_ptr<RS_FilterInterface> filter((*f)());
+	for(auto f: getFilters()){
+		std::unique_ptr<RS_FilterInterface> filter(f());
 		if(filter &&
 				filter->canExport(fileName, t)){
 			return filter;
@@ -221,4 +210,16 @@ std::unique_ptr<RS_FilterInterface> RS_FileIO::getExportFilter(const QString &fi
 	}
 	return nullptr;
 }
+
+std::vector<std::function<RS_FilterInterface*()>> RS_FileIO::getFilters()
+{
+												  return {
+												  RS_FilterLFF::createFilter
+												  ,RS_FilterDXFRW::createFilter
+												  ,RS_FilterCXF::createFilter
+												  ,RS_FilterJWW::createFilter
+												  ,RS_FilterDXF1::createFilter
+												  };
+}
+
 // EOF

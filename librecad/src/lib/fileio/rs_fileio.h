@@ -27,11 +27,10 @@
 #ifndef RS_FILEIO_H
 #define RS_FILEIO_H
 
-#include <QList>
+#include <vector>
+#include <functional>
 #include <memory>
 #include "rs_filterinterface.h"
-
-typedef  RS_FilterInterface* (*createFilter)();
 
 //RLZ: TODO destructor for clear filterList
 /**
@@ -42,9 +41,11 @@ typedef  RS_FilterInterface* (*createFilter)();
 class RS_FileIO {
 private:
     //singleton
-	RS_FileIO();
-    RS_FileIO(RS_FileIO&) = delete;
-    RS_FileIO& operator = (RS_FileIO&) = delete;
+	RS_FileIO()=default;
+	RS_FileIO(RS_FileIO const&) = delete;
+	RS_FileIO& operator = (RS_FileIO const&) = delete;
+	RS_FileIO(RS_FileIO&&) = delete;
+	RS_FileIO& operator = (RS_FileIO&&) = delete;
 	
 public:
     /**
@@ -79,7 +80,7 @@ public:
 private:
 
 /** a list of pointers to static functions to create file filters **/
-	QList<createFilter> const filters;
+	static std::vector<std::function<RS_FilterInterface*()>> getFilters();
 };
 
 
