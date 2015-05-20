@@ -74,6 +74,7 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
+	virtual void updateToolBar(){}
 
     void center();
     void fit();
