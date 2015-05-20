@@ -76,7 +76,6 @@ public:
 
 	virtual void updateMouseButtonHints();
 	virtual void updateMouseCursor();
-	//virtual void updateToolBar();
 
     virtual void setClosed(bool c);
     virtual bool isClosed();
@@ -98,7 +97,7 @@ protected:
 	/**
 	* Point history (for undo)
 	*/
-	QList<RS_Vector> undoBuffer;
+	std::vector<RS_Vector> undoBuffer;
 
 	void redo();
 };

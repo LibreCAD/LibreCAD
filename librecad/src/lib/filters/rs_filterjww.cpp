@@ -1856,10 +1856,10 @@ void RS_FilterJWW::writeSplinePoints(DL_WriterA& dw,
 	// split spline into atomic entities for JWW R12:
 	if(jww.getVersion() == VER_R12)
 	{
-		QList<RS_Vector> sp = s->getStrokePoints();
-		jww.writePolyline(dw, DL_PolylineData(sp.count(), 0, 0, s->isClosed()*0x1), attrib);
+		auto const& sp = s->getStrokePoints();
+		jww.writePolyline(dw, DL_PolylineData(sp.size(), 0, 0, s->isClosed()*0x1), attrib);
 
-		for(int i = 0; i < sp.count(); i++)
+		for(size_t i = 0; i < sp.size(); i++)
 		{
 			jww.writeVertex(dw, DL_VertexData(sp.at(i).x, sp.at(i).y, 0.0, 0.0));
 		}
@@ -1869,7 +1869,7 @@ void RS_FilterJWW::writeSplinePoints(DL_WriterA& dw,
 
 	// Number of control points:
 	int numCtrl = s->getNumberOfControlPoints();
-	QList<RS_Vector> cp = s->getControlPoints();
+	auto const& cp = s->getControlPoints();
 
 	if(numCtrl < 3)
 	{
@@ -1903,10 +1903,8 @@ void RS_FilterJWW::writeSplinePoints(DL_WriterA& dw,
 	}
 
 	// write spline control points:
-	QList<RS_Vector>::iterator it;
-	for(it = cp.begin(); it != cp.end(); ++it)
-	{
-		jww.writeControlPoint(dw, DL_ControlPointData((*it).x, (*it).y, 0.0));
+	for(auto const& v: cp){
+		jww.writeControlPoint(dw, DL_ControlPointData(v.x, v.y, 0.0));
 	}
 }
 

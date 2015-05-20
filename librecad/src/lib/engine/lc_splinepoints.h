@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_SPLINEPOINTS_H
 #define LC_SPLINEPOINTS_H
 
-#include <QList>
+#include <vector>
 #include "rs_atomicentity.h"
 #include "rs_linetypepattern.h"
 
@@ -56,8 +56,8 @@ struct LC_SplinePointsData
 	bool closed;
 	bool cut;
 	/** points on the spline. */
-	QList<RS_Vector> splinePoints;
-	QList<RS_Vector> controlPoints;
+	std::vector<RS_Vector> splinePoints;
+	std::vector<RS_Vector> controlPoints;
 };
 
 std::ostream& operator << (std::ostream& os, const LC_SplinePointsData& ld);
@@ -93,46 +93,28 @@ public:
 	virtual RS_Entity* clone() const;
 
 	/**	@return RS2::EntitySpline */
-	virtual RS2::EntityType rtti() const
-	{
-		return RS2::EntitySplinePoints;
-	}
+	virtual RS2::EntityType rtti() const;
 
 	/** @return false */
-	virtual bool isEdge() const
-	{
-		return true;
-	}
+	virtual bool isEdge() const;
 
 	/** @return Copy of data that defines the spline. */
-    LC_SplinePointsData getData() const
-	{
-		return data;
-	}
+	LC_SplinePointsData const& getData() const;
+	LC_SplinePointsData& getData();
 
 	/** @return Number of control points. */
-	int getNumberOfControlPoints()
-	{
-		return data.controlPoints.count();
-	}
+	size_t getNumberOfControlPoints() const;
 
 	/**
 	* @retval true if the spline is closed.
 	* @retval false otherwise.
 	*/
-	bool isClosed()
-	{
-		return data.closed;
-	}
+	bool isClosed() const;
 
 	/**
     * Sets the closed flag of this spline.
 	*/
-	void setClosed(bool c)
-	{
-		data.closed = c;
-		update();
-	}
+	void setClosed(bool c);
 	
     virtual void update();
 
@@ -229,9 +211,9 @@ public:
 	virtual void revertDirection();
 
 	virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
-	QList<RS_Vector> getPoints();
-	QList<RS_Vector> getControlPoints();
-	QList<RS_Vector> getStrokePoints();
+	std::vector<RS_Vector> getPoints();
+	std::vector<RS_Vector> getControlPoints();
+	std::vector<RS_Vector> getStrokePoints();
 
     friend std::ostream& operator << (std::ostream& os, const LC_SplinePoints& l);
 

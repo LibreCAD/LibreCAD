@@ -2274,7 +2274,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
 void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s)
 {
 	int nCtrls = s->getNumberOfControlPoints();
-	QList<RS_Vector> cp = s->getControlPoints();
+	auto const& cp = s->getControlPoints();
 
 	if(nCtrls < 3)
 	{
@@ -2295,9 +2295,9 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s)
 	if(version == 1009)
 	{
 		DRW_Polyline pol;
-		QList<RS_Vector> sp = s->getStrokePoints();
+		auto const& sp = s->getStrokePoints();
 
-		for(int i = 0; i < sp.count(); i++)
+		for(size_t i = 0; i < sp.size(); i++)
 		{
 			pol.addVertex(DRW_Vertex(sp.at(i).x, sp.at(i).y, 0.0, 0.0));
 		}
@@ -2336,7 +2336,7 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s)
 	}
 
 	// write spline control points:
-	for(int i = 0; i < cp.size(); ++i)
+	for(size_t i = 0; i < cp.size(); ++i)
 	{
 		DRW_Coord *controlpoint = new DRW_Coord();
 		sp.controllist.push_back(controlpoint);
