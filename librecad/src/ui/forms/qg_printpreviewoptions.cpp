@@ -126,7 +126,7 @@ void QG_PrintPreviewOptions::setScaleFixed(bool fixed)
 
 void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
 
-    if (a && a->rtti()==RS2::ActionPrintPreview) {
+	if (a && a->rtti()==RS2::ActionFilePrintPreview) {
         action = static_cast<RS_ActionPrintPreview*>(a);
         /** fixed scale **/
         if(update){

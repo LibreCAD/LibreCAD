@@ -74,11 +74,13 @@ void RS_ActionDefault::init(int status) {
     RS_DEBUG->print("RS_ActionDefault::init: OK");
 }
 
-
-
-void RS_ActionDefault::trigger() {
-    RS_PreviewActionInterface::trigger();
-
+/**
+ * Finishes this action.
+ */
+void RS_ActionDefault::finish(bool /*updateTB*/) {
+	RS_DEBUG->print("RS_ActionPrintPreview::finish");
+	graphicView->setMouseCursor(RS2::ArrowCursor);
+	RS_DEBUG->print("RS_ActionPrintPreview::finish: OK");
 }
 
 void RS_ActionDefault::keyPressEvent(QKeyEvent* e) {

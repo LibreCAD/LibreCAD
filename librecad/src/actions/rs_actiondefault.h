@@ -61,10 +61,9 @@ public:
     virtual RS2::ActionType rtti() const{
         return RS2::ActionDefault;
     }
+	virtual void finish(bool updateTB = true );
 
     virtual void init(int status=0);
-
-    virtual void trigger();
 
     virtual void keyPressEvent(QKeyEvent* e);
     virtual void keyReleaseEvent(QKeyEvent* e);

@@ -70,11 +70,14 @@ void RS_ActionPrintPreview::init(int status) {
     showOptions();
 }
 
-
-
-
-void RS_ActionPrintPreview::trigger() {}
-
+/**
+ * Finishes this action.
+ */
+void RS_ActionPrintPreview::finish(bool /*updateTB*/) {
+	RS_DEBUG->print("RS_ActionPrintPreview::finish");
+	graphicView->setMouseCursor(RS2::ArrowCursor);
+	RS_DEBUG->print("RS_ActionPrintPreview::finish: OK");
+}
 
 
 void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {

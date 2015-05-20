@@ -532,7 +532,7 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
     }
 
     switch (action->rtti()) {
-    case RS2::ActionPrintPreview:
+	case RS2::ActionFilePrintPreview:
         requestPrintPreviewOptions(action, on, update);
         break;
 

@@ -196,9 +196,7 @@ public:
         ActionFilePrintPDF,
         ActionFilePrintPreview,
         ActionFileExportMakerCam,
-        ActionFileQuit,
-
-        ActionPrintPreview,
+		ActionFileQuit,
 
         ActionEditKillAllActions,
         ActionEditUndo,
