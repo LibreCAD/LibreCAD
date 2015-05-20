@@ -76,13 +76,6 @@ void RS_ActionDrawCircleTan2::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-//void RS_ActionDrawCircleTan2::finish(bool updateTB){
-////    for(int i=0;i<circles.size();i++) circles[i]->setHighlighted(false);
-////    graphicView->redraw(RS2::RedrawDrawing);
-////    circles.clear();
-//    RS_PreviewActionInterface::finish(updateTB);
-//}
-
 
 void RS_ActionDrawCircleTan2::trigger() {
     //    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;

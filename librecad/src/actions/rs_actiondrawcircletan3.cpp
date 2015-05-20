@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_line.h"
 #include "rs_point.h"
 #include "lc_quadratic.h"
+#include "rs_information.h"
 
 /**
  * Constructor.
@@ -114,8 +115,8 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent* e) {
 //        RS_Entity*  en = catchEntity(e, enTypeList, RS2::ResolveAll);
         coord= graphicView->toGraph(e->x(), e->y());
 //        circles[getStatus()]=static_cast<RS_Line*>(en);
-        if(preparePreview()) {
-            deletePreview();
+		deletePreview();
+		if(preparePreview()) {
 			RS_Circle* e=new RS_Circle(preview.get(), *cData);
             preview->addEntity(e);
 			for(auto& c: candidates){
@@ -136,52 +137,104 @@ bool RS_ActionDrawCircleTan3::getData(){
     if(getStatus() != SetCircle3) return false;
     //find the nearest circle
 	size_t i=0;
-    for(;i<circles.size();++i)
-        if(circles[i]->rtti() == RS2::EntityLine) break;
-    candidates.clear();
-        const int i1=(i+1)%3;
-        const int i2=(i+2)%3;
-        if(i<circles.size() && circles[i]->rtti() == RS2::EntityLine){
+	size_t const countLines=std::count_if(circles.begin(), circles.end(), [](RS_AtomicEntity* e)->bool
+	{
+			return e->rtti()==RS2::EntityLine;
+});
+
+	for(;i<circles.size();++i)
+		if(circles[i]->rtti() == RS2::EntityLine) break;
+	candidates.clear();
+	size_t i1=(i+1)%3;
+	size_t i2=(i+2)%3;
+	if(i<circles.size() && circles[i]->rtti() == RS2::EntityLine){
+		//one or more lines
 
             LC_Quadratic lc0(circles[i],circles[i1],false);
-             LC_Quadratic lc01(circles[i],circles[i1],true);
+			LC_Quadratic lc01(circles[i],circles[i1],true);
             LC_Quadratic lc1;
             RS_VectorSolutions sol;
             //detect degenerate case two circles with the same radius
-            if(circles[i1]->rtti()== RS2::EntityCircle &&
-                    circles[i2]->rtti()== RS2::EntityCircle
-                    ){
-                RS_Circle* c1=static_cast<RS_Circle*>(circles[i1]);
-                RS_Circle* c2=static_cast<RS_Circle*>(circles[i2]);
-                if(fabs(fabs(c1->getRadius())-fabs(c2->getRadius()))<RS_TOLERANCE){
-                    //degenerate
-                    const RS_Vector p0=(c1->getCenter()+c2->getCenter())*0.5;
-                    const RS_Vector p1=p0 + (c1->getCenter() - p0).rotate(0.5*M_PI);
-                    lc1=RS_Line(NULL, RS_LineData(p0,p1 )).getQuadratic();
-                    sol=LC_Quadratic::getIntersection(lc0,lc1);
+			switch(countLines){
+			default:
+			case 0:
+				//this should not happen
+				assert(false);
+			case 1:
+				//1 line, two circles
+			{
+				RS_AtomicEntity* c1=circles[i1];
+				RS_AtomicEntity* c2=circles[i2];
+				if(fabs(fabs(c1->getRadius())-fabs(c2->getRadius()))<RS_TOLERANCE){
+					//degenerate
+					const RS_Vector p0=(c1->getCenter()+c2->getCenter())*0.5;
+					const RS_Vector p1=p0 + (c1->getCenter() - p0).rotate(0.5*M_PI);
+					lc1=RS_Line(NULL, RS_LineData(p0,p1 )).getQuadratic();
+					sol=LC_Quadratic::getIntersection(lc0,lc1);
 
-                    sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
-                    lc1=RS_Line(NULL, RS_LineData(c1->getCenter(),c1->getCenter())).getQuadratic();
-                    sol.appendTo(LC_Quadratic::getIntersection(lc0,lc1));
-                    sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
-                }
+					sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
+					lc1=RS_Line(NULL, RS_LineData(c1->getCenter(),c1->getCenter())).getQuadratic();
+					sol.appendTo(LC_Quadratic::getIntersection(lc0,lc1));
+					sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
+				}
+			}
+				break;
+			case 2:
+				//2 lines, one circle
+			{
+				if(circles[i2]->rtti()==RS2::EntityLine){
+					std::swap(i1, i2);
+				}
+				lc1=LC_Quadratic(circles[i],circles[i1], true);
+				LC_Quadratic lc2=LC_Quadratic(circles[i],circles[i2], true);
+				sol.appendTo(LC_Quadratic::getIntersection(lc1,lc2));
+			}
+				break;
+			case 3:
+				//3 lines, one circle
+			{
+				qDebug()<<"00: sol.size()="<<sol.size();
 
-            }
-            if(sol.size()==0) {
-                switch(circles[i2]->rtti()){
-                case RS2::EntityCircle:
-                    lc1=LC_Quadratic(circles[i],circles[i2], true);
-                    sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
-                    if(circles[i1]->rtti()== RS2::EntityCircle )
-                        sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
-                    //there's no break, because the default part would be run for circles as well
-                default:
-                    lc1=LC_Quadratic(circles[i],circles[i2]);
-                    sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
-                    if(circles[i1]->rtti()== RS2::EntityCircle )
-                        sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
-                }
-            }
+				lc0=circles[i]->getQuadratic();
+				lc1=circles[i1]->getQuadratic();
+				auto lc2=circles[i2]->getQuadratic();
+				auto sol1=LC_Quadratic::getIntersection(lc0,lc1);
+				if(sol1.size()<1) {
+					std::swap(lc0, lc2);
+					std::swap(i, i2);
+				}
+				RS_Line* line0=static_cast<RS_Line*>(circles[i]);
+				RS_Line* line1=static_cast<RS_Line*>(circles[i1]);
+				RS_Line* line2=static_cast<RS_Line*>(circles[i2]);
+				lc0=line0->getQuadratic();
+				lc1=line1->getQuadratic();
+				lc2=line2->getQuadratic();
+				sol1=LC_Quadratic::getIntersection(lc0,lc1);
+				if(!sol1.size()) return false;
+				RS_Vector const v1=sol1.at(0);
+				double angle1=0.5*(line0->getAngle1()+line1->getAngle1());
+
+				sol1=LC_Quadratic::getIntersection(lc0,lc2);
+				double angle2;
+				if(sol1.size()<1) {
+					return false;
+				}
+				angle2=0.5*(line0->getAngle1()+line2->getAngle1());
+				RS_Vector const& v2=sol1.at(0);
+				for(unsigned j=0; j<2; ++j){
+
+					RS_Line l1(NULL, RS_LineData(v1, v1+RS_Vector(angle1)));
+					for(unsigned j1=0; j1<2; ++j1){
+						RS_Line l2(NULL, RS_LineData(v2, v2+RS_Vector(angle2)));
+						sol.appendTo(RS_Information::getIntersectionLineLine(&l1, &l2));
+						angle2 += M_PI_2;
+					}
+					angle1 += M_PI_2;
+				}
+			}
+			}
+
+
             double d;
 
         //line passes circle center, need a second parabola as the image of the line
@@ -205,6 +258,7 @@ bool RS_ActionDrawCircleTan3::getData(){
 
             sol1.push_back(vp);
         }
+		qDebug()<<"sol1.size()="<<sol1.size();
 
 
         for(size_t j=0;j<sol1.size();j++){
@@ -235,6 +289,8 @@ bool RS_ActionDrawCircleTan3::preparePreview(){
 	size_t index=candidates.size();
     double dist=RS_MAXDOUBLE*RS_MAXDOUBLE;
 	for(size_t i=0;i<candidates.size();++i){
+
+		preview->addEntity(new RS_Point(preview.get(), RS_PointData(candidates.at(i)->center)));
         double d;
 		RS_Circle(nullptr, *candidates.at(i)).getNearestPointOnEntity(coord,false,&d);
 		double dCenter=coord.distanceTo(candidates.at(i)->center);

@@ -166,8 +166,7 @@ int RS_Settings::readNumEntry(const QString& key, int def, bool* ok) {
 
 
 QVariant RS_Settings::readEntryCache(const QString& key) {
-	auto it=cache.find(key);
-	if(it==cache.end()) return QVariant();
+	if(!cache.count(key)) return QVariant();
 	return cache[key];
 }
 

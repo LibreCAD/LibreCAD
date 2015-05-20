@@ -50,9 +50,9 @@ RS_LineData::RS_LineData(const RS_Vector& _startpoint,
 }
 
 std::ostream& operator << (std::ostream& os, const RS_LineData& ld) {
-	os << "(" << ld.startpoint <<
-		  "/" << ld.endpoint <<
-		  ")";
+	os << "RS_LINE: ((" << ld.startpoint <<
+		  ")(" << ld.endpoint <<
+		  "))";
 	return os;
 }
 
