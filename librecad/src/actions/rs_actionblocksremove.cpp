@@ -54,21 +54,18 @@ void RS_ActionBlocksRemove::trigger() {
             RS_DIALOGFACTORY->requestBlockRemovalDialog(graphic->getBlockList());
 
         // list of containers that might refer to the block via inserts:
-        QList<RS_EntityContainer*> containerList;
-        containerList.append(graphic);
+		std::vector<RS_EntityContainer*> containerList;
+		containerList.push_back(graphic);
         RS_BlockList* blkLst = graphic->getBlockList();
         for (int bi=0; bi<blkLst->count(); bi++) {
-            containerList.append(blkLst->at(bi));
+			containerList.push_back(blkLst->at(bi));
         }
 
         if (block) {
             if (document) {
                 document->startUndoCycle();
             }
-
-            for (int i = 0; i < containerList.size(); ++i) {
-
-                RS_EntityContainer* cont = containerList.at(i);
+			for(auto cont: containerList){
                 // remove all inserts from the graphic:
                 bool done;
                 do {
