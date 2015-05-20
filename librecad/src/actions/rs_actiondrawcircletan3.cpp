@@ -193,8 +193,6 @@ bool RS_ActionDrawCircleTan3::getData(){
 		case 3:
 			//3 lines
 		{
-			qDebug()<<"00: sol.size()="<<sol.size();
-
 			lc0=circles[i]->getQuadratic();
 			lc1=circles[i1]->getQuadratic();
 			auto lc2=circles[i2]->getQuadratic();
@@ -209,11 +207,13 @@ bool RS_ActionDrawCircleTan3::getData(){
 			lc0=line0->getQuadratic();
 			lc1=line1->getQuadratic();
 			lc2=line2->getQuadratic();
+			//intersection 0, 1
 			sol1=LC_Quadratic::getIntersection(lc0,lc1);
 			if(!sol1.size()) return false;
 			RS_Vector const v1=sol1.at(0);
 			double angle1=0.5*(line0->getAngle1()+line1->getAngle1());
 
+			//intersection 0, 2
 			sol1=LC_Quadratic::getIntersection(lc0,lc2);
 			double angle2;
 			if(sol1.size()<1) {
@@ -221,6 +221,7 @@ bool RS_ActionDrawCircleTan3::getData(){
 			}
 			angle2=0.5*(line0->getAngle1()+line2->getAngle1());
 			RS_Vector const& v2=sol1.at(0);
+			//two bisector lines per intersection
 			for(unsigned j=0; j<2; ++j){
 
 				RS_Line l1(NULL, RS_LineData(v1, v1+RS_Vector(angle1)));
@@ -252,8 +253,7 @@ bool RS_ActionDrawCircleTan3::getData(){
 		RS_VectorSolutions sol1;
 		for(const RS_Vector& vp: sol){
 			if(vp.magnitude()>RS_MAXDOUBLE) continue;
-			if(sol1.size())
-				if(sol1.getClosestDistance(vp)<RS_TOLERANCE) continue;
+			if(sol1.size() && sol1.getClosestDistance(vp)<RS_TOLERANCE) continue;
 
 			sol1.push_back(vp);
 		}
