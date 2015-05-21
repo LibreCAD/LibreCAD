@@ -71,7 +71,7 @@ public:
     virtual void updateMouseCursor();
 //    virtual void updateToolBar();
 
-	int getNumber() {
+	int getNumber() const{
 		return number;
 	}
 

@@ -501,20 +501,8 @@ void RS_ActionDrawCircleTan3::updateMouseButtonHints() {
 	}
 }
 
-
-
 void RS_ActionDrawCircleTan3::updateMouseCursor() {
 	graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionDrawCircleTan3::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
 
 // EOF

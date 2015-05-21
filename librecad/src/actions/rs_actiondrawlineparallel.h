@@ -72,7 +72,7 @@ public:
     virtual void updateMouseCursor();
 //    virtual void updateToolBar();
 
-	double getDistance() {
+	double getDistance() const{
 		return distance;
 	}
 
@@ -80,7 +80,7 @@ public:
 		distance = d;
 	}
 
-	int getNumber() {
+	int getNumber() const{
 		return number;
 	}
 
