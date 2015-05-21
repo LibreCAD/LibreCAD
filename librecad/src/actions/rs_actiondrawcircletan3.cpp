@@ -196,11 +196,18 @@ bool RS_ActionDrawCircleTan3::getData(){
 			lc0=circles[i]->getQuadratic();
 			lc1=circles[i1]->getQuadratic();
 			auto lc2=circles[i2]->getQuadratic();
+			//attempt to have intersections (lc0, lc1), (lc0, lc2)
 			auto sol1=LC_Quadratic::getIntersection(lc0,lc1);
 			if(sol1.size()<1) {
 				std::swap(lc0, lc2);
 				std::swap(i, i2);
 			}
+			sol1=LC_Quadratic::getIntersection(lc0,lc2);
+			if(sol1.size()<1) {
+				std::swap(lc0, lc1);
+				std::swap(i, i1);
+			}
+
 			RS_Line* line0=static_cast<RS_Line*>(circles[i]);
 			RS_Line* line1=static_cast<RS_Line*>(circles[i1]);
 			RS_Line* line2=static_cast<RS_Line*>(circles[i2]);
@@ -209,7 +216,9 @@ bool RS_ActionDrawCircleTan3::getData(){
 			lc2=line2->getQuadratic();
 			//intersection 0, 1
 			sol1=LC_Quadratic::getIntersection(lc0,lc1);
-			if(!sol1.size()) return false;
+			if(!sol1.size()) {
+				return false;
+			}
 			RS_Vector const v1=sol1.at(0);
 			double angle1=0.5*(line0->getAngle1()+line1->getAngle1());
 
@@ -257,8 +266,6 @@ bool RS_ActionDrawCircleTan3::getData(){
 
 			sol1.push_back(vp);
 		}
-		qDebug()<<"sol1.size()="<<sol1.size();
-
 
 		for(size_t j=0;j<sol1.size();j++){
 			circles[i]->getNearestPointOnEntity(sol1[j],false,&d);
