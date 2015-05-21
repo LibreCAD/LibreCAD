@@ -107,14 +107,14 @@ public:
 	virtual bool isEmpty() const{
         return count()==0;
 	}
-    virtual unsigned int count() const;
-	virtual unsigned int countDeep() const;
+	virtual unsigned count() const;
+	virtual unsigned countDeep() const;
 	//virtual unsigned long int countLayerEntities(RS_Layer* layer);
 	/** \brief countSelected number of selected
 	* @param deep count sub-containers, if true
 	* @param types if is not empty, only counts by types listed
 	*/
-	virtual unsigned int countSelected(bool deep=true, std::set<RS2::EntityType> const& types = std::set<RS2::EntityType>());
+	virtual unsigned countSelected(bool deep=true, std::set<RS2::EntityType> const& types = std::set<RS2::EntityType>());
     virtual double totalSelectedLength();
 
     /**

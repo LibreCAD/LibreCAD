@@ -260,12 +260,25 @@ bool RS_Entity::isArc() const
 	switch (rtti()) {
 	case RS2::EntityArc:
 	case RS2::EntityCircle:
+		//ellipse implements its own test
 	case RS2::EntityEllipse:
 		return true;
 	default:
 		return false;
 	}
 }
+
+ bool RS_Entity::isArcCircleLine() const
+ {
+	 switch (rtti()) {
+	 case RS2::EntityArc:
+	 case RS2::EntityCircle:
+	 case RS2::EntityLine:
+		 return true;
+	 default:
+		 return false;
+	 }
+ }
 
 /** whether the entity's bounding box intersects with visible portion of graphic view */
 bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const

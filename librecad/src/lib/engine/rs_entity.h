@@ -548,11 +548,17 @@ m0 x + m1 y + m2 =0
      * currently, trimmable types are: RS_Line, RS_Circle, RS_Arc, RS_Ellipse
      */
     bool trimmable() const;
+
 	/**
 	 * @brief isArc is the entity of type Arc, Circle, or Ellipse
 	 * @return true for Arc, Circle, or Ellipse
 	 */
-	bool isArc() const;
+	virtual bool isArc() const;
+	/**
+	 * @brief isArcLine determine the entitiy is either Arc, Circle, or Line
+	 * @return true if entity is Arc, Circle, or Line
+	 */
+	virtual bool isArcCircleLine() const;
 
 protected:
 	//! Entity's parent entity or nullptr is this entity has no parent.

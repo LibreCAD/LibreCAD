@@ -213,13 +213,11 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
 {
 //    DEBUG_HEADER();
 
-    if(circle0->rtti() != RS2::EntityArc &&
-            circle0->rtti() != RS2::EntityCircle&&
-            circle0->rtti() != RS2::EntityLine) return;
-    if(circle1->rtti() != RS2::EntityArc &&
-            circle1->rtti() != RS2::EntityCircle&&
-            circle1->rtti() != RS2::EntityLine) return;
-    if(circle0->rtti() == RS2::EntityLine)
+	if(!( circle0->isArcCircleLine() && circle1->isArcCircleLine())) {
+		return;
+	}
+
+	if(circle1->rtti() != RS2::EntityLine)
         std::swap(circle0, circle1);
     if(circle0->rtti() == RS2::EntityLine) {
         //two lines
