@@ -173,20 +173,20 @@ RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend
  *
  * @return None
  */
-void RS_Polyline::appendVertexs(const QList< QPair<RS_Vector*, double> > vl) {
+void RS_Polyline::appendVertexs(const std::vector< std::pair<RS_Vector, double> >& vl) {
 	RS_Entity* entity=nullptr;
     //static double nextBulge = 0.0;
-    if (vl.isEmpty()) return;
-    int idx = 0;
+	if (!vl.size()) return;
+	size_t idx = 0;
     // very first vertex:
     if (!data.startpoint.valid) {
-        data.startpoint = data.endpoint = *(vl.at(idx).first);
+		data.startpoint = data.endpoint = vl.at(idx).first;
         nextBulge = vl.at(idx++).second;
     }
 
     // consequent vertices:
     for (; idx< vl.size();idx++){
-        entity = createVertex(*(vl.at(idx).first), nextBulge, false);
+		entity = createVertex(vl.at(idx).first, nextBulge, false);
         data.endpoint = entity->getEndpoint();
         RS_EntityContainer::addEntity(entity);
         nextBulge = vl.at(idx).second;

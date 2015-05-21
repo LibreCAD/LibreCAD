@@ -576,10 +576,12 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
         //extend line on a construction layer to fill the whole view
         RS_Vector lb(0,0);
         RS_Vector rt(view->getWidth(),view->getHeight());
-        QList<RS_Vector> rect;
-        rect<<lb<<RS_Vector(rt.x,lb.y);
-        rect<<rt<<RS_Vector(lb.x,rt.y);
-        rect<<lb;
+		std::vector<RS_Vector> rect;
+		rect.push_back(lb);
+		rect.push_back({rt.x,lb.y});
+		rect.push_back(rt);
+		rect.push_back({lb.x,rt.y});
+		rect.push_back(lb);
         RS_VectorSolutions sol;
         RS_Line dLine(pStart,pEnd);
         for(int i=0;i<4;i++){

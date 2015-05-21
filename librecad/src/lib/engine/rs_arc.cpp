@@ -527,19 +527,19 @@ RS_Vector RS_Arc::getNearestOrthTan(const RS_Vector& coord,
         double angle=normal.getAngle1();
         RS_Vector vp;
         vp.setPolar(getRadius(),angle);
-        QList<RS_Vector> sol;
+		std::vector<RS_Vector> sol;
         for(int i=0;i <= 1;i++){
                 if(!onEntity ||
                    RS_Math::isAngleBetween(angle,getAngle1(),getAngle2(),isReversed())) {
                 if(i){
-                sol.append(- vp);
+				sol.push_back(- vp);
                 }else {
-                sol.append(vp);
+				sol.push_back(vp);
                 }
         }
                 angle=RS_Math::correctAngle(angle+M_PI);
         }
-        switch(sol.count()) {
+		switch(sol.size()) {
                 case 0:
                         return RS_Vector(false);
                 case 2:
@@ -687,11 +687,11 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
         if( ! trimSol.hasValid() ) return (RS_Vector(false));
         if( trimSol.getNumber() == 1 ) return (trimSol.get(0));
         double am=getArcAngle(trimCoord);
-        QList<double> ias;
+		std::vector<double> ias;
         double ia(0.),ia2(0.);
         RS_Vector is,is2;
 		for(size_t ii=0; ii<trimSol.getNumber(); ++ii) { //find closest according ellipse angle
-            ias.append(getArcAngle(trimSol.get(ii)));
+			ias.push_back(getArcAngle(trimSol.get(ii)));
             if( !ii ||  fabs( remainder( ias[ii] - am, 2*M_PI)) < fabs( remainder( ia -am, 2*M_PI)) ) {
                 ia = ias[ii];
                 is = trimSol.get(ii);

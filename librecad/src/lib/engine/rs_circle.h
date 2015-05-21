@@ -29,7 +29,6 @@
 #ifndef RS_CIRCLE_H
 #define RS_CIRCLE_H
 
-#include <QList>
 #include <vector>
 #include "rs_atomicentity.h"
 
@@ -127,7 +126,7 @@ public:
 | Cx - Ci|^2=(Rx+Ri)^2
 with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are the Center and radius of the i-th existing circle
 **/
-    static QList<RS_Circle> solveAppolloniusSingle(const QList<RS_Circle>& circles);
+	static std::vector<RS_Circle> solveAppolloniusSingle(const std::vector<RS_Circle>& circles);
 
 	std::vector<RS_Circle> createTan3(const std::vector<RS_AtomicEntity*>& circles);
 	bool testTan3(const std::vector<RS_AtomicEntity*>& circles);
