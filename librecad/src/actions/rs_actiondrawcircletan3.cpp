@@ -151,7 +151,6 @@ bool RS_ActionDrawCircleTan3::getData(){
 		//one or more lines
 
 		LC_Quadratic lc0(circles[i],circles[i1],false);
-		LC_Quadratic lc01(circles[i],circles[i1],true);
 		LC_Quadratic lc1;
 		RS_VectorSolutions sol;
 		//detect degenerate case two circles with the same radius
