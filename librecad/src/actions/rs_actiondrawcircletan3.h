@@ -74,11 +74,6 @@ public:
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 
-//    virtual void showOptions();
-//    virtual void hideOptions();
-
-
-
 //protected:
     private:
 	std::vector<double> verifyCenter(const RS_Vector& center) const;

@@ -163,20 +163,9 @@ bool RS_ActionDrawCircleTan3::getData(){
 		case 1:
 			//1 line, two circles
 		{
-			RS_AtomicEntity* c1=circles[i1];
-			RS_AtomicEntity* c2=circles[i2];
-			if(fabs(fabs(c1->getRadius())-fabs(c2->getRadius()))<RS_TOLERANCE){
-				//degenerate
-				const RS_Vector p0=(c1->getCenter()+c2->getCenter())*0.5;
-				const RS_Vector p1=p0 + (c1->getCenter() - p0).rotate(0.5*M_PI);
-				lc1=RS_Line(NULL, RS_LineData(p0,p1 )).getQuadratic();
-				sol=LC_Quadratic::getIntersection(lc0,lc1);
-
-				sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
-				lc1=RS_Line(NULL, RS_LineData(c1->getCenter(),c1->getCenter())).getQuadratic();
-				sol.appendTo(LC_Quadratic::getIntersection(lc0,lc1));
-				sol.appendTo(LC_Quadratic::getIntersection(lc01,lc1));
-			}
+			lc1=LC_Quadratic(circles[i],circles[i1], true);
+			LC_Quadratic lc2=LC_Quadratic(circles[i],circles[i2], true);
+			sol.appendTo(LC_Quadratic::getIntersection(lc1,lc2));
 		}
 			break;
 		case 2:
@@ -185,8 +174,8 @@ bool RS_ActionDrawCircleTan3::getData(){
 			if(circles[i2]->rtti()==RS2::EntityLine){
 				std::swap(i1, i2);
 			}
-			lc1=LC_Quadratic(circles[i],circles[i1], true);
-			LC_Quadratic lc2=LC_Quadratic(circles[i],circles[i2], true);
+			lc1=LC_Quadratic(circles[i2],circles[i], true);
+			LC_Quadratic lc2=LC_Quadratic(circles[i2],circles[i1], true);
 			sol.appendTo(LC_Quadratic::getIntersection(lc1,lc2));
 		}
 			break;
@@ -263,17 +252,17 @@ bool RS_ActionDrawCircleTan3::getData(){
 		for(const RS_Vector& vp: sol){
 			if(vp.magnitude()>RS_MAXDOUBLE) continue;
 			if(sol1.size() && sol1.getClosestDistance(vp)<RS_TOLERANCE) continue;
-
 			sol1.push_back(vp);
 		}
 
-		for(size_t j=0;j<sol1.size();j++){
-			circles[i]->getNearestPointOnEntity(sol1[j],false,&d);
-			std::shared_ptr<RS_CircleData> data(new RS_CircleData(sol1[j],d));
+		for(auto const& v: sol1){
+			circles[i]->getNearestPointOnEntity(v,false,&d);
+			std::shared_ptr<RS_CircleData> data(new RS_CircleData(v,d));
 			if(circles[(i+1)%3]->isTangent(*data)==false) continue;
 			if(circles[(i+2)%3]->isTangent(*data)==false) continue;
 			candidates.push_back(data);
 		}
+
 	}else{
 		RS_Circle c(NULL,*cData);
 		auto&& solutions=c.createTan3(circles);
@@ -323,7 +312,7 @@ RS_Entity* RS_ActionDrawCircleTan3::catchCircle(QMouseEvent* e) {
 	for(int i=0;i<getStatus();++i) {
 		if(en->getId() == circles[i]->getId()) return ret; //do not pull in the same line again
 	}
-	if(en->getParent() != NULL) {
+	if(en->getParent()) {
 		if ( en->getParent()->ignoredOnModification()){
 			return NULL;
 		}
@@ -444,34 +433,10 @@ void RS_ActionDrawCircleTan3::commandEvent(RS_CommandEvent* e) {
 }
 */
 
-
-//void RS_ActionDrawCircleTan3::showOptions() {
-//    RS_DEBUG->print("RS_ActionDrawCircleTan3::showOptions");
-//    if(RS_DIALOGFACTORY != NULL){
-//        RS_ActionInterface::showOptions();
-
-//        RS_DIALOGFACTORY->requestOptions(this, true);
-//    }
-//    RS_DEBUG->print("RS_ActionDrawCircleTan3::showOptions: OK");
-//}
-
-
-
-//void RS_ActionDrawCircleTan3::hideOptions() {
-//    if(RS_DIALOGFACTORY != NULL){
-//        RS_ActionInterface::hideOptions();
-
-//        RS_DIALOGFACTORY->requestOptions(this, false);
-//    }
-//}
-
-
 QStringList RS_ActionDrawCircleTan3::getAvailableCommands() {
 	QStringList cmd;
 	return cmd;
 }
-
-
 
 void RS_ActionDrawCircleTan3::updateMouseButtonHints() {
 	if (RS_DIALOGFACTORY) {
