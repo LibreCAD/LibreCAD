@@ -301,13 +301,4 @@ double RS_ActionDrawArcTangential::getRadius() const {
 	return data->radius;
 }
 
-//void RS_ActionDrawArcTangential::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
-
 // EOF

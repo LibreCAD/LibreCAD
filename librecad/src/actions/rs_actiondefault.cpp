@@ -371,24 +371,4 @@ void RS_ActionDefault::updateMouseCursor() {
     }
 }
 
-
-
-//void RS_ActionDefault::updateToolBar() {
-//    //not needed any more
-//    return;
-//    //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-//        switch (getStatus()) {
-//        case Neutral:
-//                // would switch back to main in edit / measure / .. modes
-//                //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-//                break;
-//        case Moving:
-//        case MovingRef:
-//                RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-//                break;
-//        default:
-//                break;
-//        }
-//}
-
 // EOF

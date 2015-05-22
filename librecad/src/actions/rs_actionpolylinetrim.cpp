@@ -206,15 +206,4 @@ void RS_ActionPolylineTrim::updateMouseCursor() {
         graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-
-//void RS_ActionPolylineTrim::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
-
 // EOF

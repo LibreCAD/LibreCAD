@@ -248,16 +248,5 @@ void RS_ActionDrawCircle::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-
-//void RS_ActionDrawCircle::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
-
 // EOF
 

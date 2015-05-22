@@ -73,7 +73,6 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 protected:
     /** Center of ellipse */

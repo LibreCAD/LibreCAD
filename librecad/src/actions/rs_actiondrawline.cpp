@@ -349,15 +349,6 @@ void RS_ActionDrawLine::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-//void RS_ActionDrawLine::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
 void RS_ActionDrawLine::close() {
 	if (historyIndex>2 && start.valid && (data->startpoint - start).squared() > RS_TOLERANCE2 ) {
 		data->endpoint = start;

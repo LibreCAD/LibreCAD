@@ -173,15 +173,4 @@ void RS_ActionInfoDist2::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-
-//void RS_ActionInfoDist2::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
-
 // EOF

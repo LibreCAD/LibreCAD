@@ -102,14 +102,4 @@ void RS_ActionModifyAttributes::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::DelCursor);
 }
 
-
-
-//void RS_ActionModifyAttributes::updateToolBar() {
-////    if (isFinished()) {
-////        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-////    }
-////    return;
-//}
-
-
 // EOF

@@ -436,16 +436,5 @@ void RS_ActionDrawArc::setReversed(bool r) const{
 	data->reversed = r;
 }
 
-//void RS_ActionDrawArc::updateToolBar() {
-//    if (RS_DIALOGFACTORY!=nullptr) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }else{
-//            RS_DIALOGFACTORY->showCadToolBar(rtti());
-//        }
-//    }
-//}
-
-
 // EOF
 

@@ -222,17 +222,4 @@ void RS_ActionModifyStretch::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-
-//void RS_ActionModifyStretch::updateToolBar() {
-//    //not needed any more with new snap
-//    return;
-//    if (!isFinished()) {
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-//    } else {
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//    }
-//}
-
-
 // EOF

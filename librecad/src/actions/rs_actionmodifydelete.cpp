@@ -88,11 +88,4 @@ void RS_ActionModifyDelete::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::DelCursor);
 }
 
-
-
-//void RS_ActionModifyDelete::updateToolBar() {
-//    //not needed any more with new snap
-//}
-
-
 // EOF

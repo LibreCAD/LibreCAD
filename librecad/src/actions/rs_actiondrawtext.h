@@ -79,7 +79,6 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
         void setText(const QString& t);
 		const QString& getText() const;

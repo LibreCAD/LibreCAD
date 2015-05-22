@@ -57,7 +57,6 @@ public:
 
     virtual void init(int status=0);
     virtual void trigger();
-//    virtual void updateToolBar();
 };
 
 #endif

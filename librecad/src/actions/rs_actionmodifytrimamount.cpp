@@ -204,13 +204,4 @@ void RS_ActionModifyTrimAmount::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-
-//void RS_ActionModifyTrimAmount::updateToolBar() {
-//    //not needed any more with new snap
-//    return;
-//    RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//}
-
-
 // EOF

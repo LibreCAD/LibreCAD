@@ -66,7 +66,6 @@ public:
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 private:
     RS_Entity* delEntity;

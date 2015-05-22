@@ -166,15 +166,4 @@ void RS_ActionModifyMove::updateMouseCursor() {
         }
 }
 
-
-
-//void RS_ActionModifyMove::updateToolBar() {
-//    if( isFinished()) {
-//        if(RS_DIALOGFACTORY != NULL) {
-//            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//        }
-//    }
-//}
-
-
 // EOF

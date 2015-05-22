@@ -362,16 +362,4 @@ void RS_ActionDrawLineRelAngle::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-
-//void RS_ActionDrawLineRelAngle::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
-
-
 // EOF

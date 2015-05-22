@@ -268,6 +268,21 @@ QStringList RS_ActionModifyRound::getAvailableCommands() {
 }
 
 
+void RS_ActionModifyRound::setRadius(double r) {
+	data.radius = r;
+}
+
+double RS_ActionModifyRound::getRadius() const{
+	return data.radius;
+}
+
+void RS_ActionModifyRound::setTrim(bool t) {
+	data.trim = t;
+}
+
+bool RS_ActionModifyRound::isTrimOn() const{
+	return data.trim;
+}
 
 void RS_ActionModifyRound::showOptions() {
     RS_ActionInterface::showOptions();
@@ -320,16 +335,5 @@ void RS_ActionModifyRound::updateMouseButtonHints() {
 void RS_ActionModifyRound::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionModifyRound::updateToolBar() {
-//    //not needed any more with new snap
-//    return;
-//    if (RS_DIALOGFACTORY) {
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//    }
-//}
-
 
 // EOF

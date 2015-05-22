@@ -74,23 +74,14 @@ public:
 	
  virtual void updateMouseButtonHints();
  virtual void updateMouseCursor();
-// virtual void updateToolBar();
 	
-	void setRadius(double r) {
-		data.radius = r;
-	}
+	void setRadius(double r);
 
-	double getRadius() {
-		return data.radius;
-	}
+	double getRadius() const;
 
-	void setTrim(bool t) {
-		data.trim = t;
-	}
+	void setTrim(bool t);
 
-	bool isTrimOn() {
-		return data.trim;
-	}
+	bool isTrimOn() const;
 
 private:
 	//RS_Vector coord;

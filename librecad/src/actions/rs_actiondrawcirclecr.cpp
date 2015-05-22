@@ -252,15 +252,5 @@ void RS_ActionDrawCircleCR::updateMouseCursor() {
 double RS_ActionDrawCircleCR::getRadius() const{
 	return data->radius;
 }
-
-//void RS_ActionDrawCircleCR::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
-
 // EOF
 

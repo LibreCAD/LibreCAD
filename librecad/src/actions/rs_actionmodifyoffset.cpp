@@ -147,16 +147,5 @@ void RS_ActionModifyOffset::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-
-//void RS_ActionModifyOffset::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//        }
-//    }
-//}
-
-
 // EOF
 

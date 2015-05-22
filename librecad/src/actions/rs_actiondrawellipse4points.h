@@ -69,7 +69,6 @@ public:
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 protected:
     // 4 points on ellipse

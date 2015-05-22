@@ -254,18 +254,5 @@ void RS_ActionDrawArc3P::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-
-//void RS_ActionDrawArc3P::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }else{
-//            RS_DIALOGFACTORY->showCadToolBar(rtti());
-//        }
-//    }
-//}
-
-
 // EOF
 

@@ -69,7 +69,6 @@ public:
     virtual void showOptions();
 
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 	int getNumber() const{
 		return number;

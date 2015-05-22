@@ -166,21 +166,4 @@ void RS_ActionModifyCut::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-
-//void RS_ActionModifyCut::updateToolBar() {
-//    //not needed any more with new snap
-//    return;
-//    switch (getStatus()) {
-//    case SetCutCoord:
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-//        break;
-//    case ChooseCutEntity:
-//    default:
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//        break;
-//    }
-//}
-
-
 // EOF

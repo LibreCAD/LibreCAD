@@ -178,21 +178,4 @@ void RS_ActionModifyRotate2::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-
-//void RS_ActionModifyRotate2::updateToolBar() {
-//    //not needed any more with new snap
-//    return;
-//    switch (getStatus()) {
-//    case SetReferencePoint1:
-//    case SetReferencePoint2:
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-//        break;
-//    default:
-//        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//        break;
-//    }
-//}
-
-
 // EOF

@@ -471,12 +471,4 @@ double RS_ActionDrawCircleTan1_2P::getRadius() const{
 	return cData->radius;
 }
 
-//void RS_ActionDrawCircleTan1_2P::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
 // EOF

@@ -164,19 +164,8 @@ void RS_ActionBlocksCreate::updateMouseButtonHints() {
 }
 
 
-
 void RS_ActionBlocksCreate::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionBlocksCreate::updateToolBar() {
-//    if (isFinished()) {
-//        RS_DIALOGFACTORY->requestPreviousToolBar();
-//        RS_DIALOGFACTORY->requestPreviousToolBar();
-//    }
-//}
-
 
 // EOF

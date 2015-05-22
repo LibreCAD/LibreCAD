@@ -53,7 +53,6 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-//    virtual void updateToolBar();
 
 private:
     RS_Vector pt;

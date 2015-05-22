@@ -70,13 +70,4 @@ void RS_ActionInfoTotalLength::trigger() {
     finish(false);
 }
 
-
-
-//void RS_ActionInfoTotalLength::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
 // EOF

@@ -284,13 +284,4 @@ void RS_ActionModifyBevel::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-
-
-//void RS_ActionModifyBevel::updateToolBar() {
-//    //not needed any more with new snap
-//    return;
-//    RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
-//}
-
-
 // EOF

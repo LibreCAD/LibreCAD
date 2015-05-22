@@ -290,30 +290,6 @@ void RS_ActionDrawMText::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-//void RS_ActionDrawMText::updateToolBar() {
-//    if(isFinished()) {
-//        if (RS_DIALOGFACTORY) {
-//            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-//        }
-//    }
-//    /*
-//    //not needed any more with new snap
-//    return;
-//    if (RS_DIALOGFACTORY) {
-//        switch (getStatus()) {
-//        case SetPos:
-//            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarSnap);
-//            break;
-//        default:
-//            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-//            break;
-//        }
-//    }
-//    */
-//}
-
-
-
 void RS_ActionDrawMText::setText(const QString& t) {
 	data->text = t;
     textChanged = true;
