@@ -48,9 +48,7 @@ RS_ActionDrawCircle3P::~RS_ActionDrawCircle3P() {}
 
 QAction* RS_ActionDrawCircle3P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
         // "Circle: 3 Points"
-    QAction* action = new QAction(tr("3 Points"), NULL);
-        action->setIcon(QIcon(":/extui/circles3p.png"));
-    //action->zetStatusTip(tr("Draw circles with 3 points"));
+	QAction* action = new QAction(QIcon(":/extui/circles3p.png"), tr("3 Points"), NULL);
     return action;
 }
 
@@ -230,17 +228,6 @@ void RS_ActionDrawCircle3P::updateMouseButtonHints() {
 void RS_ActionDrawCircle3P::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
-
-
-//void RS_ActionDrawCircle3P::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
-
 
 // EOF
 

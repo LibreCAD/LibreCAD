@@ -48,7 +48,7 @@ RS_ActionDrawCircleTan2::~RS_ActionDrawCircleTan2(){}
 QAction* RS_ActionDrawCircleTan2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
 
-    action = new QAction(tr("Tangential 2 Circles, Radius",  "circle tangential to two give circles and with radius"), NULL);
+	action = new QAction(tr("Tangential 2 Circles, Radius",  "circle tangential to two give circles and with radius"), nullptr);
     action->setIcon(QIcon(":/extui/circletan2.png"));
     return action;
 }
@@ -78,8 +78,6 @@ void RS_ActionDrawCircleTan2::finish(bool updateTB){
 
 
 void RS_ActionDrawCircleTan2::trigger() {
-    //    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
-    //    std::cout<<"begin"<<std::endl;
 
     RS_PreviewActionInterface::trigger();
 
@@ -158,14 +156,14 @@ bool RS_ActionDrawCircleTan2::preparePreview(){
 
 RS_Entity* RS_ActionDrawCircleTan2::catchCircle(QMouseEvent* e) {
     RS_Entity*  en = catchEntity(e,enTypeList, RS2::ResolveAll);
-    if(en == NULL) return NULL;
-    if(en->isVisible()==false) return NULL;
+	if(en == nullptr) return nullptr;
+	if(en->isVisible()==false) return nullptr;
     for(int i=0;i<getStatus();i++) {
-        if(en->getId() == circles[i]->getId()) return NULL; //do not pull in the same line again
+		if(en->getId() == circles[i]->getId()) return nullptr; //do not pull in the same line again
     }
-    if(en->getParent() != NULL) {
+	if(en->getParent()) {
         if ( en->getParent()->ignoredOnModification()){
-            return NULL;
+			return nullptr;
         }
     }
     return en;
@@ -179,7 +177,7 @@ void RS_ActionDrawCircleTan2::mouseReleaseEvent(QMouseEvent* e) {
         case SetCircle1:
         case SetCircle2: {
             RS_Entity*  en = catchCircle(e);
-            if (en==NULL) return;
+			if (en==nullptr) return;
             circles.resize(getStatus());
             circles.push_back(static_cast<RS_AtomicEntity*>(en));
             if(getStatus()==SetCircle1 || getCenters()){
@@ -284,7 +282,7 @@ void RS_ActionDrawCircleTan2::commandEvent(RS_CommandEvent* e) {
 
 void RS_ActionDrawCircleTan2::showOptions() {
     RS_DEBUG->print("RS_ActionDrawCircleTan2::showOptions");
-    if(RS_DIALOGFACTORY != NULL){
+	if(RS_DIALOGFACTORY){
         RS_ActionInterface::showOptions();
 
         RS_DIALOGFACTORY->requestOptions(this, true);
@@ -295,7 +293,7 @@ void RS_ActionDrawCircleTan2::showOptions() {
 
 
 void RS_ActionDrawCircleTan2::hideOptions() {
-    if(RS_DIALOGFACTORY != NULL){
+	if(RS_DIALOGFACTORY){
         RS_ActionInterface::hideOptions();
 
         RS_DIALOGFACTORY->requestOptions(this, false);
@@ -343,14 +341,5 @@ void RS_ActionDrawCircleTan2::updateMouseCursor() {
 double RS_ActionDrawCircleTan2::getRadius() const{
 	return cData->radius;
 }
-
-
-//void RS_ActionDrawCircleTan2::updateToolBar() {
-//    if (RS_DIALOGFACTORY) {
-//        if (isFinished()) {
-//            RS_DIALOGFACTORY->resetToolBar();
-//        }
-//    }
-//}
 
 // EOF
