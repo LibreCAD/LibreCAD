@@ -271,9 +271,9 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
     }
     //two circles
 
-    double f=(circle0->getCenter()-circle1->getCenter()).magnitude()*0.5;
-    double a=fabs(circle0->getRadius()+circle1->getRadius())*0.5;
-    double c=fabs(circle0->getRadius()-circle1->getRadius())*0.5;
+	double const f=(circle0->getCenter()-circle1->getCenter()).magnitude()*0.5;
+	double const a=fabs(circle0->getRadius()+circle1->getRadius())*0.5;
+	double const c=fabs(circle0->getRadius()-circle1->getRadius())*0.5;
 //    DEBUG_HEADER();
 //    qDebug()<<"circle center to center distance="<<2.*f<<"\ttotal radius="<<2.*a;
     if(a<RS_TOLERANCE) return;
@@ -297,11 +297,32 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
     }
 
 //       DEBUG_HEADER();
+	if(c<RS_TOLERANCE){
+		//two circles are the same radius
+		//degenerate hypberbola: straight lines
+		//equation xy = 0
+		m_bValid=true;
+		m_bIsQuadratic=true;
+		m_mQuad(0,0)=0.;
+		m_mQuad(0,1)=0.5;
+		m_mQuad(1,0)=0.5;
+		m_mQuad(1,1)=0.;
+		m_vLinear(0)=0.;
+		m_vLinear(1)=0.;
+		m_dConst=0.;
+		rotate(angle);
+		move(center);
+		return;
+	}
 //hyperbola
+	// equation: x^2/c^2 - y^2/(f^2 -c ^2) = 1
+	// f: from hyperbola center to one circle center
+	// c: half of difference of two circles
+
     double b2= f*f - c*c;
     m_bValid=true;
     m_bIsQuadratic=true;
-    m_mQuad(0,0)=1./(a*a);
+	m_mQuad(0,0)=1./(c*c);
     m_mQuad(0,1)=0.;
     m_mQuad(1,0)=0.;
     m_mQuad(1,1)=-1./b2;

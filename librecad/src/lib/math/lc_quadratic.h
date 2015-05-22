@@ -44,10 +44,10 @@ public:
     explicit LC_Quadratic();
     LC_Quadratic(const LC_Quadratic& lc0);
     LC_Quadratic& operator = (const LC_Quadratic& lc0);
-    /** construct a ellipse or hyperbola as the path of center of tangent circles
+	/** \brief construct a ellipse or hyperbola as the path of center of tangent circles
       passing the point */
     LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point);
-    /** construct a ellipse or hyperbola as the path of center of common tangent circles
+	/** \brief construct a ellipse or hyperbola as the path of center of common tangent circles
       of this two given entities,
       mirror option allows to specify the mirror quadratic around the line
 */
