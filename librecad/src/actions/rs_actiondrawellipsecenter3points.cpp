@@ -2,7 +2,7 @@
 **
  * Draw ellipse by foci and a point on ellipse
 
-Copyright (C) 2011 Dongxu Li (dongxuli2011@gmail.com)
+Copyright (C) 2011-2015 Dongxu Li (dongxuli2011@gmail.com)
 Copyright (C) 2011 R. van Twisk (librecad@rvt.dds.nl)
 
 This program is free software; you can redistribute it and/or
@@ -51,8 +51,7 @@ RS_ActionDrawEllipseCenter3Points::~RS_ActionDrawEllipseCenter3Points(){}
 QAction* RS_ActionDrawEllipseCenter3Points::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
 
-    action = new QAction(tr("Ellipse Center and &3 Points"), NULL);
-    action->setIcon(QIcon(":/extui/ellipsecenter3points.png"));
+	action = new QAction(QIcon(":/extui/ellipsecenter3points.png"), tr("Ellipse Center and &3 Points"), nullptr);
     return action;
 }
 
@@ -175,7 +174,7 @@ void RS_ActionDrawEllipseCenter3Points::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawEllipseCenter3Points::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (e==nullptr) {
         return;
     }
     RS_Vector mouse = e->getCoordinate();

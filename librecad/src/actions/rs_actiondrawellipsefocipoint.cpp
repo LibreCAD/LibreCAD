@@ -185,75 +185,37 @@ void RS_ActionDrawEllipseFociPoint::coordinateEvent(RS_CoordinateEvent* e) {
     }
 }
 
-//fixme, support command line
-
 void RS_ActionDrawEllipseFociPoint::commandEvent(RS_CommandEvent* e) {
-    QString cmd = e->getCommand().toLower();
+	QString cmd = e->getCommand().toLower();
 
-    if (checkCommand("help", cmd)) {
-        if (RS_DIALOGFACTORY) {
-            RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                             + getAvailableCommands().join(", "));
-        }
-        return;
-    }
+	if (checkCommand("help", cmd)) {
+		if (RS_DIALOGFACTORY) {
+			RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+											 + getAvailableCommands().join(": ")+
+											 tr("specify a point on ellipse, or total distance to foci")
+											 );
+		}
+		e->accept();
+		return;
+	}
 
-    switch (getStatus()) {
-    //    case SetFocus1: {
-    //            bool ok;
-    //            double m = RS_Math::eval(c, &ok);
-    //            if (ok) {
-    //                ratio = m / major.magnitude();
-    //                if (!isArc) {
-    //                    trigger();
-    //                } else {
-    //                    setStatus(SetAngle1);
-    //                }
-    //            } else {
-    //                if (RS_DIALOGFACTORY) {
-    //                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-    //                }
-    //            }
-    //        }
-    //        break;
+	if(getStatus()==SetPoint){
+		bool ok;
+		double a = RS_Math::eval(cmd, &ok);
+		if (ok) {
+			d=0.5*fabs(a);
+			if (d > c + RS_TOLERANCE) {
+				trigger();
+			}else{
+				RS_DIALOGFACTORY->commandMessage(tr("Total distance %1 is smaller than distance between foci").arg(fabs(a)));
+			}
+		} else {
+			if (RS_DIALOGFACTORY) {
+				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+			}
+		}
 
-    //    case SetFocus2: {
-    //            bool ok;
-    //            double a = RS_Math::eval(c, &ok);
-    //            if (ok) {
-    //                angle1 = RS_Math::deg2rad(a);
-    //                setStatus(SetAngle2);
-    //            } else {
-    //                if (RS_DIALOGFACTORY) {
-    //                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-    //                }
-    //            }
-    //        }
-    //        break;
-
-    case SetPoint: {
-        bool ok;
-        double a = RS_Math::eval(cmd, &ok);
-        if (ok) {
-            e->accept();
-//            std::cout<<"e->isAccepted()="<<e->isAccepted()<<std::endl;
-            d=0.5*fabs(a);
-            if (d > c + RS_TOLERANCE) {
-                trigger();
-            }else{
-                RS_DIALOGFACTORY->commandMessage(QString::number(fabs(a))+" is smaller than distance between foci");
-            }
-        } else {
-            if (RS_DIALOGFACTORY) {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-            }
-        }
-    }
-        break;
-
-    default:
-        break;
-    }
+	}
 }
 
 

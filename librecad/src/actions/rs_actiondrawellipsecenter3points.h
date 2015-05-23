@@ -2,7 +2,7 @@
 **
  * Draw ellipse by foci and a point on ellipse
 
-Copyright (C) 2011 Dongxu Li (dongxuli2011@gmail.com)
+Copyright (C) 2011-2015 Dongxu Li (dongxuli2011@gmail.com)
 Copyright (C) 2011 R. van Twisk (librecad@rvt.dds.nl)
 
 This program is free software; you can redistribute it and/or
