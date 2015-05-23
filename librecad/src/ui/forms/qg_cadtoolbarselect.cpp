@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 Dongxu Li (dongxuli2011 at gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -58,10 +59,10 @@ void QG_CadToolBarSelect::setSelectAction(RS_ActionInterface* selectAction) {
 void QG_CadToolBarSelect::setNextAction(int nextAction) {
     this->nextAction = nextAction;
     if (nextAction==-1) {
-		DEBUG_HEADER();
+//		DEBUG_HEADER();
 		m_pButtonForward->setVisible(false);
     } else {
-		DEBUG_HEADER();
+//		DEBUG_HEADER();
 		m_pButtonForward->setVisible(true);
     }
 }
