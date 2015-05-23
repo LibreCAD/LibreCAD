@@ -42,8 +42,7 @@ RS_ActionDrawEllipseFociPoint::RS_ActionDrawEllipseFociPoint(
           focus1(false),
           focus2(false),
           point(false)
-{//nothing
-
+{
 }
 
 
@@ -51,8 +50,7 @@ RS_ActionDrawEllipseFociPoint::RS_ActionDrawEllipseFociPoint(
 QAction* RS_ActionDrawEllipseFociPoint::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;
 
-    action = new QAction(tr("Ellipse &Foci Point"), NULL);
-    action->setIcon(QIcon(":/extui/ellipsefocipoint.png"));
+	action = new QAction(QIcon(":/extui/ellipsefocipoint.png"), tr("Ellipse &Foci Point"), NULL);
     return action;
 }
 

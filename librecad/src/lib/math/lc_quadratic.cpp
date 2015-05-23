@@ -46,7 +46,9 @@
 LC_Quadratic::LC_Quadratic():
     m_mQuad(2,2),
     m_vLinear(2),
-    m_bValid(false){}
+	m_bValid(false)
+{}
+
 LC_Quadratic::LC_Quadratic(const LC_Quadratic& lc0):
   m_bIsQuadratic(lc0.isQuadratic())
   ,m_bValid(lc0.isValid())
@@ -200,6 +202,51 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point
         return;
     }
 
+}
+
+
+bool LC_Quadratic::isQuadratic() const {
+	return m_bIsQuadratic;
+}
+
+bool LC_Quadratic::isValid() const
+{
+	return m_bValid;
+}
+
+void LC_Quadratic::setValid(bool value)
+{
+	m_bValid=value;
+}
+
+boost::numeric::ublas::vector<double>& LC_Quadratic::getLinear()
+{
+	return m_vLinear;
+}
+
+const boost::numeric::ublas::vector<double>& LC_Quadratic::getLinear() const
+{
+	return m_vLinear;
+}
+
+boost::numeric::ublas::matrix<double>& LC_Quadratic::getQuad()
+{
+	return m_mQuad;
+}
+
+const boost::numeric::ublas::matrix<double>& LC_Quadratic::getQuad() const
+{
+	return m_mQuad;
+}
+
+double const& LC_Quadratic::constTerm()const
+{
+	return m_dConst;
+}
+
+double& LC_Quadratic::constTerm()
+{
+	return m_dConst;
 }
 
 /** construct a ellipse or hyperbola as the path of center of common tangent circles
@@ -508,8 +555,8 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
     }
     auto&& sol= RS_Math::simultaneousQuadraticSolverFull(ce);
     bool valid= sol.size()>0;
-    for(size_t i=0; i<sol.size(); ++i){
-        if(sol.at(i).magnitude()>=RS_MAXDOUBLE){
+	for(auto & v: sol){
+		if(v.magnitude()>=RS_MAXDOUBLE){
             valid=false;
             break;
         }

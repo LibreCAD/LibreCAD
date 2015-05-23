@@ -179,7 +179,7 @@ LC_Quadratic LC_Hyperbola::getQuadratic() const
     ce[5]=-1.;
     LC_Quadratic ret(ce);
     if(ce[0]<RS_TOLERANCE2 || fabs(ce[2])<RS_TOLERANCE2) {
-        ret.m_bValid=false;
+		ret.setValid(false);
         return ret;
     }
     ret.rotate(data.majorP.angle());

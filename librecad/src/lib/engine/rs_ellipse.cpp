@@ -792,9 +792,9 @@ bool RS_Ellipse::createFromQuadratic(const LC_Quadratic& q){
 	//generate centered quadratic
 	LC_Quadratic qCentered=q;
 	qCentered.move(-eCenter);
-	if(qCentered.m_dConst>= -DBL_EPSILON) return false;
+	if(qCentered.constTerm()>= -DBL_EPSILON) return false;
 	const auto& mq2=qCentered.getQuad();
-	const double factor=-1./qCentered.m_dConst;
+	const double factor=-1./qCentered.constTerm();
 	//quadratic terms
 	if(!createFromQuadratic({mq2(0,0)*factor, 2.*mq2(0,1)*factor, mq2(1,1)*factor})) return false;
 

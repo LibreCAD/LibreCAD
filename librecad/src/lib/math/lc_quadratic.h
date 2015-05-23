@@ -65,37 +65,19 @@ public:
     LC_Quadratic move(const RS_Vector& v);
     LC_Quadratic rotate(const double& a);
     LC_Quadratic rotate(const RS_Vector& center, const double& a);
-    /** whether it's quadratic or linear
+	/** \brief whether it's quadratic or linear
       @return true, if quadratic;
       return false, if linear
  */
-    bool isQuadratic() const {
-        return m_bIsQuadratic;
-    }
-    bool isValid() const
-    {
-            return m_bValid;
-    }
-    void setValid(bool value)
-    {
-        m_bValid=value;
-    }
-    boost::numeric::ublas::vector<double>& getLinear()
-    {
-        return m_vLinear;
-    }
-     const boost::numeric::ublas::vector<double>& getLinear() const
-     {
-         return m_vLinear;
-     }
-     boost::numeric::ublas::matrix<double>& getQuad()
-     {
-         return m_mQuad;
-     }
-     const boost::numeric::ublas::matrix<double>& getQuad() const
-     {
-         return m_mQuad;
-     }
+	bool isQuadratic() const;
+	bool isValid() const;
+	void setValid(bool value);
+	boost::numeric::ublas::vector<double>& getLinear();
+	 const boost::numeric::ublas::vector<double>& getLinear() const;
+	 boost::numeric::ublas::matrix<double>& getQuad();
+	 const boost::numeric::ublas::matrix<double>& getQuad() const;
+	 double const& constTerm()const;
+	 double& constTerm();
 
     /** switch x,y coordinates */
     LC_Quadratic flipXY(void) const;
@@ -106,7 +88,7 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, const LC_Quadratic& l);
 
-//    private:
+private:
     // the equation form: {x, y}.m_mQuad.{{x},{y}} + m_vLinear.{{x},{y}}+m_dConst=0
     boost::numeric::ublas::matrix<double> m_mQuad;
     boost::numeric::ublas::vector<double> m_vLinear;
