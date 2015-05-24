@@ -112,19 +112,22 @@ QC_MDIWindow::~QC_MDIWindow() {
 			cadMdiArea->removeSubWindow(p);
 		}
 	}
+	if(!(graphicView && graphicView->isCleanUp())){
+		//do not clear layer/block lists, if application is being closed
 
-	if (document->getLayerList()) {
-        document->getLayerList()->removeListener(graphicView);
-    }
+		if (document->getLayerList()) {
+			document->getLayerList()->removeListener(graphicView);
+		}
 
-	if (document->getBlockList()) {
-        document->getBlockList()->removeListener(graphicView);
-    }
+		if (document->getBlockList()) {
+			document->getBlockList()->removeListener(graphicView);
+		}
 
-	if (owner==true && document) {
-        delete document;
-    }
-    document = NULL;
+		if (owner==true && document) {
+			delete document;
+		}
+		document = nullptr;
+	}
     cadMdiArea->activateNextSubWindow();
     QMdiSubWindow* subWindow=cadMdiArea->currentSubWindow();
     QC_ApplicationWindow::getAppWindow()->slotWindowActivated(subWindow);
