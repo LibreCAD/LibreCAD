@@ -46,12 +46,6 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
     showOptions();
 }
 
-
-
-RS_ActionPrintPreview::~RS_ActionPrintPreview() {
-}
-
-
 QAction* RS_ActionPrintPreview::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     // tr("Print Preview")
     QAction* action = new QAction(tr("Print Pre&view"), NULL);
@@ -69,16 +63,6 @@ void RS_ActionPrintPreview::init(int status) {
     RS_ActionInterface::init(status);
     showOptions();
 }
-
-/**
- * Finishes this action.
- */
-void RS_ActionPrintPreview::finish(bool /*updateTB*/) {
-	RS_DEBUG->print("RS_ActionPrintPreview::finish");
-	graphicView->setMouseCursor(RS2::ArrowCursor);
-	RS_DEBUG->print("RS_ActionPrintPreview::finish: OK");
-}
-
 
 void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
@@ -211,14 +195,14 @@ void RS_ActionPrintPreview::resume() {
 
 //printout warning in command widget
 void RS_ActionPrintPreview::printWarning(const QString& s) {
-    if(RS_DIALOGFACTORY != NULL ){
+	if(RS_DIALOGFACTORY){
         RS_DIALOGFACTORY->commandMessage(s);
     }
 }
 
 void RS_ActionPrintPreview::showOptions() {
     RS_ActionInterface::showOptions();
-    if(RS_DIALOGFACTORY != NULL && ! isFinished() ) {
+	if(RS_DIALOGFACTORY && ! isFinished() ) {
         RS_DIALOGFACTORY->requestOptions(this, true,hasOptions);
         hasOptions=true;
     }
@@ -231,11 +215,6 @@ void RS_ActionPrintPreview::hideOptions() {
 
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
-
-
-void RS_ActionPrintPreview::updateMouseButtonHints() {}
-
-
 
 void RS_ActionPrintPreview::updateMouseCursor() {
     switch (getStatus()){

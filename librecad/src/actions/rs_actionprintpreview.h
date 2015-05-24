@@ -48,7 +48,7 @@ public:
 public:
     RS_ActionPrintPreview(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-    ~RS_ActionPrintPreview();
+	~RS_ActionPrintPreview()=default;
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
@@ -57,7 +57,6 @@ public:
     }
 
     virtual void init(int status=0);
-	virtual void finish(bool updateTB = true );
 	virtual void resume();
 
     virtual void mouseMoveEvent(QMouseEvent* e);
@@ -71,7 +70,6 @@ public:
     virtual void showOptions();
     virtual void hideOptions();
 
-    virtual void updateMouseButtonHints();
 	virtual void updateMouseCursor();
 
     void center();
