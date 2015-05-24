@@ -126,7 +126,7 @@ void RS_GraphicView::setFactorY(double f) {
 }
 
 void RS_GraphicView::setOffset(int ox, int oy) {
-	//    DEBUG_HEADER();
+	//    DEBUG_HEADER
 	//    RS_DEBUG->print(/*RS_Debug::D_WARNING, */"set offset from (%d, %d) to (%d, %d)", getOffsetX(), getOffsetY(), ox, oy);
 	setOffsetX(ox);
 	setOffsetY(oy);
@@ -1038,7 +1038,7 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
 
 		//increase grid point size on for DPI>96
 		int dpiX = qApp->desktop()->logicalDpiX();
-		//        DEBUG_HEADER();
+		//        DEBUG_HEADER
 		//        RS_DEBUG->print(RS_Debug::D_ERROR, "dpiX=%d\n",dpiX);
 		const RS_Pen penSaved=painter->getPen();
 		if(dpiX>96) {

@@ -663,7 +663,7 @@ bool	RS_Ellipse::createFrom4P(const RS_VectorSolutions& sol)
     data.ratio=sqrt(dn[0]/dn[2]);
     data.angle1=0.;
     data.angle2=0.;
-//    DEBUG_HEADER();
+//    DEBUG_HEADER
 //    std::cout<<"center="<<data.center;
 //    std::cout<<"majorP="<<data.majorP;
 //    std::cout<<"ratio="<<data.ratio;
@@ -1488,7 +1488,7 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
             double k=majorP.magnitude();
             if(k<RS_TOLERANCE2 || d < RS_TOLERANCE ||
                     c >= d - RS_TOLERANCE) return;
-            //            DEBUG_HEADER();
+            //            DEBUG_HEADER
             //            std::cout<<__func__<<" : moving focus";
             majorP *= d/k;
             setCenter(center);
@@ -1732,7 +1732,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
     //sorting
     std::sort(crossPoints.begin(),crossPoints.end());
     //draw visible
-//    DEBUG_HEADER();
+//    DEBUG_HEADER
 //    std::cout<<"crossPoints.size()="<<crossPoints.size()<<std::endl;
     RS_Ellipse arc(*this);
     arc.setSelected(isSelected());

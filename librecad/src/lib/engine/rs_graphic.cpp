@@ -322,7 +322,7 @@ bool RS_Graphic::save(bool isAutoSave)
 			QDateTime m=finfo.lastModified();
             //bug#3414993
             //modifiedTime should only be used for the same filename
-//            DEBUG_HEADER();
+//            DEBUG_HEADER
 //            qDebug()<<"currentFileName= "<<currentFileName;
 //            qDebug()<<"Checking file: filename= "<<filename;
 //            qDebug()<<"Checking file: "<<filename;

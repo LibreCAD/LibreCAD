@@ -212,7 +212,7 @@ bool RS_ActionDrawCircleTan1_2P::getCenters(){
 //    LC_Quadratic lc1(circle, points[1]);
     LC_Quadratic lc1(points[1], points[0]);
     auto&& list=LC_Quadratic::getIntersection(lc0,lc1);
-//    DEBUG_HEADER();
+//    DEBUG_HEADER
 //    std::cout<<"intersections : "<<list<<std::endl;
 
 	for(const RS_Vector& vp: list){
@@ -243,7 +243,7 @@ bool RS_ActionDrawCircleTan1_2P::getCenters(){
         if(existing) continue;
         centers.push_back(vp);
     }
-//    DEBUG_HEADER();
+//    DEBUG_HEADER
 //    std::cout<<"points: "<<points[0]<<" , "<<points[1]<<std::endl;
 //    std::cout<<"centers.size()="<<centers.size()<<std::endl;
 //    std::cout<<"centers: "<<centers<<std::endl;

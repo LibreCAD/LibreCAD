@@ -93,7 +93,7 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
 			else
 				break;
 		case Qt::Key_Escape:
-			//			DEBUG_HEADER();
+			//			DEBUG_HEADER
 			//			qDebug()<<"Not filtered";
 			return false;
 		default:
@@ -106,7 +106,7 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
 		QKeyEvent * newEvent = new QKeyEvent(*static_cast<QKeyEvent*>(event));
 		QApplication::postEvent(leCommand, newEvent);
 		this->setFocus();
-		//			DEBUG_HEADER();
+		//			DEBUG_HEADER
 		//			qDebug()<<"Filtered";
 		return true;
 	}

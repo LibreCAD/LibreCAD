@@ -59,10 +59,10 @@ void QG_CadToolBarSelect::setSelectAction(RS_ActionInterface* selectAction) {
 void QG_CadToolBarSelect::setNextAction(int nextAction) {
     this->nextAction = nextAction;
     if (nextAction==-1) {
-//		DEBUG_HEADER();
+//		DEBUG_HEADER
 		m_pButtonForward->setVisible(false);
     } else {
-//		DEBUG_HEADER();
+//		DEBUG_HEADER
 		m_pButtonForward->setVisible(true);
     }
 }

@@ -129,7 +129,7 @@ double RS_Circle::getLength() const {
 
 bool RS_Circle::isTangent(const RS_CircleData&  circleData) const{
 	const double d=circleData.center.distanceTo(data.center);
-//    DEBUG_HEADER();
+//    DEBUG_HEADER
 	const double r0=fabs(circleData.radius);
 	const double r1=fabs(data.radius);
 //    std::cout<<fabs(d-fabs(r0-r1))<<" : "<<fabs(d-fabs(r0+r1))<<std::endl;
@@ -406,7 +406,7 @@ std::vector<RS_Circle> RS_Circle::createTan3(const std::vector<RS_AtomicEntity*>
             ++i;
         }
     }
-//        DEBUG_HEADER();
+//        DEBUG_HEADER
 //    std::cout<<"after testing, ret.size()="<<ret.size()<<std::endl;
     return ret;
 }
@@ -424,7 +424,7 @@ bool RS_Circle::testTan3(const std::vector<RS_AtomicEntity*>& circles)
         const double r1 = fabs((*it)->getRadius());
 
 		const double dist=fabs((data.center - (*it)->getCenter()).magnitude());
-//        DEBUG_HEADER();
+//        DEBUG_HEADER
 //        std::cout<<"testing: "<<getCenter()<<" r="<<getRadius()<<". \twith Center = ( "<<(*it)->getCenter().x<<" , "<<(*it)->getCenter().y<<" ), r= "<<(*it)->getRadius()<<std::endl;
 //        std::cout<<"r0="<<r0<<"\tr1="<<r1<<"\tdist="<<dist<<"\tdelta0="<<fabs(dist - fabs(r0 - r1)) <<"\tdelta1="<<fabs(dist - fabs(r0 + r1))
 //                <<"\t"<<sqrt(DBL_EPSILON)*qMax(r0,r1)<<std::endl;
@@ -467,7 +467,7 @@ std::vector<RS_Circle> RS_Circle::solveAppolloniusSingle(const std::vector<RS_Ci
     mat[1][0]=centers[2].x - centers[1].x;
     mat[1][1]=centers[2].y - centers[1].y;
     if(fabs(mat[0][0]*mat[1][1] - mat[0][1]*mat[1][0])<RS_TOLERANCE2){
-//        DEBUG_HEADER();
+//        DEBUG_HEADER
 //        std::cout<<"The provided circles are in a line, not common tangent circle"<<std::endl;
         size_t i0=0;
         if( centers[0].distanceTo(centers[1]) <= RS_TOLERANCE ||  centers[0].distanceTo(centers[2]) <= RS_TOLERANCE) i0 = 1;

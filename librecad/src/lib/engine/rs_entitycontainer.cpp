@@ -1494,7 +1494,7 @@ RS_Entity* RS_EntityContainer::getNearestEntity(const RS_Vector& coord,
 bool RS_EntityContainer::optimizeContours() {
 //    std::cout<<"RS_EntityContainer::optimizeContours: begin"<<std::endl;
 
-//    DEBUG_HEADER();
+//    DEBUG_HEADER
 //    std::cout<<"loop with count()="<<count()<<std::endl;
     RS_DEBUG->print("RS_EntityContainer::optimizeContours");
 
@@ -1583,7 +1583,7 @@ bool RS_EntityContainer::optimizeContours() {
         	break;			//workaround if next is NULL
         } 					//workaround if next is NULL
     }
-//    DEBUG_HEADER();
+//    DEBUG_HEADER
     if(vpEnd.valid && vpEnd.squaredTo(vpStart)>1e-8) {
         if(closed) QG_DIALOGFACTORY->commandMessage(errMsg.arg(vpEnd.distanceTo(vpStart))
                                          .arg(vpStart.x).arg(vpStart.y).arg(vpEnd.x).arg(vpEnd.y));
