@@ -69,6 +69,7 @@ public:
 	
     virtual void hideOptions();
     virtual void showOptions();
+	virtual void finish(bool updateTB=true);
 
     virtual void updateMouseCursor();
 

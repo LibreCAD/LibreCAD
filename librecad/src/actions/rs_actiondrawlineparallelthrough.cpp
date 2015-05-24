@@ -48,6 +48,15 @@ QAction* RS_ActionDrawLineParallelThrough::createGUIAction(RS2::ActionType /*typ
     return action;
 }
 
+void RS_ActionDrawLineParallelThrough::finish(bool updateTB){
+	if(entity){
+		entity->setHighlighted(false);
+		graphicView->drawEntity(entity);
+		entity=nullptr;
+	}
+	RS_PreviewActionInterface::finish(updateTB);
+}
+
 void RS_ActionDrawLineParallelThrough::trigger() {
     RS_PreviewActionInterface::trigger();
 
