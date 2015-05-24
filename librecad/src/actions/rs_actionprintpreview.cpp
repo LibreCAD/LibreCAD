@@ -44,6 +44,7 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
     ,m_bPaperOffset(false)
 {
     showOptions();
+	actionType=RS2::ActionFilePrintPreview;
 }
 
 QAction* RS_ActionPrintPreview::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
@@ -273,7 +274,7 @@ bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
 
 
 
-double RS_ActionPrintPreview::getScale() {
+double RS_ActionPrintPreview::getScale() const{
     double ret = 1.0;
     if (graphic) {
         ret = graphic->getPaperScale();

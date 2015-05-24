@@ -52,10 +52,6 @@ public:
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-    virtual RS2::ActionType rtti() const{
-		return RS2::ActionFilePrintPreview;
-    }
-
     virtual void init(int status=0);
 	virtual void resume();
 
@@ -70,23 +66,20 @@ public:
     virtual void showOptions();
     virtual void hideOptions();
 
+	virtual void finish(bool /*updateTB*/ = true ){}
 	virtual void updateMouseCursor();
 
     void center();
     void fit();
     bool setScale(double f, bool autoZoom = true);
-    double getScale();
-    //print warning message to command widget
-    //should we add this as virtual function to rs_actioninterface?
+	double getScale() const;
     void printWarning(const QString& s);
 
-    void setBlackWhite(bool bw);
-    //bool isBlackWhite() {
-    //	return blackWhite;
-    //}
+	void setBlackWhite(bool bw);
     RS2::Unit getUnit();
     void setPaperScaleFixed(bool fixed);
     bool getPaperScaleFixed();
+
 
 protected:
     //bool blackWhite;

@@ -48,6 +48,7 @@ RS_ActionDefault::RS_ActionDefault(RS_EntityContainer& container,
 {
 
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
+	actionType=RS2::ActionDefault;
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault: OK");
 }
 
@@ -72,15 +73,6 @@ void RS_ActionDefault::init(int status) {
     //        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
 
     RS_DEBUG->print("RS_ActionDefault::init: OK");
-}
-
-/**
- * Finishes this action.
- */
-void RS_ActionDefault::finish(bool /*updateTB*/) {
-	RS_DEBUG->print("RS_ActionPrintPreview::finish");
-	graphicView->setMouseCursor(RS2::ArrowCursor);
-	RS_DEBUG->print("RS_ActionPrintPreview::finish: OK");
 }
 
 void RS_ActionDefault::keyPressEvent(QKeyEvent* e) {
