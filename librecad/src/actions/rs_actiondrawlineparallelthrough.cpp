@@ -36,21 +36,15 @@
 RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Parallels", container, graphicView) {
-
-    parallel = NULL;
-    entity = NULL;
-	m_SnapDistance = 1.0;
-    number = 1;
-    coord = RS_Vector(false);
+		:RS_PreviewActionInterface("Draw Parallels", container, graphicView)
+		,coord(false)
+{
+	m_SnapDistance=1.;
 }
 
 
 QAction* RS_ActionDrawLineParallelThrough::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Par&allel through point"),
-    QAction* action = new QAction(tr("Parallel through point"), NULL);
-        action->setIcon(QIcon(":/extui/linesparathrough.png"));
-    //action->zetStatusTip(tr("Draw parallel through a given point"));
+	QAction* action = new QAction(QIcon(":/extui/linesparathrough.png"), tr("Parallel through point"), NULL);
     return action;
 }
 
@@ -63,7 +57,7 @@ void RS_ActionDrawLineParallelThrough::trigger() {
                        number,
                        entity);
 
-        if (e==NULL) {
+		if (!e) {
             RS_DEBUG->print("RS_ActionDrawLineParallelThrough::trigger:"
                             " No parallels added\n");
         }
@@ -147,7 +141,7 @@ void RS_ActionDrawLineParallelThrough::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawLineParallelThrough::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (!e) {
         return;
     }
 
@@ -270,6 +264,15 @@ QStringList RS_ActionDrawLineParallelThrough::getAvailableCommands() {
 
 void RS_ActionDrawLineParallelThrough::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
+}
+
+
+int RS_ActionDrawLineParallelThrough::getNumber() const{
+	return number;
+}
+
+void RS_ActionDrawLineParallelThrough::setNumber(int n) {
+	number = n;
 }
 
 // EOF

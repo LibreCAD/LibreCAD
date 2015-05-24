@@ -72,37 +72,21 @@ public:
 
     virtual void updateMouseCursor();
 
-	int getNumber() {
-		return number;
-	}
+	int getNumber() const;
 
-	void setNumber(int n) {
-		number = n;
-	}
+	void setNumber(int n);
 
 private:
     /** Closest parallel. */
-    RS_Entity* parallel;
+	RS_Entity* parallel=nullptr;
 	/** Number of parallels. */
-	int number;
+	int number=1;
 	/** Coordinate of the mouse. */
 	RS_Vector coord;
 	/** Original entity. */
-	RS_Entity* entity;
+	RS_Entity* entity=nullptr;
 	/** Last status before entering length or number. */
 	Status lastStatus;
-	/**
-	 * Commands
-	 */
-	/*
-        QString cmdDistance;
-        QString cmdDistance2;
-        QString cmdDistance3;
-	
-        QString cmdNumber;
-        QString cmdNumber2;
-        QString cmdNumber3;
-	*/
 };
 
 #endif
