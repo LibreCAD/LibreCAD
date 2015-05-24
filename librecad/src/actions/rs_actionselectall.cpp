@@ -34,9 +34,10 @@ RS_ActionSelectAll::RS_ActionSelectAll(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView,
                                        bool select)
         :RS_ActionInterface("Select All Entities",
-                    container, graphicView) {
-
-    this->select = select;
+					container, graphicView)
+		,select(select)
+{
+	actionType=RS2::ActionSelectAll;
 }
 
 QAction* RS_ActionSelectAll::createGUIAction(RS2::ActionType type, QObject* parent) {

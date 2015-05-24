@@ -39,7 +39,9 @@
 RS_ActionLibraryInsert::RS_ActionLibraryInsert(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Library Insert",
-                           container, graphicView) {}
+						   container, graphicView) {
+	actionType=RS2::ActionLibraryInsert;
+}
 
 
 

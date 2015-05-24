@@ -38,6 +38,7 @@ RS_ActionModifyOffset::RS_ActionModifyOffset(RS_EntityContainer& container,
                                              RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Modify Offset",
                                container, graphicView) {
+	actionType=RS2::ActionModifyOffset;
 
     data.distance=0.;
     data.number=1;

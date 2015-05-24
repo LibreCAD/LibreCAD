@@ -44,9 +44,10 @@ RS_ActionSelectIntersected::RS_ActionSelectIntersected(
     RS_GraphicView& graphicView,
     bool select)
         : RS_PreviewActionInterface("Select Intersected",
-                            container, graphicView) {
-
-    this->select = select;
+							container, graphicView)
+		,select(select)
+{
+	actionType=RS2::ActionSelectIntersected;
 }
 
 

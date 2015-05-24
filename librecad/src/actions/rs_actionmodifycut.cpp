@@ -35,10 +35,11 @@
 RS_ActionModifyCut::RS_ActionModifyCut(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_ActionInterface("Cut Entity",
-                    container, graphicView) {
-
-    cutEntity = NULL;
-    cutCoord = RS_Vector(false);
+					container, graphicView)
+,cutEntity(nullptr)
+,cutCoord(false)
+{
+	actionType=RS2::ActionModifyCut;
 }
 
 QAction* RS_ActionModifyCut::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

@@ -36,7 +36,9 @@
 RS_ActionModifyDelete::RS_ActionModifyDelete(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Delete Entities",
-                    container, graphicView) {}
+					container, graphicView) {
+	actionType=RS2::ActionModifyDelete;
+}
 
 QAction* RS_ActionModifyDelete::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	QAction* action = new QAction(QIcon(":/extui/modifydelete.png"), tr("&Delete"), nullptr);

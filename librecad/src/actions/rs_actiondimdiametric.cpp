@@ -43,6 +43,7 @@ RS_ActionDimDiametric::RS_ActionDimDiametric(
     RS_GraphicView& graphicView)
         :RS_ActionDimension("Draw Diametric Dimensions",
                     container, graphicView) {
+	actionType=RS2::ActionDimDiametric;
     reset();
 }
 

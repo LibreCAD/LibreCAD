@@ -39,7 +39,7 @@ RS_ActionDimLeader::RS_ActionDimLeader(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw leaders",
                            container, graphicView) {
-
+	actionType=RS2::ActionDimLeader;
     reset();
 }
 

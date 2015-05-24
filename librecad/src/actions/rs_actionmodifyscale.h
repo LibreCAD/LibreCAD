@@ -53,9 +53,6 @@ public:
     ~RS_ActionModifyScale() = default;
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    RS2::ActionType rtti() const{
-        return RS2::ActionModifyScale;
-    }
     virtual void init(int status=0);
     virtual void trigger();
     virtual void mouseMoveEvent(QMouseEvent* e);

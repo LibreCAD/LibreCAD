@@ -39,6 +39,7 @@ RS_ActionDrawCircle2P::RS_ActionDrawCircle2P(RS_EntityContainer& container,
 						   container, graphicView)
 		,data(new RS_CircleData())
 {
+	actionType=RS2::ActionDrawCircle2P;
     reset();
 }
 

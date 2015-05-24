@@ -36,11 +36,11 @@
 RS_ActionDrawMText::RS_ActionDrawMText(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw Text",
-                           container, graphicView) {
-
-    //text = NULL;
-    pos = RS_Vector(false);
-    textChanged = true;
+						   container, graphicView)
+		,pos(false)
+		,textChanged(true)
+{
+	actionType=RS2::ActionDrawMText;
 }
 
 RS_ActionDrawMText::~RS_ActionDrawMText(){}

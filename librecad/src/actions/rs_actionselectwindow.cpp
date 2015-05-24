@@ -42,9 +42,10 @@ RS_ActionSelectWindow::RS_ActionSelectWindow(RS_EntityContainer& container,
         RS_GraphicView& graphicView,
         bool select)
         : RS_PreviewActionInterface("Select Window",
-                            container, graphicView) {
-
-    this->select = select;
+							container, graphicView)
+		,select(select)
+{
+	actionType=RS2::ActionSelectWindow;
 }
 
 

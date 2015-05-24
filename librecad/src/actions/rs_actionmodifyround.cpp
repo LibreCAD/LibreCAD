@@ -42,6 +42,7 @@ RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
 		,coord1(false)
 		,coord2(false)
 {
+	actionType=RS2::ActionModifyRound;
 }
 
 QAction* RS_ActionModifyRound::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

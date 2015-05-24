@@ -47,10 +47,6 @@ public:
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-    RS2::ActionType rtti() const{
-        return RS2::ActionDrawLineOrthTan;
-    }
-
     virtual void trigger();
     virtual void finish(bool updateTB = true);
 

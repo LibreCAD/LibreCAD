@@ -40,6 +40,7 @@ RS_ActionSelect::RS_ActionSelect(RS_EntityContainer& container,
 	,nextAction(nextAction)
 	,selectSingle(false)
 {
+	actionType=RS2::ActionSelect;
 }
 
 

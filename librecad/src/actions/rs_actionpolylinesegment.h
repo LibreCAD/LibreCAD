@@ -49,9 +49,6 @@ public:
 	~RS_ActionPolylineSegment()=default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    virtual RS2::ActionType rtti() const{
-        return RS2::ActionPolylineSegment;
-    }
     virtual void init(int status=0);
 	
     virtual void trigger();

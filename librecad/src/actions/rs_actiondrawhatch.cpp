@@ -37,9 +37,10 @@ RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw Hatch",
                            container, graphicView)
+		,hatch(nullptr)
         ,m_bShowArea(false)
 {
-	hatch = nullptr;
+	actionType=RS2::ActionDrawHatch;
 }
 
 
@@ -49,6 +50,9 @@ QAction* RS_ActionDrawHatch::createGUIAction(RS2::ActionType /*type*/, QObject* 
     return action;
 }
 
+void RS_ActionDrawHatch::setShowArea(bool s){
+	m_bShowArea=s;
+}
 
 void RS_ActionDrawHatch::init(int status) {
     RS_ActionInterface::init(status);

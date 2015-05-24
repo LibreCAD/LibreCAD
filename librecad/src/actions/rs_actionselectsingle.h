@@ -46,10 +46,6 @@ public:
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-    virtual RS2::ActionType rtti() const{
-        return RS2::ActionSelectSingle;
-    }
-
     virtual void trigger();
     virtual void keyPressEvent(QKeyEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);

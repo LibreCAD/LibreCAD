@@ -43,6 +43,7 @@ RS_ActionDrawEllipseFociPoint::RS_ActionDrawEllipseFociPoint(
           focus2(false),
           point(false)
 {
+	actionType=RS2::ActionDrawEllipseFociPoint;
 }
 
 

@@ -44,6 +44,7 @@ RS_ActionDrawLine::RS_ActionDrawLine(RS_EntityContainer& container,
 {
 
     RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine");
+	actionType=RS2::ActionDrawLine;
     reset();
     RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine: OK");
 }

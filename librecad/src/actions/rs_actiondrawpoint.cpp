@@ -36,7 +36,9 @@
 RS_ActionDrawPoint::RS_ActionDrawPoint(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw Points",
-                           container, graphicView) {}
+						   container, graphicView) {
+	actionType=RS2::ActionDrawPoint;
+}
 
 
 QAction* RS_ActionDrawPoint::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

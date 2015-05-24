@@ -33,6 +33,7 @@ LC_ActionDrawCircle2PR::LC_ActionDrawCircle2PR(RS_EntityContainer& container,
 											   RS_GraphicView& graphicView)
 	:RS_ActionDrawCircleCR(container, graphicView)
 {
+	actionType=RS2::ActionDrawCircle2PR;
 	reset();
 }
 

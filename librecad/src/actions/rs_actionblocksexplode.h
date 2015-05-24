@@ -43,10 +43,6 @@ public:
 	~RS_ActionBlocksExplode() = default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-	
-	virtual RS2::ActionType rtti() const{
-		return RS2::ActionBlocksExplode;
-	}
 
     virtual void init(int status=0);
 

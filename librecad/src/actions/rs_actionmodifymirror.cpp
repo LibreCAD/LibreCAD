@@ -35,7 +35,9 @@
 RS_ActionModifyMirror::RS_ActionModifyMirror(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Mirror Entities",
-                           container, graphicView) {}
+						   container, graphicView) {
+	actionType=RS2::ActionModifyMirror;
+}
 
 QAction* RS_ActionModifyMirror::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
         // tr("Mirror"

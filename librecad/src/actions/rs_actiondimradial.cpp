@@ -42,6 +42,7 @@ RS_ActionDimRadial::RS_ActionDimRadial(
     RS_GraphicView& graphicView)
         :RS_ActionDimension("Draw Radial Dimensions",
                     container, graphicView) {
+	actionType=RS2::ActionDimRadial;
     reset();
 }
 

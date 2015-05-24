@@ -40,10 +40,6 @@ public:
     RS_ActionBlocksAdd(RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
 	~RS_ActionBlocksAdd() = default;
-
-	virtual RS2::ActionType rtti() const{
-			return RS2::ActionBlocksAdd;
-	}
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

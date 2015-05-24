@@ -39,8 +39,8 @@ RS_ActionDimAligned::RS_ActionDimAligned(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionDimension("Draw aligned dimensions",
                     container, graphicView) {
-
-    reset();
+	actionType=RS2::ActionDimAligned;
+	reset();
 }
 
 

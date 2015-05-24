@@ -37,7 +37,9 @@ RS_ActionModifyAttributes::RS_ActionModifyAttributes(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_ActionInterface("Change Attributes",
-                    container, graphicView) {}
+					container, graphicView) {
+	actionType=RS2::ActionModifyAttributes;
+}
 
 
 QAction* RS_ActionModifyAttributes::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

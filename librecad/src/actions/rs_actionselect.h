@@ -46,9 +46,6 @@ public:
 	~RS_ActionSelect()=default;
 
     virtual void init(int status);
-    virtual RS2::ActionType rtti() const{
-            return RS2::ActionSelect;
-    }
     virtual void resume();
     //virtual void keyPressEvent(QKeyEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);

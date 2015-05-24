@@ -35,7 +35,9 @@ RS_ActionModifyRotate2::RS_ActionModifyRotate2(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Rotate Entities around two centers",
-                           container, graphicView) {}
+						   container, graphicView) {
+	actionType=RS2::ActionModifyRotate2;
+}
 
 
 QAction* RS_ActionModifyRotate2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

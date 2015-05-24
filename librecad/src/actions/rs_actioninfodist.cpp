@@ -37,7 +37,9 @@
 RS_ActionInfoDist::RS_ActionInfoDist(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Info Dist",
-                           container, graphicView) {}
+						   container, graphicView) {
+	actionType=RS2::ActionInfoDist;
+}
 
 
 QAction* RS_ActionInfoDist::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

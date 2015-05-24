@@ -37,7 +37,9 @@
 RS_ActionPolylineDel::RS_ActionPolylineDel(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Delete node",
-                           container, graphicView) {}
+						   container, graphicView) {
+	actionType=RS2::ActionPolylineDel;
+}
 
 
 QAction* RS_ActionPolylineDel::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

@@ -54,9 +54,6 @@ public:
 	~RS_ActionInfoArea();
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    virtual RS2::ActionType rtti() const{
-        return RS2::ActionInfoArea;
-    }
 
     virtual void init(int status=0);
     virtual void trigger();

@@ -35,7 +35,9 @@
 RS_ActionModifyRotate::RS_ActionModifyRotate(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Rotate Entities",
-                               container, graphicView) {}
+							   container, graphicView) {
+	actionType=RS2::ActionModifyRotate;
+}
 
 QAction* RS_ActionModifyRotate::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     // tr("Rotate")

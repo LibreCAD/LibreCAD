@@ -27,9 +27,10 @@
 #ifndef RS_ACTIONMODIFYBEVEL_H
 #define RS_ACTIONMODIFYBEVEL_H
 
+#include<memory>
 #include "rs_previewactioninterface.h"
-#include "rs_modification.h"
 
+class RS_BevelData;
 
 /**
  * This action class can handle user events to bevel corners.
@@ -53,13 +54,9 @@ public:
 public:
     RS_ActionModifyBevel(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyBevel() = default;
+	~RS_ActionModifyBevel();
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
-	virtual RS2::ActionType rtti() const{
-		return RS2::ActionModifyBevel;
-	}
 
     virtual void init(int status=0);
     virtual void trigger();
@@ -76,36 +73,24 @@ public:
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 
-	void setLength1(double l1) {
-		data.length1 = l1;
-	}
+	void setLength1(double l1);
 
-	double getLength1() {
-		return data.length1;
-	}
+	double getLength1() const;
 	
-	void setLength2(double l2) {
-		data.length2 = l2;
-	}
+	void setLength2(double l2);
 
-	double getLength2() {
-		return data.length2;
-	}
+	double getLength2() const;
 
-	void setTrim(bool t) {
-		data.trim = t;
-	}
+	void setTrim(bool t);
 
-	bool isTrimOn() {
-		return data.trim;
-	}
+	bool isTrimOn() const;
 
 private:
     RS_Entity* entity1;
 	RS_Vector coord1;
     RS_Entity* entity2;
 	RS_Vector coord2;
-	RS_BevelData data;
+	std::unique_ptr<RS_BevelData> data;
 	/** Last status before entering angle. */
 	Status lastStatus;
 };

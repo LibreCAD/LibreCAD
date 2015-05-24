@@ -45,7 +45,7 @@ RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(
 	,coord(false)
 	,entity(nullptr)
 {
-	actionType=RS2::ActionNone;
+	actionType=RS2::ActionDrawLineParallel;
 }
 
 QAction* RS_ActionDrawLineParallel::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
@@ -69,6 +69,22 @@ QAction* RS_ActionDrawLineParallel::createGUIAction(RS2::ActionType type, QObjec
     }
 	if(action) action->setCheckable(true);
     return action;
+}
+
+double RS_ActionDrawLineParallel::getDistance() const{
+	return distance;
+}
+
+void RS_ActionDrawLineParallel::setDistance(double d) {
+	distance = d;
+}
+
+int RS_ActionDrawLineParallel::getNumber() const{
+	return number;
+}
+
+void RS_ActionDrawLineParallel::setNumber(int n) {
+	number = n;
 }
 
 void RS_ActionDrawLineParallel::trigger() {

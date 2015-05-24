@@ -36,9 +36,10 @@ RS_ActionModifyDeleteQuick::RS_ActionModifyDeleteQuick(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_ActionInterface("Quick Delete Entities",
-                    container, graphicView) {
-
-    en = NULL;
+					container, graphicView)
+		,en(nullptr)
+{
+	actionType=RS2::ActionModifyDeleteQuick;
 }
 
 

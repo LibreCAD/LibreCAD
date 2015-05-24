@@ -56,9 +56,6 @@ public:
 	~RS_ActionDrawEllipseAxis()=default;
 	
     static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-    RS2::ActionType rtti() const{
-        return actionType;
-    }
 
     virtual void init(int status=0);
 	
@@ -78,7 +75,7 @@ protected:
     /** Center of ellipse */
     RS_Vector center;
     /** Endpoint of major axis */
-    RS_Vector major;
+	RS_Vector m_vMajorP;
     /** Ratio major / minor */
     double ratio;
     /** Start angle */

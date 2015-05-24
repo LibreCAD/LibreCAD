@@ -34,7 +34,9 @@
 RS_ActionModifyScale::RS_ActionModifyScale(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Scale Entities",
-                           container, graphicView) {}
+						   container, graphicView) {
+	actionType=RS2::ActionModifyScale;
+}
 
 
 QAction* RS_ActionModifyScale::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

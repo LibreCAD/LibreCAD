@@ -27,6 +27,7 @@
 #ifndef RS_ACTIONINFOINSIDE_H
 #define RS_ACTIONINFOINSIDE_H
 
+#include<memory>
 #include "rs_actioninterface.h"
 
 
@@ -44,9 +45,6 @@ public:
     ~RS_ActionInfoInside();
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    virtual RS2::ActionType rtti() const{
-        return RS2::ActionInfoInside;
-    }
 
     virtual void trigger();
     virtual void mouseMoveEvent(QMouseEvent* e);
@@ -56,7 +54,7 @@ public:
 
 private:
     RS_Vector pt;
-	RS_EntityContainer* contour;
+	std::unique_ptr<RS_EntityContainer> contour;
 };
 
 #endif

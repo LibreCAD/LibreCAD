@@ -36,9 +36,10 @@
 
 RS_ActionSelectContour::RS_ActionSelectContour(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :RS_ActionInterface("Select Contours", container, graphicView) {
-
-    en = NULL;
+		:RS_ActionInterface("Select Contours", container, graphicView)
+		,en(nullptr)
+{
+	actionType=RS2::ActionSelectContour;
 }
 
 QAction* RS_ActionSelectContour::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

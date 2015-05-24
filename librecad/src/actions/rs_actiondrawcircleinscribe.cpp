@@ -40,6 +40,7 @@ RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(
                            container, graphicView),
 		  cData(new RS_CircleData(RS_Vector(0.,0.),1.))
 {
+	actionType=RS2::ActionDrawCircleInscribe;
 }
 
 RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe(){}

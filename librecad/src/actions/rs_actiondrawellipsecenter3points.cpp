@@ -42,8 +42,7 @@ RS_ActionDrawEllipseCenter3Points::RS_ActionDrawEllipseCenter3Points(
 		  cData(new RS_CircleData(RS_Vector(0.,0.),1.)),
 		  eData(new RS_EllipseData(RS_Vector(0.,0.),RS_Vector(1.,0),1.,0.,0.,false))
 {
-          points.clean();
-
+	actionType=RS2::ActionDrawEllipseCenter3Points;
 }
 
 RS_ActionDrawEllipseCenter3Points::~RS_ActionDrawEllipseCenter3Points(){}

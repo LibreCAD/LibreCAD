@@ -40,6 +40,7 @@ RS_ActionDimAngular::RS_ActionDimAngular(
     RS_GraphicView& graphicView)
         :RS_ActionDimension("Draw Angular Dimensions",
                     container, graphicView) {
+	actionType= RS2::ActionDimAngular;
     reset();
 }
 

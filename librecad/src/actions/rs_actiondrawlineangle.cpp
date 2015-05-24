@@ -42,15 +42,15 @@ RS_ActionDrawLineAngle::RS_ActionDrawLineAngle(RS_EntityContainer& container,
         :RS_PreviewActionInterface("Draw lines with given angle",
 						   container, graphicView)
 		,data(new RS_LineData())
+		,pos(false)
+		,angle(angle)
+		,length(1.)
+		,fixedAngle(fixedAngle)
+		,snpPoint(0)
 {
 
-    this->angle = angle;
     this->actionType=actionType;
 
-    length = 1.0;
-    snpPoint = 0;
-    this->fixedAngle = fixedAngle;
-    pos = RS_Vector(false);
     RS_DIALOGFACTORY->requestOptions(this, true,false);
     reset();
 }
@@ -254,6 +254,39 @@ void RS_ActionDrawLineAngle::commandEvent(RS_CommandEvent* e) {
 }
 
 
+void RS_ActionDrawLineAngle::setSnapPoint(int sp) {
+	snpPoint = sp;
+}
+
+int RS_ActionDrawLineAngle::getSnapPoint() const{
+	return snpPoint;
+}
+
+void RS_ActionDrawLineAngle::setAngle(double a) {
+	angle = a;
+}
+
+double RS_ActionDrawLineAngle::getAngle() const{
+	return angle;
+}
+
+void RS_ActionDrawLineAngle::setLength(double l) {
+	length = l;
+}
+
+double RS_ActionDrawLineAngle::getLength() const{
+	return length;
+}
+
+bool RS_ActionDrawLineAngle::hasFixedAngle() const{
+	switch(rtti()){
+	case RS2::ActionDrawLineHorizontal:
+	case RS2::ActionDrawLineVertical:
+		return true;
+	default:
+		return false;
+	}
+}
 
 QStringList RS_ActionDrawLineAngle::getAvailableCommands() {
     QStringList cmd;

@@ -34,9 +34,10 @@
 
 RS_ActionSelectLayer::RS_ActionSelectLayer(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :RS_ActionInterface("Select Layers", container, graphicView) {
-
-    en = NULL;
+		:RS_ActionInterface("Select Layers", container, graphicView)
+		,en(nullptr)
+{
+	actionType=RS2::ActionSelectLayer;
 }
 
 

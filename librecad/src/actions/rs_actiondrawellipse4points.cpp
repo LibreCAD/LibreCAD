@@ -43,6 +43,7 @@ RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
 		  eData(new RS_EllipseData(RS_Vector(0.,0.),RS_Vector(1.,0),1.,0.,0.,false))
         ,m_bUniqueEllipse(false)
 {
+	actionType=RS2::ActionDrawEllipse4Points;
 }
 
 RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points(){}

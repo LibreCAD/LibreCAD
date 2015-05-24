@@ -32,18 +32,22 @@
 #include "rs_commandevent.h"
 #include "rs_information.h"
 #include "rs_math.h"
+#include "rs_modification.h"
 
 RS_ActionModifyBevel::RS_ActionModifyBevel(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Bevel Entities",
-                           container, graphicView) {
-
-    entity1 = NULL;
-    coord1 = RS_Vector(false);
-    entity2 = NULL;
-    coord2 = RS_Vector(false);
+						   container, graphicView)
+		,entity1(nullptr)
+		,coord1(false)
+		,entity2(nullptr)
+		,coord2(false)
+		,data(new RS_BevelData())
+{
+	actionType=RS2::ActionModifyBevel;
 }
 
+RS_ActionModifyBevel::~RS_ActionModifyBevel(){}
 
 QAction* RS_ActionModifyBevel::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
         // tr("Bevel")
@@ -73,7 +77,7 @@ void RS_ActionModifyBevel::trigger() {
         RS_Modification m(*container, graphicView);
         m.bevel(coord1, (RS_AtomicEntity*)entity1,
                 coord2, (RS_AtomicEntity*)entity2,
-                data);
+				*data);
 
         entity1 = NULL;
         entity2 = NULL;
@@ -164,7 +168,7 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent* e) {
             //deletePreview();
             //lastStatus = (Status)getStatus();
             //setStatus(SetTrim);
-            data.trim = !data.trim;
+			data->trim = !data->trim;
             RS_DIALOGFACTORY->requestOptions(this, true, true);
         }
         break;
@@ -174,7 +178,7 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent* e) {
             double l = RS_Math::eval(c, &ok);
             if (ok) {
                 e->accept();
-                data.length1 = l;
+				data->length1 = l;
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
             }
@@ -187,7 +191,7 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent* e) {
             bool ok;
             double l = RS_Math::eval(c, &ok);
             if (ok) {
-                data.length2 = l;
+				data->length2 = l;
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
             }
@@ -215,7 +219,29 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent* e) {
     }
 }
 
+void RS_ActionModifyBevel::setLength1(double l1) {
+	data->length1 = l1;
+}
 
+double RS_ActionModifyBevel::getLength1() const{
+	return data->length1;
+}
+
+void RS_ActionModifyBevel::setLength2(double l2) {
+	data->length2 = l2;
+}
+
+double RS_ActionModifyBevel::getLength2() const{
+	return data->length2;
+}
+
+void RS_ActionModifyBevel::setTrim(bool t) {
+	data->trim = t;
+}
+
+bool RS_ActionModifyBevel::isTrimOn() const{
+	return data->trim;
+}
 
 QStringList RS_ActionModifyBevel::getAvailableCommands() {
     QStringList cmd;

@@ -42,6 +42,7 @@ RS_ActionDrawArc3P::RS_ActionDrawArc3P(RS_EntityContainer& container,
 						   container, graphicView)
 		,data(new RS_ArcData())
 {
+	actionType=RS2::ActionDrawArc3P;
     reset();
 }
 

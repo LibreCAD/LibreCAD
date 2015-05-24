@@ -38,6 +38,7 @@ RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
 	,entityTypeList(entityTypeList)
 	,en(nullptr)
 {
+	actionType=RS2::ActionSelectSingle;
     if(actionSelect != NULL){
         if(actionSelect->rtti() == RS2::ActionSelect) {
             this->actionSelect=static_cast<RS_ActionSelect*>(actionSelect);

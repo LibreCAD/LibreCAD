@@ -52,11 +52,6 @@ public:
 		RS_GraphicView& graphicView);
     ~LC_ActionDrawSplinePoints();
 
-	virtual RS2::ActionType rtti() const
-	{
-		return RS2::ActionDrawSplinePoints;
-	}
-
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
 	void reset();

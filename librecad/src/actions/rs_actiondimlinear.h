@@ -69,8 +69,6 @@ public:
 	
 	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 	
-    virtual RS2::ActionType rtti() const;
-
     void reset();
 
     virtual void trigger();
@@ -106,7 +104,6 @@ protected:
 
 	/** Last status before entering text or angle. */
     Status lastStatus;
-    RS2::ActionType actionType;
 };
 
 #endif

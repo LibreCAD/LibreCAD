@@ -52,9 +52,6 @@ public:
     ~RS_ActionDrawHatch() = default;
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-	RS2::ActionType rtti() const{
-		return RS2::ActionDrawHatch;
-	}
 
     virtual void init(int status=0);
     virtual void trigger();
@@ -62,9 +59,7 @@ public:
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    void setShowArea(bool s){
-        m_bShowArea=s;
-    }
+	void setShowArea(bool s);
 
 private:
     RS_HatchData data;

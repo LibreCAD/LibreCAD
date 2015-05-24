@@ -36,12 +36,12 @@
 RS_ActionDrawLinePolygonCorCor::RS_ActionDrawLinePolygonCorCor(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Polygons (Corner,Corner)", container, graphicView) {
-
-    corner1 = RS_Vector(false);
-    corner2 = RS_Vector(false);
-
-    number = 3;
+		:RS_PreviewActionInterface("Draw Polygons (Corner,Corner)", container, graphicView)
+		,corner1(false)
+		,corner2(false)
+		,number(3)
+{
+	actionType=RS2::ActionDrawLinePolygonCorCor;
 }
 
 QAction* RS_ActionDrawLinePolygonCorCor::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

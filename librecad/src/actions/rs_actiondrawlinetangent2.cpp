@@ -40,6 +40,7 @@ RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
 	,circle2(nullptr)
 	,valid(false)
 {
+	actionType=RS2::ActionDrawLineTangent2;
     setStatus(SetCircle1);
 }
 

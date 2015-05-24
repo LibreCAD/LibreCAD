@@ -318,6 +318,10 @@ void RS_ActionInterface::showOptions() {
     RS_Snapper::showOptions();
 }
 
+void RS_ActionInterface::setActionType(RS2::ActionType actionType){
+	this->actionType=actionType;
+}
+
 /**
  * Calls checkCommand() from the RS_COMMANDS module.
  */

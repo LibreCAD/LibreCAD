@@ -36,6 +36,7 @@ RS_ActionModifyExplodeText::RS_ActionModifyExplodeText(RS_EntityContainer& conta
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Blocks Explode",
                            container, graphicView) {
+	actionType=RS2::ActionModifyExplodeText;
 }
 
 

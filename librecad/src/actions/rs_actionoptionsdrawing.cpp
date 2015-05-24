@@ -36,6 +36,7 @@ RS_ActionOptionsDrawing::RS_ActionOptionsDrawing(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Drawing Options",
                     container, graphicView) {
+	actionType=RS2::ActionOptionsDrawing;
 }
 
 

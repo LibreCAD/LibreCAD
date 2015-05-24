@@ -45,6 +45,7 @@ RS_ActionDrawCircleTan1_2P::RS_ActionDrawCircleTan1_2P(
     ,circle(NULL)
 	,cData(new RS_CircleData(RS_Vector(0.,0.),1.))
 {
+	actionType = RS2::ActionDrawCircleTan1_2P;
 }
 
 RS_ActionDrawCircleTan1_2P::~RS_ActionDrawCircleTan1_2P(){}

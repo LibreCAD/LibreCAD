@@ -34,7 +34,10 @@
 RS_ActionInfoTotalLength::RS_ActionInfoTotalLength(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Info Total Length",
-                    container, graphicView) {}
+					container, graphicView)
+{
+	actionType=RS2::ActionInfoTotalLength;
+}
 
 
 QAction* RS_ActionInfoTotalLength::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

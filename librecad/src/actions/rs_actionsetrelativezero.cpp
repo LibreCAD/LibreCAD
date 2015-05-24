@@ -34,7 +34,9 @@
 RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Set the relative Zero",
-                           container, graphicView) {}
+						   container, graphicView) {
+	actionType=RS2::ActionSetRelativeZero;
+}
 
 
 QAction* RS_ActionSetRelativeZero::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

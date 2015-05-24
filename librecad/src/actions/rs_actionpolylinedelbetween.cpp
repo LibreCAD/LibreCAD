@@ -38,7 +38,9 @@
 RS_ActionPolylineDelBetween::RS_ActionPolylineDelBetween(RS_EntityContainer& container,
                 RS_GraphicView& graphicView)
                 :RS_PreviewActionInterface("Delete between two nodes",
-                                                   container, graphicView) {}
+												   container, graphicView) {
+	actionType=RS2::ActionPolylineDelBetween;
+}
 
 
 QAction* RS_ActionPolylineDelBetween::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

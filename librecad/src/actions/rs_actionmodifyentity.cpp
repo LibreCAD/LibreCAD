@@ -34,9 +34,10 @@
 
 RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :RS_ActionInterface("Modify Entity", container, graphicView) {
-
-    en = NULL;
+		:RS_ActionInterface("Modify Entity", container, graphicView)
+		,en(nullptr)
+{
+	actionType=RS2::ActionModifyEntity;
 }
 
 

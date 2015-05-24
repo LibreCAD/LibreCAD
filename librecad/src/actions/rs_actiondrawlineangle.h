@@ -57,10 +57,6 @@ public:
 	~RS_ActionDrawLineAngle();
 
 	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-	
-    virtual RS2::ActionType rtti() const{
-        return actionType;
-    }
 
     void reset();
 
@@ -82,39 +78,19 @@ public:
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 
-	void setSnapPoint(int sp) {
-		snpPoint = sp;
-	}
+	void setSnapPoint(int sp);
 
-	int getSnapPoint() {
-		return snpPoint;
-	}
+	int getSnapPoint() const;
 
-	void setAngle(double a) {
-		angle = a;
-	}
+	void setAngle(double a);
 
-	double getAngle() {
-		return angle;
-	}
+	double getAngle() const;
 
-	void setLength(double l) {
-		length = l;
-	}
+	void setLength(double l);
 
-	double getLength() {
-		return length;
-	}
+	double getLength() const;
 
-    bool hasFixedAngle() {
-        switch(rtti()){
-        case RS2::ActionDrawLineHorizontal:
-        case RS2::ActionDrawLineVertical:
-            return true;
-        default:
-            return false;
-        }
-    }
+	bool hasFixedAngle() const;
 
 protected:
     /**
@@ -140,8 +116,7 @@ protected:
     /**
      * Snap point (start, middle, end).
      */
-    int snpPoint;
-    RS2::ActionType actionType;
+	int snpPoint;
 };
 
 #endif

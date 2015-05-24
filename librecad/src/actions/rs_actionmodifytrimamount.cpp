@@ -34,15 +34,16 @@
 #include "rs_math.h"
 
 RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_ActionInterface("Trim Entity by a given amount",
-                    container, graphicView) {
-
-    trimEntity = NULL;
-    trimCoord = RS_Vector(false);
-    distance = 0.0;
-    byTotal = false;
+		RS_EntityContainer& container,
+		RS_GraphicView& graphicView)
+	:RS_ActionInterface("Trim Entity by a given amount",
+						container, graphicView)
+	,trimEntity(nullptr)
+	,trimCoord(false)
+	,distance(0.0)
+	,byTotal(false)
+{
+	actionType=RS2::ActionModifyTrimAmount;
 }
 
 QAction* RS_ActionModifyTrimAmount::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

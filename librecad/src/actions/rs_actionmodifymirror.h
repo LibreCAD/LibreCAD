@@ -54,9 +54,6 @@ public:
 	~RS_ActionModifyMirror()=default;
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    RS2::ActionType rtti() const{
-        return RS2::ActionModifyMirror;
-    }
     virtual void init(int status=0);
     virtual void trigger();
 	virtual void coordinateEvent(RS_CoordinateEvent* e);

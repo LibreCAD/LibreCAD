@@ -36,7 +36,9 @@
 
 RS_ActionPolylineAppend::RS_ActionPolylineAppend(RS_EntityContainer& container,
 	RS_GraphicView& graphicView)
-	:RS_ActionDrawPolyline(container, graphicView) {}
+	:RS_ActionDrawPolyline(container, graphicView) {
+	actionType=RS2::ActionPolylineAppend;
+}
 
 QAction* RS_ActionPolylineAppend::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	QAction* action = new QAction(tr("A&ppend node"), NULL);

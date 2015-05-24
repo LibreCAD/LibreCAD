@@ -39,6 +39,7 @@ RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
 		,vertex(false)
 {
 	preview->setOwner(false);
+	actionType=RS2::ActionDrawLineFree;
 }
 
 RS_ActionDrawLineFree::~RS_ActionDrawLineFree() {}

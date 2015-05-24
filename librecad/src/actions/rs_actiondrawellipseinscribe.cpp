@@ -40,6 +40,7 @@ RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(
 						   container, graphicView)
 		,eData(new RS_EllipseData())
 {
+	actionType=RS2::ActionDrawEllipseInscribe;
 }
 
 RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe(){}

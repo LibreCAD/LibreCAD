@@ -66,10 +66,6 @@ public:
                       RS_GraphicView& graphicView);
     virtual ~RS_ActionDrawPolyline();
 
-	virtual RS2::ActionType rtti() const{
-		return RS2::ActionDrawPolyline;
-	}
-
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	
     void reset();
@@ -93,43 +89,21 @@ public:
 	void close();
 	void undo();
 
-    void setMode(SegmentMode m) {
-		Mode=m;
-	}
+	void setMode(SegmentMode m);
 
-	int getMode() {
-		return Mode;
-	}
+	int getMode() const;
 
-	void setRadius(double r) {
-        	Radius=r;
-	}
+	void setRadius(double r) ;
 
-        double getRadius() {
-		return Radius;
-        }
+	double getRadius() const;
 
-        void setAngle(double a) {
-        	Angle=a;
-	}
+	void setAngle(double a);
 
-        double getAngle() {
-        	return Angle;
-	}
+	double getAngle() const;
 
-	void setReversed( bool c) {
-		if (c)
-			Reversed = -1;
-		else
-			Reversed = 1;
-	}
+	void setReversed( bool c);
 
-	bool isReversed() {
-		if(Reversed==-1)
-		  return true;
-		else
-		  return false;
-	}
+	bool isReversed() const;
 
 	double solveBulge(RS_Vector mouse);
 
@@ -137,7 +111,7 @@ protected:
     double Radius;
     double Angle;
     SegmentMode Mode;
-    int Reversed;
+	int m_Reversed;
     bool calculatedSegment;
 
     /**

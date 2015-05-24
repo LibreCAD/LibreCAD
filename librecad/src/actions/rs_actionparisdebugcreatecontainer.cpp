@@ -39,6 +39,7 @@ RS_ActionPARISDebugCreateContainer::RS_ActionPARISDebugCreateContainer(
         : RS_ActionInterface("rs_actionparischeckcont",
                      container, graphicView) {
 
+	actionType=RS2::ActionPARISDebugCreateContainer;
     //QMessageBox::about(NULL, "info", "check container");
     RS_Document* theDoc = (RS_Document*) &container;
 

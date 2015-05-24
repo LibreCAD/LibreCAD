@@ -43,6 +43,7 @@ RS_ActionDrawCircleCR::RS_ActionDrawCircleCR(RS_EntityContainer& container,
 						   container, graphicView)
 		,data(new RS_CircleData())
 {
+	actionType=RS2::ActionDrawCircleCR;
 
     reset();
 }

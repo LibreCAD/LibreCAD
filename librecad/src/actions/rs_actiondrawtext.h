@@ -56,10 +56,6 @@ public:
 
         static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-        virtual RS2::ActionType rtti() const{
-                return RS2::ActionDrawText;
-        }
-
     virtual void init(int status=0);
 
         void reset();

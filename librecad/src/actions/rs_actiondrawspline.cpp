@@ -43,6 +43,7 @@ RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
 	,data(new RS_SplineData(3, false))
 	,spline(nullptr)
 {
+	actionType=RS2::ActionDrawSpline;
 	reset();
 }
 

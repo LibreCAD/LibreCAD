@@ -42,6 +42,7 @@ RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(RS_EntityContainer& conta
 							   container, graphicView)
 	,data(new RS_ArcData())
 {
+	actionType=RS2::ActionDrawArcTangential;
     reset();
 }
 

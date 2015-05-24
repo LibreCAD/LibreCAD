@@ -47,9 +47,6 @@ public:
 	RS_ActionPolylineEquidistant(RS_EntityContainer& container,
 						RS_GraphicView& graphicView);
 	~RS_ActionPolylineEquidistant()=default;
-	virtual RS2::ActionType rtti() const{
-		return RS2::ActionPolylineEquidistant;
-	}
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
@@ -70,7 +67,7 @@ public:
 		dist = d;
 	}
 
-	double getDist() {
+	double getDist() const{
 		return dist;
 	}
 
@@ -78,7 +75,7 @@ public:
 		number = n;
 	}
 
-	int getNumber() {
+	int getNumber() const{
 		return number;
 	}
 

@@ -43,6 +43,7 @@ RS_ActionDrawCircleTan3::RS_ActionDrawCircleTan3(
 							   container, graphicView),
 	  cData(new RS_CircleData(RS_Vector(0.,0.),1.))
 {
+	actionType=RS2::ActionDrawCircleTan3;
 }
 
 QAction* RS_ActionDrawCircleTan3::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

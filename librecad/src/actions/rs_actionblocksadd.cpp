@@ -33,7 +33,9 @@
 
 RS_ActionBlocksAdd::RS_ActionBlocksAdd(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Add Block", container, graphicView) {}
+		:RS_ActionInterface("Add Block", container, graphicView) {
+	actionType = RS2::ActionBlocksAdd;
+}
 
 
 

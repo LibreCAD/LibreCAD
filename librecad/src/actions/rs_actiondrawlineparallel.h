@@ -53,10 +53,6 @@ public:
 
 	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 	
-	virtual RS2::ActionType rtti() const{
-        return actionType;
-	}
-
     virtual void trigger();
 	
     virtual void mouseMoveEvent(QMouseEvent* e);
@@ -72,21 +68,13 @@ public:
     virtual void updateMouseCursor();
 //    virtual void updateToolBar();
 
-	double getDistance() const{
-		return distance;
-	}
+	double getDistance() const;
 
-	void setDistance(double d) {
-		distance = d;
-	}
+	void setDistance(double d);
 
-	int getNumber() const{
-		return number;
-	}
+	int getNumber() const;
 
-	void setNumber(int n) {
-		number = n;
-	}
+	void setNumber(int n);
 
 private:
     /** Closest parallel. */

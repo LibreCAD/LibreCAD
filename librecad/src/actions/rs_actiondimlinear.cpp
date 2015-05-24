@@ -46,18 +46,16 @@
 RS_ActionDimLinear::RS_ActionDimLinear(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView,
                                        double angle,
-									   bool _fixedAngle, RS2::ActionType type)
+									   bool _fixedAngle, RS2::ActionType /*type*/)
         :RS_ActionDimension("Draw linear dimensions",
                     container, graphicView)
 		,edata(new RS_DimLinearData(RS_Vector(0., 0.), RS_Vector(0., 0.), angle, 0.))
 		,fixedAngle(_fixedAngle)
-		,actionType(type)
+		,lastStatus(SetExtPoint1)
 {
-
-
-    lastStatus = SetExtPoint1;
-
-    reset();
+	//TODO: fix dim linear type logic: whether it's for linear only, or should cover horizontal/vertical dim types
+	actionType=RS2::ActionDimLinear;
+	reset();
 }
 
 
@@ -93,17 +91,6 @@ QAction* RS_ActionDimLinear::createGUIAction(RS2::ActionType type, QObject* /*pa
     }
 
     return action;
-}
-
-RS2::ActionType RS_ActionDimLinear::rtti() const{
-    return actionType;
-//    if(fixedAngle){
-//        if( fabs(RS_Math::getAngleDifference(0.,data.angle)) < RS_TOLERANCE )
-//            return RS2::ActionDimLinearHor;
-//        else
-//            return RS2::ActionDimLinearVer;
-//    }
-//    return RS2::ActionDimLinear;
 }
 
 void RS_ActionDimLinear::reset() {

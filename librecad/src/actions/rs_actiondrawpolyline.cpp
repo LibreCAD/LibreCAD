@@ -44,8 +44,10 @@
 RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw polylines",
-                           container, graphicView) {
-    Reversed=1;
+						   container, graphicView)
+		,m_Reversed(1)
+{
+	actionType=RS2::ActionDrawPolyline;
     reset();
 }
 
@@ -232,7 +234,7 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
         b=tan(Reversed*Angle*M_PI/720.0);
         break;*/
     case Ang:
-        b=tan(Reversed*Angle*M_PI/720.0);
+		b=tan(m_Reversed*Angle*M_PI/720.0);
         suc = arc.createFrom2PBulge(point,mouse,b);
         if (suc)
 			arc_data.reset(new RS_ArcData(arc.getData()));
@@ -311,6 +313,37 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
     }
 }
 
+void RS_ActionDrawPolyline::setMode(SegmentMode m) {
+	Mode=m;
+}
+
+int RS_ActionDrawPolyline::getMode() const{
+	return Mode;
+}
+
+void RS_ActionDrawPolyline::setRadius(double r) {
+	Radius=r;
+}
+
+double RS_ActionDrawPolyline::getRadius() const{
+	return Radius;
+}
+
+void RS_ActionDrawPolyline::setAngle(double a) {
+	Angle=a;
+}
+
+double RS_ActionDrawPolyline::getAngle() const{
+	return Angle;
+}
+
+void RS_ActionDrawPolyline::setReversed( bool c) {
+	m_Reversed=c?-1:1;
+}
+
+bool RS_ActionDrawPolyline::isReversed() const{
+	return m_Reversed==-1;
+}
 
 
 void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e) {

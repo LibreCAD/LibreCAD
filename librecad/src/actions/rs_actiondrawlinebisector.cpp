@@ -47,6 +47,7 @@ RS_ActionDrawLineBisector::RS_ActionDrawLineBisector(
 		,coord2(false)
 		,lastStatus(SetLine1)
 {
+	actionType=RS2::ActionDrawLineBisector;
 }
 
 QAction* RS_ActionDrawLineBisector::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

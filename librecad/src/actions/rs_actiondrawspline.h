@@ -53,10 +53,6 @@ public:
                       RS_GraphicView& graphicView);
     virtual ~RS_ActionDrawSpline();
 
-	virtual RS2::ActionType rtti() const{
-		return RS2::ActionDrawSpline;
-	}
-
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
     void reset();

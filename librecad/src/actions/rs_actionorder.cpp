@@ -36,8 +36,10 @@
 RS_ActionOrder::RS_ActionOrder(RS_EntityContainer& container,
         RS_GraphicView& graphicView, RS2::ActionType type)
         :RS_PreviewActionInterface("Sort Entities",
-                           container, graphicView) {
-    orderType = type;
+						   container, graphicView)
+		,orderType(type)
+{
+	actionType=RS2::ActionOrderBottom;
 }
 
 

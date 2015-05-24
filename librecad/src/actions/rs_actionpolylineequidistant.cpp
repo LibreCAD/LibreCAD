@@ -42,6 +42,7 @@ RS_ActionPolylineEquidistant::RS_ActionPolylineEquidistant(RS_EntityContainer& c
 	,dist(1.)
 	,number(1)
 {
+	actionType=RS2::ActionPolylineEquidistant;
 }
 
 

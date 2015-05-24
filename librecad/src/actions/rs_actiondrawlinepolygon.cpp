@@ -36,12 +36,12 @@
 RS_ActionDrawLinePolygonCenCor::RS_ActionDrawLinePolygonCenCor(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Polygons (Center,Corner)", container, graphicView) {
-
-    center = RS_Vector(false);
-    corner = RS_Vector(false);
-
-    number = 3;
+		:RS_PreviewActionInterface("Draw Polygons (Center,Corner)", container, graphicView)
+		,center(false)
+		,corner(false)
+		,number(3)
+{
+	actionType=RS2::ActionDrawLinePolygonCenCor;
 }
 
 QAction* RS_ActionDrawLinePolygonCenCor::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

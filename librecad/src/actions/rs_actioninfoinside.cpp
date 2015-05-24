@@ -34,23 +34,21 @@
 
 
 RS_ActionInfoInside::RS_ActionInfoInside(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Info Inside",
-                    container, graphicView) {
-
-    contour = new RS_EntityContainer(NULL, false);
-
+										 RS_GraphicView& graphicView)
+	:RS_ActionInterface("Info Inside",
+						container, graphicView)
+	,contour(new RS_EntityContainer(nullptr, false))
+{
+	actionType=RS2::ActionInfoInside;
 	for(auto e: container){
-        if (e->isSelected()) {
-            contour->addEntity(e);
-        }
-    }
+		if (e->isSelected()) {
+			contour->addEntity(e);
+		}
+	}
 }
 
 
-RS_ActionInfoInside::~RS_ActionInfoInside() {
-    delete contour;
-}
+RS_ActionInfoInside::~RS_ActionInfoInside() {}
 
 
 QAction* RS_ActionInfoInside::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
@@ -65,7 +63,7 @@ QAction* RS_ActionInfoInside::createGUIAction(RS2::ActionType /*type*/, QObject*
 
 void RS_ActionInfoInside::trigger() {
     bool onContour = false;
-    if (RS_Information::isPointInsideContour(pt, contour, &onContour)) {
+	if (RS_Information::isPointInsideContour(pt, contour.get(), &onContour)) {
         RS_DIALOGFACTORY->commandMessage(tr("Point is inside selected contour."));
     } else {
         RS_DIALOGFACTORY->commandMessage(tr("Point is outside selected contour."));

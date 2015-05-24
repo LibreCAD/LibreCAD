@@ -34,21 +34,20 @@
 #include "rs_coordinateevent.h"
 
 RS_ActionModifyStretch::RS_ActionModifyStretch(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Stretch Entities",
-                           container, graphicView) {
-
-    firstCorner = RS_Vector(false);
-    secondCorner = RS_Vector(false);
-    referencePoint = RS_Vector(false);
-    targetPoint = RS_Vector(false);
+											   RS_GraphicView& graphicView)
+	:RS_PreviewActionInterface("Stretch Entities",
+							   container, graphicView)
+	,firstCorner(false)
+	,secondCorner(false)
+	,referencePoint(false)
+	,targetPoint(false)
+{
+	actionType=RS2::ActionModifyStretch;
 }
 
 QAction* RS_ActionModifyStretch::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
         // tr("Stretch")
-    QAction* action = new QAction(tr("&Stretch"), NULL);
-        action->setIcon(QIcon(":/extui/modifystretch.png"));
-    //action->zetStatusTip(tr("Stretch Entities"));
+	QAction* action = new QAction(QIcon(":/extui/modifystretch.png"), tr("&Stretch"), NULL);
     return action;
 }
 

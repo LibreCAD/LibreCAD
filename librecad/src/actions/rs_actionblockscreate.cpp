@@ -41,9 +41,10 @@
 RS_ActionBlocksCreate::RS_ActionBlocksCreate(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Blocks Create",
-                           container, graphicView) {
-
-    referencePoint = RS_Vector(false);
+						   container, graphicView)
+		,referencePoint(false)
+{
+	actionType=RS2::ActionBlocksCreate;
 }
 
 

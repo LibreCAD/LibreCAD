@@ -41,6 +41,7 @@ RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 	,point(false)
 	,circle(nullptr)
 {
+	actionType=RS2::ActionDrawLineTangent1;
 }
 
 RS_ActionDrawLineTangent1::~RS_ActionDrawLineTangent1(){}

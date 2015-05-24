@@ -38,7 +38,9 @@
 RS_ActionPolylineTrim::RS_ActionPolylineTrim(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Trim segments",
-                           container, graphicView) {}
+						   container, graphicView) {
+	actionType=RS2::ActionPolylineTrim;
+}
 
 
 QAction* RS_ActionPolylineTrim::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

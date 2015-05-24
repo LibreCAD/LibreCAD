@@ -34,7 +34,9 @@
 RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Move Entities",
-                           container, graphicView) {}
+						   container, graphicView) {
+	actionType=RS2::ActionModifyMove;
+}
 
 
 QAction* RS_ActionModifyMove::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

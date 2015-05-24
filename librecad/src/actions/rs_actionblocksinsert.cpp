@@ -41,13 +41,14 @@
  * Constructor.
  */
 RS_ActionBlocksInsert::RS_ActionBlocksInsert(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Blocks Insert",
-						   container, graphicView)
-,block(NULL)
+											 RS_GraphicView& graphicView)
+	:RS_PreviewActionInterface("Blocks Insert",
+							   container, graphicView)
+	,block(nullptr)
+	,lastStatus(SetUndefined)
 {
-    reset();    // init data Member
-    lastStatus = SetUndefined;
+	actionType = RS2::ActionBlocksInsert;
+	reset();    // init data Member
 }
 
 

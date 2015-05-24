@@ -51,10 +51,6 @@ public:
 	~RS_ActionDimDiametric();
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-	
-	virtual RS2::ActionType rtti() const{
-		return RS2::ActionDimDiametric;
-	}
 
 	virtual void reset();
 	

@@ -38,6 +38,7 @@ RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw rectangles",
                            container, graphicView) {
+	actionType=RS2::ActionDrawLineRectangle;
     reset();
 }
 

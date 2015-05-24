@@ -43,6 +43,7 @@ RS_ActionDrawLineOrthTan::RS_ActionDrawLineOrthTan(
 	,tangent(nullptr)
 	,circle(nullptr)
 {
+	actionType=RS2::ActionDrawLineOrthTan;
 }
 
 

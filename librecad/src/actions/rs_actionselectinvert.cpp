@@ -34,6 +34,7 @@ RS_ActionSelectInvert::RS_ActionSelectInvert(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Invert Selection",
                     container, graphicView) {
+	actionType=RS2::ActionSelectInvert;
 }
 
 

@@ -38,7 +38,9 @@
 RS_ActionPolylineSegment::RS_ActionPolylineSegment(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Create Polyline Existing from Segments",
-                           container, graphicView) {}
+						   container, graphicView) {
+	actionType=RS2::ActionPolylineSegment;
+}
 
 
 QAction* RS_ActionPolylineSegment::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
