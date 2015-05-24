@@ -678,6 +678,7 @@ void QC_ApplicationWindow::initActions(void)
     menu->addSeparator();
 
 	action= actionFactory.addGUI(menu, fileToolBar, this, RS2::ActionFilePrintPreview);
+	connect(this, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
 	action= actionFactory.addGUI(menu, fileToolBar, this, RS2::ActionFilePrint);
 	connect(this, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
 
