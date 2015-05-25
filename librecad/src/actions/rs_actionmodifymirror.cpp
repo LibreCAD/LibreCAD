@@ -31,42 +31,39 @@
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
+#include "rs_modification.h"
 
 RS_ActionModifyMirror::RS_ActionModifyMirror(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Mirror Entities",
-						   container, graphicView) {
+						   container, graphicView)
+		,data(new RS_MirrorData())
+{
 	actionType=RS2::ActionModifyMirror;
 }
 
+RS_ActionModifyMirror::~RS_ActionModifyMirror(){}
+
 QAction* RS_ActionModifyMirror::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Mirror"
-    QAction* action = new QAction(tr("&Mirror"), NULL);
-        action->setIcon(QIcon(":/extui/modifymirror.png"));
-    //action->zetStatusTip(tr("Mirror Entities"));
+	QAction* action = new QAction(QIcon(":/extui/modifymirror.png"), tr("&Mirror"), NULL);
     return action;
 }
-
 
 void RS_ActionModifyMirror::init(int status) {
     RS_ActionInterface::init(status);
 }
-
-
 
 void RS_ActionModifyMirror::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyMirror::trigger()");
 
     RS_Modification m(*container, graphicView);
-    m.mirror(data);
+	m.mirror(*data);
 
     if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
 }
-
-
 
 void RS_ActionModifyMirror::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyMirror::mouseMoveEvent begin");
@@ -104,8 +101,6 @@ void RS_ActionModifyMirror::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyMirror::mouseMoveEvent end");
 }
 
-
-
 void RS_ActionModifyMirror::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
@@ -116,8 +111,6 @@ void RS_ActionModifyMirror::mouseReleaseEvent(QMouseEvent* e) {
         init(getStatus()-1);
     }
 }
-
-
 
 void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent* e) {
     if (e==NULL) {
@@ -138,9 +131,9 @@ void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent* e) {
             setStatus(ShowDialog);
                 graphicView->moveRelativeZero(mouse);
             if (RS_DIALOGFACTORY) {
-                if (RS_DIALOGFACTORY->requestMirrorDialog(data)) {
-                    data.axisPoint1 = axisPoint1;
-                    data.axisPoint2 = axisPoint2;
+				if (RS_DIALOGFACTORY->requestMirrorDialog(*data)) {
+					data->axisPoint1 = axisPoint1;
+					data->axisPoint2 = axisPoint2;
                     deletePreview();
                     trigger();
                     finish(false);
@@ -152,8 +145,6 @@ void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent* e) {
             break;
         }
 }
-
-
 
 void RS_ActionModifyMirror::updateMouseButtonHints() {
     if (RS_DIALOGFACTORY) {
@@ -178,8 +169,6 @@ void RS_ActionModifyMirror::updateMouseButtonHints() {
         }
     }
 }
-
-
 
 void RS_ActionModifyMirror::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);

@@ -28,8 +28,8 @@
 #define RS_ACTIONMODIFYROTATE_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_modification.h"
 
+class RS_RotateData;
 
 /**
  * This action class can handle user events to move entities.
@@ -52,7 +52,7 @@ public:
 public:
     RS_ActionModifyRotate(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-    ~RS_ActionModifyRotate() = default;
+	~RS_ActionModifyRotate();
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     virtual void init(int status=0);
@@ -68,7 +68,7 @@ public:
     virtual void updateMouseCursor();
 
 private:
-    RS_RotateData data;
+	std::unique_ptr<RS_RotateData> data;
 };
 
 #endif

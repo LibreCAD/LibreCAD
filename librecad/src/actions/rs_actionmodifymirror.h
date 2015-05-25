@@ -28,8 +28,8 @@
 #define RS_ACTIONMODIFYMIRROR_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_modification.h"
 
+class RS_MirrorData;
 
 /**
  * This action class can handle user events to mirror entities.
@@ -51,7 +51,7 @@ public:
 public:
     RS_ActionModifyMirror(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-	~RS_ActionModifyMirror()=default;
+	~RS_ActionModifyMirror();
 	
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     virtual void init(int status=0);
@@ -63,7 +63,7 @@ public:
     virtual void updateMouseCursor();
 
 private:
-    RS_MirrorData data;
+	std::unique_ptr<RS_MirrorData> data;
     RS_Vector axisPoint1;
     RS_Vector axisPoint2;
 };

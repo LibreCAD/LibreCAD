@@ -32,6 +32,7 @@
 #include "rs_commandevent.h"
 #include "rs_information.h"
 #include "rs_math.h"
+#include "rs_modification.h"
 
 RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -41,15 +42,15 @@ RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
 		,entity2(nullptr)
 		,coord1(false)
 		,coord2(false)
+		,data(new RS_RoundData())
 {
 	actionType=RS2::ActionModifyRound;
 }
 
+RS_ActionModifyRound::~RS_ActionModifyRound(){}
+
 QAction* RS_ActionModifyRound::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // (tr("Round")
-        QAction* action = new QAction(tr("&Fillet"), NULL);
-        action->setIcon(QIcon(":/extui/modifyround.png"));
-    //action->zetStatusTip(tr("Round Entities"));
+		QAction* action = new QAction(QIcon(":/extui/modifyround.png"), tr("&Fillet"), NULL);
         return action;
 }
 
@@ -78,13 +79,13 @@ void RS_ActionModifyRound::trigger() {
                 (RS_AtomicEntity*)entity1,
                 coord2,
                 (RS_AtomicEntity*)entity2,
-                data);
+				*data);
 
         //coord = RS_Vector(false);
         coord1 = RS_Vector(false);
-        entity1 = NULL;
+		entity1 = nullptr;
         coord2 = RS_Vector(false);
-        entity2 = NULL;
+		entity2 = nullptr;
         setStatus(SetEntity1);
 
         if (RS_DIALOGFACTORY) {
@@ -124,16 +125,16 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent* e) {
             preview->addEntity(tmp1);
             preview->addEntity(tmp2);
 
-            bool trim = data.trim;
-            data.trim = false;
+			bool trim = data->trim;
+			data->trim = false;
             RS_Modification m(*preview, NULL, false);
             m.round(coord2,
                     coord1,
                     (RS_AtomicEntity*)tmp1,
                     coord2,
                     (RS_AtomicEntity*)tmp2,
-                    data);
-            data.trim = trim;
+					*data);
+			data->trim = trim;
 
             preview->removeEntity(tmp1);
             preview->removeEntity(tmp2);
@@ -208,7 +209,7 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
             deletePreview();
             lastStatus = (Status)getStatus();
             setStatus(SetTrim);
-            data.trim = !data.trim;
+			data->trim = !data->trim;
             if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->requestOptions(this, true, true);
             }
@@ -220,7 +221,7 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
             double r = RS_Math::eval(c, &ok);
             if (ok) {
                 e->accept();
-                data.radius = r;
+				data->radius = r;
             } else {
                 if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
@@ -235,9 +236,9 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
 
         /*case SetTrim: {
         if (c==cmdYes.lower() || c==cmdYes2) {
-        data.trim = true;
+		data->trim = true;
     } else if (c==cmdNo.lower() || c==cmdNo2) {
-        data.trim = false;
+		data->trim = false;
                 } else {
                     RS_DIALOGFACTORY->commandMessage(tr("Please enter 'Yes' "
                "or 'No'"));
@@ -270,19 +271,19 @@ QStringList RS_ActionModifyRound::getAvailableCommands() {
 
 
 void RS_ActionModifyRound::setRadius(double r) {
-	data.radius = r;
+	data->radius = r;
 }
 
 double RS_ActionModifyRound::getRadius() const{
-	return data.radius;
+	return data->radius;
 }
 
 void RS_ActionModifyRound::setTrim(bool t) {
-	data.trim = t;
+	data->trim = t;
 }
 
 bool RS_ActionModifyRound::isTrimOn() const{
-	return data.trim;
+	return data->trim;
 }
 
 void RS_ActionModifyRound::showOptions() {

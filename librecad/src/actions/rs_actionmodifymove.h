@@ -28,8 +28,8 @@
 #define RS_ACTIONMODIFYMOVE_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_modification.h"
 
+class RS_MoveData;
 
 /**
  * This action class can handle user events to move entities.
@@ -37,38 +37,38 @@
  * @author Andrew Mustun
  */
 class RS_ActionModifyMove : public RS_PreviewActionInterface {
-        Q_OBJECT
+	Q_OBJECT
 public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetReferencePoint,    /**< Setting the reference point. */
-        SetTargetPoint,       /**< Setting the target point. */
-        ShowDialog            /**< Showing the options dialog. */
-    };
+	/**
+	 * Action States.
+	 */
+	enum Status {
+		SetReferencePoint,    /**< Setting the reference point. */
+		SetTargetPoint,       /**< Setting the target point. */
+		ShowDialog            /**< Showing the options dialog. */
+	};
 
 public:
-    RS_ActionModifyMove(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-    ~RS_ActionModifyMove() = default;
+	RS_ActionModifyMove(RS_EntityContainer& container,
+						RS_GraphicView& graphicView);
+	~RS_ActionModifyMove();
 
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-    virtual void trigger();
+	virtual void trigger();
 
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	virtual void mouseMoveEvent(QMouseEvent* e);
+	virtual void mouseReleaseEvent(QMouseEvent* e);
 
-        virtual void coordinateEvent(RS_CoordinateEvent* e);
+	virtual void coordinateEvent(RS_CoordinateEvent* e);
 
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	virtual void updateMouseButtonHints();
+	virtual void updateMouseCursor();
 
 private:
-    RS_MoveData data;
-    RS_Vector referencePoint;
-    RS_Vector targetPoint;
+	std::unique_ptr<RS_MoveData> data;
+	RS_Vector referencePoint;
+	RS_Vector targetPoint;
 };
 
 #endif

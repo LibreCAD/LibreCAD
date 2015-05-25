@@ -32,20 +32,22 @@
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_modification.h"
 
 RS_ActionModifyMoveRotate::RS_ActionModifyMoveRotate(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Move and Rotate Entities",
-                           container, graphicView) {
+						   container, graphicView)
+		,data(new RS_MoveRotateData())
+{
 	actionType=RS2::ActionModifyMoveRotate;
 }
 
+RS_ActionModifyMoveRotate::~RS_ActionModifyMoveRotate(){}
+
 QAction* RS_ActionModifyMoveRotate::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Move and Rotate")
-    QAction* action = new QAction(tr("M&ove and Rotate"), NULL);
-        action->setIcon(QIcon(":/extui/modifymoverotate.png"));
-        //action->zetStatusTip(tr("Move and Rotate Entities"));
+	QAction* action = new QAction(QIcon(":/extui/modifymoverotate.png"), tr("M&ove and Rotate"), NULL);
     return action;
 }
 
@@ -60,7 +62,7 @@ void RS_ActionModifyMoveRotate::trigger() {
     RS_DEBUG->print("RS_ActionModifyMoveRotate::trigger()");
 
     RS_Modification m(*container, graphicView);
-    m.moveRotate(data);
+	m.moveRotate(*data);
 
     finish(false);
 
@@ -78,18 +80,18 @@ void RS_ActionModifyMoveRotate::mouseMoveEvent(QMouseEvent* e) {
         RS_Vector mouse = snapPoint(e);
         switch (getStatus()) {
         case SetReferencePoint:
-            data.referencePoint = mouse;
+			data->referencePoint = mouse;
             break;
 
         case SetTargetPoint:
-            if (data.referencePoint.valid) {
+			if (data->referencePoint.valid) {
                 targetPoint = mouse;
-                data.offset = targetPoint-data.referencePoint;
+				data->offset = targetPoint-data->referencePoint;
 
                 deletePreview();
                 preview->addSelectionFrom(*container);
-                preview->rotate(data.referencePoint, data.angle);
-                preview->move(data.offset);
+				preview->rotate(data->referencePoint, data->angle);
+				preview->move(data->offset);
                 drawPreview();
             }
             break;
@@ -125,7 +127,7 @@ void RS_ActionModifyMoveRotate::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetReferencePoint:
-        data.referencePoint = pos;
+		data->referencePoint = pos;
         setStatus(SetTargetPoint);
         break;
 
@@ -133,8 +135,8 @@ void RS_ActionModifyMoveRotate::coordinateEvent(RS_CoordinateEvent* e) {
         targetPoint = pos;
 
         setStatus(ShowDialog);
-        data.offset = targetPoint - data.referencePoint;
-        if (RS_DIALOGFACTORY->requestMoveRotateDialog(data)) {
+		data->offset = targetPoint - data->referencePoint;
+		if (RS_DIALOGFACTORY->requestMoveRotateDialog(*data)) {
             trigger();
             //finish();
         }
@@ -171,7 +173,7 @@ void RS_ActionModifyMoveRotate::commandEvent(RS_CommandEvent* e) {
             double a = RS_Math::eval(c, &ok);
             if (ok) {
                 e->accept();
-                data.angle = RS_Math::deg2rad(a);
+				data->angle = RS_Math::deg2rad(a);
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
             }
@@ -218,6 +220,13 @@ void RS_ActionModifyMoveRotate::hideOptions() {
     RS_ActionInterface::hideOptions();
 
     RS_DIALOGFACTORY->requestOptions(this, false);
+}
+
+void RS_ActionModifyMoveRotate::setAngle(double a) {
+	data->angle = a;
+}
+double RS_ActionModifyMoveRotate::getAngle() const{
+	return data->angle;
 }
 
 

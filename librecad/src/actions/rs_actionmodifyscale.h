@@ -28,8 +28,8 @@
 #define RS_ACTIONMODIFYSCALE_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_modification.h"
 
+class RS_ScaleData;
 
 /**
  * This action class can handle user events to move entities.
@@ -50,7 +50,7 @@ public:
 public:
     RS_ActionModifyScale(RS_EntityContainer& container,
                          RS_GraphicView& graphicView);
-    ~RS_ActionModifyScale() = default;
+	~RS_ActionModifyScale();
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     virtual void init(int status=0);
@@ -63,7 +63,7 @@ public:
     virtual void updateMouseCursor();
 
 private:
-    RS_ScaleData data;
+	std::unique_ptr<RS_ScaleData> data;
     RS_Vector referencePoint;
     RS_Vector targetPoint;
 };

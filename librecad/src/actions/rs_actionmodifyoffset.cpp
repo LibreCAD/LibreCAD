@@ -29,35 +29,29 @@
 
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-//#include "rs_commands.h"
-//#include "rs_commandevent.h"
 #include "rs_modification.h"
 
 
 RS_ActionModifyOffset::RS_ActionModifyOffset(RS_EntityContainer& container,
                                              RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Modify Offset",
-                               container, graphicView) {
+							   container, graphicView)
+	,data(new RS_OffsetData())
+{
 	actionType=RS2::ActionModifyOffset;
 
-    data.distance=0.;
-    data.number=1;
-    data.useCurrentAttributes = true;
-    data.useCurrentLayer = true;
+	data->distance=0.;
+	data->number=1;
+	data->useCurrentAttributes = true;
+	data->useCurrentLayer = true;
 }
-
-
 
 RS_ActionModifyOffset::~RS_ActionModifyOffset() {}
 
 QAction* RS_ActionModifyOffset::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action = new QAction(tr("&Offset"),NULL);
-    action->setIcon(QIcon(":/extui/arcspara.png"));//we need a new icon here
+	QAction* action = new QAction(QIcon(":/extui/arcspara.png"), tr("&Offset"),nullptr);
     return action;
 }
-
-
-
 
 void RS_ActionModifyOffset::init(int status) {
     RS_ActionInterface::init(status);
@@ -68,7 +62,7 @@ void RS_ActionModifyOffset::init(int status) {
 
 void RS_ActionModifyOffset::trigger() {
     RS_Modification m(*container, graphicView);
-    m.offset(data);
+	m.offset(*data);
     if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarModify);
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
@@ -80,24 +74,22 @@ void RS_ActionModifyOffset::trigger() {
 
 void RS_ActionModifyOffset::mouseMoveEvent(QMouseEvent* e) {
 //    RS_DEBUG->print("RS_ActionModifyOffset::mouseMoveEvent begin");
-    data.coord=snapPoint(e);
+	data->coord=snapPoint(e);
 
 
-	RS_EntityContainer ec(NULL,true);
+	RS_EntityContainer ec(nullptr,true);
 	for(auto en: *container){
         if(en->isSelected()) ec.addEntity(en->clone());
     }
     if(ec.isEmpty()) return;
-    RS_Modification m(ec, NULL, false);
-    m.offset(data);
+	RS_Modification m(ec, nullptr, false);
+	m.offset(*data);
 
     deletePreview();
     preview->addSelectionFrom(ec);
     drawPreview();
 
 }
-
-
 
 void RS_ActionModifyOffset::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
@@ -107,7 +99,6 @@ void RS_ActionModifyOffset::mouseReleaseEvent(QMouseEvent* e) {
         init(getStatus()-1);
     }
 }
-
 
 void RS_ActionModifyOffset::updateMouseButtonHints() {
     if (RS_DIALOGFACTORY) {
@@ -123,26 +114,20 @@ void RS_ActionModifyOffset::updateMouseButtonHints() {
     }
 }
 
-
-
 void RS_ActionModifyOffset::showOptions() {
     RS_ActionInterface::showOptions();
     if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestModifyOffsetOptions(data.distance, true);
+		RS_DIALOGFACTORY->requestModifyOffsetOptions(data->distance, true);
     }
 }
-
-
 
 void RS_ActionModifyOffset::hideOptions() {
     RS_ActionInterface::hideOptions();
 
     if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->requestModifyOffsetOptions(data.distance, false);
+		RS_DIALOGFACTORY->requestModifyOffsetOptions(data->distance, false);
     }
 }
-
-
 
 void RS_ActionModifyOffset::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);

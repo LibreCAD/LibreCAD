@@ -48,11 +48,8 @@ RS_ActionDimAngular::RS_ActionDimAngular(
 RS_ActionDimAngular::~RS_ActionDimAngular(){}
 
 QAction* RS_ActionDimAngular::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Angular"),
-    QAction* action = new QAction(tr("&Angular"), NULL);
-	action->setIcon(QIcon(":/extui/dimangular.png"));
-    //action->zetStatusTip(tr("Angular Dimension"));
-    return action;
+	QAction* action = new QAction(QIcon(":/extui/dimangular.png"), tr("&Angular"), NULL);
+	return action;
 }
 
 
@@ -310,7 +307,5 @@ void RS_ActionDimAngular::updateMouseButtonHints() {
         break;
     }
 }
-
-
 
 // EOF

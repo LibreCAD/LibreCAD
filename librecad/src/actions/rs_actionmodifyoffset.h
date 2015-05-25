@@ -30,7 +30,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define RS_ACTIONMODIFYOFFSET_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_modification.h"
+
+class RS_OffsetData;
 
 /**
  * This action class create entity by offset
@@ -74,6 +75,6 @@ public:
 
 protected:
 
-    RS_OffsetData data;
+	std::unique_ptr<RS_OffsetData> data;
 };
 #endif

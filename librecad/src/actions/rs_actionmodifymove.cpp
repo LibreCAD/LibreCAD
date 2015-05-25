@@ -30,29 +30,31 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_coordinateevent.h"
+#include "rs_modification.h"
 
 RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Move Entities",
-						   container, graphicView) {
+						   container, graphicView)
+		,data(new RS_MoveData())
+{
 	actionType=RS2::ActionModifyMove;
 }
 
 
 QAction* RS_ActionModifyMove::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("&Move / Copy")
-    QAction* action = new QAction(tr("&Move / Copy"),  NULL);
-        action->setIcon(QIcon(":/extui/modifymove.png"));
-    //action->zetStatusTip(tr("Move or copy entities one or multiple times"));
+	QAction* action = new QAction(QIcon(":/extui/modifymove.png"), tr("&Move / Copy"),  NULL);
     return action;
 }
+
+RS_ActionModifyMove::~RS_ActionModifyMove(){}
 
 void RS_ActionModifyMove::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyMove::trigger()");
 
     RS_Modification m(*container, graphicView);
-    m.move(data);
+	m.move(*data);
 
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     finish(false);
@@ -122,12 +124,12 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent* e) {
         targetPoint = pos;
         graphicView->moveRelativeZero(targetPoint);
         setStatus(ShowDialog);
-        if (RS_DIALOGFACTORY->requestMoveDialog(data)) {
-            if(data.number<0){
-                data.number=abs(data.number);
-                RS_DIALOGFACTORY->commandMessage(QString(tr("Invalid number of copies, use %1 ")).arg(data.number));
+		if (RS_DIALOGFACTORY->requestMoveDialog(*data)) {
+			if(data->number<0){
+				data->number=abs(data->number);
+				RS_DIALOGFACTORY->commandMessage(QString(tr("Invalid number of copies, use %1 ")).arg(data->number));
             }
-            data.offset = targetPoint - referencePoint;
+			data->offset = targetPoint - referencePoint;
             trigger();
         }
         break;

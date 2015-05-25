@@ -28,8 +28,8 @@
 #define RS_ACTIONMODIFYROTATE2_H
 
 #include "rs_previewactioninterface.h"
-#include "rs_modification.h"
 
+class RS_Rotate2Data;
 
 /**
  * This action class can handle user events to rotate entities around
@@ -52,7 +52,7 @@ public:
 public:
     RS_ActionModifyRotate2(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyRotate2() = default;
+	~RS_ActionModifyRotate2();
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     virtual void init(int status=0);
@@ -62,16 +62,13 @@ public:
 	
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
     virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	virtual QStringList getAvailableCommands();
 
-    //virtual void hideOptions();
-    //virtual void showOptions();
-	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 
 private:
-    RS_Rotate2Data data;
+	std::unique_ptr<RS_Rotate2Data> data;
 };
 
 #endif
