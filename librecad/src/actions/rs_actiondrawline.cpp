@@ -60,8 +60,6 @@ QAction* RS_ActionDrawLine::createGUIAction(RS2::ActionType /*type*/, QObject* /
     return action;
 }
 
-
-
 void RS_ActionDrawLine::reset() {
 	RS_DEBUG->print("RS_ActionDrawLine::reset");
 	data.reset(new RS_LineData());
@@ -71,8 +69,6 @@ void RS_ActionDrawLine::reset() {
     RS_DEBUG->print("RS_ActionDrawLine::reset: OK");
 }
 
-
-
 void RS_ActionDrawLine::init(int status) {
     RS_DEBUG->print("RS_ActionDrawLine::init");
     RS_PreviewActionInterface::init(status);
@@ -81,8 +77,6 @@ void RS_ActionDrawLine::init(int status) {
     drawSnapper();
     RS_DEBUG->print("RS_ActionDrawLine::init: OK");
 }
-
-
 
 void RS_ActionDrawLine::trigger() {
     RS_PreviewActionInterface::trigger();
@@ -155,8 +149,6 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
     //    RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent end");
 }
 
-
-
 void RS_ActionDrawLine::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_Vector snapped = snapPoint(e);
@@ -171,8 +163,6 @@ void RS_ActionDrawLine::mouseReleaseEvent(QMouseEvent* e) {
         init(getStatus()-1);
     }
 }
-
-
 
 void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent");
@@ -211,8 +201,6 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e) {
     }
     RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent: OK");
 }
-
-
 
 void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLine::commandEvent");
@@ -256,8 +244,6 @@ void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e) {
     //    RS_DEBUG->print("RS_ActionDrawLine::commandEvent: OK");
 }
 
-
-
 QStringList RS_ActionDrawLine::getAvailableCommands() {
     QStringList cmd;
 	if(historyIndex+1<(int) history.size()) {
@@ -281,8 +267,6 @@ QStringList RS_ActionDrawLine::getAvailableCommands() {
 
     return cmd;
 }
-
-
 
 void RS_ActionDrawLine::updateMouseButtonHints() {
     if(RS_DIALOGFACTORY != NULL){
@@ -324,7 +308,6 @@ void RS_ActionDrawLine::updateMouseButtonHints() {
     }
 }
 
-
 void RS_ActionDrawLine::showOptions() {
     RS_DEBUG->print("RS_ActionDrawLine::showOptions");
     if(RS_DIALOGFACTORY != NULL){
@@ -334,8 +317,6 @@ void RS_ActionDrawLine::showOptions() {
     }
     RS_DEBUG->print("RS_ActionDrawLine::showOptions: OK");
 }
-
-
 
 void RS_ActionDrawLine::hideOptions() {
     if(RS_DIALOGFACTORY != NULL){
@@ -392,6 +373,7 @@ void RS_ActionDrawLine::undo() {
         setStatus(SetStartpoint);
     }
 }
+
 void RS_ActionDrawLine::redo() {
 	if ((int) history.size()>historyIndex+1) {
         historyIndex++;

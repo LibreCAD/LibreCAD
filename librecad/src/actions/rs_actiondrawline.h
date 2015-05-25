@@ -38,62 +38,62 @@ struct RS_LineData;
  * @author Andrew Mustun
  */
 class RS_ActionDrawLine : public RS_PreviewActionInterface {
-        Q_OBJECT
+	Q_OBJECT
 public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetStartpoint,   /**< Setting the startpoint.  */
-        SetEndpoint      /**< Setting the endpoint. */
-    };
+	/**
+	 * Action States.
+	 */
+	enum Status {
+		SetStartpoint,   /**< Setting the startpoint.  */
+		SetEndpoint      /**< Setting the endpoint. */
+	};
 
 public:
-    RS_ActionDrawLine(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
+	RS_ActionDrawLine(RS_EntityContainer& container,
+					  RS_GraphicView& graphicView);
 	virtual ~RS_ActionDrawLine();
 
-        static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-    void reset();
+	void reset();
 
-    virtual void init(int status=0);
-    virtual void trigger();
+	virtual void init(int status=0);
+	virtual void trigger();
 
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	virtual void mouseMoveEvent(QMouseEvent* e);
+	virtual void mouseReleaseEvent(QMouseEvent* e);
 
-        virtual void coordinateEvent(RS_CoordinateEvent* e);
-    virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	virtual void coordinateEvent(RS_CoordinateEvent* e);
+	virtual void commandEvent(RS_CommandEvent* e);
+	virtual QStringList getAvailableCommands();
 
-        virtual void showOptions();
-        virtual void hideOptions();
+	virtual void showOptions();
+	virtual void hideOptions();
 
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
-    void addHistory(const RS_Vector& v);//add history after the current point
+	virtual void updateMouseButtonHints();
+	virtual void updateMouseCursor();
+	void addHistory(const RS_Vector& v);//add history after the current point
 
-        void close();
-        void undo();
-        void redo();
+	void close();
+	void undo();
+	void redo();
 
 protected:
-    RS_Vector snapToAngle(const RS_Vector& currentCoord);
-     /**
-    * Line data defined so far.
-    */
+	RS_Vector snapToAngle(const RS_Vector& currentCoord);
+	/**
+	* Line data defined so far.
+	*/
 	std::unique_ptr<RS_LineData> data;
-        /**
-         * Start point of the series of lines. Used for close function.
-         */
-        RS_Vector start;
+	/**
+		 * Start point of the series of lines. Used for close function.
+		 */
+	RS_Vector start;
 
-        /**
-         * Point history (for undo)
-         */
-		int historyIndex;
-		std::vector<RS_Vector> history;
+	/**
+		 * Point history (for undo)
+		 */
+	int historyIndex;
+	std::vector<RS_Vector> history;
 
 };
 

@@ -33,18 +33,13 @@
 #include "rs_layer.h"
 #include "qg_layerwidget.h"
 
-
-
 RS_ActionLayersEdit::RS_ActionLayersEdit(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Edit Layer", container, graphicView) {}
 
 
 QAction* RS_ActionLayersEdit::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Edit Layer")
-    QAction* action = new QAction(tr("&Edit Layer"), NULL);
-    //action->zetStatusTip(tr("Edit Layer"));
-	action->setIcon(QIcon(":/ui/layeredit.png"));
+	QAction* action = new QAction(QIcon(":/ui/layeredit.png"), tr("&Edit Layer"), NULL);
     return action;
 }
 
@@ -78,8 +73,6 @@ void RS_ActionLayersEdit::trigger() {
 	graphicView->redraw(RS2::RedrawDrawing); 
 
 }
-
-
 
 void RS_ActionLayersEdit::init(int status) {
     RS_ActionInterface::init(status);

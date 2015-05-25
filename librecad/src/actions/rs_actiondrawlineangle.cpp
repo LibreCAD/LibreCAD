@@ -69,43 +69,27 @@ RS_ActionDrawLineAngle::~RS_ActionDrawLineAngle() {
 
 
 QAction* RS_ActionDrawLineAngle::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
-    QAction* action=NULL;
-
-        if (type==RS2::ActionDrawLineAngle) {
-                // tr("&Angle"),
-                // "Line: Angle"
-                action = new QAction(tr("&Angle"),  NULL);
-                action->setIcon(QIcon(":/extui/linesangle.png"));
-            //action->zetStatusTip(tr("Draw lines with a given angle"));
-        }
-        else if (type==RS2::ActionDrawLineHorizontal) {
-                    //  tr("Line: Horizontal"),
-            action = new QAction(tr("&Horizontal"),  NULL);
-                    action->setIcon(QIcon(":/extui/lineshor.png"));
-            //action->zetStatusTip(tr("Draw horizontal lines"));
-        }
-        else if (type==RS2::ActionDrawLineVertical) {
-                    // tr("H&orizontal / Vertical"),
-            action = new QAction(tr("Vertical"), NULL);
-                    action->setIcon(QIcon(":/extui/linesver.png"));
-            //action->zetStatusTip(tr("Draw vertical lines"));
-        }
-    return action;
+	switch (type){
+	case RS2::ActionDrawLineAngle:
+		return new QAction(QIcon(":/extui/linesangle.png"), tr("&Angle"), nullptr);
+	case RS2::ActionDrawLineHorizontal:
+		return new QAction(QIcon(":/extui/lineshor.png"), tr("&Horizontal"), nullptr);
+	case RS2::ActionDrawLineVertical:
+		return new QAction(QIcon(":/extui/linesver.png"), tr("Vertical"), nullptr);
+	default:
+		return nullptr;
+	}
 }
 
 void RS_ActionDrawLineAngle::reset() {
 	data.reset(new RS_LineData(RS_Vector(false), RS_Vector(false)));
 }
 
-
-
 void RS_ActionDrawLineAngle::init(int status) {
     RS_PreviewActionInterface::init(status);
 
     reset();
 }
-
-
 
 void RS_ActionDrawLineAngle::trigger() {
     RS_PreviewActionInterface::trigger();
@@ -129,8 +113,6 @@ void RS_ActionDrawLineAngle::trigger() {
                     line->getId());
 }
 
-
-
 void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineAngle::mouseMoveEvent begin");
 
@@ -145,8 +127,6 @@ void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
 
     RS_DEBUG->print("RS_ActionDrawLineAngle::mouseMoveEvent end");
 }
-
-
 
 void RS_ActionDrawLineAngle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
@@ -181,9 +161,8 @@ void RS_ActionDrawLineAngle::preparePreview() {
 	data.reset(new RS_LineData(p1, p2));
 }
 
-
 void RS_ActionDrawLineAngle::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (!e) {
         return;
     }
 
@@ -197,8 +176,6 @@ void RS_ActionDrawLineAngle::coordinateEvent(RS_CoordinateEvent* e) {
         break;
     }
 }
-
-
 
 void RS_ActionDrawLineAngle::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
@@ -252,7 +229,6 @@ void RS_ActionDrawLineAngle::commandEvent(RS_CommandEvent* e) {
         break;
     }
 }
-
 
 void RS_ActionDrawLineAngle::setSnapPoint(int sp) {
 	snpPoint = sp;
@@ -326,23 +302,17 @@ void RS_ActionDrawLineAngle::updateMouseButtonHints() {
     }
 }
 
-
-
 void RS_ActionDrawLineAngle::showOptions() {
     RS_ActionInterface::showOptions();
 
     RS_DIALOGFACTORY->requestOptions(this, true,true);
 }
 
-
-
 void RS_ActionDrawLineAngle::hideOptions() {
     RS_ActionInterface::hideOptions();
 
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
-
-
 
 void RS_ActionDrawLineAngle::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
