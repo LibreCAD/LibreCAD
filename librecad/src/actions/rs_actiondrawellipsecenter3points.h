@@ -67,10 +67,8 @@ public:
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 
-protected:
-    // 4 points on ellipse
-    RS_VectorSolutions points;
-	private:
+private:
+	RS_VectorSolutions points;
 	std::unique_ptr<RS_CircleData> cData;
 	std::unique_ptr<RS_EllipseData> eData;
     bool valid;

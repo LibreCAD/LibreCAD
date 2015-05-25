@@ -50,13 +50,9 @@ RS_ActionModifyBevel::RS_ActionModifyBevel(RS_EntityContainer& container,
 RS_ActionModifyBevel::~RS_ActionModifyBevel(){}
 
 QAction* RS_ActionModifyBevel::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Bevel")
-    QAction* action = new QAction(tr("&Bevel"),  NULL);
-        action->setIcon(QIcon(":/extui/modifybevel.png"));
-    //action->zetStatusTip(tr("Bevel Entities"));
+	QAction* action = new QAction(QIcon(":/extui/modifybevel.png"), tr("&Bevel"), nullptr);
     return action;
 }
-
 
 void RS_ActionModifyBevel::init(int status) {
     RS_ActionInterface::init(status);
@@ -64,8 +60,6 @@ void RS_ActionModifyBevel::init(int status) {
     //snapMode = RS2::SnapFree;
     snapMode.restriction = RS2::RestrictNothing;
 }
-
-
 
 void RS_ActionModifyBevel::trigger() {
 

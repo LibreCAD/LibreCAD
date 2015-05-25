@@ -313,8 +313,6 @@ void RS_ActionDrawEllipseCenter3Points::updateMouseButtonHints() {
     }
 }
 
-
-
 void RS_ActionDrawEllipseCenter3Points::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
