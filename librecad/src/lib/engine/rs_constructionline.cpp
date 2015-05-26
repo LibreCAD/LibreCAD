@@ -31,6 +31,26 @@
 #include "lc_quadratic.h"
 
 
+RS_ConstructionLineData::RS_ConstructionLineData():
+	point1(false),
+	point2(false)
+{}
+
+RS_ConstructionLineData::RS_ConstructionLineData(const RS_Vector& point1,
+						const RS_Vector& point2):
+	point1(point1)
+	,point2(point2)
+{
+}
+
+std::ostream& operator << (std::ostream& os,
+								  const RS_ConstructionLineData& ld)
+{
+	os << "(" << ld.point1 <<
+	"/" << ld.point2 <<
+	")";
+	return os;
+}
 
 /**
  * Constructor.
@@ -106,6 +126,32 @@ RS_Vector RS_ConstructionLine::getNearestCenter(const RS_Vector& /*coord*/,
     }
 
     return RS_Vector(false);
+}
+
+RS_Vector RS_ConstructionLine::getStartpoint() const {
+	return RS_Vector(false);
+}
+
+/**
+	 * @todo
+	 * @return End point of the entity.
+	 */
+RS_Vector RS_ConstructionLine::getEndpoint() const {
+	return RS_Vector(false);
+}
+
+/** @return Copy of data that defines the line. */
+RS_ConstructionLineData const& RS_ConstructionLine::getData() const {
+	return data;
+}
+
+/** @return First definition point. */
+RS_Vector const& RS_ConstructionLine::getPoint1() const {
+	return data.point1;
+}
+/** @return Second definition point. */
+RS_Vector const& RS_ConstructionLine::getPoint2() const {
+	return data.point2;
 }
 
 /** return the equation of the entity

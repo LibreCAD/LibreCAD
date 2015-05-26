@@ -120,6 +120,17 @@ QString RS_DimAligned::getMeasuredLabel() {
 }
 
 
+RS_DimAlignedData const& RS_DimAligned::getEData() const {
+	return edata;
+}
+
+RS_Vector const& RS_DimAligned::getExtensionPoint1() const {
+	return edata.extensionPoint1;
+}
+
+RS_Vector const& RS_DimAligned::getExtensionPoint2() const {
+	return edata.extensionPoint2;
+}
 
 /**
  * Updates the sub entities of this dimension. Called when the

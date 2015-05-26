@@ -80,9 +80,7 @@ public:
      * @return Copy of data that defines the aligned dimension.
      * @see getData()
      */
-    RS_DimAlignedData getEData() const {
-        return edata;
-    }
+	RS_DimAlignedData const& getEData() const;
 
 	virtual RS_VectorSolutions getRefPoints() const;
 
@@ -90,13 +88,9 @@ public:
 
     virtual void updateDim(bool autoText=false);
 
-    RS_Vector getExtensionPoint1() {
-        return edata.extensionPoint1;
-    }
+	RS_Vector const& getExtensionPoint1() const;
 
-    RS_Vector getExtensionPoint2() {
-        return edata.extensionPoint2;
-    }
+	RS_Vector const& getExtensionPoint2() const;
 
     /**
      * Recalculate the original Dimension Point to remove Dim oblique angle.
