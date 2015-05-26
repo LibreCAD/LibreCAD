@@ -3,7 +3,7 @@
  */
 
 #ifdef EMU_C99
-#include <assert.h>
+#include <cassert>
 
 long int lrint(double x);
 double round(double x);

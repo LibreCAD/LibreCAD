@@ -26,7 +26,7 @@
 
 #include <iostream>
 #include <QMap>
-#include <qapplication.h>
+#include <QApplication>
 #include <QTextCodec>
 #include <QTranslator>
 #include <QFileInfo>

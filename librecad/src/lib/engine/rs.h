@@ -38,7 +38,7 @@
 #define RS_TEST
 
 #ifdef RS_TEST
-#include <assert.h>
+#include <cassert>
 #endif
 
 // Windoze XP can't handle the original MAX/MINDOUBLE's

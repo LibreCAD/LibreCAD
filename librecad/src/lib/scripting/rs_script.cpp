@@ -27,9 +27,6 @@
 #include "rs_script.h"
 
 #include <iostream>
-//#include <values.h>
-
-
 
 /**
  * Constructor.

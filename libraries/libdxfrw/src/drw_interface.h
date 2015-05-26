@@ -13,7 +13,7 @@
 #ifndef DRW_INTERFACE_H
 #define DRW_INTERFACE_H
 
-#include <string.h>
+#include <cstring>
 
 #include "drw_entities.h"
 #include "drw_objects.h"

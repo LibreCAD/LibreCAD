@@ -95,5 +95,4 @@ private:
 };
 
 #endif
-
 // EOF

@@ -13,7 +13,7 @@
 
 #include "document_interface.h"
 #include "align.h"
-#include <math.h>
+#include <cmath>
 
 QString LC_Align::name() const
  {

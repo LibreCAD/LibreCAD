@@ -11,7 +11,7 @@
 ******************************************************************************/
 
 #include <iostream>
-#include <math.h>
+#include <cmath>
 #include "drw_objects.h"
 #include "intern/dxfreader.h"
 #include "intern/dxfwriter.h"

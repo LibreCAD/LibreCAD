@@ -15,11 +15,11 @@
 #include <fstream>
 #include <algorithm>
 #include <sstream>
+#include <cassert>
 #include "intern/drw_textcodec.h"
 #include "intern/dxfreader.h"
 #include "intern/dxfwriter.h"
 #include "intern/drw_dbg.h"
-#include <assert.h>
 
 #define FIRSTHANDLE 48
 

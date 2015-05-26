@@ -28,7 +28,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include <stdio.h>
+#include <cstdio>
 
 #include "dl_writer_ascii.h"
 #include "dl_exception.h"

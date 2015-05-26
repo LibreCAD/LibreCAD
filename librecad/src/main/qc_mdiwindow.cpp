@@ -190,7 +190,7 @@ void QC_MDIWindow::addChildWindow(QC_MDIWindow* w) {
  * @see addChildWindow
  */
 void QC_MDIWindow::removeChildWindow(QC_MDIWindow* w) {
-//    RS_DEBUG->print("RS_MDIWindoqapplication.h>w::removeChildWindow()");
+//    RS_DEBUG->print("%s %s()", __FILE__, __func__);
     if(childWindows.size()>0 ){
         if(childWindows.contains(w)){
             childWindows.removeAll(w);

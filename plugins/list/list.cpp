@@ -15,7 +15,7 @@
 #include <QColor>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
-#include <math.h>
+#include <cmath>
 #include "list.h"
 
 QString LC_List::name() const
