@@ -76,17 +76,6 @@ public:
         return RS2::EntityConstructionLine;
     }
 
-        /**
-         * @todo
-         * @return Start point of the entity.
-         */
-	virtual RS_Vector getStartpoint() const;
-    /**
-         * @todo
-         * @return End point of the entity.
-         */
-	virtual RS_Vector getEndpoint() const;
-
     /** @return Copy of data that defines the line. */
 	RS_ConstructionLineData const& getData() const;
 

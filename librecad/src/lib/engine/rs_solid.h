@@ -81,31 +81,17 @@ public:
         return RS2::EntitySolid;
     }
 
-    /**
-         * @return Start point of the entity.
-         */
-    virtual RS_Vector getStartpoint() const {
-        return RS_Vector(false);
-    }
-    /**
-         * @return End point of the entity.
-         */
-    virtual RS_Vector getEndpoint() const {
-        return RS_Vector(false);
-    }
-
-
     /** @return Copy of data that defines the point. */
-    RS_SolidData getData() const {
+	RS_SolidData const& getData() const {
         return data;
     }
 
     /** @return true if this is a triangle. */
-    bool isTriangle() {
+	bool isTriangle() const{
         return !data.corner[3].valid;
     }
 
-    RS_Vector getCorner(int num);
+	RS_Vector getCorner(int num) const;
 
     void shapeArrow(const RS_Vector& point,
                     double angle,

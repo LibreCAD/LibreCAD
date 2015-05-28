@@ -128,18 +128,6 @@ RS_Vector RS_ConstructionLine::getNearestCenter(const RS_Vector& /*coord*/,
     return RS_Vector(false);
 }
 
-RS_Vector RS_ConstructionLine::getStartpoint() const {
-	return RS_Vector(false);
-}
-
-/**
-	 * @todo
-	 * @return End point of the entity.
-	 */
-RS_Vector RS_ConstructionLine::getEndpoint() const {
-	return RS_Vector(false);
-}
-
 /** @return Copy of data that defines the line. */
 RS_ConstructionLineData const& RS_ConstructionLine::getData() const {
 	return data;

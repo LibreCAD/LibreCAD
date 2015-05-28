@@ -88,7 +88,7 @@ RS_Entity* RS_Solid::clone() const {
 /**
  * @return Corner number 'num'.
  */
-RS_Vector RS_Solid::getCorner(int num) {
+RS_Vector RS_Solid::getCorner(int num) const{
     if (num>=0 && num<4) {
         return data.corner[num];
     } else {
