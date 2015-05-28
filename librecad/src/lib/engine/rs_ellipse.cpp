@@ -198,7 +198,7 @@ RS_VectorSolutions RS_Ellipse::getFoci() const {
 RS_VectorSolutions RS_Ellipse::getRefPoints() const
 {
     RS_VectorSolutions ret;
-    if(isArc()){
+	if(isEllipticArc()){
         //no start/end point for whole ellipse
         ret.push_back(getStartpoint());
         ret.push_back(getEndpoint());
@@ -346,7 +346,7 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
                                      const RS_Vector& coord,
 									 double* dist) const{
 //    RS_DEBUG->print("RS_Ellipse::getNearestDist() begin\n");
-    if( ! isArc() ) {
+	if( ! isEllipticArc() ) {
         // both angles being 0, whole ellipse
         // no end points for whole ellipse, therefore, no snap by distance from end points.
         return RS_Vector(false);
@@ -419,7 +419,7 @@ bool RS_Ellipse::switchMajorMinor(void)
     RS_Vector vp=getMajorP();
     setMajorP(RS_Vector(- data.ratio*vp.y, data.ratio*vp.x)); //direction pi/2 relative to old MajorP;
     setRatio(1./data.ratio);
-    if( isArc() )  {
+	if( isEllipticArc() )  {
         //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
         setAngle1(getEllipseAngle(vp_start));
         setAngle2(getEllipseAngle(vp_end));
@@ -431,7 +431,7 @@ bool RS_Ellipse::switchMajorMinor(void)
  * @return Start point of the entity.
  */
 RS_Vector  RS_Ellipse::getStartpoint() const {
-	if(isArc()) return getEllipsePoint(data.angle1);
+	if(isEllipticArc()) return getEllipsePoint(data.angle1);
 	return RS_Vector(false);
 }
 
@@ -439,7 +439,7 @@ RS_Vector  RS_Ellipse::getStartpoint() const {
  * @return End point of the entity.
  */
 RS_Vector  RS_Ellipse::getEndpoint() const {
-	if(isArc()) return getEllipsePoint(data.angle2);
+	if(isEllipticArc()) return getEllipsePoint(data.angle2);
 	return RS_Vector(false);
 }
 
@@ -1019,7 +1019,7 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
                                        int middlePoints
                                        ) const{
     RS_DEBUG->print("RS_Ellpse::getNearestMiddle(): begin\n");
-    if ( ! isArc() ) {
+	if ( ! isEllipticArc() ) {
         //no middle point for whole ellipse, angle1=angle2=0
 		if (dist!=nullptr) {
             *dist = RS_MAXDOUBLE;
@@ -1331,7 +1331,7 @@ const RS_EllipseData& RS_Ellipse::getData() const
 void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_Vector vpStart;
     RS_Vector vpEnd;
-    if(isArc()){
+	if(isEllipticArc()){
         //only handle start/end points for ellipse arc
         vpStart=getStartpoint().scale(center,factor);
         vpEnd=getEndpoint().scale(center,factor);
@@ -1365,7 +1365,7 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
     a=cA+cB;
     b=vp.magnitude();
     setRatio( sqrt((a - b)/(a + b) ));
-    if( isArc() ) {
+	if( isEllipticArc() ) {
         //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
         setAngle1(getEllipseAngle(vpStart));
         setAngle2(getEllipseAngle(vpEnd));
@@ -1384,7 +1384,7 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
  *
  *@author: Dongxu Li
  */
-bool RS_Ellipse::isArc() const{
+bool RS_Ellipse::isEllipticArc() const{
 #ifndef EMU_C99
     using std::isnormal;
 #endif
@@ -1399,7 +1399,7 @@ void RS_Ellipse::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2
     RS_Vector center=getCenter();
     RS_Vector majorp = center + getMajorP();
     RS_Vector startpoint,endpoint;
-    if( isArc() )  {
+	if( isEllipticArc() )  {
         startpoint = getStartpoint();
         endpoint = getEndpoint();
     }
@@ -1410,7 +1410,7 @@ void RS_Ellipse::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2
     setCenter(center);
     setReversed(!isReversed());
     setMajorP(majorp - center);
-    if( isArc() )  {
+	if( isEllipticArc() )  {
         //only reset start/end points for ellipse arcs, i.e., angle1 angle2 are not both zero
         startpoint.mirror(axisPoint1, axisPoint2);
         endpoint.mirror(axisPoint1, axisPoint2);
@@ -1450,7 +1450,7 @@ double RS_Ellipse::getDirection2() const {
 }
 
 void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-    if(isArc()){
+	if(isEllipticArc()){
         RS_Vector startpoint = getStartpoint();
         RS_Vector endpoint = getEndpoint();
 
@@ -1587,7 +1587,7 @@ double RS_Ellipse::areaLineIntegral() const
 {
     const double a=getMajorRadius();
     const double b=getMinorRadius();
-    if(!isArc())
+	if(!isEllipticArc())
         return M_PI*a*b;
     const double ab=a*b;
     const double r2=a*a+b*b;
@@ -1683,7 +1683,7 @@ double RS_Ellipse::getMinorRadius() const {
 }
 
 void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
-    if(isArc()==false){
+	if(isEllipticArc()==false){
         RS_Ellipse arc(*this);
         arc.setAngle2(2.*M_PI);
         arc.setReversed(false);

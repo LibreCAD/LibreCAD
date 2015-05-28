@@ -177,8 +177,8 @@ public:
 
     /** @return The minor radius of this ellipse */
 	double getMinorRadius() const;
-	//! \brief isArc the ellipse an Arc, if angle1/angle2 are not both 0
-	virtual bool isArc() const;
+	//! \brief isEllipticArc the ellipse an Arc, if angle1/angle2 are not both 0
+	virtual bool isEllipticArc() const;
     virtual bool isEdge() const {
         return true;
     }
