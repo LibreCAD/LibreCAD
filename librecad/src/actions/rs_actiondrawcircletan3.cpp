@@ -163,9 +163,13 @@ bool RS_ActionDrawCircleTan3::getData(){
 		case 1:
 			//1 line, two circles
 		{
-			lc1=LC_Quadratic(circles[i],circles[i1], true);
-			LC_Quadratic lc2=LC_Quadratic(circles[i],circles[i2], true);
-			sol.appendTo(LC_Quadratic::getIntersection(lc1,lc2));
+			for(unsigned k=0; k<4; ++k){
+				//loop through all mirroring cases
+				lc1=LC_Quadratic(circles[i],circles[i1], k & 1u);
+				LC_Quadratic lc2=LC_Quadratic(circles[i],circles[i2], k & 2u);
+				sol.appendTo(LC_Quadratic::getIntersection(lc1,lc2));
+			}
+
 		}
 			break;
 		case 2:
