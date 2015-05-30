@@ -178,9 +178,14 @@ bool RS_ActionDrawCircleTan3::getData(){
 			if(circles[i2]->rtti()==RS2::EntityLine){
 				std::swap(i1, i2);
 			}
-			lc1=LC_Quadratic(circles[i2],circles[i], true);
-			LC_Quadratic lc2=LC_Quadratic(circles[i2],circles[i1], true);
-			sol.appendTo(LC_Quadratic::getIntersection(lc1,lc2));
+			//i2 is circle
+
+			for(unsigned k=0; k<4; ++k){
+				//loop through all mirroring cases
+				lc1=LC_Quadratic(circles[i2],circles[i], k & 1u);
+				LC_Quadratic lc2=LC_Quadratic(circles[i2],circles[i1], k & 2u);
+				sol.appendTo(LC_Quadratic::getIntersection(lc1,lc2));
+			}
 		}
 			break;
 		case 3:
