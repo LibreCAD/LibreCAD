@@ -1471,8 +1471,10 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
         setCenter(getCenter()+offset);
         return;
     }
-    auto&& foci=getFoci();
-    for(size_t i=0; i< 2 ; i++){
+	bool const switched=getRatio()>1.;
+	if(switched) switchMajorMinor();
+	auto foci=getFoci();
+	for(size_t i=0; i< 2 ; i++){
         if ((ref-foci.at(i)).squared()<1.0e-8) {
             auto&& focusNew=foci.at(i) + offset;
             //move focus
@@ -1495,9 +1497,12 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
             setMajorP(majorP);
             setRatio(sqrt(d*d-c*c)/d);
             correctAngles();//avoid extra 2.*M_PI in angles
+			if(switched) switchMajorMinor();
             return;
         }
     }
+
+	if(switched) switchMajorMinor();
 
     //move major/minor points
     if ((ref-getMajorPoint()).squared()<1.0e-8) {
