@@ -157,9 +157,30 @@ __scripts/build-osx.sh__ bash building scripts are supplied. See [OS/X by buildi
 FreeBSD users
 -------------
 
-See scripts/build-freebsd.sh for the list of ports that need to be installed.
+* Building with Qt version5:
+- Install
+```
+databases/qt5-sql devel/qt5-core devel/qt5-help graphics/qt5-svg math/muparser
+net/qt5-network print/qt5-printsupport textproc/clucene-qt5 x11-toolkits/qt5-gui
+x11-toolkits/qt5-widgets
+```
+- Run
+```
+/usr/local/lib/qt5/bin/qmake QMAKE_CXXFLAGS="-I /usr/local/include" QMAKE_LIBS="-L /usr/local/lib" && make
+```
 
-Use the script itself to build LibreCAD.
+* Building with Qt version 4:
+- Install
+```
+databases/qt4-sql devel/qt4-corelib devel/qt4-help graphics/qt4-svg math/muparser
+net/qt4-network textproc/clucene-qt4 x11-toolkits/qt4-gui
+```
+- Run
+```
+qmake-qt4 && make
+```
+
+The executable is generated at __unix/librecad__
 
 Windows Users
 -------------
@@ -199,4 +220,4 @@ qmake -r librecad.pro
 make
 ```
 
-The executible is generated at __unix/librecad__
+The executable is generated at __unix/librecad__
