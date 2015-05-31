@@ -104,6 +104,9 @@ public:
                  const RS_DimensionData& d);
 	virtual ~RS_Dimension() = default;
 
+    RS_Vector getNearestRef( const RS_Vector& coord, double* dist = nullptr) const;
+    RS_Vector getNearestSelectedRef( const RS_Vector& coord, double* dist = nullptr) const;
+
     /** @return Copy of data that defines the dimension. */
     RS_DimensionData getData() const {
         return data;

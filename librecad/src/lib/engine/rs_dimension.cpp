@@ -105,6 +105,23 @@ RS_Dimension::RS_Dimension(RS_EntityContainer* parent,
         : RS_EntityContainer(parent), data(d) {
 }
 
+RS_Vector RS_Dimension::getNearestRef( const RS_Vector& coord,
+                                       double* dist /*= nullptr*/) const
+{
+    // override the RS_EntityContainer methode
+    // use RS_Entity instead for refpoint dragging
+    return RS_Entity::getNearestRef( coord, dist);
+}
+
+RS_Vector RS_Dimension::getNearestSelectedRef( const RS_Vector& coord,
+                                               double* dist /*= nullptr*/) const
+{
+    // override the RS_EntityContainer methode
+    // use RS_Entity instead for refpoint dragging
+    return RS_Entity::getNearestSelectedRef( coord, dist);
+}
+
+
 /**
  * @return Dimension text. Either a text the user defined or
  *         the measured text.
