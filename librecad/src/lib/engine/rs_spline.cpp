@@ -118,6 +118,22 @@ RS_VectorSolutions RS_Spline::getRefPoints() const
 	return RS_VectorSolutions(data.controlPoints);
 }
 
+RS_Vector RS_Spline::getNearestRef( const RS_Vector& coord,
+                                    double* dist /*= nullptr*/) const
+{
+    // override the RS_EntityContainer methode
+    // use RS_Entity instead for spline point dragging
+    return RS_Entity::getNearestRef(coord, dist);
+}
+
+RS_Vector RS_Spline::getNearestSelectedRef( const RS_Vector& coord,
+                                            double* dist /*= nullptr*/) const
+{
+    // override the RS_EntityContainer methode
+    // use RS_Entity instead for spline point dragging
+    return RS_Entity::getNearestSelectedRef(coord, dist);
+}
+
 /**
  * Updates the internal polygon of this spline. Called when the
  * spline or it's data, position, .. changes.
