@@ -120,6 +120,10 @@ public:
     virtual RS_Vector getMiddlePoint(void)const {
             return RS_Vector(false);
 	}
+    virtual RS_Vector getNearestRef( const RS_Vector& coord,
+                                     double* dist = nullptr) const;
+    virtual RS_Vector getNearestSelectedRef( const RS_Vector& coord,
+                                             double* dist = nullptr) const;
     virtual RS_Entity* addVertex(const RS_Vector& v,
                 double bulge=0.0, bool prepend=false);
 

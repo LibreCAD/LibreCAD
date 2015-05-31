@@ -410,6 +410,22 @@ RS_VectorSolutions RS_Polyline::getRefPoints() const{
     return ret;
 }
 
+RS_Vector RS_Polyline::getNearestRef( const RS_Vector& coord,
+                                      double* dist /*= nullptr*/) const
+{
+    // override the RS_EntityContainer methode
+    // use RS_Entity instead for vertex dragging
+    return RS_Entity::getNearestRef( coord, dist);
+}
+
+RS_Vector RS_Polyline::getNearestSelectedRef( const RS_Vector& coord,
+                                              double* dist /*= nullptr*/) const
+{
+    // override the RS_EntityContainer methode
+    // use RS_Entity instead for vertex dragging
+    return RS_Entity::getNearestSelectedRef( coord, dist);
+}
+
 /*
 void RS_Polyline::reorder() {
         // current point:
