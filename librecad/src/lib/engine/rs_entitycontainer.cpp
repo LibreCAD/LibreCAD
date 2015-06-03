@@ -1593,7 +1593,7 @@ bool RS_EntityContainer::optimizeContours() {
 
 
     // add new sorted entities:
-	for (RS_Entity* en=tmp.firstEntity(); en; en=tmp.nextEntity()) {
+	for(auto en: tmp){
 		en->setProcessed(false);
         addEntity(en->clone());
     }
