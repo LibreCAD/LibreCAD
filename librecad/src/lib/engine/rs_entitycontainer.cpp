@@ -1513,7 +1513,7 @@ bool RS_EntityContainer::optimizeContours() {
         //detect circles and whole ellipses
         switch(e1->rtti()){
         case RS2::EntityEllipse:
-            if(static_cast<RS_Ellipse*>(e1)->isArc())
+			if(static_cast<RS_Ellipse*>(e1)->isEllipticArc())
                 continue;
         case RS2::EntityCircle:
             //directly detect circles, bug#3443277
