@@ -325,6 +325,9 @@ void Plugin_Entity::getData(QHash<int, QVariant> *data){
     case RS2::EntitySpline:
         data->insert(DPI::ETYPE, DPI::SPLINE);
         break;
+	case RS2::EntitySplinePoints:
+		data->insert(DPI::ETYPE, DPI::SPLINEPOINTS);
+		break;
     case RS2::EntityPolyline:
         data->insert(DPI::ETYPE, DPI::POLYLINE);
         data->insert(DPI::CLOSEPOLY, static_cast<RS_Polyline*>(entity)->isClosed() );

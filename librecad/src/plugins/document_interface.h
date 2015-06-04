@@ -63,6 +63,7 @@ namespace DPI {
         INSERT,
         POLYLINE,
         SPLINE,
+		SPLINEPOINTS,
         HATCH,
         DIMLEADER,
         DIMALIGNED,

@@ -206,6 +206,9 @@ QString LC_List::getStrData(Plug_Entity *ent) {
     case DPI::SPLINE:
         strData.prepend( strEntity.arg(tr("SPLINE")));
         break;
+	case DPI::SPLINEPOINTS:
+		strData.prepend( strEntity.arg(tr("SPLINEPOINTS")));
+		break;
     case DPI::HATCH:
         strData.prepend( strEntity.arg(tr("HATCH")));
         break;
