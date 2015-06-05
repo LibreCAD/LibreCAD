@@ -270,7 +270,7 @@ void RS_Hatch::update() {
 
     for (int px=px1; px<px2; px++) {
 		for (int py=py1; py<py2; py++) {
-			for(auto e: entities){
+			for(auto e: *pat){
                 RS_Entity* te=e->clone();
                 te->move(dvx*px + dvy*py);
                 tmp.addEntity(te);
