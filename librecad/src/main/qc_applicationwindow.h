@@ -300,7 +300,10 @@ public:
 protected:
     void closeEvent(QCloseEvent*);
     virtual void mouseReleaseEvent(QMouseEvent* e);
-
+    //! \{ accept drop files to open
+    virtual void dropEvent(QDropEvent* e);
+    virtual void dragEnterEvent(QDragEnterEvent * event);
+    //! \}
 
 private:
 

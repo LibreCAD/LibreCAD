@@ -214,6 +214,8 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     undoEnable=false;
     redoEnable=false;
 
+    //accept drop events to open files
+    setAcceptDrops(true);
 }
 
 /**
@@ -566,7 +568,33 @@ void QC_ApplicationWindow::mouseReleaseEvent(QMouseEvent* e) {
     e->accept();
 }
 
+void QC_ApplicationWindow::dropEvent(QDropEvent* event)
+{
+    event->acceptProposedAction();
 
+    //limit maximum number of dropped files to be opened
+    unsigned counts=0;
+    for(QUrl const& url: event->mimeData()->urls()) {
+        const QString &fileName = url.toLocalFile();
+        if(QFileInfo(fileName).exists() && fileName.endsWith(R"(.dxf)", Qt::CaseInsensitive)){
+            slotFileOpen(fileName, RS2::FormatUnknown);
+            if(++counts>32) return;
+        }
+    }
+}
+
+void 	QC_ApplicationWindow::dragEnterEvent(QDragEnterEvent * event)
+{
+    if (event->mimeData()->hasUrls()){
+        for(QUrl const& url: event->mimeData()->urls()) {
+            const QString &fileName = url.toLocalFile();
+            if(QFileInfo(fileName).exists() && fileName.endsWith(R"(.dxf)", Qt::CaseInsensitive)){
+                event->acceptProposedAction();
+                return;
+            }
+        }
+    }
+}
 
 /**
  * Initializes the MDI mdiAreaCAD.
