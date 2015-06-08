@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-
+#include<QObject>
 #include "rs_eventhandler.h"
 
 #include "rs_actioninterface.h"
@@ -37,15 +37,11 @@
 /**
  * Constructor.
  */
-RS_EventHandler::RS_EventHandler(RS_GraphicView* graphicView) {
-    this->graphicView = graphicView;
-//    actionIndex=-1;
-    currentActions.clear();
-    //    for (int i=0; i<RS_MAXACTIONS; ++i) {
-    //        currentActions[i] = NULL;
-    //    }
-    coordinateInputEnabled = true;
-    defaultAction = NULL;
+RS_EventHandler::RS_EventHandler(RS_GraphicView* graphicView):
+    graphicView(graphicView)
+  ,defaultAction(nullptr)
+  ,coordinateInputEnabled(true)
+{
 }
 
 
@@ -56,22 +52,15 @@ RS_EventHandler::RS_EventHandler(RS_GraphicView* graphicView) {
 RS_EventHandler::~RS_EventHandler() {
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler");
     if (defaultAction) {
-        defaultAction->finish();
         delete defaultAction;
-        defaultAction = NULL;
+        defaultAction = nullptr;
     }
 
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: Deleting all actions..");
-    for(int i=0; i< currentActions.size();i++){
-        //        currentActions[i]->finish(false);
-        delete currentActions[i];
+    for(auto a: currentActions){
+        delete a;
     }
-    //    for (int i=0; i<RS_MAXACTIONS; ++i) {
-    //        if (currentActions[i]) {
-    //            currentActions[i]->setFinished();
-    //        }
-    //    }
-    //cleanUp();
+    currentActions.clear();
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: Deleting all actions..: OK");
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: OK");
 }
@@ -249,7 +238,7 @@ bool RS_EventHandler::cliCalculator(const QString& cmd) const
     if(ok)
 		RS_DIALOGFACTORY->commandMessage(str + " = "+QString::number(result, 'g', 12));
     else
-        RS_DIALOGFACTORY->commandMessage("Calculator error for input: "+ str);
+        RS_DIALOGFACTORY->commandMessage(QObject::tr("Calculator error for input: ")+ str);
     return true;
 }
 
@@ -592,7 +581,7 @@ void RS_EventHandler::cleanUp() {
             delete *it;
             it= currentActions.erase(it);
         }else{
-            it++;
+            ++it;
         }
     }
     if(hasAction()){
@@ -613,9 +602,9 @@ void RS_EventHandler::cleanUp() {
  * Sets the snap mode for all currently active actions.
  */
 void RS_EventHandler::setSnapMode(RS_SnapMode sm) {
-    for (auto it=currentActions.begin();it != currentActions.end();it++){
-        if(! (*it)->isFinished()){
-            (*it)->setSnapMode(sm);
+    for(auto a: currentActions){
+        if( ! a->isFinished()){
+            a->setSnapMode(sm);
         }
     }
 
@@ -629,9 +618,10 @@ void RS_EventHandler::setSnapMode(RS_SnapMode sm) {
  * Sets the snap restriction for all currently active actions.
  */
 void RS_EventHandler::setSnapRestriction(RS2::SnapRestriction sr) {
-    for (auto it=currentActions.begin();it != currentActions.end();it++){
-        if(! (*it)->isFinished()){
-            (*it)->setSnapRestriction(sr);
+
+    for(auto a: currentActions){
+        if( ! a->isFinished()){
+            a->setSnapRestriction(sr);
         }
     }
 
@@ -644,7 +634,7 @@ void RS_EventHandler::setSnapRestriction(RS2::SnapRestriction sr) {
 void RS_EventHandler::debugActions() {
     //        std::cout<<"action queue size=:"<<currentActions.size()<<std::endl;
     RS_DEBUG->print("---");
-    for(int i=0;i<currentActions.size();i++){
+    for(int i=0;i<currentActions.size();++i){
 
         if (i == currentActions.size() - 1 ) {
             RS_DEBUG->print("Current");
