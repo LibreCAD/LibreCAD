@@ -42,7 +42,7 @@ RS_Point::RS_Point(RS_EntityContainer* parent,
 
 RS_Entity* RS_Point::clone() const {
 	RS_Point* p = new RS_Point(*this);
-	p->initId();
+//	p->initId();
 	return p;
 }
 

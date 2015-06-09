@@ -289,7 +289,7 @@ LC_SplinePoints::LC_SplinePoints(RS_EntityContainer* parent,
 RS_Entity* LC_SplinePoints::clone() const
 {
     LC_SplinePoints* l = new LC_SplinePoints(*this);
-	l->initId();
+//	l->initId();
 	return l;
 }
 

@@ -73,7 +73,7 @@ RS_DimDiametric::RS_DimDiametric(RS_EntityContainer* parent,
 RS_Entity* RS_DimDiametric::clone() const {
 	RS_DimDiametric* d = new RS_DimDiametric(*this);
 	d->setOwner(isOwner());
-	d->initId();
+//	d->initId();
 	d->detach();
 	return d;
 }

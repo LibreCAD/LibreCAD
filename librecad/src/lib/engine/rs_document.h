@@ -33,6 +33,7 @@
 #include "rs_undo.h"
 
 class RS_BlockList;
+class RS_Pen;
 
 /**
  * Base class for documents. Documents can be either graphics or 
@@ -45,8 +46,11 @@ class RS_BlockList;
 class RS_Document : public RS_EntityContainer,
     public RS_Undo {
 public:
-    RS_Document(RS_EntityContainer* parent=NULL);
-    virtual ~RS_Document(){}
+    RS_Document(RS_EntityContainer* parent=nullptr);
+    RS_Document(RS_Document const& rhs);
+    RS_Document& operator = (RS_Document const& rhs);
+
+    virtual ~RS_Document();
 
     virtual RS_LayerList* getLayerList() = 0;
     virtual RS_BlockList* getBlockList() = 0;
@@ -61,33 +65,23 @@ public:
     /**
      * @return true for all document entities (e.g. Graphics or Blocks).
      */
-    virtual bool isDocument() const {
-        return true;
-    }
+    virtual bool isDocument() const;
 
     /**
      * Removes an entity from the entiy container. Implementation
      * from RS_Undo.
      */
-    virtual void removeUndoable(RS_Undoable* u) {
-        if (u && u->undoRtti()==RS2::UndoableEntity) {
-            removeEntity((RS_Entity*)u);
-        }
-    }
+    virtual void removeUndoable(RS_Undoable* u);
 
     /**
      * @return Currently active drawing pen.
      */
-    RS_Pen getActivePen() const {
-        return activePen;
-    }
+    RS_Pen getActivePen() const;
 
     /**
      * Sets the currently active drawing pen to p.
      */
-    void setActivePen(RS_Pen p) {
-        activePen = p;
-    }
+    void setActivePen(RS_Pen const& p);
 
     /**
      * @return File name of the document currently loaded.
@@ -142,7 +136,7 @@ protected:
     /** Flag set if the document was modified and not yet saved. */
     bool modified;
     /** Active pen. */
-    RS_Pen activePen;
+    std::unique_ptr<RS_Pen> activePen;
     /** File name of the document or empty for a new document. */
     QString filename;
 	/** Auto-save file name of document. */

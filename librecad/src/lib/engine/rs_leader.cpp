@@ -30,14 +30,14 @@
 #include "rs_debug.h"
 #include "rs_line.h"
 #include "rs_solid.h"
+#include "rs_pen.h"
 
 
 /**
  * Constructor.
  */
 RS_Leader::RS_Leader(RS_EntityContainer* parent)
-		:RS_EntityContainer(parent)
-		,empty(true)
+        :RS_EntityContainer(parent)
 {
 }
 
@@ -49,13 +49,12 @@ RS_Leader::RS_Leader(RS_EntityContainer* parent)
 RS_Leader::RS_Leader(RS_EntityContainer* parent,
                      const RS_LeaderData& d)
         :RS_EntityContainer(parent), data(d) {
-    empty = true;
 }
 
 RS_Entity* RS_Leader::clone() const{
 	RS_Leader* p = new RS_Leader(*this);
 	p->setOwner(isOwner());
-	p->initId();
+//	p->initId();
 	p->detach();
 	return p;
 }

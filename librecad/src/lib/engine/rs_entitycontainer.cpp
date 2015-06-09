@@ -100,7 +100,7 @@ RS_Entity* RS_EntityContainer::clone() const{
                     ec->isOwner());
 
     ec->detach();
-    ec->initId();
+//    ec->initId();
 
     return ec;
 }

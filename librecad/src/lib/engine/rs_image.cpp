@@ -92,7 +92,7 @@ RS_Image RS_Image::operator = (const RS_Image& _image)
 RS_Entity* RS_Image::clone() const {
     RS_Image* i = new RS_Image(*this);
         i->setHandle(getHandle());
-    i->initId();
+//    i->initId();
     i->update();
     return i;
 }

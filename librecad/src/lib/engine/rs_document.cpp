@@ -26,17 +26,19 @@
 
 
 #include "rs_document.h"
+#include "rs_pen.h"
 
 
 /**
  * Constructor.
  *
- * @param parent Parent of the document. Often that's NULL but
+ * @param parent Parent of the document. Often that's nullptr but
  *        for blocks it's the blocklist.
  */
 RS_Document::RS_Document(RS_EntityContainer* parent)
-        : RS_EntityContainer(parent), RS_Undo() {
-
+        : RS_EntityContainer(parent), RS_Undo()
+        ,activePen(new RS_Pen())
+{
     RS_DEBUG->print("RS_Document::RS_Document() ");
 
     filename = "";
@@ -44,7 +46,54 @@ RS_Document::RS_Document(RS_EntityContainer* parent)
 	formatType = RS2::FormatUnknown;
     setModified(false);
     RS_Color col(RS2::FlagByLayer);
-    activePen = RS_Pen(col, RS2::WidthByLayer, RS2::LineByLayer);
+    *activePen = RS_Pen(col, RS2::WidthByLayer, RS2::LineByLayer);
 
-    gv = NULL;//used to read/save current view
+    gv = nullptr;//used to read/save current view
+}
+
+RS_Document::RS_Document(RS_Document const& rhs):
+    modified(rhs.modified)
+  ,activePen(new RS_Pen(*rhs.activePen))
+  ,filename(rhs.filename)
+  ,autosaveFilename(rhs.autosaveFilename)
+  ,formatType(rhs.formatType)
+  ,gv(rhs.gv)
+{}
+
+RS_Document& RS_Document::operator = (RS_Document const& rhs)
+{
+    modified=rhs.modified;
+    activePen.reset(new RS_Pen(*rhs.activePen));
+    filename=rhs.filename;
+    autosaveFilename=rhs.autosaveFilename;
+    formatType=rhs.formatType;
+    gv=rhs.gv;
+    return *this;
+}
+
+RS_Document::~RS_Document(){}
+
+RS_Pen RS_Document::getActivePen() const {
+    return *activePen;
+}
+
+/**
+ * Sets the currently active drawing pen to p.
+ */
+void RS_Document::setActivePen(RS_Pen const& p) {
+    *activePen = p;
+}
+
+bool RS_Document::isDocument() const {
+    return true;
+}
+
+/**
+ * Removes an entity from the entiy container. Implementation
+ * from RS_Undo.
+ */
+void RS_Document::removeUndoable(RS_Undoable* u) {
+    if (u && u->undoRtti()==RS2::UndoableEntity) {
+        removeEntity((RS_Entity*)u);
+    }
 }

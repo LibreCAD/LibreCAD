@@ -47,6 +47,7 @@
 #include "rs_vector.h"
 #include "rs_information.h"
 #include "lc_quadratic.h"
+#include "rs_pen.h"
 
 /**
  * Default constructor.
@@ -54,12 +55,39 @@
  *               E.g. a line might have a graphic entity or
  *               a polyline entity as parent.
  */
-RS_Entity::RS_Entity(RS_EntityContainer* parent) {
-
-    this->parent = parent;
+RS_Entity::RS_Entity(RS_EntityContainer* parent):
+    parent(parent)
+  ,m_pPen(new RS_Pen())
+{
     init();
 }
 
+RS_Entity::RS_Entity(RS_Entity const& rhs):
+    parent(rhs.parent)
+  ,minV(rhs.minV)
+  ,maxV(rhs.maxV)
+  ,layer(rhs.layer)
+  ,m_pPen(rhs.m_pPen?new RS_Pen(* rhs.m_pPen):nullptr)
+  ,updateEnabled(rhs.updateEnabled)
+  ,varList(rhs.varList)
+{
+    init();
+}
+
+RS_Entity& RS_Entity::operator = (RS_Entity const& rhs)
+{
+    parent=rhs.parent;
+    minV=rhs.minV;
+    maxV=rhs.maxV;
+    layer=rhs.layer;
+    m_pPen.reset(rhs.m_pPen?new RS_Pen(* rhs.m_pPen):nullptr);
+    updateEnabled=rhs.updateEnabled;
+    varList=rhs.varList;
+    init();
+    return *this;
+}
+
+RS_Entity::~RS_Entity(){}
 
 /**
  * Copy constructor.
@@ -738,6 +766,9 @@ RS_Layer* RS_Entity::getLayer(bool resolve) const {
 }
 
 
+void RS_Entity::setPen(const RS_Pen& pen) {
+    *m_pPen = pen;
+}
 
 /**
  * Sets the layer of this entity to the layer with the given name
@@ -793,10 +824,10 @@ void RS_Entity::setLayerToActive() {
 RS_Pen RS_Entity::getPen(bool resolve) const {
 
     if (!resolve) {
-        return pen;
+        return *m_pPen;
     } else {
 
-        RS_Pen p = pen;
+        RS_Pen p = *m_pPen;
         RS_Layer* l = getLayer(true);
 
         // use parental attributes (e.g. vertex of a polyline, block
@@ -845,7 +876,7 @@ RS_Pen RS_Entity::getPen(bool resolve) const {
 void RS_Entity::setPenToActive() {
     RS_Document* doc = getDocument();
     if (doc) {
-        pen = doc->getActivePen();
+        *m_pPen = doc->getActivePen();
     } else {
         //RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Entity::setPenToActive(): "
         //                "No document / active pen linked to this entity.");
@@ -1051,7 +1082,7 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
         os << " layer address: " << e.layer << " ";
     }
 
-    os << e.pen << "\n";
+    os << * e.m_pPen << "\n";
 
         os << "variable list:\n";
 	for(auto const& v: e.varList){

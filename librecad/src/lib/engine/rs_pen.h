@@ -107,7 +107,7 @@ public:
     void setColor(const RS_Color& c) {
         color = c;
     }
-    bool isValid() {
+    bool isValid() const{
         return !getFlag(RS2::FlagInvalid);
     }
 

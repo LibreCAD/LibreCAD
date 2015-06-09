@@ -64,7 +64,7 @@ RS_ConstructionLine::RS_ConstructionLine(RS_EntityContainer* parent,
 
 RS_Entity* RS_ConstructionLine::clone() const {
     RS_ConstructionLine* c = new RS_ConstructionLine(*this);
-    c->initId();
+//    c->initId();
     return c;
 }
 

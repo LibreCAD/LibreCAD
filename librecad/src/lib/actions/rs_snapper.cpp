@@ -37,6 +37,7 @@
 #include "rs_overlayline.h"
 #include "rs_entitycontainer.h"
 #include "rs_coordinateevent.h"
+#include "rs_pen.h"
 
 /**
   * Disable all snapping.

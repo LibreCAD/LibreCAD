@@ -32,6 +32,7 @@
 #include "rs_solid.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
+#include "rs_pen.h"
 
 
 RS_DimLinearData::RS_DimLinearData():
@@ -79,7 +80,7 @@ RS_DimLinear::RS_DimLinear(RS_EntityContainer* parent,
 RS_Entity* RS_DimLinear::clone() const {
 	RS_DimLinear* d = new RS_DimLinear(*this);
 	d->setOwner(isOwner());
-	d->initId();
+//	d->initId();
 	d->detach();
 	return d;
 }

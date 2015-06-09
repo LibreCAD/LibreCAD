@@ -36,6 +36,7 @@
 #include "qg_blockwidget.h"
 #include "rs_blocklist.h"
 #include "qg_actionhandler.h"
+#include "rs_color.h"
 
 QG_BlockModel::QG_BlockModel(QObject * parent) : QAbstractTableModel(parent) {
     blockVisible = QIcon(":/ui/visibleblock.png");

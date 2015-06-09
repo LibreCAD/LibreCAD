@@ -35,6 +35,7 @@
 #include "rs_information.h"
 #include "rs_solid.h"
 #include "rs_mtext.h"
+#include "rs_pen.h"
 
 RS_DimAngularData::RS_DimAngularData():
 	definitionPoint1(false),
@@ -84,7 +85,7 @@ RS_DimAngular::RS_DimAngular(RS_EntityContainer* parent,
 RS_Entity* RS_DimAngular::clone() const{
 		RS_DimAngular* d = new RS_DimAngular(*this);
 		d->setOwner(isOwner());
-		d->initId();
+//		d->initId();
 		d->detach();
 		return d;
 	}

@@ -34,6 +34,7 @@
 #include "rs_information.h"
 #include "rs_arc.h"
 #include "rs_line.h"
+#include "rs_pen.h"
 
 RS_ActionPolylineEquidistant::RS_ActionPolylineEquidistant(RS_EntityContainer& container,
 														   RS_GraphicView& graphicView)

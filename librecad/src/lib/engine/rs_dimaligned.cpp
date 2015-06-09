@@ -32,6 +32,7 @@
 #include "rs_units.h"
 #include "rs_constructionline.h"
 #include "rs_math.h"
+#include "rs_pen.h"
 
 RS_DimAlignedData::RS_DimAlignedData():
 	extensionPoint1(false),
@@ -88,7 +89,7 @@ RS_DimAligned::RS_DimAligned(RS_EntityContainer* parent,
 RS_Entity* RS_DimAligned::clone() const{
 	RS_DimAligned* d = new RS_DimAligned(*this);
 	d->setOwner(isOwner());
-	d->initId();
+//	d->initId();
 	d->detach();
 	return d;
 }
