@@ -3623,8 +3623,11 @@ QString RS_FilterDXFRW::toNativeString(const QString& data) {
     int j = 0;
     for (int i=0; i<data.length(); ++i) {
         if (data.at(i).unicode() == 0x7B){ //is '{' ?
-            if (data.at(i+1).unicode() == 0x5c && data.at(i+2).unicode() == 0x66){ //is "\f" ?
-                //found font tag, append parsed part
+            if ( (data.at(i+1).unicode() == 0x5c && data.at(i+2).unicode() == 0x66) || //is "\f" ?
+                 (data.at(i+1).unicode() == 0x5c && data.at(i+2).unicode() == 0x48) || //is "\H" ?
+                 (data.at(i+1).unicode() == 0x5c && data.at(i+2).unicode() == 0x43)    //is "\C" ?
+               ) {
+                //found font, size or color tag, append parsed part
                 res.append(data.mid(j,i-j));
                 //skip to ';'
                 for (int k=i+3; k<data.length(); ++k) {
@@ -3637,7 +3640,8 @@ QString RS_FilterDXFRW::toNativeString(const QString& data) {
                 for (int k=i; k<data.length(); ++k) {
                     if (data.at(k).unicode() == 0x7D) {
                         res.append(data.mid(i,k-i));
-                        i = j = ++k;
+                        i = k; //Do not use ++k because jump to main "for" adds 1 to i
+                        j = ++k;
                         break;
                     }
                 }
@@ -3651,6 +3655,8 @@ QString RS_FilterDXFRW::toNativeString(const QString& data) {
     res = res.replace(QRegExp("\\\\P"), "\n");
     // Space:
     res = res.replace(QRegExp("\\\\~"), " ");
+    // Tab:
+    res = res.replace(QRegExp("\\^I"), "    ");//RLZ: change 4 spaces for \t when mtext have support for tab
     // diameter:
     res = res.replace(QRegExp("%%[cC]"), QChar(0x2300));//RLZ: Empty_set is 0x2205, diameter is 0x2300 need to add in all fonts
     // degree:
