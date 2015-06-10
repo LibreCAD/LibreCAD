@@ -51,23 +51,13 @@ RS_ActionInfoAngle::RS_ActionInfoAngle(RS_EntityContainer& container,
 }
 
 QAction* RS_ActionInfoAngle::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Angle between two lines"),
-                                  tr("&Angle between two lines"),
-                                  QKeySequence(), NULL); */
-
-    QAction* action = new QAction(tr("An&gle between two lines"), NULL);
-    //action->zetStatusTip(tr("Measures the angle between two lines"));
-        action->setIcon(QIcon(":/extui/infoangle.png"));
+    QAction* action = new QAction(QIcon(":/extui/infoangle.png"), tr("An&gle between two lines"), NULL);
     return action;
 }
 
-
 void RS_ActionInfoAngle::init(int status) {
     RS_ActionInterface::init(status);
-
 }
-
-
 
 void RS_ActionInfoAngle::trigger() {
 
@@ -101,8 +91,6 @@ void RS_ActionInfoAngle::trigger() {
     }
 }
 
-
-
 void RS_ActionInfoAngle::mouseMoveEvent(QMouseEvent* /*e*/) {
     RS_DEBUG->print("RS_ActionInfoAngle::mouseMoveEvent begin");
 
@@ -119,8 +107,6 @@ void RS_ActionInfoAngle::mouseMoveEvent(QMouseEvent* /*e*/) {
 
     RS_DEBUG->print("RS_ActionInfoAngle::mouseMoveEvent end");
 }
-
-
 
 void RS_ActionInfoAngle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
@@ -155,8 +141,6 @@ void RS_ActionInfoAngle::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
 void RS_ActionInfoAngle::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetEntity1:
@@ -174,8 +158,6 @@ void RS_ActionInfoAngle::updateMouseButtonHints() {
         break;
     }
 }
-
-
 
 void RS_ActionInfoAngle::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);

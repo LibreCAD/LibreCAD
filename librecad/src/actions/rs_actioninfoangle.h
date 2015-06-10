@@ -29,7 +29,6 @@
 
 #include "rs_previewactioninterface.h"
 
-
 /**
  * This action class can handle user events to measure angles.
  *
@@ -52,7 +51,7 @@ public:
     ~RS_ActionInfoAngle() = default;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-    virtual void init(int status=0);
+	virtual void init(int status);
     virtual void trigger();
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
