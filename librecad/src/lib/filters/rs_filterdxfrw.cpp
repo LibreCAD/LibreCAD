@@ -3623,29 +3623,24 @@ QString RS_FilterDXFRW::toNativeString(const QString& data) {
     int j = 0;
     for (int i=0; i<data.length(); ++i) {
         if (data.at(i).unicode() == 0x7B){ //is '{' ?
-            if ( (data.at(i+1).unicode() == 0x5c && data.at(i+2).unicode() == 0x66) || //is "\f" ?
-                 (data.at(i+1).unicode() == 0x5c && data.at(i+2).unicode() == 0x48) || //is "\H" ?
-                 (data.at(i+1).unicode() == 0x5c && data.at(i+2).unicode() == 0x43)    //is "\C" ?
-               ) {
-                //found font, size or color tag, append parsed part
-                res.append(data.mid(j,i-j));
-                //skip to ';'
-                for (int k=i+3; k<data.length(); ++k) {
-                    if (data.at(k).unicode() == 0x3B) {
-                        i = j = ++k;
-                        break;
-                    }
+            if (data.at(i+1).unicode() == 0x5c){ //and is "{\" ?
+                //check known codes
+                if ( (data.at(i+2).unicode() == 0x66) || //is "\f" ?
+                     (data.at(i+2).unicode() == 0x48) || //is "\H" ?
+                     (data.at(i+2).unicode() == 0x43)    //is "\C" ?
+                   ) {
+                    //found tag, append parsed part
+                    res.append(data.mid(j,i-j));
+                    int pos = data.indexOf(0x7D, i+3);//find '}'
+                    if (pos <0) break; //'}' not found
+                    QString tmp = data.mid(i+1, pos-i-1);
+                    do {
+                        tmp = tmp.remove(0,tmp.indexOf(0x3B, 0)+1 );//remove to ';'
+                    } while(tmp.startsWith("\\f") || tmp.startsWith("\\H") || tmp.startsWith("\\C"));
+                    res.append(tmp);
+                    i = j = pos;
+                    ++j;
                 }
-                //add to '}'
-                for (int k=i; k<data.length(); ++k) {
-                    if (data.at(k).unicode() == 0x7D) {
-                        res.append(data.mid(i,k-i));
-                        i = k; //Do not use ++k because jump to main "for" adds 1 to i
-                        j = ++k;
-                        break;
-                    }
-                }
-
             }
         }
     }
