@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONDRAWLINETANGENT2_H
 #define RS_ACTIONDRAWLINETANGENT2_H
 
-#include<set>
 #include "rs_previewactioninterface.h"
 
 class RS_Line;
@@ -70,7 +69,6 @@ private:
     RS_Entity* circle1;
     /** 2nd chosen entity */
     RS_Entity* circle2;
-    const std::set<RS2::EntityType> circleType={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse};
     bool valid;
 };
 

@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONMODIFYROUND_H
 #define RS_ACTIONMODIFYROUND_H
 
-#include<set>
 #include "rs_previewactioninterface.h"
 
 class RS_RoundData;
@@ -89,8 +88,6 @@ private:
 	std::unique_ptr<RS_RoundData> data;
 	/** Last status before entering angle. */
 	Status lastStatus;
-	const std::set<RS2::EntityType> eType={ RS2::EntityLine , RS2::EntityPolyline , RS2::EntityArc ,
-											   RS2::EntityCircle , RS2::EntityEllipse , RS2::EntitySpline};
 };
 
 #endif

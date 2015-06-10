@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWCIRCLETAN2_H
 #define RS_ACTIONDRAWCIRCLETAN2_H
 
-#include<set>
 #include "rs_previewactioninterface.h"
 
 class RS_AtomicEntity;
@@ -83,9 +82,7 @@ protected:
     RS_Vector coord;
     double radius;
     bool valid;
-    const std::set<RS2::EntityType> enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
 	RS_VectorSolutions centers;
-
 };
 
 #endif

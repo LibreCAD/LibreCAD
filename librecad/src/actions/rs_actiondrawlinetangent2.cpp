@@ -24,13 +24,18 @@
 **
 **********************************************************************/
 
-#include <QAction>
+#include<set>
+#include<QAction>
 #include "rs_actiondrawlinetangent2.h"
 
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_creation.h"
 #include "rs_line.h"
+
+namespace{
+const std::set<RS2::EntityType> circleType={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse};
+}
 
 RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
     RS_EntityContainer& container,

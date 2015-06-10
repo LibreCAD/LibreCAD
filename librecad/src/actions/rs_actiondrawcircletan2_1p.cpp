@@ -21,6 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include <QAction>
+#include <set>
 #include "rs_actiondrawcircletan2_1p.h"
 
 #include "rs_dialogfactory.h"
@@ -31,6 +32,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_quadratic.h"
 #include "rs_coordinateevent.h"
 
+namespace {
+const std::set<RS2::EntityType> enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+}
 /**
  * Constructor.
  *

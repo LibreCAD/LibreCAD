@@ -20,6 +20,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <set>
 #include <QAction>
 #include "rs_actiondrawcircletan1_2p.h"
 
@@ -32,6 +33,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_point.h"
 #include "lc_quadratic.h"
 #include "rs_coordinateevent.h"
+
+namespace{
+//list of entity types supported by current action
+const std::set<RS2::EntityType> enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+}
 
 /**
  * Constructor.

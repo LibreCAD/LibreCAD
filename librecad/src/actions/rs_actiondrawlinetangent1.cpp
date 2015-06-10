@@ -24,7 +24,8 @@
 **
 **********************************************************************/
 
-#include <QAction>
+#include<set>
+#include<QAction>
 #include "rs_actiondrawlinetangent1.h"
 
 #include "rs_dialogfactory.h"
@@ -33,6 +34,11 @@
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
 
+namespace{
+const std::set<RS2::EntityType> circleType={RS2::EntityArc,RS2::EntityCircle,
+											   RS2::EntityEllipse, RS2::EntitySplinePoints
+											  };
+}
 RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 		RS_EntityContainer& container,
 		RS_GraphicView& graphicView)

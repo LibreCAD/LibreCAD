@@ -24,15 +24,20 @@
 **
 **********************************************************************/
 
+#include<set>
+#include<QAction>
 #include "rs_actionmodifyround.h"
-
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_information.h"
 #include "rs_math.h"
 #include "rs_modification.h"
+
+namespace{
+const std::set<RS2::EntityType> eType={ RS2::EntityLine , RS2::EntityPolyline , RS2::EntityArc ,
+                                           RS2::EntityCircle , RS2::EntityEllipse , RS2::EntitySpline};
+}
 
 RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
