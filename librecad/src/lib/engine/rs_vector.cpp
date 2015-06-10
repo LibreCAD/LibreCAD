@@ -681,7 +681,7 @@ RS_VectorSolutions::RS_VectorSolutions(int num):
 }
 
 
-RS_VectorSolutions::RS_VectorSolutions(std::initializer_list<RS_Vector> l):
+RS_VectorSolutions::RS_VectorSolutions(std::initializer_list<RS_Vector> const& l):
 	vector( l.begin(), l.end())
   ,tangent(false)
 {
