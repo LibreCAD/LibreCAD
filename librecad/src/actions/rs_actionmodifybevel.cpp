@@ -73,15 +73,13 @@ void RS_ActionModifyBevel::trigger() {
                 coord2, (RS_AtomicEntity*)entity2,
 				*data);
 
-        entity1 = NULL;
-        entity2 = NULL;
+        entity1 = nullptr;
+        entity2 = nullptr;
         setStatus(SetEntity1);
 
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
 }
-
-
 
 void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyBevel::mouseMoveEvent begin");
@@ -136,8 +134,6 @@ void RS_ActionModifyBevel::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
 void RS_ActionModifyBevel::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
@@ -159,9 +155,6 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent* e) {
             lastStatus = (Status)getStatus();
             setStatus(SetLength2);
         } else if (checkCommand("trim", c)) {
-            //deletePreview();
-            //lastStatus = (Status)getStatus();
-            //setStatus(SetTrim);
 			data->trim = !data->trim;
             RS_DIALOGFACTORY->requestOptions(this, true, true);
         }
@@ -193,20 +186,6 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent* e) {
             setStatus(lastStatus);
         }
         break;
-
-        /*case SetTrim: {
-        if (checkCommand()) {
-        data.trim = true;
-    } else if (c==cmdNo.lower() || c==cmdNo2) {
-        data.trim = false;
-                } else {
-                    RS_DIALOGFACTORY->commandMessage(tr("Please enter 'Yes' "
-               "or 'No'"));
-                }
-                RS_DIALOGFACTORY->requestOptions(this, true, true);
-                setStatus(lastStatus);
-            }
-            break;*/
 
     default:
         break;
@@ -252,23 +231,17 @@ QStringList RS_ActionModifyBevel::getAvailableCommands() {
     return cmd;
 }
 
-
-
 void RS_ActionModifyBevel::showOptions() {
     RS_ActionInterface::showOptions();
 
     RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
-
-
 void RS_ActionModifyBevel::hideOptions() {
     RS_ActionInterface::hideOptions();
 
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
-
-
 
 void RS_ActionModifyBevel::updateMouseButtonHints() {
     switch (getStatus()) {
@@ -288,17 +261,11 @@ void RS_ActionModifyBevel::updateMouseButtonHints() {
         RS_DIALOGFACTORY->updateMouseWidget(tr("Enter length 2:"),
                                             tr("Back"));
         break;
-        /*case SetTrim:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Trim on? (yes/no):"),
-                                                "");
-            break;*/
     default:
 		RS_DIALOGFACTORY->updateMouseWidget();
         break;
     }
 }
-
-
 
 void RS_ActionModifyBevel::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
