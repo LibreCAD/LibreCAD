@@ -119,7 +119,7 @@ void RS_ActionEditCopy::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionEditCopy::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e){
         return;
     }
 

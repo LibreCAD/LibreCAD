@@ -49,9 +49,9 @@ QAction* RS_ActionBlocksAdd::createGUIAction(RS2::ActionType /*type*/, QObject* 
 
 void RS_ActionBlocksAdd::trigger() {
     RS_DEBUG->print("adding block");
-	if (graphic!=nullptr) {
+    if (graphic) {
 		RS_BlockList* blockList = graphic->getBlockList();
-		if (blockList!=nullptr) {
+		if (blockList) {
 			RS_BlockData d = 
 				RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
 			if (d.isValid()) {

@@ -50,13 +50,7 @@ RS_ActionDrawCircle::~RS_ActionDrawCircle() {}
 
 
 QAction* RS_ActionDrawCircle::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/*RVT_PORT    QAction* action = new QAction(tr("Circle: Center, Point"),
-                                  tr("Center, &Point"),
-                                  QKeySequence(), NULL); */
-        // "Circle: Center, Point"
-    QAction* action = new QAction(tr("Center, &Point"), NULL);
-        action->setIcon(QIcon(":/extui/circles.png"));
-    //action->zetStatusTip(tr("Draw circles with center and point"));
+    QAction* action = new QAction(QIcon(":/extui/circles.png"), tr("Center, &Point"), nullptr);
     return action;
 }
 
@@ -139,7 +133,7 @@ void RS_ActionDrawCircle::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawCircle::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (!e){
         return;
     }
 

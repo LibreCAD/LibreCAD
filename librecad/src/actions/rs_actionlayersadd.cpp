@@ -31,17 +31,12 @@
 #include "rs_graphic.h"
 #include "qg_layerwidget.h"
 
-
-
 RS_ActionLayersAdd::RS_ActionLayersAdd(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_ActionInterface("Add Layer", container, graphicView) {}
 
-
 QAction* RS_ActionLayersAdd::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action = new QAction(tr("&Add Layer"), NULL);
-    //action->zetStatusTip(tr("Add Layer"));
-        action->setIcon(QIcon(":/ui/layeradd.png"));
+    QAction* action = new QAction(QIcon(":/ui/layeradd.png"), tr("&Add Layer"), NULL);
     return action;
 }
 
@@ -59,8 +54,6 @@ void RS_ActionLayersAdd::trigger() {
     }
     finish(false);
 }
-
-
 
 void RS_ActionLayersAdd::init(int status) {
     RS_ActionInterface::init(status);

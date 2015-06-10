@@ -34,19 +34,13 @@
 
 
 RS_ActionLayersToggleLock::RS_ActionLayersToggleLock(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_ActionInterface("Toggle Layer Visibility",
-                    container, graphicView) {}
-
+        RS_EntityContainer& container,
+        RS_GraphicView& graphicView)
+    :RS_ActionInterface("Toggle Layer Visibility" ,container, graphicView)
+{}
 
 QAction* RS_ActionLayersToggleLock::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Toggle Layer Lock"),
-                                  tr("&Toggle Lock"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Toggle Layer Loc&k"), NULL);
-     action->setIcon(QIcon(":/ui/lockedlayer.png"));
-    //action->zetStatusTip(tr("Toggle Lock"));
+    QAction* action = new QAction(QIcon(":/ui/lockedlayer.png"), tr("Toggle Layer Loc&k"), nullptr);
     return action;
 }
 
@@ -79,8 +73,6 @@ void RS_ActionLayersToggleLock::trigger() {
     }
     finish(false);
 }
-
-
 
 void RS_ActionLayersToggleLock::init(int status) {
     RS_ActionInterface::init(status);

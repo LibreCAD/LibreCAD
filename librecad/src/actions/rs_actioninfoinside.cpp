@@ -31,8 +31,6 @@
 #include "rs_graphicview.h"
 #include "rs_information.h"
 
-
-
 RS_ActionInfoInside::RS_ActionInfoInside(RS_EntityContainer& container,
 										 RS_GraphicView& graphicView)
 	:RS_ActionInterface("Info Inside",
@@ -47,16 +45,10 @@ RS_ActionInfoInside::RS_ActionInfoInside(RS_EntityContainer& container,
 	}
 }
 
-
 RS_ActionInfoInside::~RS_ActionInfoInside() {}
 
-
 QAction* RS_ActionInfoInside::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Point inside contour"),
-                                  tr("&Point inside contour"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Point inside contour"), NULL);
-    //action->zetStatusTip(tr("Checks if a given point is inside the selected contour"));
+    QAction* action = new QAction(tr("Point inside contour"), nullptr);
 
     return action;
 }
@@ -71,17 +63,14 @@ void RS_ActionInfoInside::trigger() {
     finish(false);
 }
 
-
-
-void RS_ActionInfoInside::mouseMoveEvent(QMouseEvent* /*e*/) {
+void RS_ActionInfoInside::mouseMoveEvent(QMouseEvent* e) {
+    e->accept();
     //RS_Vector mouse = snapPoint(e);
     //bool onContour = false;
     /*if (RS_Information::isPointInsideContour(mouse, contour, &onContour)) {
     } else {
     }*/
 }
-
-
 
 void RS_ActionInfoInside::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
@@ -91,8 +80,6 @@ void RS_ActionInfoInside::mouseReleaseEvent(QMouseEvent* e) {
         trigger();
     }
 }
-
-
 
 void RS_ActionInfoInside::updateMouseButtonHints() {
     switch (getStatus()) {
@@ -105,8 +92,6 @@ void RS_ActionInfoInside::updateMouseButtonHints() {
         break;
     }
 }
-
-
 
 void RS_ActionInfoInside::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);

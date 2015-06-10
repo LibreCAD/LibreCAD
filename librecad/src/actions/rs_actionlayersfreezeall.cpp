@@ -29,8 +29,6 @@
 #include <QAction>
 #include "rs_graphic.h"
 
-
-
 RS_ActionLayersFreezeAll::RS_ActionLayersFreezeAll(bool freeze,
         RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -41,23 +39,15 @@ RS_ActionLayersFreezeAll::RS_ActionLayersFreezeAll(bool freeze,
 }
 
 QAction* RS_ActionLayersFreezeAll::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
-    QAction* action=NULL;
-
-        if (type==RS2::ActionLayersFreezeAll) {
-                // tr("Freeze all")
-                action = new QAction(tr("&Hide all"),  NULL);
-        //action->zetStatusTip(tr("Freeze all layers"));
-                action->setIcon(QIcon(":/ui/hiddenblock.png"));
-        }
-        else if (type==RS2::ActionLayersDefreezeAll) {
-                // tr("Defreeze all")
-        action = new QAction(tr("&Show all"),   NULL);
-        //action->zetStatusTip(tr("Defreeze all layers"));
-                action->setIcon(QIcon(":/ui/visibleblock.png"));
-        }
-    return action;
+    switch(type){
+    case RS2::ActionLayersFreezeAll:
+        return new QAction(QIcon(":/ui/hiddenblock.png"), tr("&Hide all"), nullptr);
+    case RS2::ActionLayersDefreezeAll:
+        return new QAction(QIcon(":/ui/visibleblock.png"), tr("&Show all"), nullptr);
+    default:
+        return nullptr;
+    }
 }
-
 
 void RS_ActionLayersFreezeAll::trigger() {
     RS_DEBUG->print("RS_ActionLayersFreezeAll::trigger");
@@ -67,8 +57,6 @@ void RS_ActionLayersFreezeAll::trigger() {
     }
     finish(false);
 }
-
-
 
 void RS_ActionLayersFreezeAll::init(int status) {
     RS_ActionInterface::init(status);
