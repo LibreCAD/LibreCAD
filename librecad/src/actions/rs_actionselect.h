@@ -27,6 +27,7 @@
 #ifndef RS_ACTIONSELECT_H
 #define RS_ACTIONSELECT_H
 
+#include <set>
 #include "rs_actioninterface.h"
 
 
@@ -42,7 +43,7 @@ public:
     RS_ActionSelect(RS_EntityContainer& container,
                     RS_GraphicView& graphicView,
                     RS2::ActionType nextAction,
-					std::vector<RS2::EntityType>* entityTypeList=NULL);
+                    std::set<RS2::EntityType> const& entityTypeList=std::set<RS2::EntityType>());
 	~RS_ActionSelect()=default;
 
     virtual void init(int status);
@@ -56,7 +57,7 @@ public:
     void requestFinish(bool keep=false);
 
 private:
-	std::vector<RS2::EntityType>* entityTypeList;
+    std::set<RS2::EntityType> const entityTypeList;
     RS2::ActionType nextAction;
     bool selectSingle;
 };

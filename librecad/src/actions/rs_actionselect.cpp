@@ -34,7 +34,7 @@
 RS_ActionSelect::RS_ActionSelect(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView,
                                  RS2::ActionType nextAction,
-								 std::vector<RS2::EntityType>* entityTypeList)
+                                 std::set<RS2::EntityType> const& entityTypeList)
 	:RS_ActionInterface("Select Entities", container, graphicView)
 	,entityTypeList(entityTypeList)
 	,nextAction(nextAction)
@@ -95,16 +95,14 @@ void RS_ActionSelect::updateToolBar() {
 //                RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
                 RS_DIALOGFACTORY->requestPreviousToolBar();
             } else{
-                if ( entityTypeList != NULL &&  entityTypeList->size() >= 1 ){
+                if ( entityTypeList.size()){
                     //only select entity types from the given list
                     //fixme, need to handle resolution level
 
 					for(auto e: *container){
 						if (e && e->isSelected()) {
-							auto it=std::find(entityTypeList->begin(), entityTypeList->end(), e->rtti());
-							if ( it == entityTypeList->end() ){
-                                e->setSelected(false);
-                            }
+							if(!entityTypeList.count(e->rtti()))
+								e->setSelected(false);
                         }
                     }
                 }

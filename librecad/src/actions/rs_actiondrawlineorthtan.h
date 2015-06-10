@@ -24,8 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWLINEORTHTAN_H
 #define RS_ACTIONDRAWLINEORTHTAN_H
 
+#include<set>
 #include "rs_previewactioninterface.h"
-
 
 /**
  * This action class can handle user events to draw tangents normal to lines
@@ -64,7 +64,7 @@ private:
     RS_Line* tangent; //holds the tangent line for preview
     /** arc/circle/ellipse to generate tangent */
     RS_Entity* circle;
-	const std::vector<RS2::EntityType> circleList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse}; //this holds a list of entity types which supports tangent
+    const std::set<RS2::EntityType> circleList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse}; //this holds a list of entity types which supports tangent
 
 };
 

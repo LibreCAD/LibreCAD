@@ -602,7 +602,7 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, RS2::EntityType enType,
                level);
 }
 
-RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, const std::vector<RS2::EntityType>& enTypeList,
+RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, const std::set<RS2::EntityType>& enTypeList,
                                    RS2::ResolveLevel level) {
 	RS_Entity* pten = nullptr;
     RS_Vector coord(RS_Vector(graphicView->toGraphX(e->x()), graphicView->toGraphY(e->y())));
@@ -615,11 +615,11 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, const std::vector<RS2::Entity
 		RS_EntityContainer ec(nullptr,false);
 		for( auto t0: enTypeList){
 			RS_Entity* en=catchEntity(coord, t0, level);
-			if(en!=nullptr) ec.addEntity(en);
-			if(en!=nullptr) {
+			if(en) ec.addEntity(en);
+//			if(en!=nullptr) {
 //            std::cout<<__FILE__<<" : "<<__func__<<" : lines "<<__LINE__<<std::endl;
 //            std::cout<<"caught id= "<<en->getId()<<std::endl;
-            }
+//            }
         }
         if(ec.count()>0){
             ec.getDistanceToPoint(coord, &pten, RS2::ResolveNone);

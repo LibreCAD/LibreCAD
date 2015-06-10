@@ -68,7 +68,7 @@ private:
     RS_Vector point;
     /** Chosen entity */
     RS_Entity* circle;
-	const std::vector<RS2::EntityType> circleType={RS2::EntityArc,RS2::EntityCircle,
+    const std::initializer_list<RS2::EntityType> circleType={RS2::EntityArc,RS2::EntityCircle,
 												   RS2::EntityEllipse, RS2::EntitySplinePoints
 												  };
 };

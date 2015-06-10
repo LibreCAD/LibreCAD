@@ -33,7 +33,9 @@
 
 
 RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
-											 RS_GraphicView& graphicView,RS_ActionInterface* actionSelect,  std::vector<RS2::EntityType>* entityTypeList)
+											 RS_GraphicView& graphicView,
+											 RS_ActionInterface* actionSelect,
+											 std::set<RS2::EntityType> const& entityTypeList)
 	:RS_ActionInterface("Select Entities", container, graphicView)
 	,entityTypeList(entityTypeList)
 	,en(nullptr)
@@ -59,13 +61,10 @@ QAction* RS_ActionSelectSingle::createGUIAction(RS2::ActionType /*type*/, QObjec
 
 
 void RS_ActionSelectSingle::trigger() {
-//        if(entityTypeList != NULL){
-//                std::cout<<"RS_ActionSelectSingle::trigger(): entityTypeList->contains(en->rtti())="<<entityTypeList->contains(en->rtti())<<std::endl;
-//        }
-	if (en && (entityTypeList==nullptr ||
-			   std::any_of(entityTypeList->begin(), entityTypeList->end(),[this](RS2::EntityType t)->bool{
-													return this->en->rtti()==t;
-}))) {
+	if (en && (entityTypeList.empty() ||
+			   entityTypeList.count(en->rtti())
+			   )
+	){
         RS_Selection s(*container, graphicView);
         s.selectSingle(en);
 
@@ -87,14 +86,14 @@ void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         //need to finish the parent RS_ActionSelect as well, bug#3437138
             //need to check actionSelect is set, bug#3437138
-        if(actionSelect != NULL) {
+        if(actionSelect) {
             actionSelect->requestFinish(false);
         }
         init(getStatus()-1);
     } else {
-        if(entityTypeList && entityTypeList->size()>0) {
+        if(entityTypeList.size()) {
 //            std::cout<<"RS_ActionSelectSingle::mouseReleaseEvent(): entityTypeList->size()="<< entityTypeList->size()<<std::endl;
-            en = catchEntity(e,*entityTypeList);
+            en = catchEntity(e, entityTypeList);
         }else{
             en = catchEntity(e);
         }

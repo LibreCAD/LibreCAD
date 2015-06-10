@@ -41,7 +41,7 @@ class RS_ActionSelectSingle : public RS_ActionInterface {
 public:
     RS_ActionSelectSingle(RS_EntityContainer& container,
 						  RS_GraphicView& graphicView,RS_ActionInterface* actionSelect=NULL,
-						  std::vector<RS2::EntityType>* entityTypeList=NULL);
+						  std::set<RS2::EntityType> const& entityTypeList=std::set<RS2::EntityType>());
 	~RS_ActionSelectSingle()=default;
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
@@ -52,7 +52,7 @@ public:
     virtual void updateMouseCursor();
 
 private:
-	const std::vector<RS2::EntityType>* entityTypeList;
+    std::set<RS2::EntityType> const entityTypeList;
 
     RS_Entity* en;
     RS_ActionSelect* actionSelect;

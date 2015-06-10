@@ -166,9 +166,6 @@
 #include "qg_snaptoolbar.h"
 #include "qc_applicationwindow.h"
 
-//a list of EntityTypes which support actionOffset
-std::vector<RS2::EntityType> QG_ActionHandler::offsetEntities(0);
-
 /**
  * Constructor
  */
@@ -700,18 +697,13 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionModifyRound(*doc, *gv);
         break;
     case RS2::ActionModifyOffset:
-		if(!doc->countSelected(true, {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline})){
-			if (offsetEntities.size() == 0){
-				//list all supported Entity types here
-				//fixme, handle this initialization better
-				offsetEntities.push_back(RS2::EntityArc);
-				offsetEntities.push_back(RS2::EntityCircle);
-				offsetEntities.push_back(RS2::EntityLine);
-				offsetEntities.push_back(RS2::EntityPolyline);
-			}
-			a = new RS_ActionSelect(*doc, *gv,RS2::ActionModifyOffsetNoSelect,&offsetEntities);
+    {
+        std::set<RS2::EntityType> const allowedOffsetTypes={RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline};
+        if(!doc->countSelected(true, allowedOffsetTypes)){
+            a = new RS_ActionSelect(*doc, *gv,RS2::ActionModifyOffsetNoSelect, allowedOffsetTypes);
 			break;
 		}
+	}
     case RS2::ActionModifyOffsetNoSelect:
         a = new RS_ActionModifyOffset(*doc, *gv);
 		break;

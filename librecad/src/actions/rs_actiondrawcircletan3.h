@@ -24,7 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWCIRCLETAN3_H
 #define RS_ACTIONDRAWCIRCLETAN3_H
 
-#include <vector>
+#include<vector>
+#include<set>
 #include "rs_previewactioninterface.h"
 
 struct RS_CircleData;
@@ -80,7 +81,7 @@ public:
 	std::shared_ptr<RS_CircleData> cData;
     RS_Vector coord;
     bool valid;
-	const std::vector<RS2::EntityType> enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+    const std::set<RS2::EntityType> enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
 	//keep a list of centers found
 	std::vector<std::shared_ptr<RS_CircleData> > candidates;
     RS_VectorSolutions centers;
