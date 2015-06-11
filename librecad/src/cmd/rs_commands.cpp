@@ -32,11 +32,19 @@
 #include "rs_system.h"
 #include "rs_dialogfactory.h"
 
-RS_Commands* RS_Commands::uniqueInstance = NULL;
+RS_Commands* RS_Commands::uniqueInstance = nullptr;
 
 const char* RS_Commands::FnPrefix = "Fn";
 const char* RS_Commands::AltPrefix = "Alt-";
 const char* RS_Commands::MetaPrefix = "Meta-";
+
+
+RS_Commands* RS_Commands::instance() {
+    if (!uniqueInstance) {
+        uniqueInstance = new RS_Commands();
+    }
+    return uniqueInstance;
+}
 
 /**
  * Constructor. Initiates main command dictionary.
@@ -556,7 +564,9 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
 
 	QString c;
 
-	if(!(code.startsWith(RS_Commands::FnPrefix) || code.startsWith(RS_Commands::AltPrefix) || code.startsWith(RS_Commands::MetaPrefix))) {
+    if(!(code.startsWith(FnPrefix) ||
+         code.startsWith(AltPrefix) ||
+         code.startsWith(MetaPrefix))) {
     	if(code.size() < 1 || code.contains(QRegExp("^[a-z].*",Qt::CaseInsensitive)) == false )
 			 return RS2::ActionNone;
 	    c = code.toLower();
