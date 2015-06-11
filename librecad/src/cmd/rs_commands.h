@@ -29,8 +29,7 @@
 #ifndef RS_COMMANDS_H
 #define RS_COMMANDS_H
 
-#include <QHash>
-#include <QObject>
+#include <map>
 
 #include "rs.h"
 
@@ -45,7 +44,6 @@
  * @author Andrew Mustun
  */
 class RS_Commands : public QObject {
-    Q_OBJECT
 
 public:
     /**
@@ -89,10 +87,10 @@ private:
     RS_Commands(RS_Commands& ) = delete;
     RS_Commands& operator = ( RS_Commands& ) = delete;
 
-    QHash<QString, RS2::ActionType> mainCommands;
-    QHash<QString, RS2::ActionType> shortCommands;
+    std::map<QString, RS2::ActionType> mainCommands;
+    std::map<QString, RS2::ActionType> shortCommands;
     // key=english command , value = translated
-    QHash<QString, QString> cmdTranslation;
+    std::map<QString, QString> cmdTranslation;
 };
 
 #endif

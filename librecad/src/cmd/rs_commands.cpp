@@ -25,6 +25,7 @@
 **
 **********************************************************************/
 
+#include <QObject>
 #include <QTextStream>
 #include "rs_commands.h"
 
@@ -45,353 +46,351 @@ const char* RS_Commands::MetaPrefix = "Meta-";
  */
 RS_Commands::RS_Commands() {
     // draw:
-    cmdTranslation.insert("point", tr("point"));
-    mainCommands.insert(tr("point"), RS2::ActionDrawPoint);
-    cmdTranslation.insert("po", tr("po"));
-    shortCommands.insert(tr("po"), RS2::ActionDrawPoint);
+    cmdTranslation["point"]=QObject::tr("point");
+    mainCommands[QObject::tr("point")]=RS2::ActionDrawPoint;
+    cmdTranslation["po"]=QObject::tr("po");
+    shortCommands[QObject::tr("po")]=RS2::ActionDrawPoint;
 
-    cmdTranslation.insert("line", tr("line"));
-    mainCommands.insert(tr("line"), RS2::ActionDrawLine);
-    cmdTranslation.insert("li", tr("li"));
-    shortCommands.insert(tr("li"), RS2::ActionDrawLine);
-    shortCommands.insert(tr("l"), RS2::ActionDrawLine);
+    cmdTranslation["line"]=QObject::tr("line");
+    mainCommands[QObject::tr("line")]=RS2::ActionDrawLine;
+    cmdTranslation["li"]=QObject::tr("li");
+    shortCommands[QObject::tr("li")]=RS2::ActionDrawLine;
+    shortCommands[QObject::tr("l")]=RS2::ActionDrawLine;
 
-    cmdTranslation.insert("polyline", tr("polyline"));
-    mainCommands.insert(tr("polyline"), RS2::ActionDrawPolyline);
-    cmdTranslation.insert("pl", tr("pl"));
-    shortCommands.insert(tr("pl"), RS2::ActionDrawPolyline);
+    cmdTranslation["polyline"]=QObject::tr("polyline");
+    mainCommands[QObject::tr("polyline")]=RS2::ActionDrawPolyline;
+    cmdTranslation["pl"]=QObject::tr("pl");
+    shortCommands[QObject::tr("pl")]=RS2::ActionDrawPolyline;
 
-    cmdTranslation.insert("offset", tr("offset"));
-    mainCommands.insert(tr("offset"), RS2::ActionDrawLineParallel);
-    shortCommands.insert(tr("o", "offset"), RS2::ActionDrawLineParallel);
-    cmdTranslation.insert("parallel", tr("parallel"));
-    mainCommands.insert(tr("parallel"), RS2::ActionDrawLineParallel);
-    cmdTranslation.insert("pa", tr("pa"));
-    shortCommands.insert(tr("pa", "parallel"), RS2::ActionDrawLineParallel);
+    cmdTranslation["offset"]=QObject::tr("offset");
+    mainCommands[QObject::tr("offset")]=RS2::ActionDrawLineParallel;
+    shortCommands[QObject::tr("o", "offset")]=RS2::ActionDrawLineParallel;
+    cmdTranslation["parallel"]=QObject::tr("parallel");
+    mainCommands[QObject::tr("parallel")]=RS2::ActionDrawLineParallel;
+    cmdTranslation["pa"]=QObject::tr("pa");
+    shortCommands[QObject::tr("pa", "parallel")]=RS2::ActionDrawLineParallel;
 
-    cmdTranslation.insert("arc", tr("arc"));
-    mainCommands.insert(tr("arc"), RS2::ActionDrawArc3P);
-    cmdTranslation.insert("ar", tr("ar"));
-    mainCommands.insert(tr("ar"), RS2::ActionDrawArc3P);
-    shortCommands.insert(tr("a"), RS2::ActionDrawArc3P);
+    cmdTranslation["arc"]=QObject::tr("arc");
+    mainCommands[QObject::tr("arc")]=RS2::ActionDrawArc3P;
+    cmdTranslation["ar"]=QObject::tr("ar");
+    mainCommands[QObject::tr("ar")]=RS2::ActionDrawArc3P;
+    shortCommands[QObject::tr("a")]=RS2::ActionDrawArc3P;
 
-    cmdTranslation.insert("circle", tr("circle"));
-    mainCommands.insert(tr("circle"), RS2::ActionDrawCircle);
-    cmdTranslation.insert("ci", tr("ci"));
-    shortCommands.insert(tr("ci"), RS2::ActionDrawCircle);
+    cmdTranslation["circle"]=QObject::tr("circle");
+    mainCommands[QObject::tr("circle")]=RS2::ActionDrawCircle;
+    cmdTranslation["ci"]=QObject::tr("ci");
+    shortCommands[QObject::tr("ci")]=RS2::ActionDrawCircle;
 
-    cmdTranslation.insert("rectangle", tr("rectangle"));
-    mainCommands.insert(tr("rectangle"), RS2::ActionDrawLineRectangle);
-    cmdTranslation.insert("rect", tr("rect"));
-    shortCommands.insert(tr("rectang"), RS2::ActionDrawLineRectangle);
-    shortCommands.insert(tr("rect"), RS2::ActionDrawLineRectangle);
-    shortCommands.insert(tr("rec"), RS2::ActionDrawLineRectangle);
+    cmdTranslation["rectangle"]=QObject::tr("rectangle");
+    mainCommands[QObject::tr("rectangle")]=RS2::ActionDrawLineRectangle;
+    cmdTranslation["rect"]=QObject::tr("rect");
+    shortCommands[QObject::tr("rectang")]=RS2::ActionDrawLineRectangle;
+    shortCommands[QObject::tr("rect")]=RS2::ActionDrawLineRectangle;
+    shortCommands[QObject::tr("rec")]=RS2::ActionDrawLineRectangle;
 
-    cmdTranslation.insert("mtext", tr("mtext"));
-    mainCommands.insert(tr("mtext"), RS2::ActionDrawMText);
-    cmdTranslation.insert("text", tr("text"));
-    mainCommands.insert(tr("text"), RS2::ActionDrawText);
+    cmdTranslation["mtext"]=QObject::tr("mtext");
+    mainCommands[QObject::tr("mtext")]=RS2::ActionDrawMText;
+    cmdTranslation["text"]=QObject::tr("text");
+    mainCommands[QObject::tr("text")]=RS2::ActionDrawText;
 
     // zoom:
-    cmdTranslation.insert("regen", tr("regen"));
-    cmdTranslation.insert("redraw", tr("redraw"));
-    mainCommands.insert(tr("regen"), RS2::ActionZoomRedraw);
-    mainCommands.insert(tr("redraw"), RS2::ActionZoomRedraw);
-    shortCommands.insert(tr("rg", "zoom - redraw"), RS2::ActionZoomRedraw);
+    cmdTranslation["regen"]=QObject::tr("regen");
+    cmdTranslation["redraw"]=QObject::tr("redraw");
+    mainCommands[QObject::tr("regen")]=RS2::ActionZoomRedraw;
+    mainCommands[QObject::tr("redraw")]=RS2::ActionZoomRedraw;
+    shortCommands[QObject::tr("rg", "zoom - redraw")]=RS2::ActionZoomRedraw;
 
-    cmdTranslation.insert("zr", tr("zr"));
-    shortCommands.insert(tr("zr", "zoom - redraw"), RS2::ActionZoomRedraw);
+    cmdTranslation["zr"]=QObject::tr("zr");
+    shortCommands[QObject::tr("zr", "zoom - redraw")]=RS2::ActionZoomRedraw;
 
-    cmdTranslation.insert("zw", tr("zw"));
-    mainCommands.insert(tr("zw", "zoom - window"), RS2::ActionZoomWindow);
+    cmdTranslation["zw"]=QObject::tr("zw");
+    mainCommands[QObject::tr("zw", "zoom - window")]=RS2::ActionZoomWindow;
 
-    cmdTranslation.insert("za", tr("za"));
-    mainCommands.insert(tr("za", "zoom - auto"), RS2::ActionZoomAuto);
+    cmdTranslation["za"]=QObject::tr("za");
+    mainCommands[QObject::tr("za", "zoom - auto")]=RS2::ActionZoomAuto;
 
-    cmdTranslation.insert("zp", tr("zp"));
-    mainCommands.insert(tr("zp", "zoom - pan"), RS2::ActionZoomPan);
+    cmdTranslation["zp"]=QObject::tr("zp");
+    mainCommands[QObject::tr("zp", "zoom - pan")]=RS2::ActionZoomPan;
 
-    cmdTranslation.insert("zv", tr("zv"));
-    mainCommands.insert(tr("zv", "zoom - previous"), RS2::ActionZoomPrevious);
+    cmdTranslation["zv"]=QObject::tr("zv");
+    mainCommands[QObject::tr("zv", "zoom - previous")]=RS2::ActionZoomPrevious;
 
     // edit:
-    cmdTranslation.insert("kill", tr("kill"));
-    mainCommands.insert(tr("kill"), RS2::ActionEditKillAllActions);
-    cmdTranslation.insert("k", tr("k"));
-    shortCommands.insert(tr("k"), RS2::ActionEditKillAllActions);
+    cmdTranslation["kill"]=QObject::tr("kill");
+    mainCommands[QObject::tr("kill")]=RS2::ActionEditKillAllActions;
+    cmdTranslation["k"]=QObject::tr("k");
+    shortCommands[QObject::tr("k")]=RS2::ActionEditKillAllActions;
 
-    cmdTranslation.insert("undo", tr("undo"));
-    mainCommands.insert(tr("undo"), RS2::ActionEditUndo);
-    cmdTranslation.insert("u", tr("u"));
-    shortCommands.insert(tr("u", "undo"), RS2::ActionEditUndo);
+    cmdTranslation["undo"]=QObject::tr("undo");
+    mainCommands[QObject::tr("undo")]=RS2::ActionEditUndo;
+    cmdTranslation["u"]=QObject::tr("u");
+    shortCommands[QObject::tr("u", "undo")]=RS2::ActionEditUndo;
 
-    cmdTranslation.insert("redo", tr("redo"));
-    mainCommands.insert(tr("redo"), RS2::ActionEditRedo);
-    cmdTranslation.insert("r", tr("r"));
-    shortCommands.insert(tr("r"), RS2::ActionEditRedo);
+    cmdTranslation["redo"]=QObject::tr("redo");
+    mainCommands[QObject::tr("redo")]=RS2::ActionEditRedo;
+    cmdTranslation["r"]=QObject::tr("r");
+    shortCommands[QObject::tr("r")]=RS2::ActionEditRedo;
 
     // dimensions:
-    cmdTranslation.insert("da", tr("da"));
-    mainCommands.insert(tr("da", "dimension - aligned"), RS2::ActionDimAligned);
-    shortCommands.insert(tr("da"), RS2::ActionDimAligned);
+    cmdTranslation["da"]=QObject::tr("da");
+    mainCommands[QObject::tr("da", "dimension - aligned")]=RS2::ActionDimAligned;
+    shortCommands[QObject::tr("da")]=RS2::ActionDimAligned;
 
-    cmdTranslation.insert("dh", tr("dh"));
-    mainCommands.insert(tr("dh", "dimension - horizontal"), RS2::ActionDimLinearHor);
-    shortCommands.insert(tr("dh"), RS2::ActionDimLinearHor);
+    cmdTranslation["dh"]=QObject::tr("dh");
+    mainCommands[QObject::tr("dh", "dimension - horizontal")]=RS2::ActionDimLinearHor;
+    shortCommands[QObject::tr("dh")]=RS2::ActionDimLinearHor;
 
-    cmdTranslation.insert("dr", tr("dr"));
-    mainCommands.insert(tr("dr", "dimension - linear"), RS2::ActionDimLinear);
-    shortCommands.insert(tr("dr"), RS2::ActionDimLinear);
+    cmdTranslation["dr"]=QObject::tr("dr");
+    mainCommands[QObject::tr("dr", "dimension - linear")]=RS2::ActionDimLinear;
+    shortCommands[QObject::tr("dr")]=RS2::ActionDimLinear;
 
-    cmdTranslation.insert("dv", tr("dv"));
-    mainCommands.insert(tr("dv", "dimension - vertical"), RS2::ActionDimLinearVer);
-    shortCommands.insert(tr("dv"), RS2::ActionDimLinearVer);
+    cmdTranslation["dv"]=QObject::tr("dv");
+    mainCommands[QObject::tr("dv", "dimension - vertical")]=RS2::ActionDimLinearVer;
+    shortCommands[QObject::tr("dv")]=RS2::ActionDimLinearVer;
 
-    cmdTranslation.insert("ld", tr("ld"));
-    mainCommands.insert(tr("ld", "dimension - leader"), RS2::ActionDimLeader);
-    shortCommands.insert(tr("ld"), RS2::ActionDimLeader);
+    cmdTranslation["ld"]=QObject::tr("ld");
+    mainCommands[QObject::tr("ld", "dimension - leader")]=RS2::ActionDimLeader;
+    shortCommands[QObject::tr("ld")]=RS2::ActionDimLeader;
 
     // tools:
-    cmdTranslation.insert("dimregen", tr("dimregen"));
-    mainCommands.insert(tr("dimregen"), RS2::ActionToolRegenerateDimensions);
+    cmdTranslation["dimregen"]=QObject::tr("dimregen");
+    mainCommands[QObject::tr("dimregen")]=RS2::ActionToolRegenerateDimensions;
 
 	 // restrictions:
-    cmdTranslation.insert("rn", tr("rn", "restrict - nothing"));
-    mainCommands.insert(tr("rn", "restrict - nothing"), RS2::ActionRestrictNothing);
-    shortCommands.insert(tr("rn"), RS2::ActionRestrictNothing);
+	cmdTranslation["rn"]=QObject::tr("rn", "restrict - nothing");
+	mainCommands[QObject::tr("rn", "restrict - nothing")]=RS2::ActionRestrictNothing;
+	shortCommands[QObject::tr("rn")]=RS2::ActionRestrictNothing;
 
-    cmdTranslation.insert("rr", tr("rr", "restrict - orthogonal"));
-    mainCommands.insert(tr("rr", "restrict - orthogonal"), RS2::ActionRestrictOrthogonal);
-    shortCommands.insert(tr("rr"), RS2::ActionRestrictOrthogonal);
+    cmdTranslation["rr"]=QObject::tr("rr", "restrict - orthogonal");
+    mainCommands[QObject::tr("rr", "restrict - orthogonal")]=RS2::ActionRestrictOrthogonal;
+    shortCommands[QObject::tr("rr")]=RS2::ActionRestrictOrthogonal;
 
-    cmdTranslation.insert("rh", tr("rh", "restrict - horizontal"));
-    mainCommands.insert(tr("rh", "restrict - horizontal"), RS2::ActionRestrictHorizontal);
-    shortCommands.insert(tr("rh"), RS2::ActionRestrictHorizontal);
+    cmdTranslation["rh"]=QObject::tr("rh", "restrict - horizontal");
+    mainCommands[QObject::tr("rh", "restrict - horizontal")]=RS2::ActionRestrictHorizontal;
+    shortCommands[QObject::tr("rh")]=RS2::ActionRestrictHorizontal;
 
-    cmdTranslation.insert("rv", tr("rv", "restrict - vertical"));
-    mainCommands.insert(tr("rv", "restrict - vertical"), RS2::ActionRestrictVertical);
-    shortCommands.insert(tr("rv"), RS2::ActionRestrictVertical);
-
+    cmdTranslation["rv"]=QObject::tr("rv", "restrict - vertical");
+    mainCommands[QObject::tr("rv", "restrict - vertical")]=RS2::ActionRestrictVertical;
+    shortCommands[QObject::tr("rv")]=RS2::ActionRestrictVertical;
 
     // modify:
-    cmdTranslation.insert("tm", tr("tm"));
-    mainCommands.insert(tr("tm", "modify - multi trim (extend)"), RS2::ActionModifyTrim2);
-    shortCommands.insert(tr("tm"), RS2::ActionModifyTrim2);
+    cmdTranslation["tm"]=QObject::tr("tm");
+    mainCommands[QObject::tr("tm", "modify - multi trim (extend)")]=RS2::ActionModifyTrim2;
+    shortCommands[QObject::tr("tm")]=RS2::ActionModifyTrim2;
 
-    cmdTranslation.insert("xt", tr("xt"));
-    mainCommands.insert(tr("xt", "modify - trim (extend)"), RS2::ActionModifyTrim);
-    shortCommands.insert(tr("xt"), RS2::ActionModifyTrim);
+    cmdTranslation["xt"]=QObject::tr("xt");
+    mainCommands[QObject::tr("xt", "modify - trim (extend)")]=RS2::ActionModifyTrim;
+    shortCommands[QObject::tr("xt")]=RS2::ActionModifyTrim;
 
-    cmdTranslation.insert("rm", tr("rm"));
-    mainCommands.insert(tr("rm", "modify - trim"), RS2::ActionModifyTrim);
-    shortCommands.insert(tr("rm"), RS2::ActionModifyTrim);
+    cmdTranslation["rm"]=QObject::tr("rm");
+    mainCommands[QObject::tr("rm", "modify - trim")]=RS2::ActionModifyTrim;
+    shortCommands[QObject::tr("rm")]=RS2::ActionModifyTrim;
 
-    cmdTranslation.insert("mv", tr("mv"));
-    mainCommands.insert(tr("mv", "modify - move"), RS2::ActionModifyMove);
-    shortCommands.insert(tr("mv"), RS2::ActionModifyMove);
+    cmdTranslation["mv"]=QObject::tr("mv");
+    mainCommands[QObject::tr("mv", "modify - move")]=RS2::ActionModifyMove;
+    shortCommands[QObject::tr("mv")]=RS2::ActionModifyMove;
 
-    cmdTranslation.insert("ch", tr("ch"));
-    mainCommands.insert(tr("ch", "modify - bevel (chamfer)"), RS2::ActionModifyBevel);
-    shortCommands.insert(tr("ch"), RS2::ActionModifyBevel);
-    cmdTranslation.insert("fillet", tr("fillet", "modify - fillet"));
-    mainCommands.insert(tr("fillet", "modify - fillet"), RS2::ActionModifyBevel);
+    cmdTranslation["ch"]=QObject::tr("ch");
+    mainCommands[QObject::tr("ch", "modify - bevel (chamfer)")]=RS2::ActionModifyBevel;
+    shortCommands[QObject::tr("ch")]=RS2::ActionModifyBevel;
+    cmdTranslation["fillet"]=QObject::tr("fillet", "modify - fillet");
+    mainCommands[QObject::tr("fillet", "modify - fillet")]=RS2::ActionModifyBevel;
 
-    cmdTranslation.insert("divide", tr("divide", "modify - divide"));
-    mainCommands.insert(tr("divide", "modify - divide"), RS2::ActionModifyCut);
-    shortCommands.insert(tr("div", "modify - divide"), RS2::ActionModifyCut);
-    cmdTranslation.insert("cut", tr("cut", "modify - divide"));
-    mainCommands.insert(tr("cut", "modify - divide"), RS2::ActionModifyCut);
+    cmdTranslation["divide"]=QObject::tr("divide", "modify - divide");
+    mainCommands[QObject::tr("divide", "modify - divide")]=RS2::ActionModifyCut;
+    shortCommands[QObject::tr("div", "modify - divide")]=RS2::ActionModifyCut;
+    cmdTranslation["cut"]=QObject::tr("cut", "modify - divide");
+    mainCommands[QObject::tr("cut", "modify - divide")]=RS2::ActionModifyCut;
 
-    cmdTranslation.insert("mi", tr("mi"));
-    mainCommands.insert(tr("mi", "modify - mirror"), RS2::ActionModifyMirror);
-    shortCommands.insert(tr("mi"), RS2::ActionModifyMirror);
+    cmdTranslation["mi"]=QObject::tr("mi");
+    mainCommands[QObject::tr("mi", "modify - mirror")]=RS2::ActionModifyMirror;
+    shortCommands[QObject::tr("mi")]=RS2::ActionModifyMirror;
 
-	cmdTranslation.insert("re", tr("re"));
-	mainCommands.insert(tr("re", "modify - revert direction"), RS2::ActionModifyRevertDirection);
-	shortCommands.insert(tr("re"), RS2::ActionModifyRevertDirection);
+	cmdTranslation["re"]=QObject::tr("re");
+	mainCommands[QObject::tr("re", "modify - revert direction")]=RS2::ActionModifyRevertDirection;
+	shortCommands[QObject::tr("re")]=RS2::ActionModifyRevertDirection;
 
-	cmdTranslation.insert("ro", tr("ro"));
-    mainCommands.insert(tr("ro", "modify - rotate"), RS2::ActionModifyRotate);
-    shortCommands.insert(tr("ro"), RS2::ActionModifyRotate);
+	cmdTranslation["ro"]=QObject::tr("ro");
+	mainCommands[QObject::tr("ro", "modify - rotate")]=RS2::ActionModifyRotate;
+	shortCommands[QObject::tr("ro")]=RS2::ActionModifyRotate;
 
-    cmdTranslation.insert("sz", tr("sz"));
-    mainCommands.insert(tr("sz", "modify - scale"), RS2::ActionModifyScale);
-    shortCommands.insert(tr("sz"), RS2::ActionModifyScale);
+    cmdTranslation["sz"]=QObject::tr("sz");
+    mainCommands[QObject::tr("sz", "modify - scale")]=RS2::ActionModifyScale;
+    shortCommands[QObject::tr("sz")]=RS2::ActionModifyScale;
 
-    cmdTranslation.insert("ss", tr("ss"));
-    mainCommands.insert(tr("ss", "modify - stretch"), RS2::ActionModifyStretch);
-    shortCommands.insert(tr("ss"), RS2::ActionModifyStretch);
+    cmdTranslation["ss"]=QObject::tr("ss");
+    mainCommands[QObject::tr("ss", "modify - stretch")]=RS2::ActionModifyStretch;
+    shortCommands[QObject::tr("ss")]=RS2::ActionModifyStretch;
 
-    cmdTranslation.insert("er", tr("er"));
-    mainCommands.insert(tr("er", "modify - delete (erase)"), RS2::ActionModifyDelete);
-    shortCommands.insert(tr("er"), RS2::ActionModifyDelete);
+    cmdTranslation["er"]=QObject::tr("er");
+    mainCommands[QObject::tr("er", "modify - delete (erase)")]=RS2::ActionModifyDelete;
+    shortCommands[QObject::tr("er")]=RS2::ActionModifyDelete;
 
-    cmdTranslation.insert("oo", tr("oo"));
-    mainCommands.insert(tr("oo", "modify - undo (oops)"), RS2::ActionEditUndo);
-    shortCommands.insert(tr("oo"), RS2::ActionEditUndo);
+    cmdTranslation["oo"]=QObject::tr("oo");
+    mainCommands[QObject::tr("oo", "modify - undo (oops)")]=RS2::ActionEditUndo;
+    shortCommands[QObject::tr("oo")]=RS2::ActionEditUndo;
 
-    cmdTranslation.insert("uu", tr("uu"));
-    mainCommands.insert(tr("uu", "modify - redo"), RS2::ActionEditRedo);
-    shortCommands.insert(tr("uu"), RS2::ActionEditRedo);
+    cmdTranslation["uu"]=QObject::tr("uu");
+    mainCommands[QObject::tr("uu", "modify - redo")]=RS2::ActionEditRedo;
+    shortCommands[QObject::tr("uu")]=RS2::ActionEditRedo;
 
-    cmdTranslation.insert("xp", tr("xp"));
-    mainCommands.insert(tr("xp", "modify - explode"), RS2::ActionBlocksExplode);
-    shortCommands.insert(tr("xp"), RS2::ActionBlocksExplode);
+    cmdTranslation["xp"]=QObject::tr("xp");
+    mainCommands[QObject::tr("xp", "modify - explode")]=RS2::ActionBlocksExplode;
+    shortCommands[QObject::tr("xp")]=RS2::ActionBlocksExplode;
 
     // snap:
-    cmdTranslation.insert("os", tr("os", "snap - free"));
-    mainCommands.insert(tr("os", "snap - free"), RS2::ActionSnapFree);
-    shortCommands.insert(tr("os"), RS2::ActionSnapFree);
+    cmdTranslation["os"]=QObject::tr("os", "snap - free");
+    mainCommands[QObject::tr("os", "snap - free")]=RS2::ActionSnapFree;
+    shortCommands[QObject::tr("os")]=RS2::ActionSnapFree;
 
-    cmdTranslation.insert("sc", tr("sc"));
-    mainCommands.insert(tr("sc", "snap - center"), RS2::ActionSnapCenter);
-    shortCommands.insert(tr("sc"), RS2::ActionSnapCenter);
+    cmdTranslation["sc"]=QObject::tr("sc");
+    mainCommands[QObject::tr("sc", "snap - center")]=RS2::ActionSnapCenter;
+    shortCommands[QObject::tr("sc")]=RS2::ActionSnapCenter;
 
-    cmdTranslation.insert("sd", tr("sd"));
-    mainCommands.insert(tr("sd", "snap - distance"), RS2::ActionSnapDist);
-    shortCommands.insert(tr("sd"), RS2::ActionSnapDist);
+    cmdTranslation["sd"]=QObject::tr("sd");
+    mainCommands[QObject::tr("sd", "snap - distance")]=RS2::ActionSnapDist;
+    shortCommands[QObject::tr("sd")]=RS2::ActionSnapDist;
 
-    cmdTranslation.insert("se", tr("se"));
-    mainCommands.insert(tr("se", "snap - end"), RS2::ActionSnapEndpoint);
-    shortCommands.insert(tr("se"), RS2::ActionSnapEndpoint);
+    cmdTranslation["se"]=QObject::tr("se");
+    mainCommands[QObject::tr("se", "snap - end")]=RS2::ActionSnapEndpoint;
+    shortCommands[QObject::tr("se")]=RS2::ActionSnapEndpoint;
 
-    cmdTranslation.insert("sf", tr("sf"));
-    mainCommands.insert(tr("sf", "snap - free"), RS2::ActionSnapFree);
-    shortCommands.insert(tr("sf"), RS2::ActionSnapFree);
+    cmdTranslation["sf"]=QObject::tr("sf");
+    mainCommands[QObject::tr("sf", "snap - free")]=RS2::ActionSnapFree;
+    shortCommands[QObject::tr("sf")]=RS2::ActionSnapFree;
 
-    cmdTranslation.insert("sg", tr("sg"));
-    mainCommands.insert(tr("sg", "snap - grid"), RS2::ActionSnapGrid);
-    shortCommands.insert(tr("sg"), RS2::ActionSnapGrid);
+    cmdTranslation["sg"]=QObject::tr("sg");
+    mainCommands[QObject::tr("sg", "snap - grid")]=RS2::ActionSnapGrid;
+    shortCommands[QObject::tr("sg")]=RS2::ActionSnapGrid;
 
-    cmdTranslation.insert("si", tr("si"));
-    mainCommands.insert(tr("si", "snap - intersection"), RS2::ActionSnapIntersection);
-    shortCommands.insert(tr("si"), RS2::ActionSnapIntersection);
+    cmdTranslation["si"]=QObject::tr("si");
+    mainCommands[QObject::tr("si", "snap - intersection")]=RS2::ActionSnapIntersection;
+    shortCommands[QObject::tr("si")]=RS2::ActionSnapIntersection;
 
-    cmdTranslation.insert("sm", tr("sm"));
-    mainCommands.insert(tr("sm", "snap - middle"), RS2::ActionSnapMiddle);
-    shortCommands.insert(tr("sm"), RS2::ActionSnapMiddle);
+    cmdTranslation["sm"]=QObject::tr("sm");
+    mainCommands[QObject::tr("sm", "snap - middle")]=RS2::ActionSnapMiddle;
+    shortCommands[QObject::tr("sm")]=RS2::ActionSnapMiddle;
 
-    cmdTranslation.insert("sn", tr("sn"));
-    mainCommands.insert(tr("sn", "snap - nearest"), RS2::ActionSnapOnEntity);
-    shortCommands.insert(tr("sn"), RS2::ActionSnapOnEntity);
+    cmdTranslation["sn"]=QObject::tr("sn");
+    mainCommands[QObject::tr("sn", "snap - nearest")]=RS2::ActionSnapOnEntity;
+    shortCommands[QObject::tr("sn")]=RS2::ActionSnapOnEntity;
 
-    cmdTranslation.insert("np", tr("np"));
-    mainCommands.insert(tr("np", "snap - nearest point"), RS2::ActionSnapOnEntity);
-    shortCommands.insert(tr("np"), RS2::ActionSnapOnEntity);
+    cmdTranslation["np"]=QObject::tr("np");
+    mainCommands[QObject::tr("np", "snap - nearest point")]=RS2::ActionSnapOnEntity;
+    shortCommands[QObject::tr("np")]=RS2::ActionSnapOnEntity;
 
-    cmdTranslation.insert("setrelativezero", tr("setrelativezero"));
-    mainCommands.insert(tr("setrelativezero", "snap - set relative zero position"), RS2::ActionSetRelativeZero);
-    cmdTranslation.insert("rz", tr("rz"));
-    shortCommands.insert(tr("rz"), RS2::ActionSetRelativeZero);
+    cmdTranslation["setrelativezero"]=QObject::tr("setrelativezero");
+    mainCommands[QObject::tr("setrelativezero", "snap - set relative zero position")]=RS2::ActionSetRelativeZero;
+    cmdTranslation["rz"]=QObject::tr("rz");
+    shortCommands[QObject::tr("rz")]=RS2::ActionSetRelativeZero;
 
     // selection:
-    cmdTranslation.insert("sa", tr("sa"));
-    mainCommands.insert(tr("sa", "Select all"), RS2::ActionSelectAll);
-    shortCommands.insert(tr("sa"), RS2::ActionSelectAll);
+    cmdTranslation["sa"]=QObject::tr("sa");
+    mainCommands[QObject::tr("sa", "Select all")]=RS2::ActionSelectAll;
+    shortCommands[QObject::tr("sa")]=RS2::ActionSelectAll;
 
-    cmdTranslation.insert("tn", tr("tn"));
-    mainCommands.insert(tr("tn", "Deselect all"), RS2::ActionDeselectAll);
-    shortCommands.insert(tr("tn"), RS2::ActionDeselectAll);
+    cmdTranslation["tn"]=QObject::tr("tn");
+    mainCommands[QObject::tr("tn", "Deselect all")]=RS2::ActionDeselectAll;
+    shortCommands[QObject::tr("tn")]=RS2::ActionDeselectAll;
 
-    cmdTranslation.insert( "angle", tr("angle"));
-    cmdTranslation.insert( "dpi", tr("dpi"));
-    cmdTranslation.insert( "close", tr("close"));
-    cmdTranslation.insert( "chord length", tr("chord length"));
-    cmdTranslation.insert( "columns", tr("columns"));
-    cmdTranslation.insert( "columnspacing", tr("columnspacing"));
-    cmdTranslation.insert( "factor", tr("factor"));
-    cmdTranslation.insert( "length", tr("length"));
-    cmdTranslation.insert( "length1", tr("length1"));
-    cmdTranslation.insert( "length2", tr("length2"));
-    cmdTranslation.insert( "number", tr("number"));
-    cmdTranslation.insert( "radius", tr("radius"));
-    cmdTranslation.insert( "rows", tr("rows"));
-    cmdTranslation.insert( "rowspacing", tr("rowspacing"));
-    cmdTranslation.insert( "through", tr("through"));
-    cmdTranslation.insert( "trim", tr("trim"));
+    cmdTranslation[ "angle"]=QObject::tr("angle");
+    cmdTranslation[ "dpi"]=QObject::tr("dpi");
+    cmdTranslation[ "close"]=QObject::tr("close");
+    cmdTranslation[ "chord length"]=QObject::tr("chord length");
+    cmdTranslation[ "columns"]=QObject::tr("columns");
+    cmdTranslation[ "columnspacing"]=QObject::tr("columnspacing");
+    cmdTranslation[ "factor"]=QObject::tr("factor");
+    cmdTranslation[ "length"]=QObject::tr("length");
+    cmdTranslation[ "length1"]=QObject::tr("length1");
+    cmdTranslation[ "length2"]=QObject::tr("length2");
+    cmdTranslation[ "number"]=QObject::tr("number");
+    cmdTranslation[ "radius"]=QObject::tr("radius");
+    cmdTranslation[ "rows"]=QObject::tr("rows");
+    cmdTranslation[ "rowspacing"]=QObject::tr("rowspacing");
+    cmdTranslation[ "through"]=QObject::tr("through");
+    cmdTranslation[ "trim"]=QObject::tr("trim");
 
-/** following are reversed translation, i.e., from translated to english **/
+/** following are reversed translation]=i.e.]=from translated to english **/
     //not used as command keywords
-// used in function, checkCommand()
-    cmdTranslation.insert(tr("angle"), "angle");
-    cmdTranslation.insert(tr("ang", "angle"), "angle");
-    cmdTranslation.insert(tr("an", "angle"), "angle");
+// used in function]=checkCommand()
+    cmdTranslation[QObject::tr("angle")]="angle";
+    cmdTranslation[QObject::tr("ang", "angle")]="angle";
+    cmdTranslation[QObject::tr("an", "angle")]="angle";
 
-    cmdTranslation.insert(tr("center"), "center");
-    cmdTranslation.insert(tr("cen", "center"), "center");
-    cmdTranslation.insert(tr("ce", "center"), "center");
+    cmdTranslation[QObject::tr("center")]="center";
+    cmdTranslation[QObject::tr("cen", "center")]="center";
+    cmdTranslation[QObject::tr("ce", "center")]="center";
 
-    cmdTranslation.insert(tr("chord length"), "chord length");
-//    cmdTranslation.insert(tr("length", "chord length"), "chord length");
-    cmdTranslation.insert(tr("cl", "chord length"), "chord length");
+    cmdTranslation[QObject::tr("chord length")]="chord length";
+//    cmdTranslation[QObject::tr("length", "chord length")]="chord length";
+    cmdTranslation[QObject::tr("cl", "chord length")]="chord length";
 
-    cmdTranslation.insert(tr("close"), "close");
-    cmdTranslation.insert(tr("c", "close"), "close");
+    cmdTranslation[QObject::tr("close")]="close";
+    cmdTranslation[QObject::tr("c", "close")]="close";
 
-    cmdTranslation.insert(tr("columns"), "columns");
-    cmdTranslation.insert(tr("cols", "columns"), "columns");
-    cmdTranslation.insert(tr("co", "columns"), "columns");
+    cmdTranslation[QObject::tr("columns")]="columns";
+    cmdTranslation[QObject::tr("cols", "columns")]="columns";
+    cmdTranslation[QObject::tr("co", "columns")]="columns";
 
-    cmdTranslation.insert(tr("columnspacing", "columnspacing for inserts"), "columnspacing");
-    cmdTranslation.insert(tr("colspacing", "columnspacing for inserts"), "columnspacing");
-    cmdTranslation.insert(tr("cs", "columnspacing for inserts"), "columnspacing");
+    cmdTranslation[QObject::tr("columnspacing", "columnspacing for inserts")]="columnspacing";
+    cmdTranslation[QObject::tr("colspacing", "columnspacing for inserts")]="columnspacing";
+    cmdTranslation[QObject::tr("cs", "columnspacing for inserts")]="columnspacing";
 
-    cmdTranslation.insert(tr("factor"), "factor");
-    cmdTranslation.insert(tr("fact", "factor"), "factor");
-    cmdTranslation.insert(tr("f", "factor"), "factor");
+    cmdTranslation[QObject::tr("factor")]="factor";
+    cmdTranslation[QObject::tr("fact", "factor")]="factor";
+    cmdTranslation[QObject::tr("f", "factor")]="factor";
 
-    cmdTranslation.insert(tr("help"), "help");
-    cmdTranslation.insert(tr("?", "help"), "help");
+    cmdTranslation[QObject::tr("help")]="help";
+    cmdTranslation[QObject::tr("?", "help")]="help";
 
-    cmdTranslation.insert(tr("length","length"), "length");
-    cmdTranslation.insert(tr("len","length"), "length");
-    cmdTranslation.insert(tr("l","length"), "length");
+    cmdTranslation[QObject::tr("length","length")]="length";
+    cmdTranslation[QObject::tr("len","length")]="length";
+    cmdTranslation[QObject::tr("l","length")]="length";
 
-    cmdTranslation.insert(tr("length1","length1"), "length1");
-    cmdTranslation.insert(tr("len1","length1"), "length1");
-    cmdTranslation.insert(tr("l1","length1"), "length1");
+    cmdTranslation[QObject::tr("length1","length1")]="length1";
+    cmdTranslation[QObject::tr("len1","length1")]="length1";
+    cmdTranslation[QObject::tr("l1","length1")]="length1";
 
-    cmdTranslation.insert(tr("length2","length2"), "length2");
-    cmdTranslation.insert(tr("len2","length2"), "length2");
-    cmdTranslation.insert(tr("l2","length2"), "length2");
+    cmdTranslation[QObject::tr("length2","length2")]="length2";
+    cmdTranslation[QObject::tr("len2","length2")]="length2";
+    cmdTranslation[QObject::tr("l2","length2")]="length2";
 
-    cmdTranslation.insert(tr("number","number"), "number");
-    cmdTranslation.insert(tr("num","number"), "number");
-    cmdTranslation.insert(tr("n","number"), "number");
+    cmdTranslation[QObject::tr("number","number")]="number";
+    cmdTranslation[QObject::tr("num","number")]="number";
+    cmdTranslation[QObject::tr("n","number")]="number";
 
-    cmdTranslation.insert(tr("radius"), "radius");
-    cmdTranslation.insert(tr("ra","radius"), "radius");
+    cmdTranslation[QObject::tr("radius")]="radius";
+    cmdTranslation[QObject::tr("ra","radius")]="radius";
 
-    cmdTranslation.insert(tr("reversed","reversed"), "reversed");
-    cmdTranslation.insert(tr("rev","reversed"), "reversed");
-    cmdTranslation.insert(tr("rev","reversed"), "reversed");
+    cmdTranslation[QObject::tr("reversed","reversed")]="reversed";
+    cmdTranslation[QObject::tr("rev","reversed")]="reversed";
+    cmdTranslation[QObject::tr("rev","reversed")]="reversed";
 
-    cmdTranslation.insert(tr("row", "row"), "row");
+    cmdTranslation[QObject::tr("row", "row")]="row";
 
-    cmdTranslation.insert(tr("rowspacing", "rowspacing for inserts"), "rowspacing");
-    cmdTranslation.insert(tr("rs","rowspacing for inserts"), "rowspacing");
+    cmdTranslation[QObject::tr("rowspacing", "rowspacing for inserts")]="rowspacing";
+    cmdTranslation[QObject::tr("rs","rowspacing for inserts")]="rowspacing";
 
-    cmdTranslation.insert(tr("text"), "text");
-    cmdTranslation.insert(tr("t","text"), "text");
+    cmdTranslation[QObject::tr("text")]="text";
+    cmdTranslation[QObject::tr("t","text")]="text";
 
-    cmdTranslation.insert(tr("through"), "through");
-    cmdTranslation.insert(tr("t","through"), "through");
+    cmdTranslation[QObject::tr("through")]="through";
+    cmdTranslation[QObject::tr("t","through")]="through";
 
-    cmdTranslation.insert(tr("undo"), "undo");
-    cmdTranslation.insert(tr("u","undo"), "undo");
+    cmdTranslation[QObject::tr("undo")]="undo";
+    cmdTranslation[QObject::tr("u","undo")]="undo";
 
-    cmdTranslation.insert(tr("redo"), "redo");
-    cmdTranslation.insert(tr("r","redo"), "redo");
+    cmdTranslation[QObject::tr("redo")]="redo";
+    cmdTranslation[QObject::tr("r","redo")]="redo";
 
-    cmdTranslation.insert(tr("back"), "back");
-    cmdTranslation.insert(tr("b","back"), "back");
+    cmdTranslation[QObject::tr("back")]="back";
+    cmdTranslation[QObject::tr("b","back")]="back";
     //printer preview
-    cmdTranslation.insert(tr("paperoffset"), "paperoffset");
-    cmdTranslation.insert(tr("graphoffset"), "graphoffset");
+    cmdTranslation[QObject::tr("paperoffset")]="paperoffset";
+    cmdTranslation[QObject::tr("graphoffset")]="graphoffset";
 
 }
 
-//#include<QDebug>
 /**
  * Read existing alias file or create one new.
  * In OS_WIN32 "c:\documents&settings\<user>\local configuration\application data\LibreCAD\librecad.alias"
@@ -403,9 +402,10 @@ void RS_Commands::updateAlias(){
     if (aliasName.isEmpty())
         return;
     aliasName += "/librecad.alias";
+//    qDebug()<<"alisa file:\t"<<aliasName;
     QFile f(aliasName);
     QString line;
-    QHash<QString, QString> aliasList;
+    std::map<QString, QString> aliasList;
     if (f.exists()) {
 
         //alias file exists, read user defined alias
@@ -423,12 +423,9 @@ void RS_Commands::updateAlias(){
                 QStringList txtList = line.split(QRegExp(R"(\s)"),QString::SkipEmptyParts);
                 if (txtList.size()> 1) {
 //                    qDebug()<<"reading: "<<txtList.at(0)<<"\t"<< txtList.at(1);
-                    aliasList.insert(txtList.at(0), txtList.at(1));
-                } else if (txtList.size()> 0) {
-                    aliasList.insert(txtList.at(0), "txtList.at(1)" "");
+                    aliasList[txtList.at(0)]=txtList.at(1);
                 }
             }
-            //            }
         }
     } else {
     //alias file do no exist, create one with translated shortCommands
@@ -438,11 +435,15 @@ void RS_Commands::updateAlias(){
             ts << "# lines starting with # are comments" << endl;
             ts << "# format are:" << endl;
             ts << "# alias<\\t>command-untranslated" << endl << endl;
-            QHash<QString, RS2::ActionType>::const_iterator i;
-            for (i = shortCommands.constBegin(); i != shortCommands.constEnd(); ++i) {
-                line = mainCommands.key(i.value());
-                ts << i.key() << "\t";
-                ts << cmdTranslation.key(line) << endl;
+            for(auto const& p: shortCommands){
+                auto const act=p.second;
+                auto it=std::find_if(mainCommands.begin(), mainCommands.end(),
+                                     [&act](std::pair<QString, RS2::ActionType> const& p0)->bool{
+                        return p0.second==act;
+            });
+                if(it != mainCommands.end()){
+                    ts<<p.first<<'\t'<<it->first<<endl;
+                }
             }
             ts.flush();
         }
@@ -452,20 +453,15 @@ void RS_Commands::updateAlias(){
 //RLZ: to be writen
 
     //add alias to shortCommands
-    QHash<QString, QString>::const_iterator it;
-    for (it = aliasList.constBegin(); it != aliasList.constEnd(); ++it) {
-//            qDebug()<<"alias: "<<it.key()<<" "<<it.value();
-        RS2::ActionType act=RS2::ActionNone;
-        if(cmdTranslation.contains(it.value())){
-            act= mainCommands.value(cmdTranslation.value(it.value()),RS2::ActionNone);
-        }else if(mainCommands.contains(it.value()))
-                act= mainCommands.value(it.value(),RS2::ActionNone);
-        else
-            act= shortCommands.value(it.value(),RS2::ActionNone);
-
-        if (act != RS2::ActionNone && it.key() != " "){
-//            qDebug()<<"inserting "<<it.key();
-            shortCommands.insert(it.key(), act);
+    for(auto const& p: aliasList){
+        if(shortCommands.count(p.first)) continue;
+        if(mainCommands.count(p.first)) continue;
+        if(mainCommands.count(p.second)){
+            RS_DEBUG->print("adding command alias: %s\t%s\n", p.first.toStdString().c_str(), p.second.toStdString().c_str());
+            shortCommands[p.first]=mainCommands[p.second];
+        }else if(cmdTranslation.count(p.second)){
+            RS_DEBUG->print("adding command alias: %s\t%s\n", p.first.toStdString().c_str(), cmdTranslation[p.second].toStdString().c_str());
+            shortCommands[p.first]=mainCommands[cmdTranslation[p.second]];
         }
     }
     f.close();
@@ -477,16 +473,14 @@ void RS_Commands::updateAlias(){
  */
 QStringList RS_Commands::complete(const QString& cmd) {
     QStringList ret;
-    QHash<QString, RS2::ActionType>::const_iterator it = mainCommands.constBegin();
-    while (it != mainCommands.constEnd()) {
-        if (it.key().startsWith(cmd)) {
-            ret << it.key();
+    for(auto const& p: mainCommands){
+        if(p.first.startsWith(cmd, Qt::CaseInsensitive)){
+            ret << p.first;
         }
-        ++it;
     }
-        ret.sort();
+    ret.sort();
 
-        return ret;
+    return ret;
 }
 
 
@@ -502,47 +496,41 @@ QStringList RS_Commands::complete(const QString& cmd) {
  * @return The translated command.
  */
 RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) {
-    QString c = cmd.toLower();
-    QString full = cmd;          // full command defaults to given command
+    QString full = cmd.toLower();
     RS2::ActionType ret = RS2::ActionNone;
 
         // find command:
 //	RS2::ActionType* retPtr = mainCommands.value(cmd);
-        if ( mainCommands.contains(cmd) ) {
-                ret = mainCommands.value(cmd);
-        } else
-        if ( shortCommands.contains(cmd) ) {
-                ret = shortCommands.value(cmd);
+        if ( mainCommands.count(cmd) ) {
+                ret = mainCommands[cmd];
+        } else if ( shortCommands.count(cmd) ) {
+                ret = shortCommands[cmd];
         }
 
         // find full command to confirm to user:
         if(verbose){
-            QHash<QString, RS2::ActionType>::const_iterator it = mainCommands.constBegin();
-            while (it != mainCommands.constEnd()) {
-                if (it.value()==ret) {
-                    if (RS_DIALOGFACTORY) {
-                        RS_DEBUG->print("RS_Commands::cmdToAction: commandMessage");
-                        //RS_DIALOGFACTORY->commandMessage(tr("Command: %1")
-                        //	.arg(full));
-                        RS_DIALOGFACTORY->commandMessage(tr("Command: %1").arg(full));
-                        //                                        RS_DialogFactory::instance()->commandMessage( tr("Command: %1").arg(full));
-                        RS_DEBUG->print("RS_Commands::cmdToAction: "
-                                        "commandMessage: ok");
-                        //}
-                    }
-                    else {
-                        RS_DEBUG->print("RS_Commands::cmdToAction: dialog "
-                                        "factory instance is NULL");
-                    }
-                    break;
+            auto it = std::find_if(mainCommands.begin(), mainCommands.end(),
+                                   [ret](std::pair<QString, RS2::ActionType> const& p)->bool{
+                    return p.second == ret;
+        } );
+            if(it != mainCommands.end()){
+                if (RS_DIALOGFACTORY) {
+                    RS_DEBUG->print("RS_Commands::cmdToAction: commandMessage");
+                    //RS_DIALOGFACTORY->commandMessage(QObject::tr("Command: %1")
+                    //	.arg(full));
+                    RS_DIALOGFACTORY->commandMessage(QObject::tr("Command: %1 (%2)").arg(full).arg(it->first));
+                    //                                        RS_DialogFactory::instance()->commandMessage( QObject::tr("Command: %1").arg(full));
+                    RS_DEBUG->print("RS_Commands::cmdToAction: "
+                                    "commandMessage: ok");
+                    //}
                 }
-                ++it;
+            }else {
+                RS_DEBUG->print(QObject::tr("RS_Commands:: command not found: %1").arg(full).toStdString().c_str());
             }
+
         }
         return ret;
 }
-
-
 
 /**
  * Gets the action for the given keycode. A keycode is a sequence
@@ -566,7 +554,7 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
 //    std::cout<<"regex: "<<qPrintable(c)<<" matches: "<< c.contains(QRegExp("^[a-z].*",Qt::CaseInsensitive))<<std::endl;
 //    std::cout<<"RS2::ActionType RS_Commands::keycodeToAction("<<qPrintable(c)<<")"<<std::endl;
 
-    QMultiHash<QString, RS2::ActionType>::iterator it = shortCommands.find(c);
+    auto it = shortCommands.find(c);
 
     if( it == shortCommands.end() ) {
 
@@ -574,17 +562,17 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
         it = mainCommands.find(c);
         if( it == mainCommands.end() ){
             if (RS_DIALOGFACTORY) {
-                RS_DIALOGFACTORY->commandMessage(tr("Command not found: %1").arg(c));
+                RS_DIALOGFACTORY->commandMessage(QObject::tr("Command not found: %1").arg(c));
             }
             return RS2::ActionNone;
         }
     }
     //found
     if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->commandMessage(tr("Accepted keycode: %1").arg(c));
+        RS_DIALOGFACTORY->commandMessage(QObject::tr("Accepted keycode: %1").arg(c));
     }
     //fixme, need to handle multiple hits
-    return it.value();
+    return it->second;
 }
 
 
@@ -597,7 +585,7 @@ QString RS_Commands::command(const QString& cmd) {
         return instance()->cmdTranslation[cmd];
     }
     if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->commandMessage(tr("Command not found: %1").arg(cmd));
+        RS_DIALOGFACTORY->commandMessage(QObject::tr("Command not found: %1").arg(cmd));
     }
     RS_DEBUG->print(RS_Debug::D_WARNING,
                 "RS_Commands::command: command '%s' unknown", cmd.toLatin1().data());
@@ -621,127 +609,14 @@ bool RS_Commands::checkCommand(const QString& cmd, const QString& str,
     QString&& cmdLower = cmd.toLower();
     auto it = instance()->cmdTranslation.find(cmdLower);
     if(it != instance()->cmdTranslation.end()){
-        RS2::ActionType type0=instance()->cmdToAction(it.value());
+        RS2::ActionType type0=instance()->cmdToAction(it->second);
         if( type0  != RS2::ActionNone ) {
             return  type0 ==instance()->cmdToAction(strl);
         }
     }
 
     it =  instance()->cmdTranslation.find(strl);
-    if(it !=  instance()->cmdTranslation.end()) return it.value() == cmdLower;
-    return false;
-
-//    if (cmd=="angle") {
-//        if (strl==tr("angle") || strl==tr("ang", "angle") ||
-//                strl==tr("a", "angle")) {
-//            return true;
-//        }
-//    } else if (cmd=="center") {
-//        if (strl==tr("center") || strl==tr("cen", "center") ||
-//                strl==tr("c", "center")) {
-//            return true;
-//        }
-//    } else if (cmd=="chord length") {
-//        if (strl==tr("length", "chord length") ||
-//                strl==tr("l", "chord length")) {
-//            return true;
-//        }
-//    } else if (cmd=="close") {
-//        if (strl==tr("close") ||
-//                strl==tr("c", "close")) {
-//            return true;
-//        }
-//    } else if (cmd=="columns") {
-//        if (strl==tr("columns") || strl==tr("cols", "columns") ||
-//                strl==tr("c", "columns")) {
-//            return true;
-//        }
-//    } else if (cmd=="columnspacing") {
-//        if (strl==tr("columnspacing", "columnspacing for inserts") ||
-//                strl==tr("colspacing", "columnspacing for inserts") ||
-//                strl==tr("cs", "columnspacing for inserts")) {
-//            return true;
-//        }
-//    } else if (cmd=="factor") {
-//        if (strl==tr("factor") || strl==tr("fact", "factor") ||
-//                strl==tr("f", "factor")) {
-//            return true;
-//        }
-//    } else if (cmd=="help") {
-//        if (strl==tr("help") || strl==tr("?", "help")) {
-//            return true;
-//        }
-//    } else if (cmd=="length") {
-//        if (strl==tr("length", "length") ||
-//                strl==tr("len", "length") ||
-//                strl==tr("l", "length")) {
-//            return true;
-//        }
-//    } else if (cmd=="length1") {
-//        if (strl==tr("length1", "length1") ||
-//                strl==tr("len1", "length1") ||
-//                strl==tr("l1", "length1")) {
-//            return true;
-//        }
-//    } else if (cmd=="length2") {
-//        if (strl==tr("length2", "length2") ||
-//                strl==tr("len2", "length2") ||
-//                strl==tr("l2", "length2")) {
-//            return true;
-//        }
-//    } else if (cmd=="number") {
-//        if (strl==tr("number") ||
-//                strl==tr("num", "number") ||
-//                strl==tr("n", "number")) {
-//            return true;
-//        }
-//    } else if (cmd=="radius") {
-//        if (strl==tr("radius") ||
-//                strl==tr("r", "radius")) {
-//            return true;
-//        }
-//    } else if (cmd=="reversed") {
-//        if (strl==tr("reversed", "reversed arc") ||
-//                strl==tr("rev", "reversed arc") ||
-//                strl==tr("r", "reversed arc")) {
-//            return true;
-//        }
-//    } else if (cmd=="rows") {
-//        if (strl==tr("rows") || strl==tr("r", "rows")) {
-//            return true;
-//        }
-//    } else if (cmd=="rowspacing") {
-//        if (strl==tr("rowspacing", "rowspacing for inserts") ||
-//                strl==tr("rs", "rowspacing for inserts")) {
-//            return true;
-//        }
-//    } else if (cmd=="text") {
-//        if (strl==tr("text") ||
-//                strl==tr("t", "text")) {
-//            return true;
-//        }
-//    } else if (cmd=="through") {
-//        if (strl==tr("through") ||
-//                strl==tr("t", "through")) {
-//            return true;
-//        }
-//    } else if (cmd=="undo") {
-//        if (strl==tr("undo") ||
-//                strl==tr("u", "undo")) {
-//            return true;
-//        }
-//    } else if (cmd=="redo") {
-//        if (strl==tr("redo") ||
-//                strl==tr("r", "redo")) {
-//            return true;
-//        }
-//    } else if (cmd=="back") {
-//        if (strl==tr("back") ||
-//                strl==tr("b", "back")) {
-//            return true;
-//        }
-//    }
-
+    if(it !=  instance()->cmdTranslation.end()) return it->second == cmdLower;
     return false;
 }
 
@@ -750,7 +625,7 @@ bool RS_Commands::checkCommand(const QString& cmd, const QString& str,
  * @return the local translation for "Commands available:".
  */
 QString RS_Commands::msgAvailableCommands() {
-    return tr("Available commands:");
+    return QObject::tr("Available commands:");
 }
 
 /**
@@ -764,8 +639,8 @@ QString RS_Commands::filterCliCal(const QString& cmd)
     QString str=cmd.trimmed();
     const QRegExp calCmd(R"(^(cal|calculate))");
     if(!(str.contains(calCmd)
-         || str.startsWith(tr("cal","command to trigger cli calculator"), Qt::CaseInsensitive)
-         || str.startsWith(tr("calculate","command to trigger cli calculator"), Qt::CaseInsensitive)
+         || str.startsWith(QObject::tr("cal","command to trigger cli calculator"), Qt::CaseInsensitive)
+         || str.startsWith(QObject::tr("calculate","command to trigger cli calculator"), Qt::CaseInsensitive)
                            )) {
         return QString();
     }
