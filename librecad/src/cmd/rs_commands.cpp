@@ -459,12 +459,11 @@ void RS_Commands::updateAlias(){
             ts << "# alias<\\t>command-untranslated" << endl << endl;
             for(auto const& p: shortCommands){
                 auto const act=p.second;
-                auto it=std::find_if(mainCommands.begin(), mainCommands.end(),
-                                     [&act](std::pair<QString, RS2::ActionType> const& p0)->bool{
-                        return p0.second==act;
-            });
-                if(it != mainCommands.end()){
-                    ts<<p.first<<'\t'<<it->first<<endl;
+                for(auto const& pCmd: mainCommands){
+                    if(pCmd.second==act){
+                        ts<<p.first<<'\t'<<pCmd.first<<endl;
+                        break;
+                    }
                 }
             }
             ts.flush();
@@ -531,25 +530,21 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) {
 
         // find full command to confirm to user:
         if(verbose){
-            auto it = std::find_if(mainCommands.begin(), mainCommands.end(),
-                                   [ret](std::pair<QString, RS2::ActionType> const& p)->bool{
-                    return p.second == ret;
-        } );
-            if(it != mainCommands.end()){
-                if (RS_DIALOGFACTORY) {
-                    RS_DEBUG->print("RS_Commands::cmdToAction: commandMessage");
-                    //RS_DIALOGFACTORY->commandMessage(QObject::tr("Command: %1")
-                    //	.arg(full));
-                    RS_DIALOGFACTORY->commandMessage(QObject::tr("Command: %1 (%2)").arg(full).arg(it->first));
-                    //                                        RS_DialogFactory::instance()->commandMessage( QObject::tr("Command: %1").arg(full));
-                    RS_DEBUG->print("RS_Commands::cmdToAction: "
-                                    "commandMessage: ok");
-                    //}
+            for(auto const& p: mainCommands){
+                if(p.second==ret){
+                    if (RS_DIALOGFACTORY) {
+                        RS_DEBUG->print("RS_Commands::cmdToAction: commandMessage");
+                        //RS_DIALOGFACTORY->commandMessage(QObject::tr("Command: %1")
+                        //	.arg(full));
+                        RS_DIALOGFACTORY->commandMessage(QObject::tr("Command: %1 (%2)").arg(full).arg(p.first));
+                        //                                        RS_DialogFactory::instance()->commandMessage( QObject::tr("Command: %1").arg(full));
+                        RS_DEBUG->print("RS_Commands::cmdToAction: "
+                                        "commandMessage: ok");
+                    }
+                    return ret;
                 }
-            }else {
-                RS_DEBUG->print(QObject::tr("RS_Commands:: command not found: %1").arg(full).toStdString().c_str());
             }
-
+            RS_DEBUG->print(QObject::tr("RS_Commands:: command not found: %1").arg(full).toStdString().c_str());
         }
         return ret;
 }
