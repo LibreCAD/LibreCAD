@@ -42,7 +42,7 @@
  *
  * @author Andrew Mustun
  */
-class RS_Commands : public QObject {
+class RS_Commands {
 
 public:
     /**
