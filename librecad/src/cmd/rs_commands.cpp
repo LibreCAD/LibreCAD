@@ -25,12 +25,31 @@
 **
 **********************************************************************/
 
+#include<vector>
 #include <QObject>
 #include <QTextStream>
 #include "rs_commands.h"
 
 #include "rs_system.h"
 #include "rs_dialogfactory.h"
+
+namespace {
+struct LC_CommandItem {
+    LC_CommandItem()=delete;
+    LC_CommandItem(std::vector<std::pair<QString, QString>> const& fullCmdList,
+                   std::vector<std::pair<QString, QString>> const& shortCmdList,
+                   RS2::ActionType actionType
+                   ):
+        fullCmdList(fullCmdList)
+      ,shortCmdList(shortCmdList)
+      ,actionType(actionType)
+    {}
+    ~LC_CommandItem()=default;
+    std::vector<std::pair<QString, QString>> const fullCmdList;
+    std::vector<std::pair<QString, QString>> const shortCmdList;
+    RS2::ActionType actionType;
+};
+}
 
 RS_Commands* RS_Commands::uniqueInstance = nullptr;
 
@@ -53,364 +72,465 @@ RS_Commands* RS_Commands::instance() {
  * cmdTranslation contains both ways of mapping between translated and English
  */
 RS_Commands::RS_Commands() {
-    // draw:
-    cmdTranslation["point"]=QObject::tr("point", "draw point");
-    mainCommands[QObject::tr("point", "draw point")]=RS2::ActionDrawPoint;
-    cmdTranslation["po"]=QObject::tr("po", "draw point");
-    shortCommands[QObject::tr("po", "draw point")]=RS2::ActionDrawPoint;
-
-    cmdTranslation["line"]=QObject::tr("line", "draw line");
-    mainCommands[QObject::tr("line", "draw line")]=RS2::ActionDrawLine;
-    cmdTranslation["li"]=QObject::tr("li", "draw line");
-    shortCommands[QObject::tr("li", "draw line")]=RS2::ActionDrawLine;
-    shortCommands[QObject::tr("l", "draw line")]=RS2::ActionDrawLine;
-
-    cmdTranslation["polyline"]=QObject::tr("polyline", "draw polyline");
-    mainCommands[QObject::tr("polyline", "draw polyline")]=RS2::ActionDrawPolyline;
-    cmdTranslation["pl"]=QObject::tr("pl", "draw polyline");
-    shortCommands[QObject::tr("pl", "draw polyline")]=RS2::ActionDrawPolyline;
-
-    cmdTranslation["offset"]=QObject::tr("offset");
-    mainCommands[QObject::tr("offset")]=RS2::ActionDrawLineParallel;
-    shortCommands[QObject::tr("o", "offset")]=RS2::ActionDrawLineParallel;
-    cmdTranslation["parallel"]=QObject::tr("parallel");
-    mainCommands[QObject::tr("parallel")]=RS2::ActionDrawLineParallel;
-    cmdTranslation["pa"]=QObject::tr("pa", "parallel");
-    shortCommands[QObject::tr("pa", "parallel")]=RS2::ActionDrawLineParallel;
-
-    cmdTranslation["arc"]=QObject::tr("arc", "draw arc");
-    mainCommands[QObject::tr("arc", "draw arc")]=RS2::ActionDrawArc3P;
-    cmdTranslation["ar"]=QObject::tr("ar", "draw arc");
-    mainCommands[QObject::tr("ar", "draw arc")]=RS2::ActionDrawArc3P;
-    shortCommands[QObject::tr("a", "draw arc")]=RS2::ActionDrawArc3P;
-
-    cmdTranslation["circle"]=QObject::tr("circle", "draw circle");
-    mainCommands[QObject::tr("circle", "draw circle")]=RS2::ActionDrawCircle;
-    cmdTranslation["ci"]=QObject::tr("ci", "draw circle");
-    shortCommands[QObject::tr("ci", "draw circle")]=RS2::ActionDrawCircle;
-
-    cmdTranslation["rectangle"]=QObject::tr("rectangle", "draw rectangle");
-    mainCommands[QObject::tr("rectangle", "draw rectangle")]=RS2::ActionDrawLineRectangle;
-    cmdTranslation["rect"]=QObject::tr("rect", "draw rectangle");
-    shortCommands[QObject::tr("rectang", "draw rectangle")]=RS2::ActionDrawLineRectangle;
-    shortCommands[QObject::tr("rect", "draw rectangle")]=RS2::ActionDrawLineRectangle;
-    shortCommands[QObject::tr("rec", "draw rectangle")]=RS2::ActionDrawLineRectangle;
-
-    cmdTranslation["mtext"]=QObject::tr("mtext", "draw mtext");
-    mainCommands[QObject::tr("mtext", "draw mtext")]=RS2::ActionDrawMText;
-    cmdTranslation["text"]=QObject::tr("text", "draw text");
-    mainCommands[QObject::tr("text", "draw text")]=RS2::ActionDrawText;
-
-    // zoom:
-    cmdTranslation["regen"]=QObject::tr("regen");
-    cmdTranslation["redraw"]=QObject::tr("redraw");
-    mainCommands[QObject::tr("regen")]=RS2::ActionZoomRedraw;
-    mainCommands[QObject::tr("redraw")]=RS2::ActionZoomRedraw;
-    shortCommands[QObject::tr("rg", "zoom - redraw")]=RS2::ActionZoomRedraw;
-
-    cmdTranslation["zr"]=QObject::tr("zr", "zoom - redraw");
-    shortCommands[QObject::tr("zr", "zoom - redraw")]=RS2::ActionZoomRedraw;
-
-    cmdTranslation["zw"]=QObject::tr("zw");
-    mainCommands[QObject::tr("zw", "zoom - window")]=RS2::ActionZoomWindow;
-
-    cmdTranslation["za"]=QObject::tr("za");
-    mainCommands[QObject::tr("za", "zoom - auto")]=RS2::ActionZoomAuto;
-
-    cmdTranslation["zp"]=QObject::tr("zp");
-    mainCommands[QObject::tr("zp", "zoom - pan")]=RS2::ActionZoomPan;
-
-    cmdTranslation["zv"]=QObject::tr("zv");
-    mainCommands[QObject::tr("zv", "zoom - previous")]=RS2::ActionZoomPrevious;
-
-    // edit:
-    cmdTranslation["kill"]=QObject::tr("kill");
-    mainCommands[QObject::tr("kill")]=RS2::ActionEditKillAllActions;
-    cmdTranslation["k"]=QObject::tr("k");
-    shortCommands[QObject::tr("k")]=RS2::ActionEditKillAllActions;
-
-    cmdTranslation["undo"]=QObject::tr("undo", "undo");
-    mainCommands[QObject::tr("undo", "undo")]=RS2::ActionEditUndo;
-    cmdTranslation["u"]=QObject::tr("u", "undo");
-    shortCommands[QObject::tr("u", "undo")]=RS2::ActionEditUndo;
-
-    cmdTranslation["redo"]=QObject::tr("redo");
-    mainCommands[QObject::tr("redo")]=RS2::ActionEditRedo;
-    cmdTranslation["r"]=QObject::tr("r");
-    shortCommands[QObject::tr("r")]=RS2::ActionEditRedo;
-
-    // dimensions:
-    cmdTranslation["da"]=QObject::tr("da");
-    mainCommands[QObject::tr("da", "dimension - aligned")]=RS2::ActionDimAligned;
-    shortCommands[QObject::tr("da", "dimension - aligned")]=RS2::ActionDimAligned;
-
-    cmdTranslation["dh"]=QObject::tr("dh", "dimension - horizontal");
-    mainCommands[QObject::tr("dh", "dimension - horizontal")]=RS2::ActionDimLinearHor;
-    shortCommands[QObject::tr("dh", "dimension - horizontal")]=RS2::ActionDimLinearHor;
-
-    cmdTranslation["dr"]=QObject::tr("dr", "dimension - linear");
-    mainCommands[QObject::tr("dr", "dimension - linear")]=RS2::ActionDimLinear;
-    shortCommands[QObject::tr("dr", "dimension - linear")]=RS2::ActionDimLinear;
-
-    cmdTranslation["dv"]=QObject::tr("dv", "dimension - vertical");
-    mainCommands[QObject::tr("dv", "dimension - vertical")]=RS2::ActionDimLinearVer;
-    shortCommands[QObject::tr("dv", "dimension - vertical")]=RS2::ActionDimLinearVer;
-
-    cmdTranslation["ld"]=QObject::tr("ld", "dimension - leader");
-    mainCommands[QObject::tr("ld", "dimension - leader")]=RS2::ActionDimLeader;
-    shortCommands[QObject::tr("ld", "dimension - leader")]=RS2::ActionDimLeader;
-
-    // tools:
-    cmdTranslation["dimregen"]=QObject::tr("dimregen", "dimension - regenerate");
-    mainCommands[QObject::tr("dimregen", "dimension - regenerate")]=RS2::ActionToolRegenerateDimensions;
-
-	 // restrictions:
-	cmdTranslation["rn"]=QObject::tr("rn", "restrict - nothing");
-	mainCommands[QObject::tr("rn", "restrict - nothing")]=RS2::ActionRestrictNothing;
-	shortCommands[QObject::tr("rn")]=RS2::ActionRestrictNothing;
-
-    cmdTranslation["rr"]=QObject::tr("rr", "restrict - orthogonal");
-    mainCommands[QObject::tr("rr", "restrict - orthogonal")]=RS2::ActionRestrictOrthogonal;
-    shortCommands[QObject::tr("rr")]=RS2::ActionRestrictOrthogonal;
-
-    cmdTranslation["rh"]=QObject::tr("rh", "restrict - horizontal");
-    mainCommands[QObject::tr("rh", "restrict - horizontal")]=RS2::ActionRestrictHorizontal;
-    shortCommands[QObject::tr("rh")]=RS2::ActionRestrictHorizontal;
-
-    cmdTranslation["rv"]=QObject::tr("rv", "restrict - vertical");
-    mainCommands[QObject::tr("rv", "restrict - vertical")]=RS2::ActionRestrictVertical;
-    shortCommands[QObject::tr("rv")]=RS2::ActionRestrictVertical;
-
-    // modify:
-    cmdTranslation["trim2"]=QObject::tr("trim2", "modify - multi trim (extend)");
-    mainCommands[QObject::tr("trim2", "modify - multi trim (extend)")]=RS2::ActionModifyTrim2;
-    cmdTranslation["tm2"]=QObject::tr("tm2");
-    shortCommands[QObject::tr("tm2")]=RS2::ActionModifyTrim2;
-
-    cmdTranslation["trim"]=QObject::tr("trim", "modify - trim (extend)");
-    mainCommands[QObject::tr("trim", "modify - trim (extend)")]=RS2::ActionModifyTrim;
-    cmdTranslation["tm"]=QObject::tr("tm", "modify - trim (extend)");
-    shortCommands[QObject::tr("tm", "modify - trim (extend)")]=RS2::ActionModifyTrim;
-
-//    cmdTranslation["rm"]=QObject::tr("rm");
-//    shortCommands[QObject::tr("rm")]=RS2::ActionModifyTrim;
-
-    cmdTranslation["move"]=QObject::tr("move", "modify - move");
-    mainCommands[QObject::tr("move", "modify - move")]=RS2::ActionModifyMove;
-    cmdTranslation["mv"]=QObject::tr("mv", "modify - move");
-    shortCommands[QObject::tr("mv", "modify - move")]=RS2::ActionModifyMove;
-
-    cmdTranslation["bevel"]=QObject::tr("bevel", "modify - bevel (chamfer)");
-    mainCommands[QObject::tr("bevel", "modify - bevel (chamfer)")]=RS2::ActionModifyBevel;
-    cmdTranslation["ch"]=QObject::tr("ch", "modify - bevel (chamfer)");
-    shortCommands[QObject::tr("ch", "modify - bevel (chamfer)")]=RS2::ActionModifyBevel;
-    cmdTranslation["fillet"]=QObject::tr("fillet", "modify - fillet");
-    mainCommands[QObject::tr("fillet", "modify - fillet")]=RS2::ActionModifyBevel;
-    cmdTranslation["fi"]=QObject::tr("fi", "modify - fillet");
-    shortCommands[QObject::tr("fi", "modify - fillet")]=RS2::ActionModifyBevel;
-
-    cmdTranslation["divide"]=QObject::tr("divide", "modify - divide");
-    mainCommands[QObject::tr("divide", "modify - divide")]=RS2::ActionModifyCut;
-    shortCommands[QObject::tr("div", "modify - divide")]=RS2::ActionModifyCut;
-    cmdTranslation["cut"]=QObject::tr("cut", "modify - divide");
-    mainCommands[QObject::tr("cut", "modify - divide")]=RS2::ActionModifyCut;
-
-    cmdTranslation["mirror"]=QObject::tr("mirror");
-    mainCommands[QObject::tr("mirror", "modify - mirror")]=RS2::ActionModifyMirror;
-    cmdTranslation["mi"]=QObject::tr("mi");
-    shortCommands[QObject::tr("mi", "modify - mirror")]=RS2::ActionModifyMirror;
-
-	cmdTranslation["revert"]=QObject::tr("revert", "modify - revert direction");
-	mainCommands[QObject::tr("revert", "modify - revert direction")]=RS2::ActionModifyRevertDirection;
-	cmdTranslation["re"]=QObject::tr("re");
-	shortCommands[QObject::tr("re", "modify - revert direction")]=RS2::ActionModifyRevertDirection;
-
-	cmdTranslation["rotate"]=QObject::tr("rotate", "modify - rotate");
-	mainCommands[QObject::tr("rotate", "modify - rotate")]=RS2::ActionModifyRotate;
-	cmdTranslation["ro"]=QObject::tr("ro", "modify - rotate");
-	shortCommands[QObject::tr("ro", "modify - rotate")]=RS2::ActionModifyRotate;
-
-    cmdTranslation["scale"]=QObject::tr("scale", "modify - scale");
-    mainCommands[QObject::tr("scale", "modify - scale")]=RS2::ActionModifyScale;
-    cmdTranslation["sz"]=QObject::tr("sz", "modify - scale");
-    shortCommands[QObject::tr("sz", "modify - scale")]=RS2::ActionModifyScale;
-
-    cmdTranslation["stretch"]=QObject::tr("stretch", "modify - stretch");
-    mainCommands[QObject::tr("stretch", "modify - stretch")]=RS2::ActionModifyStretch;
-    cmdTranslation["ss"]=QObject::tr("ss", "modify - stretch");
-    shortCommands[QObject::tr("ss", "modify - stretch")]=RS2::ActionModifyStretch;
-
-    cmdTranslation["delete"]=QObject::tr("delete", "modify - delete (erase)");
-    mainCommands[QObject::tr("delete", "modify - delete (erase)")]=RS2::ActionModifyDelete;
-    cmdTranslation["er"]=QObject::tr("er", "modify - delete (erase)");
-    shortCommands[QObject::tr("er", "modify - delete (erase)")]=RS2::ActionModifyDelete;
-
-    cmdTranslation["undo"]=QObject::tr("undo", "modify - undo (oops)");
-    mainCommands[QObject::tr("undo", "modify - undo (oops)")]=RS2::ActionEditUndo;
-    cmdTranslation["oo"]=QObject::tr("oo", "modify - undo (oops)");
-    shortCommands[QObject::tr("oo", "modify - undo (oops)")]=RS2::ActionEditUndo;
-
-    cmdTranslation["redo"]=QObject::tr("redo", "modify - redo");
-    mainCommands[QObject::tr("redo", "modify - redo")]=RS2::ActionEditRedo;
-    cmdTranslation["uu"]=QObject::tr("uu", "modify - redo");
-    shortCommands[QObject::tr("uu", "modify - redo")]=RS2::ActionEditRedo;
-
-    cmdTranslation["explode"]=QObject::tr("explode");
-    mainCommands[QObject::tr("explode", "modify - explode blocks/polylines")]=RS2::ActionBlocksExplode;
-    cmdTranslation["xp"]=QObject::tr("xp", "modify - explode blocks/polylines");
-    shortCommands[QObject::tr("xp", "modify - explode blocks/polylines")]=RS2::ActionBlocksExplode;
-
-    // snap:
-    cmdTranslation["os"]=QObject::tr("os", "snap - free");
-    mainCommands[QObject::tr("os", "snap - free")]=RS2::ActionSnapFree;
-    shortCommands[QObject::tr("os")]=RS2::ActionSnapFree;
-
-    cmdTranslation["sc"]=QObject::tr("sc");
-    mainCommands[QObject::tr("sc", "snap - center")]=RS2::ActionSnapCenter;
-    shortCommands[QObject::tr("sc")]=RS2::ActionSnapCenter;
-
-    cmdTranslation["sd"]=QObject::tr("sd");
-    mainCommands[QObject::tr("sd", "snap - distance")]=RS2::ActionSnapDist;
-    shortCommands[QObject::tr("sd")]=RS2::ActionSnapDist;
-
-    cmdTranslation["se"]=QObject::tr("se");
-    mainCommands[QObject::tr("se", "snap - end")]=RS2::ActionSnapEndpoint;
-    shortCommands[QObject::tr("se")]=RS2::ActionSnapEndpoint;
-
-    cmdTranslation["sf"]=QObject::tr("sf");
-    mainCommands[QObject::tr("sf", "snap - free")]=RS2::ActionSnapFree;
-    shortCommands[QObject::tr("sf")]=RS2::ActionSnapFree;
-
-    cmdTranslation["sg"]=QObject::tr("sg");
-    mainCommands[QObject::tr("sg", "snap - grid")]=RS2::ActionSnapGrid;
-    shortCommands[QObject::tr("sg")]=RS2::ActionSnapGrid;
-
-    cmdTranslation["si"]=QObject::tr("si");
-    mainCommands[QObject::tr("si", "snap - intersection")]=RS2::ActionSnapIntersection;
-    shortCommands[QObject::tr("si")]=RS2::ActionSnapIntersection;
-
-    cmdTranslation["sm"]=QObject::tr("sm");
-    mainCommands[QObject::tr("sm", "snap - middle")]=RS2::ActionSnapMiddle;
-    shortCommands[QObject::tr("sm")]=RS2::ActionSnapMiddle;
-
-    cmdTranslation["sn"]=QObject::tr("sn");
-    mainCommands[QObject::tr("sn", "snap - nearest")]=RS2::ActionSnapOnEntity;
-    shortCommands[QObject::tr("sn")]=RS2::ActionSnapOnEntity;
-
-    cmdTranslation["np"]=QObject::tr("np");
-    mainCommands[QObject::tr("np", "snap - nearest point")]=RS2::ActionSnapOnEntity;
-    shortCommands[QObject::tr("np")]=RS2::ActionSnapOnEntity;
-
-    cmdTranslation["setrelativezero"]=QObject::tr("setrelativezero");
-    mainCommands[QObject::tr("setrelativezero", "snap - set relative zero position")]=RS2::ActionSetRelativeZero;
-    cmdTranslation["rz"]=QObject::tr("rz");
-    shortCommands[QObject::tr("rz")]=RS2::ActionSetRelativeZero;
-
-    // selection:
-    cmdTranslation["sa"]=QObject::tr("sa");
-    mainCommands[QObject::tr("sa", "Select all")]=RS2::ActionSelectAll;
-    shortCommands[QObject::tr("sa")]=RS2::ActionSelectAll;
-
-    cmdTranslation["tn"]=QObject::tr("tn");
-    mainCommands[QObject::tr("tn", "Deselect all")]=RS2::ActionDeselectAll;
-    shortCommands[QObject::tr("tn")]=RS2::ActionDeselectAll;
-
-    cmdTranslation["angle"]=QObject::tr("angle");
-    cmdTranslation["dpi"]=QObject::tr("dpi");
-    cmdTranslation["close"]=QObject::tr("close");
-    cmdTranslation["chord length"]=QObject::tr("chord length");
-    cmdTranslation["columns"]=QObject::tr("columns");
-    cmdTranslation["columnspacing"]=QObject::tr("columnspacing");
-    cmdTranslation["factor"]=QObject::tr("factor");
-    cmdTranslation["length"]=QObject::tr("length");
-    cmdTranslation["length1"]=QObject::tr("length1");
-    cmdTranslation["length2"]=QObject::tr("length2");
-    cmdTranslation["number"]=QObject::tr("number");
-    cmdTranslation["radius"]=QObject::tr("radius");
-    cmdTranslation["rows"]=QObject::tr("rows");
-    cmdTranslation["rowspacing"]=QObject::tr("rowspacing");
-    cmdTranslation["through"]=QObject::tr("through");
-    cmdTranslation["trim"]=QObject::tr("trim");
-
-/** following are reversed translation]=i.e.]=from translated to english **/
-    //not used as command keywords
-// used in function]=checkCommand()
-    cmdTranslation[QObject::tr("angle")]="angle";
-    cmdTranslation[QObject::tr("ang", "angle")]="angle";
-    cmdTranslation[QObject::tr("an", "angle")]="angle";
-
-    cmdTranslation[QObject::tr("center")]="center";
-    cmdTranslation[QObject::tr("cen", "center")]="center";
-    cmdTranslation[QObject::tr("ce", "center")]="center";
-
-    cmdTranslation[QObject::tr("chord length")]="chord length";
-//    cmdTranslation[QObject::tr("length", "chord length")]="chord length";
-    cmdTranslation[QObject::tr("cl", "chord length")]="chord length";
-
-    cmdTranslation[QObject::tr("close")]="close";
-    cmdTranslation[QObject::tr("c", "close")]="close";
-
-    cmdTranslation[QObject::tr("columns")]="columns";
-    cmdTranslation[QObject::tr("cols", "columns")]="columns";
-    cmdTranslation[QObject::tr("co", "columns")]="columns";
-
-    cmdTranslation[QObject::tr("columnspacing", "columnspacing for inserts")]="columnspacing";
-    cmdTranslation[QObject::tr("colspacing", "columnspacing for inserts")]="columnspacing";
-    cmdTranslation[QObject::tr("cs", "columnspacing for inserts")]="columnspacing";
-
-    cmdTranslation[QObject::tr("factor")]="factor";
-    cmdTranslation[QObject::tr("fact", "factor")]="factor";
-    cmdTranslation[QObject::tr("f", "factor")]="factor";
-
-    cmdTranslation[QObject::tr("help")]="help";
-    cmdTranslation[QObject::tr("?", "help")]="help";
-
-    cmdTranslation[QObject::tr("length","length")]="length";
-    cmdTranslation[QObject::tr("len","length")]="length";
-    cmdTranslation[QObject::tr("l","length")]="length";
-
-    cmdTranslation[QObject::tr("length1","length1")]="length1";
-    cmdTranslation[QObject::tr("len1","length1")]="length1";
-    cmdTranslation[QObject::tr("l1","length1")]="length1";
-
-    cmdTranslation[QObject::tr("length2","length2")]="length2";
-    cmdTranslation[QObject::tr("len2","length2")]="length2";
-    cmdTranslation[QObject::tr("l2","length2")]="length2";
-
-    cmdTranslation[QObject::tr("number","number")]="number";
-    cmdTranslation[QObject::tr("num","number")]="number";
-    cmdTranslation[QObject::tr("n","number")]="number";
-
-    cmdTranslation[QObject::tr("radius")]="radius";
-    cmdTranslation[QObject::tr("ra","radius")]="radius";
-
-    cmdTranslation[QObject::tr("reversed","reversed")]="reversed";
-    cmdTranslation[QObject::tr("rev","reversed")]="reversed";
-    cmdTranslation[QObject::tr("rev","reversed")]="reversed";
-
-    cmdTranslation[QObject::tr("row", "row")]="row";
-
-    cmdTranslation[QObject::tr("rowspacing", "rowspacing for inserts")]="rowspacing";
-    cmdTranslation[QObject::tr("rs","rowspacing for inserts")]="rowspacing";
-
-    cmdTranslation[QObject::tr("text")]="text";
-    cmdTranslation[QObject::tr("t","text")]="text";
-
-    cmdTranslation[QObject::tr("through")]="through";
-    cmdTranslation[QObject::tr("t","through")]="through";
-
-    cmdTranslation[QObject::tr("undo")]="undo";
-    cmdTranslation[QObject::tr("u","undo")]="undo";
-
-    cmdTranslation[QObject::tr("redo")]="redo";
-    cmdTranslation[QObject::tr("r","redo")]="redo";
-
-    cmdTranslation[QObject::tr("back")]="back";
-    cmdTranslation[QObject::tr("b","back")]="back";
-    //printer preview
-    cmdTranslation[QObject::tr("paperoffset")]="paperoffset";
-    cmdTranslation[QObject::tr("graphoffset")]="graphoffset";
-
+    std::initializer_list<LC_CommandItem> commandList={
+        //draw point
+        {
+            //list all <full command, translation> pairs
+            {{"point", QObject::tr("point", "draw point")}},
+
+            //list all <short command, translation> pairs
+            {{"po", QObject::tr("po", "draw point")}},
+
+            //action type
+            RS2::ActionDrawPoint
+        },
+        //draw line
+        {
+            {{"line", QObject::tr("line", "draw line")}},
+            {{"li", QObject::tr("li", "draw line")},
+             {"l", QObject::tr("l", "draw line")}
+            },
+            RS2::ActionDrawLine
+        },
+        //draw polyline
+        {
+            {{"polyline", QObject::tr("polyline", "draw polyline")}},
+            {{"pl", QObject::tr("pl", "draw polyline")}},
+            RS2::ActionDrawPolyline
+        },
+        //offset
+        {
+            {{"offset", QObject::tr("offset", "create offset")},
+             {"parallel", QObject::tr("parallel", "create offset")}
+            },
+            {{"o", QObject::tr("o", "create offset")},
+            {"pa", QObject::tr("pa", "create offset")}},
+            RS2::ActionDrawLineParallel
+        },
+        //draw arc
+        {
+            {{"arc", QObject::tr("arc", "draw arc")}},
+            {{"ar", QObject::tr("ar", "draw arc")},
+            {"a", QObject::tr("a", "draw arc")}},
+            RS2::ActionDrawArc3P
+        },
+        //draw circle
+        {
+            {{"circle", QObject::tr("circle", "draw circle")}},
+            {{"ci", QObject::tr("ci", "draw circle")}},
+            RS2::ActionDrawCircle
+        },
+        //draw rectangle
+        {
+            {{"rectangle", QObject::tr("rectangle", "draw rectangle")}},
+            {{"rectang", QObject::tr("rectang", "draw rectangle")},
+             {"rect", QObject::tr("rect", "draw rectangle")},
+            {"rec", QObject::tr("rec", "draw rectangle")}},
+            RS2::ActionDrawLineRectangle
+        },
+        //draw mtext
+        {
+            {{"mtext", QObject::tr("mtext", "draw mtext")}},
+            {},
+            RS2::ActionDrawMText
+        },
+        //draw text
+        {
+            {{"text", QObject::tr("text", "draw text")}},
+            {},
+            RS2::ActionDrawText
+        },
+        //zoom redraw
+        {
+            {{"regen", QObject::tr("regen", "zoom - redraw")},
+             {"redraw", QObject::tr("redraw", "zoom - redraw")}
+            },
+            {{"rg", QObject::tr("rg", "zoom - redraw")},
+            {"zr", QObject::tr("zr", "zoom - redraw")}},
+            RS2::ActionZoomRedraw
+        },
+        //zoom window
+        {
+            {{"zoomwindow", QObject::tr("zoomwindow", "zoom - window")}
+            },
+            {{"zw", QObject::tr("zw", "zoom - window")}},
+            RS2::ActionZoomWindow
+        },
+        //zoom auto
+        {
+            {{"zoomauto", QObject::tr("zoomauto", "zoom - auto")}
+            },
+            {{"za", QObject::tr("za", "zoom - auto")}},
+            RS2::ActionZoomAuto
+        },
+        //zoom pan
+        {
+            {{"zoompan", QObject::tr("zoompan", "zoom - pan")}
+            },
+            {{"zp", QObject::tr("zp", "zoom - pan")}},
+            RS2::ActionZoomPan
+        },
+        //zoom previous
+        {
+            {{"zoomprevious", QObject::tr("zoomprevious", "zoom - previous")}
+            },
+            {{"zv", QObject::tr("zv", "zoom - previous")}},
+            RS2::ActionZoomPrevious
+        },
+        //kill actions
+        {
+            {{"kill", QObject::tr("kill", "kill all actions")}},
+            {{"k", QObject::tr("k", "kill all actions")}},
+            RS2::ActionEditKillAllActions
+        },
+        //undo cycle
+        {
+            {{"undo", QObject::tr("undo", "undo cycle")}},
+            {{"u", QObject::tr("u", "undo cycle")}},
+            RS2::ActionEditUndo
+        },
+        //redo cycle
+        {
+            {{"redo", QObject::tr("redo", "redo cycle")}},
+            {{"r", QObject::tr("r", "redo cycle")}},
+            RS2::ActionEditRedo
+        },
+        //dimension aligned
+        {
+            {{"dimaligned", QObject::tr("dimaligned", "dimension - aligned")}},
+            {{"da", QObject::tr("da", "dimension - aligned")}},
+            RS2::ActionDimAligned
+        },
+        //dimension horizontal
+        {
+            {{"dimhorizontal", QObject::tr("dimhorizontal", "dimension - horizontal")}},
+            {{"dh", QObject::tr("dh", "dimension - horizontal")}},
+            RS2::ActionDimLinearHor
+        },
+        //dimension vertical
+        {
+            {{"dimvertical", QObject::tr("dimvertical", "dimension - vertical")}
+            },
+            {{"dv", QObject::tr("dv", "dimension - vertical")}},
+            RS2::ActionDimLinearVer
+        },
+        //dimension linear
+        {
+            {{"dimlinear", QObject::tr("dimlinear", "dimension - linear")}},
+            {{"dl", QObject::tr("dh", "dimension - linear")},
+             {"dr", QObject::tr("dr", "dimension - linear")}
+            },
+            RS2::ActionDimLinear
+        },
+        //dimension leader
+        {
+            {{"dimleader", QObject::tr("dimleader", "dimension - leader")}},
+            {{"ld", QObject::tr("ld", "dimension - leader")}},
+            RS2::ActionDimLeader
+        },
+        //dimension regenerate
+        {
+            {{"dimregen", QObject::tr("dimregen", "dimension - regenerate")}},
+            {},
+            RS2::ActionToolRegenerateDimensions
+        },
+        //snap restrictions
+        {
+            {{"restrictnothing", QObject::tr("restrictnothing", "restrict - nothing")}},
+            {{"rn", QObject::tr("rn", "restrict - nothing")}},
+            RS2::ActionRestrictNothing
+        },
+        //snap orthogonal
+        {
+            {{"restrictorthogonal", QObject::tr("restrictorthogonal", "restrict - orthogonal")}},
+            {{"rr", QObject::tr("rr", "restrict - orthogonal")}},
+            RS2::ActionRestrictOrthogonal
+        },
+        //snap horizontal
+        {
+            {{"restricthorizontal", QObject::tr("restricthorizontal", "restrict - horizontal")}},
+            {{"rh", QObject::tr("rh", "restrict - horizontal")}},
+            RS2::ActionRestrictHorizontal
+        },
+        //snap vertical
+        {
+            {{"restrictvertical", QObject::tr("restrictvertical", "restrict - vertical")}},
+            {{"rv", QObject::tr("rv", "restrict - vertical")}},
+            RS2::ActionRestrictVertical
+        },
+        //trim2
+        {
+            {{"trim2", QObject::tr("trim2", "modify - multi trim (extend)")}},
+            {{"tm2", QObject::tr("tm2", "modify - multi trim (extend)")}},
+            RS2::ActionModifyTrim2
+        },
+        //trim
+        {
+            {{"trim", QObject::tr("trim", "modify - trim (extend)")}},
+            {{"tm", QObject::tr("tm", "modify - trim (extend)")}},
+            RS2::ActionModifyTrim
+        },
+        //move
+        {
+            {{"move", QObject::tr("move", "modify - move (copy)")}},
+            {{"mv", QObject::tr("mv", "modify - move (copy)")}},
+            RS2::ActionModifyMove
+        },
+        //bevel
+        {
+            {{"bevel", QObject::tr("bevel", "modify -  bevel (chamfer/fillet)")},
+            {"fillet", QObject::tr("fillet", "modify -  bevel (chamfer/fillet)")}},
+            {{"ch", QObject::tr("ch", "modify -  bevel (chamfer/fillet)")},
+            {"fi", QObject::tr("fi", "modify -  bevel (chamfer/fillet)")}},
+            RS2::ActionModifyBevel
+        },
+        //divide
+        {
+            {{"divide", QObject::tr("divide", "modify -  divide (cut)")},
+             {"cut", QObject::tr("cut", "modify -  divide (cut)")}},
+            {{"div", QObject::tr("div", "modify -  divide (cut)")}},
+            RS2::ActionModifyCut
+        },
+        //mirror
+        {
+            {{"mirror", QObject::tr("mirror", "modify -  mirror")}},
+            {{"mi", QObject::tr("mi", "modify -  mirror")}},
+            RS2::ActionModifyMirror
+        },
+        //revert
+        {
+            {{"revert", QObject::tr("revert", "modify -  revert direction")}},
+            {{"rev", QObject::tr("rev", "modify -  revert direction")}},
+            RS2::ActionModifyRevertDirection
+        },
+        //rotate
+        {
+            {{"rotate", QObject::tr("rotate", "modify -  rotate")}},
+            {{"ro", QObject::tr("ro", "modify -  rotate")}},
+            RS2::ActionModifyRotate
+        },
+        //scale
+        {
+            {{"scale", QObject::tr("scale", "modify -  scale")}},
+            {{"sz", QObject::tr("sz", "modify -  scale")}},
+            RS2::ActionModifyScale
+        },
+        //stretch
+        {
+            {{"stretch", QObject::tr("stretch", "modify -  stretch")}},
+            {{"ss", QObject::tr("ss", "modify -  stretch")}},
+            RS2::ActionModifyStretch
+        },
+        //delete
+        {
+            {{"delete", QObject::tr("delete", "modify -  delete (erase)")}},
+            {{"er", QObject::tr("er", "modify -  delete (erase)")},
+             {"del", QObject::tr("del", "modify -  delete (erase)")}},
+            RS2::ActionModifyDelete
+        },
+        //undo
+        {
+            {{"undo", QObject::tr("undo", "edit -  undo")}},
+            {{"oo", QObject::tr("oo", "edit -  undo")}},
+            RS2::ActionEditUndo
+        },
+        //redo
+        {
+            {{"redo", QObject::tr("redo", "edit -  redo")}},
+            {{"uu", QObject::tr("uu", "edit -  redo")}},
+            RS2::ActionEditUndo
+        },
+        //explode
+        {
+            {{"explode", QObject::tr("explode", "explode block/polyline into entities")}},
+            {{"xp", QObject::tr("xp", "explode block/polyline into entities")}},
+            RS2::ActionBlocksExplode
+        },
+        //snap free
+        {
+            {{"snapfree", QObject::tr("snapfree", "snap - free")}},
+            {{"os", QObject::tr("os", "snap - free")},
+            {"sf", QObject::tr("sf", "snap - free")}},
+            RS2::ActionSnapFree
+        },
+        //snap center
+        {
+            {{"snapcenter", QObject::tr("snapcenter", "snap - center")}},
+            {{"sc", QObject::tr("sc", "snap - center")}},
+            RS2::ActionSnapCenter
+        },
+        //snap dist
+        {
+            {{"snapdist", QObject::tr("snapdist", "snap - distance to endpoints")}},
+            {{"sc", QObject::tr("sc", "snap - distance to endpoints")}},
+            RS2::ActionSnapDist
+        },
+        //snap end
+        {
+            {{"snapend", QObject::tr("snapend", "snap - end points")}},
+            {{"se", QObject::tr("se", "snap - end points")}},
+            RS2::ActionSnapEndpoint
+        },
+        //snap grid
+        {
+            {{"snapgrid", QObject::tr("snapgrid", "snap - grid")}},
+            {{"sg", QObject::tr("sg", "snap - grid")}},
+            RS2::ActionSnapGrid
+        },
+        //snap intersection
+        {
+            {{"snapintersection", QObject::tr("snapintersection", "snap - intersection")}},
+            {{"si", QObject::tr("si", "snap - intersection")}},
+            RS2::ActionSnapIntersection
+        },
+        //snap middle
+        {
+            {{"snapmiddle", QObject::tr("snapmiddle", "snap - middle points")}},
+            {{"sm", QObject::tr("sm", "snap - middle points")}},
+            RS2::ActionSnapMiddle
+        },
+        //snap on entity
+        {
+            {{"snaponentity", QObject::tr("snaponentity", "snap - on entity")}},
+            {{"sn", QObject::tr("sn", "snap - on entity")},
+            {"np", QObject::tr("np", "snap - on entity")}},
+            RS2::ActionSnapOnEntity
+        },
+        //set relative zero
+        {
+            {{"setrelativezero", QObject::tr("setrelativezero", "set relative zero position")}},
+            {{"rz", QObject::tr("rz", "set relative zero position")}},
+            RS2::ActionSetRelativeZero
+        },
+        //Select all entities
+        {
+            {{"selectall", QObject::tr("selectall", "Select all entities")}},
+            {{"sa", QObject::tr("sa", "Select all entities")}},
+            RS2::ActionSelectAll
+        },
+        //DeSelect all entities
+        {
+            {{"deselectall", QObject::tr("deselectall", "deselect all entities")}},
+            {{"tn", QObject::tr("tn", "deselect all entities")}},
+            RS2::ActionDeselectAll
+        }
+    };
+
+    for(auto const& c0: commandList){
+        auto const act=c0.actionType;
+        //add full commands
+        for(auto const& p0: c0.fullCmdList){
+            cmdTranslation[p0.first]=p0.second;
+            mainCommands[p0.second]=act;
+        }
+        //add short commands
+        for(auto const& p1: c0.shortCmdList){
+            cmdTranslation[p1.first]=p1.second;
+            shortCommands[p1.second]=act;
+        }
+    }
+
+    // translations
+    std::vector<std::pair<QString, QString>> transList={
+        {"angle",QObject::tr("angle")},
+        {"dpi",QObject::tr("dpi")},
+        {"close",QObject::tr("close")},
+        {"chord length",QObject::tr("chord length")},
+        {"columns",QObject::tr("columns")},
+        {"columnspacing",QObject::tr("columnspacing")},
+        {"factor",QObject::tr("factor")},
+        {"length",QObject::tr("length")},
+        {"length1",QObject::tr("length1", "bevel/fillet lenght1")},
+        {"length2",QObject::tr("length2", "bevel/fillet lenght2")},
+        {"number",QObject::tr("number")},
+        {"radius",QObject::tr("radius")},
+        {"rows",QObject::tr("rows")},
+        {"rowspacing",QObject::tr("rowspacing")},
+        {"through",QObject::tr("through")},
+        {"trim",QObject::tr("trim")},
+
+    /** following are reversed translation,i.e.,from translated to english **/
+        //not used as command keywords
+    // used in function,checkCommand()
+        {QObject::tr("angle"),"angle"},
+        {QObject::tr("ang", "angle"),"angle"},
+        {QObject::tr("an", "angle"),"angle"},
+
+        {QObject::tr("center"),"center"},
+        {QObject::tr("cen", "center"),"center"},
+        {QObject::tr("ce", "center"),"center"},
+
+        {QObject::tr("chord length"),"chord length"},
+    //    {QObject::tr("length", "chord length"),"chord length"},
+        {QObject::tr("cl", "chord length"),"chord length"},
+
+        {QObject::tr("close"),"close"},
+        {QObject::tr("c", "close"),"close"},
+
+        {QObject::tr("columns"),"columns"},
+        {QObject::tr("cols", "columns"),"columns"},
+        {QObject::tr("co", "columns"),"columns"},
+
+        {QObject::tr("columnspacing", "columnspacing for inserts"),"columnspacing"},
+        {QObject::tr("colspacing", "columnspacing for inserts"),"columnspacing"},
+        {QObject::tr("cs", "columnspacing for inserts"),"columnspacing"},
+
+        {QObject::tr("factor"),"factor"},
+        {QObject::tr("fact", "factor"),"factor"},
+        {QObject::tr("f", "factor"),"factor"},
+
+        {QObject::tr("help"),"help"},
+        {QObject::tr("?", "help"),"help"},
+
+        {QObject::tr("length","length"),"length"},
+        {QObject::tr("len","length"),"length"},
+        {QObject::tr("l","length"),"length"},
+
+        {QObject::tr("length1","length1"),"length1"},
+        {QObject::tr("len1","length1"),"length1"},
+        {QObject::tr("l1","length1"),"length1"},
+
+        {QObject::tr("length2","length2"),"length2"},
+        {QObject::tr("len2","length2"),"length2"},
+        {QObject::tr("l2","length2"),"length2"},
+
+        {QObject::tr("number","number"),"number"},
+        {QObject::tr("num","number"),"number"},
+        {QObject::tr("n","number"),"number"},
+
+        {QObject::tr("radius"),"radius"},
+        {QObject::tr("ra","radius"),"radius"},
+
+        {QObject::tr("reversed","reversed"),"reversed"},
+        {QObject::tr("rev","reversed"),"reversed"},
+        {QObject::tr("rev","reversed"),"reversed"},
+
+        {QObject::tr("row", "row"),"row"},
+
+        {QObject::tr("rowspacing", "rowspacing for inserts"),"rowspacing"},
+        {QObject::tr("rs","rowspacing for inserts"),"rowspacing"},
+
+        {QObject::tr("text"),"text"},
+        {QObject::tr("t","text"),"text"},
+
+        {QObject::tr("through"),"through"},
+        {QObject::tr("t","through"),"through"},
+
+        {QObject::tr("undo"),"undo"},
+        {QObject::tr("u","undo"),"undo"},
+
+        {QObject::tr("redo"),"redo"},
+        {QObject::tr("r","redo"),"redo"},
+
+        {QObject::tr("back"),"back"},
+        {QObject::tr("b","back"),"back"},
+        //printer preview
+        {QObject::tr("paperoffset"),"paperoffset"},
+        {QObject::tr("graphoffset"),"graphoffset"}
+};
+    for(auto const& p: transList){
+       cmdTranslation[p.first] = p.second;
+    }
 }
 
 /**

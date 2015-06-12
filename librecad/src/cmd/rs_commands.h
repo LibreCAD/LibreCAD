@@ -78,7 +78,7 @@ protected:
 
 private:
     RS_Commands() ;
-    ~RS_Commands()=default;
+    ~RS_Commands()=delete;
     RS_Commands(RS_Commands& ) = delete;
     RS_Commands& operator = ( RS_Commands& ) = delete;
 
