@@ -680,9 +680,8 @@ RS_VectorSolutions::RS_VectorSolutions(int num):
 {
 }
 
-
 RS_VectorSolutions::RS_VectorSolutions(std::initializer_list<RS_Vector> const& l):
-	vector( l.begin(), l.end())
+	vector(l)
   ,tangent(false)
 {
 }
@@ -698,7 +697,6 @@ void RS_VectorSolutions::alloc(size_t num) {
 		vector.insert(vector.end(), v.begin(), v.end());
 	}
 }
-
 
 void RS_VectorSolutions::clean()
 {
@@ -768,7 +766,6 @@ void RS_VectorSolutions::resize(size_t n){
 const std::vector<RS_Vector>& RS_VectorSolutions::getVector() const {
     return vector;
 }
-
 
 std::vector<RS_Vector>::const_iterator RS_VectorSolutions::begin() const
 {
@@ -887,7 +884,6 @@ void RS_VectorSolutions::move(const RS_Vector& vp) {
 		}
 	}
 }
-
 
 /**
  * Scales all vectors by the given factors with the given center.
