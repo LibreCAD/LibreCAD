@@ -320,11 +320,16 @@ RS_Commands::RS_Commands() {
         },
         //bevel
         {
-            {{"bevel", QObject::tr("bevel", "modify -  bevel (chamfer/fillet)")},
-            {"fillet", QObject::tr("fillet", "modify -  bevel (chamfer/fillet)")}},
-            {{"ch", QObject::tr("ch", "modify -  bevel (chamfer/fillet)")},
-            {"fi", QObject::tr("fi", "modify -  bevel (chamfer/fillet)")}},
+            {{"bevel", QObject::tr("bevel", "modify -  bevel")}},
+            {{"bev", QObject::tr("bev", "modify -  bevel")},
+            {"ch", QObject::tr("ch", "modify -  bevel")}},
             RS2::ActionModifyBevel
+        },
+        //fillet
+        {
+            {{"fillet", QObject::tr("fillet", "modify -  fillet")}},
+            {{"fi", QObject::tr("fi", "modify -  fillet")}},
+            RS2::ActionModifyRound
         },
         //divide
         {
