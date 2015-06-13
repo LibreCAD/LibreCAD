@@ -77,6 +77,7 @@ RS_EntityContainer& RS_EntityContainer::operator = (const RS_EntityContainer& ec
     entities=ec.entities;
     autoUpdateBorders=ec.autoUpdateBorders;
     autoDelete=false;
+    return *this;
 }
 
 
