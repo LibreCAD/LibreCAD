@@ -107,6 +107,12 @@ RS_Commands::RS_Commands() {
             {"pa", QObject::tr("pa", "create offset")}},
             RS2::ActionDrawLineParallel
         },
+        //draw parallel line through point
+        {
+            {{"ptp", QObject::tr("ptp", "parallel through point")}},
+            {{"pp", QObject::tr("pp", "parallel through point")}},
+            RS2::ActionDrawLineParallelThrough
+        },
         //draw arc
         {
             {{"arc", QObject::tr("arc", "draw arc")}},
@@ -119,6 +125,24 @@ RS_Commands::RS_Commands() {
             {{"circle", QObject::tr("circle", "draw circle")}},
             {{"ci", QObject::tr("ci", "draw circle")}},
             RS2::ActionDrawCircle
+        },        
+        //draw 2 point circle
+        {
+            {{"circle2", QObject::tr("circle2", "circle 2 points")}},
+            {{"c2", QObject::tr("c2", "circle 2 points")}},
+            RS2::ActionDrawCircle2P
+        },
+        //draw 3 point circle
+        {
+            {{"circle3", QObject::tr("circle3", "circle 3 points")}},
+            {{"c3", QObject::tr("c3", "circle 3 points")}},
+            RS2::ActionDrawCircle3P
+        },
+        //draw circle tangent to 3 objects
+        {
+            {{"tan3", QObject::tr("tan3", "circle tangent to 3")}},
+            {{"ct3", QObject::tr("ct3", "circle tangent to 3")}},
+            RS2::ActionDrawCircleTan3
         },
         //draw rectangle
         {
@@ -413,7 +437,20 @@ RS_Commands::RS_Commands() {
             {{"deselectall", QObject::tr("deselectall", "deselect all entities")}},
             {{"tn", QObject::tr("tn", "deselect all entities")}},
             RS2::ActionDeselectAll
+        },
+        //Modify Attributes
+        {
+            {{"modifyattr", QObject::tr("modifyattr", "modify attribute")}},
+            {{"ma", QObject::tr("ma", "modify attribute")}},
+            RS2::ActionModifyAttributes
+        },
+        //Distance Point to Point
+        {
+            {{"dist", QObject::tr("dist", "distance point to point")}},
+            {{"dpp", QObject::tr("dpp", "distance point to point")}},
+            RS2::ActionInfoDist
         }
+
     };
 
     for(auto const& c0: commandList){
