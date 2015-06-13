@@ -113,6 +113,24 @@ RS_Commands::RS_Commands() {
             {{"pp", QObject::tr("pp", "parallel through point")}},
             RS2::ActionDrawLineParallelThrough
         },
+        //draw angle bisector
+        {
+            {{"bisect", QObject::tr("bisect", "angle bisector")}},
+            {{"bi", QObject::tr("bi", "angle bisector")}},
+            RS2::ActionDrawLineBisector
+        },
+        //draw line tangent to circle from point
+        {
+            {{"tangentpc", QObject::tr("tangentpc", "tangent point and circle")}},
+            {{"tanpc", QObject::tr("tanpc", "tangent point and circle")}},
+            RS2::ActionDrawLineTangent1
+        },
+        //draw polygon by 2 vertices
+        {
+            {{"polygon2v", QObject::tr("polygon2v", "polygon by 2 vertices")}},
+            {{"poly2", QObject::tr("poly2", "polygon by 2 vertices")}},
+            RS2::ActionDrawLinePolygonCorCor
+        },
         //draw arc
         {
             {{"arc", QObject::tr("arc", "draw arc")}},
@@ -440,17 +458,30 @@ RS_Commands::RS_Commands() {
         },
         //Modify Attributes
         {
-            {{"modifyattr", QObject::tr("modifyattr", "modify attribute")}},
-            {{"ma", QObject::tr("ma", "modify attribute")}},
+            {{"modifyattr", QObject::tr("modifyattr", "modify attribute")}},            
+            {{"attr", QObject::tr("attr", "modify attribute")},
+            {"ma", QObject::tr("ma", "modify attribute")}},
             RS2::ActionModifyAttributes
         },
         //Distance Point to Point
         {
-            {{"dist", QObject::tr("dist", "distance point to point")}},
-            {{"dpp", QObject::tr("dpp", "distance point to point")}},
+            {{"distance", QObject::tr("distance", "distance point to point")}},
+            {{"dist", QObject::tr("dist", "distance point to point")},
+            {"dpp", QObject::tr("dpp", "distance point to point")}},
             RS2::ActionInfoDist
+        },
+        //Measure angle
+        {
+            {{"angle", QObject::tr("angle", "measure angle")}},
+            {{"ang", QObject::tr("ang", "measure angle")}},
+            RS2::ActionInfoAngle
+        },
+        //Measure area
+        {
+            {{"area", QObject::tr("area", "measure area")}},
+            {{"ar", QObject::tr("ar", "measure area")}},
+            RS2::ActionInfoArea
         }
-
     };
 
     for(auto const& c0: commandList){
