@@ -98,11 +98,28 @@ RS_Commands::RS_Commands() {
             {{"pl", QObject::tr("pl", "draw polyline")}},
             RS2::ActionDrawPolyline
         },
+        //draw freehand line
+        {
+            {{"free", QObject::tr("free", "draw freehand line")}},
+            {{"fhl", QObject::tr("fhl", "draw freehand line")}},
+            RS2::ActionDrawLineFree
+        },
+        //draw spline
+        {
+            {{"spline", QObject::tr("spline", "draw spline")}},
+            {{"spl", QObject::tr("spl", "draw spline")}},
+            RS2::ActionDrawSpline
+        },
+        //draw spline through points
+        {
+            {{"spline2", QObject::tr("spline2", "spline through points")}},
+            {{"stp", QObject::tr("stp", "spline through points")}},
+            RS2::ActionDrawSplinePoints
+        },
         //offset
         {
             {{"offset", QObject::tr("offset", "create offset")},
-             {"parallel", QObject::tr("parallel", "create offset")}
-            },
+            {"parallel", QObject::tr("parallel", "create offset")}},
             {{"o", QObject::tr("o", "create offset")},
             {"pa", QObject::tr("pa", "create offset")}},
             RS2::ActionDrawLineParallel
@@ -124,6 +141,32 @@ RS_Commands::RS_Commands() {
             {{"tangentpc", QObject::tr("tangentpc", "tangent point and circle")}},
             {{"tanpc", QObject::tr("tanpc", "tangent point and circle")}},
             RS2::ActionDrawLineTangent1
+        },
+        //draw perpendicular line
+        {
+            {{"ortho", QObject::tr("ortho", "perpendicular line")}},
+            {{"perp", QObject::tr("perp", "perpendicular line")}},
+            RS2::ActionDrawLineOrthogonal
+        },
+        //draw vertical line
+        {
+            {{"vertical", QObject::tr("vertical", "vertical line")}},
+            {{"ver", QObject::tr("ver", "vertical line")}},
+            RS2::ActionDrawLineVertical
+        },
+        //draw horizontal line
+        {
+            {{"horizontal", QObject::tr("horizontal", "horizontal line")}},
+            {{"hor", QObject::tr("hor", "horizontal line")}},
+            RS2::ActionDrawLineHorizontal
+        },
+        //draw rectangle
+        {
+            {{"rectangle", QObject::tr("rectangle", "draw rectangle")}},
+            {{"rectang", QObject::tr("rectang", "draw rectangle")},
+             {"rect", QObject::tr("rect", "draw rectangle")},
+            {"rec", QObject::tr("rec", "draw rectangle")}},
+            RS2::ActionDrawLineRectangle
         },
         //draw polygon by 2 vertices
         {
@@ -162,13 +205,12 @@ RS_Commands::RS_Commands() {
             {{"ct3", QObject::tr("ct3", "circle tangent to 3")}},
             RS2::ActionDrawCircleTan3
         },
-        //draw rectangle
+        //draw inscribed ellipse
         {
-            {{"rectangle", QObject::tr("rectangle", "draw rectangle")}},
-            {{"rectang", QObject::tr("rectang", "draw rectangle")},
-             {"rect", QObject::tr("rect", "draw rectangle")},
-            {"rec", QObject::tr("rec", "draw rectangle")}},
-            RS2::ActionDrawLineRectangle
+            {{"ellipseinscribed", QObject::tr("ellipseinscribed", "inscribed ellipse")}},
+            {{"ei", QObject::tr("ei", "inscribed ellipse")},
+            {"ie", QObject::tr("ie", "inscribed ellipse")}},
+            RS2::ActionDrawEllipseInscribe
         },
         //draw mtext
         {
@@ -320,22 +362,22 @@ RS_Commands::RS_Commands() {
         },
         //bevel
         {
-            {{"bevel", QObject::tr("bevel", "modify -  bevel")}},
-            {{"bev", QObject::tr("bev", "modify -  bevel")},
-            {"ch", QObject::tr("ch", "modify -  bevel")}},
+            {{"bevel", QObject::tr("bevel", "modify - bevel")}},
+            {{"bev", QObject::tr("bev", "modify - bevel")},
+            {"ch", QObject::tr("ch", "modify - bevel")}},
             RS2::ActionModifyBevel
         },
         //fillet
         {
-            {{"fillet", QObject::tr("fillet", "modify -  fillet")}},
-            {{"fi", QObject::tr("fi", "modify -  fillet")}},
+            {{"fillet", QObject::tr("fillet", "modify - fillet")}},
+            {{"fi", QObject::tr("fi", "modify - fillet")}},
             RS2::ActionModifyRound
         },
         //divide
         {
-            {{"divide", QObject::tr("divide", "modify -  divide (cut)")},
-             {"cut", QObject::tr("cut", "modify -  divide (cut)")}},
-            {{"div", QObject::tr("div", "modify -  divide (cut)")}},
+            {{"divide", QObject::tr("divide", "modify - divide (cut)")},
+             {"cut", QObject::tr("cut", "modify - divide (cut)")}},
+            {{"div", QObject::tr("div", "modify - divide (cut)")}},
             RS2::ActionModifyCut
         },
         //mirror
@@ -467,6 +509,12 @@ RS_Commands::RS_Commands() {
             {{"attr", QObject::tr("attr", "modify attribute")},
             {"ma", QObject::tr("ma", "modify attribute")}},
             RS2::ActionModifyAttributes
+        },
+        //Modify Properties
+        {
+            {{"properties", QObject::tr("properties", "modify properties")}},
+            {{"prop", QObject::tr("prop", "modify properties")}},
+            RS2::ActionModifyEntity
         },
         //Distance Point to Point
         {
