@@ -54,7 +54,7 @@
 #else
 # include <QPrinter>
 # include <QPrintDialog>
-#endif 
+#endif
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -697,7 +697,7 @@ void QC_ApplicationWindow::initActions(void)
 
     // Import Block:
     actionFactory.addGUI(subMenu, this, RS2::ActionBlocksImport);
-	subMenu = menu->addMenu( QIcon(":/actions/fileimport.png"), tr("Export"));
+	subMenu = menu->addMenu( QIcon(":/actions/fileexport.png"), tr("Export"));
 	subMenu->setObjectName("Export");
 	actionFactory.addGUI(subMenu, actionHandler, RS2::ActionFileExportMakerCam);
 	actionFactory.addGUI(subMenu, this, {RS2::ActionFilePrintPDF
