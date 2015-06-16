@@ -221,9 +221,9 @@ void LC_MakerCamSVG::writeLayer(RS_Document* document, RS_Layer* layer) {
 
 void LC_MakerCamSVG::writeEntities(RS_Document* document, RS_Layer* layer) {
 
-    RS_DEBUG->print("RS_MakerCamSVG::writeEntitiesFromBlock: Writing entities from layer ...");
+    RS_DEBUG->print("RS_MakerCamSVG::writeEntities: Writing entities from layer ...");
 
-	for(auto e: *document){
+	for (auto e: *document) {
 
         if (e->getLayer() == layer) {
 
@@ -261,9 +261,13 @@ void LC_MakerCamSVG::writeEntity(RS_Entity* entity) {
         case RS2::EntityEllipse:
             writeEllipse((RS_Ellipse*)entity);
             break;
+        case RS2::EntitySpline:
+            writeSpline((RS_Spline*)entity);
+            break;
 
         default:
-            RS_DEBUG->print("RS_MakerCamSVG::writeEntity: Entity with type '%d' not yet implemented",
+            RS_DEBUG->print(RS_Debug::D_NOTICE,
+                            "RS_MakerCamSVG::writeEntity: Entity with type '%d' not yet implemented",
                             (int)entity->rtti());
             break;
     }
@@ -346,7 +350,7 @@ void LC_MakerCamSVG::writePolyline(RS_Polyline* polyline) {
 
     std::string path = svgPathMoveTo(convertToSvg(polyline->getStartpoint()));
 
-	for(auto entity: *polyline){
+	for (auto entity: *polyline) {
 
         if (!entity->isAtomic()) {
             continue;
@@ -543,6 +547,79 @@ void LC_MakerCamSVG::writeEllipse(RS_Ellipse* ellipse) {
     }
 }
 
+void LC_MakerCamSVG::writeSpline(RS_Spline* spline) {
+
+    RS_DEBUG->print("RS_MakerCamSVG::writeSpline: Writing spline ...");
+
+    if (spline->getDegree() < 3) {
+        RS_DEBUG->print(RS_Debug::D_NOTICE,
+                        "RS_MakerCamSVG::writeSpline: Splines with degree '%d' not yet implemented",
+                        (int)spline->getDegree());
+
+        return;
+    }
+
+    if (spline->isClosed()) {
+        RS_DEBUG->print(RS_Debug::D_NOTICE,
+                        "RS_MakerCamSVG::writeSpline: Closed splines not yet implemented");
+
+        return;
+    }
+
+    std::vector<RS_Vector> control_points = spline->getControlPoints();
+
+    int control_points_size = control_points.size();
+
+    std::vector<RS_Vector> bezier_points;
+
+    // Extend control point list with interpolation points that act as control
+    // points for the bezier curves
+    for (int i = 0; i < (control_points_size - 1); i++) {
+        bezier_points.push_back(control_points[i]);
+
+        bool more_than_bezier = (control_points_size > 4);
+
+        if (more_than_bezier) {
+
+            bool first_or_last = ((i == 0) || (i == (control_points_size - 2)));
+
+            if (!first_or_last) {
+
+                bool second_or_second_last = ((i == 1) || (i == (control_points_size - 3)));
+
+                if (second_or_second_last) {
+                    bezier_points.push_back((control_points[i] + control_points[i + 1]) / 2.0);
+                }
+                else {
+                    bezier_points.push_back((control_points[i] * 2.0 + control_points[i + 1]) / 3.0);
+                    bezier_points.push_back((control_points[i] + control_points[i + 1] * 2.0) / 3.0);
+                }
+            }
+        }
+    }
+
+    bezier_points.push_back(control_points[control_points_size - 1]);
+
+    // Update the up to now original spline control points to bezier endpoints
+    for (int i = 3; i < (bezier_points.size() - 1); i += 3) {
+        bezier_points[i] = ((bezier_points[i - 1] + bezier_points[i + 1]) / 2.0);
+    }
+
+    std::string path = svgPathMoveTo(convertToSvg(bezier_points[0]));
+
+    int bezier_count = control_points_size - spline->getDegree();
+
+    for (int i = 0; i < bezier_count; i++) {
+        path += svgPathCurveTo(convertToSvg(bezier_points[3 * (i + 1)]), convertToSvg(bezier_points[3 * (i + 1) - 2]), convertToSvg(bezier_points[3 * (i + 1) - 1]));
+    }
+
+    xmlWriter->addElement("path", NAMESPACE_URI_SVG);
+
+    xmlWriter->addAttribute("d", path);
+
+    xmlWriter->closeElement();
+}
+
 std::string LC_MakerCamSVG::numXml(double value) {
 
     return RS_Utility::doubleToString(value, 8).toStdString();
@@ -566,6 +643,7 @@ std::string LC_MakerCamSVG::svgPathCurveTo(RS_Vector point, RS_Vector controlpoi
            numXml(controlpoint2.x) + "," + numXml(controlpoint2.y) + " " +
            numXml(point.x) + "," + numXml(point.y) + " ";
 }
+
 
 std::string LC_MakerCamSVG::svgPathLineTo(RS_Vector point) {
 

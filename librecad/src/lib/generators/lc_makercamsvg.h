@@ -85,6 +85,7 @@ private:
     void writeCircle(RS_Circle* circle);
     void writeArc(RS_Arc* arc);
     void writeEllipse(RS_Ellipse* ellipse);
+    void writeSpline(RS_Spline* spline);
 
     std::string numXml(double value);
     RS_Vector convertToSvg(RS_Vector vector);
