@@ -547,6 +547,10 @@ void LC_MakerCamSVG::writeEllipse(RS_Ellipse* ellipse) {
     }
 }
 
+// NOTE: Quite obviously, the spline implementation in LibreCad is a bit shaky.
+//       It looks as if degree 1 and degree 3 splines are hold in the RS_Spline
+//       object, while degree 2 splines are hold in the "artificial" (as it has
+//       no DXF counterpart) LC_SplinePoints object.
 void LC_MakerCamSVG::writeSpline(RS_Spline* spline) {
 
     RS_DEBUG->print("RS_MakerCamSVG::writeSpline: Writing spline ...");
@@ -559,55 +563,87 @@ void LC_MakerCamSVG::writeSpline(RS_Spline* spline) {
         return;
     }
 
-    if (spline->isClosed()) {
-        RS_DEBUG->print(RS_Debug::D_NOTICE,
-                        "RS_MakerCamSVG::writeSpline: Closed splines not yet implemented");
-
-        return;
-    }
-
     std::vector<RS_Vector> control_points = spline->getControlPoints();
 
     int control_points_size = control_points.size();
 
     std::vector<RS_Vector> bezier_points;
 
-    // Extend control point list with interpolation points that act as control
-    // points for the bezier curves
-    for (int i = 0; i < (control_points_size - 1); i++) {
-        bezier_points.push_back(control_points[i]);
+    int bezier_points_size;
 
-        bool more_than_bezier = (control_points_size > 4);
+    if (spline->isClosed()) {
+        RS_DEBUG->print("RS_MakerCamSVG::writeSpline: Writing closed degree 3 spline as 'path' with cubic bézier segments");
 
-        if (more_than_bezier) {
+        for (int i = 0; i < (control_points_size - 1); i++) {
+            bezier_points.push_back(control_points[i]);
 
-            bool first_or_last = ((i == 0) || (i == (control_points_size - 2)));
+            bezier_points.push_back((control_points[i] * 2.0 + control_points[i + 1]) / 3.0);
+            bezier_points.push_back((control_points[i] + control_points[i + 1] * 2.0) / 3.0);
+        }
 
-            if (!first_or_last) {
+        bezier_points.push_back(control_points[control_points_size - 1]);
+        bezier_points.push_back((control_points[control_points_size - 1] * 2.0 + control_points[0]) / 3.0);
+        bezier_points.push_back((control_points[control_points_size - 1] + control_points[0] * 2.0) / 3.0);
+        bezier_points.push_back(control_points[0]);
 
-                bool second_or_second_last = ((i == 1) || (i == (control_points_size - 3)));
+        // Auxiliary points for easier calculation
+        bezier_points.insert(bezier_points.begin(), ((control_points[control_points_size - 1] + control_points[0] * 2.0) / 3.0));
+        bezier_points.push_back((control_points[0] * 2.0 + control_points[1]) / 3.0);
 
-                if (second_or_second_last) {
-                    bezier_points.push_back((control_points[i] + control_points[i + 1]) / 2.0);
-                }
-                else {
-                    bezier_points.push_back((control_points[i] * 2.0 + control_points[i + 1]) / 3.0);
-                    bezier_points.push_back((control_points[i] + control_points[i + 1] * 2.0) / 3.0);
+        bezier_points_size = bezier_points.size();
+
+        for (int i = 1; i < (bezier_points_size - 1); i += 3) {
+            bezier_points[i] = ((bezier_points[i - 1] + bezier_points[i + 1]) / 2.0);
+        }
+
+        // Remove auxiliary points
+        bezier_points.pop_back();
+        bezier_points.erase(bezier_points.begin());
+    }
+    else {
+        RS_DEBUG->print("RS_MakerCamSVG::writeSpline: Writing open degree 3 spline as 'path' with cubic bézier segments");
+
+        // Extend control point list with interpolation points that act as control
+        // points for the bezier curves
+        for (int i = 0; i < (control_points_size - 1); i++) {
+            bezier_points.push_back(control_points[i]);
+
+            bool more_than_bezier = (control_points_size > 4);
+
+            if (more_than_bezier) {
+
+                bool first_or_last = ((i == 0) || (i == (control_points_size - 2)));
+
+                if (!first_or_last) {
+
+                    bool second_or_second_last = ((i == 1) || (i == (control_points_size - 3)));
+
+                    if (second_or_second_last) {
+                        bezier_points.push_back((control_points[i] + control_points[i + 1]) / 2.0);
+                    }
+                    else {
+                        bezier_points.push_back((control_points[i] * 2.0 + control_points[i + 1]) / 3.0);
+                        bezier_points.push_back((control_points[i] + control_points[i + 1] * 2.0) / 3.0);
+                    }
                 }
             }
         }
-    }
 
-    bezier_points.push_back(control_points[control_points_size - 1]);
+        bezier_points.push_back(control_points[control_points_size - 1]);
 
-    // Update the up to now original spline control points to bezier endpoints
-    for (int i = 3; i < (bezier_points.size() - 1); i += 3) {
-        bezier_points[i] = ((bezier_points[i - 1] + bezier_points[i + 1]) / 2.0);
+        bezier_points_size = bezier_points.size();
+
+        // Update the up to now original spline control points to bezier endpoints
+        for (int i = 3; i < (bezier_points_size - 1); i += 3) {
+            bezier_points[i] = ((bezier_points[i - 1] + bezier_points[i + 1]) / 2.0);
+        }
     }
 
     std::string path = svgPathMoveTo(convertToSvg(bezier_points[0]));
 
-    int bezier_count = control_points_size - spline->getDegree();
+    bezier_points_size = bezier_points.size();
+
+    int bezier_count = ((bezier_points_size - 1) / 3);
 
     for (int i = 0; i < bezier_count; i++) {
         path += svgPathCurveTo(convertToSvg(bezier_points[3 * (i + 1)]), convertToSvg(bezier_points[3 * (i + 1) - 2]), convertToSvg(bezier_points[3 * (i + 1) - 1]));
