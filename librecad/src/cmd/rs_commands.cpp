@@ -88,8 +88,7 @@ RS_Commands::RS_Commands() {
         {
             {{"line", QObject::tr("line", "draw line")}},
             {{"li", QObject::tr("li", "draw line")},
-             {"l", QObject::tr("l", "draw line")}
-            },
+             {"l", QObject::tr("l", "draw line")}},
             RS2::ActionDrawLine
         },
         //draw polyline
@@ -116,7 +115,7 @@ RS_Commands::RS_Commands() {
             {{"stp", QObject::tr("stp", "spline through points")}},
             RS2::ActionDrawSplinePoints
         },
-        //offset
+        //draw parallel line
         {
             {{"offset", QObject::tr("offset", "create offset")},
             {"parallel", QObject::tr("parallel", "create offset")}},
@@ -144,8 +143,8 @@ RS_Commands::RS_Commands() {
         },
         //draw perpendicular line
         {
-            {{"ortho", QObject::tr("ortho", "perpendicular line")}},
             {{"perp", QObject::tr("perp", "perpendicular line")}},
+            {{"ortho", QObject::tr("ortho", "perpendicular line")}},
             RS2::ActionDrawLineOrthogonal
         },
         //draw vertical line
@@ -212,52 +211,53 @@ RS_Commands::RS_Commands() {
             {"ie", QObject::tr("ie", "inscribed ellipse")}},
             RS2::ActionDrawEllipseInscribe
         },
+        //draw hatch
+        {
+            {{"hatch", QObject::tr("hatch", "draw hatch")}},
+            {{"ha", QObject::tr("ha", "draw hatch")}},
+            RS2::ActionDrawHatchNoSelect
+        },
         //draw mtext
         {
             {{"mtext", QObject::tr("mtext", "draw mtext")}},
-            {},
+            {{"mtxt", QObject::tr("mtxt", "draw mtext")}},
             RS2::ActionDrawMText
         },
         //draw text
         {
             {{"text", QObject::tr("text", "draw text")}},
-            {},
+            {{"txt", QObject::tr("txt", "draw text")}},
             RS2::ActionDrawText
         },
         //zoom redraw
         {
             {{"regen", QObject::tr("regen", "zoom - redraw")},
-             {"redraw", QObject::tr("redraw", "zoom - redraw")}
-            },
+             {"redraw", QObject::tr("redraw", "zoom - redraw")}},
             {{"rg", QObject::tr("rg", "zoom - redraw")},
             {"zr", QObject::tr("zr", "zoom - redraw")}},
             RS2::ActionZoomRedraw
         },
         //zoom window
         {
-            {{"zoomwindow", QObject::tr("zoomwindow", "zoom - window")}
-            },
+            {{"zoomwindow", QObject::tr("zoomwindow", "zoom - window")}},
             {{"zw", QObject::tr("zw", "zoom - window")}},
             RS2::ActionZoomWindow
         },
         //zoom auto
         {
-            {{"zoomauto", QObject::tr("zoomauto", "zoom - auto")}
-            },
+            {{"zoomauto", QObject::tr("zoomauto", "zoom - auto")}},
             {{"za", QObject::tr("za", "zoom - auto")}},
             RS2::ActionZoomAuto
         },
         //zoom pan
         {
-            {{"zoompan", QObject::tr("zoompan", "zoom - pan")}
-            },
+            {{"zoompan", QObject::tr("zoompan", "zoom - pan")}},
             {{"zp", QObject::tr("zp", "zoom - pan")}},
             RS2::ActionZoomPan
         },
         //zoom previous
         {
-            {{"zoomprevious", QObject::tr("zoomprevious", "zoom - previous")}
-            },
+            {{"zoomprevious", QObject::tr("zoomprevious", "zoom - previous")}},
             {{"zv", QObject::tr("zv", "zoom - previous")}},
             RS2::ActionZoomPrevious
         },
@@ -293,8 +293,7 @@ RS_Commands::RS_Commands() {
         },
         //dimension vertical
         {
-            {{"dimvertical", QObject::tr("dimvertical", "dimension - vertical")}
-            },
+            {{"dimvertical", QObject::tr("dimvertical", "dimension - vertical")}},
             {{"dv", QObject::tr("dv", "dimension - vertical")}},
             RS2::ActionDimLinearVer
         },
@@ -302,8 +301,7 @@ RS_Commands::RS_Commands() {
         {
             {{"dimlinear", QObject::tr("dimlinear", "dimension - linear")}},
             {{"dl", QObject::tr("dh", "dimension - linear")},
-             {"dr", QObject::tr("dr", "dimension - linear")}
-            },
+             {"dr", QObject::tr("dr", "dimension - linear")}},
             RS2::ActionDimLinear
         },
         //dimension leader
@@ -394,39 +392,39 @@ RS_Commands::RS_Commands() {
         },
         //rotate
         {
-            {{"rotate", QObject::tr("rotate", "modify -  rotate")}},
-            {{"ro", QObject::tr("ro", "modify -  rotate")}},
+            {{"rotate", QObject::tr("rotate", "modify - rotate")}},
+            {{"ro", QObject::tr("ro", "modify - rotate")}},
             RS2::ActionModifyRotate
         },
         //scale
         {
-            {{"scale", QObject::tr("scale", "modify -  scale")}},
-            {{"sz", QObject::tr("sz", "modify -  scale")}},
+            {{"scale", QObject::tr("scale", "modify - scale")}},
+            {{"sz", QObject::tr("sz", "modify - scale")}},
             RS2::ActionModifyScale
         },
         //stretch
         {
-            {{"stretch", QObject::tr("stretch", "modify -  stretch")}},
-            {{"ss", QObject::tr("ss", "modify -  stretch")}},
+            {{"stretch", QObject::tr("stretch", "modify - stretch")}},
+            {{"ss", QObject::tr("ss", "modify - stretch")}},
             RS2::ActionModifyStretch
         },
         //delete
         {
-            {{"delete", QObject::tr("delete", "modify -  delete (erase)")}},
-            {{"er", QObject::tr("er", "modify -  delete (erase)")},
-             {"del", QObject::tr("del", "modify -  delete (erase)")}},
+            {{"delete", QObject::tr("delete", "modify - delete (erase)")}},
+            {{"er", QObject::tr("er", "modify - delete (erase)")},
+             {"del", QObject::tr("del", "modify - delete (erase)")}},
             RS2::ActionModifyDelete
         },
         //undo
         {
-            {{"undo", QObject::tr("undo", "edit -  undo")}},
-            {{"oo", QObject::tr("oo", "edit -  undo")}},
+            {{"undo", QObject::tr("undo", "edit - undo")}},
+            {{"oo", QObject::tr("oo", "edit - undo")}},
             RS2::ActionEditUndo
         },
         //redo
         {
-            {{"redo", QObject::tr("redo", "edit -  redo")}},
-            {{"uu", QObject::tr("uu", "edit -  redo")}},
+            {{"redo", QObject::tr("redo", "edit - redo")}},
+            {{"uu", QObject::tr("uu", "edit - redo")}},
             RS2::ActionEditUndo
         },
         //explode
