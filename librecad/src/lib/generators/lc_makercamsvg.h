@@ -86,12 +86,20 @@ private:
     void writeArc(RS_Arc* arc);
     void writeEllipse(RS_Ellipse* ellipse);
     void writeSpline(RS_Spline* spline);
+    void writeSplinepoints(LC_SplinePoints* splinepoints);
+
+    void writeCubicBeziers(std::vector<RS_Vector> control_points, bool is_closed);
+    void writeQuadraticBeziers(std::vector<RS_Vector> control_points, bool is_closed);
+
+    std::vector<RS_Vector> calcCubicBezierPoints(std::vector<RS_Vector> control_points, bool is_closed);
+    std::vector<RS_Vector> calcQuadraticBezierPoints(std::vector<RS_Vector> control_points, bool is_closed);
 
     std::string numXml(double value);
     RS_Vector convertToSvg(RS_Vector vector);
 
     std::string svgPathClose();
     std::string svgPathCurveTo(RS_Vector point, RS_Vector controlpoint1, RS_Vector controlpoint2);
+    std::string svgPathQuadraticCurveTo(RS_Vector point, RS_Vector controlpoint);
     std::string svgPathLineTo(RS_Vector point);
     std::string svgPathMoveTo(RS_Vector point);
     std::string svgPathArc(RS_Arc* arc);
