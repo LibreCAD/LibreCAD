@@ -44,8 +44,7 @@ class RS_EntityContainer : public RS_Entity {
 public:
 
 	RS_EntityContainer(RS_EntityContainer* parent=nullptr, bool owner=true);
-    RS_EntityContainer(const RS_EntityContainer& ec);
-    RS_EntityContainer& operator = (const RS_EntityContainer& ec);
+    //RS_EntityContainer(const RS_EntityContainer& ec);
     virtual ~RS_EntityContainer();
 
 	virtual RS_Entity* clone() const;
@@ -222,16 +221,16 @@ protected:
     QList<RS_Entity *> entities;
 
     /** sub container used only temporarly for iteration. */
-    RS_EntityContainer* subContainer=nullptr;
+    RS_EntityContainer* subContainer;
 
     /**
      * Automatically update the borders of the container when entities
      * are added or removed.
      */
-    bool autoUpdateBorders=true;
+    static bool autoUpdateBorders;
 
 private:
-    int entIdx=-1;
+    int entIdx;
     bool autoDelete;
 };
 

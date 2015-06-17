@@ -48,6 +48,8 @@
 #include "emu_qt44.h"
 #endif
 
+bool RS_EntityContainer::autoUpdateBorders = true;
+
 /**
  * Default constructor.
  *
@@ -55,28 +57,14 @@
  */
 RS_EntityContainer::RS_EntityContainer(RS_EntityContainer* parent,
                                        bool owner)
-    : RS_Entity(parent)
-    , autoDelete(owner)
-{
+    : RS_Entity(parent) {
 
+    autoDelete=owner;
     RS_DEBUG->print("RS_EntityContainer::RS_EntityContainer: "
                     "owner: %d", (int)owner);
-}
-
-RS_EntityContainer::RS_EntityContainer(const RS_EntityContainer& ec):
-    RS_Entity(ec)
-  ,entities(ec.entities)
-  ,autoUpdateBorders(ec.autoUpdateBorders)
-  ,autoDelete(false)
-{
-}
-
-RS_EntityContainer& RS_EntityContainer::operator = (const RS_EntityContainer& ec)
-{
-    RS_Entity::operator =(ec);
-    entities=ec.entities;
-    autoUpdateBorders=ec.autoUpdateBorders;
-    autoDelete=false;
+	subContainer = nullptr;
+    //autoUpdateBorders = true;
+    entIdx = -1;
 }
 
 
