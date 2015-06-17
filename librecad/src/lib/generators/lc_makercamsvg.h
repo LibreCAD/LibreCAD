@@ -88,11 +88,11 @@ private:
     void writeSpline(RS_Spline* spline);
     void writeSplinepoints(LC_SplinePoints* splinepoints);
 
-    void writeCubicBeziers(std::vector<RS_Vector> control_points, bool is_closed);
-    void writeQuadraticBeziers(std::vector<RS_Vector> control_points, bool is_closed);
+    void writeCubicBeziers(const std::vector<RS_Vector> &control_points, bool is_closed);
+    void writeQuadraticBeziers(const std::vector<RS_Vector> &control_points, bool is_closed);
 
-    std::vector<RS_Vector> calcCubicBezierPoints(std::vector<RS_Vector> control_points, bool is_closed);
-    std::vector<RS_Vector> calcQuadraticBezierPoints(std::vector<RS_Vector> control_points, bool is_closed);
+    std::vector<RS_Vector> calcCubicBezierPoints(const std::vector<RS_Vector> &control_points, bool is_closed);
+    std::vector<RS_Vector> calcQuadraticBezierPoints(const std::vector<RS_Vector> &control_points, bool is_closed);
 
     std::string numXml(double value);
     RS_Vector convertToSvg(RS_Vector vector);

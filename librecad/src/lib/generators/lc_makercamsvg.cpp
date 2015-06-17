@@ -581,7 +581,7 @@ void LC_MakerCamSVG::writeSplinepoints(LC_SplinePoints* splinepoints) {
     writeQuadraticBeziers(splinepoints->getControlPoints(), splinepoints->isClosed());
 }
 
-void LC_MakerCamSVG::writeCubicBeziers(std::vector<RS_Vector> control_points, bool is_closed) {
+void LC_MakerCamSVG::writeCubicBeziers(const std::vector<RS_Vector> &control_points, bool is_closed) {
 
     std::vector<RS_Vector> bezier_points = calcCubicBezierPoints(control_points, is_closed);
 
@@ -602,7 +602,7 @@ void LC_MakerCamSVG::writeCubicBeziers(std::vector<RS_Vector> control_points, bo
     xmlWriter->closeElement();
 }
 
-void LC_MakerCamSVG::writeQuadraticBeziers(std::vector<RS_Vector> control_points, bool is_closed) {
+void LC_MakerCamSVG::writeQuadraticBeziers(const std::vector<RS_Vector> &control_points, bool is_closed) {
 
     std::vector<RS_Vector> bezier_points = calcQuadraticBezierPoints(control_points, is_closed);
 
@@ -623,7 +623,7 @@ void LC_MakerCamSVG::writeQuadraticBeziers(std::vector<RS_Vector> control_points
     xmlWriter->closeElement();
 }
 
-std::vector<RS_Vector> LC_MakerCamSVG::calcCubicBezierPoints(std::vector<RS_Vector> control_points, bool is_closed) {
+std::vector<RS_Vector> LC_MakerCamSVG::calcCubicBezierPoints(const std::vector<RS_Vector> &control_points, bool is_closed) {
 
     std::vector<RS_Vector> bezier_points;
 
@@ -699,7 +699,7 @@ std::vector<RS_Vector> LC_MakerCamSVG::calcCubicBezierPoints(std::vector<RS_Vect
     return bezier_points;
 }
 
-std::vector<RS_Vector> LC_MakerCamSVG::calcQuadraticBezierPoints(std::vector<RS_Vector> control_points, bool is_closed) {
+std::vector<RS_Vector> LC_MakerCamSVG::calcQuadraticBezierPoints(const std::vector<RS_Vector> &control_points, bool is_closed) {
 
     std::vector<RS_Vector> bezier_points;
 
