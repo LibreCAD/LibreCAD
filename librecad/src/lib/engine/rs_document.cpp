@@ -52,8 +52,7 @@ RS_Document::RS_Document(RS_EntityContainer* parent)
 }
 
 RS_Document::RS_Document(RS_Document const& rhs):
-    RS_EntityContainer(rhs)
-  ,modified(rhs.modified)
+    modified(rhs.modified)
   ,activePen(new RS_Pen(*rhs.activePen))
   ,filename(rhs.filename)
   ,autosaveFilename(rhs.autosaveFilename)
@@ -63,7 +62,6 @@ RS_Document::RS_Document(RS_Document const& rhs):
 
 RS_Document& RS_Document::operator = (RS_Document const& rhs)
 {
-    RS_EntityContainer::operator =(rhs);
     modified=rhs.modified;
     activePen.reset(new RS_Pen(*rhs.activePen));
     filename=rhs.filename;
