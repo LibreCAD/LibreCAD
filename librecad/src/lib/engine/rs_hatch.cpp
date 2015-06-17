@@ -105,7 +105,7 @@ bool RS_Hatch::validate() {
 RS_Entity* RS_Hatch::clone() const{
     RS_Hatch* t = new RS_Hatch(*this);
     t->setOwner(isOwner());
-//    t->initId();
+    t->initId();
     t->detach();
         t->hatch = NULL;
     return t;

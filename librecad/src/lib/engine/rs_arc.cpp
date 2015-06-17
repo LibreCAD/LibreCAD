@@ -69,7 +69,7 @@ bool RS_ArcData::isValid() const{
 
 std::ostream& operator << (std::ostream& os, const RS_ArcData& ad) {
 	os << "(" << ad.center <<
-		  "," << ad.radius <<
+		  "/" << ad.radius <<
 		  " " << ad.angle1 <<
 		  "," << ad.angle2 <<
 		  ")";
@@ -87,7 +87,7 @@ RS_Arc::RS_Arc(RS_EntityContainer* parent,
 
 RS_Entity* RS_Arc::clone() const {
 	RS_Arc* a = new RS_Arc(*this);
-//	a->initId();
+	a->initId();
 	return a;
 }
 

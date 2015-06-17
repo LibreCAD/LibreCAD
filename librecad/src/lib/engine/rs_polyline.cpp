@@ -33,7 +33,6 @@
 #include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_information.h"
-#include "rs_pen.h"
 
 RS_PolylineData::RS_PolylineData():
 	startpoint(false)
@@ -88,7 +87,7 @@ RS_Polyline::RS_Polyline(RS_EntityContainer* parent,
 RS_Entity* RS_Polyline::clone() const {
 	RS_Polyline* p = new RS_Polyline(*this);
 	p->setOwner(isOwner());
-//	p->initId();
+	p->initId();
 	p->detach();
 	return p;
 }

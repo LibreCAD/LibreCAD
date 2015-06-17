@@ -30,7 +30,6 @@
 #include "rs_mtext.h"
 #include "rs_solid.h"
 #include "rs_graphic.h"
-#include "rs_pen.h"
 
 RS_DimRadialData::RS_DimRadialData():
 	definitionPoint(false),
@@ -71,7 +70,7 @@ RS_DimRadial::RS_DimRadial(RS_EntityContainer* parent,
 RS_Entity* RS_DimRadial::clone() const {
 	RS_DimRadial* d = new RS_DimRadial(*this);
 	d->setOwner(isOwner());
-//	d->initId();
+	d->initId();
 	d->detach();
 	return d;
 }

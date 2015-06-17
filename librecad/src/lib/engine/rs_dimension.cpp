@@ -31,7 +31,6 @@
 #include "rs_solid.h"
 #include "rs_units.h"
 #include "rs_math.h"
-#include "rs_pen.h"
 
 RS_DimensionData::RS_DimensionData():
 	definitionPoint(false),

@@ -31,7 +31,6 @@
 #include "rs_fontlist.h"
 #include "rs_insert.h"
 #include "rs_math.h"
-#include "rs_pen.h"
 
 RS_TextData::RS_TextData(const RS_Vector& _insertionPoint,
 						 const RS_Vector& _secondPoint,
@@ -91,7 +90,7 @@ RS_Text::RS_Text(RS_EntityContainer* parent,
 RS_Entity* RS_Text::clone() const{
 	RS_Text* t = new RS_Text(*this);
 	t->setOwner(isOwner());
-//	t->initId();
+	t->initId();
 	t->detach();
 	return t;
 }

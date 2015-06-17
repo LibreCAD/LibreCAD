@@ -26,7 +26,7 @@
 
 
 #include "rs_block.h"
-#include "rs_pen.h"
+
 #include "rs_graphic.h"
 
 RS_BlockData::RS_BlockData(const QString& _name,
@@ -51,7 +51,7 @@ RS_Block::RS_Block(RS_EntityContainer* parent,
                    const RS_BlockData& d)
         : RS_Document(parent), data(d) {
 
-    *m_pPen = RS_Pen(RS_Color(128,128,128), RS2::Width01, RS2::SolidLine);
+    pen = RS_Pen(RS_Color(128,128,128), RS2::Width01, RS2::SolidLine);
 }
 
 
@@ -59,7 +59,7 @@ RS_Entity* RS_Block::clone() const {
     RS_Block* blk = new RS_Block(*this);
     blk->setOwner(isOwner());
     blk->detach();
-//    blk->initId();
+    blk->initId();
     return blk;
 }
 

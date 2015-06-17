@@ -30,7 +30,6 @@
 
 #include "rs_entitycontainer.h"
 #include "rs_snapper.h"
-#include "rs_color.h"
 
 #include <QDateTime>
 #include <QMap>

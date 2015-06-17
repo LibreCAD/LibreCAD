@@ -29,8 +29,8 @@
 #ifndef RS_ENTITY_H
 #define RS_ENTITY_H
 
-#include <memory>
 #include "rs_vector.h"
+#include "rs_pen.h"
 #include "rs_undoable.h"
 
 class RS_Arc;
@@ -49,7 +49,6 @@ class RS_Text;
 class RS_Layer;
 class LC_Quadratic;
 class RS_GraphicView;
-class RS_Pen;
 
 class RS_Vector;
 class RS_VectorSolutions;
@@ -64,9 +63,7 @@ public:
 
 	RS_Entity()=default;
 	RS_Entity(RS_EntityContainer* parent=nullptr);
-	RS_Entity(RS_Entity const& rhs);
-	RS_Entity& operator = (RS_Entity const& rhs);
-	virtual ~RS_Entity();
+	virtual ~RS_Entity() = default;
 
     void init();
     virtual void initId();
@@ -156,7 +153,9 @@ public:
      * Sets the explicit pen for this entity or a pen with special
      * attributes such as BY_LAYER, ..
      */
-    void setPen(const RS_Pen& pen);
+    void setPen(const RS_Pen& pen) {
+        this->pen = pen;
+    }
 
 
     void setPenToActive();
@@ -576,7 +575,7 @@ protected:
     unsigned long int id;
 
     //! pen (attributes) for this entity
-    std::unique_ptr<RS_Pen> m_pPen;
+    RS_Pen pen;
 
     //! auto updating enabled?
     bool updateEnabled;

@@ -77,12 +77,12 @@ public:
         virtual void update();
 
     /** @return Copy of data that defines the leader. */
-    RS_LeaderData const& getData() const {
+    RS_LeaderData getData() const {
         return data;
     }
 
         /** @return true: if this leader has an arrow at the beginning. */
-        bool hasArrowHead() const{
+        bool hasArrowHead() {
                 return data.arrowHead;
         }
 
@@ -107,7 +107,7 @@ public:
 
 protected:
     RS_LeaderData data;
-        bool empty=true;
+        bool empty;
 };
 
 #endif

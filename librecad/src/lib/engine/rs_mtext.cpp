@@ -31,7 +31,6 @@
 #include "rs_fontlist.h"
 #include "rs_insert.h"
 #include "rs_math.h"
-#include "rs_pen.h"
 
 RS_MTextData::RS_MTextData(const RS_Vector& _insertionPoint,
 			double _height,
@@ -93,7 +92,7 @@ RS_MText::RS_MText(RS_EntityContainer* parent,
 RS_Entity* RS_MText::clone() const{
 	RS_MText* t = new RS_MText(*this);
 	t->setOwner(isOwner());
-//	t->initId();
+	t->initId();
 	t->detach();
 	return t;
 }
