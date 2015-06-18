@@ -49,6 +49,9 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
     action=new QAction(tr("select&All"), teHistory);
     connect(action, SIGNAL(triggered()), teHistory, SLOT(selectAll()));
     teHistory->addAction(action);
+
+    //command output style
+    teHistory->setStyleSheet("color: black; background-color: white; selection-color: white; selection-background-color: blue;");
 }
 
 /*
