@@ -71,7 +71,7 @@ void RS_ActionInfoDist::trigger() {
 												graphic->getAngleFormat(), graphic->getAnglePrecision());
 
 		RS_DIALOGFACTORY->commandMessage(
-					tr("Distance: %1 Cartesian: (%2 , %3), Polar: (%4<%5 ").arg(dists[0])
+                    tr("Distance: %1 Cartesian: (%2 , %3), Polar: (%4<%5)").arg(dists[0])
 				.arg(dists[1]).arg(dists[2])
 				.arg(dists[0])
 				.arg(angle)
