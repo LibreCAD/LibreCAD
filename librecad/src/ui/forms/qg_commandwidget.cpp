@@ -142,6 +142,7 @@ void QG_CommandWidget::appendHistory(const QString& msg) {
 
 void QG_CommandWidget::trigger() {
     QString cmd = leCommand->text();
+    cmd = cmd.simplified();
     bool isAction=false;
     if (cmd=="") {
         cmd="\n";
