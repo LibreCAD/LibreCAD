@@ -250,3 +250,8 @@ void QG_CommandWidget::processStderr() {
     ferr->close();* /
         */
 }
+
+void QG_CommandWidget::on_teHistory_selectionChanged()
+{
+    teHistory->copy();
+}

@@ -56,6 +56,9 @@ public slots:
 protected slots:
     virtual void languageChange();
 
+private slots:
+    void on_teHistory_selectionChanged();
+
 private:
     QG_ActionHandler* actionHandler;
 
