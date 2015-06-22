@@ -221,9 +221,9 @@ void LC_MakerCamSVG::writeLayer(RS_Document* document, RS_Layer* layer) {
 
 void LC_MakerCamSVG::writeEntities(RS_Document* document, RS_Layer* layer) {
 
-    RS_DEBUG->print("RS_MakerCamSVG::writeEntitiesFromBlock: Writing entities from layer ...");
+    RS_DEBUG->print("RS_MakerCamSVG::writeEntities: Writing entities from layer ...");
 
-	for(auto e: *document){
+	for (auto e: *document) {
 
         if (e->getLayer() == layer) {
 
@@ -261,9 +261,16 @@ void LC_MakerCamSVG::writeEntity(RS_Entity* entity) {
         case RS2::EntityEllipse:
             writeEllipse((RS_Ellipse*)entity);
             break;
+        case RS2::EntitySpline:
+            writeSpline((RS_Spline*)entity);
+            break;
+        case RS2::EntitySplinePoints:
+            writeSplinepoints((LC_SplinePoints*)entity);
+            break;
 
         default:
-            RS_DEBUG->print("RS_MakerCamSVG::writeEntity: Entity with type '%d' not yet implemented",
+            RS_DEBUG->print(RS_Debug::D_NOTICE,
+                            "RS_MakerCamSVG::writeEntity: Entity with type '%d' not yet implemented",
                             (int)entity->rtti());
             break;
     }
@@ -346,7 +353,7 @@ void LC_MakerCamSVG::writePolyline(RS_Polyline* polyline) {
 
     std::string path = svgPathMoveTo(convertToSvg(polyline->getStartpoint()));
 
-	for(auto entity: *polyline){
+	for (auto entity: *polyline) {
 
         if (!entity->isAtomic()) {
             continue;
@@ -543,6 +550,193 @@ void LC_MakerCamSVG::writeEllipse(RS_Ellipse* ellipse) {
     }
 }
 
+// NOTE: Quite obviously, the spline implementation in LibreCAD is a bit shaky.
+//       It looks as if degree 1 to 3 splines are hold in the RS_Spline object
+//       (if created using the control point method vs. the pass through point
+//       method). However after saving degree 2 splines and reopening the file,
+//       these splines are hold in the "artificial" LC_SplinePoints object.
+void LC_MakerCamSVG::writeSpline(RS_Spline* spline) {
+
+    if (spline->getDegree() == 2) {
+        RS_DEBUG->print("RS_MakerCamSVG::writeSpline: Writing piecewise quadratic spline as 'path' with quadratic bézier segments");
+
+        writeQuadraticBeziers(spline->getControlPoints(), spline->isClosed());
+    }
+    else if (spline->getDegree() == 3) {
+        RS_DEBUG->print("RS_MakerCamSVG::writeSpline: Writing piecewise cubic spline as 'path' with cubic bézier segments");
+
+        writeCubicBeziers(spline->getControlPoints(), spline->isClosed());
+    }
+    else {
+        RS_DEBUG->print(RS_Debug::D_NOTICE,
+                        "RS_MakerCamSVG::writePiecewiseCubicSpline: Splines with degree '%d' not implemented",
+                        (int)spline->getDegree());
+    }
+}
+
+void LC_MakerCamSVG::writeSplinepoints(LC_SplinePoints* splinepoints) {
+
+    RS_DEBUG->print("RS_MakerCamSVG::writeSplinepoints: Writing piecewise quadratic spline as 'path' with quadratic bézier segments");
+
+    writeQuadraticBeziers(splinepoints->getControlPoints(), splinepoints->isClosed());
+}
+
+void LC_MakerCamSVG::writeCubicBeziers(const std::vector<RS_Vector> &control_points, bool is_closed) {
+
+    std::vector<RS_Vector> bezier_points = calcCubicBezierPoints(control_points, is_closed);
+
+    std::string path = svgPathMoveTo(convertToSvg(bezier_points[0]));
+
+    int bezier_points_size = bezier_points.size();
+
+    int bezier_count = ((bezier_points_size - 1) / 3);
+
+    for (int i = 0; i < bezier_count; i++) {
+        path += svgPathCurveTo(convertToSvg(bezier_points[3 * (i + 1)]), convertToSvg(bezier_points[3 * (i + 1) - 2]), convertToSvg(bezier_points[3 * (i + 1) - 1]));
+    }
+
+    xmlWriter->addElement("path", NAMESPACE_URI_SVG);
+
+    xmlWriter->addAttribute("d", path);
+
+    xmlWriter->closeElement();
+}
+
+void LC_MakerCamSVG::writeQuadraticBeziers(const std::vector<RS_Vector> &control_points, bool is_closed) {
+
+    std::vector<RS_Vector> bezier_points = calcQuadraticBezierPoints(control_points, is_closed);
+
+    std::string path = svgPathMoveTo(convertToSvg(bezier_points[0]));
+
+    int bezier_points_size = bezier_points.size();
+
+    int bezier_count = ((bezier_points_size - 1) / 2);
+
+    for (int i = 0; i < bezier_count; i++) {
+        path += svgPathQuadraticCurveTo(convertToSvg(bezier_points[2 * (i + 1)]), convertToSvg(bezier_points[2 * (i + 1) - 1]));
+    }
+
+    xmlWriter->addElement("path", NAMESPACE_URI_SVG);
+
+    xmlWriter->addAttribute("d", path);
+
+    xmlWriter->closeElement();
+}
+
+std::vector<RS_Vector> LC_MakerCamSVG::calcCubicBezierPoints(const std::vector<RS_Vector> &control_points, bool is_closed) {
+
+    std::vector<RS_Vector> bezier_points;
+
+    int control_points_size = control_points.size();
+
+    int bezier_points_size;
+
+    if (is_closed) {
+
+        for (int i = 0; i < (control_points_size - 1); i++) {
+            bezier_points.push_back(control_points[i]);
+
+            bezier_points.push_back((control_points[i] * 2.0 + control_points[i + 1]) / 3.0);
+            bezier_points.push_back((control_points[i] + control_points[i + 1] * 2.0) / 3.0);
+        }
+
+        bezier_points.push_back(control_points[control_points_size - 1]);
+        bezier_points.push_back((control_points[control_points_size - 1] * 2.0 + control_points[0]) / 3.0);
+        bezier_points.push_back((control_points[control_points_size - 1] + control_points[0] * 2.0) / 3.0);
+        bezier_points.push_back(control_points[0]);
+
+        // Auxiliary points for easier calculation
+        bezier_points.insert(bezier_points.begin(), ((control_points[control_points_size - 1] + control_points[0] * 2.0) / 3.0));
+        bezier_points.push_back((control_points[0] * 2.0 + control_points[1]) / 3.0);
+
+        bezier_points_size = bezier_points.size();
+
+        for (int i = 1; i < (bezier_points_size - 1); i += 3) {
+            bezier_points[i] = ((bezier_points[i - 1] + bezier_points[i + 1]) / 2.0);
+        }
+
+        // Remove auxiliary points
+        bezier_points.pop_back();
+        bezier_points.erase(bezier_points.begin());
+    }
+    else {
+        // Extend control point list with interpolation points that act as control
+        // points for the bezier curves
+        for (int i = 0; i < (control_points_size - 1); i++) {
+            bezier_points.push_back(control_points[i]);
+
+            bool more_than_bezier = (control_points_size > 4);
+
+            if (more_than_bezier) {
+
+                bool first_or_last = ((i == 0) || (i == (control_points_size - 2)));
+
+                if (!first_or_last) {
+
+                    bool second_or_second_last = ((i == 1) || (i == (control_points_size - 3)));
+
+                    if (second_or_second_last) {
+                        bezier_points.push_back((control_points[i] + control_points[i + 1]) / 2.0);
+                    }
+                    else {
+                        bezier_points.push_back((control_points[i] * 2.0 + control_points[i + 1]) / 3.0);
+                        bezier_points.push_back((control_points[i] + control_points[i + 1] * 2.0) / 3.0);
+                    }
+                }
+            }
+        }
+
+        bezier_points.push_back(control_points[control_points_size - 1]);
+
+        bezier_points_size = bezier_points.size();
+
+        // Update the up to now original spline control points to bezier endpoints
+        for (int i = 3; i < (bezier_points_size - 1); i += 3) {
+            bezier_points[i] = ((bezier_points[i - 1] + bezier_points[i + 1]) / 2.0);
+        }
+    }
+
+    return bezier_points;
+}
+
+std::vector<RS_Vector> LC_MakerCamSVG::calcQuadraticBezierPoints(const std::vector<RS_Vector> &control_points, bool is_closed) {
+
+    std::vector<RS_Vector> bezier_points;
+
+    int control_points_size = control_points.size();
+
+    if (is_closed) {
+        for (int i = 0; i < (control_points_size - 1); i++) {
+            bezier_points.push_back(control_points[i]);
+
+            bezier_points.push_back((control_points[i] + control_points[i + 1]) / 2.0);
+        }
+
+        bezier_points.push_back(control_points[control_points_size - 1]);
+        bezier_points.push_back((control_points[control_points_size - 1] + control_points[0]) / 2.0);
+        bezier_points.push_back(control_points[0]);
+        bezier_points.push_back((control_points[0] + control_points[1]) / 2.0);
+
+        // Remove superfluous first point
+        bezier_points.erase(bezier_points.begin());
+    }
+    else {
+        for (int i = 0; i < (control_points_size - 1); i++) {
+            bezier_points.push_back(control_points[i]);
+
+            bool first_or_last = ((i == 0) || (i == (control_points_size - 2)));
+
+            if (!first_or_last) {
+                bezier_points.push_back((control_points[i] + control_points[i + 1]) / 2.0);
+            }
+        }
+
+        bezier_points.push_back(control_points[control_points_size - 1]);
+    }
+
+    return bezier_points;
+}
+
 std::string LC_MakerCamSVG::numXml(double value) {
 
     return RS_Utility::doubleToString(value, 8).toStdString();
@@ -564,6 +758,12 @@ std::string LC_MakerCamSVG::svgPathCurveTo(RS_Vector point, RS_Vector controlpoi
 
     return "C" + numXml(controlpoint1.x) + "," + numXml(controlpoint1.y) + " " +
            numXml(controlpoint2.x) + "," + numXml(controlpoint2.y) + " " +
+           numXml(point.x) + "," + numXml(point.y) + " ";
+}
+
+std::string LC_MakerCamSVG::svgPathQuadraticCurveTo(RS_Vector point, RS_Vector controlpoint) {
+
+    return "Q" + numXml(controlpoint.x) + "," + numXml(controlpoint.y) + " " +
            numXml(point.x) + "," + numXml(point.y) + " ";
 }
 
