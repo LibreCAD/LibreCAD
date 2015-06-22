@@ -51,7 +51,7 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
     teHistory->addAction(action);
 
     //command output style
-    teHistory->setStyleSheet("color: black; background-color: white; selection-color: white; selection-background-color: blue;");
+    teHistory->setStyleSheet("selection-color: white; selection-background-color: green;");
 }
 
 /*
@@ -77,6 +77,9 @@ void QG_CommandWidget::init() {
     leCommand->setFrame(false);
     leCommand->setFocusPolicy(Qt::StrongFocus);
     //setNormalMode();
+
+    //command input style
+    leCommand->setStyleSheet("selection-color: white; selection-background-color: green;");
 }
 
 bool QG_CommandWidget::checkFocus() {
@@ -251,6 +254,7 @@ void QG_CommandWidget::processStderr() {
         */
 }
 
+// automatically copy commandline output selection
 void QG_CommandWidget::on_teHistory_selectionChanged()
 {
     teHistory->copy();
