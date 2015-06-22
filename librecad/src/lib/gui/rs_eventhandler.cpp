@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <Qt>
 #include <QObject>
 #include <QRegularExpression>
 
