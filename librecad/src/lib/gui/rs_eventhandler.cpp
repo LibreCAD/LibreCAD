@@ -25,7 +25,7 @@
 **********************************************************************/
 
 #include <QObject>
-#include <QRegularExpression>
+#include <QRegExp>
 
 #include "rs_eventhandler.h"
 #include "rs_actioninterface.h"
@@ -235,7 +235,7 @@ bool RS_EventHandler::cliCalculator(const QString& cmd) const
         return false;
     }
     // convert sin(45d) to sin(45*pi/180)
-    QRegularExpression regex(R"~(([\d\.]+)deg|d)~");
+    QRegExp regex(R"~(([\d\.]+)deg|d)~");
     str.replace(regex, R"~(\1*pi/180)~");
     bool ok=true;
     double result=RS_Math::eval(str,&ok);
