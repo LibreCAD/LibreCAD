@@ -274,6 +274,35 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     // dimension alignment:
     int dimtih = graphic->getVariableInt("$DIMTIH", 0);
     cbDimTih->setCurrentIndex(dimtih);
+//RLZ todo add more options for dimensions
+    cbDimClrT->init(true, false);
+    cbDimClrE->init(true, false);
+    cbDimClrD->init(true, false);
+    cbDimLwD->init(true, false);
+    cbDimLwE->init(true, false);
+    // fixed extension length:
+    double dimfxl = graphic->getVariableDouble("$DIMFXL",
+                                               RS_Units::convert(1.0, RS2::Millimeter, unit));
+    cbDimFxL->setValue(dimfxl);
+    int dimfxlon = graphic->getVariableInt("$DIMFXLON",0);
+    if (dimfxlon > 0){
+        cbDimFxL->setEnabled(true);
+        cbDimFxLon->setChecked(true);
+    } else {
+        cbDimFxL->setEnabled(false);
+        cbDimFxLon->setChecked(false);
+    }
+    int dimlwd = graphic->getVariableInt("$DIMLWD",-2); //default ByBlock
+    cbDimLwD->setWidth(RS2::intToLineWidth(dimlwd));
+    int dimlwe = graphic->getVariableInt("$DIMLWE",-2); //default ByBlock
+    cbDimLwE->setWidth(RS2::intToLineWidth(dimlwe));
+
+/*    RS_Color dimclrt = graphic->getVariableDouble("$DIMGAP",
+                                               RS_Units::convert(0.625, RS2::Millimeter, unit));
+    cbDimClrT->setPen(pen, true, false, "" );
+//    cbDimClrT->setPen(RS_Pen pen, bool showByLayer, bool showUnchanged, const QString & title );
+    cbDimClrE->setPen(pen, true, false, "" );*/
+
     // spline line segments per patch:
     int splinesegs = graphic->getVariableInt("$SPLINESEGS", 8);
     //RLZ    cbSplineSegs->setCurrentText(QString("%1").arg(splinesegs));
@@ -416,6 +445,11 @@ void QG_DlgOptionsDrawing::validate() {
         if (dimScale<0 || dimScale == 0)
             dimScale = 1.0;
         graphic->addVariable("$DIMSCALE", dimScale, 40);
+        graphic->addVariable("$DIMLWD", cbDimLwD->getWidth(), 70);
+        graphic->addVariable("$DIMLWE", cbDimLwE->getWidth(), 70);
+        graphic->addVariable("$DIMFXL", cbDimFxL->value(), 40);
+        graphic->addVariable("$DIMFXLON", cbDimFxLon->isChecked()? 1:0, 70);
+
         // splines:
         graphic->addVariable("$SPLINESEGS",
                              (int)RS_Math::eval(cbSplineSegs->currentText()), 70);
@@ -717,6 +751,15 @@ void QG_DlgOptionsDrawing::on_cbGridOn_toggled(bool checked)
 void QG_DlgOptionsDrawing::on_rbLandscape_toggled(bool /*checked*/)
 {
 	updatePaperSize();
+}
+
+void QG_DlgOptionsDrawing::on_cbDimFxLon_toggled(bool checked)
+{
+    if (checked > 0){
+        cbDimFxL->setEnabled(true);
+    } else {
+        cbDimFxL->setEnabled(false);
+    }
 }
 
 //EOF

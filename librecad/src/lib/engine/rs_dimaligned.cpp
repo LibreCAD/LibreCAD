@@ -172,13 +172,18 @@ void RS_DimAligned::updateDim(bool autoText) {
     v2.setPolar(dimexe, extAngle);
     e1.setPolar(1.0, extAngle);
 
+    RS_Pen pen(RS_Color(RS2::FlagByBlock),
+           getExtensionLineWidth(),
+           RS2::LineByBlock);
+
     // Extension line 1:
     ld = RS_LineData(edata.extensionPoint1 + v1,
                      edata.extensionPoint1 + e1*extLength + v2);
     line = new RS_Line(this, ld);
     //line->setLayerToActive();
     //line->setPenToActive();
-    line->setPen(RS_Pen(RS2::FlagInvalid));
+//    line->setPen(RS_Pen(RS2::FlagInvalid));
+    line->setPen(pen);
     line->setLayer(NULL);
     addEntity(line);
 
@@ -188,7 +193,8 @@ void RS_DimAligned::updateDim(bool autoText) {
     line = new RS_Line(this, ld);
     //line->setLayerToActive();
     //line->setPenToActive();
-    line->setPen(RS_Pen(RS2::FlagInvalid));
+//    line->setPen(RS_Pen(RS2::FlagInvalid));
+    line->setPen(pen);
     line->setLayer(NULL);
     addEntity(line);
 

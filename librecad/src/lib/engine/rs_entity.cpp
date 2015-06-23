@@ -801,19 +801,40 @@ RS_Pen RS_Entity::getPen(bool resolve) const {
 
         // use parental attributes (e.g. vertex of a polyline, block
         // entities when they are drawn in block documents):
-        if (!p.isValid() || p.getColor().isByBlock()) {
-            if (parent) {
+        if (parent) {
+            //if pen is invalid gets all from parent
+            if (!p.isValid() ) {
                 p = parent->getPen();
             }
+            //pen is valid, verify byBlock parts
+            RS_EntityContainer* ep = parent;
+            //If parent is byblock check parent.parent (nested blocks)
+            while (p.getColor().isByBlock()){
+                if (ep) {
+                    p.setColor(parent->getPen().getColor());
+                    ep = ep->parent;
+                } else
+                    break;
+            }
+            ep = parent;
+            while (p.getWidth()==RS2::WidthByBlock){
+                if (ep) {
+                    p.setWidth(parent->getPen().getWidth());
+                    ep = ep->parent;
+                } else
+                    break;
+            }
+            ep = parent;
+            while (p.getLineType()==RS2::LineByBlock){
+                if (ep) {
+                    p.setLineType(parent->getPen().getLineType());
+                    ep = ep->parent;
+                } else
+                    break;
+            }
         }
-        // use layer attributes:
-        else if (l) {
-
-            // layer is "ByBlock":
-            /*if (layer->getName()=="ByBlock" && getBlockOrInsert()) {
-                p = getBlockOrInsert()->getPen();
-        } else {*/
-
+        // check byLayer attributes:
+        if (l) {
             // use layer's color:
             if (p.getColor().isByLayer()) {
                 p.setColor(l->getPen().getColor());

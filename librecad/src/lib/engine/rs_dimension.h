@@ -179,6 +179,10 @@ public:
     double getDimensionLineGap();
     double getTextHeight();
     bool getAlignText();
+    bool getFixedLengthOn();
+    double getFixedLength();
+    RS2::LineWidth getExtensionLineWidth();
+    RS2::LineWidth getDimensionLineWidth();
 
         double getGraphicVariable(const QString& key, double defMM, int code);
 

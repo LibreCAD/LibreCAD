@@ -315,6 +315,10 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     double len;
     double dist;
 
+    RS_Pen pen(RS_Color(RS2::FlagByBlock),
+           getExtensionLineWidth(),
+           RS2::LineByBlock);
+
     // 1st extension line:
     dist = center.distanceTo(p1);
     len = rad - dist + dimexe;
@@ -322,7 +326,8 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     line = new RS_Line(this,
                        RS_LineData(center + dir*dist + dir*dimexo,
                                    center + dir*dist + dir*len));
-    line->setPen(RS_Pen(RS2::FlagInvalid));
+    line->setPen(pen);
+//    line->setPen(RS_Pen(RS2::FlagInvalid));
     line->setLayer(NULL);
     addEntity(line);
 
@@ -333,7 +338,8 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     line = new RS_Line(this,
                        RS_LineData(center + dir*dist + dir*dimexo,
                                    center + dir*dist + dir*len));
-    line->setPen(RS_Pen(RS2::FlagInvalid));
+    line->setPen(pen);
+//    line->setPen(RS_Pen(RS2::FlagInvalid));
     line->setLayer(NULL);
     addEntity(line);
 
@@ -341,7 +347,9 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     RS_Arc* arc = new RS_Arc(this,
                              RS_ArcData(center,
                                         rad, ang1, ang2, reversed));
-    arc->setPen(RS_Pen(RS2::FlagInvalid));
+    pen.setWidth(getDimensionLineWidth());
+    arc->setPen(pen);
+//    arc->setPen(RS_Pen(RS2::FlagInvalid));
     arc->setLayer(NULL);
     addEntity(arc);
 

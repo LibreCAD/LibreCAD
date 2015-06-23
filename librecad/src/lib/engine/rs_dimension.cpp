@@ -192,9 +192,14 @@ void RS_Dimension::updateCreateDimensionLine(const RS_Vector& p1,
     // arrow angles:
     double arrowAngle1, arrowAngle2;
 
+    RS_Pen pen(RS_Color(RS2::FlagByBlock),
+           getDimensionLineWidth(),
+           RS2::LineByBlock);
+
     // Create dimension line:
     RS_Line* dimensionLine = new RS_Line(this, RS_LineData(p1, p2));
-    dimensionLine->setPen(RS_Pen(RS2::FlagInvalid));
+    dimensionLine->setPen(pen);
+//    dimensionLine->setPen(RS_Pen(RS2::FlagInvalid));
     dimensionLine->setLayer(NULL);
     addEntity(dimensionLine);
 
@@ -224,7 +229,8 @@ if(dimtsz < 0.01) {
         arrow->shapeArrow(p1,
                           arrowAngle1,
                           arrowSize);
-        arrow->setPen(RS_Pen(RS2::FlagInvalid));
+//        arrow->setPen(RS_Pen(RS2::FlagInvalid));
+        arrow->setPen(pen);
         arrow->setLayer(NULL);
         addEntity(arrow);
     }
@@ -235,7 +241,8 @@ if(dimtsz < 0.01) {
         arrow->shapeArrow(p2,
                           arrowAngle2,
                           arrowSize);
-        arrow->setPen(RS_Pen(RS2::FlagInvalid));
+//        arrow->setPen(RS_Pen(RS2::FlagInvalid));
+        arrow->setPen(pen);
         arrow->setLayer(NULL);
         addEntity(arrow);
     }
@@ -250,7 +257,8 @@ if(dimtsz < 0.01) {
     if (arrow1) {
         // tick 1
         tick = new RS_Line(this, p1-tickVector, p1+tickVector);
-        tick->setPen(RS_Pen(RS2::FlagInvalid));
+        tick->setPen(pen);
+//        tick->setPen(RS_Pen(RS2::FlagInvalid));
         tick->setLayer(NULL);
         addEntity(tick);
     }
@@ -258,7 +266,8 @@ if(dimtsz < 0.01) {
     if (arrow2) {
         // tick 2:
         tick = new RS_Line(this, p2-tickVector, p2+tickVector);
-        tick->setPen(RS_Pen(RS2::FlagInvalid));
+        tick->setPen(pen);
+//        tick->setPen(RS_Pen(RS2::FlagInvalid));
         tick->setLayer(NULL);
         addEntity(tick);
     }
@@ -441,6 +450,44 @@ bool RS_Dimension::getAlignText() {
     }
     v==0 ? ret = false :ret = true;
     return ret;
+}
+
+
+/**
+ * @return Dimension fixed length for extension lines true= fixed, false= not fixed.
+ */
+bool RS_Dimension::getFixedLengthOn() {
+    bool ret;
+    int v = getGraphicVariableInt("$DIMFXLON", 2);
+    if (v>1) {
+        addGraphicVariable("$DIMFXLON", 0, 70);
+        getGraphicVariableInt("$DIMFXLON", 0);
+    }
+    v==0 ? ret = false :ret = true;
+    return ret;
+}
+
+/**
+ * @return Dimension fixed length for extension lines.
+ */
+double RS_Dimension::getFixedLength() {
+    return getGraphicVariable("$DIMFXL", 1.0, 40);
+}
+
+
+/**
+ * @return extension line Width.
+ */
+RS2::LineWidth RS_Dimension::getExtensionLineWidth() {
+    return RS2::intToLineWidth( getGraphicVariableInt("$DIMLWE", -2) ); //default -2 (RS2::WidthByBlock)
+}
+
+
+/**
+ * @return dimension line Width.
+ */
+RS2::LineWidth RS_Dimension::getDimensionLineWidth() {
+    return RS2::intToLineWidth( getGraphicVariableInt("$DIMLWD", -2) ); //default -2 (RS2::WidthByBlock)
 }
 
 

@@ -66,6 +66,8 @@ private slots:
 
 	void on_rbLandscape_toggled(bool checked);
 
+    void on_cbDimFxLon_toggled(bool checked);
+
 private:
     QStringList listPrec1;
     RS_Graphic* graphic;

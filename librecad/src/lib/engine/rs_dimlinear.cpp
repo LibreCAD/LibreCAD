@@ -210,18 +210,24 @@ void RS_DimLinear::updateDim(bool autoText) {
     vDimexe2.setPolar(dimexe, extAngle2);
     vDimexo2.setPolar(dimexo, extAngle2);
 
+    RS_Pen pen(RS_Color(RS2::FlagByBlock),
+           getExtensionLineWidth(),
+           RS2::LineByBlock);
+
     // extension lines:
     ld = RS_LineData(edata.extensionPoint1+vDimexo1,
                      dimP1+vDimexe1);
     RS_Line* line = new RS_Line(this, ld);
-    line->setPen(RS_Pen(RS2::FlagInvalid));
+    line->setPen(pen);
+//    line->setPen(RS_Pen(RS2::FlagInvalid));
     line->setLayer(NULL);
     addEntity(line);
     ld = RS_LineData(edata.extensionPoint2+vDimexo2,
                      dimP2+vDimexe2);
     //data.definitionPoint+vDimexe2);
     line = new RS_Line(this, ld);
-    line->setPen(RS_Pen(RS2::FlagInvalid));
+    line->setPen(pen);
+//    line->setPen(RS_Pen(RS2::FlagInvalid));
     line->setLayer(NULL);
     addEntity(line);
 

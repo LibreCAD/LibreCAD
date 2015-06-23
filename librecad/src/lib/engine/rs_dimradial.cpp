@@ -143,6 +143,10 @@ void RS_DimRadial::updateDim(bool autoText) {
     // length of dimension line:
     double length = p1.distanceTo(p2);
 
+    RS_Pen pen(RS_Color(RS2::FlagByBlock),
+           getDimensionLineWidth(),
+           RS2::LineByBlock);
+
     RS_MTextData textData;
 
     textData = RS_MTextData(RS_Vector(0.0,0.0),
@@ -178,7 +182,8 @@ void RS_DimRadial::updateDim(bool autoText) {
     arrow->shapeArrow(p2,
                       arrowAngle,
                       arrowSize);
-    arrow->setPen(RS_Pen(RS2::FlagInvalid));
+//    arrow->setPen(RS_Pen(RS2::FlagInvalid));
+    arrow->setPen(pen);
     arrow->setLayer(NULL);
     addEntity(arrow);
 
@@ -188,7 +193,8 @@ void RS_DimRadial::updateDim(bool autoText) {
 
     // Create dimension line:
     RS_Line* dimensionLine = new RS_Line(this, RS_LineData(p1, p3));
-    dimensionLine->setPen(RS_Pen(RS2::FlagInvalid));
+    dimensionLine->setPen(pen);
+//    dimensionLine->setPen(RS_Pen(RS2::FlagInvalid));
     dimensionLine->setLayer(NULL);
     addEntity(dimensionLine);
 
