@@ -203,12 +203,22 @@ void RS_DimLinear::updateDim(bool autoText) {
         else
             extAngle2 = edata.extensionPoint2.angleTo(dimP2);
     }
+
     vDimexe1.setPolar(dimexe, extAngle1);
-    vDimexo1.setPolar(dimexo, extAngle1);
-
-
     vDimexe2.setPolar(dimexe, extAngle2);
-    vDimexo2.setPolar(dimexo, extAngle2);
+
+    if (getFixedLengthOn()){
+        double dimfxl = getFixedLength();
+        double extLength = (edata.extensionPoint1-dimP1).magnitude();
+        if (extLength-dimexo > dimfxl)
+            vDimexo1.setPolar(extLength - dimfxl, extAngle1);
+        extLength = (edata.extensionPoint2-dimP2).magnitude();
+        if (extLength-dimexo > dimfxl)
+            vDimexo2.setPolar(extLength - dimfxl, extAngle2);
+    } else {
+        vDimexo1.setPolar(dimexo, extAngle1);
+        vDimexo2.setPolar(dimexo, extAngle2);
+    }
 
     RS_Pen pen(RS_Color(RS2::FlagByBlock),
            getExtensionLineWidth(),

@@ -168,6 +168,12 @@ void RS_DimAligned::updateDim(bool autoText) {
     RS_LineData ld;
     RS_Line* line;
 
+    if (getFixedLengthOn()){
+        double dimfxl = getFixedLength();
+        if (extLength-dimexo > dimfxl)
+            dimexo =  extLength - dimfxl;
+    }
+
     v1.setPolar(dimexo, extAngle);
     v2.setPolar(dimexe, extAngle);
     e1.setPolar(1.0, extAngle);
