@@ -1287,9 +1287,6 @@
          <property name="editable">
           <bool>false</bool>
          </property>
-         <property name="currentText">
-          <string>Aligned</string>
-         </property>
          <item>
           <property name="text">
            <string>Aligned</string>
@@ -1300,6 +1297,9 @@
            <string>Horizontal</string>
           </property>
          </item>
+         <property name="currentIndex">
+          <string>0</string>
+         </property>
         </widget>
        </item>
        <item row="9" column="3">
