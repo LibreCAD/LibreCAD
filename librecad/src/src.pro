@@ -224,7 +224,8 @@ HEADERS += \
     lib/generators/lc_makercamsvg.h \
     lib/generators/lc_xmlwriterinterface.h \
     lib/generators/lc_xmlwriterqxmlstreamwriter.h \
-    actions/lc_actionfileexportmakercam.h
+    actions/lc_actionfileexportmakercam.h \
+    ui/qg_commandhistory.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -316,7 +317,8 @@ SOURCES += \
     lib/generators/lc_makercamsvg.cpp \
     actions/lc_actionfileexportmakercam.cpp \
     lib/engine/rs_atomicentity.cpp \
-    lib/engine/rs_undocycle.cpp
+    lib/engine/rs_undocycle.cpp \
+    ui/qg_commandhistory.cpp
 
 # ################################################################################
 # Command

@@ -33,7 +33,12 @@
  * to use this constructor.
  */
 QG_CommandEdit::QG_CommandEdit(QWidget* parent)
-        : QLineEdit(parent) {}
+        : QLineEdit(parent)
+
+{
+    //command input style
+    setStyleSheet("selection-color: white; selection-background-color: green;");
+}
 
 /**
  * Bypass for key press events from the tab key.

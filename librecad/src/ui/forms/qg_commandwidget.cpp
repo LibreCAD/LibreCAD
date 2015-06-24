@@ -39,19 +39,7 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
 {
     setObjectName(name);
     setupUi(this);
-
     init();
-    teHistory->setContextMenuPolicy(Qt::ActionsContextMenu);
-
-    QAction* action=new QAction(tr("&Copy"), teHistory);
-    connect(action, SIGNAL(triggered()), teHistory, SLOT(copy()));
-    teHistory->addAction(action);
-    action=new QAction(tr("select&All"), teHistory);
-    connect(action, SIGNAL(triggered()), teHistory, SLOT(selectAll()));
-    teHistory->addAction(action);
-
-    //command output style
-    teHistory->setStyleSheet("selection-color: white; selection-background-color: green;");
 }
 
 /*
@@ -77,9 +65,6 @@ void QG_CommandWidget::init() {
     leCommand->setFrame(false);
     leCommand->setFocusPolicy(Qt::StrongFocus);
     //setNormalMode();
-
-    //command input style
-    leCommand->setStyleSheet("selection-color: white; selection-background-color: green;");
 }
 
 bool QG_CommandWidget::checkFocus() {
@@ -252,10 +237,4 @@ void QG_CommandWidget::processStderr() {
     }
     ferr->close();* /
         */
-}
-
-// automatically copy commandline output selection
-void QG_CommandWidget::on_teHistory_selectionChanged()
-{
-    teHistory->copy();
 }
