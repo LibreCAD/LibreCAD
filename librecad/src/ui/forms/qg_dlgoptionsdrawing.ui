@@ -1107,7 +1107,7 @@
        <item row="9" column="2">
         <widget class="QComboBox" name="cbDimExe">
          <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Length to enlarge over dimension line&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>Length to enlarge over dimension line</string>
          </property>
          <property name="editable">
           <bool>true</bool>
@@ -1181,7 +1181,7 @@
         </widget>
        </item>
        <item row="11" column="7">
-        <widget class="QComboBox" name="cbDimAPrec"/>
+        <widget class="QComboBox" name="cbDimADec"/>
        </item>
        <item row="5" column="6">
         <widget class="QLabel" name="lDimLwD">
@@ -1455,7 +1455,7 @@
        <item row="11" column="2">
         <widget class="QG_ColorBox" name="cbDimClrE">
          <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;fixed extension line legth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string/>
          </property>
          <property name="editable">
           <bool>false</bool>
@@ -1465,7 +1465,7 @@
        <item row="10" column="2">
         <widget class="QDoubleSpinBox" name="cbDimFxL">
          <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;fixed extension line legth&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>fixed extension line legth</string>
          </property>
         </widget>
        </item>
@@ -1632,10 +1632,42 @@
    </hints>
   </connection>
   <connection>
+   <sender>cbDimLUnit</sender>
+   <signal>activated(int)</signal>
+   <receiver>QG_DlgOptionsDrawing</receiver>
+   <slot>updateDimLengthPrecision()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>cbAngleFormat</sender>
    <signal>activated(int)</signal>
    <receiver>QG_DlgOptionsDrawing</receiver>
    <slot>updateAnglePrecision()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbDimAUnit</sender>
+   <signal>activated(int)</signal>
+   <receiver>QG_DlgOptionsDrawing</receiver>
+   <slot>updateDimAnglePrecision()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>20</x>

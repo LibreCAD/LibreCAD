@@ -47,6 +47,8 @@ public slots:
     virtual void updatePreview();
     virtual void updatePaperSize();
     virtual void updateUnitLabels();
+    virtual void updateDimLengthPrecision();
+    virtual void updateDimAnglePrecision();
 
 protected slots:
     virtual void languageChange();
@@ -67,6 +69,10 @@ private slots:
 	void on_rbLandscape_toggled(bool checked);
 
     void on_cbDimFxLon_toggled(bool checked);
+
+private:
+    void updateCBLengthPrecision(QComboBox* u, QComboBox* l);
+    void updateCBAnglePrecision(QComboBox* u, QComboBox* p);
 
 private:
     QStringList listPrec1;
