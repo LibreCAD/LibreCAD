@@ -36,8 +36,9 @@ QG_CommandEdit::QG_CommandEdit(QWidget* parent)
         : QLineEdit(parent)
 
 {
-    //command input style
     setStyleSheet("selection-color: white; selection-background-color: green;");
+    setFrame(false);
+    setFocusPolicy(Qt::StrongFocus);
 }
 
 /**
@@ -54,8 +55,6 @@ bool QG_CommandEdit::event(QEvent* e) {
 	
 	return QLineEdit::event(e);
 }
-
-
 
 /**
  * History (arrow key up/down) support, tab.
@@ -108,16 +107,12 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e) {
 	}
 }
 
-
 void QG_CommandEdit::focusInEvent(QFocusEvent *e) {
 	emit focusIn();
 	QLineEdit::focusInEvent(e);
 }
 
-
 void QG_CommandEdit::focusOutEvent(QFocusEvent *e) {
 	emit focusOut();
 	QLineEdit::focusOutEvent(e);
 }
-
-

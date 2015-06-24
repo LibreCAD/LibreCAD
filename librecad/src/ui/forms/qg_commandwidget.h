@@ -59,8 +59,6 @@ protected slots:
 private:
     QG_ActionHandler* actionHandler;
 
-    void init();
-
 };
 
 #endif // QG_COMMANDWIDGET_H

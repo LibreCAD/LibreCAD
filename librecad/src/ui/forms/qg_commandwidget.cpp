@@ -39,7 +39,7 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
 {
     setObjectName(name);
     setupUi(this);
-    init();
+    actionHandler = NULL;
 }
 
 /*
@@ -57,14 +57,6 @@ QG_CommandWidget::~QG_CommandWidget()
 void QG_CommandWidget::languageChange()
 {
     retranslateUi(this);
-}
-
-void QG_CommandWidget::init() {
-    actionHandler = NULL;
-    //errStream = NULL;
-    leCommand->setFrame(false);
-    leCommand->setFocusPolicy(Qt::StrongFocus);
-    //setNormalMode();
 }
 
 bool QG_CommandWidget::checkFocus() {
@@ -104,14 +96,12 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
 	return false;
 }
 
-
 void QG_CommandWidget::setFocus() {
     //setCommandMode();
 	QFocusEvent* newEvent=new QFocusEvent(QEvent::FocusIn);
 	QApplication::postEvent(leCommand, newEvent);
     leCommand->setFocus();
 }
-
 
 void QG_CommandWidget::setCommand(const QString& cmd) {
     if (cmd!="") {
@@ -122,11 +112,9 @@ void QG_CommandWidget::setCommand(const QString& cmd) {
     leCommand->setText("");
 }
 
-
 void QG_CommandWidget::appendHistory(const QString& msg) {
     teHistory->append(msg);
 }
-
 
 void QG_CommandWidget::trigger() {
     QString cmd = leCommand->text();
