@@ -89,8 +89,10 @@ QString RS_DimRadial::getMeasuredLabel() {
 
     QString ret;
     if (graphic) {
-        ret = RS_Units::formatLinear(dist, graphic->getUnit(),
-                                     graphic->getLinearFormat(), graphic->getLinearPrecision());
+        int dimlunit = getGraphicVariableInt("$DIMLUNIT", 2);
+        int dimdec = getGraphicVariableInt("$DIMDEC", 4);
+        ret = RS_Units::formatLinear(dist, RS2::None,
+                                     graphic->getLinearFormat(dimlunit), dimdec);
     } else {
         ret = QString("%1").arg(dist);
     }

@@ -635,8 +635,39 @@ RS2::Unit RS_Graphic::getUnit() {
  */
 RS2::LinearFormat RS_Graphic::getLinearFormat() {
     int lunits = getVariableInt("$LUNITS", 2);
-
+    return getLinearFormat(lunits);
+/* changed by RS2::LinearFormat getLinearFormat(int f)
     switch (lunits) {
+    default:
+    case 2:
+        return RS2::Decimal;
+        break;
+
+    case 1:
+        return RS2::Scientific;
+        break;
+
+    case 3:
+        return RS2::Engineering;
+        break;
+
+    case 4:
+        return RS2::Architectural;
+        break;
+
+    case 5:
+        return RS2::Fractional;
+        break;
+    }
+
+    return RS2::Decimal;*/
+}
+
+/**
+ * @return The linear format type used by the variable "$LUNITS" & "$DIMLUNIT".
+ */
+RS2::LinearFormat RS_Graphic::getLinearFormat(int f){
+    switch (f) {
     default:
     case 2:
         return RS2::Decimal;
@@ -661,7 +692,6 @@ RS2::LinearFormat RS_Graphic::getLinearFormat() {
 
     return RS2::Decimal;
 }
-
 
 
 /**

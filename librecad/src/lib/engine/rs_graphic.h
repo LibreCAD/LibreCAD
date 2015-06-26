@@ -223,6 +223,7 @@ public:
         }
 
         RS2::LinearFormat getLinearFormat();
+        RS2::LinearFormat getLinearFormat(int f);
         int getLinearPrecision();
         RS2::AngleFormat getAngleFormat();
         int getAnglePrecision();

@@ -87,16 +87,18 @@ QString RS_DimDiametric::getMeasuredLabel() {
     // Definitive dimension line:
 	double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
 
-        RS_Graphic* graphic = getGraphic();
+    RS_Graphic* graphic = getGraphic();
 
     QString ret;
-        if (graphic) {
-                ret = RS_Units::formatLinear(dist, graphic->getUnit(),
-                        graphic->getLinearFormat(), graphic->getLinearPrecision());
-        }
-        else {
+    if (graphic) {
+        int dimlunit = getGraphicVariableInt("$DIMLUNIT", 2);
+        int dimdec = getGraphicVariableInt("$DIMDEC", 4);
+        ret = RS_Units::formatLinear(dist, RS2::None,
+                                     graphic->getLinearFormat(dimlunit), dimdec);
+    }
+    else {
         ret = QString("%1").arg(dist);
-        }
+    }
 
     return ret;
 }
