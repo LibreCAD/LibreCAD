@@ -35,6 +35,7 @@ class QG_DlgOptionsGeneral : public QDialog, public Ui::QG_DlgOptionsGeneral
 public:
     QG_DlgOptionsGeneral(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_DlgOptionsGeneral();
+    static int current_tab;
 
 public slots:
     virtual void setRestartNeeded();
@@ -43,6 +44,9 @@ public slots:
 protected slots:
     virtual void languageChange();
     virtual void setTemplateFile();
+
+private slots:
+    void on_tabWidget_currentChanged(int index);
 
 private:
     bool restartNeeded;

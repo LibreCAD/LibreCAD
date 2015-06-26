@@ -27,7 +27,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab1">
       <attribute name="title">
@@ -1287,6 +1287,9 @@
          <property name="editable">
           <bool>false</bool>
          </property>
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
          <item>
           <property name="text">
            <string>Aligned</string>
@@ -1297,9 +1300,6 @@
            <string>Horizontal</string>
           </property>
          </item>
-         <property name="currentIndex">
-          <string>0</string>
-         </property>
         </widget>
        </item>
        <item row="9" column="3">

@@ -38,13 +38,17 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
+
+int QG_DlgOptionsGeneral::current_tab = 0;
+
 QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::WindowFlags fl)
     : QDialog(parent, fl)
 {
     setModal(modal);
     setupUi(this);
-
+    tabWidget->setCurrentIndex(current_tab);
     init();
+
 }
 
 /*
@@ -246,3 +250,8 @@ void QG_DlgOptionsGeneral::ok() {
     accept();
 }
 
+
+void QG_DlgOptionsGeneral::on_tabWidget_currentChanged(int index)
+{
+    current_tab = index;
+}
