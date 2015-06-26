@@ -38,6 +38,7 @@ class QG_DlgOptionsDrawing : public QDialog, public Ui::QG_DlgOptionsDrawing
 public:
     QG_DlgOptionsDrawing(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
     ~QG_DlgOptionsDrawing();
+    static int current_tab;
 
 public slots:
     virtual void setGraphic( RS_Graphic * g );
@@ -70,6 +71,8 @@ private slots:
 
     void on_cbDimFxLon_toggled(bool checked);
 
+    void on_tabWidget_currentChanged(int index);
+
 private:
     void updateCBLengthPrecision(QComboBox* u, QComboBox* l);
     void updateCBAnglePrecision(QComboBox* u, QComboBox* p);
@@ -78,7 +81,6 @@ private:
     QStringList listPrec1;
     RS_Graphic* graphic;
     RS_Vector spacing;
-
     void init();
 
 };
