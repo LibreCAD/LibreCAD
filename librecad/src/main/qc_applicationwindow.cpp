@@ -1165,36 +1165,33 @@ void QC_ApplicationWindow::initMenuBar() {
 /**
  * Initializes the tool bars (file tool bar and pen tool bar).
  */
-void QC_ApplicationWindow::initToolBar() {
+void QC_ApplicationWindow::initToolBar()
+{
     RS_DEBUG->print("QC_ApplicationWindow::initToolBar()");
 
+    QSizePolicy toolBarPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-        QSizePolicy toolBarPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-        fileToolBar = new QToolBar( "File Operations", this);
-        fileToolBar->setSizePolicy(toolBarPolicy);
-        fileToolBar->setObjectName ( "FileTB" );
+    fileToolBar = new QToolBar( "File Operations", this);
+    fileToolBar->setSizePolicy(toolBarPolicy);
+    fileToolBar->setObjectName ( "FileTB" );
 
     editToolBar = new QToolBar( "Edit Operations", this);
-        editToolBar->setSizePolicy(toolBarPolicy);
-        editToolBar->setObjectName ( "EditTB" );
+    editToolBar->setSizePolicy(toolBarPolicy);
+    editToolBar->setObjectName ( "EditTB" );
+
     zoomToolBar = new QToolBar( "Zoom Operations", this);
+    zoomToolBar->setSizePolicy(toolBarPolicy);
+    zoomToolBar->setObjectName ( "ZoomTB" );
 
-        zoomToolBar->setSizePolicy(toolBarPolicy);
-        zoomToolBar->setObjectName ( "ZoomTB" );
-
-        penToolBar = new QG_PenToolBar(tr("Pen Selection"), this);
-        penToolBar->setSizePolicy(toolBarPolicy);
-        penToolBar->setObjectName ( "PenTB" );
-
+    penToolBar = new QG_PenToolBar(tr("Pen Selection"), this);
+    penToolBar->setSizePolicy(toolBarPolicy);
+    penToolBar->setObjectName ( "PenTB" );
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
-            this, SLOT(slotPenChanged(RS_Pen)));
+    this, SLOT(slotPenChanged(RS_Pen)));
 
-    //Add snap toolbar
     snapToolBar = new QG_SnapToolBar(tr("Snap Selection"),actionHandler, this);
     snapToolBar->setSizePolicy(toolBarPolicy);
     snapToolBar->setObjectName ( "SnapTB" );
-
     connect(this, SIGNAL(windowsChanged(bool)), snapToolBar, SLOT(setEnabled(bool)));
     //connect(snapToolBar, SIGNAL(snapsChanged(RS_SnapMode)),
     //        this, SLOT(slotSnapsChanged(RS_SnapMode)));
@@ -1202,10 +1199,10 @@ void QC_ApplicationWindow::initToolBar() {
 
 
     optionWidget = new QToolBar(tr("Tool Options"), this);
-        QSizePolicy optionWidgetBarPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-//        optionWidget->setMinimumSize(440,30);
-        optionWidget->setSizePolicy(optionWidgetBarPolicy);
-        optionWidget->setObjectName ( "ToolTB" );
+    QSizePolicy optionWidgetBarPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    //        optionWidget->setMinimumSize(440,30);
+    optionWidget->setSizePolicy(optionWidgetBarPolicy);
+    optionWidget->setObjectName ( "ToolTB" );
 
     //optionWidget->setFixedExtentHeight(26);
     //optionWidget->setHorizontallyStretchable(true);
@@ -1215,28 +1212,26 @@ void QC_ApplicationWindow::initToolBar() {
     QToolBar* t = new QToolBar(tr("CAD Tools"), this);
 
     t->setMinimumSize(66,400);
-		QSizePolicy policy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        t->setSizePolicy(policy);
-        t->setObjectName ( "CADTB" );
+    QSizePolicy policy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    t->setSizePolicy(policy);
+    t->setObjectName ( "CADTB" );
     t->setFixedWidth(66);
     t->setFloatable(false);
     t->setAllowedAreas(Qt::LeftToolBarArea | Qt::RightToolBarArea);
-   // t->setVerticallyStretchable(true);
-        addToolBar(Qt::LeftToolBarArea, t);
+    // t->setVerticallyStretchable(true);
+    addToolBar(Qt::LeftToolBarArea, t);
 
     cadToolBar = new QG_CadToolBar(t, "CAD Tools");
     cadToolBar->setActionHandler(actionHandler);
 
     connect(cadToolBar, SIGNAL(signalBack()),
-            this, SLOT(slotBack()));
-//    connect(this, SIGNAL(windowsChanged(bool)),
-//            cadToolBar, SLOT(setEnabled(bool)));
+    this, SLOT(slotBack()));
+    //    connect(this, SIGNAL(windowsChanged(bool)),
+    //            cadToolBar, SLOT(setEnabled(bool)));
 
     //QG_CadToolBarMain* cadToolBarMain =
     //new QG_CadToolBarMain(cadToolBar);
 }
-
-
 
 /**
  * Initializes the status bar at the bottom.
@@ -1260,8 +1255,6 @@ void QC_ApplicationWindow::slotUpdateActiveLayer()
     if(layerWidget&&m_pActiveLayerName)
         m_pActiveLayerName->activeLayerChanged(layerWidget->getActiveName());
 }
-
-
 
 /**
  * Initializes the global application settings from the
@@ -2071,8 +2064,6 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow* w) 
     RS_DIALOGFACTORY->updateCoordinateWidget(RS_Vector(0.0,0.0),
                                              RS_Vector(0.0,0.0), true);
 
-    // show output of filter (if any):
-    commandWidget->processStderr();
     if (!fileName.isEmpty()) {
         QString message=tr("New document from template: ")+fileName;
         commandWidget->appendHistory(message);
@@ -2346,8 +2337,6 @@ void QC_ApplicationWindow::
                 true);
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: update coordinate widget: OK");
 
-        // show output of filter (if any):
-        commandWidget->processStderr();
         QString message=tr("Loaded document: ")+fileName;
         commandWidget->appendHistory(message);
         statusBar()->showMessage(message, 2000);

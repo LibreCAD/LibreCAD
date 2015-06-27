@@ -35,11 +35,10 @@
  *  name 'name' and widget flags set to 'f'.
  */
 QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
+    : QWidget(parent, fl), actionHandler(nullptr)
 {
     setObjectName(name);
     setupUi(this);
-    actionHandler = NULL;
 }
 
 /*
@@ -57,10 +56,6 @@ QG_CommandWidget::~QG_CommandWidget()
 void QG_CommandWidget::languageChange()
 {
     retranslateUi(this);
-}
-
-bool QG_CommandWidget::checkFocus() {
-    return leCommand->hasFocus();
 }
 
 bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
@@ -167,22 +162,11 @@ void QG_CommandWidget::tabPressed() {
 
 void QG_CommandWidget::escape() {
     //leCommand->clearFocus();
-
     if (actionHandler) {
         actionHandler->slotFocusNormal();
         actionHandler->command(QString(tr("escape", "escape, go back from action steps")));
-
     }
 }
-
-/*void QG_CommandWidget::cmdChanged(const QString& text) {
-    // three equal letters enable hotkeys and move the focus away from the command line:
-    if (text.length()==3) {
-        if (text.at(0)==text.at(1) && text.at(0)==text.at(2)) {
-            escape();
-        }
-    }
-}*/
 
 void QG_CommandWidget::setActionHandler(QG_ActionHandler* ah) {
     actionHandler = ah;
@@ -198,31 +182,4 @@ void QG_CommandWidget::setNormalMode() {
     QPalette palette;
     palette.setColor(lCommand->foregroundRole(), Qt::black);
     lCommand->setPalette(palette);
-}
-
-void QG_CommandWidget::redirectStderr() {
-    //fclose(stderr);
-    //ferr = new QFile();
-    //ferr->open(IO_ReadWrite, stderr);
-    //std::streambuf buf;
-    //errStream = new std::ostream(&errBuf);
-    //std::cerr.rdbuf(errStream->rdbuf());
-}
-
-void QG_CommandWidget::processStderr() {
-        /*
-    if (errStream==NULL) {
-        return;
-    }
-
-    std::string s = errBuf.str();
-    if (s.length()!=0) {
-        appendHistory(QString("%1").arg(s.c_str()));
-    }
-    //char c;
-    / *while ((c=ferr->getch())!=-1) {
-        appendHistory(QString("%1").arg(c));
-    }
-    ferr->close();* /
-        */
 }
