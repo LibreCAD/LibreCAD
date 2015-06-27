@@ -222,7 +222,7 @@ void RS_DimLinear::updateDim(bool autoText) {
         vDimexo2.setPolar(dimexo, extAngle2);
     }
 
-    RS_Pen pen(RS_Color(RS2::FlagByBlock),
+    RS_Pen pen(getExtensionLineColor(),
            getExtensionLineWidth(),
            RS2::LineByBlock);
 

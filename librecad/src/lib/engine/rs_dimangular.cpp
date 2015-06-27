@@ -315,7 +315,7 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     double len;
     double dist;
 
-    RS_Pen pen(RS_Color(RS2::FlagByBlock),
+    RS_Pen pen(getExtensionLineColor(),
            getExtensionLineWidth(),
            RS2::LineByBlock);
 
@@ -348,6 +348,7 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
                              RS_ArcData(center,
                                         rad, ang1, ang2, reversed));
     pen.setWidth(getDimensionLineWidth());
+    pen.setColor(getDimensionLineColor());
     arc->setPen(pen);
 //    arc->setPen(RS_Pen(RS2::FlagInvalid));
     arc->setLayer(NULL);
@@ -400,7 +401,8 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     arrow->shapeArrow(arc->getStartpoint(),
                       arrowAngle1,
                       arrowSize);
-    arrow->setPen(RS_Pen(RS2::FlagInvalid));
+    arrow->setPen(pen);
+//    arrow->setPen(RS_Pen(RS2::FlagInvalid));
     arrow->setLayer(NULL);
     addEntity(arrow);
 
@@ -409,7 +411,8 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     arrow->shapeArrow(arc->getEndpoint(),
                       arrowAngle2,
                       arrowSize);
-    arrow->setPen(RS_Pen(RS2::FlagInvalid));
+    arrow->setPen(pen);
+//    arrow->setPen(RS_Pen(RS2::FlagInvalid));
     arrow->setLayer(NULL);
     addEntity(arrow);
 
@@ -453,7 +456,8 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     RS_MText* text = new RS_MText(this, textData);
 
     // move text to the side:
-    text->setPen(RS_Pen(RS2::FlagInvalid));
+    text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::LineByBlock));
+//    text->setPen(RS_Pen(RS2::FlagInvalid));
     text->setLayer(NULL);
     addEntity(text);
 

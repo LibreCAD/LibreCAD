@@ -183,6 +183,9 @@ public:
     double getFixedLength();
     RS2::LineWidth getExtensionLineWidth();
     RS2::LineWidth getDimensionLineWidth();
+    RS_Color getDimensionLineColor();
+    RS_Color getExtensionLineColor();
+    RS_Color getTextColor();
 
         double getGraphicVariable(const QString& key, double defMM, int code);
 

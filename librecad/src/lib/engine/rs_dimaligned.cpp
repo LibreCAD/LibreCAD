@@ -179,7 +179,7 @@ void RS_DimAligned::updateDim(bool autoText) {
     v2.setPolar(dimexe, extAngle);
     e1.setPolar(1.0, extAngle);
 
-    RS_Pen pen(RS_Color(RS2::FlagByBlock),
+    RS_Pen pen(getExtensionLineColor(),
            getExtensionLineWidth(),
            RS2::LineByBlock);
 

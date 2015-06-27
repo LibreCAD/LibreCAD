@@ -145,7 +145,7 @@ void RS_DimRadial::updateDim(bool autoText) {
     // length of dimension line:
     double length = p1.distanceTo(p2);
 
-    RS_Pen pen(RS_Color(RS2::FlagByBlock),
+    RS_Pen pen(getDimensionLineColor(),
            getDimensionLineWidth(),
            RS2::LineByBlock);
 
@@ -237,7 +237,8 @@ void RS_DimRadial::updateDim(bool autoText) {
     text->rotate(RS_Vector(0.0,0.0), textAngle);
     text->move(textPos);
 
-    text->setPen(RS_Pen(RS2::FlagInvalid));
+    text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::LineByBlock));
+//    text->setPen(RS_Pen(RS2::FlagInvalid));
     text->setLayer(NULL);
     addEntity(text);
 

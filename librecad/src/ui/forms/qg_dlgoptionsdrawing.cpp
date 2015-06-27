@@ -320,11 +320,12 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     updateCBAnglePrecision(cbDimAUnit, cbDimADec);
     cbDimADec->setCurrentIndex(dimadec);
 
-/*    RS_Color dimclrt = graphic->getVariableDouble("$DIMGAP",
-                                               RS_Units::convert(0.625, RS2::Millimeter, unit));
-    cbDimClrT->setPen(pen, true, false, "" );
-//    cbDimClrT->setPen(RS_Pen pen, bool showByLayer, bool showUnchanged, const QString & title );
-    cbDimClrE->setPen(pen, true, false, "" );*/
+    int dimclrd = graphic->getVariableInt("$DIMCLRD", 0);
+    int dimclre = graphic->getVariableInt("$DIMCLRE", 0);
+    int dimclrt = graphic->getVariableInt("$DIMCLRT", 0);
+    cbDimClrD->setColor(RS_FilterDXFRW::numberToColor(dimclrd));
+    cbDimClrE->setColor(RS_FilterDXFRW::numberToColor(dimclre));
+    cbDimClrT->setColor(RS_FilterDXFRW::numberToColor(dimclrt));
 
     // spline line segments per patch:
     int splinesegs = graphic->getVariableInt("$SPLINESEGS", 8);
@@ -472,6 +473,13 @@ void QG_DlgOptionsDrawing::validate() {
         graphic->addVariable("$DIMDEC", cbDimDec->currentIndex(), 70);
         graphic->addVariable("$DIMAUNIT", cbDimAUnit->currentIndex(), 70);
         graphic->addVariable("$DIMADEC", cbDimADec->currentIndex(), 70);
+        int colNum, colRGB;
+        colNum = RS_FilterDXFRW::colorToNumber(cbDimClrD->getColor(), &colRGB);
+        graphic->addVariable("$DIMCLRD", colNum, 70);
+        colNum = RS_FilterDXFRW::colorToNumber(cbDimClrE->getColor(), &colRGB);
+        graphic->addVariable("$DIMCLRE", colNum, 70);
+        colNum = RS_FilterDXFRW::colorToNumber(cbDimClrT->getColor(), &colRGB);
+        graphic->addVariable("$DIMCLRT", colNum, 70);
 
         // splines:
         graphic->addVariable("$SPLINESEGS",

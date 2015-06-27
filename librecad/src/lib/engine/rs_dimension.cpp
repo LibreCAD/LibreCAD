@@ -31,6 +31,7 @@
 #include "rs_solid.h"
 #include "rs_units.h"
 #include "rs_math.h"
+#include "rs_filterdxfrw.h" //for int <-> rs_color conversion
 
 RS_DimensionData::RS_DimensionData():
 	definitionPoint(false),
@@ -192,7 +193,7 @@ void RS_Dimension::updateCreateDimensionLine(const RS_Vector& p1,
     // arrow angles:
     double arrowAngle1, arrowAngle2;
 
-    RS_Pen pen(RS_Color(RS2::FlagByBlock),
+    RS_Pen pen(getDimensionLineColor(),
            getDimensionLineWidth(),
            RS2::LineByBlock);
 
@@ -328,7 +329,8 @@ if(dimtsz < 0.01) {
                        +distance/2.0+dimgap, textAngle);
         text->move(distH);
     }
-    text->setPen(RS_Pen(RS2::FlagInvalid));
+    text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::LineByBlock));
+//    text->setPen(RS_Pen(RS2::FlagInvalid));
     text->setLayer(NULL);
     //horizontal text, split dimensionLine
     if (getAlignText()) {
@@ -488,6 +490,29 @@ RS2::LineWidth RS_Dimension::getExtensionLineWidth() {
  */
 RS2::LineWidth RS_Dimension::getDimensionLineWidth() {
     return RS2::intToLineWidth( getGraphicVariableInt("$DIMLWD", -2) ); //default -2 (RS2::WidthByBlock)
+}
+
+/**
+ * @return dimension line Color.
+ */
+RS_Color RS_Dimension::getDimensionLineColor() {
+    return RS_FilterDXFRW::numberToColor(getGraphicVariableInt("$DIMCLRD", 0));
+}
+
+
+/**
+ * @return extension line Color.
+ */
+RS_Color RS_Dimension::getExtensionLineColor() {
+    return RS_FilterDXFRW::numberToColor(getGraphicVariableInt("$DIMCLRE", 0));
+}
+
+
+/**
+ * @return dimension text Color.
+ */
+RS_Color RS_Dimension::getTextColor() {
+    return RS_FilterDXFRW::numberToColor(getGraphicVariableInt("$DIMCLRT", 0));
 }
 
 
