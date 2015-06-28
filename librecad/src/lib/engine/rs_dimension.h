@@ -186,6 +186,7 @@ public:
     RS_Color getDimensionLineColor();
     RS_Color getExtensionLineColor();
     RS_Color getTextColor();
+    QString getTextStyle();
 
         double getGraphicVariable(const QString& key, double defMM, int code);
 

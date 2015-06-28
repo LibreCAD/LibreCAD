@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>647</width>
-    <height>457</height>
+    <width>653</width>
+    <height>485</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -725,6 +725,37 @@
          </property>
         </spacer>
        </item>
+       <item row="3" column="2">
+        <widget class="QG_FontBox" name="cbDimTxtSty"/>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Text style:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="7">
+        <widget class="QComboBox" name="cbDimDSep">
+         <item>
+          <property name="text">
+           <string>'.' (Period)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>',' (Comma)</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="10" column="6">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Decimal separator:</string>
+         </property>
+        </widget>
+       </item>
        <item row="3" column="8">
         <widget class="QLabel" name="lDimUnit6">
          <property name="text">
@@ -761,14 +792,14 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="7" column="1">
         <widget class="QLabel" name="lDimClrT">
          <property name="text">
           <string>Color:</string>
          </property>
         </widget>
        </item>
-       <item row="12" column="7">
+       <item row="13" column="7">
         <widget class="QComboBox" name="cbDimAZin">
          <item>
           <property name="text">
@@ -890,7 +921,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="3">
+       <item row="4" column="3">
         <widget class="QLabel" name="lDimUnit1">
          <property name="text">
           <string>units</string>
@@ -900,7 +931,7 @@
          </property>
         </widget>
        </item>
-       <item row="14" column="0">
+       <item row="15" column="0">
         <spacer name="spacer11">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -919,7 +950,7 @@
        <item row="5" column="7">
         <widget class="QG_WidthBox" name="cbDimLwD"/>
        </item>
-       <item row="10" column="6">
+       <item row="11" column="6">
         <widget class="QLabel" name="lDimAUnit">
          <property name="text">
           <string>Angular units:</string>
@@ -932,7 +963,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="QLabel" name="lDimTextHeight">
          <property name="text">
           <string>Text Height:</string>
@@ -986,7 +1017,7 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="2">
+       <item row="6" column="2">
         <widget class="QComboBox" name="cbDimGap">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1076,7 +1107,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="2">
+       <item row="4" column="2">
         <widget class="QComboBox" name="cbDimTextHeight">
          <property name="editable">
           <bool>true</bool>
@@ -1104,7 +1135,7 @@
        <item row="4" column="7">
         <widget class="QG_ColorBox" name="cbDimClrD"/>
        </item>
-       <item row="9" column="2">
+       <item row="10" column="2">
         <widget class="QComboBox" name="cbDimExe">
          <property name="toolTip">
           <string>Length to enlarge over dimension line</string>
@@ -1154,7 +1185,7 @@
          </item>
         </widget>
        </item>
-       <item row="14" column="1">
+       <item row="15" column="1">
         <spacer name="spacer11_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -1180,7 +1211,7 @@
          </property>
         </widget>
        </item>
-       <item row="11" column="7">
+       <item row="12" column="7">
         <widget class="QComboBox" name="cbDimADec"/>
        </item>
        <item row="5" column="6">
@@ -1190,10 +1221,10 @@
          </property>
         </widget>
        </item>
-       <item row="10" column="7">
+       <item row="11" column="7">
         <widget class="QComboBox" name="cbDimAUnit"/>
        </item>
-       <item row="5" column="3">
+       <item row="6" column="3">
         <widget class="QLabel" name="lDimUnit4">
          <property name="text">
           <string>units</string>
@@ -1206,11 +1237,11 @@
        <item row="1" column="5" colspan="3">
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>Arrows &amp; ticks</string>
+          <string>Dimension lines, arrows &amp; ticks</string>
          </property>
         </widget>
        </item>
-       <item row="12" column="6">
+       <item row="13" column="6">
         <widget class="QLabel" name="lDimAZin">
          <property name="text">
           <string>Angular zeros:</string>
@@ -1224,7 +1255,7 @@
          </property>
         </widget>
        </item>
-       <item row="11" column="6">
+       <item row="12" column="6">
         <widget class="QLabel" name="lDimADec">
          <property name="text">
           <string>Angular precision:</string>
@@ -1237,7 +1268,7 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="1">
+       <item row="10" column="1">
         <widget class="QLabel" name="lDimExe">
          <property name="text">
           <string>Enlarge:</string>
@@ -1247,7 +1278,7 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="1">
+       <item row="9" column="1">
         <widget class="QLabel" name="lDimExo">
          <property name="text">
           <string>Offset:</string>
@@ -1276,10 +1307,10 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="2">
+       <item row="7" column="2">
         <widget class="QG_ColorBox" name="cbDimClrT"/>
        </item>
-       <item row="4" column="2">
+       <item row="5" column="2">
         <widget class="QComboBox" name="cbDimTih">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1302,7 +1333,7 @@
          </item>
         </widget>
        </item>
-       <item row="9" column="3">
+       <item row="10" column="3">
         <widget class="QLabel" name="lDimUnit2">
          <property name="text">
           <string>units</string>
@@ -1312,7 +1343,7 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="3">
+       <item row="9" column="3">
         <widget class="QLabel" name="lDimUnit3">
          <property name="text">
           <string>units</string>
@@ -1366,7 +1397,7 @@
          </property>
         </widget>
        </item>
-       <item row="8" column="2">
+       <item row="9" column="2">
         <widget class="QComboBox" name="cbDimExo">
          <property name="toolTip">
           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1391,14 +1422,14 @@
          </item>
         </widget>
        </item>
-       <item row="10" column="3">
+       <item row="11" column="3">
         <widget class="QLabel" name="lDimUnit7">
          <property name="text">
           <string>units</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="5" column="1">
         <widget class="QLabel" name="lDimTih">
          <property name="text">
           <string>Text alignment:</string>
@@ -1408,7 +1439,7 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="6" column="1">
         <widget class="QLabel" name="lDimGap">
          <property name="text">
           <string>Dimension line gap:</string>
@@ -1418,14 +1449,14 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="0" colspan="3">
+       <item row="8" column="0" colspan="3">
         <widget class="QLabel" name="label_3">
          <property name="text">
           <string>Extension lines</string>
          </property>
         </widget>
        </item>
-       <item row="10" column="0" colspan="2">
+       <item row="11" column="0" colspan="2">
         <widget class="QCheckBox" name="cbDimFxLon">
          <property name="text">
           <string>Fixed length:</string>
@@ -1435,24 +1466,24 @@
          </property>
         </widget>
        </item>
-       <item row="11" column="1">
+       <item row="12" column="1">
         <widget class="QLabel" name="lDimClrE">
          <property name="text">
           <string>Color:</string>
          </property>
         </widget>
        </item>
-       <item row="12" column="1">
+       <item row="13" column="1">
         <widget class="QLabel" name="lDimLwE">
          <property name="text">
           <string>Width:</string>
          </property>
         </widget>
        </item>
-       <item row="12" column="2">
+       <item row="13" column="2">
         <widget class="QG_WidthBox" name="cbDimLwE"/>
        </item>
-       <item row="11" column="2">
+       <item row="12" column="2">
         <widget class="QG_ColorBox" name="cbDimClrE">
          <property name="toolTip">
           <string/>
@@ -1462,7 +1493,7 @@
          </property>
         </widget>
        </item>
-       <item row="10" column="2">
+       <item row="11" column="2">
         <widget class="QDoubleSpinBox" name="cbDimFxL">
          <property name="toolTip">
           <string>fixed extension line legth</string>

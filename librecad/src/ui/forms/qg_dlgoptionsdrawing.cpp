@@ -30,6 +30,7 @@
 #include "rs_graphic.h"
 #include "rs_settings.h"
 #include "rs_math.h"
+#include "rs_font.h"
 
 /*
  *  Constructs a QG_DlgOptionsDrawing as a child of 'parent', with the
@@ -121,7 +122,7 @@ void QG_DlgOptionsDrawing::init() {
     for (int i=RS2::Custom; i<=RS2::NPageSize; i++) {
         cbPaperFormat->addItem(RS_Units::paperFormatToString((RS2::PaperFormat)i));
     }
-
+    cbDimTxtSty->init();
 }
 
 
@@ -327,6 +328,12 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     cbDimClrE->setColor(RS_FilterDXFRW::numberToColor(dimclre));
     cbDimClrT->setColor(RS_FilterDXFRW::numberToColor(dimclrt));
 
+    QString dimtxtsty = graphic->getVariableString("$DIMTXTSTY", "standard");
+    cbDimTxtSty->setFont(dimtxtsty);
+//    cbDimTxtSty->setCurrentIndex( cbDimTxtSty->findText(dimtxtsty) );
+    int dimdsep = graphic->getVariableInt("$DIMDSEP", 0);
+    (dimdsep == 44) ? cbDimDSep->setCurrentIndex(1) :  cbDimDSep->setCurrentIndex(0);
+
     // spline line segments per patch:
     int splinesegs = graphic->getVariableInt("$SPLINESEGS", 8);
     //RLZ    cbSplineSegs->setCurrentText(QString("%1").arg(splinesegs));
@@ -480,6 +487,8 @@ void QG_DlgOptionsDrawing::validate() {
         graphic->addVariable("$DIMCLRE", colNum, 70);
         colNum = RS_FilterDXFRW::colorToNumber(cbDimClrT->getColor(), &colRGB);
         graphic->addVariable("$DIMCLRT", colNum, 70);
+        graphic->addVariable("$DIMTXTSTY", cbDimTxtSty->getFont()->getFileName() , 2);
+        graphic->addVariable("$DIMDSEP", (cbDimDSep->currentIndex()==1)? 44 : 0, 70);
 
         // splines:
         graphic->addVariable("$SPLINESEGS",

@@ -93,6 +93,11 @@ QString RS_DimRadial::getMeasuredLabel() {
         int dimdec = getGraphicVariableInt("$DIMDEC", 4);
         ret = RS_Units::formatLinear(dist, RS2::None,
                                      graphic->getLinearFormat(dimlunit), dimdec);
+        //verify if units are decimal and comma separator
+        if (dimlunit==2){
+            if (getGraphicVariableInt("$DIMDSEP", 0) == 44)
+                ret.replace(QChar('.'), QChar(','));
+        }
     } else {
         ret = QString("%1").arg(dist);
     }
@@ -159,7 +164,8 @@ void RS_DimRadial::updateDim(bool autoText) {
                            RS_MTextData::Exact,
                            1.0,
                            getLabel(),
-                           "standard",
+                           getTextStyle(),
+//                           "standard",
                            0.0);
 
     RS_MText* text = new RS_MText(this, textData);

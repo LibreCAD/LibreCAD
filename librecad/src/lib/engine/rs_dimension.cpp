@@ -317,7 +317,8 @@ if(dimtsz < 0.01) {
                            RS_MTextData::Exact,
                            1.0,
                            getLabel(),
-                           "standard",
+                           getTextStyle(),
+//                           "standard",
                            textAngle);
 
     RS_MText* text = new RS_MText(this, textData);
@@ -513,6 +514,14 @@ RS_Color RS_Dimension::getExtensionLineColor() {
  */
 RS_Color RS_Dimension::getTextColor() {
     return RS_FilterDXFRW::numberToColor(getGraphicVariableInt("$DIMCLRT", 0));
+}
+
+
+/**
+ * @return text style for dimensions.
+ */
+QString RS_Dimension::getTextStyle() {
+    return getGraphicVariableString("$DIMTXTSTY", "standard");
 }
 
 

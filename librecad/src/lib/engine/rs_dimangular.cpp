@@ -102,6 +102,11 @@ QString RS_DimAngular::getMeasuredLabel() {
         ret = RS_Units::formatAngle(getAngle(),
                 RS_Units::numberToAngleFormat(dimaunit),
                 dimadec);
+        //verify if units are decimal and comma separator
+        if (dimaunit !=1){
+            if (getGraphicVariableInt("$DIMDSEP", 0) == 44)
+                ret.replace(QChar('.'), QChar(','));
+        }
 
     /*
         ret = QString("%1%2")
@@ -442,6 +447,7 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     // move text away from dimension line:
     textPos+=distV;
 
+    QString dimtxtsty = getTextStyle();
     textData = RS_MTextData(textPos,
                            dimtxt, 30.0,
                            RS_MTextData::VABottom,
@@ -450,7 +456,8 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
                            RS_MTextData::Exact,
                            1.0,
                            getLabel(),
-                           "standard",
+                           getTextStyle(),
+//                           "standard",
                            textAngle);
 
     RS_MText* text = new RS_MText(this, textData);
