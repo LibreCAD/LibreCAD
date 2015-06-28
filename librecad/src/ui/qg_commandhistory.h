@@ -28,18 +28,29 @@
 #define QG_COMMANDHISTORY_H
 #include <QTextEdit>
 
+/**
+ * @brief The QG_CommandHistory class holds commands and messages.
+ * It's a read only textedit widget.
+ * \author ravas
+ */
 class QG_CommandHistory : public QTextEdit
 {
     Q_OBJECT
 
 public:
-
+	QG_CommandHistory()=delete;
     explicit QG_CommandHistory(QWidget* parent);
 
 private slots:
 
-    void mouseReleaseEvent(QMouseEvent* event);
+	void mouseReleaseEvent(QMouseEvent* event);
+	void slotTextChanged();
 
+private:
+	/*menu item for Copy*/
+	QAction* m_pCopy;
+	/*menu item for Select All*/
+	QAction* m_pSelectAll;
 };
 
 #endif // QG_COMMANDHISTORY_H
