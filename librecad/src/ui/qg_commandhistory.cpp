@@ -54,7 +54,7 @@ QG_CommandHistory::QG_CommandHistory(QWidget* parent) :
 void QG_CommandHistory::mouseReleaseEvent(QMouseEvent* event)
 {
     QTextEdit::mouseReleaseEvent(event);
-	if (event->button() == Qt::LeftButton && m_pCopy->isEnabled())
+	if (event->button() == Qt::LeftButton && m_pCopy->isVisible())
     {
         copy();
     }
