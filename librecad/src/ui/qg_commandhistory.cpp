@@ -33,17 +33,20 @@
 QG_CommandHistory::QG_CommandHistory(QWidget* parent) :
     QTextEdit(parent)
 {
-    setContextMenuPolicy(Qt::ActionsContextMenu);
+	setContextMenuPolicy(Qt::ActionsContextMenu);
 
-    QAction* action;
+	m_pCopy = new QAction(tr("&Copy"), this);
+	connect(m_pCopy, SIGNAL(triggered()), this, SLOT(copy()));
+	addAction(m_pCopy);
+	m_pCopy->setVisible(false);
+	//only show "copy" menu item when there's available selection to copy
+	connect(this, SIGNAL(copyAvailable(bool)), m_pCopy, SLOT(setVisible(bool)));
 
-    action = new QAction(tr("&Copy"), this);
-    connect(action, SIGNAL(triggered()), this, SLOT(copy()));
-    addAction(action);
+	m_pSelectAll = new QAction(tr("select&All"), this);
+	connect(m_pSelectAll, SIGNAL(triggered()), this, SLOT(selectAll()));
+	addAction(m_pSelectAll);
 
-    action = new QAction(tr("select&All"), this);
-    connect(action, SIGNAL(triggered()), this, SLOT(selectAll()));
-    addAction(action);
+	connect(this, SIGNAL(textChanged()), this, SLOT(slotTextChanged()));
 
     setStyleSheet("selection-color: white; selection-background-color: green;");
 }
@@ -51,8 +54,15 @@ QG_CommandHistory::QG_CommandHistory(QWidget* parent) :
 void QG_CommandHistory::mouseReleaseEvent(QMouseEvent* event)
 {
     QTextEdit::mouseReleaseEvent(event);
-    if (event->button() == Qt::LeftButton)
+	if (event->button() == Qt::LeftButton && m_pCopy->isVisible())
     {
         copy();
     }
 }
+
+void QG_CommandHistory::slotTextChanged()
+{
+	//only show the selectAll item when there is text
+	m_pSelectAll->setVisible(! toPlainText().isEmpty());
+}
+
