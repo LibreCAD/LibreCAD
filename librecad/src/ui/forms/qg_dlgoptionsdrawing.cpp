@@ -122,7 +122,7 @@ void QG_DlgOptionsDrawing::init() {
     for (int i=RS2::Custom; i<=RS2::NPageSize; i++) {
         cbPaperFormat->addItem(RS_Units::paperFormatToString((RS2::PaperFormat)i));
     }
-    cbDimTxtSty->init();
+    cbDimTxSty->init();
 }
 
 
@@ -328,9 +328,8 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     cbDimClrE->setColor(RS_FilterDXFRW::numberToColor(dimclre));
     cbDimClrT->setColor(RS_FilterDXFRW::numberToColor(dimclrt));
 
-    QString dimtxtsty = graphic->getVariableString("$DIMTXTSTY", "standard");
-    cbDimTxtSty->setFont(dimtxtsty);
-//    cbDimTxtSty->setCurrentIndex( cbDimTxtSty->findText(dimtxtsty) );
+    QString dimtxsty = graphic->getVariableString("$DIMTXSTY", "standard");
+    cbDimTxSty->setFont(dimtxsty);
     int dimdsep = graphic->getVariableInt("$DIMDSEP", 0);
     (dimdsep == 44) ? cbDimDSep->setCurrentIndex(1) :  cbDimDSep->setCurrentIndex(0);
 
@@ -487,7 +486,7 @@ void QG_DlgOptionsDrawing::validate() {
         graphic->addVariable("$DIMCLRE", colNum, 70);
         colNum = RS_FilterDXFRW::colorToNumber(cbDimClrT->getColor(), &colRGB);
         graphic->addVariable("$DIMCLRT", colNum, 70);
-        graphic->addVariable("$DIMTXTSTY", cbDimTxtSty->getFont()->getFileName() , 2);
+        graphic->addVariable("$DIMTXSTY", cbDimTxSty->getFont()->getFileName() , 2);
         graphic->addVariable("$DIMDSEP", (cbDimDSep->currentIndex()==1)? 44 : 0, 70);
 
         // splines:

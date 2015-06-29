@@ -521,7 +521,7 @@ RS_Color RS_Dimension::getTextColor() {
  * @return text style for dimensions.
  */
 QString RS_Dimension::getTextStyle() {
-    return getGraphicVariableString("$DIMTXTSTY", "standard");
+    return getGraphicVariableString("$DIMTXSTY", "standard");
 }
 
 

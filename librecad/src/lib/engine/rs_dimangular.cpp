@@ -447,7 +447,6 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     // move text away from dimension line:
     textPos+=distV;
 
-    QString dimtxtsty = getTextStyle();
     textData = RS_MTextData(textPos,
                            dimtxt, 30.0,
                            RS_MTextData::VABottom,
