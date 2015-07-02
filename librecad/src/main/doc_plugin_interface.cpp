@@ -215,9 +215,9 @@ void Plugin_Entity::getData(QHash<int, QVariant> *data){
     RS2::EntityType et = entity->rtti();
     data->insert(DPI::EID, (qulonglong)entity->getId());
     data->insert(DPI::LAYER, entity->getLayer()->getName() );
-    data->insert(DPI::LTYPE, Converter.lt2str(entity->getPen().getLineType()) );
-    data->insert(DPI::LWIDTH, Converter.lw2str(entity->getPen().getWidth()) );
-    data->insert(DPI::COLOR, entity->getPen().getColor() );
+    data->insert(DPI::LTYPE, Converter.lt2str(entity->getPen(false).getLineType()) );
+    data->insert(DPI::LWIDTH, Converter.lw2str(entity->getPen(false).getWidth()) );
+    data->insert(DPI::COLOR, entity->getPen(false).getColor().toIntColor() );
     data->insert(DPI::VISIBLE, (entity->isVisible()) ? 1 : 0 );
     switch (et) {
     //atomicEntity
@@ -384,7 +384,9 @@ void Plugin_Entity::updateData(QHash<int, QVariant> *data){
         epen.setWidth( Converter.str2lw(str) );
     }
     if (hash.contains(DPI::COLOR)) {
-        QColor color = hash.take(DPI::COLOR).value<QColor>();
+        int co = hash.take(DPI::COLOR).toInt();
+        RS_Color color;// = hash.take(DPI::COLOR).value<QColor>();
+        color.fromIntColor(co);
         epen.setColor(color);
     }
     ec->setPen(epen);
@@ -1080,36 +1082,44 @@ bool Doc_plugin_interface::deleteLayer(QString name){
     return false;
 }
 
-void Doc_plugin_interface::getCurrentLayerProperties(QColor *c, DPI::LineWidth *w, DPI::LineType *t){
+void Doc_plugin_interface::getCurrentLayerProperties(int *c, DPI::LineWidth *w, DPI::LineType *t){
     RS_Pen pen = docGr->getActiveLayer()->getPen();
-    RS_Color col = pen.getColor();
-    c->setRgb(col.red(), col.green(), col.blue());
+    *c = pen.getColor().toIntColor();
+//    RS_Color col = pen.getColor();
+//    c->setRgb(col.red(), col.green(), col.blue());
     *w = static_cast<DPI::LineWidth>(pen.getWidth());
     *t = static_cast<DPI::LineType>(pen.getLineType());
 }
 
-void Doc_plugin_interface::getCurrentLayerProperties(QColor *c, QString *w, QString *t){
+void Doc_plugin_interface::getCurrentLayerProperties(int *c, QString *w, QString *t){
     RS_Pen pen = docGr->getActiveLayer()->getPen();
-    RS_Color col = pen.getColor();
-    c->setRgb(col.red(), col.green(), col.blue());
+    *c = pen.getColor().toIntColor();
+//    RS_Color col = pen.getColor();
+//    c->setRgb(col.red(), col.green(), col.blue());
     w->clear();
     w->append(Converter.lw2str(pen.getWidth()));
     t->clear();
     t->append(Converter.lt2str(pen.getLineType()));
 }
 
-void Doc_plugin_interface::setCurrentLayerProperties(QColor c, DPI::LineWidth w, DPI::LineType t){
+void Doc_plugin_interface::setCurrentLayerProperties(int c, DPI::LineWidth w, DPI::LineType t){
     RS_Layer* layer = docGr->getActiveLayer();
     if (layer != NULL) {
-        RS_Pen pen(RS_Color(c), static_cast<RS2::LineWidth>(w), static_cast<RS2::LineType>(t));
+        RS_Color co;
+        co.fromIntColor(c);
+        RS_Pen pen(co, static_cast<RS2::LineWidth>(w), static_cast<RS2::LineType>(t));
+//        RS_Pen pen(RS_Color(c), static_cast<RS2::LineWidth>(w), static_cast<RS2::LineType>(t));
         layer->setPen(pen);
     }
 }
 
-void Doc_plugin_interface::setCurrentLayerProperties(QColor c, QString w, QString t){
+void Doc_plugin_interface::setCurrentLayerProperties(int c, QString w, QString t){
     RS_Layer* layer = docGr->getActiveLayer();
     if (layer != NULL) {
-        RS_Pen pen(RS_Color(c), Converter.str2lw(w), Converter.str2lt(t));
+        RS_Color co;
+        co.fromIntColor(c);
+        RS_Pen pen(co, Converter.str2lw(w), Converter.str2lt(t));
+//        RS_Pen pen(RS_Color(c), Converter.str2lw(w), Converter.str2lt(t));
         layer->setPen(pen);
     }
 }

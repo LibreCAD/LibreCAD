@@ -29,7 +29,8 @@
 #include <QPointF>
 #include <QHash>
 #include <QString>
-#include <QColor>
+#include <QVariant>
+//#include <QColor>
 
 namespace DPI {
     //! Vertical alignments.
@@ -104,12 +105,15 @@ namespace DPI {
         STARTANGLE=50,  /*!< double: arc start angle or rotation angle for insert and text */
         ENDANGLE=51,    /*!< double: arc end angle */
         VISIBLE=60,     /*!< int: 1 visible, 0 invisible (reversed from dxf spec, but more logic*/
-        COLOR=62,       /*!< QColor: entity color */
+        COLOR=62,       /*!< int: -1 ByLayer, -2 ByBlock, other 24 bit RGB color: entity color */
         CLOSEPOLY=70,   /*!< int: closed polyline 0=open, 1=closed */
         TXTALIGNH=72,   /*!< enum: horizontal alignment for text */
         TXTALIGNV=73,   /*!< enum: vertical alignment for text */
         REVERSED=291 /*!< bool: true if arc is reversed (clockwise) */
     };
+//Note about 24 bit RGB color:
+//    decimal integer 1632041, in hex 18 E7 29, in RGB dec 24,231,41
+// example red RGB dec 255,0,0; hex FF0000; decimal integer 16711680
 
     enum LineWidth {
         Width00 = 0,       /**< Width 1.  (0.00mm) */
@@ -164,6 +168,10 @@ namespace DPI {
         BorderLineX2 = 19,    /**< dash, dash, dot large. */
         LineByLayer = -1,     /**< Line type defined by layer not entity */
         LineByBlock = -2      /**< Line type defined by block not entity */
+    };
+
+    enum EntColor {
+        das,
     };
 
 }
@@ -390,10 +398,10 @@ public:
     */
     virtual bool deleteLayer(QString name) = 0;
 
-    virtual void getCurrentLayerProperties(QColor *c, DPI::LineWidth *w, DPI::LineType *t) = 0;
-    virtual void getCurrentLayerProperties(QColor *c, QString *w, QString *t) = 0;
-    virtual void setCurrentLayerProperties(QColor c, DPI::LineWidth w, DPI::LineType t) = 0;
-    virtual void setCurrentLayerProperties(QColor c, QString w, QString t) = 0;
+    virtual void getCurrentLayerProperties(int *c, DPI::LineWidth *w, DPI::LineType *t) = 0;
+    virtual void getCurrentLayerProperties(int *c, QString *w, QString *t) = 0;
+    virtual void setCurrentLayerProperties(int c, DPI::LineWidth w, DPI::LineType t) = 0;
+    virtual void setCurrentLayerProperties(int c, QString w, QString t) = 0;
 
     //! Gets a point.
     /*! Prompt message or an default message to the user asking for a point.

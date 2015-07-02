@@ -99,10 +99,10 @@ public:
     QStringList getAllBlocks();
     bool deleteLayer(QString name);
 
-    void getCurrentLayerProperties(QColor *c, DPI::LineWidth *w, DPI::LineType *t);
-    void getCurrentLayerProperties(QColor *c, QString *w, QString *t);
-    void setCurrentLayerProperties(QColor c, DPI::LineWidth w, DPI::LineType t);
-    void setCurrentLayerProperties(QColor c, QString w, QString t);
+    void getCurrentLayerProperties(int *c, DPI::LineWidth *w, DPI::LineType *t);
+    void getCurrentLayerProperties(int *c, QString *w, QString *t);
+    void setCurrentLayerProperties(int c, DPI::LineWidth w, DPI::LineType t);
+    void setCurrentLayerProperties(int c, QString w, QString t);
 
     bool getPoint(QPointF *point, const QString& mesage, QPointF *base);
     Plug_Entity *getEnt(const QString& mesage);

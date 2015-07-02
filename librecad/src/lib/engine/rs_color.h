@@ -74,6 +74,10 @@ public:
             return c0;
     }
 
+    //These 2 metods is used for plugins
+    int toIntColor(void) const;
+    void fromIntColor(int co);
+
     RS_Color& operator = (const RS_Color& c) {
         setRgb(c.red(), c.green(), c.blue());
         setFlags(c.getFlags());
