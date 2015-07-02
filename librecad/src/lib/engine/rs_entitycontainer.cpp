@@ -1184,7 +1184,7 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
 
     unsigned i0=0;
 	for(auto en: entities){
-		if (en->isVisible() && !en->getParent()->ignoredOnModification() ){//no end point for Insert, text, Dim
+		if (!en->getParent()->ignoredOnModification() ){//no end point for Insert, text, Dim
 //            std::cout<<"find nearest for entity "<<i0<<std::endl;
             point = en->getNearestEndpoint(coord, &curDist);
             if (point.valid && curDist<minDist) {
