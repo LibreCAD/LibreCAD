@@ -298,7 +298,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         else
             writer->writeUtf8String(6, varStr);
     else
-        writer->writeString(7, "BYLAYER");
+        writer->writeString(6, "BYLAYER");
     writer->writeString(9, "$CECOLOR");
     if (getInt("$CECOLOR", &varInt))
         writer->writeInt16(62, varInt);
