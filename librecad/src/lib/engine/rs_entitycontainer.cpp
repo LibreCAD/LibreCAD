@@ -1217,13 +1217,11 @@ RS_Vector RS_EntityContainer::getNearestPointOnEntity(const RS_Vector& coord,
 
 	RS_Entity* en = getNearestEntity(coord, dist, RS2::ResolveNone);
 
-	if (en) {
-        if ( en->isVisible()
-			 && !en->getParent()->ignoredOnModification()
-			 ){//no middle point for Spline, Insert, text, Dim
-            point = en->getNearestPointOnEntity(coord, onEntity, dist, entity);
-        }
-    }
+	if (en && en->isVisible()
+			&& !en->getParent()->ignoredOnModification()
+			){
+		point = en->getNearestPointOnEntity(coord, onEntity, dist, entity);
+	}
 
     return point;
 }
