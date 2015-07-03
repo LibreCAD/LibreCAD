@@ -105,7 +105,7 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyRound::mouseMoveEvent begin");
 
     RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
-    RS_Entity* se = catchEntity(e, eType, RS2::ResolveAll);
+    RS_Entity* se = catchEntity(e, eType, RS2::ResolveAllButTextImage);
 
     switch (getStatus()) {
     case SetEntity1:
