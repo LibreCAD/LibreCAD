@@ -119,6 +119,19 @@ enum RS2::LineType convLTW::str2lt(QString s){
 enum RS2::LineWidth convLTW::str2lw(QString w){
     return lWidth.key(w, RS2::WidthDefault);
 }
+QString convLTW::intColor2str(int col){
+    switch (col) {
+    case -1:
+        return "BYLAYER";
+        break;
+    case -2:
+        return "BYBLOCK";
+        break;
+    default:
+        return QString::number(col >> 16) + ", " + QString::number((col >> 8)& 0xFF) + ", " + QString::number(col & 0xFF);
+        break;
+    }
+}
 
 
 convLTW Converter;
@@ -722,6 +735,10 @@ void Plugin_Entity::scale(QPointF center, QPointF factor){
         delete ne;
     } else
         this->entity = ne;
+}
+
+QString Plugin_Entity::intColor2str(int color){
+    return Converter.intColor2str(color);
 }
 
 Doc_plugin_interface::Doc_plugin_interface(RS_Document *d, RS_GraphicView* gv, QWidget* parent){

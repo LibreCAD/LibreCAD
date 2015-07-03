@@ -12,7 +12,7 @@
 
 
 #include <QTextEdit>
-#include <QColor>
+//#include <QColor>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 #include <cmath>
@@ -71,8 +71,8 @@ QString LC_List::getStrData(Plug_Entity *ent) {
     //common entity data
     ent->getData(&data);
     strData  = strCommon.arg(tr("Layer")).arg(data.value(DPI::LAYER).toString());
-    QColor color = data.value(DPI::COLOR).value<QColor>();
-    strData.append( strCommon.arg(tr("Color")).arg(color.name()));
+    int col = data.value(DPI::COLOR).toInt();
+    strData.append( strCommon.arg(tr("Color")).arg( ent->intColor2str(col) ));
     strData.append( strCommon.arg(tr("Line type")).arg(data.value(DPI::LTYPE).toString()));
     strData.append( strCommon.arg(tr("Line thickness")).arg(data.value(DPI::LWIDTH).toString()));
     strData.append( strCommon.arg(tr("ID")).arg(data.value(DPI::EID).toLongLong()));

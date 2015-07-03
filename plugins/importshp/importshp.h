@@ -49,14 +49,15 @@ class AttribData
 public:
     AttribData(){
         layer = "0";
-        color = Qt::black;
+        color = -1; //-1 == BYLAYER
         lineType = "BYLAYER";
         width = "BYLAYER";
     }
     QString layer;
     QString lineType;
     QString width;
-    QColor color;
+    int color;
+//    QColor color;
 };
 
 /***********/

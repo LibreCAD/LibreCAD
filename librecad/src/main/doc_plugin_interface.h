@@ -39,6 +39,7 @@ public:
     convLTW();
     QString lt2str(enum RS2::LineType lt);
     QString lw2str(enum RS2::LineWidth lw);
+    QString intColor2str(int col);
     enum RS2::LineType str2lt(QString s);
     enum RS2::LineWidth str2lw(QString w);
 private:
@@ -62,6 +63,7 @@ public:
     virtual void move(QPointF offset);
     virtual void rotate(QPointF center, double angle);
     virtual void scale(QPointF center, QPointF factor);
+    virtual QString intColor2str(int color);
 private:
     RS_Entity* entity;
     bool hasContainer;

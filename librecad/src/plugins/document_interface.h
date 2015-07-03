@@ -254,6 +254,11 @@ public:
     */
     virtual void scale(QPointF center, QPointF factor) = 0;
 
+    //! Utility: Get color as string.
+    /*!
+    *  \param color color as integer to convert as string.
+    */
+    virtual QString intColor2str(int color) = 0;
 };
 
 //! Interface for comunicate plugins.
