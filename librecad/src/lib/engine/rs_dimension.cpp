@@ -330,7 +330,7 @@ if(dimtsz < 0.01) {
                        +distance/2.0+dimgap, textAngle);
         text->move(distH);
     }
-    text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::LineByBlock));
+    text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
 //    text->setPen(RS_Pen(RS2::FlagInvalid));
     text->setLayer(NULL);
     //horizontal text, split dimensionLine

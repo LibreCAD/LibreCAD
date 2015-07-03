@@ -462,7 +462,7 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     RS_MText* text = new RS_MText(this, textData);
 
     // move text to the side:
-    text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::LineByBlock));
+    text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
 //    text->setPen(RS_Pen(RS2::FlagInvalid));
     text->setLayer(NULL);
     addEntity(text);
