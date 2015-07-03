@@ -73,6 +73,8 @@ void RS_ActionModifyBevel::trigger() {
                 coord2, (RS_AtomicEntity*)entity2,
 				*data);
 
+        coord1 = RS_Vector(false);
+        coord2 = RS_Vector(false);
         entity1 = nullptr;
         entity2 = nullptr;
         setStatus(SetEntity1);
@@ -85,7 +87,7 @@ void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyBevel::mouseMoveEvent begin");
 
     RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
-    RS_Entity* se = catchEntity(e, RS2::ResolveAllButTextImage);
+    RS_Entity* se = catchEntity(e, RS2::ResolveAll);
 
     switch (getStatus()) {
     case SetEntity1:
