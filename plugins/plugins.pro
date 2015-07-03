@@ -18,6 +18,7 @@ SUBDIRS     = \
         sameprop \
         importshp \
         sample \
+        picfile \
         plotequation
 
 TRANSLATIONS = ./ts/plugins_ar.ts \
