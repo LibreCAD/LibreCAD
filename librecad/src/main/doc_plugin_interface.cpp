@@ -45,6 +45,7 @@
 #include "rs_insert.h"
 #include "rs_polyline.h"
 #include "rs_ellipse.h"
+#include "rs_polyline.h"
 #include "lc_splinepoints.h"
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetselect.h"
@@ -908,6 +909,28 @@ void Doc_plugin_interface::addEllipse(QPointF *start, QPointF *end, qreal ratio,
         doc->addUndoable(entity);
     } else
         RS_DEBUG->print("Doc_plugin_interface::addEllipse: currentContainer is NULL");
+}
+
+void Doc_plugin_interface::addPolyline(std::vector<QPointF> const& points, bool closed)
+{
+    if (doc) {
+        RS_PolylineData data;
+        if(closed)
+            data.setFlag(RS2::FlagClosed);
+        RS_Polyline* entity = new RS_Polyline(doc, data);
+
+        for(auto const& pt: points){
+            entity->addVertex(RS_Vector(pt.x(), pt.y()), 0.);
+        }
+
+        doc->addEntity(entity);
+        if (!haveUndo) {
+            doc->startUndoCycle();
+            haveUndo = true;
+        }
+        doc->addUndoable(entity);
+    } else
+        RS_DEBUG->print("%s: currentContainer is NULL", __func__);
 }
 
 void Doc_plugin_interface::addSplinePoints(std::vector<QPointF> const& points, bool closed)
