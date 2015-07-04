@@ -86,6 +86,7 @@ public:
     void addCircle(QPointF *start, qreal radius);
     void addArc(QPointF *start, qreal radius, qreal a1, qreal a2);
     void addEllipse(QPointF *start, QPointF *end, qreal ratio, qreal a1, qreal a2);
+    virtual void addSplinePoints(std::vector<QPointF> const& points, bool closed=false);
     void addImage(int handle, QPointF *start, QPointF *uvr, QPointF *vvr,
                   int w, int h, QString name, int br, int con, int fade);
     void addInsert(QString name, QPointF ins, QPointF scale, qreal rot);

@@ -328,6 +328,13 @@ public:
     */
     virtual void addEllipse(QPointF *start, QPointF *end, qreal ratio, qreal a1, qreal a2) = 0;
 
+    //! Add LC_SplinePoints entity to current document.
+    /*! Add splinepoints entity to current document with current attributes.
+    *  \param points interpolation points
+    *  \param closed whether splinepoints is closed
+    */
+    virtual void addSplinePoints(std::vector<QPointF> const& points, bool closed=false) = 0;
+
     //! Add image entity to current document.
     /*! Add image entity to current document with current attributes.
     *  \param start start point coordinate.

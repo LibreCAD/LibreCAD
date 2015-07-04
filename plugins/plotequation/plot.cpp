@@ -93,31 +93,18 @@ void plot::execComm(Document_Interface *doc, QWidget *parent, QString cmd)
 
         pointAmount = xValues.size();
 
-        if(equation2.isEmpty())
-        {//use first equation for drawing (explicit)
-            for(size_t i = 0; i < pointAmount -1; ++i)
-            {
-                startPoint.setX(xValues.at(i));
-                startPoint.setY(yValues1.at(i));
+        std::vector<QPointF> points;
 
-                endPoint.setX(xValues.at(i+1));
-                endPoint.setY(yValues1.at(i+1));
-                doc->addLine(&startPoint, &endPoint);
-            }
+        QList<double> const& xpoints=(equation2.isEmpty())?xValues:yValues1;
+        QList<double> const& ypoints=(equation2.isEmpty())?yValues1:yValues2;
 
+        for(int i=0; i< xpoints.size(); ++i){
+            points.emplace_back(QPointF(xpoints[i], ypoints[i]));
         }
-        else
-        {//use first and second equation for drawing (parametric)
-            for(size_t i = 0; i < pointAmount -1; ++i)
-            {
-                startPoint.setX(yValues1.at(i));
-                startPoint.setY(yValues2.at(i));
+        //TODO add option for splinepoints: closed
+        //hardcoded to false now
+        doc->addSplinePoints(points, false);
 
-                endPoint.setX(yValues1.at(i+1));
-                endPoint.setY(yValues2.at(i+1));
-                doc->addLine(&startPoint, &endPoint);
-            }
-        }
     }
 
 }
