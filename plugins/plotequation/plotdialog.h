@@ -1,11 +1,15 @@
 #ifndef PLOTDIALOG_H
 #define PLOTDIALOG_H
 
+#include <memory>
 #include <QDialog>
-#include <QGridLayout>
-#include <QLabel>
-#include <QLineEdit>
-#include <QPushButton>
+
+class QGridLayout;
+class QLabel;
+class QLineEdit;
+class QPushButton;
+class QHBoxLayout;
+class QSpacerItem;
 
 
 class plotDialog : public QDialog
@@ -13,10 +17,10 @@ class plotDialog : public QDialog
     Q_OBJECT
 public:
     explicit plotDialog(QWidget *parent = 0);
+    ~plotDialog();
     void getValues(QString& eq1, QString& eq2, QString &start, QString &end, double& step) const;
     
-signals:
-    
+
 public slots:
     void slotDrawButtonClicked();
 
@@ -42,7 +46,6 @@ private:
     QPushButton* btnAccept;
     QPushButton* btnCancel;
     QSpacerItem* space;
-
     bool readInput();
 
     

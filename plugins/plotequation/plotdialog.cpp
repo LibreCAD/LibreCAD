@@ -1,5 +1,10 @@
 #include "plotdialog.h"
 
+#include <QGridLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
+
 plotDialog::plotDialog(QWidget *parent) :
     QDialog(parent)
 {
@@ -12,14 +17,14 @@ plotDialog::plotDialog(QWidget *parent) :
                                 "Use t or x in your equation as a variable/parameter.\n"));
     lblEquasion1 = new QLabel(tr("Equation 1:"));
     lblEquasion2 = new QLabel(tr("Equation 2:"));
-    lnedEquasion1 = new QLineEdit;
-    lnedEquasion2 = new QLineEdit;
+    lnedEquasion1 = new QLineEdit(this);
+    lnedEquasion2 = new QLineEdit(this);
     lblStartValue = new QLabel(tr("start value:"));
     lblEndValue = new QLabel(tr("end value:"));
     lblStepSize = new QLabel(tr("step size:"));
-    lnedStartValue = new QLineEdit;
-    lnedEndValue = new QLineEdit;
-    lnedStepSize = new QLineEdit;
+    lnedStartValue = new QLineEdit(this);
+    lnedEndValue = new QLineEdit(this);
+    lnedStepSize = new QLineEdit(this);
     btnAccept = new QPushButton(tr("Draw"));
     btnCancel = new QPushButton(tr("Cancel"));
     space = new QSpacerItem(0, 20);
@@ -59,6 +64,8 @@ plotDialog::plotDialog(QWidget *parent) :
 
 
 }
+
+plotDialog::~plotDialog(){}
 
 //get the valuew that the user entered
 void plotDialog::getValues(QString& eq1, QString& eq2, QString& start, QString& end, double& step) const
