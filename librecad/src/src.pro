@@ -798,7 +798,6 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_arctangentialoptions.ui \
     ui/forms/qg_beveloptions.ui \
     ui/forms/qg_blockdialog.ui \
-    ui/forms/qg_cadtoolbar.ui \
     ui/forms/qg_circleoptions.ui \
     ui/forms/qg_circletan2options.ui \
     ui/forms/qg_coordinatewidget.ui \

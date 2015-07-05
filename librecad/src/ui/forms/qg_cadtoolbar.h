@@ -30,14 +30,13 @@
 #include <vector>
 #include <map>
 #include "rs.h"
-#include "ui_qg_cadtoolbar.h"
 
 class QG_ActionHandler;
 class LC_CadToolBarInterface;
 class RS_ActionInterface;
 class QActions;
 
-class QG_CadToolBar : public QWidget, public Ui::QG_CadToolBar
+class QG_CadToolBar : public QWidget
 {
     Q_OBJECT
 
@@ -87,12 +86,12 @@ protected:
 	 * @brief m_toolbars holds cad toolbars managed by this LC_CadToolBar instance
 	 */
 	std::map<RS2::ToolBarId, LC_CadToolBarInterface*> m_toolbars;
-	QG_ActionHandler* actionHandler = nullptr;
+	QG_ActionHandler* actionHandler;
 
 	std::vector<LC_CadToolBarInterface*> activeToolbars;
 
 protected slots:
-    virtual void languageChange();
+//    virtual void languageChange();
     void hideSubToolBars();
     void showSubToolBar();
 

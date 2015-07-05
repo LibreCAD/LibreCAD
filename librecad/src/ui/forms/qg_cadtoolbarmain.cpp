@@ -23,7 +23,9 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include<QCoreApplication>
 #include<QMouseEvent>
+#include<QAction>
 #include<tuple>
 #include<utility>
 #include "qg_cadtoolbarmain.h"

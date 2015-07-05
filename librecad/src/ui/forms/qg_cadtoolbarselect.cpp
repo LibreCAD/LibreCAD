@@ -24,9 +24,10 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <QToolButton>
-#include <QLayout>
-#include <QMouseEvent>
+#include<QAction>
+#include<QToolButton>
+#include<QLayout>
+#include<QMouseEvent>
 #include "qg_cadtoolbarselect.h"
 #include "qg_cadtoolbar.h"
 #include "rs_actionselect.h"

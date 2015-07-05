@@ -23,6 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include<QAction>
 #include "qg_cadtoolbarinfo.h"
 #include "qg_cadtoolbar.h"
 #include "qg_actionhandler.h"

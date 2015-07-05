@@ -23,9 +23,10 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <QVBoxLayout>
-#include <QToolButton>
-#include <QToolBar>
+#include<QVBoxLayout>
+#include<QToolButton>
+#include<QToolBar>
+#include<QAction>
 #include "qg_cadtoolbararcs.h"
 #include "qg_cadtoolbar.h"
 #include "qg_actionhandler.h"

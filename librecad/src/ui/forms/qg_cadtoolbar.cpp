@@ -48,21 +48,18 @@ QG_CadToolBar::QG_CadToolBar(QWidget* parent, const char* name, Qt::WindowFlags 
 	,actionHandler(nullptr)
 {
     setObjectName(name);
-    setupUi(this);
 	setCursor(Qt::ArrowCursor);
 	init();
 }
-
 
 /*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_CadToolBar::languageChange()
-{
-    retranslateUi(this);
-}
-
+//void QG_CadToolBar::languageChange()
+//{
+//    retranslateUi(this);
+//}
 
 void QG_CadToolBar::init() {
 	//create sub cad toolbars
