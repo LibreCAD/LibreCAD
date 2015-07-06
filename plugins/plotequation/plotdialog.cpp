@@ -4,6 +4,10 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QComboBox>
+#include <QDebug>
+
+Q_DECLARE_METATYPE(plotDialog::EntityType)
 
 plotDialog::plotDialog(QWidget *parent) :
     QDialog(parent)
@@ -51,11 +55,18 @@ plotDialog::plotDialog(QWidget *parent) :
     mainLayout->addWidget(lnedStartValue, 4, 1);
     mainLayout->addWidget(lnedEndValue, 5, 1);
     mainLayout->addWidget(lnedStepSize, 6, 1);
+    m_pTypeSelection = new QComboBox(this);
+    m_pTypeSelection->addItem(tr("Line Segments", "Plot Equation to generate RS_Line segments"), QVariant::fromValue(LineSegments));
+    m_pTypeSelection->addItem(tr("Polyline", "Plot Equation to generate RS_Polyline"), QVariant::fromValue(Polyline));
+    m_pTypeSelection->addItem(tr("SplinePoints", "Plot Equation to generate 2nd spline by LC_SplinePoints"), QVariant::fromValue(SplinePoints));
+    m_pTypeSelection->setCurrentIndex(1);
+
+    mainLayout->addWidget(m_pTypeSelection, 7, 0);
 
     buttonLayout->addWidget(btnAccept);
     buttonLayout->addWidget(btnCancel);
 
-    mainLayout->addLayout(buttonLayout, 7, 1);
+    mainLayout->addLayout(buttonLayout, 8, 1);
 
     setLayout(mainLayout);
 
@@ -65,7 +76,10 @@ plotDialog::plotDialog(QWidget *parent) :
 
 }
 
-plotDialog::~plotDialog(){}
+plotDialog::EntityType plotDialog::getEntityType() const
+{
+    return m_pTypeSelection->itemData(m_pTypeSelection->currentIndex()).value<plotDialog::EntityType>();
+}
 
 //get the valuew that the user entered
 void plotDialog::getValues(QString& eq1, QString& eq2, QString& start, QString& end, double& step) const

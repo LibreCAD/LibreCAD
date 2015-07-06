@@ -139,10 +139,11 @@ QString convLTW::intColor2str(int col){
 convLTW Converter;
 
 
-Plugin_Entity::Plugin_Entity(RS_Entity* ent, Doc_plugin_interface* d) {
-    entity = ent;
-    hasContainer = true;
-    dpi = d;
+Plugin_Entity::Plugin_Entity(RS_Entity* ent, Doc_plugin_interface* d):
+    entity(ent)
+  ,hasContainer(true)
+  ,dpi(d)
+{
 }
 
 /*RS_EntityContainer* parent,
@@ -743,12 +744,12 @@ QString Plugin_Entity::intColor2str(int color){
     return Converter.intColor2str(color);
 }
 
-Doc_plugin_interface::Doc_plugin_interface(RS_Document *d, RS_GraphicView* gv, QWidget* parent){
-    doc =d;
-    docGr =doc->getGraphic();
-    gView =gv;
-    main = parent;
-    haveUndo = false;
+Doc_plugin_interface::Doc_plugin_interface(RS_Document *d, RS_GraphicView* gv, QWidget* parent):
+doc(d)
+,docGr(doc->getGraphic())
+,gView(gv)
+,main(parent)
+,haveUndo(false){
 }
 
 Doc_plugin_interface::~Doc_plugin_interface(){
@@ -909,6 +910,36 @@ void Doc_plugin_interface::addEllipse(QPointF *start, QPointF *end, qreal ratio,
         doc->addUndoable(entity);
     } else
         RS_DEBUG->print("Doc_plugin_interface::addEllipse: currentContainer is NULL");
+}
+
+void Doc_plugin_interface::addLines(std::vector<QPointF> const& points, bool closed)
+{
+    if (doc) {
+        RS_LineData data;
+
+        if (!haveUndo) {
+            doc->startUndoCycle();
+            haveUndo = true;
+        }
+
+        data.endpoint=RS_Vector(points.front().x(), points.front().y());
+
+        for(size_t i=1; i<points.size(); ++i){
+            data.startpoint=data.endpoint;
+            data.endpoint=RS_Vector(points[i].x(), points[i].y());
+            RS_Line* line=new RS_Line(doc, data);
+            doc->addEntity(line);
+            doc->addUndoable(line);
+        }
+        if(closed){
+            data.startpoint=data.endpoint;
+            data.endpoint=RS_Vector(points.front().x(), points.front().y());
+            RS_Line* line=new RS_Line(doc, data);
+            doc->addEntity(line);
+            doc->addUndoable(line);
+        }
+    } else
+        RS_DEBUG->print("%s: currentContainer is NULL", __func__);
 }
 
 void Doc_plugin_interface::addPolyline(std::vector<QPointF> const& points, bool closed)

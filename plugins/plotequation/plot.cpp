@@ -9,6 +9,7 @@
 #include "plot.h"
 #include "plotdialog.h"
 #include <muParser.h>
+#include <QDebug>
 
 plot::plot(QObject *parent) :
     QObject(parent)
@@ -42,10 +43,7 @@ void plot::execComm(Document_Interface *doc, QWidget *parent, QString cmd)
     QList<double> xValues;
     QList<double> yValues1;
     QList<double> yValues2;
-    QList<QPointF> points;
-    QPointF startPoint;
-    QPointF endPoint;
-    unsigned int pointAmount;
+    plotDialog::EntityType lineType=plotDialog::Polyline;
 
     plotDialog plotDlg(parent);
     int result =  plotDlg.exec();
@@ -55,6 +53,7 @@ void plot::execComm(Document_Interface *doc, QWidget *parent, QString cmd)
         double startVal = 0.0;
         double endVal = 0.0;
         plotDlg.getValues(equation1, equation2, startValue, endValue, stepSize);
+        lineType=plotDlg.getEntityType();
 
         try{
             mu::Parser p;
@@ -91,8 +90,6 @@ void plot::execComm(Document_Interface *doc, QWidget *parent, QString cmd)
             std::cout << e.GetMsg() << std::endl;
         }
 
-        pointAmount = xValues.size();
-
         std::vector<QPointF> points;
 
         QList<double> const& xpoints=(equation2.isEmpty())?xValues:yValues1;
@@ -103,7 +100,17 @@ void plot::execComm(Document_Interface *doc, QWidget *parent, QString cmd)
         }
         //TODO add option for splinepoints: closed
         //hardcoded to false now
+        switch(lineType){
+        case plotDialog::LineSegments:
+            doc->addLines(points, false);
+            break;
+        case plotDialog::Polyline:
+        default:
+            doc->addPolyline(points, false);
+            break;
+        case plotDialog::SplinePoints:
         doc->addSplinePoints(points, false);
+        }
 
     }
 

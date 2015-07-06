@@ -275,7 +275,8 @@ public:
 class Document_Interface
 {
 public:
-    virtual ~Document_Interface() {}
+    Document_Interface() = default;
+    virtual ~Document_Interface() = default;
     //! Force to update the graphic view.
     /*! Force to update the graphic view.
     */
@@ -327,6 +328,13 @@ public:
     *  \param radius radius for arc.
     */
     virtual void addEllipse(QPointF *start, QPointF *end, qreal ratio, qreal a1, qreal a2) = 0;
+
+    //! Add addLine entity to current document.
+    /*! Add addLine entity to current document with current attributes; polyline is by lines.
+    *  \param points of line segments
+    *  \param closed whether line is closed
+    */
+    virtual void addLines(std::vector<QPointF> const& points, bool closed=false) = 0;
 
     //! Add polyline entity to current document.
     /*! Add polyline entity to current document with current attributes; polyline is by lines.
