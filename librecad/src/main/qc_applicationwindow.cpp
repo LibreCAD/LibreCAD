@@ -1218,10 +1218,11 @@ void QC_ApplicationWindow::initToolBar()
     t->setFloatable(false);
     t->setAllowedAreas(Qt::LeftToolBarArea | Qt::RightToolBarArea);
     // t->setVerticallyStretchable(true);
-    addToolBar(Qt::LeftToolBarArea, t);
 
     cadToolBar = new QG_CadToolBar(t, "CAD Tools");
     cadToolBar->setActionHandler(actionHandler);
+    t->addWidget(cadToolBar);
+    addToolBar(Qt::LeftToolBarArea, t);
 
     connect(cadToolBar, SIGNAL(signalBack()),
     this, SLOT(slotBack()));
