@@ -1211,11 +1211,10 @@ void QC_ApplicationWindow::initToolBar()
     // CAD toolbar left:
     QToolBar* t = new QToolBar(tr("CAD Tools"), this);
 
-    t->setMinimumSize(66,400);
+    t->setMinimumSize(73,400);
     QSizePolicy policy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     t->setSizePolicy(policy);
     t->setObjectName ( "CADTB" );
-    t->setFixedWidth(66);
     t->setFloatable(false);
     t->setAllowedAreas(Qt::LeftToolBarArea | Qt::RightToolBarArea);
     // t->setVerticallyStretchable(true);
