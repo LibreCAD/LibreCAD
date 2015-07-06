@@ -30,6 +30,7 @@
 #include <QHash>
 #include <QString>
 #include <QVariant>
+#include<vector>
 //#include <QColor>
 
 namespace DPI {
