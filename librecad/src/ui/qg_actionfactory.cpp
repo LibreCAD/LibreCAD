@@ -324,7 +324,7 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
                         // tr("Grid")
                         action = new QAction(tr("&Grid"), mw);
                         action->setIcon(QIcon(":/actions/viewgrid.png"));
-                        action->setShortcut(tr("CTRL-G"));
+                        action->setShortcut(QKeySequence(tr("Ctrl+G", "Toggle Grid")));
                         //action->zetStatusTip(tr("Enables/disables the grid"));
                         action->setCheckable(true);
                         connect(action, SIGNAL(toggled(bool)),
