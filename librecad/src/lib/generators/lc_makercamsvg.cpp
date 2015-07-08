@@ -422,7 +422,7 @@ void LC_MakerCamSVG::writeEllipse(RS_Ellipse* ellipse) {
 
         std::string path = "";
 
-        if (ellipse->isArc()) {
+        if (ellipse->isEllipticArc()) {
 
             const int segments = 4;
 
@@ -500,7 +500,7 @@ void LC_MakerCamSVG::writeEllipse(RS_Ellipse* ellipse) {
     }
     else {
 
-        if (ellipse->isArc()) {
+        if (ellipse->isEllipticArc()) {
 
             RS_DEBUG->print("RS_MakerCamSVG::writeEllipse: Writing ellipse arc as 'path' with arc segments ...");
 
