@@ -90,26 +90,26 @@ void plot::execComm(Document_Interface *doc, QWidget *parent, QString cmd)
             std::cout << e.GetMsg() << std::endl;
         }
 
-        std::vector<QPointF> points;
-
         QList<double> const& xpoints=(equation2.isEmpty())?xValues:yValues1;
         QList<double> const& ypoints=(equation2.isEmpty())?yValues1:yValues2;
 
-        for(int i=0; i< xpoints.size(); ++i){
-            points.emplace_back(QPointF(xpoints[i], ypoints[i]));
-        }
-        //TODO add option for splinepoints: closed
-        //hardcoded to false now
-        switch(lineType){
-        case plotDialog::LineSegments:
-            doc->addLines(points, false);
-            break;
-        case plotDialog::Polyline:
-        default:
+        if (lineType == plotDialog::LineSegments || lineType == plotDialog::SplinePoints){
+            std::vector<QPointF> points;
+            for(int i=0; i< xpoints.size(); ++i){
+                points.emplace_back(QPointF(xpoints[i], ypoints[i]));
+            }
+            if (lineType == plotDialog::SplinePoints){
+                //TODO add option for splinepoints: closed
+                //hardcoded to false now
+                doc->addSplinePoints(points, false);
+            } else
+                doc->addLines(points, false);
+        } else { //default plotDialog::Polyline
+            std::vector<Plug_VertexData> points;
+            for(int i=0; i< xpoints.size(); ++i){
+                points.emplace_back(Plug_VertexData(QPointF(xpoints[i], ypoints[i]), 0.0));
+            }
             doc->addPolyline(points, false);
-            break;
-        case plotDialog::SplinePoints:
-        doc->addSplinePoints(points, false);
         }
 
     }

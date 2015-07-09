@@ -942,7 +942,7 @@ void Doc_plugin_interface::addLines(std::vector<QPointF> const& points, bool clo
         RS_DEBUG->print("%s: currentContainer is NULL", __func__);
 }
 
-void Doc_plugin_interface::addPolyline(std::vector<QPointF> const& points, bool closed)
+void Doc_plugin_interface::addPolyline(std::vector<Plug_VertexData> const& points, bool closed)
 {
     if (doc) {
         RS_PolylineData data;
@@ -951,7 +951,7 @@ void Doc_plugin_interface::addPolyline(std::vector<QPointF> const& points, bool 
         RS_Polyline* entity = new RS_Polyline(doc, data);
 
         for(auto const& pt: points){
-            entity->addVertex(RS_Vector(pt.x(), pt.y()), 0.);
+            entity->addVertex(RS_Vector(pt.point.x(), pt.point.y()), pt.bulge);
         }
 
         doc->addEntity(entity);
