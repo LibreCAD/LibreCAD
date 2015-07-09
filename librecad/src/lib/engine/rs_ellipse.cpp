@@ -1471,8 +1471,8 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
         setCenter(getCenter()+offset);
         return;
     }
-	bool const switched=getRatio()>1.;
-	if(switched) switchMajorMinor();
+
+    if(data.ratio>1.) switchMajorMinor();
 	auto foci=getFoci();
 	for(size_t i=0; i< 2 ; i++){
         if ((ref-foci.at(i)).squared()<1.0e-8) {
@@ -1497,12 +1497,10 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
             setMajorP(majorP);
             setRatio(sqrt(d*d-c*c)/d);
             correctAngles();//avoid extra 2.*M_PI in angles
-			if(switched) switchMajorMinor();
+            if(data.ratio>1.) switchMajorMinor();
             return;
         }
     }
-
-	if(switched) switchMajorMinor();
 
     //move major/minor points
     if ((ref-getMajorPoint()).squared()<1.0e-8) {
@@ -1512,6 +1510,7 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
         double ratio = getRatio()*getMajorRadius()/r;
         setMajorP(majorP);
         setRatio(ratio);
+        if(data.ratio>1.) switchMajorMinor();
         return;
     }
     if ((ref-getMinorPoint()).squared()<1.0e-8) {
@@ -1524,9 +1523,9 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
         if(r<RS_TOLERANCE) return;
         double ratio = getRatio()*r/getMinorRadius();
         setRatio(ratio);
+        if(data.ratio>1.) switchMajorMinor();
         return;
     }
-
 }
 
 /** whether the entity's bounding box intersects with visible portion of graphic view

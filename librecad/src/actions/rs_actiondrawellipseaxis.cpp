@@ -99,6 +99,9 @@ void RS_ActionDrawEllipseAxis::trigger() {
                                angle1, angle2,
                                false);
     RS_Ellipse* ellipse = new RS_Ellipse(container, ellipseData);
+    if (ratio > 1.){
+        ellipse->switchMajorMinor();
+    }
     ellipse->setLayerToActive();
     ellipse->setPenToActive();
 
@@ -112,7 +115,7 @@ void RS_ActionDrawEllipseAxis::trigger() {
     }
 
     RS_Vector rz = graphicView->getRelativeZero();
-        graphicView->redraw(RS2::RedrawDrawing);
+    graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(rz);
     drawSnapper();
 
