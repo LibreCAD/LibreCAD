@@ -110,12 +110,16 @@ public:
      */
     void addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, const std::initializer_list<RS2::ActionType>& list) const;
 
-	void setCADToolBar(QG_CadToolBar* toolbar);
+    QMap<RS2::ActionType, QAction*> action_map(std::initializer_list<RS2::ActionType> list);
+
+    QList<QAction*> action_list(QObject* slot_owner, std::initializer_list<RS2::ActionType> list);
+
+//	void setCADToolBar(QG_CadToolBar* toolbar);
 
 private:
     QG_ActionHandler* actionHandler;
     QWidget* widget;
-	QG_CadToolBar* m_pCADToolBar;
+//	QG_CadToolBar* m_pCADToolBar;
 };
 
 #endif

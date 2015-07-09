@@ -167,8 +167,8 @@
  */
 QG_ActionFactory::QG_ActionFactory(QG_ActionHandler* ah, QWidget* w, QG_CadToolBar* toolbar):
     actionHandler(ah)
-  ,widget(w)
-  ,m_pCADToolBar(toolbar)
+   ,widget(w)
+//  ,m_pCADToolBar(toolbar)
 {
 }
 
@@ -194,8 +194,7 @@ QG_ActionFactory::QG_ActionFactory(QG_ActionHandler* ah, QWidget* w, QG_CadToolB
  *							  is unknown.
  *	*/
 
-QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
-                                                                                                                QObject* obj2) const
+QAction* QG_ActionFactory::createAction(RS2::ActionType id, QObject* obj, QObject* obj2) const
 {
     // assert that action handler is not invalid:
     if (actionHandler==NULL) {
@@ -347,8 +346,12 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
         // StatusBar is displayed by default
         action->setChecked(true);
 
+        action->setShortcut(QKeySequence(tr("Ctrl+I", "Hide Statusbar")));
+
         connect(action, SIGNAL(toggled(bool)),
                 obj, SLOT(slotViewStatusBar(bool)));
+
+
         break;
 
     case RS2::ActionViewLayerList:
@@ -673,9 +676,8 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
         break;
 
     case RS2::ActionDrawCircle:
-                action = RS_ActionDrawCircle::createGUIAction(id, mw);
-        connect(action, SIGNAL(triggered()),
-                obj, SLOT(slotDrawCircle()));
+        action = RS_ActionDrawCircle::createGUIAction(id, mw);
+        connect(action, SIGNAL(triggered()), obj, SLOT(slotDrawCircle()));
         break;
 
     case RS2::ActionDrawCircleCR:
@@ -1465,18 +1467,18 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
     return action;
 }
 
-
+//1
 QAction*  QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, RS2::ActionType id,
 								   RS2::ToolBarId toolbarId ) const
 {
     QAction* const action=createAction(id, obj);
     if(action) menu->addAction(action);
-	if(m_pCADToolBar && toolbarId != RS2::ToolBarNone){
-		m_pCADToolBar->populateSubToolBar({action}, toolbarId);
-	   }
+//	if(m_pCADToolBar && toolbarId != RS2::ToolBarNone){
+//		m_pCADToolBar->populateSubToolBar({action}, toolbarId);
+//	   }
     return action;
 }
-
+//2
 void QG_ActionFactory::addGUI(QMenu* menu, QObject* obj,
 							  const std::initializer_list<RS2::ActionType>& list,
 							  RS2::ToolBarId id) const
@@ -1485,18 +1487,18 @@ void QG_ActionFactory::addGUI(QMenu* menu, QObject* obj,
 	for(RS2::ActionType type: list){
 		actions.push_back(addGUI(menu, obj, type));
 	}
-	if(actions.size() && m_pCADToolBar && id != RS2::ToolBarNone){
-		m_pCADToolBar->populateSubToolBar(actions, id);
-	}
+//	if(actions.size() && m_pCADToolBar && id != RS2::ToolBarNone){
+//		m_pCADToolBar->populateSubToolBar(actions, id);
+//	}
 }
-
+//3
 QAction*  QG_ActionFactory::addGUI(QMenu* menu, QObject* obj, QObject* obj2, RS2::ActionType id) const
 {
     QAction* const action=createAction(id, obj, obj2);
     if(action) menu->addAction(action);
     return action;
 }
-
+//4
 QAction*  QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, RS2::ActionType id) const
 {
     QAction* const action=createAction(id, obj);
@@ -1506,13 +1508,13 @@ QAction*  QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj,
     }
     return action;
 }
-
+//5
 void QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, const std::initializer_list<RS2::ActionType>& list) const
 {
     for(RS2::ActionType type: list)
-        addGUI(menu, toolbar, obj, type);
+        addGUI(menu, toolbar, obj, type); //4
 }
-
+//6
 QAction* QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, QObject* obj2, RS2::ActionType id) const
 {
     QAction* const action=createAction(id, obj, obj2);
@@ -1523,11 +1525,29 @@ QAction* QG_ActionFactory::addGUI(QMenu* menu, QToolBar* toolbar, QObject* obj, 
     return action;
 }
 
-
-void QG_ActionFactory::setCADToolBar(QG_CadToolBar* toolbar)
+QMap<RS2::ActionType, QAction*> QG_ActionFactory::action_map(std::initializer_list<RS2::ActionType> list)
 {
-	m_pCADToolBar=toolbar;
+    QMap<RS2::ActionType, QAction*> a_map;
+
+    for(RS2::ActionType type : list)
+    {
+        a_map[type] = createAction(type, actionHandler);
+    }
+    return a_map;
 }
 
+QList<QAction*> QG_ActionFactory::action_list(QObject* slot_owner, std::initializer_list<RS2::ActionType> list)
+{
+    QList<QAction*> a_list;
 
+    for(RS2::ActionType type : list)
+    {
+        a_list.append(createAction(type, slot_owner));
+    }
+    return a_list;
+}
 
+//void QG_ActionFactory::setCADToolBar(QG_CadToolBar* toolbar)
+//{
+//	m_pCADToolBar=toolbar;
+//}

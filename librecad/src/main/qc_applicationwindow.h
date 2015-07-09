@@ -74,9 +74,7 @@ public:
     QC_ApplicationWindow();
     ~QC_ApplicationWindow();
 
-    void initActions();
-    void initMenuBar();
-    void initToolBar();
+    void toolbars_menues_actions();
     void initStatusBar();
 
     void initSettings();
@@ -96,6 +94,7 @@ public:
     void setPreviousZoomEnable(bool enable);
 
 public slots:
+    void slot_set_action(QAction* q_action);
     virtual void show();
     void finishSplashScreen();
         void slotFocus();
@@ -299,7 +298,7 @@ public:
 
 protected:
     void closeEvent(QCloseEvent*);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+//    virtual void mouseReleaseEvent(QMouseEvent* e);
     //! \{ accept drop files to open
     virtual void dropEvent(QDropEvent* e);
     virtual void dragEnterEvent(QDragEnterEvent * event);
@@ -379,6 +378,8 @@ private:
 
     QList <QAction*> recentFilesAction;
     /** the main toolbars */
+    QToolBar* dwToolBar;
+    QToolBar* circleToolBar;
     QToolBar* fileToolBar;
     QToolBar* editToolBar;
     QToolBar* zoomToolBar;
@@ -394,7 +395,7 @@ private:
     // Toolbar for selecting the current pen
     QG_PenToolBar* penToolBar;
     // Toolbar for CAD tools
-    QG_CadToolBar* cadToolBar;
+//    QG_CadToolBar* cadToolBar;
 
 #if QT_VERSION < 0x040400
     QAssistantClient *assistant;

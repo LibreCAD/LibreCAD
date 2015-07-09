@@ -72,6 +72,7 @@ RS_Snapper(container, graphicView) {
     actionType=RS2::ActionNone;
 
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\": OK", name);
+
 }
 
 /**
@@ -109,10 +110,11 @@ void RS_ActionInterface::init(int status) {
         //graphicView->setMouseCursor(cursor);
                 updateMouseButtonHints();
         updateMouseCursor();
-        updateToolBar();
+        // updateToolBar();
     }else{
         //delete snapper when finished, bug#3416878
         deleteSnapper();
+
     }
 }
 
@@ -199,7 +201,7 @@ QStringList RS_ActionInterface::getAvailableCommands() {
 void RS_ActionInterface::setStatus(int status) {
     this->status = status;
     updateMouseButtonHints();
-    updateToolBar();
+    //updateToolBar();
     updateMouseCursor();
     if(status<0) finish();
 }
@@ -261,20 +263,20 @@ void RS_ActionInterface::setFinished() {
 /**
  * Finishes this action.
  */
-void RS_ActionInterface::finish(bool updateTB) {
+void RS_ActionInterface::finish(bool updateTB)
+{
 	RS_DEBUG->print("RS_ActionInterface::finish");
 	//refuse to quit the default action
 	if(!(rtti() == RS2::ActionDefault || rtti()==RS2::ActionFilePrintPreview) ) {
 		status = -1;
 		finished = true;
 		hideOptions();
-		if(updateTB) {
-			updateToolBar();
-		}
+//		if(updateTB) {
+//			updateToolBar();
+//		}
 		RS_Snapper::finish();
-		graphicView->setMouseCursor(RS2::ArrowCursor);
+        graphicView->setMouseCursor(RS2::ArrowCursor);
 	}
-
 	RS_DEBUG->print("RS_ActionInterface::finish: OK");
 }
 

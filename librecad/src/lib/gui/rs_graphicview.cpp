@@ -252,7 +252,7 @@ RS_ActionInterface* RS_GraphicView::getCurrentAction() {
  * Sets the current action of the event handler.
  */
 void RS_GraphicView::setCurrentAction(RS_ActionInterface* action) {
-	RS_DEBUG->print("RS_GraphicView::setCurrentAction");
+    RS_DEBUG->print("RS_GraphicView::setCurrentAction");
 	if (eventHandler) {
 		eventHandler->setCurrentAction(action);
 	}
@@ -289,11 +289,13 @@ void RS_GraphicView::killAllActions() {
 void RS_GraphicView::back() {
 	if (eventHandler && eventHandler->hasAction()) {
 		eventHandler->back();
-	} else {
-		if (RS_DIALOGFACTORY) {
-			RS_DIALOGFACTORY->requestPreviousMenu();
-		}
-	}
+    }
+//    else
+//    {
+//		if (RS_DIALOGFACTORY) {
+//			RS_DIALOGFACTORY->requestPreviousMenu();
+//		}
+//	}
 }
 
 
@@ -325,18 +327,19 @@ void RS_GraphicView::mousePressEvent(QMouseEvent* e) {
  * Called by the actual GUI class which implements the RS_GraphicView
  * interface to notify LibreCAD about mouse events.
  */
-void RS_GraphicView::mouseReleaseEvent(QMouseEvent* e) {
+void RS_GraphicView::mouseReleaseEvent(QMouseEvent* e)
+{
 	RS_DEBUG->print("RS_GraphicView::mouseReleaseEvent");
-	if (eventHandler) {
-		if (e->button()!=Qt::RightButton ||
-				eventHandler->hasAction()) {
-
+    if (eventHandler)
+    {
+        if (e->button()!=Qt::RightButton || eventHandler->hasAction())
+        {
 			eventHandler->mouseReleaseEvent(e);
 			//e->accept();
 		}
-		else {
-			back();
-
+        else
+        {
+            back();
 			e->accept();
 		}
 	}
@@ -2011,3 +2014,8 @@ bool RS_GraphicView::isCleanUp(void) const
 	return m_bIsCleanUp;
 }
 
+void RS_GraphicView::set_action(QAction* q_action)
+{
+    eventHandler->real_action = q_action;
+    eventHandler->right_click_quits = true;
+}
