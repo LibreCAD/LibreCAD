@@ -398,7 +398,6 @@ public:
         default:
             return -3;
         }
-        return static_cast<int> (lw);
     }
 
     static int lineWidth2dwgInt(enum lineWidth lw){
