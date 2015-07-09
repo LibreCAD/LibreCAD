@@ -98,7 +98,7 @@ void LC_MakerCamSVG::write(RS_Graphic* graphic) {
     max = graphic->getMax();
 
     RS2::Unit raw_unit = graphic->getUnit();
-
+    lengthFactor=1.;
     switch (raw_unit) {
         case RS2::Millimeter:
             unit = "mm";
@@ -111,7 +111,8 @@ void LC_MakerCamSVG::write(RS_Graphic* graphic) {
             break;
 
         default:
-            unit = "";
+            unit = "mm";
+            lengthFactor=RS_Units::convert(1., raw_unit, RS2::Millimeter);
             break;
     }
 
@@ -120,9 +121,9 @@ void LC_MakerCamSVG::write(RS_Graphic* graphic) {
     xmlWriter->addNamespaceDeclaration("lc", NAMESPACE_URI_LC);
     xmlWriter->addNamespaceDeclaration("xlink", NAMESPACE_URI_XLINK);
 
-    xmlWriter->addAttribute("width", numXml(max.x - min.x) + unit);
-    xmlWriter->addAttribute("height", numXml(max.y - min.y) + unit);
-    xmlWriter->addAttribute("viewBox", "0 0 "+ numXml(max.x - min.x) + " " + numXml(max.y - min.y));
+    xmlWriter->addAttribute("width", lengthXml(max.x - min.x) + unit);
+    xmlWriter->addAttribute("height", lengthXml(max.y - min.y) + unit);
+    xmlWriter->addAttribute("viewBox", "0 0 "+ lengthXml(max.x - min.x) + " " + lengthXml(max.y - min.y));
 
     writeBlocks(graphic);
     writeLayers(graphic);
@@ -304,8 +305,8 @@ void LC_MakerCamSVG::writeInsert(RS_Insert* insert) {
 
         xmlWriter->addElement("use", NAMESPACE_URI_SVG);
 
-        xmlWriter->addAttribute("x", numXml(insertionpoint.x));
-        xmlWriter->addAttribute("y", numXml(insertionpoint.y - (max.y - min.y)));
+        xmlWriter->addAttribute("x", lengthXml(insertionpoint.x));
+        xmlWriter->addAttribute("y", lengthXml(insertionpoint.y - (max.y - min.y)));
         xmlWriter->addAttribute("href", "#" + std::to_string(block->getId()), NAMESPACE_URI_XLINK);
 
         xmlWriter->closeElement();
@@ -323,9 +324,9 @@ void LC_MakerCamSVG::writePoint(RS_Point* point) {
 
     xmlWriter->addElement("circle", NAMESPACE_URI_SVG);
 
-    xmlWriter->addAttribute("cx", numXml(center.x));
-    xmlWriter->addAttribute("cy", numXml(center.y));
-    xmlWriter->addAttribute("r", numXml(0.1));
+    xmlWriter->addAttribute("cx", lengthXml(center.x));
+    xmlWriter->addAttribute("cy", lengthXml(center.y));
+    xmlWriter->addAttribute("r", lengthXml(0.1));
 
     xmlWriter->closeElement();
 }
@@ -339,10 +340,10 @@ void LC_MakerCamSVG::writeLine(RS_Line* line) {
 
     xmlWriter->addElement("line", NAMESPACE_URI_SVG);
 
-    xmlWriter->addAttribute("x1", numXml(startpoint.x));
-    xmlWriter->addAttribute("y1", numXml(startpoint.y));
-    xmlWriter->addAttribute("x2", numXml(endpoint.x));
-    xmlWriter->addAttribute("y2", numXml(endpoint.y));
+    xmlWriter->addAttribute("x1", lengthXml(startpoint.x));
+    xmlWriter->addAttribute("y1", lengthXml(startpoint.y));
+    xmlWriter->addAttribute("x2", lengthXml(endpoint.x));
+    xmlWriter->addAttribute("y2", lengthXml(endpoint.y));
 
     xmlWriter->closeElement();
 }
@@ -389,9 +390,9 @@ void LC_MakerCamSVG::writeCircle(RS_Circle* circle) {
 
     xmlWriter->addElement("circle", NAMESPACE_URI_SVG);
 
-    xmlWriter->addAttribute("cx", numXml(center.x));
-    xmlWriter->addAttribute("cy", numXml(center.y));
-    xmlWriter->addAttribute("r", numXml(circle->getRadius()));
+    xmlWriter->addAttribute("cx", lengthXml(center.x));
+    xmlWriter->addAttribute("cy", lengthXml(center.y));
+    xmlWriter->addAttribute("r", lengthXml(circle->getRadius()));
 
     xmlWriter->closeElement();
 }
@@ -536,13 +537,13 @@ void LC_MakerCamSVG::writeEllipse(RS_Ellipse* ellipse) {
 
             double angle = 180 - (RS_Math::rad2deg(ellipse->getAngle()) - 90);
 
-            std::string transform = "translate(" + numXml(center.x) + ", " + numXml(center.y) + ") " +
+            std::string transform = "translate(" + lengthXml(center.x) + ", " + lengthXml(center.y) + ") " +
                                     "rotate(" + numXml(angle) + ")";
 
             xmlWriter->addElement("ellipse", NAMESPACE_URI_SVG);
 
-            xmlWriter->addAttribute("rx", numXml(minorradius));
-            xmlWriter->addAttribute("ry", numXml(majorradius));
+            xmlWriter->addAttribute("rx", lengthXml(minorradius));
+            xmlWriter->addAttribute("ry", lengthXml(majorradius));
             xmlWriter->addAttribute("transform", transform);
 
             xmlWriter->closeElement();
@@ -742,6 +743,10 @@ std::string LC_MakerCamSVG::numXml(double value) {
     return RS_Utility::doubleToString(value, 8).toStdString();
 }
 
+std::string LC_MakerCamSVG::lengthXml(double value) {
+    return numXml(lengthFactor*value);
+}
+
 RS_Vector LC_MakerCamSVG::convertToSvg(RS_Vector vector) {
 
     RS_Vector translated((vector.x - min.x), (max.y - vector.y));
@@ -756,25 +761,25 @@ std::string LC_MakerCamSVG::svgPathClose() {
 
 std::string LC_MakerCamSVG::svgPathCurveTo(RS_Vector point, RS_Vector controlpoint1, RS_Vector controlpoint2) {
 
-    return "C" + numXml(controlpoint1.x) + "," + numXml(controlpoint1.y) + " " +
-           numXml(controlpoint2.x) + "," + numXml(controlpoint2.y) + " " +
-           numXml(point.x) + "," + numXml(point.y) + " ";
+    return "C" + lengthXml(controlpoint1.x) + "," + lengthXml(controlpoint1.y) + " " +
+           lengthXml(controlpoint2.x) + "," + lengthXml(controlpoint2.y) + " " +
+           lengthXml(point.x) + "," + lengthXml(point.y) + " ";
 }
 
 std::string LC_MakerCamSVG::svgPathQuadraticCurveTo(RS_Vector point, RS_Vector controlpoint) {
 
-    return "Q" + numXml(controlpoint.x) + "," + numXml(controlpoint.y) + " " +
-           numXml(point.x) + "," + numXml(point.y) + " ";
+    return "Q" + lengthXml(controlpoint.x) + "," + lengthXml(controlpoint.y) + " " +
+           lengthXml(point.x) + "," + lengthXml(point.y) + " ";
 }
 
 std::string LC_MakerCamSVG::svgPathLineTo(RS_Vector point) {
 
-    return "L" + numXml(point.x) + "," + numXml(point.y) + " ";
+    return "L" + lengthXml(point.x) + "," + lengthXml(point.y) + " ";
 }
 
 std::string LC_MakerCamSVG::svgPathMoveTo(RS_Vector point) {
 
-    return "M" + numXml(point.x) + "," + numXml(point.y) + " ";
+    return "M" + lengthXml(point.x) + "," + lengthXml(point.y) + " ";
 }
 
 std::string LC_MakerCamSVG::svgPathArc(RS_Arc* arc) {
@@ -804,11 +809,11 @@ std::string LC_MakerCamSVG::svgPathArc(RS_Arc* arc) {
 
 std::string LC_MakerCamSVG::svgPathArc(RS_Vector point, double radius_x, double radius_y, double x_axis_rotation, bool large_arc_flag, bool sweep_flag) {
 
-    return "A" + numXml(radius_x) + "," + numXml(radius_y) + " " +
+    return "A" + lengthXml(radius_x) + "," + lengthXml(radius_y) + " " +
            numXml(x_axis_rotation) + " " +
            (large_arc_flag ? "1" : "0") + "," +
            (sweep_flag ? "1" : "0") + " " +
-           numXml(point.x) + "," + numXml(point.y) + " ";
+           lengthXml(point.x) + "," + lengthXml(point.y) + " ";
 }
 
 RS_Vector LC_MakerCamSVG::calcEllipsePointDerivative(double majorradius, double minorradius, double x_axis_rotation, double angle) {

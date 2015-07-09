@@ -95,6 +95,13 @@ private:
     std::vector<RS_Vector> calcQuadraticBezierPoints(const std::vector<RS_Vector> &control_points, bool is_closed);
 
     std::string numXml(double value);
+    /**
+     * @brief lengthXml convert length to xml string
+     * using lengthFactor to convert unknown units into mm
+     * @param value
+     * @return
+     */
+    std::string lengthXml(double value);
     RS_Vector convertToSvg(RS_Vector vector);
 
     std::string svgPathClose();
@@ -122,6 +129,7 @@ private:
     RS_Vector offset;
 
     std::string unit;
+    double lengthFactor;
 };
 
 #endif
