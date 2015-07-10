@@ -100,9 +100,6 @@ void LC_MakerCamSVG::write(RS_Graphic* graphic) {
     RS2::Unit raw_unit = graphic->getUnit();
     lengthFactor=1.;
     switch (raw_unit) {
-        case RS2::Millimeter:
-            unit = "mm";
-            break;
         case RS2::Centimeter:
             unit = "cm";
             break;
@@ -111,8 +108,10 @@ void LC_MakerCamSVG::write(RS_Graphic* graphic) {
             break;
 
         default:
-            unit = "mm";
             lengthFactor=RS_Units::convert(1., raw_unit, RS2::Millimeter);
+            //do not break here, default will use mm and convert length to mm
+        case RS2::Millimeter:
+            unit = "mm";
             break;
     }
 
