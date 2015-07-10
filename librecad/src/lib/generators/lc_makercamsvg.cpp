@@ -743,47 +743,50 @@ std::string LC_MakerCamSVG::numXml(double value) {
     return RS_Utility::doubleToString(value, 8).toStdString();
 }
 
-std::string LC_MakerCamSVG::lengthXml(double value) {
+std::string LC_MakerCamSVG::lengthXml(double value) const
+{
     return numXml(lengthFactor*value);
 }
 
-RS_Vector LC_MakerCamSVG::convertToSvg(RS_Vector vector) {
+RS_Vector LC_MakerCamSVG::convertToSvg(RS_Vector vector) const
+{
 
     RS_Vector translated((vector.x - min.x), (max.y - vector.y));
 
     return translated + offset;
 }
 
-std::string LC_MakerCamSVG::svgPathClose() {
+std::string LC_MakerCamSVG::svgPathClose() const
+{
 
     return "Z ";
 }
 
-std::string LC_MakerCamSVG::svgPathCurveTo(RS_Vector point, RS_Vector controlpoint1, RS_Vector controlpoint2) {
-
+std::string LC_MakerCamSVG::svgPathCurveTo(RS_Vector point, RS_Vector controlpoint1, RS_Vector controlpoint2) const
+{
     return "C" + lengthXml(controlpoint1.x) + "," + lengthXml(controlpoint1.y) + " " +
            lengthXml(controlpoint2.x) + "," + lengthXml(controlpoint2.y) + " " +
            lengthXml(point.x) + "," + lengthXml(point.y) + " ";
 }
 
-std::string LC_MakerCamSVG::svgPathQuadraticCurveTo(RS_Vector point, RS_Vector controlpoint) {
-
+std::string LC_MakerCamSVG::svgPathQuadraticCurveTo(RS_Vector point, RS_Vector controlpoint) const
+{
     return "Q" + lengthXml(controlpoint.x) + "," + lengthXml(controlpoint.y) + " " +
            lengthXml(point.x) + "," + lengthXml(point.y) + " ";
 }
 
-std::string LC_MakerCamSVG::svgPathLineTo(RS_Vector point) {
-
+std::string LC_MakerCamSVG::svgPathLineTo(RS_Vector point) const
+{
     return "L" + lengthXml(point.x) + "," + lengthXml(point.y) + " ";
 }
 
-std::string LC_MakerCamSVG::svgPathMoveTo(RS_Vector point) {
-
+std::string LC_MakerCamSVG::svgPathMoveTo(RS_Vector point) const
+{
     return "M" + lengthXml(point.x) + "," + lengthXml(point.y) + " ";
 }
 
-std::string LC_MakerCamSVG::svgPathArc(RS_Arc* arc) {
-
+std::string LC_MakerCamSVG::svgPathArc(RS_Arc* arc) const
+{
     RS_Vector endpoint = convertToSvg(arc->getEndpoint());
     double radius = arc->getRadius();
 
@@ -807,8 +810,8 @@ std::string LC_MakerCamSVG::svgPathArc(RS_Arc* arc) {
     return svgPathArc(endpoint, radius, radius, 0.0, large_arc_flag, sweep_flag);
 }
 
-std::string LC_MakerCamSVG::svgPathArc(RS_Vector point, double radius_x, double radius_y, double x_axis_rotation, bool large_arc_flag, bool sweep_flag) {
-
+std::string LC_MakerCamSVG::svgPathArc(RS_Vector point, double radius_x, double radius_y, double x_axis_rotation, bool large_arc_flag, bool sweep_flag) const
+{
     return "A" + lengthXml(radius_x) + "," + lengthXml(radius_y) + " " +
            numXml(x_axis_rotation) + " " +
            (large_arc_flag ? "1" : "0") + "," +
@@ -816,8 +819,8 @@ std::string LC_MakerCamSVG::svgPathArc(RS_Vector point, double radius_x, double 
            lengthXml(point.x) + "," + lengthXml(point.y) + " ";
 }
 
-RS_Vector LC_MakerCamSVG::calcEllipsePointDerivative(double majorradius, double minorradius, double x_axis_rotation, double angle) {
-
+RS_Vector LC_MakerCamSVG::calcEllipsePointDerivative(double majorradius, double minorradius, double x_axis_rotation, double angle) const
+{
     RS_Vector vector((-majorradius * cos(x_axis_rotation) * sin(angle)) - (minorradius * sin(x_axis_rotation) * cos(angle)),
                      (-majorradius * sin(x_axis_rotation) * sin(angle)) + (minorradius * cos(x_axis_rotation) * cos(angle)));
 
