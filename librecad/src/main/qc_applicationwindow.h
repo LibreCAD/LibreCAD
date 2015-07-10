@@ -75,12 +75,11 @@ public:
     ~QC_ApplicationWindow();
 
     void toolbars_menues_actions();
+    void set_icon_size();
     void initStatusBar();
-
     void initSettings();
-        void restoreDocks();
+    void restoreDocks();
     void storeSettings();
-
     void initMDI();
     void initView();
 
@@ -97,13 +96,13 @@ public slots:
     void slot_set_action(QAction* q_action);
     virtual void show();
     void finishSplashScreen();
-        void slotFocus();
+    void slotFocus();
     void slotBack();
     void slotKillAllActions();
     //void slotNext();
     void slotEnter();
     void slotFocusCommandLine();
-        void slotError(const QString& msg);
+    void slotError(const QString& msg);
 
     void slotWindowActivated(int);
     void slotWindowActivated(QMdiSubWindow* w);

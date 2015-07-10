@@ -2672,6 +2672,8 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
 	QColor endHandleColor(RS_SETTINGS->readEntry("/EndHandleColor", "#0000FF"));
 	RS_SETTINGS->endGroup();
 
+    set_icon_size();
+
     QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
     for (int i = 0; i < windows.size(); ++i) {
         QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
@@ -3128,16 +3130,16 @@ void QC_ApplicationWindow::updateWindowTitle(QWidget *w)
 
 void QC_ApplicationWindow::slot_set_action(QAction* q_action)
 {
-    RS_GraphicView* GV;
-    GV = getGraphicView();
-    GV->set_action(q_action);
+    getGraphicView()->set_action(q_action);
 }
 
 // github.com/LibreCAD/LibreCAD.git
-// ravas@outlook.com
+// ravas@outlook.com - 2015
 void QC_ApplicationWindow::toolbars_menues_actions()
 {
-    RS_DEBUG->print("QC_ApplicationWindow::create_actions_toolbars_menues()");
+    RS_DEBUG->print("QC_ApplicationWindow::toolbars_menues_actions()");
+
+    set_icon_size();
 
     QSizePolicy toolBarPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     QG_ActionFactory AF(actionHandler, this);
@@ -3804,4 +3806,17 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     constructionTB->addAction(circle_actions[RS2::ActionDrawCircle]);
     constructionTB->addAction(line_actions[RS2::ActionDrawLine]);
     addToolBar(Qt::BottomToolBarArea, constructionTB);
+}
+
+
+void QC_ApplicationWindow::set_icon_size()
+{
+    RS_SETTINGS->beginGroup("/Appearance");
+    bool custom_size = RS_SETTINGS->readNumEntry("/SetIconSize", 0);
+    if (custom_size)
+    {
+        int icon_size = RS_SETTINGS->readNumEntry("/IconSize", 24);
+        setIconSize(QSize(icon_size, icon_size));
+    }
+    RS_SETTINGS->endGroup();
 }
