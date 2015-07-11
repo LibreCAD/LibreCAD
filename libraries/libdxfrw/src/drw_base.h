@@ -396,9 +396,9 @@ public:
         case width23:
             return 211;
         default:
-            return -3;
+            break;
         }
-        return static_cast<int> (lw);
+        return -3;
     }
 
     static int lineWidth2dwgInt(enum lineWidth lw){
