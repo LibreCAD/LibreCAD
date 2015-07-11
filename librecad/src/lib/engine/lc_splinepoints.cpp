@@ -800,16 +800,16 @@ double LC_SplinePoints::getDistanceToPoint(const RS_Vector& coord,
 	return dDist;
 }
 
-RS_Vector LC_SplinePoints::getNearestCenter(const RS_Vector& /*coord*/,
-	double* dist) const
-{
-	if(dist != NULL)
-	{
-		*dist = RS_MAXDOUBLE;
-	}
+//RS_Vector LC_SplinePoints::getNearestCenter(const RS_Vector& /*coord*/,
+//	double* dist) const
+//{
+//	if(dist != NULL)
+//	{
+//		*dist = RS_MAXDOUBLE;
+//	}
 
-	return RS_Vector(false);
-}
+//	return RS_Vector(false);
+//}
 
 RS_Vector GetNearestMiddleLine(const RS_Vector& x1, const RS_Vector& x2,
 	const RS_Vector& coord, double* dist, int middlePoints)
@@ -1058,13 +1058,13 @@ void LC_SplinePoints::revertDirection()
 /**
  * @return The reference points of the spline.
  */
-std::vector<RS_Vector> LC_SplinePoints::getPoints()
+std::vector<RS_Vector> const& LC_SplinePoints::getPoints() const
 {
 	if(data.cut) return data.controlPoints;
 	return data.splinePoints;
 }
 
-std::vector<RS_Vector> LC_SplinePoints::getControlPoints()
+std::vector<RS_Vector> const& LC_SplinePoints::getControlPoints() const
 {
 	return data.controlPoints;
 }
@@ -1088,7 +1088,7 @@ void StrokeQuad(std::vector<RS_Vector> *plist, RS_Vector vx1, RS_Vector vc1,
 	}
 }
 
-std::vector<RS_Vector> LC_SplinePoints::getStrokePoints()
+std::vector<RS_Vector> LC_SplinePoints::getStrokePoints() const
 {
 	std::vector<RS_Vector> ret;
     int p1 = getGraphicVariableInt("$SPLINESEGS", 8);

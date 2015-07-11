@@ -185,8 +185,8 @@ public:
      */
 	virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
 		bool onEntity = true, double* dist = NULL, RS_Entity** entity = NULL) const;
-	virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-		double* dist = NULL) const;
+//	virtual RS_Vector getNearestCenter(const RS_Vector& coord,
+//		double* dist = NULL) const;
 	virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
 		double* dist = NULL, int middlePoints = 1) const;
 	virtual RS_Vector getNearestDist(double distance,
@@ -211,9 +211,9 @@ public:
 	virtual void revertDirection();
 
 	virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset);
-	std::vector<RS_Vector> getPoints();
-	std::vector<RS_Vector> getControlPoints();
-	std::vector<RS_Vector> getStrokePoints();
+    std::vector<RS_Vector> const& getPoints() const;
+    std::vector<RS_Vector> const& getControlPoints() const;
+    std::vector<RS_Vector> getStrokePoints() const;
 
     friend std::ostream& operator << (std::ostream& os, const LC_SplinePoints& l);
 
