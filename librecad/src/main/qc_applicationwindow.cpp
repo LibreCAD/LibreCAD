@@ -3148,15 +3148,17 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     QMenu* subMenu;
     QToolBar* toolbar;
     QList<QAction*> a_list;
+    QList<QToolBar*> tb_list;
 
     // <~ File ~>
 
     menu = menuBar()->addMenu(tr("&File"));
     menu->setObjectName("File");
 
-    fileToolBar = new QToolBar( "File Operations", this);
+    fileToolBar = new QToolBar("File Operations", this);
     fileToolBar->setSizePolicy(toolBarPolicy);
-    fileToolBar->setObjectName ( "FileTB" );
+    fileToolBar->setObjectName("FileTB");
+    tb_list.append(fileToolBar);
 
     a_list = AF.action_list(this, {RS2::ActionFileNew
                                           ,RS2::ActionFileNewTemplate
@@ -3175,12 +3177,11 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     AF.addGUI(subMenu, actionHandler, RS2::ActionDrawImage);
     AF.addGUI(subMenu, this, RS2::ActionBlocksImport);
 
-    subMenu = menu->addMenu( QIcon(":/actions/fileexport.png"), tr("Export"));
+    subMenu = menu->addMenu(QIcon(":/actions/fileexport.png"), tr("Export"));
     subMenu->setObjectName("Export");
 
     AF.addGUI(subMenu, actionHandler, RS2::ActionFileExportMakerCam);
-    AF.addGUI(subMenu, this, {RS2::ActionFilePrintPDF
-                                        ,RS2::ActionFileExport});
+    AF.addGUI(subMenu, this, {RS2::ActionFilePrintPDF, RS2::ActionFileExport});
 
     menu->addSeparator();
 
@@ -3204,6 +3205,7 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     editToolBar = new QToolBar("Edit Operations", this);
     editToolBar->setSizePolicy(toolBarPolicy);
     editToolBar->setObjectName ("EditTB" );
+    tb_list.append(editToolBar);
 
     AF.addGUI(menu, editToolBar, actionHandler, RS2::ActionEditKillAllActions);
 
@@ -3244,6 +3246,7 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     zoomToolBar = new QToolBar( "Zoom Operations", this);
     zoomToolBar->setSizePolicy(toolBarPolicy);
     zoomToolBar->setObjectName ( "ZoomTB" );
+    tb_list.append(zoomToolBar);
 
     action=AF.addGUI(menu, zoomToolBar, this, RS2::ActionViewGrid);
     action->setChecked(true);
@@ -3308,6 +3311,7 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     toolbar = new QToolBar("Line Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("LineTB");
+    tb_list.append(toolbar);
 
     QMap<RS2::ActionType, QAction*> line_actions;
 
@@ -3348,7 +3352,7 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     toolbar = new QToolBar("Arc Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("ArcTB");
-
+    tb_list.append(toolbar);
     QMap<RS2::ActionType, QAction*> arc_actions;
 
     arc_actions = AF.action_map({RS2::ActionDrawArc
@@ -3376,6 +3380,7 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     toolbar = new QToolBar("Circle Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName ("CirclesTB");
+    tb_list.append(toolbar);
 
     QMap<RS2::ActionType, QAction*> circle_actions;
 
@@ -3411,6 +3416,7 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     toolbar = new QToolBar("Ellipse Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("EllipseTB");
+    tb_list.append(toolbar);
 
     QMap<RS2::ActionType, QAction*> ellipse_actions;
 
@@ -3440,6 +3446,7 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     toolbar = new QToolBar("Spline Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("SplineTB");
+    tb_list.append(toolbar);
 
     a_list = AF.action_list(actionHandler, {RS2::ActionDrawSpline
                                             ,RS2::ActionDrawSplinePoints});
@@ -3464,6 +3471,7 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     toolbar = new QToolBar("Polyline Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("PolylineTB");
+    tb_list.append(toolbar);
 
     QMap<RS2::ActionType, QAction*> polyline_actions;
 
@@ -3497,6 +3505,7 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     toolbar = new QToolBar("Misc Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("MiscTB");
+    tb_list.append(toolbar);
 
     a_list = AF.action_list(actionHandler, {RS2::ActionDrawMText,
                                             RS2::ActionDrawHatch,
@@ -3528,6 +3537,7 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     toolbar = new QToolBar("Dimension Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("DimensionsTB");
+    tb_list.append(toolbar);
 
     QMap<RS2::ActionType, QAction*> dim_actions;
 
@@ -3560,6 +3570,7 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     toolbar = new QToolBar("Modify Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("ModifyTB");
+    tb_list.append(toolbar);
 
     QMap<RS2::ActionType, QAction*> modify_actions;
 
@@ -3605,6 +3616,8 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     snapToolBar = new QG_SnapToolBar(tr("Snap Selection"),actionHandler, this);
     snapToolBar->setSizePolicy(toolBarPolicy);
     snapToolBar->setObjectName ( "SnapTB" );
+    tb_list.append(snapToolBar);
+
     connect(this, SIGNAL(windowsChanged(bool)), snapToolBar, SLOT(setEnabled(bool)));
     //connect(snapToolBar, SIGNAL(snapsChanged(RS_SnapMode)),
     //        this, SLOT(slotSnapsChanged(RS_SnapMode)));
@@ -3627,9 +3640,7 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     toolbar = new QToolBar("Info Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("InfoTB");
-
-    menu = menuBar()->addMenu(tr("&Info"));
-    menu->setObjectName("Info");
+    tb_list.append(toolbar);
 
     QMap<RS2::ActionType, QAction*> info_actions;
 
@@ -3690,30 +3701,33 @@ void QC_ApplicationWindow::toolbars_menues_actions()
     penToolBar = new QG_PenToolBar(tr("Pen Selection"), this);
     penToolBar->setSizePolicy(toolBarPolicy);
     penToolBar->setObjectName ( "PenTB" );
+    tb_list.append(penToolBar);
+
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
     this, SLOT(slotPenChanged(RS_Pen)));
 
     addToolBar(Qt::TopToolBarArea, penToolBar);
+
+    // Tool options toolbar
+
+    optionWidget = new QToolBar(tr("Tool Options"), this);
+    //        optionWidget->setMinimumSize(440,30);
+    optionWidget->setSizePolicy(toolBarPolicy);
+    optionWidget->setObjectName ("ToolTB");
+    tb_list.append(optionWidget);
 
     //ToolBars
     //
     menu = menuBar()->addMenu(tr("&Toolbars"));
     menu->setObjectName("Toolbars");
 
-    optionWidget = new QToolBar(tr("Tool Options"), this);
-    QSizePolicy optionWidgetBarPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    //        optionWidget->setMinimumSize(440,30);
-    optionWidget->setSizePolicy(optionWidgetBarPolicy);
-    optionWidget->setObjectName ( "ToolTB" );
-
-//    AF.addGUI(menu, this, cadToolBar->parentWidget(), RS2::ActionViewCadToolbar);
-    AF.addGUI(menu, this, penToolBar, RS2::ActionViewPenToolbar);
-    AF.addGUI(menu, this, optionWidget, RS2::ActionViewOptionToolbar);
-    AF.addGUI(menu, this, fileToolBar, RS2::ActionViewFileToolbar);
-    AF.addGUI(menu, this, editToolBar, RS2::ActionViewEditToolbar);
-    AF.addGUI(menu, this, snapToolBar, RS2::ActionViewSnapToolbar);
-
     addToolBar(Qt::TopToolBarArea, optionWidget);
+
+    foreach (QToolBar* tb, tb_list)
+    {
+        menu->addAction(tb->toggleViewAction());
+    }
+
 
     // DockWidgets
     //
