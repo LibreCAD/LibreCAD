@@ -953,8 +953,8 @@ void QC_ApplicationWindow::initActions(void)
 	actionFactory.addGUI(subMenu, actionHandler, RS2::ActionDrawText);
 
     // Hatch:
-	actionFactory.addGUI(menu, actionHandler, {RS2::ActionDrawHatch,
-											   RS2::ActionDrawImage}, RS2::ToolBarMain);
+    actionFactory.addGUI(menu, actionHandler, {RS2::ActionDrawHatch,
+                                               RS2::ActionDrawImage}, RS2::ToolBarMain);
     // Dimensioning actions:
     //
 #ifdef __APPLE1__
@@ -3210,14 +3210,14 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
 
     // update background color of all open drawings:
     RS_SETTINGS->beginGroup("/Appearance");
-    QColor color(RS_SETTINGS->readEntry("/BackgroundColor", "#000000"));
+    QColor color(RS_SETTINGS->readEntry("/BackgroundColor", "Black"));
     QColor gridColor(RS_SETTINGS->readEntry("/GridColor", "Gray"));
-    QColor metaGridColor(RS_SETTINGS->readEntry("/MetaGridColor", "Darkgray"));
-    QColor selectedColor(RS_SETTINGS->readEntry("/SelectedColor", "#A54747"));
-	QColor highlightedColor(RS_SETTINGS->readEntry("/HighlightedColor", "#739373"));
-	QColor startHandleColor(RS_SETTINGS->readEntry("/StartHandleColor", "#00FFFF"));
-	QColor handleColor(RS_SETTINGS->readEntry("/HandleColor", "#0000FF"));
-	QColor endHandleColor(RS_SETTINGS->readEntry("/EndHandleColor", "#0000FF"));
+    QColor metaGridColor(RS_SETTINGS->readEntry("/MetaGridColor", "DarkGray"));
+    QColor selectedColor(RS_SETTINGS->readEntry("/SelectedColor", "Green"));
+    QColor highlightedColor(RS_SETTINGS->readEntry("/HighlightedColor", "PaleGreen"));
+    QColor startHandleColor(RS_SETTINGS->readEntry("/StartHandleColor", "Cyan"));
+    QColor handleColor(RS_SETTINGS->readEntry("/HandleColor", "Blue"));
+    QColor endHandleColor(RS_SETTINGS->readEntry("/EndHandleColor", "Violet"));
 	RS_SETTINGS->endGroup();
 
     QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
