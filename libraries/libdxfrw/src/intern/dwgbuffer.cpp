@@ -560,8 +560,8 @@ std::string dwgBuffer::get8bitStr(){
     duint16 textSize = getBitShort();
     if (textSize == 0)
         return std::string();
-    duint8 buffer[textSize+1];
-    bool good = getBytes(buffer, textSize);
+    duint8 *tmpBuffer = new duint8[textSize];
+    bool good = getBytes(tmpBuffer, textSize);
     if (!good)
         return std::string();
 
@@ -577,8 +577,10 @@ std::string dwgBuffer::get8bitStr(){
             currByte = tmp;
         }
     }*/
-    buffer[textSize]= '\0';
-    return std::string(reinterpret_cast<char*>(buffer));
+    std::string str(reinterpret_cast<char*>(tmpBuffer), textSize);
+    delete[]tmpBuffer;
+
+    return str;
 }
 
 //internal since 2007 //pending: are 2 bytes null terminated??
@@ -590,16 +592,18 @@ std::string dwgBuffer::get16bitStr(duint16 textSize, bool nullTerm){
     duint16 ts = textSize;
     if (nullTerm)
         ts += 2;
-    duint8 buffer[textSize +2];
-    bool good = getBytes(buffer, ts);
+    duint8 *tmpBuffer = new duint8[textSize + 2];
+    bool good = getBytes(tmpBuffer, ts);
     if (!good)
         return std::string();
-
     if (!nullTerm) {
-        buffer[textSize]= '\0';
-        buffer[textSize+1]= '\0';
+        tmpBuffer[textSize] = '\0';
+        tmpBuffer[textSize + 1] = '\0';
     }
-    return std::string(reinterpret_cast<char*>(buffer), ts);
+    std::string str(reinterpret_cast<char*>(tmpBuffer), ts);
+    delete[]tmpBuffer;
+
+    return str;
 }
 
 //T 8 bit text converted from codepage to utf8
@@ -851,9 +855,9 @@ duint16 dwgBuffer::crc8(duint16 dx,dint32 start,dint32 end){
     int pos = filestr->getPos();
     filestr->setPos(start);
     int n = end-start;
-    duint8 buf[n];
-    duint8 *p = buf;
-    filestr->read (buf,n);
+    duint8 *tmpBuf = new duint8[n];
+    duint8 *p = tmpBuf;
+    filestr->read (tmpBuf,n);
     filestr->setPos(pos);
     if (!filestr->good())
         return 0;
@@ -866,6 +870,7 @@ duint16 dwgBuffer::crc8(duint16 dx,dint32 start,dint32 end){
     dx = dx ^ crctable[al & 0xFF];
     p++;
   }
+  delete[]tmpBuf;
   return(dx);
 }
 
@@ -873,9 +878,9 @@ duint32 dwgBuffer::crc32(duint32 seed,dint32 start,dint32 end){
     int pos = filestr->getPos();
     filestr->setPos(start);
     int n = end-start;
-    duint8 buf[n];
-    duint8 *p = buf;
-    filestr->read (buf,n);
+    duint8 *tmpBuf = new duint8[n];
+    duint8 *p = tmpBuf;
+    filestr->read (tmpBuf,n);
     filestr->setPos(pos);
     if (!filestr->good())
         return 0;
@@ -885,6 +890,7 @@ duint32 dwgBuffer::crc32(duint32 seed,dint32 start,dint32 end){
     duint8 data = *p++;
     invertedCrc = (invertedCrc >> 8) ^ crc32Table[(invertedCrc ^ data) & 0xff];
     }
+    delete[]tmpBuf;
     return ~invertedCrc;
 }
 
