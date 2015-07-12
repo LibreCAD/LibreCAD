@@ -35,6 +35,7 @@ public:
 	virtual void showCadToolBar(RS2::ActionType /*actionType*/) {}
 	virtual void setSelectAction( RS_ActionInterface * /*selectAction*/ ) {}
 	virtual void setNextAction( int /*nextAction*/ ) {}
+    virtual QSize 	sizeHint() const;
 
 public slots:
 	virtual void back();

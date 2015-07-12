@@ -26,7 +26,7 @@
 #ifndef QG_CADTOOLBAR_H
 #define QG_CADTOOLBAR_H
 
-#include <QWidget>
+#include <QToolBar>
 #include <vector>
 #include <map>
 #include "rs.h"
@@ -36,12 +36,12 @@ class LC_CadToolBarInterface;
 class RS_ActionInterface;
 class QActions;
 
-class QG_CadToolBar : public QWidget
+class QG_CadToolBar : public QToolBar
 {
     Q_OBJECT
 
 public:
-    QG_CadToolBar(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_CadToolBar(QWidget* parent = 0, const char* name = 0);
 	~QG_CadToolBar() = default;
 
 	/**
@@ -49,6 +49,7 @@ public:
 	 * @param actions
 	 */
 	void populateSubToolBar(const std::vector<QAction*>& actions, RS2::ToolBarId toolbarID);
+    virtual QSize 	sizeHint() const;
 
 public slots:
 	void back();

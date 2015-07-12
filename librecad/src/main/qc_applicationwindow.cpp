@@ -806,7 +806,7 @@ void QC_ApplicationWindow::initActions(void)
     actionFactory.addGUI(subMenu, this, blockWidget->parentWidget(), RS2::ActionViewBlockList);
     actionFactory.addGUI(subMenu, this, libraryWidget->parentWidget(), RS2::ActionViewLibrary);
     actionFactory.addGUI(subMenu, this, commandWidget->parentWidget(), RS2::ActionViewCommandLine);
-    actionFactory.addGUI(subMenu, this, cadToolBar->parentWidget(), RS2::ActionViewCadToolbar);
+    actionFactory.addGUI(subMenu, this, cadToolBar, RS2::ActionViewCadToolbar);
 
     subMenu->addSeparator();
 
@@ -1209,20 +1209,11 @@ void QC_ApplicationWindow::initToolBar()
     //addDockWindow(optionWidget, DockTop, true);
 
     // CAD toolbar left:
-    QToolBar* t = new QToolBar(tr("CAD Tools"), this);
 
-    t->setMinimumSize(66,400);
-    QSizePolicy policy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    t->setSizePolicy(policy);
-    t->setObjectName ( "CADTB" );
-    t->setFixedWidth(66);
-    t->setFloatable(false);
-    t->setAllowedAreas(Qt::LeftToolBarArea | Qt::RightToolBarArea);
-    // t->setVerticallyStretchable(true);
-    addToolBar(Qt::LeftToolBarArea, t);
-
-    cadToolBar = new QG_CadToolBar(t, "CAD Tools");
+    cadToolBar = new QG_CadToolBar(this, "CAD Tools");
+    cadToolBar->setObjectName("CADTB");
     cadToolBar->setActionHandler(actionHandler);
+    addToolBar(Qt::LeftToolBarArea, cadToolBar);
 
     connect(cadToolBar, SIGNAL(signalBack()),
     this, SLOT(slotBack()));

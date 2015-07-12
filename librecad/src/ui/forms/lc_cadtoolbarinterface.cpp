@@ -33,7 +33,7 @@ void LC_CadToolBarInterface::initToolBars()
 	}
 	setStyleSheet("QToolBar{ margin: 0px }");
 	setContentsMargins(0,0,0,0);
-	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+//	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	for(auto p: {m_pGrid0, m_pGrid1}){
 		p->setFloatable(false);
 		p->setMovable(false);
@@ -58,13 +58,14 @@ void LC_CadToolBarInterface::initToolBars()
 	if(m_pButtonBack){
 		QToolButton* button=new QToolButton;
 		button->setDefaultAction(m_pButtonBack);
-		button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 		vLayout->addWidget(button);
 		connect(m_pButtonBack, SIGNAL(triggered()), cadToolBar, SLOT(back()));
 	}
 	vLayout->addLayout(hLayout);
+    if(rtti()!=RS2::ToolBarSelect)
+        vLayout->addStretch(1);
 
-//	if(this->layout() ) delete layout();
 	setLayout(vLayout);
 }
 
@@ -94,6 +95,12 @@ void LC_CadToolBarInterface::killAllActions()
 	if(actionHandler==nullptr) return;
 	actionHandler->killAllActions();
 }
+
+QSize LC_CadToolBarInterface::sizeHint() const
+{
+    return QSize(-1,-1);
+}
+
 
 void LC_CadToolBarInterface::mousePressEvent(QMouseEvent* e) {
 	if (e->button()==Qt::RightButton && cadToolBar) {
@@ -140,5 +147,8 @@ void LC_CadToolBarInterface::addSubActions(const std::vector<QAction*>& actions,
 {
 	for(auto p: actions){
 		this->addSubAction(p, addGroup);
-	}
+    }
+    qDebug()<<"parentWidget()->size() "<<cadToolBar->size();
+    resize(cadToolBar->size());
+    qDebug()<<__func__<<": size="<<size();
 }

@@ -369,6 +369,9 @@ QAction* QG_ActionFactory::createAction(	RS2::ActionType id, QObject* obj,
         if (obj2) {
             action=((QToolBar *)obj2)->toggleViewAction();
         }
+        if(id==RS2::ActionViewCadToolbar){
+            action->setText(tr("CAD ToolBar"));
+        }
         break;
 
         // Tools:

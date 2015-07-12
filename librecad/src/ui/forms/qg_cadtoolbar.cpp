@@ -43,12 +43,15 @@
  *  Constructs a QG_CadToolBar as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CadToolBar::QG_CadToolBar(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
+QG_CadToolBar::QG_CadToolBar(QWidget* parent, const char* name)
+    : QToolBar(parent)
 	,actionHandler(nullptr)
 {
     setObjectName(name);
 	setCursor(Qt::ArrowCursor);
+    setMinimumSize(73,400);
+    setAllowedAreas(Qt::LeftToolBarArea | Qt::RightToolBarArea);
+    setFloatable(false);
 	init();
 }
 
@@ -81,6 +84,11 @@ void QG_CadToolBar::init() {
 		p->hide();
 		m_toolbars[p->rtti()]= p;
 	}
+}
+
+QSize 	QG_CadToolBar::sizeHint() const
+{
+    return QSize(-1, -1);
 }
 
 void QG_CadToolBar::populateSubToolBar(const std::vector<QAction*>& actions, RS2::ToolBarId toolbarID)
@@ -158,6 +166,8 @@ void QG_CadToolBar::showSubToolBar(){
 		p->move(0,20);
 		p->show();
     }
+    p->resize(size());
+    adjustSize();
 }
 
 void QG_CadToolBar::showPreviousToolBar(bool cleanup) {

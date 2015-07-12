@@ -47,8 +47,9 @@ QG_CadToolBarSelect::QG_CadToolBarSelect(QG_CadToolBar* parent, Qt::WindowFlags 
 	if(layout()){
 		QToolButton* button=new QToolButton;
 		button->setDefaultAction(m_pButtonForward);
-		button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 		layout()->addWidget(button);
+        static_cast<QVBoxLayout*>(layout())->addStretch(1);
 	}
 	connect(m_pButtonForward, SIGNAL(triggered()), this, SLOT(runNextAction()));
 }
