@@ -148,7 +148,5 @@ void LC_CadToolBarInterface::addSubActions(const std::vector<QAction*>& actions,
 	for(auto p: actions){
 		this->addSubAction(p, addGroup);
     }
-    qDebug()<<"parentWidget()->size() "<<cadToolBar->size();
     resize(cadToolBar->size());
-    qDebug()<<__func__<<": size="<<size();
 }
