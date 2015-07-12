@@ -257,10 +257,15 @@ void QG_DlgOptionsGeneral::on_tabWidget_currentChanged(int index)
     current_tab = index;
 }
 
-void QG_DlgOptionsGeneral::set_color(QComboBox* combo)
+void QG_DlgOptionsGeneral::set_color(QComboBox* combo, QColor custom)
 {
-    QColor color;
-    color = QColorDialog::getColor(Qt::green, this, "Select Color", QColorDialog::DontUseNativeDialog);
+    QColor current;
+    current.setNamedColor(combo->lineEdit()->text());
+
+    QColorDialog dlg;
+    dlg.setCustomColor(0, custom);
+
+    QColor color = dlg.getColor(current, this, "Select Color", QColorDialog::DontUseNativeDialog);
     if (color.isValid())
     {
         combo->lineEdit()->setText(color.name());
@@ -269,40 +274,40 @@ void QG_DlgOptionsGeneral::set_color(QComboBox* combo)
 
 void QG_DlgOptionsGeneral::on_pb_background_clicked()
 {
-    set_color(cbBackgroundColor);
+    set_color(cbBackgroundColor, QColor("Black"));
 }
 
 void QG_DlgOptionsGeneral::on_pb_grid_clicked()
 {
-    set_color(cbGridColor);
+    set_color(cbGridColor, QColor("Gray"));
 }
 
 void QG_DlgOptionsGeneral::on_pb_meta_clicked()
 {
-    set_color(cbMetaGridColor);
+    set_color(cbMetaGridColor, QColor("DarkGray"));
 }
 
 void QG_DlgOptionsGeneral::on_pb_selected_clicked()
 {
-    set_color(cbSelectedColor);
+    set_color(cbSelectedColor, QColor("Green"));
 }
 
 void QG_DlgOptionsGeneral::on_pb_highlighted_clicked()
 {
-    set_color(cbHighlightedColor);
+    set_color(cbHighlightedColor, QColor("PaleGreen"));
 }
 
 void QG_DlgOptionsGeneral::on_pb_start_clicked()
 {
-    set_color(cbStartHandleColor);
+    set_color(cbStartHandleColor, QColor("Cyan"));
 }
 
 void QG_DlgOptionsGeneral::on_pb_handle_clicked()
 {
-    set_color(cbHandleColor);
+    set_color(cbHandleColor, QColor("Blue"));
 }
 
 void QG_DlgOptionsGeneral::on_pb_end_clicked()
 {
-    set_color(cbEndHandleColor);
+    set_color(cbEndHandleColor, QColor("Violet"));
 }
