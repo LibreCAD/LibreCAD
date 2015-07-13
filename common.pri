@@ -71,7 +71,8 @@ greaterThan( QT_MAJOR_VERSION, 4) {
 	QMAKE_CXXFLAGS_DEBUG += -std=c++11
 }
 
-macx{
-    QMAKE_CXXFLAGS_DEBUG += -mmacosx-version-min=10.8
-    QMAKE_CXXFLAGS += -mmacosx-version-min=10.8
-}
+# RVT July 12 2015, I believe we need these here
+#macx{
+#    QMAKE_CXXFLAGS_DEBUG += -mmacosx-version-min=10.8
+#    QMAKE_CXXFLAGS += -mmacosx-version-min=10.8
+#}
