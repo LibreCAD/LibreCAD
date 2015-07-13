@@ -504,6 +504,8 @@ void RS_FilterDXFRW::addSolid(const DRW_Solid& data) {
  */
 void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
     RS_DEBUG->print("RS_FilterDXFRW::addLWPolyline");
+    if (data.vertlist.empty())
+        return;
     RS_PolylineData d(RS_Vector(false),
                       RS_Vector(false),
                       data.flags&0x1);
@@ -2107,6 +2109,9 @@ void RS_FilterDXFRW::writeArc(RS_Arc* a) {
  * Writes the given polyline entity to the file as lwpolyline.
  */
 void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
+    //skip if are empty polyline
+    if (l->isEmpty())
+            return;
     // version 12 are old style polyline
     if (version==1009) {
         writePolyline(l);
@@ -2119,7 +2124,7 @@ void RS_FilterDXFRW::writeLWPolyline(RS_Polyline* l) {
     double bulge=0.0;
 
     for (RS_Entity* e=l->firstEntity(RS2::ResolveNone);
-         e; e=nextEntity) {
+         e!=NULL; e=nextEntity) {
 
         currEntity = e;
         nextEntity = l->nextEntity(RS2::ResolveNone);
