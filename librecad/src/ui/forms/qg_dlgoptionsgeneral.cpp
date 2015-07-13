@@ -26,6 +26,7 @@
 #include "qg_dlgoptionsgeneral.h"
 
 #include <QMessageBox>
+#include <QColorDialog>
 #include "rs_system.h"
 #include "rs_settings.h"
 #include "rs_units.h"
@@ -121,12 +122,12 @@ void QG_DlgOptionsGeneral::init() {
     // colors:
 	initComboBox(cbBackgroundColor, RS_SETTINGS->readEntry("/BackgroundColor", "Black"));
 	initComboBox(cbGridColor, RS_SETTINGS->readEntry("/GridColor", "Gray"));
-	initComboBox(cbMetaGridColor, RS_SETTINGS->readEntry("/MetaGridColor", "#404040"));
-	initComboBox(cbSelectedColor, RS_SETTINGS->readEntry("/SelectedColor", "#a54747"));
-	initComboBox(cbHighlightedColor, RS_SETTINGS->readEntry("/HighlightedColor", "#739373"));
-	initComboBox(cbStartHandleColor, RS_SETTINGS->readEntry("/StartHandleColor", "#00FFFF"));
-	initComboBox(cbHandleColor, RS_SETTINGS->readEntry("/HandleColor", "#0000FF"));
-	initComboBox(cbEndHandleColor, RS_SETTINGS->readEntry("/EndHandleColor", "#0000FF"));
+    initComboBox(cbMetaGridColor, RS_SETTINGS->readEntry("/MetaGridColor", "DarkGray"));
+    initComboBox(cbSelectedColor, RS_SETTINGS->readEntry("/SelectedColor", "Green"));
+    initComboBox(cbHighlightedColor, RS_SETTINGS->readEntry("/HighlightedColor", "PaleGreen"));
+    initComboBox(cbStartHandleColor, RS_SETTINGS->readEntry("/StartHandleColor", "Cyan"));
+    initComboBox(cbHandleColor, RS_SETTINGS->readEntry("/HandleColor", "Blue"));
+    initComboBox(cbEndHandleColor, RS_SETTINGS->readEntry("/EndHandleColor", "Violet"));
 
     // font size:
     QString sizeStatus = RS_SETTINGS->readEntry("/StatusBarFontSize", "9");
@@ -254,4 +255,59 @@ void QG_DlgOptionsGeneral::ok() {
 void QG_DlgOptionsGeneral::on_tabWidget_currentChanged(int index)
 {
     current_tab = index;
+}
+
+void QG_DlgOptionsGeneral::set_color(QComboBox* combo, QColor custom)
+{
+    QColor current;
+    current.setNamedColor(combo->lineEdit()->text());
+
+    QColorDialog dlg;
+    dlg.setCustomColor(0, custom);
+
+    QColor color = dlg.getColor(current, this, "Select Color", QColorDialog::DontUseNativeDialog);
+    if (color.isValid())
+    {
+        combo->lineEdit()->setText(color.name());
+    }
+}
+
+void QG_DlgOptionsGeneral::on_pb_background_clicked()
+{
+    set_color(cbBackgroundColor, QColor("Black"));
+}
+
+void QG_DlgOptionsGeneral::on_pb_grid_clicked()
+{
+    set_color(cbGridColor, QColor("Gray"));
+}
+
+void QG_DlgOptionsGeneral::on_pb_meta_clicked()
+{
+    set_color(cbMetaGridColor, QColor("DarkGray"));
+}
+
+void QG_DlgOptionsGeneral::on_pb_selected_clicked()
+{
+    set_color(cbSelectedColor, QColor("Green"));
+}
+
+void QG_DlgOptionsGeneral::on_pb_highlighted_clicked()
+{
+    set_color(cbHighlightedColor, QColor("PaleGreen"));
+}
+
+void QG_DlgOptionsGeneral::on_pb_start_clicked()
+{
+    set_color(cbStartHandleColor, QColor("Cyan"));
+}
+
+void QG_DlgOptionsGeneral::on_pb_handle_clicked()
+{
+    set_color(cbHandleColor, QColor("Blue"));
+}
+
+void QG_DlgOptionsGeneral::on_pb_end_clicked()
+{
+    set_color(cbEndHandleColor, QColor("Violet"));
 }
