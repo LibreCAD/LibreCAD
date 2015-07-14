@@ -1408,6 +1408,13 @@ void QC_ApplicationWindow::initView() {
         addDockWidget(Qt::BottomDockWidgetArea, dw);
 
     RS_DEBUG->print("  done");
+
+    RS_SETTINGS->beginGroup("/Appearance");
+    QString layer_select_color(RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC"));
+    RS_SETTINGS->endGroup();
+
+    layerWidget->setStyleSheet("selection-background-color: " + layer_select_color);
+    blockWidget->setStyleSheet("selection-background-color: " + layer_select_color);
 }
 
 
@@ -3204,12 +3211,16 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
     QColor color(RS_SETTINGS->readEntry("/BackgroundColor", "Black"));
     QColor gridColor(RS_SETTINGS->readEntry("/GridColor", "Gray"));
     QColor metaGridColor(RS_SETTINGS->readEntry("/MetaGridColor", "DarkGray"));
-    QColor selectedColor(RS_SETTINGS->readEntry("/SelectedColor", "Green"));
+    QColor selectedColor(RS_SETTINGS->readEntry("/SelectedColor", "PaleGreen"));
     QColor highlightedColor(RS_SETTINGS->readEntry("/HighlightedColor", "PaleGreen"));
     QColor startHandleColor(RS_SETTINGS->readEntry("/StartHandleColor", "Cyan"));
     QColor handleColor(RS_SETTINGS->readEntry("/HandleColor", "Blue"));
     QColor endHandleColor(RS_SETTINGS->readEntry("/EndHandleColor", "Violet"));
+    QString layer_select_color(RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC"));
 	RS_SETTINGS->endGroup();
+
+    layerWidget->setStyleSheet("selection-background-color: " + layer_select_color);
+    blockWidget->setStyleSheet("selection-background-color: " + layer_select_color);
 
     QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
     for (int i = 0; i < windows.size(); ++i) {

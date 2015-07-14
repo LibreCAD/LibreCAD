@@ -236,8 +236,6 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
 	this->setLayout(lay);
 
     connect(layerView, SIGNAL(pressed(QModelIndex)), this, SLOT(slotActivated(QModelIndex)));
-
-    layerView->setStyleSheet("selection-color: black; selection-background-color: #CCFFCC;");
 }
 
 
