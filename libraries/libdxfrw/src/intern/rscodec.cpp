@@ -171,8 +171,21 @@ int RScodec::decode(unsigned char *data) {
     int bb = nn-kk;; //nn-kk length of parity data
     int *recd = new (std::nothrow) int[nn];
 
-    int elp[bb+2][bb], d[bb+2], l[bb+2], u_lu[bb+2], s[bb+1] ;
-    int count=0, syn_error=0, root[tt], loc[tt], z[tt+1], err[nn], reg[tt+1] ;
+    int **elp = new int*[bb + 2];
+    for (int i = 0; i < bb + 2; ++i)
+        elp[i] = new int[bb];
+
+    int *d = new int[bb + 2];
+    int *l = new int[bb + 2];
+    int *u_lu = new int[bb + 2];
+    int *s = new int[bb + 1];
+    int count=0;
+    int syn_error=0;
+    int *root = new int[tt];
+    int *loc = new int[tt];
+    int *z = new int[tt+1];
+    int *err = new int[nn];
+    int *reg = new int[tt + 1];
 
 //    for (int i=0; i<nn; i++)
 //       recd[i] = index_of[recd[i]] ;          /* put recd[i] into index form */
@@ -197,6 +210,18 @@ int RScodec::decode(unsigned char *data) {
     if (!syn_error) {      /* if no errors, ends */
         /* no non-zero syndromes => no errors: output is received codeword */
         delete[] recd;
+        for (int i = 0; i < bb + 2; ++i)
+            delete[] elp[i];
+        delete[] elp;
+        delete[] d;
+        delete[] l;
+        delete[] u_lu;
+        delete[] s;
+        delete[] root;
+        delete[] loc;
+        delete[] z;
+        delete[] err;
+        delete[] reg;
         return 0;
     }
 
@@ -286,6 +311,18 @@ int RScodec::decode(unsigned char *data) {
     u++ ;
     if (l[u]>tt) {                 /* elp has degree has degree >tt hence cannot solve */
         delete[] recd;        /* just output is received codeword as is */
+        for (int i = 0; i < bb + 2; ++i)
+            delete[] elp[i];
+        delete[] elp;
+        delete[] d;
+        delete[] l;
+        delete[] u_lu;
+        delete[] s;
+        delete[] root;
+        delete[] loc;
+        delete[] z;
+        delete[] err;
+        delete[] reg;
         return -1;
     }
 
@@ -316,6 +353,18 @@ int RScodec::decode(unsigned char *data) {
 
     if (count!=l[u]) {   /* no. roots != degree of elp => >tt errors and cannot solve */
         delete[] recd;        /* just output is received codeword as is */
+        for (int i = 0; i < bb + 2; ++i)
+            delete[] elp[i];
+        delete[] elp;
+        delete[] d;
+        delete[] l;
+        delete[] u_lu;
+        delete[] s;
+        delete[] root;
+        delete[] loc;
+        delete[] z;
+        delete[] err;
+        delete[] reg;
         return -1;
     }
 
@@ -362,5 +411,17 @@ int RScodec::decode(unsigned char *data) {
         }
     }
     delete[] recd;
+    for (int i = 0; i < bb + 2; ++i)
+        delete[] elp[i];
+    delete[] elp;
+    delete[] d;
+    delete[] l;
+    delete[] u_lu;
+    delete[] s;
+    delete[] root;
+    delete[] loc;
+    delete[] z;
+    delete[] err;
+    delete[] reg;
     return count;
 }

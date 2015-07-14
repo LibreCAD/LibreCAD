@@ -95,9 +95,9 @@ bool dwgR::testReader(){
     }
 
     dwgBuffer fileBuf(&filestr);
-    duint8 strdata[fileBuf.size()];
-    fileBuf.getBytes(strdata, fileBuf.size());
-    dwgBuffer dataBuf(strdata, fileBuf.size());
+    duint8 *tmpStrData = new duint8[fileBuf.size()];
+    fileBuf.getBytes(tmpStrData, fileBuf.size());
+    dwgBuffer dataBuf(tmpStrData, fileBuf.size());
     fileBuf.setPosition(0);
     DRW_DBG("\ndwgR::testReader filebuf size: ");DRW_DBG(fileBuf.size());
     DRW_DBG("\ndwgR::testReader dataBuf size: ");DRW_DBG(dataBuf.size());
@@ -132,7 +132,7 @@ bool dwgR::testReader(){
     DRW_DBG("\n filebuf bitpos: ");DRW_DBG(fileBuf.getBitPos());
     DRW_DBG("\n dataBuf bitpos: ");DRW_DBG(dataBuf.getBitPos());
 
-
+    delete[]tmpStrData;
     filestr.close();
     DRW_DBG("\n\n");
     return isOk;

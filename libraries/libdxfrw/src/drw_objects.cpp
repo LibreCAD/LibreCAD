@@ -129,22 +129,22 @@ DRW_DBG("\n***************************** parsing table entry *******************
         /* RLZ: TODO */
         dwgHandle ah = buf->getHandle();
         DRW_DBG("App Handle: "); DRW_DBGHL(ah.code, ah.size, ah.ref);
-        duint8 byteStr[extDataSize];
-        buf->getBytes(byteStr, extDataSize);
-        dwgBuffer buff(byteStr, extDataSize, buf->decoder);
-        int pos = buff.getPosition();
-        int bpos = buff.getBitPos();
+        duint8 *tmpExtData = new duint8[extDataSize];
+        buf->getBytes(tmpExtData, extDataSize);
+        dwgBuffer tmpExtDataBuf(tmpExtData, extDataSize, buf->decoder);
+        int pos = tmpExtDataBuf.getPosition();
+        int bpos = tmpExtDataBuf.getBitPos();
         DRW_DBG("ext data pos: "); DRW_DBG(pos); DRW_DBG("."); DRW_DBG(bpos); DRW_DBG("\n");
-        duint8 dxfCode = buff.getRawChar8();
+        duint8 dxfCode = tmpExtDataBuf.getRawChar8();
         DRW_DBG(" dxfCode: "); DRW_DBG(dxfCode);
         switch (dxfCode){
         case 0:{
-            duint8 strLength = buff.getRawChar8();
+            duint8 strLength = tmpExtDataBuf.getRawChar8();
             DRW_DBG(" strLength: "); DRW_DBG(strLength);
-            duint16 cp = buff.getBERawShort16();
+            duint16 cp = tmpExtDataBuf.getBERawShort16();
             DRW_DBG(" str codepage: "); DRW_DBG(cp);
             for (int i=0;i< strLength+1;i++) {//string length + null terminating char
-                duint8 dxfChar = buff.getRawChar8();
+                duint8 dxfChar = tmpExtDataBuf.getRawChar8();
                 DRW_DBG(" dxfChar: "); DRW_DBG(dxfChar);
             }
             break;
@@ -153,7 +153,8 @@ DRW_DBG("\n***************************** parsing table entry *******************
             /* RLZ: TODO */
             break;
         }
-        DRW_DBG("ext data pos: "); DRW_DBG(buff.getPosition()); DRW_DBG("."); DRW_DBG(buff.getBitPos()); DRW_DBG("\n");
+        DRW_DBG("ext data pos: "); DRW_DBG(tmpExtDataBuf.getPosition()); DRW_DBG("."); DRW_DBG(tmpExtDataBuf.getBitPos()); DRW_DBG("\n");
+        delete[]tmpExtData;
         extDataSize = buf->getBitShort(); //BS
         DRW_DBG(" ext data size: "); DRW_DBG(extDataSize);
     } //end parsing extData (EED)
