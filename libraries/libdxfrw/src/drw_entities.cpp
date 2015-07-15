@@ -177,7 +177,7 @@ bool DRW_Entity::parseDxfGroups(int code, dxfReader *reader){
                     curr.addInt(reader->getInt32());
                     break;
                 case dxfReader::DOUBLE:
-                    curr.addInt(reader->getDouble());
+                    curr.addDouble(reader->getDouble());
                     break;
                 case dxfReader::BOOL:
                     curr.addInt(reader->getInt32());
