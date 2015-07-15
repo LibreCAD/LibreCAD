@@ -28,6 +28,8 @@
 #include <QStatusBar>
 #include <QMenuBar>
 #include <QDockWidget>
+#include <QDesktopServices>
+#include <QUrl>
 
 #if QT_VERSION < 0x040400
 #include <QtAssistant/QAssistantClient>
@@ -1151,9 +1153,13 @@ void QC_ApplicationWindow::initMenuBar() {
 
     menuBar()->addSeparator();
     // menuBar entry helpMenu
+    QAction* wiki_link = new QAction(tr("Online (Wiki)"), this);
+    connect(wiki_link, SIGNAL(triggered()), this, SLOT(goto_wiki()));
+
     helpMenu = menuBar()->addMenu(tr("&Help"));
     helpMenu->setObjectName("Help");
     helpMenu->addAction(helpManual);
+    helpMenu->addAction(wiki_link);
     helpMenu->addSeparator();
     helpMenu->addAction(helpAboutApp);
 
@@ -3663,4 +3669,9 @@ void QC_ApplicationWindow::updateWindowTitle(QWidget *w)
         if(w->windowTitle().lastIndexOf(m_qDraftModeTitle))
         w->setWindowTitle(w->windowTitle()+m_qDraftModeTitle);
     }
+}
+
+void QC_ApplicationWindow::goto_wiki()
+{
+    QDesktopServices::openUrl(QUrl("http://wiki.librecad.org/index.php/Main_Page"));
 }
