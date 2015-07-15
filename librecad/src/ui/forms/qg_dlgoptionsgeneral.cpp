@@ -123,11 +123,12 @@ void QG_DlgOptionsGeneral::init() {
 	initComboBox(cbBackgroundColor, RS_SETTINGS->readEntry("/BackgroundColor", "Black"));
 	initComboBox(cbGridColor, RS_SETTINGS->readEntry("/GridColor", "Gray"));
     initComboBox(cbMetaGridColor, RS_SETTINGS->readEntry("/MetaGridColor", "DarkGray"));
-    initComboBox(cbSelectedColor, RS_SETTINGS->readEntry("/SelectedColor", "Green"));
+    initComboBox(cbSelectedColor, RS_SETTINGS->readEntry("/SelectedColor", "PaleGreen"));
     initComboBox(cbHighlightedColor, RS_SETTINGS->readEntry("/HighlightedColor", "PaleGreen"));
     initComboBox(cbStartHandleColor, RS_SETTINGS->readEntry("/StartHandleColor", "Cyan"));
     initComboBox(cbHandleColor, RS_SETTINGS->readEntry("/HandleColor", "Blue"));
     initComboBox(cbEndHandleColor, RS_SETTINGS->readEntry("/EndHandleColor", "Violet"));
+    initComboBox(cb_layerselection, RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC"));
 
     // font size:
     QString sizeStatus = RS_SETTINGS->readEntry("/StatusBarFontSize", "9");
@@ -217,6 +218,7 @@ void QG_DlgOptionsGeneral::ok() {
 	RS_SETTINGS->writeEntry("/StartHandleColor", cbStartHandleColor->currentText());
 	RS_SETTINGS->writeEntry("/HandleColor", cbHandleColor->currentText());
 	RS_SETTINGS->writeEntry("/EndHandleColor", cbEndHandleColor->currentText());
+    RS_SETTINGS->writeEntry("/LayerSelectColor", cb_layerselection->currentText());
 	RS_SETTINGS->writeEntry("/StatusBarFontSize", cbSizeStatus->currentText());
     RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
     RS_SETTINGS->endGroup();
@@ -289,7 +291,7 @@ void QG_DlgOptionsGeneral::on_pb_meta_clicked()
 
 void QG_DlgOptionsGeneral::on_pb_selected_clicked()
 {
-    set_color(cbSelectedColor, QColor("Green"));
+    set_color(cbSelectedColor, QColor("PaleGreen"));
 }
 
 void QG_DlgOptionsGeneral::on_pb_highlighted_clicked()
@@ -310,4 +312,9 @@ void QG_DlgOptionsGeneral::on_pb_handle_clicked()
 void QG_DlgOptionsGeneral::on_pb_end_clicked()
 {
     set_color(cbEndHandleColor, QColor("Violet"));
+}
+
+void QG_DlgOptionsGeneral::on_pb_layerselection_clicked()
+{
+    set_color(cb_layerselection, QColor("#CCFFCC"));
 }

@@ -65,6 +65,8 @@ private slots:
 
     void on_pb_end_clicked();
 
+    void on_pb_layerselection_clicked();
+
 private:
     bool restartNeeded;
 
