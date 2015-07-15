@@ -120,14 +120,14 @@ void QG_DlgOptionsGeneral::init() {
 	initComboBox(cbMaxPreview, RS_SETTINGS->readEntry("/MaxPreview", "100"));
 
     // colors:
-	initComboBox(cbBackgroundColor, RS_SETTINGS->readEntry("/BackgroundColor", "Black"));
-	initComboBox(cbGridColor, RS_SETTINGS->readEntry("/GridColor", "Gray"));
-    initComboBox(cbMetaGridColor, RS_SETTINGS->readEntry("/MetaGridColor", "DarkGray"));
-    initComboBox(cbSelectedColor, RS_SETTINGS->readEntry("/SelectedColor", "PaleGreen"));
-    initComboBox(cbHighlightedColor, RS_SETTINGS->readEntry("/HighlightedColor", "PaleGreen"));
-    initComboBox(cbStartHandleColor, RS_SETTINGS->readEntry("/StartHandleColor", "Cyan"));
-    initComboBox(cbHandleColor, RS_SETTINGS->readEntry("/HandleColor", "Blue"));
-    initComboBox(cbEndHandleColor, RS_SETTINGS->readEntry("/EndHandleColor", "Violet"));
+    initComboBox( cbBackgroundColor,  RS_SETTINGS->readGraphicColor( RS_Settings::BackgroundColor));
+    initComboBox( cbGridColor,        RS_SETTINGS->readGraphicColor( RS_Settings::GridColor));
+    initComboBox( cbMetaGridColor,    RS_SETTINGS->readGraphicColor( RS_Settings::MetaGridColor));
+    initComboBox( cbSelectedColor,    RS_SETTINGS->readGraphicColor( RS_Settings::SelectedColor));
+    initComboBox( cbHighlightedColor, RS_SETTINGS->readGraphicColor( RS_Settings::HighlightedColor));
+    initComboBox( cbStartHandleColor, RS_SETTINGS->readGraphicColor( RS_Settings::StartHandleColor));
+    initComboBox( cbHandleColor,      RS_SETTINGS->readGraphicColor( RS_Settings::HandleColor));
+    initComboBox( cbEndHandleColor,   RS_SETTINGS->readGraphicColor( RS_Settings::EndHandleColor));
     initComboBox(cb_layerselection, RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC"));
 
     // font size:
@@ -276,42 +276,42 @@ void QG_DlgOptionsGeneral::set_color(QComboBox* combo, QColor custom)
 
 void QG_DlgOptionsGeneral::on_pb_background_clicked()
 {
-    set_color(cbBackgroundColor, QColor("Black"));
+    set_color( cbBackgroundColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::BackgroundColor)));
 }
 
 void QG_DlgOptionsGeneral::on_pb_grid_clicked()
 {
-    set_color(cbGridColor, QColor("Gray"));
+    set_color( cbGridColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::GridColor)));
 }
 
 void QG_DlgOptionsGeneral::on_pb_meta_clicked()
 {
-    set_color(cbMetaGridColor, QColor("DarkGray"));
+    set_color( cbMetaGridColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::MetaGridColor)));
 }
 
 void QG_DlgOptionsGeneral::on_pb_selected_clicked()
 {
-    set_color(cbSelectedColor, QColor("PaleGreen"));
+    set_color( cbSelectedColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::SelectedColor)));
 }
 
 void QG_DlgOptionsGeneral::on_pb_highlighted_clicked()
 {
-    set_color(cbHighlightedColor, QColor("PaleGreen"));
+    set_color( cbHighlightedColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::HighlightedColor)));
 }
 
 void QG_DlgOptionsGeneral::on_pb_start_clicked()
 {
-    set_color(cbStartHandleColor, QColor("Cyan"));
+    set_color( cbStartHandleColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::StartHandleColor)));
 }
 
 void QG_DlgOptionsGeneral::on_pb_handle_clicked()
 {
-    set_color(cbHandleColor, QColor("Blue"));
+    set_color( cbHandleColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::HandleColor)));
 }
 
 void QG_DlgOptionsGeneral::on_pb_end_clicked()
 {
-    set_color(cbEndHandleColor, QColor("Violet"));
+    set_color( cbEndHandleColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::EndHandleColor)));
 }
 
 void QG_DlgOptionsGeneral::on_pb_layerselection_clicked()

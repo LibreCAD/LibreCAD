@@ -73,18 +73,18 @@ RS_GraphicView::~RS_GraphicView() {}
 
 void RS_GraphicView::init()
 {
-	RS_SETTINGS->beginGroup("/Appearance");
-	setBackground(QColor(RS_SETTINGS->readEntry("/BackgroundColor", "#000000")));
-	setGridColor(QColor(RS_SETTINGS->readEntry("/GridColor", "#7F7F7F")));
-	setMetaGridColor(QColor(RS_SETTINGS->readEntry("/MetaGridColor", "#3F3F3F")));
-	setSelectedColor(QColor(RS_SETTINGS->readEntry("/SelectedColor", "#A54747")));
-	setHighlightedColor(QColor(RS_SETTINGS->readEntry("/HighlightedColor", "#739373")));
-	setStartHandleColor(QColor(RS_SETTINGS->readEntry("/StartHandleColor", "#00FFFF")));
-	setHandleColor(QColor(RS_SETTINGS->readEntry("/HandleColor", "#0000FF")));
-	setEndHandleColor(QColor(RS_SETTINGS->readEntry("/EndHandleColor", "#0000FF")));
+    RS_SETTINGS->beginGroup("/Appearance");
+    setBackground(       QColor( RS_SETTINGS->readGraphicColor( RS_Settings::BackgroundColor)));
+    setGridColor(        QColor( RS_SETTINGS->readGraphicColor( RS_Settings::GridColor)));
+    setMetaGridColor(    QColor( RS_SETTINGS->readGraphicColor( RS_Settings::MetaGridColor)));
+    setSelectedColor(    QColor( RS_SETTINGS->readGraphicColor( RS_Settings::SelectedColor)));
+    setHighlightedColor( QColor( RS_SETTINGS->readGraphicColor( RS_Settings::HighlightedColor)));
+    setStartHandleColor( QColor( RS_SETTINGS->readGraphicColor( RS_Settings::StartHandleColor)));
+    setHandleColor(      QColor( RS_SETTINGS->readGraphicColor( RS_Settings::HandleColor)));
+    setEndHandleColor(   QColor( RS_SETTINGS->readGraphicColor( RS_Settings::EndHandleColor)));
 
-	RS_SETTINGS->endGroup();
-	QC_ApplicationWindow::getAppWindow()->setPreviousZoomEnable(false);
+    RS_SETTINGS->endGroup();
+    QC_ApplicationWindow::getAppWindow()->setPreviousZoomEnable(false);
 }
 
 /**

@@ -60,6 +60,17 @@ public:
      */
     void init(const QString& companyKey, const QString& appKey);
 
+    enum GraphicColors {
+        BackgroundColor = 0,
+        GridColor,
+        MetaGridColor,
+        SelectedColor,
+        HighlightedColor,
+        StartHandleColor,
+        HandleColor,
+        EndHandleColor
+    };
+
     void beginGroup(const QString& group);
     void endGroup();
 
@@ -74,6 +85,8 @@ public:
                         const QString& def = QString::null,
                         bool* ok = 0);
     int readNumEntry(const QString& key, int def=0, bool* ok=0);
+    QString readGraphicColor( const GraphicColors colIndex);
+    const char* defaultGraphicColor( const GraphicColors colIndex);
 
 private:
     RS_Settings();

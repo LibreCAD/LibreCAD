@@ -70,6 +70,7 @@
 #include "rs_actionlibraryinsert.h"
 #include "rs_painterqt.h"
 #include "rs_selection.h"
+#include "rs_settings.h"
 
 #include "qg_cadtoolbar.h"
 #include "qg_snaptoolbar.h"
@@ -3208,16 +3209,16 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
 
     // update background color of all open drawings:
     RS_SETTINGS->beginGroup("/Appearance");
-    QColor color(RS_SETTINGS->readEntry("/BackgroundColor", "Black"));
-    QColor gridColor(RS_SETTINGS->readEntry("/GridColor", "Gray"));
-    QColor metaGridColor(RS_SETTINGS->readEntry("/MetaGridColor", "DarkGray"));
-    QColor selectedColor(RS_SETTINGS->readEntry("/SelectedColor", "PaleGreen"));
-    QColor highlightedColor(RS_SETTINGS->readEntry("/HighlightedColor", "PaleGreen"));
-    QColor startHandleColor(RS_SETTINGS->readEntry("/StartHandleColor", "Cyan"));
-    QColor handleColor(RS_SETTINGS->readEntry("/HandleColor", "Blue"));
-    QColor endHandleColor(RS_SETTINGS->readEntry("/EndHandleColor", "Violet"));
+    QColor color( RS_SETTINGS->readGraphicColor( RS_Settings::BackgroundColor));
+    QColor gridColor( RS_SETTINGS->readGraphicColor( RS_Settings::GridColor));
+    QColor metaGridColor( RS_SETTINGS->readGraphicColor( RS_Settings::MetaGridColor));
+    QColor selectedColor( RS_SETTINGS->readGraphicColor( RS_Settings::SelectedColor));
+    QColor highlightedColor( RS_SETTINGS->readGraphicColor( RS_Settings::HighlightedColor));
+    QColor startHandleColor( RS_SETTINGS->readGraphicColor( RS_Settings::StartHandleColor));
+    QColor handleColor( RS_SETTINGS->readGraphicColor( RS_Settings::HandleColor));
+    QColor endHandleColor( RS_SETTINGS->readGraphicColor( RS_Settings::EndHandleColor));
     QString layer_select_color(RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC"));
-	RS_SETTINGS->endGroup();
+    RS_SETTINGS->endGroup();
 
     layerWidget->setStyleSheet("selection-background-color: " + layer_select_color);
     blockWidget->setStyleSheet("selection-background-color: " + layer_select_color);
