@@ -99,7 +99,7 @@ bool DRW_Entity::parseCode(int code, dxfReader *reader){
         colorName = reader->getString();
         break;
     case 67:
-        space = (DRW::Space)reader->getInt32(); //RLZ verify cast values
+        space = static_cast<DRW::Space>(reader->getInt32());
         break;
     case 102:
         parseDxfGroups(code, reader);
