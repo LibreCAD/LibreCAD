@@ -263,7 +263,7 @@ void QG_DlgOptionsGeneral::set_color(QComboBox* combo, QColor custom)
     current.setNamedColor(combo->lineEdit()->text());
 
     QColorDialog dlg;
-    dlg.setCustomColor(0, custom);
+	dlg.setCustomColor(0, custom.rgb());
 
     QColor color = dlg.getColor(current, this, "Select Color", QColorDialog::DontUseNativeDialog);
     if (color.isValid())
