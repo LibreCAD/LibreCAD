@@ -3673,5 +3673,5 @@ void QC_ApplicationWindow::updateWindowTitle(QWidget *w)
 
 void QC_ApplicationWindow::goto_wiki()
 {
-    QDesktopServices::openUrl(QUrl("http://wiki.librecad.org/index.php/Main_Page"));
+    QDesktopServices::openUrl(QUrl("http://wiki.librecad.org/"));
 }
