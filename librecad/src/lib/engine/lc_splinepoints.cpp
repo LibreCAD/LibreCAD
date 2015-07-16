@@ -21,7 +21,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-
+#include <QPolygonF>
 #include "lc_splinepoints.h"
 
 #include "rs_circle.h"
@@ -3665,5 +3665,32 @@ LC_SplinePoints* LC_SplinePoints::cut(const RS_Vector& pos)
 	}
 
 	return ret;
+}
+
+QPolygonF LC_SplinePoints::getBoundingRect(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2)
+{
+    QPolygonF ret{{QPointF{x1.x, x1.y}}};
+    //find t for tangent in parallel with x2 - x1
+    RS_Vector const pt=(x1 - c1*2. + x2)*2.;
+    RS_Vector const pl=(x1 - x2);
+    double const determinant=pt.x*pl.y - pt.y*pl.x;
+    if(fabs(determinant)<RS_TOLERANCE15){
+        //bezier is a straight line
+        ret<<QPointF(x2.x, x2.y)<<ret.front();
+        return ret;
+    }
+    RS_Vector const pc=(x1 - c1)*2.;
+    double const t=(pc.x*pl.y - pc.y*pl.x)/determinant;
+    double const tr=1.-t;
+    //offset from x1 to the extreme point
+    RS_Vector const pext=x1*(tr*tr-1)+c1*(2.*t*tr)+x2*(t*t);
+    //perpendicular offset from x1 to the extreme point, the component of the offset perpendicular to x1-x2
+    RS_Vector const dp=pext - pl*(pext.dotP(pl)/pl.squared());
+    RS_Vector v1=x1 + dp;
+    ret<<QPointF(v1.x, v1.y);
+    v1=x2 + dp;
+    ret<<QPointF(v1.x, v1.y);
+    ret<<ret.front();
+    return ret;
 }
 
