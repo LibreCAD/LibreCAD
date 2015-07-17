@@ -188,6 +188,8 @@ public slots:
     void slotUpdateActiveLayer();
 	void execPlug();
 
+    void goto_wiki();
+
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);
