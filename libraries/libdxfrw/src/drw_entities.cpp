@@ -790,7 +790,7 @@ void DRW_Ellipse::toPolyline(DRW_Polyline *pol, int parts){
     sinRot = sin(incAngle);
     incAngle = M_PIx2 / parts;
     curAngle = staparam;
-    int i = curAngle/incAngle;
+    int i = static_cast<int>(curAngle / incAngle);
     do {
         if (curAngle > endparam) {
             curAngle = endparam;
