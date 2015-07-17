@@ -3409,6 +3409,7 @@ void QC_ApplicationWindow::slotHelpManual() {
 
             helpWindow = new QDockWidget(tr("Help"), this);
             helpWindow->setWidget(splitter);
+            helpWindow->setObjectName("HelpWindow");
 
             // Enable single clicking of the index
             connect(helpEngine->contentWidget(), SIGNAL(clicked(QModelIndex)), helpEngine->contentWidget(), SLOT(showLink(QModelIndex)));
