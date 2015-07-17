@@ -32,6 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphic.h"
 #include "rs_painterqt.h"
 #include "lc_quadratic.h"
+#include "rs_information.h"
 
 LC_SplinePointsData::LC_SplinePointsData(bool _closed, bool _cut):
 	closed(_closed)
@@ -3123,7 +3124,34 @@ void addQuadQuadIntersect(RS_VectorSolutions *pVS,
 	const RS_Vector& vStart, const RS_Vector& vControl, const RS_Vector& vEnd,
 	const RS_Vector& vx1, const RS_Vector& vc1, const RS_Vector& vx2)
 {
-	RS_Vector va0 = vStart;
+
+    //avoid intersection if there's no intersection between lines
+    //TODO, avoid O(N^2) complexity
+    //tangential direction along (start, control, end)
+    std::vector<RS_Line> lines0{{RS_Line(nullptr, RS_LineData(vStart, vControl)),
+    RS_Line(nullptr, RS_LineData(vEnd, vControl))}};
+
+    //tangential direction along (start, control, end)
+    std::vector<RS_Line> lines1{{RS_Line(nullptr, RS_LineData(vx1, vc1)),
+                    RS_Line(nullptr, RS_LineData(vx2, vc1))}};
+
+    //if lines0, lines1 do not overlap, there's no intersection
+    bool overlap=false;
+    for(auto const& l0: lines0){
+        for(auto const& l1: lines1){
+            if(RS_Information::getIntersection(&l0, &l1, true).size()){
+                overlap=true;
+                break;
+            }
+        }
+        if(overlap) break;
+    }
+    if(!overlap) {
+        //if there's no overlap, return now
+        return;
+    }
+
+    RS_Vector va0 = vStart;
 	RS_Vector va1 = (vControl - vStart)*2.0;
 	RS_Vector va2 = vEnd - vControl*2.0 + vStart;
 
@@ -3169,7 +3197,7 @@ void LC_SplinePoints::addQuadIntersect(RS_VectorSolutions *pVS, const RS_Vector&
 	size_t n = data.controlPoints.size();
 	if(n < 2) return;
 
-	RS_Vector vStart(false), vEnd(false), vControl(false);
+    RS_Vector vStart(false), vEnd(false), vControl(false);
 
 	if(data.closed)
 	{
@@ -3178,6 +3206,7 @@ void LC_SplinePoints::addQuadIntersect(RS_VectorSolutions *pVS, const RS_Vector&
 		vStart = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
 		vControl = data.controlPoints.at(0);
 		vEnd = (data.controlPoints.at(0) + data.controlPoints.at(1))/2.0;
+
 
 		addQuadQuadIntersect(pVS, vStart, vControl, vEnd, x1, c1, x2);
 
