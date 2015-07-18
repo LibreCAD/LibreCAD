@@ -944,9 +944,9 @@ RS_Vector LC_SplinePoints::getNearestMiddle(const RS_Vector& coord,
 	}
 
 	int iNext;
-	vRes = GetSplinePointAtDist(dDist, data.closed?0:1, 0.0, &iNext, &dt);
+    vRes = GetSplinePointAtDist(dDist, 1, 0.0, &iNext, &dt);
 	if(vRes.valid) dMinDist = (vRes - coord).magnitude();
-	i = 1;
+    i = 2;
 	while(vRes.valid && i < middlePoints)
 	{
 		vNext = GetSplinePointAtDist(dDist, iNext, dt, &iNext, &dt);
