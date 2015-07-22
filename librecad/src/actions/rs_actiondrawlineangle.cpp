@@ -115,7 +115,7 @@ void RS_ActionDrawLineAngle::trigger() {
 void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineAngle::mouseMoveEvent begin");
 
-	if (getStatus()==SetPos && data->startpoint.valid) {
+    if (getStatus()==SetPos) {
         pos = snapPoint(e);
         deletePreview();
         preparePreview();
