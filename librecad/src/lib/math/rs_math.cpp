@@ -276,16 +276,16 @@ QString RS_Math::doubleToString(double value, double prec) {
     QString ret;
     QString exaStr;
     int dotPos;
-    int num = RS_Math::round(value / prec);
+    int num = RS_Math::round(value / prec)*prec;
 
     exaStr = RS_Math::doubleToString(prec, 10);
     dotPos = exaStr.indexOf('.');
 
     if (dotPos==-1) {
-        ret.sprintf("%d", RS_Math::round(num*prec));
+        ret.sprintf("%d", RS_Math::round(num));
     } else {
         int digits = exaStr.length() - dotPos - 1;
-        ret = RS_Math::doubleToString(num*prec, digits);
+        ret = RS_Math::doubleToString(num, digits);
     }
 
     return ret;
