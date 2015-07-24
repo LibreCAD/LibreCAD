@@ -291,9 +291,6 @@ QString RS_Math::doubleToString(double value, double prec) {
     return ret;
 }
 
-
-
-
 /**
  * Converts a double into a string which is as short as possible.
  *
@@ -380,14 +377,19 @@ std::vector<double> RS_Math::quadraticSolver(const std::vector<double>& ce)
 {
     std::vector<double> ans(0,0.);
     if(ce.size() != 2) return ans;
-    double b = 0.25*ce[0]*ce[0];
-    double discriminant=b-ce[1];
-    if (discriminant >= - RS_TOLERANCE*qMax(fabs(b), fabs(ce[1])) ){
+    double const a=-0.5*ce[0];
+    double b=a*a;
+    double const discriminant=b-ce[1];
+    if (discriminant >= - RS_TOLERANCE15*std::max(fabs(b), fabs(ce[1])) ){
         b =  sqrt(fabs(discriminant));
-        double a=-0.5*ce[0];
         if( b >= RS_TOLERANCE*fabs(a) ) {
-            ans.push_back(a + b);
-            ans.push_back(a - b);
+            if(a>0.){
+                ans.push_back(a + b);
+                ans.push_back(ce[1]/ans[0]);
+            }else{
+                ans.push_back(a - b);
+                ans.push_back(ce[1]/ans[0]);
+            }
         }else
             ans.push_back(a);
     }
