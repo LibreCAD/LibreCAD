@@ -39,6 +39,10 @@
 #include "qg_cadtoolbarselect.h"
 #include "qg_cadtoolbarsplines.h"
 
+#if QT_VERSION >= 0x050500
+#include "qc_applicationwindow.h"
+#endif
+
 /*
  *  Constructs a QG_CadToolBar as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -49,7 +53,12 @@ QG_CadToolBar::QG_CadToolBar(QWidget* parent, const char* name)
 {
     setObjectName(name);
 	setCursor(Qt::ArrowCursor);
+#if QT_VERSION >= 0x050500
+    auto const dPxlRatio=QC_ApplicationWindow::getAppWindow()->devicePixelRatio();
+    setMinimumSize(73*dPxlRatio,400*dPxlRatio);
+#else
     setMinimumSize(73,400);
+#endif
     setAllowedAreas(Qt::LeftToolBarArea | Qt::RightToolBarArea);
     setFloatable(false);
 	init();
