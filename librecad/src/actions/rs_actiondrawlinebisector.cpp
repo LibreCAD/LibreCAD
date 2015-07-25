@@ -50,11 +50,6 @@ RS_ActionDrawLineBisector::RS_ActionDrawLineBisector(
 	actionType=RS2::ActionDrawLineBisector;
 }
 
-QAction* RS_ActionDrawLineBisector::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(QIcon(":/extui/linesbisector.png"),tr("Bisector"), nullptr);
-	return action;
-}
-
 void RS_ActionDrawLineBisector::setLength(double l) {
 	length = l;
 }

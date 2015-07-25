@@ -49,10 +49,6 @@ RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
 
 RS_ActionDrawSpline::~RS_ActionDrawSpline() {}
 
-QAction* RS_ActionDrawSpline::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	return new QAction(QIcon(":/extui/menuspline.png"), tr("&Spline"), nullptr);
-}
-
 void RS_ActionDrawSpline::reset() {
 	spline = nullptr;
 	history.clear();

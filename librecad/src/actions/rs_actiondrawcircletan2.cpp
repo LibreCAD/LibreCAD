@@ -50,15 +50,6 @@ RS_ActionDrawCircleTan2::RS_ActionDrawCircleTan2(
 
 RS_ActionDrawCircleTan2::~RS_ActionDrawCircleTan2(){}
 
-
-QAction* RS_ActionDrawCircleTan2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action;
-
-	action = new QAction(tr("Tangential 2 Circles, Radius",  "circle tangential to two give circles and with radius"), nullptr);
-    action->setIcon(QIcon(":/extui/circletan2.png"));
-    return action;
-}
-
 void RS_ActionDrawCircleTan2::init(int status) {
     RS_PreviewActionInterface::init(status);
     if(status>=0) {

@@ -45,13 +45,6 @@ RS_ActionModifyStretch::RS_ActionModifyStretch(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyStretch;
 }
 
-QAction* RS_ActionModifyStretch::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Stretch")
-	QAction* action = new QAction(QIcon(":/extui/modifystretch.png"), tr("&Stretch"), NULL);
-    return action;
-}
-
-
 void RS_ActionModifyStretch::init(int status) {
     RS_ActionInterface::init(status);
 

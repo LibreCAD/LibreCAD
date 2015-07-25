@@ -56,14 +56,6 @@ RS_ActionDrawCircleTan1_2P::RS_ActionDrawCircleTan1_2P(
 
 RS_ActionDrawCircleTan1_2P::~RS_ActionDrawCircleTan1_2P(){}
 
-QAction* RS_ActionDrawCircleTan1_2P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action;
-
-    action = new QAction(tr("Tangential, 2 P&oints"), NULL);
-    action->setIcon(QIcon(":/extui/circletan1_2p.png"));
-    return action;
-}
-
 void RS_ActionDrawCircleTan1_2P::init(int status) {
     RS_PreviewActionInterface::init(status);
     if(status>=0) {

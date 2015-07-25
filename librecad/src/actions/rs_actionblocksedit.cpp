@@ -36,16 +36,6 @@ RS_ActionBlocksEdit::RS_ActionBlocksEdit(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Edit Block", container, graphicView) {}
 
-
-QAction* RS_ActionBlocksEdit::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	//  tr("&Edit Block")
-	QAction* action = new QAction( tr("&Edit Block"), NULL);
-    //action->zetStatusTip(tr("Edit Block"));
-	action->setIcon(QIcon(":/ui/blockedit.png"));
-	return action;
-}
-
-
 void RS_ActionBlocksEdit::trigger() {
     RS_DEBUG->print("edit block");
     if (graphic) {

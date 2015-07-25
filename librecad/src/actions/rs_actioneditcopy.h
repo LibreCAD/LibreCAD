@@ -51,8 +51,6 @@ public:
                       RS_GraphicView& graphicView);
     ~RS_ActionEditCopy();
 
-	static QAction* createGUIAction(RS2::ActionType type, QObject* parent);
-
 	virtual void init(int status);
 
     virtual void trigger();

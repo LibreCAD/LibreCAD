@@ -2016,6 +2016,5 @@ bool RS_GraphicView::isCleanUp(void) const
 
 void RS_GraphicView::set_action(QAction* q_action)
 {
-    eventHandler->real_action = q_action;
-    eventHandler->right_click_quits = true;
+    eventHandler->set_action(q_action);
 }

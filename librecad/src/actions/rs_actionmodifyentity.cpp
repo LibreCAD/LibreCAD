@@ -40,15 +40,6 @@ RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyEntity;
 }
 
-
-QAction* RS_ActionModifyEntity::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Properties")
-    QAction* action = new QAction(tr("&Properties"), NULL);
-        action->setIcon(QIcon(":/extui/modifyentity.png"));
-    //action->zetStatusTip(tr("Modify Entity Properties"));
-    return action;
-}
-
 void RS_ActionModifyEntity::trigger() {
     if (en) {
         RS_Entity* clone = en->clone();

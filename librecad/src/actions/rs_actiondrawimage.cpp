@@ -49,17 +49,8 @@ RS_ActionDrawImage::RS_ActionDrawImage(RS_EntityContainer& container,
 	actionType=RS2::ActionDrawImage;
 }
 
-
-
 RS_ActionDrawImage::~RS_ActionDrawImage() {}
 
-
-QAction* RS_ActionDrawImage::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    // tr("Image")
-	QAction* action = new QAction(QIcon(":/extui/menuimage.png"), tr("Insert &Image"), nullptr);
-	action->setData(RS2::ActionDrawImage);
-    return action;
-}
 
 void RS_ActionDrawImage::init(int status) {
     RS_PreviewActionInterface::init(status);

@@ -46,15 +46,6 @@ RS_ActionDrawEllipseFociPoint::RS_ActionDrawEllipseFociPoint(
 	actionType=RS2::ActionDrawEllipseFociPoint;
 }
 
-
-
-QAction* RS_ActionDrawEllipseFociPoint::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action;
-
-	action = new QAction(QIcon(":/extui/ellipsefocipoint.png"), tr("Ellipse &Foci Point"), NULL);
-    return action;
-}
-
 void RS_ActionDrawEllipseFociPoint::init(int status) {
     RS_PreviewActionInterface::init(status);
 

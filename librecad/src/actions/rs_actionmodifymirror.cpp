@@ -44,11 +44,6 @@ RS_ActionModifyMirror::RS_ActionModifyMirror(RS_EntityContainer& container,
 
 RS_ActionModifyMirror::~RS_ActionModifyMirror(){}
 
-QAction* RS_ActionModifyMirror::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(QIcon(":/extui/modifymirror.png"), tr("&Mirror"), NULL);
-    return action;
-}
-
 void RS_ActionModifyMirror::init(int status) {
     RS_ActionInterface::init(status);
 }

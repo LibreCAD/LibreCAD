@@ -50,11 +50,6 @@ RS_ActionInfoAngle::RS_ActionInfoAngle(RS_EntityContainer& container,
 	actionType=RS2::ActionInfoAngle;
 }
 
-QAction* RS_ActionInfoAngle::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action = new QAction(QIcon(":/extui/infoangle.png"), tr("An&gle between two lines"), NULL);
-    return action;
-}
-
 void RS_ActionInfoAngle::init(int status) {
     RS_ActionInterface::init(status);
 }

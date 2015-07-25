@@ -40,26 +40,6 @@ RS_ActionSelectAll::RS_ActionSelectAll(RS_EntityContainer& container,
 	actionType=RS2::ActionSelectAll;
 }
 
-QAction* RS_ActionSelectAll::createGUIAction(RS2::ActionType type, QObject* parent) {
-    QAction* action;
-    if (type==RS2::ActionSelectAll) {
-                // tr("Select All")
-                action = new QAction(tr("Select &All"), parent);
-                action->setShortcut(QKeySequence::SelectAll);
-                action->setIcon(QIcon(":/extui/selectall.png"));
-                //action->zetStatusTip(tr("Selects all Entities"));
-        } else {
-                // tr("Deselect all")
-                action = new QAction(tr("Deselect &all"), parent);
-                // RVT April 29, 2011 - Added esc key to de-select all entities
-                action->setShortcuts(QList<QKeySequence>() << QKeySequence(tr("Ctrl+K")));
-                action->setIcon(QIcon(":/extui/selectnothing.png"));
-                //action->zetStatusTip(tr("Deselects all Entities"));
-    }
-    return action;
-}
-
-
 void RS_ActionSelectAll::init(int status) {
     RS_ActionInterface::init(status);
     trigger();

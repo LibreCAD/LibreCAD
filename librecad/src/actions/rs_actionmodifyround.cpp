@@ -54,12 +54,6 @@ RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
 
 RS_ActionModifyRound::~RS_ActionModifyRound(){}
 
-QAction* RS_ActionModifyRound::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-		QAction* action = new QAction(QIcon(":/extui/modifyround.png"), tr("&Fillet"), NULL);
-        return action;
-}
-
-
 void RS_ActionModifyRound::init(int status) {
     RS_ActionInterface::init(status);
 

@@ -45,17 +45,6 @@ RS_ActionDrawCircle2P::RS_ActionDrawCircle2P(RS_EntityContainer& container,
 
 RS_ActionDrawCircle2P::~RS_ActionDrawCircle2P() {}
 
-
-QAction* RS_ActionDrawCircle2P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Circle: 2 Points")
-        QAction* action = new QAction(tr("2 Points"),  NULL);
-        action->setIcon(QIcon(":/extui/circles2p.png"));
-    //action->zetStatusTip(tr("Draw circles with 2 points"));
-
-    return action;
-}
-
-
 void RS_ActionDrawCircle2P::reset() {
 	data->reset();
     point1 = RS_Vector(false);

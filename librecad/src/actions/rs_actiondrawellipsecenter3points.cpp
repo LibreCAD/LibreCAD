@@ -47,13 +47,6 @@ RS_ActionDrawEllipseCenter3Points::RS_ActionDrawEllipseCenter3Points(
 
 RS_ActionDrawEllipseCenter3Points::~RS_ActionDrawEllipseCenter3Points(){}
 
-QAction* RS_ActionDrawEllipseCenter3Points::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action;
-
-	action = new QAction(QIcon(":/extui/ellipsecenter3points.png"), tr("Ellipse Center and &3 Points"), nullptr);
-    return action;
-}
-
 void RS_ActionDrawEllipseCenter3Points::init(int status) {
     RS_PreviewActionInterface::init(status);
 

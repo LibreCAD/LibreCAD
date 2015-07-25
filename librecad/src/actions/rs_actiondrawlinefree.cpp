@@ -44,14 +44,6 @@ RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
 
 RS_ActionDrawLineFree::~RS_ActionDrawLineFree() {}
 
-QAction* RS_ActionDrawLineFree::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr(""Line: Freehand"),
-    QAction* action = new QAction(tr("&Freehand Line"), NULL);
-        action->setIcon(QIcon(":/extui/linesfree.png"));
-    //action->zetStatusTip(tr("Draw freehand lines"));
-    return action;
-}
-
 void RS_ActionDrawLineFree::trigger() {
 	deleteSnapper();
 	if (polyline.get()) {

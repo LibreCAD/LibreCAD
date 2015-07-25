@@ -43,10 +43,6 @@ RS_ActionModifyScale::RS_ActionModifyScale(RS_EntityContainer& container,
 
 RS_ActionModifyScale::~RS_ActionModifyScale(){}
 
-QAction* RS_ActionModifyScale::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(QIcon(":/extui/modifyscale.png"), tr("&Scale"),  NULL);
-    return action;
-}
 
 void RS_ActionModifyScale::init(int status) {
     RS_ActionInterface::init(status);

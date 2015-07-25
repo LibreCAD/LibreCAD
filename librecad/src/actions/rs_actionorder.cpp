@@ -42,35 +42,6 @@ RS_ActionOrder::RS_ActionOrder(RS_EntityContainer& container,
 	actionType=RS2::ActionOrderBottom;
 }
 
-
-QAction* RS_ActionOrder::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
-    QAction* action;
-    switch (type) {
-    case RS2::ActionOrderBottom:
-        action = new QAction(tr("move to bottom"), NULL);
-        action->setIcon(QIcon(":/extui/order_bottom.png"));
-        action->setStatusTip(tr("set to bottom"));
-        break;
-    case RS2::ActionOrderLower:
-        action = new QAction(tr("lower after entity"), NULL);
-        action->setIcon(QIcon(":/extui/order_lower.png"));
-        action->setStatusTip(tr("lower over entity"));
-        break;
-    case RS2::ActionOrderRaise:
-        action = new QAction(tr("raise over entity"), NULL);
-        action->setIcon(QIcon(":/extui/order_raise.png"));
-        action->setStatusTip(tr("raise over entity"));
-        break;
-//    case RS2::ActionOrderTop:
-    default:
-        action = new QAction(tr("move to top"), NULL);
-        action->setIcon(QIcon(":/extui/order_top.png"));
-        action->setStatusTip(tr("set to top"));
-        break;
-    }
-    return action;
-}
-
 void RS_ActionOrder::init(int status) {
     RS_ActionInterface::init(status);
     targetEntity = NULL;

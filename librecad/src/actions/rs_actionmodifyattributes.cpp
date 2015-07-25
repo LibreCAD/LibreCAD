@@ -42,15 +42,6 @@ RS_ActionModifyAttributes::RS_ActionModifyAttributes(
 }
 
 
-QAction* RS_ActionModifyAttributes::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Attributes")
-    QAction* action = new QAction(tr("&Attributes"),  NULL);
-        action->setIcon(QIcon(":/extui/modifyattributes.png"));
-    //action->zetStatusTip(tr("Modify Entity Attributes"));
-    return action;
-}
-
-
 void RS_ActionModifyAttributes::init(int status) {
     RS_ActionInterface::init(status);
 

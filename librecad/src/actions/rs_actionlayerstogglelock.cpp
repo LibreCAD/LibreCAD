@@ -39,11 +39,6 @@ RS_ActionLayersToggleLock::RS_ActionLayersToggleLock(
     :RS_ActionInterface("Toggle Layer Visibility" ,container, graphicView)
 {}
 
-QAction* RS_ActionLayersToggleLock::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action = new QAction(QIcon(":/ui/lockedlayer.png"), tr("Toggle Layer Loc&k"), nullptr);
-    return action;
-}
-
 void RS_ActionLayersToggleLock::trigger() {
     RS_DEBUG->print("toggle layer");
     if (graphic) {

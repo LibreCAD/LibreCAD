@@ -42,20 +42,9 @@ RS_ActionModifyCut::RS_ActionModifyCut(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyCut;
 }
 
-QAction* RS_ActionModifyCut::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Divide")
-        QAction *action = new QAction(tr("&Divide"), NULL);
-        action->setIcon(QIcon(":/extui/modifycut.png"));
-        //action->zetStatusTip(tr("Cut Entities"));
-    return action;
-}
-
-
 void RS_ActionModifyCut::init(int status) {
     RS_ActionInterface::init(status);
 }
-
-
 
 void RS_ActionModifyCut::trigger() {
 

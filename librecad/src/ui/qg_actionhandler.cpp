@@ -220,7 +220,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         RS_GraphicView* gv = mainWindow->getGraphicView();
     RS_Document* doc = mainWindow->getDocument();
     RS_ActionInterface* a = NULL;
-    gv->killAllActions();
+//    gv->killAllActions();
 
     // only global options are allowed without a document:
     if (gv==NULL || doc==NULL) {

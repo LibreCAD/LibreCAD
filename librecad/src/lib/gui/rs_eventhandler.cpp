@@ -536,11 +536,11 @@ void RS_EventHandler::killAllActions() {
 	RS_DEBUG->print(__FILE__ ": %s: line %d: begin\n", __func__, __LINE__);
 	for(auto p: currentActions){
 		if ( ! p->isFinished() ){
-            if (right_click_quits)
-            {
-                real_action->setChecked(false);
-                right_click_quits = false;
-            }
+//            if (right_click_quits)
+//            {
+//                real_action->setChecked(false);
+//                right_click_quits = false;
+//            }
 			p->finish();
 		}
 	}

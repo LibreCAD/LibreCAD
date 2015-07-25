@@ -40,22 +40,11 @@ RS_ActionToolRegenerateDimensions::RS_ActionToolRegenerateDimensions(RS_EntityCo
                     container, graphicView) {}
 
 
-QAction* RS_ActionToolRegenerateDimensions::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Regenerate Dimension Entities"),
-                                  tr("&Regenerate Dimension Entities"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Regenerate Dimension Entities"), NULL);
-    //action->zetStatusTip(tr("Regenerates all Dimension Entities"));
-
-    return action;
-}
-
 void RS_ActionToolRegenerateDimensions::init(int status) {
     RS_ActionInterface::init(status);
 
     trigger();
 }
-
 
 
 void RS_ActionToolRegenerateDimensions::trigger() {

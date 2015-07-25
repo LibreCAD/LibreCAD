@@ -40,11 +40,6 @@ RS_ActionModifyDelete::RS_ActionModifyDelete(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyDelete;
 }
 
-QAction* RS_ActionModifyDelete::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(QIcon(":/extui/modifydelete.png"), tr("&Delete"), nullptr);
-    return action;
-}
-
 
 void RS_ActionModifyDelete::init(int status) {
     RS_ActionInterface::init(status);

@@ -37,15 +37,6 @@ RS_ActionSelectInvert::RS_ActionSelectInvert(RS_EntityContainer& container,
 	actionType=RS2::ActionSelectInvert;
 }
 
-
-QAction* RS_ActionSelectInvert::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action = new QAction(tr("Invert Selection"),  NULL);
-        action->setIcon(QIcon(":/extui/selectinvert.png"));
-    //action->zetStatusTip(tr("Inverts the current selection"));
-    return action;
-}
-
-
 void RS_ActionSelectInvert::init(int status) {
     RS_ActionInterface::init(status);
     trigger();

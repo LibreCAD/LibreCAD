@@ -68,18 +68,6 @@ RS_ActionDrawLineAngle::~RS_ActionDrawLineAngle() {
 }
 
 
-QAction* RS_ActionDrawLineAngle::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
-	switch (type){
-	default:
-	case RS2::ActionDrawLineAngle:
-		return new QAction(QIcon(":/extui/linesangle.png"), tr("&Angle"), nullptr);
-	case RS2::ActionDrawLineHorizontal:
-		return new QAction(QIcon(":/extui/lineshor.png"), tr("&Horizontal"), nullptr);
-	case RS2::ActionDrawLineVertical:
-		return new QAction(QIcon(":/extui/linesver.png"), tr("Vertical"), nullptr);
-	}
-}
-
 void RS_ActionDrawLineAngle::reset() {
 	data.reset(new RS_LineData(RS_Vector(false), RS_Vector(false)));
 }

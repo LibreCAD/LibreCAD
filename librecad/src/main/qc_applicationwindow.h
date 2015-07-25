@@ -59,7 +59,6 @@ class QHelpEngine;
 class QC_PluginInterface;
 class QG_ActiveLayerName;
 class LC_SimpleTests;
-
 /**
  * Main application window. Hold together document, view and controls.
  *
@@ -74,7 +73,8 @@ public:
     QC_ApplicationWindow();
     ~QC_ApplicationWindow();
 
-    void toolbars_menues_actions();
+    void menus_and_toolbars();
+    void add_action(QMenu* menu, QToolBar* toolbar, QAction* action);
     void set_icon_size();
     void initStatusBar();
     void initSettings();
@@ -377,11 +377,11 @@ private:
 
     QList <QAction*> recentFilesAction;
     /** the main toolbars */
-    QToolBar* dwToolBar;
+    QToolBar* tb_wigets;
     QToolBar* circleToolBar;
-    QToolBar* fileToolBar;
-    QToolBar* editToolBar;
-    QToolBar* zoomToolBar;
+    QToolBar* tb_file;
+    QToolBar* tb_edit;
+    QToolBar* tb_zoom;
     static QAction* previousZoom;
     static QAction* undoButton;
     static QAction* redoButton;

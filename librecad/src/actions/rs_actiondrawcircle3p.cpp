@@ -47,14 +47,6 @@ RS_ActionDrawCircle3P::RS_ActionDrawCircle3P(RS_EntityContainer& container,
 RS_ActionDrawCircle3P::~RS_ActionDrawCircle3P() {}
 
 
-QAction* RS_ActionDrawCircle3P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // "Circle: 3 Points"
-	QAction* action = new QAction(QIcon(":/extui/circles3p.png"), tr("3 Points"), NULL);
-    return action;
-}
-
-
-
 void RS_ActionDrawCircle3P::reset() {
 	data->reset();
     point1 = RS_Vector(false);

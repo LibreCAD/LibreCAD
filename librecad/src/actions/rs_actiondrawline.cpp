@@ -51,15 +51,6 @@ RS_ActionDrawLine::RS_ActionDrawLine(RS_EntityContainer& container,
 
 RS_ActionDrawLine::~RS_ActionDrawLine(){}
 
-
-QAction* RS_ActionDrawLine::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    //tr("Line: 2 Points")
-    QAction* action = new QAction(tr("&2 Points"), NULL);
-    action->setIcon(QIcon(":/extui/linesnormal.png"));
-    //action->zetStatusTip(tr("Draw lines"));
-    return action;
-}
-
 void RS_ActionDrawLine::reset() {
 	RS_DEBUG->print("RS_ActionDrawLine::reset");
 	data.reset(new RS_LineData());
