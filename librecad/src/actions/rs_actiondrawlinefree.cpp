@@ -30,8 +30,6 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 
-
-
 RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw freehand lines",
@@ -45,11 +43,7 @@ RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
 RS_ActionDrawLineFree::~RS_ActionDrawLineFree() {}
 
 QAction* RS_ActionDrawLineFree::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr(""Line: Freehand"),
-    QAction* action = new QAction(tr("&Freehand Line"), NULL);
-        action->setIcon(QIcon(":/extui/linesfree.png"));
-    //action->zetStatusTip(tr("Draw freehand lines"));
-    return action;
+    return new QAction(QIcon(":/extui/linesfree.png"), tr("&Freehand Line"), nullptr);
 }
 
 void RS_ActionDrawLineFree::trigger() {
@@ -96,8 +90,8 @@ void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
 
         vertex = v;
 
-        RS_DEBUG->print("RS_ActionDrawLineFree::mouseMoveEvent():"
-                        " line added: %d", ent->getId());
+        RS_DEBUG->print("RS_ActionDrawLineFree::%s:"
+                        " line added: %d", __func__, ent->getId());
     }
 }
 
@@ -125,8 +119,6 @@ void RS_ActionDrawLineFree::mousePressEvent(QMouseEvent* e) {
     //}
 }
 
-
-
 void RS_ActionDrawLineFree::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         if(getStatus()==Dragging){
@@ -140,8 +132,6 @@ void RS_ActionDrawLineFree::mouseReleaseEvent(QMouseEvent* e) {
         init(getStatus()-1);
     }
 }
-
-
 
 void RS_ActionDrawLineFree::updateMouseButtonHints() {
     switch (getStatus()) {
