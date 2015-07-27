@@ -240,6 +240,11 @@ duint8 dwgBuffer::getBit(){
     return ret;
 }
 
+/**Reads one Bit returns a bool value 0==false 1==true (B) **/
+bool dwgBuffer::getBoolBit(){
+    return (getBit() != 0);
+}
+
 /**Reads two Bits returns a char (BB) **/
 duint8 dwgBuffer::get2Bits(){
     duint8 buffer;
