@@ -416,23 +416,23 @@ bool RS_Circle::testTan3(const std::vector<RS_AtomicEntity*>& circles)
 
     if(circles.size()!=3) return false;
 
-    const auto itEnd=circles.end();
 //        std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //        std::cout<<"to verify Center = ( "<<data.center.x<<" , "<<data.center.y<<" ), r= "<<data.radius<<std::endl;
-    for(auto it=circles.begin();it!=itEnd;it++){
+    for(auto const& c: circles){
 		const double r0 = fabs(data.radius);
-        const double r1 = fabs((*it)->getRadius());
+        const double r1 = fabs(c->getRadius());
 
-		const double dist=fabs((data.center - (*it)->getCenter()).magnitude());
+        const double dist=fabs((data.center - c->getCenter()).magnitude());
 //        DEBUG_HEADER
 //        std::cout<<"testing: "<<getCenter()<<" r="<<getRadius()<<". \twith Center = ( "<<(*it)->getCenter().x<<" , "<<(*it)->getCenter().y<<" ), r= "<<(*it)->getRadius()<<std::endl;
 //        std::cout<<"r0="<<r0<<"\tr1="<<r1<<"\tdist="<<dist<<"\tdelta0="<<fabs(dist - fabs(r0 - r1)) <<"\tdelta1="<<fabs(dist - fabs(r0 + r1))
 //                <<"\t"<<sqrt(DBL_EPSILON)*qMax(r0,r1)<<std::endl;
 
-        if( dist < qMax(r0,r1) )
-                return fabs(dist - fabs(r0 - r1)) <= sqrt(DBL_EPSILON)*qMax(r0,r1);
+        double const rmax=std::max(r0,r1);
+        if( dist < rmax )
+                return fabs(dist - fabs(r0 - r1)) <= sqrt(DBL_EPSILON)*rmax;
         else
-                return fabs(dist - fabs(r0 + r1)) <= sqrt(DBL_EPSILON)*qMax(r0,r1);
+                return fabs(dist - fabs(r0 + r1)) <= sqrt(DBL_EPSILON)*rmax;
     }
     return true;
 }

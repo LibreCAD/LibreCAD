@@ -274,7 +274,8 @@ bool RS_Entity::isArc() const
 	 case RS2::EntityArc:
 	 case RS2::EntityCircle:
 	 case RS2::EntityLine:
-		 return true;
+     case RS2::EntityPoint:
+         return true;
 	 default:
 		 return false;
 	 }
