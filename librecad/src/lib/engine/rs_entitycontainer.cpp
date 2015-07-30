@@ -1321,12 +1321,12 @@ RS_Vector RS_EntityContainer::getNearestIntersection(const RS_Vector& coord,
 
 	if (closestEntity) {
         for (RS_Entity* en = firstEntity(RS2::ResolveAllButTextImage);
-             en != NULL;
+             en;
              en = nextEntity(RS2::ResolveAllButTextImage)) {
             if (
                     !en->isVisible()
 					|| en->getParent()->ignoredOnModification()
-					){//do not do intersection for point, text, Dim
+                    ){
                 continue;
             }
 
@@ -1428,10 +1428,13 @@ double RS_EntityContainer::getDistanceToPoint(const RS_Vector& coord,
             RS_DEBUG->print("entity: getDistanceToPoint: OK");
 
             if (curDist<minDist) {
-                if (level!=RS2::ResolveAll) {
-                    closestEntity = e;
-                } else {
+                switch(level){
+                case RS2::ResolveAll:
+                case RS2::ResolveAllButTextImage:
                     closestEntity = subEntity;
+                    break;
+                default:
+                    closestEntity = e;
                 }
                 minDist = curDist;
             }
@@ -1791,7 +1794,8 @@ double RS_EntityContainer::areaLineIntegral() const
 bool RS_EntityContainer::ignoredOnModification() const
 {
     switch(rtti()){
-    case RS2::EntityInsert:         /**Insert*/
+    // commented out Insert to allow snapping on block, bug#523
+    // case RS2::EntityInsert:         /**Insert*/
     case RS2::EntitySpline:
     case RS2::EntityMText:        /**< Text 15*/
     case RS2::EntityText:         /**< Text 15*/
