@@ -52,7 +52,9 @@ RS_ActionDrawCircleTan3::RS_ActionDrawCircleTan3(
 }
 
 QAction* RS_ActionDrawCircleTan3::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    return new QAction(QIcon(":/extui/circletan3.png"), tr("Tangential &3 Circles"), nullptr);
+    QAction* action=new QAction(QIcon(":/extui/circletan3.png"), tr("Tangential &3 Circles"), nullptr);
+    action->setToolTip(tr("Draw tangential circle of 3 given points, lines, arcs/circles"));
+    return action;
 }
 
 void RS_ActionDrawCircleTan3::init(int status) {
