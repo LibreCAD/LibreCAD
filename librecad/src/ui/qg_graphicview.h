@@ -117,15 +117,15 @@ protected:
 	//! Label for grid spacing.
     QLabel* gridStatus;
     //! CAD mouse cursor
-    QCursor* curCad;
+    std::unique_ptr<QCursor> curCad;
     //! Delete mouse cursor
-    QCursor* curDel;
+    std::unique_ptr<QCursor> curDel;
     //! Select mouse cursor
-    QCursor* curSelect;
+    std::unique_ptr<QCursor> curSelect;
     //! Magnifying glass mouse cursor
-    QCursor* curMagnifier;
+    std::unique_ptr<QCursor> curMagnifier;
     //! Hand mouse cursor
-    QCursor* curHand;
+    std::unique_ptr<QCursor> curHand;
 		
 	// Used for buffering different paint layers
 	std::unique_ptr<QPixmap> PixmapLayer1;  // Used for grids and absolute 0

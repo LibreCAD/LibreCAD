@@ -51,19 +51,33 @@
 
 #define QG_SCROLLMARGIN 400
 
+#ifdef Q_OS_WIN32
+#define CURSOR_SIZE 16
+#else
+#define CURSOR_SIZE 15
+#endif
 
 /**
  * Constructor.
  */
 QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlags f)
-        : QWidget(parent, f), RS_GraphicView() {
+        :QWidget(parent, f)
+        ,RS_GraphicView()
+        ,hScrollBar(new QG_ScrollBar(Qt::Horizontal, this))
+        ,vScrollBar(new QG_ScrollBar(Qt::Vertical, this))
+        ,layout(new QGridLayout(this))
+        ,gridStatus(new QLabel("-", this))
+        ,curCad(new QCursor(QPixmap(":ui/cur_cad_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
+        ,curDel(new QCursor(QPixmap(":ui/cur_del_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
+        ,curSelect(new QCursor(QPixmap(":ui/cur_select_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
+        ,curMagnifier(new QCursor(QPixmap(":ui/cur_glass_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
+        ,curHand(new QCursor(QPixmap(":ui/cur_hand_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
+        ,redrawMethod(RS2::RedrawAll)
+        ,isSmoothScrolling(false)
+{
     setObjectName(name);
     setBackground(background);
 
-    redrawMethod=RS2::RedrawAll;
-    isSmoothScrolling = false;
-
-    layout = new QGridLayout(this);
     layout->setMargin(0);
     layout->setSpacing(0);
     layout->setColumnStretch(0, 1);
@@ -72,7 +86,6 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlag
     layout->setRowStretch(0, 1);
     layout->setRowStretch(1, 0);
 
-    hScrollBar = new QG_ScrollBar(Qt::Horizontal, this);
     hScrollBar->setSingleStep(50);
     hScrollBar->setCursor(Qt::ArrowCursor);
     layout->addWidget(hScrollBar, 1, 0);
@@ -80,7 +93,6 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlag
     connect(hScrollBar, SIGNAL(valueChanged(int)),
             this, SLOT(slotHScrolled(int)));
 
-    vScrollBar = new QG_ScrollBar(Qt::Vertical, this);
     vScrollBar->setSingleStep(50);
     vScrollBar->setCursor(Qt::ArrowCursor);
     layout->addWidget(vScrollBar, 0, 2);
@@ -88,31 +100,11 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlag
     connect(vScrollBar, SIGNAL(valueChanged(int)),
             this, SLOT(slotVScrolled(int)));
 
-    // Mouse Cursors:
-    QPixmap cur1(":ui/cur_cad_bmp.png");
-    QPixmap cur2(":ui/cur_glass_bmp.png");
-    QPixmap cur3(":ui/cur_del_bmp.png");
-    QPixmap cur4(":ui/cur_select_bmp.png");
-    QPixmap cur5(":ui/cur_hand_bmp.png");
-#ifdef Q_OS_WIN32
-    curCad = new QCursor(cur1, 16, 16);
-    curMagnifier = new QCursor(cur2, 12, 12);
-    curDel = new QCursor(cur3, 16, 16);
-    curSelect = new QCursor(cur4, 16, 16);
-    curHand = new QCursor(cur5, 15, 15);
-#else
-    curCad = new QCursor(cur1, 15, 15);
-    curMagnifier = new QCursor(cur2, 12, 12);
-    curDel = new QCursor(cur3, 15, 15);
-    curSelect = new QCursor(cur4, 15, 15);
-    curHand = new QCursor(cur5, 15, 15);
-#endif
-
     // Dummy widgets for scrollbar corners:
     //layout->addWidget(new QWidget(this), 1, 1);
     //QWidget* w = new QWidget(this);
     //w->setEraseColor(QColor(255,0,0));
-    gridStatus = new QLabel("-", this);
+
     gridStatus->setAlignment(Qt::AlignRight);
     layout->addWidget(gridStatus, 1, 1, 1, 2);
     layout->addItem(new QSpacerItem(50, 0), 0, 1);
