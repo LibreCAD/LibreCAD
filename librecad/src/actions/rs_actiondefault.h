@@ -47,8 +47,9 @@ public:
                                              first part of a selection window) */
         SetCorner2,     /**< Setting the 2nd corner of a selection window. */
         Moving,         /**< Moving entities (drag'n'drop) */
-        MovingRef       /**< Moving a reference point of one or more selected
+        MovingRef,       /**< Moving a reference point of one or more selected
                                              entities */
+        Panning /**< view panning triggered by Ctl- mouse dragging */
     };
 
 public:

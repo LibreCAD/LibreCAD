@@ -183,6 +183,17 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
             drawPreview();
         }
+        break;
+    case Panning:
+    {
+        RS_Vector const vTarget(e->x(), e->y());
+        RS_Vector const v01=vTarget - v1;
+        if(v01.squared()>=64.){
+            graphicView->zoomPan((int) v01.x, (int) v01.y);
+            v1=vTarget;
+        }
+    }
+        break;
 
     default:
         break;
@@ -195,8 +206,16 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case Neutral:
-            v1 = graphicView->toGraph(e->x(), e->y());
-            setStatus(Dragging);
+        {
+            auto const m=e->modifiers();
+            if(m & (Qt::ControlModifier|Qt::MetaModifier)){
+                v1 = RS_Vector(e->x(), e->y());
+                setStatus(Panning);
+            } else {
+                v1 = graphicView->toGraph(e->x(), e->y());
+                setStatus(Dragging);
+            }
+        }
             break;
 
         case Moving: {
@@ -294,6 +313,9 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
         }
             break;
 
+        case Panning:
+            setStatus(Neutral);
+            break;
 
         default:
             break;
@@ -357,6 +379,9 @@ void RS_ActionDefault::updateMouseCursor() {
     case Moving:
     case MovingRef:
         graphicView->setMouseCursor(RS2::SelectCursor);
+        break;
+    case Panning:
+        graphicView->setMouseCursor(RS2::ClosedHandCursor);
         break;
     default:
         break;
