@@ -66,7 +66,7 @@ echo $LC_DMG_SF
 #remove existing DMG
 rm -f $LC_DMG
 #build DMG
-./scripts/build-osx.sh -p="" -q="" &>> $LOG_ERR
+./scripts/build-osx.sh -p="" -q="" 2>&1 >> $LOG_ERR
 if ! [ -f $LC_DMG ]
 then
 	echo "$(date): building failed, exiting" >> $LOG_ERR
