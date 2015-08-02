@@ -340,18 +340,6 @@ RS_Commands::RS_Commands() {
             {{"rv", QObject::tr("rv", "restrict - vertical")}},
             RS2::ActionRestrictVertical
         },
-        //trim2
-        {
-            {{"trim2", QObject::tr("trim2", "modify - multi trim (extend)")}},
-            {{"tm2", QObject::tr("tm2", "modify - multi trim (extend)")}},
-            RS2::ActionModifyTrim2
-        },
-        //trim
-        {
-            {{"trim", QObject::tr("trim", "modify - trim (extend)")}},
-            {{"tm", QObject::tr("tm", "modify - trim (extend)")}},
-            RS2::ActionModifyTrim
-        },
         //move
         {
             {{"move", QObject::tr("move", "modify - move (copy)")}},
@@ -401,6 +389,24 @@ RS_Commands::RS_Commands() {
             {{"scale", QObject::tr("scale", "modify - scale")}},
             {{"sz", QObject::tr("sz", "modify - scale")}},
             RS2::ActionModifyScale
+        },
+        //trim
+        {
+            {{"trim", QObject::tr("trim", "modify - trim (extend)")}},
+            {{"tm", QObject::tr("tm", "modify - trim (extend)")}},
+            RS2::ActionModifyTrim
+        },
+        //trim2
+        {
+            {{"trim2", QObject::tr("trim2", "modify - multi trim (extend)")}},
+            {{"tm2", QObject::tr("tm2", "modify - multi trim (extend)")}},
+            RS2::ActionModifyTrim2
+        },
+        //lengthen
+        {
+            {{"lengthen", QObject::tr("lengthen", "modify - lengthen")}},
+            {{"le", QObject::tr("le", "modify - lengthen")}},
+            RS2::ActionModifyTrimAmount
         },
         //stretch
         {
@@ -695,7 +701,7 @@ void RS_Commands::updateAlias(){
             ts << "#LibreCAD alias v1" << endl << endl;
             ts << "# lines starting with # are comments" << endl;
             ts << "# format are:" << endl;
-            ts << "# alias<\\t>command-untranslated" << endl << endl;
+            ts << R"(# alias<\t>command-untranslated)" << endl << endl;
             for(auto const& p: shortCommands){
                 auto const act=p.second;
                 for(auto const& pCmd: mainCommands){
