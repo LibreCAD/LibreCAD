@@ -27,6 +27,8 @@
 # specify QT_PATH to customize
 SCRIPTPATH="$(dirname "$0")"
 QT_PATH=/opt/local/bin/
+
+
 QMAKE_OPTS="-spec mkspec/macports"
 
 for i in "$@"
@@ -37,7 +39,10 @@ case $i in
     ;;
     -p=*|--qtpath*=)
     QT_PATH="${i#*=}"
-    QT_PATH=${QT_PATH%/}/
+    if [[ $QT_PATH ]]
+    then
+        QT_PATH=${QT_PATH%/}/
+    fi
     ;;
     -no-p|--no-qtpath)
     QT_PATH=
@@ -47,6 +52,16 @@ case $i in
     ;;
 esac
 done
+
+#validate QT_PATH
+if [[ ! -f ${QT_PATH}qmake ]]
+then
+	QT_PATH=$(dirname "$(which qmake)")/
+	if [[ -z $QT_PATH ]]
+	then
+		echo "can not locate qmake"
+	fi
+fi
 
 QMAKE_CMD=${QT_PATH}qmake
 
@@ -59,6 +74,7 @@ rm -rf LibreCAD.app
 
 # Run distclean if a previous version of Makefile exists
 if [ -f Makefile ]; then
+    $QMAKE_CMD $QMAKE_OPTS -r
     make distclean
 fi
 
