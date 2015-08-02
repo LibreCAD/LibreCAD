@@ -701,7 +701,9 @@ void RS_Commands::updateAlias(){
             ts << "#LibreCAD alias v1" << endl << endl;
             ts << "# lines starting with # are comments" << endl;
             ts << "# format are:" << endl;
-            ts << R"(# alias<\t>command-untranslated)" << endl << endl;
+            ts << R"(# <alias>\t<command-untranslated>)" << endl;
+            ts << "# example"<<endl;
+            ts << "# l\tline"<<endl<<endl;
             for(auto const& p: shortCommands){
                 auto const act=p.second;
                 for(auto const& pCmd: mainCommands){
