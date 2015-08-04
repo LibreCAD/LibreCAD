@@ -200,14 +200,12 @@ bool QG_SnapToolBar::lockedRelativeZero() const
 {
     return bLockRelZero->isChecked();
 }
+
 void QG_SnapToolBar::setLockedRelativeZero(bool on)
 {
     bLockRelZero->setChecked(on);
 }
-QList<QAction*> QG_SnapToolBar::getActions() const
-{
-	return findChildren<QAction*>();
-}
+
 void QG_SnapToolBar::setActionHandler(QG_ActionHandler* ah){
     actionHandler=ah;
 }
