@@ -3146,20 +3146,21 @@ void QC_ApplicationWindow::menus_and_toolbars()
     QToolBar* toolbar;
     QToolButton* tool_button;
 
-    std::vector<std::string> a_list;
-    std::vector<QToolBar*> list_tb; // for creating the toolbar menu
+    QList<QAction*> list_a;
+    QList<QToolBar*> list_tb; // for creating the toolbar menu
 
     QActionGroup* tools = new QActionGroup(this);
     connect(tools, SIGNAL(triggered(QAction*)), this, SLOT(slot_set_action(QAction*)));
+
     LC_ActionFactory a_factory(actionHandler, this, tools);
-    std::map<std::string, QAction*> a_map;
-    a_map = a_factory.action_map();
+    QMap<QString, QAction*> map_a;
+    map_a = a_factory.action_map();
 
     QToolBar* tb_categories = new QToolBar("Categories", this);
     tb_categories->setSizePolicy(toolBarPolicy);
     tb_categories->setObjectName("CategoriesTB");
-    list_tb.push_back(tb_categories);
-
+    addToolBar(Qt::LeftToolBarArea, tb_categories);
+    list_tb.append(tb_categories);
 
     // <[~ File ~]>
 
@@ -3169,37 +3170,40 @@ void QC_ApplicationWindow::menus_and_toolbars()
     tb_file = new QToolBar("File Operations", this);
     tb_file->setSizePolicy(toolBarPolicy);
     tb_file->setObjectName("FileTB");
-    list_tb.push_back(tb_file);
+    list_tb.append(tb_file);
 
-    a_list = {"FileNew", "FileNewTemplate", "FileOpen", "FileSave", "FileSaveAs"};
+    list_a
+            << map_a["FileNew"]
+            << map_a["FileNewTemplate"]
+            << map_a["FileOpen"]
+            << map_a["FileSave"]
+            << map_a["FileSaveAs"];
 
-    for (std::string a : a_list)
-    {
-        add_action(menu, tb_file, a_map[a]);
-    }
+    menu->addActions(list_a);
+    tb_file->addActions(list_a);
 
     sub_menu = menu->addMenu(QIcon(":/actions/fileimport.png"), tr("Import"));
     sub_menu->setObjectName("Import");
-    sub_menu->addAction(a_map["DrawImage"]);
-    sub_menu->addAction(a_map["BlocksImport"]);
+    sub_menu->addAction(map_a["DrawImage"]);
+    sub_menu->addAction(map_a["BlocksImport"]);
 
     sub_menu = menu->addMenu(QIcon(":/actions/fileexport.png"), tr("Export"));
     sub_menu->setObjectName("Export");
-    sub_menu->addAction(a_map["FileExportMakerCam"]);
-    sub_menu->addAction(a_map["FilePrintPDF"]);
-    sub_menu->addAction(a_map["FileExport"]);
+    sub_menu->addAction(map_a["FileExportMakerCam"]);
+    sub_menu->addAction(map_a["FilePrintPDF"]);
+    sub_menu->addAction(map_a["FileExport"]);
 
     menu->addSeparator();
 
-    menu->addAction(a_map["FilePrint"]);
-    menu->addAction(a_map["FilePrintPreview"]);
-    tb_file->addAction(a_map["FilePrint"]);
-    tb_file->addAction(a_map["FilePrintPreview"]);
+    menu->addAction(map_a["FilePrint"]);
+    menu->addAction(map_a["FilePrintPreview"]);
+    tb_file->addAction(map_a["FilePrint"]);
+    tb_file->addAction(map_a["FilePrintPreview"]);
 
     menu->addSeparator();
 
-    menu->addAction(a_map["FileClose"]);
-    menu->addAction(a_map["FileQuit"]);
+    menu->addAction(map_a["FileClose"]);
+    menu->addAction(map_a["FileQuit"]);
 
     menu->addSeparator();
 
@@ -3214,15 +3218,15 @@ void QC_ApplicationWindow::menus_and_toolbars()
     tb_edit = new QToolBar("Edit Operations", this);
     tb_edit->setSizePolicy(toolBarPolicy);
     tb_edit->setObjectName ("EditTB" );
-    list_tb.push_back(tb_edit);
+    list_tb.append(tb_edit);
 
-    add_action(menu, tb_edit, a_map["EditKillAllActions"]);
+    add_action(menu, tb_edit, map_a["EditKillAllActions"]);
 
     tb_edit->addSeparator();
     menu->addSeparator();
 
-    undoButton = a_map["EditUndo"];
-    redoButton = a_map["EditRedo"];
+    undoButton = map_a["EditUndo"];
+    redoButton = map_a["EditRedo"];
 
     add_action(menu, tb_edit, undoButton);
     add_action(menu, tb_edit, redoButton);
@@ -3230,9 +3234,9 @@ void QC_ApplicationWindow::menus_and_toolbars()
     tb_edit->addSeparator();
     menu->addSeparator();
 
-    add_action(menu, tb_edit, a_map["EditCut"]);
-    add_action(menu, tb_edit, a_map["EditCopy"]);
-    add_action(menu, tb_edit, a_map["EditPaste"]);
+    add_action(menu, tb_edit, map_a["EditCut"]);
+    add_action(menu, tb_edit, map_a["EditCopy"]);
+    add_action(menu, tb_edit, map_a["EditPaste"]);
 
     menu->addSeparator();
 
@@ -3240,15 +3244,15 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     sub_menu= menu->addMenu(tr("Draw &Order"));
     sub_menu->setObjectName("Order");
-    sub_menu->addAction(a_map["OrderBottom"]);
-    sub_menu->addAction(a_map["OrderTop"]);
-    sub_menu->addAction(a_map["OrderLower"]);
-    sub_menu->addAction(a_map["OrderRaise"]);
+    sub_menu->addAction(map_a["OrderBottom"]);
+    sub_menu->addAction(map_a["OrderTop"]);
+    sub_menu->addAction(map_a["OrderLower"]);
+    sub_menu->addAction(map_a["OrderRaise"]);
 
     // <[~ Options ~]>
 
-    menu->addAction(a_map["OptionsGeneral"]);
-    menu->addAction(a_map["OptionsDrawing"]);
+    menu->addAction(map_a["OptionsGeneral"]);
+    menu->addAction(map_a["OptionsDrawing"]);
 
     addToolBar(Qt::TopToolBarArea, tb_edit); //tr("Edit");
 
@@ -3260,27 +3264,27 @@ void QC_ApplicationWindow::menus_and_toolbars()
     tb_zoom = new QToolBar("Zoom Operations", this);
     tb_zoom->setSizePolicy(toolBarPolicy);
     tb_zoom->setObjectName("ZoomTB");
-    list_tb.push_back(tb_zoom);
+    list_tb.append(tb_zoom);
 
-    add_action(menu, tb_zoom, a_map["ViewGrid"]);
+    add_action(menu, tb_zoom, map_a["ViewGrid"]);
 
     RS_SETTINGS->beginGroup("/Appearance");
     bool draftMode = (bool)RS_SETTINGS->readNumEntry("/DraftMode", 0);
     RS_SETTINGS->endGroup();
-    add_action(menu, tb_zoom, a_map["ViewDraft"]);
-    a_map["ViewDraft"]->setChecked(draftMode);
+    add_action(menu, tb_zoom, map_a["ViewDraft"]);
+    map_a["ViewDraft"]->setChecked(draftMode);
 
     menu->addSeparator();
     tb_zoom->addSeparator();
 
-    add_action(menu, tb_zoom, a_map["ZoomRedraw"]);
-    add_action(menu, tb_zoom, a_map["ZoomIn"]);
-    add_action(menu, tb_zoom, a_map["ZoomOut"]);
-    add_action(menu, tb_zoom, a_map["ZoomAuto"]);
-    previousZoom = a_map["ZoomPrevious"];
+    add_action(menu, tb_zoom, map_a["ZoomRedraw"]);
+    add_action(menu, tb_zoom, map_a["ZoomIn"]);
+    add_action(menu, tb_zoom, map_a["ZoomOut"]);
+    add_action(menu, tb_zoom, map_a["ZoomAuto"]);
+    previousZoom = map_a["ZoomPrevious"];
     add_action(menu, tb_zoom, previousZoom);
-    add_action(menu, tb_zoom, a_map["ZoomWindow"]);
-    add_action(menu, tb_zoom, a_map["ZoomPan"]);
+    add_action(menu, tb_zoom, map_a["ZoomWindow"]);
+    add_action(menu, tb_zoom, map_a["ZoomPan"]);
 
     addToolBar(Qt::TopToolBarArea, tb_zoom);
 
@@ -3289,22 +3293,21 @@ void QC_ApplicationWindow::menus_and_toolbars()
     menu = menuBar()->addMenu(tr("&Select"));
     menu->setObjectName("Select");
 
-    a_list = {"DeselectAll"
-             ,"SelectAll"
-             ,"SelectSingle"
-             ,"SelectContour"
-             ,"SelectWindow"
-             ,"DeselectWindow"
-             ,"SelectIntersected"
-             ,"DeselectIntersected"
-             ,"SelectLayer"
-             ,"SelectInvert"
-             };
+    list_a.clear();
 
-    for (std::string a : a_list)
-    {
-        menu->addAction(a_map[a]);
-    }
+    list_a
+            << map_a["DeselectAll"]
+            << map_a["SelectAll"]
+            << map_a["SelectSingle"]
+            << map_a["SelectContour"]
+            << map_a["SelectWindow"]
+            << map_a["DeselectWindow"]
+            << map_a["SelectIntersected"]
+            << map_a["DeselectIntersected"]
+            << map_a["SelectLayer"]
+            << map_a["SelectInvert"];
+
+    menu->addActions(list_a);
 
     // <[~ Draw ~]>
 
@@ -3319,36 +3322,36 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbar = new QToolBar("Line Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("LineTB");
-    list_tb.push_back(toolbar);
+    list_tb.append(toolbar);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/extui/menuline.png"));
     tb_categories->addWidget(tool_button);
 
-    a_list =  {"DrawLine"
-              ,"DrawLineAngle"
-              ,"DrawLineHorizontal"
-              ,"DrawLineVertical"
-              ,"DrawLineRectangle"
-              ,"DrawLineParallel"
-              ,"DrawLineParallelThrough"
-              ,"DrawLineBisector"
-              ,"DrawLineTangent1"
-              ,"DrawLineTangent2"
-              ,"DrawLineOrthTan"
-              ,"DrawLineOrthogonal"
-              ,"DrawLineRelAngle"
-              ,"DrawLinePolygonCenCor"
-              ,"DrawLinePolygonCorCor"
-              ,"DrawLineFree"};
+    list_a.clear();
 
+    list_a
+            << map_a["DrawLine"]
+            << map_a["DrawLineAngle"]
+            << map_a["DrawLineHorizontal"]
+            << map_a["DrawLineVertical"]
+            << map_a["DrawLineRectangle"]
+            << map_a["DrawLineParallel"]
+            << map_a["DrawLineParallelThrough"]
+            << map_a["DrawLineBisector"]
+            << map_a["DrawLineTangent1"]
+            << map_a["DrawLineTangent2"]
+            << map_a["DrawLineOrthTan"]
+            << map_a["DrawLineOrthogonal"]
+            << map_a["DrawLineRelAngle"]
+            << map_a["DrawLinePolygonCenCor"]
+            << map_a["DrawLinePolygonCorCor"]
+            << map_a["DrawLineFree"];
 
-    for (std::string a : a_list)
-    {
-        add_action(sub_menu, toolbar, a_map[a]);
-        tool_button->addAction(a_map[a]);
-    }
+    sub_menu->addActions(list_a);
+    toolbar->addActions(list_a);
+    tool_button->addActions(list_a);
 
     addToolBar(Qt::TopToolBarArea, toolbar);
 
@@ -3360,24 +3363,24 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbar = new QToolBar("Arc Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("ArcTB");
-    list_tb.push_back(toolbar);
+    list_tb.append(toolbar);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/extui/menuarc.png"));
     tb_categories->addWidget(tool_button);
 
-    a_list = {"DrawArc"
-             ,"DrawArc3P"
-             ,"DrawArcParallel"
-             ,"DrawArcTangential"};
+    list_a.clear();
 
+    list_a
+            << map_a["DrawArc"]
+            << map_a["DrawArc3P"]
+            << map_a["DrawArcParallel"]
+            << map_a["DrawArcTangential"];
 
-    for (std::string a : a_list)
-    {
-        add_action(sub_menu, toolbar, a_map[a]);
-        tool_button->addAction(a_map[a]);
-    }
+    sub_menu->addActions(list_a);
+    toolbar->addActions(list_a);
+    tool_button->addActions(list_a);
 
     addToolBar(Qt::BottomToolBarArea, toolbar);
 
@@ -3389,30 +3392,31 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbar = new QToolBar("Circle Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName ("CirclesTB");
-    list_tb.push_back(toolbar);
+    list_tb.append(toolbar);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/extui/menucircle.png"));
     tb_categories->addWidget(tool_button);
 
-    a_list = {"DrawCircleTan3"
-             ,"DrawCircleCR"
-             ,"DrawCircle2P"
-             ,"DrawCircle2PR"
-             ,"DrawCircle3P"
-             ,"DrawCircleParallel"
-             ,"DrawCircleInscribe"
-             ,"DrawCircleTan1_2P"
-             ,"DrawCircleTan2"
-             ,"DrawCircleTan2_1P"
-             ,"DrawCircle"};
+    list_a.clear();
 
-    for (std::string a : a_list)
-    {
-        add_action(sub_menu, toolbar, a_map[a]);
-        tool_button->addAction(a_map[a]);
-    }
+    list_a
+            << map_a["DrawCircle"]
+            << map_a["DrawCircle2P"]
+            << map_a["DrawCircle2PR"]
+            << map_a["DrawCircle3P"]
+            << map_a["DrawCircleCR"]
+            << map_a["DrawCircleParallel"]
+            << map_a["DrawCircleInscribe"]
+            << map_a["DrawCircleTan2_1P"]
+            << map_a["DrawCircleTan1_2P"]
+            << map_a["DrawCircleTan2"]
+            << map_a["DrawCircleTan3"];
+
+    sub_menu->addActions(list_a);
+    toolbar->addActions(list_a);
+    tool_button->addActions(list_a);
 
     addToolBar(Qt::TopToolBarArea, toolbar);
 
@@ -3424,26 +3428,26 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbar = new QToolBar("Ellipse Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("EllipseTB");
-    list_tb.push_back(toolbar);
+    list_tb.append(toolbar);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/extui/menuellipse.png"));
     tb_categories->addWidget(tool_button);
 
+    list_a.clear();
 
-    a_list = {"DrawEllipseAxis"
-             ,"DrawEllipseArcAxis"
-             ,"DrawEllipseFociPoint"
-             ,"DrawEllipse4Points"
-             ,"DrawEllipseCenter3Points"
-             ,"DrawEllipseInscribe"};
+    list_a
+            << map_a["DrawEllipseAxis"]
+            << map_a["DrawEllipseArcAxis"]
+            << map_a["DrawEllipseFociPoint"]
+            << map_a["DrawEllipse4Points"]
+            << map_a["DrawEllipseCenter3Points"]
+            << map_a["DrawEllipseInscribe"];
 
-    for (std::string a : a_list)
-    {
-        add_action(sub_menu, toolbar, a_map[a]);
-        tool_button->addAction(a_map[a]);
-    }
+    sub_menu->addActions(list_a);
+    toolbar->addActions(list_a);
+    tool_button->addActions(list_a);
 
     addToolBar(Qt::BottomToolBarArea, toolbar);
 
@@ -3455,10 +3459,10 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbar = new QToolBar("Spline Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("SplineTB");
-    list_tb.push_back(toolbar);
+    list_tb.append(toolbar);
 
-    add_action(sub_menu, toolbar, a_map["DrawSpline"]);
-    add_action(sub_menu, toolbar, a_map["DrawSplinePoints"]);
+    add_action(sub_menu, toolbar, map_a["DrawSpline"]);
+    add_action(sub_menu, toolbar, map_a["DrawSplinePoints"]);
 
     addToolBar(Qt::BottomToolBarArea, toolbar);
 
@@ -3470,28 +3474,28 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbar = new QToolBar("Polyline Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("PolylineTB");
-    list_tb.push_back(toolbar);
+    list_tb.append(toolbar);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/extui/menupolyline.png"));
     tb_categories->addWidget(tool_button);
 
-    a_list = {"DrawPolyline"
-              ,"PolylineAdd"
-              ,"PolylineAppend"
-              ,"PolylineDel"
-              ,"PolylineDelBetween"
-              ,"PolylineTrim"
-              ,"PolylineEquidistant"
-              ,"PolylineSegment"};
+    list_a.clear();
 
+    list_a
+            << map_a["DrawPolyline"]
+            << map_a["PolylineAdd"]
+            << map_a["PolylineAppend"]
+            << map_a["PolylineDel"]
+            << map_a["PolylineDelBetween"]
+            << map_a["PolylineTrim"]
+            << map_a["PolylineEquidistant"]
+            << map_a["PolylineSegment"];
 
-    for (std::string a : a_list)
-    {
-        add_action(sub_menu, toolbar, a_map[a]);
-        tool_button->addAction(a_map[a]);
-    }
+    sub_menu->addActions(list_a);
+    toolbar->addActions(list_a);
+    tool_button->addActions(list_a);
 
     addToolBar(Qt::BottomToolBarArea, toolbar);
 
@@ -3504,18 +3508,19 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbar = new QToolBar("Misc Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("MiscTB");
-    list_tb.push_back(toolbar);
+    list_tb.append(toolbar);
 
-    a_list = {"DrawMText",
-                "DrawHatch",
-                "DrawImage",
-                "BlocksCreate",
-                "DrawPoint"};
+    list_a.clear();
 
-    for (std::string a : a_list)
-    {
-        add_action(menu, toolbar, a_map[a]);
-    }
+    list_a
+            << map_a["DrawMText"]
+            << map_a["DrawHatch"]
+            << map_a["DrawImage"]
+            << map_a["BlocksCreate"]
+            << map_a["DrawPoint"];
+
+    menu->addActions(list_a);
+    toolbar->addActions(list_a);
 
     addToolBar(Qt::LeftToolBarArea, toolbar);
 
@@ -3533,28 +3538,28 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbar = new QToolBar("Dimension Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("DimensionsTB");
-    list_tb.push_back(toolbar);
+    list_tb.append(toolbar);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/extui/dimhor.png"));
     tb_categories->addWidget(tool_button);
 
-    a_list = {"DimAligned"
-              ,"DimLinear"
-              ,"DimLinearHor"
-              ,"DimLinearVer"
-              ,"DimRadial"
-              ,"DimDiametric"
-              ,"DimAngular"
-              ,"DimLeader"};
+    list_a.clear();
 
+    list_a
+            << map_a["DimAligned"]
+            << map_a["DimLinear"]
+            << map_a["DimLinearHor"]
+            << map_a["DimLinearVer"]
+            << map_a["DimRadial"]
+            << map_a["DimDiametric"]
+            << map_a["DimAngular"]
+            << map_a["DimLeader"];
 
-    for (std::string a : a_list)
-    {
-        add_action(menu, toolbar, a_map[a]);
-        tool_button->addAction(a_map[a]);
-    }
+    menu->addActions(list_a);
+    toolbar->addActions(list_a);
+    tool_button->addActions(list_a);
 
     addToolBar(Qt::BottomToolBarArea, toolbar);
 
@@ -3566,42 +3571,41 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbar = new QToolBar("Modify Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("ModifyTB");
-    list_tb.push_back(toolbar);
+    list_tb.append(toolbar);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/extui/menuedit.png"));
     tb_categories->addWidget(tool_button);
 
+    list_a.clear();
 
-    a_list = {"ModifyMove"
-                ,"ModifyRotate"
-                ,"ModifyScale"
-                ,"ModifyMirror"
-                ,"ModifyMoveRotate"
-                ,"ModifyRotate2"
-                ,"ModifyRevertDirection"
-                ,"ModifyTrim"
-                ,"ModifyTrim2"
-                ,"ModifyTrimAmount"
-                ,"ModifyOffset"
-                ,"ModifyBevel"
-                ,"ModifyRound"
-                ,"ModifyCut"
-                ,"ModifyStretch"
-                ,"ModifyEntity"
-                ,"ModifyAttributes"
-                ,"ModifyDelete"
-                ,"ModifyDeleteQuick"
-                ,"ModifyExplodeText"
-                ,"BlocksExplode"};
+    list_a
+            << map_a["ModifyMove"]
+            << map_a["ModifyRotate"]
+            << map_a["ModifyScale"]
+            << map_a["ModifyMirror"]
+            << map_a["ModifyMoveRotate"]
+            << map_a["ModifyRotate2"]
+            << map_a["ModifyRevertDirection"]
+            << map_a["ModifyTrim"]
+            << map_a["ModifyTrim2"]
+            << map_a["ModifyTrimAmount"]
+            << map_a["ModifyOffset"]
+            << map_a["ModifyBevel"]
+            << map_a["ModifyRound"]
+            << map_a["ModifyCut"]
+            << map_a["ModifyStretch"]
+            << map_a["ModifyEntity"]
+            << map_a["ModifyAttributes"]
+            << map_a["ModifyDelete"]
+            << map_a["ModifyDeleteQuick"]
+            << map_a["ModifyExplodeText"]
+            << map_a["BlocksExplode"];
 
-
-    for (std::string a : a_list)
-    {
-        add_action(menu, toolbar, a_map[a]);
-        tool_button->addAction(a_map[a]);
-    }
+    menu->addActions(list_a);
+    toolbar->addActions(list_a);
+    tool_button->addActions(list_a);
 
     addToolBar(Qt::RightToolBarArea, toolbar);
 
@@ -3613,16 +3617,12 @@ void QC_ApplicationWindow::menus_and_toolbars()
     snapToolBar = new QG_SnapToolBar(tr("Snap Selection"),actionHandler, this);
     snapToolBar->setSizePolicy(toolBarPolicy);
     snapToolBar->setObjectName("SnapTB" );
-    list_tb.push_back(snapToolBar);
+    list_tb.append(snapToolBar);
 
     connect(this, SIGNAL(windowsChanged(bool)), snapToolBar, SLOT(setEnabled(bool)));
     this->addToolBar(snapToolBar);
 
-    if(snapToolBar) {
-        for(QAction* a : snapToolBar->getActions()){
-            menu->addAction(a);
-        }
-    }
+    menu->addActions(snapToolBar->actions());
 
     addToolBar(Qt::LeftToolBarArea, snapToolBar);
 
@@ -3634,24 +3634,25 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbar = new QToolBar("Info Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName("InfoTB");
-    list_tb.push_back(toolbar);
+    list_tb.append(toolbar);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/extui/menumeasure.png"));
     tb_categories->addWidget(tool_button);
 
-    a_list = {"InfoDist"
-               ,"InfoDist2"
-               ,"InfoAngle"
-               ,"InfoTotalLength"
-               ,"InfoArea"};
+    list_a.clear();
 
-    for (std::string a : a_list)
-    {
-        add_action(menu, toolbar, a_map[a]);
-        tool_button->addAction(a_map[a]);
-    }
+    list_a
+            << map_a["InfoDist"]
+            << map_a["InfoDist2"]
+            << map_a["InfoAngle"]
+            << map_a["InfoTotalLength"]
+            << map_a["InfoArea"];
+
+    menu->addActions(list_a);
+    toolbar->addActions(list_a);
+    tool_button->addActions(list_a);
 
     addToolBar(Qt::TopToolBarArea, toolbar);
 
@@ -3660,47 +3661,47 @@ void QC_ApplicationWindow::menus_and_toolbars()
     menu = menuBar()->addMenu(tr("&Layer"));
     menu->setObjectName("Layer");
 
-    a_list =  {"LayersDefreezeAll"
-               ,"LayersFreezeAll"
-               ,"LayersAdd"
-               ,"LayersRemove"
-               ,"LayersEdit"
-               ,"LayersToggleLock"
-               ,"LayersToggleView"
-               ,"LayersTogglePrint"
-               ,"LayersToggleConstruction"};
+    list_a.clear();
 
-    for (std::string a : a_list)
-    {
-        menu->addAction(a_map[a]);
-    }
+    list_a
+            << map_a["LayersDefreezeAll"]
+            << map_a["LayersFreezeAll"]
+            << map_a["LayersAdd"]
+            << map_a["LayersRemove"]
+            << map_a["LayersEdit"]
+            << map_a["LayersToggleLock"]
+            << map_a["LayersToggleView"]
+            << map_a["LayersTogglePrint"]
+            << map_a["LayersToggleConstruction"];
+
+    menu->addActions(list_a);
 
     // <[~ Block ~]>
 
     menu = menuBar()->addMenu(tr("&Block"));
     menu->setObjectName("Block");
 
-    a_list = {"BlocksDefreezeAll"
-               ,"BlocksFreezeAll"
-               ,"BlocksToggleView"
-               ,"BlocksAdd"
-               ,"BlocksRemove"
-               ,"BlocksAttributes"
-               ,"BlocksInsert"
-               ,"BlocksEdit"
-               ,"BlocksSave"
-               ,"BlocksCreate"
-               ,"BlocksExplode"};
+    list_a.clear();
 
-    for (std::string a : a_list)
-    {
-        menu->addAction(a_map[a]);
-    }
+    list_a
+            << map_a["BlocksDefreezeAll"]
+            << map_a["BlocksFreezeAll"]
+            << map_a["BlocksToggleView"]
+            << map_a["BlocksAdd"]
+            << map_a["BlocksRemove"]
+            << map_a["BlocksAttributes"]
+            << map_a["BlocksInsert"]
+            << map_a["BlocksEdit"]
+            << map_a["BlocksSave"]
+            << map_a["BlocksCreate"]
+            << map_a["BlocksExplode"];
+
+    menu->addActions(list_a);
 
     penToolBar = new QG_PenToolBar(tr("Pen Selection"), this);
     penToolBar->setSizePolicy(toolBarPolicy);
     penToolBar->setObjectName ( "PenTB" );
-    list_tb.push_back(penToolBar);
+    list_tb.append(penToolBar);
 
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
     this, SLOT(slotPenChanged(RS_Pen)));
@@ -3710,10 +3711,16 @@ void QC_ApplicationWindow::menus_and_toolbars()
     // <[~ Tool Options ~]>
 
     optionWidget = new QToolBar(tr("Tool Options"), this);
-    //        optionWidget->setMinimumSize(440,30);
     optionWidget->setSizePolicy(toolBarPolicy);
     optionWidget->setObjectName ("ToolTB");
-    list_tb.push_back(optionWidget);
+    list_tb.append(optionWidget);
+
+    // <[~ Custom Toolbar ~]>
+
+//    tb_custom = new LC_CustomToolbar(tr("Custom"), this);
+//    tb_custom->actions_from_file("C:/1B/custom.txt", map_a);
+//    connect(tools, SIGNAL(triggered(QAction*)), tb_custom, SLOT(slot_most_recent_action(QAction*)));
+//    addToolBar(Qt::TopToolBarArea, tb_custom);
 
 
     // <[~ Toolbar Menu ~]>
@@ -3723,7 +3730,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     addToolBar(Qt::TopToolBarArea, optionWidget);
 
-    for (QToolBar* tb : list_tb)
+    foreach (QToolBar* tb, list_tb)
     {
         menu->addAction(tb->toggleViewAction());
     }
@@ -3738,7 +3745,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     tb_wigets->setSizePolicy(toolBarPolicy);
     tb_wigets->setObjectName ( "DockWidgetsTB" );
 
-    add_action(menu, tb_wigets, a_map["ViewStatusBar"]);
+    add_action(menu, tb_wigets, map_a["ViewStatusBar"]);
     add_action(menu, tb_wigets, blockDockWindow->toggleViewAction());
     add_action(menu, tb_wigets, libraryDockWindow->toggleViewAction());
     add_action(menu, tb_wigets, commandDockWindow->toggleViewAction());
@@ -3793,10 +3800,8 @@ void QC_ApplicationWindow::menus_and_toolbars()
     //
     scriptMenu = new QMenu(tr("&Scripts"));
     scriptMenu->setObjectName("Scripts");
-    scriptOpenIDE = AF.createAction("ScriptOpenIDE", this);
-    scriptOpenIDE->addTo(scriptMenu);
-    scriptRun = AF.createAction("ScriptRun", this);
-    scriptMenu->addAction(scriptRun);
+    scriptMenu->addAction(map_a["ScriptOpenIDE"]);
+    scriptMenu->addAction(map_a["ScriptRun"]);
     menuBar()->addMenu(scriptMenu);
 #else
     scriptMenu = 0;
@@ -3807,24 +3812,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
 #ifdef LC_DEBUGGING
     m_pSimpleTest=new LC_SimpleTests(this);
 #endif
-
-
-    QToolBar* tb_construct = new QToolBar("Construction", this);
-    tb_construct->setSizePolicy(toolBarPolicy);
-    tb_construct->setObjectName("ConstructionTB" );
-
-    tb_construct->addAction(a_map["DrawCircle"]);
-    tb_construct->addAction(a_map["DrawCircle2P"]);
-    tb_construct->addAction(a_map["DrawCircle3P"]);
-    tb_construct->addAction(a_map["DrawCircleTan3"]);
-    tb_construct->addSeparator();
-    tb_construct->addAction(a_map["DrawLine"]);
-
-    addToolBar(Qt::BottomToolBarArea, tb_construct);
-
-    addToolBar(Qt::LeftToolBarArea, tb_categories);
-
-
 }
 
 
@@ -3845,4 +3832,3 @@ void QC_ApplicationWindow::add_action(QMenu* menu, QToolBar* toolbar, QAction* a
     menu->addAction(action);
     toolbar->addAction(action);
 }
-

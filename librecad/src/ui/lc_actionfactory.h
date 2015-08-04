@@ -41,7 +41,7 @@ public:
     LC_ActionFactory(QG_ActionHandler* ah, QMainWindow* mw, QActionGroup* group);
     virtual ~LC_ActionFactory() = default;
 
-    std::map<std::string, QAction*> action_map();
+    QMap<QString, QAction*> action_map();
 
 private:
 

@@ -36,10 +36,10 @@ LC_ActionFactory::LC_ActionFactory(QG_ActionHandler* ah, QMainWindow* mw, QActio
     tools(group)
 {}
 
-std::map<std::string, QAction*> LC_ActionFactory::action_map()
+QMap<QString, QAction*> LC_ActionFactory::action_map()
 {
 
-    std::map<std::string, QAction*> a_map;
+    QMap<QString, QAction*> a_map;
     QAction* action;
 
     // <[~ Zoom ~]>
@@ -719,9 +719,9 @@ std::map<std::string, QAction*> LC_ActionFactory::action_map()
     action->setData("InfoArea");
     a_map["InfoArea"] = action;
 
-    for (auto item : a_map)
+    foreach (QAction* value, a_map)
     {
-        item.second->setCheckable(true);
+        value->setCheckable(true);
     }
 
     // =============================

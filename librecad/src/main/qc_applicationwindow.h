@@ -40,6 +40,8 @@
 class QAssistantClient;
 #endif
 
+#include "lc_customtoolbar.h"
+
 class QMdiArea;
 class QMdiSubWindow;
 class QC_MDIWindow;
@@ -382,6 +384,7 @@ private:
     QToolBar* tb_file;
     QToolBar* tb_edit;
     QToolBar* tb_zoom;
+    LC_CustomToolbar* tb_custom;
     static QAction* previousZoom;
     static QAction* undoButton;
     static QAction* redoButton;

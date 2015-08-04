@@ -225,7 +225,8 @@ HEADERS += \
     lib/generators/lc_xmlwriterinterface.h \
     lib/generators/lc_xmlwriterqxmlstreamwriter.h \
     actions/lc_actionfileexportmakercam.h \
-    ui/qg_commandhistory.h
+    ui/qg_commandhistory.h \
+    ui/lc_customtoolbar.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -318,7 +319,8 @@ SOURCES += \
     actions/lc_actionfileexportmakercam.cpp \
     lib/engine/rs_atomicentity.cpp \
     lib/engine/rs_undocycle.cpp \
-    ui/qg_commandhistory.cpp
+    ui/qg_commandhistory.cpp \
+    ui/lc_customtoolbar.cpp
 
 # ################################################################################
 # Command
