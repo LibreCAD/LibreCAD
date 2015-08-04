@@ -42,41 +42,40 @@ RS_ActionZoomIn::RS_ActionZoomIn(RS_EntityContainer& container,
                                  RS2::Axis axis,
                                  const RS_Vector& center,
                                  double factor)
-        :RS_ActionInterface("Zoom in", container, graphicView) {
-
-    this->zoom_factor = factor;
-    this->direction = direction;
-    this->axis = axis;
-    this->center = center;
+        :RS_ActionInterface("Zoom in", container, graphicView)
+        ,zoom_factor(factor)
+        ,direction(direction)
+        ,axis(axis)
+        ,center(center)
+{
 }
 
 QAction* RS_ActionZoomIn::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
     QAction* action;
 
     if (type==RS2::ActionZoomIn) {
-		// tr("Zoom in")
-		action = new QAction(tr("Zoom &In"), NULL);
+        // tr("Zoom in")
+        action = new QAction(tr("Zoom &In"), nullptr);
 #if QT_VERSION >= 0x040600
-                action->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/actions/zoomin.png")));
+        action->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/actions/zoomin.png")));
 #else
-                action->setIcon(QIcon(":/actions/zoomin.png"));
+        action->setIcon(QIcon(":/actions/zoomin.png"));
 #endif
-		action->setShortcut(QKeySequence::ZoomIn);
-		//action->zetStatusTip(tr("Zooms in"));
+        action->setShortcut(QKeySequence::ZoomIn);
+        action->setStatusTip(tr("Zooms in"));
     } else {
-		// tr("Zoom Out")
-		action = new QAction(tr("Zoom &Out"), NULL);
+        // tr("Zoom Out")
+        action = new QAction(tr("Zoom &Out"), nullptr);
 #if QT_VERSION >= 0x040600
-                action->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/actions/zoomout.png")));
+        action->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/actions/zoomout.png")));
 #else
-                action->setIcon(QIcon(":/actions/zoomout.png"));
+        action->setIcon(QIcon(":/actions/zoomout.png"));
 #endif
-                action->setShortcut(QKeySequence::ZoomOut);
-		//action->zetStatusTip(tr("Zooms out"));
+        action->setShortcut(QKeySequence::ZoomOut);
+        action->setStatusTip(tr("Zooms out"));
     }
     return action;
 }
-
 
 void RS_ActionZoomIn::init(int status) {
     RS_ActionInterface::init(status);
