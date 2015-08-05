@@ -52,8 +52,6 @@ public:
     RS_ActionDimLeader(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
 	~RS_ActionDimLeader() = default;
-	
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
     void reset();
 

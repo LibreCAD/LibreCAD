@@ -42,14 +42,6 @@ RS_ActionSelectContour::RS_ActionSelectContour(RS_EntityContainer& container,
 	actionType=RS2::ActionSelectContour;
 }
 
-QAction* RS_ActionSelectContour::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("(De-)Select Contour")
-    QAction* action = new QAction(tr("(De-)Select &Contour"),  NULL);
-        action->setIcon(QIcon(":/extui/selectcontour.png"));
-        //action->zetStatusTip(tr("(De-)Selects connected entities"));
-    return action;
-}
-
 
 void RS_ActionSelectContour::trigger() {
     if (en) {

@@ -35,11 +35,6 @@ RS_ActionLayersAdd::RS_ActionLayersAdd(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_ActionInterface("Add Layer", container, graphicView) {}
 
-QAction* RS_ActionLayersAdd::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action = new QAction(QIcon(":/ui/layeradd.png"), tr("&Add Layer"), NULL);
-    return action;
-}
-
 void RS_ActionLayersAdd::trigger() {
     RS_DEBUG->print("add layer");
 

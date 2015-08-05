@@ -225,7 +225,8 @@ HEADERS += \
     lib/generators/lc_xmlwriterinterface.h \
     lib/generators/lc_xmlwriterqxmlstreamwriter.h \
     actions/lc_actionfileexportmakercam.h \
-    ui/qg_commandhistory.h
+    ui/qg_commandhistory.h \
+    ui/lc_customtoolbar.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -318,7 +319,8 @@ SOURCES += \
     actions/lc_actionfileexportmakercam.cpp \
     lib/engine/rs_atomicentity.cpp \
     lib/engine/rs_undocycle.cpp \
-    ui/qg_commandhistory.cpp
+    ui/qg_commandhistory.cpp \
+    ui/lc_customtoolbar.cpp
 
 # ################################################################################
 # Command
@@ -601,7 +603,7 @@ RESOURCES += ../res/actions/actions.qrc
 
 # ################################################################################
 # UI
-HEADERS += ui/qg_actionfactory.h \
+HEADERS += ui/lc_actionfactory.h \
     ui/qg_actionhandler.h \
     ui/qg_blockwidget.h \
     ui/qg_colorbox.h \
@@ -698,7 +700,7 @@ HEADERS += ui/qg_actionfactory.h \
     ui/forms/qg_trimamountoptions.h \
     ui/forms/qg_widgetpen.h
 
-SOURCES += ui/qg_actionfactory.cpp \
+SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
     ui/qg_blockwidget.cpp \
     ui/qg_colorbox.cpp \

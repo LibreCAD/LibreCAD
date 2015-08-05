@@ -37,12 +37,6 @@ RS_ActionLayersEdit::RS_ActionLayersEdit(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Edit Layer", container, graphicView) {}
 
-
-QAction* RS_ActionLayersEdit::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(QIcon(":/ui/layeredit.png"), tr("&Edit Layer"), NULL);
-    return action;
-}
-
 void RS_ActionLayersEdit::trigger() {
     RS_DEBUG->print("RS_ActionLayersEdit::trigger");
 

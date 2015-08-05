@@ -53,7 +53,6 @@ public:
                         RS_GraphicView& graphicView);
 	~RS_ActionModifyMirror();
 	
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     virtual void init(int status=0);
     virtual void trigger();
 	virtual void coordinateEvent(RS_CoordinateEvent* e);

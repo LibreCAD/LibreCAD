@@ -43,8 +43,6 @@ public:
                        bool select);
 	~RS_ActionSelectAll()=default;
 
-	static QAction* createGUIAction(RS2::ActionType type, QObject* parent);
-
     void init(int status);
     virtual void trigger();
 

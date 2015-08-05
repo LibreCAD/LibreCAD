@@ -56,12 +56,6 @@ void RS_ActionDrawLineOrthTan::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-QAction* RS_ActionDrawLineOrthTan::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(tr("Tangent &Orthogonal"), nullptr);
-    action->setIcon(QIcon(":/extui/linesorthtan.png"));
-    return action;
-}
-
 void RS_ActionDrawLineOrthTan::trigger() {
 	if(!tangent) return;
     RS_PreviewActionInterface::trigger();

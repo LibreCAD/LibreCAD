@@ -54,8 +54,6 @@ public:
                                RS_GraphicView& graphicView);
     ~RS_ActionDrawArcTangential();
 
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
     void reset();
 
     virtual void init(int status=0);

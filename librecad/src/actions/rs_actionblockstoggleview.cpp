@@ -39,12 +39,6 @@ RS_ActionBlocksToggleView::RS_ActionBlocksToggleView(
                     container, graphicView) {}
 
 
-QAction* RS_ActionBlocksToggleView::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(QIcon(":/ui/layertoggle.png"), tr("Toggle Block &Visibility"), nullptr);
-	return action;
-}
-
-
 void RS_ActionBlocksToggleView::trigger() {
     RS_DEBUG->print("toggle block");
 	if (graphic) {

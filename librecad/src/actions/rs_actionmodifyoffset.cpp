@@ -48,11 +48,6 @@ RS_ActionModifyOffset::RS_ActionModifyOffset(RS_EntityContainer& container,
 
 RS_ActionModifyOffset::~RS_ActionModifyOffset() {}
 
-QAction* RS_ActionModifyOffset::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(QIcon(":/extui/arcspara.png"), tr("&Offset"),nullptr);
-    return action;
-}
-
 void RS_ActionModifyOffset::init(int status) {
     RS_ActionInterface::init(status);
     //finish, if nothing selected

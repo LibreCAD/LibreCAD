@@ -48,29 +48,6 @@ RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(
 	actionType=RS2::ActionDrawLineParallel;
 }
 
-QAction* RS_ActionDrawLineParallel::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
-
-	QAction* action = nullptr;
-    switch(type){
-    case RS2::ActionDrawLineParallel:
-		action = new QAction(tr("&Parallel"), nullptr);
-        action->setIcon(QIcon(":/extui/linespara.png"));
-        break;
-    case RS2::ActionDrawArcParallel:
-		action = new QAction(tr("&Concentric"), nullptr);
-        action->setIcon(QIcon(":/extui/arcspara.png"));
-        break;
-    case RS2::ActionDrawCircleParallel:
-		action = new QAction(tr("&Concentric"), nullptr);
-        action->setIcon(QIcon(":/extui/circlespara.png"));
-        break;
-    default:
-		break;
-    }
-	if(action) action->setCheckable(true);
-    return action;
-}
-
 double RS_ActionDrawLineParallel::getDistance() const{
 	return distance;
 }

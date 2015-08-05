@@ -58,7 +58,9 @@ public:
 	RS_GraphicView();
 	virtual ~RS_GraphicView();
 
-	void cleanUp();
+    void cleanUp();
+
+    void set_action(QAction* q_action);
 
 	/**
 	 * @return Pointer to the graphic entity if the entity container
@@ -224,7 +226,7 @@ public:
 
 	void setDefaultAction(RS_ActionInterface* action);
 	RS_ActionInterface*  getDefaultAction();
-	void setCurrentAction(RS_ActionInterface* action);
+    void setCurrentAction(RS_ActionInterface* action);
 	RS_ActionInterface* getCurrentAction();
 
 	void killSelectActions();

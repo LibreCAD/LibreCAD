@@ -41,15 +41,6 @@ RS_ActionPolylineDel::RS_ActionPolylineDel(RS_EntityContainer& container,
 	actionType=RS2::ActionPolylineDel;
 }
 
-
-QAction* RS_ActionPolylineDel::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action = new QAction(tr("&Delete node"), NULL);
-    action->setShortcut(QKeySequence());
-    action->setIcon(QIcon(":/extui/polylinedel.png"));
-    action->setStatusTip(tr("Delete polyline's node"));
-    return action;
-}
-
 void RS_ActionPolylineDel::init(int status) {
     RS_ActionInterface::init(status);
     delEntity = NULL;

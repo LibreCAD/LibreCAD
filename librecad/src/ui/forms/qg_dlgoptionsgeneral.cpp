@@ -135,6 +135,9 @@ void QG_DlgOptionsGeneral::init() {
     cbSizeStatus->setCurrentIndex( cbSizeStatus->findText(sizeStatus) );
     cbSplash->setChecked(RS_SETTINGS->readNumEntry("/ShowSplash",1)==1);
 
+    sb_icon_size->setValue(RS_SETTINGS->readNumEntry("/IconSize", 24));
+    cb_icon_size->setChecked(RS_SETTINGS->readNumEntry("/SetIconSize", 1)?true:false);
+
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Paths");
@@ -221,6 +224,8 @@ void QG_DlgOptionsGeneral::ok() {
     RS_SETTINGS->writeEntry("/LayerSelectColor", cb_layerselection->currentText());
 	RS_SETTINGS->writeEntry("/StatusBarFontSize", cbSizeStatus->currentText());
     RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
+    RS_SETTINGS->writeEntry("/IconSize", sb_icon_size->value() );
+    RS_SETTINGS->writeEntry("/SetIconSize", cb_icon_size->isChecked()?1:0);
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Paths");
@@ -236,7 +241,7 @@ void QG_DlgOptionsGeneral::ok() {
     RS_SETTINGS->writeEntry("/Unit",
         RS_Units::unitToString( RS_Units::stringToUnit( cbUnit->currentText() ), false/*untr.*/) );
     RS_SETTINGS->writeEntry("/AutoSaveTime", cbAutoSaveTime->value() );
-    RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked()?1:0 );
+    RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked()?1:0);
     RS_SETTINGS->endGroup();
 
 	//update entities to selected entities to the current active layer

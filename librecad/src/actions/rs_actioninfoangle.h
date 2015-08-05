@@ -50,7 +50,6 @@ public:
                         RS_GraphicView& graphicView);
     ~RS_ActionInfoAngle() = default;
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	virtual void init(int status);
     virtual void trigger();
     virtual void mouseMoveEvent(QMouseEvent* e);

@@ -48,15 +48,6 @@ RS_ActionDimRadial::RS_ActionDimRadial(
 
 RS_ActionDimRadial::~RS_ActionDimRadial(){}
 
-QAction* RS_ActionDimRadial::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Radial")
-    QAction* action = new QAction(tr("&Radial"),  NULL);
-	action->setIcon(QIcon(":/extui/dimradial.png"));
-    //action->zetStatusTip(tr("Radial Dimension"));
-
-    return action;
-}
-
 void RS_ActionDimRadial::reset() {
     RS_ActionDimension::reset();
 

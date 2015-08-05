@@ -49,7 +49,6 @@ public:
     virtual void setActionHandler(QG_ActionHandler* ah);
 	bool lockedRelativeZero() const;
     void setLockedRelativeZero(bool on);
-	QList<QAction*> getActions() const;
 
 public slots:
 	void setSnaps(RS_SnapMode const & s);

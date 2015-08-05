@@ -51,25 +51,6 @@ RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(
 }
 
 
-QAction* RS_ActionDrawLineRelAngle::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
-    QAction* action = NULL;
-
-        if (type==RS2::ActionDrawLineRelAngle) {
-                // tr("R&elative angle"),
-                action = new QAction(tr("Relative angle"), NULL);
-                action->setIcon(QIcon(":/extui/linesrelativeangle.png"));
-        //action->zetStatusTip(tr("Draw line with relative angle"));
-        }
-        else if (type==RS2::ActionDrawLineOrthogonal) {
-                // tr("&Orthogonal"),
-        action = new QAction(tr("Orthogonal"), NULL);
-                action->setIcon(QIcon(":/extui/linesorthogonal.png"));
-        //action->zetStatusTip(tr("Draw orthogonal line"));
-        }
-    return action;
-}
-
-
 RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
 	if( fixedAngle && RS_Math::getAngleDifference(angle,M_PI_2) < RS_TOLERANCE )
 		return RS2::ActionDrawLineOrthogonal;

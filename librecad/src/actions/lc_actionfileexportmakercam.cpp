@@ -37,12 +37,6 @@ LC_ActionFileExportMakerCam::LC_ActionFileExportMakerCam(RS_EntityContainer& con
                                                          RS_GraphicView& graphicView)
     : RS_ActionInterface("Export as MakerCAM SVG...", container, graphicView) {}
 
-QAction* LC_ActionFileExportMakerCam::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-
-	QAction* action = new QAction(tr("Export as &MakerCAM SVG..."), nullptr);
-//	action->setIcon(QIcon(":/ui/blockadd.png"));
-    return action;
-}
 
 void LC_ActionFileExportMakerCam::init(int status) {
 

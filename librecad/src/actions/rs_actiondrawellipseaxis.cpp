@@ -58,17 +58,6 @@ RS_ActionDrawEllipseAxis::RS_ActionDrawEllipseAxis(
 }
 
 
-
-QAction* RS_ActionDrawEllipseAxis::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
-	switch(type){
-	case RS2::ActionDrawEllipseArcAxis:
-		return new QAction(QIcon(":/extui/ellipsearcsaxes.png"), tr("Ellipse &Arc (Axis)"), nullptr);
-	default:
-	case RS2::ActionDrawEllipseAxis:
-		return new QAction(QIcon(":/extui/ellipsesaxes.png"), tr("&Ellipse (Axis)"), nullptr);
-	}
-}
-
 void RS_ActionDrawEllipseAxis::init(int status) {
     RS_PreviewActionInterface::init(status);
 

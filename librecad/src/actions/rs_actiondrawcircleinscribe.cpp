@@ -45,10 +45,6 @@ RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(
 
 RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe(){}
 
-QAction* RS_ActionDrawCircleInscribe::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	return new QAction(QIcon(":/extui/circleinscribe.png"), tr("Circle &Inscribed"), NULL);
-}
-
 void RS_ActionDrawCircleInscribe::clearLines(bool checkStatus)
 {
 	while(lines.size() ){

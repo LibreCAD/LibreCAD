@@ -43,12 +43,6 @@ RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
 	m_SnapDistance=1.;
 }
 
-
-QAction* RS_ActionDrawLineParallelThrough::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(QIcon(":/extui/linesparathrough.png"), tr("Parallel through point"), NULL);
-    return action;
-}
-
 void RS_ActionDrawLineParallelThrough::finish(bool updateTB){
 	if(entity){
 		entity->setHighlighted(false);

@@ -67,8 +67,6 @@ public:
                        RS2::ActionType type = RS2::ActionDimLinear);
     ~RS_ActionDimLinear();
 	
-	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-	
     void reset();
 
     virtual void trigger();

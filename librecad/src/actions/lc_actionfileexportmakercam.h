@@ -32,8 +32,6 @@ public:
 	LC_ActionFileExportMakerCam(RS_EntityContainer& container, RS_GraphicView& graphicView);
 	~LC_ActionFileExportMakerCam() = default;
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
     virtual void init(int status=0);
     virtual void trigger();
 
