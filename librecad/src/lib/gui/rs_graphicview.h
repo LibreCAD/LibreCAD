@@ -77,7 +77,7 @@ public:
 	/**
 	 * @return Current drawing mode.
 	 */
-	RS2::DrawingMode getDrawingMode() {
+    RS2::DrawingMode getDrawingMode() const {
 		return drawingMode;
 	}
 
@@ -92,7 +92,7 @@ public:
 	 * @reval true Deleting instead of drawing.
 		 *        false Normal drawing mode.
 	 */
-	bool getDeleteMode() {
+    bool getDeleteMode() const{
 		return deleteMode;
 	}
 
@@ -282,7 +282,7 @@ public:
 	virtual void drawEntityPlain(RS_Painter *painter, RS_Entity* e);
 	virtual void drawEntityPlain(RS_Painter *painter, RS_Entity* e, double& patternOffset);
 	virtual void setPenForEntity(RS_Painter *painter, RS_Entity* e );
-
+    virtual RS_Vector getMousePosition() const = 0;
 
 	virtual const RS_LineTypePattern* getPattern(RS2::LineType t);
 

@@ -47,7 +47,8 @@ public:
     virtual void setMouseCursor(RS2::CursorType ) {}
 
     virtual void emulateMouseMoveEvent() {}
-        virtual void updateGridStatusWidget(const QString& ) {}
+    virtual void updateGridStatusWidget(const QString& ) {}
+    virtual RS_Vector getMousePosition() const;
 
     void paint();
 

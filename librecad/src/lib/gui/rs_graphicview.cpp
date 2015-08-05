@@ -492,11 +492,11 @@ void RS_GraphicView::zoomIn(double f, const RS_Vector& center) {
 		return;
 	}
 
-
-	RS_Vector c = center;
-	if (c.valid==false) {
-		c = toGraph(RS_Vector(getWidth()/2, getHeight()/2));
-	}
+    RS_Vector c = center;
+    if (!c.valid) {
+        //find mouse position
+        c= getMousePosition();
+    }
 
 	zoomWindow(
 				toGraph(RS_Vector(0,0))

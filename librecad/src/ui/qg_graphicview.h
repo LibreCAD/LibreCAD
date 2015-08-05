@@ -82,6 +82,12 @@ public:
      * @param oy, offset Y
      */
     virtual void setOffset(int ox, int oy);
+    /**
+     * @brief getMousePosition() mouse position in widget coordinates
+     * @return the cursor position in widget coordinates
+     * returns the widget center, if cursor is not on the widget
+     */
+    virtual RS_Vector getMousePosition() const;
 
 protected:
     virtual void emulateMouseMoveEvent();

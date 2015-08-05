@@ -58,9 +58,10 @@ int RS_StaticGraphicView::getHeight() const{
     return height;
 }
 
-
-
-
+RS_Vector RS_StaticGraphicView::getMousePosition() const
+{
+    return RS_Vector(false);
+}
 
 /**
  * Handles paint events by redrawing the graphic in this view.

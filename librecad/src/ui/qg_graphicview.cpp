@@ -788,6 +788,16 @@ void QG_GraphicView::setOffset(int ox, int oy) {
     adjustOffsetControls();
 }
 
+RS_Vector QG_GraphicView::getMousePosition() const
+{
+    //find mouse position
+    QPoint vp=mapFromGlobal(QCursor::pos());
+    //if cursor is not on widget, return the widget center position
+    if(!rect().contains(vp))
+        vp=QPoint(width()/2, height()/2);
+    return toGraph(RS_Vector(vp.x(), vp.y()));
+}
+
 void QG_GraphicView::getPixmapForView(std::unique_ptr<QPixmap>& pm)
 {
 	QSize const s0(getWidth(), getHeight());
