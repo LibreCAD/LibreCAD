@@ -107,10 +107,10 @@ public:
 	virtual void redraw(RS2::RedrawMethod method=RS2::RedrawAll) = 0;
 	/** This virtual method must be overwritten and is then
 	  called whenever the view changed */
-	virtual void adjustOffsetControls() {}
+    virtual void adjustOffsetControls() = 0;
 	/** This virtual method must be overwritten and is then
 	  called whenever the view changed */
-	virtual void adjustZoomControls() {}
+    virtual void adjustZoomControls() = 0;
 
 	/**
 	 * Sets the background color. Note that applying the background
@@ -185,7 +185,7 @@ public:
 	 * This virtual method can be overwritten to set the mouse
 	 * cursor to the given type.
 	 */
-	virtual void setMouseCursor(RS2::CursorType /*c*/) {}
+    virtual void setMouseCursor(RS2::CursorType /*c*/) = 0;
 
 	void setContainer(RS_EntityContainer* container);
 	RS_EntityContainer* getContainer() const;
@@ -294,7 +294,7 @@ public:
 	virtual void drawOverlay(RS_Painter *painter);
 
 	RS_Grid* getGrid() const;
-	virtual void updateGridStatusWidget(const QString& /*text*/) {}
+    virtual void updateGridStatusWidget(const QString& /*text*/) = 0;
 
 	void setDefaultSnapMode(RS_SnapMode sm);
 	RS_SnapMode getDefaultSnapMode() const;

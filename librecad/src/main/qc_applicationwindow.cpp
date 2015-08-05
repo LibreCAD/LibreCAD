@@ -819,10 +819,6 @@ void QC_ApplicationWindow::initActions(void)
     actionFactory.addGUI(subMenu, this, editToolBar, RS2::ActionViewEditToolbar);
     actionFactory.addGUI(subMenu, this, snapToolBar, RS2::ActionViewSnapToolbar);
 
-    // RVT_PORT menu->insertItem(tr("Vie&ws"), createDockWindowMenu(NoToolBars));
-    // RVT_PORT menu->insertItem(tr("Tool&bars"), createDockWindowMenu(OnlyToolBars));
-
-
     // tr("Focus on Command Line")
     action = new QAction(tr("Focus on &Command Line"), this);
     action->setIcon(QIcon(":/main/editclear.png"));
@@ -831,7 +827,6 @@ void QC_ApplicationWindow::initActions(void)
         commandLineShortcuts<<QKeySequence(Qt::CTRL + Qt::Key_M)<<QKeySequence( Qt::Key_Colon)<<QKeySequence(Qt::Key_Space);
         action->setShortcuts(commandLineShortcuts);
     }
-        //action->zetStatusTip(tr("Focus on Command Line"));
 
     connect(action, SIGNAL(triggered()),
             this, SLOT(slotFocusCommandLine()));
