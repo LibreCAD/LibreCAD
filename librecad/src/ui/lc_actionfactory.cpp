@@ -143,7 +143,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map()
     action->setData("DrawLineHorizontal");
     a_map["DrawLineHorizontal"] = action;
 
-    new QAction(QIcon(":/extui/linesver.png"), tr("Vertical"), tools);
+    action = new QAction(QIcon(":/extui/linesver.png"), tr("Vertical"), tools);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineVertical()));
     action->setData("DrawLineVertical");
