@@ -455,7 +455,7 @@ RS_Commands::RS_Commands() {
         //snap dist
         {
             {{"snapdist", QObject::tr("snapdist", "snap - distance to endpoints")}},
-            {{"sc", QObject::tr("sc", "snap - distance to endpoints")}},
+            {{"sd", QObject::tr("sd", "snap - distance to endpoints")}},
             RS2::ActionSnapDist
         },
         //snap end
