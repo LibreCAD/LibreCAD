@@ -24,15 +24,12 @@
 **
 **********************************************************************/
 
-
 #include "rs_preview.h"
-
 #include "rs_entitycontainer.h"
 #include "rs_line.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_settings.h"
-
 
 /**
  * Constructor.
@@ -45,8 +42,6 @@ RS_Preview::RS_Preview(RS_EntityContainer* parent)
     RS_SETTINGS->endGroup();
 }
 
-
-
 /**
  * Destructor.
  */
@@ -58,17 +53,14 @@ RS_Preview::~RS_Preview() {
     */
 }
 
-
-
 /**
  * Adds an entity to this preview and removes any attributes / layer
  * connectsions before that.
  */
 void RS_Preview::addEntity(RS_Entity* entity) {
-    if (entity==NULL || entity->isUndone()) {
+    if (entity==nullptr || entity->isUndone()) {
         return;
     }
-
 
     // only border preview for complex entities:
     //if ((entity->count() > maxEntities-count()) &&
@@ -114,9 +106,9 @@ void RS_Preview::addEntity(RS_Entity* entity) {
         RS_EntityContainer::addEntity(l4);
 
         delete entity;
-        entity = NULL;
+        entity = nullptr;
     } else {
-        entity->setLayer(NULL);
+        entity->setLayer(nullptr);
         entity->setSelected(false);
         entity->reparent(this);
                 // Don't set this pen, let drawing routines decide entity->setPenToActive();
@@ -124,21 +116,18 @@ void RS_Preview::addEntity(RS_Entity* entity) {
     }
 }
 
-
-
 /**
  * Clones the given entity and adds the clone to the preview.
  */
 void RS_Preview::addCloneOf(RS_Entity* entity) {
-    if (entity==NULL) {
+    if (!entity) {
         return;
     }
 
     RS_Entity* clone = entity->clone();
+    clone->reparent(this);
     addEntity(clone);
 }
-
-
 
 /**
  * Adds all entities from 'container' to the preview (unselected).
@@ -154,11 +143,10 @@ void RS_Preview::addAllFrom(RS_EntityContainer& container) {
 
             c+=clone->countDeep();
             addEntity(clone);
-            // clone might be NULL after this point
+            // clone might be nullptr after this point
         }
     }
 }
-
 
 /**
  * Adds all selected entities from 'container' to the preview (unselected).
@@ -174,11 +162,10 @@ void RS_Preview::addSelectionFrom(RS_EntityContainer& container) {
 
             c+=clone->countDeep();
             addEntity(clone);
-            // clone might be NULL after this point
+            // clone might be nullptr after this point
         }
     }
 }
-
 
 /**
  * Adds all entities in the given range and those which have endpoints
@@ -186,7 +173,6 @@ void RS_Preview::addSelectionFrom(RS_EntityContainer& container) {
  */
 void RS_Preview::addStretchablesFrom(RS_EntityContainer& container,
                                      const RS_Vector& v1, const RS_Vector& v2) {
-
     int c=0;
 
 	for(auto e: container){
@@ -204,9 +190,7 @@ void RS_Preview::addStretchablesFrom(RS_EntityContainer& container,
 
             c+=clone->countDeep();
             addEntity(clone);
-            // clone might be NULL after this point
+            // clone might be nullptr after this point
         }
     }
 }
-
-

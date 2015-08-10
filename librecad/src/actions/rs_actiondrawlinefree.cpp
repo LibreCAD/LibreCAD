@@ -82,13 +82,9 @@ void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
             //do not add the same mouse position
             return;
         }
-        RS_Entity* ent = polyline->addVertex(v)->clone();
-        ent->reparent(preview);
-        RS_Polyline* p1=static_cast<RS_Polyline*>(ent);
-        p1->closingEntity();
-        if (p1->count() > 0){
-            preview->addEntity(p1);
-
+        auto ent = static_cast<RS_Polyline*>(polyline->addVertex(v));
+        if (ent->count()){
+            preview->addCloneOf(ent);
             drawPreview();
         }
 
