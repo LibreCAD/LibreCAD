@@ -136,8 +136,9 @@ public:
     virtual void setBrush(const QBrush& color) = 0;
     virtual void drawPolygon(const QPolygon& a, Qt::FillRule rule=Qt::WindingFill) = 0;
     virtual void erase() = 0;
-    virtual int getWidth() = 0;
-    virtual int getHeight() = 0;
+    virtual int getWidth() const= 0;
+    virtual int getHeight() const= 0;
+    virtual double getDpmm() const= 0;
 
     virtual void setOffset(const RS_Vector& o) {
         offset = o;

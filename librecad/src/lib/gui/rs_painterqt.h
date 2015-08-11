@@ -41,7 +41,7 @@ class RS_PainterQt: public QPainter, public RS_Painter {
 
 public:
     RS_PainterQt( QPaintDevice* pd);
-    virtual ~RS_PainterQt();
+    virtual ~RS_PainterQt()=default;
 
     virtual void moveTo(int x, int y);
     virtual void lineTo(int x, int y);
@@ -85,12 +85,12 @@ public:
     virtual void drawPolygon(const QPolygon& a,Qt::FillRule rule=Qt::WindingFill);
     virtual void drawPath ( const QPainterPath & path );
     virtual void erase();
-    virtual int getWidth();
+    virtual int getWidth() const;
     /** get Density per millimeter on screen/print device
       *@return density per millimeter in pixel/mm
       */
-    virtual double getDpmm();
-    virtual int getHeight();
+    virtual double getDpmm() const;
+    virtual int getHeight() const;
 
 
     virtual RS_Pen getPen() const;
