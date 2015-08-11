@@ -2962,12 +2962,14 @@ void QC_ApplicationWindow::slotFilePrintPDF() {
  *	Notes:			Menu file -> print preview.
  *	*/
 
-void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
+void QC_ApplicationWindow::slotFilePrintPreview(bool on)
+{
     RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview()");
 
-    RS_DEBUG->print("  creating MDI window");
     QC_MDIWindow* parent = getMDIWindow();
-    if (parent==NULL) {
+
+    if (parent==nullptr)
+    {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QC_ApplicationWindow::slotFilePrintPreview: "
                 "no window opened");
@@ -2975,16 +2977,21 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
     }
 
     // close print preview:
-    if (on==false) {
+    if (on==false)
+    {
         RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): off");
-        if (parent->getGraphicView()->isPrintPreview()) {
+
+        if (parent->getGraphicView()->isPrintPreview())
+        {
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): close");
+            getGraphicView()->getDefaultAction()->hideOptions();
             slotFileClose();
-//            std::cout<<"QC_ApplicationWindow::slotFilePrintPreview(bool on): close"<<std::endl;
             emit(printPreviewChanged(false));
-            if(mdiAreaCAD->subWindowList().size()>0){
+            if(mdiAreaCAD->subWindowList().size()>0)
+            {
                 QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
-				if(w){
+                if(w)
+                {
                     mdiAreaCAD->setActiveSubWindow(w);
                 }
             }
@@ -2996,7 +3003,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
     else {
         // look for an existing print preview:
         QC_MDIWindow* ppv = parent->getPrintPreview();
-		if (ppv) {
+        if (ppv)
+        {
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): show existing");
 
             //no need to search, casting parentWindow works like a charm
@@ -3004,28 +3012,26 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on) {
             mdiAreaCAD->setActiveSubWindow(qobject_cast<QMdiSubWindow*>(ppv->parentWidget()));
 //            std::cout<<"QC_ApplicationWindow::slotFilePrintPreview(bool on): emit(printPreviewChanged(true))"<<std::endl;
             emit(printPreviewChanged(true));
-
-
-        } else {
-            if (!parent->getGraphicView()->isPrintPreview()) {
+        }
+        else
+        {
+            if (!parent->getGraphicView()->isPrintPreview())
+            {
                 //generate a new print preview
                 RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): create");
 
                 QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), mdiAreaCAD, 0);
-                                QMdiSubWindow* subWindow=mdiAreaCAD->addSubWindow(w);
-                                subWindow->showMaximized();
-//                                w->setWindowState(Qt::WindowMaximized);
+                QMdiSubWindow* subWindow=mdiAreaCAD->addSubWindow(w);
+                subWindow->showMaximized();
                 parent->addChildWindow(w);
-                connect(w, SIGNAL(signalClosing()),
-                         this, SLOT(slotFileClose()));
+                connect(w, SIGNAL(signalClosing()), this, SLOT(slotFileClose()));
 
                 w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
                 w->setWindowIcon(QIcon(":/main/document.png"));
                 w->slotZoomAuto();
                 w->getGraphicView()->setPrintPreview(true);
                 w->getGraphicView()->setBackground(RS_Color(255,255,255));
-                w->getGraphicView()->setDefaultAction(
-                    new RS_ActionPrintPreview(*w->getDocument(), *w->getGraphicView()));
+                w->getGraphicView()->setDefaultAction(new RS_ActionPrintPreview(*w->getDocument(), *w->getGraphicView()));
 
                 // only graphics offer block lists, blocks don't
                 RS_DEBUG->print("  adding listeners");

@@ -97,8 +97,8 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc,
  *
  * Deletes the document associated with this window.
  */
-QC_MDIWindow::~QC_MDIWindow() {
-
+QC_MDIWindow::~QC_MDIWindow()
+{
     //avoid switching to invalid subwindow, bug#3509368
     auto&& windows = cadMdiArea->subWindowList();
 	for(auto p: windows){
@@ -232,6 +232,8 @@ bool QC_MDIWindow::closeMDI(bool force, bool ask) {
     if (document==NULL) {
         return true;
     }
+
+    QC_ApplicationWindow::getAppWindow()->slotFilePrintPreview(false);
 
     bool ret = false;
 
