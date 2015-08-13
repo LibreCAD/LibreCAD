@@ -887,6 +887,7 @@ void QG_GraphicView::paintEvent(QPaintEvent *) {
         //wPainter.setCompositionMode(QPainter::CompositionMode_Screen);
         wPainter.drawPixmap(0,0,*PixmapLayer1);
         wPainter.drawPixmap(0,0,*PixmapLayer2);
+        wPainter.setCompositionMode(QPainter::RasterOp_SourceXorDestination);
         wPainter.drawPixmap(0,0,*PixmapLayer3);
         wPainter.end();
 
