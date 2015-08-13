@@ -3,19 +3,17 @@ About LibreCAD
 
 [LibreCAD](http://www.librecad.org) is a 2D CAD drawing tool based on the community edition of QCAD (http://www.qcad.org).
 LibreCAD has been re-structured, ported to new [Qt](http://qt-project.org) versions and works natively cross platform between OS X, Windows and Linux.
-See [LibreCAD Home](http://www.librecad.org).
 
-User Manual and wiki
+Wiki
 --------------------
 
-We are in the process of building a user manual and wiki:
+* [Main Page](http://wiki.librecad.org/index.php/Main_Page)
+* [Users Manual](http://wiki.librecad.org/index.php/LibreCAD_users_Manual)
+* [Download](http://wiki.librecad.org/index.php/Download)
+* [Install / Build](http://wiki.librecad.org/index.php/LibreCAD_Installation_from_Source) (or see below)
 
-[wiki.librecad.org](http://wiki.librecad.org/index.php/Main_Page)
-
-OS X Users
+OS X and Homebrew
 ----------
-
-If you use [MacPorts](https://www.macports.org/), see below. If you use brew, or neither one, use this section.
 
 Install Homebrew from [http://brew.sh/](http://brew.sh/).
 
@@ -79,7 +77,7 @@ cd LibreCAD
 
 This creates an executable "LibreCAD.app/Contents/MacOS/LibreCAD" and package "LibreCAD.dmg".
 
-OS X with MacPorts Users
+OS X and MacPorts
 ------------------------
 
 install MacPorts from [http://www.macports.org/](http://www.macports.org/)
