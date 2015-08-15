@@ -26,8 +26,8 @@
 **
 **********************************************************************/
 
-#include <QDebug>
 #include <cfloat>
+#include <QPolygonF>
 #include "rs_circle.h"
 
 #include "rs_arc.h"

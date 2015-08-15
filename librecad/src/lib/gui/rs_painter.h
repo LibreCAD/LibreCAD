@@ -32,8 +32,8 @@
 #include "rs_math.h"
 #include "rs_pen.h"
 #include "rs_vector.h"
-#include <QPainterPath>
 
+class QPainterPath;
 
 /**
  * This class is a common interface for a painter class. Such
