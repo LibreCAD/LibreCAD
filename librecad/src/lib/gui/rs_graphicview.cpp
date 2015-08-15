@@ -212,13 +212,13 @@ void RS_GraphicView::centerY(double v) {
 }
 
 /**
- * @return Current action or NULL.
+ * @return Current action or nullptr.
  */
 RS_ActionInterface* RS_GraphicView::getDefaultAction() {
 	if (eventHandler) {
 		return eventHandler->getDefaultAction();
 	} else {
-		return NULL;
+        return nullptr;
 	}
 }
 
@@ -236,13 +236,13 @@ void RS_GraphicView::setDefaultAction(RS_ActionInterface* action) {
 
 
 /**
- * @return Current action or NULL.
+ * @return Current action or nullptr.
  */
 RS_ActionInterface* RS_GraphicView::getCurrentAction() {
 	if (eventHandler) {
 		return eventHandler->getCurrentAction();
 	} else {
-		return NULL;
+        return nullptr;
 	}
 }
 
@@ -364,7 +364,7 @@ void RS_GraphicView::mouseReleaseEvent(QMouseEvent* e) {
 void RS_GraphicView::mouseMoveEvent(QMouseEvent* e) {
 	RS_DEBUG->print("RS_GraphicView::mouseMoveEvent begin");
 
-	RS_Graphic* graphic = NULL;
+    RS_Graphic* graphic = nullptr;
 
 	if (container->rtti()==RS2::EntityGraphic) {
 		graphic = (RS_Graphic*)container;
@@ -955,12 +955,12 @@ void RS_GraphicView::zoomScroll(RS2::Direction direction) {
 void RS_GraphicView::zoomPage() {
 
 	RS_DEBUG->print("RS_GraphicView::zoomPage");
-	if (container==NULL) {
+    if (container==nullptr) {
 		return;
 	}
 
 	RS_Graphic* graphic = container->getGraphic();
-	if (graphic==NULL) {
+    if (graphic==nullptr) {
 		return;
 	}
 
@@ -1014,7 +1014,7 @@ void RS_GraphicView::drawWindow_DEPRECATED(RS_Vector v1, RS_Vector v2) {
 	if (container) {
 		for(auto se: *container){
 			if (se->isInWindow(v1, v2)) {
-				drawEntity(NULL, se);
+                drawEntity(nullptr, se);
 			}
 		}
 	}
@@ -1140,7 +1140,7 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 
 		RS_Graphic* graphic = container->getGraphic();
 
-		if (graphic != NULL)
+        if (graphic)
 		{
 			uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
 
@@ -1171,7 +1171,7 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 
 		RS_Graphic* graphic = container->getGraphic();
 
-		if (graphic != NULL)
+        if (graphic)
 			uf = RS_Units::convert(1.0, RS2::Millimeter, graphic->getUnit());
 
 		pen.setScreenWidth(toGuiDX(w / 100.0 * uf));
@@ -1212,7 +1212,7 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 
 /**
  * Draws an entity. Might be recusively called e.g. for polylines.
- * If the class wide painter is NULL a new painter will be created
+ * If the class wide painter is nullptr a new painter will be created
  * and destroyed afterwards.
  *
  * @param patternOffset Offset of line pattern (used for connected
@@ -1244,8 +1244,8 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e) {
 void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patternOffset) {
 
 	// update is diabled:
-	// given entity is NULL:
-	if (e==NULL) {
+    // given entity is nullptr:
+    if (e==nullptr) {
 		return;
 	}
 
@@ -1263,7 +1263,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
 	// test if the entity is in the viewport
 	/* temporary disabled so rs_overlaylien can be drawn
 	if (!e->isContainer() && !isPrinting() &&
-			(painter==NULL || !painter->isPreviewMode()) &&
+            (painter==nullptr || !painter->isPreviewMode()) &&
 			(toGuiX(e->getMax().x)<0 || toGuiX(e->getMin().x)>getWidth() ||
 			 toGuiY(e->getMin().y)<0 || toGuiY(e->getMax().y)>getHeight())) {
 		return;
@@ -1333,7 +1333,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
  * The painter must be initialized and all the attributes (pen) must be set.
  */
 void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e, double& patternOffset) {
-	if (e==NULL) {
+    if (e==nullptr) {
 		return;
 	}
 
@@ -1345,7 +1345,7 @@ void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e, double& 
 
 }
 void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e) {
-	if (e==NULL) {
+    if (e==nullptr) {
 		return;
 	}
 
@@ -1375,7 +1375,7 @@ void RS_GraphicView::deleteEntity(RS_Entity* e) {
 
 /**
  * @return Pointer to the static pattern struct that belongs to the
- * given pattern type or NULL.
+ * given pattern type or nullptr.
  */
 const RS_LineTypePattern* RS_GraphicView::getPattern(RS2::LineType t) {
 	switch (t) {
@@ -1470,7 +1470,7 @@ const RS_LineTypePattern* RS_GraphicView::getPattern(RS2::LineType t) {
 	default:
 		break;
 	}
-	return NULL;
+    return nullptr;
 }
 
 
@@ -1486,26 +1486,23 @@ const RS_LineTypePattern* RS_GraphicView::getPattern(RS2::LineType t) {
  */
 void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter) {
 
-	int zr = 20;
+    int const zr = 20;
 
-	RS_Pen p(QColor(255,0,0), RS2::Width00, RS2::SolidLine);
+    RS_Pen p(RS_Color(255,0,0), RS2::Width00, RS2::SolidLine);
 	p.setScreenWidth(0);
 	painter->setPen(p);
 	//painter->setBrush(Qt::NoBrush);
+    auto vp=toGui(RS_Vector(0,0));
+    if( vp.x +zr<0 || vp.x-zr>getWidth()) return;
+    if( vp.y +zr<0 || vp.y-zr>getHeight()) return;
 
-	painter->drawLine(RS_Vector(toGuiX(0.0)-zr,
-								toGuiY(0.0)),
-					  RS_Vector(toGuiX(0.0)+zr,
-								toGuiY(0.0)));
-
-	painter->drawLine(RS_Vector(toGuiX(0.0),
-								toGuiY(0.0)-zr),
-					  RS_Vector(toGuiX(0.0),
-								toGuiY(0.0)+zr));
-
+    painter->drawLine(RS_Vector(vp.x-zr, vp.y),
+                      RS_Vector(vp.x+zr, vp.y)
+                      );
+    painter->drawLine(RS_Vector(vp.x, vp.y-zr),
+                      RS_Vector(vp.x, vp.y+zr)
+                      );
 }
-
-
 
 /**
  * This virtual method can be overwritten to draw the relative
@@ -1518,27 +1515,27 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter) {
  */
 void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
 
-	if (relativeZero.valid==false) {
+    if (!relativeZero.valid) {
 		return;
 	}
 
-	RS_Pen p(RS_Color(255, 0, 0), RS2::Width00, RS2::SolidLine);
+    RS_Pen p(RS_Color(255,0,0), RS2::Width00, RS2::SolidLine);
 	p.setScreenWidth(0);
 	painter->setPen(p);
 
-	int zr=5;
+    int const zr=5;
+    auto vp=toGui(relativeZero);
+    if( vp.x +zr<0 || vp.x-zr>getWidth()) return;
+    if( vp.y +zr<0 || vp.y-zr>getHeight()) return;
 
-	painter->drawLine(RS_Vector(toGuiX(relativeZero.x)-zr,
-								toGuiY(relativeZero.y)),
-					  RS_Vector(toGuiX(relativeZero.x)+zr,
-								toGuiY(relativeZero.y)));
+    painter->drawLine(RS_Vector(vp.x-zr, vp.y),
+                      RS_Vector(vp.x+zr, vp.y)
+                      );
+    painter->drawLine(RS_Vector(vp.x, vp.y-zr),
+                      RS_Vector(vp.x, vp.y+zr)
+                      );
 
-	painter->drawLine(RS_Vector(toGuiX(relativeZero.x),
-								toGuiY(relativeZero.y)-zr),
-					  RS_Vector(toGuiX(relativeZero.x),
-								toGuiY(relativeZero.y)+zr));
-
-	painter->drawCircle(toGui(relativeZero), 5);
+    painter->drawCircle(vp, 5);
 }
 
 
@@ -1552,7 +1549,7 @@ void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
  */
 void RS_GraphicView::drawPaper(RS_Painter *painter) {
 
-	if (container==NULL) {
+    if (container==nullptr) {
 		return;
 	}
 
@@ -1604,7 +1601,7 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
  */
 void RS_GraphicView::drawGrid(RS_Painter *painter) {
 
-	if (grid==NULL || isGridOn()==false) {
+    if (grid==nullptr || isGridOn()==false) {
 		return;
 	}
 
@@ -1640,7 +1637,7 @@ void RS_GraphicView::drawGrid(RS_Painter *painter) {
  */
 void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 
-	if (grid==NULL || isGridOn()==false /*|| grid->getMetaSpacing()<0.0*/) {
+    if (grid==nullptr || isGridOn()==false /*|| grid->getMetaSpacing()<0.0*/) {
 		return;
 	}
 
@@ -1877,7 +1874,7 @@ RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics pos
 	if (overlayEntities[position]) {
 		return overlayEntities[position];
 	}
-	overlayEntities[position]=new RS_EntityContainer(NULL);
+    overlayEntities[position]=new RS_EntityContainer(nullptr);
 
 	return overlayEntities[position];
 
