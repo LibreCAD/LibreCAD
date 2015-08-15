@@ -3699,7 +3699,8 @@ LC_SplinePoints* LC_SplinePoints::cut(const RS_Vector& pos)
 
 QPolygonF LC_SplinePoints::getBoundingRect(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2)
 {
-    QPolygonF ret{QVector<QPointF>{{x1.x, x1.y}}};
+    QPolygonF ret;
+    ret << QPointF(x1.x, x1.y);
     //find t for tangent in parallel with x2 - x1
     RS_Vector const pt=(x1 - c1*2. + x2)*2.;
     RS_Vector const pl=(x1 - x2);
