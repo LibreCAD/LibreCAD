@@ -135,16 +135,13 @@ void RS_Painter::createEllipse(QPolygon& pa,
            toScreenY(vp.y));
 }
 
-
-
 void RS_Painter::drawRect(const RS_Vector& p1, const RS_Vector& p2) {
-    drawLine(RS_Vector(p1.x, p1.y), RS_Vector(p2.x, p1.y));
-    drawLine(RS_Vector(p2.x, p1.y), RS_Vector(p2.x, p2.y));
-    drawLine(RS_Vector(p2.x, p2.y), RS_Vector(p1.x, p2.y));
-    drawLine(RS_Vector(p1.x, p2.y), RS_Vector(p1.x, p1.y));
+    drawPolygon(QRect(int(p1.x+0.5), int(p1.y+0.5), int(p2.x - p1.x+0.5), int(p2.y - p1.y+0.5)));
+//    drawLine(RS_Vector(p1.x, p1.y), RS_Vector(p2.x, p1.y));
+//    drawLine(RS_Vector(p2.x, p1.y), RS_Vector(p2.x, p2.y));
+//    drawLine(RS_Vector(p2.x, p2.y), RS_Vector(p1.x, p2.y));
+//    drawLine(RS_Vector(p1.x, p2.y), RS_Vector(p1.x, p1.y));
 }
-
-
 
 void RS_Painter::drawHandle(const RS_Vector& p, const RS_Color& c, int size) {
     if (size<0) {

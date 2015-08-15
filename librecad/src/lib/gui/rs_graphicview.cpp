@@ -1274,36 +1274,26 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
 
 	//RS_DEBUG->print("draw plain");
 	if (isDraftMode()) {
-		// large mtexts as rectangles:
-		if (e->rtti()==RS2::EntityMText) {
-			if (toGuiDX(((RS_MText*)e)->getHeight())<4 || e->countDeep()>100) {
-				painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
-			} else {
-				drawEntityPlain(painter, e, patternOffset);
-			}
-		}
-		// large texts as rectangles:
-		else if (e->rtti()==RS2::EntityText) {
-			if (toGuiDX(((RS_Text*)e)->getHeight())<4 || e->countDeep()>100) {
-				painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
-			} else {
-				drawEntityPlain(painter, e, patternOffset);
-			}
-		}
-
-		// all images as rectangles:
-		else if (e->rtti()==RS2::EntityImage) {
-			painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
-		}
-
-		// hide hatches:
-		else if (e->rtti()==RS2::EntityHatch) {
-			// nothing
-		}
-
-		else {
-			drawEntityPlain(painter, e, patternOffset);
-		}
+        switch(e->rtti()){
+        case RS2::EntityMText:
+        case RS2::EntityText:
+            if (toGuiDX(((RS_MText*)e)->getHeight())<4 || e->countDeep()>100) {
+                // large or tiny texts as rectangles:
+                painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
+            } else {
+                drawEntityPlain(painter, e, patternOffset);
+            }
+            break;
+        case RS2::EntityImage:
+            // all images as rectangles:
+            painter->drawRect(toGui(e->getMin()), toGui(e->getMax()));
+            break;
+        case RS2::EntityHatch:
+            //skip hatches
+            break;
+        default:
+            drawEntityPlain(painter, e, patternOffset);
+        }
 	} else {
 		drawEntityPlain(painter, e, patternOffset);
 	}
