@@ -913,11 +913,11 @@ bool RS_Graphic::fitToPage() {
     //ps = RS_Units::convert(ps, getUnit(), RS2::Millimeter);
 
     // tin-pot 2011-12-30: TODO: can s.x < 0.0 (==> fx < 0.0) happen?
-    if (fabs(s.x) > 1.0e-10) {
+	if (fabs(s.x) > RS_TOLERANCE) {
         fx = ps.x / s.x;
         ret=false;
     }
-    if (fabs(s.y) > 1.0e-10) {
+	if (fabs(s.y) > RS_TOLERANCE) {
         fy = ps.y / s.y;
         ret=false;
     }
