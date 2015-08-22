@@ -2855,10 +2855,11 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         fileDlg.setAcceptMode(QFileDialog::AcceptSave);
         fileDlg.setDefaultSuffix("pdf");
         fileDlg.setDirectory(infDefaultFile.dir().path());
-        strPdfFileName = infDefaultFile.baseName();
-        if( strPdfFileName.isEmpty())
-            strPdfFileName = "unnamed";
-        fileDlg.selectFile(strPdfFileName);
+		// bug#509 setting default file name restricts selection
+//        strPdfFileName = infDefaultFile.baseName();
+//        if( strPdfFileName.isEmpty())
+//            strPdfFileName = "unnamed";
+		//fileDlg.selectFile(strPdfFileName);
 
         if( QDialog::Accepted == fileDlg.exec()) {
             QStringList files = fileDlg.selectedFiles();
