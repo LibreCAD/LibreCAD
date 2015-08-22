@@ -62,8 +62,8 @@ void RS_ActionDrawPoint::trigger() {
             document->endUndoCycle();
         }
 
-                graphicView->redraw(RS2::RedrawDrawing);
-        graphicView->moveRelativeZero(pt);
+		graphicView->moveRelativeZero(pt);
+		graphicView->redraw((RS2::RedrawMethod) (RS2::RedrawDrawing | RS2::RedrawOverlay));
     }
 }
 
