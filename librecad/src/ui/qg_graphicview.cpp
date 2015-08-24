@@ -668,43 +668,42 @@ void QG_GraphicView::adjustOffsetControls() {
                 min.y < RS_MINDOUBLE ) {
         min = RS_Vector(-10,-10);
         max = RS_Vector(100,100);
-    }
+	}
 
-        int minVal = (int)(-ox-toGuiDX(getWidth())*0.5
-                        - QG_SCROLLMARGIN - getBorderLeft());
-        int maxVal = (int)(-ox+toGuiDX(getWidth())*0.5
-                        + QG_SCROLLMARGIN + getBorderRight());
+	int minVal = (int)(-ox-toGuiDX(getWidth())*0.5
+					   - QG_SCROLLMARGIN - getBorderLeft());
+	int maxVal = (int)(-ox+toGuiDX(getWidth())*0.5
+					   + QG_SCROLLMARGIN + getBorderRight());
 
-        hScrollBar->setValue(0);
-        if (minVal<=maxVal) {
-                hScrollBar->setRange(minVal, maxVal);
-        }
-    //hScrollBar->setMinValue(minVal);
+	if (minVal<=maxVal) {
+		hScrollBar->setRange(minVal, maxVal);
+	}
+	hScrollBar->setPageStep(int(toGuiDX(fabs(max.x - min.x))));
 
-        //hScrollBar->setMaxValue(maxVal);
+	minVal = (int)(oy-toGuiDY(getHeight())*0.5
+				   - QG_SCROLLMARGIN - getBorderTop());
+	maxVal = (int)(oy+toGuiDY(getHeight())*0.5
+				   +QG_SCROLLMARGIN + getBorderBottom());
 
-        minVal = (int)(oy-toGuiDY(getHeight())*0.5
-                        - QG_SCROLLMARGIN - getBorderTop());
-        maxVal = (int)(oy+toGuiDY(getHeight())*0.5
-                       +QG_SCROLLMARGIN + getBorderBottom());
+	if (minVal<=maxVal) {
+		vScrollBar->setRange(minVal, maxVal);
+	}
+	vScrollBar->setPageStep(int(toGuiDY(fabs(max.y - min.y))));
 
-        if (minVal<=maxVal) {
-                vScrollBar->setRange(minVal, maxVal);
-        }
-    //vScrollBar->setMaxValue((int)(QG_SCROLLMARGIN + getBorderBottom()
-     //                             - (min.y * getFactor().y)));
-
-
-    //vScrollBar->setMinValue((int)(getHeight() -
-     //                             max.y * getFactor().y
-     //                             - QG_SCROLLMARGIN - getBorderTop()));
+	//vScrollBar->setMaxValue((int)(QG_SCROLLMARGIN + getBorderBottom()
+	//                             - (min.y * getFactor().y)));
 
 
-    hScrollBar->setPageStep((int)(getWidth()));
-    vScrollBar->setPageStep((int)(getHeight()));
+	//vScrollBar->setMinValue((int)(getHeight() -
+	//                             max.y * getFactor().y
+	//                             - QG_SCROLLMARGIN - getBorderTop()));
 
-    hScrollBar->setValue(-ox);
-    vScrollBar->setValue(oy);
+
+	hScrollBar->setPageStep((int)(getWidth()));
+	vScrollBar->setPageStep((int)(getHeight()));
+
+	hScrollBar->setValue(-ox);
+	vScrollBar->setValue(oy);
 
 
     slotHScrolled(-ox);
