@@ -914,14 +914,14 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
     double baseAngle=isReversed()?getAngle2():getAngle1();
     for(unsigned short i=0;i<4;i++){
         RS_Line line(NULL,RS_LineData(vertex.at(i),vertex.at((i+1)%4)));
-        auto&& vpIts=RS_Information::getIntersection(
+		auto vpIts=RS_Information::getIntersection(
                     static_cast<RS_Entity*>(this),
                     &line,
                     true);
         if( vpIts.size()==0) continue;
 		for(const RS_Vector& vp: vpIts){
-            auto&& ap1=getTangentDirection(vp).angle();
-            auto&& ap2=line.getTangentDirection(vp).angle();
+			auto ap1=getTangentDirection(vp).angle();
+			auto ap2=line.getTangentDirection(vp).angle();
             //ignore tangent points, because the arc doesn't cross over
             if( fabs( remainder(ap2 - ap1, M_PI) ) < RS_TOLERANCE_ANGLE) continue;
             crossPoints.push_back(

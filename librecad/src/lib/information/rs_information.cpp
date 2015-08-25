@@ -261,8 +261,8 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
 	}
 	else
 	{
-		const auto&& qf1=e1->getQuadratic();
-		const auto&& qf2=e2->getQuadratic();
+		const auto qf1=e1->getQuadratic();
+		const auto qf2=e2->getQuadratic();
 		ret=LC_Quadratic::getIntersection(qf1,qf2);
 	}
     RS_VectorSolutions ret2;
@@ -282,8 +282,8 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
             }
         }
         // need to test whether the intersection is tangential
-        RS_Vector&& direction1=e1->getTangentDirection(vp);
-        RS_Vector&& direction2=e2->getTangentDirection(vp);
+		RS_Vector direction1=e1->getTangentDirection(vp);
+		RS_Vector direction2=e2->getTangentDirection(vp);
         if( direction1.valid && direction2.valid && fabs(fabs(direction1.dotP(direction2)) - sqrt(direction1.squared()*direction2.squared())) < sqrt(tol)*tol )
             ret2.setTangent(true);
         //TODO, make the following tangential test, nearest test work for all entity types
@@ -617,7 +617,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     m.push_back(( y2*tcssi - 2.*x2*cs2)*ia2 - ( y2*tcssi+2*x2*si2)*ib2); //mb10
     m.push_back( ( x2*tcssi - 2.*y2*si2)*ia2 - ( x2*tcssi+2*y2*cs2)*ib2); //mb11
     m.push_back((ucs - vsi)*(ucs-vsi)*ia2+(usi+vcs)*(usi+vcs)*ib2 -1.); //mc1
-    auto&& vs0=RS_Math::simultaneousQuadraticSolver(m);
+	auto vs0=RS_Math::simultaneousQuadraticSolver(m);
     shifta1 = - shifta1;
     shiftc1 = - shiftc1;
 	for(RS_Vector vp: vs0){

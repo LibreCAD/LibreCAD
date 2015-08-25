@@ -276,7 +276,7 @@ m0 x + m1 y + m2 =0
 LC_Quadratic RS_Line::getQuadratic() const
 {
     std::vector<double> ce(3,0.);
-    auto&& dvp=data.endpoint - data.startpoint;
+	auto dvp=data.endpoint - data.startpoint;
     RS_Vector normal(-dvp.y,dvp.x);
     ce[0]=normal.x;
     ce[1]=normal.y;
@@ -313,7 +313,7 @@ RS_Vector RS_Line::prepareTrim(const RS_Vector& trimCoord,
 //prepare trimming for multiple intersections
     if ( ! trimSol.hasValid()) return(RS_Vector(false));
     if ( trimSol.getNumber() == 1 ) return(trimSol.get(0));
-    auto&& vp0=trimSol.getClosest(trimCoord,NULL,0);
+	auto vp0=trimSol.getClosest(trimCoord,NULL,0);
 
     double dr2=trimCoord.squaredTo(vp0);
     //the trim point found is closer to mouse location (trimCoord) than both end points, return this trim point
@@ -322,10 +322,10 @@ RS_Vector RS_Line::prepareTrim(const RS_Vector& trimCoord,
     RS_Vector vp1=(trimCoord.squaredTo(getStartpoint()) <= trimCoord.squaredTo(getEndpoint()))?getStartpoint():getEndpoint();
 
     //searching for intersection in the direction of the closer end point
-    auto&& dvp1=vp1 - trimCoord;
+	auto dvp1=vp1 - trimCoord;
     RS_VectorSolutions sol1;
     for(size_t i=0; i<trimSol.size(); i++){
-        auto&& dvp2=trimSol.at(i) - trimCoord;
+		auto dvp2=trimSol.at(i) - trimCoord;
         if( RS_Vector::dotP(dvp1, dvp2) > RS_TOLERANCE) sol1.push_back(trimSol.at(i));
     }
     //if found intersection in direction, return the closest to trimCoord from it
@@ -396,7 +396,7 @@ bool RS_Line::isTangent(const RS_CircleData&  circleData) const{
 RS_Vector RS_Line::getNormalVector() const
 {
     RS_Vector vp=data.endpoint  - data.startpoint; //direction vector
-    double&& r=vp.magnitude();
+	double r=vp.magnitude();
     if(r< RS_TOLERANCE) return RS_Vector(false);
     return RS_Vector(-vp.y,vp.x)/r;
 }
@@ -404,7 +404,7 @@ RS_Vector RS_Line::getNormalVector() const
   std::vector<RS_Entity* > RS_Line::offsetTwoSides(const double& distance) const
 {
 	  std::vector<RS_Entity*> ret(0,NULL);
-      RS_Vector&& vp=getNormalVector()*distance;
+	  RS_Vector vp=getNormalVector()*distance;
 	  ret.push_back(new RS_Line(NULL,RS_LineData(data.startpoint+vp,data.endpoint+vp)));
 	  ret.push_back(new RS_Line(NULL,RS_LineData(data.startpoint-vp,data.endpoint-vp)));
 	  return ret;
@@ -559,7 +559,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
          }
          for(unsigned short i=0;i<4;i++){
              RS_Line line(NULL,RS_LineData(vertex.at(i),vertex.at((i+1)%4)));
-             auto&& vpIts=RS_Information::getIntersection(static_cast<RS_Entity*>(this), &line, true);
+			 auto vpIts=RS_Information::getIntersection(static_cast<RS_Entity*>(this), &line, true);
              if( vpIts.size()==0) continue;
 			 endPoints.push_back(vpIts.get(0));
          }

@@ -100,7 +100,7 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc,
 QC_MDIWindow::~QC_MDIWindow()
 {
     //avoid switching to invalid subwindow, bug#3509368
-    auto&& windows = cadMdiArea->subWindowList();
+	auto windows = cadMdiArea->subWindowList();
 	for(auto p: windows){
 		QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(p->widget());
 		if(m){

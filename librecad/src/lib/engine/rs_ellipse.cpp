@@ -886,7 +886,7 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 		//trapezoid
 		RS_Line* l0=quad[parallel_index].get();
 		RS_Line* l1=quad[(parallel_index+2)%4].get();
-		RS_Vector&& centerPoint=(l0->getMiddlePoint()+l1->getMiddlePoint())*0.5;
+		RS_Vector centerPoint=(l0->getMiddlePoint()+l1->getMiddlePoint())*0.5;
 		//not symmetric, no inscribed ellipse
 		if( fabs(centerPoint.distanceTo(l0->getStartpoint()) - centerPoint.distanceTo(l0->getEndpoint()))>RS_TOLERANCE)
 			return false;
@@ -1476,9 +1476,9 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 	auto foci=getFoci();
 	for(size_t i=0; i< 2 ; i++){
         if ((ref-foci.at(i)).squared()<1.0e-8) {
-            auto&& focusNew=foci.at(i) + offset;
+			auto focusNew=foci.at(i) + offset;
             //move focus
-            auto&& center = getCenter() + offset*0.5;
+			auto center = getCenter() + offset*0.5;
             RS_Vector majorP;
             if(getMajorP().dotP( foci.at(i) - getCenter()) >= 0.){
                 majorP = focusNew - center;
@@ -1713,13 +1713,13 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
     double baseAngle=isReversed()?getAngle2():getAngle1();
     for(unsigned short i=0;i<4;i++){
 		RS_Line line(nullptr,RS_LineData(vertex.at(i),vertex.at((i+1)%4)));
-        auto&& vpIts=RS_Information::getIntersection(
+		auto vpIts=RS_Information::getIntersection(
                     static_cast<RS_Entity*>(this), &line, true);
 //    std::cout<<"vpIts.size()="<<vpIts.size()<<std::endl;
         if( vpIts.size()==0) continue;
 		for(const RS_Vector& vp: vpIts){
-            auto&& ap1=getTangentDirection(vp).angle();
-            auto&& ap2=line.getTangentDirection(vp).angle();
+			auto ap1=getTangentDirection(vp).angle();
+			auto ap2=line.getTangentDirection(vp).angle();
             //ignore tangent points, because the arc doesn't cross over
             if( fabs( remainder(ap2 - ap1, M_PI) ) < RS_TOLERANCE_ANGLE) continue;
             crossPoints.push_back(

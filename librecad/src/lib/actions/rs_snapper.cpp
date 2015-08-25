@@ -158,7 +158,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
 
     if (snapMode.snapEndpoint) {
         t = snapEndpoint(mouseCoord);
-        double&& ds2=mouseCoord.squaredTo(t);
+		double ds2=mouseCoord.squaredTo(t);
 
         if (ds2 < ds2Min){
             ds2Min=ds2;
@@ -167,7 +167,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
     }
     if (snapMode.snapCenter) {
         t = snapCenter(mouseCoord);
-        double&& ds2=mouseCoord.squaredTo(t);
+		double ds2=mouseCoord.squaredTo(t);
         if (ds2 < ds2Min){
             ds2Min=ds2;
             snapSpot = t;
@@ -180,7 +180,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
             RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, snapMode.snapMiddle);
         }
         t = snapMiddle(mouseCoord);
-        double&& ds2=mouseCoord.squaredTo(t);
+		double ds2=mouseCoord.squaredTo(t);
         if (ds2 < ds2Min){
             ds2Min=ds2;
             snapSpot = t;
@@ -193,7 +193,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
 			RS_DIALOGFACTORY->requestSnapDistOptions(m_SnapDistance, snapMode.snapDistance);
         }
         t = snapDist(mouseCoord);
-        double&& ds2=mouseCoord.squaredTo(t);
+		double ds2=mouseCoord.squaredTo(t);
         if (ds2 < ds2Min){
             ds2Min=ds2;
             snapSpot = t;
@@ -201,7 +201,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
     }
     if (snapMode.snapIntersection) {
         t = snapIntersection(mouseCoord);
-        double&& ds2=mouseCoord.squaredTo(t);
+		double ds2=mouseCoord.squaredTo(t);
         if (ds2 < ds2Min){
             ds2Min=ds2;
             snapSpot = t;
@@ -211,7 +211,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
     if (snapMode.snapOnEntity &&
         snapSpot.distanceTo(mouseCoord) > snapMode.distance) {
         t = snapOnEntity(mouseCoord);
-        double&& ds2=mouseCoord.squaredTo(t);
+		double ds2=mouseCoord.squaredTo(t);
         if (ds2 < ds2Min){
             ds2Min=ds2;
             snapSpot = t;
@@ -220,7 +220,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
 
     if (snapMode.snapGrid) {
         t = snapGrid(mouseCoord);
-        double&& ds2=mouseCoord.squaredTo(t);
+		double ds2=mouseCoord.squaredTo(t);
         if (ds2 < ds2Min){
             ds2Min=ds2;
             snapSpot = t;

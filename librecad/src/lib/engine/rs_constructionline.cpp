@@ -154,7 +154,7 @@ m0 x + m1 y + m2 =0
 LC_Quadratic RS_ConstructionLine::getQuadratic() const
 {
     std::vector<double> ce(3,0.);
-    auto&& dvp=data.point2 - data.point1;
+	auto dvp=data.point2 - data.point1;
     RS_Vector normal(-dvp.y,dvp.x);
     ce[0]=normal.x;
     ce[1]=normal.y;
