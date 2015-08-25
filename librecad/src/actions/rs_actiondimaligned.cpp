@@ -25,6 +25,7 @@
 **********************************************************************/
 #include<cmath>
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_actiondimaligned.h"
 #include "rs_dimaligned.h"
 

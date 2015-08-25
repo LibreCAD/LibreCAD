@@ -27,6 +27,7 @@
 #include "rs_actionmodifytrimamount.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"

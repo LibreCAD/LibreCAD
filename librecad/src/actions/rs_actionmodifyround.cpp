@@ -26,6 +26,7 @@
 
 #include<set>
 #include<QAction>
+#include <QMouseEvent>
 #include "rs_actionmodifyround.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"

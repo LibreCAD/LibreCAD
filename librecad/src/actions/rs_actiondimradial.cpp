@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_actiondimradial.h"
 
 #include "rs_dimradial.h"

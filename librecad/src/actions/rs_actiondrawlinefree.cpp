@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_actiondrawlinefree.h"
 #include "rs_polyline.h"
 #include "rs_dialogfactory.h"

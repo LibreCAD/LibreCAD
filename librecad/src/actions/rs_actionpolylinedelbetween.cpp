@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_actionpolylinedelbetween.h"
 
 #include "rs_dialogfactory.h"

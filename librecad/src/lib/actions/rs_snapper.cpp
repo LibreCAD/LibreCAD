@@ -26,6 +26,7 @@
 
 
 #include<cmath>
+#include<QMouseEvent>
 #include "rs_snapper.h"
 
 #include "rs_circle.h"

@@ -26,6 +26,7 @@
 
 #include<set>
 #include<QAction>
+#include <QMouseEvent>
 #include "rs_actiondrawlinetangent2.h"
 
 #include "rs_dialogfactory.h"

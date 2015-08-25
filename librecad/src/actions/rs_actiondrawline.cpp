@@ -26,6 +26,7 @@
 
 #include<cmath>
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_actiondrawline.h"
 
 #include "rs_actioneditundo.h"

@@ -27,6 +27,7 @@
 #include "rs_actionselectlayer.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_selection.h"
 

@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_actiondimangular.h"
 #include "rs_dimangular.h"
 

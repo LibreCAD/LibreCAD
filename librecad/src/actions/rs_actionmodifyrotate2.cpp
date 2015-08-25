@@ -27,6 +27,7 @@
 #include "rs_actionmodifyrotate2.h"
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_coordinateevent.h"

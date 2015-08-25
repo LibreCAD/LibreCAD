@@ -26,6 +26,7 @@
 
 #include "qc_actiongetpoint.h"
 
+#include <QMouseEvent>
 #include "rs_snapper.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"

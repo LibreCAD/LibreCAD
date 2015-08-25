@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_actiondimdiametric.h"
 #include "rs_dimdiametric.h"
 

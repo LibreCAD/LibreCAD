@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <QMouseEvent>
 #include "rs_actionselect.h"
 
 #include "rs_dialogfactory.h"

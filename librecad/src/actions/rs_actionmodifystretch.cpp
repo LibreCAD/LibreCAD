@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_actionmodifystretch.h"
 
 #include "rs_dialogfactory.h"
