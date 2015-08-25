@@ -700,7 +700,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
         m.push_back(2.*a*b*v.x); //mb11
         m.push_back(a*a*b*b); //mc1
 
-        auto&& vs0=RS_Math::simultaneousQuadraticSolver(m); //to hold solutions
+		auto vs0=RS_Math::simultaneousQuadraticSolver(m); //to hold solutions
 		if (vs0.getNumber()<1) return nullptr;
 //        for(size_t i=0;i<vs0.getNumber();i++){
 		for(RS_Vector vpec: vs0){
@@ -769,12 +769,12 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
 
     if(e1->getRadius() < e2->getRadius()) std::swap(e1,e2);
 
-    RS_Vector&& center1=e1->getCenter();
-    RS_Vector&& center2=e2->getCenter();
-    RS_Vector&& cp=(center1+center2)*0.5;
+	RS_Vector center1=e1->getCenter();
+	RS_Vector center2=e2->getCenter();
+	RS_Vector cp=(center1+center2)*0.5;
     double dist=center1.distanceTo(center2);
     if(dist<RS_TOLERANCE) return ret;
-    RS_Vector&& vp= center1 - cp;
+	RS_Vector vp= center1 - cp;
      double c=dist/(e1->getRadius()+e2->getRadius());
      if( c < 1. - RS_TOLERANCE) {
         //two circles intersection or one circle in the other, there's an ellipse path

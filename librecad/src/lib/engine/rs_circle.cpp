@@ -343,8 +343,8 @@ RS_VectorSolutions RS_Circle::createTan1_2P(const RS_AtomicEntity* circle, const
 RS_VectorSolutions RS_Circle::createTan2(const std::vector<RS_AtomicEntity*>& circles, const double& r)
 {
     if(circles.size()<2) return false;
-    auto&& e0=circles[0]->offsetTwoSides(r);
-    auto&& e1=circles[1]->offsetTwoSides(r);
+	auto e0=circles[0]->offsetTwoSides(r);
+	auto e1=circles[1]->offsetTwoSides(r);
     RS_VectorSolutions centers;
 	if(e0.size() && e1.size()) {
         for(auto it0=e0.begin();it0!=e0.end();it0++){
@@ -473,7 +473,7 @@ std::vector<RS_Circle> RS_Circle::solveAppolloniusSingle(const std::vector<RS_Ci
         if( centers[0].distanceTo(centers[1]) <= RS_TOLERANCE ||  centers[0].distanceTo(centers[2]) <= RS_TOLERANCE) i0 = 1;
         LC_Quadratic lc0(& (circles[i0]), & (circles[(i0+1)%3]));
         LC_Quadratic lc1(& (circles[i0]), & (circles[(i0+2)%3]));
-        auto&& c0 = LC_Quadratic::getIntersection(lc0, lc1);
+		auto c0 = LC_Quadratic::getIntersection(lc0, lc1);
 //        qDebug()<<"c0.size()="<<c0.size();
         for(size_t i=0; i<c0.size(); i++){
             const double dc =  c0[i].distanceTo(centers[i0]);

@@ -171,7 +171,7 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point
             m_dConst = direction.x*point.y-direction.y*point.x;
             return;
         }
-        RS_Vector&& center= (projection+point)*0.5;
+		RS_Vector center= (projection+point)*0.5;
 //        std::cout<<"point="<<point<<std::endl;
 //        std::cout<<"center="<<center<<std::endl;
         double p=sqrt(p2);
@@ -273,7 +273,7 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
 
 //        auto&& centers=getIntersection(line0->getQuadratic(),
 //                                           line0->getQuadratic());
-        auto&& centers=RS_Information::getIntersection(line0,line1);
+		auto centers=RS_Information::getIntersection(line0,line1);
 //        DEBUG_HEADER
         if(centers.size()!=1) return;
         double angle=0.5*(line0->getAngle1()+line1->getAngle1());
@@ -324,14 +324,14 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
 //    DEBUG_HEADER
 //    qDebug()<<"circle center to center distance="<<2.*f<<"\ttotal radius="<<2.*a;
     if(a<RS_TOLERANCE) return;
-    RS_Vector&& center=(circle0->getCenter()+circle1->getCenter())*0.5;
+	RS_Vector center=(circle0->getCenter()+circle1->getCenter())*0.5;
     double angle=center.angleTo(circle0->getCenter());
     if( f<a){
         //ellipse
         double ratio=sqrt(a*a - f*f)/a;
-        RS_Vector&& majorP=RS_Vector(angle)*a;
+		RS_Vector majorP=RS_Vector(angle)*a;
         RS_Ellipse ellipse(NULL,RS_EllipseData(center,majorP,ratio,0.,0.,false));
-        auto&& lc0=ellipse.getQuadratic();
+		auto lc0=ellipse.getQuadratic();
 
         m_mQuad=lc0.getQuad();
         m_vLinear=lc0.getLinear();
@@ -426,8 +426,8 @@ LC_Quadratic LC_Quadratic::move(const RS_Vector& v)
 LC_Quadratic LC_Quadratic::rotate(const double& angle)
 {
     using namespace boost::numeric::ublas;
-    auto&& m=rotationMatrix(angle);
-    auto&& t=trans(m);
+	auto m=rotationMatrix(angle);
+	auto t=trans(m);
     m_vLinear = prod(t, m_vLinear);
     if(m_bIsQuadratic){
         m_mQuad=prod(m_mQuad,m);
@@ -553,7 +553,7 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
         std::cout<<*p1<<std::endl;
         std::cout<<*p2<<std::endl;
     }
-    auto&& sol= RS_Math::simultaneousQuadraticSolverFull(ce);
+	auto sol= RS_Math::simultaneousQuadraticSolverFull(ce);
     bool valid= sol.size()>0;
 	for(auto & v: sol){
 		if(v.magnitude()>=RS_MAXDOUBLE){
@@ -607,7 +607,7 @@ std::ostream& operator << (std::ostream& os, const LC_Quadratic& q) {
         return os;
     }
     os<<std::endl;
-    auto&& ce=q.getCoefficients();
+	auto ce=q.getCoefficients();
     unsigned short i=0;
     if(ce.size()==6){
         os<<ce[0]<<"*x^2 "<<( (ce[1]>=0.)?"+":" ")<<ce[1]<<"*x*y  "<< ((ce[2]>=0.)?"+":" ")<<ce[2]<<"*y^2 ";

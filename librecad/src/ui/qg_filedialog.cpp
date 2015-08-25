@@ -251,7 +251,7 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
 #endif
     selectNameFilter(fDxfrw2007);
     selectFile(fn);
-    auto&& ext=getExtension(ftype);
+	auto ext=getExtension(ftype);
     if(ext.size()==4){
         if(ext[0]=='.') ext.remove(0,1);
     }

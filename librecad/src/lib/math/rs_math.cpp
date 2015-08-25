@@ -433,7 +433,7 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
         std::vector<double> ce2(2,0.);
         ce2[0]=q;
         ce2[1]=-1./27*p*p*p;
-        auto&& r=quadraticSolver(ce2);
+		auto r=quadraticSolver(ce2);
         if ( r.size()==0 ) { //should not happen
 			std::cerr<<__FILE__<<" : "<<__func__<<" : line"<<__LINE__<<" :cubicSolver()::Error cubicSolver("<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<")\n";
         }
@@ -546,7 +546,7 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
         cubic[1]=p;
         cubic[2]=q;
         ans.push_back(0.);
-        auto&& r=cubicSolver(cubic);
+		auto r=cubicSolver(cubic);
 		std::copy(r.begin(),r.end(), std::back_inserter(ans));
         for(size_t i=0; i<ans.size(); i++) ans[i] -= shift;
         return ans;
@@ -566,7 +566,7 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
     cubic[0]=2.*p;
     cubic[1]=p*p-4.*r;
     cubic[2]=-q*q;
-    auto&& r3= cubicSolver(cubic);
+	auto r3= cubicSolver(cubic);
     //std::cout<<"quartic_solver:: real roots from cubic: "<<ret<<std::endl;
     //for(unsigned int i=0; i<ret; i++)
     //   std::cout<<"cubic["<<i<<"]="<<cubic[i]<<" x= "<<croots[i]<<std::endl;
@@ -600,7 +600,7 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
         ans=quadraticSolver(ce2);
         ce2[0]=	sqrtz0;
         ce2[1]=0.5*(p+r3[0])-0.5*q/sqrtz0;
-        auto&& r1=quadraticSolver(ce2);
+		auto r1=quadraticSolver(ce2);
 		std::copy(r1.begin(),r1.end(),std::back_inserter(ans));
 		for(auto& x: ans){
 			x -= shift;
@@ -930,7 +930,7 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
         std::cout<<qy[4]<<"*y^4 +("<<qy[3]<<")*y^3+("<<qy[2]<<")*y^2+("<<qy[1]<<")*y+("<<qy[0]<<")==0"<<std::endl;
 	}
     //quarticSolver
-    auto&& roots=quarticSolverFull(qy);
+	auto roots=quarticSolverFull(qy);
     if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
         std::cout<<"roots.size()= "<<roots.size()<<std::endl;
     }
@@ -1025,9 +1025,9 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverMixed(const std::vector<s
       y (2 b c d-a c e)-a c g+c^2 d = y^2 (a^2 (-f)+a b e-b^2 d)+y (a b g-a^2 h)+a^2 (-i)
       */
     std::vector<double> ce(3,0.);
-    const double&& a2=a*a;
-    const double&& b2=b*b;
-    const double&& c2=c*c;
+	const double& a2=a*a;
+	const double& b2=b*b;
+	const double& c2=c*c;
     ce[0]= -f*a2+a*b*e-b2*d;
     ce[1]=a*b*g-a2*h- (2*b*c*d-a*c*e);
     ce[2]=a*c*g-c2*d-a2*i;
@@ -1085,7 +1085,7 @@ bool RS_Math::simultaneousQuadraticVerify(const std::vector<std::vector<double> 
       * verifying the equations to floating point tolerance by terms
       */
 	double sum0=0., sum1=0.;
-	double f00,f01;
+	double f00=0.,f01=0.;
 	double amax0, amax1;
 	for(size_t i0=0; i0<20; ++i0){
 		double& x=v.x;
