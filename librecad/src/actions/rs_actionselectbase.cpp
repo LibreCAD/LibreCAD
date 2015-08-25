@@ -26,6 +26,7 @@
 
 #include "rs_actionselectbase.h"
 
+#include <QMouseEvent>
 #include "rs_graphicview.h"
 
 

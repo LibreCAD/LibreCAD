@@ -27,6 +27,7 @@
 #include <memory>
 #include <QAction>
 #include <QImage>
+#include <QMouseEvent>
 #include "rs_image.h"
 #include "rs_line.h"
 #include "rs_units.h"

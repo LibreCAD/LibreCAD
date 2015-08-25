@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_actiondrawarc3p.h"
 
 #include "rs_dialogfactory.h"

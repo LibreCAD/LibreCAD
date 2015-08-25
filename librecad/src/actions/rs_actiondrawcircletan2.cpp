@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include<set>
 #include<QAction>
+#include <QMouseEvent>
 #include "rs_actiondrawcircletan2.h"
 
 #include "rs_dialogfactory.h"

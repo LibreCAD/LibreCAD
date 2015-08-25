@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_actionmodifymirror.h"
 
 #include "rs_dialogfactory.h"

@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <QAction>
+#include <QMouseEvent>
 #include "rs_actionblocksinsert.h"
 #include "rs_insert.h"
 #include "rs_block.h"

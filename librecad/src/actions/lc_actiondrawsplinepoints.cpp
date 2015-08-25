@@ -26,6 +26,7 @@
 **********************************************************************/
 
 #include <QAction>
+#include <QMouseEvent>
 #include "lc_actiondrawsplinepoints.h"
 
 #include "lc_splinepoints.h"

@@ -33,11 +33,12 @@
 
 #include <QDateTime>
 #include <QMap>
-#include <QKeyEvent>
 #include <tuple>
 #include <memory>
 
 
+class QMouseEvent;
+class QKeyEvent;
 class RS_ActionInterface;
 class RS_EventHandler;
 class RS_Grid;

@@ -35,6 +35,7 @@
 #include <QApplication>
 #include <QDateTime>
 #include <QImageWriter>
+#include <QMouseEvent>
 
 #include "rs_system.h"
 #include "rs_settings.h"

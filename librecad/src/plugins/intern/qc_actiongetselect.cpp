@@ -24,8 +24,9 @@
 **
 **********************************************************************/
 
-#include "doc_plugin_interface.h"
+#include <QMouseEvent>
 #include "qc_actiongetselect.h"
+#include "doc_plugin_interface.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_actionselectsingle.h"

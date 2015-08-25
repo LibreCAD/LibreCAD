@@ -26,6 +26,7 @@
 
 #include <QObject>
 #include <QRegExp>
+#include <QMouseEvent>
 
 #include "rs_eventhandler.h"
 #include "rs_actioninterface.h"
