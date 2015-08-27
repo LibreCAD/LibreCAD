@@ -148,7 +148,7 @@ void QG_DlgOptionsGeneral::init() {
     lePathScripts->setText(RS_SETTINGS->readEntry("/Scripts", ""));
     lePathLibrary->setText(RS_SETTINGS->readEntry("/Library", "").trimmed());
     leTemplate->setText(RS_SETTINGS->readEntry("/Template", "").trimmed());
-
+    le_custom_toolbar->setText(RS_SETTINGS->readEntry("/CustomToolbar", "").trimmed());
     RS_SETTINGS->endGroup();
 
     // units:
@@ -235,6 +235,7 @@ void QG_DlgOptionsGeneral::ok() {
     RS_SETTINGS->writeEntry("/Scripts", lePathScripts->text());
     RS_SETTINGS->writeEntry("/Library", lePathLibrary->text());
     RS_SETTINGS->writeEntry("/Template", leTemplate->text());
+    RS_SETTINGS->writeEntry("/CustomToolbar", le_custom_toolbar->text());
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Defaults");
@@ -322,4 +323,13 @@ void QG_DlgOptionsGeneral::on_pb_end_clicked()
 void QG_DlgOptionsGeneral::on_pb_layerselection_clicked()
 {
     set_color(cb_layerselection, QColor("#CCFFCC"));
+}
+
+void QG_DlgOptionsGeneral::set_toolbar_file()
+{
+    QString path = QFileDialog::getOpenFileName(this);
+    if (!path.isEmpty())
+    {
+        le_custom_toolbar->setText(QDir::toNativeSeparators(path));
+    }
 }

@@ -684,23 +684,6 @@ void QC_ApplicationWindow::slotEnableActions(bool enable) {
 }
 
 /**
-    QAction* wiki_link = new QAction(tr("Online (Wiki)"), this);
-    connect(wiki_link, SIGNAL(triggered()), this, SLOT(goto_wiki()));
-
-    helpMenu->addAction(wiki_link);
-    addToolBar(Qt::LeftToolBarArea, cadToolBar);
-
-#if QT_VERSION >= 0x050500
-    auto const dPxlRatio=devicePixelRatio();
-    QSize const sIcon=cadToolBar->iconSize()*dPxlRatio;
-    cadToolBar->setIconSize(sIcon);
-    optionWidget->setIconSize(sIcon);
-    snapToolBar->setIconSize(sIcon);
-    penToolBar->setIconSize(sIcon);
-    zoomToolBar->setIconSize(sIcon);
-    editToolBar->setIconSize(sIcon);
-    fileToolBar->setIconSize(sIcon);
-#endif
  * Initializes the status bar at the bottom.
  */
 void QC_ApplicationWindow::initStatusBar() {
@@ -3755,10 +3738,25 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     // <[~ Custom Toolbar ~]>
 
-//    tb_custom = new LC_CustomToolbar(tr("Custom"), this);
-//    tb_custom->actions_from_file("C:/1B/custom.txt", map_a);
-//    connect(tools, SIGNAL(triggered(QAction*)), tb_custom, SLOT(slot_most_recent_action(QAction*)));
-//    addToolBar(Qt::TopToolBarArea, tb_custom);
+    QString path = RS_SETTINGS->readEntry("/Paths/CustomToolbar");
+
+    if (!path.isEmpty())
+    {
+        if (QFile::exists(path))
+        {
+            tb_custom = new LC_CustomToolbar(tr("Custom"), this);
+            tb_custom->actions_from_file(path, map_a);
+            tb_custom->setObjectName("lc_customtoolbar");
+            tb_custom->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+            connect(tools, SIGNAL(triggered(QAction*)), tb_custom, SLOT(slot_most_recent_action(QAction*)));
+            addToolBar(Qt::TopToolBarArea, tb_custom);
+        }
+        else
+        {
+            qDebug() << "The custom toolbar file was not found.";
+            RS_SETTINGS->writeEntry("/Paths/CustomToolbar", QString::null);
+        }
+    }
 
 
     // <[~ Toolbar Menu ~]>
@@ -3826,10 +3824,14 @@ void QC_ApplicationWindow::menus_and_toolbars()
     helpManual = new QAction( QIcon(":/main/manual.png"), tr("&Manual"), this);
     connect( helpManual, SIGNAL(triggered()), this, SLOT(slotHelpManual()));
 
+    QAction* wiki_link = new QAction(tr("Online (Wiki)"), this);
+    connect(wiki_link, SIGNAL(triggered()), this, SLOT(goto_wiki()));
+
     // menuBar entry helpMenu
     helpMenu = menuBar()->addMenu(tr("&Help"));
     helpMenu->setObjectName("Help");
     helpMenu->addAction(helpManual);
+    helpMenu->addAction(wiki_link);
     helpMenu->addSeparator();
     helpMenu->addAction(helpAboutApp);
 

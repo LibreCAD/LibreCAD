@@ -6,8 +6,6 @@
 
 LC_CustomToolbar::LC_CustomToolbar(QString name, QWidget* parent): QToolBar(name, parent)
 {
-    setObjectName("lc_customtoolbar");
-    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     QAction* action = new QAction(tr("Add or Remove Action"), parent);
     action->setShortcut(QKeySequence("F2"));
     connect(action, SIGNAL(triggered()), this, SLOT(slot_add_or_remove_action()));

@@ -32,7 +32,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -1411,6 +1411,16 @@
        <string>&amp;Paths</string>
       </attribute>
       <layout class="QGridLayout">
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>Custom Toolbar:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="le_custom_toolbar"/>
+       </item>
        <item row="0" column="0">
         <widget class="QLabel" name="textLabel2">
          <property name="text">
@@ -1497,7 +1507,7 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="7" column="0">
         <spacer name="spacer5">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -1513,7 +1523,7 @@
          </property>
         </spacer>
        </item>
-       <item row="6" column="1">
+       <item row="7" column="1">
         <spacer name="spacer5_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -1528,6 +1538,14 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="6" column="2">
+        <widget class="QToolButton" name="bt_custom_toolbar">
+         <property name="icon">
+          <iconset resource="../../../res/extui/extui.qrc">
+           <normaloff>:/extui/fileopen.png</normaloff>:/extui/fileopen.png</iconset>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -1731,8 +1749,8 @@
    <slot>ok()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>322</x>
-     <y>380</y>
+     <x>333</x>
+     <y>588</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1747,8 +1765,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>322</x>
-     <y>380</y>
+     <x>333</x>
+     <y>588</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1763,8 +1781,8 @@
    <slot>setRestartNeeded()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>200</x>
+     <y>417</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1779,8 +1797,8 @@
    <slot>setRestartNeeded()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>367</x>
+     <y>516</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1795,8 +1813,8 @@
    <slot>setRestartNeeded()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
+     <x>367</x>
+     <y>490</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>
@@ -1811,8 +1829,8 @@
    <slot>setTemplateFile()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>609</x>
-     <y>182</y>
+     <x>682</x>
+     <y>193</y>
     </hint>
     <hint type="destinationlabel">
      <x>322</x>
@@ -1820,5 +1838,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>bt_custom_toolbar</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgOptionsGeneral</receiver>
+   <slot>set_toolbar_file()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>678</x>
+     <y>213</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>700</x>
+     <y>248</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>set_toolbar_file()</slot>
+ </slots>
 </ui>
