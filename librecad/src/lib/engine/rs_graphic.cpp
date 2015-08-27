@@ -876,8 +876,8 @@ void RS_Graphic::centerToPage() {
     RS_Vector size = getPaperSize();
 
     double scale = getPaperScale();
-    auto&& s=getSize();
-    auto&& sMin=getMin();
+	auto s=getSize();
+	auto sMin=getMin();
     /** avoid zero size, bug#3573158 */
     if(fabs(s.x)<RS_TOLERANCE) {
         s.x=10.;

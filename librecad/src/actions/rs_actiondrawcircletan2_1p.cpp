@@ -126,10 +126,10 @@ bool RS_ActionDrawCircleTan2_1P::getCenters()
     LC_Quadratic lc0(circles[0], point);
     LC_Quadratic lc1(circles[1], point);
 
-    auto&& list=LC_Quadratic::getIntersection(lc0,lc1);
+	auto list=LC_Quadratic::getIntersection(lc0,lc1);
     centers.clean();
 	for(const RS_Vector& vp: list){
-        auto&& ds=vp.distanceTo(point)-RS_TOLERANCE;
+		auto ds=vp.distanceTo(point)-RS_TOLERANCE;
         bool validBranch(true);
         for(int j=0;j<2;j++){
             if(circles[j]->rtti()==RS2::EntityCircle||circles[j]->rtti()==RS2::EntityArc){
