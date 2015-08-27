@@ -970,7 +970,7 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
             ce2[1]=ce[2]/ce[0];
 //                DEBUG_HEADER
 //                        std::cout<<"x^2 +("<<ce2[0]<<")*x+("<<ce2[1]<<")==0"<<std::endl;
-            auto&& xRoots=quadraticSolver(ce2);
+			auto xRoots=quadraticSolver(ce2);
             for(size_t j0=0;j0<xRoots.size();j0++){
 //                DEBUG_HEADER
 //                std::cout<<"x="<<xRoots[j0]<<std::endl;

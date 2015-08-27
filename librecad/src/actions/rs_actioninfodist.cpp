@@ -61,7 +61,7 @@ void RS_ActionInfoDist::trigger() {
     RS_DEBUG->print("RS_ActionInfoDist::trigger()");
 
 	if (point1.valid && point2.valid) {
-		auto&& dV = point2 - point1;
+		auto dV = point2 - point1;
 		QStringList dists;
 		for(double a: {dV.magnitude(), dV.x, dV.y}){
 			dists<<RS_Units::formatLinear(a, graphic->getUnit(),

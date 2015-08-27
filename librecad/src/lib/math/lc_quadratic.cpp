@@ -271,8 +271,6 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
         RS_Line* line0=(RS_Line*) circle0;
         RS_Line* line1=(RS_Line*) circle1;
 
-//        auto&& centers=getIntersection(line0->getQuadratic(),
-//                                           line0->getQuadratic());
 		auto centers=RS_Information::getIntersection(line0,line1);
 //        DEBUG_HEADER
         if(centers.size()!=1) return;

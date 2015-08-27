@@ -278,7 +278,7 @@ bool RS_ActionDrawCircleTan3::getData(){
 
 	}else{
         RS_Circle c(nullptr,*cData);
-		auto&& solutions=c.createTan3(circles);
+		auto solutions=c.createTan3(circles);
 		candidates.clear();
 		for(const RS_Circle& s: solutions){
 			candidates.push_back(std::make_shared<RS_CircleData>(s.getData()));

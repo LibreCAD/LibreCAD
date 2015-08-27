@@ -136,7 +136,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
         case RS2::EntityCircle:
         {
             RS_Vector&& dvp=mouse - circle->getCenter();
-            double&& rvp=dvp.magnitude();
+			double rvp=dvp.magnitude();
             if(rvp<RS_TOLERANCE2) break;
 			cData->radius=(circle->getRadius()+rvp)*0.5;
 			cData->center=circle->getCenter()+dvp*(cData->radius/rvp);
@@ -219,7 +219,7 @@ bool RS_ActionDrawCircleTan1_2P::getCenters(){
     LC_Quadratic lc0(circle, points[0]);
 //    LC_Quadratic lc1(circle, points[1]);
     LC_Quadratic lc1(points[1], points[0]);
-    auto&& list=LC_Quadratic::getIntersection(lc0,lc1);
+	auto list=LC_Quadratic::getIntersection(lc0,lc1);
 //    DEBUG_HEADER
 //    std::cout<<"intersections : "<<list<<std::endl;
 
