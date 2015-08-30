@@ -509,8 +509,12 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
                                                      RS2::Both, mouse, factor));
             } else {
                 // otherwise, scroll
-                setCurrentAction(new RS_ActionZoomScroll(numPixels.x(), numPixels.y(),
-                                                         *container, *this));
+				//scroll by scrollbars: issue #479
+				hScrollBar->setValue(hScrollBar->value() - numPixels.x());
+				vScrollBar->setValue(vScrollBar->value() - numPixels.y());
+
+//                setCurrentAction(new RS_ActionZoomScroll(numPixels.x(), numPixels.y(),
+//                                                         *container, *this));
             }
             redraw();
         }
@@ -555,8 +559,18 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     }
 
     if (scroll) {
-        setCurrentAction(new RS_ActionZoomScroll(direction,
-                         *container, *this));
+		//scroll by scrollbars: issue #479
+		switch(direction){
+		case RS2::Left:
+		case RS2::Right:
+			hScrollBar->setValue(hScrollBar->value()+e->delta());
+			break;
+		default:
+			vScrollBar->setValue(vScrollBar->value()+e->delta());
+		}
+
+//        setCurrentAction(new RS_ActionZoomScroll(direction,
+//                         *container, *this));
     }
 
     // zoom in / out:
