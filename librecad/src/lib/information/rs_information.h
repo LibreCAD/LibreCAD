@@ -31,8 +31,6 @@
 
 class RS_Ellipse;
 
-
-
 /**
  * Class for getting information about entities. This includes
  * also things like the end point of an element which is 
@@ -71,8 +69,8 @@ public:
     static RS_VectorSolutions getIntersectionLineArc(RS_Line* line,
             RS_Arc* arc);
 
-    static RS_VectorSolutions getIntersectionArcArc(RS_Arc* e1,
-            RS_Arc* e2);
+	static RS_VectorSolutions getIntersectionArcArc(RS_Entity const* e1,
+			RS_Entity const* e2);
 
     static RS_VectorSolutions getIntersectionEllipseEllipse(RS_Ellipse* e1,
             RS_Ellipse* e2);
