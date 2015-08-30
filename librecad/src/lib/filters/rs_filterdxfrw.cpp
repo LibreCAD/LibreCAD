@@ -621,7 +621,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
     //cout << "Insert: " << name << " " << ip << " " << cols << "/" << rows << endl;
 
     RS_InsertData d( QString::fromUtf8(data.name.c_str()),
-                    ip, sc, data.angle/ARAD,
+                    ip, sc, data.angle,
                     data.colcount, data.rowcount,
                     sp, NULL, RS2::NoUpdate);
     RS_Insert* entity = new RS_Insert(currentContainer, d);
@@ -2389,7 +2389,7 @@ void RS_FilterDXFRW::writeInsert(RS_Insert* i) {
 #ifndef  RS_VECTOR2D
     in.zscale = i->getScale().z;
 #endif
-    in.angle = RS_Math::rad2deg(i->getAngle());
+    in.angle = i->getAngle();
     in.colcount = i->getCols();
     in.rowcount = i->getRows();
     in.colspace = i->getSpacing().x;
