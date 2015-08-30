@@ -345,13 +345,13 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
     if (version > DRW::AC1018) {//2007+
         materialFlag = buf->get2Bits(); //BB
         DRW_DBG("materialFlag: "); DRW_DBG(materialFlag);
-        duint8 shadowFlag = buf->getRawChar8(); //RC
+        shadowFlag = buf->getRawChar8(); //RC
         DRW_DBG("shadowFlag: "); DRW_DBG(shadowFlag); DRW_DBG("\n");
     }
     if (version > DRW::AC1021) {//2010+
-        duint8 shadowFlag = buf->get2Bits(); //RC
-        DRW_DBG("shadowFlag 2: "); DRW_DBG(shadowFlag); DRW_DBG("\n");
-        duint8 unk = buf->getBit();
+        duint8 visualFlags = buf->get2Bits(); //full & face visual style
+        DRW_DBG("shadowFlag 2: "); DRW_DBG(visualFlags); DRW_DBG("\n");
+        duint8 unk = buf->getBit(); //edge visual style
         DRW_DBG("unknown bit: "); DRW_DBG(unk); DRW_DBG("\n");
     }
     dint16 invisibleFlag = buf->getBitShort(); //BS
@@ -441,6 +441,11 @@ bool DRW_Entity::parseDwgEntHandle(DRW::Version version, dwgBuffer *buf){
             if (materialFlag == 3) {
                 dwgHandle materialH = buf->getOffsetHandle(handle);
                 DRW_DBG(" material Handle: "); DRW_DBGHL(materialH.code, materialH.size, materialH.ref); DRW_DBG("\n");
+                DRW_DBG("\n Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
+            }
+            if (shadowFlag == 3) {
+                dwgHandle shadowH = buf->getOffsetHandle(handle);
+                DRW_DBG(" shadow Handle: "); DRW_DBGHL(shadowH.code, shadowH.size, shadowH.ref); DRW_DBG("\n");
                 DRW_DBG("\n Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
             }
         }

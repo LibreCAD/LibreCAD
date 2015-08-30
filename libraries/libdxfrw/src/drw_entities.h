@@ -209,6 +209,7 @@ protected: //only for read dwg
     duint8 plotFlags; //presence of plot style //BB
     duint8 ltFlags; //presence of linetype handle //BB
     duint8 materialFlag; //presence of material handle //BB
+    duint8 shadowFlag; //presence of shadow handle ?? (in dwg may be plotflag)//RC
     dwgHandle lTypeH;
     dwgHandle layerH;
     duint32 nextEntLink;
