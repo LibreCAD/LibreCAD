@@ -569,7 +569,7 @@ public:
     double xscale;           /*!< x scale factor, code 41 */
     double yscale;           /*!< y scale factor, code 42 */
     double zscale;           /*!< z scale factor, code 43 */
-    double angle;            /*!< rotation angle, code 50 */
+    double angle;            /*!< rotation angle in radians, code 50 */
     int colcount;            /*!< column count, code 70 */
     int rowcount;            /*!< row count, code 71 */
     double colspace;         /*!< column space, code 44 */

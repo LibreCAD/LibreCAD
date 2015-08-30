@@ -1131,7 +1131,7 @@ bool dxfRW::writeInsert(DRW_Insert *ent){
     writer->writeDouble(41, ent->xscale);
     writer->writeDouble(42, ent->yscale);
     writer->writeDouble(43, ent->zscale);
-    writer->writeDouble(50, ent->angle);
+    writer->writeDouble(50, (ent->angle)*ARAD); //in dxf angle is writed in degrees
     writer->writeInt16(70, ent->colcount);
     writer->writeInt16(71, ent->rowcount);
     writer->writeDouble(44, ent->colspace);
