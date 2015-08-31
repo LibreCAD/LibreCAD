@@ -241,6 +241,8 @@ public:
     */
     virtual void move(QPointF offset) = 0;
 
+	virtual void moveRotate(QPointF const& offset, QPointF const& center, double angle)=0;
+
     //! rotate the entity.
     /*!
     *  \param center center of rotation.

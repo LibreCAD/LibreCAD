@@ -714,6 +714,21 @@ void Plugin_Entity::move(QPointF offset){
         this->entity = ne;
 }
 
+void Plugin_Entity::moveRotate(QPointF const& offset, QPointF const& center, double angle)
+{
+	RS_Entity *ne = entity->clone();
+	ne->move( RS_Vector(offset.x(), offset.y()) );
+	ne->rotate( RS_Vector(center.x(), center.y()) , angle);
+	bool ok = dpi->addToUndo(entity, ne);
+	//if doc interface fails to handle for undo only modify original entity
+	if (!ok){
+		entity->move( RS_Vector(offset.x(), offset.y()) );
+		entity->rotate( RS_Vector(center.x(), center.y()) , angle);
+		delete ne;
+	} else
+		this->entity = ne;
+}
+
 void Plugin_Entity::rotate(QPointF center, double angle){
     RS_Entity *ne = entity->clone();
     ne->rotate( RS_Vector(center.x(), center.y()) , angle);
