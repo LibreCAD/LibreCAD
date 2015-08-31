@@ -60,8 +60,9 @@ public:
     virtual void getPolylineData(QList<Plug_VertexData> *data);
     virtual void updatePolylineData(QList<Plug_VertexData> *data);
 
-    virtual void move(QPointF offset);
-    virtual void rotate(QPointF center, double angle);
+	virtual void move(QPointF offset);
+	virtual void moveRotate(QPointF const& offset, QPointF const& center, double angle);
+	virtual void rotate(QPointF center, double angle);
     virtual void scale(QPointF center, QPointF factor);
     virtual QString intColor2str(int color);
 private:
