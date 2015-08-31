@@ -36,16 +36,17 @@
 
 QC_ActionGetSelect::QC_ActionGetSelect(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView)
-        :RS_ActionInterface("Get Select", container, graphicView) {
-    completed = false;
-    mesage = tr("Select objects:");
+		:RS_ActionInterface("Get Select", container, graphicView)
+		,completed(false)
+		,message(tr("Select objects:"))
+{
 }
 
 
 void QC_ActionGetSelect::updateMouseButtonHints() {
     switch (getStatus()) {
     case Select:
-        RS_DIALOGFACTORY->updateMouseWidget(mesage, tr("Cancel"));
+		RS_DIALOGFACTORY->updateMouseWidget(message, tr("Cancel"));
             break;
     default:
 		RS_DIALOGFACTORY->updateMouseWidget();
@@ -59,17 +60,14 @@ void QC_ActionGetSelect::updateMouseCursor() {
 }
 
 void QC_ActionGetSelect::setMesage(QString msg){
-    mesage = msg;
+	message = msg;
 }
-
 
 void QC_ActionGetSelect::init(int status) {
         RS_ActionInterface::init(status);
         graphicView->setCurrentAction(
                 new RS_ActionSelectSingle(*container, *graphicView, this));
 }
-
-
 
 void QC_ActionGetSelect::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
@@ -93,7 +91,8 @@ void QC_ActionGetSelect::updateToolBar() {
 /**
  * Adds all selected entities from 'container' to the selection.
  */
-void QC_ActionGetSelect::getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d) {
+void QC_ActionGetSelect::getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d) const
+{
 	for(auto e: *container){
 
         if (e->isSelected()) {

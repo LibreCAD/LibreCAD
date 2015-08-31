@@ -52,8 +52,7 @@ public:
 public:
     QC_ActionGetSelect(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~QC_ActionGetSelect() {}
-
+	~QC_ActionGetSelect() = default;
 
     virtual void init(int status=0);
 	
@@ -64,12 +63,12 @@ public:
 	virtual void updateToolBar();
 
     void setMesage(QString msg);
-    bool isCompleted(){return completed;}
-    void getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d);
+	bool isCompleted() const{return completed;}
+	void getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d) const;
 
 private:
     bool completed;
-    QString mesage;
+	QString message;
 
 };
 
