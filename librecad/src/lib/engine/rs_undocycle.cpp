@@ -5,19 +5,14 @@
  * more Undoables.
  */
 void RS_UndoCycle::addUndoable(RS_Undoable* u) {
-	undoables.append(u);
+	undoables.insert(u);
 }
 
 /**
  * Removes an undoable from the list.
  */
 void RS_UndoCycle::removeUndoable(RS_Undoable* u) {
-#if QT_VERSION < 0x040400
-	emu_qt44_removeOne(undoables, u);
-#else
-	undoables.removeOne(u);
-#endif
-
+	undoables.erase(u);
 }
 
 std::ostream& operator << (std::ostream& os,
@@ -33,8 +28,7 @@ std::ostream& operator << (std::ostream& os,
 		break;
 }*/
 	os << "   Undoable ids: ";
-	for (int i = 0; i < uc.undoables.size(); ++i) {
-		RS_Undoable *u = uc.undoables.at(i);
+	for (auto u: uc.undoables) {
 		if (u->undoRtti()==RS2::UndoableEntity) {
 			RS_Entity* e = (RS_Entity*)u;
 			os << e->getId() << (u->isUndone() ? "*" : "") << " ";
