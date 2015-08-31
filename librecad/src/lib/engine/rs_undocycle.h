@@ -29,14 +29,10 @@
 #define RS_UNDOLISTITEM_H
 
 #include <iostream>
-#include <QList>
+#include <set>
 
 #include "rs_entity.h"
 #include "rs_undoable.h"
-
-#if QT_VERSION < 0x040400
-#include "emu_qt44.h"
-#endif
 
 /**
  * An Undo Cycle represents an action that was triggered and can 
@@ -78,7 +74,7 @@ private:
     //! Undo type:
     //RS2::UndoType type;
     //! List of entity id's that were affected by this action
-    QList<RS_Undoable *> undoables;
+	std::set<RS_Undoable*> undoables;
 };
 
 #endif
