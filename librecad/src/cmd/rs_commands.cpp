@@ -304,6 +304,12 @@ RS_Commands::RS_Commands() {
              {"dr", QObject::tr("dr", "dimension - linear")}},
             RS2::ActionDimLinear
         },
+	//dimension angular
+	{
+		{{"dimangular", QObject::tr("dimangular", "dimension - angular")}},
+		{{"an", QObject::tr("an", "dimension - angular")}},
+		RS2::ActionDimAngular
+	},
         //dimension leader
         {
             {{"dimleader", QObject::tr("dimleader", "dimension - leader")}},
