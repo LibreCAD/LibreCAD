@@ -304,6 +304,25 @@ RS_Commands::RS_Commands() {
              {"dr", QObject::tr("dr", "dimension - linear")}},
             RS2::ActionDimLinear
         },
+	//dimension angular
+	{
+		{{"dimangular", QObject::tr("dimangular", "dimension - angular")}},
+		{{"dan", QObject::tr("dan", "dimension - angular")}},
+		RS2::ActionDimAngular
+	},
+	//dimension radius
+	{
+		{{"dimradial", QObject::tr("dimradial", "dimension - radial")}},
+		{{"dimradius", QObject::tr("dimradius", "dimension - radius")}},
+		RS2::ActionDimRadial
+	},
+	//dimension diameter
+	{
+		{{"dimdiametric", QObject::tr("dimdiametric", "dimension - diametric")}},
+		{{"dimdiameter", QObject::tr("dimdiameter", "dimension - diametric")},
+		 {"dd", QObject::tr("dd", "dimension - diametric")}},
+		RS2::ActionDimDiametric
+	},
         //dimension leader
         {
             {{"dimleader", QObject::tr("dimleader", "dimension - leader")}},
