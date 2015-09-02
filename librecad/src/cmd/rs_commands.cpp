@@ -39,6 +39,20 @@ struct LC_CommandItem {
 	std::vector<std::pair<QString, QString>> const shortCmdList;
 	RS2::ActionType actionType;
 };
+
+// helper function to check and report command collision
+template<typename T1, typename T2>
+bool isCollisionFree(std::map<T1, T2> const& lookUp, T1 const& key, T2 const& value)
+{
+	if(!lookUp.count(key)) return true;
+
+	//report command string collision
+	QString msg=__FILE__+QObject::tr(": duplicated command: %1 is already taken by %2")
+			.arg(key).arg(value);
+
+	RS_DEBUG->print(RS_Debug::D_ERROR, "%s\n", msg.toStdString().c_str());
+	return false;
+}
 }
 
 RS_Commands* RS_Commands::uniqueInstance = nullptr;
@@ -166,7 +180,7 @@ RS_Commands::RS_Commands() {
         //draw arc
         {
             {{"arc", QObject::tr("arc", "draw arc")}},
-            {{"ar", QObject::tr("ar", "draw arc")},
+			{//{"ar", QObject::tr("ar", "draw arc")},
             {"a", QObject::tr("a", "draw arc")}},
             RS2::ActionDrawArc3P
         },
@@ -290,7 +304,7 @@ RS_Commands::RS_Commands() {
         //dimension linear
         {
             {{"dimlinear", QObject::tr("dimlinear", "dimension - linear")}},
-            {{"dl", QObject::tr("dh", "dimension - linear")},
+			{{"dl", QObject::tr("dl", "dimension - linear")},
              {"dr", QObject::tr("dr", "dimension - linear")}},
             RS2::ActionDimLinear
         },
@@ -429,19 +443,7 @@ RS_Commands::RS_Commands() {
             {{"er", QObject::tr("er", "modify - delete (erase)")},
              {"del", QObject::tr("del", "modify - delete (erase)")}},
             RS2::ActionModifyDelete
-        },
-        //undo
-        {
-            {{"undo", QObject::tr("undo", "edit - undo")}},
-            {{"oo", QObject::tr("oo", "edit - undo")}},
-            RS2::ActionEditUndo
-        },
-        //redo
-        {
-            {{"redo", QObject::tr("redo", "edit - redo")}},
-            {{"uu", QObject::tr("uu", "edit - redo")}},
-            RS2::ActionEditUndo
-        },
+		},
         //explode
         {
             {{"explode", QObject::tr("explode", "explode block/polyline into entities")}},
@@ -535,7 +537,7 @@ RS_Commands::RS_Commands() {
             {{"dist", QObject::tr("dist", "distance point to point")},
             {"dpp", QObject::tr("dpp", "distance point to point")}},
             RS2::ActionInfoDist
-        },
+		},
         //Measure angle
         {
             {{"angle", QObject::tr("angle", "measure angle")}},
@@ -554,13 +556,17 @@ RS_Commands::RS_Commands() {
         auto const act=c0.actionType;
         //add full commands
         for(auto const& p0: c0.fullCmdList){
-            cmdTranslation[p0.first]=p0.second;
-            mainCommands[p0.second]=act;
+			if(isCollisionFree(cmdTranslation, p0.first, p0.second))
+				cmdTranslation[p0.first]=p0.second;
+			if(isCollisionFree(mainCommands, p0.second, act))
+				mainCommands[p0.second]=act;
         }
         //add short commands
         for(auto const& p1: c0.shortCmdList){
-            cmdTranslation[p1.first]=p1.second;
-            shortCommands[p1.second]=act;
+			if(isCollisionFree(cmdTranslation, p1.first, p1.second))
+				cmdTranslation[p1.first]=p1.second;
+			if(isCollisionFree(shortCommands, p1.second, act))
+				shortCommands[p1.second]=act;
         }
     }
 
