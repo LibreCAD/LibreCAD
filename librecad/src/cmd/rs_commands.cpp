@@ -35,19 +35,9 @@
 
 namespace {
 struct LC_CommandItem {
-    LC_CommandItem()=delete;
-    LC_CommandItem(std::vector<std::pair<QString, QString>> const& fullCmdList,
-                   std::vector<std::pair<QString, QString>> const& shortCmdList,
-                   RS2::ActionType actionType
-                   ):
-        fullCmdList(fullCmdList)
-      ,shortCmdList(shortCmdList)
-      ,actionType(actionType)
-    {}
-    ~LC_CommandItem()=default;
-    std::vector<std::pair<QString, QString>> const fullCmdList;
-    std::vector<std::pair<QString, QString>> const shortCmdList;
-    RS2::ActionType actionType;
+	std::vector<std::pair<QString, QString>> const fullCmdList;
+	std::vector<std::pair<QString, QString>> const shortCmdList;
+	RS2::ActionType actionType;
 };
 }
 
