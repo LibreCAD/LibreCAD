@@ -72,6 +72,10 @@ public:
 
 private:
     RS_Debug();
+	RS_Debug(const RS_Debug&)=delete;
+	RS_Debug& operator = (const RS_Debug&)=delete;
+	RS_Debug(RS_Debug&&)=delete;
+	RS_Debug& operator = (RS_Debug&&)=delete;
 
 public:
     static RS_Debug* instance();
