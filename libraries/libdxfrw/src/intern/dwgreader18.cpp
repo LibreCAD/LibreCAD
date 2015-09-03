@@ -317,15 +317,16 @@ bool dwgReader18::readFileHeader() {
         DRW_DBG("Page num= "); DRW_DBG(id); DRW_DBG(" size= "); DRW_DBGH(size);
         DRW_DBG(" address= "); DRW_DBGH(address);  DRW_DBG("\n");
         //TODO num can be negative indicating gap
-        duint64 ind = id > 0 ? id : -id;
+//        duint64 ind = id > 0 ? id : -id;
         if (id < 0){
             DRW_DBG("Parent= "); DRW_DBG(buff2.getRawLong32());
             DRW_DBG("\nLeft= "); DRW_DBG(buff2.getRawLong32());
             DRW_DBG(", Right= "); DRW_DBG(buff2.getRawLong32());
             DRW_DBG(", 0x00= ");DRW_DBGH(buff2.getRawLong32()); DRW_DBG("\n");
+            i += 16;
         }
 
-        sectionPageMapTmp[ind] = dwgPageInfo(ind, address, size);
+        sectionPageMapTmp[id] = dwgPageInfo(id, address, size);
         address += size;
     }
 
