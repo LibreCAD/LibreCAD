@@ -157,7 +157,6 @@ void QG_CommandWidget::tabPressed() {
             leCommand->setText(reducedChoice.first());
         }
         else if (reducedChoice.count()>0) {
-        //TODO: unix-like behaviour for autocompletion
             QString longestString = "";
             QString shortestString = "";
             int lengthShortestString(0);
