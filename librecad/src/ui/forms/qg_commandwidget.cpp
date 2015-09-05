@@ -189,24 +189,16 @@ void QG_CommandWidget::setNormalMode() {
 }
 
 QString QG_CommandWidget::getRootCommand( const QStringList & cmdList ) {
-    QString longestString;
     QString shortestString;
     int lengthShortestString(0);
-    int lengthCmdList = cmdList.count();
 
-    // Finding which is the longest string
-    for(QStringList::const_iterator it = cmdList.begin(); it != cmdList.end(); ++it) {
-        if((*it).length() > longestString.length()) {
-            longestString = (*it);
-        }
-    }
-    int lengthLongestString = longestString.length();
+    shortestString = cmdList.at(0);
+    lengthShortestString = shortestString.length();
 
-    // Finding which is the shortest string
-    lengthShortestString = longestString.length();
     for(QStringList::const_iterator it = cmdList.begin(); it != cmdList.end(); ++it) {
         if((*it).length() < lengthShortestString) {
             shortestString = (*it);
+            lengthShortestString = shortestString.length();
         }
     }
     lengthShortestString = shortestString.length();
@@ -218,7 +210,7 @@ QString QG_CommandWidget::getRootCommand( const QStringList & cmdList ) {
 
     for(i = 0; i < lengthShortestString; ++i) {
         for(QStringList::const_iterator it = cmdList.begin(); it != cmdList.end(); ++it) {
-            if(longestString.at(i) != (*it).at(i)) {
+            if(shortestString.at(i) != (*it).at(i)) {
                 common = false;
                 break;
             }
@@ -227,7 +219,7 @@ QString QG_CommandWidget::getRootCommand( const QStringList & cmdList ) {
             ++pos;
         }
     }
-    return longestString.left(pos);
+    return shortestString.left(pos);
 
 }
 
