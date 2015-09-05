@@ -212,8 +212,8 @@ QString QG_CommandWidget::getRootCommand( const QStringList & cmdList, const QSt
     while(high > low + 1) {
         mid = (high + low)/2;
         common = true;
-        proposal = shortestString.left(mid);
 
+        proposal = shortestString.left(mid);
         for(auto const& substring: cmdList) {
             if(!substring.startsWith(proposal)) {
                 common = false;
@@ -228,9 +228,12 @@ QString QG_CommandWidget::getRootCommand( const QStringList & cmdList, const QSt
         }
     }
 
+    // As we assign just before mid value to low (if strings are common), we can use it as parameter for left.
+    // If not common -> low value does not changes, even if escaping from the while. This avoids weird behaviors like continuing completion when pressing tab.
+    proposal = shortestString.left(low);
     
 
-    return shortestString.left(mid);
+    return proposal;
 
 }
 
