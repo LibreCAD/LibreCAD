@@ -157,7 +157,7 @@ void QG_CommandWidget::tabPressed() {
             leCommand->setText(reducedChoice.first());
         }
         else if (reducedChoice.count()>0) {
-            QString proposal = this->getRootCommand(reducedChoice);
+            QString proposal = this->getRootCommand(reducedChoice, typed);
             appendHistory(reducedChoice.join(", "));
             leCommand -> setText(proposal);
         }
@@ -188,7 +188,7 @@ void QG_CommandWidget::setNormalMode() {
     lCommand->setPalette(palette);
 }
 
-QString QG_CommandWidget::getRootCommand( const QStringList & cmdList ) {
+QString QG_CommandWidget::getRootCommand( const QStringList & cmdList, const QString & typed ) {
     QString shortestString;
     int lengthShortestString(0);
 
@@ -201,25 +201,36 @@ QString QG_CommandWidget::getRootCommand( const QStringList & cmdList ) {
             lengthShortestString = shortestString.length();
         }
     }
-    lengthShortestString = shortestString.length();
 
     // Now we parse the cmdList list, character of each item by character.
-    int i(0);
-    int pos(0);
     bool common = true;
+    int low = typed.length();
+    int high = lengthShortestString + 1;
+    int mid(0);
+    QString proposal;
 
-    for(i = 0; i < lengthShortestString; ++i) {
-        for(QStringList::const_iterator it = cmdList.begin(); it != cmdList.end(); ++it) {
-            if(shortestString.at(i) != (*it).at(i)) {
+    while(high > low + 1) {
+        mid = (high + low)/2;
+        common = true;
+        proposal = shortestString.left(mid);
+
+        for(auto const& substring: cmdList) {
+            if(!substring.startsWith(proposal)) {
                 common = false;
                 break;
             }
         }
-        if(common == true) {
-            ++pos;
+        if(common) {
+            low = mid;
+        }
+        else {
+            high = mid;
         }
     }
-    return shortestString.left(pos);
+
+    
+
+    return shortestString.left(mid);
 
 }
 
