@@ -55,6 +55,7 @@ protected slots:
 
 private:
     QG_ActionHandler* actionHandler;
+    QString getRootCommand( const QStringList & cmdList );
 };
 
 #endif // QG_COMMANDWIDGET_H

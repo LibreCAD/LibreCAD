@@ -157,47 +157,7 @@ void QG_CommandWidget::tabPressed() {
             leCommand->setText(reducedChoice.first());
         }
         else if (reducedChoice.count()>0) {
-        //TODO: unix-like behaviour for autocompletion
-            QString longestString = "";
-            QString shortestString = "";
-            int lengthShortestString(0);
-            int lengthReducedChoice = reducedChoice.count();
-
-            // Finding which is the longest string
-            for(QStringList::Iterator it = reducedChoice.begin(); it != reducedChoice.end(); ++it) {
-                if((*it).length() > longestString.length()) {
-                    longestString = (*it);
-                }
-            }
-            int lengthLongestString = longestString.length();
-
-            // Finding which is the shortest string
-            lengthShortestString = longestString.length();
-            for(QStringList::Iterator it = reducedChoice.begin(); it != reducedChoice.end(); ++it) {
-                if((*it).length() < lengthShortestString) {
-                    shortestString = (*it);
-                }
-            }
-            lengthShortestString = shortestString.length();
-
-            // Now we parse the reducedChoice list, character of each item by character.
-            int i(0);
-            int pos(0);
-            bool common = true;
-
-            for(i = 0; i < lengthShortestString; ++i) {
-                for(QStringList::Iterator it = reducedChoice.begin(); it != reducedChoice.end(); ++it) {
-                    if(longestString.at(i) != (*it).at(i)) {
-                        common = false;
-                        break;
-                    }
-                }
-                if(common == true) {
-                    ++pos;
-                }
-            }
-
-            QString proposal = longestString.left(pos);
+            QString proposal = this->getRootCommand(reducedChoice);
             appendHistory(reducedChoice.join(", "));
             leCommand -> setText(proposal);
         }
@@ -227,3 +187,47 @@ void QG_CommandWidget::setNormalMode() {
     palette.setColor(lCommand->foregroundRole(), Qt::black);
     lCommand->setPalette(palette);
 }
+
+QString QG_CommandWidget::getRootCommand( const QStringList & cmdList ) {
+    QString longestString;
+    QString shortestString;
+    int lengthShortestString(0);
+    int lengthCmdList = cmdList.count();
+
+    // Finding which is the longest string
+    for(QStringList::const_iterator it = cmdList.begin(); it != cmdList.end(); ++it) {
+        if((*it).length() > longestString.length()) {
+            longestString = (*it);
+        }
+    }
+    int lengthLongestString = longestString.length();
+
+    // Finding which is the shortest string
+    lengthShortestString = longestString.length();
+    for(QStringList::const_iterator it = cmdList.begin(); it != cmdList.end(); ++it) {
+        if((*it).length() < lengthShortestString) {
+            shortestString = (*it);
+        }
+    }
+    lengthShortestString = shortestString.length();
+
+    // Now we parse the cmdList list, character of each item by character.
+    int i(0);
+    int pos(0);
+    bool common = true;
+
+    for(i = 0; i < lengthShortestString; ++i) {
+        for(QStringList::const_iterator it = cmdList.begin(); it != cmdList.end(); ++it) {
+            if(longestString.at(i) != (*it).at(i)) {
+                common = false;
+                break;
+            }
+        }
+        if(common == true) {
+            ++pos;
+        }
+    }
+    return longestString.left(pos);
+
+}
+
