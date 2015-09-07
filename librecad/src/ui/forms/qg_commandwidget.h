@@ -49,6 +49,7 @@ public slots:
     virtual void setActionHandler( QG_ActionHandler * ah );
     virtual void setCommandMode();
     virtual void setNormalMode();
+	static QString getRootCommand( const QStringList & cmdList, const QString & typed );
 
 protected slots:
     virtual void languageChange();

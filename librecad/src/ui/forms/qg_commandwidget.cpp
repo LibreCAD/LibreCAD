@@ -25,10 +25,13 @@
 **********************************************************************/
 #include "qg_commandwidget.h"
 #include <QKeyEvent>
+#include <algorithm>
 
 #include "qg_actionhandler.h"
 #include "rs_commands.h"
 #include "rs_commandevent.h"
+#include "rs_system.h"
+#include "rs_utility.h"
 
 /*
  *  Constructs a QG_CommandWidget as a child of 'parent', with the
@@ -155,7 +158,9 @@ void QG_CommandWidget::tabPressed() {
             leCommand->setText(reducedChoice.first());
         }
         else if (reducedChoice.count()>0) {
+			QString const& proposal = this->getRootCommand(reducedChoice, typed);
             appendHistory(reducedChoice.join(", "));
+            leCommand -> setText(proposal);
         }
     }
 }
@@ -183,3 +188,46 @@ void QG_CommandWidget::setNormalMode() {
     palette.setColor(lCommand->foregroundRole(), Qt::black);
     lCommand->setPalette(palette);
 }
+
+QString QG_CommandWidget::getRootCommand( const QStringList & cmdList, const QString & typed ) {
+	//do we have to check for empty cmdList?
+	if(cmdList.empty()) return QString();
+
+	//find the shortest string in cmdList
+	auto const& shortestString = * std::min_element(cmdList.begin(), cmdList.end(),
+													[](QString const& a, QString const& b) -> bool
+			{
+				return a.size() < b.size();
+			}
+			);
+	int const lengthShortestString = shortestString.size();
+
+	// Now we parse the cmdList list, character of each item by character.
+	int low = typed.length();
+	int high = lengthShortestString + 1;
+
+    while(high > low + 1) {
+		int mid = (high + low)/2;
+		bool common = true;
+
+		QString const& proposal = shortestString.left(mid);
+        for(auto const& substring: cmdList) {
+            if(!substring.startsWith(proposal)) {
+                common = false;
+                break;
+            }
+        }
+        if(common) {
+            low = mid;
+        }
+        else {
+            high = mid;
+        }
+    }
+
+    // As we assign just before mid value to low (if strings are common), we can use it as parameter for left.
+    // If not common -> low value does not changes, even if escaping from the while. This avoids weird behaviors like continuing completion when pressing tab.
+	return shortestString.left(low);
+
+}
+
