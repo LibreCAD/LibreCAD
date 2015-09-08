@@ -50,14 +50,6 @@ RS_ActionDrawArc::RS_ActionDrawArc(RS_EntityContainer& container,
 
 RS_ActionDrawArc::~RS_ActionDrawArc(){}
 
-QAction* RS_ActionDrawArc::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(tr("&Center, Point, Angles"),nullptr);
-	action->setIcon(QIcon(":/extui/arcscraa.png"));
-	action->setCheckable(true);
-	return action;
-}
-
-
 void RS_ActionDrawArc::reset() {
 
 	if (data->reversed) {

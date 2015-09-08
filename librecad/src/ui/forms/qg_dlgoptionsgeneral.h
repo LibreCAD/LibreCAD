@@ -67,6 +67,8 @@ private slots:
 
     void on_pb_layerselection_clicked();
 
+    void set_toolbar_file();
+
 private:
     bool restartNeeded;
 

@@ -49,12 +49,6 @@ RS_ActionDrawCircle::RS_ActionDrawCircle(RS_EntityContainer& container,
 
 RS_ActionDrawCircle::~RS_ActionDrawCircle() {}
 
-
-QAction* RS_ActionDrawCircle::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action = new QAction(QIcon(":/extui/circles.png"), tr("Center, &Point"), nullptr);
-    return action;
-}
-
 void RS_ActionDrawCircle::reset() {
 	data.reset(new RS_CircleData(RS_Vector(false), 0.0));
 }

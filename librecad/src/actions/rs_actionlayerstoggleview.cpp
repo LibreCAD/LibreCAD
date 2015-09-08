@@ -38,14 +38,6 @@ RS_ActionLayersToggleView::RS_ActionLayersToggleView(
                     container, graphicView) {}
 
 
-QAction* RS_ActionLayersToggleView::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Toggle Layer Visibility")
-    QAction* action = new QAction(tr("&Toggle Layer Visibility"), NULL);
-    //action->zetStatusTip(tr("Toggle Layer"));
-	action->setIcon(QIcon(":/ui/layertoggle.png"));
-    return action;
-}
-
 void RS_ActionLayersToggleView::trigger() {
     RS_DEBUG->print("toggle layer");
     if (graphic) {

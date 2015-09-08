@@ -53,8 +53,6 @@ public:
                       RS_GraphicView& graphicView);
 	~RS_ActionDrawMText();
 
-        static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
     virtual void init(int status=0);
 
         void reset();

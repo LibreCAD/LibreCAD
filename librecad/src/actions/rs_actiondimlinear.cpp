@@ -63,37 +63,6 @@ RS_ActionDimLinear::RS_ActionDimLinear(RS_EntityContainer& container,
 
 RS_ActionDimLinear::~RS_ActionDimLinear() {}
 
-
-QAction* RS_ActionDimLinear::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
-    QAction* action;
-
-    switch (type) {
-    default:
-    case RS2::ActionDimLinear:
-		// tr("Linear")
-		action = new QAction(tr("&Linear"),  NULL);
-                action->setIcon(QIcon(":/extui/dimlinear.png"));
-        //action->zetStatusTip(tr("Linear Dimension"));
-        break;
-
-    case RS2::ActionDimLinearHor:
-		// tr("Horizontal")
-		action = new QAction(tr("&Horizontal"), NULL);
-		action->setIcon(QIcon(":/extui/dimhor.png"));
-        //action->zetStatusTip(tr("Horizontal Dimension"));
-        break;
-
-    case RS2::ActionDimLinearVer:
-		// tr("Vertical")
-		action = new QAction(tr("&Vertical"), NULL);
-		action->setIcon(QIcon(":/extui/dimver.png"));
-        //action->zetStatusTip(tr("Vertical Dimension"));
-        break;
-    }
-
-    return action;
-}
-
 void RS_ActionDimLinear::reset() {
     RS_ActionDimension::reset();
 

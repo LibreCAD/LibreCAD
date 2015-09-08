@@ -135,6 +135,9 @@ void QG_DlgOptionsGeneral::init() {
     cbSizeStatus->setCurrentIndex( cbSizeStatus->findText(sizeStatus) );
     cbSplash->setChecked(RS_SETTINGS->readNumEntry("/ShowSplash",1)==1);
 
+    sb_icon_size->setValue(RS_SETTINGS->readNumEntry("/IconSize", 24));
+    cb_icon_size->setChecked(RS_SETTINGS->readNumEntry("/SetIconSize", 1)?true:false);
+
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Paths");
@@ -145,7 +148,7 @@ void QG_DlgOptionsGeneral::init() {
     lePathScripts->setText(RS_SETTINGS->readEntry("/Scripts", ""));
     lePathLibrary->setText(RS_SETTINGS->readEntry("/Library", "").trimmed());
     leTemplate->setText(RS_SETTINGS->readEntry("/Template", "").trimmed());
-
+    le_custom_toolbar->setText(RS_SETTINGS->readEntry("/CustomToolbar", "").trimmed());
     RS_SETTINGS->endGroup();
 
     // units:
@@ -221,6 +224,8 @@ void QG_DlgOptionsGeneral::ok() {
     RS_SETTINGS->writeEntry("/LayerSelectColor", cb_layerselection->currentText());
 	RS_SETTINGS->writeEntry("/StatusBarFontSize", cbSizeStatus->currentText());
     RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
+    RS_SETTINGS->writeEntry("/IconSize", sb_icon_size->value() );
+    RS_SETTINGS->writeEntry("/SetIconSize", cb_icon_size->isChecked()?1:0);
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Paths");
@@ -230,13 +235,14 @@ void QG_DlgOptionsGeneral::ok() {
     RS_SETTINGS->writeEntry("/Scripts", lePathScripts->text());
     RS_SETTINGS->writeEntry("/Library", lePathLibrary->text());
     RS_SETTINGS->writeEntry("/Template", leTemplate->text());
+    RS_SETTINGS->writeEntry("/CustomToolbar", le_custom_toolbar->text());
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Defaults");
     RS_SETTINGS->writeEntry("/Unit",
         RS_Units::unitToString( RS_Units::stringToUnit( cbUnit->currentText() ), false/*untr.*/) );
     RS_SETTINGS->writeEntry("/AutoSaveTime", cbAutoSaveTime->value() );
-    RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked()?1:0 );
+    RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked()?1:0);
     RS_SETTINGS->endGroup();
 
 	//update entities to selected entities to the current active layer
@@ -317,4 +323,13 @@ void QG_DlgOptionsGeneral::on_pb_end_clicked()
 void QG_DlgOptionsGeneral::on_pb_layerselection_clicked()
 {
     set_color(cb_layerselection, QColor("#CCFFCC"));
+}
+
+void QG_DlgOptionsGeneral::set_toolbar_file()
+{
+    QString path = QFileDialog::getOpenFileName(this);
+    if (!path.isEmpty())
+    {
+        le_custom_toolbar->setText(QDir::toNativeSeparators(path));
+    }
 }

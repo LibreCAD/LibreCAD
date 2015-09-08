@@ -53,10 +53,6 @@ RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 
 RS_ActionDrawLineTangent1::~RS_ActionDrawLineTangent1(){}
 
-QAction* RS_ActionDrawLineTangent1::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	return new QAction(QIcon(":/extui/linestan1.png"), tr("Tangent (P,C)"), nullptr);
-}
-
 void RS_ActionDrawLineTangent1::trigger() {
 	RS_PreviewActionInterface::trigger();
 

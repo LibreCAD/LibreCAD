@@ -42,6 +42,11 @@ public:
     RS_EventHandler(RS_GraphicView* graphicView);
     ~RS_EventHandler();
 
+    QAction* real_action;
+    bool right_click_quits;
+
+    void set_action(QAction* q_action);
+
     void back();
     void enter();
 

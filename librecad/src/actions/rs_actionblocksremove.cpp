@@ -37,15 +37,6 @@ RS_ActionBlocksRemove::RS_ActionBlocksRemove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Remove Block", container, graphicView) {}
 
-
-QAction* RS_ActionBlocksRemove::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Remove Block")
-        QAction* action = new QAction(tr("&Remove Block"), NULL);
-    //action->zetStatusTip(tr("Remove Block"));
-        action->setIcon(QIcon(":/ui/blockremove.png"));
-        return action;
-}
-
 void RS_ActionBlocksRemove::trigger() {
     RS_DEBUG->print("RS_ActionBlocksRemove::trigger");
 

@@ -49,16 +49,6 @@ RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(
 
 RS_ActionDrawLineHorVert::~RS_ActionDrawLineHorVert() {}
 
-
-QAction* RS_ActionDrawLineHorVert::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("hor./vert. line"),
-                                  tr("H&orizontal / Vertical"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Vertical"), NULL);
-    //action->zetStatusTip(tr("Draw horizontal/vertical lines"));
-    return action;
-}
-
 void RS_ActionDrawLineHorVert::reset() {
 	data.reset(new RS_LineData());
 }

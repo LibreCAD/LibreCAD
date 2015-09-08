@@ -41,26 +41,6 @@ RS_ActionBlocksFreezeAll::RS_ActionBlocksFreezeAll(bool freeze,
     this->freeze = freeze;
 }
 
-QAction* RS_ActionBlocksFreezeAll::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
-    QAction* action = NULL;
-
-        if (type==RS2::ActionBlocksFreezeAll) {
-                // tr("Freeze all")
-                action= new QAction(tr("&Hide all"), NULL);
-        //action->zetStatusTip(tr("Freeze all blocks"));
-                action->setIcon(QIcon(":/ui/blockfreeze.png"));
-        }
-        else if (type==RS2::ActionBlocksDefreezeAll) {
-                // tr("&Defreeze all")
-                action = new QAction(tr("&Show all"), NULL);
-        //action->zetStatusTip(tr("Defreeze all blocks"));
-                action->setIcon(QIcon(":/ui/blockdefreeze.png"));
-
-        }
-
-    return action;
-}
-
 
 void RS_ActionBlocksFreezeAll::trigger() {
     RS_DEBUG->print("RS_ActionBlocksFreezeAll::trigger");

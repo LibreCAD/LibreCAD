@@ -35,15 +35,6 @@ RS_ActionBlocksSave::RS_ActionBlocksSave(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Edit Block", container, graphicView) {}
 
-
-QAction* RS_ActionBlocksSave::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	//  tr("&Edit Block")
-    QAction* action = new QAction( tr("&Save Block"), NULL);
-    //action->zetStatusTip(tr("Edit Block"));
-    action->setIcon(QIcon(":/main/filesave.png"));
-	return action;
-}
-
 /*recursive add blocks in graphic*/
 void RS_ActionBlocksSave::addBlock(RS_Insert* in, RS_Graphic* g) {
 

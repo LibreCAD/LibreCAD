@@ -49,15 +49,6 @@ RS_ActionDrawText::RS_ActionDrawText(RS_EntityContainer& container,
 RS_ActionDrawText::~RS_ActionDrawText(){}
 
 
-QAction* RS_ActionDrawText::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Text")
-	QAction* action = new QAction(tr("&Text"),  NULL);
-	action->setIcon(QIcon(":/extui/menutext.png"));
-	action->setData(RS2::ActionDrawText);
-	return action;
-}
-
-
 void RS_ActionDrawText::init(int status) {
     RS_ActionInterface::init(status);
     if (RS_DIALOGFACTORY) {

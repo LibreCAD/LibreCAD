@@ -39,17 +39,6 @@ RS_ActionOptionsDrawing::RS_ActionOptionsDrawing(RS_EntityContainer& container,
 	actionType=RS2::ActionOptionsDrawing;
 }
 
-
-QAction* RS_ActionOptionsDrawing::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action = new QAction( QIcon(":/actions/drawingprefs.png"), tr("Current &Drawing Preferences"), NULL);
-// Preferences shortcut was itroduced on 4.6
-#if QT_VERSION >= 0x040600
-	action->setShortcut(QKeySequence::Preferences);
-#endif 
-    return action;
-}
-
-
 void RS_ActionOptionsDrawing::init(int status) {
     RS_ActionInterface::init(status);
 

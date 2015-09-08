@@ -41,17 +41,6 @@ RS_ActionDrawPoint::RS_ActionDrawPoint(RS_EntityContainer& container,
 	actionType=RS2::ActionDrawPoint;
 }
 
-
-QAction* RS_ActionDrawPoint::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// (tr("Points")
-	QAction* action = new QAction(tr("&Points"),  NULL);
-	action->setIcon(QIcon(":/extui/points.png"));
-	action->setData(RS2::ActionDrawPoint);
-
-	return action;
-}
-
-
 void RS_ActionDrawPoint::trigger() {
     if (pt.valid) {
         RS_Point* point = new RS_Point(container, RS_PointData(pt));

@@ -51,8 +51,6 @@ public:
                                  RS_GraphicView& graphicView);
 	~RS_ActionDrawCircleTan1_2P();
 
-    static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-
     virtual void init(int status=0);
 
     virtual void trigger();

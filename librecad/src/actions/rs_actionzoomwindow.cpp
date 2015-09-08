@@ -49,21 +49,6 @@ RS_ActionZoomWindow::RS_ActionZoomWindow(RS_EntityContainer& container,
     this->keepAspectRatio = keepAspectRatio;
 }
 
-
-QAction* RS_ActionZoomWindow::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Window Zoom")
-        QAction* action = new QAction(tr("&Window Zoom"), NULL);
-#if QT_VERSION >= 0x040600
-        action->setIcon(QIcon::fromTheme("zoom-select", QIcon(":/actions/zoomwindow.png")));
-#else
-        action->setIcon(QIcon(":/actions/zoomwindow.png"));
-#endif
-        //action->zetStatusTip(tr("Zooms in a window"));
-
-    return action;
-}
-
-
 void RS_ActionZoomWindow::init(int status) {
     RS_DEBUG->print("RS_ActionZoomWindow::init()");
 

@@ -49,14 +49,6 @@ RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
 
 RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points(){}
 
-QAction* RS_ActionDrawEllipse4Points::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action;
-
-    action = new QAction(tr("Ellipse &4 Point"), NULL);
-    action->setIcon(QIcon(":/extui/ellipse4points.png"));
-    return action;
-}
-
 void RS_ActionDrawEllipse4Points::init(int status) {
     RS_PreviewActionInterface::init(status);
     if(getStatus() == SetPoint1) points.clean();

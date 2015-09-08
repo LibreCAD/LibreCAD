@@ -38,17 +38,6 @@ RS_ActionLayersFreezeAll::RS_ActionLayersFreezeAll(bool freeze,
     this->freeze = freeze;
 }
 
-QAction* RS_ActionLayersFreezeAll::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
-    switch(type){
-    case RS2::ActionLayersFreezeAll:
-        return new QAction(QIcon(":/ui/hiddenblock.png"), tr("&Hide all"), nullptr);
-    case RS2::ActionLayersDefreezeAll:
-        return new QAction(QIcon(":/ui/visibleblock.png"), tr("&Show all"), nullptr);
-    default:
-        return nullptr;
-    }
-}
-
 void RS_ActionLayersFreezeAll::trigger() {
     RS_DEBUG->print("RS_ActionLayersFreezeAll::trigger");
     if (graphic) {

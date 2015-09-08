@@ -36,10 +36,6 @@ RS_ActionLayersRemove::RS_ActionLayersRemove(RS_EntityContainer& container,
         :RS_ActionInterface("Remove Layer", container, graphicView) {}
 
 
-QAction* RS_ActionLayersRemove::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	return new QAction(QIcon(":/ui/layerremove.png"), tr("&Remove Layer"), nullptr);
-}
-
 void RS_ActionLayersRemove::trigger() {
     RS_DEBUG->print("RS_ActionLayersRemove::trigger");
 

@@ -49,12 +49,6 @@ LC_ActionDrawSplinePoints::LC_ActionDrawSplinePoints(RS_EntityContainer& contain
 
 LC_ActionDrawSplinePoints::~LC_ActionDrawSplinePoints() {}
 
-QAction* LC_ActionDrawSplinePoints::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/)
-{
-	QAction* action = new QAction(QIcon(":/extui/menusplinepoints.png"), tr("&Spline through points"),  NULL);
-	return action;
-}
-
 void LC_ActionDrawSplinePoints::reset() {
 	spline.reset();
 	undoBuffer.clear();

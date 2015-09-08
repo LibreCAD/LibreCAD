@@ -50,8 +50,6 @@ public:
     RS_ActionModifyCut(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
     ~RS_ActionModifyCut() = default;
-	
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
     virtual void init(int status=0);
     virtual void trigger();

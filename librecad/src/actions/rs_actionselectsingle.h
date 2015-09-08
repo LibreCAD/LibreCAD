@@ -44,8 +44,6 @@ public:
 						  std::set<RS2::EntityType> const& entityTypeList=std::set<RS2::EntityType>());
 	~RS_ActionSelectSingle()=default;
 
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
     virtual void trigger();
     virtual void keyPressEvent(QKeyEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);

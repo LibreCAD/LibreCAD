@@ -35,22 +35,6 @@ RS_ActionFileSave::RS_ActionFileSave(RS_EntityContainer& container,
         :RS_ActionInterface("File Save", container, graphicView) {}
 
 
-QAction* RS_ActionFileSave::createGUIAction(RS2::ActionType /*type*/, QObject* parent) {
-	
-	//(tr("Save Drawing")
-	QAction* action = new QAction(tr("&Save"), parent);
-#if QT_VERSION >= 0x040600
-        action->setIcon(QIcon::fromTheme("document-save", QIcon(":/actions/filesave2.png")));
-#else
-        action->setIcon(QIcon(":/actions/filesave2.png"));
-#endif
-        action->setShortcut(QKeySequence::Save);
-    //action->zetStatusTip(tr("Saves the current drawing"));
-	
-    return action;
-}
-
-
 void RS_ActionFileSave::trigger() {
     RS_DEBUG->print("RS_ActionFileSave::trigger");
 

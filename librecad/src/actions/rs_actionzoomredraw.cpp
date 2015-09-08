@@ -41,22 +41,6 @@ RS_ActionZoomRedraw::RS_ActionZoomRedraw(RS_EntityContainer& container,
         :RS_ActionInterface("Redraw", container, graphicView) {
 }
 
-
-QAction* RS_ActionZoomRedraw::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Redraw")
-	QAction* action = new QAction(tr("&Redraw"), NULL);
-#if QT_VERSION >= 0x040600
-        action->setIcon(QIcon::fromTheme("view-refresh", QIcon(":/actions/zoomredraw.png")));
-#else
-        action->setIcon(QIcon(":/actions/zoomredraw.png"));
-#endif
-        action->setShortcut(QKeySequence::Refresh);
-	//action->zetStatusTip(tr("Redraw"));
-	
-    return action;
-}
-
-
 void RS_ActionZoomRedraw::init(int status) {
     RS_ActionInterface::init(status);
     trigger();

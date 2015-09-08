@@ -35,13 +35,6 @@ RS_ActionModifyRevertDirection::RS_ActionModifyRevertDirection(RS_EntityContaine
 {
 }
 
-QAction* RS_ActionModifyRevertDirection::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(tr("Re&vert direction"), NULL);
-	action->setIcon(QIcon(":/extui/reverse.png"));
-	action->setShortcut(QKeySequence(tr("Ctrl+R")));
-	return action;
-}
-
 void RS_ActionModifyRevertDirection::trigger() {
 	RS_DEBUG->print("RS_ActionModifyRevertDirection::trigger");
 
