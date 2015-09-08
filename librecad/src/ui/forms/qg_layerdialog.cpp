@@ -103,6 +103,7 @@ void QG_LayerDialog::setLayerList( RS_LayerList * ll ){
 }
 
 void QG_LayerDialog::init(){
+	leName->setFocus();
 	layer = NULL;
 	layerList = NULL;
 	layerName = "";
