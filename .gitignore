@@ -72,3 +72,5 @@ core
 *.core
 vgcore.*
 core.*
+libraries/libdxfrw/object_script.libdxfrw.Debug
+libraries/libdxfrw/object_script.libdxfrw.Release
