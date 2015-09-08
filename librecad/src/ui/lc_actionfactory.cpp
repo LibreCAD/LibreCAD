@@ -1,7 +1,7 @@
 /*
 **********************************************************************************
 **
-** This file is part of the LibreCAD project (librecad.org), a 2D CAD program.
+** This file was created for the LibreCAD project (librecad.org), a 2D CAD program.
 **
 ** Copyright (C) 2015 ravas (ravas@outlook.com)
 **
@@ -22,7 +22,7 @@
 **********************************************************************************
 */
 
-// github.com/r-a-v-a-s/LibreCAD.git
+// This file was first published at: github.com/r-a-v-a-s/LibreCAD.git
 
 // lc_actionfactory is a rewrite of qg_actionfactory; some copied content remains.
 // qg_actionfactory contributors:
