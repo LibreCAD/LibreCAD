@@ -339,16 +339,15 @@ private:
     QG_LibraryWidget* libraryWidget;
 
     /** Layer list dock widget */
-    QDockWidget* layerDockWindow;
+    QDockWidget* dock_layer;
     /** Block list dock widget */
-    QDockWidget* blockDockWindow;
+    QDockWidget* dock_block;
     /** Library list dock widget */
-    QDockWidget* libraryDockWindow;
+    QDockWidget* dock_library;
 
-
-        /** Command line */
-        QG_CommandWidget* commandWidget;
-        QDockWidget* commandDockWindow;
+    /** Command line */
+    QG_CommandWidget* commandWidget;
+    QDockWidget* dock_command;
 
     /** Coordinate widget */
     QG_CoordinateWidget* coordinateWidget;
@@ -424,6 +423,8 @@ private:
     void loadPlugins();
     QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
 	QList<QC_PluginInterface*> loadedPlugins;
+
+    QMenu* createPopupMenu();
 
 };
 

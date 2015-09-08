@@ -96,6 +96,7 @@
 
 #include "lc_simpletests.h"
 #include "lc_actionfactory.h"
+#include "lc_dockwidget.h"
 
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
@@ -160,11 +161,13 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating scripter: OK");
 #endif
 
-        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init view");
     initView();
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
+
         RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: menus_and_toolbars");
     menus_and_toolbars();
-        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
+        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init view");
+
     initStatusBar();
 
         RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory");
@@ -763,110 +766,64 @@ void QC_ApplicationWindow::storeSettings() {
 }
 
 
-
 /**
  * Initializes the view.
  */
-void QC_ApplicationWindow::initView() {
+void QC_ApplicationWindow::initView()
+{
     RS_DEBUG->print("QC_ApplicationWindow::initView()");
+    RS_DEBUG->print("layer widget..");
 
-    RS_DEBUG->print("init view..");
-    QDockWidget* dw;
-
-    RS_DEBUG->print("  layer widget..");
-    dw = new QDockWidget( "Layer", this);
-    dw->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-        dw->setObjectName ( "LayerDW" );
-    layerWidget = new QG_LayerWidget(actionHandler, dw, "Layer");
+    dock_layer = new QDockWidget("Layer", this);
+    dock_layer->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dock_layer->setObjectName("LayerDW");
+    layerWidget = new QG_LayerWidget(actionHandler, dock_layer, "Layer");
     layerWidget->setFocusPolicy(Qt::NoFocus);
-    connect(layerWidget, SIGNAL(escape()),
-            this, SLOT(slotFocus()));
-    connect(this, SIGNAL(windowsChanged(bool)),
-            layerWidget, SLOT(setEnabled(bool)));
-    //dw->boxLayout()->addWidget(layerWidget);
-    dw->setWidget(layerWidget);
-    //dw->setFixedExtentWidth(120);
-    //dw->setFixedExtentHeight(400);
-    //dw->setFixedHeight(400);
-    // dw->setResizeEnabled(true);
-    dw->setWindowTitle(tr("Layer List"));
-    // dw->setCloseMode(QDockWidget::Always);
-    //dw->resize(120,mdiAreaCAD->height()/2);
-    addDockWidget (Qt::RightDockWidgetArea, dw );
+    connect(layerWidget, SIGNAL(escape()), this, SLOT(slotFocus()));
+    connect(this, SIGNAL(windowsChanged(bool)), layerWidget, SLOT(setEnabled(bool)));
+    dock_layer->setWidget(layerWidget);
+    dock_layer->setWindowTitle(tr("Layer List"));
 
-    layerDockWindow = dw;
+    RS_DEBUG->print("block widget..");
 
-    RS_DEBUG->print("  block widget..");
-    dw = new QDockWidget("Block", this);
-    dw->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-        dw->setObjectName ( "BlockDW" );
-    // dw->setResizeEnabled(true);
-    blockWidget = new QG_BlockWidget(actionHandler, dw, "Block");
+    dock_block = new QDockWidget("Block", this);
+    dock_block->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dock_block->setObjectName("BlockDW");
+    blockWidget = new QG_BlockWidget(actionHandler, dock_block, "Block");
     blockWidget->setFocusPolicy(Qt::NoFocus);
-    connect(blockWidget, SIGNAL(escape()),
-            this, SLOT(slotFocus()));
-    connect(this, SIGNAL(windowsChanged(bool)),
-            blockWidget, SLOT(setEnabled(bool)));
-    //dw->boxLayout()->addWidget(blockWidget);
-    dw->setWidget(blockWidget);
-    // dw->setFixedExtentWidth(120);
-    dw->setWindowTitle(tr("Block List"));
-    // dw->setCloseMode(QDockWidget::Always);
-    //dw->setFixedExtentHeight(400);
-        addDockWidget(Qt::RightDockWidgetArea, dw);
-    blockDockWindow = dw;
+    connect(blockWidget, SIGNAL(escape()), this, SLOT(slotFocus()));
+    connect(this, SIGNAL(windowsChanged(bool)), blockWidget, SLOT(setEnabled(bool)));
+    dock_block->setWidget(blockWidget);
+    dock_block->setWindowTitle(tr("Block List"));
 
-    RS_DEBUG->print("  library widget..");
-    dw = new QDockWidget("Library", this);
-    dw->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-        dw->setObjectName ( "BlockDW" );
-        dw->setObjectName ( "LibraryDW" );
-    libraryWidget = new QG_LibraryWidget(dw, "Library");
+    RS_DEBUG->print("library widget..");
+
+    dock_library = new QDockWidget("Library", this);
+    dock_library->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dock_library->setObjectName("LibraryDW");
+    libraryWidget = new QG_LibraryWidget(dock_library, "Library");
     libraryWidget->setActionHandler(actionHandler);
     libraryWidget->setFocusPolicy(Qt::NoFocus);
-    connect(libraryWidget, SIGNAL(escape()),
-            this, SLOT(slotFocus()));
+    connect(libraryWidget, SIGNAL(escape()), this, SLOT(slotFocus()));
     connect(this, SIGNAL(windowsChanged(bool)),
             (QObject*)libraryWidget->bInsert, SLOT(setEnabled(bool)));
-    dw->setWidget(libraryWidget);
-    //dw->setFixedExtentWidth(240);
-    //dw->setHeight(400);
-    dw->resize(240, 400);
-    // dw->setResizeEnabled(true);
-    dw->setWindowTitle(tr("Library Browser"));
-    // dw->setCloseMode(QDockWidget::Always);
-    addDockWidget(Qt::LeftDockWidgetArea , dw);
+    dock_library->setWidget(libraryWidget);
+    dock_library->resize(240, 400);
+    dock_library->setWindowTitle(tr("Library Browser"));
+    addDockWidget(Qt::RightDockWidgetArea , dock_library);
+    tabifyDockWidget(dock_library, dock_block);
+    tabifyDockWidget(dock_block, dock_layer);
 
-    libraryDockWindow = dw;
-    libraryDockWindow->hide();
+    RS_DEBUG->print("command widget..");
 
-    RS_DEBUG->print("  command widget..");
-    dw = new QDockWidget(tr("Command line"), this);
-    dw->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-        dw->setObjectName ( "BlockDW" );
-    dw->setFeatures(QDockWidget::DockWidgetVerticalTitleBar|QDockWidget::AllDockWidgetFeatures);
-    dw->setObjectName ( "CommandDW" );
-    // dw->setResizeEnabled(true);
-    commandWidget = new QG_CommandWidget(dw, "Command");
+    dock_command = new QDockWidget(tr("Command line"), this);
+    dock_command->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dock_command->setObjectName("CommandDW");
+    commandWidget = new QG_CommandWidget(dock_command, "Command");
     commandWidget->setActionHandler(actionHandler);
-    //commandWidget->redirectStderr();
-    //std::cerr << "Ready.\n";
-    //commandWidget->processStderr();
-    connect(this, SIGNAL(windowsChanged(bool)),
-            commandWidget, SLOT(setEnabled(bool)));
-    //connect(commandWidget, SIGNAL(escape()),
-    //        this, SLOT(slotFocus()));
-    //commandWidget->grabKeyboard();
-    //dw->boxLayout()->addWidget(commandWidget);
-    dw->setWidget(commandWidget);
-    //dw->setFixedExtentWidth(120);
-    //dw->setFixedExtentHeight(45);
-//    dw->setWindowTitle();
-    // dw->setCloseMode(QDockWidget::Always);
-    commandDockWindow = dw;
-        addDockWidget(Qt::BottomDockWidgetArea, dw);
-
-    RS_DEBUG->print("  done");
+    connect(this, SIGNAL(windowsChanged(bool)), commandWidget, SLOT(setEnabled(bool)));
+    dock_command->setWidget(commandWidget);
+    addDockWidget(Qt::RightDockWidgetArea, dock_command);
 
     RS_SETTINGS->beginGroup("/Appearance");
     QString layer_select_color(RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC"));
@@ -3170,6 +3127,9 @@ void QC_ApplicationWindow::menus_and_toolbars()
     QList<QAction*> list_a;
     QList<QToolBar*> list_tb; // for creating the toolbar menu
 
+    int icon_size = RS_SETTINGS->readNumEntry("/Appearance/IconSize", 24);
+    int columns = 5;
+
     QActionGroup* tools = new QActionGroup(this);
     connect(tools, SIGNAL(triggered(QAction*)), this, SLOT(slot_set_action(QAction*)));
 
@@ -3180,7 +3140,8 @@ void QC_ApplicationWindow::menus_and_toolbars()
     QToolBar* tb_categories = new QToolBar("Categories", this);
     tb_categories->setSizePolicy(toolBarPolicy);
     tb_categories->setObjectName("CategoriesTB");
-    addToolBar(Qt::LeftToolBarArea, tb_categories);
+    addToolBar(Qt::BottomToolBarArea, tb_categories);
+    tb_categories->hide();
     list_tb.append(tb_categories);
 
     // <[~ File ~]>
@@ -3229,6 +3190,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     menu->addSeparator();
 
     addToolBar(Qt::TopToolBarArea, tb_file);
+    tb_file->setVisible(false);
     fileMenu = menu;
 
     // <[~ Edit ~]>
@@ -3258,6 +3220,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     add_action(menu, tb_edit, map_a["EditCut"]);
     add_action(menu, tb_edit, map_a["EditCopy"]);
     add_action(menu, tb_edit, map_a["EditPaste"]);
+    menu->addAction(map_a["ModifyDeleteQuick"]);
 
     menu->addSeparator();
 
@@ -3337,19 +3300,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     // <[~ Lines ~]>
 
-    sub_menu= menu->addMenu(tr("&Line"));
-    sub_menu->setObjectName("Line");
-
-    toolbar = new QToolBar("Line Tools", this);
-    toolbar->setSizePolicy(toolBarPolicy);
-    toolbar->setObjectName("LineTB");
-    list_tb.append(toolbar);
-
-    tool_button = new QToolButton;
-    tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menuline.png"));
-    tb_categories->addWidget(tool_button);
-
     list_a.clear();
 
     list_a
@@ -3358,7 +3308,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << map_a["DrawLineHorizontal"]
             << map_a["DrawLineVertical"]
             << map_a["DrawLineRectangle"]
-            << map_a["DrawLineParallel"]
             << map_a["DrawLineParallelThrough"]
             << map_a["DrawLineBisector"]
             << map_a["DrawLineTangent1"]
@@ -3367,43 +3316,31 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << map_a["DrawLineOrthogonal"]
             << map_a["DrawLineRelAngle"]
             << map_a["DrawLinePolygonCenCor"]
-            << map_a["DrawLinePolygonCorCor"]
-            << map_a["DrawLineFree"];
+            << map_a["DrawLinePolygonCorCor"];
 
+    sub_menu= menu->addMenu(tr("&Line"));
+    sub_menu->setObjectName("Line");
     sub_menu->addActions(list_a);
-    toolbar->addActions(list_a);
-    tool_button->addActions(list_a);
 
-    addToolBar(Qt::TopToolBarArea, toolbar);
-
-    // <[~ Arcs ~]>
-
-    sub_menu= menu->addMenu(tr("&Arc"));
-    sub_menu->setObjectName("Arc");
-
-    toolbar = new QToolBar("Arc Tools", this);
+    toolbar = new QToolBar("Line Tools", this);
     toolbar->setSizePolicy(toolBarPolicy);
-    toolbar->setObjectName("ArcTB");
+    toolbar->setObjectName("LineTB");
     list_tb.append(toolbar);
+    toolbar->addActions(list_a);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menuarc.png"));
+    tool_button->setIcon(QIcon(":/extui/menuline.png"));
     tb_categories->addWidget(tool_button);
-
-    list_a.clear();
-
-    list_a
-            << map_a["DrawArc"]
-            << map_a["DrawArc3P"]
-            << map_a["DrawArcParallel"]
-            << map_a["DrawArcTangential"];
-
-    sub_menu->addActions(list_a);
-    toolbar->addActions(list_a);
     tool_button->addActions(list_a);
 
+    LC_DockWidget* dock_line = new LC_DockWidget(this);
+    dock_line->setObjectName("dock_line");
+    dock_line->setWindowTitle("Line");
+    dock_line->add_actions(list_a, columns, icon_size);
+
     addToolBar(Qt::BottomToolBarArea, toolbar);
+    toolbar->setVisible(false);
 
     // <[~ Circles ~]>
 
@@ -3428,8 +3365,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << map_a["DrawCircle2PR"]
             << map_a["DrawCircle3P"]
             << map_a["DrawCircleCR"]
-            << map_a["DrawCircleParallel"]
-            << map_a["DrawCircleInscribe"]
             << map_a["DrawCircleTan2_1P"]
             << map_a["DrawCircleTan1_2P"]
             << map_a["DrawCircleTan2"]
@@ -3439,7 +3374,52 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbar->addActions(list_a);
     tool_button->addActions(list_a);
 
-    addToolBar(Qt::TopToolBarArea, toolbar);
+    LC_DockWidget* dock_circle = new LC_DockWidget(this);
+    dock_circle->setObjectName("dock_circle");
+    dock_circle->setWindowTitle("Circle");
+    dock_circle->add_actions(list_a, columns, icon_size);
+
+    addToolBar(Qt::BottomToolBarArea, toolbar);
+    toolbar->setVisible(false);
+
+    // <[~ Curves ~]>
+
+    sub_menu= menu->addMenu(tr("&Curve"));
+    sub_menu->setObjectName("Curve");
+
+    toolbar = new QToolBar("Curve Tools", this);
+    toolbar->setSizePolicy(toolBarPolicy);
+    toolbar->setObjectName ("tb_curve");
+    list_tb.append(toolbar);
+
+    tool_button = new QToolButton;
+    tool_button->setPopupMode(QToolButton::InstantPopup);
+    tool_button->setIcon(QIcon(":/extui/linesfree.png"));
+    tb_categories->addWidget(tool_button);
+
+    list_a.clear();
+
+    list_a
+            << map_a["DrawArc"]
+            << map_a["DrawArc3P"]
+            << map_a["DrawArcTangential"]
+            << map_a["DrawSpline"]
+            << map_a["DrawSplinePoints"]
+            << map_a["DrawEllipseArcAxis"]
+            << map_a["DrawLineFree"];
+
+    sub_menu->addActions(list_a);
+    toolbar->addActions(list_a);
+    tool_button->addActions(list_a);
+
+    LC_DockWidget* dock_curve = new LC_DockWidget(this);
+    dock_curve->setObjectName("dock_curve");
+    dock_curve->setWindowTitle("Curve");
+    dock_curve->add_actions(list_a, columns, icon_size);
+    addDockWidget(Qt::LeftDockWidgetArea, dock_curve);
+
+    addToolBar(Qt::BottomToolBarArea, toolbar);
+    toolbar->setVisible(false);
 
     // <[~ Ellipses ~]>
 
@@ -3460,7 +3440,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     list_a
             << map_a["DrawEllipseAxis"]
-            << map_a["DrawEllipseArcAxis"]
             << map_a["DrawEllipseFociPoint"]
             << map_a["DrawEllipse4Points"]
             << map_a["DrawEllipseCenter3Points"]
@@ -3470,22 +3449,16 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbar->addActions(list_a);
     tool_button->addActions(list_a);
 
-    addToolBar(Qt::BottomToolBarArea, toolbar);
-
-    // <[~ Splines ~]>
-
-    sub_menu= menu->addMenu(tr("&Spline"));
-    sub_menu->setObjectName("Spline");
-
-    toolbar = new QToolBar("Spline Tools", this);
-    toolbar->setSizePolicy(toolBarPolicy);
-    toolbar->setObjectName("SplineTB");
-    list_tb.append(toolbar);
-
-    add_action(sub_menu, toolbar, map_a["DrawSpline"]);
-    add_action(sub_menu, toolbar, map_a["DrawSplinePoints"]);
+    LC_DockWidget* dock_ellipse = new LC_DockWidget(this);
+    dock_ellipse->setObjectName("dock_ellipse");
+    dock_ellipse->setWindowTitle("Ellipse");
+    dock_ellipse->add_actions(list_a, columns, icon_size);
+    addDockWidget(Qt::LeftDockWidgetArea, dock_curve);
+    tabifyDockWidget(dock_curve, dock_ellipse);
+    tabifyDockWidget(dock_ellipse, dock_circle);
 
     addToolBar(Qt::BottomToolBarArea, toolbar);
+    toolbar->setVisible(false);
 
     // <[~ Polylines ~]>
 
@@ -3518,7 +3491,15 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbar->addActions(list_a);
     tool_button->addActions(list_a);
 
+    LC_DockWidget* dock_polyline = new LC_DockWidget(this);
+    dock_polyline->setObjectName("dock_polyline");
+    dock_polyline->setWindowTitle("Polyline");
+    dock_polyline->add_actions(list_a, columns, icon_size);
+    addDockWidget(Qt::LeftDockWidgetArea, dock_polyline);
+    tabifyDockWidget(dock_polyline, dock_line);
+
     addToolBar(Qt::BottomToolBarArea, toolbar);
+    toolbar->setVisible(false);
 
     // Text:
     menu = menuBar()->addMenu(tr("&Misc"));
@@ -3543,7 +3524,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     menu->addActions(list_a);
     toolbar->addActions(list_a);
 
-    addToolBar(Qt::LeftToolBarArea, toolbar);
+    addToolBar(Qt::BottomToolBarArea, toolbar);
 
     // <[~ Dimension ~]>
 
@@ -3582,7 +3563,14 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbar->addActions(list_a);
     tool_button->addActions(list_a);
 
+    LC_DockWidget* dock_dimension = new LC_DockWidget(this);
+    dock_dimension->setObjectName("dock_dimension");
+    dock_dimension->setWindowTitle("Dimension");
+    dock_dimension->add_actions(list_a, columns, icon_size);
+    addDockWidget(Qt::LeftDockWidgetArea, dock_dimension);
+
     addToolBar(Qt::BottomToolBarArea, toolbar);
+    toolbar->setVisible(false);
 
     // <[~ Modify ~]>
 
@@ -3619,8 +3607,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << map_a["ModifyStretch"]
             << map_a["ModifyEntity"]
             << map_a["ModifyAttributes"]
-            << map_a["ModifyDelete"]
-            << map_a["ModifyDeleteQuick"]
             << map_a["ModifyExplodeText"]
             << map_a["BlocksExplode"];
 
@@ -3628,7 +3614,15 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbar->addActions(list_a);
     tool_button->addActions(list_a);
 
-    addToolBar(Qt::RightToolBarArea, toolbar);
+    LC_DockWidget* dock_modify = new LC_DockWidget(this);
+    dock_modify->setObjectName("dock_modify");
+    dock_modify->setWindowTitle("Modify");
+    dock_modify->add_actions(list_a, columns, icon_size);
+    // tabifyDockWidget(dock_dimension, dock_modify);
+    addDockWidget(Qt::LeftDockWidgetArea, dock_modify);
+
+    addToolBar(Qt::BottomToolBarArea, toolbar);
+    toolbar->setVisible(false);
 
     // <[~ Snapping ~]>
 
@@ -3645,7 +3639,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     menu->addActions(snapToolBar->actions());
 
-    addToolBar(Qt::LeftToolBarArea, snapToolBar);
+    addToolBar(Qt::BottomToolBarArea, snapToolBar);
 
     // <[~ Info ~]>
 
@@ -3675,7 +3669,14 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbar->addActions(list_a);
     tool_button->addActions(list_a);
 
-    addToolBar(Qt::TopToolBarArea, toolbar);
+    LC_DockWidget* dock_info = new LC_DockWidget(this);
+    dock_info->setObjectName("dock_info");
+    dock_info->setWindowTitle("Info");
+    dock_info->add_actions(list_a, columns, icon_size);
+    tabifyDockWidget(dock_dimension, dock_info);
+
+    addToolBar(Qt::BottomToolBarArea, toolbar);
+    toolbar->hide();
 
     // <[~ Layer ~]>
 
@@ -3782,10 +3783,10 @@ void QC_ApplicationWindow::menus_and_toolbars()
     tb_wigets->setObjectName ( "DockWidgetsTB" );
 
     add_action(menu, tb_wigets, map_a["ViewStatusBar"]);
-    add_action(menu, tb_wigets, blockDockWindow->toggleViewAction());
-    add_action(menu, tb_wigets, libraryDockWindow->toggleViewAction());
-    add_action(menu, tb_wigets, commandDockWindow->toggleViewAction());
-    add_action(menu, tb_wigets, layerDockWindow->toggleViewAction());
+    add_action(menu, tb_wigets, dock_block->toggleViewAction());
+    add_action(menu, tb_wigets, dock_library->toggleViewAction());
+    add_action(menu, tb_wigets, dock_command->toggleViewAction());
+    add_action(menu, tb_wigets, dock_layer->toggleViewAction());
 
     menu->addSeparator();
 
@@ -3871,4 +3872,12 @@ void QC_ApplicationWindow::add_action(QMenu* menu, QToolBar* toolbar, QAction* a
 {
     menu->addAction(action);
     toolbar->addAction(action);
+}
+
+QMenu* QC_ApplicationWindow::createPopupMenu()
+{
+    // todo: use this to make a more organized context menu
+    // another idea is to make a dialog with checkboxes
+    QMenu *menu = QMainWindow::createPopupMenu();
+    return menu;
 }
