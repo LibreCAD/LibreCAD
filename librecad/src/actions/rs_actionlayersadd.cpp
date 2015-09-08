@@ -37,6 +37,7 @@ RS_ActionLayersAdd::RS_ActionLayersAdd(RS_EntityContainer& container,
 
 QAction* RS_ActionLayersAdd::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action = new QAction(QIcon(":/ui/layeradd.png"), tr("&Add Layer"), NULL);
+    action->setShortcut(QKeySequence("Ctrl+L"));
     return action;
 }
 
