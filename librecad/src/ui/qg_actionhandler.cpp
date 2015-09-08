@@ -1486,7 +1486,7 @@ void QG_ActionHandler::slotDrawText() {
 }
 
 void QG_ActionHandler::slotDrawHatch() {
-    setCurrentAction(RS2::ActionDrawHatch);
+    setCurrentAction(RS2::ActionDrawHatchNoSelect);
 }
 
 void QG_ActionHandler::slotDrawImage() {
