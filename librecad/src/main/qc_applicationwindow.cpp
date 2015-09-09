@@ -753,15 +753,19 @@ void QC_ApplicationWindow::restoreDocks() {
 void QC_ApplicationWindow::storeSettings() {
     RS_DEBUG->print("QC_ApplicationWindow::storeSettings()");
 
-    RS_SETTINGS->beginGroup("/Geometry");
-    RS_SETTINGS->writeEntry("/WindowWidth", width());
-    RS_SETTINGS->writeEntry("/WindowHeight", height());
-    RS_SETTINGS->writeEntry("/WindowX", x());
-    RS_SETTINGS->writeEntry("/WindowY", y());
-    RS_SETTINGS->writeEntry("/DockWindows", QVariant (saveState()));
-    RS_SETTINGS->endGroup();
-    //save snapMode
-    snapToolBar->saveSnapMode();
+    if (RS_Settings::save_is_allowed)
+    {
+        RS_SETTINGS->beginGroup("/Geometry");
+        RS_SETTINGS->writeEntry("/WindowWidth", width());
+        RS_SETTINGS->writeEntry("/WindowHeight", height());
+        RS_SETTINGS->writeEntry("/WindowX", x());
+        RS_SETTINGS->writeEntry("/WindowY", y());
+        RS_SETTINGS->writeEntry("/DockWindows", QVariant (saveState()));
+        RS_SETTINGS->endGroup();
+        //save snapMode
+        snapToolBar->saveSnapMode();
+    }
+
     RS_DEBUG->print("QC_ApplicationWindow::storeSettings(): OK");
 }
 
@@ -3197,7 +3201,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     menu->addSeparator();
 
     addToolBar(Qt::TopToolBarArea, tb_file);
-    tb_file->setVisible(false);
     fileMenu = menu;
 
     // <[~ Edit ~]>

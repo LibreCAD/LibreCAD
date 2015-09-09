@@ -69,6 +69,10 @@ private slots:
 
     void set_toolbar_file();
 
+    void on_pb_clear_all_clicked();
+
+    void on_pb_clear_geometry_clicked();
+
 private:
     bool restartNeeded;
 

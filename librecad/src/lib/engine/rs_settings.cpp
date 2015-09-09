@@ -29,7 +29,7 @@
 #include "rs_settings.h"
 
 RS_Settings* RS_Settings::uniqueInstance = nullptr;
-
+bool RS_Settings::save_is_allowed = true;
 
 RS_Settings::RS_Settings():
 	initialized(false)
@@ -205,4 +205,18 @@ QString RS_Settings::readGraphicColor( const GraphicColors colIndex)
     }
 
     return QString("Green");
+}
+
+void RS_Settings::clear_all()
+{
+    QSettings s(companyKey, appKey);
+    s.clear();
+    save_is_allowed = false;
+}
+
+void RS_Settings::clear_geometry()
+{
+    QSettings s(companyKey, appKey);
+    s.remove("/Geometry");
+    save_is_allowed = false;
 }
