@@ -39,17 +39,6 @@ RS_ActionBlocksAttributes::RS_ActionBlocksAttributes(
 
 
 
-
-QAction* RS_ActionBlocksAttributes::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Rename Block")
-    QAction* action = new QAction(tr("&Rename Block"), NULL);
-	action->setIcon(QIcon(":/ui/blockattributes.png"));
-    //action->zetStatusTip(tr("Rename Block and all Inserts"));
-    return action;
-}
-
-
-
 void RS_ActionBlocksAttributes::trigger() {
     RS_DEBUG->print("editing block attributes");
 

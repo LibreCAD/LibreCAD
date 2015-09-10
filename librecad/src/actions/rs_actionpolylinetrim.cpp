@@ -43,15 +43,6 @@ RS_ActionPolylineTrim::RS_ActionPolylineTrim(RS_EntityContainer& container,
 	actionType=RS2::ActionPolylineTrim;
 }
 
-
-QAction* RS_ActionPolylineTrim::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        QAction* action = new QAction(tr("&Trim segments"), NULL);
-        action->setShortcut(QKeySequence());
-        action->setIcon(QIcon(":/extui/polylinetrim.png"));
-        action->setStatusTip(tr("Trim polyline's segments"));
-        return action;
-}
-
 void RS_ActionPolylineTrim::init(int status) {
         RS_ActionInterface::init(status);
         delEntity = Segment1 = Segment2 = NULL;

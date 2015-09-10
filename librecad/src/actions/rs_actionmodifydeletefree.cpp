@@ -41,15 +41,6 @@ RS_ActionModifyDeleteFree::RS_ActionModifyDeleteFree(
         :RS_ActionInterface("Delete Entities Freehand",
                     container, graphicView) {}
 
-QAction* RS_ActionModifyDeleteFree::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Delete Freehand"), tr("&Delete Freehand"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Delete Freehand"), NULL);
-    //action->zetStatusTip(tr("Delete Freehand"));
-    return action;
-}
-
-
 void RS_ActionModifyDeleteFree::init(int status) {
     RS_ActionInterface::init(status);
     polyline = NULL;

@@ -42,14 +42,6 @@ RS_ActionInfoDist::RS_ActionInfoDist(RS_EntityContainer& container,
 	actionType=RS2::ActionInfoDist;
 }
 
-
-QAction* RS_ActionInfoDist::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Distance Point to Point")
-		QAction* action = new QAction(QIcon(":/extui/restricthorizontal.png"), tr("&Distance Point to Point"), NULL);
-        return action;
-}
-
-
 void RS_ActionInfoDist::init(int status) {
     RS_ActionInterface::init(status);
 }

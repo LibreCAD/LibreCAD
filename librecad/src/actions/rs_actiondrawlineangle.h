@@ -56,8 +56,6 @@ public:
                            RS2::ActionType actionType=RS2::ActionDrawLineAngle);
 	~RS_ActionDrawLineAngle();
 
-	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-
     void reset();
 
     virtual void init(int status=0);

@@ -51,18 +51,6 @@ RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(RS_EntityContainer& conta
 
 RS_ActionDrawArcTangential::~RS_ActionDrawArcTangential() {}
 
-
-QAction* RS_ActionDrawArcTangential::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    /*RVT_PORT    QAction* action = new QAction(tr("Arc: Tangential"),
-                                  tr("&Tangential"),
-                                  QKeySequence(), NULL); */
-	QAction* action = new QAction(QIcon(":/extui/arcstangential.png"), tr("Arc &Tangential"), nullptr);
-    //action->zetStatusTip(tr("Draw arcs tangential to base entity"));
-	action->setCheckable(true);
-    return action;
-}
-
-
 void RS_ActionDrawArcTangential::reset() {
     baseEntity = NULL;
     isStartPoint = false;

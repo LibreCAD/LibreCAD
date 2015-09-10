@@ -48,12 +48,6 @@ RS_ActionDimAngular::RS_ActionDimAngular(
 
 RS_ActionDimAngular::~RS_ActionDimAngular(){}
 
-QAction* RS_ActionDimAngular::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(QIcon(":/extui/dimangular.png"), tr("&Angular"), NULL);
-	return action;
-}
-
-
 void RS_ActionDimAngular::reset() {
     RS_ActionDimension::reset();
 

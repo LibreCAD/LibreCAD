@@ -45,8 +45,6 @@ public:
                     double factor = 1.25);
     ~RS_ActionZoomIn() = default;
 
-	static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
-
     virtual void init(int status=0);
     virtual void trigger();
 

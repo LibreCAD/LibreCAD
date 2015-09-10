@@ -47,15 +47,6 @@ RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(
 	actionType=RS2::ActionModifyTrimAmount;
 }
 
-QAction* RS_ActionModifyTrimAmount::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Lengthen")
-        QAction* action = new QAction(tr("&Lengthen"), NULL);
-        action->setIcon(QIcon(":/extui/modifytrimamount.png"));
-        //action->zetStatusTip(tr("Lengthen by a given amount"));
-        return action;
-}
-
-
 void RS_ActionModifyTrimAmount::init(int status) {
     RS_ActionInterface::init(status);
 

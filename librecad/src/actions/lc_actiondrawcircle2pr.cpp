@@ -38,12 +38,6 @@ LC_ActionDrawCircle2PR::LC_ActionDrawCircle2PR(RS_EntityContainer& container,
 	reset();
 }
 
-QAction* LC_ActionDrawCircle2PR::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// "Circle: 2 Points, Radius"
-	QAction* action = new QAction(QIcon(":/extui/circle2pr.png"), tr("2 Points, Radius"), NULL);
-	return action;
-}
-
 void LC_ActionDrawCircle2PR::reset() {
 	deletePreview();
 	data->reset();

@@ -46,13 +46,6 @@ RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(
 
 RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe(){}
 
-QAction* RS_ActionDrawEllipseInscribe::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action;
-
-	action = new QAction(QIcon(":/extui/ellipseinscribed.png"), tr("Ellipse &Inscribed"), nullptr);
-    return action;
-}
-
 void RS_ActionDrawEllipseInscribe::clearLines(bool checkStatus)
 {
 	while(lines.size() ){

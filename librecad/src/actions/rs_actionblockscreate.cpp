@@ -49,15 +49,6 @@ RS_ActionBlocksCreate::RS_ActionBlocksCreate(RS_EntityContainer& container,
 }
 
 
-
-QAction* RS_ActionBlocksCreate::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(QIcon(":/extui/menublock.png"), tr("&Create Block"), nullptr);
-		action->setData(RS2::ActionBlocksCreate);
-    return action;
-}
-
-
-
 void RS_ActionBlocksCreate::init(int status) {
     RS_PreviewActionInterface::init(status);
 }

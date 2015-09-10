@@ -38,17 +38,6 @@ RS_ActionZoomPan::RS_ActionZoomPan(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView)
         :RS_ActionInterface("Zoom Panning", container, graphicView) {}
 
-
-QAction* RS_ActionZoomPan::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // tr("Pan Zoom")
-        QAction* action = new QAction(tr("Zoom &Panning"), NULL);
-        action->setIcon(QIcon(":/actions/zoompan.png"));
-        //action->zetStatusTip(tr("Realtime Panning"));
-
-    return action;
-}
-
-
 void RS_ActionZoomPan::init(int status) {
     RS_ActionInterface::init(status);
     snapMode.clear();

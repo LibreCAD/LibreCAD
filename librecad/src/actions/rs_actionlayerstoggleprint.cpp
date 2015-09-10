@@ -42,17 +42,6 @@ RS_ActionLayersTogglePrint::RS_ActionLayersTogglePrint(
         :RS_ActionInterface("Toggle Layer Printing",
                     container, graphicView) {}
 
-
-QAction* RS_ActionLayersTogglePrint::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-/* RVT_PORT    QAction* action = new QAction(tr("Toggle Layer Print"),
-                                  tr("&Toggle Print"),
-                                  QKeySequence(), NULL); */
-    QAction* action = new QAction(tr("Toggle Layer &Print"), NULL);
-     action->setIcon(QIcon(":/ui/fileprint.png"));
-    //action->zetStatusTip(tr("Toggle Print"));
-    return action;
-}
-
 void RS_ActionLayersTogglePrint::trigger() {
     RS_DEBUG->print("toggle layer printing");
     if (graphic) {

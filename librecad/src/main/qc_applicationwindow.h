@@ -40,6 +40,8 @@
 class QAssistantClient;
 #endif
 
+#include "lc_customtoolbar.h"
+
 class QMdiArea;
 class QMdiSubWindow;
 class QC_MDIWindow;
@@ -59,7 +61,6 @@ class QHelpEngine;
 class QC_PluginInterface;
 class QG_ActiveLayerName;
 class LC_SimpleTests;
-
 /**
  * Main application window. Hold together document, view and controls.
  *
@@ -74,15 +75,13 @@ public:
     QC_ApplicationWindow();
     ~QC_ApplicationWindow();
 
-    void initActions();
-    void initMenuBar();
-    void initToolBar();
+    void menus_and_toolbars();
+    void add_action(QMenu* menu, QToolBar* toolbar, QAction* action);
+    void set_icon_size();
     void initStatusBar();
-
     void initSettings();
-        void restoreDocks();
+    void restoreDocks();
     void storeSettings();
-
     void initMDI();
     void initView();
 
@@ -96,15 +95,16 @@ public:
     void setPreviousZoomEnable(bool enable);
 
 public slots:
+    void slot_set_action(QAction* q_action);
     virtual void show();
     void finishSplashScreen();
-        void slotFocus();
+    void slotFocus();
     void slotBack();
     void slotKillAllActions();
     //void slotNext();
     void slotEnter();
     void slotFocusCommandLine();
-        void slotError(const QString& msg);
+    void slotError(const QString& msg);
 
     void slotWindowActivated(int);
     void slotWindowActivated(QMdiSubWindow* w);
@@ -301,7 +301,7 @@ public:
 
 protected:
     void closeEvent(QCloseEvent*);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+//    virtual void mouseReleaseEvent(QMouseEvent* e);
     //! \{ accept drop files to open
     virtual void dropEvent(QDropEvent* e);
     virtual void dragEnterEvent(QDragEnterEvent * event);
@@ -339,16 +339,15 @@ private:
     QG_LibraryWidget* libraryWidget;
 
     /** Layer list dock widget */
-    QDockWidget* layerDockWindow;
+    QDockWidget* dock_layer;
     /** Block list dock widget */
-    QDockWidget* blockDockWindow;
+    QDockWidget* dock_block;
     /** Library list dock widget */
-    QDockWidget* libraryDockWindow;
+    QDockWidget* dock_library;
 
-
-        /** Command line */
-        QG_CommandWidget* commandWidget;
-        QDockWidget* commandDockWindow;
+    /** Command line */
+    QG_CommandWidget* commandWidget;
+    QDockWidget* dock_command;
 
     /** Coordinate widget */
     QG_CoordinateWidget* coordinateWidget;
@@ -381,9 +380,12 @@ private:
 
     QList <QAction*> recentFilesAction;
     /** the main toolbars */
-    QToolBar* fileToolBar;
-    QToolBar* editToolBar;
-    QToolBar* zoomToolBar;
+    QToolBar* tb_wigets;
+    QToolBar* circleToolBar;
+    QToolBar* tb_file;
+    QToolBar* tb_edit;
+    QToolBar* tb_zoom;
+    LC_CustomToolbar* tb_custom;
     static QAction* previousZoom;
     static QAction* undoButton;
     static QAction* redoButton;
@@ -396,7 +398,7 @@ private:
     // Toolbar for selecting the current pen
     QG_PenToolBar* penToolBar;
     // Toolbar for CAD tools
-    QG_CadToolBar* cadToolBar;
+//    QG_CadToolBar* cadToolBar;
 
 #if QT_VERSION < 0x040400
     QAssistantClient *assistant;
@@ -421,6 +423,8 @@ private:
     void loadPlugins();
     QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
 	QList<QC_PluginInterface*> loadedPlugins;
+
+    QMenu* createPopupMenu();
 
 };
 

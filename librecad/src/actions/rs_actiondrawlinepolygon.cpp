@@ -45,14 +45,6 @@ RS_ActionDrawLinePolygonCenCor::RS_ActionDrawLinePolygonCenCor(
 	actionType=RS2::ActionDrawLinePolygonCenCor;
 }
 
-QAction* RS_ActionDrawLinePolygonCenCor::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // Polygon
-    QAction* action = new QAction(tr("Pol&ygon (Cen,Cor)"),  NULL);
-                action->setIcon(QIcon(":/extui/linespolygon.png"));
-    //action->zetStatusTip(tr("Draw polygon with center and corner"));
-    return action;
-}
-
 
 void RS_ActionDrawLinePolygonCenCor::trigger() {
     RS_PreviewActionInterface::trigger();

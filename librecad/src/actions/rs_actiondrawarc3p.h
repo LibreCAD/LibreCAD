@@ -53,8 +53,7 @@ public:
     RS_ActionDrawArc3P(RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
     ~RS_ActionDrawArc3P();
-	
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+
     void reset();
 
     virtual void init(int status=0);

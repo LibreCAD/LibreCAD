@@ -54,8 +54,6 @@ public:
                              RS_GraphicView& graphicView,
                              bool isArc);
 	~RS_ActionDrawEllipseAxis()=default;
-	
-    static QAction* createGUIAction(RS2::ActionType type, QObject* /*parent*/);
 
     virtual void init(int status=0);
 	

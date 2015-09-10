@@ -44,13 +44,6 @@ RS_ActionInfoDist2::RS_ActionInfoDist2(RS_EntityContainer& container,
 	actionType=RS2::ActionInfoDist2;
 }
 
-
-QAction* RS_ActionInfoDist2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        // (tr("Distance Entity to Point")
-	QAction* action = new QAction(QIcon(":/extui/infodist2.png"), tr("&Distance Entity to Point"), nullptr);
-    return action;
-}
-
 RS_ActionInfoDist2::~RS_ActionInfoDist2() {
     if(graphicView != NULL && graphicView->isCleanUp()==false){
         if( entity && entity->isHighlighted()){

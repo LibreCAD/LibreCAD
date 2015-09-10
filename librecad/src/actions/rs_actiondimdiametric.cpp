@@ -50,14 +50,6 @@ RS_ActionDimDiametric::RS_ActionDimDiametric(
 
 RS_ActionDimDiametric::~RS_ActionDimDiametric(){}
 
-QAction* RS_ActionDimDiametric::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Diametric")
-    QAction* action = new QAction(tr("&Diametric"),  NULL);
-	action->setIcon(QIcon(":/extui/dimdiametric.png"));
-    //action->zetStatusTip(tr("Diametric Dimension"));
-    return action;
-}
-
 void RS_ActionDimDiametric::reset() {
     RS_ActionDimension::reset();
 

@@ -46,13 +46,6 @@ LC_ActionLayersToggleConstruction::LC_ActionLayersToggleConstruction(
                     container, graphicView) {}
 
 
-QAction* LC_ActionLayersToggleConstruction::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action = new QAction(tr("Toggle &Construction Layer"), NULL);
-    action->setIcon(QIcon(":/ui/constructionlayer.png"));
-    return action;
-}
-
-
 void LC_ActionLayersToggleConstruction::trigger() {
     RS_DEBUG->print("toggle layer construction");
     if (graphic) {

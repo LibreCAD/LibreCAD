@@ -50,22 +50,6 @@ RS_ActionSelectWindow::RS_ActionSelectWindow(RS_EntityContainer& container,
 }
 
 
-QAction* RS_ActionSelectWindow::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
-    QAction* action;
-
-    if (type==RS2::ActionSelectWindow) {
-        action = new QAction(tr("Select Window"),  NULL);
-                action->setIcon(QIcon(":/extui/selectwindow.png"));
-        //action->zetStatusTip(tr("Selects all Entities in a given Window"));
-    } else {
-        action = new QAction(tr("Deselect Window"), NULL);
-                action->setIcon(QIcon(":/extui/deselectwindow.png"));
-        //action->zetStatusTip(tr("Deselects all Entities in a given Window"));
-        }
-    return action;
-}
-
-
 void RS_ActionSelectWindow::init(int status) {
     RS_PreviewActionInterface::init(status);
     v1 = v2 = RS_Vector(false);

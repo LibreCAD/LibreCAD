@@ -43,15 +43,6 @@ RS_ActionPolylineSegment::RS_ActionPolylineSegment(RS_EntityContainer& container
 	actionType=RS2::ActionPolylineSegment;
 }
 
-
-QAction* RS_ActionPolylineSegment::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-    QAction* action = new QAction(tr("Create Polyline from Existing &Segments"), NULL);
-    action->setShortcut(QKeySequence());
-    action->setIcon(QIcon(":/extui/polylinesegment.png"));
-    action->setStatusTip(tr("Create Polyline from Existing Segments"));
-    return action;
-}
-
 void RS_ActionPolylineSegment::init(int status) {
     RS_ActionInterface::init(status);
     targetEntity = NULL;

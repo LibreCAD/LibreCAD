@@ -50,8 +50,6 @@ public:
                               RS_GraphicView& graphicView);
 	~RS_ActionDrawLineTangent2();
 
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
     virtual void trigger();
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);

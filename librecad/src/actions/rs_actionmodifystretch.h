@@ -53,7 +53,6 @@ public:
                         RS_GraphicView& graphicView);
     ~RS_ActionModifyStretch() = default;
 	
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
     virtual void init(int status=0);
     virtual void trigger();
 	

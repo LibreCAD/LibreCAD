@@ -57,15 +57,6 @@ RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
 RS_ActionDrawPolyline::~RS_ActionDrawPolyline() {}
 
 
-QAction* RS_ActionDrawPolyline::createGUIAction(RS2::ActionType /*type*/,
-                                QObject* /*parent*/) {
-	QAction* action = new QAction(QIcon(":/extui/polyline.png"), tr("&Polyline"),  NULL);
-    action->setStatusTip(tr("Draw polylines"));
-    return action;
-}
-
-
-
 void RS_ActionDrawPolyline::reset() {
         polyline = NULL;
 	data.reset(new RS_PolylineData(RS_Vector(false), RS_Vector(false), false));

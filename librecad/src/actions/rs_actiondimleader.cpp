@@ -44,12 +44,6 @@ RS_ActionDimLeader::RS_ActionDimLeader(RS_EntityContainer& container,
     reset();
 }
 
-QAction* RS_ActionDimLeader::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Leader")
-	QAction* action = new QAction(QIcon(":/extui/dimleader.png"), tr("&Leader"), nullptr);
-    return action;
-}
-
 void RS_ActionDimLeader::reset() {
     //data = RS_LineData(RS_Vector(false), RS_Vector(false));
     //start = RS_Vector(false);

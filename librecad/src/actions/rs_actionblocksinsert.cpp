@@ -56,13 +56,6 @@ RS_ActionBlocksInsert::RS_ActionBlocksInsert(RS_EntityContainer& container,
 
 RS_ActionBlocksInsert::~RS_ActionBlocksInsert() {}
 
-QAction* RS_ActionBlocksInsert::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Insert Block")
-    QAction* action = new QAction(tr("&Insert Block"),  NULL);
-    //action->zetStatusTip(tr("Insert Block"));
-	action->setIcon(QIcon(":/ui/blockinsert.png"));
-    return action;
-}
 
 void RS_ActionBlocksInsert::init(int status) {
     RS_PreviewActionInterface::init(status);

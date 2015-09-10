@@ -44,13 +44,6 @@ RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container,
 	actionType=RS2::ActionDrawHatch;
 }
 
-
-QAction* RS_ActionDrawHatch::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(QIcon(":/extui/menuhatch.png"), tr("&Hatch"), nullptr);
-	action->setData(RS2::ActionDrawHatch);
-    return action;
-}
-
 void RS_ActionDrawHatch::setShowArea(bool s){
 	m_bShowArea=s;
 }

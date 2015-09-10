@@ -53,8 +53,6 @@ public:
     RS_ActionDrawCircle3P(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
     ~RS_ActionDrawCircle3P();
-	
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
     void reset();
 

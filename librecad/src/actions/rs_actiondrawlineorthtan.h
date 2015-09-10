@@ -44,8 +44,6 @@ public:
                              RS_GraphicView& graphicView);
 	~RS_ActionDrawLineOrthTan() = default;
 
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
     virtual void trigger();
     virtual void finish(bool updateTB = true);
 

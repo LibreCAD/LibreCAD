@@ -51,22 +51,6 @@ RS_ActionSelectIntersected::RS_ActionSelectIntersected(
 	actionType=RS2::ActionSelectIntersected;
 }
 
-
-QAction* RS_ActionSelectIntersected::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {
-    QAction* action;
-    if (type==RS2::ActionSelectIntersected) {
-        action = new QAction(tr("Select Intersected Entities"),  NULL);
-                action->setIcon(QIcon(":/extui/selectinters.png"));
-        //action->zetStatusTip(tr("Selects all entities intersected by a line"));
-    } else {
-        action = new QAction(tr("Deselect Intersected Entities"), NULL);
-                action->setIcon(QIcon(":/extui/deselectinters.png"));
-        //action->zetStatusTip(tr("Deselects all entities intersected by a line"));
-    }
-    return action;
-}
-
-
 void RS_ActionSelectIntersected::init(int status) {
     RS_PreviewActionInterface::init(status);
 

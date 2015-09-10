@@ -47,10 +47,6 @@ RS_ActionModifyMoveRotate::RS_ActionModifyMoveRotate(
 
 RS_ActionModifyMoveRotate::~RS_ActionModifyMoveRotate(){}
 
-QAction* RS_ActionModifyMoveRotate::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(QIcon(":/extui/modifymoverotate.png"), tr("M&ove and Rotate"), NULL);
-    return action;
-}
 
 void RS_ActionModifyMoveRotate::init(int status) {
     RS_ActionInterface::init(status);

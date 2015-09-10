@@ -43,16 +43,6 @@ RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
     reset();
 }
 
-
-QAction* RS_ActionDrawLineRectangle::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-        //  tr("&Rectangle"),
-        QAction* action = new QAction(tr("Rectangle"), NULL);
-        action->setIcon(QIcon(":/extui/linesrect.png"));
-    //action->zetStatusTip(tr("Draw rectangles"));
-        return action;
-}
-
-
 void RS_ActionDrawLineRectangle::reset() {
     for (int i=0; i<4; ++i) {
 		data[i].reset(new RS_LineData(RS_Vector(false),

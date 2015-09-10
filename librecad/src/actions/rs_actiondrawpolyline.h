@@ -65,8 +65,6 @@ public:
     RS_ActionDrawPolyline(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
     virtual ~RS_ActionDrawPolyline();
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	
     void reset();
 

@@ -42,8 +42,6 @@ public:
                        RS_GraphicView& graphicView);
 	~RS_ActionSelectInvert()=default;
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
     void init(int status);
     virtual void trigger();
 };

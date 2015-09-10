@@ -43,21 +43,6 @@ RS_ActionZoomAuto::RS_ActionZoomAuto(RS_EntityContainer& container,
     this->keepAspectRatio = keepAspectRatio;
 }
 
-
-QAction* RS_ActionZoomAuto::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	// tr("Auto Zoom")
-	QAction* action = new QAction(tr("&Auto Zoom"), NULL);
-#if QT_VERSION >= 0x040600
-        action->setIcon(QIcon::fromTheme("zoom-fit-best", QIcon(":/actions/zoomauto.png")));
-#else
-        action->setIcon(QIcon(":/actions/zoomauto.png"));
-#endif
-        //action->zetStatusTip(tr("Zooms automatic"));
-
-	return action;
-}
-
-
 void RS_ActionZoomAuto::init(int status) {
     RS_ActionInterface::init(status);
     trigger();

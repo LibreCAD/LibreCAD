@@ -26,8 +26,8 @@
 
 #include <QObject>
 #include <QRegExp>
+#include <QAction>
 #include <QMouseEvent>
-
 #include "rs_eventhandler.h"
 #include "rs_actioninterface.h"
 #include "rs_dialogfactory.h"
@@ -41,12 +41,10 @@
  */
 RS_EventHandler::RS_EventHandler(RS_GraphicView* graphicView):
     graphicView(graphicView)
-  ,defaultAction(nullptr)
-  ,coordinateInputEnabled(true)
-{
-}
-
-
+    ,defaultAction(nullptr)
+    ,coordinateInputEnabled(true)
+    ,right_click_quits(false)
+    ,real_action(nullptr){}
 
 /**
  * Destructor.
@@ -539,6 +537,11 @@ void RS_EventHandler::killAllActions() {
 	RS_DEBUG->print(__FILE__ ": %s: line %d: begin\n", __func__, __LINE__);
 	for(auto p: currentActions){
 		if ( ! p->isFinished() ){
+//            if (right_click_quits)
+//            {
+//                real_action->setChecked(false);
+//                right_click_quits = false;
+//            }
 			p->finish();
 		}
 	}
@@ -581,8 +584,13 @@ void RS_EventHandler::cleanUp() {
 
     for (auto it=currentActions.begin();it != currentActions.end();){
 
-        if( (*it)->isFinished()){
-//            (*it)->finish();
+        if( (*it)->isFinished())
+        {
+            if (right_click_quits)
+            {
+                real_action->setChecked(false);
+                right_click_quits = false;
+            }
             delete *it;
             it= currentActions.erase(it);
         }else{
@@ -649,5 +657,13 @@ void RS_EventHandler::debugActions() {
                         currentActions.at(i)->isFinished() ? "finished" : "active");
     }
 }
+
+void RS_EventHandler::set_action(QAction* q_action)
+{
+    real_action = q_action;
+    right_click_quits = true;
+    killAllActions();
+}
+
 
 // EOF

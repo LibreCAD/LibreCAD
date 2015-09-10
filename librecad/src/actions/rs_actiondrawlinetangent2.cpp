@@ -53,10 +53,6 @@ RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
 RS_ActionDrawLineTangent2::~RS_ActionDrawLineTangent2(){}
 
 
-QAction* RS_ActionDrawLineTangent2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	return new QAction(QIcon(":/extui/linestan2.png"), tr("Tangent (C,C)"), nullptr);
-}
-
 void RS_ActionDrawLineTangent2::finish(bool updateTB){
     if(circle1){
         circle1->setHighlighted(false);

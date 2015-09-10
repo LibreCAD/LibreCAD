@@ -42,12 +42,6 @@ RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyMove;
 }
 
-
-QAction* RS_ActionModifyMove::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(QIcon(":/extui/modifymove.png"), tr("&Move / Copy"),  NULL);
-    return action;
-}
-
 RS_ActionModifyMove::~RS_ActionModifyMove(){}
 
 void RS_ActionModifyMove::trigger() {
