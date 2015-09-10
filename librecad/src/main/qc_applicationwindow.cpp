@@ -3138,8 +3138,18 @@ void QC_ApplicationWindow::menus_and_toolbars()
     QList<QAction*> list_a;
     QList<QToolBar*> list_tb; // for creating the toolbar menu
 
-    int icon_size = RS_SETTINGS->readNumEntry("/Appearance/IconSize", 24);
-    int columns = 5;
+    bool custom_size = RS_SETTINGS->readNumEntry("/Appearance/SetIconSize", 0);
+    int icon_size; // sidebar dockwidgets
+    if (custom_size)
+    {
+        icon_size = RS_SETTINGS->readNumEntry("/Appearance/IconSize", 22);
+    }
+    else
+    {
+        icon_size = 22;
+    }
+
+    int columns = 5; // sidebar dockwidgets
 
     QActionGroup* tools = new QActionGroup(this);
     connect(tools, SIGNAL(triggered(QAction*)), this, SLOT(slot_set_action(QAction*)));
