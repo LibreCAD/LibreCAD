@@ -3350,7 +3350,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_line->add_actions(list_a, columns, icon_size);
 
     addToolBar(Qt::BottomToolBarArea, toolbar);
-    toolbar->setVisible(false);
+    toolbar->hide();
 
     // <[~ Circles ~]>
 
@@ -3390,7 +3390,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_circle->add_actions(list_a, columns, icon_size);
 
     addToolBar(Qt::BottomToolBarArea, toolbar);
-    toolbar->setVisible(false);
+    toolbar->hide();
 
     // <[~ Curves ~]>
 
@@ -3426,10 +3426,10 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_curve->setObjectName("dock_curve");
     dock_curve->setWindowTitle("Curve");
     dock_curve->add_actions(list_a, columns, icon_size);
-    addDockWidget(Qt::LeftDockWidgetArea, dock_curve);
+
 
     addToolBar(Qt::BottomToolBarArea, toolbar);
-    toolbar->setVisible(false);
+    toolbar->hide();
 
     // <[~ Ellipses ~]>
 
@@ -3463,12 +3463,9 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_ellipse->setObjectName("dock_ellipse");
     dock_ellipse->setWindowTitle("Ellipse");
     dock_ellipse->add_actions(list_a, columns, icon_size);
-    addDockWidget(Qt::LeftDockWidgetArea, dock_curve);
-    tabifyDockWidget(dock_curve, dock_ellipse);
-    tabifyDockWidget(dock_ellipse, dock_circle);
 
     addToolBar(Qt::BottomToolBarArea, toolbar);
-    toolbar->setVisible(false);
+    toolbar->hide();
 
     // <[~ Polylines ~]>
 
@@ -3505,11 +3502,9 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_polyline->setObjectName("dock_polyline");
     dock_polyline->setWindowTitle("Polyline");
     dock_polyline->add_actions(list_a, columns, icon_size);
-    addDockWidget(Qt::LeftDockWidgetArea, dock_polyline);
-    tabifyDockWidget(dock_polyline, dock_line);
 
     addToolBar(Qt::BottomToolBarArea, toolbar);
-    toolbar->setVisible(false);
+    toolbar->hide();
 
     // Text:
     menu = menuBar()->addMenu(tr("&Misc"));
@@ -3577,10 +3572,10 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_dimension->setObjectName("dock_dimension");
     dock_dimension->setWindowTitle("Dimension");
     dock_dimension->add_actions(list_a, columns, icon_size);
-    addDockWidget(Qt::LeftDockWidgetArea, dock_dimension);
+
 
     addToolBar(Qt::BottomToolBarArea, toolbar);
-    toolbar->setVisible(false);
+    toolbar->hide();
 
     // <[~ Modify ~]>
 
@@ -3628,11 +3623,9 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_modify->setObjectName("dock_modify");
     dock_modify->setWindowTitle("Modify");
     dock_modify->add_actions(list_a, columns, icon_size);
-    // tabifyDockWidget(dock_dimension, dock_modify);
-    addDockWidget(Qt::LeftDockWidgetArea, dock_modify);
 
     addToolBar(Qt::BottomToolBarArea, toolbar);
-    toolbar->setVisible(false);
+    toolbar->hide();
 
     // <[~ Snapping ~]>
 
@@ -3683,7 +3676,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_info->setObjectName("dock_info");
     dock_info->setWindowTitle("Info");
     dock_info->add_actions(list_a, columns, icon_size);
-    tabifyDockWidget(dock_dimension, dock_info);
 
     addToolBar(Qt::BottomToolBarArea, toolbar);
     toolbar->hide();
@@ -3782,7 +3774,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
         menu->addAction(tb->toggleViewAction());
     }
 
-
     // <[~ DockWidgets ~]>
 
     menu = menuBar()->addMenu(tr("&Dockwidgets"));
@@ -3863,6 +3854,20 @@ void QC_ApplicationWindow::menus_and_toolbars()
 #ifdef LC_DEBUGGING
     m_pSimpleTest=new LC_SimpleTests(this);
 #endif
+
+    // <[~ Sidebar ~]>
+
+    addDockWidget(Qt::LeftDockWidgetArea, dock_line);
+    tabifyDockWidget(dock_line, dock_polyline);
+    dock_line->raise();
+    addDockWidget(Qt::LeftDockWidgetArea, dock_circle);
+    tabifyDockWidget(dock_circle, dock_curve);
+    tabifyDockWidget(dock_curve, dock_ellipse);
+    dock_circle->raise();
+    addDockWidget(Qt::LeftDockWidgetArea, dock_dimension);
+    tabifyDockWidget(dock_dimension, dock_info);
+    dock_dimension->raise();
+    addDockWidget(Qt::LeftDockWidgetArea, dock_modify);
 }
 
 
