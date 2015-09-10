@@ -3801,6 +3801,17 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     menu->addSeparator();
 
+    menu->addAction(dock_line->toggleViewAction());
+    menu->addAction(dock_polyline->toggleViewAction());
+    menu->addAction(dock_circle->toggleViewAction());
+    menu->addAction(dock_curve->toggleViewAction());
+    menu->addAction(dock_ellipse->toggleViewAction());
+    menu->addAction(dock_dimension->toggleViewAction());
+    menu->addAction(dock_info->toggleViewAction());
+    menu->addAction(dock_modify->toggleViewAction());
+
+    menu->addSeparator();
+
     // tr("Focus on Command Line")
     action = new QAction(tr("Focus on &Command Line"), this);
     action->setIcon(QIcon(":/main/editclear.png"));
