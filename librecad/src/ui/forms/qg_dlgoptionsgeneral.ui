@@ -1666,35 +1666,6 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QGroupBox" name="groupBox_3">
-         <property name="title">
-          <string>Clear Settings</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <widget class="QPushButton" name="pb_clear_all">
-            <property name="toolTip">
-             <string>restores the program to its original state</string>
-            </property>
-            <property name="text">
-             <string>All</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pb_clear_geometry">
-            <property name="toolTip">
-             <string>restores program geometry/layout to original state</string>
-            </property>
-            <property name="text">
-             <string>Geometry</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
        <item row="0" column="1">
         <spacer name="spacer11_2">
          <property name="orientation">
@@ -1711,7 +1682,7 @@
          </property>
         </spacer>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -1723,6 +1694,47 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="2" column="0">
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>Clear Settings</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QPushButton" name="pb_clear_geometry">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>restores program geometry/layout to original state</string>
+            </property>
+            <property name="text">
+             <string>Layout</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pb_clear_all">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>restores the program to its original state</string>
+            </property>
+            <property name="text">
+             <string>All</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
