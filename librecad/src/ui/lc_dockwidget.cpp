@@ -42,26 +42,12 @@ LC_DockWidget::LC_DockWidget(QWidget* parent): QDockWidget(parent)
 
 void LC_DockWidget::add_actions(QList<QAction*> list, int columns, int icon_size)
 {
-    --columns;
-    int row = 0;
-    int column = 0;
-    QToolButton* toolbutton;
-
-    foreach (auto item, list)
+	for(auto const& item: list)
     {
-        toolbutton = new QToolButton;
-        toolbutton->setDefaultAction(item);
-        toolbutton->setIconSize(QSize(icon_size, icon_size));
-        grid->addWidget(toolbutton, row, column);
-
-        if (column == columns)
-        {
-            column = 0;
-            ++row;
-        }
-        else
-        {
-            ++column;
-        }
+		QToolButton* toolbutton = new QToolButton(this);
+		toolbutton->setDefaultAction(item);
+		toolbutton->setIconSize(QSize(icon_size, icon_size));
+		int const count=grid->count();
+		grid->addWidget(toolbutton, count/columns, count%columns);
     }
 }
