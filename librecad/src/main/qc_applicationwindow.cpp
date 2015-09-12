@@ -3110,6 +3110,8 @@ void QC_ApplicationWindow::updateWindowTitle(QWidget *w)
 
 void QC_ApplicationWindow::slot_set_action(QAction* q_action)
 {
+    // SIGNAL = http://doc.qt.io/qt-5/qactiongroup.html#triggered
+
     getGraphicView()->set_action(q_action);
 }
 
@@ -3623,7 +3625,8 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << map_a["ModifyEntity"]
             << map_a["ModifyAttributes"]
             << map_a["ModifyExplodeText"]
-            << map_a["BlocksExplode"];
+            << map_a["BlocksExplode"]
+            << map_a["ModifyDeleteQuick"];
 
     menu->addActions(list_a);
     toolbar->addActions(list_a);
