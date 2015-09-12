@@ -29,11 +29,15 @@
 #include <QToolButton>
 
 LC_DockWidget::LC_DockWidget(QWidget* parent): QDockWidget(parent)
+  ,frame(new QFrame(this))
+  ,grid(new QGridLayout)
 {
-    frame = new QFrame;
-    this->setWidget(frame);
-    grid = new QGridLayout;
-    frame->setLayout(grid);
+	frame->setContentsMargins(0,0,0,0);
+	setWidget(frame);
+
+	grid->setSpacing(0);
+	grid->setContentsMargins(1,1,1,1);
+	frame->setLayout(grid);
 }
 
 void LC_DockWidget::add_actions(QList<QAction*> list, int columns, int icon_size)
