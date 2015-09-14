@@ -38,7 +38,6 @@ class RS_RoundData;
  */
 class RS_ActionModifyRound : public RS_PreviewActionInterface {
 	Q_OBJECT
-public:
 	/**
   * Action States.
   */

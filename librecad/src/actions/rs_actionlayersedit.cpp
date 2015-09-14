@@ -40,10 +40,8 @@ RS_ActionLayersEdit::RS_ActionLayersEdit(RS_EntityContainer& container,
 void RS_ActionLayersEdit::trigger() {
     RS_DEBUG->print("RS_ActionLayersEdit::trigger");
 
-    RS_Layer* layer = NULL;
-
     if (graphic) {
-        layer =
+	RS_Layer* layer =
             RS_DIALOGFACTORY->requestEditLayerDialog(graphic->getLayerList());
 
         if (layer) {

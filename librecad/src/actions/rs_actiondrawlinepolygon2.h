@@ -37,7 +37,6 @@
  */
 class RS_ActionDrawLinePolygonCorCor : public RS_PreviewActionInterface {
 	Q_OBJECT
-private:
     enum Status {
         SetCorner1,    /**< Setting center 1. */
 		SetCorner2,    /**< Setting corner 2. */

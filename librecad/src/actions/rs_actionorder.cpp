@@ -38,6 +38,7 @@ RS_ActionOrder::RS_ActionOrder(RS_EntityContainer& container,
         RS_GraphicView& graphicView, RS2::ActionType type)
         :RS_PreviewActionInterface("Sort Entities",
 						   container, graphicView)
+		,targetEntity(nullptr)
 		,orderType(type)
 {
 	actionType=RS2::ActionOrderBottom;
@@ -45,7 +46,7 @@ RS_ActionOrder::RS_ActionOrder(RS_EntityContainer& container,
 
 void RS_ActionOrder::init(int status) {
     RS_ActionInterface::init(status);
-    targetEntity = NULL;
+	targetEntity = nullptr;
     if (orderType == RS2::ActionOrderBottom ||
             orderType == RS2::ActionOrderTop) {
         trigger();
@@ -57,14 +58,14 @@ void RS_ActionOrder::trigger() {
     RS_DEBUG->print("RS_ActionOrder::trigger()");
 
     QList<RS_Entity *> entList;
-	int index = -1;
 	for(auto e: *container){
         if (e->isSelected())
             entList.append(e);
     }
 
     if (targetEntity) {
-        targetEntity->setHighlighted(false);
+		int index = -1;
+		targetEntity->setHighlighted(false);
         graphicView->drawEntity(targetEntity);
 
         switch (orderType) {
@@ -79,7 +80,7 @@ void RS_ActionOrder::trigger() {
         default:
             break;
         }
-        targetEntity = NULL;
+		targetEntity = nullptr;
     } else {
         switch (orderType) {
         case RS2::ActionOrderBottom:
@@ -118,7 +119,7 @@ void RS_ActionOrder::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case ChooseEntity:
             targetEntity = catchEntity(e);
-            if (targetEntity==NULL) {
+			if (targetEntity==nullptr) {
                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
             } else {
                 targetEntity->setHighlighted(true);

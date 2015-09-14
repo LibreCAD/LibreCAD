@@ -41,6 +41,7 @@ RS_ActionDrawLinePolygonCorCor::RS_ActionDrawLinePolygonCorCor(
 		,corner1(false)
 		,corner2(false)
 		,number(3)
+		,lastStatus(SetCorner1)
 {
 	actionType=RS2::ActionDrawLinePolygonCorCor;
 }
