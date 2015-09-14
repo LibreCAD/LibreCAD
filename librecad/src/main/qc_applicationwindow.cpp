@@ -2245,7 +2245,6 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         printer.setOutputFormat(QPrinter::PdfFormat);
         printer.setColorMode(QPrinter::Color);
         QFileInfo   infDefaultFile(strDefaultFile);
-        QString     strPdfFileName("");
         QFileDialog fileDlg(this, tr("Export as PDF"));
         QString     defFilter("PDF files (*.pdf)");
         QStringList filters;
