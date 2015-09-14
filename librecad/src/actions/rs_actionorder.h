@@ -35,7 +35,6 @@
  */
 class RS_ActionOrder : public RS_PreviewActionInterface {
 	Q_OBJECT
-public:
     /**
      * Action States.
      */

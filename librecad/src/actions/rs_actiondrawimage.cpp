@@ -46,7 +46,9 @@
 RS_ActionDrawImage::RS_ActionDrawImage(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Image",
-                               container, graphicView) {
+							   container, graphicView)
+	,lastStatus(ShowDialog)
+{
 	actionType=RS2::ActionDrawImage;
 }
 

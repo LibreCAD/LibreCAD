@@ -39,7 +39,6 @@
  */
 class RS_ActionDrawLineParallelThrough : public RS_PreviewActionInterface {
 	Q_OBJECT
-private:
     enum Status {
         SetEntity,    /**< Choose original entity. */
 		SetPos,       /**< Setting point for this parallel to go through. */

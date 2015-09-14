@@ -40,6 +40,7 @@ RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(
         :RS_PreviewActionInterface("Draw ellipse inscribed",
 						   container, graphicView)
 		,eData(new RS_EllipseData())
+		,valid(false)
 {
 	actionType=RS2::ActionDrawEllipseInscribe;
 }

@@ -36,13 +36,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  */
 RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw ellipse from 4 points",
-                           container, graphicView),
-		  cData(new RS_CircleData(RS_Vector(0.,0.),1.)),
-		  eData(new RS_EllipseData(RS_Vector(0.,0.),RS_Vector(1.,0),1.,0.,0.,false))
-        ,m_bUniqueEllipse(false)
+		RS_EntityContainer& container,
+		RS_GraphicView& graphicView)
+	:RS_PreviewActionInterface("Draw ellipse from 4 points", container,
+							   graphicView)
+	,cData(new RS_CircleData(RS_Vector(0.,0.),1.))
+	,eData(new RS_EllipseData(RS_Vector(0.,0.), RS_Vector(1.,0),1.,0.,0.,false))
+	,m_bUniqueEllipse(false)
 {
 	actionType=RS2::ActionDrawEllipse4Points;
 }
@@ -53,8 +53,6 @@ void RS_ActionDrawEllipse4Points::init(int status) {
     RS_PreviewActionInterface::init(status);
     if(getStatus() == SetPoint1) points.clean();
 }
-
-
 
 void RS_ActionDrawEllipse4Points::trigger() {
     RS_PreviewActionInterface::trigger();

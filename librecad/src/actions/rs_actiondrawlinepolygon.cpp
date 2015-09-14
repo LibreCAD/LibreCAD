@@ -41,6 +41,7 @@ RS_ActionDrawLinePolygonCenCor::RS_ActionDrawLinePolygonCenCor(
 		,center(false)
 		,corner(false)
 		,number(3)
+		,lastStatus(SetCenter)
 {
 	actionType=RS2::ActionDrawLinePolygonCenCor;
 }
@@ -76,7 +77,7 @@ void RS_ActionDrawLinePolygonCenCor::mouseMoveEvent(QMouseEvent* e) {
             corner = mouse;
             deletePreview();
 
-			RS_Creation creation(preview.get(), NULL, false);
+			RS_Creation creation(preview.get(), nullptr, false);
             creation.createPolygon(center, corner, number);
 
             drawPreview();
@@ -100,12 +101,8 @@ void RS_ActionDrawLinePolygonCenCor::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
 void RS_ActionDrawLinePolygonCenCor::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
-        return;
-    }
+	if (!e)  return;
 
     RS_Vector mouse = e->getCoordinate();
 
@@ -125,8 +122,6 @@ void RS_ActionDrawLinePolygonCenCor::coordinateEvent(RS_CoordinateEvent* e) {
         break;
     }
 }
-
-
 
 void RS_ActionDrawLinePolygonCenCor::updateMouseButtonHints() {
     if (RS_DIALOGFACTORY) {
@@ -161,8 +156,6 @@ void RS_ActionDrawLinePolygonCenCor::showOptions() {
     }
 }
 
-
-
 void RS_ActionDrawLinePolygonCenCor::hideOptions() {
     RS_ActionInterface::hideOptions();
 
@@ -170,8 +163,6 @@ void RS_ActionDrawLinePolygonCenCor::hideOptions() {
         RS_DIALOGFACTORY->requestOptions(this, false);
     }
 }
-
-
 
 void RS_ActionDrawLinePolygonCenCor::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
