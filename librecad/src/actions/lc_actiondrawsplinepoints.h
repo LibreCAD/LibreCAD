@@ -76,7 +76,7 @@ public:
     //using degree=2 only
     virtual void setDegree(int /*deg*/){}
 
-protected:
+private:
 	/**
 	* Spline data defined so far.
 	*/
