@@ -516,14 +516,14 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     }
 
 //    RS_Vector vp2(false);
-    double d,d2,s,dDistance(RS_MAXDOUBLE*RS_MAXDOUBLE);
+	double d,dDistance(RS_MAXDOUBLE*RS_MAXDOUBLE);
     //double ea;
     for(size_t i=0; i<roots.size(); i++) {
         //I don't understand the reason yet, but I can do without checking whether sine/cosine are valid
         //if ( fabs(roots[i])>1.) continue;
-        s=twoby*roots[i]/(twoax-twoa2b2*roots[i]); //sine
+		double const s=twoby*roots[i]/(twoax-twoa2b2*roots[i]); //sine
         //if (fabs(s) > 1. ) continue;
-        d2=twoa2b2+(twoax-2.*roots[i]*twoa2b2)*roots[i]+twoby*s;
+		double const d2=twoa2b2+(twoax-2.*roots[i]*twoa2b2)*roots[i]+twoby*s;
         if (d2<0) continue; // fartherest
         RS_Vector vp3;
         vp3.set(a*roots[i],b*s);
@@ -1807,7 +1807,7 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
     if(a2 <a1+RS_TOLERANCE_ANGLE) a2 +=2.*M_PI;
     painter->setPen(pen);
 	size_t i(0),j(0);
-    double* ds = new double[pat->num>0?pat->num:0];
+	std::unique_ptr<double[]> ds{new double[pat->num>0?pat->num:0]};
     if(pat->num>0){
         double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
         while( i<pat->num){
@@ -1817,8 +1817,7 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
 			++i;
         }
         j=i;
-    }else {
-        delete[] ds;
+	}else {
         RS_DEBUG->print(RS_Debug::D_WARNING,"Invalid pattern when drawing ellipse");
         painter->drawEllipse(cp,
                              ra, rb,
@@ -1830,12 +1829,11 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
     }
 
     double curA(a1);
-    double nextA;
     bool notDone(true);
 
     for(i=0;notDone;i=(i+1)%j) {//draw patterned ellipse
 
-        nextA = curA + fabs(ds[i])/
+		double nextA = curA + fabs(ds[i])/
                 RS_Vector(ra*sin(curA),rb*cos(curA)).magnitude();
         if(nextA>a2){
             nextA=a2;
@@ -1853,7 +1851,6 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
         curA=nextA;
     }
 
-    delete[] ds;
 }
 
 
