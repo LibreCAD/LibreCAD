@@ -35,8 +35,8 @@
  */
 QG_SplineOptions::QG_SplineOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	,action(nullptr)
 {
-    action = NULL;
     setupUi(this);
 }
 
@@ -66,13 +66,13 @@ void QG_SplineOptions::destroy() {
 }
 
 void QG_SplineOptions::setAction(RS_ActionInterface* a, bool update) {
-    int degree;
-    bool closed;
     if (a && (
                 a->rtti()==RS2::ActionDrawSpline||a->rtti()==RS2::ActionDrawSplinePoints
                 )) {
-        action = (RS_ActionDrawSpline*)a;
-        
+		action = static_cast<RS_ActionDrawSpline*>(a);
+		int degree;
+		bool closed;
+
         if (update) {
             if(a->rtti()==RS2::ActionDrawSpline)
                 degree = action->getDegree();
@@ -99,7 +99,7 @@ void QG_SplineOptions::setAction(RS_ActionInterface* a, bool update) {
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_SplineOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
 }
 
