@@ -73,7 +73,15 @@ void RS_ActionDrawCircleCR::trigger() {
 									  *data);
     circle->setLayerToActive();
     circle->setPenToActive();
-    container->addEntity(circle);
+
+    switch(getStatus()) {
+    	case SetCenter:
+    		container->addEntity(circle);
+		graphicView->moveRelativeZero(circle->getCenter());
+		break;
+	case SetRadius:
+		break;
+    }
 
     // upd. undo list:
     if (document) {
@@ -82,7 +90,6 @@ void RS_ActionDrawCircleCR::trigger() {
         document->endUndoCycle();
     }
         graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(circle->getCenter());
 
     setStatus(SetCenter);
 
