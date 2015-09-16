@@ -34,6 +34,7 @@ LC_CustomToolbar::LC_CustomToolbar(QString name, QWidget* parent): QToolBar(name
 {
     QAction* action = new QAction(tr("Add or Remove Action"), parent);
     action->setShortcut(QKeySequence("F2"));
+    action->setIcon(QIcon(":/extui/char_pm.png"));
     connect(action, SIGNAL(triggered()), this, SLOT(slot_add_or_remove_action()));
     addAction(action);
 }
