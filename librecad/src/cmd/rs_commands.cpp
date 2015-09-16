@@ -202,6 +202,12 @@ RS_Commands::RS_Commands() {
             {{"c3", QObject::tr("c3", "circle 3 points")}},
             RS2::ActionDrawCircle3P
         },
+	//draw circle with point and radius
+	{
+		{{"circlecr", QObject::tr("circlecr", "circle with center and radius")}},
+		{{"cc", QObject::tr("cc", "circle with center and radius")}},
+		RS2::ActionDrawCircleCR
+	},
         //draw circle tangent to 3 objects
         {
             {{"tan3", QObject::tr("tan3", "circle tangent to 3")}},
