@@ -39,7 +39,7 @@
  */
 class RS_Vector {
 public:
-    RS_Vector();
+	RS_Vector()=default;
 #ifdef  RS_VECTOR2D
     RS_Vector(double vx, double vy);
 #else
@@ -50,7 +50,7 @@ public:
     explicit RS_Vector(bool valid);
 	~RS_Vector()=default;
 
-    void set(double angle); // set to unit vector by the direction of angle
+	void set(double angle); // set to unit vector by the direction of angle
 #ifdef  RS_VECTOR2D
     void set(double vx, double vy);
 #else
@@ -123,12 +123,12 @@ public:
 #endif
 
 public:
-    double x;
-    double y;
+	double x=0.;
+	double y=0.;
 #ifndef RS_VECTOR2D
-    double z;
+	double z=0.;
 #endif
-    bool valid;
+	bool valid=false;
 };
 
 
