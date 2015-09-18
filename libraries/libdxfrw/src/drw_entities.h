@@ -119,6 +119,7 @@ public:
         nextEntLink = prevEntLink = 0;
         numReactors = xDictFlag = 0;
         curr = NULL;
+        ownerHandle= false;
     }
 
     DRW_Entity(const DRW_Entity& e) {
@@ -144,6 +145,7 @@ public:
         numReactors = e.numReactors;
         xDictFlag = e.xDictFlag;
         curr = NULL;
+        ownerHandle= false;
 //        curr = e.curr;
         for (std::vector<DRW_Variant*>::const_iterator it=e.extData.begin(); it!=e.extData.end(); ++it){
             extData.push_back(new DRW_Variant(*(*it)));
@@ -214,6 +216,7 @@ protected: //only for read dwg
     dwgHandle layerH;
     duint32 nextEntLink;
     duint32 prevEntLink;
+    bool ownerHandle;
 
     duint8 xDictFlag;
     dint32 numReactors; //
