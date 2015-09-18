@@ -29,13 +29,13 @@
 #include <QToolButton>
 
 LC_DockWidget::LC_DockWidget(QWidget* parent): QDockWidget(parent)
-  ,frame(new QFrame(this))
-  ,grid(new QGridLayout)
+    ,frame(new QFrame(this))
+    ,grid(new QGridLayout)
 {
 	frame->setContentsMargins(0,0,0,0);
 	setWidget(frame);
 
-	grid->setSpacing(0);
+    grid->setSpacing(2);
 	grid->setContentsMargins(1,1,1,1);
 	frame->setLayout(grid);
 }
