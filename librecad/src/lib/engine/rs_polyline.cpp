@@ -237,7 +237,6 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
         double alpha = atan(bulge)*4.0;
 
         double radius;
-        RS_Vector center;
         RS_Vector middle;
         double dist;
         double angle;
@@ -269,7 +268,7 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
             h*=-1.0;
         }
 
-        center.setPolar(h, angle);
+		RS_Vector center = RS_Vector::polar(h, angle);
         center+=middle;
 
                 double a1;

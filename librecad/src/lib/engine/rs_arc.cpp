@@ -133,8 +133,7 @@ bool RS_Arc::createFrom2PDirectionRadius(const RS_Vector& startPoint,
         const RS_Vector& endPoint,
         double direction1, double radius) {
 
-    RS_Vector ortho;
-	ortho.setPolar(radius, direction1 + M_PI_2);
+	RS_Vector ortho = RS_Vector::polar(radius, direction1 + M_PI_2);
     RS_Vector center1 = startPoint + ortho;
     RS_Vector center2 = startPoint - ortho;
 
@@ -172,8 +171,7 @@ bool RS_Arc::createFrom2PDirectionAngle(const RS_Vector& startPoint,
     if( fabs(remainder( angleLength, M_PI))<RS_TOLERANCE_ANGLE ) return false;
     data.radius=0.5*startPoint.distanceTo(endPoint)/sin(0.5*angleLength);
 
-    RS_Vector ortho;
-	ortho.setPolar(data.radius, direction1 + M_PI_2);
+	RS_Vector ortho = RS_Vector::polar(data.radius, direction1 + M_PI_2);
     RS_Vector center1 = startPoint + ortho;
     RS_Vector center2 = startPoint - ortho;
 
@@ -475,8 +473,7 @@ RS_Vector RS_Arc::getNearestDist(double distance,
     }
 
 
-    RS_Vector ret;
-    ret.setPolar(data.radius, a);
+	RS_Vector ret = RS_Vector::polar(data.radius, a);
     ret += getCenter();
 
     return ret;
@@ -493,7 +490,6 @@ RS_Vector RS_Arc::getNearestDist(double distance,
     }
 
     double a;
-    RS_Vector p;
     double aDist = distance / data.radius;
 
     if (isReversed()) {
@@ -510,7 +506,7 @@ RS_Vector RS_Arc::getNearestDist(double distance,
         }
     }
 
-    p.setPolar(data.radius, a);
+	RS_Vector p = RS_Vector::polar(data.radius, a);
     p += data.center;
 
     return p;
@@ -525,8 +521,7 @@ RS_Vector RS_Arc::getNearestOrthTan(const RS_Vector& coord,
                 return RS_Vector(false);
         }
         double angle=normal.getAngle1();
-        RS_Vector vp;
-        vp.setPolar(getRadius(),angle);
+		RS_Vector vp = RS_Vector::polar(getRadius(),angle);
 		std::vector<RS_Vector> sol;
         for(int i=0;i <= 1;i++){
                 if(!onEntity ||

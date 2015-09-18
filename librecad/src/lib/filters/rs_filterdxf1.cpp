@@ -1223,8 +1223,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             double dist =
                                 RS_Vector(v13, v23).distanceTo(RS_Vector(v10,v20));
 
-                            RS_Vector defP;
-                            defP.setPolar(dist, angle);
+							RS_Vector defP = RS_Vector::polar(dist, angle);
                             defP+=RS_Vector(v14, v24);
 
                             RS_DimAligned* d =
@@ -1336,8 +1335,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             double ang =
                                 RS_Vector(v10, v20)
                                 .angleTo(RS_Vector(v15, v25));
-                            RS_Vector v2;
-                            v2.setPolar(v40, ang);
+							RS_Vector v2 = RS_Vector::polar(v40, ang);
                             RS_DimRadial* d =
                                 new RS_DimRadial(
                                     graphic,

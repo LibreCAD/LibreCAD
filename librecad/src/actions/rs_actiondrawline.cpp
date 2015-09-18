@@ -108,8 +108,7 @@ RS_Vector RS_ActionDrawLine::snapToAngle(const RS_Vector &currentCoord)
     const double angularResolution=15.;
     angle -= remainder(angle,angularResolution);
     angle *= M_PI/180.;
-    RS_Vector res = currentCoord;
-	res.setPolar(data->startpoint.distanceTo(currentCoord),
+	RS_Vector res = RS_Vector::polar(data->startpoint.distanceTo(currentCoord),
                  angle);
 	res += data->startpoint;
     snapPoint(res, true);

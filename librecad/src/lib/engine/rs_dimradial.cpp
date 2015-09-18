@@ -195,8 +195,7 @@ void RS_DimRadial::updateDim(bool autoText) {
     arrow->setLayer(NULL);
     addEntity(arrow);
 
-    RS_Vector p3;
-    p3.setPolar(length, angle);
+	RS_Vector p3 = RS_Vector::polar(length, angle);
     p3 += p1;
 
     // Create dimension line:
@@ -300,8 +299,7 @@ void RS_DimRadial::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 				double d = data.definitionPoint.distanceTo(edata.definitionPoint);
 				double a = data.definitionPoint.angleTo(edata.definitionPoint + offset);
 
-                RS_Vector v;
-                v.setPolar(d, a);
+				RS_Vector v = RS_Vector::polar(d, a);
 		edata.definitionPoint = data.definitionPoint + v;
                 updateDim(true);
     }

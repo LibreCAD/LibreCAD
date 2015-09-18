@@ -323,8 +323,8 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         double a = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
 
                         if (ok1 && ok2) {
-                            RS_Vector pos;
-                            pos.setPolar(r,RS_Math::deg2rad(a));
+							RS_Vector pos{
+								RS_Vector::polar(r,RS_Math::deg2rad(a))};
                             RS_CoordinateEvent ce(pos);
                             currentActions.last()->coordinateEvent(&ce);
                         } else {
@@ -346,8 +346,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         double a = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
 
                         if (ok1 && ok2) {
-                            RS_Vector pos;
-                            pos.setPolar(r,RS_Math::deg2rad(a));
+							RS_Vector pos = RS_Vector::polar(r,RS_Math::deg2rad(a));
                             RS_CoordinateEvent ce(pos +
                                                   graphicView->getRelativeZero());
                             currentActions.last()->coordinateEvent(&ce);

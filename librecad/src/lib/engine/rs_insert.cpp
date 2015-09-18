@@ -374,8 +374,7 @@ void RS_Insert::scale(const RS_Vector& center, const RS_Vector& factor) {
 void RS_Insert::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     data.insertionPoint.mirror(axisPoint1, axisPoint2);
 
-        RS_Vector vec;
-        vec.setPolar(1.0, data.angle);
+		RS_Vector vec = RS_Vector::polar(1.0, data.angle);
         vec.mirror(RS_Vector(0.0,0.0), axisPoint2-axisPoint1);
         data.angle = RS_Math::correctAngle(vec.angle()-M_PI);
 

@@ -94,12 +94,11 @@ void RS_ActionDimAligned::trigger() {
 
 
 void RS_ActionDimAligned::preparePreview() {
-    RS_Vector dirV;
-    dirV.setPolar(100.0,
+	RS_Vector dirV = RS_Vector::polar(100.,
 				  edata->extensionPoint1.angleTo(
 					  edata->extensionPoint2)
 				  +M_PI_2);
-    RS_ConstructionLine cl(NULL,
+	RS_ConstructionLine cl(nullptr,
                            RS_ConstructionLineData(
 							   edata->extensionPoint2,
 							   edata->extensionPoint2+dirV));
@@ -167,9 +166,7 @@ void RS_ActionDimAligned::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDimAligned::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
-        return;
-    }
+	if (!e) return;
 
     RS_Vector pos = e->getCoordinate();
 

@@ -189,8 +189,7 @@ void RS_DimDiametric::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
                 double d = c.distanceTo(edata.definitionPoint);
                 double a = c.angleTo(edata.definitionPoint + offset);
 
-                RS_Vector v;
-                v.setPolar(d, a);
+				RS_Vector v = RS_Vector::polar(d, a);
         edata.definitionPoint = c + v;
 				data.definitionPoint = c - v;
                 updateDim(true);
@@ -200,8 +199,7 @@ void RS_DimDiametric::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 				double d = c.distanceTo(data.definitionPoint);
 				double a = c.angleTo(data.definitionPoint + offset);
 
-                RS_Vector v;
-                v.setPolar(d, a);
+				RS_Vector v = RS_Vector::polar(d, a);
 		data.definitionPoint = c + v;
                 edata.definitionPoint = c - v;
                 updateDim(true);

@@ -2446,8 +2446,7 @@ void RS_FilterDXFRW::writeMText(RS_MText* t) {
         for (int i=0; i<txtList.size();++i){
             if (!txtList.at(i).isEmpty()) {
                 text->text = toDxfString(txtList.at(i)).toUtf8().data();
-                RS_Vector inc = t->getInsertionPoint();
-                inc.setPolar(dist*i, t->getAngle()+M_PI_2);
+				RS_Vector inc  = RS_Vector::polar(dist*i, t->getAngle()+M_PI_2);
                 if (setSec) {
                     text->secPoint.x += inc.x;
                     text->secPoint.y += inc.y;

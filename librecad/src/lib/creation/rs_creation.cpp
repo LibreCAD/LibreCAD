@@ -171,7 +171,6 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
     }
 
 	double ang = e->getAngle1() + M_PI_2;
-    RS_Vector p1, p2;
     RS_LineData parallelData;
 	RS_Line* ret = nullptr;
 
@@ -182,9 +181,9 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
     for (int num=1; num<=number; ++num) {
 
         // calculate 1st parallel:
-        p1.setPolar(distance*num, ang);
+		RS_Vector p1 = RS_Vector::polar(distance*num, ang);
         p1 += e->getStartpoint();
-        p2.setPolar(distance*num, ang);
+		RS_Vector p2 = RS_Vector::polar(distance*num, ang);
         p2 += e->getEndpoint();
 		RS_Line parallel1(nullptr, RS_LineData(p1, p2));
 
@@ -462,9 +461,7 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
                 (angleDiff / (num+1) * n);
 
         RS_LineData d;
-        RS_Vector v;
-
-        v.setPolar(length, angle);
+		RS_Vector v = RS_Vector::polar(length, angle);
         d = RS_LineData(inters, inters + v);
 
         RS_Line* newLine = new RS_Line(container, d);
@@ -607,11 +604,8 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
                 double angle2 = asin(dist2/dist1);
 				double angt1 = angle1 + angle2 + M_PI_2;
 				double angt2 = angle1 - angle2 - M_PI_2;
-                RS_Vector offs1;
-                RS_Vector offs2;
-
-                offs1.setPolar(circleRadius1, angt1);
-                offs2.setPolar(circleRadius2, angt1);
+				RS_Vector offs1 = RS_Vector::polar(circleRadius1, angt1);
+				RS_Vector offs2 = RS_Vector::polar(circleRadius2, angt1);
 
                 d = RS_LineData(circleCenter1 + offs1,
                                 circleCenter2 + offs2);
@@ -836,8 +830,7 @@ RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord,
 
     a1 += angle;
 
-    RS_Vector v1;
-    v1.setPolar(length, a1);
+	RS_Vector v1 = RS_Vector::polar(length, a1);
     //RS_ConstructionLineData(coord-v1, coord+v1);
     RS_LineData d(coord-v1, coord+v1);
     RS_Line* ret;
@@ -937,17 +930,14 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
     double ang1 = corner1.angleTo(corner2);
     double ang = ang1;
 
-    RS_Vector c1(false);
-    RS_Vector c2 = corner1;
-    RS_Vector edge;
-    RS_Line* line;
 
     for (int n=1; n<=number; ++n) {
-        c1 = c2;
-        edge.setPolar(len, ang);
+		RS_Vector c2 = corner1;
+		RS_Vector c1 = c2;
+		RS_Vector edge = RS_Vector::polar(len, ang);
         c2 = c1 + edge;
 
-        line = new RS_Line(container, RS_LineData(c1, c2));
+		RS_Line* line = new RS_Line(container, RS_LineData(c1, c2));
         line->setLayerToActive();
         line->setPenToActive();
 

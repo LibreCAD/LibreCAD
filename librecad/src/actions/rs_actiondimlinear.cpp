@@ -105,8 +105,7 @@ void RS_ActionDimLinear::trigger() {
 
 
 void RS_ActionDimLinear::preparePreview() {
-    RS_Vector dirV;
-	dirV.setPolar(100.0, edata->angle+M_PI_2);
+	RS_Vector dirV = RS_Vector::polar(100., edata->angle+M_PI_2);
 
     RS_ConstructionLine cl(
         NULL,

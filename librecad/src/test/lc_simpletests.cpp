@@ -648,8 +648,7 @@ void LC_SimpleTests::slotTestInsertEllipse() {
 		RS_Line* line;
 
 		for (double a=0.0; a<2*M_PI; a+=0.1) {
-			RS_Vector v;
-			v.setPolar(50.0, a);
+			RS_Vector v = RS_Vector::polar(50.0, a);
 			double xp = 1000.0*a;
 
 			RS_EllipseData ellipseData(RS_Vector(xp,0.0),

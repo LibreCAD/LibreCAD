@@ -200,8 +200,7 @@ RS_Vector RS_Line::getNearestDist(double distance,
                                   const RS_Vector& coord,
 								  double* dist) const{
 
-    RS_Vector dv;
-    dv.setPolar(distance, getAngle1());
+	RS_Vector dv = RS_Vector::polar(distance, getAngle1());
 
     RS_Vector ret;
     //if(coord.distanceTo(getStartpoint()) < coord.distanceTo(getEndpoint())) {
@@ -224,8 +223,7 @@ RS_Vector RS_Line::getNearestDist(double distance,
 
     double a1 = getAngle1();
 
-    RS_Vector dv;
-    dv.setPolar(distance, a1);
+	RS_Vector dv = RS_Vector::polar(distance, a1);
     RS_Vector ret;
 
     if (startp) {

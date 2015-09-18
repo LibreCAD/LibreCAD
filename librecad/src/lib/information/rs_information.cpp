@@ -780,8 +780,7 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
         sure = true;
 
         // create ray:
-        RS_Vector v;
-        v.setPolar(width*10.0, rayAngle);
+		RS_Vector v = RS_Vector::polar(width*10.0, rayAngle);
         RS_Line ray(NULL, RS_LineData(point, point+v));
         counter = 0;
         RS_VectorSolutions sol;
