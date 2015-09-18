@@ -27,6 +27,8 @@
 
 #include <vector>
 #include "rs_information.h"
+#include "rs_entitycontainer.h"
+#include "rs_vector.h"
 
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -45,8 +47,9 @@
  *        entities. Usually that's an RS_Graphic entity but
  *        it can also be a polyline, text, ...
  */
-RS_Information::RS_Information(RS_EntityContainer& container) {
-    this->container = &container;
+RS_Information::RS_Information(RS_EntityContainer& container):
+	container(&container)
+{
 }
 
 
@@ -56,15 +59,16 @@ RS_Information::RS_Information(RS_EntityContainer& container) {
  *         false: otherwise
  */
 bool RS_Information::isDimension(RS2::EntityType type) {
-    if (type==RS2::EntityDimAligned ||
-            type==RS2::EntityDimLinear ||
-            type==RS2::EntityDimRadial ||
-            type==RS2::EntityDimDiametric ||
-            type==RS2::EntityDimAngular) {
-        return true;
-    } else {
-        return false;
-    }
+	switch(type){
+	case RS2::EntityDimAligned:
+	case RS2::EntityDimLinear:
+	case RS2::EntityDimRadial:
+	case RS2::EntityDimDiametric:
+	case RS2::EntityDimAngular:
+		return true;
+	default:
+		return false;
+	}
 }
 
 
@@ -76,16 +80,15 @@ bool RS_Information::isDimension(RS2::EntityType type) {
 bool RS_Information::isTrimmable(RS_Entity* e) {
 	if (e) {
 		if (e->getParent()) {
-            if (e->getParent()->rtti()==RS2::EntityPolyline) {
-                return true;
-            }
-            else if (e->getParent()->rtti()==RS2::EntityContainer ||
-                     e->getParent()->rtti()==RS2::EntityGraphic ||
-                     e->getParent()->rtti()==RS2::EntityBlock) {
-
-                // normal entity:
-                return true;
-            }
+			switch(e->getParent()->rtti()){
+			case RS2::EntityPolyline:
+			case RS2::EntityContainer:
+			case RS2::EntityGraphic:
+			case RS2::EntityBlock:
+				return true;
+			default:
+				return false;
+			}
         }
     }
 
@@ -160,9 +163,9 @@ RS_Vector RS_Information::getNearestEndpoint(const RS_Vector& coord,
  *
  * @param coord Coordinate (typically a mouse coordinate)
  * @param dist Pointer to a double which will contain the
- *        measured distance after return or NULL
+ *        measured distance after return or nullptr
  * @param entity Pointer to a pointer which will point to the
- *        entity on which the point is or NULL
+ *        entity on which the point is or nullptr
  *
  * @return the coordinate found or an invalid vector
  * if there are no elements at all in this graphics
@@ -185,7 +188,7 @@ RS_Vector RS_Information::getNearestPointOnEntity(const RS_Vector& coord,
  *             masured distance after return
  * @param level Level of resolving entities.
  *
- * @return the entity found or NULL if there are no elements
+ * @return the entity found or nullptr if there are no elements
  * at all in this graphics container.
  */
 RS_Entity* RS_Information::getNearestEntity(const RS_Vector& coord,
@@ -215,8 +218,8 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
     RS_VectorSolutions ret;
     const double tol = 1.0e-4;
 
-    if (e1==NULL || e2==NULL ) {
-        RS_DEBUG->print("RS_Information::getIntersection() for NULL entities");
+	if (e1==nullptr || e2==nullptr ) {
+		RS_DEBUG->print("RS_Information::getIntersection() for nullptr entities");
         return ret;
     }
     if (e1->getId() == e2->getId()) {
@@ -246,7 +249,7 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
 
     //avoid intersections between line segments the same spline
     /* ToDo: 24 Aug 2011, Dongxu Li, if rtti() is not defined for the parent, the following check for splines may still cause segfault */
-	if ( e1->getParent() != NULL && e1->getParent() == e2->getParent()) {
+	if ( e1->getParent() != nullptr && e1->getParent() == e2->getParent()) {
         if ( e1->getParent()->rtti()==RS2::EntitySpline ) {
             //do not calculate intersections from neighboring lines of a spline
             if ( abs(e1->getParent()->findEntity(e1) - e1->getParent()->findEntity(e2)) <= 1 ) {
@@ -297,8 +300,8 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
             ret2.setTangent(true);
         //TODO, make the following tangential test, nearest test work for all entity types
 
-//        RS_Entity   *lpLine = NULL,
-//                    *lpCircle = NULL;
+//        RS_Entity   *lpLine = nullptr,
+//                    *lpCircle = nullptr;
 //        if( RS2::EntityLine == e1->rtti() && RS2::EntityCircle == e2->rtti()) {
 //            lpLine = e1;
 //            lpCircle = e2;
@@ -307,7 +310,7 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
 //            lpLine = e2;
 //            lpCircle = e1;
 //        }
-//        if( NULL != lpLine && NULL != lpCircle) {
+//        if( nullptr != lpLine && nullptr != lpCircle) {
 //            double dist = 0.0;
 //            RS_Vector nearest = lpLine->getNearestPointOnEntity( lpCircle->getCenter(), false, &dist);
 
@@ -333,8 +336,8 @@ RS_VectorSolutions RS_Information::getIntersectionLineLine(RS_Line* e1,
 
     RS_VectorSolutions ret;
 
-    if (e1==NULL || e2==NULL) {
-        RS_DEBUG->print("RS_Information::getIntersectionLineLin() for NULL entities");
+	if (e1==nullptr || e2==nullptr) {
+		RS_DEBUG->print("RS_Information::getIntersectionLineLin() for nullptr entities");
         return ret;
     }
 
@@ -373,7 +376,7 @@ RS_VectorSolutions RS_Information::getIntersectionLineArc(RS_Line* line,
 
     RS_VectorSolutions ret;
 
-    if (line==NULL || arc==NULL) {
+	if (line==nullptr || arc==nullptr) {
         return ret;
     }
 
@@ -552,7 +555,7 @@ RS_VectorSolutions RS_Information::getIntersectionArcArc(RS_Entity const* e1,
 RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1, RS_Ellipse* e2) {
     RS_VectorSolutions ret;
 
-    if (e1==NULL || e2==NULL ) {
+	if (e1==nullptr || e2==nullptr ) {
         return ret;
     }
     if (
@@ -562,11 +565,11 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     ) { // overlapped ellipses, do not do overlap
         return ret;
     }
-    RS_Ellipse ellipse01(NULL,e1->getData());
+	RS_Ellipse ellipse01(nullptr,e1->getData());
 
     RS_Ellipse *e01= & ellipse01;
     if( e01->getMajorRadius() < e01->getMinorRadius() ) e01->switchMajorMinor();
-    RS_Ellipse ellipse02(NULL,e2->getData());
+	RS_Ellipse ellipse02(nullptr,e2->getData());
     RS_Ellipse *e02= &ellipse02;
     if( e02->getMajorRadius() < e02->getMinorRadius() ) e02->switchMajorMinor();
     //transform ellipse2 to ellipse1's coordinates
@@ -645,7 +648,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
 RS_VectorSolutions RS_Information::getIntersectionCircleEllipse(RS_Circle* c1,
         RS_Ellipse* e1) {
     RS_VectorSolutions ret;
-    if (c1==NULL || e1==NULL) {
+	if (c1==nullptr || e1==nullptr) {
         return ret;
     }
 
@@ -663,7 +666,7 @@ RS_VectorSolutions RS_Information::getIntersectionCircleEllipse(RS_Circle* c1,
 RS_VectorSolutions RS_Information::getIntersectionArcEllipse(RS_Arc * a1,
         RS_Ellipse* e1) {
     RS_VectorSolutions ret;
-    if (a1==NULL || e1==NULL) {
+	if (a1==nullptr || e1==nullptr) {
         return ret;
     }
     RS_EllipseData d(
@@ -689,7 +692,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseLine(RS_Line* line,
 
     RS_VectorSolutions ret;
 
-    if (line==NULL || ellipse==NULL) {
+	if (line==nullptr || ellipse==nullptr) {
         return ret;
     }
 
@@ -759,9 +762,9 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseLine(RS_Line* line,
 bool RS_Information::isPointInsideContour(const RS_Vector& point,
         RS_EntityContainer* contour, bool* onContour) {
 
-    if (contour==NULL) {
+	if (!contour) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_Information::isPointInsideContour: contour is NULL");
+						"RS_Information::isPointInsideContour: contour is nullptr");
         return false;
     }
 
@@ -781,7 +784,7 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
 
         // create ray:
 		RS_Vector v = RS_Vector::polar(width*10.0, rayAngle);
-        RS_Line ray(NULL, RS_LineData(point, point+v));
+		RS_Line ray(nullptr, RS_LineData(point, point+v));
         counter = 0;
         RS_VectorSolutions sol;
 
@@ -916,7 +919,7 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
            done = true;
            double minDist = RS_MAXDOUBLE;
            double dist;
-        av = NULL;
+		av = nullptr;
 		   for (RS_Vector* v = is.first(); v; v = is.next()) {
                dist = point.distanceTo(*v);
                if (dist<minDist) {
