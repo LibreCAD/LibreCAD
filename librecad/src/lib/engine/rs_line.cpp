@@ -650,8 +650,9 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     double patternSegmentLength = pat->totalLength;
 
     // create pattern:
-	std::vector<RS_Vector> dp(pat->num > 0?pat->num:0);
-	double ds[pat->num > 0?pat->num:0];
+	size_t const patnum=pat->num > 0?pat->num:0;
+	std::vector<RS_Vector> dp(patnum);
+	std::vector<double> ds(patnum, 0.);
     if (pat->num >0 ){
         double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
         for (i=0; i<pat->num; ++i) {
