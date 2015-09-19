@@ -662,7 +662,7 @@ RS_Vector RS_Circle::getNearestMiddle(const RS_Vector& coord,
 
     RS_Vector vPoint( getNearestPointOnEntity( coord, true, dist));
     int iCounts = middlePoints + 1;
-    double dAngleSteps = 0.5 * M_PI / iCounts;
+	double dAngleSteps = M_PI_2 / iCounts;
 	double dAngleToPoint = data.center.angleTo(vPoint);
     int iStepCount = static_cast<int>((dAngleToPoint + 0.5 * dAngleSteps) / dAngleSteps);
     if( 0 < middlePoints) {
@@ -680,7 +680,7 @@ RS_Vector RS_Circle::getNearestMiddle(const RS_Vector& coord,
 	vPoint.setPolar( data.radius, dAngleSteps * iStepCount);
 	vPoint.move( data.center);
 
-    if( nullptr != dist) {
+	if(dist) {
         *dist = vPoint.distanceTo( coord);
     }
 
@@ -771,11 +771,11 @@ void RS_Circle::scale(const RS_Vector& center, const RS_Vector& factor) {
 }
 
 double RS_Circle::getDirection1() const{
-        return M_PI/2.0;
+		return M_PI_2;
 }
 
 double RS_Circle::getDirection2() const{
-        return M_PI/2.0*3.0;
+		return M_PI_2*3.0;
 }
 
 
