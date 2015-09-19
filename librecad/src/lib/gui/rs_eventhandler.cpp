@@ -40,21 +40,16 @@
  * Constructor.
  */
 RS_EventHandler::RS_EventHandler(RS_GraphicView* graphicView):
-    graphicView(graphicView)
-    ,defaultAction(nullptr)
-    ,coordinateInputEnabled(true)
-    ,right_click_quits(false)
-    ,real_action(nullptr){}
+	graphicView(graphicView)
+{}
 
 /**
  * Destructor.
  */
 RS_EventHandler::~RS_EventHandler() {
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler");
-    if (defaultAction) {
-        delete defaultAction;
-        defaultAction = nullptr;
-    }
+	delete defaultAction;
+	defaultAction = nullptr;
 
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: Deleting all actions..");
     for(auto a: currentActions){
@@ -234,6 +229,7 @@ bool RS_EventHandler::cliCalculator(const QString& cmd) const
         return false;
     }
     // convert sin(45d) to sin(45*pi/180)
+	// TODO,
     QRegExp regex(R"~(([\d\.]+)deg|d)~");
     str.replace(regex, R"~(\1*pi/180)~");
     bool ok=true;
@@ -402,7 +398,7 @@ void RS_EventHandler::disableCoordinateInput() {
 /**
  * @return Current action.
  */
-RS_ActionInterface* RS_EventHandler::getCurrentAction() {
+RS_ActionInterface* RS_EventHandler::getCurrentAction(){
     if(hasAction()){
         return currentActions.last();
     } else {
@@ -415,7 +411,7 @@ RS_ActionInterface* RS_EventHandler::getCurrentAction() {
 /**
  * @return The current default action.
  */
-RS_ActionInterface* RS_EventHandler::getDefaultAction() {
+RS_ActionInterface* RS_EventHandler::getDefaultAction() const{
     return defaultAction;
 }
 
@@ -554,14 +550,14 @@ void RS_EventHandler::killAllActions() {
 /**
  * @return true if the action is within currentActions
  */
-bool RS_EventHandler::isValid(RS_ActionInterface* action){
+bool RS_EventHandler::isValid(RS_ActionInterface* action) const{
     return currentActions.indexOf(action) >= 0;
 }
 
 /**
  * @return true if there is at least one action in the action stack.
  */
-bool RS_EventHandler::hasAction() {
+bool RS_EventHandler::hasAction(){
 
     while(currentActions.size()>0 ) {
         if(! currentActions.last()->isFinished()){
@@ -643,7 +639,7 @@ void RS_EventHandler::setSnapRestriction(RS2::SnapRestriction sr) {
 }
 
 
-void RS_EventHandler::debugActions() {
+void RS_EventHandler::debugActions() const{
     //        std::cout<<"action queue size=:"<<currentActions.size()<<std::endl;
     RS_DEBUG->print("---");
     for(int i=0;i<currentActions.size();++i){
