@@ -61,7 +61,7 @@ RS_Vector::RS_Vector(double vx, double vy, double vz):
  */
 RS_Vector::RS_Vector(double angle):
 	x(cos(angle))
-  ,y(cos(angle))
+  ,y(sin(angle))
   ,valid(true)
 {
 }
