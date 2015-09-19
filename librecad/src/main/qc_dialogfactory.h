@@ -29,7 +29,6 @@
 
 #include "qg_dialogfactory.h"
 
-
 /**
  * This is the LibreCAD specific implementation of a widget which can create and
  * show dialogs. Some functions cannot be implemented on the
@@ -38,12 +37,11 @@
  */
 class QC_DialogFactory: public QG_DialogFactory {
 public:
-    QC_DialogFactory(QWidget* parent, QToolBar* ow) :
-	  QG_DialogFactory(parent, ow) {}
-    virtual ~QC_DialogFactory() {}
+	QC_DialogFactory(QWidget* parent, QToolBar* ow);
+	virtual ~QC_DialogFactory() = default;
 
-    virtual void requestEditBlockWindow(RS_BlockList* blockList = NULL);
-    virtual void closeEditBlockWindow(RS_Block* block = NULL);
+	virtual void requestEditBlockWindow(RS_BlockList* blockList = nullptr);
+	virtual void closeEditBlockWindow(RS_Block* block = nullptr);
 };
 
 #endif

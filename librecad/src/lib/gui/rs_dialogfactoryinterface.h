@@ -437,7 +437,7 @@ public:
     virtual void commandMessage(const QString& message) = 0;
 
 
-        virtual bool isAdapter() = 0;
+		virtual bool isAdapter() const= 0;
 
 };
 

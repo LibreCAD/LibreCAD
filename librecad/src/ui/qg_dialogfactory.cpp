@@ -31,6 +31,7 @@
 #include <QImageReader>
 #include <QString>
 #include <QFileDialog>
+#include <QToolBar>
 
 #include "rs_patternlist.h"
 #include "rs_settings.h"
