@@ -67,10 +67,10 @@ public:
 #else
 	boost::fusion::tuple<double, double, double> operator()(double const& z) const {
 #endif
-	double cz=cos(z);
-	double sz=sin(z);
+	double const cz=cos(z);
+	double const sz=sin(z);
 		//delta amplitude
-	double d=sqrt(1-k2*sz*sz);
+	double const d=sqrt(1-k2*sz*sz);
 		// return f(x), f'(x) and f''(x)
 #if BOOST_VERSION > 104500
 	return boost::math::make_tuple(
@@ -600,8 +600,8 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
 
     RS_VectorSolutions  vsFoci = getFoci();
     if( 2 == vsFoci.getNumber()) {
-        RS_Vector vFocus1 = vsFoci.get(0);
-        RS_Vector vFocus2 = vsFoci.get(1);
+		RS_Vector const& vFocus1 = vsFoci.get(0);
+		RS_Vector const& vFocus2 = vsFoci.get(1);
 
         double distFocus1 = coord.distanceTo(vFocus1);
         double distFocus2 = coord.distanceTo(vFocus2);
@@ -620,7 +620,7 @@ RS_Vector RS_Ellipse::getNearestCenter(const RS_Vector& coord,
         }
     }
 
-	if (nullptr != dist) {
+	if (dist) {
         *dist = distCenter;
     }
     return vCenter;
@@ -745,7 +745,7 @@ bool RS_Ellipse::createFromQuadratic(const std::vector<double>& dn){
 
 	//Eigen system
 	const double d = a - b;
-	const double s=sqrt(d*d + c*c);
+	const double s=hypot(d,c);
 	// { a>b, d>0
 	// eigenvalue: ( a+b - s)/2, eigenvector: ( -c, d + s)
 	// eigenvalue: ( a+b + s)/2, eigenvector: ( d + s, c)
@@ -1059,7 +1059,7 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     vp.rotate(getAngle());
     vp.move(getCenter());
 
-	if (dist!=nullptr) {
+	if (dist) {
         *dist = vp.distanceTo(coord);
     }
     //RS_DEBUG->print("RS_Ellipse::getNearestMiddle: angle1=%g, angle2=%g, middle=%g\n",amin,amax,a);
@@ -1455,18 +1455,19 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
         RS_Vector endpoint = getEndpoint();
 
         //    if (ref.distanceTo(startpoint)<1.0e-4) {
-        if ((ref-startpoint).squared()<1.0e-8) {
+		//instead of
+		if ((ref-startpoint).squared()<RS_TOLERANCE_ANGLE) {
             moveStartpoint(startpoint+offset);
             correctAngles();//avoid extra 2.*M_PI in angles
             return;
         }
-        if ((ref-endpoint).squared()<1.0e-8) {
+		if ((ref-endpoint).squared()<RS_TOLERANCE_ANGLE) {
             moveEndpoint(endpoint+offset);
             correctAngles();//avoid extra 2.*M_PI in angles
             return;
         }
     }
-    if ((ref-getCenter()).squared()<1.0e-8) {
+	if ((ref-getCenter()).squared()<RS_TOLERANCE_ANGLE) {
         //move center
         setCenter(getCenter()+offset);
         return;
@@ -1475,7 +1476,7 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     if(data.ratio>1.) switchMajorMinor();
 	auto foci=getFoci();
 	for(size_t i=0; i< 2 ; i++){
-        if ((ref-foci.at(i)).squared()<1.0e-8) {
+		if ((ref-foci.at(i)).squared()<RS_TOLERANCE_ANGLE) {
 			auto focusNew=foci.at(i) + offset;
             //move focus
 			auto center = getCenter() + offset*0.5;
@@ -1503,7 +1504,7 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     }
 
     //move major/minor points
-    if ((ref-getMajorPoint()).squared()<1.0e-8) {
+	if ((ref-getMajorPoint()).squared()<RS_TOLERANCE_ANGLE) {
         RS_Vector majorP=getMajorP()+offset;
         double r=majorP.magnitude();
         if(r<RS_TOLERANCE) return;
@@ -1513,7 +1514,7 @@ void RS_Ellipse::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
         if(data.ratio>1.) switchMajorMinor();
         return;
     }
-    if ((ref-getMinorPoint()).squared()<1.0e-8) {
+	if ((ref-getMinorPoint()).squared()<RS_TOLERANCE_ANGLE) {
         RS_Vector minorP=getMinorPoint() + offset;
         double r2=getMajorP().squared();
         if(r2<RS_TOLERANCE2) return;
@@ -1760,12 +1761,10 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
 void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 //    std::cout<<"RS_Ellipse::drawVisible(): begin\n";
 //    std::cout<<*this<<std::endl;
-	if (painter==nullptr || view==nullptr) {
-        return;
-    }
+	if (!( painter && view)) return;
 
     //visible in grahic view
-    if(isVisibleInWindow(view)==false) return;
+	if(!isVisibleInWindow(view)) return;
     double ra(getMajorRadius()*view->getFactor().x);
     double rb(getRatio()*ra);
     if(rb<RS_TOLERANCE) {//ellipse too small
@@ -1793,7 +1792,7 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
         pat = view->getPattern(getPen().getLineType());
     }
 
-	if (pat==nullptr) {
+	if (!pat) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "Invalid pattern for Ellipse");
         return;
     }
@@ -1807,7 +1806,7 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
     if(a2 <a1+RS_TOLERANCE_ANGLE) a2 +=2.*M_PI;
     painter->setPen(pen);
 	size_t i(0),j(0);
-	std::unique_ptr<double[]> ds{new double[pat->num>0?pat->num:0]};
+	std::vector<double> ds(pat->num>0?pat->num:0);
     if(pat->num>0){
         double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
         while( i<pat->num){
