@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -31,10 +31,7 @@
 RS_Settings* RS_Settings::uniqueInstance = nullptr;
 bool RS_Settings::save_is_allowed = true;
 
-RS_Settings::RS_Settings():
-	initialized(false)
-{
-}
+RS_Settings::RS_Settings(): initialized(false) {}
 
 RS_Settings* RS_Settings::instance() {
 	if (!uniqueInstance) {
@@ -52,16 +49,16 @@ RS_Settings* RS_Settings::instance() {
  *        with a "/". E.g. "/LibreCAD"
  */
 void RS_Settings::init(const QString& companyKey,
-                       const QString& appKey) {
+					   const QString& appKey) {
 
-    group = "";
-	
-    this->companyKey = companyKey;
-    this->appKey = appKey;
+	group = "";
 
-    //insertSearchPath(QSettings::Windows, companyKey + appKey);
-    //insertSearchPath(QSettings::Unix, "/usr/share/");
-    initialized = true;
+	this->companyKey = companyKey;
+	this->appKey = appKey;
+
+	//insertSearchPath(QSettings::Windows, companyKey + appKey);
+	//insertSearchPath(QSettings::Unix, "/usr/share/");
+	initialized = true;
 }
 
 
@@ -74,87 +71,87 @@ RS_Settings::~RS_Settings() {
 
 
 void RS_Settings::beginGroup(const QString& group) {
-    this->group = group;
+	this->group = group;
 }
 
 void RS_Settings::endGroup() {
-    this->group = "";
+	this->group = "";
 }
 
 bool RS_Settings::writeEntry(const QString& key, int value) {
-    return writeEntry(key, QVariant(value));
+	return writeEntry(key, QVariant(value));
 }
 
 bool RS_Settings::writeEntry(const QString& key,const QString& value) {
-    return writeEntry(key, QVariant(value));
+	return writeEntry(key, QVariant(value));
 }
 
 bool RS_Settings::writeEntry(const QString& key, double value) {
-    return writeEntry(key, QVariant(value));
+	return writeEntry(key, QVariant(value));
 }
 
 bool RS_Settings::writeEntry(const QString& key, const QVariant& value) {
 	QSettings s(companyKey, appKey);
-    // RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
+	// RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
 
-    s.setValue(QString("%1%2").arg(group).arg(key), value);
+	s.setValue(QString("%1%2").arg(group).arg(key), value);
 	cache[key]=value;
 
-    return true;
+	return true;
 }
 
 QString RS_Settings::readEntry(const QString& key,
-                                 const QString& def,
-                                 bool* ok) {
-	
-    // lookup:
-    QVariant ret = readEntryCache(key);
-    if (!ret.isValid()) {
-				
-        QSettings s(companyKey, appKey);
-    	// RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
-		
+								 const QString& def,
+								 bool* ok) {
+
+	// lookup:
+	QVariant ret = readEntryCache(key);
+	if (!ret.isValid()) {
+
+		QSettings s(companyKey, appKey);
+		// RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
+
 		if (ok) {
 			*ok=s.contains(QString("%1%2").arg(group).arg(key));
 		}
-		
-        ret = s.value(QString("%1%2").arg(group).arg(key), QVariant(def));
-		cache[key]=ret;
-    }
 
-    return ret.toString();
+		ret = s.value(QString("%1%2").arg(group).arg(key), QVariant(def));
+		cache[key]=ret;
+	}
+
+	return ret.toString();
 
 }
 
 QByteArray RS_Settings::readByteArrayEntry(const QString& key,
-                    const QString& def,
-                    bool* ok) {
-    QVariant ret = readEntryCache(key);
-    if (!ret.isValid()) {
+					const QString& def,
+					bool* ok) {
+	QVariant ret = readEntryCache(key);
+	if (!ret.isValid()) {
 
-        QSettings s(companyKey, appKey);
-        // RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
+		QSettings s(companyKey, appKey);
+		// RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
 
-                if (ok) {
-                        *ok=s.contains(QString("%1%2").arg(group).arg(key));
-                }
+				if (ok) {
+						*ok=s.contains(QString("%1%2").arg(group).arg(key));
+				}
 
-        ret = s.value(QString("%1%2").arg(group).arg(key), QVariant(def));
+		ret = s.value(QString("%1%2").arg(group).arg(key), QVariant(def));
 		cache[key]=ret;
-    }
+	}
 
-    return ret.toByteArray();
+	return ret.toByteArray();
 
 }
 
 int RS_Settings::readNumEntry(const QString& key, int def)
 {
-    if (!cache.count(key))
-    {
-        QSettings s(companyKey, appKey);
-        cache[key]= s.value(QString("%1%2").arg(group).arg(key), QVariant(def));
+	if (!cache.count(key))
+	{
+		QSettings s(companyKey, appKey);
+		cache[key]= s.value(QString("%1%2").arg(group).arg(key), QVariant(def));
 	}
-    return cache[key].toInt();
+	return cache[key].toInt();
 }
 
 
@@ -165,51 +162,51 @@ QVariant RS_Settings::readEntryCache(const QString& key) {
 
 
 void RS_Settings::addToCache(const QString& key, const QVariant& value) {
-    cache[key]=value;
+	cache[key]=value;
 }
 
 const char* RS_Settings::defaultGraphicColor( const GraphicColors colIndex)
 {
-    switch( colIndex) {
-    case BackgroundColor : return "Black";
-    case GridColor       : return "Gray";
-    case MetaGridColor   : return "#404040";
-    case SelectedColor   : return "#A54747";
-    case HighlightedColor: return "#739373";
-    case StartHandleColor: return "Cyan";
-    case HandleColor     : return "Blue";
-    case EndHandleColor  : return "Blue";
-    }
+	switch( colIndex) {
+	case BackgroundColor : return "Black";
+	case GridColor       : return "Gray";
+	case MetaGridColor   : return "#404040";
+	case SelectedColor   : return "#A54747";
+	case HighlightedColor: return "#739373";
+	case StartHandleColor: return "Cyan";
+	case HandleColor     : return "Blue";
+	case EndHandleColor  : return "Blue";
+	}
 
-    return "Green";
+	return "Green";
 }
 
 QString RS_Settings::readGraphicColor( const GraphicColors colIndex)
 {
-    switch( colIndex) {
-    case BackgroundColor : return readEntry( "/BackgroundColor", defaultGraphicColor(colIndex));
-    case GridColor       : return readEntry( "/GridColor", defaultGraphicColor(colIndex));
-    case MetaGridColor   : return readEntry( "/MetaGridColor", defaultGraphicColor(colIndex));
-    case SelectedColor   : return readEntry( "/SelectedColor", defaultGraphicColor(colIndex));
-    case HighlightedColor: return readEntry( "/HighlightedColor", defaultGraphicColor(colIndex));
-    case StartHandleColor: return readEntry( "/StartHandleColor", defaultGraphicColor(colIndex));
-    case HandleColor     : return readEntry( "/HandleColor", defaultGraphicColor(colIndex));
-    case EndHandleColor  : return readEntry( "/EndHandleColor", defaultGraphicColor(colIndex));
-    }
+	switch( colIndex) {
+	case BackgroundColor : return readEntry( "/BackgroundColor", defaultGraphicColor(colIndex));
+	case GridColor       : return readEntry( "/GridColor", defaultGraphicColor(colIndex));
+	case MetaGridColor   : return readEntry( "/MetaGridColor", defaultGraphicColor(colIndex));
+	case SelectedColor   : return readEntry( "/SelectedColor", defaultGraphicColor(colIndex));
+	case HighlightedColor: return readEntry( "/HighlightedColor", defaultGraphicColor(colIndex));
+	case StartHandleColor: return readEntry( "/StartHandleColor", defaultGraphicColor(colIndex));
+	case HandleColor     : return readEntry( "/HandleColor", defaultGraphicColor(colIndex));
+	case EndHandleColor  : return readEntry( "/EndHandleColor", defaultGraphicColor(colIndex));
+	}
 
-    return QString("Green");
+	return QString("Green");
 }
 
 void RS_Settings::clear_all()
 {
-    QSettings s(companyKey, appKey);
-    s.clear();
-    save_is_allowed = false;
+	QSettings s(companyKey, appKey);
+	s.clear();
+	save_is_allowed = false;
 }
 
 void RS_Settings::clear_geometry()
 {
-    QSettings s(companyKey, appKey);
-    s.remove("/Geometry");
-    save_is_allowed = false;
+	QSettings s(companyKey, appKey);
+	s.remove("/Geometry");
+	save_is_allowed = false;
 }
