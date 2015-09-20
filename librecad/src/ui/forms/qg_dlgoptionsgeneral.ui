@@ -1140,7 +1140,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="4" column="0">
            <widget class="QLabel" name="lMaxPreview">
             <property name="text">
              <string>Number of p&amp;review entities:</string>
@@ -1153,7 +1153,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="4" column="1">
            <widget class="QComboBox" name="cbMaxPreview">
             <property name="editable">
              <bool>true</bool>
@@ -1190,7 +1190,7 @@
             </item>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QLabel" name="lMinGridSpacing">
             <property name="text">
              <string>Minimal Grid Spacing (px):</string>
@@ -1203,7 +1203,7 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="3" column="1">
            <widget class="QComboBox" name="cbMinGridSpacing">
             <property name="editable">
              <bool>true</bool>
@@ -1248,6 +1248,13 @@
               <string notr="true">20</string>
              </property>
             </item>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="cb_antialiasing">
+            <property name="text">
+             <string>Anti-Aliasing</string>
+            </property>
            </widget>
           </item>
          </layout>

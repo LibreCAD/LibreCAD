@@ -866,6 +866,10 @@ void QG_GraphicView::paintEvent(QPaintEvent *) {
 				// DRaw layer 2
 				PixmapLayer2->fill(Qt::transparent);
 				RS_PainterQt painter2(PixmapLayer2.get());
+				if (RS_SETTINGS->readNumEntry("/Appearance/Antialiasing"))
+				{
+					painter2.setRenderHint(QPainter::Antialiasing);
+				}
 				painter2.setDrawingMode(drawingMode);
 				setDraftMode(draftMode);
 		painter2.setDrawSelectedOnly(false);

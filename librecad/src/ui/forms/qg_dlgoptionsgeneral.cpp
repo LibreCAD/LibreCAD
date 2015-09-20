@@ -105,6 +105,7 @@ void QG_DlgOptionsGeneral::init() {
 	cbLanguageCmd->setCurrentIndex( cbLanguageCmd->findText(RS_SYSTEM->symbolToLanguage(langCmd)) );
 
 	// graphic view:
+
 	// crosshairs:
 	QString showCrosshairs = RS_SETTINGS->readEntry("/ShowCrosshairs", "1");
 	cbShowCrosshairs->setChecked(showCrosshairs=="1");
@@ -136,6 +137,9 @@ void QG_DlgOptionsGeneral::init() {
 
 	sb_icon_size->setValue(RS_SETTINGS->readNumEntry("/IconSize", 24));
 	cb_icon_size->setChecked(RS_SETTINGS->readNumEntry("/SetIconSize", 1)?true:false);
+
+	int checked = RS_SETTINGS->readNumEntry("/Antialiasing");
+	cb_antialiasing->setChecked(checked?true:false);
 
 	RS_SETTINGS->endGroup();
 
@@ -228,6 +232,7 @@ void QG_DlgOptionsGeneral::ok()
 		RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
 		RS_SETTINGS->writeEntry("/IconSize", sb_icon_size->value() );
 		RS_SETTINGS->writeEntry("/SetIconSize", cb_icon_size->isChecked()?1:0);
+		RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked()?1:0);
 		RS_SETTINGS->endGroup();
 
 		RS_SETTINGS->beginGroup("/Paths");
