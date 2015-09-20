@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 #include "qg_dlgoptionsgeneral.h"
@@ -43,13 +43,12 @@
 int QG_DlgOptionsGeneral::current_tab = 0;
 
 QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
+	: QDialog(parent, fl)
 {
-    setModal(modal);
-    setupUi(this);
-    tabWidget->setCurrentIndex(current_tab);
-    init();
-
+	setModal(modal);
+	setupUi(this);
+	tabWidget->setCurrentIndex(current_tab);
+	init();
 }
 
 /*
@@ -57,8 +56,8 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::Wind
  */
 QG_DlgOptionsGeneral::~QG_DlgOptionsGeneral()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	destroy();
+	// no need to delete child widgets, Qt does it all for us
 }
 
 /*
@@ -67,109 +66,109 @@ QG_DlgOptionsGeneral::~QG_DlgOptionsGeneral()
  */
 void QG_DlgOptionsGeneral::languageChange()
 {
-    retranslateUi(this);
+	retranslateUi(this);
 }
 
 void QG_DlgOptionsGeneral::init() {
 #ifdef QC_PREDEFINED_LOCALE
-    bgLanguage->hide();
-    Widget9Layout->addMultiCellWidget( bgGraphicView, 0, 2, 0, 0 ); //use empty space as well
+	bgLanguage->hide();
+	Widget9Layout->addMultiCellWidget( bgGraphicView, 0, 2, 0, 0 ); //use empty space as well
 #endif
-    // Fill combobox with languages:
-    QStringList languageList = RS_SYSTEM->getLanguageList();
-    languageList.sort();
-    languageList.prepend("en");
+	// Fill combobox with languages:
+	QStringList languageList = RS_SYSTEM->getLanguageList();
+	languageList.sort();
+	languageList.prepend("en");
 	for(auto const& lang: languageList){
 
-        RS_DEBUG->print("QG_DlgOptionsGeneral::init: adding %s to combobox",
+		RS_DEBUG->print("QG_DlgOptionsGeneral::init: adding %s to combobox",
 						lang.toLatin1().data());
 
 		QString l = RS_SYSTEM->symbolToLanguage(lang);
 		if (l.isEmpty()==false && cbLanguage->findData(lang)==-1) {
-            RS_DEBUG->print("QG_DlgOptionsGeneral::init: %s", l.toLatin1().data());
+			RS_DEBUG->print("QG_DlgOptionsGeneral::init: %s", l.toLatin1().data());
 			cbLanguage->addItem(l,lang);
 			cbLanguageCmd->addItem(l, lang);
-        }
-    }
+		}
+	}
 
-    RS_SETTINGS->beginGroup("/Appearance");
+	RS_SETTINGS->beginGroup("/Appearance");
 
-    // set current language:
-    QString def_lang = "en";
+	// set current language:
+	QString def_lang = "en";
 #ifdef QC_PREDEFINED_LOCALE
-    def_lang = QC_PREDEFINED_LOCALE;
+	def_lang = QC_PREDEFINED_LOCALE;
 #endif
-    QString lang = RS_SETTINGS->readEntry("/Language", def_lang);
-    cbLanguage->setCurrentIndex( cbLanguage->findText(RS_SYSTEM->symbolToLanguage(lang)) );
+	QString lang = RS_SETTINGS->readEntry("/Language", def_lang);
+	cbLanguage->setCurrentIndex( cbLanguage->findText(RS_SYSTEM->symbolToLanguage(lang)) );
 
-    QString langCmd = RS_SETTINGS->readEntry("/LanguageCmd", def_lang);
-    cbLanguageCmd->setCurrentIndex( cbLanguageCmd->findText(RS_SYSTEM->symbolToLanguage(langCmd)) );
+	QString langCmd = RS_SETTINGS->readEntry("/LanguageCmd", def_lang);
+	cbLanguageCmd->setCurrentIndex( cbLanguageCmd->findText(RS_SYSTEM->symbolToLanguage(langCmd)) );
 
-    // graphic view:
-    // crosshairs:
-    QString showCrosshairs = RS_SETTINGS->readEntry("/ShowCrosshairs", "1");
-    cbShowCrosshairs->setChecked(showCrosshairs=="1");
-    
-    // scale grid:
-    QString scaleGrid = RS_SETTINGS->readEntry("/ScaleGrid", "1");
-    cbScaleGrid->setChecked(scaleGrid=="1");
-    QString minGridSpacing = RS_SETTINGS->readEntry("/MinGridSpacing", "10");
-    cbMinGridSpacing->setCurrentIndex( cbMinGridSpacing->findText(minGridSpacing) );
+	// graphic view:
+	// crosshairs:
+	QString showCrosshairs = RS_SETTINGS->readEntry("/ShowCrosshairs", "1");
+	cbShowCrosshairs->setChecked(showCrosshairs=="1");
 
-    // preview:
+	// scale grid:
+	QString scaleGrid = RS_SETTINGS->readEntry("/ScaleGrid", "1");
+	cbScaleGrid->setChecked(scaleGrid=="1");
+	QString minGridSpacing = RS_SETTINGS->readEntry("/MinGridSpacing", "10");
+	cbMinGridSpacing->setCurrentIndex( cbMinGridSpacing->findText(minGridSpacing) );
+
+	// preview:
 	initComboBox(cbMaxPreview, RS_SETTINGS->readEntry("/MaxPreview", "100"));
 
-    // colors:
-    initComboBox( cbBackgroundColor,  RS_SETTINGS->readGraphicColor( RS_Settings::BackgroundColor));
-    initComboBox( cbGridColor,        RS_SETTINGS->readGraphicColor( RS_Settings::GridColor));
-    initComboBox( cbMetaGridColor,    RS_SETTINGS->readGraphicColor( RS_Settings::MetaGridColor));
-    initComboBox( cbSelectedColor,    RS_SETTINGS->readGraphicColor( RS_Settings::SelectedColor));
-    initComboBox( cbHighlightedColor, RS_SETTINGS->readGraphicColor( RS_Settings::HighlightedColor));
-    initComboBox( cbStartHandleColor, RS_SETTINGS->readGraphicColor( RS_Settings::StartHandleColor));
-    initComboBox( cbHandleColor,      RS_SETTINGS->readGraphicColor( RS_Settings::HandleColor));
-    initComboBox( cbEndHandleColor,   RS_SETTINGS->readGraphicColor( RS_Settings::EndHandleColor));
-    initComboBox(cb_layerselection, RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC"));
+	// colors:
+	initComboBox( cbBackgroundColor,  RS_SETTINGS->readGraphicColor( RS_Settings::BackgroundColor));
+	initComboBox( cbGridColor,        RS_SETTINGS->readGraphicColor( RS_Settings::GridColor));
+	initComboBox( cbMetaGridColor,    RS_SETTINGS->readGraphicColor( RS_Settings::MetaGridColor));
+	initComboBox( cbSelectedColor,    RS_SETTINGS->readGraphicColor( RS_Settings::SelectedColor));
+	initComboBox( cbHighlightedColor, RS_SETTINGS->readGraphicColor( RS_Settings::HighlightedColor));
+	initComboBox( cbStartHandleColor, RS_SETTINGS->readGraphicColor( RS_Settings::StartHandleColor));
+	initComboBox( cbHandleColor,      RS_SETTINGS->readGraphicColor( RS_Settings::HandleColor));
+	initComboBox( cbEndHandleColor,   RS_SETTINGS->readGraphicColor( RS_Settings::EndHandleColor));
+	initComboBox(cb_layerselection, RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC"));
 
-    // font size:
-    QString sizeStatus = RS_SETTINGS->readEntry("/StatusBarFontSize", "9");
-    cbSizeStatus->setCurrentIndex( cbSizeStatus->findText(sizeStatus) );
-    cbSplash->setChecked(RS_SETTINGS->readNumEntry("/ShowSplash",1)==1);
+	// font size:
+	QString sizeStatus = RS_SETTINGS->readEntry("/StatusBarFontSize", "9");
+	cbSizeStatus->setCurrentIndex( cbSizeStatus->findText(sizeStatus) );
+	cbSplash->setChecked(RS_SETTINGS->readNumEntry("/ShowSplash",1)==1);
 
-    sb_icon_size->setValue(RS_SETTINGS->readNumEntry("/IconSize", 24));
-    cb_icon_size->setChecked(RS_SETTINGS->readNumEntry("/SetIconSize", 1)?true:false);
+	sb_icon_size->setValue(RS_SETTINGS->readNumEntry("/IconSize", 24));
+	cb_icon_size->setChecked(RS_SETTINGS->readNumEntry("/SetIconSize", 1)?true:false);
 
-    RS_SETTINGS->endGroup();
+	RS_SETTINGS->endGroup();
 
-    RS_SETTINGS->beginGroup("/Paths");
+	RS_SETTINGS->beginGroup("/Paths");
 
-    lePathTranslations->setText(RS_SETTINGS->readEntry("/Translations", ""));
-    lePathHatch->setText(RS_SETTINGS->readEntry("/Patterns", ""));
-    lePathFonts->setText(RS_SETTINGS->readEntry("/Fonts", ""));
-    lePathScripts->setText(RS_SETTINGS->readEntry("/Scripts", ""));
-    lePathLibrary->setText(RS_SETTINGS->readEntry("/Library", "").trimmed());
-    leTemplate->setText(RS_SETTINGS->readEntry("/Template", "").trimmed());
-    le_custom_toolbar->setText(RS_SETTINGS->readEntry("/CustomToolbar", "").trimmed());
-    RS_SETTINGS->endGroup();
+	lePathTranslations->setText(RS_SETTINGS->readEntry("/Translations", ""));
+	lePathHatch->setText(RS_SETTINGS->readEntry("/Patterns", ""));
+	lePathFonts->setText(RS_SETTINGS->readEntry("/Fonts", ""));
+	lePathScripts->setText(RS_SETTINGS->readEntry("/Scripts", ""));
+	lePathLibrary->setText(RS_SETTINGS->readEntry("/Library", "").trimmed());
+	leTemplate->setText(RS_SETTINGS->readEntry("/Template", "").trimmed());
+	le_custom_toolbar->setText(RS_SETTINGS->readEntry("/CustomToolbar", "").trimmed());
+	RS_SETTINGS->endGroup();
 
-    // units:
-    for (int i=RS2::None; i<RS2::LastUnit; i++) {
-        if (i!=(int)RS2::None)
-            cbUnit->addItem(RS_Units::unitToString((RS2::Unit)i));
-    }
-    // RVT_PORT cbUnit->listBox()->sort();
-    cbUnit->insertItem( 0, RS_Units::unitToString(RS2::None) );
+	// units:
+	for (int i=RS2::None; i<RS2::LastUnit; i++) {
+		if (i!=(int)RS2::None)
+			cbUnit->addItem(RS_Units::unitToString((RS2::Unit)i));
+	}
+	// RVT_PORT cbUnit->listBox()->sort();
+	cbUnit->insertItem( 0, RS_Units::unitToString(RS2::None) );
 
-    QString def_unit = "Millimeter";
+	QString def_unit = "Millimeter";
 #ifdef QC_PREDEFINED_UNIT
-    def_unit = QC_PREDEFINED_UNIT;
+	def_unit = QC_PREDEFINED_UNIT;
 #endif
-    RS_SETTINGS->beginGroup("/Defaults");
+	RS_SETTINGS->beginGroup("/Defaults");
 //    cbUnit->setCurrentIndex( cbUnit->findText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit) )) );
-    cbUnit->setCurrentIndex( cbUnit->findText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit).toUtf8().data() )) );
-    // Auto save timer
-    cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5));
-    cbAutoBackup->setChecked(RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)?true:false);
-    RS_SETTINGS->endGroup();
+	cbUnit->setCurrentIndex( cbUnit->findText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit).toUtf8().data() )) );
+	// Auto save timer
+	cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5));
+	cbAutoBackup->setChecked(RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)?true:false);
+	RS_SETTINGS->endGroup();
 
 	//update entities to selected entities to the current active layer
 	RS_SETTINGS->beginGroup("/Modify");
@@ -178,7 +177,7 @@ void QG_DlgOptionsGeneral::init() {
 	RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked()?1:0);
 	RS_SETTINGS->endGroup();
 
-    restartNeeded = false;
+	restartNeeded = false;
 }
 
 void QG_DlgOptionsGeneral::initComboBox(QComboBox* cb, QString text) {
@@ -194,159 +193,159 @@ void QG_DlgOptionsGeneral::destroy() {
 }
 
 void QG_DlgOptionsGeneral::setRestartNeeded() {
-    restartNeeded = true;
+	restartNeeded = true;
 }
 
 void QG_DlgOptionsGeneral::setTemplateFile() {
-    RS2::FormatType type = RS2::FormatDXFRW;
-    QG_FileDialog dlg(this);
-    QString fileName = dlg.getOpenFile(&type);
-    leTemplate->setText(fileName);
+	RS2::FormatType type = RS2::FormatDXFRW;
+	QG_FileDialog dlg(this);
+	QString fileName = dlg.getOpenFile(&type);
+	leTemplate->setText(fileName);
 }
 
 void QG_DlgOptionsGeneral::ok()
 {
-    if (RS_Settings::save_is_allowed)
-    {
-        //RS_SYSTEM->loadTranslation(cbLanguage->currentText());
-        RS_SETTINGS->beginGroup("/Appearance");
-        RS_SETTINGS->writeEntry("/Language",cbLanguage->itemData(cbLanguage->currentIndex()));
-        RS_SETTINGS->writeEntry("/LanguageCmd",cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
-        RS_SETTINGS->writeEntry("/ShowCrosshairs", QString("%1").arg((int)cbShowCrosshairs->isChecked()));
-        RS_SETTINGS->writeEntry("/ScaleGrid", QString("%1").arg((int)cbScaleGrid->isChecked()));
-        RS_SETTINGS->writeEntry("/MinGridSpacing", cbMinGridSpacing->currentText());
-        RS_SETTINGS->writeEntry("/MaxPreview", cbMaxPreview->currentText());
-        RS_SETTINGS->writeEntry("/BackgroundColor", cbBackgroundColor->currentText());
-        RS_SETTINGS->writeEntry("/GridColor", cbGridColor->currentText());
-        RS_SETTINGS->writeEntry("/MetaGridColor", cbMetaGridColor->currentText());
-        RS_SETTINGS->writeEntry("/SelectedColor", cbSelectedColor->currentText());
-        RS_SETTINGS->writeEntry("/HighlightedColor", cbHighlightedColor->currentText());
-        RS_SETTINGS->writeEntry("/StartHandleColor", cbStartHandleColor->currentText());
-        RS_SETTINGS->writeEntry("/HandleColor", cbHandleColor->currentText());
-        RS_SETTINGS->writeEntry("/EndHandleColor", cbEndHandleColor->currentText());
-        RS_SETTINGS->writeEntry("/LayerSelectColor", cb_layerselection->currentText());
-        RS_SETTINGS->writeEntry("/StatusBarFontSize", cbSizeStatus->currentText());
-        RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
-        RS_SETTINGS->writeEntry("/IconSize", sb_icon_size->value() );
-        RS_SETTINGS->writeEntry("/SetIconSize", cb_icon_size->isChecked()?1:0);
-        RS_SETTINGS->endGroup();
+	if (RS_Settings::save_is_allowed)
+	{
+		//RS_SYSTEM->loadTranslation(cbLanguage->currentText());
+		RS_SETTINGS->beginGroup("/Appearance");
+		RS_SETTINGS->writeEntry("/Language",cbLanguage->itemData(cbLanguage->currentIndex()));
+		RS_SETTINGS->writeEntry("/LanguageCmd",cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
+		RS_SETTINGS->writeEntry("/ShowCrosshairs", QString("%1").arg((int)cbShowCrosshairs->isChecked()));
+		RS_SETTINGS->writeEntry("/ScaleGrid", QString("%1").arg((int)cbScaleGrid->isChecked()));
+		RS_SETTINGS->writeEntry("/MinGridSpacing", cbMinGridSpacing->currentText());
+		RS_SETTINGS->writeEntry("/MaxPreview", cbMaxPreview->currentText());
+		RS_SETTINGS->writeEntry("/BackgroundColor", cbBackgroundColor->currentText());
+		RS_SETTINGS->writeEntry("/GridColor", cbGridColor->currentText());
+		RS_SETTINGS->writeEntry("/MetaGridColor", cbMetaGridColor->currentText());
+		RS_SETTINGS->writeEntry("/SelectedColor", cbSelectedColor->currentText());
+		RS_SETTINGS->writeEntry("/HighlightedColor", cbHighlightedColor->currentText());
+		RS_SETTINGS->writeEntry("/StartHandleColor", cbStartHandleColor->currentText());
+		RS_SETTINGS->writeEntry("/HandleColor", cbHandleColor->currentText());
+		RS_SETTINGS->writeEntry("/EndHandleColor", cbEndHandleColor->currentText());
+		RS_SETTINGS->writeEntry("/LayerSelectColor", cb_layerselection->currentText());
+		RS_SETTINGS->writeEntry("/StatusBarFontSize", cbSizeStatus->currentText());
+		RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
+		RS_SETTINGS->writeEntry("/IconSize", sb_icon_size->value() );
+		RS_SETTINGS->writeEntry("/SetIconSize", cb_icon_size->isChecked()?1:0);
+		RS_SETTINGS->endGroup();
 
-        RS_SETTINGS->beginGroup("/Paths");
-        RS_SETTINGS->writeEntry("/Translations", lePathTranslations->text());
-        RS_SETTINGS->writeEntry("/Patterns", lePathHatch->text());
-        RS_SETTINGS->writeEntry("/Fonts", lePathFonts->text());
-        RS_SETTINGS->writeEntry("/Scripts", lePathScripts->text());
-        RS_SETTINGS->writeEntry("/Library", lePathLibrary->text());
-        RS_SETTINGS->writeEntry("/Template", leTemplate->text());
-        RS_SETTINGS->writeEntry("/CustomToolbar", le_custom_toolbar->text());
-        RS_SETTINGS->endGroup();
+		RS_SETTINGS->beginGroup("/Paths");
+		RS_SETTINGS->writeEntry("/Translations", lePathTranslations->text());
+		RS_SETTINGS->writeEntry("/Patterns", lePathHatch->text());
+		RS_SETTINGS->writeEntry("/Fonts", lePathFonts->text());
+		RS_SETTINGS->writeEntry("/Scripts", lePathScripts->text());
+		RS_SETTINGS->writeEntry("/Library", lePathLibrary->text());
+		RS_SETTINGS->writeEntry("/Template", leTemplate->text());
+		RS_SETTINGS->writeEntry("/CustomToolbar", le_custom_toolbar->text());
+		RS_SETTINGS->endGroup();
 
-        RS_SETTINGS->beginGroup("/Defaults");
-        RS_SETTINGS->writeEntry("/Unit",
-            RS_Units::unitToString( RS_Units::stringToUnit( cbUnit->currentText() ), false/*untr.*/) );
-        RS_SETTINGS->writeEntry("/AutoSaveTime", cbAutoSaveTime->value() );
-        RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked()?1:0);
-        RS_SETTINGS->endGroup();
+		RS_SETTINGS->beginGroup("/Defaults");
+		RS_SETTINGS->writeEntry("/Unit",
+			RS_Units::unitToString( RS_Units::stringToUnit( cbUnit->currentText() ), false/*untr.*/) );
+		RS_SETTINGS->writeEntry("/AutoSaveTime", cbAutoSaveTime->value() );
+		RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked()?1:0);
+		RS_SETTINGS->endGroup();
 
-        //update entities to selected entities to the current active layer
-        RS_SETTINGS->beginGroup("/Modify");
-        RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked()?1:0);
-        RS_SETTINGS->endGroup();
-    }
+		//update entities to selected entities to the current active layer
+		RS_SETTINGS->beginGroup("/Modify");
+		RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked()?1:0);
+		RS_SETTINGS->endGroup();
+	}
 
 
-    if (restartNeeded==true) {
-        QMessageBox::warning( this, tr("Preferences"),
-                              tr("Please restart the application to apply all changes."),
-                              QMessageBox::Ok,
-                              Qt::NoButton);
-    }
-    accept();
+	if (restartNeeded==true) {
+		QMessageBox::warning( this, tr("Preferences"),
+							  tr("Please restart the application to apply all changes."),
+							  QMessageBox::Ok,
+							  Qt::NoButton);
+	}
+	accept();
 }
 
 
 void QG_DlgOptionsGeneral::on_tabWidget_currentChanged(int index)
 {
-    current_tab = index;
+	current_tab = index;
 }
 
 void QG_DlgOptionsGeneral::set_color(QComboBox* combo, QColor custom)
 {
-    QColor current;
-    current.setNamedColor(combo->lineEdit()->text());
+	QColor current;
+	current.setNamedColor(combo->lineEdit()->text());
 
-    QColorDialog dlg;
+	QColorDialog dlg;
 	dlg.setCustomColor(0, custom.rgb());
 
-    QColor color = dlg.getColor(current, this, "Select Color", QColorDialog::DontUseNativeDialog);
-    if (color.isValid())
-    {
-        combo->lineEdit()->setText(color.name());
-    }
+	QColor color = dlg.getColor(current, this, "Select Color", QColorDialog::DontUseNativeDialog);
+	if (color.isValid())
+	{
+		combo->lineEdit()->setText(color.name());
+	}
 }
 
 void QG_DlgOptionsGeneral::on_pb_background_clicked()
 {
-    set_color( cbBackgroundColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::BackgroundColor)));
+	set_color( cbBackgroundColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::BackgroundColor)));
 }
 
 void QG_DlgOptionsGeneral::on_pb_grid_clicked()
 {
-    set_color( cbGridColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::GridColor)));
+	set_color( cbGridColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::GridColor)));
 }
 
 void QG_DlgOptionsGeneral::on_pb_meta_clicked()
 {
-    set_color( cbMetaGridColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::MetaGridColor)));
+	set_color( cbMetaGridColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::MetaGridColor)));
 }
 
 void QG_DlgOptionsGeneral::on_pb_selected_clicked()
 {
-    set_color( cbSelectedColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::SelectedColor)));
+	set_color( cbSelectedColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::SelectedColor)));
 }
 
 void QG_DlgOptionsGeneral::on_pb_highlighted_clicked()
 {
-    set_color( cbHighlightedColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::HighlightedColor)));
+	set_color( cbHighlightedColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::HighlightedColor)));
 }
 
 void QG_DlgOptionsGeneral::on_pb_start_clicked()
 {
-    set_color( cbStartHandleColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::StartHandleColor)));
+	set_color( cbStartHandleColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::StartHandleColor)));
 }
 
 void QG_DlgOptionsGeneral::on_pb_handle_clicked()
 {
-    set_color( cbHandleColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::HandleColor)));
+	set_color( cbHandleColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::HandleColor)));
 }
 
 void QG_DlgOptionsGeneral::on_pb_end_clicked()
 {
-    set_color( cbEndHandleColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::EndHandleColor)));
+	set_color( cbEndHandleColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::EndHandleColor)));
 }
 
 void QG_DlgOptionsGeneral::on_pb_layerselection_clicked()
 {
-    set_color(cb_layerselection, QColor("#CCFFCC"));
+	set_color(cb_layerselection, QColor("#CCFFCC"));
 }
 
 void QG_DlgOptionsGeneral::set_toolbar_file()
 {
-    QString path = QFileDialog::getOpenFileName(this);
-    if (!path.isEmpty())
-    {
-        le_custom_toolbar->setText(QDir::toNativeSeparators(path));
-    }
+	QString path = QFileDialog::getOpenFileName(this);
+	if (!path.isEmpty())
+	{
+		le_custom_toolbar->setText(QDir::toNativeSeparators(path));
+	}
 }
 
 void QG_DlgOptionsGeneral::on_pb_clear_all_clicked()
 {
-    RS_SETTINGS->clear_all();
-    QMessageBox::information(this, "info", "You must restart LibreCAD to see the changes.");
+	RS_SETTINGS->clear_all();
+	QMessageBox::information(this, "info", "You must restart LibreCAD to see the changes.");
 }
 
 void QG_DlgOptionsGeneral::on_pb_clear_geometry_clicked()
 {
-    RS_SETTINGS->clear_geometry();
-    QMessageBox::information(this, "info", "You must restart LibreCAD to see the changes.");
+	RS_SETTINGS->clear_geometry();
+	QMessageBox::information(this, "info", "You must restart LibreCAD to see the changes.");
 }
