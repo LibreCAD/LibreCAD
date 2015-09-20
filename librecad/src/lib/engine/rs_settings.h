@@ -84,7 +84,7 @@ public:
     QByteArray readByteArrayEntry(const QString& key,
                         const QString& def = QString::null,
                         bool* ok = 0);
-    int readNumEntry(const QString& key, int def=0, bool* ok=0);
+    int readNumEntry(const QString& key, int def=0);
     QString readGraphicColor( const GraphicColors colIndex);
     const char* defaultGraphicColor( const GraphicColors colIndex);
     void clear_all();
