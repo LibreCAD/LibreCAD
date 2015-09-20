@@ -146,12 +146,16 @@ QByteArray RS_Settings::readByteArrayEntry(const QString& key,
 
 int RS_Settings::readNumEntry(const QString& key, int def)
 {
-	if (!cache.count(key))
+	QVariant value = readEntryCache(key);
+	if (!value.isValid())
 	{
 		QSettings s(companyKey, appKey);
-		cache[key]= s.value(QString("%1%2").arg(group).arg(key), QVariant(def));
+		QString str = QString("%1%2").arg(group).arg(key);
+		// qDebug() << str;
+		value = s.value(str, QVariant(def));
+		cache[key] = value;
 	}
-	return cache[key].toInt();
+	return value.toInt();
 }
 
 
