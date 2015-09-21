@@ -117,6 +117,9 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlag
 
 	// See https://sourceforge.net/tracker/?func=detail&aid=3289298&group_id=342582&atid=1433844 (Left-mouse drag shrinks window)
 	setAttribute(Qt::WA_NoMousePropagation);
+
+	int aa = RS_SETTINGS->readNumEntry("/Appearance/Antialiasing");
+	set_antialiasing(aa?true:false);
 }
 
 
@@ -866,7 +869,7 @@ void QG_GraphicView::paintEvent(QPaintEvent *) {
 				// DRaw layer 2
 				PixmapLayer2->fill(Qt::transparent);
 				RS_PainterQt painter2(PixmapLayer2.get());
-				if (RS_SETTINGS->readNumEntry("/Appearance/Antialiasing"))
+				if (antialiasing)
 				{
 					painter2.setRenderHint(QPainter::Antialiasing);
 				}
@@ -901,3 +904,7 @@ void QG_GraphicView::paintEvent(QPaintEvent *) {
 	RS_DEBUG->print("QG_GraphicView::paintEvent end");
 }
 
+void QG_GraphicView::set_antialiasing(bool state)
+{
+	antialiasing = state;
+}
