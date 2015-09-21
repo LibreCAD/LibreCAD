@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -36,76 +36,76 @@ class QVariant;
 #define RS_SETTINGS RS_Settings::instance()
 
 /**
- * This class can store and reload settings from a 
+ * This class can store and reload settings from a
  * configuration file or the windoze registry.
  * Please note that the Qt default implementation doesn't
  * work as one would expect. That's why this class overwrites
  * most of the default behaviour.
- * 
+ *
  */
-class RS_Settings {
-
+class RS_Settings
+{
 public:
 	~RS_Settings();
 	/**
-     * @return Instance to the unique settings object.
-     */
+	 * @return Instance to the unique settings object.
+	 */
 	static RS_Settings* instance();
 
-    /**
-     * Initialize the system.
-     *
-     * @param companyKey Company Key
-     * @param appKey Application key
-     */
-    void init(const QString& companyKey, const QString& appKey);
+	/**
+	 * Initialize the system.
+	 *
+	 * @param companyKey Company Key
+	 * @param appKey Application key
+	 */
+	void init(const QString& companyKey, const QString& appKey);
 
-    enum GraphicColors {
-        BackgroundColor = 0,
-        GridColor,
-        MetaGridColor,
-        SelectedColor,
-        HighlightedColor,
-        StartHandleColor,
-        HandleColor,
-        EndHandleColor
-    };
+	enum GraphicColors {
+		BackgroundColor = 0,
+		GridColor,
+		MetaGridColor,
+		SelectedColor,
+		HighlightedColor,
+		StartHandleColor,
+		HandleColor,
+		EndHandleColor
+	};
 
-    void beginGroup(const QString& group);
-    void endGroup();
+	void beginGroup(const QString& group);
+	void endGroup();
 
-    bool writeEntry(const QString& key, int value);
-    bool writeEntry(const QString& key, double value);
-    bool writeEntry(const QString& key, const QVariant& value);
-    bool writeEntry(const QString& key, const QString& value);
-    QString readEntry(const QString& key,
-                        const QString& def = QString::null,
-                        bool* ok = 0);
-    QByteArray readByteArrayEntry(const QString& key,
-                        const QString& def = QString::null,
-                        bool* ok = 0);
-    int readNumEntry(const QString& key, int def=0, bool* ok=0);
-    QString readGraphicColor( const GraphicColors colIndex);
-    const char* defaultGraphicColor( const GraphicColors colIndex);
-    void clear_all();
-    void clear_geometry();
-    static bool save_is_allowed;
+	bool writeEntry(const QString& key, int value);
+	bool writeEntry(const QString& key, double value);
+	bool writeEntry(const QString& key, const QVariant& value);
+	bool writeEntry(const QString& key, const QString& value);
+	QString readEntry(const QString& key,
+						const QString& def = QString::null,
+						bool* ok = 0);
+	QByteArray readByteArrayEntry(const QString& key,
+						const QString& def = QString::null,
+						bool* ok = 0);
+	int readNumEntry(const QString& key, int def=0);
+	QString readGraphicColor( const GraphicColors colIndex);
+	const char* defaultGraphicColor( const GraphicColors colIndex);
+	void clear_all();
+	void clear_geometry();
+	static bool save_is_allowed;
 
 private:
-    RS_Settings();
+	RS_Settings();
 	RS_Settings(RS_Settings const&) = delete;
 	RS_Settings& operator = (RS_Settings const&) = delete;
 	QVariant readEntryCache(const QString& key);
 	void addToCache(const QString& key, const QVariant& value);
 
 protected:
-    static RS_Settings* uniqueInstance;
+	static RS_Settings* uniqueInstance;
 
 	std::map<QString, QVariant> cache;
-    QString companyKey;
-    QString appKey;
-    QString group;
-    bool initialized;
+	QString companyKey;
+	QString appKey;
+	QString group;
+	bool initialized;
 };
 
 #endif
