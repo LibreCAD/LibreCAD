@@ -147,21 +147,18 @@ QByteArray RS_Settings::readByteArrayEntry(const QString& key,
 
 }
 
-int RS_Settings::readNumEntry(const QString& key, int def, bool* ok) {
-
-    // lookup:
-    QVariant ret = readEntryCache(key);
-    if (!ret.isValid()) {
-        QSettings s(companyKey, appKey);
-    	// RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
-
-		if (ok) {
-			*ok=s.contains(QString("%1%2").arg(group).arg(key));
-		}
-		ret = s.value(QString("%1%2").arg(group).arg(key), QVariant(def));
-		cache[key]=ret;
+int RS_Settings::readNumEntry(const QString& key, int def)
+{
+	QVariant value = readEntryCache(key);
+	if (!value.isValid())
+	{
+		QSettings s(companyKey, appKey);
+		QString str = QString("%1%2").arg(group).arg(key);
+		// qDebug() << str;
+		value = s.value(str, QVariant(def));
+		cache[key] = value;
 	}
-	return ret.toInt();
+	return value.toInt();
 }
 
 
