@@ -89,6 +89,8 @@ public:
      */
     virtual RS_Vector getMousePosition() const;
 
+	void set_antialiasing(bool state);
+
 protected:
     virtual void emulateMouseMoveEvent();
     virtual void mousePressEvent(QMouseEvent* e);
@@ -142,6 +144,9 @@ protected:
 		
     //! Keep tracks of if we are currently doing a high-resolution scrolling
     bool isSmoothScrolling;
+
+private:
+	bool antialiasing{false};
 };
 
 #endif

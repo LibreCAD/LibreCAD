@@ -2643,8 +2643,10 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
     QColor highlightedColor( RS_SETTINGS->readGraphicColor( RS_Settings::HighlightedColor));
     QColor startHandleColor( RS_SETTINGS->readGraphicColor( RS_Settings::StartHandleColor));
     QColor handleColor( RS_SETTINGS->readGraphicColor( RS_Settings::HandleColor));
-    QColor endHandleColor( RS_SETTINGS->readGraphicColor( RS_Settings::EndHandleColor));
-    QString layer_select_color(RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC"));
+	QColor endHandleColor( RS_SETTINGS->readGraphicColor( RS_Settings::EndHandleColor));
+
+	QString layer_select_color = RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC");
+	int antialiasing = RS_SETTINGS->readNumEntry("/Antialiasing");
     RS_SETTINGS->endGroup();
 
     layerWidget->setStyleSheet("selection-background-color: " + layer_select_color);
@@ -2657,7 +2659,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
         QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
         if (m) {
             QG_GraphicView* gv = m->getGraphicView();
-            if (gv) {
+			if (gv) {
                 gv->setBackground(color);
                 gv->setGridColor(gridColor);
                 gv->setMetaGridColor(metaGridColor);
@@ -2666,12 +2668,11 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
                 gv->setStartHandleColor(startHandleColor);
                 gv->setHandleColor(handleColor);
                 gv->setEndHandleColor(endHandleColor);
-//                gv->updateGrid();
+				gv->set_antialiasing(antialiasing?true:false);
                 gv->redraw(RS2::RedrawGrid);
             }
         }
     }
-
 }
 
 
