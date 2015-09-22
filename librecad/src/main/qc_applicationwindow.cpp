@@ -3766,6 +3766,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
             tb_custom->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
             connect(tools, SIGNAL(triggered(QAction*)), tb_custom, SLOT(slot_most_recent_action(QAction*)));
             addToolBar(Qt::TopToolBarArea, tb_custom);
+            list_tb.append(tb_custom);
         }
         else
         {
