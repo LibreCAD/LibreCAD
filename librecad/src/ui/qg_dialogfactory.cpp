@@ -1773,7 +1773,7 @@ bool QG_DialogFactory::requestTextDialog(RS_Text* text) {
  * Shows a dialog to edit pattern / hatch attributes of the given entity.
  */
 bool QG_DialogFactory::requestHatchDialog(RS_Hatch* hatch) {
-	if (hatch) return false;
+	if (hatch==nullptr) return false;
 
     RS_PATTERNLIST->init();
 
