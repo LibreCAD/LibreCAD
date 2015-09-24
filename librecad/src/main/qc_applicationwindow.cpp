@@ -3215,6 +3215,21 @@ void QC_ApplicationWindow::menus_and_toolbars()
     addToolBar(Qt::TopToolBarArea, tb_file);
     fileMenu = menu;
 
+    // <[~ Settings ~]>
+
+    menu = menuBar()->addMenu(tr("Settings"));
+    menu->setObjectName("settings_menu");
+
+    toolbar = new QToolBar("Settings", this);
+    toolbar->setSizePolicy(toolBarPolicy);
+    toolbar->setObjectName ("settings_toolbar" );
+    list_tb.append(toolbar);
+
+    add_action(menu, toolbar, map_a["OptionsGeneral"]);
+    add_action(menu, toolbar, map_a["OptionsDrawing"]);
+
+    addToolBar(Qt::TopToolBarArea, toolbar);
+
     // <[~ Edit ~]>
 
     menu = menuBar()->addMenu(tr("&Edit"));
@@ -3222,7 +3237,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     tb_edit = new QToolBar("Edit Operations", this);
     tb_edit->setSizePolicy(toolBarPolicy);
-    tb_edit->setObjectName ("EditTB" );
+    tb_edit->setObjectName("EditTB");
     list_tb.append(tb_edit);
 
     add_action(menu, tb_edit, map_a["EditKillAllActions"]);
@@ -3256,9 +3271,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     sub_menu->addAction(map_a["OrderRaise"]);
 
     // <[~ Options ~]>
-
-    menu->addAction(map_a["OptionsGeneral"]);
-    menu->addAction(map_a["OptionsDrawing"]);
 
     addToolBar(Qt::TopToolBarArea, tb_edit); //tr("Edit");
 
