@@ -797,25 +797,22 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) {
 		} else
 			return ret;
 
-        // find full command to confirm to user:
-        if(verbose){
-            for(auto const& p: mainCommands){
-                if(p.second==ret){
-                    if (RS_DIALOGFACTORY) {
-                        RS_DEBUG->print("RS_Commands::cmdToAction: commandMessage");
-                        //RS_DIALOGFACTORY->commandMessage(QObject::tr("Command: %1")
-                        //	.arg(full));
-                        RS_DIALOGFACTORY->commandMessage(QObject::tr("Command: %1 (%2)").arg(full).arg(p.first));
-                        //                                        RS_DialogFactory::instance()->commandMessage( QObject::tr("Command: %1").arg(full));
-                        RS_DEBUG->print("RS_Commands::cmdToAction: "
-                                        "commandMessage: ok");
-                    }
-                    return ret;
-                }
-            }
-            RS_DEBUG->print(QObject::tr("RS_Commands:: command not found: %1").arg(full).toStdString().c_str());
-        }
-        return ret;
+		if (!verbose) return ret;
+		// find full command to confirm to user:
+		for(auto const& p: mainCommands){
+			if(p.second==ret){
+				if (RS_DIALOGFACTORY) {
+					RS_DEBUG->print("RS_Commands::cmdToAction: commandMessage");
+					RS_DIALOGFACTORY->commandMessage(QObject::tr("Command: %1 (%2)").arg(full).arg(p.first));
+					//                                        RS_DialogFactory::instance()->commandMessage( QObject::tr("Command: %1").arg(full));
+					RS_DEBUG->print("RS_Commands::cmdToAction: "
+									"commandMessage: ok");
+				}
+				return ret;
+			}
+		}
+		RS_DEBUG->print(QObject::tr("RS_Commands:: command not found: %1").arg(full).toStdString().c_str());
+		return ret;
 }
 
 /**
