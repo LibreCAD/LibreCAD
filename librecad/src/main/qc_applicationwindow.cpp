@@ -3131,8 +3131,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QSizePolicy toolBarPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    QAction* action;
-    QMenu* menu;
     QMenu* sub_menu;
     QToolBar* toolbar;
     QToolButton* tool_button;
@@ -3167,15 +3165,17 @@ void QC_ApplicationWindow::menus_and_toolbars()
     tb_categories->hide();
     list_tb.append(tb_categories);
 
+    QMenuBar* menu_bar = menuBar();
+
     // <[~ File ~]>
 
-    menu = menuBar()->addMenu(tr("&File"));
-    menu->setObjectName("File");
+    QMenu* file_menu = new QMenu(tr("&File"), menu_bar);
+    file_menu->setObjectName("File");
 
-    tb_file = new QToolBar(tr("File Operations"), this);
-    tb_file->setSizePolicy(toolBarPolicy);
-    tb_file->setObjectName("FileTB");
-    list_tb.append(tb_file);
+    file_toolbar = new QToolBar(tr("File Operations"), this);
+    file_toolbar->setSizePolicy(toolBarPolicy);
+    file_toolbar->setObjectName("FileTB");
+    list_tb.append(file_toolbar);
 
     list_a
             << map_a["FileNew"]
@@ -3184,132 +3184,129 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << map_a["FileSave"]
             << map_a["FileSaveAs"];
 
-    menu->addActions(list_a);
-    tb_file->addActions(list_a);
+    file_menu->addActions(list_a);
+    file_toolbar->addActions(list_a);
 
-    sub_menu = menu->addMenu(QIcon(":/actions/fileimport.png"), tr("Import"));
+    sub_menu = file_menu->addMenu(QIcon(":/actions/fileimport.png"), tr("Import"));
     sub_menu->setObjectName("Import");
     sub_menu->addAction(map_a["DrawImage"]);
     sub_menu->addAction(map_a["BlocksImport"]);
 
-    sub_menu = menu->addMenu(QIcon(":/actions/fileexport.png"), tr("Export"));
+    sub_menu = file_menu->addMenu(QIcon(":/actions/fileexport.png"), tr("Export"));
     sub_menu->setObjectName("Export");
     sub_menu->addAction(map_a["FileExportMakerCam"]);
     sub_menu->addAction(map_a["FilePrintPDF"]);
     sub_menu->addAction(map_a["FileExport"]);
 
-    menu->addSeparator();
+    file_menu->addSeparator();
 
-    menu->addAction(map_a["FilePrint"]);
-    menu->addAction(map_a["FilePrintPreview"]);
-    tb_file->addAction(map_a["FilePrint"]);
-    tb_file->addAction(map_a["FilePrintPreview"]);
+    file_menu->addAction(map_a["FilePrint"]);
+    file_menu->addAction(map_a["FilePrintPreview"]);
+    file_toolbar->addAction(map_a["FilePrint"]);
+    file_toolbar->addAction(map_a["FilePrintPreview"]);
 
-    menu->addSeparator();
+    file_menu->addSeparator();
 
-    menu->addAction(map_a["FileClose"]);
-    menu->addAction(map_a["FileQuit"]);
+    file_menu->addAction(map_a["FileClose"]);
+    file_menu->addAction(map_a["FileQuit"]);
 
-    menu->addSeparator();
+    file_menu->addSeparator();
 
-    addToolBar(Qt::TopToolBarArea, tb_file);
-    fileMenu = menu;
+    addToolBar(Qt::TopToolBarArea, file_toolbar);
 
     // <[~ Settings ~]>
 
-    menu = menuBar()->addMenu(tr("Settings"));
-    menu->setObjectName("settings_menu");
+    QMenu* settings_menu = new QMenu(tr("Settings"), menu_bar);
+    settings_menu->setObjectName("settings_menu");
 
     toolbar = new QToolBar(tr("Settings"), this);
     toolbar->setSizePolicy(toolBarPolicy);
     toolbar->setObjectName ("settings_toolbar" );
     list_tb.append(toolbar);
 
-    add_action(menu, toolbar, map_a["OptionsGeneral"]);
-    add_action(menu, toolbar, map_a["OptionsDrawing"]);
+    add_action(settings_menu, toolbar, map_a["OptionsGeneral"]);
+    add_action(settings_menu, toolbar, map_a["OptionsDrawing"]);
 
     addToolBar(Qt::TopToolBarArea, toolbar);
 
     // <[~ Edit ~]>
 
-    menu = menuBar()->addMenu(tr("&Edit"));
-    menu->setObjectName("Edit");
+    QMenu* edit_menu = new QMenu(tr("&Edit"), menu_bar);
+    edit_menu->setObjectName("Edit");
 
     tb_edit = new QToolBar(tr("Edit Operations"), this);
     tb_edit->setSizePolicy(toolBarPolicy);
     tb_edit->setObjectName("EditTB");
     list_tb.append(tb_edit);
 
-    add_action(menu, tb_edit, map_a["EditKillAllActions"]);
+    add_action(edit_menu, tb_edit, map_a["EditKillAllActions"]);
 
     tb_edit->addSeparator();
-    menu->addSeparator();
+    edit_menu->addSeparator();
 
     undoButton = map_a["EditUndo"];
     redoButton = map_a["EditRedo"];
 
-    add_action(menu, tb_edit, undoButton);
-    add_action(menu, tb_edit, redoButton);
+    add_action(edit_menu, tb_edit, undoButton);
+    add_action(edit_menu, tb_edit, redoButton);
 
     tb_edit->addSeparator();
-    menu->addSeparator();
+    edit_menu->addSeparator();
 
-    add_action(menu, tb_edit, map_a["EditCut"]);
-    add_action(menu, tb_edit, map_a["EditCopy"]);
-    add_action(menu, tb_edit, map_a["EditPaste"]);
-    menu->addAction(map_a["ModifyDeleteQuick"]);
+    add_action(edit_menu, tb_edit, map_a["EditCut"]);
+    add_action(edit_menu, tb_edit, map_a["EditCopy"]);
+    add_action(edit_menu, tb_edit, map_a["EditPaste"]);
+    edit_menu->addAction(map_a["ModifyDeleteQuick"]);
 
-    menu->addSeparator();
+    edit_menu->addSeparator();
 
     // <[~ Order ~]>
 
-    sub_menu= menu->addMenu(tr("Draw &Order"));
+    sub_menu = edit_menu->addMenu(tr("Draw &Order"));
     sub_menu->setObjectName("Order");
     sub_menu->addAction(map_a["OrderBottom"]);
     sub_menu->addAction(map_a["OrderTop"]);
     sub_menu->addAction(map_a["OrderLower"]);
     sub_menu->addAction(map_a["OrderRaise"]);
 
-    // <[~ Options ~]>
-
-    addToolBar(Qt::TopToolBarArea, tb_edit); //tr("Edit");
+    addToolBar(Qt::TopToolBarArea, tb_edit);
 
     // <[~ View ~]>
 
-    menu = menuBar()->addMenu(tr("&View"));
-    menu->setObjectName("View");
+    QMenu* view_menu = new QMenu(tr("&View"), menu_bar);
+    view_menu->setObjectName("View");
 
     tb_zoom = new QToolBar(tr("Zoom Operations"), this);
     tb_zoom->setSizePolicy(toolBarPolicy);
     tb_zoom->setObjectName("ZoomTB");
     list_tb.append(tb_zoom);
 
-    add_action(menu, tb_zoom, map_a["ViewGrid"]);
+    add_action(view_menu, tb_zoom, map_a["ViewGrid"]);
 
     RS_SETTINGS->beginGroup("/Appearance");
     bool draftMode = (bool)RS_SETTINGS->readNumEntry("/DraftMode", 0);
     RS_SETTINGS->endGroup();
-    add_action(menu, tb_zoom, map_a["ViewDraft"]);
+    add_action(view_menu, tb_zoom, map_a["ViewDraft"]);
     map_a["ViewDraft"]->setChecked(draftMode);
 
-    menu->addSeparator();
+    view_menu->addSeparator();
     tb_zoom->addSeparator();
 
-    add_action(menu, tb_zoom, map_a["ZoomRedraw"]);
-    add_action(menu, tb_zoom, map_a["ZoomIn"]);
-    add_action(menu, tb_zoom, map_a["ZoomOut"]);
-    add_action(menu, tb_zoom, map_a["ZoomAuto"]);
+    add_action(view_menu, tb_zoom, map_a["ZoomRedraw"]);
+    add_action(view_menu, tb_zoom, map_a["ZoomIn"]);
+    add_action(view_menu, tb_zoom, map_a["ZoomOut"]);
+    add_action(view_menu, tb_zoom, map_a["ZoomAuto"]);
     previousZoom = map_a["ZoomPrevious"];
-    add_action(menu, tb_zoom, previousZoom);
-    add_action(menu, tb_zoom, map_a["ZoomWindow"]);
-    add_action(menu, tb_zoom, map_a["ZoomPan"]);
+    add_action(view_menu, tb_zoom, previousZoom);
+    add_action(view_menu, tb_zoom, map_a["ZoomWindow"]);
+    add_action(view_menu, tb_zoom, map_a["ZoomPan"]);
 
     addToolBar(Qt::TopToolBarArea, tb_zoom);
 
     // <[~ Select ~]>
 
-    menu = menuBar()->addMenu(tr("&Select"));
-    menu->setObjectName("Select");
+    QMenu* select_menu = new QMenu(tr("&Select"), menu_bar);
+    select_menu->setObjectName("Select");
 
     list_a.clear();
 
@@ -3325,12 +3322,12 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << map_a["SelectLayer"]
             << map_a["SelectInvert"];
 
-    menu->addActions(list_a);
+    select_menu->addActions(list_a);
 
     // <[~ Draw ~]>
 
-    menu = menuBar()->addMenu(tr("&Draw"));
-    menu->setObjectName("Draw");
+    QMenu* draw_menu = new QMenu(tr("&Draw"), menu_bar);
+    draw_menu->setObjectName("Draw");
 
     // <[~ Lines ~]>
 
@@ -3352,7 +3349,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << map_a["DrawLinePolygonCenCor"]
             << map_a["DrawLinePolygonCorCor"];
 
-    sub_menu= menu->addMenu(tr("&Line"));
+    sub_menu= draw_menu->addMenu(tr("&Line"));
     sub_menu->setObjectName("Line");
     sub_menu->addActions(list_a);
 
@@ -3378,7 +3375,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     // <[~ Circles ~]>
 
-    sub_menu= menu->addMenu(tr("&Circle"));
+    sub_menu= draw_menu->addMenu(tr("&Circle"));
     sub_menu->setObjectName("Circle");
 
     toolbar = new QToolBar(tr("Circle Tools"), this);
@@ -3418,7 +3415,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     // <[~ Curves ~]>
 
-    sub_menu= menu->addMenu(tr("&Curve"));
+    sub_menu= draw_menu->addMenu(tr("&Curve"));
     sub_menu->setObjectName("Curve");
 
     toolbar = new QToolBar(tr("Curve Tools"), this);
@@ -3457,7 +3454,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     // <[~ Ellipses ~]>
 
-    sub_menu= menu->addMenu(tr("&Ellipse"));
+    sub_menu= draw_menu->addMenu(tr("&Ellipse"));
     sub_menu->setObjectName("Ellipse");
 
     toolbar = new QToolBar(tr("Ellipse Tools"), this);
@@ -3493,7 +3490,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     // <[~ Polylines ~]>
 
-    sub_menu= menu->addMenu(tr("&Polyline"));
+    sub_menu= draw_menu->addMenu(tr("&Polyline"));
     sub_menu->setObjectName("Polyline");
 
     toolbar = new QToolBar(tr("Polyline Tools"), this);
@@ -3530,11 +3527,10 @@ void QC_ApplicationWindow::menus_and_toolbars()
     addToolBar(Qt::BottomToolBarArea, toolbar);
     toolbar->hide();
 
-    // Text:
-    menu = menuBar()->addMenu(tr("&Misc"));
-    sub_menu->setObjectName("MiscMenu");
-
     // <[~ Misc ~]>
+
+    QMenu* misc_menu = new QMenu(tr("&Misc"), menu_bar);
+    sub_menu->setObjectName("MiscMenu");
 
     toolbar = new QToolBar(tr("Misc Tools"), this);
     toolbar->setSizePolicy(toolBarPolicy);
@@ -3550,21 +3546,15 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << map_a["BlocksCreate"]
             << map_a["DrawPoint"];
 
-    menu->addActions(list_a);
+    misc_menu->addActions(list_a);
     toolbar->addActions(list_a);
 
     addToolBar(Qt::BottomToolBarArea, toolbar);
 
     // <[~ Dimension ~]>
 
-#ifdef __APPLE1__
-    QMenu* m = menu;
-    menu= m->addMenu(tr("&Dimension"));
-#else
-    menu = menuBar()->addMenu(tr("&Dimension"));
-#endif
-
-    menu->setObjectName("Dimension");
+    QMenu* dimension_menu = new QMenu(tr("&Dimension"), menu_bar);
+    dimension_menu->setObjectName("Dimension");
 
     toolbar = new QToolBar(tr("Dimension Tools"), this);
     toolbar->setSizePolicy(toolBarPolicy);
@@ -3588,7 +3578,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << map_a["DimAngular"]
             << map_a["DimLeader"];
 
-    menu->addActions(list_a);
+    dimension_menu->addActions(list_a);
     toolbar->addActions(list_a);
     tool_button->addActions(list_a);
 
@@ -3597,14 +3587,13 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_dimension->setWindowTitle(tr("Dimension"));
     dock_dimension->add_actions(list_a, columns, icon_size);
 
-
     addToolBar(Qt::BottomToolBarArea, toolbar);
     toolbar->hide();
 
     // <[~ Modify ~]>
 
-    menu = menuBar()->addMenu(tr("&Modify"));
-    menu->setObjectName("Modify");
+    QMenu* modify_menu = new QMenu(tr("&Modify"), menu_bar);
+    modify_menu->setObjectName("Modify");
 
     toolbar = new QToolBar(tr("Modify Tools"), this);
     toolbar->setSizePolicy(toolBarPolicy);
@@ -3640,7 +3629,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << map_a["BlocksExplode"]
             << map_a["ModifyDeleteQuick"];
 
-    menu->addActions(list_a);
+    modify_menu->addActions(list_a);
     toolbar->addActions(list_a);
     tool_button->addActions(list_a);
 
@@ -3654,8 +3643,8 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     // <[~ Snapping ~]>
 
-    menu = menuBar()->addMenu(tr("&Snap"));
-    menu->setObjectName("Snap");
+    QMenu* snap_menu = new QMenu(tr("&Snap"), menu_bar);
+    snap_menu->setObjectName("Snap");
 
     snapToolBar = new QG_SnapToolBar(tr("Snap Selection"),actionHandler, this);
     snapToolBar->setSizePolicy(toolBarPolicy);
@@ -3665,14 +3654,14 @@ void QC_ApplicationWindow::menus_and_toolbars()
     connect(this, SIGNAL(windowsChanged(bool)), snapToolBar, SLOT(setEnabled(bool)));
     this->addToolBar(snapToolBar);
 
-    menu->addActions(snapToolBar->actions());
+    snap_menu->addActions(snapToolBar->actions());
 
     addToolBar(Qt::BottomToolBarArea, snapToolBar);
 
     // <[~ Info ~]>
 
-    menu = menuBar()->addMenu(tr("&Info"));
-    menu->setObjectName("Info");
+    QMenu* info_menu = new QMenu(tr("&Info"), menu_bar);
+    info_menu->setObjectName("Info");
 
     toolbar = new QToolBar(tr("Info Tools"), this);
     toolbar->setSizePolicy(toolBarPolicy);
@@ -3693,7 +3682,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << map_a["InfoTotalLength"]
             << map_a["InfoArea"];
 
-    menu->addActions(list_a);
+    info_menu->addActions(list_a);
     toolbar->addActions(list_a);
     tool_button->addActions(list_a);
 
@@ -3707,8 +3696,8 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     // <[~ Layer ~]>
 
-    menu = menuBar()->addMenu(tr("&Layer"));
-    menu->setObjectName("Layer");
+    QMenu* layer_menu = new QMenu(tr("&Layer"), menu_bar);
+    layer_menu->setObjectName("Layer");
 
     list_a.clear();
 
@@ -3723,12 +3712,12 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << map_a["LayersTogglePrint"]
             << map_a["LayersToggleConstruction"];
 
-    menu->addActions(list_a);
+    layer_menu->addActions(list_a);
 
     // <[~ Block ~]>
 
-    menu = menuBar()->addMenu(tr("&Block"));
-    menu->setObjectName("Block");
+    QMenu* block_menu = new QMenu(tr("&Block"), menu_bar);
+    block_menu->setObjectName("Block");
 
     list_a.clear();
 
@@ -3745,7 +3734,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << map_a["BlocksCreate"]
             << map_a["BlocksExplode"];
 
-    menu->addActions(list_a);
+    block_menu->addActions(list_a);
 
     penToolBar = new QG_PenToolBar(tr("Pen Selection"), this);
     penToolBar->setSizePolicy(toolBarPolicy);
@@ -3788,77 +3777,69 @@ void QC_ApplicationWindow::menus_and_toolbars()
     }
 
 
-    // <[~ Toolbar Menu ~]>
+    // <[~ Toolbars Menu ~]>
 
-    menu = menuBar()->addMenu(tr("&Toolbars"));
-    menu->setObjectName("Toolbars");
+    QMenu* toolbars_menu = new QMenu(tr("&Toolbars"), menu_bar);
+    toolbars_menu->setObjectName("Toolbars");
 
     addToolBar(Qt::TopToolBarArea, optionWidget);
 
     foreach (QToolBar* tb, list_tb)
     {
-        menu->addAction(tb->toggleViewAction());
+        toolbars_menu->addAction(tb->toggleViewAction());
     }
 
     // <[~ DockWidgets ~]>
 
-    menu = menuBar()->addMenu(tr("&Dockwidgets"));
-    menu->setObjectName("Dockwidgets");
+    QMenu* dockwidgets_menu = new QMenu(tr("&Dockwidgets"), menu_bar);
+    dockwidgets_menu->setObjectName("Dockwidgets");
 
     tb_wigets = new QToolBar(tr("DockWidgets"), this);
     tb_wigets->setSizePolicy(toolBarPolicy);
     tb_wigets->setObjectName("DockWidgetsTB");
 
-    add_action(menu, tb_wigets, map_a["ViewStatusBar"]);
-    add_action(menu, tb_wigets, dock_block->toggleViewAction());
-    add_action(menu, tb_wigets, dock_library->toggleViewAction());
-    add_action(menu, tb_wigets, dock_command->toggleViewAction());
-    add_action(menu, tb_wigets, dock_layer->toggleViewAction());
+    add_action(dockwidgets_menu, tb_wigets, map_a["ViewStatusBar"]);
+    add_action(dockwidgets_menu, tb_wigets, dock_block->toggleViewAction());
+    add_action(dockwidgets_menu, tb_wigets, dock_library->toggleViewAction());
+    add_action(dockwidgets_menu, tb_wigets, dock_command->toggleViewAction());
+    add_action(dockwidgets_menu, tb_wigets, dock_layer->toggleViewAction());
 
-    menu->addSeparator();
+    dockwidgets_menu->addSeparator();
 
-    menu->addAction(dock_line->toggleViewAction());
-    menu->addAction(dock_polyline->toggleViewAction());
-    menu->addAction(dock_circle->toggleViewAction());
-    menu->addAction(dock_curve->toggleViewAction());
-    menu->addAction(dock_ellipse->toggleViewAction());
-    menu->addAction(dock_dimension->toggleViewAction());
-    menu->addAction(dock_info->toggleViewAction());
-    menu->addAction(dock_modify->toggleViewAction());
+    dockwidgets_menu->addAction(dock_line->toggleViewAction());
+    dockwidgets_menu->addAction(dock_polyline->toggleViewAction());
+    dockwidgets_menu->addAction(dock_circle->toggleViewAction());
+    dockwidgets_menu->addAction(dock_curve->toggleViewAction());
+    dockwidgets_menu->addAction(dock_ellipse->toggleViewAction());
+    dockwidgets_menu->addAction(dock_dimension->toggleViewAction());
+    dockwidgets_menu->addAction(dock_info->toggleViewAction());
+    dockwidgets_menu->addAction(dock_modify->toggleViewAction());
 
-    menu->addSeparator();
+    dockwidgets_menu->addSeparator();
 
     // tr("Focus on Command Line")
-    action = new QAction(tr("Focus on &Command Line"), this);
-    action->setIcon(QIcon(":/main/editclear.png"));
+    QAction* focus_a = new QAction(tr("Focus on &Command Line"), this);
+    focus_a->setIcon(QIcon(":/main/editclear.png"));
 
     //added commandline shortcuts, feature request# 3437106
     QList<QKeySequence> commandLineShortcuts;
     commandLineShortcuts<<QKeySequence(Qt::CTRL + Qt::Key_M)<<QKeySequence(Qt::Key_Colon)<<QKeySequence(Qt::Key_Space);
-    action->setShortcuts(commandLineShortcuts);
+    focus_a->setShortcuts(commandLineShortcuts);
 
-    connect(action, SIGNAL(triggered()), this, SLOT(slotFocusCommandLine()));
-    menu->addAction(action);
+    connect(focus_a, SIGNAL(triggered()), this, SLOT(slotFocusCommandLine()));
+    dockwidgets_menu->addAction(focus_a);
 
     addToolBar(Qt::BottomToolBarArea, tb_wigets);
 
-    windowsMenu = menuBar()->addMenu(tr("&Window"));
+    windowsMenu = new QMenu(tr("&Window"), menu_bar);
     windowsMenu->setObjectName("Window");
     connect(windowsMenu, SIGNAL(aboutToShow()),
             this, SLOT(slotWindowsMenuAboutToShow()));
 
-    // menuBar configuration
-    recentFiles.reset(new QG_RecentFiles(9));
-    openedFiles.clear();
-
     // <[~ Help ~]>
 
     helpAboutApp = new QAction(QIcon(QC_APP_ICON), tr("About"), this);
-
-    //helpAboutApp->zetStatusTip(tr("About the application"));
-    //helpAboutApp->setWhatsThis(tr("About\n\nAbout the application"));
-    connect(helpAboutApp, SIGNAL(triggered()),
-            this, SLOT(slotHelpAbout()));
+    connect(helpAboutApp, SIGNAL(triggered()), this, SLOT(slotHelpAbout()));
 
     helpManual = new QAction(QIcon(":/main/manual.png"), tr("&Manual"), this);
     connect(helpManual, SIGNAL(triggered()), this, SLOT(slotHelpManual()));
@@ -3867,12 +3848,12 @@ void QC_ApplicationWindow::menus_and_toolbars()
     connect(wiki_link, SIGNAL(triggered()), this, SLOT(goto_wiki()));
 
     // menuBar entry helpMenu
-    helpMenu = menuBar()->addMenu(tr("&Help"));
-    helpMenu->setObjectName("Help");
-    helpMenu->addAction(helpManual);
-    helpMenu->addAction(wiki_link);
-    helpMenu->addSeparator();
-    helpMenu->addAction(helpAboutApp);
+    QMenu* help_menu = new QMenu(tr("&Help"), menu_bar);
+    help_menu->setObjectName("Help");
+    help_menu->addAction(helpManual);
+    help_menu->addAction(wiki_link);
+    help_menu->addSeparator();
+    help_menu->addAction(helpAboutApp);
 
 #ifdef RS_SCRIPTING
     // Scripts menu:
@@ -3905,6 +3886,27 @@ void QC_ApplicationWindow::menus_and_toolbars()
     tabifyDockWidget(dock_dimension, dock_info);
     dock_dimension->raise();
     addDockWidget(Qt::LeftDockWidgetArea, dock_modify);
+
+    // <[~ MenuBar ~]>
+
+    menu_bar->addMenu(file_menu);
+    menu_bar->addMenu(settings_menu);
+    menu_bar->addMenu(edit_menu);
+    menu_bar->addMenu(view_menu);
+    menu_bar->addMenu(select_menu);
+    menu_bar->addMenu(draw_menu);
+    menu_bar->addMenu(dimension_menu);
+    menu_bar->addMenu(modify_menu);
+    menu_bar->addMenu(snap_menu);
+    menu_bar->addMenu(info_menu);
+    menu_bar->addMenu(layer_menu);
+    menu_bar->addMenu(block_menu);
+    menu_bar->addMenu(windowsMenu);
+    menu_bar->addMenu(help_menu);
+
+    // menuBar configuration
+    recentFiles.reset(new QG_RecentFiles(9));
+    openedFiles.clear();
 }
 
 

@@ -372,7 +372,6 @@ private:
         QS_Scripter* scripter;
 #endif
 
-    QMenu* fileMenu;
     QMenu* windowsMenu;
     QMenu* scriptMenu;
     QMenu* helpMenu;
@@ -382,7 +381,7 @@ private:
     /** the main toolbars */
     QToolBar* tb_wigets;
     QToolBar* circleToolBar;
-    QToolBar* tb_file;
+    QToolBar* file_toolbar;
     QToolBar* tb_edit;
     QToolBar* tb_zoom;
     LC_CustomToolbar* tb_custom;
