@@ -3156,9 +3156,9 @@ void QC_ApplicationWindow::menus_and_toolbars()
     QActionGroup* tools = new QActionGroup(this);
     connect(tools, SIGNAL(triggered(QAction*)), this, SLOT(slot_set_action(QAction*)));
 
-    LC_ActionFactory a_factory(actionHandler, this, tools);
+    LC_ActionFactory a_factory;
     QMap<QString, QAction*> map_a;
-    map_a = a_factory.action_map();
+    map_a = a_factory.action_map(actionHandler, this, tools);
 
     QToolBar* tb_categories = new QToolBar("Categories", this);
     tb_categories->setSizePolicy(toolBarPolicy);

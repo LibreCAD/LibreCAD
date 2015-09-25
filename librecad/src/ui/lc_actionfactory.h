@@ -26,7 +26,6 @@
 #define LC_ACTIONFACTORY_H
 
 #include <QAction>
-#include <QMainWindow>
 #include <QActionGroup>
 
 #include "qg_actionhandler.h"
@@ -37,18 +36,9 @@ class LC_ActionFactory : public QObject
     Q_OBJECT
 
 public:
-
-    LC_ActionFactory(QG_ActionHandler* ah, QMainWindow* mw, QActionGroup* group);
+    LC_ActionFactory();
     virtual ~LC_ActionFactory() = default;
-
-    QMap<QString, QAction*> action_map();
-
-private:
-
-    QG_ActionHandler* action_handler;
-    QMainWindow* main_window;
-    QActionGroup* tools;
-
+    QMap<QString, QAction*> action_map(QG_ActionHandler* action_handler, QObject* main_window, QActionGroup* tools);
 };
 
 #endif

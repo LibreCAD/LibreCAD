@@ -30,15 +30,10 @@
 
 #include "lc_actionfactory.h"
 
-LC_ActionFactory::LC_ActionFactory(QG_ActionHandler* ah, QMainWindow* mw, QActionGroup* group):
-    action_handler(ah),
-    main_window(mw),
-    tools(group)
-{}
+LC_ActionFactory::LC_ActionFactory() {}
 
-QMap<QString, QAction*> LC_ActionFactory::action_map()
+QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_handler, QObject* main_window, QActionGroup* tools)
 {
-
     QMap<QString, QAction*> a_map;
     QAction* action;
 
@@ -979,7 +974,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map()
     #ifdef __APPLE__
      tr("&Preferences"),
     #else
-     tr("&Application Preferences")+"...",
+     tr("&Application Preferences"),
     #endif
      main_window);
 
