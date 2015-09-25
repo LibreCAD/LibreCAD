@@ -3171,6 +3171,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QMenu* file_menu = new QMenu(tr("&File"), menu_bar);
     file_menu->setObjectName("File");
+    file_menu->setTearOffEnabled(true);
 
     file_toolbar = new QToolBar(tr("File Operations"), this);
     file_toolbar->setSizePolicy(toolBarPolicy);
@@ -3218,6 +3219,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QMenu* settings_menu = new QMenu(tr("Settings"), menu_bar);
     settings_menu->setObjectName("settings_menu");
+    settings_menu->setTearOffEnabled(true);
 
     toolbar = new QToolBar(tr("Settings"), this);
     toolbar->setSizePolicy(toolBarPolicy);
@@ -3233,6 +3235,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QMenu* edit_menu = new QMenu(tr("&Edit"), menu_bar);
     edit_menu->setObjectName("Edit");
+    edit_menu->setTearOffEnabled(true);
 
     tb_edit = new QToolBar(tr("Edit Operations"), this);
     tb_edit->setSizePolicy(toolBarPolicy);
@@ -3275,6 +3278,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QMenu* view_menu = new QMenu(tr("&View"), menu_bar);
     view_menu->setObjectName("View");
+    view_menu->setTearOffEnabled(true);
 
     tb_zoom = new QToolBar(tr("Zoom Operations"), this);
     tb_zoom->setSizePolicy(toolBarPolicy);
@@ -3307,6 +3311,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QMenu* select_menu = new QMenu(tr("&Select"), menu_bar);
     select_menu->setObjectName("Select");
+    select_menu->setTearOffEnabled(true);
 
     list_a.clear();
 
@@ -3328,6 +3333,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QMenu* draw_menu = new QMenu(tr("&Draw"), menu_bar);
     draw_menu->setObjectName("Draw");
+    draw_menu->setTearOffEnabled(true);
 
     // <[~ Lines ~]>
 
@@ -3530,7 +3536,8 @@ void QC_ApplicationWindow::menus_and_toolbars()
     // <[~ Misc ~]>
 
     QMenu* misc_menu = new QMenu(tr("&Misc"), menu_bar);
-    sub_menu->setObjectName("MiscMenu");
+    misc_menu->setObjectName("MiscMenu");
+    misc_menu->setTearOffEnabled(true);
 
     toolbar = new QToolBar(tr("Misc Tools"), this);
     toolbar->setSizePolicy(toolBarPolicy);
@@ -3555,6 +3562,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QMenu* dimension_menu = new QMenu(tr("&Dimension"), menu_bar);
     dimension_menu->setObjectName("Dimension");
+    dimension_menu->setTearOffEnabled(true);
 
     toolbar = new QToolBar(tr("Dimension Tools"), this);
     toolbar->setSizePolicy(toolBarPolicy);
@@ -3594,6 +3602,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QMenu* modify_menu = new QMenu(tr("&Modify"), menu_bar);
     modify_menu->setObjectName("Modify");
+    modify_menu->setTearOffEnabled(true);
 
     toolbar = new QToolBar(tr("Modify Tools"), this);
     toolbar->setSizePolicy(toolBarPolicy);
@@ -3645,6 +3654,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QMenu* snap_menu = new QMenu(tr("&Snap"), menu_bar);
     snap_menu->setObjectName("Snap");
+    snap_menu->setTearOffEnabled(true);
 
     snapToolBar = new QG_SnapToolBar(tr("Snap Selection"),actionHandler, this);
     snapToolBar->setSizePolicy(toolBarPolicy);
@@ -3662,6 +3672,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QMenu* info_menu = new QMenu(tr("&Info"), menu_bar);
     info_menu->setObjectName("Info");
+    info_menu->setTearOffEnabled(true);
 
     toolbar = new QToolBar(tr("Info Tools"), this);
     toolbar->setSizePolicy(toolBarPolicy);
@@ -3698,6 +3709,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QMenu* layer_menu = new QMenu(tr("&Layer"), menu_bar);
     layer_menu->setObjectName("Layer");
+    layer_menu->setTearOffEnabled(true);
 
     list_a.clear();
 
@@ -3718,6 +3730,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QMenu* block_menu = new QMenu(tr("&Block"), menu_bar);
     block_menu->setObjectName("Block");
+    block_menu->setTearOffEnabled(true);
 
     list_a.clear();
 
@@ -3781,6 +3794,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QMenu* toolbars_menu = new QMenu(tr("&Toolbars"), menu_bar);
     toolbars_menu->setObjectName("Toolbars");
+    toolbars_menu->setTearOffEnabled(true);
 
     addToolBar(Qt::TopToolBarArea, optionWidget);
 
@@ -3793,6 +3807,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QMenu* dockwidgets_menu = new QMenu(tr("&Dockwidgets"), menu_bar);
     dockwidgets_menu->setObjectName("Dockwidgets");
+    dockwidgets_menu->setTearOffEnabled(true);
 
     tb_wigets = new QToolBar(tr("DockWidgets"), this);
     tb_wigets->setSizePolicy(toolBarPolicy);
@@ -3831,8 +3846,12 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     addToolBar(Qt::BottomToolBarArea, tb_wigets);
 
+    // <[~ Windows ~]>
+
     windowsMenu = new QMenu(tr("&Window"), menu_bar);
     windowsMenu->setObjectName("Window");
+    windowsMenu->setTearOffEnabled(true);
+
     connect(windowsMenu, SIGNAL(aboutToShow()),
             this, SLOT(slotWindowsMenuAboutToShow()));
 
@@ -3850,6 +3869,8 @@ void QC_ApplicationWindow::menus_and_toolbars()
     // menuBar entry helpMenu
     QMenu* help_menu = new QMenu(tr("&Help"), menu_bar);
     help_menu->setObjectName("Help");
+    help_menu->setTearOffEnabled(true);
+
     help_menu->addAction(helpManual);
     help_menu->addAction(wiki_link);
     help_menu->addSeparator();
@@ -3895,6 +3916,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     menu_bar->addMenu(view_menu);
     menu_bar->addMenu(select_menu);
     menu_bar->addMenu(draw_menu);
+    menu_bar->addMenu(misc_menu);
     menu_bar->addMenu(dimension_menu);
     menu_bar->addMenu(modify_menu);
     menu_bar->addMenu(snap_menu);
