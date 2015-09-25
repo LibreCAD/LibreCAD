@@ -202,7 +202,6 @@ void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e) {
         if (checkCommand("help", c)) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
-        e->accept();
             return;
         }
         break;
@@ -210,14 +209,12 @@ void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e) {
     case SetEndpoint:
         if (checkCommand("close", c)) {
             close();
-        e->accept();
             updateMouseButtonHints();
             return;
         }
 
         if (checkCommand("undo", c)) {
             undo();
-        e->accept();
             updateMouseButtonHints();
             return;
         }
@@ -228,10 +225,10 @@ void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e) {
     }
     if (checkCommand("redo", c)) {
         redo();
-        e->accept();
         updateMouseButtonHints();
         return;
-    }
+	}
+	e->accept();
     //    RS_DEBUG->print("RS_ActionDrawLine::commandEvent: OK");
 }
 
