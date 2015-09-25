@@ -794,7 +794,8 @@ RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) {
                 ret = mainCommands[cmd];
         } else if ( shortCommands.count(cmd) ) {
                 ret = shortCommands[cmd];
-        }
+		} else
+			return ret;
 
         // find full command to confirm to user:
         if(verbose){
@@ -892,11 +893,11 @@ QString RS_Commands::command(const QString& cmd) {
 bool RS_Commands::checkCommand(const QString& cmd, const QString& str,
                                RS2::ActionType /*action*/) {
 
-    QString&& strl = str.toLower();
-    QString&& cmdLower = cmd.toLower();
+	QString const& strl = str.toLower();
+	QString const& cmdLower = cmd.toLower();
     auto it = instance()->cmdTranslation.find(cmdLower);
     if(it != instance()->cmdTranslation.end()){
-        RS2::ActionType type0=instance()->cmdToAction(it->second);
+		RS2::ActionType type0=instance()->cmdToAction(it->second, false);
         if( type0  != RS2::ActionNone ) {
             return  type0 ==instance()->cmdToAction(strl);
         }
