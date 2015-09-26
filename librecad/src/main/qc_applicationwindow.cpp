@@ -3348,6 +3348,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << map_a["DrawLinePolygonCorCor"];
 
     sub_menu= draw_menu->addMenu(tr("&Line"));
+    sub_menu->setIcon(QIcon(":/extui/menuline.png"));
     sub_menu->setObjectName("Line");
     sub_menu->addActions(list_a);
 
@@ -3372,6 +3373,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     // <[~ Circles ~]>
 
     sub_menu= draw_menu->addMenu(tr("&Circle"));
+    sub_menu->setIcon(QIcon(":/extui/menucircle.png"));
     sub_menu->setObjectName("Circle");
 
     QToolBar* circle_toolbar = new QToolBar(tr("Circle"), this);
@@ -3409,7 +3411,8 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     // <[~ Curves ~]>
 
-    sub_menu= draw_menu->addMenu(tr("&Curve"));
+    sub_menu = draw_menu->addMenu(tr("&Curve"));
+    sub_menu->setIcon(QIcon(":/extui/linesfree.png"));
     sub_menu->setObjectName("Curve");
 
     QToolBar* curve_toolbar = new QToolBar(tr("Curve"), this);
@@ -3446,6 +3449,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     // <[~ Ellipses ~]>
 
     sub_menu= draw_menu->addMenu(tr("&Ellipse"));
+    sub_menu->setIcon(QIcon(":/extui/menuellipse.png"));
     sub_menu->setObjectName("Ellipse");
 
     QToolBar* ellipse_toolbar = new QToolBar(tr("Ellipse"), this);
@@ -3480,6 +3484,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     // <[~ Polylines ~]>
 
     sub_menu= draw_menu->addMenu(tr("&Polyline"));
+    sub_menu->setIcon(QIcon(":/extui/menupolyline.png"));
     sub_menu->setObjectName("Polyline");
 
     QToolBar* polyline_toolbar = new QToolBar(tr("Polyline"), this);
