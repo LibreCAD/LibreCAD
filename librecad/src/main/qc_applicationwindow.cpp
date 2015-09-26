@@ -3169,7 +3169,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     QToolBar* categories_toolbar = new QToolBar(tr("Categories"), this);
     categories_toolbar->setSizePolicy(toolBarPolicy);
     categories_toolbar->setObjectName("categories_toolbar");
-    addToolBar(Qt::BottomToolBarArea, categories_toolbar);
     categories_toolbar->hide();
 
     // <[~ File ~]>
@@ -3181,7 +3180,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     file_toolbar = new QToolBar(tr("File"), this);
     file_toolbar->setSizePolicy(toolBarPolicy);
     file_toolbar->setObjectName("file_toolbar");
-
 
     list_a
             << map_a["FileNew"]
@@ -3218,8 +3216,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     file_menu->addSeparator();
 
-    addToolBar(Qt::TopToolBarArea, file_toolbar);
-
     // <[~ Settings ~]>
 
     QMenu* settings_menu = new QMenu(tr("Settings"), menu_bar);
@@ -3232,8 +3228,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     add_action(settings_menu, settings_toolbar, map_a["OptionsGeneral"]);
     add_action(settings_menu, settings_toolbar, map_a["OptionsDrawing"]);
-
-    addToolBar(Qt::TopToolBarArea, settings_toolbar);
 
     // <[~ Edit ~]>
 
@@ -3275,8 +3269,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     sub_menu->addAction(map_a["OrderLower"]);
     sub_menu->addAction(map_a["OrderRaise"]);
 
-    addToolBar(Qt::TopToolBarArea, edit_toolbar);
-
     // <[~ View ~]>
 
     QMenu* view_menu = new QMenu(tr("&View"), menu_bar);
@@ -3306,8 +3298,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     add_action(view_menu, view_toolbar, previousZoom);
     add_action(view_menu, view_toolbar, map_a["ZoomWindow"]);
     add_action(view_menu, view_toolbar, map_a["ZoomPan"]);
-
-    addToolBar(Qt::TopToolBarArea, view_toolbar);
 
     // <[~ Select ~]>
 
@@ -3377,7 +3367,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_line->setWindowTitle(tr("Line"));
     dock_line->add_actions(list_a, columns, icon_size);
 
-    addToolBar(Qt::BottomToolBarArea, line_toolbar);
     line_toolbar->hide();
 
     // <[~ Circles ~]>
@@ -3416,7 +3405,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_circle->setWindowTitle(tr("Circle"));
     dock_circle->add_actions(list_a, columns, icon_size);
 
-    addToolBar(Qt::BottomToolBarArea, circle_toolbar);
     circle_toolbar->hide();
 
     // <[~ Curves ~]>
@@ -3453,8 +3441,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_curve->setWindowTitle(tr("Curve"));
     dock_curve->add_actions(list_a, columns, icon_size);
 
-
-    addToolBar(Qt::BottomToolBarArea, curve_toolbar);
     curve_toolbar->hide();
 
     // <[~ Ellipses ~]>
@@ -3489,7 +3475,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_ellipse->setWindowTitle(tr("Ellipse"));
     dock_ellipse->add_actions(list_a, columns, icon_size);
 
-    addToolBar(Qt::BottomToolBarArea, ellipse_toolbar);
     ellipse_toolbar->hide();
 
     // <[~ Polylines ~]>
@@ -3527,7 +3512,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_polyline->setWindowTitle(tr("Polyline"));
     dock_polyline->add_actions(list_a, columns, icon_size);
 
-    addToolBar(Qt::BottomToolBarArea, polyline_toolbar);
     polyline_toolbar->hide();
 
     // <[~ Misc ~]>
@@ -3551,8 +3535,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     misc_menu->addActions(list_a);
     misc_toolbar->addActions(list_a);
-
-    addToolBar(Qt::BottomToolBarArea, misc_toolbar);
 
     // <[~ Dimension ~]>
 
@@ -3590,7 +3572,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_dimension->setWindowTitle(tr("Dimension"));
     dock_dimension->add_actions(list_a, columns, icon_size);
 
-    addToolBar(Qt::BottomToolBarArea, dimension_toolbar);
     dimension_toolbar->hide();
 
     // <[~ Modify ~]>
@@ -3641,7 +3622,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_modify->setWindowTitle(tr("Modify"));
     dock_modify->add_actions(list_a, columns, icon_size);
 
-    addToolBar(Qt::BottomToolBarArea, modify_toolbar);
     modify_toolbar->hide();
 
     // <[~ Snapping ~]>
@@ -3655,11 +3635,8 @@ void QC_ApplicationWindow::menus_and_toolbars()
     snapToolBar->setObjectName("snap_toolbar" );
 
     connect(this, SIGNAL(windowsChanged(bool)), snapToolBar, SLOT(setEnabled(bool)));
-    this->addToolBar(snapToolBar);
 
     snap_menu->addActions(snapToolBar->actions());
-
-    addToolBar(Qt::BottomToolBarArea, snapToolBar);
 
     // <[~ Info ~]>
 
@@ -3694,7 +3671,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_info->setWindowTitle(tr("Info"));
     dock_info->add_actions(list_a, columns, icon_size);
 
-    addToolBar(Qt::BottomToolBarArea, info_toolbar);
     info_toolbar->hide();
 
     // <[~ Layer ~]>
@@ -3748,8 +3724,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
     this, SLOT(slotPenChanged(RS_Pen)));
 
-    addToolBar(Qt::TopToolBarArea, penToolBar);
-
     // <[~ Tool Options ~]>
 
     optionWidget = new QToolBar(tr("Tool Options"), this);
@@ -3777,8 +3751,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
             RS_SETTINGS->writeEntry("/Paths/CustomToolbar", QString::null);
         }
     }
-
-    addToolBar(Qt::TopToolBarArea, optionWidget);
 
     // <[~ DockWidgets ~]>
 
@@ -3820,8 +3792,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     connect(focus_a, SIGNAL(triggered()), this, SLOT(slotFocusCommandLine()));
     dockwidgets_menu->addAction(focus_a);
-
-    addToolBar(Qt::BottomToolBarArea, dockwidgets_toolbar);
 
     // <[~ Windows ~]>
 
@@ -3889,7 +3859,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_dimension->raise();
     addDockWidget(Qt::LeftDockWidgetArea, dock_modify);
 
-    // <[~ Toolbars ~]>
+    // <[~ Toolbars Menu~]>
 
     toolbars_menu->addAction(categories_toolbar->toggleViewAction());
     toolbars_menu->addAction(file_toolbar->toggleViewAction());
@@ -3910,7 +3880,28 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbars_menu->addAction(dockwidgets_toolbar->toggleViewAction());
     toolbars_menu->addAction(optionWidget->toggleViewAction());
 
-    // <[~ MenuBar ~]>
+    // <[~ Toolbars Layout~]>
+
+    addToolBar(Qt::BottomToolBarArea, categories_toolbar);
+    addToolBar(Qt::TopToolBarArea, file_toolbar);
+    addToolBar(Qt::TopToolBarArea, edit_toolbar);
+    addToolBar(Qt::TopToolBarArea, view_toolbar);
+    addToolBar(Qt::BottomToolBarArea, line_toolbar);
+    addToolBar(Qt::TopToolBarArea, settings_toolbar);
+    addToolBar(Qt::BottomToolBarArea, circle_toolbar);
+    addToolBar(Qt::BottomToolBarArea, curve_toolbar);
+    addToolBar(Qt::BottomToolBarArea, ellipse_toolbar);
+    addToolBar(Qt::BottomToolBarArea, polyline_toolbar);
+    addToolBar(Qt::BottomToolBarArea, misc_toolbar);
+    addToolBar(Qt::BottomToolBarArea, dimension_toolbar);
+    addToolBar(Qt::BottomToolBarArea, modify_toolbar);
+    addToolBar(Qt::BottomToolBarArea, snapToolBar);
+    addToolBar(Qt::BottomToolBarArea, info_toolbar);
+    addToolBar(Qt::TopToolBarArea, penToolBar);
+    addToolBar(Qt::TopToolBarArea, optionWidget);
+    addToolBar(Qt::BottomToolBarArea, dockwidgets_toolbar);
+
+    // <[~ MenuBar Layout~]>
 
     menu_bar->addMenu(file_menu);
     menu_bar->addMenu(settings_menu);
