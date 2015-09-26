@@ -166,8 +166,6 @@ void RS_DimLinear::updateDim(bool autoText) {
     // extension line extension (DIMEXE)
     double dimexe = getExtensionLineExtension()*dimscale;
 
-    RS_LineData ld;
-
     // direction of dimension line
 	RS_Vector dirDim = RS_Vector::polar(100.0, edata.angle);
 
@@ -230,17 +228,15 @@ void RS_DimLinear::updateDim(bool autoText) {
            RS2::LineByBlock);
 
     // extension lines:
-    ld = RS_LineData(edata.extensionPoint1+vDimexo1,
-                     dimP1+vDimexe1);
-    RS_Line* line = new RS_Line(this, ld);
+	RS_Line* line = new RS_Line{this,
+			edata.extensionPoint1+vDimexo1, dimP1+vDimexe1};
     line->setPen(pen);
 //    line->setPen(RS_Pen(RS2::FlagInvalid));
 	line->setLayer(nullptr);
     addEntity(line);
-    ld = RS_LineData(edata.extensionPoint2+vDimexo2,
-                     dimP2+vDimexe2);
     //data.definitionPoint+vDimexe2);
-    line = new RS_Line(this, ld);
+	line = new RS_Line{this,
+			edata.extensionPoint2+vDimexo2, dimP2+vDimexe2};
     line->setPen(pen);
 //    line->setPen(RS_Pen(RS2::FlagInvalid));
 	line->setLayer(nullptr);

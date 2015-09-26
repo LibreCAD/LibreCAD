@@ -300,8 +300,8 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
 	if(normal.dotP(disp)>0.) normal *= -1.;
     if(mirror) normal *= -1.;
 							   
-        RS_Line directrix(NULL,RS_LineData(line1->getStartpoint()+normal,
-                                           line1->getEndpoint()+normal));
+		RS_Line directrix{line1->getStartpoint()+normal,
+										   line1->getEndpoint()+normal};
         LC_Quadratic lc0(&directrix,circle0->getCenter());
         *this = lc0;
         return;

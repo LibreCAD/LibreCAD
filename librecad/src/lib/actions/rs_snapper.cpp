@@ -701,22 +701,28 @@ void RS_Snapper::drawSnapper() {
                                     direction2=RS_Vector(M_PI*5./6.)*l;
                                 }
                                 RS_Vector center(graphicView->toGui(snapCoord));
-								RS_OverlayLine *line=new RS_OverlayLine(nullptr,RS_LineData(center-direction1,center+direction1));
+								RS_OverlayLine *line=new RS_OverlayLine(nullptr,
+								{center-direction1,center+direction1});
                                 line->setPen(crossHairPen);
                                 container->addEntity(line);
-								line=new RS_OverlayLine(nullptr,RS_LineData(center-direction2,center+direction2));
+								line=new RS_OverlayLine(nullptr,
+								{center-direction2,center+direction2});
                                 line->setPen(crossHairPen);
                                 container->addEntity(line);
                             }else{//orthogonal crosshair
 
 
-								RS_OverlayLine *line=new RS_OverlayLine(nullptr, RS_LineData(RS_Vector(0, graphicView->toGuiY(snapCoord.y)),
-                                                                                          RS_Vector(graphicView->getWidth(), graphicView->toGuiY(snapCoord.y))));
+								RS_OverlayLine *line=new RS_OverlayLine(nullptr,
+								{{0., graphicView->toGuiY(snapCoord.y)},
+								 {double(graphicView->getWidth()), graphicView->toGuiY(snapCoord.y)}
+																		});
                                 line->setPen(crossHairPen);
                                 container->addEntity(line);
 
-								line=new RS_OverlayLine(nullptr, RS_LineData(RS_Vector(graphicView->toGuiX(snapCoord.x),0),
-                                                                          RS_Vector(graphicView->toGuiX(snapCoord.x), graphicView->getHeight())));
+								line=new RS_OverlayLine(nullptr,
+								{{graphicView->toGuiX(snapCoord.x),0.},
+								 {graphicView->toGuiX(snapCoord.x),
+								  double(graphicView->getHeight())}});
                                 line->setPen(crossHairPen);
                                 container->addEntity(line);
                             }
@@ -727,20 +733,24 @@ void RS_Snapper::drawSnapper() {
         }
         if (snapCoord.valid && snapCoord!=snapSpot) {
 
-						RS_OverlayLine *line=new RS_OverlayLine(nullptr, RS_LineData(graphicView->toGui(snapSpot)+RS_Vector(-5,0),
-                                                                                                                                          graphicView->toGui(snapSpot)+RS_Vector(-1,4)));
+						RS_OverlayLine *line=new RS_OverlayLine(nullptr,
+						{graphicView->toGui(snapSpot)+RS_Vector{-5.,0.},
+						 graphicView->toGui(snapSpot)+RS_Vector{-1.,4.}});
                         line->setPen(crossHairPen);
                         container->addEntity(line);
-						line=new RS_OverlayLine(nullptr, RS_LineData(graphicView->toGui(snapSpot)+RS_Vector(0,5),
-                                                                                                                                          graphicView->toGui(snapSpot)+RS_Vector(4,1)));
+						line=new RS_OverlayLine(nullptr,
+						{graphicView->toGui(snapSpot)+RS_Vector{0.,5.},
+						 graphicView->toGui(snapSpot)+RS_Vector{4.,1.}});
                         line->setPen(crossHairPen);
                         container->addEntity(line);
-						line=new RS_OverlayLine(nullptr, RS_LineData(graphicView->toGui(snapSpot)+RS_Vector(5,0),
-                                                                                                                                          graphicView->toGui(snapSpot)+RS_Vector(1,-4)));
+						line=new RS_OverlayLine(nullptr,
+						{graphicView->toGui(snapSpot)+RS_Vector{5.,0.},
+						 graphicView->toGui(snapSpot)+RS_Vector{1.,-4.}});
                         line->setPen(crossHairPen);
                         container->addEntity(line);
-						line=new RS_OverlayLine(nullptr, RS_LineData(graphicView->toGui(snapSpot)+RS_Vector(0,-5),
-                                                                                                                                          graphicView->toGui(snapSpot)+RS_Vector(-4,-1)));
+						line=new RS_OverlayLine(nullptr,
+						{graphicView->toGui(snapSpot)+RS_Vector{0.,-5.},
+						 graphicView->toGui(snapSpot)+RS_Vector{-4.,-1.}});
                         line->setPen(crossHairPen);
                         container->addEntity(line);
 

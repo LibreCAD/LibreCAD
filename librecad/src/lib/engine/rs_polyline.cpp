@@ -218,12 +218,12 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
 
     // create line for the polyline:
     if (fabs(bulge)<RS_TOLERANCE) {
-                if (prepend==false) {
-                entity = new RS_Line(this, RS_LineData(data.endpoint, v));
-                }
-                else {
-                entity = new RS_Line(this, RS_LineData(v, data.startpoint));
-                }
+		if (prepend) {
+			entity = new RS_Line{v, data.startpoint};
+		}
+		else {
+			entity = new RS_Line{data.endpoint, v};
+		}
         entity->setSelected(isSelected());
         entity->setPen(RS_Pen(RS2::FlagInvalid));
 		entity->setLayer(nullptr);

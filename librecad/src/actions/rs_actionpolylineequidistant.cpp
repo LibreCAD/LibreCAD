@@ -59,7 +59,7 @@ void RS_ActionPolylineEquidistant::init(int status) {
  * Modify newEntity to parellel of orgEntity at distance dist
  * If dist is positive the offset is in left else in right
  * Bot newEntity and orgEntity are the same type of entity
- * if not return NULL pointer
+ * if not return nullptr pointer
  *
  * @retval RS_Entity* of parellel entity
  *
@@ -75,7 +75,7 @@ RS_Entity* RS_ActionPolylineEquidistant::calculateOffset(RS_Entity* newEntity,RS
         else
             r = r0 - dist;
         if(r < 0)
-            return NULL;
+			return nullptr;
         arc->setData(((RS_Arc*)orgEntity)->getData());
         arc->setRadius(r);
         arc->calculateEndpoints();
@@ -142,10 +142,11 @@ bool RS_ActionPolylineEquidistant::makeContour() {
         neg = -1.0;
 
     // Create new helper entities
-    RS_Line line1(NULL, RS_LineData(RS_Vector(true), RS_Vector(true)));//current line
-    RS_Line lineFirst(NULL, RS_LineData(RS_Vector(true), RS_Vector(true)));//previous line
-    RS_Arc arc1(NULL, RS_ArcData(RS_Vector(true), 0,0,0,false));//current arc
-    RS_Arc arcFirst(NULL, RS_ArcData(RS_Vector(true), 0,0,0,false));//previous arc
+	RS_Vector const origin{0.,0.};
+	RS_Line line1{origin, origin};//current line
+	RS_Line lineFirst{origin, origin};//previous line
+	RS_Arc arc1(nullptr, RS_ArcData(origin, 0,0,0,false));//current arc
+	RS_Arc arcFirst(nullptr, RS_ArcData(origin, 0,0,0,false));//previous arc
 
     for (int num=1; num<=number || (number==0 && num<=1); num++) {
         RS_Polyline* newPolyline = new RS_Polyline(container);
@@ -157,7 +158,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
         double bulge = 0.0;
         RS_Entity* en;
         RS_Entity* prevEntity = entities.last();
-        RS_Entity* currEntity=NULL;
+		RS_Entity* currEntity=nullptr;
         for (int i = 0; i < entities.size(); ++i) {
             en = entities.at(i);
             RS_Vector v(false);
@@ -197,7 +198,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                     double dess = currEntity->getStartpoint().distanceTo(prevEntity->getEndpoint());
                     if (dess > 1.0e-12) {
                         newPolyline->addVertex(v, bulge);
-                        prevEntity = NULL;
+						prevEntity = nullptr;
                         break;
                     }
                 }
@@ -282,7 +283,7 @@ void RS_ActionPolylineEquidistant::trigger() {
 
                 makeContour();
 
-                originalEntity = NULL;
+				originalEntity = nullptr;
                 targetPoint = RS_Vector(false);
                 bRightSide = false;
                 setStatus(ChooseEntity);
@@ -301,7 +302,7 @@ void RS_ActionPolylineEquidistant::mouseReleaseEvent(QMouseEvent* e) {
                 switch (getStatus()) {
                 case ChooseEntity:
                         originalEntity = catchEntity(e);
-                        if (originalEntity==NULL) {
+						if (originalEntity==nullptr) {
                                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
                         } else if (originalEntity->rtti()!=RS2::EntityPolyline) {
 

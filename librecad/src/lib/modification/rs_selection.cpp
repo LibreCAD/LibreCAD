@@ -151,7 +151,7 @@ void RS_Selection::selectWindow(const RS_Vector& v1, const RS_Vector& v2,
 void RS_Selection::selectIntersected(const RS_Vector& v1, const RS_Vector& v2,
                                      bool select) {
 
-    RS_Line line(NULL, RS_LineData(v1, v2));
+	RS_Line line{v1, v2};
     bool inters;
 
 	for(auto e: *container){

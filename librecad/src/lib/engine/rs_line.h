@@ -36,14 +36,6 @@ class LC_Quadratic;
  * Holds the data that defines a line.
  */
 struct RS_LineData {
-    /**
-     * Default constructor. Leaves the data object uninitialized.
-     */
-	RS_LineData() = default;
-
-    RS_LineData(const RS_Vector& startpoint,
-				const RS_Vector& endpoint);
-
     RS_Vector startpoint;
     RS_Vector endpoint;
 };

@@ -315,7 +315,6 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
 
     double rad = edata.definitionPoint4.distanceTo(center);
 
-    RS_Line* line;
     double len;
     double dist;
 
@@ -327,9 +326,9 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     dist = center.distanceTo(p1);
     len = rad - dist + dimexe;
 	RS_Vector dir = RS_Vector::polar(1.0, ang1);
-    line = new RS_Line(this,
-                       RS_LineData(center + dir*dist + dir*dimexo,
-                                   center + dir*dist + dir*len));
+	RS_Line* line = new RS_Line{this,
+			center + dir*dist + dir*dimexo,
+			center + dir*dist + dir*len};
     line->setPen(pen);
 //    line->setPen(RS_Pen(RS2::FlagInvalid));
 	line->setLayer(nullptr);
@@ -339,9 +338,9 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     dist = center.distanceTo(p2);
     len = rad - dist + dimexe;
     dir.setPolar(1.0, ang2);
-    line = new RS_Line(this,
-                       RS_LineData(center + dir*dist + dir*dimexo,
-                                   center + dir*dist + dir*len));
+	line = new RS_Line{this,
+			center + dir*dist + dir*dimexo,
+			center + dir*dist + dir*len};
     line->setPen(pen);
 //    line->setPen(RS_Pen(RS2::FlagInvalid));
 	line->setLayer(nullptr);
@@ -367,7 +366,7 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     // arrow angles:
     double arrowAngle1, arrowAngle2;
     double arrowAng;
-        if (rad>1.0e-6) {
+		if (rad>RS_TOLERANCE_ANGLE) {
                 arrowAng = arrowSize / rad;
         }
         else {

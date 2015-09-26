@@ -59,8 +59,8 @@ void QC_ActionGetPoint::mouseMoveEvent(QMouseEvent* e) {
             if (referencePoint.valid) {
                 targetPoint = mouse;
                 deletePreview();
-				RS_Line *line =new RS_Line(preview.get(),
-                                       RS_LineData(referencePoint, mouse));
+				RS_Line *line =new RS_Line{preview.get(),
+						referencePoint, mouse};
                 line->setPen(RS_Pen(RS_Color(0,0,0), RS2::Width00, RS2::DotLine ));
                 preview->addEntity(line);
                 RS_DEBUG->print("QC_ActionGetPoint::mouseMoveEvent: draw preview");

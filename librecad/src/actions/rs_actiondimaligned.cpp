@@ -122,8 +122,7 @@ void RS_ActionDimAligned::mouseMoveEvent(QMouseEvent* e) {
 		if (edata->extensionPoint1.valid) {
             deletePreview();
             preview->addEntity(
-				new RS_Line(preview.get(),
-							RS_LineData(edata->extensionPoint1, mouse))
+				new RS_Line{preview.get(),edata->extensionPoint1, mouse}
             );
             drawPreview();
         }

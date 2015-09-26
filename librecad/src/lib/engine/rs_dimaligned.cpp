@@ -185,9 +185,9 @@ void RS_DimAligned::updateDim(bool autoText) {
            RS2::LineByBlock);
 
     // Extension line 1:
-	RS_LineData ld = RS_LineData(edata.extensionPoint1 + v1,
-                     edata.extensionPoint1 + e1*extLength + v2);
-	RS_Line* line = new RS_Line(this, ld);
+	RS_Line* line = new RS_Line{this,
+			edata.extensionPoint1 + v1,
+			edata.extensionPoint1 + e1*extLength + v2};
     //line->setLayerToActive();
     //line->setPenToActive();
 //    line->setPen(RS_Pen(RS2::FlagInvalid));
@@ -196,9 +196,9 @@ void RS_DimAligned::updateDim(bool autoText) {
     addEntity(line);
 
     // Extension line 2:
-    ld = RS_LineData(edata.extensionPoint2 + v1,
-                     edata.extensionPoint2 + e1*extLength + v2);
-    line = new RS_Line(this, ld);
+	line = new RS_Line{this,
+			edata.extensionPoint2 + v1,
+			edata.extensionPoint2 + e1*extLength + v2};
     //line->setLayerToActive();
     //line->setPenToActive();
 //    line->setPen(RS_Pen(RS2::FlagInvalid));

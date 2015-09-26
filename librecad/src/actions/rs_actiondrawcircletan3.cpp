@@ -229,10 +229,9 @@ bool RS_ActionDrawCircleTan3::getData(){
 			RS_Vector const& v2=sol1.at(0);
 			//two bisector lines per intersection
 			for(unsigned j=0; j<2; ++j){
-
-                RS_Line l1(nullptr, RS_LineData(v1, v1+RS_Vector(angle1)));
+				RS_Line l1{v1, v1+RS_Vector{angle1}};
 				for(unsigned j1=0; j1<2; ++j1){
-                    RS_Line l2(nullptr, RS_LineData(v2, v2+RS_Vector(angle2)));
+					RS_Line l2{v2, v2+RS_Vector{angle2}};
 					sol.appendTo(RS_Information::getIntersectionLineLine(&l1, &l2));
 					angle2 += M_PI_2;
 				}

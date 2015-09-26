@@ -421,9 +421,9 @@ RS_Vector RS_Arc::getNearestMiddle(const RS_Vector& coord,
         double amin=getAngle1();
         double amax=getAngle2();
         //std::cout<<"RS_Arc::getNearestMiddle(): middlePoints="<<middlePoints<<std::endl;
-        if( !(/*std::*/isnormal(amin) || /*std::*/isnormal(amax))){
+		if( !(isnormal(amin) || isnormal(amax))){
                 //whole circle, no middle point
-                if(dist != NULL) {
+				if(dist) {
                         *dist=RS_MAXDOUBLE;
                 }
                 return RS_Vector(false);
@@ -609,10 +609,10 @@ bool RS_Arc::offset(const RS_Vector& coord, const double& distance) {
 }
 std::vector<RS_Entity* > RS_Arc::offsetTwoSides(const double& distance) const
 {
-	std::vector<RS_Entity*> ret(0,NULL);
-	ret.push_back(new RS_Arc(NULL,RS_ArcData(getCenter(),getRadius()+distance,getAngle1(),getAngle2(),isReversed())));
+	std::vector<RS_Entity*> ret(0,nullptr);
+	ret.push_back(new RS_Arc(nullptr,RS_ArcData(getCenter(),getRadius()+distance,getAngle1(),getAngle2(),isReversed())));
     if(getRadius()>distance)
-	ret.push_back(new RS_Arc(NULL,RS_ArcData(getCenter(),getRadius()-distance,getAngle1(),getAngle2(),isReversed())));
+	ret.push_back(new RS_Arc(nullptr,RS_ArcData(getCenter(),getRadius()-distance,getAngle1(),getAngle2(),isReversed())));
     return ret;
 }
 
@@ -889,6 +889,7 @@ void RS_Arc::stretch(const RS_Vector& firstCorner,
 /** find the visible part of the arc, and call drawVisible() to draw */
 void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
                   double& patternOffset) {
+	if (!( painter && view)) return;
 
     //only draw the visible portion of line
     RS_Vector vpMin(view->toGraph(0,view->getHeight()));
@@ -908,7 +909,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 
     double baseAngle=isReversed()?getAngle2():getAngle1();
     for(unsigned short i=0;i<4;i++){
-        RS_Line line(NULL,RS_LineData(vertex.at(i),vertex.at((i+1)%4)));
+		RS_Line line{vertex.at(i),vertex.at((i+1)%4)};
 		auto vpIts=RS_Information::getIntersection(
                     static_cast<RS_Entity*>(this),
                     &line,
@@ -946,9 +947,7 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
                   double& patternOffset) {
 
-    if (painter==NULL || view==NULL) {
-        return;
-    }
+	if (!( painter && view)) return;
     //visible in grahic view
     if(isVisibleInWindow(view)==false) return;
 
@@ -985,7 +984,7 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
         pat = view->getPattern(getPen().getLineType());
     }
 
-    if (pat==NULL|| ra<0.5) {//avoid division by zero from small ra
+	if (!pat || ra<0.5) {//avoid division by zero from small ra
 		RS_DEBUG->print("%s: Invalid line pattern or radius too small, drawing arc using solid line", __func__);
         painter->drawArc(cp, ra,
                          getAngle1(),getAngle2(),

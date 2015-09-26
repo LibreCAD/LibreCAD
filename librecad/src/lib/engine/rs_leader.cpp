@@ -89,7 +89,7 @@ void RS_Leader::update() {
                           p2.angleTo(p1),
                           getGraphicVariableDouble("$DIMASZ", 2.5)* getGraphicVariableDouble("$DIMSCALE", 1.0));
             s->setPen(RS_Pen(RS2::FlagInvalid));
-            s->setLayer(NULL);
+			s->setLayer(nullptr);
             RS_EntityContainer::addEntity(s);
         }
     }
@@ -106,22 +106,22 @@ void RS_Leader::update() {
  *
  * @param v vertex coordinate
  *
- * @return Pointer to the entity that was addded or NULL if this
+ * @return Pointer to the entity that was addded or nullptr if this
  *         was the first vertex added.
  */
 RS_Entity* RS_Leader::addVertex(const RS_Vector& v) {
 
-    RS_Entity* entity=NULL;
-    static RS_Vector last = RS_Vector(false);
+	RS_Entity* entity{nullptr};
+	static RS_Vector last = RS_Vector{false};
 
     if (empty) {
         last = v;
         empty = false;
     } else {
         // add line to the leader:
-        entity = new RS_Line(this, RS_LineData(last, v));
+		entity = new RS_Line{this, {last, v}};
         entity->setPen(RS_Pen(RS2::FlagInvalid));
-        entity->setLayer(NULL);
+		entity->setLayer(nullptr);
         RS_EntityContainer::addEntity(entity);
 
                 if (count()==1 && hasArrowHead()) {
@@ -146,10 +146,9 @@ void RS_Leader::addEntity(RS_Entity* entity) {
     RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Leader::addEntity:"
                     " should never be called");
 
-    if (entity==NULL) {
-        return;
-    }
-    delete entity;
+	if (!entity) return;
+
+	delete entity;
 }
 
 

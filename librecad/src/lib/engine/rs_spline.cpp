@@ -197,10 +197,9 @@ void RS_Spline::update() {
     RS_Vector prev(false);
 	for (i = 1; i <= 3*p1; i += 3) {
         if (prev.valid) {
-            RS_Line* line = new RS_Line(this,
-                                        RS_LineData(prev, RS_Vector(p[i], p[i+1])));
+			RS_Line* line = new RS_Line{this, prev, {p[i], p[i+1]}};
 			line->setLayer(nullptr);
-            line->setPen(RS_Pen(RS2::FlagInvalid));
+			line->setPen(RS2::FlagInvalid);
             addEntity(line);
         }
         prev = RS_Vector(p[i], p[i+1]);

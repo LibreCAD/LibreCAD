@@ -3129,13 +3129,17 @@ void addQuadQuadIntersect(RS_VectorSolutions *pVS,
 
     //avoid intersection if there's no intersection between lines
     //TODO, avoid O(N^2) complexity
-    //tangential direction along (start, control, end)
-    std::vector<RS_Line> lines0{{RS_Line(nullptr, RS_LineData(vStart, vControl)),
-    RS_Line(nullptr, RS_LineData(vEnd, vControl))}};
+	//tangential direction along (start, control, end)
+	std::vector<RS_Line> lines0{{
+			{vStart, vControl},
+			{vEnd, vControl}
+								}};
 
     //tangential direction along (start, control, end)
-    std::vector<RS_Line> lines1{{RS_Line(nullptr, RS_LineData(vx1, vc1)),
-                    RS_Line(nullptr, RS_LineData(vx2, vc1))}};
+	std::vector<RS_Line> lines1{{
+			{vx1, vc1},
+			{vx2, vc1}
+								}};
 
     //if lines0, lines1 do not overlap, there's no intersection
     bool overlap=false;
@@ -3179,7 +3183,7 @@ void addQuadQuadIntersect(RS_VectorSolutions *pVS,
 	m.push_back(a1);
 	m.push_back(b1);
 
-    RS_VectorSolutions&& pvRes = RS_Math::simultaneousQuadraticSolverFull(m);
+	RS_VectorSolutions const& pvRes = RS_Math::simultaneousQuadraticSolverFull(m);
 
 	for(RS_Vector vSol: pvRes)
     {

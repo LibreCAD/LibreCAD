@@ -107,16 +107,14 @@ void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent* e) {
 		RS_Vector last(false);
 		for(const auto& v: points){
 			if (last.valid) {
-				preview->addEntity(new RS_Line(preview.get(),
-											   RS_LineData(last, v)));
+				preview->addEntity(new RS_Line{preview.get(), last, v});
 			}
 			last = v;
 		}
 
 		if ( points.size() ) {
-			RS_Vector p = points.back();
-			preview->addEntity(new RS_Line(preview.get(),
-                                       RS_LineData(p, mouse)));
+			RS_Vector const& p = points.back();
+			preview->addEntity(new RS_Line{preview.get(), p, mouse});
         }
         drawPreview();
     }

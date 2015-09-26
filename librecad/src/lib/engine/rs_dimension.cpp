@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-
+#include<array>
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_dimension.h"
@@ -198,7 +198,7 @@ void RS_Dimension::updateCreateDimensionLine(const RS_Vector& p1,
            RS2::LineByBlock);
 
     // Create dimension line:
-    RS_Line* dimensionLine = new RS_Line(this, RS_LineData(p1, p2));
+	RS_Line* dimensionLine = new RS_Line{this, p1, p2};
     dimensionLine->setPen(pen);
 //    dimensionLine->setPen(RS_Pen(RS2::FlagInvalid));
 	dimensionLine->setLayer(nullptr);
@@ -330,14 +330,14 @@ if(dimtsz < 0.01) {
     if (getAlignText()) {
         double w =text->getUsedTextWidth()/2+dimgap;
         double h = text->getUsedTextHeight()/2+dimgap;
-        RS_Vector v1 = textPos - RS_Vector(w, h);
-        RS_Vector v2 = textPos + RS_Vector(w, h);
-        RS_Line l[] = {
-			RS_Line(nullptr, RS_LineData(v1, RS_Vector(v2.x, v1.y))),
-			RS_Line(nullptr, RS_LineData(RS_Vector(v2.x, v1.y), v2)),
-			RS_Line(nullptr, RS_LineData(v2, RS_Vector(v1.x, v2.y))),
-			RS_Line(nullptr, RS_LineData(RS_Vector(v1.x, v2.y), v1))
-        };
+		RS_Vector v1 = textPos - RS_Vector(w, h);
+		RS_Vector v2 = textPos + RS_Vector(w, h);
+		std::array<RS_Line, 4> l {{
+				{v1, {v2.x, v1.y}},
+				{{v2.x, v1.y}, v2},
+				{v2, {v1.x, v2.y}},
+				{{v1.x, v2.y}, v1}
+								  }};
         RS_VectorSolutions sol1, sol2;
         int inters= 0;
         do {
@@ -352,7 +352,8 @@ if(dimtsz < 0.01) {
         //are text intersecting dimensionLine?
         if (sol1.hasValid() && sol2.hasValid()) {
             //yes, split dimension line
-            RS_Line* dimensionLine2 = (RS_Line*)dimensionLine->clone();
+			RS_Line* dimensionLine2 =
+					static_cast<RS_Line*>(dimensionLine->clone());
             v1 = sol1.get(0);
             v2 = sol2.get(0);
             if (p1.distanceTo(v1) < p1.distanceTo(v2)) {

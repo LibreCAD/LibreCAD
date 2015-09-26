@@ -45,8 +45,7 @@ RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
 
 void RS_ActionDrawLineRectangle::reset() {
     for (int i=0; i<4; ++i) {
-		data[i].reset(new RS_LineData(RS_Vector(false),
-							  RS_Vector(false)));
+		data[i].reset(new RS_LineData{});
     }
 }
 
@@ -123,17 +122,15 @@ void RS_ActionDrawLineRectangle::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawLineRectangle::preparePreview() {
-	data[0].reset(new RS_LineData(corner1, RS_Vector(corner2.x, corner1.y)));
-	data[1].reset(new RS_LineData(RS_Vector(corner2.x, corner1.y), corner2));
-	data[2].reset(new RS_LineData(corner2, RS_Vector(corner1.x, corner2.y)));
-	data[3].reset(new RS_LineData(RS_Vector(corner1.x, corner2.y), corner1));
+	data[0].reset(new RS_LineData{corner1, {corner2.x, corner1.y}});
+	data[1].reset(new RS_LineData{{corner2.x, corner1.y}, corner2});
+	data[2].reset(new RS_LineData{corner2, {corner1.x, corner2.y}});
+	data[3].reset(new RS_LineData{{corner1.x, corner2.y}, corner1});
 }
 
 
 void RS_ActionDrawLineRectangle::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
-        return;
-    }
+	if (!e) return;
 
     RS_Vector mouse = e->getCoordinate();
 

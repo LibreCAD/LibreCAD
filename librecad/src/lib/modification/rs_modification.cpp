@@ -2606,9 +2606,9 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
 
     // add bevel line:
     RS_DEBUG->print("RS_Modification::bevel: add bevel line");
-    RS_Line* bevel = new RS_Line(baseContainer, RS_LineData(bp1, bp2));
+	RS_Line* bevel = new RS_Line{baseContainer, {bp1, bp2}};
 
-    if (isPolyline==false) {
+	if (!isPolyline) {
         baseContainer->addEntity(bevel);
     } else {
         int idx1 = baseContainer->findEntity(trimmed1);

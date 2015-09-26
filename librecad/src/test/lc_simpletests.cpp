@@ -504,9 +504,7 @@ void LC_SimpleTests::slotTestInsertBlock() {
 		RS_Circle* circle;
 
 		// Add one red line:
-		line = new RS_Line(block,
-						   RS_LineData(RS_Vector(0.0,0.0),
-									   RS_Vector(50.0,0.0)));
+		line = new RS_Line{block, {0.,0.}, {50.,0.}};
 		line->setLayerToActive();
 		line->setPen(RS_Pen(RS_Color(255, 0, 0),
 							RS2::Width01,
@@ -514,16 +512,14 @@ void LC_SimpleTests::slotTestInsertBlock() {
 		block->addEntity(line);
 
 		// Add one line with attributes from block:
-		line = new RS_Line(block,
-						   RS_LineData(RS_Vector(50.0,0.0),
-									   RS_Vector(50.0,50.0)));
+		line = new RS_Line{block, {50.,0.}, {50.,50.}};
 		line->setPen(RS_Pen(RS_Color(RS2::FlagByBlock),
 							RS2::WidthByBlock,
 							RS2::LineByBlock));
 		block->addEntity(line);
 
 		// Add one arc with attributes from block:
-		RS_ArcData d(RS_Vector(50.0,0.0),
+		RS_ArcData d({50.,0.},
 					 50.0, M_PI_2, M_PI,
 					 false);
 		arc = new RS_Arc(block, d);
@@ -666,9 +662,7 @@ void LC_SimpleTests::slotTestInsertEllipse() {
 			//graphic->addEntity(new RS_Point(graphic, ellipse->getMax()));
 			//graphic->addEntity(new RS_Point(graphic, ellipse->getMin()));
 
-			line = new RS_Line(graphic,
-							   RS_LineData(RS_Vector(xp,0.0),
-										   RS_Vector(xp,0.0)+v));
+			line = new RS_Line{graphic, {xp, 0.}, RS_Vector{xp, 0.}+v};
 			line->setPen(RS_Pen(RS_Color(128, 128, 128),
 								RS2::Width01,
 								RS2::SolidLine));
@@ -1037,12 +1031,9 @@ void LC_SimpleTests::slotTestMath01() {
 		}
 
 		// axis
-		graphic->addEntity(new RS_Line(graphic,
-									   RS_LineData(RS_Vector(0.0,0.0),
-												   RS_Vector(2*M_PI,0.0))));
-		graphic->addEntity(new RS_Line(graphic,
-									   RS_LineData(RS_Vector(0.0,-1.0),
-												   RS_Vector(0.0,1.0))));
+		graphic->addEntity(new RS_Line{graphic,
+									   {0.,0.}, {2*M_PI,0.}});
+		graphic->addEntity(new RS_Line{graphic, {0., -1.}, {0., 1.}});
 
 		// cos
 		double a;
@@ -1050,26 +1041,21 @@ void LC_SimpleTests::slotTestMath01() {
 		double x_0 = RS_Math::deg2rad(60.0);
 		for (a=0.01; a<2*M_PI; a+=0.01) {
 			// cos curve:
-			RS_Line* line = new RS_Line(graphic,
-										RS_LineData(RS_Vector(a-0.01, cos(a-0.01)),
-													RS_Vector(a, cos(a))));
+			RS_Line* line = new RS_Line{graphic, {a-0.01, cos(a-0.01)},
+			{a, cos(a)}};
 			graphic->addEntity(line);
 
 			// tangent:
-			graphic->addEntity(new RS_Line(graphic,
-										   RS_LineData(RS_Vector(a-0.01,cos(x_0)-sin(x_0)*(a-0.01-x_0)),
-													   RS_Vector(a,cos(x_0)-sin(x_0)*(a-x_0)))));
+			graphic->addEntity(new RS_Line{graphic,
+										   {a-0.01,cos(x_0)-sin(x_0)*(a-0.01-x_0)},
+										   {a,cos(x_0)-sin(x_0)*(a-x_0)}});
 		}
 
 		// 59.0 deg
-		graphic->addEntity(new RS_Line(graphic,
-									   RS_LineData(RS_Vector(x,0.0),
-												   RS_Vector(x,1.0))));
+		graphic->addEntity(new RS_Line{graphic, {x,0.}, {x,1.}});
 
 		// 60.0 deg
-		graphic->addEntity(new RS_Line(graphic,
-									   RS_LineData(RS_Vector(x_0,0.0),
-												   RS_Vector(x_0,1.0))));
+		graphic->addEntity(new RS_Line{graphic, {x_0,0.}, {x_0,1.}});
 
 		// tangent
 		//graphic->addEntity(new RS_Line(graphic,

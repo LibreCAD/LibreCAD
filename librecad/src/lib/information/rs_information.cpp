@@ -587,8 +587,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
 
     if( e01->getMinorRadius() < RS_TOLERANCE || e01 -> getRatio()< RS_TOLERANCE) {
         // treate e01 as a line
-        RS_LineData ldata0(RS_Vector(-a1,0.),RS_Vector(a1,0.));
-        RS_Line *l0=new RS_Line(e1->getParent(),ldata0);
+		RS_Line *l0=new RS_Line{e1->getParent(), {{-a1,0.}, {a1,0.}}};
         ret= getIntersectionEllipseLine(l0, e02);
         ret.rotate(-shifta1);
         ret.move(-shiftc1);
@@ -596,9 +595,8 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
     }
     if( e02->getMinorRadius() < RS_TOLERANCE || e02 -> getRatio()< RS_TOLERANCE) {
         // treate e02 as a line
-        RS_LineData ldata0(RS_Vector(-a2,0.),RS_Vector(a2,0.));
-        RS_Line *l0=new RS_Line(e1->getParent(),ldata0);
-        l0->rotate(RS_Vector(0.,0.),e02->getAngle());
+		RS_Line *l0=new RS_Line{e1->getParent(), {{-a2,0.}, {a2,0.}}};
+		l0->rotate({0.,0.}, e02->getAngle());
         l0->move(e02->getCenter());
         ret= getIntersectionEllipseLine(l0, e01);
         ret.rotate(-shifta1);
@@ -784,7 +782,7 @@ bool RS_Information::isPointInsideContour(const RS_Vector& point,
 
         // create ray:
 		RS_Vector v = RS_Vector::polar(width*10.0, rayAngle);
-		RS_Line ray(nullptr, RS_LineData(point, point+v));
+		RS_Line ray{point, point+v};
         counter = 0;
         RS_VectorSolutions sol;
 
@@ -955,7 +953,7 @@ RS_VectorSolutions RS_Information::createQuadrilateral(const RS_EntityContainer&
 	std::vector<RS_Vector> vertices;
 	for(auto it=lines.begin()+1; it != lines.end(); ++it){
 		for(auto jt=lines.begin(); jt != it; ++jt){
-			RS_VectorSolutions&& sol=RS_Information::getIntersectionLineLine(*it, *jt);
+			RS_VectorSolutions const& sol=RS_Information::getIntersectionLineLine(*it, *jt);
 			if(sol.size()){
 				vertices.push_back(sol.at(0));
 			}
@@ -976,7 +974,7 @@ RS_VectorSolutions RS_Information::createQuadrilateral(const RS_EntityContainer&
 			std::vector<std::vector<RS_Vector>::iterator> left;
 			std::vector<std::vector<RS_Vector>::iterator> right;
 			for(auto it=vertices.begin(); it != vertices.end(); ++it){
-				RS_Vector&& dir=*it - pl->getNearestPointOnEntity(*it, false);
+				RS_Vector const& dir=*it - pl->getNearestPointOnEntity(*it, false);
 				if(dir.squared()<RS_TOLERANCE15) continue;
 //				std::cout<<"angle="<<remainder(dir.angle() - a0, 2.*M_PI)<<std::endl;
 				if(remainder(dir.angle() - a0, 2.*M_PI) > 0.)
@@ -998,7 +996,7 @@ RS_VectorSolutions RS_Information::createQuadrilateral(const RS_EntityContainer&
 	}
 
 	//order vertices
-	RS_Vector center(0., 0.);
+	RS_Vector center{0., 0.};
 	for(const RS_Vector& vp: vertices)
 		center += vp;
 	center *= 0.25;

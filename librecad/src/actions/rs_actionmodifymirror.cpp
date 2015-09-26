@@ -81,9 +81,8 @@ void RS_ActionModifyMirror::mouseMoveEvent(QMouseEvent* e) {
                 preview->addSelectionFrom(*container);
                 preview->mirror(axisPoint1, axisPoint2);
 
-				preview->addEntity(new RS_Line(preview.get(),
-                                               RS_LineData(axisPoint1,
-                                                           axisPoint2)));
+				preview->addEntity(new RS_Line{preview.get(),
+											   axisPoint1, axisPoint2});
 
                 drawPreview();
             }

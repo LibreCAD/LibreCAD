@@ -70,7 +70,7 @@ RS_ActionDrawLineAngle::~RS_ActionDrawLineAngle() {
 
 
 void RS_ActionDrawLineAngle::reset() {
-	data.reset(new RS_LineData(RS_Vector(false), RS_Vector(false)));
+	data.reset(new RS_LineData{});
 }
 
 void RS_ActionDrawLineAngle::init(int status) {
@@ -83,7 +83,7 @@ void RS_ActionDrawLineAngle::trigger() {
     RS_PreviewActionInterface::trigger();
 
     preparePreview();
-	RS_Line* line = new RS_Line(container, *data);
+	RS_Line* line = new RS_Line{container, *data};
     line->setLayerToActive();
     line->setPenToActive();
     container->addEntity(line);
@@ -146,13 +146,11 @@ void RS_ActionDrawLineAngle::preparePreview() {
     }
 
     p2 += p1;
-	data.reset(new RS_LineData(p1, p2));
+	data.reset(new RS_LineData{p1, p2});
 }
 
 void RS_ActionDrawLineAngle::coordinateEvent(RS_CoordinateEvent* e) {
-	if (!e) {
-        return;
-    }
+	if (!e) return;
 
     switch (getStatus()) {
     case SetPos:

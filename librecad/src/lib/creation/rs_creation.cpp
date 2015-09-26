@@ -185,14 +185,14 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
         p1 += e->getStartpoint();
 		RS_Vector p2 = RS_Vector::polar(distance*num, ang);
         p2 += e->getEndpoint();
-		RS_Line parallel1(nullptr, RS_LineData(p1, p2));
+		RS_Line parallel1{p1, p2};
 
         // calculate 2nd parallel:
         p1.setPolar(distance*num, ang+M_PI);
         p1 += e->getStartpoint();
         p2.setPolar(distance*num, ang+M_PI);
         p2 += e->getEndpoint();
-		RS_Line parallel2(nullptr, RS_LineData(p1, p2));
+		RS_Line parallel2{p1, p2};
 
         double dist1 = parallel1.getDistanceToPoint(coord);
         double dist2 = parallel2.getDistanceToPoint(coord);
@@ -205,7 +205,7 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
                 parallelData = parallel2.getData();
             }
 
-            RS_Line* newLine = new RS_Line(container, parallelData);
+			RS_Line* newLine = new RS_Line{container, parallelData};
 			if (ret==nullptr) {
 				ret = newLine;
 			}
@@ -460,14 +460,10 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
         double angle = angle1 +
                 (angleDiff / (num+1) * n);
 
-        RS_LineData d;
-		RS_Vector v = RS_Vector::polar(length, angle);
-        d = RS_LineData(inters, inters + v);
+		RS_Vector const v = RS_Vector::polar(length, angle);
 
-        RS_Line* newLine = new RS_Line(container, d);
-		if (ret==nullptr) {
-			ret = newLine;
-		}
+		RS_Line* newLine = new RS_Line{container, inters, inters + v};
+		if (!ret) ret = newLine;
 		setEntity(newLine);
     }
 	if (document && handleUndo) {
@@ -500,7 +496,7 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
 	if (document && handleUndo) {
         document->startUndoCycle();
     }
-    ret = new RS_Line(container, RS_LineData(vp,t0));
+	ret = new RS_Line{container, vp, t0};
     ret->setLayerToActive();
     ret->setPenToActive();
     return ret;
@@ -534,9 +530,9 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
     RS_Vector vp2(sol.getClosest(coord));
     RS_LineData d;
     if( (vp2-point).squared() > RS_TOLERANCE2 ) {
-        d=RS_LineData(vp2,point);
+		d={vp2, point};
     }else{//the given point is a tangential point
-        d=RS_LineData(point+circle->getTangentDirection(point),point);
+		d={point+circle->getTangentDirection(point), point};
     }
 
 
@@ -546,7 +542,7 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
         document->startUndoCycle();
     }
 
-    ret = new RS_Line(container, d);
+	ret = new RS_Line{container, d};
 	setEntity(ret);
 
     return ret;
@@ -607,17 +603,15 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
 				RS_Vector offs1 = RS_Vector::polar(circleRadius1, angt1);
 				RS_Vector offs2 = RS_Vector::polar(circleRadius2, angt1);
 
-                d = RS_LineData(circleCenter1 + offs1,
-                                circleCenter2 + offs2);
-				poss.push_back( new RS_Line(nullptr, d));
+				poss.push_back( new RS_Line{circleCenter1 + offs1,
+													  circleCenter2 + offs2});
 
 
                 offs1.setPolar(circleRadius1, angt2);
                 offs2.setPolar(circleRadius2, angt2);
 
-                d = RS_LineData(circleCenter1 + offs1,
-                                circleCenter2 + offs2);
-				poss.push_back( new RS_Line(nullptr, d));
+				poss.push_back( new RS_Line{circleCenter1 + offs1,
+													  circleCenter2 + offs2});
             }
 
             // inner tangents:
@@ -632,17 +626,15 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
                 offs1.setPolar(circleRadius1, angt3);
                 offs2.setPolar(circleRadius2, angt3);
 
-                d = RS_LineData(circleCenter1 - offs1,
-                                circleCenter2 + offs2);
-				poss.push_back( new RS_Line(nullptr, d));
+				poss.push_back( new RS_Line{circleCenter1 - offs1,
+													  circleCenter2 + offs2});
 
 
                 offs1.setPolar(circleRadius1, angt4);
                 offs2.setPolar(circleRadius2, angt4);
 
-                d = RS_LineData(circleCenter1 - offs1,
-                                circleCenter2 + offs2);
-				poss.push_back( new RS_Line(nullptr, d));
+				poss.push_back( new RS_Line{circleCenter1 - offs1,
+													  circleCenter2 + offs2});
             }
 
         }
@@ -698,11 +690,12 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
 		if (vs0.getNumber()<1) return nullptr;
 //        for(size_t i=0;i<vs0.getNumber();i++){
 		for(RS_Vector vpec: vs0){
-            RS_Vector vpe2(e2->getCenter()+ RS_Vector(vpec.y/e2->getRatio(),vpec.x*e2->getRatio()));
+			RS_Vector vpe2(e2->getCenter()+
+						   RS_Vector(vpec.y/e2->getRatio(),vpec.x*e2->getRatio()));
             vpec.x *= -1.;//direction vector of tangent
             RS_Vector vpe1(vpe2 - vpec*(RS_Vector::dotP(vpec,vpe2)/vpec.squared()));
 //            std::cout<<"vpe1.squared()="<<vpe1.squared()<<std::endl;
-			RS_Line *l=new RS_Line(nullptr,RS_LineData(vpe1,vpe2));
+			RS_Line *l=new RS_Line{vpe1, vpe2};
             l->rotate(a2);
             l->scale(factor1);
             l->rotate(a0);
@@ -740,7 +733,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
             document->startUndoCycle();
         }
 
-        ret = new RS_Line(container, d);
+		ret = new RS_Line{container, d};
 		setEntity(ret);
     } else {
 		ret = nullptr;
@@ -784,7 +777,7 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
 	ret.push_back(new LC_Hyperbola(nullptr, LC_HyperbolaData(cp,vp*c,sqrt(1. - c*c),0.,0.,false)));
     return ret;
 }
-	ret.push_back( new RS_Line(nullptr, RS_LineData(cp, RS_Vector(cp.x - vp.y, cp.y+vp.x))));
+	ret.push_back(new RS_Line{cp, {cp.x - vp.y, cp.y+vp.x}});
     return ret;
 }
 
@@ -832,14 +825,12 @@ RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord,
 
 	RS_Vector v1 = RS_Vector::polar(length, a1);
     //RS_ConstructionLineData(coord-v1, coord+v1);
-    RS_LineData d(coord-v1, coord+v1);
-    RS_Line* ret;
 
 	if (document && handleUndo) {
         document->startUndoCycle();
     }
 
-    ret = new RS_Line(container, d);
+	RS_Line* ret = new RS_Line{container, coord-v1, coord+v1};
 	setEntity(ret);
 
     return ret;
@@ -876,13 +867,11 @@ RS_Line* RS_Creation::createPolygon(const RS_Vector& center,
         c1 = c2;
 		c2 = c2.rotate(center, (2.*M_PI)/number);
 
-        line = new RS_Line(container, RS_LineData(c1, c2));
+		line = new RS_Line{container, c1, c2};
         line->setLayerToActive();
         line->setPenToActive();
 
-		if (ret==nullptr) {
-            ret = line;
-        }
+		if (!ret) ret = line;
 
 		if (container) {
             container->addEntity(line);
@@ -937,7 +926,7 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
 		RS_Vector edge = RS_Vector::polar(len, ang);
         c2 = c1 + edge;
 
-		RS_Line* line = new RS_Line(container, RS_LineData(c1, c2));
+		RS_Line* line = new RS_Line{container, c1, c2};
         line->setLayerToActive();
         line->setPenToActive();
 

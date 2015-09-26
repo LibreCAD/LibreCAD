@@ -816,7 +816,7 @@ void Doc_plugin_interface::addLine(QPointF *start, QPointF *end){
     RS_Vector v1(start->x(), start->y());
     RS_Vector v2(end->x(), end->y());
     if (doc) {
-        RS_Line* entity = new RS_Line(doc, RS_LineData(v1, v2));
+		RS_Line* entity = new RS_Line{doc, v1, v2};
         doc->addEntity(entity);
         if (!haveUndo) {
             doc->startUndoCycle();

@@ -364,7 +364,7 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
     }
     if(getRatio()<RS_TOLERANCE) {
         //treat the ellipse as a line
-		RS_Line line(nullptr,RS_LineData(e.minV,e.maxV));
+		RS_Line line{e.minV,e.maxV};
         return line.getNearestDist(distance,coord,dist);
     }
     double x1=e.getAngle1();
@@ -378,7 +378,7 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
 
     guess=(RS_Vector(x1+guess).scale(RS_Vector(e.getRatio(),1.))).angle();//convert to ellipse angle
     if( guess < x1) guess += 2.*M_PI;
-    if( ! RS_Math::isAngleBetween(guess,x1,x2,false)) {
+	if( !RS_Math::isAngleBetween(guess,x1,x2,false)) {
         guess=x1 +0.5*RS_Math::getAngleDifference(x1,x2);
     }
     int digits=std::numeric_limits<double>::digits;
@@ -820,10 +820,10 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 		for(RS_Line*const p: lines){//copy the line pointers
 			c0.addEntity(p);
 		}
-		RS_VectorSolutions&& s0=RS_Information::createQuadrilateral(c0);
+		RS_VectorSolutions const& s0=RS_Information::createQuadrilateral(c0);
 		if(s0.size()!=4) return false;
 		for(size_t i=0; i<4; ++i){
-			quad[i].reset(new RS_Line(nullptr, RS_LineData(s0[i], s0[(i+1)%4])));
+			quad[i].reset(new RS_Line{s0[i], s0[(i+1)%4]});
 		}
 	}
 
@@ -831,9 +831,9 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 	RS_Vector centerProjection;
 	{
 		std::vector<RS_Line> diagonal;
-		diagonal.push_back(RS_Line(nullptr, RS_LineData(quad[0]->getStartpoint(), quad[1]->getEndpoint())));
-		diagonal.push_back(RS_Line(nullptr, RS_LineData(quad[1]->getStartpoint(), quad[2]->getEndpoint())));
-		RS_VectorSolutions&& sol=RS_Information::getIntersectionLineLine( & diagonal[0],& diagonal[1]);
+		diagonal.emplace_back(quad[0]->getStartpoint(), quad[1]->getEndpoint());
+		diagonal.emplace_back(quad[1]->getStartpoint(), quad[2]->getEndpoint());
+		RS_VectorSolutions const& sol=RS_Information::getIntersectionLineLine( & diagonal[0],& diagonal[1]);
 		if(sol.getNumber()==0) {//this should not happen
 			//        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Ellipse::createInscribeQuadrilateral(): can not locate projection Center");
 			RS_DEBUG->print("RS_Ellipse::createInscribeQuadrilateral(): can not locate projection Center");
@@ -847,7 +847,7 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 	int parallel=0;
 	int parallel_index=0;
 	for(int i=0;i<=1;++i) {
-		RS_VectorSolutions&& sol1=RS_Information::getIntersectionLineLine(quad[i].get(), quad[(i+2)%4].get());
+		RS_VectorSolutions const& sol1=RS_Information::getIntersectionLineLine(quad[i].get(), quad[(i+2)%4].get());
 		RS_Vector direction;
 		if(sol1.getNumber()==0) {
 			direction=quad[i]->getEndpoint()-quad[i]->getStartpoint();
@@ -871,7 +871,7 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 	{
 		RS_Line cl0(quad[1]->getEndpoint(),(tangent[0]+tangent[2])*0.5);
 		RS_Line cl1(quad[2]->getEndpoint(),(tangent[1]+tangent[2])*0.5);
-		RS_VectorSolutions&& sol=RS_Information::getIntersection(&cl0, &cl1,false);
+		RS_VectorSolutions const& sol=RS_Information::getIntersection(&cl0, &cl1,false);
 		if(sol.getNumber()==0){
 			//this should not happen
 			//        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Ellipse::createInscribeQuadrilateral(): can not locate Ellipse Center");
@@ -1546,7 +1546,7 @@ bool RS_Ellipse::isVisibleInWindow(RS_GraphicView* view) const
     }
     //check for intersection points with viewport
     for(unsigned short i=0;i<4;i++){
-		RS_Line line(nullptr,RS_LineData(vps.at(i),vps.at((i+1)%4)));
+		RS_Line line{vps.at(i),vps.at((i+1)%4)};
 		RS_Ellipse e0(nullptr, getData());
         if( RS_Information::getIntersection(&e0, &line, true).size()>0) return true;
     }
@@ -1706,14 +1706,14 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
 	std::vector<RS_Vector> vertex(0);
     for(unsigned short i=0;i<4;i++){
         const QPointF& vp(visualBox.at(i));
-		vertex.push_back(RS_Vector(vp.x(),vp.y()));
+		vertex.emplace_back(vp.x(),vp.y());
     }
     /** angles at cross points */
 	std::vector<double> crossPoints(0);
 
     double baseAngle=isReversed()?getAngle2():getAngle1();
     for(unsigned short i=0;i<4;i++){
-		RS_Line line(nullptr,RS_LineData(vertex.at(i),vertex.at((i+1)%4)));
+		RS_Line line{vertex.at(i),vertex.at((i+1)%4)};
 		auto vpIts=RS_Information::getIntersection(
                     static_cast<RS_Entity*>(this), &line, true);
 //    std::cout<<"vpIts.size()="<<vpIts.size()<<std::endl;

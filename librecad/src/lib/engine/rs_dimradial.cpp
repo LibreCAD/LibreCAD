@@ -192,17 +192,17 @@ void RS_DimRadial::updateDim(bool autoText) {
                       arrowSize);
 //    arrow->setPen(RS_Pen(RS2::FlagInvalid));
     arrow->setPen(pen);
-    arrow->setLayer(NULL);
+	arrow->setLayer(nullptr);
     addEntity(arrow);
 
 	RS_Vector p3 = RS_Vector::polar(length, angle);
     p3 += p1;
 
     // Create dimension line:
-    RS_Line* dimensionLine = new RS_Line(this, RS_LineData(p1, p3));
+	RS_Line* dimensionLine = new RS_Line{this, p1, p3};
     dimensionLine->setPen(pen);
 //    dimensionLine->setPen(RS_Pen(RS2::FlagInvalid));
-    dimensionLine->setLayer(NULL);
+	dimensionLine->setLayer(nullptr);
     addEntity(dimensionLine);
 
     RS_Vector distV;
@@ -239,12 +239,12 @@ void RS_DimRadial::updateDim(bool autoText) {
         data.middleOfText = textPos;
     }
 
-    text->rotate(RS_Vector(0.0,0.0), textAngle);
+	text->rotate({0., 0.}, textAngle);
     text->move(textPos);
 
     text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
 //    text->setPen(RS_Pen(RS2::FlagInvalid));
-    text->setLayer(NULL);
+	text->setLayer(nullptr);
     addEntity(text);
 
     calculateBorders();

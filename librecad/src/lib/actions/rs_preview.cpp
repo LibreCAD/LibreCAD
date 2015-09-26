@@ -84,21 +84,13 @@ void RS_Preview::addEntity(RS_Entity* entity) {
         RS_Vector max = entity->getMax();
 
         RS_Line* l1 =
-            new RS_Line(this,
-                        RS_LineData(RS_Vector(min.x, min.y),
-                                    RS_Vector(max.x, min.y)));
+			new RS_Line(this, {min.x, min.y}, {max.x, min.y});
         RS_Line* l2 =
-            new RS_Line(this,
-                        RS_LineData(RS_Vector(max.x, min.y),
-                                    RS_Vector(max.x, max.y)));
+			new RS_Line(this, {max.x, min.y}, {max.x, max.y});
         RS_Line* l3 =
-            new RS_Line(this,
-                        RS_LineData(RS_Vector(max.x, max.y),
-                                    RS_Vector(min.x, max.y)));
+			new RS_Line(this, {max.x, max.y}, {min.x, max.y});
         RS_Line* l4 =
-            new RS_Line(this,
-                        RS_LineData(RS_Vector(min.x, max.y),
-                                    RS_Vector(min.x, min.y)));
+			new RS_Line(this, {min.x, max.y}, {min.x, min.y});
 
         RS_EntityContainer::addEntity(l1);
         RS_EntityContainer::addEntity(l2);
