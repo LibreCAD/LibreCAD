@@ -85,7 +85,7 @@ void QG_DlgOptionsGeneral::init() {
 						lang.toLatin1().data());
 
 		QString l = RS_SYSTEM->symbolToLanguage(lang);
-		if (l.isEmpty()==false && cbLanguage->findData(lang)==-1) {
+		if (!l.isEmpty() && cbLanguage->findData(lang)==-1) {
             RS_DEBUG->print("QG_DlgOptionsGeneral::init: %s", l.toLatin1().data());
 			cbLanguage->addItem(l,lang);
 			cbLanguageCmd->addItem(l, lang);

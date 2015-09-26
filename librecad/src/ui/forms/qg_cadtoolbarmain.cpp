@@ -62,7 +62,7 @@ void QG_CadToolBarMain::addSubActions(const std::vector<QAction*>& actions, bool
 	}
 	if(std::any_of(actionTypes.begin(), actionTypes.end(),
 				   [](const std::pair<QAction**, RS2::ActionType>& a)->bool{
-				   return *(a.first)==nullptr;
+				   return !*(a.first);
 })) return;
 	const std::initializer_list<std::tuple<QAction**, QString, const char*>> buttons={
 		std::make_tuple(&bMenuLine, "menuline", R"(Show toolbar "Lines")"),
@@ -145,9 +145,9 @@ void QG_CadToolBarMain::setActionHandler(QG_ActionHandler* ah)
 //clear current action
 void QG_CadToolBarMain::finishCurrentAction(bool resetToolBar)
 {
-	if(actionHandler==nullptr) return;
+	if(!actionHandler) return;
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
-	if(currentAction != nullptr) {
+	if(currentAction ) {
         currentAction->finish(resetToolBar); //finish the action, but do not update toolBar
     }
 }

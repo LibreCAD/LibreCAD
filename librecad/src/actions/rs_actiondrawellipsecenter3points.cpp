@@ -167,7 +167,7 @@ void RS_ActionDrawEllipseCenter3Points::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawEllipseCenter3Points::coordinateEvent(RS_CoordinateEvent* e) {
-	if (e==nullptr) {
+	if (!e) {
         return;
     }
     RS_Vector mouse = e->getCoordinate();

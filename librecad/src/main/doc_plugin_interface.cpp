@@ -672,7 +672,7 @@ void Plugin_Entity::getPolylineData(QList<Plug_VertexData> *data){
             }
         }
 
-        if (l->isClosed()==false || nextEntity) {
+		if (!l->isClosed() || nextEntity) {
             data->append(Plug_VertexData(QPointF(ae->getEndpoint().x,
                                          ae->getEndpoint().y),bulge));
         }

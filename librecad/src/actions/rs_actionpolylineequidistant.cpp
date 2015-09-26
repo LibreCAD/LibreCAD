@@ -302,7 +302,7 @@ void RS_ActionPolylineEquidistant::mouseReleaseEvent(QMouseEvent* e) {
                 switch (getStatus()) {
                 case ChooseEntity:
                         originalEntity = catchEntity(e);
-						if (originalEntity==nullptr) {
+						if (!originalEntity) {
                                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
                         } else if (originalEntity->rtti()!=RS2::EntityPolyline) {
 

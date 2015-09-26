@@ -77,7 +77,7 @@ RS_Creation::RS_Creation(RS_EntityContainer* container,
 RS_Entity* RS_Creation::createParallelThrough(const RS_Vector& coord,
                                               int number,
                                               RS_Entity* e) {
-	if (e==nullptr) {
+	if (!e) {
 		return nullptr;
     }
 
@@ -120,7 +120,7 @@ RS_Entity* RS_Creation::createParallelThrough(const RS_Vector& coord,
 RS_Entity* RS_Creation::createParallel(const RS_Vector& coord,
                                        double distance, int number,
                                        RS_Entity* e) {
-	if (e==nullptr) {
+	if (!e) {
 		return nullptr;
     }
 
@@ -166,7 +166,7 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
                                          double distance, int number,
                                          RS_Line* e) {
 
-	if (e==nullptr) {
+	if (!e) {
 		return nullptr;
     }
 
@@ -206,7 +206,7 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
             }
 
 			RS_Line* newLine = new RS_Line{container, parallelData};
-			if (ret==nullptr) {
+			if (!ret) {
 				ret = newLine;
 			}
 			setEntity(newLine);
@@ -240,7 +240,7 @@ RS_Arc* RS_Creation::createParallelArc(const RS_Vector& coord,
                                        double distance, int number,
                                        RS_Arc* e) {
 
-	if (e==nullptr) {
+	if (!e) {
 		return nullptr;
     }
 
@@ -285,7 +285,7 @@ RS_Arc* RS_Creation::createParallelArc(const RS_Vector& coord,
             }
 
             RS_Arc* newArc = new RS_Arc(container, parallelData);
-			if (ret==nullptr) {
+			if (!ret) {
 				ret = newArc;
 			}
 			setEntity(newArc);
@@ -315,7 +315,7 @@ RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
                                              double distance, int number,
                                              RS_Circle* e) {
 
-	if (e==nullptr) {
+	if (!e) {
 		return nullptr;
     }
 
@@ -360,7 +360,7 @@ RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
             }
 
             RS_Circle* newCircle = new RS_Circle(container, parallelData);
-			if (ret==nullptr) {
+			if (!ret) {
 				ret = newCircle;
 			}
 			setEntity(newCircle);
@@ -433,13 +433,15 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
 
     RS_VectorSolutions sol;
     // check given entities:
-	if( ! (l1 && l2)) return nullptr;
-	if(! (l1->rtti()==RS2::EntityLine && l1->rtti()==RS2::EntityLine)) return nullptr;
+	if (!(l1 && l2)) return nullptr;
+	if (!(l1->rtti()==RS2::EntityLine && l1->rtti()==RS2::EntityLine)) {
+		return nullptr;
+	}
 
     // intersection between entities:
     sol = RS_Information::getIntersection(l1, l2, false);
     RS_Vector inters = sol.get(0);
-    if (inters.valid==false) {
+	if (!inters.valid) {
 		return nullptr;
     }
 
@@ -519,14 +521,15 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
     //RS_Vector circleCenter;
 
     // check given entities:
-	if(! (circle && point.valid)) return nullptr;
-	if( !( circle->isArc() || circle->rtti()==RS2::EntitySplinePoints))
+	if (!(circle && point.valid)) return nullptr;
+	if (!( circle->isArc() || circle->rtti()==RS2::EntitySplinePoints)){
 		return nullptr;
+	}
 
     // the two tangent points:
     RS_VectorSolutions sol=circle->getTangentPoint(point);
 
-	if(sol.getNumber()==0) return nullptr;
+	if(!sol.getNumber()) return nullptr;
     RS_Vector vp2(sol.getClosest(coord));
     RS_LineData d;
     if( (vp2-point).squared() > RS_TOLERANCE2 ) {
@@ -748,13 +751,13 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
   *@ at success return either an ellipse or hyperbola
   */
  std::vector<RS_Entity*> RS_Creation::createCircleTangent2( RS_Entity* circle1,RS_Entity* circle2)
-{
-	  std::vector<RS_Entity*> ret(0, (RS_Entity*)nullptr);
-	if(circle1==nullptr||circle2==nullptr) return ret;
-    RS_Entity* e1=circle1;
-    RS_Entity* e2=circle2;
+ {
+	std::vector<RS_Entity*> ret(0, nullptr);
+	if (!(circle1 && circle2)) return ret;
+	RS_Entity* e1=circle1;
+	RS_Entity* e2=circle2;
 
-    if(e1->getRadius() < e2->getRadius()) std::swap(e1,e2);
+	if (e1->getRadius() < e2->getRadius()) std::swap(e1,e2);
 
 	RS_Vector center1=e1->getCenter();
 	RS_Vector center2=e2->getCenter();
@@ -797,7 +800,7 @@ RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord,
                                          double length) {
 
     // check given entity / coord:
-	if (entity==nullptr || !coord.valid ||
+	if (!(entity && coord.valid) ||
             (entity->rtti()!=RS2::EntityArc && entity->rtti()!=RS2::EntityCircle
              && entity->rtti()!=RS2::EntityLine)) {
 
@@ -930,7 +933,7 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
         line->setLayerToActive();
         line->setPenToActive();
 
-		if (ret==nullptr) {
+		if (!ret) {
             ret = line;
         }
 

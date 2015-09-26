@@ -55,7 +55,7 @@ RS_Selection::RS_Selection(RS_EntityContainer& container,
  * Selects or deselects the given entitiy.
  */
 void RS_Selection::selectSingle(RS_Entity* e) {
-    if (e && (e->getLayer()==NULL || e->getLayer()->isLocked()==false)) {
+	if (e && (! (e->getLayer() && e->getLayer()->isLocked()))) {
 
         if (graphicView) {
             graphicView->deleteEntity(e);
@@ -243,7 +243,7 @@ void RS_Selection::selectContour(RS_Entity* e) {
 
             if (en && en->isVisible() && 
 				en->isAtomic() && en->isSelected()!=select && 
-				(en->getLayer()==NULL || en->getLayer()->isLocked()==false)) {
+				(!(en->getLayer() && en->getLayer()->isLocked()))) {
 
                 ae = (RS_AtomicEntity*)en;
                 bool doit = false;
@@ -320,7 +320,7 @@ void RS_Selection::selectLayer(const QString& layerName, bool select) {
 
         if (en && en->isVisible() && 
 				en->isSelected()!=select && 
-				(en->getLayer()==NULL || en->getLayer()->isLocked()==false)) {
+				(!(en->getLayer() && en->getLayer()->isLocked()))) {
 
             RS_Layer* l = en->getLayer(true);
 

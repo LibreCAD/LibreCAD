@@ -323,7 +323,7 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
     QModelIndex idx = layerModel->getIndex (layer);
 
     layerView->setCurrentIndex ( idx );
-    if(updateScroll==false)
+	if (!updateScroll)
         layerView->verticalScrollBar()->setValue(yPos);
 
     //update active layer name in mainwindow status bar

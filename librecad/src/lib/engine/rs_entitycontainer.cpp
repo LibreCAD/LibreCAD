@@ -327,9 +327,7 @@ void RS_EntityContainer::addEntity(RS_Entity* entity) {
        }
     */
 
-	if (entity==nullptr) {
-        return;
-    }
+	if (!entity) return;
 
     if (entity->rtti()==RS2::EntityImage ||
             entity->rtti()==RS2::EntityHatch) {
@@ -348,7 +346,7 @@ void RS_EntityContainer::addEntity(RS_Entity* entity) {
  * borders of this entity-container if autoUpdateBorders is true.
  */
 void RS_EntityContainer::appendEntity(RS_Entity* entity){
-	if (entity==nullptr)
+	if (!entity)
         return;
     entities.append(entity);
     if (autoUpdateBorders)
@@ -360,8 +358,7 @@ void RS_EntityContainer::appendEntity(RS_Entity* entity){
  * borders of this entity-container if autoUpdateBorders is true.
  */
 void RS_EntityContainer::prependEntity(RS_Entity* entity){
-	if (entity==nullptr)
-        return;
+	if (!entity) return;
     entities.prepend(entity);
     if (autoUpdateBorders)
         adjustBorders(entity);
@@ -407,9 +404,7 @@ void RS_EntityContainer::moveEntity(int index, QList<RS_Entity *>& entList){
  * the borders of this entity-container if autoUpdateBorders is true.
  */
 void RS_EntityContainer::insertEntity(int index, RS_Entity* entity) {
-	if (entity==nullptr) {
-        return;
-    }
+	if (!entity) return;
 
     entities.insert(index, entity);
 
@@ -428,7 +423,7 @@ void RS_EntityContainer::insertEntity(int index, RS_Entity* entity) {
 void RS_EntityContainer::replaceEntity(int index, RS_Entity* entity) {
 //RLZ TODO: is needed to delete the old entity? not documented in Q3PtrList
 //    investigate in qt3support code if reactivate this function.
-	if (entity==nullptr) {
+	if (!entity) {
         return;
     }
 
@@ -573,7 +568,7 @@ void RS_EntityContainer::calculateBorders() {
         //        RS_DEBUG->print("RS_EntityContainer::calculateBorders: "
         //                        "isVisible: %d", (int)e->isVisible());
 
-		if (e->isVisible() && (layer==nullptr || !layer->isFrozen())) {
+		if (e->isVisible() && !(layer && layer->isFrozen())) {
             e->calculateBorders();
             adjustBorders(e);
         }
@@ -783,7 +778,7 @@ RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
             // emtpy container:
-			if (e==nullptr) {
+			if (!e) {
 				subContainer = nullptr;
                 e = nextEntity(level);
             }
@@ -803,7 +798,7 @@ RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
             // emtpy container:
-			if (e==nullptr) {
+			if (!e) {
 				subContainer = nullptr;
                 e = nextEntity(level);
             }
@@ -822,7 +817,7 @@ RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
             // emtpy container:
-			if (e==nullptr) {
+			if (!e) {
 				subContainer = nullptr;
                 e = nextEntity(level);
             }
@@ -928,7 +923,7 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
             // emtpy container:
-			if (e==nullptr) {
+			if (!e) {
 				subContainer = nullptr;
                 e = nextEntity(level);
             }
@@ -957,7 +952,7 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
             // emtpy container:
-			if (e==nullptr) {
+			if (!e) {
 				subContainer = nullptr;
                 e = nextEntity(level);
             }
@@ -985,7 +980,7 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->firstEntity(level);
             // emtpy container:
-			if (e==nullptr) {
+			if (!e) {
 				subContainer = nullptr;
                 e = nextEntity(level);
             }
@@ -1031,7 +1026,7 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->lastEntity(level);
             // emtpy container:
-			if (e==nullptr) {
+			if (!e) {
 				subContainer = nullptr;
                 e = prevEntity(level);
             }
@@ -1058,7 +1053,7 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->lastEntity(level);
             // emtpy container:
-			if (e==nullptr) {
+			if (!e) {
 				subContainer = nullptr;
                 e = prevEntity(level);
             }
@@ -1085,7 +1080,7 @@ RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
             subContainer = (RS_EntityContainer*)e;
             e = ((RS_EntityContainer*)e)->lastEntity(level);
             // emtpy container:
-			if (e==nullptr) {
+			if (!e) {
 				subContainer = nullptr;
                 e = prevEntity(level);
             }
@@ -1179,7 +1174,7 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
 
     //QListIterator<RS_Entity> it = createIterator();
     //RS_Entity* en;
-	//while ( (en = it.current()) != nullptr ) {
+	//while ( (en = it.current())  ) {
     //    ++it;
 
     unsigned i0=0;
@@ -1203,7 +1198,7 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
 
 //    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //    std::cout<<"count()="<<const_cast<RS_EntityContainer*>(this)->count()<<"\tminDist= "<<minDist<<"\tclosestPoint="<<closestPoint;
-//    if(pEntity != nullptr) std::cout<<"\t*pEntity="<<*pEntity;
+//    if(pEntity ) std::cout<<"\t*pEntity="<<*pEntity;
 //    std::cout<<std::endl;
     return closestPoint;
 }
@@ -1744,7 +1739,7 @@ void RS_EntityContainer::revertDirection() {
 void RS_EntityContainer::draw(RS_Painter* painter, RS_GraphicView* view,
                               double& /*patternOffset*/) {
 
-	if (painter==nullptr || view==nullptr) {
+	if (!(painter && view)) {
         return;
     }
 

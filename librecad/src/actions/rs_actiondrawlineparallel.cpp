@@ -73,7 +73,7 @@ void RS_ActionDrawLineParallel::trigger() {
                                            distance, number,
                                            entity);
 
-	if (e==nullptr) {
+	if (!e) {
         RS_DEBUG->print("RS_ActionDrawLineParallel::trigger:"
                         " No parallels added\n");
     }

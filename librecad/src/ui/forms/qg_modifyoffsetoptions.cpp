@@ -77,10 +77,10 @@ void QG_ModifyOffsetOptions::setDist(double& d, bool initial) {
 
         leDist->setText(r);
         *dist=RS_Math::eval(r,&ok);
-        if(ok==false) *dist=1.;
+		if (!ok) *dist=1.;
     } else {
         *dist=RS_Math::eval(leDist->text(),&ok);
-        if(ok==false) *dist=1.;
+		if (!ok) *dist=1.;
     }
 }
 

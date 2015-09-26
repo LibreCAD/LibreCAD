@@ -47,7 +47,7 @@ void RS_ActionPolylineAppend::trigger() {
 
 	RS_PreviewActionInterface::trigger();
 
-	if (polyline==nullptr) {
+	if (!polyline) {
 		return;
 	}
 
@@ -131,7 +131,7 @@ void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent* e) {
-	if (e==nullptr) {
+	if (!e) {
 		return;
 	}
 
@@ -154,7 +154,7 @@ void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent* e) {
 		point = mouse;
                 history.append(mouse);
                 bHistory.append(0.0);
-				if (polyline==nullptr) {
+				if (!polyline) {
 			polyline = new RS_Polyline(container, *data);
 			polyline->addVertex(start, 0.0, prepend);
 		}

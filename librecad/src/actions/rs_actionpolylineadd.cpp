@@ -101,7 +101,7 @@ void RS_ActionPolylineAdd::mouseReleaseEvent(QMouseEvent* e) {
                 switch (getStatus()) {
                 case ChooseSegment:
                         addEntity = catchEntity(e);
-						if (addEntity==nullptr) {
+						if (!addEntity) {
                         RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
                         } else if (addEntity->rtti()!=RS2::EntityPolyline) {
 
@@ -119,7 +119,7 @@ void RS_ActionPolylineAdd::mouseReleaseEvent(QMouseEvent* e) {
 
                 case SetAddCoord:
                         addCoord = snapPoint(e);
-						if (addEntity==nullptr) {
+						if (!addEntity) {
                                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
                         } else if (!addCoord.valid) {
                                 RS_DIALOGFACTORY->commandMessage(tr("Adding point is invalid."));
@@ -128,7 +128,7 @@ void RS_ActionPolylineAdd::mouseReleaseEvent(QMouseEvent* e) {
 								addSegment = nullptr;
                                 double dist = graphicView->toGraphDX(snapRange)*0.9;
                                 addSegment =  ((RS_Polyline*)addEntity)->getNearestEntity( clickCoord, &dist, RS2::ResolveNone);
-								if(addSegment == nullptr) {
+								if (!addSegment) {
                                         RS_DIALOGFACTORY->commandMessage(
                                                         tr("Adding point is not on entity."));
                                         break;

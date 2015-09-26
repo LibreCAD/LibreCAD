@@ -80,7 +80,7 @@ void QG_CadToolBarArcs::restoreAction()
     //clear all action
 	m_pHidden->setChecked(true);
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
-	if(currentAction != nullptr) {
+	if(currentAction ) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }

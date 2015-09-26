@@ -1123,7 +1123,7 @@ bool QG_ActionHandler::command(const QString& cmd) {
         if (type!=RS2::ActionNone) {
             RS_DEBUG->print("QG_ActionHandler::command: setting current action");
              //special handling, currently needed for snap actions
-            if( commandLineActions(type)==false){
+			if (!commandLineActions(type)){
                 //not handled yet
                 setCurrentAction(type);
             }

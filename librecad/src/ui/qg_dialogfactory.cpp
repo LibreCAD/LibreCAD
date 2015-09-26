@@ -240,14 +240,14 @@ RS_Layer* QG_DialogFactory::requestNewLayerDialog(RS_LayerList* layerList) {
 RS_Layer* QG_DialogFactory::requestLayerRemovalDialog(RS_LayerList* layerList) {
 
 	RS_Layer* layer = nullptr;
-	if (layerList==nullptr) {
+	if (!layerList) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_DialogFactory::requestLayerRemovalDialog(): "
 				"layerList is nullptr");
 		return nullptr;
     }
     /*
-	   if (layerList==nullptr) {
+	   if (!layerList) {
 		   if (container && container->rtti()==RS2::EntityGraphic) {
                layerList = (RS_LayerList*)container;
            } else {
@@ -300,7 +300,7 @@ RS_Layer* QG_DialogFactory::requestEditLayerDialog(RS_LayerList* layerList) {
 
 	RS_Layer* layer = nullptr;
     /*
-	   if (layerList==nullptr) {
+	   if (!layerList) {
 		   if (container && container->rtti()==RS2::EntityGraphic) {
                layerList = (RS_LayerList*)container;
            } else {
@@ -309,7 +309,7 @@ RS_Layer* QG_DialogFactory::requestEditLayerDialog(RS_LayerList* layerList) {
        }
     */
 
-	if (layerList==nullptr) {
+	if (!layerList) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_DialogFactory::requestEditLayerDialog(): "
 				"layerList is nullptr");
@@ -349,7 +349,7 @@ RS_BlockData QG_DialogFactory::requestNewBlockDialog(RS_BlockList* blockList) {
     RS_BlockData ret;
     ret = RS_BlockData("", RS_Vector(false), false);
 
-	if (blockList==nullptr) {
+	if (!blockList) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_DialogFactory::requestNewBlockDialog(): "
 				"blockList is nullptr");
@@ -380,14 +380,14 @@ RS_BlockData QG_DialogFactory::requestBlockAttributesDialog(RS_BlockList* blockL
     RS_BlockData ret;
     ret = RS_BlockData("", RS_Vector(false), false);
 
-	if (blockList==nullptr) {
+	if (!blockList) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_DialogFactory::requestBlockAttributesDialog(): "
 				"blockList is nullptr");
         return ret;
     }
     /*
-	   if (blockList==nullptr) {
+	   if (!blockList) {
 		   if (container && container->rtti()==RS2::EntityGraphic) {
                blockList = (RS_BlockList*)container;
            } else {
@@ -422,7 +422,7 @@ RS_BlockData QG_DialogFactory::requestBlockAttributesDialog(RS_BlockList* blockL
 RS_Block* QG_DialogFactory::requestBlockRemovalDialog(RS_BlockList* blockList) {
 	RS_Block* block = nullptr;
 
-	if (blockList==nullptr) {
+	if (!blockList) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_DialogFactory::requestBlockRemovalDialog(): "
 				"blockList is nullptr");
@@ -526,7 +526,7 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
                                       bool on, bool update) {
         RS_DEBUG->print("QG_DialogFactory::requestOptions");
 
-	if (action==nullptr) {
+	if (!action) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
 				"QG_DialogFactory::requestOptions: action is nullptr");
         return;
@@ -624,7 +624,7 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
     case RS2::ActionDimLinearVer:
     case RS2::ActionDimLinearHor:
         requestDimensionOptions(action, on, update);
-        if (((RS_ActionDimLinear*)action)->hasFixedAngle()==false) {
+		if (!((RS_ActionDimLinear*)action)->hasFixedAngle()) {
             requestDimLinearOptions(action, on, update);
         }
         break;
@@ -686,7 +686,7 @@ void QG_DialogFactory::requestPrintPreviewOptions(RS_ActionInterface* action,
         return;
     }
 	if (optionWidget ) {
-		if (printPreviewOptions==nullptr) {
+		if (!printPreviewOptions) {
             printPreviewOptions = new QG_PrintPreviewOptions();
             printPreviewOptions ->setAction(action, false);
             optionWidget->addWidget(printPreviewOptions);
@@ -757,7 +757,7 @@ void QG_DialogFactory::requestPolylineEquidistantOptions(RS_ActionInterface* act
         return;
     }
 	if (optionWidget ) {
-		if (polylineEquidistantOptions==nullptr) {
+		if (!polylineEquidistantOptions) {
             polylineEquidistantOptions = new QG_PolylineEquidistantOptions();
 
             optionWidget->addWidget(polylineEquidistantOptions);
@@ -827,14 +827,14 @@ void QG_DialogFactory::requestLineAngleOptions(RS_ActionInterface* action,
 
 	if (optionWidget) {
 		if (on) {
-			if(m_pLineAngleOptions==nullptr)
+			if(!m_pLineAngleOptions)
                 m_pLineAngleOptions = new QG_LineAngleOptions();
             optionWidget->addWidget(m_pLineAngleOptions);
             m_pLineAngleOptions->setAction(action, update);
             //toolWidget->setData(&angle, &length, fixedAngle, update);
             m_pLineAngleOptions->show();
         }else{
-			if (m_pLineAngleOptions==nullptr) return;
+			if (!m_pLineAngleOptions) return;
             delete m_pLineAngleOptions;
 			m_pLineAngleOptions = nullptr;
         }
@@ -988,8 +988,8 @@ void QG_DialogFactory::requestArcTangentialOptions(RS_ActionInterface* action,
 
 void QG_DialogFactory::updateArcTangentialOptions(const double& d, bool byRadius)
 {
-	if (arcTangentialOptions==nullptr) return;
-    if(byRadius){
+	if (!arcTangentialOptions) return;
+	if (byRadius){
         arcTangentialOptions->updateAngle(QString::number(d,'g',5));
     }else{
         arcTangentialOptions->updateRadius(QString::number(d,'g',5));
@@ -1217,7 +1217,7 @@ void QG_DialogFactory::requestSnapMiddleOptions(int& middlePoints, bool on) {
         return;
     }
 	if (optionWidget ) {
-		if (snapMiddleOptions==nullptr) {
+		if (!snapMiddleOptions) {
             snapMiddleOptions = new QG_SnapMiddleOptions(middlePoints);
             optionWidget->addWidget(snapMiddleOptions);
             snapMiddleOptions->setMiddlePoints(middlePoints);
@@ -1242,7 +1242,7 @@ void QG_DialogFactory::requestSnapDistOptions(double& dist, bool on) {
         return;
     }
 	if (optionWidget ) {
-		if ( snapDistOptions==nullptr) {
+		if (!snapDistOptions) {
             snapDistOptions = new QG_SnapDistOptions();
             optionWidget->addWidget(snapDistOptions);
         snapDistOptions->setDist(dist);
@@ -1359,7 +1359,7 @@ void QG_DialogFactory::requestModifyOffsetOptions(double& dist, bool on) {
         return;
     }
 	if (optionWidget ) {
-		if ( modifyOffsetOptions==nullptr) {
+		if (!modifyOffsetOptions) {
             modifyOffsetOptions = new QG_ModifyOffsetOptions();
             optionWidget->addWidget(modifyOffsetOptions);
             modifyOffsetOptions->setDist(dist);
@@ -1773,7 +1773,7 @@ bool QG_DialogFactory::requestTextDialog(RS_Text* text) {
  * Shows a dialog to edit pattern / hatch attributes of the given entity.
  */
 bool QG_DialogFactory::requestHatchDialog(RS_Hatch* hatch) {
-	if (hatch==nullptr) return false;
+	if (!hatch) return false;
 
     RS_PATTERNLIST->init();
 

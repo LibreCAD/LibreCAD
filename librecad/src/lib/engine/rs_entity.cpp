@@ -223,7 +223,7 @@ void RS_Entity::undoStateChanged(bool /*undone*/) {
  * @return true if this entity or any parent entities are undone.
  */
 bool RS_Entity::isUndone() const {
-		if (parent==nullptr) {
+		if (!parent) {
                 return RS_Undoable::isUndone();
         }
         else {
@@ -396,11 +396,7 @@ bool RS_Entity::isVisible() const{
     }
 
     if (getBlockOrInsert()->rtti()==RS2::EntityBlock) {
-		if (getLayer(false)==nullptr || !getLayer(false)->isFrozen()) {
-            return true;
-        } else {
-            return false;
-        }
+		return !(getLayer(false) && getLayer(false)->isFrozen());
     }
 
 
@@ -467,11 +463,7 @@ RS_Vector RS_Entity::getSize() const {
  */
 bool RS_Entity::isLocked() const
 {
-	if (getLayer(true) && getLayer()->isLocked()) {
-        return true;
-    } else {
-        return false;
-    }
+	return getLayer(true) && getLayer()->isLocked();
 }
 
 RS_Vector RS_Entity::getCenter() const {

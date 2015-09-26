@@ -73,7 +73,7 @@ public:
 		angle = a;
 	}
 
-	double getAngle() {
+	double getAngle() const{
 		return angle;
 	}
 
@@ -81,11 +81,11 @@ public:
 		length = l;
 	}
 
-	double getLength() {
+	double getLength() const{
 		return length;
 	}
 
-	bool hasFixedAngle() {
+	bool hasFixedAngle() const{
 		return fixedAngle;
 	}
 

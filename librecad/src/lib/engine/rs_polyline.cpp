@@ -661,9 +661,7 @@ void RS_Polyline::stretch(const RS_Vector& firstCorner,
  */
 void RS_Polyline::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patternOffset*/) {
 
-	if (view==nullptr) {
-        return;
-    }
+	if (!view) return;
 
     // draw first entity and set correct pen:
     RS_Entity* e = firstEntity(RS2::ResolveNone);

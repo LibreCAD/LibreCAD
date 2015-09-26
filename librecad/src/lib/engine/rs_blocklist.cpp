@@ -92,13 +92,13 @@ void RS_BlockList::activate(RS_Block* block) {
 bool RS_BlockList::add(RS_Block* block, bool notify) {
     RS_DEBUG->print("RS_BlockList::add()");
 
-	if (block==nullptr) {
+	if (!block) {
         return false;
     }
 
     // check if block already exists:
     RS_Block* b = find(block->getName());
-	if (b==nullptr) {
+	if (!b) {
         blocks.append(block);
 
         if (notify) {
@@ -177,7 +177,7 @@ void RS_BlockList::remove(RS_Block* block) {
  */
 bool RS_BlockList::rename(RS_Block* block, const QString& name) {
 	if (block) {
-		if (find(name)==nullptr) {
+		if (!find(name)) {
 			block->setName(name);
 			setModified(true);
 			return true;
@@ -263,7 +263,7 @@ void RS_BlockList::toggle(const QString& name) {
  * Listeners are notified.
  */
 void RS_BlockList::toggle(RS_Block* block) {
-	if (block==nullptr) {
+	if (!block) {
         return;
     }
 

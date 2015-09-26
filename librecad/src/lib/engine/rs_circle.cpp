@@ -289,7 +289,7 @@ std::vector<RS_Entity* > RS_Circle::offsetTwoSides(const double& distance) const
 RS_VectorSolutions RS_Circle::createTan1_2P(const RS_AtomicEntity* circle, const std::vector<RS_Vector> points)
 {
     RS_VectorSolutions ret;
-	if(circle==nullptr||points.size()<2) return ret;
+	if (!circle||points.size()<2) return ret;
     return LC_Quadratic::getIntersection(
                 LC_Quadratic(circle,points[0]),
                 LC_Quadratic(circle,points[1])

@@ -192,7 +192,7 @@ void RS_Hatch::update() {
     // search pattern:
     RS_DEBUG->print("RS_Hatch::update: requesting pattern");
     RS_Pattern* pat = RS_PATTERNLIST->requestPattern(data.pattern);
-	if (pat==nullptr) {
+	if (!pat) {
         updateRunning = false;
         RS_DEBUG->print("RS_Hatch::update: requesting pattern: not found");
         updateError = HATCH_PATTERN_NOT_FOUND;
@@ -372,7 +372,7 @@ void RS_Hatch::update() {
         {
             RS_Vector sp = startPoint;
             double sa = center.angleTo(sp);
-			if(ellipse != nullptr) sa=ellipse->getEllipseAngle(sp);
+			if(ellipse ) sa=ellipse->getEllipseAngle(sp);
             bool done;
             double minDist;
             double dist = 0.0;

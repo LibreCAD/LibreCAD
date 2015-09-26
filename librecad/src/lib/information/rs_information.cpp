@@ -218,7 +218,7 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
     RS_VectorSolutions ret;
     const double tol = 1.0e-4;
 
-	if (e1==nullptr || e2==nullptr ) {
+	if (!(e1 && e2) ) {
 		RS_DEBUG->print("RS_Information::getIntersection() for nullptr entities");
         return ret;
     }
@@ -249,7 +249,7 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
 
     //avoid intersections between line segments the same spline
     /* ToDo: 24 Aug 2011, Dongxu Li, if rtti() is not defined for the parent, the following check for splines may still cause segfault */
-	if ( e1->getParent() != nullptr && e1->getParent() == e2->getParent()) {
+	if ( e1->getParent() && e1->getParent() == e2->getParent()) {
         if ( e1->getParent()->rtti()==RS2::EntitySpline ) {
             //do not calculate intersections from neighboring lines of a spline
             if ( abs(e1->getParent()->findEntity(e1) - e1->getParent()->findEntity(e2)) <= 1 ) {
@@ -279,8 +279,8 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
 	}
     RS_VectorSolutions ret2;
 	for(const RS_Vector& vp: ret){
-		if ( ! vp.valid) continue;
-        if (onEntities==true) {
+		if (!vp.valid) continue;
+		if (onEntities) {
             //ignore intersections not on entity
             if (!(
                         (e1->isConstruction(true) || e1->isPointOnEntity(vp, tol)) &&
@@ -336,7 +336,7 @@ RS_VectorSolutions RS_Information::getIntersectionLineLine(RS_Line* e1,
 
     RS_VectorSolutions ret;
 
-	if (e1==nullptr || e2==nullptr) {
+	if (!(e1 && e2)) {
 		RS_DEBUG->print("RS_Information::getIntersectionLineLin() for nullptr entities");
         return ret;
     }
@@ -376,9 +376,7 @@ RS_VectorSolutions RS_Information::getIntersectionLineArc(RS_Line* line,
 
     RS_VectorSolutions ret;
 
-	if (line==nullptr || arc==nullptr) {
-        return ret;
-    }
+	if (!(line && arc)) return ret;
 
     double dist=0.0;
     RS_Vector nearest;
@@ -490,8 +488,7 @@ RS_VectorSolutions RS_Information::getIntersectionArcArc(RS_Entity const* e1,
 
     RS_VectorSolutions ret;
 
-	if (!(e1 && e2))
-        return ret;
+	if (!(e1 && e2)) return ret;
 
 	if(e1->rtti() != RS2::EntityArc && e1->rtti() != RS2::EntityCircle)
 		return ret;
@@ -555,7 +552,7 @@ RS_VectorSolutions RS_Information::getIntersectionArcArc(RS_Entity const* e1,
 RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1, RS_Ellipse* e2) {
     RS_VectorSolutions ret;
 
-	if (e1==nullptr || e2==nullptr ) {
+	if (!(e1 && e2) ) {
         return ret;
     }
     if (
@@ -646,9 +643,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1,
 RS_VectorSolutions RS_Information::getIntersectionCircleEllipse(RS_Circle* c1,
         RS_Ellipse* e1) {
     RS_VectorSolutions ret;
-	if (c1==nullptr || e1==nullptr) {
-        return ret;
-    }
+	if (!(c1 && e1)) return ret;
 
     RS_EllipseData d(
         c1->getCenter(),
@@ -664,7 +659,7 @@ RS_VectorSolutions RS_Information::getIntersectionCircleEllipse(RS_Circle* c1,
 RS_VectorSolutions RS_Information::getIntersectionArcEllipse(RS_Arc * a1,
         RS_Ellipse* e1) {
     RS_VectorSolutions ret;
-	if (a1==nullptr || e1==nullptr) {
+	if (!(a1 && e1)) {
         return ret;
     }
     RS_EllipseData d(
@@ -690,9 +685,7 @@ RS_VectorSolutions RS_Information::getIntersectionEllipseLine(RS_Line* line,
 
     RS_VectorSolutions ret;
 
-	if (line==nullptr || ellipse==nullptr) {
-        return ret;
-    }
+	if (!(line && ellipse)) return ret;
 
     // rotate into normal position:
 

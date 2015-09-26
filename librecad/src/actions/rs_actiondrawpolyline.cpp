@@ -78,9 +78,7 @@ void RS_ActionDrawPolyline::init(int status) {
 void RS_ActionDrawPolyline::trigger() {
     RS_PreviewActionInterface::trigger();
 
-		if (polyline==nullptr) {
-                return;
-        }
+	if (!polyline) return;
 
         // add the entity
     //RS_Polyline* polyline = new RS_Polyline(container, data);
@@ -97,7 +95,7 @@ void RS_ActionDrawPolyline::trigger() {
 
         // upd view
     deleteSnapper();
-    graphicView->moveRelativeZero(RS_Vector(0.0,0.0));
+	graphicView->moveRelativeZero(RS_Vector{0.,0.});
     graphicView->drawEntity(polyline);
     graphicView->moveRelativeZero(polyline->getEndpoint());
     drawSnapper();
@@ -242,7 +240,7 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 }
 
 void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
-	if (e==nullptr) {
+	if (!e) {
         return;
     }
 
@@ -271,8 +269,7 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
         point = mouse;
         history.append(mouse);
         bHistory.append(bulge);
-				if (polyline==nullptr) {
-						//printf("polyline==nullptr\n");
+				if (!polyline) {
 						polyline = new RS_Polyline(container, *data);
                         polyline->addVertex(start, 0.0);
                 }

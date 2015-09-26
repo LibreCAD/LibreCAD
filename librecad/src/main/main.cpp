@@ -424,7 +424,7 @@ QStringList handleArgs(int argc, char** argv, const QList<int>& argClean) {
 
         for (int i=1; i<argc; i++) {
             if(argClean.indexOf(i)>=0) continue;
-                if (QString(argv[i]).startsWith("-")==false) {
+				if (!QString(argv[i]).startsWith("-")) {
                         QString fname = QDir::toNativeSeparators(
                                 QFileInfo(QFile::decodeName(argv[i])).absoluteFilePath() );
                         ret.append(fname);

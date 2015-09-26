@@ -119,7 +119,7 @@ void RS_ActionOrder::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case ChooseEntity:
             targetEntity = catchEntity(e);
-			if (targetEntity==nullptr) {
+			if (!targetEntity) {
                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
             } else {
                 targetEntity->setHighlighted(true);

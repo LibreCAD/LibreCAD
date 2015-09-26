@@ -134,7 +134,7 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
 //                        std::cout<<"update="<<update<<" : updateDisabled="<<updateDisabled <<std::endl;
 //                        std::cout<<"update="<<update<<" : action->getPaperScaleFixed()="<<action->getPaperScaleFixed() <<std::endl;
             if(updateDisabled||action->getPaperScaleFixed()){
-                if(action->getPaperScaleFixed()==false){
+				if (!action->getPaperScaleFixed()){
                     RS_SETTINGS->beginGroup("/PrintPreview");
                     QString&& s=RS_SETTINGS->readEntry("/PrintScaleValue", "1:1");
                     RS_SETTINGS->endGroup();

@@ -122,7 +122,7 @@ void QG_CadToolBar::back() {
 
 void QG_CadToolBar::finishCurrentAction(bool resetToolBar)
 {
-	if(actionHandler==nullptr) return;
+	if(!actionHandler) return;
 	RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
 	if(currentAction) {
 		currentAction->finish(resetToolBar); //finish the action, but do not update toolBar
@@ -203,7 +203,7 @@ void QG_CadToolBar::showPreviousToolBar(bool cleanup) {
 		//        std::cout<<"QG_CadToolBar::showPreviousToolBar(false): toolbars.size()="<<toolbars.size()<<std::endl;
 		if(activeToolbars.size()>1){
 			//            std::cout<<"QG_CadToolBar::showPreviousToolBar(false): hide:"<<toolbarIDs[toolbars.size()-1]<<std::endl;
-			if(activeToolbars.back()== nullptr) activeToolbars.back()->setVisible(false);
+			if (!activeToolbars.back()) activeToolbars.back()->setVisible(false);
 			activeToolbars.pop_back();
 		}
 
@@ -424,9 +424,9 @@ void QG_CadToolBar::showCadToolBar(RS2::ActionType actionType, bool cleanup){
 		showToolBar(id, false);
 	}
     if(cleanup){
-		if(actionHandler != nullptr) {
+		if(actionHandler ) {
             RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
-			if(currentAction != nullptr) {
+			if(currentAction ) {
                 currentAction->finish(false); //finish the action, but do not update toolBar
             }
         }

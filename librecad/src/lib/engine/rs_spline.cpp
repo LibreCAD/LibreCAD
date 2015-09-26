@@ -245,7 +245,7 @@ RS_Vector RS_Spline::getNearestEndpoint(const RS_Vector& coord,
 //            }
 //        }
     }
-	if (dist!=nullptr) {
+	if (dist) {
         *dist = minDist;
     }
     return ret;
@@ -266,7 +266,7 @@ RS_Vector RS_Spline::getNearestPointOnEntity(const RS_Vector& coord,
 RS_Vector RS_Spline::getNearestCenter(const RS_Vector& /*coord*/,
 									  double* dist) const{
 
-	if (dist!=nullptr) {
+	if (dist) {
         *dist = RS_MAXDOUBLE;
     }
 
@@ -278,7 +278,7 @@ RS_Vector RS_Spline::getNearestCenter(const RS_Vector& /*coord*/,
 RS_Vector RS_Spline::getNearestMiddle(const RS_Vector& /*coord*/,
                                       double* dist,
                                       int /*middlePoints*/)const {
-	if (dist!=nullptr) {
+	if (dist) {
         *dist = RS_MAXDOUBLE;
     }
 
@@ -290,7 +290,7 @@ RS_Vector RS_Spline::getNearestMiddle(const RS_Vector& /*coord*/,
 RS_Vector RS_Spline::getNearestDist(double /*distance*/,
                                     const RS_Vector& /*coord*/,
 									double* dist) const{
-	if (dist!=nullptr) {
+	if (dist) {
         *dist = RS_MAXDOUBLE;
     }
 
@@ -362,7 +362,7 @@ void RS_Spline::revertDirection() {
 
 void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 
-	if (painter==nullptr || view==nullptr) {
+	if (!(painter && view)) {
         return;
     }
 
@@ -391,7 +391,7 @@ void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patter
  */
 /*
 void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view) {
-   if (painter==nullptr || view==nullptr) {
+   if (!(painter && view)) {
        return;
    }
 
@@ -513,7 +513,7 @@ void RS_Spline::rbasis(int c, double t, int npts,
 
     nplusc = npts + c;
 
-    double* temp = new double[nplusc+1];
+	std::vector<double> temp(nplusc+1,0.);
 
     // calculate the first order nonrational basis functions n[i]
     for (i = 1; i<= nplusc-1; i++) {
@@ -561,7 +561,6 @@ void RS_Spline::rbasis(int c, double t, int npts,
             r[i] = 0;
     }
 
-    delete[] temp;
 }
 
 

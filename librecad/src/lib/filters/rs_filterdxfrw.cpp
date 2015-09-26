@@ -162,7 +162,7 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
     delete dummyContainer;
     /*set current layer */
     RS_Layer* cl = graphic->findLayer(graphic->getVariableString("$CLAYER", "0"));
-	if (cl != nullptr){
+	if (cl ){
         //require to notify
         graphic->getLayerList()->activate(cl, true);
     }
@@ -239,7 +239,7 @@ void RS_FilterDXFRW::addVport(const DRW_Vport &data) {
         graphic->setIsometricGrid(data.snapStyle);
         graphic->setCrosshairType( (RS2::CrosshairType)data.snapIsopair);
         RS_GraphicView *gv = graphic->getGraphicView();
-		if (gv != nullptr) {
+		if (gv ) {
             double width = data.height * data.ratio;
             double factorX= gv->getWidth() / width;
             double factorY= gv->getHeight() / data.height;
@@ -340,7 +340,7 @@ void RS_FilterDXFRW::addLine(const DRW_Line& data) {
 
     RS_DEBUG->print("RS_FilterDXF::addLine: create line");
 
-	if (currentContainer==nullptr) {
+	if (!currentContainer) {
 		RS_DEBUG->print("RS_FilterDXF::addLine: currentContainer is nullptr");
     }
 
@@ -395,7 +395,7 @@ void RS_FilterDXFRW::addXline(const DRW_Xline& data) {
 
     RS_DEBUG->print("RS_FilterDXF::addXline: create line");
 
-	if (currentContainer==nullptr) {
+	if (!currentContainer) {
 		RS_DEBUG->print("RS_FilterDXF::addXline: currentContainer is nullptr");
     }
 
@@ -1416,7 +1416,7 @@ void RS_FilterDXFRW::prepareBlocks() {
     }
     //Add a name to each dimension, in dxfR12 also for hatches
     for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
-		 e != nullptr; e = graphic->nextEntity(RS2::ResolveNone)) {
+		 e ; e = graphic->nextEntity(RS2::ResolveNone)) {
         if ( !(e->getFlag(RS2::FlagUndone)) ) {
             switch (e->rtti()) {
             case RS2::EntityDimLinear:
@@ -1871,7 +1871,7 @@ void RS_FilterDXFRW::writeTextstyles(){
     QString sty;
     //Find fonts used by text entities in drawing
     for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
-		 e != nullptr; e = graphic->nextEntity(RS2::ResolveNone)) {
+		 e ; e = graphic->nextEntity(RS2::ResolveNone)) {
         if ( !(e->getFlag(RS2::FlagUndone)) ) {
             switch (e->rtti()) {
             case RS2::EntityMText:
@@ -1893,7 +1893,7 @@ void RS_FilterDXFRW::writeTextstyles(){
     for (unsigned i = 0; i < graphic->countBlocks(); i++) {
         blk = graphic->blockAt(i);
         for (RS_Entity *e = blk->firstEntity(RS2::ResolveNone);
-			 e != nullptr; e = blk->nextEntity(RS2::ResolveNone)) {
+			 e ; e = blk->nextEntity(RS2::ResolveNone)) {
             if ( !(e->getFlag(RS2::FlagUndone)) ) {
                 switch (e->rtti()) {
                 case RS2::EntityMText:
@@ -1944,7 +1944,7 @@ void RS_FilterDXFRW::writeVports(){
         vp.gridSpacing.y = 10;
     }
     RS_GraphicView *gv = graphic->getGraphicView();
-	if (gv != nullptr) {
+	if (gv ) {
         RS_Vector fac =gv->getFactor();
         vp.height = gv->getHeight()/fac.y;
         vp.ratio = (double)gv->getWidth() / (double)gv->getHeight();
@@ -1974,7 +1974,7 @@ void RS_FilterDXFRW::writeAppId(){
 
 void RS_FilterDXFRW::writeEntities(){
     for (RS_Entity *e = graphic->firstEntity(RS2::ResolveNone);
-		 e != nullptr; e = graphic->nextEntity(RS2::ResolveNone)) {
+		 e ; e = graphic->nextEntity(RS2::ResolveNone)) {
         if ( !(e->getFlag(RS2::FlagUndone)) ) {
             writeEntity(e);
         }
@@ -2670,7 +2670,7 @@ void RS_FilterDXFRW::writeLeader(RS_Leader* l) {
             leader.vertexlist.push_back(new DRW_Coord(li->getStartpoint().x, li->getStartpoint().y, 0.0));
         }
     }
-	if (li != nullptr) {
+	if (li ) {
         leader.vertexlist.push_back(new DRW_Coord(li->getEndpoint().x, li->getEndpoint().y, 0.0));
     }
     dxfW->writeLeader(&leader);
@@ -2858,7 +2858,7 @@ void RS_FilterDXFRW::writeImage(RS_Image * i) {
     image.fade = i->getFade();
 
     DRW_ImageDef *imgDef = dxfW->writeImage(&image, i->getFile().toUtf8().data());
-	if (imgDef != nullptr) {
+	if (imgDef ) {
         imgDef->loaded = 1;
         imgDef->u = i->getData().size.x;
         imgDef->v = i->getData().size.y;
@@ -2906,7 +2906,7 @@ void RS_FilterDXFRW::writeImage(RS_Image * i) {
 
     RS_Block* blk = new RS_Block(graphic, blkdata);
 
-	for (RS_Entity* e1 = con->firstEntity(); e1 != nullptr;
+	for (RS_Entity* e1 = con->firstEntity(); e1 ;
             e1 = con->nextEntity() ) {
         blk->addEntity(e1);
     }
@@ -2946,7 +2946,7 @@ void RS_FilterDXFRW::setEntityAttributes(RS_Entity* entity,
     QString layName = toNativeString(QString::fromUtf8(attrib->layer.c_str()));
 
     // Layer: add layer in case it doesn't exist:
-	if (graphic->findLayer(layName)==nullptr) {
+	if (!graphic->findLayer(layName)) {
         DRW_Layer lay;
         lay.name = attrib->layer;
         addLayer(lay);

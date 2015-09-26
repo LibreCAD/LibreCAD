@@ -396,10 +396,10 @@ RS_Vector RS_Ellipse::getNearestDist(double distance,
     x1= (vp1-coord).squared();
     x2= (vp2-coord).squared();
     if( x1 > x2 ){
-		if(dist !=nullptr)  *dist=sqrt(x2);
+		if (dist)  *dist=sqrt(x2);
         return vp2;
     }else{
-		if(dist !=nullptr)  *dist=sqrt(x1);
+		if (dist)  *dist=sqrt(x1);
         return vp1;
     }
 }
@@ -1021,7 +1021,7 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     RS_DEBUG->print("RS_Ellpse::getNearestMiddle(): begin\n");
 	if ( ! isEllipticArc() ) {
         //no middle point for whole ellipse, angle1=angle2=0
-		if (dist!=nullptr) {
+		if (dist) {
             *dist = RS_MAXDOUBLE;
         }
         return RS_Vector(false);
@@ -1031,7 +1031,7 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     if ( ra < RS_TOLERANCE || rb < RS_TOLERANCE ) {
         //zero radius, return the center
         RS_Vector vp(getCenter());
-		if (dist!=nullptr) {
+		if (dist) {
             *dist = vp.distanceTo(coord);
         }
         return vp;

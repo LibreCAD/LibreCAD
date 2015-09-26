@@ -96,7 +96,7 @@ void QG_PolylineEquidistantOptions::updateDist(const QString& l) {
 	if (action) {
         bool ok;
         double dist=RS_Math::eval(l,&ok);
-        if(ok==false){
+		if(!ok){
             dist=10.;
             leDist->setText(QString::number(dist,'g',3));
         }
@@ -109,7 +109,7 @@ void QG_PolylineEquidistantOptions::updateDist(const QString& l) {
 void QG_PolylineEquidistantOptions::updateNumber(const QString& l) {
     bool ok;
     unsigned i=static_cast<unsigned>(RS_Math::eval(l,&ok)+0.5);
-    if(ok==false || (i==0 && i>100)) {
+	if (!ok || (i==0 && i>100)) {
         i=1;
         leNumber->setText(QString::number(i));
     }

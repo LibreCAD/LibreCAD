@@ -314,8 +314,8 @@ bool RS_ActionDrawCircleTan3::preparePreview(){
 RS_Entity* RS_ActionDrawCircleTan3::catchCircle(QMouseEvent* e) {
     RS_Entity* ret=nullptr;
 	RS_Entity*  en = catchEntity(e,enTypeList, RS2::ResolveAll);
-    if(en == nullptr) return ret;
-	if(en->isVisible()==false) return ret;
+	if (!en) return ret;
+	if (!en->isVisible()) return ret;
 	for(int i=0;i<getStatus();++i) {
 		if(en->getId() == circles[i]->getId()) return ret; //do not pull in the same line again
 	}
@@ -336,7 +336,7 @@ void RS_ActionDrawCircleTan3::mouseReleaseEvent(QMouseEvent* e) {
 		case SetCircle2:
 		case SetCircle3: {
 			RS_Entity*  en = catchCircle(e);
-            if (en==nullptr) return;
+			if (!en) return;
 			circles.resize(getStatus());
 			for(const RS_AtomicEntity* const pc: circles)
 				if(pc == en) continue;

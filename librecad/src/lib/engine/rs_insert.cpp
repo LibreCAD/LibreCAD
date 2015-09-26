@@ -102,7 +102,7 @@ void RS_Insert::update() {
     clear();
 
     RS_Block* blk = getBlockForInsert();
-	if (blk==nullptr) {
+	if (!blk) {
 		//return nullptr;
 				RS_DEBUG->print("RS_Insert::update: Block is nullptr");
         return;
@@ -122,7 +122,7 @@ void RS_Insert::update() {
 
         /*QListIterator<RS_Entity> it = createIterator();
     RS_Entity* e;
-	while ( (e = it.current()) != nullptr ) {
+	while ( (e = it.current())  ) {
         ++it;*/
 
         RS_DEBUG->print("RS_Insert::update: cols: %d, rows: %d",
@@ -170,7 +170,7 @@ void RS_Insert::update() {
                 ne->setUpdateEnabled(false);
                 // if entity layer are 0 set to insert layer to allow "1 layer control" bug ID #3602152
                 RS_Layer *l= ne->getLayer();//special fontchar block don't have
-				if (l != nullptr && ne->getLayer()->getName() == "0")
+				if (l  && ne->getLayer()->getName() == "0")
                     ne->setLayer(this->getLayer());
                 ne->setParent(this);
                 ne->setVisible(getFlag(RS2::FlagVisible));
@@ -259,7 +259,7 @@ RS_Block* RS_Insert::getBlockForInsert() const{
 
     RS_BlockList* blkList;
 
-	if (data.blockSource==nullptr) {
+	if (!data.blockSource) {
 		if (getGraphic()) {
             blkList = getGraphic()->getBlockList();
         } else {

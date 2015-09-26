@@ -84,7 +84,7 @@ void LC_CustomToolbar::actions_from_file(QString path, QMap<QString, QAction*> m
 
 void LC_CustomToolbar::slot_add_or_remove_action()
 {
-    if (most_recent_action != nullptr)
+    if (most_recent_action )
     {
         QString token = most_recent_action->data().toString();
 

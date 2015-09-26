@@ -85,7 +85,7 @@ void RS_ActionDrawHatch::trigger() {
 			e->setSelected(false);
         }
     }
-	for (e=container->firstEntity(RS2::ResolveAll); e!=nullptr;
+	for (e=container->firstEntity(RS2::ResolveAll); e;
             e=container->nextEntity(RS2::ResolveAll)) {
         if (e->isSelected() && 
             (e->rtti()==RS2::EntityHatch ||
@@ -98,7 +98,7 @@ void RS_ActionDrawHatch::trigger() {
 
 	// look for selected contours:
     bool haveContour = false;
-	for (e=container->firstEntity(RS2::ResolveAll); e!=nullptr;
+	for (e=container->firstEntity(RS2::ResolveAll); e;
             e=container->nextEntity(RS2::ResolveAll)) {
         if (e->isSelected()) {
             haveContour = true;
@@ -117,13 +117,13 @@ void RS_ActionDrawHatch::trigger() {
     loop->setPen(RS_Pen(RS2::FlagInvalid));
 
     // add selected contour:
-	for (RS_Entity* e=container->firstEntity(RS2::ResolveAll); e!=nullptr;
+	for (RS_Entity* e=container->firstEntity(RS2::ResolveAll); e;
             e=container->nextEntity(RS2::ResolveAll)) {
 
         if (e->isSelected()) {
             e->setSelected(false);
 			// entity is part of a complex entity (spline, polyline, ..):
-			if (e->getParent()!=nullptr &&
+			if (e->getParent() &&
 // RVT - Don't de-delect the parent EntityPolyline, this is messing up the getFirst and getNext iterators
 //			    (e->getParent()->rtti()==RS2::EntitySpline ||
 //				 e->getParent()->rtti()==RS2::EntityPolyline)) {
@@ -199,7 +199,7 @@ void RS_ActionDrawHatch::mouseMoveEvent(QMouseEvent*) {
 
 
         deletePreview();
-		if (hatch!=nullptr && !hatch->isVisible()) {
+		if (hatch && !hatch->isVisible()) {
             hatch->setVisible(true);
         }
         offset = RS_Vector(graphicView->toGuiDX(pos.x),

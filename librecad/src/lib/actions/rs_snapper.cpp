@@ -117,14 +117,14 @@ void RS_Snapper::finish() {
 
 void RS_Snapper::setSnapMode(const RS_SnapMode& snapMode) {
     this->snapMode = snapMode;
-	if (RS_DIALOGFACTORY==nullptr) return;
+	if (!RS_DIALOGFACTORY) return;
 	RS_DIALOGFACTORY->requestSnapDistOptions(m_SnapDistance, snapMode.snapDistance);
     RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, snapMode.snapMiddle);
 //std::cout<<"RS_Snapper::setSnapMode(): middlePoints="<<middlePoints<<std::endl;
 }
 //get current mouse coordinates
 RS_Vector RS_Snapper::snapFree(QMouseEvent* e) {
-	if (e==nullptr) {
+	if (!e) {
                 RS_DEBUG->print(RS_Debug::D_WARNING,
 						"RS_Snapper::snapFree: event is nullptr");
         return RS_Vector(false);
@@ -147,7 +147,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
     snapSpot = RS_Vector(false);
     RS_Vector t(false);
 
-	if (e==nullptr) {
+	if (!e) {
                 RS_DEBUG->print(RS_Debug::D_WARNING,
 						"RS_Snapper::snapPoint: event is nullptr");
         return snapSpot;
@@ -176,7 +176,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
     if (snapMode.snapMiddle) {
         //this is still brutal force
         //todo: accept value from widget QG_SnapMiddleOptions
-		if(RS_DIALOGFACTORY != nullptr) {
+		if(RS_DIALOGFACTORY ) {
             RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, snapMode.snapMiddle);
         }
         t = snapMiddle(mouseCoord);
@@ -189,7 +189,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
     if (snapMode.snapDistance) {
         //this is still brutal force
         //todo: accept value from widget QG_SnapDistOptions
-		if(RS_DIALOGFACTORY != nullptr) {
+		if(RS_DIALOGFACTORY ) {
 			RS_DIALOGFACTORY->requestSnapDistOptions(m_SnapDistance, snapMode.snapDistance);
         }
         t = snapDist(mouseCoord);
@@ -283,7 +283,7 @@ RS_Vector RS_Snapper::snapPoint(const RS_Vector& coord, bool setSpot)
         snapSpot=coord;
         if(setSpot) snapCoord = coord;
         drawSnapper();
-		if (RS_DIALOGFACTORY!=nullptr) {
+		if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->updateCoordinateWidget(snapCoord,
                     snapCoord - graphicView->getRelativeZero());
         }
@@ -292,7 +292,7 @@ RS_Vector RS_Snapper::snapPoint(const RS_Vector& coord, bool setSpot)
 }
 double RS_Snapper::getSnapRange() const
 {
-	if(graphicView != nullptr)
+	if(graphicView )
     return (graphicView->getGrid()->getCellVector()*0.5).magnitude();
     return 20.;
 }
@@ -352,7 +352,7 @@ RS_Vector RS_Snapper::snapGrid(const RS_Vector& coord) {
  */
 RS_Vector RS_Snapper::snapOnEntity(const RS_Vector& coord) {
 
-    RS_Vector vec(false);
+	RS_Vector vec{};
 	vec = container->getNearestPointOnEntity(coord, true, nullptr, &keyEntity);
     return vec;
 }
@@ -366,7 +366,7 @@ RS_Vector RS_Snapper::snapOnEntity(const RS_Vector& coord) {
  * @return The coordinates of the point or an invalid vector.
  */
 RS_Vector RS_Snapper::snapCenter(const RS_Vector& coord) {
-    RS_Vector vec(false);
+	RS_Vector vec{};
 
 	vec = container->getNearestCenter(coord, nullptr);
     return vec;
@@ -412,7 +412,7 @@ RS_Vector RS_Snapper::snapDist(const RS_Vector& coord) {
  * @return The coordinates of the point or an invalid vector.
  */
 RS_Vector RS_Snapper::snapIntersection(const RS_Vector& coord) {
-    RS_Vector vec(false);
+	RS_Vector vec{};
 
     vec = container->getNearestIntersection(coord,
 											nullptr);
@@ -492,11 +492,11 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos,
     RS_Entity* entity = container->getNearestEntity(pos, &dist, level);
 
         int idx = -1;
-		if (entity!=nullptr && entity->getParent()!=nullptr) {
+		if (entity && entity->getParent()) {
                 idx = entity->getParent()->findEntity(entity);
         }
 
-	if (entity!=nullptr && dist<=getSnapRange()) {
+	if (entity && dist<=getSnapRange()) {
         // highlight:
         RS_DEBUG->print("RS_Snapper::catchEntity: found: %d", idx);
         return entity;
@@ -525,13 +525,13 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
 
     // set default distance for points inside solids
 	RS_EntityContainer ec(nullptr,false);
-	for(RS_Entity* en= container->firstEntity(level);en!=nullptr;en=container->nextEntity(level)){
+	for(RS_Entity* en= container->firstEntity(level);en;en=container->nextEntity(level)){
         if(en->isVisible()==false) continue;
         if(en->rtti() != enType && RS2::isContainer(enType)){
             //whether this entity is a member of member of the type enType
             RS_Entity* parent(en->getParent());
-            bool matchFound(false);
-			while(parent != nullptr) {
+			bool matchFound{false};
+			while(parent ) {
 //                    std::cout<<"RS_Snapper::catchEntity(): parent->rtti()="<<parent->rtti()<<" enType= "<<enType<<std::endl;
                 if(parent->rtti() == enType) {
                     matchFound=true;
@@ -540,7 +540,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
                 }
                 parent=parent->getParent();
             }
-            if(matchFound==false) continue;
+			if(!matchFound) continue;
         }
         if (en->rtti() == enType){
             ec.addEntity(en);
@@ -552,11 +552,11 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
     RS_Entity* entity = ec.getNearestEntity(pos, &dist, RS2::ResolveNone);
 
         int idx = -1;
-		if (entity!=nullptr && entity->getParent()!=nullptr) {
+		if (entity && entity->getParent()) {
                 idx = entity->getParent()->findEntity(entity);
         }
 
-	if (entity!=nullptr && dist<=getSnapRange()) {
+	if (entity && dist<=getSnapRange()) {
         // highlight:
         RS_DEBUG->print("RS_Snapper::catchEntity: found: %d", idx);
         return entity;
@@ -616,7 +616,7 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, const std::set<RS2::EntityTyp
 		for( auto t0: enTypeList){
 			RS_Entity* en=catchEntity(coord, t0, level);
 			if(en) ec.addEntity(en);
-//			if(en!=nullptr) {
+//			if(en) {
 //            std::cout<<__FILE__<<" : "<<__func__<<" : lines "<<__LINE__<<std::endl;
 //            std::cout<<"caught id= "<<en->getId()<<std::endl;
 //            }

@@ -131,7 +131,7 @@ bool RS_Font::loadFont() {
         readLFF(path);
 
     RS_Block* bk = letterList.find(QChar(0xfffd));
-	if (bk == nullptr) {
+	if (!bk) {
         // create new letter:
 		RS_FontChar* letter = new RS_FontChar(nullptr, QChar(0xfffd), RS_Vector(0.0, 0.0));
         RS_Polyline* pline = new RS_Polyline(letter, RS_PolylineData());
@@ -403,11 +403,11 @@ RS_Block* RS_Font::generateLffFont(const QString& ch){
 			int uCode = line.toInt(nullptr, 16);
             QChar ch = QChar(uCode);
             RS_Block* bk = letterList.find(ch);
-			if (bk == nullptr && rawLffFontList.contains(ch) == true) {
+			if (!bk && rawLffFontList.contains(ch)) {
                 generateLffFont(ch);
                 bk = letterList.find(ch);
             }
-			if (bk != nullptr) {
+			if (bk) {
                 RS_Entity* bk2 = bk->clone();
                 bk2->setPen(RS_Pen(RS2::FlagInvalid));
 				bk2->setLayer(nullptr);

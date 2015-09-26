@@ -56,9 +56,9 @@ void RS_ActionBlocksCreate::init(int status) {
 
 
 void RS_ActionBlocksCreate::trigger() {
-	if (graphic!=nullptr) {
+	if (graphic) {
         RS_BlockList* blockList = graphic->getBlockList();
-		if (blockList!=nullptr) {
+		if (blockList) {
             RS_BlockData d =
                 RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
 
@@ -82,7 +82,7 @@ void RS_ActionBlocksCreate::trigger() {
 
     setStatus(getStatus()+1); // clear mouse button hints
     updateMouseButtonHints();
-//    if(RS_DIALOGFACTORY!=nullptr){
+//    if(RS_DIALOGFACTORY){
 //        RS_DIALOGFACTORY->requestPreviousToolBar();
 //    }
     graphicView->killSelectActions();
@@ -97,7 +97,7 @@ void RS_ActionBlocksCreate::mouseMoveEvent(QMouseEvent* e) {
     case SetReferencePoint:
         //data.insertionPoint = snapPoint(e);
 
-		/*if (block!=nullptr) {
+		/*if (block) {
             deletePreview();
             //preview->addAllFrom(*block);
             //preview->move(data.insertionPoint);
@@ -126,7 +126,7 @@ void RS_ActionBlocksCreate::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionBlocksCreate::coordinateEvent(RS_CoordinateEvent* e) {
-	if (e==nullptr) {
+	if (!e) {
         return;
     }
 

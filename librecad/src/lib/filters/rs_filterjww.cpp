@@ -1233,7 +1233,7 @@ bool RS_FilterJWW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         //DL_WriterA* dw = jww.out(file, VER_R12);
         DL_WriterA* dw = jww.out((const char*)QFile::encodeName(file), exportVersion);
 
-		if (dw==nullptr) {
+		if (!dw) {
                 RS_DEBUG->print("RS_FilterJWW::fileExport: can't write file");
                 return false;
         }
@@ -1506,7 +1506,7 @@ void RS_FilterJWW::writeVariables(DL_WriterA& dw) {
  * @todo Add support for unicode layer names
  */
 void RS_FilterJWW::writeLayer(DL_WriterA& dw, RS_Layer* l) {
-		if (l==nullptr) {
+		if (!l) {
                 RS_DEBUG->print(RS_Debug::D_WARNING,
 						"RS_FilterJWW::writeLayer: layer is nullptr");
                 return;
@@ -1555,7 +1555,7 @@ void RS_FilterJWW::writeAppid(DL_WriterA& dw, const char* appid) {
  * Writes a block (just the definition, not the entities in it).
  */
 void RS_FilterJWW::writeBlock(DL_WriterA& dw, RS_Block* blk) {
-		if (blk==nullptr) {
+		if (!blk) {
                 RS_DEBUG->print(RS_Debug::D_WARNING,
 						"RS_FilterJWW::writeBlock: Block is nullptr");
                 return;
@@ -1596,7 +1596,7 @@ void RS_FilterJWW::writeEntity(DL_WriterA& dw, RS_Entity* e) {
 void RS_FilterJWW::writeEntity(DL_WriterA& dw, RS_Entity* e,
                                                            const DL_Attributes& attrib) {
 
-		if (e==nullptr || e->getFlag(RS2::FlagUndone)) {
+		if (!e || e->getFlag(RS2::FlagUndone)) {
                 return;
         }
         RS_DEBUG->print("writing Entity");
@@ -2428,7 +2428,7 @@ void RS_FilterJWW::writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
 
         RS_Block* blk = new RS_Block(graphic, blkdata);
 
-		for (RS_Entity* e1 = con->firstEntity(); e1 != nullptr;
+		for (RS_Entity* e1 = con->firstEntity(); e1 ;
                         e1 = con->nextEntity() ) {
                 blk->addEntity(e1);
         }
@@ -2458,7 +2458,7 @@ void RS_FilterJWW::writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c,
  * Writes an IMAGEDEF object into an OBJECT section.
  */
 void RS_FilterJWW::writeImageDef(DL_WriterA& dw, RS_Image* i) {
-		if (i==nullptr || i->getFlag(RS2::FlagUndone)) {
+		if (!i || i->getFlag(RS2::FlagUndone)) {
                 return;
         }
 
@@ -2509,7 +2509,7 @@ void RS_FilterJWW::setEntityAttributes(RS_Entity* entity,
                 QTextCodec *codec = QTextCodec::codecForName(enc.toLatin1());
                 if(codec)
                         lName = codec->toUnicode(attrib.getLayer().c_str());
-				if (graphic->findLayer(lName)==nullptr) {
+				if (!graphic->findLayer(lName)) {
                         addLayer(DL_LayerData(attrib.getLayer(), 0));
                 }
                 entity->setLayer(lName);

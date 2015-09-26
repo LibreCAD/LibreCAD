@@ -418,7 +418,7 @@ void RS_Solid::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
 void RS_Solid::draw(RS_Painter* painter, RS_GraphicView* view,
         double& /*patternOffset*/) {
 
-	if (painter==nullptr || view==nullptr) {
+	if (!(painter && view)) {
         return;
     }
 
