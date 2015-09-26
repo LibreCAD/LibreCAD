@@ -74,6 +74,16 @@ p, li { white-space: pre-wrap; }
     </widget>
    </item>
    <item>
+    <widget class="QLabel" name="lCommand">
+     <property name="text">
+      <string>Command:</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="Line" name="line1">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -92,16 +102,6 @@ p, li { white-space: pre-wrap; }
    <item>
     <layout class="QHBoxLayout">
      <item>
-      <widget class="QLabel" name="lCommand">
-       <property name="text">
-        <string>Command:</string>
-       </property>
-       <property name="wordWrap">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QG_CommandEdit" name="leCommand" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -111,13 +111,6 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="toolTip">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;type in coordinates or commands&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="clearButton">
-       <property name="text">
-        <string>Clear</string>
        </property>
       </widget>
      </item>
@@ -220,22 +213,6 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>20</x>
      <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>clearButton</sender>
-   <signal>clicked()</signal>
-   <receiver>teHistory</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>595</x>
-     <y>87</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>319</x>
-     <y>34</y>
     </hint>
    </hints>
   </connection>

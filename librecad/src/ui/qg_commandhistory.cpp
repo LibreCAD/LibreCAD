@@ -48,6 +48,10 @@ QG_CommandHistory::QG_CommandHistory(QWidget* parent) :
 
 	connect(this, SIGNAL(textChanged()), this, SLOT(slotTextChanged()));
 
+    QAction* clear = new QAction(tr("Clear"), this);
+    connect(clear, SIGNAL(triggered(bool)), this, SLOT(clear()));
+    addAction(clear);
+
     setStyleSheet("selection-color: white; selection-background-color: green;");
 }
 
