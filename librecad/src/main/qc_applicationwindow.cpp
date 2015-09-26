@@ -3972,5 +3972,5 @@ void QC_ApplicationWindow::slot_fullscreen(bool checked)
 {
     // SIGNAL = http://doc.qt.io/qt-5/qaction.html#checked-prop
 
-    checked?showFullScreen():showNormal();
+    checked?showFullScreen():showMaximized();
 }
