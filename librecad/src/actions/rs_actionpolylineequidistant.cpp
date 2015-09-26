@@ -161,7 +161,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
 		RS_Entity* currEntity=nullptr;
         for (int i = 0; i < entities.size(); ++i) {
             en = entities.at(i);
-            RS_Vector v(false);
+			RS_Vector v{false};
             if (en->rtti()==RS2::EntityArc) {
                 currEntity = &arc1;
                 calculateOffset(currEntity, en, dist*num*neg);

@@ -43,22 +43,11 @@ RS_Preview::RS_Preview(RS_EntityContainer* parent)
 }
 
 /**
- * Destructor.
- */
-RS_Preview::~RS_Preview() {
-    /*
-    RS_SETTINGS->beginGroup("/Appearance");
-    RS_SETTINGS->writeEntry("/MaxPreview", maxEntities);
-    RS_SETTINGS->endGroup();
-    */
-}
-
-/**
  * Adds an entity to this preview and removes any attributes / layer
  * connectsions before that.
  */
 void RS_Preview::addEntity(RS_Entity* entity) {
-    if (entity==nullptr || entity->isUndone()) {
+	if (!entity || entity->isUndone()) {
         return;
     }
 

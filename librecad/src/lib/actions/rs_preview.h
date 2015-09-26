@@ -43,7 +43,7 @@ class RS_Vector;
 class RS_Preview : public RS_EntityContainer {
 public:
     RS_Preview(RS_EntityContainer* parent=nullptr);
-    ~RS_Preview();
+	~RS_Preview() = default;
     virtual RS2::EntityType rtti() const {
         return RS2::EntityPreview;
     }

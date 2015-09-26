@@ -223,10 +223,8 @@ void RS_ActionDrawEllipseAxis::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawEllipseAxis::coordinateEvent(RS_CoordinateEvent* e) {
-	if (e==nullptr) {
-        return;
-    }
-    RS_Vector mouse = e->getCoordinate();
+	if (!e) return;
+	RS_Vector const& mouse = e->getCoordinate();
 
     switch (getStatus()) {
     case SetCenter:
@@ -271,7 +269,8 @@ void RS_ActionDrawEllipseAxis::coordinateEvent(RS_CoordinateEvent* e) {
                 v.scale(RS_Vector(1.0, 1.0/ratio));
                 angle2 = v.angle();
         trigger();
-        } break;
+		}
+		break;
 
     default:
         break;

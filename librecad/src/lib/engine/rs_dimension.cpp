@@ -439,14 +439,13 @@ double RS_Dimension::getTextHeight() {
  * @return Dimension labels alignement text true= horizontal, false= aligned.
  */
 bool RS_Dimension::getAlignText() {
-    bool ret;
     int v = getGraphicVariableInt("$DIMTIH", 2);
     if (v>1) {
         addGraphicVariable("$DIMTIH", 0, 70);
         getGraphicVariableInt("$DIMTIH", 0);
+		return true;
     }
-    v==0 ? ret = false :ret = true;
-    return ret;
+	return false;
 }
 
 
@@ -454,14 +453,13 @@ bool RS_Dimension::getAlignText() {
  * @return Dimension fixed length for extension lines true= fixed, false= not fixed.
  */
 bool RS_Dimension::getFixedLengthOn() {
-    bool ret;
     int v = getGraphicVariableInt("$DIMFXLON", 2);
     if (v>1) {
         addGraphicVariable("$DIMFXLON", 0, 70);
         getGraphicVariableInt("$DIMFXLON", 0);
+		return true;
     }
-    v==0 ? ret = false :ret = true;
-    return ret;
+	return false;
 }
 
 /**

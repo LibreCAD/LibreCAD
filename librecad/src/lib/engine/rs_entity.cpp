@@ -319,7 +319,7 @@ double RS_Entity::getDistanceToPoint(const RS_Vector& coord,
                                   RS2::ResolveLevel /*level*/,
                                   double /*solidDist*/) const
 {
-	if( entity != nullptr) {
+	if (entity) {
         *entity=const_cast<RS_Entity*>(this);
     }
     double dToEntity = RS_MAXDOUBLE;
@@ -355,7 +355,7 @@ bool RS_Entity::isVisible() const{
                 return false;
         }*/
 
-	if (getLayer()==nullptr) {
+	if (!getLayer()) {
         return true;
     }
 
@@ -379,8 +379,8 @@ bool RS_Entity::isVisible() const{
         }
     }
 
-	if (layer==nullptr /*&& getLayer()->getName()!="ByBlock"*/) {
-		if (getLayer()==nullptr) {
+	if (!layer /*&& getLayer()->getName()!="ByBlock"*/) {
+		if (!getLayer()) {
             return true;
         } else {
             if (!getLayer()->isFrozen()) {
@@ -391,7 +391,7 @@ bool RS_Entity::isVisible() const{
         }
     }
 
-	if (getBlockOrInsert()==nullptr) {
+	if (!getBlockOrInsert()) {
         return true;
     }
 
@@ -404,11 +404,11 @@ bool RS_Entity::isVisible() const{
     }
 
 
-	if (getBlockOrInsert()->getLayer()==nullptr) {
+	if (!getBlockOrInsert()->getLayer()) {
         return true;
     }
 
-    if(!getBlockOrInsert()->getLayer()->isFrozen()) {
+	if (!getBlockOrInsert()->getLayer()->isFrozen()) {
         return true;
     }
 
@@ -436,19 +436,19 @@ void RS_Entity::setHighlighted(bool on) {
 }
 
 RS_Vector RS_Entity::getStartpoint() const {
-	return RS_Vector(false);
+	return RS_Vector{};
 }
 
 RS_Vector RS_Entity::getEndpoint() const {
-	return RS_Vector(false);
+	return RS_Vector{};
 }
 
 RS_VectorSolutions RS_Entity::getTangentPoint(const RS_Vector& /*point*/) const {
-	return RS_VectorSolutions();
+	return RS_VectorSolutions{};
 }
 
 RS_Vector RS_Entity::getTangentDirection(const RS_Vector& /*point*/)const{
-	return RS_Vector(false);
+	return RS_Vector{};
 }
 /**
  * @return true if the entity is highlighted.
@@ -475,7 +475,7 @@ bool RS_Entity::isLocked() const
 }
 
 RS_Vector RS_Entity::getCenter() const {
-	return RS_Vector(false);
+	return RS_Vector{};
 }
 
 double RS_Entity::getRadius() const {
@@ -526,7 +526,7 @@ m0 x + m1 y + m2 =0
 **/
 LC_Quadratic RS_Entity::getQuadratic() const
 {
-        return LC_Quadratic();
+		return LC_Quadratic{};
 }
 
 /**
@@ -553,7 +553,7 @@ RS_Insert* RS_Entity::getInsert() const
  */
 RS_Entity* RS_Entity::getBlockOrInsert() const
 {
-	RS_Entity* ret=nullptr;
+	RS_Entity* ret{nullptr};
 	switch(rtti()){
 	case RS2::EntityBlock:
 	case RS2::EntityInsert:
@@ -725,7 +725,7 @@ RS_Layer* RS_Entity::getLayer(bool resolve) const {
     if (resolve) {
         // we have no layer but a parent that might have one.
         // return parent's layer instead:
-		if (layer==nullptr /*|| layer->getName()=="ByBlock"*/) {
+		if (!layer /*|| layer->getName()=="ByBlock"*/) {
             if (parent) {
                 return parent->getLayer(true);
             } else {
