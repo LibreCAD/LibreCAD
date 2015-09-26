@@ -3258,16 +3258,21 @@ void QC_ApplicationWindow::menus_and_toolbars()
     add_action(edit_menu, edit_toolbar, map_a["EditPaste"]);
     edit_menu->addAction(map_a["ModifyDeleteQuick"]);
 
-    edit_menu->addSeparator();
-
     // <[~ Order ~]>
 
-    sub_menu = edit_menu->addMenu(tr("Draw &Order"));
-    sub_menu->setObjectName("Order");
-    sub_menu->addAction(map_a["OrderBottom"]);
-    sub_menu->addAction(map_a["OrderTop"]);
-    sub_menu->addAction(map_a["OrderLower"]);
-    sub_menu->addAction(map_a["OrderRaise"]);
+    QMenu* order_menu = new QMenu(tr("&Order"), menu_bar);
+    order_menu->setObjectName("order_menu");
+    order_menu->setTearOffEnabled(true);
+
+    QToolBar* order_toolbar = new QToolBar(tr("Order"), this);
+    order_toolbar->setSizePolicy(toolBarPolicy);
+    order_toolbar->setObjectName("order_toolbar");
+    order_toolbar->hide();
+
+    add_action(order_menu, order_toolbar, map_a["OrderTop"]);
+    add_action(order_menu, order_toolbar, map_a["OrderBottom"]);
+    add_action(order_menu, order_toolbar, map_a["OrderRaise"]);
+    add_action(order_menu, order_toolbar, map_a["OrderLower"]);
 
     // <[~ View ~]>
 
@@ -3884,15 +3889,19 @@ void QC_ApplicationWindow::menus_and_toolbars()
     toolbars_menu->addAction(penToolBar->toggleViewAction());
     toolbars_menu->addAction(dockwidgets_toolbar->toggleViewAction());
     toolbars_menu->addAction(optionWidget->toggleViewAction());
+    toolbars_menu->addAction(order_toolbar->toggleViewAction());
 
     // <[~ Toolbars Layout~]>
 
-    addToolBar(Qt::BottomToolBarArea, categories_toolbar);
     addToolBar(Qt::TopToolBarArea, file_toolbar);
     addToolBar(Qt::TopToolBarArea, edit_toolbar);
     addToolBar(Qt::TopToolBarArea, view_toolbar);
-    addToolBar(Qt::BottomToolBarArea, line_toolbar);
+    addToolBar(Qt::TopToolBarArea, penToolBar);
+    addToolBar(Qt::TopToolBarArea, optionWidget);
     addToolBar(Qt::TopToolBarArea, settings_toolbar);
+    addToolBar(Qt::TopToolBarArea, order_toolbar);
+    addToolBar(Qt::BottomToolBarArea, categories_toolbar);
+    addToolBar(Qt::BottomToolBarArea, line_toolbar);
     addToolBar(Qt::BottomToolBarArea, circle_toolbar);
     addToolBar(Qt::BottomToolBarArea, curve_toolbar);
     addToolBar(Qt::BottomToolBarArea, ellipse_toolbar);
@@ -3902,8 +3911,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     addToolBar(Qt::BottomToolBarArea, modify_toolbar);
     addToolBar(Qt::BottomToolBarArea, snapToolBar);
     addToolBar(Qt::BottomToolBarArea, info_toolbar);
-    addToolBar(Qt::TopToolBarArea, penToolBar);
-    addToolBar(Qt::TopToolBarArea, optionWidget);
     addToolBar(Qt::BottomToolBarArea, dockwidgets_toolbar);
 
     // <[~ MenuBar Layout~]>
@@ -3912,6 +3919,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     menu_bar->addMenu(settings_menu);
     menu_bar->addMenu(edit_menu);
     menu_bar->addMenu(view_menu);
+    menu_bar->addMenu(order_menu);
     menu_bar->addMenu(select_menu);
     menu_bar->addMenu(draw_menu);
     menu_bar->addMenu(misc_menu);
