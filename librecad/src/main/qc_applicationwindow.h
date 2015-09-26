@@ -379,12 +379,12 @@ private:
 
     QList <QAction*> recentFilesAction;
     /** the main toolbars */
-    QToolBar* tb_wigets;
+    QToolBar* dockwidgets_toolbar;
     QToolBar* circleToolBar;
     QToolBar* file_toolbar;
-    QToolBar* tb_edit;
-    QToolBar* tb_zoom;
-    LC_CustomToolbar* tb_custom;
+    QToolBar* edit_toolbar;
+    QToolBar* view_toolbar;
+    LC_CustomToolbar* custom_toolbar;
     static QAction* previousZoom;
     static QAction* undoButton;
     static QAction* redoButton;
