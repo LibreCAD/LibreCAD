@@ -3284,6 +3284,8 @@ void QC_ApplicationWindow::menus_and_toolbars()
     view_toolbar->setSizePolicy(toolBarPolicy);
     view_toolbar->setObjectName("view_toolbar");
 
+    view_menu->addAction(map_a["Fullscreen"]);
+
     add_action(view_menu, view_toolbar, map_a["ViewGrid"]);
 
     RS_SETTINGS->beginGroup("/Appearance");
@@ -3964,4 +3966,11 @@ QMenu* QC_ApplicationWindow::createPopupMenu()
     // another idea is to make a dialog with checkboxes
     QMenu *menu = QMainWindow::createPopupMenu();
     return menu;
+}
+
+void QC_ApplicationWindow::slot_fullscreen(bool checked)
+{
+    // SIGNAL = http://doc.qt.io/qt-5/qaction.html#checked-prop
+
+    checked?showFullScreen():showNormal();
 }

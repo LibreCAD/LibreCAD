@@ -190,6 +190,8 @@ public slots:
 
     void goto_wiki();
 
+    void slot_fullscreen(bool checked);
+
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);
