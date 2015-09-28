@@ -42,10 +42,9 @@ QG_CommandHistory::QG_CommandHistory(QWidget* parent) :
 	//only show "copy" menu item when there's available selection to copy
 	connect(this, SIGNAL(copyAvailable(bool)), m_pCopy, SLOT(setVisible(bool)));
 
-	m_pSelectAll = new QAction(tr("select&All"), this);
+	m_pSelectAll = new QAction(tr("Select &All"), this);
 	connect(m_pSelectAll, SIGNAL(triggered()), this, SLOT(selectAll()));
 	addAction(m_pSelectAll);
-
 	connect(this, SIGNAL(textChanged()), this, SLOT(slotTextChanged()));
 
     QAction* clear = new QAction(tr("Clear"), this);
