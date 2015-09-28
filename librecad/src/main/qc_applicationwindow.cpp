@@ -3158,12 +3158,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QMenuBar* menu_bar = menuBar();
 
-    // <[~ Toolbars Menu ~]>
-
-    QMenu* toolbars_menu = new QMenu(tr("&Toolbars"), menu_bar);
-    toolbars_menu->setObjectName("toolbars_menu");
-    toolbars_menu->setTearOffEnabled(true);
-
     // <[~ Categories Toolbar ~]>
 
     QToolBar* categories_toolbar = new QToolBar(tr("Categories"), this);
@@ -3285,6 +3279,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     view_toolbar->setObjectName("view_toolbar");
 
     view_menu->addAction(map_a["Fullscreen"]);
+    view_menu->addAction(map_a["ViewStatusBar"]);
 
     add_action(view_menu, view_toolbar, map_a["ViewGrid"]);
 
@@ -3764,47 +3759,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
         }
     }
 
-    // <[~ DockWidgets ~]>
-
-    QMenu* dockwidgets_menu = new QMenu(tr("&Dockwidgets"), menu_bar);
-    dockwidgets_menu->setObjectName("Dockwidgets");
-    dockwidgets_menu->setTearOffEnabled(true);
-
-    dockwidgets_toolbar = new QToolBar(tr("DockWidgets"), this);
-    dockwidgets_toolbar->setSizePolicy(toolBarPolicy);
-    dockwidgets_toolbar->setObjectName("dockwidgets_toolbar");
-
-    add_action(dockwidgets_menu, dockwidgets_toolbar, map_a["ViewStatusBar"]);
-    add_action(dockwidgets_menu, dockwidgets_toolbar, dock_block->toggleViewAction());
-    add_action(dockwidgets_menu, dockwidgets_toolbar, dock_library->toggleViewAction());
-    add_action(dockwidgets_menu, dockwidgets_toolbar, dock_command->toggleViewAction());
-    add_action(dockwidgets_menu, dockwidgets_toolbar, dock_layer->toggleViewAction());
-
-    dockwidgets_menu->addSeparator();
-
-    dockwidgets_menu->addAction(dock_line->toggleViewAction());
-    dockwidgets_menu->addAction(dock_polyline->toggleViewAction());
-    dockwidgets_menu->addAction(dock_circle->toggleViewAction());
-    dockwidgets_menu->addAction(dock_curve->toggleViewAction());
-    dockwidgets_menu->addAction(dock_ellipse->toggleViewAction());
-    dockwidgets_menu->addAction(dock_dimension->toggleViewAction());
-    dockwidgets_menu->addAction(dock_info->toggleViewAction());
-    dockwidgets_menu->addAction(dock_modify->toggleViewAction());
-
-    dockwidgets_menu->addSeparator();
-
-    // tr("Focus on Command Line")
-    QAction* focus_a = new QAction(tr("Focus on &Command Line"), this);
-    focus_a->setIcon(QIcon(":/main/editclear.png"));
-
-    //added commandline shortcuts, feature request# 3437106
-    QList<QKeySequence> commandLineShortcuts;
-    commandLineShortcuts<<QKeySequence(Qt::CTRL + Qt::Key_M)<<QKeySequence(Qt::Key_Colon)<<QKeySequence(Qt::Key_Space);
-    focus_a->setShortcuts(commandLineShortcuts);
-
-    connect(focus_a, SIGNAL(triggered()), this, SLOT(slotFocusCommandLine()));
-    dockwidgets_menu->addAction(focus_a);
-
     // <[~ Windows ~]>
 
     windowsMenu = new QMenu(tr("&Window"), menu_bar);
@@ -3835,11 +3789,20 @@ void QC_ApplicationWindow::menus_and_toolbars()
     help_menu->addSeparator();
     help_menu->addAction(helpAboutApp);
 
+    // <[~ Dockwidgets Toolbar ~]>
+
+    dockwidgets_toolbar = new QToolBar(tr("DockWidgets"), this);
+    dockwidgets_toolbar->setSizePolicy(toolBarPolicy);
+    dockwidgets_toolbar->setObjectName("dockwidgets_toolbar");
+    dockwidgets_toolbar->addAction(map_a["ViewStatusBar"]);
+    dockwidgets_toolbar->addAction(dock_block->toggleViewAction());
+    dockwidgets_toolbar->addAction(dock_library->toggleViewAction());
+    dockwidgets_toolbar->addAction(dock_command->toggleViewAction());
+    dockwidgets_toolbar->addAction(dock_layer->toggleViewAction());
+
     // <[~ Scripting?! ~]>
 
 #ifdef RS_SCRIPTING
-    // Scripts menu:
-    //
     scriptMenu = new QMenu(tr("&Scripts"));
     scriptMenu->setObjectName("Scripts");
     scriptMenu->addAction(map_a["ScriptOpenIDE"]);
@@ -3871,27 +3834,62 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_dimension->raise();
     addDockWidget(Qt::LeftDockWidgetArea, dock_modify);
 
-    // <[~ Toolbars Menu~]>
+    // <[~ DockWidgets Menu ~]>
 
-    toolbars_menu->addAction(categories_toolbar->toggleViewAction());
-    toolbars_menu->addAction(file_toolbar->toggleViewAction());
-    toolbars_menu->addAction(settings_toolbar->toggleViewAction());
-    toolbars_menu->addAction(edit_toolbar->toggleViewAction());
-    toolbars_menu->addAction(view_toolbar->toggleViewAction());
-    toolbars_menu->addAction(line_toolbar->toggleViewAction());
-    toolbars_menu->addAction(circle_toolbar->toggleViewAction());
-    toolbars_menu->addAction(curve_toolbar->toggleViewAction());
-    toolbars_menu->addAction(ellipse_toolbar->toggleViewAction());
-    toolbars_menu->addAction(polyline_toolbar->toggleViewAction());
-    toolbars_menu->addAction(misc_toolbar->toggleViewAction());
-    toolbars_menu->addAction(dimension_toolbar->toggleViewAction());
-    toolbars_menu->addAction(modify_toolbar->toggleViewAction());
-    toolbars_menu->addAction(snapToolBar->toggleViewAction());
-    toolbars_menu->addAction(info_toolbar->toggleViewAction());
-    toolbars_menu->addAction(penToolBar->toggleViewAction());
-    toolbars_menu->addAction(dockwidgets_toolbar->toggleViewAction());
-    toolbars_menu->addAction(optionWidget->toggleViewAction());
-    toolbars_menu->addAction(order_toolbar->toggleViewAction());
+    QMenu* dockwidgets_menu = new QMenu(tr("&Dockwidgets"), menu_bar);
+    dockwidgets_menu->setObjectName("Dockwidgets");
+    dockwidgets_menu->setTearOffEnabled(true);
+
+    dockwidget_view_actions
+            << dock_block->toggleViewAction()
+            << dock_library->toggleViewAction()
+            << dock_command->toggleViewAction()
+            << dock_layer->toggleViewAction()
+            << dock_line->toggleViewAction()
+            << dock_polyline->toggleViewAction()
+            << dock_circle->toggleViewAction()
+            << dock_curve->toggleViewAction()
+            << dock_ellipse->toggleViewAction()
+            << dock_dimension->toggleViewAction()
+            << dock_info->toggleViewAction()
+            << dock_modify->toggleViewAction();
+
+    dockwidgets_menu->addActions(dockwidget_view_actions);
+    dockwidgets_menu->addAction(map_a["FocusCommand"]);
+
+    // <[~ Toolbars Menu ~]>
+
+    QMenu* toolbars_menu = new QMenu(tr("&Toolbars"), menu_bar);
+    toolbars_menu->setObjectName("toolbars_menu");
+    toolbars_menu->setTearOffEnabled(true);
+
+    toolbar_view_actions
+            << categories_toolbar->toggleViewAction()
+            << file_toolbar->toggleViewAction()
+            << settings_toolbar->toggleViewAction()
+            << edit_toolbar->toggleViewAction()
+            << view_toolbar->toggleViewAction()
+            << line_toolbar->toggleViewAction()
+            << circle_toolbar->toggleViewAction()
+            << curve_toolbar->toggleViewAction()
+            << ellipse_toolbar->toggleViewAction()
+            << polyline_toolbar->toggleViewAction()
+            << misc_toolbar->toggleViewAction()
+            << dimension_toolbar->toggleViewAction()
+            << modify_toolbar->toggleViewAction()
+            << snapToolBar->toggleViewAction()
+            << info_toolbar->toggleViewAction()
+            << penToolBar->toggleViewAction()
+            << dockwidgets_toolbar->toggleViewAction()
+            << optionWidget->toggleViewAction()
+            << order_toolbar->toggleViewAction();
+
+    if (custom_toolbar)
+    {
+        toolbar_view_actions << custom_toolbar->toggleViewAction();
+    }
+
+    toolbars_menu->addActions(toolbar_view_actions);
 
     // <[~ Toolbars Layout~]>
 
@@ -3962,10 +3960,17 @@ void QC_ApplicationWindow::add_action(QMenu* menu, QToolBar* toolbar, QAction* a
 
 QMenu* QC_ApplicationWindow::createPopupMenu()
 {
-    // todo: use this to make a more organized context menu
-    // another idea is to make a dialog with checkboxes
-    QMenu *menu = QMainWindow::createPopupMenu();
-    return menu;
+    QMenu* context_menu = new QMenu("Context");
+
+    QMenu* tb_menu = new QMenu("Toolbars", context_menu);
+    tb_menu->addActions(toolbar_view_actions);
+    context_menu->addMenu(tb_menu);
+
+    QMenu* dw_menu = new QMenu("Dockwidgets", context_menu);
+    dw_menu->addActions(dockwidget_view_actions);
+    context_menu->addMenu(dw_menu);
+
+    return context_menu;
 }
 
 void QC_ApplicationWindow::slot_fullscreen(bool checked)

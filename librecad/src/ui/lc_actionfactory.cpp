@@ -1266,5 +1266,14 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("ViewStatusBar");
     a_map["ViewStatusBar"] = action;
 
+    action = new QAction(tr("Focus on &Command Line"), main_window);
+    action->setIcon(QIcon(":/main/editclear.png"));
+    QList<QKeySequence> commandLineShortcuts;
+    commandLineShortcuts<<QKeySequence(Qt::CTRL + Qt::Key_M)<<QKeySequence(Qt::Key_Colon)<<QKeySequence(Qt::Key_Space);
+    action->setShortcuts(commandLineShortcuts);
+    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFocusCommandLine()));
+    action->setData("FocusCommand");
+    a_map["FocusCommand"] = action;
+
     return a_map;
 }

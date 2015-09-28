@@ -386,7 +386,7 @@ private:
     QToolBar* file_toolbar;
     QToolBar* edit_toolbar;
     QToolBar* view_toolbar;
-    LC_CustomToolbar* custom_toolbar;
+    LC_CustomToolbar* custom_toolbar{nullptr};
     static QAction* previousZoom;
     static QAction* undoButton;
     static QAction* redoButton;
@@ -426,6 +426,8 @@ private:
 	QList<QC_PluginInterface*> loadedPlugins;
 
     QMenu* createPopupMenu();
+    QList<QAction*> toolbar_view_actions;
+    QList<QAction*> dockwidget_view_actions;
 
 };
 
