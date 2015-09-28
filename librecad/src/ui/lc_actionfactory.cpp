@@ -1234,7 +1234,17 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     // <[~ View ~]>
 
     action = new QAction(tr("&Fullscreen"), main_window);
+    #if QT_VERSION >= 0x050000
     action->setShortcut(QKeySequence::FullScreen);
+    #else
+        #if defined(Q_OS_MAC)
+        action->setShortcut(tr("Ctrl+Meta+F"));
+        #elif defined(Q_OS_WIN)
+        action->setShortcut(tr("F11"));
+        #else
+        action->setShortcut(tr("Ctrl+F11"));
+        #endif
+    #endif
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)), main_window, SLOT(slot_fullscreen(bool)));
     action->setData("Fullscreen");
