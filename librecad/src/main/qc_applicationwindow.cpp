@@ -3279,7 +3279,8 @@ void QC_ApplicationWindow::menus_and_toolbars()
     view_toolbar->setObjectName("view_toolbar");
 
     view_menu->addAction(map_a["Fullscreen"]);
-    view_menu->addAction(map_a["ViewStatusBar"]);
+    statusbar_view_action = map_a["ViewStatusBar"];
+    view_menu->addAction(statusbar_view_action);
 
     add_action(view_menu, view_toolbar, map_a["ViewGrid"]);
 
@@ -3969,6 +3970,8 @@ QMenu* QC_ApplicationWindow::createPopupMenu()
     QMenu* dw_menu = new QMenu("Dockwidgets", context_menu);
     dw_menu->addActions(dockwidget_view_actions);
     context_menu->addMenu(dw_menu);
+
+    context_menu->addAction(statusbar_view_action);
 
     return context_menu;
 }

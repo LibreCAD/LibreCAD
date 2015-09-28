@@ -428,7 +428,7 @@ private:
     QMenu* createPopupMenu();
     QList<QAction*> toolbar_view_actions;
     QList<QAction*> dockwidget_view_actions;
-
+    QAction* statusbar_view_action;
 };
 
 
