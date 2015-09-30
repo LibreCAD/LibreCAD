@@ -218,7 +218,7 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
 
     // create line for the polyline:
     if (fabs(bulge)<RS_TOLERANCE) {
-		if (prepend) {
+		if (!prepend) {
 			entity = new RS_Line{v, data.startpoint};
 		}
 		else {
