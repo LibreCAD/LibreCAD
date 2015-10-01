@@ -1634,26 +1634,28 @@ bool RS_Modification::scale(RS_ScaleData& data) {
             if ( fabs(data.factor.x - data.factor.y) > RS_TOLERANCE ) {
                     if ( ec->rtti() == RS2::EntityCircle ) {
     //non-isotropic scaling, replacing selected circles with ellipses
-                RS_Circle *c=(RS_Circle*) ec;
-                RS_EllipseData d(
-                    c->getCenter(),
-                    RS_Vector(c->getRadius(),0.),
-                    1.0,
-                    0.,
-                    0.,
-                    false);
-                ec= new RS_Ellipse(container,d);
+				RS_Circle *c=static_cast<RS_Circle*>(ec);
+				ec= new RS_Ellipse{container,
+						c->getCenter(), {c->getRadius(),0.},
+						1.,
+						0., 0., false};
             } else if ( ec->rtti() == RS2::EntityArc ) {
     //non-isotropic scaling, replacing selected arcs with ellipses
                 RS_Arc *c=(RS_Arc*) ec;
-                RS_EllipseData d(
-                    c->getCenter(),
-                    RS_Vector(c->getRadius(),0.),
-                    1.0,
-                    c->getAngle1(),
-                    c->getAngle2(),
-                    c->isReversed());
-                ec= new RS_Ellipse(container,d);
+				RS_EllipseData d{
+					c->getCenter(),
+					{c->getRadius(),0.},
+					1.0,
+					c->getAngle1(),
+					c->getAngle2(),
+					c->isReversed()};
+				ec= new RS_Ellipse{container,
+								   c->getCenter(),
+								   {c->getRadius(),0.},
+								   1.0,
+								   c->getAngle1(),
+								   c->getAngle2(),
+								   c->isReversed()};
             }
             }
 			selectedList.push_back(ec);
@@ -2321,13 +2323,14 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
                 ) {
             // whole ellipse, convert to a whole range elliptic arc
             a=ellipse->getEllipseAngle(cutCoord);
-            cut1 = new RS_Ellipse(cutEntity->getParent(),
-                                  RS_EllipseData(ellipse ->getCenter(),
-                                                 ellipse ->getMajorP(),
-                                                 ellipse ->getRatio(),
-                                                 a,a+2.*M_PI,ellipse ->isReversed()
-                                                 )
-                                  );
+			cut1 = new RS_Ellipse{cutEntity->getParent(),
+					RS_EllipseData{ellipse ->getCenter(),
+					ellipse ->getMajorP(),
+					ellipse ->getRatio(),
+					a,a+2.*M_PI,
+					ellipse ->isReversed()
+		}
+		};
             cut1->setPen(cutEntity->getPen(false));
             cut1->setLayer(cutEntity->getLayer(false));
 			//cut2 = nullptr; // cut2 is nullptr by default

@@ -92,20 +92,6 @@ private:
 };
 }
 
-RS_EllipseData::RS_EllipseData(const RS_Vector& _center,
-							   const RS_Vector& _majorP,
-							   double _ratio,
-							   double _angle1, double _angle2,
-							   bool _reversed):
-	center(_center)
-  ,majorP(_majorP)
-  ,ratio(_ratio)
-  ,angle1(_angle1)
-  ,angle2(_angle2)
-  ,reversed(_reversed)
-{
-}
-
 std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed) {
 	os << "(" << ed.center <<
 		  " " << ed.majorP <<
@@ -121,10 +107,39 @@ std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed) {
  */
 RS_Ellipse::RS_Ellipse(RS_EntityContainer* parent,
                        const RS_EllipseData& d)
-    :RS_AtomicEntity(parent), data(d) {
-
+	:RS_AtomicEntity(parent)
+	,data(d) {
     //calculateEndpoints();
     calculateBorders();
+}
+
+RS_Ellipse::RS_Ellipse(const RS_EllipseData& d)
+	:RS_AtomicEntity(nullptr)
+	,data(d)
+{
+	//calculateEndpoints();
+	calculateBorders();
+}
+
+RS_Ellipse::RS_Ellipse(RS_EntityContainer* parent,
+					   const RS_Vector& center,
+					   const RS_Vector& majorP,
+					   double ratio,
+					   double angle1, double angle2,
+					   bool reversed):
+	RS_AtomicEntity(parent)
+  ,data({center, majorP, ratio, angle1, angle2, reversed})
+{
+}
+
+RS_Ellipse::RS_Ellipse(const RS_Vector& center,
+					   const RS_Vector& majorP,
+					   double ratio,
+					   double angle1, double angle2,
+					   bool reversed):
+	RS_AtomicEntity(nullptr)
+  ,data({center, majorP, ratio, angle1, angle2, reversed})
+{
 }
 
 RS_Entity* RS_Ellipse::clone() const {

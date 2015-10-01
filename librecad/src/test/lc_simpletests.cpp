@@ -636,23 +636,22 @@ void LC_SimpleTests::slotTestInsertEllipse() {
 	RS_Document* d = appWin->getDocument();
 	if (d) {
 		RS_Graphic* graphic = (RS_Graphic*)d;
-		if (graphic==NULL) {
+		if (!graphic) {
 			return;
 		}
 
 		RS_Ellipse* ellipse;
 		RS_Line* line;
 
-		for (double a=0.0; a<2*M_PI; a+=0.1) {
-			RS_Vector v = RS_Vector::polar(50.0, a);
-			double xp = 1000.0*a;
+		for (double a=0.; a<2.*M_PI; a+=0.1) {
+			RS_Vector v = RS_Vector::polar(50., a);
+			double xp = 1000.*a;
 
-			RS_EllipseData ellipseData(RS_Vector(xp,0.0),
-									   v,
-									   0.5,
-									   0.0, 2*M_PI,
-									   false);
-			ellipse = new RS_Ellipse(graphic, ellipseData);
+			ellipse = new RS_Ellipse(graphic,
+			{xp,0.}, v,
+									 0.5,
+									 0., 2.*M_PI,
+									 false);
 
 			ellipse->setPen(RS_Pen(RS_Color(255, 0, 255),
 								   RS2::Width01,

@@ -169,7 +169,8 @@ Plugin_Entity::Plugin_Entity(RS_EntityContainer* parent, enum DPI::ETYPE type){
         entity = new RS_Arc(parent, RS_ArcData());
         break;
     case DPI::ELLIPSE:
-        entity = new RS_Ellipse(parent, RS_EllipseData(RS_Vector(0,0), RS_Vector(0,0),0.0,0.0,0.0,false));
+		entity = new RS_Ellipse{parent,
+				RS_EllipseData{{0.,0.}, {0.,0.},0.,0.,0.,false}};
         break;
     case DPI::IMAGE:
         entity = new RS_Image(parent, RS_ImageData());
@@ -913,8 +914,7 @@ void Doc_plugin_interface::addEllipse(QPointF *start, QPointF *end, qreal ratio,
         RS_Vector v1(start->x(), start->y());
         RS_Vector v2(end->x(), end->y());
 
-        RS_EllipseData ed(v1, v2, ratio,
-                      a1, a2, false);
+		RS_EllipseData ed{v1, v2, ratio, a1, a2, false};
         RS_Ellipse* entity = new RS_Ellipse(doc, ed);
 
         doc->addEntity(entity);

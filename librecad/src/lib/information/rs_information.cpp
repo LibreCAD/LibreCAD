@@ -549,7 +549,8 @@ RS_VectorSolutions RS_Information::getIntersectionArcArc(RS_Entity const* e1,
 // @author Dongxu Li <dongxuli2011@gmail.com>
 //
 
-RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(RS_Ellipse* e1, RS_Ellipse* e2) {
+RS_VectorSolutions RS_Information::getIntersectionEllipseEllipse(
+		RS_Ellipse const* e1, RS_Ellipse const* e2) {
     RS_VectorSolutions ret;
 
 	if (!(e1 && e2) ) {
@@ -645,15 +646,12 @@ RS_VectorSolutions RS_Information::getIntersectionCircleEllipse(RS_Circle* c1,
     RS_VectorSolutions ret;
 	if (!(c1 && e1)) return ret;
 
-    RS_EllipseData d(
-        c1->getCenter(),
-        RS_Vector(c1->getRadius(),0.),
-        1.0,
-        0.,
-        2.*M_PI,
-        false);
-    RS_Ellipse * e2= new RS_Ellipse(c1->getParent(),d);
-    return getIntersectionEllipseEllipse(e1,e2);
+	RS_Ellipse const e2{c1->getParent(),
+			c1->getCenter(), {c1->getRadius(),0.},
+			1.0,
+			0., 2.*M_PI,
+			false};
+	return getIntersectionEllipseEllipse(e1, &e2);
 }
 
 RS_VectorSolutions RS_Information::getIntersectionArcEllipse(RS_Arc * a1,
@@ -661,16 +659,14 @@ RS_VectorSolutions RS_Information::getIntersectionArcEllipse(RS_Arc * a1,
     RS_VectorSolutions ret;
 	if (!(a1 && e1)) {
         return ret;
-    }
-    RS_EllipseData d(
-        a1->getCenter(),
-        RS_Vector(a1->getRadius(),0.),
-        1.0,
-        a1->getAngle1(),
-        a1->getAngle2(),
-        a1->isReversed());
-    RS_Ellipse * e2= new RS_Ellipse(a1->getParent(),d);
-    return getIntersectionEllipseEllipse(e1,e2);
+	}
+	RS_Ellipse const e2{a1->getParent(),
+			a1->getCenter(),
+			{a1->getRadius(), 0.},
+			1.0,
+			a1->getAngle1(), a1->getAngle2(),
+			a1->isReversed()};
+	return getIntersectionEllipseEllipse(e1, &e2);
 }
 
 

@@ -79,8 +79,9 @@ public:
 	static RS_VectorSolutions getIntersectionArcArc(RS_Entity const* e1,
 			RS_Entity const* e2);
 
-    static RS_VectorSolutions getIntersectionEllipseEllipse(RS_Ellipse* e1,
-            RS_Ellipse* e2);
+	static RS_VectorSolutions getIntersectionEllipseEllipse(
+			RS_Ellipse const* e1,
+			RS_Ellipse const* e2);
     static RS_VectorSolutions getIntersectionArcEllipse(RS_Arc* e1,
             RS_Ellipse* e2);
     static RS_VectorSolutions getIntersectionCircleEllipse(RS_Circle* e1,

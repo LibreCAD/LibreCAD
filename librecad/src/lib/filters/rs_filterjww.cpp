@@ -316,15 +316,14 @@ void RS_FilterJWW::addArc(const DL_ArcData& data) {
 void RS_FilterJWW::addEllipse(const DL_EllipseData& data) {
         RS_DEBUG->print("RS_FilterJWW::addEllipse");
 
-        RS_Vector v1(data.cx, data.cy);
-        RS_Vector v2(data.mx, data.my);
+		RS_Vector v1{data.cx, data.cy};
+		RS_Vector v2{data.mx, data.my};
 
-        RS_EllipseData ed(v1, v2,
-                                          data.ratio,
-                                          data.angle1,
-                                          data.angle2,
-                                          false);
-        RS_Ellipse* entity = new RS_Ellipse(currentContainer, ed);
+		RS_Ellipse* entity = new RS_Ellipse{currentContainer,
+											v1, v2,
+											data.ratio,
+											data.angle1, data.angle2,
+											false};
         setEntityAttributes(entity, attributes);
 
         currentContainer->addEntity(entity);

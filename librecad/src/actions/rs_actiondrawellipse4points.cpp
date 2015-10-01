@@ -40,8 +40,8 @@ RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
 		RS_GraphicView& graphicView)
 	:RS_PreviewActionInterface("Draw ellipse from 4 points", container,
 							   graphicView)
-	,cData(new RS_CircleData(RS_Vector(0.,0.),1.))
-	,eData(new RS_EllipseData(RS_Vector(0.,0.), RS_Vector(1.,0),1.,0.,0.,false))
+	,cData(new RS_CircleData({0.,0.}, 1.))
+	,eData(new RS_EllipseData{{0.,0.}, {1.,0.}, 1., 0., 0., false})
 	,m_bUniqueEllipse(false)
 {
 	actionType=RS2::ActionDrawEllipse4Points;
@@ -57,7 +57,7 @@ void RS_ActionDrawEllipse4Points::init(int status) {
 void RS_ActionDrawEllipse4Points::trigger() {
     RS_PreviewActionInterface::trigger();
     RS_Entity* en;
-    if(getStatus()==SetPoint4&&evalid){
+	if(getStatus()==SetPoint4 && evalid){
 		en=new RS_Ellipse(container, *eData);
     }else{
 		en=new RS_Circle(container, *cData);
@@ -140,7 +140,7 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
 				cData.reset(new RS_CircleData(c.getData()));
 			}
         }else{
-			RS_Ellipse e(preview.get(), *eData);
+			RS_Ellipse e{preview.get(), *eData};
             valid= e.createFrom4P(points);
             if(valid){
                 evalid=valid;

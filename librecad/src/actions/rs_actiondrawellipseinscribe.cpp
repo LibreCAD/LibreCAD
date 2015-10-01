@@ -39,7 +39,7 @@ RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw ellipse inscribed",
 						   container, graphicView)
-		,eData(new RS_EllipseData())
+		,eData(new RS_EllipseData{})
 		,valid(false)
 {
 	actionType=RS2::ActionDrawEllipseInscribe;
@@ -140,7 +140,7 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
 bool RS_ActionDrawEllipseInscribe::preparePreview(){
     valid=false;
     if(getStatus() == SetLine4) {
-		RS_Ellipse e(preview.get(), RS_EllipseData());
+		RS_Ellipse e{preview.get(), RS_EllipseData()};
         valid= e.createInscribeQuadrilateral(lines);
         if(valid){
 			eData.reset(new RS_EllipseData(e.getData()));

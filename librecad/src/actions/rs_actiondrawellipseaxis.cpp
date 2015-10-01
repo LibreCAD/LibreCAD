@@ -84,11 +84,9 @@ void RS_ActionDrawEllipseAxis::init(int status) {
 void RS_ActionDrawEllipseAxis::trigger() {
     RS_PreviewActionInterface::trigger();
 
-	RS_EllipseData ellipseData(center, m_vMajorP,
-                               ratio,
-                               angle1, angle2,
-                               false);
-    RS_Ellipse* ellipse = new RS_Ellipse(container, ellipseData);
+	RS_Ellipse* ellipse = new RS_Ellipse{container,
+		{center, m_vMajorP, ratio, angle1, angle2, false}
+	};
     if (ratio > 1.){
         ellipse->switchMajorMinor();
     }
@@ -129,11 +127,9 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
     case SetMajor:
         if (center.valid) {
             deletePreview();
-            RS_EllipseData ed(center, mouse-center,
-                              0.5,
-                              0.0, isArc?2.*M_PI:0.0,
-                              false);
-			preview->addEntity(new RS_Ellipse(preview.get(), ed));
+			preview->addEntity(new RS_Ellipse{preview.get(),
+				{center, mouse-center, 0.5, 0.0, isArc?2.*M_PI:0., false}
+							   });
             drawPreview();
         }
         break;
@@ -144,11 +140,9 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
 			RS_Line line{center-m_vMajorP, center+m_vMajorP};
             double d = line.getDistanceToPoint(mouse);
             ratio = d/(line.getLength()/2);
-			RS_EllipseData ed(center, m_vMajorP,
-                              ratio,
-                              0.0, isArc?2.*M_PI:0.0,
-                              false);
-			preview->addEntity(new RS_Ellipse(preview.get(), ed));
+			preview->addEntity(new RS_Ellipse{preview.get(),
+				{center, m_vMajorP, ratio, 0., isArc?2.*M_PI:0., false}
+							   });
             drawPreview();
         }
         break;
@@ -162,16 +156,14 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                         RS_Vector m = mouse;
 						m.rotate(center, -m_vMajorP.angle());
                         RS_Vector v = m-center;
-                        v.scale(RS_Vector(1.0, 1.0/ratio));
+						v.y /= ratio;
 						angle1 = v.angle(); // + m_vMajorP.angle();
 
 			preview->addEntity(new RS_Line{preview.get(), center, mouse});
 
-			RS_EllipseData ed(center, m_vMajorP,
-                              ratio,
-                              angle1, angle1+1.0,
-                              false);
-			preview->addEntity(new RS_Ellipse(preview.get(), ed));
+			preview->addEntity(new RS_Ellipse{preview.get(),
+				{center, m_vMajorP, ratio, angle1, angle1+1.0, false}
+							   });
             drawPreview();
         }
         break;
@@ -184,17 +176,17 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                         RS_Vector m = mouse;
 						m.rotate(center, -m_vMajorP.angle());
                         RS_Vector v = m-center;
-                        v.scale(RS_Vector(1.0, 1.0/ratio));
+						v.scale({1.0, 1.0/ratio});
 						angle2 = v.angle(); // + m_vMajorP.angle();
 
 			preview->addEntity(new RS_Line{preview.get(), center, mouse});
 
-            RS_EllipseData ed(
-				center, m_vMajorP,
-                ratio,
-                angle1, angle2,
-                false);
-			preview->addEntity(new RS_Ellipse(preview.get(), ed));
+			preview->addEntity(new RS_Ellipse{preview.get(),
+											  {center, m_vMajorP,
+												  ratio,
+												  angle1, angle2,
+												  false}
+							   });
             drawPreview();
         }
 
@@ -256,7 +248,7 @@ void RS_ActionDrawEllipseAxis::coordinateEvent(RS_CoordinateEvent* e) {
                 RS_Vector m = mouse;
 				m.rotate(center, -m_vMajorP.angle());
                 RS_Vector v = m-center;
-                v.scale(RS_Vector(1.0, 1.0/ratio));
+				v.y /= ratio;
                 angle1 = v.angle();
         setStatus(SetAngle2);
                 } break;
@@ -266,7 +258,7 @@ void RS_ActionDrawEllipseAxis::coordinateEvent(RS_CoordinateEvent* e) {
                 RS_Vector m = mouse;
 				m.rotate(center, -m_vMajorP.angle());
                 RS_Vector v = m-center;
-                v.scale(RS_Vector(1.0, 1.0/ratio));
+				v.y /= ratio;
                 angle2 = v.angle();
         trigger();
 		}

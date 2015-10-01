@@ -457,14 +457,16 @@ void RS_FilterDXFRW::addArc(const DRW_Arc& data) {
 void RS_FilterDXFRW::addEllipse(const DRW_Ellipse& data) {
     RS_DEBUG->print("RS_FilterDXFRW::addEllipse");
 
-    RS_Vector v1(data.basePoint.x, data.basePoint.y);
-    RS_Vector v2(data.secPoint.x, data.secPoint.y);
-    double ang2 = data.endparam;
-    if ( fabs(ang2- 6.28318530718) < 1.0e-10 && fabs(data.staparam) < 1.0e-10 )
+	RS_Vector v1(data.basePoint.x, data.basePoint.y);
+	RS_Vector v2(data.secPoint.x, data.secPoint.y);
+	double ang2 = data.endparam;
+	if (fabs(ang2- 2.*M_PI) < RS_TOLERANCE && fabs(data.staparam) < RS_TOLERANCE)
         ang2 = 0.0;
-    RS_EllipseData ed(v1, v2, data.ratio, data.staparam,
-                                    ang2, false);
-    RS_Ellipse* entity = new RS_Ellipse(currentContainer, ed);
+	RS_Ellipse* entity = new RS_Ellipse(currentContainer,
+										v1, v2,
+										data.ratio,
+										data.staparam, ang2,
+										false);
     setEntityAttributes(entity, &data);
 
     currentContainer->addEntity(entity);
@@ -1127,11 +1129,11 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                             ang2 +=M_PI;
                         }
                     }
-                    e = new RS_Ellipse(hatchLoop,
-                                       RS_EllipseData(RS_Vector(e2->basePoint.x, e2->basePoint.y),
-                                                      RS_Vector(e2->secPoint.x, e2->secPoint.y),
-                                                      e2->ratio, ang1, ang2, !e2->isccw));
-                    break;
+					e = new RS_Ellipse{hatchLoop,
+					{{e2->basePoint.x, e2->basePoint.y},
+					{e2->secPoint.x, e2->secPoint.y},
+							e2->ratio, ang1, ang2, !e2->isccw}};
+					break;
                 }
                 default:
                     break;
