@@ -218,11 +218,10 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
 
     // create line for the polyline:
     if (fabs(bulge)<RS_TOLERANCE) {
-		if (!prepend) {
-			entity = new RS_Line{v, data.startpoint};
-		}
-		else {
-			entity = new RS_Line{data.endpoint, v};
+		if (prepend) {
+			entity = new RS_Line{this, v, data.startpoint};
+		} else {
+			entity = new RS_Line{this, data.endpoint, v};
 		}
         entity->setSelected(isSelected());
         entity->setPen(RS_Pen(RS2::FlagInvalid));
@@ -236,12 +235,11 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
         bool reversed = (bulge<0.0);
         double alpha = atan(bulge)*4.0;
 
-        double radius;
         RS_Vector middle;
         double dist;
         double angle;
 
-                if (prepend==false) {
+				if (!prepend) {
                 middle = (data.endpoint+v)/2.0;
             dist = data.endpoint.distanceTo(v)/2.0;
                 angle = data.endpoint.angleTo(v);
@@ -253,9 +251,9 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
                 }
 
         // alpha can't be 0.0 at this point
-        radius = fabs(dist / sin(alpha/2.0));
+		double const radius = fabs(dist / sin(alpha/2.0));
 
-        double wu = fabs(RS_Math::pow(radius, 2.0) - RS_Math::pow(dist, 2.0));
+		double const wu = fabs(radius*radius - dist*dist);
         double h = sqrt(wu);
 
         if (bulge>0.0) {
@@ -274,7 +272,7 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
                 double a1;
                 double a2;
 
-                if (prepend==false) {
+				if (!prepend) {
                         a1 = center.angleTo(data.endpoint);
                         a2 = center.angleTo(v);
                 }
@@ -283,7 +281,7 @@ RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prep
                         a2 = center.angleTo(data.startpoint);
                 }
 
-        RS_ArcData d(center, radius,
+		RS_ArcData const d(center, radius,
                      a1, a2,
                      reversed);
 
