@@ -431,15 +431,15 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
                                      RS_Line* l1,
                                      RS_Line* l2) {
 
-    RS_VectorSolutions sol;
     // check given entities:
-	if (!(l1 && l2)) return nullptr;
-	if (!(l1->rtti()==RS2::EntityLine && l1->rtti()==RS2::EntityLine)) {
+	if (!(l1 && l2))
 		return nullptr;
-	}
+	if (!(l1->rtti()==RS2::EntityLine && l2->rtti()==RS2::EntityLine))
+		return nullptr;
 
     // intersection between entities:
-    sol = RS_Information::getIntersection(l1, l2, false);
+	RS_VectorSolutions const& sol =
+			RS_Information::getIntersection(l1, l2, false);
     RS_Vector inters = sol.get(0);
 	if (!inters.valid) {
 		return nullptr;
@@ -448,7 +448,7 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
     double angle1 = inters.angleTo(l1->getNearestPointOnEntity(coord1));
     double angle2 = inters.angleTo(l2->getNearestPointOnEntity(coord2));
     double angleDiff = RS_Math::getAngleDifference(angle1, angle2);
-    if (angleDiff>M_PI) {
+	if (angleDiff > M_PI) {
 		angleDiff = angleDiff - 2.*M_PI;
     }
 	RS_Line* ret = nullptr;
@@ -457,12 +457,12 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
         document->startUndoCycle();
     }
 
-    for (int n=1; n<=num; ++n) {
+	for (int n=1; n <= num; ++n) {
 
         double angle = angle1 +
                 (angleDiff / (num+1) * n);
 
-		RS_Vector const v = RS_Vector::polar(length, angle);
+		RS_Vector const& v = RS_Vector::polar(length, angle);
 
 		RS_Line* newLine = new RS_Line{container, inters, inters + v};
 		if (!ret) ret = newLine;
@@ -489,12 +489,14 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
 	RS_Line* ret = nullptr;
 
     // check given entities:
-	if(! (circle && normal)) return ret;
-	if(! circle->isArc()) return ret;
+	if (!(circle && normal))
+		return ret;
+	if (!circle->isArc())
+		return ret;
     //if( normal->getLength()<RS_TOLERANCE) return ret;//line too short
-	RS_Vector t0 = circle->getNearestOrthTan(coord,*normal,false);
+	RS_Vector const& t0 = circle->getNearestOrthTan(coord,*normal,false);
     if(!t0.valid) return ret;
-	RS_Vector vp=normal->getNearestPointOnEntity(t0, false);
+	RS_Vector const& vp=normal->getNearestPointOnEntity(t0, false);
 	if (document && handleUndo) {
         document->startUndoCycle();
     }
@@ -522,15 +524,16 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
 
     // check given entities:
 	if (!(circle && point.valid)) return nullptr;
-	if (!( circle->isArc() || circle->rtti()==RS2::EntitySplinePoints)){
+	if (!(circle->isArc() || circle->rtti()==RS2::EntitySplinePoints)){
 		return nullptr;
 	}
 
     // the two tangent points:
     RS_VectorSolutions sol=circle->getTangentPoint(point);
 
-	if(!sol.getNumber()) return nullptr;
-    RS_Vector vp2(sol.getClosest(coord));
+	if (!sol.getNumber())
+		return nullptr;
+	RS_Vector const vp2{sol.getClosest(coord)};
     RS_LineData d;
     if( (vp2-point).squared() > RS_TOLERANCE2 ) {
 		d={vp2, point};
