@@ -427,6 +427,8 @@ protected:
 		 */
 	bool deleteMode=false;
 
+    QList<QAction*> recent_actions;
+
 private:
 	//! \brief init by settings
 	void init();

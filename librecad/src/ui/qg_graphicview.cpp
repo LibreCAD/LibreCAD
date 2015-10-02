@@ -28,6 +28,7 @@
 
 #include <QGridLayout>
 #include <QLabel>
+#include <QMenu>
 #include <QDebug>
 #if QT_VERSION >= 0x050200
 #include <QNativeGestureEvent>
@@ -43,6 +44,7 @@
 #include "rs_painterqt.h"
 #include "rs_dialogfactory.h"
 #include "qg_dialogfactory.h"
+#include "rs_eventhandler.h"
 
 
 #include "qg_scrollbar.h"
@@ -317,7 +319,19 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* e)
 {
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent");
 
-    RS_GraphicView::mouseReleaseEvent(e);
+    if (e->button()==Qt::RightButton && !eventHandler->hasAction())
+    {
+        if (!recent_actions.isEmpty())
+        {
+            QMenu* context_menu = new QMenu;
+            context_menu->addActions(recent_actions);
+            context_menu->exec(mapToGlobal(e->pos()));
+        }
+    }
+    else
+    {
+        RS_GraphicView::mouseReleaseEvent(e);
+    }
 
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
 }

@@ -292,10 +292,6 @@ void RS_GraphicView::back()
     {
 		eventHandler->back();
     }
-    else
-    {
-
-	}
 }
 
 
@@ -2001,4 +1997,10 @@ bool RS_GraphicView::isCleanUp(void) const
 void RS_GraphicView::set_action(QAction* q_action)
 {
     eventHandler->set_action(q_action);
+
+    if (recent_actions.contains(q_action))
+    {
+        recent_actions.removeOne(q_action);
+    }
+    recent_actions.prepend(q_action);
 }
