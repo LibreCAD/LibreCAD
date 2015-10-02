@@ -3279,6 +3279,11 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     select_menu->addActions(list_a);
 
+    LC_DockWidget* dock_select = new LC_DockWidget(this);
+    dock_select->setObjectName("dock_select");
+    dock_select->setWindowTitle(tr("Select"));
+    dock_select->add_actions(list_a, columns, icon_size);
+
     // <[~ Draw ~]>
 
     QMenu* draw_menu = new QMenu(tr("&Draw"), menu_bar);
@@ -3787,6 +3792,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_circle->raise();
     addDockWidget(Qt::LeftDockWidgetArea, dock_dimension);
     tabifyDockWidget(dock_dimension, dock_info);
+    tabifyDockWidget(dock_info, dock_select);
     dock_dimension->raise();
     addDockWidget(Qt::LeftDockWidgetArea, dock_modify);
 
@@ -3808,7 +3814,8 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << dock_ellipse->toggleViewAction()
             << dock_dimension->toggleViewAction()
             << dock_info->toggleViewAction()
-            << dock_modify->toggleViewAction();
+            << dock_modify->toggleViewAction()
+            << dock_select->toggleViewAction();
 
     dockwidgets_menu->addActions(dockwidget_view_actions);
     dockwidgets_menu->addAction(map_a["FocusCommand"]);
