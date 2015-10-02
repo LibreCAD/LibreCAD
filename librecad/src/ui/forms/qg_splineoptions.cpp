@@ -65,42 +65,52 @@ void QG_SplineOptions::destroy() {
     RS_SETTINGS->endGroup();
 }
 
-void QG_SplineOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a && (
-                a->rtti()==RS2::ActionDrawSpline||a->rtti()==RS2::ActionDrawSplinePoints
-                )) {
-		action = static_cast<RS_ActionDrawSpline*>(a);
-		int degree;
-		bool closed;
-
-        if (update) {
-            if(a->rtti()==RS2::ActionDrawSpline)
-                degree = action->getDegree();
-            closed = action->isClosed();
-        } else {
-            RS_SETTINGS->beginGroup("/Draw");
-            if(a->rtti()==RS2::ActionDrawSpline){
-                degree = RS_SETTINGS->readNumEntry("/SplineDegree", 3);
-                action->setDegree(degree);
-            }
-            closed = RS_SETTINGS->readNumEntry("/SplineClosed", 0);
-            RS_SETTINGS->endGroup();
-            action->setClosed(closed);
-        }
-        if(a->rtti()==RS2::ActionDrawSpline){
-            cbDegree->setCurrentIndex( cbDegree->findText(QString("%1").arg(degree)) );
-            lDegree->show();
-            cbDegree->show();
-        } else{
-            lDegree->hide();
-            cbDegree->hide();
-        }
-        cbClosed->setChecked(closed);
-    } else {
+void QG_SplineOptions::setAction(RS_ActionInterface* a, bool update)
+{
+    if (a->rtti()!=RS2::ActionDrawSpline && a->rtti()!=RS2::ActionDrawSplinePoints)
+    {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_SplineOptions::setAction: wrong action type");
 		action = nullptr;
+        return;
     }
+
+    action = static_cast<RS_ActionDrawSpline*>(a);
+    int degree = 3;
+    bool closed;
+
+    if (update)
+    {
+        if(a->rtti()==RS2::ActionDrawSpline)
+        {
+            degree = action->getDegree();
+        }
+        closed = action->isClosed();
+    }
+    else
+    {
+        RS_SETTINGS->beginGroup("/Draw");
+        if(a->rtti()==RS2::ActionDrawSpline)
+        {
+            degree = RS_SETTINGS->readNumEntry("/SplineDegree", 3);
+            action->setDegree(degree);
+        }
+        closed = RS_SETTINGS->readNumEntry("/SplineClosed", 0);
+        RS_SETTINGS->endGroup();
+        action->setClosed(closed);
+    }
+    if(a->rtti()==RS2::ActionDrawSpline)
+    {
+        cbDegree->setCurrentIndex(cbDegree->findText(QString::number(degree)));
+        lDegree->show();
+        cbDegree->show();
+    }
+    else
+    {
+        lDegree->hide();
+        cbDegree->hide();
+    }
+    cbClosed->setChecked(closed);
 }
 
 void QG_SplineOptions::setClosed(bool c) {
