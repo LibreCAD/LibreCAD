@@ -528,15 +528,14 @@ void RS_EventHandler::killSelectActions() {
 /**
  * Kills all running actions. Called when a window is closed.
  */
-void RS_EventHandler::killAllActions() {
+void RS_EventHandler::killAllActions()
+{
 	RS_DEBUG->print(__FILE__ ": %s: line %d: begin\n", __func__, __LINE__);
-	for(auto p: currentActions){
-		if ( ! p->isFinished() ){
-//            if (right_click_quits)
-//            {
-//                real_action->setChecked(false);
-//                right_click_quits = false;
-//            }
+
+	for(auto p: currentActions)
+    {
+		if (!p->isFinished())
+        {
 			p->finish();
 		}
 	}
@@ -577,8 +576,8 @@ bool RS_EventHandler::hasAction(){
 void RS_EventHandler::cleanUp() {
     RS_DEBUG->print("RS_EventHandler::cleanUp");
 
-    for (auto it=currentActions.begin();it != currentActions.end();){
-
+    for (auto it=currentActions.begin(); it != currentActions.end();)
+    {
         if( (*it)->isFinished())
         {
             if (right_click_quits)
