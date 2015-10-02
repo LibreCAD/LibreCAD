@@ -984,12 +984,12 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
         dwgBuffer buff(tmpByteStr, size, &decoder);
         dint16 oType = buff.getObjType(version);
         buff.resetPosition();
-        delete[]tmpByteStr;
 
         if (oType > 499){
             std::map<duint32, DRW_Class*>::iterator it = classesmap.find(oType);
             if (it == classesmap.end()){//fail, not found in classes set error
                 DRW_DBG("Class "); DRW_DBG(oType);DRW_DBG("not found, handle: "); DRW_DBG(obj.handle); DRW_DBG("\n");
+                delete[]tmpByteStr;
                 return false;
             } else {
                 DRW_Class *cl = it->second;
@@ -1164,6 +1164,7 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
         if (!ret){
             DRW_DBG("Warning: Entity type "); DRW_DBG(oType);DRW_DBG("has failed, handle: "); DRW_DBG(obj.handle); DRW_DBG("\n");
         }
+        delete[]tmpByteStr;
     return ret;
 }
 
