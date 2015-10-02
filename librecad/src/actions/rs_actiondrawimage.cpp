@@ -101,10 +101,7 @@ void RS_ActionDrawImage::trigger() {
     }
 
     graphicView->redraw(RS2::RedrawDrawing);
-
-    //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
     finish(false);
-    updateToolBar();
 }
 
 

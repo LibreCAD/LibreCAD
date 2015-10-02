@@ -60,7 +60,6 @@ public:
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-	virtual void updateToolBar();
 
     void setMesage(QString msg);
 	bool isCompleted() const{return completed;}

@@ -41,7 +41,6 @@ class RS_DialogFactoryAdapter : public RS_DialogFactoryInterface {
 public:
     RS_DialogFactoryAdapter() {}
     virtual ~RS_DialogFactoryAdapter() {}
-    virtual void requestPreviousMenu() {}
     virtual void requestWarningDialog(const QString& ) {}
     virtual RS_GraphicView* requestNewDocument(const QString& = QString::null,
                         RS_Document* =NULL) { return NULL; }
@@ -74,12 +73,6 @@ public:
     virtual bool requestMirrorDialog(RS_MirrorData& ) { return false; }
     virtual bool requestMoveRotateDialog(RS_MoveRotateData& ) { return false; }
     virtual bool requestRotate2Dialog(RS_Rotate2Data& ) { return false; }
-    virtual void requestPreviousToolBar() {}
-    virtual void requestToolBar(RS2::ToolBarId ) {}
-    virtual void resetToolBar() {}
-    virtual void requestToolBarSelect(RS_ActionInterface* ,
-                                      RS2::ActionType ) {}
-    virtual void showCadToolBar(RS2::ActionType /*actionType*/){}
     virtual bool requestModifyEntityDialog(RS_Entity* ) { return false; }
     virtual bool requestMTextDialog(RS_MText* ) { return false; }
     virtual bool requestTextDialog(RS_Text* ) { return false; }

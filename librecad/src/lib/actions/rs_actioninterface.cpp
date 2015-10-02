@@ -110,7 +110,6 @@ void RS_ActionInterface::init(int status) {
         //graphicView->setMouseCursor(cursor);
                 updateMouseButtonHints();
         updateMouseCursor();
-        // updateToolBar();
     }else{
         //delete snapper when finished, bug#3416878
         deleteSnapper();
@@ -201,7 +200,6 @@ QStringList RS_ActionInterface::getAvailableCommands() {
 void RS_ActionInterface::setStatus(int status) {
     this->status = status;
     updateMouseButtonHints();
-    //updateToolBar();
     updateMouseCursor();
     if(status<0) finish();
 }
@@ -232,19 +230,6 @@ void RS_ActionInterface::updateMouseButtonHints() {}
 void RS_ActionInterface::updateMouseCursor() {}
 
 /**
- * Should be overwritten to set the toolbar for this action.
- */
-void RS_ActionInterface::updateToolBar() {
-	if (RS_DIALOGFACTORY) {
-		if (isFinished()) {
-			RS_DIALOGFACTORY->resetToolBar();
-		}else{
-			RS_DIALOGFACTORY->showCadToolBar(rtti());
-		}
-	}
-}
-
-/**
  * @return true, if the action is finished and can be deleted.
  */
 bool RS_ActionInterface::isFinished() {
@@ -271,9 +256,6 @@ void RS_ActionInterface::finish(bool updateTB)
 		status = -1;
 		finished = true;
 		hideOptions();
-//		if(updateTB) {
-//			updateToolBar();
-//		}
 		RS_Snapper::finish();
         graphicView->setMouseCursor(RS2::ArrowCursor);
 	}
@@ -301,7 +283,6 @@ void RS_ActionInterface::suspend() {
  */
 void RS_ActionInterface::resume() {
     updateMouseCursor();
-    updateToolBar();
     updateMouseButtonHints();
     RS_Snapper::resume();
 }

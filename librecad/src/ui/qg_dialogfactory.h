@@ -34,7 +34,6 @@ class QG_SnapMiddleOptions;
 class QG_SnapDistOptions;
 class QG_ModifyOffsetOptions;
 
-class QG_CadToolBar;
 class QToolBar;
 class QG_CoordinateWidget;
 class QG_SelectionWidget;
@@ -85,22 +84,6 @@ public:
     virtual void setSelectionWidget(QG_SelectionWidget* sw) {
         selectionWidget = sw;
     }
-
-    /**
-     * Links this dialog factory to the cad tool bar.
-     */
-    virtual void setCadToolBar(QG_CadToolBar* ctb) {
-        cadToolBar = ctb;
-    }
-
-    /**
-	 * @return cad tool bar or nullptr.
-     */
-	QG_CadToolBar* getCadToolBar() const {
-        return cadToolBar;
-    }
-
-    virtual void showCadToolBar(RS2::ActionType actionType) ;
 
     /**
      * Links this dialog factory to a command widget.
@@ -224,11 +207,6 @@ public:
     virtual void requestSnapMiddleOptions(int& middlePoints, bool on);
 
 public:
-    virtual void requestToolBar(RS2::ToolBarId id);
-    virtual void requestPreviousToolBar();
-    virtual void resetToolBar();
-    virtual void requestToolBarSelect(RS_ActionInterface* selectAction,
-                                      RS2::ActionType nextAction);
 
     virtual bool requestAttributesDialog(RS_AttributesData& data,
                                 RS_LayerList& layerList);
@@ -253,7 +231,6 @@ public:
                                             const QString& filter = QString(),
                                             QString* selectedFilter = 0);
 
-    virtual void requestPreviousMenu();
     virtual void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false);
 	/**
 	 * \brief updateMouseWidget Called when an action has a mouse hint.
@@ -282,8 +259,6 @@ protected:
     QG_MouseWidget* mouseWidget;
     //! Pointer to the selection widget.
     QG_SelectionWidget* selectionWidget;
-    //! Pointer to the CAD tool bar
-    QG_CadToolBar* cadToolBar;
     //! Pointer to the command line widget
     QG_CommandWidget* commandWidget;
     //! Pointer to arcTangential Option widge

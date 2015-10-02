@@ -76,7 +76,6 @@ public:
     virtual void trigger();
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual void updateToolBar();
     virtual bool isFinished();
     virtual void setFinished();
     virtual void finish(bool updateTB = true );

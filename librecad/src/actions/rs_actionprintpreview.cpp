@@ -97,7 +97,6 @@ void RS_ActionPrintPreview::mouseReleaseEvent(QMouseEvent* e) {
         break;
 
     default:
-        RS_DIALOGFACTORY->requestPreviousMenu();
         e->accept();
         break;
     }

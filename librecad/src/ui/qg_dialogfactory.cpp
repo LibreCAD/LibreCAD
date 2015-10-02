@@ -47,7 +47,6 @@
 #include "qg_arctangentialoptions.h"
 #include "qg_beveloptions.h"
 #include "qg_blockdialog.h"
-#include "qg_cadtoolbar.h"
 #include "qg_circleoptions.h"
 #include "qg_circletan2options.h"
 #include "qg_commandwidget.h"
@@ -137,7 +136,6 @@ QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* ow)
 	coordinateWidget = nullptr;
 	mouseWidget = nullptr;
 	selectionWidget = nullptr;
-	cadToolBar = nullptr;
 	commandWidget = nullptr;
 	mainWindow = nullptr;
 	polylineEquidistantOptions=nullptr;
@@ -147,7 +145,6 @@ QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* ow)
 	printPreviewOptions=nullptr;
         RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory: OK");
 }
-
 
 
 /**
@@ -1395,50 +1392,6 @@ void QG_DialogFactory::requestLibraryInsertOptions(RS_ActionInterface* action,
 }
 
 
-
-/**
- * Shows the given toolbar.
- */
-void QG_DialogFactory::requestToolBar(RS2::ToolBarId id) {
-	if (cadToolBar) {
-        cadToolBar->showToolBar(id);
-    }
-}
-
-void QG_DialogFactory::requestPreviousToolBar() {
-	if (cadToolBar) {
-        cadToolBar->showPreviousToolBar(false);
-    }
-}
-
-
-void QG_DialogFactory::resetToolBar() {
-	if (cadToolBar) {
-        cadToolBar->resetToolBar();
-    }
-}
-
-/**
- * Shows the select toolbar with the given action to launch.
- */
-void QG_DialogFactory::requestToolBarSelect(RS_ActionInterface* selectAction,
-        RS2::ActionType nextAction) {
-	if (cadToolBar) {
-        cadToolBar->showToolBarSelect(selectAction, nextAction);
-    }
-}
-
-/**
-  * Show the cad toolbar according to action type
-  * Author: Dongxu Li
-  **/
-void QG_DialogFactory::showCadToolBar(RS2::ActionType actionType) {
-if(cadToolBar){
-    cadToolBar->showCadToolBar(actionType);
-}
-}
-
-
 /**
  * Shows attributes options dialog presenting the given data.
  */
@@ -1820,17 +1773,6 @@ QString QG_DialogFactory::requestFileSaveAsDialog(const QString& caption /* = QS
 
     return QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter);
 }
-
-/**
- * Back to last menu in cad toolbar.
- */
-void QG_DialogFactory::requestPreviousMenu() {
-	if (cadToolBar) {
-        cadToolBar->showToolBarMain();
-    }
-}
-
-
 
 /**
  * Called whenever the mouse position changed.

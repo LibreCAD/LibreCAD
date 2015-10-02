@@ -231,7 +231,6 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
             setStatus(Neutral);
             RS_DIALOGFACTORY->updateSelectionWidget(
                         container->countSelected(),container->totalSelectedLength());
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
             deleteSnapper();
         }
             break;
@@ -248,7 +247,6 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
             setStatus(Neutral);
             RS_DIALOGFACTORY->updateSelectionWidget(
                         container->countSelected(),container->totalSelectedLength());
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
         }
             break;
 
@@ -323,7 +321,6 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
         }
     } else if (e->button()==Qt::RightButton) {
         //cleanup
-		RS_DIALOGFACTORY->requestPreviousToolBar();
         setStatus(Neutral);
         e->accept();
     }

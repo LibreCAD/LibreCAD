@@ -70,7 +70,6 @@
 #include "rs_selection.h"
 #include "rs_settings.h"
 
-//#include "qg_cadtoolbar.h"
 #include "qg_snaptoolbar.h"
 #include "qg_blockwidget.h"
 #include "qg_layerwidget.h"
@@ -555,18 +554,6 @@ void QC_ApplicationWindow::closeEvent(QCloseEvent* ce) {
     RS_DEBUG->print("QC_ApplicationWindow::closeEvent(): OK");
 }
 
-
-
-/**
- * Handles right-clicks for moving back to the last cad tool bar.
- */
-//void QC_ApplicationWindow::mouseReleaseEvent(QMouseEvent* e) {
-//	if (e->button()==Qt::RightButton && cadToolBar) {
-//        cadToolBar->showToolBarMain();
-//    }
-//    e->accept();
-//}
-
 void QC_ApplicationWindow::dropEvent(QDropEvent* event)
 {
     event->acceptProposedAction();
@@ -846,12 +833,6 @@ void QC_ApplicationWindow::slotBack() {
     if (graphicView) {
         graphicView->back();
     }
-//    else
-//    {
-//		if (cadToolBar) {
-//            cadToolBar->showToolBar(RS2::ToolBarMain);
-//        }
-//    }
 }
 
 void QC_ApplicationWindow::slotKillAllActions() {
@@ -859,7 +840,6 @@ void QC_ApplicationWindow::slotKillAllActions() {
     QC_MDIWindow* m = getMDIWindow();
     if (gv && m && m->getDocument()) {
         gv->killAllActions();
-        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
 
         RS_Selection s((RS_EntityContainer&)*m->getDocument(), gv);
         s.selectAll(false);
@@ -877,17 +857,14 @@ void QC_ApplicationWindow::slotKillAllActions() {
 /**
  * Goes one step further in the current action.
  */
-void QC_ApplicationWindow::slotEnter() {
+void QC_ApplicationWindow::slotEnter()
+{
     RS_DEBUG->print("QC_ApplicationWindow::slotEnter(): begin\n");
-//		if (cadToolBar) {
-//            cadToolBar->forceNext();
-//        } else {
-            RS_GraphicView* graphicView = getGraphicView();
-            if (graphicView) {
-                graphicView->enter();
-            }
-//        }
-//    }
+    RS_GraphicView* graphicView = getGraphicView();
+    if (graphicView)
+    {
+        graphicView->enter();
+    }
     RS_DEBUG->print("QC_ApplicationWindow::slotEnter(): end\n");
 }
 
@@ -1391,26 +1368,6 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     QG_DIALOGFACTORY->setSelectionWidget(selectionWidget);
     // Link the dialog factory to the option widget:
     //QG_DIALOGFACTORY->setOptionWidget(optionWidget);
-    // Link the dialog factory to the cad tool bar:
-//	if (cadToolBar) {
-//        //set SnapFree to avoid orphaned snapOptions, bug#3407522
-//            /* setting snap option toolbar pointers to non-static fixes
-//             * bug#3407522
-//			if (snapToolBar && getGraphicView() && getDocument() ) {
-//                    //need to detect graphicView and Document for NULL
-////bug#3408689
-//                RS_SnapMode s=snapToolBar->getSnaps();
-//                s.snapMiddle=false;
-//                s.snapDistance=false;
-//                snapToolBar->setSnaps(s);
-//                //cadToolBar->setSnapFree();
-//            }
-//            */
-//        cadToolBar->showToolBar(RS2::ToolBarMain);
-//        cadToolBar->resetToolBar();
-//        }
-
-//    QG_DIALOGFACTORY->setCadToolBar(cadToolBar);
     // Link the dialog factory to the command widget:
     QG_DIALOGFACTORY->setCommandWidget(commandWidget);
     // Link the dialog factory to the main app window:
@@ -2462,8 +2419,6 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 QG_DIALOGFACTORY->setSelectionWidget(selectionWidget);
                 // Link the graphic view to the option widget:
                 //QG_DIALOGFACTORY->setOptionWidget(optionWidget);
-                // Link the graphic view to the cad tool bar:
-//                QG_DIALOGFACTORY->setCadToolBar(cadToolBar);
                 // Link the graphic view to the command widget:
                 QG_DIALOGFACTORY->setCommandWidget(commandWidget);
 

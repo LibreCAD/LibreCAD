@@ -262,7 +262,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 		if (gv) {
             // DO we need to call some form of a 'clean' function?
             gv->killAllActions();
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
 
             RS_Selection s((RS_EntityContainer&)*doc, gv);
             s.selectAll(false);

@@ -93,8 +93,6 @@ void RS_ActionSelect::updateToolBar() {
                 //todo: make actions safe with empty selection, issue#235
                 RS_DIALOGFACTORY->commandMessage(tr("No entity selected!"));
                 //do not keep toolbar select after this action finishes, issue#291
-//                RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
-                RS_DIALOGFACTORY->requestPreviousToolBar();
             } else{
                 if ( entityTypeList.size()){
                     //only select entity types from the given list
@@ -107,12 +105,8 @@ void RS_ActionSelect::updateToolBar() {
                         }
                     }
                 }
-                RS_DIALOGFACTORY->requestPreviousToolBar();
             }
-        }else{
-            RS_DIALOGFACTORY->requestToolBarSelect(this, nextAction);
         }
-
     }
 }
 

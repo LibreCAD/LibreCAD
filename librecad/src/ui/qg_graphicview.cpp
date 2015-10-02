@@ -42,7 +42,6 @@
 #include "rs_settings.h"
 #include "rs_painterqt.h"
 #include "rs_dialogfactory.h"
-#include "qg_cadtoolbar.h"
 #include "qg_dialogfactory.h"
 
 
@@ -314,19 +313,13 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e) {
 }
 
 
-void QG_GraphicView::mouseReleaseEvent(QMouseEvent* e) {
-        RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent");
-    RS_GraphicView::mouseReleaseEvent(e);
-    //QWidget::mouseReleaseEvent(e);
+void QG_GraphicView::mouseReleaseEvent(QMouseEvent* e)
+{
+    RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent");
 
-    if (!e->isAccepted()) {
-        if (QG_DIALOGFACTORY && QG_DIALOGFACTORY->getCadToolBar()) {
-                        RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: "
-                                "fwd to cadtoolbar");
-            QG_DIALOGFACTORY->getCadToolBar()->mouseReleaseEvent(e);
-        }
-    }
-        RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
+    RS_GraphicView::mouseReleaseEvent(e);
+
+    RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
 }
 
 

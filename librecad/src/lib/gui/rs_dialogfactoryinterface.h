@@ -62,7 +62,6 @@ class RS_ScaleData;
 class RS_Solid;
 class RS_Text;
 class RS_Vector;
-class QG_CadToolBar;
 
 /**
  * Interface for objects that can create and show dialogs.
@@ -71,12 +70,6 @@ class RS_DialogFactoryInterface {
 public:
     RS_DialogFactoryInterface() {}
     virtual ~RS_DialogFactoryInterface() {}
-
-    /**
-     * This virtual method must be overwritten and must show the previously
-     * shown menu in the cad toolbar.
-     */
-    virtual void requestPreviousMenu() = 0;
 
     /**
      * This virtual method must be overwritten and must provide
@@ -306,27 +299,6 @@ public:
      *             by the presented widget.
      */
     virtual bool requestRotate2Dialog(RS_Rotate2Data& data) = 0;
-
-    /**
-     * This virtual method must be overwritten and must show
-     * the given toolbar.
-     *
-     * @param id Tool bar ID.
-     */
-    virtual void requestToolBar(RS2::ToolBarId id) = 0;
-    virtual void requestPreviousToolBar() = 0;
-    virtual void resetToolBar() = 0;
-    virtual void showCadToolBar(RS2::ActionType actionType) = 0;
-
-    /**
-     * This virtual method must be overwritten and must show
-     * the tag toolbar with a button for launching the given
-     * action.
-     *
-     * @param nextAction ID of next action to create after selecting was done.
-     */
-    virtual void requestToolBarSelect(RS_ActionInterface* selectAction,
-                                      RS2::ActionType nextAction) = 0;
 
     /**
      * This virtual method must be overwritten and must present

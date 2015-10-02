@@ -303,7 +303,6 @@ public:
 
 protected:
     void closeEvent(QCloseEvent*);
-//    virtual void mouseReleaseEvent(QMouseEvent* e);
     //! \{ accept drop files to open
     virtual void dropEvent(QDropEvent* e);
     virtual void dragEnterEvent(QDragEnterEvent * event);
@@ -398,8 +397,6 @@ private:
 
     // Toolbar for selecting the current pen
     QG_PenToolBar* penToolBar;
-    // Toolbar for CAD tools
-//    QG_CadToolBar* cadToolBar;
 
 #if QT_VERSION < 0x040400
     QAssistantClient *assistant;

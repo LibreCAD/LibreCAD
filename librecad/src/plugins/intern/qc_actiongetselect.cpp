@@ -76,18 +76,6 @@ void QC_ActionGetSelect::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-void QC_ActionGetSelect::updateToolBar() {
-    if (RS_DIALOGFACTORY) {
-        if (!isFinished()) {
-            RS_DIALOGFACTORY->requestToolBarSelect(this, RS2::ActionDefault);
-        } else {
-            RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
-			RS_DIALOGFACTORY->updateMouseWidget();
-            completed = true;
-        }
-    }
-}
-
 /**
  * Adds all selected entities from 'container' to the selection.
  */

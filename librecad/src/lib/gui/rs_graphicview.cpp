@@ -286,16 +286,16 @@ void RS_GraphicView::killAllActions() {
 /**
  * Go back in menu or current action.
  */
-void RS_GraphicView::back() {
-	if (eventHandler && eventHandler->hasAction()) {
+void RS_GraphicView::back()
+{
+	if (eventHandler && eventHandler->hasAction())
+    {
 		eventHandler->back();
     }
-//    else
-//    {
-//		if (RS_DIALOGFACTORY) {
-//			RS_DIALOGFACTORY->requestPreviousMenu();
-//		}
-//	}
+    else
+    {
+
+	}
 }
 
 
@@ -335,7 +335,6 @@ void RS_GraphicView::mouseReleaseEvent(QMouseEvent* e)
         if (e->button()!=Qt::RightButton || eventHandler->hasAction())
         {
 			eventHandler->mouseReleaseEvent(e);
-			//e->accept();
 		}
         else
         {

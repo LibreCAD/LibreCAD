@@ -219,7 +219,6 @@ HEADERS += \
     ui/forms/qg_snaptoolbar.h \
     actions/lc_actiondrawcircle2pr.h \
     ui/forms/qg_activelayername.h \
-    ui/forms/lc_cadtoolbarinterface.h \
     test/lc_simpletests.h \
     lib/generators/lc_makercamsvg.h \
     lib/generators/lc_xmlwriterinterface.h \
@@ -313,7 +312,6 @@ SOURCES += \
     lib/engine/rs_pen.cpp \
     actions/lc_actiondrawcircle2pr.cpp \
     ui/forms/qg_activelayername.cpp \
-    ui/forms/lc_cadtoolbarinterface.cpp \
     test/lc_simpletests.cpp \
     lib/generators/lc_xmlwriterqxmlstreamwriter.cpp \
     lib/generators/lc_makercamsvg.cpp \
@@ -628,19 +626,7 @@ HEADERS += ui/lc_actionfactory.h \
     ui/forms/qg_arctangentialoptions.h \
     ui/forms/qg_beveloptions.h \
     ui/forms/qg_blockdialog.h \
-    ui/forms/qg_cadtoolbar.h \
-    ui/forms/qg_cadtoolbardim.h \
-    ui/forms/qg_cadtoolbarellipses.h \
-    ui/forms/qg_cadtoolbarcircles.h \
-    ui/forms/qg_cadtoolbarlines.h \
-    ui/forms/qg_cadtoolbarselect.h \
-    ui/forms/qg_cadtoolbarpolylines.h \
-    ui/forms/qg_cadtoolbarsplines.h \
-    ui/forms/qg_cadtoolbarinfo.h \
-    ui/forms/qg_cadtoolbarmain.h \
-    ui/forms/qg_cadtoolbarmodify.h \
     ui/forms/qg_commandwidget.h \
-    ui/forms/qg_cadtoolbararcs.h \
     ui/forms/qg_circleoptions.h \
     ui/forms/qg_circletan2options.h \
     ui/forms/qg_coordinatewidget.h \
@@ -723,18 +709,6 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/forms/qg_arctangentialoptions.cpp \
     ui/forms/qg_beveloptions.cpp \
     ui/forms/qg_blockdialog.cpp \
-    ui/forms/qg_cadtoolbar.cpp \
-    ui/forms/qg_cadtoolbararcs.cpp \
-    ui/forms/qg_cadtoolbarcircles.cpp \
-    ui/forms/qg_cadtoolbardim.cpp \
-    ui/forms/qg_cadtoolbarellipses.cpp \
-    ui/forms/qg_cadtoolbarinfo.cpp \
-    ui/forms/qg_cadtoolbarlines.cpp \
-    ui/forms/qg_cadtoolbarmain.cpp \
-    ui/forms/qg_cadtoolbarmodify.cpp \
-    ui/forms/qg_cadtoolbarpolylines.cpp \
-    ui/forms/qg_cadtoolbarselect.cpp \
-    ui/forms/qg_cadtoolbarsplines.cpp \
     ui/forms/qg_circleoptions.cpp \
     ui/forms/qg_circletan2options.cpp \
     ui/forms/qg_commandwidget.cpp \
