@@ -51,14 +51,14 @@ RS_ActionDimAngular::~RS_ActionDimAngular(){}
 void RS_ActionDimAngular::reset() {
     RS_ActionDimension::reset();
 
-	edata.reset(new RS_DimAngularData(RS_Vector(false),
-                              RS_Vector(false),
-                              RS_Vector(false),
-							  RS_Vector(false))
+	edata.reset(new RS_DimAngularData(RS_Vector{false},
+									  RS_Vector{false},
+									  RS_Vector{false},
+									  RS_Vector{false})
 				);
-    line1 = NULL;
-    line2 = NULL;
-    center = RS_Vector(false);
+	line1 = nullptr;
+	line2 = nullptr;
+	center = RS_Vector{}; //default to invalid vector
     RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
 
@@ -68,9 +68,7 @@ void RS_ActionDimAngular::trigger() {
     RS_PreviewActionInterface::trigger();
 
     if (line1 && line2) {
-        RS_DimAngular* newEntity = NULL;
-
-        newEntity = new RS_DimAngular(container,
+		RS_DimAngular* newEntity = new RS_DimAngular(container,
 									  *data,
 									  *edata);
 
@@ -86,12 +84,14 @@ void RS_ActionDimAngular::trigger() {
             document->endUndoCycle();
         }
         RS_Vector rz = graphicView->getRelativeZero();
+		setStatus(SetLine1);
 		graphicView->redraw(RS2::RedrawDrawing);
         graphicView->moveRelativeZero(rz);
+		RS_Snapper::finish();
 
     } else {
         RS_DEBUG->print("RS_ActionDimAngular::trigger:"
-                        " Entity is NULL\n");
+						" Entity is nullptr\n");
     }
 }
 
@@ -100,22 +100,11 @@ void RS_ActionDimAngular::trigger() {
 void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDimAngular::mouseMoveEvent begin");
 
-    RS_Vector mouse(graphicView->toGraphX(e->x()),
-                    graphicView->toGraphY(e->y()));
-
-    switch (getStatus()) {
-    case SetLine1:
-        drawSnapper();
-        break;
-
-    case SetLine2:
-        drawSnapper();
-        break;
+	switch (getStatus()) {
 
     case SetPos:
         if (line1 && line2 && center.valid) {
-            RS_Vector mouse = snapPoint(e);
-			edata->definitionPoint4 = mouse;
+			edata->definitionPoint4 = snapPoint(e);
 
 			RS_DimAngular* d = new RS_DimAngular(preview.get(), *data, *edata);
 
@@ -199,7 +188,7 @@ void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDimAngular::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (!e) {
         return;
     }
 

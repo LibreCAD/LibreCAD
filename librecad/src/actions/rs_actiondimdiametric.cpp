@@ -53,10 +53,10 @@ RS_ActionDimDiametric::~RS_ActionDimDiametric(){}
 void RS_ActionDimDiametric::reset() {
     RS_ActionDimension::reset();
 
-	edata.reset(new RS_DimDiametricData(RS_Vector(false),
+	edata.reset(new RS_DimDiametricData(RS_Vector{false},
 								0.0)
 				);
-    entity = NULL;
+	entity = nullptr;
     pos = RS_Vector(false);
     RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
@@ -68,7 +68,7 @@ void RS_ActionDimDiametric::trigger() {
 
     preparePreview();
     if (entity) {
-        RS_DimDiametric* newEntity = NULL;
+		RS_DimDiametric* newEntity = nullptr;
 
         newEntity = new RS_DimDiametric(container,
 										*data,
@@ -88,10 +88,11 @@ void RS_ActionDimDiametric::trigger() {
         RS_Vector rz = graphicView->getRelativeZero();
 		graphicView->redraw(RS2::RedrawDrawing);
         graphicView->moveRelativeZero(rz);
+		RS_Snapper::finish();
 
     } else {
         RS_DEBUG->print("RS_ActionDimDiametric::trigger:"
-                        " Entity is NULL\n");
+						" Entity is nullptr\n");
     }
 }
 
@@ -123,17 +124,11 @@ void RS_ActionDimDiametric::preparePreview() {
 void RS_ActionDimDiametric::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDimDiametric::mouseMoveEvent begin");
 
-    RS_Vector mouse(graphicView->toGraphX(e->x()),
-                    graphicView->toGraphY(e->y()));
-
-    switch (getStatus()) {
-    case SetEntity:
-        entity = catchEntity(e, RS2::ResolveAll);
-        break;
+	switch (getStatus()) {
 
     case SetPos:
-        if (entity) {
-            pos = snapPoint(e);
+		if (entity) {
+			pos = snapPoint(e);
 
             preparePreview();
 			RS_DimDiametric* d = new RS_DimDiametric(preview.get(), *data, *edata);
@@ -166,13 +161,13 @@ void RS_ActionDimDiametric::mouseReleaseEvent(QMouseEvent* e) {
 
                         entity = en;
                         RS_Vector center;
-                        if (entity->rtti()==RS2::EntityArc) {
-                            center =
-                                ((RS_Arc*)entity)->getCenter();
-                        } else if (entity->rtti()==RS2::EntityCircle) {
-                            center =
-                                ((RS_Circle*)entity)->getCenter();
-                        }
+						if (entity->rtti()==RS2::EntityArc) {
+							center =
+									static_cast<RS_Arc*>(entity)->getCenter();
+						} else {
+							center =
+									static_cast<RS_Circle*>(entity)->getCenter();
+						}
                         graphicView->moveRelativeZero(center);
                         setStatus(SetPos);
                     } else {
@@ -202,9 +197,7 @@ void RS_ActionDimDiametric::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDimDiametric::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
-        return;
-    }
+	if (!e) return;
 
     switch (getStatus()) {
     case SetPos:

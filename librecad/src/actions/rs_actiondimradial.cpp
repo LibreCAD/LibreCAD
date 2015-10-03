@@ -42,7 +42,11 @@ RS_ActionDimRadial::RS_ActionDimRadial(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_ActionDimension("Draw Radial Dimensions",
-                    container, graphicView) {
+					container, graphicView)
+		,entity(nullptr)
+		,pos(false)
+		,lastStatus(SetEntity)
+{
 	actionType=RS2::ActionDimRadial;
     reset();
 }
@@ -52,11 +56,11 @@ RS_ActionDimRadial::~RS_ActionDimRadial(){}
 void RS_ActionDimRadial::reset() {
     RS_ActionDimension::reset();
 
-	edata.reset(new RS_DimRadialData(RS_Vector(false),
-							 0.0)
+	edata.reset(new RS_DimRadialData(RS_Vector{false}, 0.0)
 				);
-    entity = NULL;
-    pos = RS_Vector(false);
+	entity = nullptr;
+	pos = RS_Vector{false};
+	lastStatus = SetEntity;
     RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
 
@@ -67,7 +71,7 @@ void RS_ActionDimRadial::trigger() {
 
     preparePreview();
     if (entity) {
-        RS_DimRadial* newEntity = NULL;
+		RS_DimRadial* newEntity = nullptr;
 
         newEntity = new RS_DimRadial(container,
 									 *data,
@@ -87,12 +91,12 @@ void RS_ActionDimRadial::trigger() {
         RS_Vector rz = graphicView->getRelativeZero();
 		graphicView->redraw(RS2::RedrawDrawing);
         graphicView->moveRelativeZero(rz);
-        //drawSnapper();
+		RS_Snapper::finish();
 
     }
     else {
         RS_DEBUG->print("RS_ActionDimRadial::trigger:"
-                        " Entity is NULL\n");
+						" Entity is nullptr\n");
     }
 }
 
@@ -120,10 +124,7 @@ void RS_ActionDimRadial::mouseMoveEvent(QMouseEvent* e) {
     //RS_Vector mouse(graphicView->toGraphX(e->x()),
     //                graphicView->toGraphY(e->y()));
 
-    switch (getStatus()) {
-    case SetEntity:
-        entity = catchEntity(e, RS2::ResolveAll);
-        break;
+	switch (getStatus()) {
 
     case SetPos:
         if (entity) {
@@ -161,10 +162,10 @@ void RS_ActionDimRadial::mouseReleaseEvent(QMouseEvent* e) {
                         entity = en;
                         if (entity->rtti()==RS2::EntityArc) {
 							data->definitionPoint =
-                                ((RS_Arc*)entity)->getCenter();
+								static_cast<RS_Arc*>(entity)->getCenter();
                         } else if (entity->rtti()==RS2::EntityCircle) {
 							data->definitionPoint =
-                                ((RS_Circle*)entity)->getCenter();
+								static_cast<RS_Circle*>(entity)->getCenter();
                         }
 						graphicView->moveRelativeZero(data->definitionPoint);
                         setStatus(SetPos);
@@ -194,9 +195,7 @@ void RS_ActionDimRadial::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDimRadial::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
-        return;
-    }
+	if (!e) return;
 
     switch (getStatus()) {
     case SetPos:
