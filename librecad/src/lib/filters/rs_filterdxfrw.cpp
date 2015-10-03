@@ -460,13 +460,13 @@ void RS_FilterDXFRW::addEllipse(const DRW_Ellipse& data) {
 	RS_Vector v1(data.basePoint.x, data.basePoint.y);
 	RS_Vector v2(data.secPoint.x, data.secPoint.y);
 	double ang2 = data.endparam;
-	if (fabs(ang2- 2.*M_PI) < RS_TOLERANCE && fabs(data.staparam) < RS_TOLERANCE)
-        ang2 = 0.0;
-	RS_Ellipse* entity = new RS_Ellipse(currentContainer,
+	if (fabs(ang2 - 2.*M_PI) < RS_TOLERANCE &&
+			fabs(data.staparam) < RS_TOLERANCE)
+		ang2 = 0.;
+	RS_Ellipse* entity = new RS_Ellipse{currentContainer,
 										v1, v2,
 										data.ratio,
-										data.staparam, ang2,
-										false);
+										data.staparam, ang2};
     setEntityAttributes(entity, &data);
 
     currentContainer->addEntity(entity);
@@ -478,10 +478,10 @@ void RS_FilterDXFRW::addEllipse(const DRW_Ellipse& data) {
  */
 void RS_FilterDXFRW::addTrace(const DRW_Trace& data) {
     RS_Solid* entity;
-    RS_Vector v1(data.basePoint.x, data.basePoint.y);
-    RS_Vector v2(data.secPoint.x, data.secPoint.y);
-    RS_Vector v3(data.thirdPoint.x, data.thirdPoint.y);
-    RS_Vector v4(data.fourPoint.x, data.fourPoint.y);
+	RS_Vector v1{data.basePoint.x, data.basePoint.y};
+	RS_Vector v2{data.secPoint.x, data.secPoint.y};
+	RS_Vector v3{data.thirdPoint.x, data.thirdPoint.y};
+	RS_Vector v4{data.fourPoint.x, data.fourPoint.y};
     if (v3 == v4)
         entity = new RS_Solid(currentContainer, RS_SolidData(v1, v2, v3));
     else
@@ -505,8 +505,8 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
     RS_DEBUG->print("RS_FilterDXFRW::addLWPolyline");
     if (data.vertlist.empty())
         return;
-    RS_PolylineData d(RS_Vector(false),
-                      RS_Vector(false),
+	RS_PolylineData d(RS_Vector{},
+					  RS_Vector{},
                       data.flags&0x1);
     RS_Polyline *polyline = new RS_Polyline(currentContainer, d);
     setEntityAttributes(polyline, &data);
@@ -534,8 +534,8 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline& data) {
     if ( data.flags&0x40)
         return; //the polyline is a poliface mesh, TODO convert
 
-    RS_PolylineData d(RS_Vector(false),
-                      RS_Vector(false),
+	RS_PolylineData d(RS_Vector{},
+					  RS_Vector{},
                       data.flags&0x1);
     RS_Polyline *polyline = new RS_Polyline(currentContainer, d);
     setEntityAttributes(polyline, &data);
@@ -1109,7 +1109,7 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                     DRW_Ellipse *e2 = (DRW_Ellipse *)ent;
                     double ang1 = e2->staparam;
                     double ang2 = e2->endparam;
-                    if ( fabs(ang2 - 6.28318530718) < 1.0e-10 && fabs(ang1) < 1.0e-10 )
+					if ( fabs(ang2 - 2.*M_PI) < 1.0e-10 && fabs(ang1) < 1.0e-10 )
                         ang2 = 0.0;
                     else { //convert angle to parameter
                         ang1 = atan(tan(ang1)/e2->ratio);
@@ -1130,9 +1130,9 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                         }
                     }
 					e = new RS_Ellipse{hatchLoop,
-					{{e2->basePoint.x, e2->basePoint.y},
+					{e2->basePoint.x, e2->basePoint.y},
 					{e2->secPoint.x, e2->secPoint.y},
-							e2->ratio, ang1, ang2, !e2->isccw}};
+							e2->ratio, ang1, ang2, !e2->isccw};
 					break;
                 }
                 default:
@@ -1582,7 +1582,7 @@ void RS_FilterDXFRW::writeLTypes(){
     ltype.name = "DOT";
     ltype.desc = "Dot . . . . . . . . . . . . . . . . . . . . . .";
     ltype.size = 2;
-    ltype.length = 6.35;
+	ltype.length = 6.35;
     ltype.path.push_back(0.0);
     ltype.path.push_back(-6.35);
     dxfW->writeLineType(&ltype);

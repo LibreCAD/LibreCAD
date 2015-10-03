@@ -1641,14 +1641,7 @@ bool RS_Modification::scale(RS_ScaleData& data) {
 						0., 0., false};
             } else if ( ec->rtti() == RS2::EntityArc ) {
     //non-isotropic scaling, replacing selected arcs with ellipses
-                RS_Arc *c=(RS_Arc*) ec;
-				RS_EllipseData d{
-					c->getCenter(),
-					{c->getRadius(),0.},
-					1.0,
-					c->getAngle1(),
-					c->getAngle2(),
-					c->isReversed()};
+				RS_Arc *c=static_cast<RS_Arc*>(ec);
 				ec= new RS_Ellipse{container,
 								   c->getCenter(),
 								   {c->getRadius(),0.},

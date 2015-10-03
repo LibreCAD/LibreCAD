@@ -141,7 +141,7 @@ void RS_Insert::update() {
                     data.updateMode!=RS2::PreviewUpdate) {
 
 //                                        RS_DEBUG->print("RS_Insert::update: updating sub-insert");
-                    ((RS_Insert*)e)->update();
+					static_cast<RS_Insert*>(e)->update();
                 }
 
 //                                RS_DEBUG->print("RS_Insert::update: cloning entity");
@@ -149,18 +149,18 @@ void RS_Insert::update() {
                 RS_Entity* ne;
                 if ( (data.scaleFactor.x - data.scaleFactor.y)>1.0e-6) {
                     if (e->rtti()== RS2::EntityArc) {
-						RS_Arc* a= (RS_Arc*)e;
+						RS_Arc* a= static_cast<RS_Arc*>(e);
 						ne = new RS_Ellipse{this,
-						{a->getCenter(), {a->getRadius(), 0.}, 1,
+						a->getCenter(), {a->getRadius(), 0.}, 1,
 								a->getAngle1(), a->getAngle2(),
-								a->isReversed()}};
+								a->isReversed()};
                         ne->setLayer(e->getLayer());
                         ne->setPen(e->getPen(false));
                     } else if (e->rtti()== RS2::EntityCircle) {
-                        RS_Circle* a= (RS_Circle*)e;
+						RS_Circle* a= static_cast<RS_Circle*>(e);
 						ne = new RS_Ellipse{this,
-						{a->getCenter(), {a->getRadius(), 0.}, 1, 0., 2.*M_PI,
-								false}};
+						a->getCenter(), {a->getRadius(), 0.}, 1, 0., 2.*M_PI
+					};
                         ne->setLayer(e->getLayer());
                         ne->setPen(e->getPen(false));
                     } else

@@ -85,7 +85,7 @@ void RS_ActionDrawEllipseAxis::trigger() {
     RS_PreviewActionInterface::trigger();
 
 	RS_Ellipse* ellipse = new RS_Ellipse{container,
-		{center, m_vMajorP, ratio, angle1, angle2, false}
+		center, m_vMajorP, ratio, angle1, angle2
 	};
     if (ratio > 1.){
         ellipse->switchMajorMinor();
@@ -128,7 +128,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
         if (center.valid) {
             deletePreview();
 			preview->addEntity(new RS_Ellipse{preview.get(),
-				{center, mouse-center, 0.5, 0.0, isArc?2.*M_PI:0., false}
+				center, mouse-center, 0.5, 0.0, isArc?2.*M_PI:0.
 							   });
             drawPreview();
         }
@@ -141,7 +141,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
             double d = line.getDistanceToPoint(mouse);
             ratio = d/(line.getLength()/2);
 			preview->addEntity(new RS_Ellipse{preview.get(),
-				{center, m_vMajorP, ratio, 0., isArc?2.*M_PI:0., false}
+				center, m_vMajorP, ratio, 0., isArc?2.*M_PI:0.
 							   });
             drawPreview();
         }
@@ -162,7 +162,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
 			preview->addEntity(new RS_Line{preview.get(), center, mouse});
 
 			preview->addEntity(new RS_Ellipse{preview.get(),
-				{center, m_vMajorP, ratio, angle1, angle1+1.0, false}
+				center, m_vMajorP, ratio, angle1, angle1+1.0
 							   });
             drawPreview();
         }
@@ -176,16 +176,15 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                         RS_Vector m = mouse;
 						m.rotate(center, -m_vMajorP.angle());
                         RS_Vector v = m-center;
-						v.scale({1.0, 1.0/ratio});
+						v.y /= ratio;
 						angle2 = v.angle(); // + m_vMajorP.angle();
 
 			preview->addEntity(new RS_Line{preview.get(), center, mouse});
 
 			preview->addEntity(new RS_Ellipse{preview.get(),
-											  {center, m_vMajorP,
+											  center, m_vMajorP,
 												  ratio,
-												  angle1, angle2,
-												  false}
+												  angle1, angle2
 							   });
             drawPreview();
         }
