@@ -108,7 +108,7 @@ public:
     void getCurrentLayerProperties(int *c, DPI::LineWidth *w, DPI::LineType *t);
     void getCurrentLayerProperties(int *c, QString *w, QString *t);
     void setCurrentLayerProperties(int c, DPI::LineWidth w, DPI::LineType t);
-    void setCurrentLayerProperties(int c, QString w, QString t);
+	void setCurrentLayerProperties(int c, QString const& w, QString const& t);
 
     bool getPoint(QPointF *point, const QString& mesage, QPointF *base);
     Plug_Entity *getEnt(const QString& mesage);

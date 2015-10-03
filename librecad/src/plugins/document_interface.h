@@ -430,7 +430,8 @@ public:
     virtual void getCurrentLayerProperties(int *c, DPI::LineWidth *w, DPI::LineType *t) = 0;
     virtual void getCurrentLayerProperties(int *c, QString *w, QString *t) = 0;
     virtual void setCurrentLayerProperties(int c, DPI::LineWidth w, DPI::LineType t) = 0;
-    virtual void setCurrentLayerProperties(int c, QString w, QString t) = 0;
+	virtual void setCurrentLayerProperties(int c, QString const& w,
+										   QString const& t) = 0;
 
     //! Gets a point.
     /*! Prompt message or an default message to the user asking for a point.
