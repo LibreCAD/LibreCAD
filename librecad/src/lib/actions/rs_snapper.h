@@ -99,6 +99,9 @@ public:
 	virtual ~RS_Snapper() = default;
 
     void init();
+	//!
+	//! \brief finish stop using snapper
+	//!
         void finish();
 
     /**
@@ -108,14 +111,14 @@ public:
      * If the snap mode didn't require an entity (e.g. free, grid) this
      * method will return NULL.
      */
-    RS_Entity* getKeyEntity() {
+	RS_Entity* getKeyEntity() const {
         return keyEntity;
     }
 
     /** Sets a new snap mode. */
     void setSnapMode(const RS_SnapMode& snapMode);
 
-    RS_SnapMode *getSnapMode(void) {
+	RS_SnapMode *getSnapMode(void) {
         return &this->snapMode;
     }
     /** Sets a new snap restriction. */
