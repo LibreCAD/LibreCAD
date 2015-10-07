@@ -27,7 +27,6 @@
 
 #include <QObject>
 #include <cmath>
-#include <array>
 
 #include "rs_dialogfactory.h"
 #include "qg_dialogfactory.h"
@@ -261,12 +260,8 @@ void RS_EntityContainer::selectWindow(RS_Vector v1, RS_Vector v2,
                 //e->setSelected(select);
                 included = true;
 			} else if (cross) {
-				std::array<RS_Line,4> l{{
-						{v1, {v2.x, v1.y}},
-						{{v2.x, v1.y}, v2},
-						{v2, {v1.x, v2.y}},
-						{{v1.x, v2.y}, v1}
-										}};
+				RS_EntityContainer l;
+				l.addRectangle(v1, v2);
                 RS_VectorSolutions sol;
 
                 if (e->isContainer()) {
@@ -278,9 +273,9 @@ void RS_EntityContainer::selectWindow(RS_Vector v1, RS_Vector v2,
                         if (se->rtti() == RS2::EntitySolid){
 							included = static_cast<RS_Solid*>(se)->isInCrossWindow(v1,v2);
                         } else {
-							for (auto const& line: l) {
+							for (auto line: l) {
                                 sol = RS_Information::getIntersection(
-											se, &line, true);
+											se, line, true);
                                 if (sol.hasValid()) {
                                     included = true;
                                     break;
@@ -291,8 +286,8 @@ void RS_EntityContainer::selectWindow(RS_Vector v1, RS_Vector v2,
                 } else if (e->rtti() == RS2::EntitySolid){
 					included = static_cast<RS_Solid*>(e)->isInCrossWindow(v1,v2);
                 } else {
-					for (auto const& line: l) {
-						sol = RS_Information::getIntersection(e, &line, true);
+					for (auto line: l) {
+						sol = RS_Information::getIntersection(e, line, true);
                         if (sol.hasValid()) {
                             included = true;
                             break;
@@ -751,7 +746,13 @@ void RS_EntityContainer::update() {
     }
 }
 
-
+void RS_EntityContainer::addRectangle(RS_Vector const& v0, RS_Vector const& v1)
+{
+	addEntity(new RS_Line{this, v0, {v1.x, v0.y}});
+	addEntity(new RS_Line{this, {v1.x, v0.y}, v1});
+	addEntity(new RS_Line{this, v1, {v0.x, v1.y}});
+	addEntity(new RS_Line{this, {v0.x, v1.y}, v0});
+}
 
 /**
  * Returns the first entity or nullptr if this graphic is empty.
