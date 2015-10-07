@@ -33,6 +33,7 @@
 #include "rs_commandevent.h"
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
+#include "rs_polyline.h"
 
 RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
     RS_EntityContainer& container,
@@ -40,50 +41,33 @@ RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
         :RS_PreviewActionInterface("Draw rectangles",
                            container, graphicView) {
 	actionType=RS2::ActionDrawLineRectangle;
-    reset();
 }
-
-void RS_ActionDrawLineRectangle::reset() {
-    for (int i=0; i<4; ++i) {
-		data[i].reset(new RS_LineData{});
-    }
-}
-
-
-
-void RS_ActionDrawLineRectangle::init(int status) {
-    RS_PreviewActionInterface::init(status);
-
-    reset();
-}
-
-
 
 void RS_ActionDrawLineRectangle::trigger() {
-    RS_PreviewActionInterface::trigger();
+	RS_PreviewActionInterface::trigger();
 
-    RS_Line* line[4];
-    preparePreview();
+	RS_Polyline* polyline = new RS_Polyline(container);
 
-    // create and add rectangle:
-    for (int i=0; i<4; ++i) {
-		line[i] = new RS_Line(container, *data[i]);
-        line[i]->setLayerToActive();
-        line[i]->setPenToActive();
-        container->addEntity(line[i]);
-    }
+	// create and add rectangle:
+	polyline->addVertex(corner1);
+	polyline->setLayerToActive();
+	polyline->setPenToActive();
+	polyline->addVertex({corner2.x, corner1.y});
+	polyline->addVertex({corner2.x, corner2.y});
+	polyline->addVertex({corner1.x, corner2.y});
+	polyline->setClosed(true);
+	polyline->endPolyline();
+	container->addEntity(polyline);
 
     // upd. undo list:
     if (document) {
         document->startUndoCycle();
-        for (int i=0; i<4; ++i) {
-            document->addUndoable(line[i]);
-        }
+		document->addUndoable(polyline);
         document->endUndoCycle();
     }
 
     // upd. view
-        graphicView->redraw(RS2::RedrawDrawing);
+	graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(corner2);
 }
 
@@ -97,12 +81,15 @@ void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
         corner2 = mouse;
         deletePreview();
 
-        preparePreview();
-
-        for (int i=0; i<4; ++i) {
-			preview->addEntity(new RS_Line(preview.get(), *data[i]));
-        }
-        drawPreview();
+		preview->addEntity(new RS_Line{preview.get(),
+									   {corner1, {corner2.x, corner1.y}}});
+		preview->addEntity(new RS_Line{preview.get(),
+									   {{corner2.x, corner1.y}, corner2}});
+		preview->addEntity(new RS_Line{preview.get(),
+									   {corner2, {corner1.x, corner2.y}}});
+		preview->addEntity(new RS_Line{preview.get(),
+									   {{corner1.x, corner2.y}, corner1}});
+		drawPreview();
     }
 
     RS_DEBUG->print("RS_ActionDrawLineRectangle::mouseMoveEvent end");
@@ -118,16 +105,6 @@ void RS_ActionDrawLineRectangle::mouseReleaseEvent(QMouseEvent* e) {
         init(getStatus()-1);
     }
 }
-
-
-
-void RS_ActionDrawLineRectangle::preparePreview() {
-	data[0].reset(new RS_LineData{corner1, {corner2.x, corner1.y}});
-	data[1].reset(new RS_LineData{{corner2.x, corner1.y}, corner2});
-	data[2].reset(new RS_LineData{corner2, {corner1.x, corner2.y}});
-	data[3].reset(new RS_LineData{{corner1.x, corner2.y}, corner1});
-}
-
 
 void RS_ActionDrawLineRectangle::coordinateEvent(RS_CoordinateEvent* e) {
 	if (!e) return;
@@ -152,8 +129,6 @@ void RS_ActionDrawLineRectangle::coordinateEvent(RS_CoordinateEvent* e) {
     }
 }
 
-
-
 void RS_ActionDrawLineRectangle::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
@@ -165,14 +140,6 @@ void RS_ActionDrawLineRectangle::commandEvent(RS_CommandEvent* e) {
         return;
     }
 }
-
-RS_ActionDrawLineRectangle::~RS_ActionDrawLineRectangle(){}
-
-QStringList RS_ActionDrawLineRectangle::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
-}
-
 
 void RS_ActionDrawLineRectangle::updateMouseButtonHints() {
     if (RS_DIALOGFACTORY) {
