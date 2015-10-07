@@ -248,7 +248,7 @@ void RS_ActionInterface::setFinished() {
 /**
  * Finishes this action.
  */
-void RS_ActionInterface::finish(bool updateTB)
+void RS_ActionInterface::finish(bool /*updateTB*/)
 {
 	RS_DEBUG->print("RS_ActionInterface::finish");
 	//refuse to quit the default action
