@@ -181,8 +181,7 @@ void RS_ActionInterface::commandEvent(RS_CommandEvent*) {
  *  for the command line.
  */
 QStringList RS_ActionInterface::getAvailableCommands() {
-    QStringList l;
-    return l;
+	return QStringList{};
 }
 
 /**
