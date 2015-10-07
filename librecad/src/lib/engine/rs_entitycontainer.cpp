@@ -1889,3 +1889,14 @@ std::ostream& operator << (std::ostream& os, RS_EntityContainer& ec) {
     return os;
 }
 
+
+RS_Entity* RS_EntityContainer::first() const
+{
+	return entities.first();
+}
+
+RS_Entity* RS_EntityContainer::last() const
+{
+	return entities.last();
+}
+

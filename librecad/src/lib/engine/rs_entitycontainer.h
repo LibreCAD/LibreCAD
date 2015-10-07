@@ -214,6 +214,12 @@ public:
 	QList<RS_Entity *>::const_iterator end() const;
 	QList<RS_Entity *>::iterator begin() ;
 	QList<RS_Entity *>::iterator end() ;
+	//! \{
+	//! first and last without resolving into children, assume the container is
+	//! not empty
+	RS_Entity* last() const;
+	RS_Entity* first() const;
+	//! \}
 
 protected:
 
