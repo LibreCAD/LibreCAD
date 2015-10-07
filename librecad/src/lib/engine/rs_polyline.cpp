@@ -96,13 +96,13 @@ RS_Entity* RS_Polyline::clone() const {
  * Removes the last vertex of this polyline.
  */
 void RS_Polyline::removeLastVertex() {
-        RS_Entity* last = lastEntity();
-		if (last) {
-                removeEntity(last);
-                last = lastEntity();
-				if (last) {
-                        if (last->isAtomic()) {
-                                data.endpoint = ((RS_AtomicEntity*)last)->getEndpoint();
+		RS_Entity* l = last();
+		if (l) {
+				removeEntity(l);
+				l = last();
+				if (l) {
+						if (l->isAtomic()) {
+								data.endpoint = l->getEndpoint();
                         }
                         else {
                                 RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -144,7 +144,7 @@ RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend
         // add entity to the polyline:
         entity = createVertex(v, nextBulge, prepend);
 		if (entity) {
-						if (prepend==false) {
+						if (!prepend) {
                 RS_EntityContainer::addEntity(entity);
                                 data.endpoint = v;
                         }
@@ -331,21 +331,55 @@ void RS_Polyline::setClosed(bool cl, double bulge) {
     }
 }
 
+/** sets a new start point of the polyline */
+void RS_Polyline::setStartpoint(RS_Vector const& v) {
+	data.startpoint = v;
+	if (!data.endpoint.valid) {
+		data.endpoint = v;
+	}
+}
+
+/** @return Start point of the entity */
+RS_Vector RS_Polyline::getStartpoint() const {
+	return data.startpoint;
+}
+
+/** sets a new end point of the polyline */
+void RS_Polyline::setEndpoint(RS_Vector const& v) {
+	data.endpoint = v;
+}
+
+/** @return End point of the entity */
+RS_Vector RS_Polyline::getEndpoint() const {
+	return data.endpoint;
+}
 
 /**
  * @return The bulge of the closing entity.
  */
-double RS_Polyline::getClosingBulge() {
-    if (isClosed()) {
-                RS_Entity* e = lastEntity();
-				if (e && e->rtti()==RS2::EntityArc) {
-                        return ((RS_Arc*)e)->getBulge();
-                }
-        }
+double RS_Polyline::getClosingBulge() const{
+	if (isClosed()) {
+		RS_Entity const* e = last();
+		if (e && e->rtti()==RS2::EntityArc) {
+			return static_cast<RS_Arc const*>(e)->getBulge();
+		}
+	}
 
-        return 0.0;
+	return 0.0;
 }
 
+bool RS_Polyline::isClosed() const {
+	return data.getFlag(RS2::FlagClosed);
+}
+
+void RS_Polyline::setClosed(bool cl) {
+	if (cl) {
+		data.setFlag(RS2::FlagClosed);
+	}
+	else {
+		data.delFlag(RS2::FlagClosed);
+	}
+}
 
 /**
  * Sets the polylines start and endpoint to match the first and last vertex.
@@ -353,16 +387,16 @@ double RS_Polyline::getClosingBulge() {
 void RS_Polyline::updateEndpoints() {
         RS_Entity* e1 = firstEntity();
 		if (e1 && e1->isAtomic()) {
-                RS_Vector v = ((RS_AtomicEntity*)e1)->getStartpoint();
+				RS_Vector const& v = e1->getStartpoint();
                 setStartpoint(v);
         }
 
-        RS_Entity* e2 = lastEntity();
+		RS_Entity const* e2 = last();
         if (isClosed()) {
                 e2 = prevEntity();
         }
 		if (e2 && e2->isAtomic()) {
-                RS_Vector v = ((RS_AtomicEntity*)e2)->getEndpoint();
+				RS_Vector const& v = e2->getEndpoint();
                 setEndpoint(v);
     }
 }
@@ -395,10 +429,10 @@ void RS_Polyline::addEntity(RS_Entity* /*entity*/) {
 
 
 RS_VectorSolutions RS_Polyline::getRefPoints() const{
-	RS_VectorSolutions ret({data.startpoint});
+	RS_VectorSolutions ret{{data.startpoint}};
 	for(auto e: *this){
 		if (e->isAtomic()) {
-			ret.push_back((static_cast<RS_AtomicEntity*>(e))->getEndpoint());
+			ret.push_back(e->getEndpoint());
 		}
 	}
 
@@ -553,10 +587,10 @@ bool RS_Polyline::offset(const RS_Vector& coord, const double& distance){
 //            double a1(intersections.at(i).angleTo(vp1));
             RS_VectorSolutions sol1;
 			for(const RS_Vector& vp: sol0){
-				if(RS_Math::isAngleBetween(intersections.at(i).angleTo(vp),
+				if(!RS_Math::isAngleBetween(intersections.at(i).angleTo(vp),
                                            pnew->entityAt(i)->getDirection2(),
                                            pnew->entityAt(i+1)->getDirection1(),
-                                           false)==false){
+										   false)){
 					sol1.push_back(vp);
                 }
             }
