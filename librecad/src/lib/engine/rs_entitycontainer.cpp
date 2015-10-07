@@ -276,11 +276,11 @@ void RS_EntityContainer::selectWindow(RS_Vector v1, RS_Vector v2,
                          se=ec->nextEntity(RS2::ResolveAll)) {
 
                         if (se->rtti() == RS2::EntitySolid){
-                            included = ((RS_Solid *)se)->isInCrossWindow(v1,v2);
+							included = static_cast<RS_Solid*>(se)->isInCrossWindow(v1,v2);
                         } else {
-                            for (int i=0; i<4; ++i) {
+							for (auto const& line: l) {
                                 sol = RS_Information::getIntersection(
-                                            se, &l[i], true);
+											se, &line, true);
                                 if (sol.hasValid()) {
                                     included = true;
                                     break;
@@ -289,10 +289,10 @@ void RS_EntityContainer::selectWindow(RS_Vector v1, RS_Vector v2,
                         }
                     }
                 } else if (e->rtti() == RS2::EntitySolid){
-                    included = ((RS_Solid *)e)->isInCrossWindow(v1,v2);
+					included = static_cast<RS_Solid*>(e)->isInCrossWindow(v1,v2);
                 } else {
-                    for (int i=0; i<4; ++i) {
-                        sol = RS_Information::getIntersection(e, &l[i], true);
+					for (auto const& line: l) {
+						sol = RS_Information::getIntersection(e, &line, true);
                         if (sol.hasValid()) {
                             included = true;
                             break;
@@ -1666,7 +1666,7 @@ void RS_EntityContainer::scale(const RS_Vector& center, const RS_Vector& factor)
 
 
 void RS_EntityContainer::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
-    if (axisPoint1.distanceTo(axisPoint2)>1.0e-6) {
+	if (axisPoint1.distanceTo(axisPoint2)>RS_TOLERANCE) {
 
 		for(auto e: entities){
             e->mirror(axisPoint1, axisPoint2);
