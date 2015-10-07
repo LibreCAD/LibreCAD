@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include<array>
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_dimension.h"
@@ -330,32 +329,24 @@ if(dimtsz < 0.01) {
     if (getAlignText()) {
         double w =text->getUsedTextWidth()/2+dimgap;
         double h = text->getUsedTextHeight()/2+dimgap;
-		RS_Vector v1 = textPos - RS_Vector(w, h);
-		RS_Vector v2 = textPos + RS_Vector(w, h);
-		std::array<RS_Line, 4> l {{
-				{v1, {v2.x, v1.y}},
-				{{v2.x, v1.y}, v2},
-				{v2, {v1.x, v2.y}},
-				{{v1.x, v2.y}, v1}
-								  }};
-        RS_VectorSolutions sol1, sol2;
-        int inters= 0;
-        do {
-            sol1 = RS_Information::getIntersection(dimensionLine, &(l[inters++]), true);
-        } while (!sol1.hasValid() && inters < 4);
-//        if (sol1.hasValid() && inters < 4) {
-        if (inters < 4) {
-            do {
-                sol2 = RS_Information::getIntersection(dimensionLine, &(l[inters++]), true);
-            } while (!sol2.hasValid() && inters < 4);
-        }
+		RS_Vector v1 = textPos - RS_Vector{w, h};
+		RS_Vector v2 = textPos + RS_Vector{w, h};
+		RS_EntityContainer c;
+		c.addRectangle(v1, v2);
+		RS_VectorSolutions sol1;
+		for(RS_Entity* e: c) {
+			sol1.appendTo(
+						RS_Information::getIntersection(dimensionLine, e, true)
+						);
+		}
+
         //are text intersecting dimensionLine?
-        if (sol1.hasValid() && sol2.hasValid()) {
+		if (sol1.size()>1) {
             //yes, split dimension line
 			RS_Line* dimensionLine2 =
 					static_cast<RS_Line*>(dimensionLine->clone());
             v1 = sol1.get(0);
-            v2 = sol2.get(0);
+			v2 = sol1.get(1);
             if (p1.distanceTo(v1) < p1.distanceTo(v2)) {
                 dimensionLine->setEndpoint(v1);
                 dimensionLine2->setStartpoint(v2);

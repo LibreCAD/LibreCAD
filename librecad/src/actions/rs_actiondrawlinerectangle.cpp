@@ -53,7 +53,7 @@ void RS_ActionDrawLineRectangle::trigger() {
 	polyline->setLayerToActive();
 	polyline->setPenToActive();
 	polyline->addVertex({corner2.x, corner1.y});
-	polyline->addVertex({corner2.x, corner2.y});
+	polyline->addVertex(corner2);
 	polyline->addVertex({corner1.x, corner2.y});
 	polyline->setClosed(true);
 	polyline->endPolyline();
@@ -80,15 +80,7 @@ void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
     if (getStatus()==SetCorner2 && corner1.valid) {
         corner2 = mouse;
         deletePreview();
-
-		preview->addEntity(new RS_Line{preview.get(),
-									   {corner1, {corner2.x, corner1.y}}});
-		preview->addEntity(new RS_Line{preview.get(),
-									   {{corner2.x, corner1.y}, corner2}});
-		preview->addEntity(new RS_Line{preview.get(),
-									   {corner2, {corner1.x, corner2.y}}});
-		preview->addEntity(new RS_Line{preview.get(),
-									   {{corner1.x, corner2.y}, corner1}});
+		preview->addRectangle(corner1, corner2);
 		drawPreview();
     }
 
@@ -130,7 +122,7 @@ void RS_ActionDrawLineRectangle::coordinateEvent(RS_CoordinateEvent* e) {
 }
 
 void RS_ActionDrawLineRectangle::commandEvent(RS_CommandEvent* e) {
-    QString c = e->getCommand().toLower();
+	QString const& c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         if (RS_DIALOGFACTORY) {
