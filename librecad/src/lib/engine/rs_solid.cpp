@@ -423,10 +423,13 @@ void RS_Solid::draw(RS_Painter* painter, RS_GraphicView* view,
     }
 
 //    RS_SolidData d = getData();
-    if (isTriangle()) {
-        painter->fillTriangle(view->toGui(getCorner(0)),
-                              view->toGui(getCorner(1)),
-                              view->toGui(getCorner(2)));
+    painter->fillTriangle(view->toGui(getCorner(0)),
+                          view->toGui(getCorner(1)),
+                          view->toGui(getCorner(2)));
+    if (!isTriangle()) {
+        painter->fillTriangle(view->toGui(getCorner(1)),
+                              view->toGui(getCorner(2)),
+                              view->toGui(getCorner(3)));
     }
 
 }
