@@ -304,7 +304,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     cbDimLwE->setWidth(RS2::intToLineWidth(dimlwe));
 
     // Dimensions / length format:
-    int dimlunit = graphic->getVariableInt("$DIMLUNIT", 2);
+    int dimlunit = graphic->getVariableInt("$DIMLUNIT", luprec);
     cbDimLUnit->setCurrentIndex(dimlunit-1);
 
     // Dimensions length precision:
