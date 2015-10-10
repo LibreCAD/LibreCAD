@@ -220,7 +220,7 @@ protected:
          * Show large cross hairs.
          */
         bool showCrosshairs;
-        bool finished;
+        bool finished{false};
 };
 
 #endif

@@ -77,12 +77,10 @@ bool RS_SnapMode::operator ==(RS_SnapMode const& rhs) const{
 /**
  * Constructor.
  */
-RS_Snapper::RS_Snapper(RS_EntityContainer& container,
-                       RS_GraphicView& graphicView) {
-                       RS_DEBUG->print("RS_Snapper::RS_Snapper()");
-    this->container = &container;
-    this->graphicView = &graphicView;
-    finished = false;
+RS_Snapper::RS_Snapper(RS_EntityContainer& container, RS_GraphicView& graphicView)
+    :container(&container)
+    ,graphicView(&graphicView)
+{
     init();
 }
 
