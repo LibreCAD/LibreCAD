@@ -113,6 +113,9 @@ void QG_DlgOptionsGeneral::init() {
     // crosshairs:
     QString showCrosshairs = RS_SETTINGS->readEntry("/ShowCrosshairs", "1");
     cbShowCrosshairs->setChecked(showCrosshairs=="1");
+
+    QString snapindicator = RS_SETTINGS->readEntry("/SnapIndicator", "Crosshair");
+    cb_snapindicator->setCurrentIndex(snapindicator=="Crosshair"?0:1);
     
     // scale grid:
     QString scaleGrid = RS_SETTINGS->readEntry("/ScaleGrid", "1");
@@ -217,6 +220,7 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/Language",cbLanguage->itemData(cbLanguage->currentIndex()));
         RS_SETTINGS->writeEntry("/LanguageCmd",cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
         RS_SETTINGS->writeEntry("/ShowCrosshairs", QString("%1").arg((int)cbShowCrosshairs->isChecked()));
+        RS_SETTINGS->writeEntry("/SnapIndicator", cb_snapindicator->currentText());
         RS_SETTINGS->writeEntry("/ScaleGrid", QString("%1").arg((int)cbScaleGrid->isChecked()));
         RS_SETTINGS->writeEntry("/MinGridSpacing", cbMinGridSpacing->currentText());
         RS_SETTINGS->writeEntry("/MaxPreview", cbMaxPreview->currentText());

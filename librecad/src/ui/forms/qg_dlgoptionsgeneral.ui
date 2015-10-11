@@ -1120,17 +1120,7 @@
           <string>Graphic View</string>
          </property>
          <layout class="QGridLayout">
-          <item row="0" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbShowCrosshairs">
-            <property name="text">
-             <string>&amp;Show large crosshairs</string>
-            </property>
-            <property name="shortcut">
-             <string>Alt+S</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0" colspan="2">
+          <item row="2" column="0" colspan="2">
            <widget class="QCheckBox" name="cbScaleGrid">
             <property name="text">
              <string>A&amp;utomatically scale grid</string>
@@ -1140,7 +1130,7 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="5" column="0">
            <widget class="QLabel" name="lMaxPreview">
             <property name="text">
              <string>Number of p&amp;review entities:</string>
@@ -1153,7 +1143,7 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
+          <item row="5" column="1">
            <widget class="QComboBox" name="cbMaxPreview">
             <property name="editable">
              <bool>true</bool>
@@ -1190,7 +1180,7 @@
             </item>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="4" column="0">
            <widget class="QLabel" name="lMinGridSpacing">
             <property name="text">
              <string>Minimal Grid Spacing (px):</string>
@@ -1203,7 +1193,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="4" column="1">
            <widget class="QComboBox" name="cbMinGridSpacing">
             <property name="editable">
              <bool>true</bool>
@@ -1250,11 +1240,35 @@
             </item>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QCheckBox" name="cb_antialiasing">
             <property name="text">
              <string>Anti-aliasing</string>
             </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="cbShowCrosshairs">
+            <property name="text">
+             <string>Snap indicator</string>
+            </property>
+            <property name="shortcut">
+             <string>Alt+S</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="cb_snapindicator">
+            <item>
+             <property name="text">
+              <string>Crosshair</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Spiderweb</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>
@@ -1387,28 +1401,18 @@
          <property name="title">
           <string>Icons</string>
          </property>
-         <widget class="QWidget" name="horizontalLayoutWidget">
-          <property name="geometry">
-           <rect>
-            <x>9</x>
-            <y>29</y>
-            <width>311</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <item>
-            <widget class="QCheckBox" name="cb_icon_size">
-             <property name="text">
-              <string>Custom size</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QSpinBox" name="sb_icon_size"/>
-           </item>
-          </layout>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QCheckBox" name="cb_icon_size">
+            <property name="text">
+             <string>Custom size</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="sb_icon_size"/>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>

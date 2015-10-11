@@ -212,15 +212,17 @@ protected:
      * default to 1, i.e., equidistant to start/end points
      */
     int middlePoints;
-        /**
-         * Snap range for catching entities.
-         */
-        int snapRange;
-        /**
-         * Show large cross hairs.
-         */
-        bool showCrosshairs;
-        bool finished{false};
+    /**
+     * Snap range for catching entities.
+     */
+    int snapRange;
+    /**
+     * Show large cross hairs.
+     */
+    bool showCrosshairs;
+    bool finished{false};
+
+    QString snap_indicator{"Crosshair"};
 };
 
 #endif
