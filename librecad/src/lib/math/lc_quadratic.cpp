@@ -114,7 +114,7 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point
     ,m_bIsQuadratic(true)
     ,m_bValid(true)
 {
-    if(circle==NULL) {
+	if(circle==nullptr) {
         m_bValid=false;
         return;
     }
@@ -300,8 +300,8 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
 	if(normal.dotP(disp)>0.) normal *= -1.;
     if(mirror) normal *= -1.;
 							   
-        RS_Line directrix(NULL,RS_LineData(line1->getStartpoint()+normal,
-                                           line1->getEndpoint()+normal));
+		RS_Line directrix{line1->getStartpoint()+normal,
+										   line1->getEndpoint()+normal};
         LC_Quadratic lc0(&directrix,circle0->getCenter());
         *this = lc0;
         return;
@@ -326,10 +326,10 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
     double angle=center.angleTo(circle0->getCenter());
     if( f<a){
         //ellipse
-        double ratio=sqrt(a*a - f*f)/a;
-		RS_Vector majorP=RS_Vector(angle)*a;
-        RS_Ellipse ellipse(NULL,RS_EllipseData(center,majorP,ratio,0.,0.,false));
-		auto lc0=ellipse.getQuadratic();
+		double const ratio=sqrt(a*a - f*f)/a;
+		RS_Vector const& majorP=RS_Vector{angle}*a;
+		RS_Ellipse const ellipse{center,majorP,ratio,0.,0.,false};
+		auto const& lc0=ellipse.getQuadratic();
 
         m_mQuad=lc0.getQuad();
         m_vLinear=lc0.getLinear();

@@ -46,6 +46,8 @@ RS_ActionDrawCircleTan2_1P::RS_ActionDrawCircleTan2_1P(
     :RS_PreviewActionInterface("Draw tangent circle 2P",
                                container, graphicView),
 	  cData(new RS_CircleData(RS_Vector(0.,0.),1.))
+	,radius(0.)
+	,valid(false)
 {
 	actionType=RS2::ActionDrawCircleTan2_1P;
 }
@@ -168,17 +170,17 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent* e) {
 }
 
 bool RS_ActionDrawCircleTan2_1P::preparePreview(){
-	if( getCenters() ==false) return false;
+	if (!getCenters()) return false;
 	cData->center=centers.getClosest(coord);
 	cData->radius=point.distanceTo(cData->center);
     return true;
 }
 
 RS_Entity* RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent* e) {
-    RS_Entity* ret=NULL;
+	RS_Entity* ret=nullptr;
     RS_Entity*  en = catchEntity(e,enTypeList, RS2::ResolveAll);
-    if(en == NULL) return ret;
-    if(en->isVisible()==false) return ret;
+	if (!en) return ret;
+	if (!en->isVisible()) return ret;
 	for(auto p: circles){
 		if(p && en->getId() == p->getId()) return ret; //do not pull in the same line again
     }
@@ -198,7 +200,7 @@ void RS_ActionDrawCircleTan2_1P::mouseReleaseEvent(QMouseEvent* e) {
         {
             circles.resize(getStatus());
             RS_AtomicEntity*  en = static_cast<RS_AtomicEntity*>(catchCircle(e));
-            if (en==NULL) return;
+			if (!en) return;
 //            circle = static_cast<RS_AtomicEntity*>(en);
             en->setHighlighted(true);
 			circles.push_back(en);

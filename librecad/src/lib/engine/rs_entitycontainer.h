@@ -73,7 +73,7 @@ public:
                 return false;
         }
 
-        virtual double getLength() const;
+	virtual double getLength() const;
 
     virtual void undoStateChanged(bool undone);
     virtual void setVisible(bool v);
@@ -89,8 +89,15 @@ public:
     virtual void prependEntity(RS_Entity* entity);
 	virtual void moveEntity(int index, QList<RS_Entity *>& entList);
     virtual void insertEntity(int index, RS_Entity* entity);
-//RLZ unused    virtual void replaceEntity(int index, RS_Entity* entity);
     virtual bool removeEntity(RS_Entity* entity);
+
+	//!
+	//! \brief addRectangle add four lines to form a rectangle by
+	//! the diagonal vertices v0,v1
+	//! \param v0,v1 diagonal vertices of the rectangle
+	//!
+	void addRectangle(RS_Vector const& v0, RS_Vector const& v1);
+
     virtual RS_Entity* firstEntity(RS2::ResolveLevel level=RS2::ResolveNone);
     virtual RS_Entity* lastEntity(RS2::ResolveLevel level=RS2::ResolveNone);
     virtual RS_Entity* nextEntity(RS2::ResolveLevel level=RS2::ResolveNone);
@@ -214,6 +221,12 @@ public:
 	QList<RS_Entity *>::const_iterator end() const;
 	QList<RS_Entity *>::iterator begin() ;
 	QList<RS_Entity *>::iterator end() ;
+	//! \{
+	//! first and last without resolving into children, assume the container is
+	//! not empty
+	RS_Entity* last() const;
+	RS_Entity* first() const;
+	//! \}
 
 protected:
 

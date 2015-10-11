@@ -469,8 +469,7 @@ void RS_Text::scale(const RS_Vector& center, const RS_Vector& factor) {
 void RS_Text::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     bool readable = RS_Math::isAngleReadable(data.angle);
 
-    RS_Vector vec;
-    vec.setPolar(1.0, data.angle);
+	RS_Vector vec = RS_Vector::polar(1.0, data.angle);
     vec.mirror(RS_Vector(0.0,0.0), axisPoint2-axisPoint1);
     data.angle = vec.angle();
 

@@ -39,14 +39,6 @@ class LC_Quadratic;
  * add 2*M_PI to angle1 or angle2 to make whole range ellipse arcs
  */
 struct RS_EllipseData {
-	RS_EllipseData() = default;
-	RS_EllipseData(const RS_EllipseData& ) = default;
-    RS_EllipseData(const RS_Vector& center,
-                   const RS_Vector& majorP,
-                   double ratio,
-                   double angle1, double angle2,
-				   bool reversed);
-
     //! Ellipse center
     RS_Vector center;
     //! Endpoint of major axis relative to center.
@@ -71,8 +63,19 @@ std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed);
 class RS_Ellipse : public RS_AtomicEntity {
 public:
 	RS_Ellipse()=default;
-    RS_Ellipse(RS_EntityContainer* parent,
-               const RS_EllipseData& d);
+	RS_Ellipse(RS_EntityContainer* parent, const RS_EllipseData& d);
+	RS_Ellipse(const RS_EllipseData& d);
+	RS_Ellipse(RS_EntityContainer* parent,
+			   const RS_Vector& center,
+			   const RS_Vector& majorP,
+			   double ratio,
+			   double angle1, double angle2,
+			   bool reversed = false);
+	RS_Ellipse(const RS_Vector& center,
+			   const RS_Vector& majorP,
+			   double ratio,
+			   double angle1, double angle2,
+			   bool reversed = false);
 	~RS_Ellipse()=default;
 
 	virtual RS_Entity* clone() const;

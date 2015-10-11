@@ -55,7 +55,7 @@ RS_Selection::RS_Selection(RS_EntityContainer& container,
  * Selects or deselects the given entitiy.
  */
 void RS_Selection::selectSingle(RS_Entity* e) {
-    if (e && (e->getLayer()==NULL || e->getLayer()->isLocked()==false)) {
+	if (e && (! (e->getLayer() && e->getLayer()->isLocked()))) {
 
         if (graphicView) {
             graphicView->deleteEntity(e);
@@ -151,7 +151,7 @@ void RS_Selection::selectWindow(const RS_Vector& v1, const RS_Vector& v2,
 void RS_Selection::selectIntersected(const RS_Vector& v1, const RS_Vector& v2,
                                      bool select) {
 
-    RS_Line line(NULL, RS_LineData(v1, v2));
+	RS_Line line{v1, v2};
     bool inters;
 
 	for(auto e: *container){
@@ -243,7 +243,7 @@ void RS_Selection::selectContour(RS_Entity* e) {
 
             if (en && en->isVisible() && 
 				en->isAtomic() && en->isSelected()!=select && 
-				(en->getLayer()==NULL || en->getLayer()->isLocked()==false)) {
+				(!(en->getLayer() && en->getLayer()->isLocked()))) {
 
                 ae = (RS_AtomicEntity*)en;
                 bool doit = false;
@@ -320,7 +320,7 @@ void RS_Selection::selectLayer(const QString& layerName, bool select) {
 
         if (en && en->isVisible() && 
 				en->isSelected()!=select && 
-				(en->getLayer()==NULL || en->getLayer()->isLocked()==false)) {
+				(!(en->getLayer() && en->getLayer()->isLocked()))) {
 
             RS_Layer* l = en->getLayer(true);
 

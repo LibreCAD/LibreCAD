@@ -39,7 +39,6 @@ class RS_BevelData;
  */
 class RS_ActionModifyBevel : public RS_PreviewActionInterface {
 	Q_OBJECT
-public:
     /**
      * Action States.
      */

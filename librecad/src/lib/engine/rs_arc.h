@@ -196,26 +196,28 @@ public:
     bool createFrom2PBulge(const RS_Vector& startPoint, const RS_Vector& endPoint,
                            double bulge);
 
-    virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-                                         double* dist = NULL)const;
-    virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-            bool onEntity = true, double* dist = NULL, RS_Entity** entity=NULL)const;
+	virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
+										 double* dist = nullptr) const;
+	virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
+											  bool onEntity = true,
+											  double* dist = nullptr,
+											  RS_Entity** entity=nullptr) const;
     virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-									   double* dist = NULL) const;
+									   double* dist = nullptr) const;
     virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = NULL,
+									   double* dist = nullptr,
                                        int middlePoints = 1
-                                       )const;
+									   ) const;
     virtual RS_Vector getNearestDist(double distance,
                                      const RS_Vector& coord,
-									 double* dist = NULL) const;
+									 double* dist = nullptr) const;
     virtual RS_Vector getNearestDist(double distance,
 									 bool startp) const;
     virtual RS_Vector getNearestOrthTan(const RS_Vector& coord,
                     const RS_Line& normal,
 					bool onEntity = false) const;
     virtual RS_VectorSolutions getTangentPoint(const RS_Vector& point) const;//find the tangential points seeing from given point
-    virtual RS_Vector getTangentDirection(const RS_Vector& point)const;
+	virtual RS_Vector getTangentDirection(const RS_Vector& point) const;
     virtual void move(const RS_Vector& offset);
     virtual void rotate(const RS_Vector& center, const double& angle);
     virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);

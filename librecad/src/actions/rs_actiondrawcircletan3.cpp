@@ -48,6 +48,7 @@ RS_ActionDrawCircleTan3::RS_ActionDrawCircleTan3(
 	:RS_PreviewActionInterface("Draw circle inscribed",
 							   container, graphicView),
 	  cData(new RS_CircleData(RS_Vector(0.,0.),1.))
+	,valid(false)
 {
 	actionType=RS2::ActionDrawCircleTan3;
 }
@@ -234,10 +235,9 @@ bool RS_ActionDrawCircleTan3::getData(){
 			RS_Vector const& v2=sol1.at(0);
 			//two bisector lines per intersection
 			for(unsigned j=0; j<2; ++j){
-
-                RS_Line l1(nullptr, RS_LineData(v1, v1+RS_Vector(angle1)));
+				RS_Line l1{v1, v1+RS_Vector{angle1}};
 				for(unsigned j1=0; j1<2; ++j1){
-                    RS_Line l2(nullptr, RS_LineData(v2, v2+RS_Vector(angle2)));
+					RS_Line l2{v2, v2+RS_Vector{angle2}};
 					sol.appendTo(RS_Information::getIntersectionLineLine(&l1, &l2));
 					angle2 += M_PI_2;
 				}
@@ -320,8 +320,8 @@ bool RS_ActionDrawCircleTan3::preparePreview(){
 RS_Entity* RS_ActionDrawCircleTan3::catchCircle(QMouseEvent* e) {
     RS_Entity* ret=nullptr;
 	RS_Entity*  en = catchEntity(e,enTypeList, RS2::ResolveAll);
-    if(en == nullptr) return ret;
-	if(en->isVisible()==false) return ret;
+	if (!en) return ret;
+	if (!en->isVisible()) return ret;
 	for(int i=0;i<getStatus();++i) {
 		if(en->getId() == circles[i]->getId()) return ret; //do not pull in the same line again
 	}
@@ -342,7 +342,7 @@ void RS_ActionDrawCircleTan3::mouseReleaseEvent(QMouseEvent* e) {
 		case SetCircle2:
 		case SetCircle3: {
 			RS_Entity*  en = catchCircle(e);
-            if (en==nullptr) return;
+			if (!en) return;
 			circles.resize(getStatus());
 			for(const RS_AtomicEntity* const pc: circles)
 				if(pc == en) continue;

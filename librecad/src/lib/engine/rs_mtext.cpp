@@ -595,8 +595,7 @@ void RS_MText::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
     //double ang = axisPoint1.angleTo(axisPoint2);
     bool readable = RS_Math::isAngleReadable(data.angle);
 
-    RS_Vector vec;
-    vec.setPolar(1.0, data.angle);
+	RS_Vector vec = RS_Vector::polar(1.0, data.angle);
     vec.mirror(RS_Vector(0.0,0.0), axisPoint2-axisPoint1);
     data.angle = vec.angle();
 

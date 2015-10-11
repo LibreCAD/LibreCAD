@@ -82,7 +82,7 @@ void RS_Entity::init() {
     resetBorders();
 
     setFlag(RS2::FlagVisible);
-    //layer = NULL;
+	//layer = nullptr;
     //pen = RS_Pen();
         updateEnabled = true;
     setLayerToActive();
@@ -223,7 +223,7 @@ void RS_Entity::undoStateChanged(bool /*undone*/) {
  * @return true if this entity or any parent entities are undone.
  */
 bool RS_Entity::isUndone() const {
-        if (parent==NULL) {
+		if (!parent) {
                 return RS_Undoable::isUndone();
         }
         else {
@@ -292,10 +292,10 @@ bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const
 	std::vector<RS_Vector> vps;
     for(unsigned short i=0;i<4;i++){
         const QPointF& vp(visualBox.at(i));
-		vps.push_back(RS_Vector(vp.x(),vp.y()));
+		vps.emplace_back(vp.x(),vp.y());
     }
     for(unsigned short i=0;i<4;i++){
-		RS_Line const line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));
+		RS_Line const line{vps.at(i),vps.at((i+1)%4)};
 		if( RS_Information::getIntersection(this, &line, true).size()>0) return true;
     }
     if( minV.isInWindowOrdered(vpMin,vpMax)||maxV.isInWindowOrdered(vpMin,vpMax)) return true;
@@ -310,7 +310,7 @@ bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const
  */
 bool RS_Entity::isPointOnEntity(const RS_Vector& coord,
                                 double tolerance) const {
-    double dist = getDistanceToPoint(coord, NULL, RS2::ResolveNone);
+	double dist = getDistanceToPoint(coord, nullptr, RS2::ResolveNone);
     return (dist<=fabs(tolerance));
 }
 
@@ -319,7 +319,7 @@ double RS_Entity::getDistanceToPoint(const RS_Vector& coord,
                                   RS2::ResolveLevel /*level*/,
                                   double /*solidDist*/) const
 {
-    if( entity != NULL) {
+	if (entity) {
         *entity=const_cast<RS_Entity*>(this);
     }
     double dToEntity = RS_MAXDOUBLE;
@@ -337,7 +337,7 @@ double RS_Entity::getDistanceToPoint(const RS_Vector& coord,
  * Is this entity visible?
  *
  * @return true Only if the entity and the layer it is on are visible.
- * The Layer might also be NULL. In that case the layer visiblity
+ * The Layer might also be nullptr. In that case the layer visiblity
 * is ignored.
  */
 bool RS_Entity::isVisible() const{
@@ -355,7 +355,7 @@ bool RS_Entity::isVisible() const{
                 return false;
         }*/
 
-    if (getLayer()==NULL) {
+	if (!getLayer()) {
         return true;
     }
 
@@ -379,8 +379,8 @@ bool RS_Entity::isVisible() const{
         }
     }
 
-    if (layer==NULL /*&& getLayer()->getName()!="ByBlock"*/) {
-        if (getLayer()==NULL) {
+	if (!layer /*&& getLayer()->getName()!="ByBlock"*/) {
+		if (!getLayer()) {
             return true;
         } else {
             if (!getLayer()->isFrozen()) {
@@ -391,24 +391,20 @@ bool RS_Entity::isVisible() const{
         }
     }
 
-    if (getBlockOrInsert()==NULL) {
+	if (!getBlockOrInsert()) {
         return true;
     }
 
     if (getBlockOrInsert()->rtti()==RS2::EntityBlock) {
-        if (getLayer(false)==NULL || !getLayer(false)->isFrozen()) {
-            return true;
-        } else {
-            return false;
-        }
+		return !(getLayer(false) && getLayer(false)->isFrozen());
     }
 
 
-    if (getBlockOrInsert()->getLayer()==NULL) {
+	if (!getBlockOrInsert()->getLayer()) {
         return true;
     }
 
-    if(!getBlockOrInsert()->getLayer()->isFrozen()) {
+	if (!getBlockOrInsert()->getLayer()->isFrozen()) {
         return true;
     }
 
@@ -436,19 +432,19 @@ void RS_Entity::setHighlighted(bool on) {
 }
 
 RS_Vector RS_Entity::getStartpoint() const {
-	return RS_Vector(false);
+	return RS_Vector{};
 }
 
 RS_Vector RS_Entity::getEndpoint() const {
-	return RS_Vector(false);
+	return RS_Vector{};
 }
 
 RS_VectorSolutions RS_Entity::getTangentPoint(const RS_Vector& /*point*/) const {
-	return RS_VectorSolutions();
+	return RS_VectorSolutions{};
 }
 
 RS_Vector RS_Entity::getTangentDirection(const RS_Vector& /*point*/)const{
-	return RS_Vector(false);
+	return RS_Vector{};
 }
 /**
  * @return true if the entity is highlighted.
@@ -467,15 +463,11 @@ RS_Vector RS_Entity::getSize() const {
  */
 bool RS_Entity::isLocked() const
 {
-	if (getLayer(true) && getLayer()->isLocked()) {
-        return true;
-    } else {
-        return false;
-    }
+	return getLayer(true) && getLayer()->isLocked();
 }
 
 RS_Vector RS_Entity::getCenter() const {
-	return RS_Vector(false);
+	return RS_Vector{};
 }
 
 double RS_Entity::getRadius() const {
@@ -484,7 +476,7 @@ double RS_Entity::getRadius() const {
 
 /**
  * @return The parent graphic in which this entity is stored
- * or the parent's parent graphic or NULL if none of the parents
+ * or the parent's parent graphic or nullptr if none of the parents
  * are stored in a graphic.
  */
 RS_Graphic* RS_Entity::getGraphic() const{
@@ -501,7 +493,7 @@ RS_Graphic* RS_Entity::getGraphic() const{
 
 /**
  * @return The parent block in which this entity is stored
- * or the parent's parent block or NULL if none of the parents
+ * or the parent's parent block or nullptr if none of the parents
  * are stored in a block.
  */
 RS_Block* RS_Entity::getBlock() const{
@@ -526,12 +518,12 @@ m0 x + m1 y + m2 =0
 **/
 LC_Quadratic RS_Entity::getQuadratic() const
 {
-        return LC_Quadratic();
+		return LC_Quadratic{};
 }
 
 /**
  * @return The parent insert in which this entity is stored
- * or the parent's parent block or NULL if none of the parents
+ * or the parent's parent block or nullptr if none of the parents
  * are stored in a block.
  */
 RS_Insert* RS_Entity::getInsert() const
@@ -548,12 +540,12 @@ RS_Insert* RS_Entity::getInsert() const
 
 /**
  * @return The parent block or insert in which this entity is stored
- * or the parent's parent block or insert or NULL if none of the parents
+ * or the parent's parent block or insert or nullptr if none of the parents
  * are stored in a block or insert.
  */
 RS_Entity* RS_Entity::getBlockOrInsert() const
 {
-	RS_Entity* ret=nullptr;
+	RS_Entity* ret{nullptr};
 	switch(rtti()){
 	case RS2::EntityBlock:
 	case RS2::EntityInsert:
@@ -569,7 +561,7 @@ RS_Entity* RS_Entity::getBlockOrInsert() const
 
 /**
  * @return The parent document in which this entity is stored
- * or the parent's parent document or NULL if none of the parents
+ * or the parent's parent document or nullptr if none of the parents
  * are stored in a document. Note that a document is usually
  * either a Graphic or a Block.
  */
@@ -710,31 +702,31 @@ RS2::Unit RS_Entity::getGraphicUnit() const
 
 
 /**
- * Returns a pointer to the layer this entity is on or NULL.
+ * Returns a pointer to the layer this entity is on or nullptr.
  *
  * @para resolve true: if the layer is ByBlock, the layer of the
  *               block this entity is in is returned.
  *               false: the layer of the entity is returned.
  *
  * @return pointer to the layer this entity is on. If the layer
- * is set to NULL the layer of the next parent that is not on
- * layer NULL is returned. If all parents are on layer NULL, NULL
+ * is set to nullptr the layer of the next parent that is not on
+ * layer nullptr is returned. If all parents are on layer nullptr, nullptr
  * is returned.
  */
 RS_Layer* RS_Entity::getLayer(bool resolve) const {
     if (resolve) {
         // we have no layer but a parent that might have one.
         // return parent's layer instead:
-        if (layer==NULL /*|| layer->getName()=="ByBlock"*/) {
+		if (!layer /*|| layer->getName()=="ByBlock"*/) {
             if (parent) {
                 return parent->getLayer(true);
             } else {
-                return NULL;
+				return nullptr;
             }
         }
     }
 
-    // return our layer. might still be NULL:
+	// return our layer. might still be nullptr:
     return layer;
 }
 
@@ -748,7 +740,7 @@ void RS_Entity::setLayer(const QString& name) {
     if (graphic) {
         layer = graphic->findLayer(name);
     } else {
-        layer = NULL;
+		layer = nullptr;
     }
 }
 
@@ -766,7 +758,7 @@ void RS_Entity::setLayer(RS_Layer* l) {
 /**
  * Sets the layer of this entity to the current layer of
  * the graphic this entity is in. If this entity (and none
- * of its parents) are in a graphic the layer is set to NULL.
+ * of its parents) are in a graphic the layer is set to nullptr.
  */
 void RS_Entity::setLayerToActive() {
     RS_Graphic* graphic = getGraphic();
@@ -774,7 +766,7 @@ void RS_Entity::setLayerToActive() {
     if (graphic) {
         layer = graphic->getActiveLayer();
     } else {
-        layer = NULL;
+		layer = nullptr;
     }
 }
 
@@ -948,7 +940,7 @@ double RS_Entity::getStyleFactor(RS_GraphicView* view) {
 
 
 /**
- * @return User defined variable connected to this entity or NULL if not found.
+ * @return User defined variable connected to this entity or nullptr if not found.
  */
 QString RS_Entity::getUserDefVar(const QString& key) const {
 	auto it=varList.find(key);
@@ -1066,8 +1058,8 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
     os << (e.getFlag(RS2::FlagSelected) ? " RS2::FlagSelected" : "");
     os << "\n";
 
-    if (e.layer==NULL) {
-        os << " layer: NULL ";
+	if (!e.layer) {
+		os << " layer: nullptr ";
     } else {
         os << " layer: " << e.layer->getName().toLatin1().data() << " ";
         os << " layer address: " << e.layer << " ";

@@ -79,14 +79,14 @@ void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
 
         // settings from action:
         if (update) {
-            if (action->hasFixedAngle()==false)
+			if (!action->hasFixedAngle())
                 sa = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
             sl = QString("%1").arg(action->getLength());
 			sp = action->getSnapPoint();
         } else {
         // settings from config file:
             RS_SETTINGS->beginGroup("/Draw");
-            if (action->hasFixedAngle()==false) {
+			if (!action->hasFixedAngle()) {
                 sa = RS_SETTINGS->readEntry("/LineAngleAngle", "30.0");
             } else {
                 sa = QString("%1").arg(action->getAngle());

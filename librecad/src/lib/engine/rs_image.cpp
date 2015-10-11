@@ -213,28 +213,22 @@ RS_Vector RS_Image::getNearestPointOnEntity(const RS_Vector& coord,
         *entity = const_cast<RS_Image*>(this);
     }
 
-    RS_VectorSolutions corners =getCorners();
+	RS_VectorSolutions const& corners =getCorners();
     //allow selecting image by clicking within images, bug#3464626
     if(containsPoint(coord)){
         //if coord is within image
         if(dist) *dist=0.;
         return coord;
     }
-    RS_VectorSolutions points(4);
+	RS_VectorSolutions points;
+	for (size_t i=0; i < corners.size(); ++i){
+		size_t const j = (i+1)%corners.size();
+		RS_Line const l{corners.at(i), corners.at(j)};
+		RS_Vector const vp = l.getNearestPointOnEntity(coord, onEntity);
+		points.push_back(vp);
+	}
 
-    RS_Line l[] =
-        {
-            RS_Line(NULL, RS_LineData(corners.get(0), corners.get(1))),
-            RS_Line(NULL, RS_LineData(corners.get(1), corners.get(2))),
-            RS_Line(NULL, RS_LineData(corners.get(2), corners.get(3))),
-            RS_Line(NULL, RS_LineData(corners.get(3), corners.get(0)))
-        };
-
-    for (int i=0; i<4; ++i) {
-        points.set(i, l[i].getNearestPointOnEntity(coord, onEntity));
-    }
-
-    return points.getClosest(coord, dist);
+	return points.getClosest(coord, dist);
 }
 
 
@@ -242,8 +236,7 @@ RS_Vector RS_Image::getNearestPointOnEntity(const RS_Vector& coord,
 RS_Vector RS_Image::getNearestCenter(const RS_Vector& coord,
 									 double* dist) const{
 
-    RS_VectorSolutions points;
-    RS_VectorSolutions corners = getCorners();
+	RS_VectorSolutions const& corners{getCorners()};
     //bug#485, there's no clear reason to ignore snapping to center within an image
 //    if(containsPoint(coord)){
 //        //if coord is within image
@@ -251,11 +244,12 @@ RS_Vector RS_Image::getNearestCenter(const RS_Vector& coord,
 //        return coord;
 //    }
 
-    points.push_back((corners.get(0) + corners.get(1))/2.0);
-    points.push_back((corners.get(1) + corners.get(2))/2.0);
-    points.push_back((corners.get(2) + corners.get(3))/2.0);
-    points.push_back((corners.get(3) + corners.get(0))/2.0);
-    points.push_back((corners.get(0) + corners.get(2))/2.0);
+	RS_VectorSolutions points;
+	for (size_t i=0; i < corners.size(); ++i) {
+		size_t const j = (i+1)%corners.size();
+		points.push_back((corners.get(i) + corners.get(j))*0.5);
+	}
+	points.push_back((corners.get(0) + corners.get(2))*0.5);
 
     return points.getClosest(coord, dist);
 }
@@ -276,20 +270,15 @@ RS_Vector RS_Image::getNearestDist(double distance,
                                    const RS_Vector& coord,
 								   double* dist) const{
 
-    RS_VectorSolutions corners = getCorners();
-    RS_VectorSolutions points(4);
+	RS_VectorSolutions const& corners = getCorners();
+	RS_VectorSolutions points;
 
-    RS_Line l[] =
-        {
-            RS_Line(NULL, RS_LineData(corners.get(0), corners.get(1))),
-            RS_Line(NULL, RS_LineData(corners.get(1), corners.get(2))),
-            RS_Line(NULL, RS_LineData(corners.get(2), corners.get(3))),
-            RS_Line(NULL, RS_LineData(corners.get(3), corners.get(0)))
-        };
-
-    for (int i=0; i<4; ++i) {
-        points.set(i, l[i].getNearestDist(distance, coord, dist));
-    }
+	for (size_t i = 0; i < corners.size(); ++i){
+		size_t const j = (i+1)%corners.size();
+		RS_Line const l{corners.get(i), corners.get(j)};
+		RS_Vector const& vp = l.getNearestDist(distance, coord, dist);
+		points.push_back(vp);
+	}
 
     return points.getClosest(coord, dist);
 }
@@ -316,23 +305,14 @@ double RS_Image::getDistanceToPoint(const RS_Vector& coord,
 		if(!draftMode) return double(0.);
 	}
     //continue to allow selecting by image edges
-    double dist;
     double minDist = RS_MAXDOUBLE;
 
-    RS_Line l[] =
-        {
-            RS_Line(NULL, RS_LineData(corners.get(0), corners.get(1))),
-            RS_Line(NULL, RS_LineData(corners.get(1), corners.get(2))),
-            RS_Line(NULL, RS_LineData(corners.get(2), corners.get(3))),
-            RS_Line(NULL, RS_LineData(corners.get(3), corners.get(0)))
-        };
-
-    for (int i=0; i<4; ++i) {
-        dist = l[i].getDistanceToPoint(coord, NULL);
-        if (dist<minDist) {
-            minDist = dist;
-        }
-    }
+	for (size_t i = 0; i < corners.size(); ++i){
+		size_t const j = (i+1)%corners.size();
+		RS_Line const l{corners.get(i), corners.get(j)};
+		double const dist = l.getDistanceToPoint(coord, nullptr);
+		minDist = std::min(minDist, dist);
+	}
 
     return minDist;
 }
@@ -383,9 +363,8 @@ void RS_Image::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
 
 
 void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-	if (painter==NULL || view==NULL || !img.get() || img->isNull()) {
-        return;
-    }
+	if (!(painter && view) || !img.get() || img->isNull())
+		return;
 
     // erase image:
     //if (painter->getPen().getColor()==view->getBackground()) {
@@ -393,8 +372,8 @@ void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
     //
     //}
 
-    RS_Vector scale = RS_Vector(view->toGuiDX(data.uVector.magnitude()),
-                                view->toGuiDY(data.vVector.magnitude()));
+	RS_Vector scale{view->toGuiDX(data.uVector.magnitude()),
+								view->toGuiDY(data.vVector.magnitude())};
     double angle = data.uVector.angle();
 
 	painter->drawImg(*img,
@@ -403,11 +382,10 @@ void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
     if (isSelected()) {
         RS_VectorSolutions sol = getCorners();
-
-        painter->drawLine(view->toGui(sol.get(0)), view->toGui(sol.get(1)));
-        painter->drawLine(view->toGui(sol.get(1)), view->toGui(sol.get(2)));
-        painter->drawLine(view->toGui(sol.get(2)), view->toGui(sol.get(3)));
-        painter->drawLine(view->toGui(sol.get(3)), view->toGui(sol.get(0)));
+		for (size_t i = 0; i < sol.size(); ++i){
+			size_t const j = (i+1)%sol.size();
+			painter->drawLine(view->toGui(sol.get(i)), view->toGui(sol.get(j)));
+		}
     }
 }
 

@@ -46,7 +46,9 @@
 RS_ActionDrawImage::RS_ActionDrawImage(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Image",
-                               container, graphicView) {
+							   container, graphicView)
+	,lastStatus(ShowDialog)
+{
 	actionType=RS2::ActionDrawImage;
 }
 
@@ -116,40 +118,27 @@ void RS_ActionDrawImage::trigger() {
 
 
 void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent* e) {
-    switch (getStatus()) {
-    case SetTargetPoint:
+	if (getStatus() == SetTargetPoint) {
 		data->insertionPoint = snapPoint(e);
 
         deletePreview();
         //RS_Creation creation(preview, NULL, false);
         //creation.createInsert(data);
-        RS_Line* line;
-		line = new RS_Line(preview.get(),
-                           RS_LineData(RS_Vector(0, 0),
-									   RS_Vector(img->width(), 0)));
+		double const w=img->width();
+		double const h=img->height();
+		RS_Line* line = new RS_Line{preview.get(), {0., 0.}, {w, 0.}};
         preview->addEntity(line);
-		line = new RS_Line(preview.get(),
-						   RS_LineData(RS_Vector(img->width(), 0),
-									   RS_Vector(img->width(), img->height())));
+		line = new RS_Line{preview.get(), {w, 0.}, {w, h}};
         preview->addEntity(line);
-		line = new RS_Line(preview.get(),
-						   RS_LineData(RS_Vector(img->width(),
-												 img->height()), RS_Vector(0, img->height())));
+		line = new RS_Line{preview.get(), {w, h}, {0., h}};
         preview->addEntity(line);
-		line = new RS_Line(preview.get(),
-						   RS_LineData(RS_Vector(0, img->height()),
-                                       RS_Vector(0, 0)));
+		line = new RS_Line{preview.get(), {0., h}, {0., 0.}};
         preview->addEntity(line);
-        preview->scale(RS_Vector(0,0),
-					   RS_Vector(data->uVector.magnitude(), data->uVector.magnitude()));
-		preview->rotate(RS_Vector(0,0), data->uVector.angle());
+		preview->scale({0., 0.},
+			{data->uVector.magnitude(), data->uVector.magnitude()});
+		preview->rotate({0.,0.}, data->uVector.angle());
 		preview->move(data->insertionPoint);
-
-        drawPreview();
-        break;
-
-    default:
-        break;
+		drawPreview();
     }
 }
 

@@ -69,12 +69,12 @@ void RS_ActionDrawEllipseFociPoint::init(int status) {
 void RS_ActionDrawEllipseFociPoint::trigger() {
     RS_PreviewActionInterface::trigger();
 
-
-    RS_EllipseData ed(center,
-                      major*d,
-                      sqrt(d*d-c*c)/d,
-                      0., 0.,false);
-    RS_Ellipse* ellipse = new RS_Ellipse(container, ed);
+	RS_Ellipse* ellipse = new RS_Ellipse{container,
+			center,
+			major*d,
+			sqrt(d*d-c*c)/d,
+			0., 0.,false
+};
     ellipse->setLayerToActive();
     ellipse->setPenToActive();
 
@@ -112,12 +112,12 @@ void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent* e) {
         point=mouse;
         d=0.5*(focus1.distanceTo(point)+focus2.distanceTo(point));
         if (d > c+ RS_TOLERANCE) {
-            deletePreview();
-            RS_EllipseData ed(center,
-                              major*d,
-                              sqrt(d*d-c*c)/d,
-                              0., 0.,false);
-			preview->addEntity(new RS_Ellipse(preview.get(), ed));
+			deletePreview();
+			preview->addEntity(new RS_Ellipse{preview.get(),
+											  center,
+											  major*d,
+											  sqrt(d*d-c*c)/d,
+											  0., 0.,false});
             drawPreview();
         }
         break;

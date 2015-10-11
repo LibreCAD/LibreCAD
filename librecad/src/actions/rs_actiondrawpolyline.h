@@ -42,7 +42,7 @@ class RS_Polyline;
 class RS_ActionDrawPolyline : public RS_PreviewActionInterface {
 	Q_OBJECT
 public:
-    /**
+	/**
      * Action States.
      */
     enum Status {
@@ -50,7 +50,7 @@ public:
         SetNextPoint      /**< Setting the endpoint. */
     };
 
-    enum SegmentMode {
+	enum SegmentMode {
     Line=0,
     Tangential=1,
     TanRad=2,

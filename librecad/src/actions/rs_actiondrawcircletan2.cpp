@@ -45,6 +45,8 @@ RS_ActionDrawCircleTan2::RS_ActionDrawCircleTan2(
     :RS_PreviewActionInterface("Draw circle inscribed",
                                container, graphicView),
 	  cData(new RS_CircleData(RS_Vector(0.,0.),1.))
+	,radius(0.)
+	,valid(false)
 {
 	actionType=RS2::ActionDrawCircleTan2;
 }
@@ -163,9 +165,9 @@ bool RS_ActionDrawCircleTan2::preparePreview(){
 
 RS_Entity* RS_ActionDrawCircleTan2::catchCircle(QMouseEvent* e) {
     RS_Entity*  en = catchEntity(e,enTypeList, RS2::ResolveAll);
-	if(en == nullptr) return nullptr;
-	if(en->isVisible()==false) return nullptr;
-    for(int i=0;i<getStatus();i++) {
+	if (!en) return nullptr;
+	if (!en->isVisible()) return nullptr;
+	for (int i=0;i<getStatus();i++) {
 		if(en->getId() == circles[i]->getId()) return nullptr; //do not pull in the same line again
     }
 	if(en->getParent()) {
@@ -184,7 +186,7 @@ void RS_ActionDrawCircleTan2::mouseReleaseEvent(QMouseEvent* e) {
         case SetCircle1:
         case SetCircle2: {
             RS_Entity*  en = catchCircle(e);
-			if (en==nullptr) return;
+			if (!en) return;
             circles.resize(getStatus());
             circles.push_back(static_cast<RS_AtomicEntity*>(en));
             if(getStatus()==SetCircle1 || getCenters()){

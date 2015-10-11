@@ -39,6 +39,7 @@ RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
     RS_GraphicView& graphicView)
 		:RS_PreviewActionInterface("Draw Parallels", container, graphicView)
 		,coord(false)
+		,lastStatus(SetEntity)
 {
 	actionType=RS2::ActionDrawLineParallelThrough;
 	m_SnapDistance=1.;

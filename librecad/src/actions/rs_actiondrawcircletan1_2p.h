@@ -35,7 +35,6 @@ struct RS_CircleData;
  */
 class RS_ActionDrawCircleTan1_2P : public RS_PreviewActionInterface {
         Q_OBJECT
-public:
     /**
      * Action States.
      */

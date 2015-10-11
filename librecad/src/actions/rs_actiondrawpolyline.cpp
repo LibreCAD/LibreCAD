@@ -67,7 +67,7 @@ QAction* RS_ActionDrawPolyline::createGUIAction(RS2::ActionType /*type*/,
 
 
 void RS_ActionDrawPolyline::reset() {
-        polyline = NULL;
+		polyline = nullptr;
 	data.reset(new RS_PolylineData(RS_Vector(false), RS_Vector(false), false));
     start = RS_Vector(false);
     history.clear();
@@ -87,9 +87,7 @@ void RS_ActionDrawPolyline::init(int status) {
 void RS_ActionDrawPolyline::trigger() {
     RS_PreviewActionInterface::trigger();
 
-        if (polyline==NULL) {
-                return;
-        }
+	if (!polyline) return;
 
         // add the entity
     //RS_Polyline* polyline = new RS_Polyline(container, data);
@@ -106,14 +104,14 @@ void RS_ActionDrawPolyline::trigger() {
 
         // upd view
     deleteSnapper();
-    graphicView->moveRelativeZero(RS_Vector(0.0,0.0));
+	graphicView->moveRelativeZero(RS_Vector{0.,0.});
     graphicView->drawEntity(polyline);
     graphicView->moveRelativeZero(polyline->getEndpoint());
     drawSnapper();
     RS_DEBUG->print("RS_ActionDrawLinePolyline::trigger(): polyline added: %d",
                     polyline->getId());
 
-        polyline = NULL;
+		polyline = nullptr;
 }
 
 
@@ -131,8 +129,7 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent* e) {
                 //p->reparent(preview);
                 //preview->addEntity(p);
         if (fabs(bulge)<RS_TOLERANCE || Mode==Line) {
-			preview->addEntity(new RS_Line(preview.get(),
-                                       RS_LineData(point, mouse)));
+			preview->addEntity(new RS_Line{preview.get(), point, mouse});
         } else
 			preview->addEntity(new RS_Arc(preview.get(), *arc_data));
         drawPreview();
@@ -162,9 +159,9 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 
     double b(0.);
     bool suc;
-    RS_Arc arc(NULL, RS_ArcData());
-    RS_Line line(NULL,RS_LineData());
-    double direction,direction2,delta;
+	RS_Arc arc(nullptr, RS_ArcData());
+	RS_Line line(nullptr,RS_LineData());
+	double direction;
     RS_AtomicEntity* lastentity;
     calculatedSegment=false;
 
@@ -179,8 +176,8 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
                 lastentity->getDirection2()+M_PI);
             line.setStartpoint(point);
             line.setEndpoint(mouse);
-            direction2=RS_Math::correctAngle(line.getDirection2()+M_PI);
-            delta=direction2-direction;
+			double const direction2=RS_Math::correctAngle(line.getDirection2()+M_PI);
+			double const delta=direction2-direction;
             if( fabs(remainder(delta,M_PI))>RS_TOLERANCE_ANGLE ) {
                 b=tan(delta/2);
                 suc = arc.createFrom2PBulge(point,mouse,b);
@@ -252,7 +249,7 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 }
 
 void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (!e) {
         return;
     }
 
@@ -281,8 +278,7 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
         point = mouse;
         history.append(mouse);
         bHistory.append(bulge);
-				if (polyline==NULL) {
-                        //printf("polyline==NULL\n");
+				if (!polyline) {
 						polyline = new RS_Polyline(container, *data);
                         polyline->addVertex(start, 0.0);
                 }
@@ -490,7 +486,7 @@ void RS_ActionDrawPolyline::undo() {
             //remove polyline from container,
             //container calls delete over polyline
             container->removeEntity(polyline);
-            polyline = NULL;
+			polyline = nullptr;
             graphicView->drawEntity(polyline);
         }
         if (polyline) {

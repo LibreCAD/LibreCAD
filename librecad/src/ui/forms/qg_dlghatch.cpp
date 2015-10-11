@@ -184,18 +184,10 @@ void QG_DlgHatch::updatePreview(RS_Pattern* ) {
 
     RS_EntityContainer* loop = new RS_EntityContainer(prevHatch);
     loop->setPen(RS_Pen(RS2::FlagInvalid));
-    loop->addEntity(new RS_Line(loop,
-                                RS_LineData(RS_Vector(0.0,0.0),
-                                            RS_Vector(prevSize,0.0))));
-    loop->addEntity(new RS_Line(loop,
-                                RS_LineData(RS_Vector(prevSize,0.0),
-                                            RS_Vector(prevSize,prevSize))));
-    loop->addEntity(new RS_Line(loop,
-                                RS_LineData(RS_Vector(prevSize,prevSize),
-                                            RS_Vector(0.0,prevSize))));
-    loop->addEntity(new RS_Line(loop,
-                                RS_LineData(RS_Vector(0.0,prevSize),
-                                            RS_Vector(0.0,0.0))));
+	loop->addEntity(new RS_Line{loop, {0., 0.}, {prevSize, 0.}});
+	loop->addEntity(new RS_Line{loop, {prevSize, 0.}, {prevSize,prevSize}});
+	loop->addEntity(new RS_Line{loop, {prevSize,prevSize}, {prevSize, 0.}});
+	loop->addEntity(new RS_Line{loop, {prevSize, 0.}, {0., 0.}});
     prevHatch->addEntity(loop);
     preview->addEntity(prevHatch);
     if (!isSolid) {

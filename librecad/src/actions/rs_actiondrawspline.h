@@ -39,7 +39,6 @@ class RS_Spline;
  */
 class RS_ActionDrawSpline : public RS_PreviewActionInterface {
 	Q_OBJECT
-public:
     /**
      * Action States.
      */
@@ -47,6 +46,14 @@ public:
         SetStartpoint,   /**< Setting the startpoint.  */
         SetNextPoint      /**< Setting the next point. */
     };
+	/**
+	 * Spline data defined so far.
+	 */
+	std::unique_ptr<RS_SplineData> data;
+	/**
+	 * Polyline entity we're working on.
+	 */
+	RS_Spline* spline;
 
 public:
     RS_ActionDrawSpline(RS_EntityContainer& container,
@@ -82,16 +89,6 @@ public:
     virtual bool isClosed();
 
 protected:
-    /**
-     * Spline data defined so far.
-     */
-	std::unique_ptr<RS_SplineData> data;
-	
-    /**
-     * Polyline entity we're working on.
-     */
-    RS_Spline* spline;
-	
     /**
      * last point.
      */

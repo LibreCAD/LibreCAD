@@ -37,18 +37,17 @@
 #include "rs_math.h"
 
 RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView,
-    double angle,
-    bool fixedAngle)
-        :RS_PreviewActionInterface("Draw Lines with relative angles",
-                           container, graphicView) {
-
-    entity = NULL;
-    this->angle = angle;
-    this->fixedAngle = fixedAngle;
-    length = 10.0;
-    pos = RS_Vector(false);
+		RS_EntityContainer& container,
+		RS_GraphicView& graphicView,
+		double angle,
+		bool fixedAngle)
+	:RS_PreviewActionInterface("Draw Lines with relative angles",
+							   container, graphicView)
+	,entity(nullptr)
+	,angle(angle)
+	,length(10.)
+	,fixedAngle(fixedAngle)
+{
 }
 
 
@@ -72,7 +71,8 @@ QAction* RS_ActionDrawLineRelAngle::createGUIAction(RS2::ActionType type, QObjec
 
 
 RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
-	if( fixedAngle && RS_Math::getAngleDifference(angle,M_PI_2) < RS_TOLERANCE )
+	if( fixedAngle &&
+			RS_Math::getAngleDifference(angle, M_PI_2) < RS_TOLERANCE_ANGLE)
 		return RS2::ActionDrawLineOrthogonal;
 	else
 		return RS2::ActionDrawLineRelAngle;
@@ -91,7 +91,7 @@ void RS_ActionDrawLineRelAngle::trigger() {
 
     /*
        if (line) {
-           RS_Entity* newEntity = NULL;
+		   RS_Entity* newEntity = nullptr;
 
            newEntity = new RS_Line(container,
                                    line->getData());
@@ -112,10 +112,10 @@ void RS_ActionDrawLineRelAngle::trigger() {
            }
            //reset();
            delete line;
-           line = NULL;
+		   line = nullptr;
        } else {
            RS_DEBUG->print("RS_ActionDrawLineRelAngle::trigger:"
-                           " Line is NULL\n");
+						   " Line is nullptr\n");
        }
     */
 }
@@ -138,7 +138,7 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent* e) {
             //RS_Vector mouse = snapPoint(e);
             pos = snapPoint(e);
 
-            /*RS_Creation creation(NULL, NULL);
+			/*RS_Creation creation(nullptr, nullptr);
             RS_Line* l = creation.createLineRelAngle(mouse,
                          entity,
                          angle,
@@ -146,7 +146,7 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent* e) {
 
             deletePreview();
 
-			RS_Creation creation(preview.get(), NULL, false);
+			RS_Creation creation(preview.get(), nullptr, false);
             creation.createLineRelAngle(pos,
                                         entity,
                                         angle,
@@ -218,7 +218,7 @@ void RS_ActionDrawLineRelAngle::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawLineRelAngle::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (!e) {
         return;
     }
 

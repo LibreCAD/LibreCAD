@@ -39,7 +39,6 @@ struct RS_ImageData;
  */
 class RS_ActionDrawImage : public RS_PreviewActionInterface {
 	Q_OBJECT
-public:
     /**
      * Action States.
      */

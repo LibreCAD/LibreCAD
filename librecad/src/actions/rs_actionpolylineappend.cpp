@@ -55,7 +55,7 @@ void RS_ActionPolylineAppend::trigger() {
 
 	RS_PreviewActionInterface::trigger();
 
-	if (polyline==NULL) {
+	if (!polyline) {
 		return;
 	}
 
@@ -84,15 +84,15 @@ void RS_ActionPolylineAppend::trigger() {
 	RS_DEBUG->print("RS_ActionDrawPolyline::trigger(): polyline added: %d",
 					polyline->getId());
 
-	polyline = NULL;
+	polyline = nullptr;
 }
 
 
 void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent* e) {
         if (e->button()==Qt::LeftButton) {
 		if (getStatus()==SetStartpoint) {
-			originalPolyline = (RS_Polyline*)catchEntity(e);
-			if (originalPolyline==NULL) {
+			originalPolyline = dynamic_cast<RS_Polyline*>(catchEntity(e));
+			if (!originalPolyline) {
 				RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
                                 return;
 			} else if (originalPolyline->rtti()!=RS2::EntityPolyline) {
@@ -105,13 +105,14 @@ void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent* e) {
                             return;
                         } else {
 				snapPoint(e);
-				RS_Entity* entFirst = ((RS_Polyline*)originalPolyline)->firstEntity();
-				RS_Entity* entLast = ((RS_Polyline*)originalPolyline)->lastEntity();
+				RS_Polyline* op=static_cast<RS_Polyline*>(originalPolyline);
+				RS_Entity* entFirst = op->firstEntity();
+				RS_Entity* entLast = op->lastEntity();
 				double dist = graphicView->toGraphDX(snapRange)*0.9;
 				RS_Entity* nearestSegment = originalPolyline->getNearestEntity( RS_Vector(graphicView->toGraphX(e->x()),
 									graphicView->toGraphY(e->y())), &dist, RS2::ResolveNone);
-				polyline = (RS_Polyline*)originalPolyline->clone();
-                                container->addEntity(polyline);
+				polyline = static_cast<RS_Polyline*>(originalPolyline->clone());
+				container->addEntity(polyline);
 				prepend = false;
 				if (nearestSegment == entFirst){
 					prepend = true;
@@ -138,7 +139,7 @@ void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent* e) {
-	if (e==NULL) {
+	if (!e) {
 		return;
 	}
 
@@ -161,7 +162,7 @@ void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent* e) {
 		point = mouse;
                 history.append(mouse);
                 bHistory.append(0.0);
-                if (polyline==NULL) {
+				if (!polyline) {
 			polyline = new RS_Polyline(container, *data);
 			polyline->addVertex(start, 0.0, prepend);
 		}

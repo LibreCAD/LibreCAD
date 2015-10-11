@@ -35,6 +35,10 @@
 #include "rs_blocklist.h"
 
 
+QC_DialogFactory::QC_DialogFactory(QWidget* parent, QToolBar* ow) :
+  QG_DialogFactory(parent, ow)
+{}
+
 /**
  * Provides a new window for editing the active block.
  */

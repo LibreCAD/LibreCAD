@@ -38,9 +38,9 @@ class QG_WidthBox: public QComboBox {
     Q_OBJECT
 
 public:
-    QG_WidthBox(QWidget* parent=0, const char* name=0);
+	QG_WidthBox(QWidget* parent=nullptr, const char* name=0);
     QG_WidthBox(bool showByLayer, bool showUnchanged,
-                QWidget* parent=0, const char* name=0);
+				QWidget* parent=nullptr, const char* name=0);
     virtual ~QG_WidthBox()=default;
 
     RS2::LineWidth getWidth() const;

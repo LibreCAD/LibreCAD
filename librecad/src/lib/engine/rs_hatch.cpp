@@ -73,7 +73,7 @@ RS_Hatch::RS_Hatch(RS_EntityContainer* parent,
         : RS_EntityContainer(parent), data(d)
 {
 
-    hatch = NULL;
+	hatch = nullptr;
     updateRunning = false;
     needOptimization = true;
     updateError = HATCH_UNDEFINED;
@@ -107,7 +107,7 @@ RS_Entity* RS_Hatch::clone() const{
     t->setOwner(isOwner());
     t->initId();
     t->detach();
-        t->hatch = NULL;
+		t->hatch = nullptr;
     return t;
 }
 
@@ -173,7 +173,7 @@ void RS_Hatch::update() {
     // delete old hatch:
     if (hatch) {
         removeEntity(hatch);
-        hatch = NULL;
+		hatch = nullptr;
     }
 
     if (isUndone()) {
@@ -192,7 +192,7 @@ void RS_Hatch::update() {
     // search pattern:
     RS_DEBUG->print("RS_Hatch::update: requesting pattern");
     RS_Pattern* pat = RS_PATTERNLIST->requestPattern(data.pattern);
-    if (pat==NULL) {
+	if (!pat) {
         updateRunning = false;
         RS_DEBUG->print("RS_Hatch::update: requesting pattern: not found");
         updateError = HATCH_PATTERN_NOT_FOUND;
@@ -288,16 +288,16 @@ void RS_Hatch::update() {
     RS_DEBUG->print("RS_Hatch::update: cutting pattern carpet");
     // cut pattern to contour shape:
     RS_EntityContainer tmp2;   // container for small cut lines
-    RS_Line* line = NULL;
-    RS_Arc* arc = NULL;
-    RS_Circle* circle = NULL;
-    RS_Ellipse* ellipse = NULL;
+	RS_Line* line = nullptr;
+	RS_Arc* arc = nullptr;
+	RS_Circle* circle = nullptr;
+	RS_Ellipse* ellipse = nullptr;
 	for(auto e: tmp){
 
-        line = NULL;
-        arc = NULL;
-        circle = NULL;
-        ellipse = NULL;
+		line = nullptr;
+		arc = nullptr;
+		circle = nullptr;
+		ellipse = nullptr;
 
         RS_Vector startPoint;
         RS_Vector endPoint;
@@ -372,7 +372,7 @@ void RS_Hatch::update() {
         {
             RS_Vector sp = startPoint;
             double sa = center.angleTo(sp);
-            if(ellipse != NULL) sa=ellipse->getEllipseAngle(sp);
+			if(ellipse ) sa=ellipse->getEllipseAngle(sp);
             bool done;
             double minDist;
             double dist = 0.0;
@@ -442,8 +442,7 @@ is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(endPoint)));
 
                 if (line) {
 
-                    tmp2.addEntity(new RS_Line(&tmp2,
-                                               RS_LineData(*v1, *v2)));
+					tmp2.addEntity(new RS_Line{&tmp2, *v1, *v2});
                 } else if (arc || circle) {
                     if(fabs(center.angleTo(*v2)-center.angleTo(*v1)) > RS_TOLERANCE_ANGLE)
                     {//don't create an arc with a too small angle
@@ -468,7 +467,7 @@ is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(endPoint)));
     // the hatch pattern entities:
     hatch = new RS_EntityContainer(this);
     hatch->setPen(RS_Pen(RS2::FlagInvalid));
-    hatch->setLayer(NULL);
+	hatch->setLayer(nullptr);
     hatch->setFlag(RS2::FlagTemp);
 
     //calculateBorders();
@@ -478,18 +477,18 @@ is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(endPoint)));
         RS_Vector middlePoint;
         RS_Vector middlePoint2;
         if (e->rtti()==RS2::EntityLine) {
-            RS_Line* line = (RS_Line*)e;
+			RS_Line* line = static_cast<RS_Line*>(e);
             middlePoint = line->getMiddlePoint();
             middlePoint2 = line->getNearestDist(line->getLength()/2.1,
                                                 line->getStartpoint());
         } else if (e->rtti()==RS2::EntityArc) {
-            RS_Arc* arc = (RS_Arc*)e;
+			RS_Arc* arc = static_cast<RS_Arc*>(e);
             middlePoint = arc->getMiddlePoint();
             middlePoint2 = arc->getNearestDist(arc->getLength()/2.1,
                                                arc->getStartpoint());
         } else {
-            middlePoint = RS_Vector(false);
-            middlePoint2 = RS_Vector(false);
+			middlePoint = RS_Vector{false};
+			middlePoint2 = RS_Vector{false};
         }
 
         if (middlePoint.valid) {
@@ -501,8 +500,8 @@ is2.append(std::shared_ptr<RS_Vector>(new RS_Vector(endPoint)));
                     RS_Information::isPointInsideContour(middlePoint2, this)) {
 
                 RS_Entity* te = e->clone();
-                te->setPen(RS_Pen(RS2::FlagInvalid));
-                te->setLayer(NULL);
+				te->setPen(RS2::FlagInvalid);
+				te->setLayer(nullptr);
                 te->reparent(hatch);
                 hatch->addEntity(te);
             }

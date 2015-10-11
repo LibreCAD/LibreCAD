@@ -51,30 +51,21 @@ public:
 public:
     RS_ActionDrawLineRectangle(RS_EntityContainer& container,
                                RS_GraphicView& graphicView);
-	~RS_ActionDrawLineRectangle();
+	~RS_ActionDrawLineRectangle() = default;
 
     static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-    void reset();
-
-    virtual void init(int status=0);
     virtual void trigger();
     virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
-	void preparePreview();
 	
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
     virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
 
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 
 protected:
-    /**
-     * Line data for the 4 lines.
-     */
-	std::unique_ptr<RS_LineData> data[4];
     /**
      * 1st corner.
      */

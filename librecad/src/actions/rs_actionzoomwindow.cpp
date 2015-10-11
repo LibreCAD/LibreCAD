@@ -99,18 +99,10 @@ void RS_ActionZoomWindow::mouseMoveEvent(QMouseEvent* e) {
     if (getStatus()==SetSecondCorner && v1.valid) {
         v2 = snapFree(e);
         deletePreview();
-		preview->addEntity(new RS_Line(preview.get(),
-                                       RS_LineData(RS_Vector(v1.x, v1.y),
-                                                   RS_Vector(v2.x, v1.y))));
-		preview->addEntity(new RS_Line(preview.get(),
-                                       RS_LineData(RS_Vector(v2.x, v1.y),
-                                                   RS_Vector(v2.x, v2.y))));
-		preview->addEntity(new RS_Line(preview.get(),
-                                       RS_LineData(RS_Vector(v2.x, v2.y),
-                                                   RS_Vector(v1.x, v2.y))));
-		preview->addEntity(new RS_Line(preview.get(),
-                                       RS_LineData(RS_Vector(v1.x, v2.y),
-                                                   RS_Vector(v1.x, v1.y))));
+		preview->addEntity(new RS_Line{preview.get(), v1, {v2.x, v1.y}});
+		preview->addEntity(new RS_Line{preview.get(), {v2.x, v1.y}, v2});
+		preview->addEntity(new RS_Line{preview.get(), v2, {v1.x, v2.y}});
+		preview->addEntity(new RS_Line{preview.get(), {v1.x, v2.y}, v1});
         drawPreview();
     }
 }

@@ -284,7 +284,8 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
 
     duint8 entmode = buf->get2Bits(); //BB
     if (entmode == 0)
-        entmode = 2;
+        ownerHandle= true;
+//        entmode = 2;
     else if(entmode ==2)
         entmode = 0;
     space = (DRW::Space)entmode; //RLZ verify cast values
@@ -374,7 +375,7 @@ bool DRW_Entity::parseDwgEntHandle(DRW::Version version, dwgBuffer *buf){
         buf->setBitPos(objSize & 7);
     }
 
-    if(space == 2){//entity are in block
+    if(ownerHandle){//entity are in block or in a polyline
         dwgHandle ownerH = buf->getOffsetHandle(handle);
         DRW_DBG("owner (parent) Handle: "); DRW_DBGHL(ownerH.code, ownerH.size, ownerH.ref); DRW_DBG("\n");
         DRW_DBG("   Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");

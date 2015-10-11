@@ -33,13 +33,14 @@
 #include "rs_polyline.h"
 #include "rs_modification.h"
 
-
-
 RS_ActionModifyDeleteFree::RS_ActionModifyDeleteFree(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_ActionInterface("Delete Entities Freehand",
-                    container, graphicView) {}
+					container, graphicView)
+{
+	init();
+}
 
 QAction* RS_ActionModifyDeleteFree::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 /* RVT_PORT    QAction* action = new QAction(tr("Delete Freehand"), tr("&Delete Freehand"),
@@ -52,8 +53,8 @@ QAction* RS_ActionModifyDeleteFree::createGUIAction(RS2::ActionType /*type*/, QO
 
 void RS_ActionModifyDeleteFree::init(int status) {
     RS_ActionInterface::init(status);
-    polyline = NULL;
-    e1 = e2 = NULL;
+	polyline = nullptr;
+	e1 = e2 = nullptr;
     v1 = v2 = RS_Vector(false);
 
     RS_SnapMode *s = getSnapMode();
@@ -103,10 +104,10 @@ void RS_ActionModifyDeleteFree::trigger() {
                         RS_DIALOGFACTORY->commandMessage(tr("Parent of second entity is not a polyline"));
             }
         } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Parent of second entity is NULL"));
+				RS_DIALOGFACTORY->commandMessage(tr("Parent of second entity is nullptr"));
         }
     } else {
-        RS_DIALOGFACTORY->commandMessage(tr("One of the chosen entities is NULL"));
+		RS_DIALOGFACTORY->commandMessage(tr("One of the chosen entities is nullptr"));
     }
 }
 
@@ -133,11 +134,11 @@ void RS_ActionModifyDeleteFree::mouseReleaseEvent(QMouseEvent* e) {
                         }
                     } else {
                                         RS_DIALOGFACTORY->commandMessage(
-                                                        tr("Parent of first entity is NULL"));
+														tr("Parent of first entity is nullptr"));
                     }
                 } else {
                                 RS_DIALOGFACTORY->commandMessage(
-                                                tr("First entity is NULL"));
+												tr("First entity is nullptr"));
                 }
             }
             break;
@@ -149,7 +150,7 @@ void RS_ActionModifyDeleteFree::mouseReleaseEvent(QMouseEvent* e) {
                 if (e2) {
                     trigger();
                 } else {
-                                RS_DIALOGFACTORY->commandMessage(tr("Second entity is NULL"));
+								RS_DIALOGFACTORY->commandMessage(tr("Second entity is nullptr"));
                 }
             }
             break;

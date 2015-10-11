@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_dimension.h"
@@ -198,10 +197,10 @@ void RS_Dimension::updateCreateDimensionLine(const RS_Vector& p1,
            RS2::LineByBlock);
 
     // Create dimension line:
-    RS_Line* dimensionLine = new RS_Line(this, RS_LineData(p1, p2));
+	RS_Line* dimensionLine = new RS_Line{this, p1, p2};
     dimensionLine->setPen(pen);
 //    dimensionLine->setPen(RS_Pen(RS2::FlagInvalid));
-    dimensionLine->setLayer(NULL);
+	dimensionLine->setLayer(nullptr);
     addEntity(dimensionLine);
 
     if (outsideArrows==false) {
@@ -212,8 +211,7 @@ void RS_Dimension::updateCreateDimensionLine(const RS_Vector& p1,
         arrowAngle2 = dimensionLine->getAngle2();
 
         // extend dimension line outside arrows
-        RS_Vector dir;
-        dir.setPolar(arrowSize*2, arrowAngle2);
+		RS_Vector dir = RS_Vector::polar(arrowSize*2, arrowAngle2);
         dimensionLine->setStartpoint(p1 + dir);
         dimensionLine->setEndpoint(p2 - dir);
     }
@@ -232,7 +230,7 @@ if(dimtsz < 0.01) {
                           arrowSize);
 //        arrow->setPen(RS_Pen(RS2::FlagInvalid));
         arrow->setPen(pen);
-        arrow->setLayer(NULL);
+		arrow->setLayer(nullptr);
         addEntity(arrow);
     }
 
@@ -244,7 +242,7 @@ if(dimtsz < 0.01) {
                           arrowSize);
 //        arrow->setPen(RS_Pen(RS2::FlagInvalid));
         arrow->setPen(pen);
-        arrow->setLayer(NULL);
+		arrow->setLayer(nullptr);
         addEntity(arrow);
     }
 }else{
@@ -252,15 +250,14 @@ if(dimtsz < 0.01) {
     // Arrows:
 
     RS_Line* tick;
-    RS_Vector tickVector;
-    tickVector.setPolar(dimtsz,arrowAngle1 + M_PI*0.25); //tick is 45 degree away
+	RS_Vector tickVector = RS_Vector::polar(dimtsz,arrowAngle1 + M_PI*0.25); //tick is 45 degree away
 
     if (arrow1) {
         // tick 1
         tick = new RS_Line(this, p1-tickVector, p1+tickVector);
         tick->setPen(pen);
 //        tick->setPen(RS_Pen(RS2::FlagInvalid));
-        tick->setLayer(NULL);
+		tick->setLayer(nullptr);
         addEntity(tick);
     }
 
@@ -269,7 +266,7 @@ if(dimtsz < 0.01) {
         tick = new RS_Line(this, p2-tickVector, p2+tickVector);
         tick->setPen(pen);
 //        tick->setPen(RS_Pen(RS2::FlagInvalid));
-        tick->setLayer(NULL);
+		tick->setLayer(nullptr);
         addEntity(tick);
     }
 }
@@ -291,15 +288,10 @@ if(dimtsz < 0.01) {
         textPos = dimensionLine->getMiddlePoint();
 
         if (!getAlignText()) {
-            RS_Vector distV;
-
-            // rotate text so it's readable from the bottom or right (ISO)
-            // quadrant 1 & 4
-            if (corrected) {
-				distV.setPolar(dimgap + dimtxt/2.0, dimAngle1-M_PI_2);
-            } else {
-				distV.setPolar(dimgap + dimtxt/2.0, dimAngle1+M_PI_2);
-            }
+			// rotate text so it's readable from the bottom or right (ISO)
+			// quadrant 1 & 4
+			double const a = corrected?-M_PI_2:M_PI_2;
+			RS_Vector distV = RS_Vector::polar(dimgap + dimtxt/2.0, dimAngle1+a);
 
             // move text away from dimension line:
             textPos+=distV;
@@ -332,36 +324,29 @@ if(dimtsz < 0.01) {
     }
     text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
 //    text->setPen(RS_Pen(RS2::FlagInvalid));
-    text->setLayer(NULL);
+	text->setLayer(nullptr);
     //horizontal text, split dimensionLine
     if (getAlignText()) {
         double w =text->getUsedTextWidth()/2+dimgap;
         double h = text->getUsedTextHeight()/2+dimgap;
-        RS_Vector v1 = textPos - RS_Vector(w, h);
-        RS_Vector v2 = textPos + RS_Vector(w, h);
-        RS_Line l[] = {
-            RS_Line(NULL, RS_LineData(v1, RS_Vector(v2.x, v1.y))),
-            RS_Line(NULL, RS_LineData(RS_Vector(v2.x, v1.y), v2)),
-            RS_Line(NULL, RS_LineData(v2, RS_Vector(v1.x, v2.y))),
-            RS_Line(NULL, RS_LineData(RS_Vector(v1.x, v2.y), v1))
-        };
-        RS_VectorSolutions sol1, sol2;
-        int inters= 0;
-        do {
-            sol1 = RS_Information::getIntersection(dimensionLine, &(l[inters++]), true);
-        } while (!sol1.hasValid() && inters < 4);
-//        if (sol1.hasValid() && inters < 4) {
-        if (inters < 4) {
-            do {
-                sol2 = RS_Information::getIntersection(dimensionLine, &(l[inters++]), true);
-            } while (!sol2.hasValid() && inters < 4);
-        }
+		RS_Vector v1 = textPos - RS_Vector{w, h};
+		RS_Vector v2 = textPos + RS_Vector{w, h};
+		RS_EntityContainer c;
+		c.addRectangle(v1, v2);
+		RS_VectorSolutions sol1;
+		for(RS_Entity* e: c) {
+			sol1.appendTo(
+						RS_Information::getIntersection(dimensionLine, e, true)
+						);
+		}
+
         //are text intersecting dimensionLine?
-        if (sol1.hasValid() && sol2.hasValid()) {
+		if (sol1.size()>1) {
             //yes, split dimension line
-            RS_Line* dimensionLine2 = (RS_Line*)dimensionLine->clone();
+			RS_Line* dimensionLine2 =
+					static_cast<RS_Line*>(dimensionLine->clone());
             v1 = sol1.get(0);
-            v2 = sol2.get(0);
+			v2 = sol1.get(1);
             if (p1.distanceTo(v1) < p1.distanceTo(v2)) {
                 dimensionLine->setEndpoint(v1);
                 dimensionLine2->setStartpoint(v2);
@@ -445,14 +430,13 @@ double RS_Dimension::getTextHeight() {
  * @return Dimension labels alignement text true= horizontal, false= aligned.
  */
 bool RS_Dimension::getAlignText() {
-    bool ret;
     int v = getGraphicVariableInt("$DIMTIH", 2);
     if (v>1) {
         addGraphicVariable("$DIMTIH", 0, 70);
         getGraphicVariableInt("$DIMTIH", 0);
+		return true;
     }
-    v==0 ? ret = false :ret = true;
-    return ret;
+	return false;
 }
 
 
@@ -460,14 +444,13 @@ bool RS_Dimension::getAlignText() {
  * @return Dimension fixed length for extension lines true= fixed, false= not fixed.
  */
 bool RS_Dimension::getFixedLengthOn() {
-    bool ret;
     int v = getGraphicVariableInt("$DIMFXLON", 2);
     if (v>1) {
         addGraphicVariable("$DIMFXLON", 0, 70);
         getGraphicVariableInt("$DIMFXLON", 0);
+		return true;
     }
-    v==0 ? ret = false :ret = true;
-    return ret;
+	return false;
 }
 
 /**

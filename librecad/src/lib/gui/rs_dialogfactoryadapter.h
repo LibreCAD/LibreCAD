@@ -97,7 +97,7 @@ public:
     virtual void updateSelectionWidget(int /*c*/, double /*l*/ ) {}
     virtual void updateArcTangentialOptions(const double& , bool ){}
     virtual void commandMessage(const QString& ) {}
-        virtual bool isAdapter() { return true; }
+		virtual bool isAdapter() const { return true; }
 };
 
 #endif

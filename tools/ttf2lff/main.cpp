@@ -89,8 +89,8 @@ static const FT_Outline_Funcs funcs
   };
 
 std::string clearZeros(double num/*, int precision*/){
-    char numLine [precision+5];
-    snprintf(numLine,precision+5, numFormat, num);
+	std::string numLine(precision+5, '\0');
+	snprintf(&(numLine[0]),precision+5, numFormat, num);
     std::string str = numLine;
     int i = str.length()- 1;
     while (str.at(i) == '0' && i>1) {

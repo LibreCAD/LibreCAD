@@ -49,6 +49,7 @@ RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
 		,coord1(false)
 		,coord2(false)
 		,data(new RS_RoundData())
+		,lastStatus(SetEntity1)
 {
 	actionType=RS2::ActionModifyRound;
 }

@@ -27,9 +27,6 @@
 #ifndef QG_DIALOGFACTORY_H
 #define QG_DIALOGFACTORY_H
 
-#include <QWidget>
-#include <QToolBar>
-
 #include "rs_dialogfactoryinterface.h"
 
 class QG_PolylineEquidistantOptions;
@@ -51,7 +48,7 @@ class RS_Document;
 class QG_LineAngleOptions;
 class RS_Vector;
 
-#define QG_DIALOGFACTORY (RS_DialogFactory::instance()->getFactoryObject()->isAdapter()==false ? ((QG_DialogFactory*)RS_DialogFactory::instance()->getFactoryObject()) : NULL)
+#define QG_DIALOGFACTORY (RS_DialogFactory::instance()->getFactoryObject()->isAdapter()==false ? ((QG_DialogFactory*)RS_DialogFactory::instance()->getFactoryObject()) : nullptr)
 
 /**
  * This is the Qt implementation of a widget which can create and
@@ -97,9 +94,9 @@ public:
     }
 
     /**
-     * @return cad tool bar or NULL.
+	 * @return cad tool bar or nullptr.
      */
-    QG_CadToolBar* getCadToolBar() {
+	QG_CadToolBar* getCadToolBar() const {
         return cadToolBar;
     }
 
@@ -113,9 +110,9 @@ public:
     }
 
     /**
-     * @return command widget or NULL.
+	 * @return command widget or nullptr.
      */
-    QG_CommandWidget* getCommandWidget() {
+	QG_CommandWidget* getCommandWidget() const {
         return commandWidget;
     }
 
@@ -130,14 +127,14 @@ public:
     virtual void requestWarningDialog(const QString& warning);
 
     virtual RS_GraphicView* requestNewDocument(const QString& fileName = QString::null,
-                        RS_Document* doc=NULL);
+						RS_Document* doc=nullptr);
 
     virtual RS_Layer* requestNewLayerDialog(
-        RS_LayerList* layerList = NULL);
+		RS_LayerList* layerList = nullptr);
     virtual RS_Layer* requestLayerRemovalDialog(
-        RS_LayerList* layerList = NULL);
+		RS_LayerList* layerList = nullptr);
     virtual RS_Layer* requestEditLayerDialog(
-        RS_LayerList* layerList = NULL);
+		RS_LayerList* layerList = nullptr);
 
     virtual RS_BlockData requestNewBlockDialog(RS_BlockList* blockList);
     virtual RS_Block* requestBlockRemovalDialog(
@@ -267,7 +264,7 @@ public:
 								   const QString& right=QString::null);
     virtual void updateSelectionWidget(int num, double length);//updated for total number of selected, and total length of selected
     virtual void commandMessage(const QString& message);
-        virtual bool isAdapter() { return false; }
+		virtual bool isAdapter() const { return false; }
 
         static QString extToFormat(const QString& ext);
         virtual void updateArcTangentialOptions(const double& d, bool byRadius);

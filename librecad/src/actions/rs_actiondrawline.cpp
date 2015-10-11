@@ -117,8 +117,7 @@ RS_Vector RS_ActionDrawLine::snapToAngle(const RS_Vector &currentCoord)
     const double angularResolution=15.;
     angle -= remainder(angle,angularResolution);
     angle *= M_PI/180.;
-    RS_Vector res = currentCoord;
-	res.setPolar(data->startpoint.distanceTo(currentCoord),
+	RS_Vector res = RS_Vector::polar(data->startpoint.distanceTo(currentCoord),
                  angle);
 	res += data->startpoint;
     snapPoint(res, true);
@@ -141,8 +140,7 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e) {
             mouse = snapToAngle(mouse);
 
         deletePreview();
-		preview->addEntity(new RS_Line(preview.get(),
-									   RS_LineData(data->startpoint, mouse)));
+		preview->addEntity(new RS_Line{preview.get(), data->startpoint, mouse});
         RS_DEBUG->print("RS_ActionDrawLine::mouseMoveEvent: draw preview");
         drawPreview();
     }

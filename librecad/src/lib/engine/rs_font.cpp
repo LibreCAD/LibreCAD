@@ -131,12 +131,12 @@ bool RS_Font::loadFont() {
         readLFF(path);
 
     RS_Block* bk = letterList.find(QChar(0xfffd));
-    if (bk == NULL) {
+	if (!bk) {
         // create new letter:
-        RS_FontChar* letter = new RS_FontChar(NULL, QChar(0xfffd), RS_Vector(0.0, 0.0));
+		RS_FontChar* letter = new RS_FontChar(nullptr, QChar(0xfffd), RS_Vector(0.0, 0.0));
         RS_Polyline* pline = new RS_Polyline(letter, RS_PolylineData());
         pline->setPen(RS_Pen(RS2::FlagInvalid));
-        pline->setLayer(NULL);
+		pline->setLayer(nullptr);
         pline->addVertex(RS_Vector(1, 0), 0);
         pline->addVertex(RS_Vector(0, 2), 0);
         pline->addVertex(RS_Vector(1, 4), 0);
@@ -209,7 +209,7 @@ void RS_Font::readCXF(QString path) {
             regexp.indexIn(line);
             QString cap = regexp.cap();
             if (!cap.isNull()) {
-                int uCode = cap.toInt(NULL, 16);
+				int uCode = cap.toInt(nullptr, 16);
                 ch = QChar(uCode);
             }
 
@@ -227,7 +227,7 @@ void RS_Font::readCXF(QString path) {
 
             // create new letter:
             RS_FontChar* letter =
-                    new RS_FontChar(NULL, ch, RS_Vector(0.0, 0.0));
+					new RS_FontChar(nullptr, ch, RS_Vector(0.0, 0.0));
 
             // Read entities of this letter:
             QString coordsStr;
@@ -252,10 +252,9 @@ void RS_Font::readCXF(QString path) {
                     double x2 = (*it2++).toDouble();
                     double y2 = (*it2).toDouble();
 
-                    RS_LineData ld(RS_Vector(x1, y1), RS_Vector(x2, y2));
-                    RS_Line* line = new RS_Line(letter, ld);
+					RS_Line* line = new RS_Line{letter, {{x1, y1}, {x2, y2}}};
                     line->setPen(RS_Pen(RS2::FlagInvalid));
-                    line->setLayer(NULL);
+					line->setLayer(nullptr);
                     letter->addEntity(line);
                 }
 
@@ -272,7 +271,7 @@ void RS_Font::readCXF(QString path) {
                                   r, a1, a2, reversed);
                     RS_Arc* arc = new RS_Arc(letter, ad);
                     arc->setPen(RS_Pen(RS2::FlagInvalid));
-                    arc->setLayer(NULL);
+					arc->setLayer(nullptr);
                     letter->addEntity(arc);
                 }
             } while (!line.isEmpty());
@@ -343,7 +342,7 @@ void RS_Font::readLFF(QString path) {
             regexp.indexIn(line);
             QString cap = regexp.cap();
             if (!cap.isNull()) {
-                int uCode = cap.toInt(NULL, 16);
+				int uCode = cap.toInt(nullptr, 16);
                 ch = QChar(uCode);
             }
             // only unicode allowed
@@ -379,11 +378,11 @@ void RS_Font::generateAllFonts(){
 RS_Block* RS_Font::generateLffFont(const QString& ch){
         if(rawLffFontList.contains(ch) == false ){
                 RS_DEBUG->print("RS_Font::generateLffFont(QChar %s ) : can not find the letter in given lff font file",qPrintable(ch));
-                return NULL;
+				return nullptr;
         }
     // create new letter:
     RS_FontChar* letter =
-            new RS_FontChar(NULL, ch, RS_Vector(0.0, 0.0));
+			new RS_FontChar(nullptr, ch, RS_Vector(0.0, 0.0));
 
     // Read entities of this letter:
     QStringList vertex;
@@ -401,17 +400,17 @@ RS_Block* RS_Font::generateLffFont(const QString& ch){
         // Defined char:
         if (line.at(0)=='C') {
             line.remove(0,1);
-            int uCode = line.toInt(NULL, 16);
+			int uCode = line.toInt(nullptr, 16);
             QChar ch = QChar(uCode);
             RS_Block* bk = letterList.find(ch);
-            if (bk == NULL && rawLffFontList.contains(ch) == true) {
+			if (!bk && rawLffFontList.contains(ch)) {
                 generateLffFont(ch);
                 bk = letterList.find(ch);
             }
-            if (bk != NULL) {
+			if (bk) {
                 RS_Entity* bk2 = bk->clone();
                 bk2->setPen(RS_Pen(RS2::FlagInvalid));
-                bk2->setLayer(NULL);
+				bk2->setLayer(nullptr);
                 letter->addEntity(bk2);
             }
         }
@@ -423,7 +422,7 @@ RS_Block* RS_Font::generateLffFont(const QString& ch){
                 continue;
             RS_Polyline* pline = new RS_Polyline(letter, RS_PolylineData());
             pline->setPen(RS_Pen(RS2::FlagInvalid));
-            pline->setLayer(NULL);
+			pline->setLayer(nullptr);
             for (int i = 0; i < vertex.size(); ++i) {
                 double x1, y1;
                 double bulge = 0;
@@ -449,7 +448,7 @@ RS_Block* RS_Font::generateLffFont(const QString& ch){
 
     if (letter->isEmpty()) {
         delete letter;
-            return NULL;
+			return nullptr;
     } else {
         letter->calculateBorders();
         letterList.add(letter);
@@ -459,7 +458,7 @@ RS_Block* RS_Font::generateLffFont(const QString& ch){
 
 RS_Block* RS_Font::findLetter(const QString& name) {
     RS_Block* ret= letterList.find(name);
-    if (ret != NULL) return ret;
+	if (ret) return ret;
     return generateLffFont(name);
 
 }

@@ -89,29 +89,21 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent* e) {
             secondCorner = snapPoint(e);
             deletePreview();
             preview->addEntity(
-				new RS_Line(preview.get(),
-                            RS_LineData(RS_Vector(firstCorner.x,
-                                                  firstCorner.y),
-                                        RS_Vector(secondCorner.x,
-                                                  firstCorner.y))));
+				new RS_Line{preview.get(),
+							{firstCorner.x, firstCorner.y},
+							{secondCorner.x, firstCorner.y}});
             preview->addEntity(
-				new RS_Line(preview.get(),
-                            RS_LineData(RS_Vector(secondCorner.x,
-                                                  firstCorner.y),
-                                        RS_Vector(secondCorner.x,
-                                                  secondCorner.y))));
+				new RS_Line{preview.get(),
+							{secondCorner.x, firstCorner.y},
+							{secondCorner.x, secondCorner.y}});
             preview->addEntity(
-				new RS_Line(preview.get(),
-                            RS_LineData(RS_Vector(secondCorner.x,
-                                                  secondCorner.y),
-                                        RS_Vector(firstCorner.x,
-                                                  secondCorner.y))));
+				new RS_Line{preview.get(),
+							{secondCorner.x, secondCorner.y},
+							{firstCorner.x, secondCorner.y}});
             preview->addEntity(
-				new RS_Line(preview.get(),
-                            RS_LineData(RS_Vector(firstCorner.x,
-                                                  secondCorner.y),
-                                        RS_Vector(firstCorner.x,
-                                                  firstCorner.y))));
+				new RS_Line{preview.get(),
+							{firstCorner.x, secondCorner.y},
+							{firstCorner.x, firstCorner.y}});
             drawPreview();
         }
         break;

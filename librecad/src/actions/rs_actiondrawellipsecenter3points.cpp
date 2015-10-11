@@ -40,8 +40,8 @@ RS_ActionDrawEllipseCenter3Points::RS_ActionDrawEllipseCenter3Points(
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw ellipse by center and 3 points",
 						   container, graphicView),
-		  cData(new RS_CircleData(RS_Vector(0.,0.),1.)),
-		  eData(new RS_EllipseData(RS_Vector(0.,0.),RS_Vector(1.,0),1.,0.,0.,false))
+		  cData(new RS_CircleData({0.,0.},1.)),
+		  eData(new RS_EllipseData{{0.,0.}, {1.,0.}, 1., 0., 0., false})
 {
 	actionType=RS2::ActionDrawEllipseCenter3Points;
 }
@@ -174,7 +174,7 @@ void RS_ActionDrawEllipseCenter3Points::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawEllipseCenter3Points::coordinateEvent(RS_CoordinateEvent* e) {
-	if (e==nullptr) {
+	if (!e) {
         return;
     }
     RS_Vector mouse = e->getCoordinate();

@@ -56,7 +56,7 @@ RS_FilterDXF1::RS_FilterDXF1()
 
     RS_DEBUG->print("Setting up DXF 1 filter...");
 
-	graphic = NULL;
+	graphic = nullptr;
 }
 
 /**
@@ -696,8 +696,8 @@ bool RS_FilterDXF1::readFromBuffer() {
                     //if(!mtCompFloat(vx1, vx2) || !mtCompFloat(vy1, vy2)) {
                     //graphic->addLine(vx1, vy1, vx2, vy2, currentLayerNum, add);
                     graphic->setActivePen(pen);
-                    graphic->addEntity(new RS_Line(graphic,
-                                                   RS_LineData(RS_Vector(vx1, vy1), RS_Vector(vx2, vy2))));
+					graphic->addEntity(new RS_Line{graphic,
+												   {vx1, vy1}, {vx2, vy2}});
                     //}
                 }
 
@@ -1223,8 +1223,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             double dist =
                                 RS_Vector(v13, v23).distanceTo(RS_Vector(v10,v20));
 
-                            RS_Vector defP;
-                            defP.setPolar(dist, angle);
+							RS_Vector defP = RS_Vector::polar(dist, angle);
                             defP+=RS_Vector(v14, v24);
 
                             RS_DimAligned* d =
@@ -1253,18 +1252,13 @@ bool RS_FilterDXF1::readFromBuffer() {
 
                         // Angle:
                     case 2: {
-                            RS_Line tl1(NULL,
-                                        RS_LineData(RS_Vector(v13, v23),
-                                                    RS_Vector(v14, v24)));
-                            RS_Line tl2(NULL,
-                                        RS_LineData(RS_Vector(v10, v20),
-                                                    RS_Vector(v15, v25)));
+							RS_Line tl1{{v13, v23}, {v14, v24}};
+							RS_Line tl2{{v10, v20}, {v15, v25}};
 
-                            RS_VectorSolutions s;
                             //bool inters=false;
                             //tmpEl1.getIntersection(&tmpEl2,
                             //                       &inters, &vcx, &vcy, 0,0,0,0, false);
-                            s = RS_Information::getIntersection(
+							RS_VectorSolutions const& s = RS_Information::getIntersection(
                                     &tl1, &tl2, false);
 
                             if (s.get(0).valid) {
@@ -1336,8 +1330,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                             double ang =
                                 RS_Vector(v10, v20)
                                 .angleTo(RS_Vector(v15, v25));
-                            RS_Vector v2;
-                            v2.setPolar(v40, ang);
+							RS_Vector v2 = RS_Vector::polar(v40, ang);
                             RS_DimRadial* d =
                                 new RS_DimRadial(
                                     graphic,
@@ -1851,7 +1844,7 @@ bool RS_FilterDXF1::readFileInBuffer(int _bNum) {
 
         // Convert 13/10 to 10
         dos2unix();
-        fPointer=NULL;
+		fPointer=nullptr;
 
         return true;
     }

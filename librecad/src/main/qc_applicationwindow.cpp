@@ -2107,7 +2107,7 @@ void QC_ApplicationWindow::slotFileNewNew() {
         return;
     }*/
 
-    if (slotFileNewHelper(fileName)==false) {
+	if (!slotFileNewHelper(fileName)) {
         // error opening template
         RS_DEBUG->print("QC_ApplicationWindow::slotFileNewNew: load Template failed");
     } else
@@ -2139,7 +2139,7 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
         maximized=activedMdiSubWindow->isMaximized();
     }
     QC_MDIWindow* w =NULL;
-    if (slotFileNewHelper(fileName, w)==false) {
+	if (!slotFileNewHelper(fileName, w)) {
         // error
         QString msg=tr("Cannot open the file\n%1\nPlease "
                        "check the permissions.").arg(fileName);
@@ -2835,9 +2835,8 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     bool    bStartPrinting = false;
     if(printPDF) {
         printer.setOutputFormat(QPrinter::PdfFormat);
-		printer.setColorMode(QPrinter::Color);
-		QFileInfo   infDefaultFile(strDefaultFile);
-        QString     strPdfFileName("");
+        printer.setColorMode(QPrinter::Color);
+        QFileInfo   infDefaultFile(strDefaultFile);
         QFileDialog fileDlg(this, tr("Export as PDF"));
         QString     defFilter("PDF files (*.pdf)");
         QStringList filters;
@@ -2969,7 +2968,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
 
     QC_MDIWindow* parent = getMDIWindow();
 
-    if (parent==nullptr)
+	if (!parent)
     {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QC_ApplicationWindow::slotFilePrintPreview: "
@@ -2978,7 +2977,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
     }
 
     // close print preview:
-    if (on==false)
+	if (!on)
     {
         RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): off");
 
@@ -3214,7 +3213,7 @@ void QC_ApplicationWindow::updateGrids() {
 void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
     RS_DEBUG->print("QC_ApplicationWindow::slotViewStatusBar()");
 
-    if (toggle==false) {
+	if (!toggle) {
         statusBar()->hide();
     } else {
         statusBar()->show();
@@ -3333,7 +3332,7 @@ void QC_ApplicationWindow::slotHelpAbout() {
         modules.append(pluginInterface->name());
 
     QString modulesString=tr("None");
-    if (modules.empty()==false) {
+	if (!modules.empty()) {
         modulesString = modules.join(", ");
     }
 

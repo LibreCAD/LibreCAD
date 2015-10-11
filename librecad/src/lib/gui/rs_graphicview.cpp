@@ -955,12 +955,12 @@ void RS_GraphicView::zoomScroll(RS2::Direction direction) {
 void RS_GraphicView::zoomPage() {
 
 	RS_DEBUG->print("RS_GraphicView::zoomPage");
-    if (container==nullptr) {
+	if (!container) {
 		return;
 	}
 
 	RS_Graphic* graphic = container->getGraphic();
-    if (graphic==nullptr) {
+	if (!graphic) {
 		return;
 	}
 
@@ -1245,7 +1245,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
 
 	// update is diabled:
     // given entity is nullptr:
-    if (e==nullptr) {
+	if (!e) {
 		return;
 	}
 
@@ -1301,7 +1301,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
 	// draw reference points:
 	if (e->isSelected()) {
 		if (!e->isParentSelected()) {
-			RS_VectorSolutions&& s = e->getRefPoints();
+			RS_VectorSolutions const& s = e->getRefPoints();
 
 			for (size_t i=0; i<s.getNumber(); ++i) {
 				int sz = -1;
@@ -1333,7 +1333,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
  * The painter must be initialized and all the attributes (pen) must be set.
  */
 void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e, double& patternOffset) {
-    if (e==nullptr) {
+	if (!e) {
 		return;
 	}
 
@@ -1345,7 +1345,7 @@ void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e, double& 
 
 }
 void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e) {
-    if (e==nullptr) {
+	if (!e) {
 		return;
 	}
 
@@ -1549,7 +1549,7 @@ void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
  */
 void RS_GraphicView::drawPaper(RS_Painter *painter) {
 
-    if (container==nullptr) {
+	if (!container) {
 		return;
 	}
 
@@ -1601,9 +1601,7 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
  */
 void RS_GraphicView::drawGrid(RS_Painter *painter) {
 
-    if (grid==nullptr || isGridOn()==false) {
-		return;
-	}
+	if (!(grid && isGridOn())) return;
 
 
 	// draw grid:
@@ -1611,7 +1609,7 @@ void RS_GraphicView::drawGrid(RS_Painter *painter) {
 	painter->setPen(gridColor);
 
 	//grid->updatePointArray();
-	auto pts = grid->getPoints();
+	auto const& pts = grid->getPoints();
 	for(auto const& v: pts){
 		painter->drawGridPoint(toGui(v));
 	}
@@ -1637,7 +1635,7 @@ void RS_GraphicView::drawGrid(RS_Painter *painter) {
  */
 void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 
-    if (grid==nullptr || isGridOn()==false /*|| grid->getMetaSpacing()<0.0*/) {
+	if (!(grid && isGridOn()) /*|| grid->getMetaSpacing()<0.0*/) {
 		return;
 	}
 
@@ -1706,7 +1704,7 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 }
 
 void RS_GraphicView::drawOverlay(RS_Painter *painter) {
-	QList<int> keys=overlayEntities.keys();
+	QList<int> const& keys=overlayEntities.keys();
 	for (int i = 0; i < keys.size(); ++i) {
 		if (overlayEntities[i]) {
 			setPenForEntity(painter, overlayEntities[i] );

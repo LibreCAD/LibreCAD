@@ -66,14 +66,14 @@ RS_FilterJWW::RS_FilterJWW()
         RS_DEBUG->print("RS_FilterJWW::RS_FilterJWW()");
 
         mtext = "";
-        polyline = NULL;
-        leader = NULL;
-        hatch = NULL;
-        hatchLoop = NULL;
-        currentContainer = NULL;
-        graphic = NULL;
-		spline = NULL;
-		splinePoints = NULL;
+		polyline = nullptr;
+		leader = nullptr;
+		hatch = nullptr;
+		hatchLoop = nullptr;
+		currentContainer = nullptr;
+		graphic = nullptr;
+		spline = nullptr;
+		splinePoints = nullptr;
         //exportVersion = DL_Codes::VER_2002;
         //systemVariables.setAutoDelete(true);
         RS_DEBUG->print("RS_FilterJWW::RS_FilterJWW(): OK");
@@ -266,12 +266,11 @@ void RS_FilterJWW::addLine(const DL_LineData& data) {
 
         RS_DEBUG->print("RS_FilterJWW::addLine: create line");
 
-        if (currentContainer==NULL) {
-                RS_DEBUG->print("RS_FilterJWW::addLine: currentContainer is NULL");
+		if (!currentContainer) {
+				RS_DEBUG->print("RS_FilterJWW::addLine: currentContainer is nullptr");
         }
 
-        RS_Line* entity = new RS_Line(currentContainer,
-                                                                  RS_LineData(v1, v2));
+		RS_Line* entity = new RS_Line{currentContainer, {v1, v2}};
         RS_DEBUG->print("RS_FilterJWW::addLine: set attributes");
         setEntityAttributes(entity, attributes);
 
@@ -317,15 +316,14 @@ void RS_FilterJWW::addArc(const DL_ArcData& data) {
 void RS_FilterJWW::addEllipse(const DL_EllipseData& data) {
         RS_DEBUG->print("RS_FilterJWW::addEllipse");
 
-        RS_Vector v1(data.cx, data.cy);
-        RS_Vector v2(data.mx, data.my);
+		RS_Vector v1{data.cx, data.cy};
+		RS_Vector v2{data.mx, data.my};
 
-        RS_EllipseData ed(v1, v2,
-                                          data.ratio,
-                                          data.angle1,
-                                          data.angle2,
-                                          false);
-        RS_Ellipse* entity = new RS_Ellipse(currentContainer, ed);
+		RS_Ellipse* entity = new RS_Ellipse{currentContainer,
+											v1, v2,
+											data.ratio,
+											data.angle1, data.angle2,
+											false};
         setEntityAttributes(entity, attributes);
 
         currentContainer->addEntity(entity);
@@ -397,7 +395,7 @@ void RS_FilterJWW::addSpline(const DL_SplineData& data) {
 		splinePoints = new LC_SplinePoints(currentContainer, d);
 		setEntityAttributes(splinePoints, attributes);
 		currentContainer->addEntity(splinePoints);
-		spline = NULL;
+		spline = nullptr;
 		return;
 	}
 
@@ -407,7 +405,7 @@ void RS_FilterJWW::addSpline(const DL_SplineData& data) {
                 setEntityAttributes(spline, attributes);
 
                 currentContainer->addEntity(spline);
-				splinePoints = NULL;
+				splinePoints = nullptr;
         } else {
                 RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FilterJWW::addSpline: Invalid degree for spline: %d. "
@@ -457,7 +455,7 @@ void RS_FilterJWW::addInsert(const DL_InsertData& data) {
 										ip, sc, RS_Math::deg2rad(data.angle),
                                         data.cols, data.rows,
                                         sp,
-                                        NULL,
+										nullptr,
                                         RS2::NoUpdate);
         RS_Insert* entity = new RS_Insert(currentContainer, d);
         setEntityAttributes(entity, attributes);
@@ -940,7 +938,7 @@ void RS_FilterJWW::addHatchLoop(const DL_HatchLoopData& /*data*/) {
         RS_DEBUG->print("RS_FilterJWW::addHatchLoop()");
         if (hatch) {
                 hatchLoop = new RS_EntityContainer(hatch);
-                hatchLoop->setLayer(NULL);
+				hatchLoop->setLayer(nullptr);
                 hatch->addEntity(hatchLoop);
         }
 }
@@ -954,15 +952,14 @@ void RS_FilterJWW::addHatchEdge(const DL_HatchEdgeData& data) {
         RS_DEBUG->print("RS_FilterJWW::addHatchEdge()");
 
         if (hatchLoop) {
-                RS_Entity* e = NULL;
+				RS_Entity* e = nullptr;
                 switch (data.type) {
                 case 1:
                         RS_DEBUG->print("RS_FilterJWW::addHatchEdge(): "
                                                         "line: %f,%f %f,%f",
                                                         data.x1, data.y1, data.x2, data.y2);
-                        e = new RS_Line(hatchLoop,
-                                                        RS_LineData(RS_Vector(data.x1, data.y1),
-                                                                                RS_Vector(data.x2, data.y2)));
+						e = new RS_Line{hatchLoop, {{data.x1, data.y1},
+						{data.x2, data.y2}}};
                         break;
                 case 2:
                         if (data.ccw && data.angle1<1.0e-6 && data.angle2>2*M_PI-1.0e-6) {
@@ -994,7 +991,7 @@ void RS_FilterJWW::addHatchEdge(const DL_HatchEdgeData& data) {
                 }
 
                 if (e) {
-                        e->setLayer(NULL);
+						e->setLayer(nullptr);
                         hatchLoop->addEntity(e);
                 }
         }
@@ -1016,7 +1013,7 @@ void RS_FilterJWW::addImage(const DL_ImageData& data) {
         RS_Image* image =
                 new RS_Image(
                         currentContainer,
-                        RS_ImageData(QString(data.ref.c_str()).toInt(NULL, 16),
+						RS_ImageData(QString(data.ref.c_str()).toInt(nullptr, 16),
                                                  ip, uv, vv,
                                                  size,
                                                  QString(""),
@@ -1036,7 +1033,7 @@ void RS_FilterJWW::addImage(const DL_ImageData& data) {
 void RS_FilterJWW::linkImage(const DL_ImageDefData& data) {
         RS_DEBUG->print("RS_FilterJWW::linkImage");
 
-        int handle = QString(data.ref.c_str()).toInt(NULL, 16);
+		int handle = QString(data.ref.c_str()).toInt(nullptr, 16);
         QString sfile(data.file.c_str());
         QFileInfo fiDxf(file);
         QFileInfo fiBitmap(sfile);
@@ -1114,7 +1111,7 @@ void RS_FilterJWW::endEntity() {
                         RS_DEBUG->print(RS_Debug::D_ERROR,
                                                         "RS_FilterJWW::endEntity(): updating hatch failed: invalid hatch area");
                 }
-                hatch=NULL;
+				hatch=nullptr;
         }
 }
 
@@ -1235,7 +1232,7 @@ bool RS_FilterJWW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         //DL_WriterA* dw = jww.out(file, VER_R12);
         DL_WriterA* dw = jww.out((const char*)QFile::encodeName(file), exportVersion);
 
-        if (dw==NULL) {
+		if (!dw) {
                 RS_DEBUG->print("RS_FilterJWW::fileExport: can't write file");
                 return false;
         }
@@ -1508,9 +1505,9 @@ void RS_FilterJWW::writeVariables(DL_WriterA& dw) {
  * @todo Add support for unicode layer names
  */
 void RS_FilterJWW::writeLayer(DL_WriterA& dw, RS_Layer* l) {
-        if (l==NULL) {
+		if (!l) {
                 RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_FilterJWW::writeLayer: layer is NULL");
+						"RS_FilterJWW::writeLayer: layer is nullptr");
                 return;
         }
 
@@ -1557,9 +1554,9 @@ void RS_FilterJWW::writeAppid(DL_WriterA& dw, const char* appid) {
  * Writes a block (just the definition, not the entities in it).
  */
 void RS_FilterJWW::writeBlock(DL_WriterA& dw, RS_Block* blk) {
-        if (blk==NULL) {
+		if (!blk) {
                 RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_FilterJWW::writeBlock: Block is NULL");
+						"RS_FilterJWW::writeBlock: Block is nullptr");
                 return;
         }
 
@@ -1598,7 +1595,7 @@ void RS_FilterJWW::writeEntity(DL_WriterA& dw, RS_Entity* e) {
 void RS_FilterJWW::writeEntity(DL_WriterA& dw, RS_Entity* e,
                                                            const DL_Attributes& attrib) {
 
-        if (e==NULL || e->getFlag(RS2::FlagUndone)) {
+		if (!e || e->getFlag(RS2::FlagUndone)) {
                 return;
         }
         RS_DEBUG->print("writing Entity");
@@ -1723,7 +1720,7 @@ void RS_FilterJWW::writePolyline(DL_WriterA& dw,
                 attrib);
         bool first = true;
         RS_Entity* nextEntity = 0;
-        RS_AtomicEntity* ae = NULL;
+		RS_AtomicEntity* ae = nullptr;
         RS_Entity* lastEntity = l->lastEntity(RS2::ResolveNone);
         for (RS_Entity* v=l->firstEntity(RS2::ResolveNone);
                         v;
@@ -2430,7 +2427,7 @@ void RS_FilterJWW::writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
 
         RS_Block* blk = new RS_Block(graphic, blkdata);
 
-        for (RS_Entity* e1 = con->firstEntity(); e1 != NULL;
+		for (RS_Entity* e1 = con->firstEntity(); e1 ;
                         e1 = con->nextEntity() ) {
                 blk->addEntity(e1);
         }
@@ -2460,7 +2457,7 @@ void RS_FilterJWW::writeAtomicEntities(DL_WriterA& dw, RS_EntityContainer* c,
  * Writes an IMAGEDEF object into an OBJECT section.
  */
 void RS_FilterJWW::writeImageDef(DL_WriterA& dw, RS_Image* i) {
-        if (i==NULL || i->getFlag(RS2::FlagUndone)) {
+		if (!i || i->getFlag(RS2::FlagUndone)) {
                 return;
         }
 
@@ -2511,13 +2508,13 @@ void RS_FilterJWW::setEntityAttributes(RS_Entity* entity,
                 QTextCodec *codec = QTextCodec::codecForName(enc.toLatin1());
                 if(codec)
                         lName = codec->toUnicode(attrib.getLayer().c_str());
-                if (graphic->findLayer(lName)==NULL) {
+				if (!graphic->findLayer(lName)) {
                         addLayer(DL_LayerData(attrib.getLayer(), 0));
                 }
                 entity->setLayer(lName);
 //-------------------------
                 // add layer in case it doesn't exist:
-/*		if (graphic->findLayer(attrib.getLayer().c_str())==NULL) {
+/*		if (graphic->findLayer(attrib.getLayer().c_str())==nullptr) {
                         addLayer(DL_LayerData(attrib.getLayer(), 0));
                 }
                 entity->setLayer(attrib.getLayer().c_str());
@@ -2550,7 +2547,7 @@ DL_Attributes RS_FilterJWW::getEntityAttributes(RS_Entity* entity) {
         if (layer) {
                 layerName = layer->getName();
         } else {
-                layerName = "NULL";
+				layerName = "nullptr";
         }
 
         RS_Pen pen = entity->getPen(false);

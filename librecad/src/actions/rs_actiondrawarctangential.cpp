@@ -86,7 +86,7 @@ void RS_ActionDrawArcTangential::init(int status) {
 void RS_ActionDrawArcTangential::trigger() {
     RS_PreviewActionInterface::trigger();
 
-    if (point.valid==false || baseEntity==NULL) {
+	if (!(point.valid && baseEntity)) {
         RS_DEBUG->print("RS_ActionDrawArcTangential::trigger: "
                         "conditions not met");
         return;
@@ -172,7 +172,7 @@ void RS_ActionDrawArcTangential::mouseReleaseEvent(QMouseEvent* e) {
             RS_Entity* entity = catchEntity(coord, RS2::ResolveAll);
             if (entity) {
                 if (entity->isAtomic()) {
-                    baseEntity = (RS_AtomicEntity*)entity;
+					baseEntity = static_cast<RS_AtomicEntity*>(entity);
                     if (baseEntity->getStartpoint().distanceTo(coord) <
                             baseEntity->getEndpoint().distanceTo(coord)) {
                         isStartPoint = true;

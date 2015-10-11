@@ -100,11 +100,10 @@ void RS_DimLinear::setAngle(double a) {
  */
 QString RS_DimLinear::getMeasuredLabel() {
     // direction of dimension line
-    RS_Vector dirDim;
-    dirDim.setPolar(100.0, edata.angle);
+	RS_Vector dirDim = RS_Vector::polar(100.0, edata.angle);
 
     // construction line for dimension line
-    RS_ConstructionLine dimLine(NULL,
+	RS_ConstructionLine dimLine(nullptr,
 								RS_ConstructionLineData(data.definitionPoint,
 														data.definitionPoint + dirDim));
 
@@ -167,15 +166,12 @@ void RS_DimLinear::updateDim(bool autoText) {
     // extension line extension (DIMEXE)
     double dimexe = getExtensionLineExtension()*dimscale;
 
-    RS_LineData ld;
-
     // direction of dimension line
-    RS_Vector dirDim;
-    dirDim.setPolar(100.0, edata.angle);
+	RS_Vector dirDim = RS_Vector::polar(100.0, edata.angle);
 
     // construction line for dimension line
     RS_ConstructionLine dimLine(
-        NULL,
+		nullptr,
 		RS_ConstructionLineData(data.definitionPoint,
 								data.definitionPoint + dirDim));
 
@@ -191,7 +187,6 @@ void RS_DimLinear::updateDim(bool autoText) {
     */
 
     double extAngle1, extAngle2;
-    RS_Vector vDimexo1, vDimexe1, vDimexo2, vDimexe2;
 
     if ((edata.extensionPoint1-dimP1).magnitude()<1e-6) {
         if ((edata.extensionPoint2-dimP2).magnitude()<1e-6) {
@@ -211,10 +206,11 @@ void RS_DimLinear::updateDim(bool autoText) {
             extAngle2 = edata.extensionPoint2.angleTo(dimP2);
     }
 
-    vDimexe1.setPolar(dimexe, extAngle1);
-    vDimexe2.setPolar(dimexe, extAngle2);
+	RS_Vector vDimexe1 = RS_Vector::polar(dimexe, extAngle1);
+	RS_Vector vDimexe2 = RS_Vector::polar(dimexe, extAngle2);
 
-    if (getFixedLengthOn()){
+	RS_Vector vDimexo1, vDimexo2;
+	if (getFixedLengthOn()){
         double dimfxl = getFixedLength();
         double extLength = (edata.extensionPoint1-dimP1).magnitude();
         if (extLength-dimexo > dimfxl)
@@ -232,26 +228,22 @@ void RS_DimLinear::updateDim(bool autoText) {
            RS2::LineByBlock);
 
     // extension lines:
-    ld = RS_LineData(edata.extensionPoint1+vDimexo1,
-                     dimP1+vDimexe1);
-    RS_Line* line = new RS_Line(this, ld);
+	RS_Line* line = new RS_Line{this,
+			edata.extensionPoint1+vDimexo1, dimP1+vDimexe1};
     line->setPen(pen);
 //    line->setPen(RS_Pen(RS2::FlagInvalid));
-    line->setLayer(NULL);
+	line->setLayer(nullptr);
     addEntity(line);
-    ld = RS_LineData(edata.extensionPoint2+vDimexo2,
-                     dimP2+vDimexe2);
     //data.definitionPoint+vDimexe2);
-    line = new RS_Line(this, ld);
+	line = new RS_Line{this,
+			edata.extensionPoint2+vDimexo2, dimP2+vDimexe2};
     line->setPen(pen);
 //    line->setPen(RS_Pen(RS2::FlagInvalid));
-    line->setLayer(NULL);
+	line->setLayer(nullptr);
     addEntity(line);
 
     calculateBorders();
 }
-
-
 
 void RS_DimLinear::move(const RS_Vector& offset) {
     RS_Dimension::move(offset);

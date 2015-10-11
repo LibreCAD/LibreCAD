@@ -150,9 +150,9 @@ double RS_DimAngular::getAngle() {
  * @return Center of the measured dimension.
  */
 RS_Vector RS_DimAngular::getCenter() const {
-    RS_ConstructionLine l1(NULL, RS_ConstructionLineData(edata.definitionPoint1,
+	RS_ConstructionLine l1(nullptr, RS_ConstructionLineData(edata.definitionPoint1,
                            edata.definitionPoint2));
-    RS_ConstructionLine l2(NULL, RS_ConstructionLineData(edata.definitionPoint3,
+	RS_ConstructionLine l2(nullptr, RS_ConstructionLineData(edata.definitionPoint3,
 						   data.definitionPoint));
     RS_VectorSolutions vs = RS_Information::getIntersection(&l1, &l2, false);
 
@@ -315,8 +315,6 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
 
     double rad = edata.definitionPoint4.distanceTo(center);
 
-    RS_Line* line;
-    RS_Vector dir;
     double len;
     double dist;
 
@@ -327,25 +325,25 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     // 1st extension line:
     dist = center.distanceTo(p1);
     len = rad - dist + dimexe;
-    dir.setPolar(1.0, ang1);
-    line = new RS_Line(this,
-                       RS_LineData(center + dir*dist + dir*dimexo,
-                                   center + dir*dist + dir*len));
+	RS_Vector dir = RS_Vector::polar(1.0, ang1);
+	RS_Line* line = new RS_Line{this,
+			center + dir*dist + dir*dimexo,
+			center + dir*dist + dir*len};
     line->setPen(pen);
 //    line->setPen(RS_Pen(RS2::FlagInvalid));
-    line->setLayer(NULL);
+	line->setLayer(nullptr);
     addEntity(line);
 
     // 2nd extension line:
     dist = center.distanceTo(p2);
     len = rad - dist + dimexe;
     dir.setPolar(1.0, ang2);
-    line = new RS_Line(this,
-                       RS_LineData(center + dir*dist + dir*dimexo,
-                                   center + dir*dist + dir*len));
+	line = new RS_Line{this,
+			center + dir*dist + dir*dimexo,
+			center + dir*dist + dir*len};
     line->setPen(pen);
 //    line->setPen(RS_Pen(RS2::FlagInvalid));
-    line->setLayer(NULL);
+	line->setLayer(nullptr);
     addEntity(line);
 
     // Create dimension line (arc):
@@ -356,7 +354,7 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     pen.setColor(getDimensionLineColor());
     arc->setPen(pen);
 //    arc->setPen(RS_Pen(RS2::FlagInvalid));
-    arc->setLayer(NULL);
+	arc->setLayer(nullptr);
     addEntity(arc);
 
     // length of dimension arc:
@@ -368,7 +366,7 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     // arrow angles:
     double arrowAngle1, arrowAngle2;
     double arrowAng;
-        if (rad>1.0e-6) {
+		if (rad>RS_TOLERANCE_ANGLE) {
                 arrowAng = arrowSize / rad;
         }
         else {
@@ -408,7 +406,7 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
                       arrowSize);
     arrow->setPen(pen);
 //    arrow->setPen(RS_Pen(RS2::FlagInvalid));
-    arrow->setLayer(NULL);
+	arrow->setLayer(nullptr);
     addEntity(arrow);
 
     // arrow 2:
@@ -418,7 +416,7 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
                       arrowSize);
     arrow->setPen(pen);
 //    arrow->setPen(RS_Pen(RS2::FlagInvalid));
-    arrow->setLayer(NULL);
+	arrow->setLayer(nullptr);
     addEntity(arrow);
 
 
@@ -464,7 +462,7 @@ void RS_DimAngular::updateDim(bool /*autoText*/) {
     // move text to the side:
     text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
 //    text->setPen(RS_Pen(RS2::FlagInvalid));
-    text->setLayer(NULL);
+	text->setLayer(nullptr);
     addEntity(text);
 
     calculateBorders();

@@ -36,13 +36,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  */
 RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw ellipse from 4 points",
-                           container, graphicView),
-		  cData(new RS_CircleData(RS_Vector(0.,0.),1.)),
-		  eData(new RS_EllipseData(RS_Vector(0.,0.),RS_Vector(1.,0),1.,0.,0.,false))
-        ,m_bUniqueEllipse(false)
+		RS_EntityContainer& container,
+		RS_GraphicView& graphicView)
+	:RS_PreviewActionInterface("Draw ellipse from 4 points", container,
+							   graphicView)
+	,cData(new RS_CircleData({0.,0.}, 1.))
+	,eData(new RS_EllipseData{{0.,0.}, {1.,0.}, 1., 0., 0., false})
+	,m_bUniqueEllipse(false)
 {
 	actionType=RS2::ActionDrawEllipse4Points;
 }
@@ -62,12 +62,10 @@ void RS_ActionDrawEllipse4Points::init(int status) {
     if(getStatus() == SetPoint1) points.clean();
 }
 
-
-
 void RS_ActionDrawEllipse4Points::trigger() {
     RS_PreviewActionInterface::trigger();
     RS_Entity* en;
-    if(getStatus()==SetPoint4&&evalid){
+	if(getStatus()==SetPoint4 && evalid){
 		en=new RS_Ellipse(container, *eData);
     }else{
 		en=new RS_Circle(container, *cData);
@@ -150,7 +148,7 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
 				cData.reset(new RS_CircleData(c.getData()));
 			}
         }else{
-			RS_Ellipse e(preview.get(), *eData);
+			RS_Ellipse e{preview.get(), *eData};
             valid= e.createFrom4P(points);
             if(valid){
                 evalid=valid;
@@ -188,7 +186,7 @@ void RS_ActionDrawEllipse4Points::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawEllipse4Points::coordinateEvent(RS_CoordinateEvent* e) {
-	if (e==nullptr) {
+	if (!e) {
         return;
     }
     RS_Vector mouse = e->getCoordinate();

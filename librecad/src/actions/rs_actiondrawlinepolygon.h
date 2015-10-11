@@ -37,7 +37,6 @@
  */
 class RS_ActionDrawLinePolygonCenCor : public RS_PreviewActionInterface {
 	Q_OBJECT
-private:
     enum Status {
         SetCenter,    /**< Setting center. */
 		SetCorner,    /**< Setting corner. */

@@ -57,6 +57,10 @@ public:
     void set(double vx, double vy, double vz=0.0);
 #endif
     void setPolar(double radius, double angle);
+	//! \{
+	//! construct by cartesian, or polar coordinates
+	static RS_Vector polar(double rho, double theta);
+	//! \}
 
     double distanceTo(const RS_Vector& v) const;
     double angle() const;

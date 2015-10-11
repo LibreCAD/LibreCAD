@@ -56,7 +56,7 @@ std::ostream& operator << (std::ostream& os, const RS_PolylineData& pd);
  */
 class RS_Polyline : public RS_EntityContainer {
 public:
-    RS_Polyline(RS_EntityContainer* parent=NULL);
+	RS_Polyline(RS_EntityContainer* parent=nullptr);
     RS_Polyline(RS_EntityContainer* parent,
                 const RS_PolylineData& d);
 	virtual ~RS_Polyline() = default;
@@ -74,45 +74,25 @@ public:
     }
 
     /** sets a new start point of the polyline */
-    void setStartpoint(RS_Vector& v) {
-        data.startpoint = v;
-        if (!data.endpoint.valid) {
-            data.endpoint = v;
-        }
-    }
+	void setStartpoint(RS_Vector const& v);
 
     /** @return Start point of the entity */
-    virtual RS_Vector getStartpoint() const {
-        return data.startpoint;
-    }
+	virtual RS_Vector getStartpoint() const;
 
     /** sets a new end point of the polyline */
-    void setEndpoint(RS_Vector& v) {
-        data.endpoint = v;
-    }
+	void setEndpoint(RS_Vector const& v);
 
     /** @return End point of the entity */
-    virtual RS_Vector getEndpoint() const {
-        return data.endpoint;
-    }
+	virtual RS_Vector getEndpoint() const;
 
-        double getClosingBulge();
+	double getClosingBulge() const;
 
-        void updateEndpoints();
+	void updateEndpoints();
 
     /** @return true if the polyline is closed. false otherwise */
-    bool isClosed() const {
-        return data.getFlag(RS2::FlagClosed);
-    }
+	bool isClosed() const;
 
-        void setClosed(bool cl) {
-                if (cl) {
-                        data.setFlag(RS2::FlagClosed);
-                }
-                else {
-                        data.delFlag(RS2::FlagClosed);
-                }
-        }
+	void setClosed(bool cl);
 
     void setClosed(bool cl, double bulge);//RLZ: rewrite this:
 
@@ -165,7 +145,7 @@ protected:
 protected:
     RS_PolylineData data;
     RS_Entity* closingEntity;
-        double nextBulge;
+	double nextBulge;
 };
 
 #endif

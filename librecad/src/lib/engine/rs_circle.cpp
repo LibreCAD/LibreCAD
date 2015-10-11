@@ -228,48 +228,7 @@ bool RS_Circle::createFrom3P(const RS_VectorSolutions& sol) {
 	data.center += sol.get(0);
     return true;
 }
-//
-//    if (p1.distanceTo(p2)>RS_TOLERANCE &&
-//            p2.distanceTo(p3)>RS_TOLERANCE &&
-//            p3.distanceTo(p1)>RS_TOLERANCE) {
-//
-//        // middle points between 3 points:
-//        RS_Vector mp1, mp2;
-//        RS_Vector dir1, dir2;
-//        double a1, a2;
-//
-//        // intersection of two middle lines
-//        mp1 = (p1 + p2)/2.0;
-//        a1 = p1.angleTo(p2) + M_PI_2;
-//        dir1.setPolar(100.0, a1);
-//        mp2 = (p2 + p3)/2.0;
-//        a2 = p2.angleTo(p3) + M_PI_2;
-//        dir2.setPolar(100.0, a2);
-//
-//        RS_ConstructionLineData d1(mp1, mp1 + dir1);
-//        RS_ConstructionLineData d2(mp2, mp2 + dir2);
-//        RS_ConstructionLine midLine1(NULL, d1);
-//        RS_ConstructionLine midLine2(NULL, d2);
-//
-//        RS_VectorSolutions sol =
-//            RS_Information::getIntersection(&midLine1, &midLine2);
-//
-//        data.center = sol.get(0);
-//        data.radius = data.center.distanceTo(p3);
-//
-//        if (sol.get(0).valid && data.radius<1.0e14 && data.radius>RS_TOLERANCE) {
-//            return true;
-//        } else {
-//            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
-//                            "Cannot create a circle with inf radius.");
-//            return false;
-//        }
-//    } else {
-//        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
-//                        "Cannot create a circle with radius 0.0.");
-//        return false;
-//    }
-//}
+
 /**
   *create circle inscribled in a triangle
   *
@@ -320,17 +279,17 @@ bool RS_Circle::createInscribe(const RS_Vector& coord, const std::vector<RS_Line
 
 std::vector<RS_Entity* > RS_Circle::offsetTwoSides(const double& distance) const
 {
-	std::vector<RS_Entity*> ret(0,NULL);
-	ret.push_back(new RS_Circle(NULL,RS_CircleData(getCenter(),getRadius()+distance)));
+	std::vector<RS_Entity*> ret(0,nullptr);
+	ret.push_back(new RS_Circle(nullptr,RS_CircleData(getCenter(),getRadius()+distance)));
 	if(fabs(getRadius()-distance)>RS_TOLERANCE)
-	ret.push_back(new RS_Circle(NULL,RS_CircleData(getCenter(),fabs(getRadius()-distance))));
+	ret.push_back(new RS_Circle(nullptr,RS_CircleData(getCenter(),fabs(getRadius()-distance))));
     return ret;
 }
 
 RS_VectorSolutions RS_Circle::createTan1_2P(const RS_AtomicEntity* circle, const std::vector<RS_Vector> points)
 {
     RS_VectorSolutions ret;
-    if(circle==NULL||points.size()<2) return ret;
+	if (!circle||points.size()<2) return ret;
     return LC_Quadratic::getIntersection(
                 LC_Quadratic(circle,points[0]),
                 LC_Quadratic(circle,points[1])
@@ -369,7 +328,7 @@ std::vector<RS_Circle> RS_Circle::createTan3(const std::vector<RS_AtomicEntity*>
     if(circles.size()!=3) return ret;
 	 std::vector<RS_Circle> cs;
 	 for(auto c: circles){
-		 cs.emplace_back(RS_Circle(NULL,RS_CircleData(c->getCenter(),c->getRadius())));
+		 cs.emplace_back(RS_Circle(nullptr,RS_CircleData(c->getCenter(),c->getRadius())));
 	 }
     unsigned short flags=0;
     do{
@@ -477,9 +436,9 @@ std::vector<RS_Circle> RS_Circle::solveAppolloniusSingle(const std::vector<RS_Ci
 //        qDebug()<<"c0.size()="<<c0.size();
         for(size_t i=0; i<c0.size(); i++){
             const double dc =  c0[i].distanceTo(centers[i0]);
-			ret.push_back(RS_Circle(NULL, RS_CircleData(c0[i], fabs(dc - radii[i0]))));
+			ret.push_back(RS_Circle(nullptr, RS_CircleData(c0[i], fabs(dc - radii[i0]))));
             if( dc > radii[i0]) {
-				ret.push_back(RS_Circle(NULL, RS_CircleData(c0[i], dc + radii[i0])));
+				ret.push_back(RS_Circle(nullptr, RS_CircleData(c0[i], dc + radii[i0])));
             }
         }
         return ret;
@@ -524,7 +483,7 @@ std::vector<RS_Circle> RS_Circle::solveAppolloniusSingle(const std::vector<RS_Ci
     std::vector<double>&& vr=RS_Math::quadraticSolver(ce);
     for(size_t i=0; i < vr.size();i++){
         if(vr.at(i)<RS_TOLERANCE) continue;
-		ret.push_back(RS_Circle(NULL,RS_CircleData(vp+vq*vr.at(i),fabs(vr.at(i)))));
+		ret.push_back(RS_Circle(nullptr,RS_CircleData(vp+vq*vr.at(i),fabs(vr.at(i)))));
     }
 //    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //    std::cout<<"Found "<<ret.size()<<" solutions"<<std::endl;
@@ -662,7 +621,7 @@ RS_Vector RS_Circle::getNearestMiddle(const RS_Vector& coord,
 
     RS_Vector vPoint( getNearestPointOnEntity( coord, true, dist));
     int iCounts = middlePoints + 1;
-    double dAngleSteps = 0.5 * M_PI / iCounts;
+	double dAngleSteps = M_PI_2 / iCounts;
 	double dAngleToPoint = data.center.angleTo(vPoint);
     int iStepCount = static_cast<int>((dAngleToPoint + 0.5 * dAngleSteps) / dAngleSteps);
     if( 0 < middlePoints) {
@@ -680,7 +639,7 @@ RS_Vector RS_Circle::getNearestMiddle(const RS_Vector& coord,
 	vPoint.setPolar( data.radius, dAngleSteps * iStepCount);
 	vPoint.move( data.center);
 
-    if( nullptr != dist) {
+	if(dist) {
         *dist = vPoint.distanceTo( coord);
     }
 
@@ -771,11 +730,11 @@ void RS_Circle::scale(const RS_Vector& center, const RS_Vector& factor) {
 }
 
 double RS_Circle::getDirection1() const{
-        return M_PI/2.0;
+		return M_PI_2;
 }
 
 double RS_Circle::getDirection2() const{
-        return M_PI/2.0*3.0;
+		return M_PI_2*3.0;
 }
 
 
@@ -798,11 +757,11 @@ bool RS_Circle::isVisibleInWindow(RS_GraphicView* view) const
 	std::vector<RS_Vector> vps;
     for(unsigned short i=0;i<4;i++){
         const QPointF& vp(visualBox.at(i));
-		vps.push_back(RS_Vector(vp.x(),vp.y()));
+		vps.emplace_back(vp.x(),vp.y());
     }
     for(unsigned short i=0;i<4;i++){
-        RS_Line line(NULL,RS_LineData(vps.at(i),vps.at((i+1)%4)));
-        RS_Circle c0(NULL, getData());
+		RS_Line line{nullptr, {vps.at(i),vps.at((i+1)%4)}};
+		RS_Circle c0{nullptr, getData()};
         if( RS_Information::getIntersection(&c0, &line, true).size()>0) return true;
     }
     if( getCenter().isInWindowOrdered(vpMin,vpMax)==false) return false;

@@ -46,6 +46,7 @@ std::ostream& operator << (std::ostream& os, const LC_SplinePointsData& ld)
 	return os;
 }
 
+namespace {
 RS_Vector GetQuadPoint(const RS_Vector& x1,
 	const RS_Vector& c1, const RS_Vector& x2, double dt)
 {
@@ -272,7 +273,7 @@ RS_Vector GetThreePointsControl(const RS_Vector& x1, const RS_Vector& x2, const 
 	RS_Vector vRes = (x2 - x1*(1.0 - dt)*(1.0 - dt) - x3*dt*dt)/dt/(1 - dt)/2.0;
 	return vRes;
 }
-
+}
 
 // RS_SplinePoints
 
@@ -1416,7 +1417,7 @@ double GetLinePointAtDist(double dLen, double t1, double dDist)
 }
 
 // returns new pattern offset;
-double DrawPatternLine(double *pdPattern, int iPattern, double patternOffset,
+double DrawPatternLine(std::vector<double> const& pdPattern, int iPattern, double patternOffset,
 	QPainterPath& qPath, RS_Vector& x1, RS_Vector& x2)
 {
 	double dLen = (x2 - x1).magnitude();
@@ -1499,7 +1500,7 @@ double DrawPatternLine(double *pdPattern, int iPattern, double patternOffset,
 }
 
 // returns new pattern offset;
-double DrawPatternQuad(double *pdPattern, int iPattern, double patternOffset,
+double DrawPatternQuad(std::vector<double> const& pdPattern, int iPattern, double patternOffset,
 	QPainterPath& qPath, RS_Vector& x1, RS_Vector& c1, RS_Vector& x2)
 {
 	double dLen = GetQuadLength(x1, c1, x2, 0.0, 1.0);
@@ -1597,7 +1598,7 @@ void LC_SplinePoints::drawPattern(RS_Painter* painter, RS_GraphicView* view,
 	if(n < 2) return;
 
 	double dpmm = static_cast<RS_PainterQt*>(painter)->getDpmm();
-	double ds[pat->num];
+	std::vector<double> ds(size_t(pat->num), 0.);
 	for(size_t i = 0; i < pat->num; i++)
 	{
 		ds[i] = dpmm*pat->pattern[i];
@@ -3128,13 +3129,17 @@ void addQuadQuadIntersect(RS_VectorSolutions *pVS,
 
     //avoid intersection if there's no intersection between lines
     //TODO, avoid O(N^2) complexity
-    //tangential direction along (start, control, end)
-    std::vector<RS_Line> lines0{{RS_Line(nullptr, RS_LineData(vStart, vControl)),
-    RS_Line(nullptr, RS_LineData(vEnd, vControl))}};
+	//tangential direction along (start, control, end)
+	std::vector<RS_Line> lines0{{
+			{vStart, vControl},
+			{vEnd, vControl}
+								}};
 
     //tangential direction along (start, control, end)
-    std::vector<RS_Line> lines1{{RS_Line(nullptr, RS_LineData(vx1, vc1)),
-                    RS_Line(nullptr, RS_LineData(vx2, vc1))}};
+	std::vector<RS_Line> lines1{{
+			{vx1, vc1},
+			{vx2, vc1}
+								}};
 
     //if lines0, lines1 do not overlap, there's no intersection
     bool overlap=false;
@@ -3178,7 +3183,7 @@ void addQuadQuadIntersect(RS_VectorSolutions *pVS,
 	m.push_back(a1);
 	m.push_back(b1);
 
-    RS_VectorSolutions&& pvRes = RS_Math::simultaneousQuadraticSolverFull(m);
+	RS_VectorSolutions const& pvRes = RS_Math::simultaneousQuadraticSolverFull(m);
 
 	for(RS_Vector vSol: pvRes)
     {

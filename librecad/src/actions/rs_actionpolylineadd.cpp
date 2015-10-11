@@ -38,7 +38,10 @@
 RS_ActionPolylineAdd::RS_ActionPolylineAdd(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Add node",
-						   container, graphicView) {
+						   container, graphicView)
+		,addEntity(nullptr)
+		,addSegment(nullptr)
+{
 	actionType=RS2::ActionPolylineAdd;
 }
 
@@ -53,7 +56,7 @@ QAction* RS_ActionPolylineAdd::createGUIAction(RS2::ActionType /*type*/, QObject
 
 void RS_ActionPolylineAdd::init(int status) {
         RS_ActionInterface::init(status);
-        addEntity = addSegment = NULL;
+		addEntity = addSegment = nullptr;
         addCoord = RS_Vector(false);
 }
 
@@ -107,7 +110,7 @@ void RS_ActionPolylineAdd::mouseReleaseEvent(QMouseEvent* e) {
                 switch (getStatus()) {
                 case ChooseSegment:
                         addEntity = catchEntity(e);
-                        if (addEntity==NULL) {
+						if (!addEntity) {
                         RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
                         } else if (addEntity->rtti()!=RS2::EntityPolyline) {
 
@@ -125,16 +128,16 @@ void RS_ActionPolylineAdd::mouseReleaseEvent(QMouseEvent* e) {
 
                 case SetAddCoord:
                         addCoord = snapPoint(e);
-                        if (addEntity==NULL) {
+						if (!addEntity) {
                                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
                         } else if (!addCoord.valid) {
                                 RS_DIALOGFACTORY->commandMessage(tr("Adding point is invalid."));
                         } else {
                                 RS_Vector clickCoord = snapPoint(e);
-                                addSegment = NULL;
+								addSegment = nullptr;
                                 double dist = graphicView->toGraphDX(snapRange)*0.9;
                                 addSegment =  ((RS_Polyline*)addEntity)->getNearestEntity( clickCoord, &dist, RS2::ResolveNone);
-                                if(addSegment == NULL) {
+								if (!addSegment) {
                                         RS_DIALOGFACTORY->commandMessage(
                                                         tr("Adding point is not on entity."));
                                         break;

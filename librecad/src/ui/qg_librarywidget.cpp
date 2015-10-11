@@ -58,7 +58,7 @@ QG_LibraryWidget::QG_LibraryWidget(QWidget* parent, const char* name, Qt::Window
     : QWidget(parent, fl)
 {
     setObjectName(name);
-    actionHandler = NULL;
+	actionHandler = nullptr;
 
     QVBoxLayout *vboxLayout = new QVBoxLayout(this);
     vboxLayout->setSpacing(2);
@@ -77,7 +77,7 @@ QG_LibraryWidget::QG_LibraryWidget(QWidget* parent, const char* name, Qt::Window
     iconModel = new QStandardItemModel;
     QStringList directoryList = RS_SYSTEM->getDirectoryList("library");
     for (int i = 0; i < directoryList.size(); ++i) {
-        appendTree(NULL, directoryList.at(i));
+		appendTree(nullptr, directoryList.at(i));
      }
 
     RS_SETTINGS->beginGroup("/Paths");
@@ -85,7 +85,7 @@ QG_LibraryWidget::QG_LibraryWidget(QWidget* parent, const char* name, Qt::Window
     RS_SETTINGS->endGroup();
     if(customPath.size()>0){
             //todo: make the custom path more flexible
-            appendTree(NULL,customPath);
+			appendTree(nullptr,customPath);
     }
     dirView->setModel(dirModel);
     ivPreview->setModel(iconModel);
@@ -185,25 +185,21 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
 //    QStringList::Iterator it;
     QDir dir(directory);
 
-    if (!dir.exists())
-        return;
+	if (!dir.exists()) return;
 
     // read subdirectories of this directory:
     QStringList lDirectoryList = dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot, QDir::Name);
 
-    QStandardItem* newItem;
-    QStandardItem* searchItem;
 
-    if (item == NULL)
-        item = dirModel->invisibleRootItem();
+	if (!item) item = dirModel->invisibleRootItem();
 
     for (int i = 0; i < lDirectoryList.size(); ++i) {
-        newItem=NULL;
+		QStandardItem* newItem=nullptr;
 
         // Look for an item already existing and take this
         //   instead of making a new one:
         for (int j = 0; j < item->rowCount(); ++j) {
-            searchItem = item->child (j);
+			QStandardItem* const searchItem = item->child (j);
             if (searchItem->text() == lDirectoryList.at(i)) {
                 newItem=searchItem;
                 break;
@@ -211,7 +207,7 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
         }
 
         // Create new item if no existing was found:
-        if (newItem==NULL) {
+		if (!newItem) {
                 newItem = new QStandardItem(QIcon(":/ui/folderclosed.png"), lDirectoryList.at(i));
                 item->setChild(item->rowCount(), newItem);
         }
@@ -295,11 +291,8 @@ void QG_LibraryWidget::updatePreview(QModelIndex idx) {
  * @return Directory (in terms of the List view) to the given item (e.g. /mechanical/screws)
  */
 QString QG_LibraryWidget::getItemDir(QStandardItem* item) {
-    QString ret = "";
 
-    if (item==NULL) {
-        return ret;
-    }
+	if (!item) return QString();
 
     QStandardItem* parent = item->parent();
     return getItemDir(parent) + QDir::separator() + QString("%1").arg(item->text());

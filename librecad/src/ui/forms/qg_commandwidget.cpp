@@ -29,6 +29,8 @@
 #include "qg_actionhandler.h"
 #include "rs_commands.h"
 #include "rs_commandevent.h"
+#include "rs_system.h"
+#include "rs_utility.h"
 
 /*
  *  Constructs a QG_CommandWidget as a child of 'parent', with the
@@ -155,7 +157,49 @@ void QG_CommandWidget::tabPressed() {
             leCommand->setText(reducedChoice.first());
         }
         else if (reducedChoice.count()>0) {
+        //TODO: unix-like behaviour for autocompletion
+            QString longestString = "";
+            QString shortestString = "";
+            int lengthShortestString(0);
+            int lengthReducedChoice = reducedChoice.count();
+
+            // Finding which is the longest string
+            for(QStringList::Iterator it = reducedChoice.begin(); it != reducedChoice.end(); ++it) {
+                if((*it).length() > longestString.length()) {
+                    longestString = (*it);
+                }
+            }
+            int lengthLongestString = longestString.length();
+
+            // Finding which is the shortest string
+            lengthShortestString = longestString.length();
+            for(QStringList::Iterator it = reducedChoice.begin(); it != reducedChoice.end(); ++it) {
+                if((*it).length() < lengthShortestString) {
+                    shortestString = (*it);
+                }
+            }
+            lengthShortestString = shortestString.length();
+
+            // Now we parse the reducedChoice list, character of each item by character.
+            int i(0);
+            int pos(0);
+            bool common = true;
+
+            for(i = 0; i < lengthShortestString; ++i) {
+                for(QStringList::Iterator it = reducedChoice.begin(); it != reducedChoice.end(); ++it) {
+                    if(longestString.at(i) != (*it).at(i)) {
+                        common = false;
+                        break;
+                    }
+                }
+                if(common == true) {
+                    ++pos;
+                }
+            }
+
+            QString proposal = longestString.left(pos);
             appendHistory(reducedChoice.join(", "));
+            leCommand -> setText(proposal);
         }
     }
 }

@@ -838,62 +838,58 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
  * usually that's very fast since we only paint the buffer we
  * have from the last call..
  */
-void QG_GraphicView::paintEvent(QPaintEvent *) {
+void QG_GraphicView::paintEvent(QPaintEvent *)
+{
     RS_DEBUG->print("QG_GraphicView::paintEvent begin");
 
-        RS_SETTINGS->beginGroup("/Appearance");
+    RS_SETTINGS->beginGroup("/Appearance");
     bool draftMode = (bool)RS_SETTINGS->readNumEntry("/DraftMode", 0);
     RS_SETTINGS->endGroup();
 
-
-        // Re-Create or get the layering pixmaps
-		getPixmapForView(PixmapLayer1);
-		getPixmapForView(PixmapLayer2);
-		getPixmapForView(PixmapLayer3);
+    // Re-Create or get the layering pixmaps
+    getPixmapForView(PixmapLayer1);
+    getPixmapForView(PixmapLayer2);
+    getPixmapForView(PixmapLayer3);
 
     // Draw Layer 1
-        if (redrawMethod & RS2::RedrawGrid) {
-                PixmapLayer1->fill(background);
-				RS_PainterQt painter1(PixmapLayer1.get());
-                //painter1->setBackgroundMode(Qt::OpaqueMode);
-                //painter1->setBackgroundColor(background);
-                //painter1->eraseRect(0,0,getWidth(), getHeight());
-                drawLayer1((RS_Painter*)&painter1);
-                painter1.end();
-        }
+    if (redrawMethod & RS2::RedrawGrid)
+    {
+        PixmapLayer1->fill(background);
+        RS_PainterQt painter1(PixmapLayer1.get());
+        drawLayer1((RS_Painter*)&painter1);
+        painter1.end();
+    }
 
-
-        if (redrawMethod & RS2::RedrawDrawing) {
-                // DRaw layer 2
-                PixmapLayer2->fill(Qt::transparent);
-				RS_PainterQt painter2(PixmapLayer2.get());
-                painter2.setDrawingMode(drawingMode);
-                setDraftMode(draftMode);
+    if (redrawMethod & RS2::RedrawDrawing)
+    {
+        // DRaw layer 2
+        PixmapLayer2->fill(Qt::transparent);
+        RS_PainterQt painter2(PixmapLayer2.get());
+        painter2.setDrawingMode(drawingMode);
+        setDraftMode(draftMode);
         painter2.setDrawSelectedOnly(false);
         drawLayer2((RS_Painter*)&painter2);
         painter2.setDrawSelectedOnly(true);
         drawLayer2((RS_Painter*)&painter2);
-        //removed to solve bug #3470573
-//        setDraftMode(false);
-                painter2.end();
-        }
+        painter2.end();
+    }
 
-    if (redrawMethod & RS2::RedrawOverlay) {
+    if (redrawMethod & RS2::RedrawOverlay)
+    {
         PixmapLayer3->fill(Qt::transparent);
-		RS_PainterQt painter3(PixmapLayer3.get());
+        RS_PainterQt painter3(PixmapLayer3.get());
         drawLayer3((RS_Painter*)&painter3);
         painter3.end();
     }
 
-        // Finally paint the layers back on the screen, bitblk to the rescue!
-        RS_PainterQt wPainter(this);
-        //wPainter.setCompositionMode(QPainter::CompositionMode_Screen);
-        wPainter.drawPixmap(0,0,*PixmapLayer1);
-        wPainter.drawPixmap(0,0,*PixmapLayer2);
-        wPainter.drawPixmap(0,0,*PixmapLayer3);
-        wPainter.end();
+    // Finally paint the layers back on the screen, bitblk to the rescue!
+    RS_PainterQt wPainter(this);
+    wPainter.drawPixmap(0,0,*PixmapLayer1);
+    wPainter.drawPixmap(0,0,*PixmapLayer2);
+    wPainter.drawPixmap(0,0,*PixmapLayer3);
+    wPainter.end();
 
-        redrawMethod=RS2::RedrawNone;
+    redrawMethod=RS2::RedrawNone;
     RS_DEBUG->print("QG_GraphicView::paintEvent end");
 }
 

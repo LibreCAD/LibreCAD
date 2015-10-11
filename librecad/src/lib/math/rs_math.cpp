@@ -30,6 +30,7 @@
 #include <boost/math/special_functions/ellint_2.hpp>
 #endif
 
+#include <cmath>
 #include <muParser.h>
 
 #include "rs_math.h"
@@ -238,7 +239,7 @@ double RS_Math::eval(const QString& expr, double def) {
  */
 double RS_Math::eval(const QString& expr, bool* ok) {
     bool okTmp(false);
-    if(ok==NULL) ok=&okTmp;
+	if(!ok) ok=&okTmp;
     if (expr.isEmpty()) {
         *ok = false;
         return 0.0;
@@ -269,26 +270,24 @@ double RS_Math::eval(const QString& expr, bool* ok) {
  */
 QString RS_Math::doubleToString(double value, double prec) {
     if (prec< RS_TOLERANCE ) {
-        std::cerr << "RS_Math::doubleToString: invalid precision\n";
-        return "";
+		RS_DEBUG->print(RS_Debug::D_ERROR,
+						"RS_Math::doubleToString: invalid precision");
+		return QString().setNum(value, prec);
     }
 
-    QString ret;
-    QString exaStr;
-    int dotPos;
-    int num = RS_Math::round(value / prec)*prec;
+	double const num = RS_Math::round(value / prec)*prec;
 
-    exaStr = RS_Math::doubleToString(prec, 10);
-    dotPos = exaStr.indexOf('.');
+	QString exaStr = RS_Math::doubleToString(1./prec, 10);
+	int const dotPos = exaStr.indexOf('.');
 
     if (dotPos==-1) {
-        ret.sprintf("%d", RS_Math::round(num));
+		//big numbers for the precision
+		return QString().setNum(RS_Math::round(num));
     } else {
-        int digits = exaStr.length() - dotPos - 1;
-        ret = RS_Math::doubleToString(num, digits);
+		//number of digits after the point
+		int digits = dotPos - 1;
+		return RS_Math::doubleToString(num, digits);
     }
-
-    return ret;
 }
 
 /**
@@ -332,31 +331,27 @@ void RS_Math::test() {
 
     v = 0.1;
     s = RS_Math::doubleToString(v, 0.1);
-    assert(s=="0.1");
+	assert(s=="0.1");
     s = RS_Math::doubleToString(v, 0.01);
-    assert(s=="0.1");
-    s = RS_Math::doubleToString(v, 0.0);
-    assert(s=="0");
+	assert(s=="0.10");
 
     v = 0.01;
     s = RS_Math::doubleToString(v, 0.1);
-    assert(s=="0");
+	assert(s=="0.0");
     s = RS_Math::doubleToString(v, 0.01);
-    assert(s=="0.01");
-    s = RS_Math::doubleToString(v, 0.0);
-    assert(s=="0");
+	assert(s=="0.01");
+	s = RS_Math::doubleToString(v, 0.001);
+	assert(s=="0.010");
 
     v = 0.001;
     s = RS_Math::doubleToString(v, 0.1);
-    assert(s=="0");
+	assert(s=="0.0");
     s = RS_Math::doubleToString(v, 0.01);
-    assert(s=="0");
+	assert(s=="0.00");
     s = RS_Math::doubleToString(v, 0.001);
-    assert(s=="0.001");
-    s = RS_Math::doubleToString(v, 0.0);
-    assert(s=="0");
+	assert(s=="0.001");
 
-    std::cout << "RS_Math::test: complete\n";
+	std::cout << "RS_Math::test: complete"<<std::endl;
 }
 
 
@@ -376,13 +371,13 @@ std::vector<double> RS_Math::quadraticSolver(const std::vector<double>& ce)
 // x^2 + ce[0] x + ce[1] =0
 {
     std::vector<double> ans(0,0.);
-    if(ce.size() != 2) return ans;
+	if (ce.size() != 2) return ans;
     double const a=-0.5*ce[0];
     double b=a*a;
     double const discriminant=b-ce[1];
     if (discriminant >= - RS_TOLERANCE15*std::max(fabs(b), fabs(ce[1])) ){
-        b =  sqrt(fabs(discriminant));
-        if( b >= RS_TOLERANCE*fabs(a) ) {
+		b = sqrt(fabs(discriminant));
+		if (b >= RS_TOLERANCE*fabs(a)) {
             if(a>0.){
                 ans.push_back(a + b);
                 ans.push_back(ce[1]/ans[0]);
@@ -402,7 +397,7 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
 {
 //    std::cout<<"x^3 + ("<<ce[0]<<")*x^2+("<<ce[1]<<")*x+("<<ce[2]<<")==0"<<std::endl;
     std::vector<double> ans(0,0.);
-    if(ce.size() != 3) return ans;
+	if (ce.size() != 3) return ans;
     // depressed cubic, Tschirnhaus transformation, x= t - b/(3a)
     // t^3 + p t +q =0
     double shift=(1./3)*ce[0];
@@ -621,7 +616,6 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
 				break;
 		}
 	}
-
 
     return ans;
 }

@@ -93,7 +93,7 @@ void RS_ActionDrawArc::trigger() {
     container->addEntity(arc);
 
     // upd. undo list:
-	if (document!=nullptr) {
+	if (document) {
         document->startUndoCycle();
         document->addUndoable(arc);
         document->endUndoCycle();
@@ -195,9 +195,8 @@ void RS_ActionDrawArc::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawArc::coordinateEvent(RS_CoordinateEvent* e) {
-	if (e==nullptr) {
-        return;
-    }
+	if (!e) return;
+
     RS_Vector mouse = e->getCoordinate();
 
     switch (getStatus()) {
@@ -249,7 +248,7 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (RS_COMMANDS->checkCommand("help", c)) {
-		if (RS_DIALOGFACTORY!=nullptr) {
+		if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
         }
@@ -260,7 +259,7 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
         e->accept();
         setReversed(!isReversed());
 
-		if (RS_DIALOGFACTORY!=nullptr) {
+		if (RS_DIALOGFACTORY) {
             RS_DIALOGFACTORY->requestOptions(this, true, true);
         }
         return;
@@ -276,7 +275,7 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
                 setStatus(SetAngle1);
                 e->accept();
             } else {
-				if (RS_DIALOGFACTORY!=nullptr) {
+				if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -291,7 +290,7 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
                 e->accept();
                 setStatus(SetAngle2);
             } else {
-				if (RS_DIALOGFACTORY!=nullptr) {
+				if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -311,7 +310,7 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
                     e->accept();
                     trigger();
                 } else {
-					if (RS_DIALOGFACTORY!=nullptr) {
+					if (RS_DIALOGFACTORY) {
                         RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                     }
                 }
@@ -327,7 +326,7 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
                 e->accept();
                 trigger();
             } else {
-				if (RS_DIALOGFACTORY!=nullptr) {
+				if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -342,14 +341,14 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
 					data->angle2 = data->angle1 + asin(l/(2*data->radius)) * 2;
                     trigger();
                 } else {
-					if (RS_DIALOGFACTORY!=nullptr) {
+					if (RS_DIALOGFACTORY) {
                         RS_DIALOGFACTORY->commandMessage(
                             tr("Not a valid chord length"));
                     }
                 }
                 e->accept();
             } else {
-				if (RS_DIALOGFACTORY!=nullptr) {
+				if (RS_DIALOGFACTORY) {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
                 }
             }
@@ -371,7 +370,7 @@ QStringList RS_ActionDrawArc::getAvailableCommands() {
 
 
 void RS_ActionDrawArc::updateMouseButtonHints() {
-	if (RS_DIALOGFACTORY!=nullptr) {
+	if (RS_DIALOGFACTORY) {
         switch (getStatus()) {
         case SetCenter:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify center"), tr("Cancel"));
@@ -408,7 +407,7 @@ void RS_ActionDrawArc::updateMouseButtonHints() {
 void RS_ActionDrawArc::showOptions() {
     RS_ActionInterface::showOptions();
 
-	if (RS_DIALOGFACTORY!=nullptr) {
+	if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, true);
     }
 }
@@ -418,7 +417,7 @@ void RS_ActionDrawArc::showOptions() {
 void RS_ActionDrawArc::hideOptions() {
     RS_ActionInterface::hideOptions();
 
-	if (RS_DIALOGFACTORY!=nullptr) {
+	if (RS_DIALOGFACTORY) {
         RS_DIALOGFACTORY->requestOptions(this, false);
     }
 }

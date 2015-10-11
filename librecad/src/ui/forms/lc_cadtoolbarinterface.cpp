@@ -76,7 +76,7 @@ void LC_CadToolBarInterface::setActionHandler(QG_ActionHandler* ah)
 
 void LC_CadToolBarInterface::finishCurrentAction(bool resetToolBar)
 {
-	if(actionHandler==nullptr) return;
+	if(!actionHandler) return;
 	RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
 	if(currentAction) {
 		currentAction->finish(resetToolBar); //finish the action, but do not update toolBar
@@ -86,13 +86,13 @@ void LC_CadToolBarInterface::finishCurrentAction(bool resetToolBar)
 
 void LC_CadToolBarInterface::killSelectActions()
 {
-	if(actionHandler==nullptr) return;
+	if(!actionHandler) return;
 	actionHandler->killSelectActions();
 }
 
 void LC_CadToolBarInterface::killAllActions()
 {
-	if(actionHandler==nullptr) return;
+	if(!actionHandler) return;
 	actionHandler->killAllActions();
 }
 

@@ -323,7 +323,7 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
     QModelIndex idx = layerModel->getIndex (layer);
 
     layerView->setCurrentIndex ( idx );
-    if(updateScroll==false)
+	if (!updateScroll)
         layerView->verticalScrollBar()->setValue(yPos);
 
     //update active layer name in mainwindow status bar
@@ -379,7 +379,7 @@ void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerNa
  */
 void QG_LayerWidget::slotUpdateLayerList() {
     QRegExp rx("");
-    int pos=0, f;
+	int pos=0;
     QString  s, n;
 
     n=matchLayerName->text();
@@ -392,8 +392,8 @@ void QG_LayerWidget::slotUpdateLayerList() {
 
     for (unsigned int i=0; i<layerList->count() ; i++) {
         s=layerModel->getLayer(i)->getName();
-        f=rx.indexIn(s, pos);
-        if ( f == 0 ) {
+		int f=rx.indexIn(s, pos);
+		if ( !f ) {
             layerView->showRow(i);
             layerModel->getLayer(i)->visibleInLayerList(true);
         } else {

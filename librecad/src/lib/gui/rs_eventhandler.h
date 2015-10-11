@@ -42,6 +42,8 @@ public:
     RS_EventHandler(RS_GraphicView* graphicView);
     ~RS_EventHandler();
 
+    void set_action(QAction* q_action);
+
     void back();
     void enter();
 
@@ -59,28 +61,21 @@ public:
     void disableCoordinateInput();
 
     void setDefaultAction(RS_ActionInterface* action);
-    RS_ActionInterface* getDefaultAction();
+	RS_ActionInterface* getDefaultAction() const;
 
     void setCurrentAction(RS_ActionInterface* action);
-    RS_ActionInterface* getCurrentAction();
-    bool isValid(RS_ActionInterface* action);
+	RS_ActionInterface* getCurrentAction();
+	bool isValid(RS_ActionInterface* action) const;
 
     void killSelectActions();
     void killAllActions();
 
     bool hasAction();
     void cleanUp();
-    void debugActions();
+	void debugActions() const;
     void setSnapMode(RS_SnapMode sm);
     void setSnapRestriction(RS2::SnapRestriction sr);
 
-protected:
-    RS_GraphicView* graphicView;
-    RS_ActionInterface* defaultAction;
-    //    RS_ActionInterface* currentActions[RS_MAXACTIONS];
-    QList<RS_ActionInterface*> currentActions;
-    int actionIndex;
-    bool coordinateInputEnabled;
 private:
     /**
          * @brief cliCalEvent, process cli "cal" calculator command
@@ -88,6 +83,15 @@ private:
          * @return true, if cli starts with "cal"
          */
     bool cliCalculator(const QString& cmd) const;
+
+	QAction* real_action{nullptr};
+	bool right_click_quits{false};
+	RS_GraphicView* graphicView{nullptr};
+	RS_ActionInterface* defaultAction{nullptr};
+	//    RS_ActionInterface* currentActions[RS_MAXACTIONS];
+	QList<RS_ActionInterface*> currentActions;
+//	int actionIndex;
+	bool coordinateInputEnabled{true};
 };
 
 #endif

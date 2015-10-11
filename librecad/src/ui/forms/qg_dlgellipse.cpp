@@ -94,8 +94,7 @@ void QG_DlgEllipse::setEllipse(RS_Ellipse& e) {
 void QG_DlgEllipse::updateEllipse() {
     ellipse->setCenter(RS_Vector(RS_Math::eval(leCenterX->text()),
                                   RS_Math::eval(leCenterY->text())));
-    RS_Vector v;
-    v.setPolar(RS_Math::eval(leMajor->text()),
+	RS_Vector v = RS_Vector::polar(RS_Math::eval(leMajor->text()),
                RS_Math::deg2rad(RS_Math::eval(leRotation->text())));
     ellipse->setMajorP(v);
     if (RS_Math::eval(leMajor->text())>1.0e-6) {

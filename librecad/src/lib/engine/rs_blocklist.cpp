@@ -92,13 +92,13 @@ void RS_BlockList::activate(RS_Block* block) {
 bool RS_BlockList::add(RS_Block* block, bool notify) {
     RS_DEBUG->print("RS_BlockList::add()");
 
-	if (block==nullptr) {
+	if (!block) {
         return false;
     }
 
     // check if block already exists:
     RS_Block* b = find(block->getName());
-	if (b==nullptr) {
+	if (!b) {
         blocks.append(block);
 
         if (notify) {
@@ -177,7 +177,7 @@ void RS_BlockList::remove(RS_Block* block) {
  */
 bool RS_BlockList::rename(RS_Block* block, const QString& name) {
 	if (block) {
-		if (find(name)==nullptr) {
+		if (!find(name)) {
 			block->setName(name);
 			setModified(true);
 			return true;
@@ -212,9 +212,21 @@ void RS_BlockList::editBlock(RS_Block* block, const RS_Block& source) {
 RS_Block* RS_BlockList::find(const QString& name) {
     //RS_DEBUG->print("RS_BlockList::find");
 	// Todo : reduce this from O(N) to O(log(N)) complexity based on sorted list or hash
-	for(RS_Block* b: blocks){
-		if (b->getName()==name) {
-			return b;
+	std::vector<RS_BlockList const*> nodes;
+	std::set<RS_BlockList const*> searched;
+	searched.insert(nullptr);
+	nodes.push_back(this);
+	while (nodes.size()) {
+		auto const& list = nodes.back();
+		nodes.pop_back();
+		for (RS_Block* b: *list) {
+			if (b->getName() == name)
+				return b;
+			auto node = b->getBlockList();
+			if (!searched.count(node)) {
+				searched.insert(list);
+				nodes.push_back(b->getBlockList());
+			}
 		}
 	}
 
@@ -238,16 +250,17 @@ QString RS_BlockList::newName(const QString& suggestion) {
 		i=name.mid(index+1).toInt();
 		name=name.mid(0, index-1);
 	}
-
-	for(RS_Block* b: blocks){
+	QString ret = QString("%1-%2").arg(name).arg(i+1);
+	RS_Block* b;
+	while((b = find(ret))){
 		index=b->getName().lastIndexOf(rx);
 		if(b->getName().mid(0, index-1) != name) continue;
 		index=b->getName().lastIndexOf(rx);
 		if(index<0) continue;
 		i=std::max(b->getName().mid(index).toInt(),i);
+		ret = QString("%1-%2").arg(name).arg(i+1);
 	}
-//	qDebug()<<QString("%1-%2").arg(name).arg(i+1);
-	return QString("%1-%2").arg(name).arg(i+1);
+	return ret;
 }
 
 /**
@@ -263,7 +276,7 @@ void RS_BlockList::toggle(const QString& name) {
  * Listeners are notified.
  */
 void RS_BlockList::toggle(RS_Block* block) {
-	if (block==nullptr) {
+	if (!block) {
         return;
     }
 

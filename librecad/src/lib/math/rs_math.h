@@ -27,12 +27,6 @@
 #ifndef RS_MATH_H
 #define RS_MATH_H
 
-// no idea why, but doesn't link without that under win32 / bcc55:
-//#ifndef _MT
-//#define _MT
-//#endif
-
-#include <cmath>
 #include <vector>
 
 class RS_Vector;
@@ -43,8 +37,10 @@ class QString;
  * Math functions.
  */
 class RS_Math {
+private:
+	RS_Math() = delete;
 public:
-    static int round(double v);
+	static int round(double v);
     static double pow(double x, double y);
     static RS_Vector pow(RS_Vector x, double y);
 

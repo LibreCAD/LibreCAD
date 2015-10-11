@@ -102,7 +102,7 @@ void RS_Insert::update() {
     clear();
 
     RS_Block* blk = getBlockForInsert();
-	if (blk==nullptr) {
+	if (!blk) {
 		//return nullptr;
 				RS_DEBUG->print("RS_Insert::update: Block is nullptr");
         return;
@@ -122,7 +122,7 @@ void RS_Insert::update() {
 
         /*QListIterator<RS_Entity> it = createIterator();
     RS_Entity* e;
-	while ( (e = it.current()) != nullptr ) {
+	while ( (e = it.current())  ) {
         ++it;*/
 
         RS_DEBUG->print("RS_Insert::update: cols: %d, rows: %d",
@@ -141,7 +141,7 @@ void RS_Insert::update() {
                     data.updateMode!=RS2::PreviewUpdate) {
 
 //                                        RS_DEBUG->print("RS_Insert::update: updating sub-insert");
-                    ((RS_Insert*)e)->update();
+					static_cast<RS_Insert*>(e)->update();
                 }
 
 //                                RS_DEBUG->print("RS_Insert::update: cloning entity");
@@ -149,17 +149,18 @@ void RS_Insert::update() {
                 RS_Entity* ne;
                 if ( (data.scaleFactor.x - data.scaleFactor.y)>1.0e-6) {
                     if (e->rtti()== RS2::EntityArc) {
-                        RS_Arc* a= (RS_Arc*)e;
-                        ne = new RS_Ellipse(this, RS_EllipseData(a->getCenter(),
-                                                        RS_Vector(a->getRadius(), 0), 1, a->getAngle1(),
-                                                        a->getAngle2(), a->isReversed() ));
+						RS_Arc* a= static_cast<RS_Arc*>(e);
+						ne = new RS_Ellipse{this,
+						a->getCenter(), {a->getRadius(), 0.}, 1,
+								a->getAngle1(), a->getAngle2(),
+								a->isReversed()};
                         ne->setLayer(e->getLayer());
                         ne->setPen(e->getPen(false));
                     } else if (e->rtti()== RS2::EntityCircle) {
-                        RS_Circle* a= (RS_Circle*)e;
-                        ne = new RS_Ellipse(this, RS_EllipseData(a->getCenter(),
-                                                        RS_Vector(a->getRadius(), 0),
-                                                        1, 0.0,2.0*M_PI, false));
+						RS_Circle* a= static_cast<RS_Circle*>(e);
+						ne = new RS_Ellipse{this,
+						a->getCenter(), {a->getRadius(), 0.}, 1, 0., 2.*M_PI
+					};
                         ne->setLayer(e->getLayer());
                         ne->setPen(e->getPen(false));
                     } else
@@ -170,7 +171,7 @@ void RS_Insert::update() {
                 ne->setUpdateEnabled(false);
                 // if entity layer are 0 set to insert layer to allow "1 layer control" bug ID #3602152
                 RS_Layer *l= ne->getLayer();//special fontchar block don't have
-				if (l != nullptr && ne->getLayer()->getName() == "0")
+				if (l  && ne->getLayer()->getName() == "0")
                     ne->setLayer(this->getLayer());
                 ne->setParent(this);
                 ne->setVisible(getFlag(RS2::FlagVisible));
@@ -259,7 +260,7 @@ RS_Block* RS_Insert::getBlockForInsert() const{
 
     RS_BlockList* blkList;
 
-	if (data.blockSource==nullptr) {
+	if (!data.blockSource) {
 		if (getGraphic()) {
             blkList = getGraphic()->getBlockList();
         } else {
@@ -374,8 +375,7 @@ void RS_Insert::scale(const RS_Vector& center, const RS_Vector& factor) {
 void RS_Insert::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     data.insertionPoint.mirror(axisPoint1, axisPoint2);
 
-        RS_Vector vec;
-        vec.setPolar(1.0, data.angle);
+		RS_Vector vec = RS_Vector::polar(1.0, data.angle);
         vec.mirror(RS_Vector(0.0,0.0), axisPoint2-axisPoint1);
         data.angle = RS_Math::correctAngle(vec.angle()-M_PI);
 

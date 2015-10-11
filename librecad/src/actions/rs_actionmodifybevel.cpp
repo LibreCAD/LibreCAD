@@ -44,6 +44,7 @@ RS_ActionModifyBevel::RS_ActionModifyBevel(RS_EntityContainer& container,
 		,entity2(nullptr)
 		,coord2(false)
 		,data(new RS_BevelData())
+		,lastStatus(SetEntity1)
 {
 	actionType=RS2::ActionModifyBevel;
 }

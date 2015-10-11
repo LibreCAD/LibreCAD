@@ -29,7 +29,7 @@
 #include "rs_previewactioninterface.h"
 
 /**
- * This action class can handle user events to move entities.
+ * This action class can handle Create Polyline Existing from Segments
  *
  * @author Andrew Mustun
  */

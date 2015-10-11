@@ -157,7 +157,7 @@ void QG_CadToolBarLines::drawLinePolygon2() {
 
 //restore action from checked
 void QG_CadToolBarLines::restoreAction() {
-	if(actionHandler==nullptr) return;
+	if(!actionHandler) return;
 	if(!bNormal) return;
     if(bNormal->isChecked()) {
         actionHandler->slotDrawLine();
@@ -226,7 +226,7 @@ void QG_CadToolBarLines::restoreAction() {
     //clear all action
 	m_pHidden->setChecked(true);
     RS_ActionInterface* currentAction =actionHandler->getCurrentAction();
-	if(currentAction != nullptr) {
+	if(currentAction ) {
         currentAction->finish(false); //finish the action, but do not update toolBar
     }
 }

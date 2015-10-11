@@ -136,8 +136,7 @@ void RS_ActionDimLinear::trigger() {
 
 
 void RS_ActionDimLinear::preparePreview() {
-    RS_Vector dirV;
-	dirV.setPolar(100.0, edata->angle+M_PI_2);
+	RS_Vector dirV = RS_Vector::polar(100., edata->angle+M_PI_2);
 
     RS_ConstructionLine cl(
         NULL,
@@ -164,9 +163,8 @@ void RS_ActionDimLinear::mouseMoveEvent(QMouseEvent* e) {
     case SetExtPoint2:
 		if (edata->extensionPoint1.valid) {
             deletePreview();
-			preview->addEntity(new RS_Line(preview.get(),
-										   RS_LineData(edata->extensionPoint1,
-                                                       mouse)));
+			preview->addEntity(new RS_Line{preview.get(),
+										   edata->extensionPoint1, mouse});
             drawPreview();
         }
         break;

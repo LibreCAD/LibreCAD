@@ -170,44 +170,40 @@ void RS_DimAligned::updateDim(bool autoText) {
     // extension lines length
 	double extLength = edata.extensionPoint2.distanceTo(data.definitionPoint);
 
-    RS_Vector v1, v2, e1;
-    RS_LineData ld;
-    RS_Line* line;
-
     if (getFixedLengthOn()){
         double dimfxl = getFixedLength();
         if (extLength-dimexo > dimfxl)
             dimexo =  extLength - dimfxl;
     }
 
-    v1.setPolar(dimexo, extAngle);
-    v2.setPolar(dimexe, extAngle);
-    e1.setPolar(1.0, extAngle);
+	RS_Vector v1 = RS_Vector::polar(dimexo, extAngle);
+	RS_Vector v2 = RS_Vector::polar(dimexe, extAngle);
+	RS_Vector e1 = RS_Vector::polar(1.0, extAngle);
 
     RS_Pen pen(getExtensionLineColor(),
            getExtensionLineWidth(),
            RS2::LineByBlock);
 
     // Extension line 1:
-    ld = RS_LineData(edata.extensionPoint1 + v1,
-                     edata.extensionPoint1 + e1*extLength + v2);
-    line = new RS_Line(this, ld);
+	RS_Line* line = new RS_Line{this,
+			edata.extensionPoint1 + v1,
+			edata.extensionPoint1 + e1*extLength + v2};
     //line->setLayerToActive();
     //line->setPenToActive();
 //    line->setPen(RS_Pen(RS2::FlagInvalid));
     line->setPen(pen);
-    line->setLayer(NULL);
+	line->setLayer(nullptr);
     addEntity(line);
 
     // Extension line 2:
-    ld = RS_LineData(edata.extensionPoint2 + v1,
-                     edata.extensionPoint2 + e1*extLength + v2);
-    line = new RS_Line(this, ld);
+	line = new RS_Line{this,
+			edata.extensionPoint2 + v1,
+			edata.extensionPoint2 + e1*extLength + v2};
     //line->setLayerToActive();
     //line->setPenToActive();
 //    line->setPen(RS_Pen(RS2::FlagInvalid));
     line->setPen(pen);
-    line->setLayer(NULL);
+	line->setLayer(nullptr);
     addEntity(line);
 
     // Dimension line:
@@ -221,7 +217,7 @@ void RS_DimAligned::updateDim(bool autoText) {
 
 void RS_DimAligned::updateDimPoint(){
     // temporary construction line
-    RS_ConstructionLine tmpLine( NULL,
+	RS_ConstructionLine tmpLine( nullptr,
         RS_ConstructionLineData(edata.extensionPoint1, edata.extensionPoint2));
 
 	RS_Vector tmpP1 = tmpLine.getNearestPointOnEntity(data.definitionPoint);
@@ -312,8 +308,7 @@ void RS_DimAligned::stretch(const RS_Vector& firstCorner,
                         ang2 = RS_Math::correctAngle(ang2+M_PI);
                 }
 
-                RS_Vector v;
-                v.setPolar(len, ang2);
+				RS_Vector v = RS_Vector::polar(len, ang2);
 				data.definitionPoint = edata.extensionPoint2 + v;
         }
         updateDim(true);
@@ -324,7 +319,7 @@ void RS_DimAligned::stretch(const RS_Vector& firstCorner,
 void RS_DimAligned::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 
 	if (ref.distanceTo(data.definitionPoint)<1.0e-4) {
-                RS_ConstructionLine l(NULL,
+				RS_ConstructionLine l(nullptr,
                         RS_ConstructionLineData(edata.extensionPoint1,
                                 edata.extensionPoint2));
 				double d = l.getDistanceToPoint(data.definitionPoint+offset);
@@ -336,8 +331,7 @@ void RS_DimAligned::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
                         a = RS_Math::correctAngle(a+M_PI);
                 }
 
-                RS_Vector v;
-                v.setPolar(d, a);
+				RS_Vector v = RS_Vector::polar(d, a);
 		data.definitionPoint = edata.extensionPoint2 + v;
                 updateDim(true);
     }

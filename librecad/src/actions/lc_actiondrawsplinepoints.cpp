@@ -99,11 +99,10 @@ void LC_ActionDrawSplinePoints::mouseMoveEvent(QMouseEvent* e)
 	RS_DEBUG->print("RS_ActionDrawSplinePoints::mouseMoveEvent begin");
 
 	RS_Vector mouse = snapPoint(e);
-	LC_SplinePoints *sp;
 
 	if(getStatus() == SetNextPoint)
 	{
-		sp = (LC_SplinePoints*)spline->clone();
+		LC_SplinePoints*  sp = static_cast<LC_SplinePoints*>(spline->clone());
 		sp->addPoint(mouse);
 		deletePreview();
 		preview->addEntity(sp);
