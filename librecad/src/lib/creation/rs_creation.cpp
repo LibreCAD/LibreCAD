@@ -854,7 +854,6 @@ RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord,
 RS_Line* RS_Creation::createPolygon(const RS_Vector& center,
                                     const RS_Vector& corner,
                                     int number) {
-
     // check given coords / number:
     if (!center.valid || !corner.valid || number<3) {
 		return nullptr;
@@ -866,15 +865,17 @@ RS_Line* RS_Creation::createPolygon(const RS_Vector& center,
         document->startUndoCycle();
     }
 
-    RS_Vector c1(false);
-    RS_Vector c2 = corner;
-    RS_Line* line;
+	double const r = center.distanceTo(corner);
+	double const angle0 = center.angleTo(corner);
+	double const da = 2.*M_PI/number;
 
-    for (int n=1; n<=number; ++n) {
-        c1 = c2;
-		c2 = c2.rotate(center, (2.*M_PI)/number);
+	for (int i=0; i < number; ++i) {
+		RS_Vector const& c0 = center +
+				RS_Vector::polar(r, angle0 + i*da);
+		RS_Vector const& c1 = center +
+				RS_Vector::polar(r, angle0 + ((i+1)%number)*da);
 
-		line = new RS_Line{container, c1, c2};
+		RS_Line* line = new RS_Line{container, c0, c1};
         line->setLayerToActive();
         line->setPenToActive();
 
@@ -910,7 +911,6 @@ RS_Line* RS_Creation::createPolygon(const RS_Vector& center,
 RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
                                      const RS_Vector& corner2,
                                      int number) {
-
     // check given coords / number:
     if (!corner1.valid || !corner2.valid || number<3) {
 		return nullptr;
@@ -922,24 +922,29 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
         document->startUndoCycle();
     }
 
-    double len = corner1.distanceTo(corner2);
-    double ang1 = corner1.angleTo(corner2);
-    double ang = ang1;
+	double const len = corner1.distanceTo(corner2);
+	double const da = 2.*M_PI/number;
+	double const r = 0.5*len/sin(0.5*da);
+	double const angle1 = corner1.angleTo(corner2);
+	RS_Vector center = (corner1 + corner2)*0.5;
+
+	//TODO, the center or the polygon could be at left or right side
+	//left is chosen here
+	center += RS_Vector::polar(0.5*len/tan(0.5*da), angle1 + M_PI_2);
+	double const angle0 = center.angleTo(corner1);
 
 
-    for (int n=1; n<=number; ++n) {
-		RS_Vector c2 = corner1;
-		RS_Vector c1 = c2;
-		RS_Vector edge = RS_Vector::polar(len, ang);
-        c2 = c1 + edge;
+	for (int i=0; i<number; ++i) {
+		RS_Vector const& c0 = center +
+				RS_Vector::polar(r, angle0 + i*da);
+		RS_Vector const& c1 = center +
+				RS_Vector::polar(r, angle0 + ((i+1)%number)*da);
 
-		RS_Line* line = new RS_Line{container, c1, c2};
+		RS_Line* line = new RS_Line{container, c0, c1};
         line->setLayerToActive();
         line->setPenToActive();
 
-		if (!ret) {
-            ret = line;
-        }
+		if (!ret) ret = line;
 
 		if (container) {
             container->addEntity(line);
@@ -951,8 +956,6 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
             graphicView->drawEntity(line);
         }
 
-        // more accurate than incrementing the angle:
-		ang = ang1 + (2.*M_PI)/number*n;
     }
 
 	if (document && handleUndo) {
