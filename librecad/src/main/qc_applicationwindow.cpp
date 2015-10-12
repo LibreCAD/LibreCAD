@@ -3106,6 +3106,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QActionGroup* tools = new QActionGroup(this);
     connect(tools, SIGNAL(triggered(QAction*)), this, SLOT(slot_set_action(QAction*)));
+    connect(this, SIGNAL(windowsChanged(bool)), tools, SLOT(setEnabled(bool)));
 
     LC_ActionFactory a_factory;
     QMap<QString, QAction*> map_a;
