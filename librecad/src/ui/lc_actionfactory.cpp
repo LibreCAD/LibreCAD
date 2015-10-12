@@ -1262,7 +1262,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
 
     action = new QAction(tr("&Draft"), main_window);
     action->setIcon(QIcon(":/actions/viewdraft.png"));
-    action->setChecked(true);
+    action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)), main_window, SLOT(slotViewDraft(bool)));
     connect(main_window, SIGNAL(draftChanged(bool)), action, SLOT(setChecked(bool)));
     action->setData("ViewDraft");
