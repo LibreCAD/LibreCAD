@@ -426,6 +426,7 @@ private:
     QList<QAction*> toolbar_view_actions;
     QList<QAction*> dockwidget_view_actions;
     QAction* statusbar_view_action;
+    QList<QC_MDIWindow*> window_list;
 };
 
 

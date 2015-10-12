@@ -1325,6 +1325,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
 
     RS_DEBUG->print("  creating MDI window");
     QC_MDIWindow* w = new QC_MDIWindow(doc, mdiAreaCAD, 0);
+    window_list << w;
         //w->setWindowState(WindowMaximized);
     connect(w, SIGNAL(signalClosing()),
             this, SLOT(slotFileClosing()));
@@ -2101,6 +2102,7 @@ void QC_ApplicationWindow::slotFileClose() {
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClose(): detaching lists");
     QC_MDIWindow* w = getMDIWindow();
+    window_list.removeOne(w);
 
     if(w){
         openedFiles.removeAll(w->getDocument()->getFilename());
@@ -2497,6 +2499,12 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
     RS_SETTINGS->beginGroup("/Appearance");
     RS_SETTINGS->writeEntry("/DraftMode", (int)toggle);
     RS_SETTINGS->endGroup();
+
+    for (auto const& win : window_list)
+    {
+        win->getGraphicView()->setDraftMode(toggle);
+    }
+
     QList<QWidget *> windows;
     if(mdiAreaCAD)
         for(QMdiSubWindow* w: mdiAreaCAD->subWindowList())

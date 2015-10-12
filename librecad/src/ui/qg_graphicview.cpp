@@ -852,10 +852,6 @@ void QG_GraphicView::paintEvent(QPaintEvent *)
 {
     RS_DEBUG->print("QG_GraphicView::paintEvent begin");
 
-    RS_SETTINGS->beginGroup("/Appearance");
-    bool draftMode = (bool)RS_SETTINGS->readNumEntry("/DraftMode", 0);
-    RS_SETTINGS->endGroup();
-
     // Re-Create or get the layering pixmaps
     getPixmapForView(PixmapLayer1);
     getPixmapForView(PixmapLayer2);
@@ -880,7 +876,6 @@ void QG_GraphicView::paintEvent(QPaintEvent *)
             painter2.setRenderHint(QPainter::Antialiasing);
         }
         painter2.setDrawingMode(drawingMode);
-        setDraftMode(draftMode);
         painter2.setDrawSelectedOnly(false);
         drawLayer2((RS_Painter*)&painter2);
         painter2.setDrawSelectedOnly(true);
