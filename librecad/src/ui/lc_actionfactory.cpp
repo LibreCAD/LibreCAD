@@ -1251,7 +1251,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     a_map["Fullscreen"] = action;
 
     action = new QAction(tr("&Grid"), main_window);
-    action->setIcon(QIcon(":/actions/viewgrid.png"));
+    action->setIcon(QIcon(":/actions/view_grid.svg"));
     action->setShortcut(QKeySequence(tr("Ctrl+G", "Toggle Grid")));
     action->setCheckable(true);
     action->setChecked(true);
