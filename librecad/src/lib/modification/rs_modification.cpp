@@ -1513,13 +1513,13 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
             num<=data.number || (data.number==0 && num<=1);
             num++) {
         // too slow:
-        //for (unsigned i=0; i<container->count(); ++i) {
-        //RS_Entity* e = container->entityAt(i);
 		for(auto e: *container){
 			if (e && e->isSelected()) {
                 RS_Entity* ec = e->clone();
+				//highlight is used by trim actions. do not carry over flag
+				ec->setHighlighted(false);
 
-                if(! ec->offset(data.coord,num*data.distance)){
+				if (!ec->offset(data.coord, num*data.distance)) {
                     delete ec;
                     continue;
                 }
@@ -1530,7 +1530,7 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
                     ec->setPenToActive();
                 }
                 if (ec->rtti()==RS2::EntityInsert) {
-                    ((RS_Insert*)ec)->update();
+					static_cast<RS_Insert*>(ec)->update();
                 }
                 // since 2.0.4.0: keep selection
                 ec->setSelected(true);
