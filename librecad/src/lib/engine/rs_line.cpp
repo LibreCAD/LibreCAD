@@ -363,7 +363,7 @@ bool RS_Line::hasEndpointsWithinWindow(const RS_Vector& firstCorner, const RS_Ve
   *Author: Dongxu Li
   */
 bool RS_Line::offset(const RS_Vector& coord, const double& distance) {
-    RS_Vector direction(getEndpoint()-getStartpoint());
+	RS_Vector direction{getEndpoint()-getStartpoint()};
     double ds(direction.magnitude());
     if(ds< RS_TOLERANCE) return false;
     direction /= ds;

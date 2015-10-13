@@ -60,7 +60,8 @@ void RS_ActionModifyOffset::trigger() {
     RS_Modification m(*container, graphicView);
 	m.offset(*data);
     if (RS_DIALOGFACTORY) {
-        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+		RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),
+												container->totalSelectedLength());
     }
     finish(false);
 }
