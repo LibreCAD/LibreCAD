@@ -172,38 +172,6 @@ void RS_Settings::addToCache(const QString& key, const QVariant& value) {
     cache[key]=value;
 }
 
-const char* RS_Settings::defaultGraphicColor( const GraphicColors colIndex)
-{
-    switch( colIndex) {
-    case BackgroundColor : return "Black";
-    case GridColor       : return "Gray";
-    case MetaGridColor   : return "#404040";
-    case SelectedColor   : return "#A54747";
-    case HighlightedColor: return "#739373";
-    case StartHandleColor: return "Cyan";
-    case HandleColor     : return "Blue";
-    case EndHandleColor  : return "Blue";
-    }
-
-    return "Green";
-}
-
-QString RS_Settings::readGraphicColor( const GraphicColors colIndex)
-{
-    switch( colIndex) {
-    case BackgroundColor : return readEntry( "/BackgroundColor", defaultGraphicColor(colIndex));
-    case GridColor       : return readEntry( "/GridColor", defaultGraphicColor(colIndex));
-    case MetaGridColor   : return readEntry( "/MetaGridColor", defaultGraphicColor(colIndex));
-    case SelectedColor   : return readEntry( "/SelectedColor", defaultGraphicColor(colIndex));
-    case HighlightedColor: return readEntry( "/HighlightedColor", defaultGraphicColor(colIndex));
-    case StartHandleColor: return readEntry( "/StartHandleColor", defaultGraphicColor(colIndex));
-    case HandleColor     : return readEntry( "/HandleColor", defaultGraphicColor(colIndex));
-    case EndHandleColor  : return readEntry( "/EndHandleColor", defaultGraphicColor(colIndex));
-    }
-
-    return QString("Green");
-}
-
 void RS_Settings::clear_all()
 {
     QSettings s(companyKey, appKey);

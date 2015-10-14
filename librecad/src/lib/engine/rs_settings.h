@@ -33,6 +33,26 @@
 
 class QVariant;
 
+// ---------------------------------------------------------------------------
+// Default Settings
+// ---------------------------------------------------------------------------
+
+namespace Colors
+{
+    const QString snap_indicator   = "#FFC200";
+    const QString background       = "Black";
+    const QString grid             = "Gray";
+    const QString meta_grid        = "#404040";
+    const QString select           = "#A54747";
+    const QString highlight        = "#739373";
+    const QString start_handle     = "Cyan";
+    const QString handle           = "Blue";
+    const QString end_handle       = "Blue";
+    const QString layer_selection  = "#CCFFCC";
+}
+
+// ---------------------------------------------------------------------------
+
 #define RS_SETTINGS RS_Settings::instance()
 
 /**
@@ -60,17 +80,6 @@ public:
      */
     void init(const QString& companyKey, const QString& appKey);
 
-    enum GraphicColors {
-        BackgroundColor = 0,
-        GridColor,
-        MetaGridColor,
-        SelectedColor,
-        HighlightedColor,
-        StartHandleColor,
-        HandleColor,
-        EndHandleColor
-    };
-
     void beginGroup(const QString& group);
     void endGroup();
 
@@ -85,8 +94,6 @@ public:
                         const QString& def = QString::null,
                         bool* ok = 0);
 	int readNumEntry(const QString& key, int def=0);
-    QString readGraphicColor( const GraphicColors colIndex);
-    const char* defaultGraphicColor( const GraphicColors colIndex);
     void clear_all();
     void clear_geometry();
     static bool save_is_allowed;

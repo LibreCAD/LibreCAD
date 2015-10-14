@@ -126,17 +126,6 @@ void QG_DlgOptionsGeneral::init() {
     // preview:
 	initComboBox(cbMaxPreview, RS_SETTINGS->readEntry("/MaxPreview", "100"));
 
-    // colors:
-    initComboBox( cbBackgroundColor,  RS_SETTINGS->readGraphicColor( RS_Settings::BackgroundColor));
-    initComboBox( cbGridColor,        RS_SETTINGS->readGraphicColor( RS_Settings::GridColor));
-    initComboBox( cbMetaGridColor,    RS_SETTINGS->readGraphicColor( RS_Settings::MetaGridColor));
-    initComboBox( cbSelectedColor,    RS_SETTINGS->readGraphicColor( RS_Settings::SelectedColor));
-    initComboBox( cbHighlightedColor, RS_SETTINGS->readGraphicColor( RS_Settings::HighlightedColor));
-    initComboBox( cbStartHandleColor, RS_SETTINGS->readGraphicColor( RS_Settings::StartHandleColor));
-    initComboBox( cbHandleColor,      RS_SETTINGS->readGraphicColor( RS_Settings::HandleColor));
-    initComboBox( cbEndHandleColor,   RS_SETTINGS->readGraphicColor( RS_Settings::EndHandleColor));
-    initComboBox(cb_layerselection, RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC"));
-
     // font size:
     QString sizeStatus = RS_SETTINGS->readEntry("/StatusBarFontSize", "9");
     cbSizeStatus->setCurrentIndex( cbSizeStatus->findText(sizeStatus) );
@@ -145,6 +134,19 @@ void QG_DlgOptionsGeneral::init() {
     sb_icon_size->setValue(RS_SETTINGS->readNumEntry("/IconSize", 24));
     cb_icon_size->setChecked(RS_SETTINGS->readNumEntry("/SetIconSize", 1)?true:false);
 
+    RS_SETTINGS->endGroup();
+
+    RS_SETTINGS->beginGroup("Colors");
+    initComboBox(cbBackgroundColor, RS_SETTINGS->readEntry("/background", Colors::background));
+    initComboBox(cbGridColor, RS_SETTINGS->readEntry("/grid", Colors::grid));
+    initComboBox(cbMetaGridColor, RS_SETTINGS->readEntry("/meta_grid", Colors::meta_grid));
+    initComboBox(cbSelectedColor, RS_SETTINGS->readEntry("/select", Colors::select));
+    initComboBox(cbHighlightedColor, RS_SETTINGS->readEntry("/highlight", Colors::highlight));
+    initComboBox(cbStartHandleColor, RS_SETTINGS->readEntry("/start_handle", Colors::start_handle));
+    initComboBox(cbHandleColor, RS_SETTINGS->readEntry("/handle", Colors::handle));
+    initComboBox(cbEndHandleColor, RS_SETTINGS->readEntry("/end_handle", Colors::end_handle));
+    initComboBox(cb_layerselection, RS_SETTINGS->readEntry("/layer_selection", Colors::layer_selection));
+    initComboBox(cb_snap_color, RS_SETTINGS->readEntry("/snap_indicator", Colors::snap_indicator));
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Paths");
@@ -217,27 +219,31 @@ void QG_DlgOptionsGeneral::ok()
     {
         //RS_SYSTEM->loadTranslation(cbLanguage->currentText());
         RS_SETTINGS->beginGroup("/Appearance");
+        RS_SETTINGS->writeEntry("/ScaleGrid", QString("%1").arg((int)cbScaleGrid->isChecked()));
+        RS_SETTINGS->writeEntry("/MinGridSpacing", cbMinGridSpacing->currentText());
+        RS_SETTINGS->writeEntry("/MaxPreview", cbMaxPreview->currentText());
         RS_SETTINGS->writeEntry("/Language",cbLanguage->itemData(cbLanguage->currentIndex()));
         RS_SETTINGS->writeEntry("/LanguageCmd",cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
         RS_SETTINGS->writeEntry("/ShowCrosshairs", QString("%1").arg((int)cbShowCrosshairs->isChecked()));
         RS_SETTINGS->writeEntry("/SnapIndicator", cb_snapindicator->currentText());
-        RS_SETTINGS->writeEntry("/ScaleGrid", QString("%1").arg((int)cbScaleGrid->isChecked()));
-        RS_SETTINGS->writeEntry("/MinGridSpacing", cbMinGridSpacing->currentText());
-        RS_SETTINGS->writeEntry("/MaxPreview", cbMaxPreview->currentText());
-        RS_SETTINGS->writeEntry("/BackgroundColor", cbBackgroundColor->currentText());
-        RS_SETTINGS->writeEntry("/GridColor", cbGridColor->currentText());
-        RS_SETTINGS->writeEntry("/MetaGridColor", cbMetaGridColor->currentText());
-        RS_SETTINGS->writeEntry("/SelectedColor", cbSelectedColor->currentText());
-        RS_SETTINGS->writeEntry("/HighlightedColor", cbHighlightedColor->currentText());
-        RS_SETTINGS->writeEntry("/StartHandleColor", cbStartHandleColor->currentText());
-        RS_SETTINGS->writeEntry("/HandleColor", cbHandleColor->currentText());
-        RS_SETTINGS->writeEntry("/EndHandleColor", cbEndHandleColor->currentText());
-        RS_SETTINGS->writeEntry("/LayerSelectColor", cb_layerselection->currentText());
         RS_SETTINGS->writeEntry("/StatusBarFontSize", cbSizeStatus->currentText());
         RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/IconSize", sb_icon_size->value() );
         RS_SETTINGS->writeEntry("/SetIconSize", cb_icon_size->isChecked()?1:0);
 		RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked()?1:0);
+        RS_SETTINGS->endGroup();
+
+        RS_SETTINGS->beginGroup("Colors");
+        RS_SETTINGS->writeEntry("/background", cbBackgroundColor->currentText());
+        RS_SETTINGS->writeEntry("/grid", cbGridColor->currentText());
+        RS_SETTINGS->writeEntry("/meta_grid", cbMetaGridColor->currentText());
+        RS_SETTINGS->writeEntry("/select", cbSelectedColor->currentText());
+        RS_SETTINGS->writeEntry("/highlight", cbHighlightedColor->currentText());
+        RS_SETTINGS->writeEntry("/start_handle", cbStartHandleColor->currentText());
+        RS_SETTINGS->writeEntry("/handle", cbHandleColor->currentText());
+        RS_SETTINGS->writeEntry("/end_handle", cbEndHandleColor->currentText());
+        RS_SETTINGS->writeEntry("/layer_selection", cb_layerselection->currentText());
+        RS_SETTINGS->writeEntry("/snap_indicator", cb_snap_color->currentText());
         RS_SETTINGS->endGroup();
 
         RS_SETTINGS->beginGroup("/Paths");
@@ -296,47 +302,52 @@ void QG_DlgOptionsGeneral::set_color(QComboBox* combo, QColor custom)
 
 void QG_DlgOptionsGeneral::on_pb_background_clicked()
 {
-    set_color( cbBackgroundColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::BackgroundColor)));
+    set_color(cbBackgroundColor, QColor(Colors::background));
 }
 
 void QG_DlgOptionsGeneral::on_pb_grid_clicked()
 {
-    set_color( cbGridColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::GridColor)));
+    set_color(cbGridColor, QColor(Colors::grid));
 }
 
 void QG_DlgOptionsGeneral::on_pb_meta_clicked()
 {
-    set_color( cbMetaGridColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::MetaGridColor)));
+    set_color(cbMetaGridColor, QColor(Colors::meta_grid));
 }
 
 void QG_DlgOptionsGeneral::on_pb_selected_clicked()
 {
-    set_color( cbSelectedColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::SelectedColor)));
+    set_color(cbSelectedColor, QColor(Colors::select));
 }
 
 void QG_DlgOptionsGeneral::on_pb_highlighted_clicked()
 {
-    set_color( cbHighlightedColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::HighlightedColor)));
+    set_color(cbHighlightedColor, QColor(Colors::highlight));
 }
 
 void QG_DlgOptionsGeneral::on_pb_start_clicked()
 {
-    set_color( cbStartHandleColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::StartHandleColor)));
+    set_color(cbStartHandleColor, QColor(Colors::start_handle));
 }
 
 void QG_DlgOptionsGeneral::on_pb_handle_clicked()
 {
-    set_color( cbHandleColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::HandleColor)));
+    set_color(cbHandleColor, QColor(Colors::handle));
 }
 
 void QG_DlgOptionsGeneral::on_pb_end_clicked()
 {
-    set_color( cbEndHandleColor, QColor( RS_SETTINGS->defaultGraphicColor(RS_Settings::EndHandleColor)));
+    set_color(cbEndHandleColor, QColor(Colors::end_handle));
 }
 
 void QG_DlgOptionsGeneral::on_pb_layerselection_clicked()
 {
-    set_color(cb_layerselection, QColor("#CCFFCC"));
+    set_color(cb_layerselection, QColor(Colors::layer_selection));
+}
+
+void QG_DlgOptionsGeneral::on_pb_snap_color_clicked()
+{
+    set_color(cb_snap_color, QColor(Colors::snap_indicator));
 }
 
 void QG_DlgOptionsGeneral::set_toolbar_file()

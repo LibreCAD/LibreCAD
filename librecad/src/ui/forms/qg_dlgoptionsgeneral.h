@@ -73,6 +73,8 @@ private slots:
 
     void on_pb_clear_geometry_clicked();
 
+    void on_pb_snap_color_clicked();
+
 private:
     bool restartNeeded;
 

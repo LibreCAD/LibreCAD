@@ -2597,25 +2597,26 @@ void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
 void QC_ApplicationWindow::slotOptionsGeneral() {
     RS_DIALOGFACTORY->requestOptionsGeneralDialog();
 
-    // update background color of all open drawings:
-    RS_SETTINGS->beginGroup("/Appearance");
-    QColor color( RS_SETTINGS->readGraphicColor( RS_Settings::BackgroundColor));
-    QColor gridColor( RS_SETTINGS->readGraphicColor( RS_Settings::GridColor));
-    QColor metaGridColor( RS_SETTINGS->readGraphicColor( RS_Settings::MetaGridColor));
-    QColor selectedColor( RS_SETTINGS->readGraphicColor( RS_Settings::SelectedColor));
-    QColor highlightedColor( RS_SETTINGS->readGraphicColor( RS_Settings::HighlightedColor));
-    QColor startHandleColor( RS_SETTINGS->readGraphicColor( RS_Settings::StartHandleColor));
-    QColor handleColor( RS_SETTINGS->readGraphicColor( RS_Settings::HandleColor));
-	QColor endHandleColor( RS_SETTINGS->readGraphicColor( RS_Settings::EndHandleColor));
+    set_icon_size();
 
-	QString layer_select_color = RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC");
-	int antialiasing = RS_SETTINGS->readNumEntry("/Antialiasing");
+    RS_SETTINGS->beginGroup("Colors");
+    QColor background(RS_SETTINGS->readEntry("/background", Colors::background));
+    QColor gridColor(RS_SETTINGS->readEntry("/grid", Colors::grid));
+    QColor metaGridColor(RS_SETTINGS->readEntry("/meta_grid", Colors::meta_grid));
+    QColor selectedColor(RS_SETTINGS->readEntry("/select", Colors::select));
+    QColor highlightedColor(RS_SETTINGS->readEntry("/highlight", Colors::highlight));
+    QColor startHandleColor(RS_SETTINGS->readEntry("/start_handle", Colors::start_handle));
+    QColor handleColor(RS_SETTINGS->readEntry("/handle", Colors::handle));
+	QColor endHandleColor(RS_SETTINGS->readEntry("/end_handle", Colors::end_handle));
+	QString layer_select_color = RS_SETTINGS->readEntry("/layer_selection", Colors::layer_selection);
     RS_SETTINGS->endGroup();
 
     layerWidget->setStyleSheet("selection-background-color: " + layer_select_color);
     blockWidget->setStyleSheet("selection-background-color: " + layer_select_color);
-    set_icon_size();
 
+    RS_SETTINGS->beginGroup("/Appearance");
+    int antialiasing = RS_SETTINGS->readNumEntry("/Antialiasing");
+    RS_SETTINGS->endGroup();
 
     QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
     for (int i = 0; i < windows.size(); ++i) {
@@ -2623,7 +2624,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
         if (m) {
             QG_GraphicView* gv = m->getGraphicView();
 			if (gv) {
-                gv->setBackground(color);
+                gv->setBackground(background);
                 gv->setGridColor(gridColor);
                 gv->setMetaGridColor(metaGridColor);
                 gv->setSelectedColor(selectedColor);

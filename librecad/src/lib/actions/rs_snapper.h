@@ -31,6 +31,7 @@
 #include <set>
 #include "rs.h"
 #include "rs_vector.h"
+#include "rs_pen.h"
 
 class RS_Entity;
 class RS_GraphicView;
@@ -222,7 +223,10 @@ protected:
     bool showCrosshairs;
     bool finished{false};
 
-    QString snap_indicator{"Crosshair"};
+private:
+    QString snap_indicator;
+    RS_Pen line_pen;
+    RS_Pen circle_pen;
 };
 
 #endif

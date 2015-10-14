@@ -73,17 +73,17 @@ RS_GraphicView::~RS_GraphicView() {}
 
 void RS_GraphicView::init()
 {
-    RS_SETTINGS->beginGroup("/Appearance");
-    setBackground(       QColor( RS_SETTINGS->readGraphicColor( RS_Settings::BackgroundColor)));
-    setGridColor(        QColor( RS_SETTINGS->readGraphicColor( RS_Settings::GridColor)));
-    setMetaGridColor(    QColor( RS_SETTINGS->readGraphicColor( RS_Settings::MetaGridColor)));
-    setSelectedColor(    QColor( RS_SETTINGS->readGraphicColor( RS_Settings::SelectedColor)));
-    setHighlightedColor( QColor( RS_SETTINGS->readGraphicColor( RS_Settings::HighlightedColor)));
-    setStartHandleColor( QColor( RS_SETTINGS->readGraphicColor( RS_Settings::StartHandleColor)));
-    setHandleColor(      QColor( RS_SETTINGS->readGraphicColor( RS_Settings::HandleColor)));
-    setEndHandleColor(   QColor( RS_SETTINGS->readGraphicColor( RS_Settings::EndHandleColor)));
-
+    RS_SETTINGS->beginGroup("Colors");
+    setBackground(QColor(RS_SETTINGS->readEntry("/background", Colors::background)));
+    setGridColor(QColor(RS_SETTINGS->readEntry("/grid", Colors::grid)));
+    setMetaGridColor(QColor(RS_SETTINGS->readEntry("/meta_grid", Colors::meta_grid)));
+    setSelectedColor(QColor(RS_SETTINGS->readEntry("/select", Colors::select)));
+    setHighlightedColor(QColor(RS_SETTINGS->readEntry("/highlight", Colors::highlight)));
+    setStartHandleColor(QColor(RS_SETTINGS->readEntry("/start_handle", Colors::start_handle)));
+    setHandleColor(QColor(RS_SETTINGS->readEntry("/handle", Colors::handle)));
+    setEndHandleColor(QColor(RS_SETTINGS->readEntry("/end_handle", Colors::end_handle)));
     RS_SETTINGS->endGroup();
+
     QC_ApplicationWindow::getAppWindow()->setPreviousZoomEnable(false);
 }
 
