@@ -97,7 +97,8 @@ void RS_Undo::startUndoCycle() {
 			if(!u) continue;
 			// Remove the pointer from _all_ other cycles:
 			for(auto& cycle: undoList){
-				cycle->removeUndoable(u);
+				if (cycle)
+					cycle->removeUndoable(u);
 			}
 			// Delete the Undoable for good:
 			if (u->isUndone()) {
