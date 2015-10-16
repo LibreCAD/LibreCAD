@@ -536,6 +536,11 @@ void RS_EventHandler::killAllActions()
     {
 		if (!p->isFinished())
         {
+            if (right_click_quits)
+            {
+                real_action->setChecked(false);
+                right_click_quits = false;
+            }
 			p->finish();
 		}
 	}
