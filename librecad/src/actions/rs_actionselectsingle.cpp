@@ -68,8 +68,10 @@ void RS_ActionSelectSingle::trigger() {
 }
 
 
-void RS_ActionSelectSingle::keyPressEvent(QKeyEvent* e) {
-    if (e->key()==Qt::Key_Enter) {
+void RS_ActionSelectSingle::keyPressEvent(QKeyEvent* e)
+{
+    if (container->countSelected() > 0 && e->key()==Qt::Key_Enter)
+    {
         finish(false);
         actionSelect->keyPressEvent(e);
     }
