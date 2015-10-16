@@ -622,6 +622,7 @@ HEADERS += ui/lc_actionfactory.h \
     ui/qg_recentfiles.h \
     ui/qg_scrollbar.h \
     ui/qg_widthbox.h \
+    ui/lg_dimzerosbox.h \
     ui/forms/qg_arcoptions.h \
     ui/forms/qg_arctangentialoptions.h \
     ui/forms/qg_beveloptions.h \
@@ -705,6 +706,7 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_pentoolbar.cpp \
     ui/qg_recentfiles.cpp \
     ui/qg_widthbox.cpp \
+    ui/lg_dimzerosbox.cpp \
     ui/forms/qg_arcoptions.cpp \
     ui/forms/qg_arctangentialoptions.cpp \
     ui/forms/qg_beveloptions.cpp \

@@ -98,10 +98,13 @@ QString RS_DimAngular::getMeasuredLabel() {
 
         int dimaunit = getGraphicVariableInt("$DIMAUNIT", 0);
         int dimadec = getGraphicVariableInt("$DIMADEC", 0);
+        int dimazin = getGraphicVariableInt("$DIMAZIN", 0);
 
-        ret = RS_Units::formatAngle(getAngle(),
-                RS_Units::numberToAngleFormat(dimaunit),
-                dimadec);
+        RS2::AngleFormat format = RS_Units::numberToAngleFormat(dimaunit);
+        ret = RS_Units::formatAngle(getAngle(), format, dimadec);
+        if (format != RS2::DegreesMinutesSeconds && format != RS2::Surveyors)
+            ret = stripZerosAngle(ret, dimazin);
+
         //verify if units are decimal and comma separator
         if (dimaunit !=1){
             if (getGraphicVariableInt("$DIMDSEP", 0) == 44)

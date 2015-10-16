@@ -119,8 +119,11 @@ QString RS_DimLinear::getMeasuredLabel() {
         if (graphic) {
             int dimlunit = getGraphicVariableInt("$DIMLUNIT", 2);
             int dimdec = getGraphicVariableInt("$DIMDEC", 4);
-            ret = RS_Units::formatLinear(dist, RS2::None,
-                                         graphic->getLinearFormat(dimlunit), dimdec);
+            int dimzin = getGraphicVariableInt("$DIMZIN", 1);
+            RS2::LinearFormat format = graphic->getLinearFormat(dimlunit);
+            ret = RS_Units::formatLinear(dist, RS2::None, format, dimdec);
+            if (format == RS2::Decimal)
+                ret = stripZerosLinear(ret, dimzin);
             //verify if units are decimal and comma separator
             if (dimlunit==2){
                 if (getGraphicVariableInt("$DIMDSEP", 0) == 44)

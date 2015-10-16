@@ -304,22 +304,30 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     cbDimLwE->setWidth(RS2::intToLineWidth(dimlwe));
 
     // Dimensions / length format:
-    int dimlunit = graphic->getVariableInt("$DIMLUNIT", luprec);
+    int dimlunit = graphic->getVariableInt("$DIMLUNIT", lunits);
     cbDimLUnit->setCurrentIndex(dimlunit-1);
 
     // Dimensions length precision:
-    int dimdec = graphic->getVariableInt("$DIMDEC", 4);
+    int dimdec = graphic->getVariableInt("$DIMDEC", luprec);
     updateCBLengthPrecision(cbDimLUnit, cbDimDec);
     cbDimDec->setCurrentIndex(dimdec);
+    // Dimensions length zeros:
+    int dimzin = graphic->getVariableInt("$DIMZIN", 1);
+    cbDimZin->setLinear();
+    cbDimZin->setData(dimzin);
 
     // Dimensions / angle format:
-    int dimaunit = graphic->getVariableInt("$DIMAUNIT", 0);
+    int dimaunit = graphic->getVariableInt("$DIMAUNIT", aunits);
     cbDimAUnit->setCurrentIndex(dimaunit);
 
     // Dimensions angle precision:
-    int dimadec = graphic->getVariableInt("$DIMADEC", 2);
+    int dimadec = graphic->getVariableInt("$DIMADEC", auprec);
     updateCBAnglePrecision(cbDimAUnit, cbDimADec);
     cbDimADec->setCurrentIndex(dimadec);
+    // Dimensions angle zeros:
+    int dimazin = graphic->getVariableInt("$DIMAZIN", 0);
+//    cbDimAZin->setCurrentIndex(dimazin);
+    cbDimAZin->setData(dimazin);
 
     int dimclrd = graphic->getVariableInt("$DIMCLRD", 0);
     int dimclre = graphic->getVariableInt("$DIMCLRE", 0);
@@ -477,8 +485,11 @@ void QG_DlgOptionsDrawing::validate() {
         graphic->addVariable("$DIMFXLON", cbDimFxLon->isChecked()? 1:0, 70);
         graphic->addVariable("$DIMLUNIT", cbDimLUnit->currentIndex()+1, 70);
         graphic->addVariable("$DIMDEC", cbDimDec->currentIndex(), 70);
+        graphic->addVariable("$DIMZIN", cbDimZin->getData(), 70);
         graphic->addVariable("$DIMAUNIT", cbDimAUnit->currentIndex(), 70);
         graphic->addVariable("$DIMADEC", cbDimADec->currentIndex(), 70);
+//        graphic->addVariable("$DIMAZIN", cbDimAZin->currentIndex(), 70);
+        graphic->addVariable("$DIMAZIN", cbDimAZin->getData(), 70);
         int colNum, colRGB;
         colNum = RS_FilterDXFRW::colorToNumber(cbDimClrD->getColor(), &colRGB);
         graphic->addVariable("$DIMCLRD", colNum, 70);
@@ -503,6 +514,9 @@ void QG_DlgOptionsDrawing::validate() {
 
         graphic->setModified(true);
     }
+    qDebug() << "DimZin:" << cbDimZin->getData();
+    qDebug() << "DimAzin:" << cbDimAZin->getData();
+    qDebug() << "end";
     accept();
 }
 
