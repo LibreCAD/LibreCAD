@@ -189,6 +189,8 @@ public:
     QString getTextStyle();
 
         double getGraphicVariable(const QString& key, double defMM, int code);
+        static QString stripZerosAngle(QString angle, int zeros=0);
+        static QString stripZerosLinear(QString linear, int zeros=1);
 
         //	virtual double getLength() {
         //		return -1.0;

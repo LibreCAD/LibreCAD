@@ -529,7 +529,62 @@ double RS_Dimension::getGraphicVariable(const QString& key, double defMM,
     return v;
 }
 
+/**
+ * Removes zeros from angle string.
+ *
+ * @param angle The string representing angle.
+ * @param zeros Zeros supresion (0 none, 1 suppres leading, 2 suppres trailing, 3 both)
+ * Decimal separator are '.'
+ *
+ * @ret String with the formatted angle.
+ */
 
+QString RS_Dimension::stripZerosAngle(QString angle, int zeros){
+    if (zeros == 0) //do nothing
+        return angle;
+    if (zeros & 2){
+        int end = angle.size() - 1;
+        QChar format = angle[end--];  //stores & skip format char
+        while (end > 0 && angle[end] == QChar('0')) // locate first 0 from end
+            end--;
+        if (angle[end] == QChar('.'))
+            end--;
+        angle.truncate(end+1);
+        angle.append(format);
+    }
+    if (zeros & 1){
+        if (angle[0] == QChar('0') & angle[1] == QChar('.'))
+        angle = angle.remove(0, 1);
+    }
+    return angle;
+}
+
+/**
+ * Removes zeros from linear string.
+ *
+ * @param linear The string representing linear measure.
+ * @param zeros Zeros supresion (see dimzin)
+ *
+ * @ret String with the formatted linear measure.
+ */
+
+QString RS_Dimension::stripZerosLinear(QString linear, int zeros){
+    if (zeros == 1) //do nothing
+        return linear;
+    if (zeros & 8){
+        int end = linear.size() - 1;
+         while (end > 0 && linear[end] == QChar('0')) // locate first 0 from end
+            end--;
+        if (linear[end] == QChar('.'))
+            end--;
+        linear.truncate(end+1);
+    }
+    if (zeros & 4){
+        if (linear[0] == QChar('0') & linear[1] == QChar('.'))
+        linear = linear.remove(0, 1);
+    }
+    return linear;
+}
 
 
 void RS_Dimension::move(const RS_Vector& offset) {
