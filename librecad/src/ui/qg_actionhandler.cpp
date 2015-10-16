@@ -276,7 +276,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionEditCut:
 		if(!doc->countSelected()){
-			a = new RS_ActionSelect(*doc, *gv, RS2::ActionEditCutNoSelect);
+			a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionEditCutNoSelect);
 			break;
 		}
     case RS2::ActionEditCutNoSelect:
@@ -284,7 +284,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
 	case RS2::ActionEditCopy:
 		if(!doc->countSelected()){
-			a = new RS_ActionSelect(*doc, *gv, RS2::ActionEditCopyNoSelect);
+			a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionEditCopyNoSelect);
 			break;
 		}
     case RS2::ActionEditCopyNoSelect:
@@ -295,20 +295,20 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionOrderBottom:
         orderType = RS2::ActionOrderBottom;
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
+        a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionOrderNoSelect);
         break;
     case RS2::ActionOrderLower:
         orderType = RS2::ActionOrderLower;
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
+        a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionOrderNoSelect);
         break;
     case RS2::ActionOrderRaise:
         orderType = RS2::ActionOrderRaise;
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
+        a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionOrderNoSelect);
         break;
     case RS2::ActionOrderTop:
 		if(!doc->countSelected()){
 			orderType = RS2::ActionOrderTop;
-			a = new RS_ActionSelect(*doc, *gv, RS2::ActionOrderNoSelect);
+			a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionOrderNoSelect);
 			break;
 		}
     case RS2::ActionOrderNoSelect:
@@ -552,7 +552,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDrawText(*doc, *gv);
         break;
     case RS2::ActionDrawHatch:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionDrawHatchNoSelect);
+        a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionDrawHatchNoSelect);
         break;
 	case RS2::ActionDrawHatchNoSelect:
 	{
@@ -596,27 +596,27 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         //
     case RS2::ActionModifyAttributes:
 		if(!doc->countSelected()){
-			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyAttributesNoSelect);
+			a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionModifyAttributesNoSelect);
 			break;
 		}
     case RS2::ActionModifyAttributesNoSelect:
         a = new RS_ActionModifyAttributes(*doc, *gv);
         break;
     case RS2::ActionModifyDelete:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyDeleteNoSelect);
+        a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionModifyDeleteNoSelect);
         break;
     case RS2::ActionModifyDeleteNoSelect:
         a = new RS_ActionModifyDelete(*doc, *gv);
         break;
     case RS2::ActionModifyDeleteQuick:
-        a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyDeleteQuick);
+        a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionModifyDeleteQuick);
         break;
     case RS2::ActionModifyDeleteFree:
         a = new RS_ActionModifyDeleteFree(*doc, *gv);
         break;
     case RS2::ActionModifyMove:
 		if(!doc->countSelected()){
-			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyMoveNoSelect);
+			a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionModifyMoveNoSelect);
 			break;
 		}
     case RS2::ActionModifyMoveNoSelect:
@@ -624,7 +624,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
 	case RS2::ActionModifyRevertDirection:
 		if(!doc->countSelected()){
-			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyRevertDirectionNoSelect);
+			a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionModifyRevertDirectionNoSelect);
 			break;
 		}
 	case RS2::ActionModifyRevertDirectionNoSelect:
@@ -632,7 +632,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 		break;
 	case RS2::ActionModifyRotate:
 		if(!doc->countSelected()){
-			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyRotateNoSelect);
+			a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionModifyRotateNoSelect);
 			break;
 		}
     case RS2::ActionModifyRotateNoSelect:
@@ -640,7 +640,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionModifyScale:
 		if(!doc->countSelected()){
-			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyScaleNoSelect);
+			a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionModifyScaleNoSelect);
 			break;
 		}
     case RS2::ActionModifyScaleNoSelect:
@@ -648,7 +648,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 		break;
     case RS2::ActionModifyMirror:
 		if(!doc->countSelected()){
-			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyMirrorNoSelect);
+			a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionModifyMirrorNoSelect);
 			break;
 		}
     case RS2::ActionModifyMirrorNoSelect:
@@ -656,7 +656,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
 	case RS2::ActionModifyMoveRotate:
 		if(!doc->countSelected()){
-			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyMoveRotateNoSelect);
+			a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionModifyMoveRotateNoSelect);
 			break;
 		}
     case RS2::ActionModifyMoveRotateNoSelect:
@@ -664,7 +664,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
 	case RS2::ActionModifyRotate2:
 		if(!doc->countSelected()){
-			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyRotate2NoSelect);
+			a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionModifyRotate2NoSelect);
 			break;
 		}
     case RS2::ActionModifyRotate2NoSelect:
@@ -700,7 +700,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     {
         std::set<RS2::EntityType> const allowedOffsetTypes={RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline};
         if(!doc->countSelected(true, allowedOffsetTypes)){
-            a = new RS_ActionSelect(*doc, *gv,RS2::ActionModifyOffsetNoSelect, allowedOffsetTypes);
+            a = new RS_ActionSelect(this, *doc, *gv,RS2::ActionModifyOffsetNoSelect, allowedOffsetTypes);
 			break;
 		}
 	}
@@ -709,7 +709,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 		break;
 	case RS2::ActionModifyExplodeText:
 		if(!doc->countSelected(false, {RS2::EntityText, RS2::EntityMText})){
-			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyExplodeTextNoSelect);
+			a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionModifyExplodeTextNoSelect);
 			break;
 		}
     case RS2::ActionModifyExplodeTextNoSelect:
@@ -801,7 +801,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
 	case RS2::ActionInfoTotalLength:
 		if(!doc->countSelected()){
-			a = new RS_ActionSelect(*doc, *gv, RS2::ActionInfoTotalLengthNoSelect);
+			a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionInfoTotalLengthNoSelect);
 			break;
 		}
     case RS2::ActionInfoTotalLengthNoSelect:
@@ -871,7 +871,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionBlocksCreate:
 		if(!doc->countSelected()){
-			a = new RS_ActionSelect(*doc, *gv, RS2::ActionBlocksCreateNoSelect);
+			a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionBlocksCreateNoSelect);
 			break;
 		}
     case RS2::ActionBlocksCreateNoSelect:
@@ -879,7 +879,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
 	case RS2::ActionBlocksExplode:
 		if(!doc->countSelected(true, {RS2::EntityBlock})){
-			a = new RS_ActionSelect(*doc, *gv, RS2::ActionBlocksExplodeNoSelect);
+			a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionBlocksExplodeNoSelect);
 			break;
 		}
     case RS2::ActionBlocksExplodeNoSelect:
@@ -1116,6 +1116,7 @@ bool QG_ActionHandler::command(const QString& cmd) {
     //   it might be intended to launch a new command
     //    std::cout<<"QG_ActionHandler::command(): e.isAccepted()="<<e.isAccepted()<<std::endl;
     if (!e.isAccepted()) {
+
         RS_DEBUG->print("QG_ActionHandler::command: convert cmd to action type");
         // command for new action:
         RS2::ActionType type = RS_COMMANDS->cmdToAction(cmd);

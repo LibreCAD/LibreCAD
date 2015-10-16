@@ -29,6 +29,7 @@
 
 #include <set>
 #include "rs_actioninterface.h"
+#include "qg_actionhandler.h"
 
 
 /**
@@ -40,7 +41,8 @@ class RS_ActionSelect : public RS_ActionInterface {
         Q_OBJECT
 public:
 
-    RS_ActionSelect(RS_EntityContainer& container,
+    RS_ActionSelect(QG_ActionHandler* a_handler,
+                    RS_EntityContainer& container,
                     RS_GraphicView& graphicView,
                     RS2::ActionType nextAction,
                     std::set<RS2::EntityType> const& entityTypeList=std::set<RS2::EntityType>());
@@ -50,16 +52,17 @@ public:
     virtual void resume();
     //virtual void keyPressEvent(QKeyEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateToolBar();
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
     virtual int countSelected();
     void requestFinish(bool keep=false);
+    void keyPressEvent(QKeyEvent* e);
 
 private:
     std::set<RS2::EntityType> const entityTypeList;
     RS2::ActionType nextAction;
     bool selectSingle;
+    QG_ActionHandler* action_handler;
 };
 
 #endif

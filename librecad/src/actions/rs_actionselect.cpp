@@ -32,7 +32,8 @@
 #include "rs_actionselectsingle.h"
 
 
-RS_ActionSelect::RS_ActionSelect(RS_EntityContainer& container,
+RS_ActionSelect::RS_ActionSelect(QG_ActionHandler* a_handler,
+                                 RS_EntityContainer& container,
                                  RS_GraphicView& graphicView,
                                  RS2::ActionType nextAction,
                                  std::set<RS2::EntityType> const& entityTypeList)
@@ -40,6 +41,7 @@ RS_ActionSelect::RS_ActionSelect(RS_EntityContainer& container,
 	,entityTypeList(entityTypeList)
 	,nextAction(nextAction)
 	,selectSingle(false)
+    ,action_handler(a_handler)
 {
 	actionType=RS2::ActionSelect;
 }
@@ -83,31 +85,6 @@ int RS_ActionSelect::countSelected() {
             RS_DIALOGFACTORY->commandMessage(tr("No entity selected!"));
         }
         return ret;
-}
-
-void RS_ActionSelect::updateToolBar() {
-    if (RS_DIALOGFACTORY) {
-        if (isFinished()){
-            if(container->countSelected()==0){
-                //some nextAction segfault with empty selection
-                //todo: make actions safe with empty selection, issue#235
-                RS_DIALOGFACTORY->commandMessage(tr("No entity selected!"));
-                //do not keep toolbar select after this action finishes, issue#291
-            } else{
-                if ( entityTypeList.size()){
-                    //only select entity types from the given list
-                    //fixme, need to handle resolution level
-
-					for(auto e: *container){
-						if (e && e->isSelected()) {
-							if(!entityTypeList.count(e->rtti()))
-								e->setSelected(false);
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
 void RS_ActionSelect::updateMouseButtonHints() {
@@ -179,4 +156,14 @@ void RS_ActionSelect::updateMouseCursor() {
         }
     }
 }
+
+void RS_ActionSelect::keyPressEvent(QKeyEvent* e)
+{
+    if (e->key()==Qt::Key_Enter && countSelected() > 0)
+    {
+        finish();
+        action_handler->setCurrentAction(nextAction);
+    }
+}
+
 // EOF
