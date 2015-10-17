@@ -34,14 +34,10 @@
 
 
 
-RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container,
-                                       RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Hatch",
-                           container, graphicView)
-		,hatch(nullptr)
-        ,m_bShowArea(false)
+RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container, RS_GraphicView& graphicView)
+                                :RS_PreviewActionInterface("Draw Hatch", container, graphicView)
 {
-	actionType=RS2::ActionDrawHatch;
+    actionType = RS2::ActionDrawHatch;
 }
 
 void RS_ActionDrawHatch::setShowArea(bool s){

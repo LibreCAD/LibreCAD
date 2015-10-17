@@ -552,15 +552,14 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDrawText(*doc, *gv);
         break;
     case RS2::ActionDrawHatch:
-        a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionDrawHatchNoSelect);
-        break;
+        if(!doc->countSelected())
+        {
+            a = new RS_ActionSelect(this, *doc, *gv, RS2::ActionDrawHatchNoSelect);
+            break;
+        }
 	case RS2::ActionDrawHatchNoSelect:
-	{
-		auto p = new RS_ActionDrawHatch(*doc, *gv);
-		p->setShowArea(true);
-		a=p;
-	}
-        break;
+		a = new RS_ActionDrawHatch(*doc, *gv);
+        break;   
     case RS2::ActionDrawImage:
         a = new RS_ActionDrawImage(*doc, *gv);
         break;
@@ -1486,7 +1485,7 @@ void QG_ActionHandler::slotDrawText() {
 }
 
 void QG_ActionHandler::slotDrawHatch() {
-    setCurrentAction(RS2::ActionDrawHatchNoSelect);
+    setCurrentAction(RS2::ActionDrawHatch);
 }
 
 void QG_ActionHandler::slotDrawImage() {

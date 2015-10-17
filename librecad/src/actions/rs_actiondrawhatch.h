@@ -61,8 +61,8 @@ public:
 
 private:
     RS_HatchData data;
-	RS_Hatch* hatch;
-    bool m_bShowArea;
+    RS_Hatch* hatch{nullptr};
+    bool m_bShowArea{true};
 };
 
 #endif
