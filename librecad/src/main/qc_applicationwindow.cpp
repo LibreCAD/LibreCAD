@@ -3100,16 +3100,10 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     QList<QAction*> list_a;
 
-    bool custom_size = RS_SETTINGS->readNumEntry("/Appearance/SetIconSize", 0);
-    int icon_size; // sidebar dockwidgets
-    if (custom_size)
-    {
-        icon_size = RS_SETTINGS->readNumEntry("/Appearance/IconSize", 22);
-    }
-    else
-    {
-        icon_size = 22;
-    }
+    RS_SETTINGS->beginGroup("/Appearance");
+    bool custom_size = RS_SETTINGS->readNumEntry("/SetIconSize", 0);
+    int icon_size = custom_size ? RS_SETTINGS->readNumEntry("/IconSize", 22) : 22;
+    RS_SETTINGS->endGroup();
 
     int columns = 5; // sidebar dockwidgets
 
