@@ -3117,9 +3117,9 @@ void QC_ApplicationWindow::menus_and_toolbars()
     connect(tools, SIGNAL(triggered(QAction*)), this, SLOT(slot_set_action(QAction*)));
     connect(this, SIGNAL(windowsChanged(bool)), tools, SLOT(setEnabled(bool)));
 
-    LC_ActionFactory a_factory;
+    LC_ActionFactory a_factory(this);
     QMap<QString, QAction*> map_a;
-    map_a = a_factory.action_map(actionHandler, this, tools);
+    map_a = a_factory.action_map(actionHandler, tools);
 
     QMenuBar* menu_bar = menuBar();
 

@@ -25,20 +25,17 @@
 #ifndef LC_ACTIONFACTORY_H
 #define LC_ACTIONFACTORY_H
 
-#include <QAction>
-#include <QActionGroup>
-
 #include "qg_actionhandler.h"
 
+class QActionGroup;
 
 class LC_ActionFactory : public QObject
 {
     Q_OBJECT
 
 public:
-    LC_ActionFactory();
-    virtual ~LC_ActionFactory() = default;
-    QMap<QString, QAction*> action_map(QG_ActionHandler* action_handler, QObject* main_window, QActionGroup* tools);
+    LC_ActionFactory(QObject* parent = 0);
+    QMap<QString, QAction*> action_map(QG_ActionHandler* action_handler, QActionGroup* tools);
 };
 
 #endif
