@@ -514,9 +514,6 @@ void QG_DlgOptionsDrawing::validate() {
 
         graphic->setModified(true);
     }
-    qDebug() << "DimZin:" << cbDimZin->getData();
-    qDebug() << "DimAzin:" << cbDimAZin->getData();
-    qDebug() << "end";
     accept();
 }
 
