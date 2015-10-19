@@ -230,6 +230,27 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
 }
 
 /**
+ * Implementation of the method which handles dimension styles.
+ */
+void RS_FilterDXFRW::addDimStyle(const DRW_Dimstyle& data){
+    RS_DEBUG->print("RS_FilterDXFRW::addLayer");
+    QString dimstyle = graphic->getVariableString("$DIMSTYLE", "standard");
+
+    if (QString::compare(data.name.c_str(), dimstyle, Qt::CaseInsensitive) == 0) {
+        if (libVersionStr == "dxfrw" && libVersion==0 && libRelease < 62){
+            graphic->addVariable("$DIMDEC", graphic->getVariableInt("$DIMDEC",
+                                            graphic->getVariableInt("$LUPREC", 4)), 70);
+            graphic->addVariable("$DIMADEC", graphic->getVariableInt("$DIMADEC",
+                                             graphic->getVariableInt("$AUPREC", 2)), 70);
+            //do nothing;
+        } else {
+            graphic->addVariable("$DIMDEC", data.dimdec, 70);
+            graphic->addVariable("$DIMADEC", data.dimadec, 70);
+        }
+    }
+}
+
+/**
  * Implementation of the method which handles vports.
  */
 void RS_FilterDXFRW::addVport(const DRW_Vport &data) {
@@ -1285,6 +1306,12 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
     codePage = graphic->getVariableString("$DWGCODEPAGE", "ANSI_1252");
     textStyle = graphic->getVariableString("$TEXTSTYLE", "Standard");
     dimStyle = graphic->getVariableString("$DIMSTYLE", "Standard");
+    //initialize units vars if not are present in dxf file
+    graphic->getVariableInt("$LUNITS", 2);
+    graphic->getVariableInt("$LUPREC", 4);
+    graphic->getVariableInt("$AUNITS", 0);
+    graphic->getVariableInt("$AUPREC", 4);
+
 
     QString acadver = versionStr = graphic->getVariableString("$ACADVER", "");
     acadver.replace(QRegExp("[a-zA-Z]"), "");
@@ -1960,11 +1987,30 @@ void RS_FilterDXFRW::writeVports(){
 void RS_FilterDXFRW::writeDimstyles(){
     DRW_Dimstyle dsty;
     dsty.name = "Standard";
+    dsty.dimscale = graphic->getVariableDouble("$DIMSCALE", 1.0);
     dsty.dimasz = graphic->getVariableDouble("$DIMASZ", 2.5);
-    dsty.dimexe = graphic->getVariableDouble("$DIMEXE", 1.25);
     dsty.dimexo = graphic->getVariableDouble("$DIMEXO", 0.625);
-    dsty.dimgap = graphic->getVariableDouble("$DIMGAP", 0.625);
+    dsty.dimexe = graphic->getVariableDouble("$DIMEXE", 1.25);
+    dsty.dimfxl = graphic->getVariableDouble("$DIMFXL", 1.0);
     dsty.dimtxt = graphic->getVariableDouble("$DIMTXT", 2.5);
+    dsty.dimtsz = graphic->getVariableDouble("$DIMTSZ", 2.5);
+    dsty.dimlfac = graphic->getVariableDouble("$DIMLFAC", 1.0);
+    dsty.dimgap = graphic->getVariableDouble("$DIMGAP", 0.625);
+    dsty.dimtih = graphic->getVariableInt("$DIMTIH", 2);
+    dsty.dimzin = graphic->getVariableInt("$DIMZIN", 1);
+    dsty.dimazin = graphic->getVariableInt("$DIMAZIN", 0);
+    dsty.dimclrd = graphic->getVariableInt("$DIMCLRD", 0);
+    dsty.dimclre = graphic->getVariableInt("$DIMCLRE", 0);
+    dsty.dimclrt = graphic->getVariableInt("$DIMCLRT", 0);
+    dsty.dimadec = graphic->getVariableInt("$DIMADEC", 0);
+    dsty.dimdec = graphic->getVariableInt("$DIMDEC", 2);
+    dsty.dimaunit = graphic->getVariableInt("$DIMAUNIT", 0);
+    dsty.dimlunit = graphic->getVariableInt("$DIMLUNIT", 2);
+    dsty.dimdsep = graphic->getVariableInt("$DIMDSEP", 0);
+    dsty.dimfxlon = graphic->getVariableInt("$DIMFXLON", 0);
+    dsty.dimtxsty = graphic->getVariableString("$DIMTXSTY", "standard").toStdString();
+    dsty.dimlwd = graphic->getVariableInt("$DIMLWD", -2);
+    dsty.dimlwe = graphic->getVariableInt("$DIMLWE", -2);
     dxfW->writeDimstyle(&dsty);
 }
 
