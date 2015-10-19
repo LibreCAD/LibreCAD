@@ -228,6 +228,9 @@ void DRW_Dimstyle::parseCode(int code, dxfReader *reader){
     case 48:
         dimtm = reader->getDouble();
         break;
+    case 49:
+        dimfxl = reader->getDouble();
+        break;
     case 140:
         dimtxt = reader->getDouble();
         break;
@@ -371,6 +374,9 @@ void DRW_Dimstyle::parseCode(int code, dxfReader *reader){
         break;
     case 289:
         dimatfit = reader->getInt32();
+        break;
+    case 290:
+        dimfxlon = reader->getInt32();
         break;
     case 340:
         dimtxsty = reader->getUtf8String();

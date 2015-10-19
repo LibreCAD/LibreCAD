@@ -1525,7 +1525,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
         if (getInt("$DIMASSOC", &varInt))
             writer->writeInt16(280, varInt);
         else
-            writer->writeInt16(280, 0);
+            writer->writeInt16(280, 1);
         writer->writeString(9, "$PROJECTNAME");
         if (getStr("$PROJECTNAME", &varStr))
             writer->writeUtf8String(1, varStr);
