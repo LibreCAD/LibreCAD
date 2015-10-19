@@ -99,7 +99,7 @@ bool DRW_Entity::parseCode(int code, dxfReader *reader){
         colorName = reader->getString();
         break;
     case 67:
-        space = (DRW::Space)reader->getInt32(); //RLZ verify cast values
+        space = static_cast<DRW::Space>(reader->getInt32());
         break;
     case 102:
         parseDxfGroups(code, reader);
@@ -177,7 +177,7 @@ bool DRW_Entity::parseDxfGroups(int code, dxfReader *reader){
                     curr.addInt(reader->getInt32());
                     break;
                 case dxfReader::DOUBLE:
-                    curr.addInt(reader->getDouble());
+                    curr.addDouble(reader->getDouble());
                     break;
                 case dxfReader::BOOL:
                     curr.addInt(reader->getInt32());
@@ -240,20 +240,20 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
         /* RLZ: TODO */
         dwgHandle ah = buf->getHandle();
         DRW_DBG("App Handle: "); DRW_DBGHL(ah.code, ah.size, ah.ref);
-        duint8 byteStr[extDataSize];
-        buf->getBytes(byteStr, extDataSize);
-        dwgBuffer buff(byteStr, extDataSize, buf->decoder);
+        duint8 *tmpExtData = new duint8[extDataSize];
+        buf->getBytes(tmpExtData, extDataSize);
+        dwgBuffer tmpExtDataBuf(tmpExtData, extDataSize, buf->decoder);
 
-        duint8 dxfCode = buff.getRawChar8();
+        duint8 dxfCode = tmpExtDataBuf.getRawChar8();
         DRW_DBG(" dxfCode: "); DRW_DBG(dxfCode);
         switch (dxfCode){
         case 0:{
-            duint8 strLength = buff.getRawChar8();
+            duint8 strLength = tmpExtDataBuf.getRawChar8();
             DRW_DBG(" strLength: "); DRW_DBG(strLength);
-            duint16 cp = buff.getBERawShort16();
+            duint16 cp = tmpExtDataBuf.getBERawShort16();
             DRW_DBG(" str codepage: "); DRW_DBG(cp);
             for (int i=0;i< strLength+1;i++) {//string length + null terminating char
-                duint8 dxfChar = buff.getRawChar8();
+                duint8 dxfChar = tmpExtDataBuf.getRawChar8();
                 DRW_DBG(" dxfChar: "); DRW_DBG(dxfChar);
             }
             break;
@@ -262,20 +262,22 @@ bool DRW_Entity::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBu
             /* RLZ: TODO */
             break;
         }
+        delete[]tmpExtData;
         extDataSize = buf->getBitShort(); //BS
         DRW_DBG(" ext data size: "); DRW_DBG(extDataSize);
     } //end parsing extData (EED)
     duint8 graphFlag = buf->getBit(); //B
     DRW_DBG(" graphFlag: "); DRW_DBG(graphFlag); DRW_DBG("\n");
     if (graphFlag) {
-        duint32 graphData = buf->getRawLong32();  //RL 32bits
-        DRW_DBG("graphData in bytes: "); DRW_DBG(graphData); DRW_DBG("\n");
+        duint32 graphDataSize = buf->getRawLong32();  //RL 32bits
+        DRW_DBG("graphData in bytes: "); DRW_DBG(graphDataSize); DRW_DBG("\n");
 // RLZ: TODO
         //skip graphData bytes
-        duint8 byteStr[graphData];
-        buf->getBytes(byteStr, graphData);
-        dwgBuffer buff(byteStr, graphData, buf->decoder);
-        DRW_DBG("graph data remaining bytes: "); DRW_DBG(buff.numRemainingBytes()); DRW_DBG("\n");
+        duint8 *tmpGraphData = new duint8[graphDataSize];
+        buf->getBytes(tmpGraphData, graphDataSize);
+        dwgBuffer tmpGraphDataBuf(tmpGraphData, graphDataSize, buf->decoder);
+        DRW_DBG("graph data remaining bytes: "); DRW_DBG(tmpGraphDataBuf.numRemainingBytes()); DRW_DBG("\n");
+        delete[]tmpGraphData;
     }
     if (version < DRW::AC1015) {//14-
         objSize = buf->getRawLong32();  //RL 32bits object size in bits
@@ -789,7 +791,7 @@ void DRW_Ellipse::toPolyline(DRW_Polyline *pol, int parts){
     sinRot = sin(incAngle);
     incAngle = M_PIx2 / parts;
     curAngle = staparam;
-    int i = curAngle/incAngle;
+    int i = static_cast<int>(curAngle / incAngle);
     do {
         if (curAngle > endparam) {
             curAngle = endparam;

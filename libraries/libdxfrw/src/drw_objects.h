@@ -132,13 +132,13 @@ public:
         dimexo = 0.0625;
         dimgap = dimcen = 0.09;
         dimtxsty = "Standard";
-        dimscale = dimlfac = dimtfac = 1.0;
+        dimscale = dimlfac = dimtfac = dimfxl = 1.0;
         dimdli = 0.38;
         dimrnd = dimdle = dimtp = dimtm = dimtsz = dimtvp = 0.0;
         dimaltf = 25.4;
         dimtol = dimlim = dimse1 = dimse2 = dimtad = dimzin = 0;
         dimtoh = dimtolj = 1;
-        dimalt = dimtofl = dimsah = dimtix = dimsoxd =0;
+        dimalt = dimtofl = dimsah = dimtix = dimsoxd = dimfxlon = 0;
         dimaltd = dimunit = dimaltu = dimalttd = dimlunit = 2;
         dimclrd = dimclre = dimclrt = dimjust = dimupt = 0;
         dimazin = dimaltz = dimaltttz = dimtzin = dimfrac = 0;
@@ -172,6 +172,7 @@ public:
     double dimdle;            /*!< code 46 */
     double dimtp;             /*!< code 47 */
     double dimtm;             /*!< code 48 */
+    double dimfxl;            /*!< code 49 V2007+ */
     double dimtxt;            /*!< code 140 */
     double dimcen;            /*!< code 141 */
     double dimtsz;            /*!< code 142 */
@@ -220,6 +221,7 @@ public:
     int dimfit;               /*!< code 287 R13+  (obsolete 2000+, use dimatfit & dimtmove)*/
     int dimupt;               /*!< code 288 R13+ */
     int dimatfit;             /*!< code 289 V2000+ */
+    int dimfxlon;             /*!< code 290 V2007+ */
     UTF8STRING dimtxsty;      /*!< code 340 R13+ */
     UTF8STRING dimldrblk;     /*!< code 341 V2000+ */
     int dimlwd;               /*!< code 371 V2000+ */

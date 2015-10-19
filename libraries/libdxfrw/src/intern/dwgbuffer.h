@@ -91,6 +91,7 @@ public:
     bool moveBitPos(dint32 size);
 
     duint8 getBit();  //B
+    bool getBoolBit();  //B as bool
     duint8 get2Bits(); //BB
     duint8 get3Bits(); //3B
     duint16 getBitShort(); //BS

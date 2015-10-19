@@ -13,7 +13,7 @@
 #ifndef DRW_BASE_H
 #define DRW_BASE_H
 
-#define DRW_VERSION "0.6.1"
+#define DRW_VERSION "0.6.3"
 
 #include <string>
 #include <list>

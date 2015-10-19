@@ -122,12 +122,14 @@ bool dwgReader15::readDwgHeader(DRW_Header& hdr){
         return false;
     if (!fileBuf->setPosition(si.address))
         return false;
-    duint8 byteStr[si.size];
-    fileBuf->getBytes(byteStr, si.size);
-    dwgBuffer buff(byteStr, si.size, &decoder);
+    duint8 *tmpByteStr = new duint8[si.size];
+    fileBuf->getBytes(tmpByteStr, si.size);
+    dwgBuffer buff(tmpByteStr, si.size, &decoder);
     DRW_DBG("Header section sentinel= ");
     checkSentinel(&buff, secEnum::HEADER, true);
-    return dwgReader::readDwgHeader(hdr, &buff, &buff);
+    bool ret = dwgReader::readDwgHeader(hdr, &buff, &buff);
+    delete[]tmpByteStr;
+    return ret;
 }
 
 
@@ -147,9 +149,9 @@ bool dwgReader15::readDwgClasses(){
         DRW_DBG("\nWARNING dwgReader15::readDwgClasses size are "); DRW_DBG(size);
         DRW_DBG(" and secSize - 38 are "); DRW_DBG(si.size - 38); DRW_DBG("\n");
     }
-    duint8 byteStr[size];
-    fileBuf->getBytes(byteStr, size);
-    dwgBuffer buff(byteStr, size, &decoder);
+    duint8 *tmpByteStr = new duint8[size];
+    fileBuf->getBytes(tmpByteStr, size);
+    dwgBuffer buff(tmpByteStr, size, &decoder);
     size--; //reduce 1 byte instead of check pos + bitPos
     while (size > buff.getPosition()) {
         DRW_Class *cl = new DRW_Class();
@@ -159,8 +161,9 @@ bool dwgReader15::readDwgClasses(){
      DRW_DBG("\nCRC: "); DRW_DBGH(fileBuf->getRawShort16());
      DRW_DBG("\nclasses section end sentinel= ");
      checkSentinel(fileBuf, secEnum::CLASSES, false);
-
-    return buff.isGood();
+     bool ret = buff.isGood();
+     delete[]tmpByteStr;
+     return ret;
 }
 
 bool dwgReader15::readDwgHandles() {
