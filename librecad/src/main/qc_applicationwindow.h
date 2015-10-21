@@ -92,7 +92,6 @@ public:
     virtual void keyReleaseEvent(QKeyEvent* e);
     void setRedoEnable(bool enable);
     void setUndoEnable(bool enable);
-    void setPreviousZoomEnable(bool enable);
 
 public slots:
     void slot_set_action(QAction* q_action);
@@ -170,12 +169,12 @@ public slots:
     void slotScriptOpenIDE();
     void slotScriptRun();
 
-        void slotRunStartScript();
-        void slotRunScript();
-        void slotRunScript(const QString& name);
+    void slotRunStartScript();
+    void slotRunScript();
+    void slotRunScript(const QString& name);
 
-        void slotInsertBlock();
-        void slotInsertBlock(const QString& name);
+    void slotInsertBlock();
+    void slotInsertBlock(const QString& name);
 
     /** shows an about dlg*/
     void slotHelpAbout();
@@ -191,6 +190,8 @@ public slots:
     void goto_wiki();
 
     void slot_fullscreen(bool checked);
+
+    void setPreviousZoomEnable(bool enable);
 
 signals:
     void gridChanged(bool on);
@@ -389,9 +390,9 @@ private:
     static QAction* previousZoom;
     static QAction* undoButton;
     static QAction* redoButton;
-    bool previousZoomEnable;
-    bool undoEnable;
-    bool redoEnable;
+    bool previousZoomEnable{false};
+    bool undoEnable{false};
+    bool redoEnable{false};
 
     QG_SnapToolBar* snapToolBar;
 

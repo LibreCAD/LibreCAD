@@ -42,8 +42,8 @@ class QMouseEvent;
 class QKeyEvent;
 class RS_ActionInterface;
 class RS_EventHandler;
-class RS_Grid;
 class RS_CommandEvent;
+class RS_Grid;
 struct RS_LineTypePattern;
 
 
@@ -55,10 +55,14 @@ struct RS_LineTypePattern;
  * Note that this is just an interface used as a slot to
  * communicate with the LibreCAD from a GUI level.
  */
-class RS_GraphicView {
+class RS_GraphicView : public QWidget
+{
+    Q_OBJECT
+
 public:
-	RS_GraphicView();
-	virtual ~RS_GraphicView();
+	RS_GraphicView(QWidget * parent = 0, Qt::WindowFlags f = 0);
+
+    QObject* main_window{nullptr};
 
     void cleanUp();
 
@@ -381,8 +385,8 @@ public:
 
 protected:
 
-	RS_EntityContainer* container; // Holds a pointer to all the enties
-	std::unique_ptr<RS_EventHandler> eventHandler;
+    RS_EntityContainer* container{nullptr}; // Holds a pointer to all the enties
+	RS_EventHandler* eventHandler;
 
 
 	int mx=0;   //!< Last known mouse cursor position
@@ -407,7 +411,7 @@ protected:
 	/** End handle color */
 	RS_Color endHandleColor;
 	/** Grid */
-	std::unique_ptr<RS_Grid> grid;
+	RS_Grid* grid;
 	/**
 		 * Current default snap mode for this graphic view. Used for new
 		 * actions.
@@ -430,10 +434,8 @@ protected:
     QList<QAction*> recent_actions;
 
 private:
-	//! \brief init by settings
-	void init();
+
 	bool zoomFrozen=false;
-	//bool gridVisible;
 	bool draftMode=false;
 
 	RS_Vector factor=RS_Vector(1.,1.);
@@ -445,9 +447,6 @@ private:
 	unsigned short savedViewIndex=0;
 	unsigned short savedViewCount=0;
 	QDateTime previousViewTime;
-	//        RS_Vector previousFactor;
-	//        int previousOffsetX;
-	//    int previousOffsetY;
 
 	int borderLeft=0;
 	int borderTop=0;
@@ -466,6 +465,9 @@ private:
 	/** if true, graphicView is under cleanup */
 	bool m_bIsCleanUp=false;
 
+signals:
+    relative_zero_changed(const RS_Vector&);
+    previous_zoom_state(bool);
 };
 
 #endif

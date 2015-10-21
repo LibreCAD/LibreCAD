@@ -32,7 +32,7 @@
 #include <QCloseEvent>
 #include "rs.h"
 
-class QC_GraphicView;
+class QG_GraphicView;
 class RS_Document;
 class RS_Graphic;
 class RS_Pen;
@@ -53,9 +53,6 @@ public:
                  Qt::WindowFlags wflags=0);
     ~QC_MDIWindow();
 
-	void initDoc(RS_Document* doc=nullptr);
-    void initView();
-
 public slots:
 
 	void slotPenChanged(const RS_Pen& p);
@@ -72,7 +69,7 @@ public slots:
 
 public:
     /** @return Pointer to graphic view */
-	QC_GraphicView* getGraphicView() const;
+	QG_GraphicView* getGraphicView() const;
 
     /** @return Pointer to document */
 	RS_Document* getDocument() const;
@@ -117,7 +114,7 @@ private:
     /** ID counter */
     static int idCounter;
     /** Graphic view */
-    QC_GraphicView* graphicView;
+    QG_GraphicView* graphicView;
     /** Document */
     RS_Document* document;
     /** Does the window own the document? */
@@ -130,13 +127,13 @@ private:
      * Pointer to parent window which needs to know if this window 
      * is closed or NULL.
      */
-    QC_MDIWindow* parentWindow;
+    QC_MDIWindow* parentWindow{nullptr};
     QMdiArea* cadMdiArea;
 
 	/**
 	 * If flag is set, the user will not be asked about closing this file.
 	 */
-	bool forceClosing;
+    bool forceClosing{false};
 };
 
 

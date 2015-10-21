@@ -46,11 +46,11 @@ const double minimumGridWidth=1.0e-8;
 /**
  * Constructor.
  */
-RS_Grid::RS_Grid(RS_GraphicView* graphicView):
-	graphicView(graphicView)
- ,baseGrid(false)
-{
-}
+RS_Grid::RS_Grid(RS_GraphicView* graphicView)
+    :QObject(graphicView)
+	,graphicView(graphicView)
+    ,baseGrid(false)
+{}
 
 /**
  * find the closest grid point

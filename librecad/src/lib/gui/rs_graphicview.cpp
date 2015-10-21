@@ -28,8 +28,8 @@
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QAction>
+#include <QMouseEvent>
 #include <climits>
-#include "qc_applicationwindow.h"
 #include "rs_graphicview.h"
 
 #include "rs_line.h"
@@ -43,6 +43,7 @@
 #include "rs_settings.h"
 #include "rs_dialogfactory.h"
 #include "rs_layer.h"
+#include "rs_grid.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -51,27 +52,15 @@
 /**
  * Constructor.
  */
-RS_GraphicView::RS_GraphicView()
-	:container(nullptr)
+RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
+    :QWidget(parent, f)
 	,eventHandler(new RS_EventHandler(this))
-	,background()
-	,foreground()
 	,gridColor(Qt::gray)
 	,metaGridColor(RS_Color(64,64,64))
 	,grid(new RS_Grid(this))
 	,drawingMode(RS2::ModeFull)
 	,savedViews(16)
 	,previousViewTime(QDateTime::currentDateTime())
-{
-	init();
-}
-
-/**
- * Destructor.
- */
-RS_GraphicView::~RS_GraphicView() {}
-
-void RS_GraphicView::init()
 {
     RS_SETTINGS->beginGroup("Colors");
     setBackground(QColor(RS_SETTINGS->readEntry("/background", Colors::background)));
@@ -83,8 +72,6 @@ void RS_GraphicView::init()
     setHandleColor(QColor(RS_SETTINGS->readEntry("/handle", Colors::handle)));
     setEndHandleColor(QColor(RS_SETTINGS->readEntry("/end_handle", Colors::end_handle)));
     RS_SETTINGS->endGroup();
-
-    QC_ApplicationWindow::getAppWindow()->setPreviousZoomEnable(false);
 }
 
 /**
@@ -717,7 +704,7 @@ void RS_GraphicView::saveView() {
 	if(savedViewCount<savedViews.size()) savedViewCount++;
 
 	if(savedViewCount==1){
-		QC_ApplicationWindow::getAppWindow()->setPreviousZoomEnable(true);
+		emit previous_zoom_state(true);
 	}
 }
 
@@ -731,7 +718,7 @@ void RS_GraphicView::restoreView() {
 	if(savedViewCount == 0) return;
 	savedViewCount --;
 	if(savedViewCount==0){
-		QC_ApplicationWindow::getAppWindow()->setPreviousZoomEnable(false);
+		emit previous_zoom_state(false);
 	}
 	savedViewIndex = (savedViewIndex + savedViews.size() - 1)%savedViews.size();
 
@@ -1847,6 +1834,7 @@ double RS_GraphicView::toGraphDY(int d) const{
 void RS_GraphicView::setRelativeZero(const RS_Vector& pos) {
 	if (relativeZeroLocked==false) {
 		relativeZero = pos;
+        emit relative_zero_changed(pos);
 	}
 }
 
@@ -1877,11 +1865,11 @@ RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics pos
 }
 
 RS_Grid* RS_GraphicView::getGrid() const{
-	return grid.get();
+	return grid;
 }
 
 RS_EventHandler* RS_GraphicView::getEventHandler() const{
-	return eventHandler.get();
+	return eventHandler;
 }
 
 void RS_GraphicView::setBackground(const RS_Color& bg) {

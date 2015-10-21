@@ -28,18 +28,29 @@
 #ifndef RS_EVENTHANDLER_H
 #define RS_EVENTHANDLER_H
 
-#include "rs_graphicview.h"
-
 #define RS_MAXACTIONS 16
+
+#include "rs_vector.h"
+
+class RS_ActionInterface;
+class QAction;
+class QMouseEvent;
+class QKeyEvent;
+class RS_CommandEvent;
+class RS_SnapMode;
+class RS_Vector;
 
 /**
  * The event handler owns and manages all actions that are currently
  * active. All events going from the view to the actions come over
  * this class.
  */
-class RS_EventHandler {
+class RS_EventHandler : public QObject
+{
+    Q_OBJECT
+
 public:
-    RS_EventHandler(RS_GraphicView* graphicView);
+    RS_EventHandler(QObject* parent = 0);
     ~RS_EventHandler();
 
     void set_action(QAction* q_action);
@@ -75,6 +86,7 @@ public:
 	void debugActions() const;
     void setSnapMode(RS_SnapMode sm);
     void setSnapRestriction(RS2::SnapRestriction sr);
+    RS_Vector relative_zero;
 
 private:
     /**
@@ -86,12 +98,14 @@ private:
 
 	QAction* real_action{nullptr};
 	bool right_click_quits{false};
-	RS_GraphicView* graphicView{nullptr};
 	RS_ActionInterface* defaultAction{nullptr};
 	//    RS_ActionInterface* currentActions[RS_MAXACTIONS];
 	QList<RS_ActionInterface*> currentActions;
 //	int actionIndex;
 	bool coordinateInputEnabled{true};
+
+public slots:
+    void set_relative_zero(const RS_Vector&);
 };
 
 #endif

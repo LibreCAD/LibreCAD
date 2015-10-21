@@ -35,13 +35,16 @@
 #include "rs_coordinateevent.h"
 #include "rs_commands.h"
 #include "rs_math.h"
+#include "rs_snapper.h"
 
 /**
  * Constructor.
  */
-RS_EventHandler::RS_EventHandler(RS_GraphicView* graphicView):
-	graphicView(graphicView)
-{}
+RS_EventHandler::RS_EventHandler(QObject* parent) : QObject(parent)
+{
+    connect(parent, SIGNAL(relative_zero_changed(const RS_Vector&)),
+            this, SLOT(set_relative_zero(const RS_Vector&)));
+}
 
 /**
  * Destructor.
@@ -295,8 +298,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                         double y = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
 
                         if (ok1 && ok2) {
-                            RS_CoordinateEvent ce(RS_Vector(x,y) +
-                                                  graphicView->getRelativeZero());
+                            RS_CoordinateEvent ce(RS_Vector(x,y) + relative_zero);
 
                             currentActions.last()->coordinateEvent(&ce);
                             //                            currentActions[actionIndex]->coordinateEvent(&ce);
@@ -343,8 +345,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
 
                         if (ok1 && ok2) {
 							RS_Vector pos = RS_Vector::polar(r,RS_Math::deg2rad(a));
-                            RS_CoordinateEvent ce(pos +
-                                                  graphicView->getRelativeZero());
+                            RS_CoordinateEvent ce(pos + relative_zero);
                             currentActions.last()->coordinateEvent(&ce);
                         } else {
                             if (RS_DIALOGFACTORY) {
@@ -664,5 +665,9 @@ void RS_EventHandler::set_action(QAction* q_action)
     killAllActions();
 }
 
+void RS_EventHandler::set_relative_zero(const RS_Vector& point)
+{
+    relative_zero = point;
+}
 
 // EOF

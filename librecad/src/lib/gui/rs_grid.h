@@ -39,10 +39,12 @@ class QRectF;
  *
  * @author Andrew Mustun
  */
-class RS_Grid {
+class RS_Grid : public QObject
+{
+    Q_OBJECT
+
 public:
 	RS_Grid(RS_GraphicView* graphicView);
-	~RS_Grid()=default;
 
 	void updatePointArray();
 

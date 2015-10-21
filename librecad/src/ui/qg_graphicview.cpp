@@ -45,6 +45,7 @@
 #include "rs_dialogfactory.h"
 #include "qg_dialogfactory.h"
 #include "rs_eventhandler.h"
+#include "rs_actiondefault.h"
 
 
 #include "qg_scrollbar.h"
@@ -61,9 +62,8 @@
 /**
  * Constructor.
  */
-QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlags f)
-        :QWidget(parent, f)
-        ,RS_GraphicView()
+QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* doc)
+        :RS_GraphicView(parent, f)
         ,hScrollBar(new QG_ScrollBar(Qt::Horizontal, this))
         ,vScrollBar(new QG_ScrollBar(Qt::Vertical, this))
         ,layout(new QGridLayout(this))
@@ -76,8 +76,22 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, const char* name, Qt::WindowFlag
         ,redrawMethod(RS2::RedrawAll)
         ,isSmoothScrolling(false)
 {
-    setObjectName(name);
-    setBackground(background);
+    RS_DEBUG->print("QG_GraphicView::QG_GraphicView()..");
+
+    RS_DEBUG->print("  Setting Container..");
+    if (doc) {
+        setContainer(doc);
+        doc->setGraphicView(this);
+    }
+    RS_DEBUG->print("  container set.");
+    setFactorX(4.0);
+    setFactorY(4.0);
+    setOffset(50, 50);
+    setBorders(10, 10, 10, 10);
+
+	if (doc) {
+		setDefaultAction(new RS_ActionDefault(*doc, *this));
+	}
 
     layout->setMargin(0);
     layout->setSpacing(0);
@@ -323,7 +337,7 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* e)
     {
         if (!recent_actions.isEmpty())
         {
-            QMenu* context_menu = new QMenu;
+            QMenu* context_menu = new QMenu(this);
             context_menu->addActions(recent_actions);
             context_menu->exec(mapToGlobal(e->pos()));
         }

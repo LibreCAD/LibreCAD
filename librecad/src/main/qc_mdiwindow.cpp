@@ -48,7 +48,6 @@
 #include "rs_settings.h"
 #include "qg_exitdialog.h"
 #include "qg_filedialog.h"
-#include "qc_graphicview.h"
 #include "rs_insert.h"
 #include "rs_mtext.h"
 #include "rs_pen.h"
@@ -62,19 +61,28 @@ int QC_MDIWindow::idCounter = 0;
  *   document shall be created for this window.
  * @param parent Parent widget. Usually a workspace.
  */
-QC_MDIWindow::QC_MDIWindow(RS_Document* doc,
-                           QWidget* parent, Qt::WindowFlags wflags)
-        : QMainWindow(parent, wflags) {
-
+QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, Qt::WindowFlags wflags)
+                            : QMainWindow(parent, wflags)
+{
     setAttribute(Qt::WA_DeleteOnClose);
-    owner = false;
     cadMdiArea=qobject_cast<QMdiArea*>(parent);
-    forceClosing = false;
-    initDoc(doc);
-    initView();
+
+    if (doc==nullptr) {
+        document = new RS_Graphic();
+        document->newDoc();
+        owner = true;
+    } else {
+        document = doc;
+        owner = false;
+    }
+
+    graphicView = new QG_GraphicView(this, 0, document);
+    graphicView->setObjectName("graphicview");
+    connect(graphicView, SIGNAL(previous_zoom_state(bool)),
+            parent->window(), SLOT(setPreviousZoomEnable(bool)));
+    setCentralWidget(graphicView);
+
     id = idCounter++;
-    //childWindows.setAutoDelete(false);
-    parentWindow = NULL;
     setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
 	if (document) {
 		if (document->getLayerList()) {
@@ -86,11 +94,7 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc,
             document->getBlockList()->addListener(graphicView);
         }
     }
-//    setFocusPolicy(Qt::ClickFocus);
-    //showMaximized();
 }
-
-
 
 /**
  * Destructor.
@@ -133,7 +137,7 @@ QC_MDIWindow::~QC_MDIWindow()
     QC_ApplicationWindow::getAppWindow()->slotWindowActivated(subWindow);
 }
 
-QC_GraphicView* QC_MDIWindow::getGraphicView() const{
+QG_GraphicView* QC_MDIWindow::getGraphicView() const{
 	return graphicView;
 }
 
@@ -297,45 +301,6 @@ void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
 
     RS_DEBUG->print("QC_MDIWindow::closeEvent end");
 }
-
-
-
-/**
- * Init the document.
- *
- * @param type Document type. RS:EntityGraphic or RS2::EntityBlock
- * @param container Entity container to be used as document or NULL
- * if a new document should be created.
- */
-void QC_MDIWindow::initDoc(RS_Document* doc) {
-
-    RS_DEBUG->print("QC_MDIWindow::initDoc()");
-
-    if (doc==NULL) {
-        document = new RS_Graphic();
-        document->newDoc();
-        owner = true;
-    } else {
-        document = doc;
-        owner = false;
-    }
-
-}
-
-
-
-/**
- * Init the view.
- */
-void QC_MDIWindow::initView() {
-    RS_DEBUG->print("QC_MDIWindow::initView()");
-
-    graphicView = new QC_GraphicView(document, this);
-    setCentralWidget(graphicView);
-//    graphicView->setFocus();
-}
-
-
 
 /**
  * Called when the current pen (color, style, width) has changed.

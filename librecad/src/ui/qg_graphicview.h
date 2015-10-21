@@ -44,14 +44,14 @@ class QG_ScrollBar;
  * Instances of this class can be linked to layer lists using
  * addLayerListListener().
  */
-class QG_GraphicView: public QWidget,
-            public RS_GraphicView,
-            public RS_LayerListListener,
-    public RS_BlockListListener {
+class QG_GraphicView:   public RS_GraphicView,
+                        public RS_LayerListListener,
+                        public RS_BlockListListener
+{
     Q_OBJECT
 
 public:
-    QG_GraphicView(QWidget* parent=0, const char* name=0, Qt::WindowFlags f=0);
+    QG_GraphicView(QWidget* parent = 0, Qt::WindowFlags f = 0, RS_Document* doc = 0);
     virtual ~QG_GraphicView();
 
 	virtual int getWidth() const;

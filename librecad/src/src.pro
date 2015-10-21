@@ -848,7 +848,6 @@ RESOURCES += ../res/ui/ui.qrc
 HEADERS += \
     main/qc_applicationwindow.h \
     main/qc_dialogfactory.h \
-    main/qc_graphicview.h \
     main/qc_mdiwindow.h \
     main/helpbrowser.h \
     main/doc_plugin_interface.h \
@@ -862,7 +861,6 @@ HEADERS += \
 SOURCES += \
     main/qc_applicationwindow.cpp \
     main/qc_dialogfactory.cpp \
-    main/qc_graphicview.cpp \
     main/qc_mdiwindow.cpp \
     main/helpbrowser.cpp \
     main/doc_plugin_interface.cpp \

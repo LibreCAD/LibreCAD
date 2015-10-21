@@ -82,7 +82,6 @@
 #include "qg_selectionwidget.h"
 #include "qg_activelayername.h"
 #include "qg_mousewidget.h"
-#include "qc_graphicview.h"
 #include "qg_pentoolbar.h"
 #include "qg_recentfiles.h"
 
@@ -207,10 +206,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         importMenu->setDisabled(true);
 
     statusBar()->showMessage(XSTR(QC_APPNAME) " Ready", 2000);
-    //setFocusPolicy(WheelFocus);
-    previousZoomEnable=false;
-    undoEnable=false;
-    redoEnable=false;
 
     //accept drop events to open files
     setAcceptDrops(true);
