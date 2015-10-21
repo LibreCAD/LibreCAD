@@ -464,8 +464,8 @@ private:
 	bool m_bIsCleanUp=false;
 
 signals:
-    relative_zero_changed(const RS_Vector&);
-    previous_zoom_state(bool);
+    void relative_zero_changed(const RS_Vector&);
+    void previous_zoom_state(bool);
 };
 
 #endif
