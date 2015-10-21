@@ -92,6 +92,7 @@ void QC_DialogFactory::closeEditBlockWindow(RS_Block* block) {
         if (m->getDocument()==block) {
             RS_DEBUG->print(
                         "QC_DialogFactory::closeEditBlockWindow: closing mdi");
+            appWindow->slotFilePrintPreview(false);
             m->closeMDI(true, false);
 
             mdiAreaCAD->removeSubWindow(mdiAreaCAD->subWindowList().at(i));

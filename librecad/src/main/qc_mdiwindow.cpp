@@ -43,7 +43,6 @@
 #include <QMdiSubWindow>
 #include <QPainter>
 
-#include "qc_applicationwindow.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"
 #include "qg_exitdialog.h"
@@ -51,6 +50,7 @@
 #include "rs_insert.h"
 #include "rs_mtext.h"
 #include "rs_pen.h"
+#include "qg_graphicview.h"
 
 int QC_MDIWindow::idCounter = 0;
 
@@ -132,9 +132,6 @@ QC_MDIWindow::~QC_MDIWindow()
 		}
 		document = nullptr;
 	}
-    cadMdiArea->activateNextSubWindow();
-    QMdiSubWindow* subWindow=cadMdiArea->currentSubWindow();
-    QC_ApplicationWindow::getAppWindow()->slotWindowActivated(subWindow);
 }
 
 QG_GraphicView* QC_MDIWindow::getGraphicView() const{
@@ -236,8 +233,6 @@ bool QC_MDIWindow::closeMDI(bool force, bool ask) {
     if (document==NULL) {
         return true;
     }
-
-    QC_ApplicationWindow::getAppWindow()->slotFilePrintPreview(false);
 
     bool ret = false;
 

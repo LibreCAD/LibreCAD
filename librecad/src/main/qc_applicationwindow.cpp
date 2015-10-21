@@ -1511,6 +1511,7 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
         if (w) {
             w->setForceClosing(true);
             mdiAreaCAD->removeSubWindow(mdiAreaCAD->currentSubWindow());
+            slotFilePrintPreview(false);
             w->closeMDI(true,false); //force closing, without asking user for confirmation
         }
         QMdiSubWindow* active=mdiAreaCAD->currentSubWindow();
@@ -1662,6 +1663,7 @@ void QC_ApplicationWindow::
            //file opening failed, clean up QC_MDIWindow and QMdiSubWindow
                w->setForceClosing(true);
                mdiAreaCAD->removeSubWindow(mdiAreaCAD->currentSubWindow());
+               slotFilePrintPreview(false);
                w->closeMDI(true,false); //force closing, without asking user for confirmation
                QMdiSubWindow* active=mdiAreaCAD->currentSubWindow();
                activedMdiSubWindow=NULL; //to allow reactivate the previous active
@@ -2097,6 +2099,7 @@ void QC_ApplicationWindow::slotFileClose() {
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClose(): detaching lists");
     QC_MDIWindow* w = getMDIWindow();
+
     window_list.removeOne(w);
 
     if(w){
@@ -2112,7 +2115,6 @@ void QC_ApplicationWindow::slotFileClose() {
             mdiAreaCAD->removeSubWindow(ppv->parentWidget());
         }
     }
-
 
     mdiAreaCAD->closeActiveSubWindow();
     activedMdiSubWindow=NULL;
@@ -2835,6 +2837,7 @@ bool QC_ApplicationWindow::queryExit(bool force) {
          while (!list.isEmpty()) {
              QC_MDIWindow *tmp=qobject_cast<QC_MDIWindow*>(list.takeFirst()->widget());
              if( tmp){
+                 slotFilePrintPreview(false);
                  succ = tmp->closeMDI(force);
                  if (!succ) {
                      break;

@@ -62,8 +62,6 @@ class RS_GraphicView : public QWidget
 public:
 	RS_GraphicView(QWidget * parent = 0, Qt::WindowFlags f = 0);
 
-    QObject* main_window{nullptr};
-
     void cleanUp();
 
     void set_action(QAction* q_action);
