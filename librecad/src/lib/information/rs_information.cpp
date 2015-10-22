@@ -26,6 +26,7 @@
 **********************************************************************/
 
 #include <vector>
+#include <QRectF>
 #include "rs_information.h"
 #include "rs_entitycontainer.h"
 #include "rs_vector.h"
@@ -222,6 +223,7 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
 		RS_DEBUG->print("RS_Information::getIntersection() for nullptr entities");
         return ret;
     }
+	if (e1->isConstruction() || e2->isConstruction()) return ret;
     if (e1->getId() == e2->getId()) {
         RS_DEBUG->print("RS_Information::getIntersection() of the same entity");
         return ret;
@@ -234,18 +236,15 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
         isDimension(e1->rtti()) || isDimension(e2->rtti())) {
         return ret;
     }
-    // a little check to avoid doing unneeded intersections, an attempt to avoid O(N^2) increasing of checking two-entity information
-    if (onEntities &&
-            (! (e1 -> isConstruction() || e2 -> isConstruction() ))
-            && (
-                e1 -> getMin().x > e2 -> getMax().x
-                || e1 -> getMax().x < e2 -> getMin().x
-                || e1 -> getMin().y > e2 -> getMax().y
-                || e1 -> getMax().y < e2 -> getMin().y
-                )
-            ) {
-            return ret;
-    }
+	{
+	// a little check to avoid doing unneeded intersections, an attempt to avoid O(N^2) increasing of checking two-entity information
+		QRectF const rect1{QPointF{e1->getMin().x, e1->getMin().y},
+						   QPointF{e1->getMax().x, e1->getMax().y}};
+		QRectF const rect2{QPointF{e2->getMin().x, e2->getMin().y},
+						   QPointF{e2->getMax().x, e2->getMax().y}};
+		if (onEntities && !rect1.intersects(rect2))
+			return ret;
+	}
 
     //avoid intersections between line segments the same spline
     /* ToDo: 24 Aug 2011, Dongxu Li, if rtti() is not defined for the parent, the following check for splines may still cause segfault */
