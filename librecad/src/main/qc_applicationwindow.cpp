@@ -3186,6 +3186,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     edit_toolbar = new QToolBar(tr("Edit"), this);
     edit_toolbar->setSizePolicy(toolBarPolicy);
     edit_toolbar->setObjectName("edit_toolbar");
+    connect(this, SIGNAL(windowsChanged(bool)), edit_toolbar, SLOT(setEnabled(bool)));
 
     add_action(edit_menu, edit_toolbar, map_a["EditKillAllActions"]);
 
@@ -3215,6 +3216,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     QToolBar* order_toolbar = new QToolBar(tr("Order"), this);
     order_toolbar->setSizePolicy(toolBarPolicy);
     order_toolbar->setObjectName("order_toolbar");
+    connect(this, SIGNAL(windowsChanged(bool)), order_toolbar, SLOT(setEnabled(bool)));
     order_toolbar->hide();
 
     add_action(order_menu, order_toolbar, map_a["OrderTop"]);
@@ -3231,6 +3233,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     view_toolbar = new QToolBar(tr("View"), this);
     view_toolbar->setSizePolicy(toolBarPolicy);
     view_toolbar->setObjectName("view_toolbar");
+    connect(this, SIGNAL(windowsChanged(bool)), view_toolbar, SLOT(setEnabled(bool)));
 
     view_menu->addAction(map_a["Fullscreen"]);
     statusbar_view_action = map_a["ViewStatusBar"];
