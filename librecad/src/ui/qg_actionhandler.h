@@ -30,7 +30,6 @@
 
 #include "rs_actioninterface.h"
 
-class QG_MainWindowInterface;
 class QG_SnapToolBar;
 
 /**
@@ -40,7 +39,7 @@ class QG_ActionHandler : public QObject {
 	Q_OBJECT
 
 public:
-	QG_ActionHandler(QG_MainWindowInterface* mw);
+	QG_ActionHandler(QObject* parent);
 	virtual ~QG_ActionHandler() = default;
 
 	RS_ActionInterface* getCurrentAction();
@@ -64,6 +63,9 @@ public:
 	QStringList getAvailableCommands();
 	RS_SnapMode getSnaps();
 	RS2::SnapRestriction getSnapRestriction();
+    void set_view(RS_GraphicView* graphic_view);
+    void set_document(RS_Document* document);
+    void set_snap_toolbar(QG_SnapToolBar* snap_toolbar);
 
 public slots:
 	/*void slotFileNew();*/
@@ -248,13 +250,14 @@ public slots:
 	void slotBlocksCreate();
 	void slotBlocksExplode();
 	void slotOptionsDrawing();
-	void slotFocusNormal();
 
 private:
-	QG_MainWindowInterface* mainWindow;
 
 	// Type of draw order selected command
-	RS2::ActionType orderType;
+    RS2::ActionType orderType{RS2::ActionOrderTop};
+    QG_SnapToolBar* snap_toolbar{nullptr};
+    RS_GraphicView* view{nullptr};
+    RS_Document*    document{nullptr};
 };
 
 #endif

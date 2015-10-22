@@ -808,6 +808,7 @@ void QC_ApplicationWindow::initView()
     commandWidget = new QG_CommandWidget(dock_command, "Command");
     commandWidget->setActionHandler(actionHandler);
     connect(this, SIGNAL(windowsChanged(bool)), commandWidget, SLOT(setEnabled(bool)));
+    connect(commandWidget->leCommand, SIGNAL(escape()), this, SLOT(setFocus()));
     dock_command->setWidget(commandWidget);
     addDockWidget(Qt::RightDockWidgetArea, dock_command);
 
@@ -952,11 +953,6 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 
         // set snapmode from snap toolbar
         //actionHandler->updateSnapMode();
-        if(snapToolBar ){
-            actionHandler->slotSetSnaps(snapToolBar->getSnaps());
-        }else {
-            RS_DEBUG->print(RS_Debug::D_ERROR,"snapToolBar is NULL\n");
-        }
 
         // set pen from pen toolbar
         slotPenChanged(penToolBar->getPen());
@@ -965,10 +961,18 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
         if (m->getGraphic()) {
             emit(gridChanged(m->getGraphic()->isGridOn()));
         }
-        if (m->getGraphicView()) {
-//            std::cout<<"QC_ApplicationWindow::slotWindowActivated(): emit(printPreviewChanged("<<m->getGraphicView()->isPrintPreview()<<")"<<std::endl;
+        QG_GraphicView* view = m->getGraphicView();
+        if (view)
+        {
+            actionHandler->set_view(view);
+            actionHandler->set_document(m->getDocument());
+            emit printPreviewChanged(view->isPrintPreview());
+        }
 
-            emit(printPreviewChanged(m->getGraphicView()->isPrintPreview()));
+        if(snapToolBar){
+            actionHandler->slotSetSnaps(snapToolBar->getSnaps());
+        }else {
+            RS_DEBUG->print(RS_Debug::D_ERROR,"snapToolBar is NULL\n");
         }
     }
 
@@ -1321,6 +1325,8 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     RS_DEBUG->print("  creating MDI window");
     QC_MDIWindow* w = new QC_MDIWindow(doc, mdiAreaCAD, 0);
     window_list << w;
+    actionHandler->set_view(w->getGraphicView());
+    actionHandler->set_document(w->getDocument());
         //w->setWindowState(WindowMaximized);
     connect(w, SIGNAL(signalClosing()),
             this, SLOT(slotFileClosing()));
@@ -3603,6 +3609,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     snapToolBar = new QG_SnapToolBar(tr("Snap Selection"), actionHandler, this);
     snapToolBar->setSizePolicy(toolBarPolicy);
     snapToolBar->setObjectName("snap_toolbar" );
+    actionHandler->set_snap_toolbar(snapToolBar);
 
     connect(this, SIGNAL(windowsChanged(bool)), snapToolBar, SLOT(setEnabled(bool)));
 

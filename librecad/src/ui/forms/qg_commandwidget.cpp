@@ -168,7 +168,6 @@ void QG_CommandWidget::tabPressed() {
 void QG_CommandWidget::escape() {
     //leCommand->clearFocus();
     if (actionHandler) {
-        actionHandler->slotFocusNormal();
         actionHandler->command(QString(tr("escape", "escape, go back from action steps")));
     }
 }
