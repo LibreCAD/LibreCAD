@@ -1375,22 +1375,13 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     // Link the dialog factory to the main app window:
     QG_DIALOGFACTORY->setMainWindow(this);
 
-        QMdiSubWindow* subWindow=mdiAreaCAD->addSubWindow(w);
+    QMdiSubWindow* subWindow=mdiAreaCAD->addSubWindow(w);
 
     RS_DEBUG->print("  showing MDI window");
-//    if (mdiAreaCAD->subWindowList().isEmpty()) {
-//        w->showMaximized();
-//        w->setFocus();
-//    } else {
-        w->show();
-        w->slotZoomAuto();
-//        subWindow->showNormal();
-        //show new open maximized
-        subWindow->showMaximized();
-        subWindow->setFocus();
-        slotWindowActivated(subWindow);
-//    }
-//    slotWindowActivated(subWindow);
+    w->show();
+    w->slotZoomAuto();
+    subWindow->showMaximized();
+    subWindow->setFocus();
     statusBar()->showMessage(tr("New Drawing created."), 2000);
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNew() OK");
