@@ -326,7 +326,7 @@ private:
     QTimer *autosaveTimer;
 
     /** MdiArea for MDI */
-    QMdiArea* mdiAreaCAD;
+    QMdiArea* mdiAreaCAD{nullptr};
     QMdiSubWindow* activedMdiSubWindow;
     bool mdiAreaTab;
 
@@ -399,12 +399,8 @@ private:
     // Toolbar for selecting the current pen
     QG_PenToolBar* penToolBar;
 
-#if QT_VERSION < 0x040400
-    QAssistantClient *assistant;
-#else
-    QHelpEngine* helpEngine;
-    QDockWidget *helpWindow;
-#endif // QT_VERSION 0x040400
+    QHelpEngine* helpEngine{nullptr};
+    QDockWidget* helpWindow{nullptr};
 
     QAction* scriptOpenIDE;
     QAction* scriptRun;

@@ -36,15 +36,8 @@
 #include <QPluginLoader>
 #include <QDesktopServices>
 #include <QUrl>
-
-#if QT_VERSION < 0x040400
-#include <QtAssistant/QAssistantClient>
-#include <QTime>
-#include "emu_qt44.h"
-#else
 #include <QtHelp>
 #include "helpbrowser.h"
-#endif // QT_VERSION 0x040400
 
 #include "qc_applicationwindow.h"
 // RVT_PORT added
@@ -137,14 +130,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     setAttribute(Qt::WA_DeleteOnClose);
     appWindow = this;
-    #if QT_VERSION < 0x040400
-        assistant = NULL;
-    #else
-        helpEngine = NULL;
-        helpWindow = NULL;
-    #endif // QT_VERSION 0x040400
-
-    mdiAreaCAD = NULL;
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
     setWindowIcon(QIcon(QC_APP_ICON));
@@ -352,22 +337,17 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
                     "deleting dialog factory: OK");
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
-        "deleting assistant..");
-#if QT_VERSION < 0x040400
-    if (assistant) {
-        delete assistant;
-    }
-#else
+        "deleting help..");
+
     if (helpEngine) {
         delete helpEngine;
     }
     if (helpWindow) {
         delete helpWindow;
     }
-#endif // QT_VERSION 0x040400
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
-                    "deleting assistant: OK");
+                    "deleting help: OK");
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: OK");
 }
@@ -528,7 +508,7 @@ void QC_ApplicationWindow::closeEvent(QCloseEvent* ce) {
     }
     else
     {
-        if(mdiAreaCAD==NULL){
+        if(mdiAreaCAD==nullptr){
             ce->accept();
             return;
         }
@@ -2753,37 +2733,19 @@ void QC_ApplicationWindow::slotHelpAbout() {
 /**
  * Menu help -> help.
  */
-void QC_ApplicationWindow::slotHelpManual() {
+void QC_ApplicationWindow::slotHelpManual()
+{
     RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual()");
 
-#if QT_VERSION < 0x040400
-    if (assistant == NULL) {
-        RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
-                        RS_SYSTEM->getAppDir().toLatin1().constData());
-        RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
-                        RS_SYSTEM->getAppDir().toLatin1().constData());
-        assistant = new QAssistantClient(RS_SYSTEM->getAppDir(), this);
-        connect(assistant, SIGNAL(error(const QString&)),
-            this, SLOT(slotError(const QString&)));
-        QStringList args;
-        args << "-profile";
-        args << QDir::convertSeparators(RS_SYSTEM->getDocPath() + "/qcaddoc.adp");
-//        args << QString("doc") + QDir::separator() + QString("qcaddoc.adp");
-
-#if QT_VERSION >= 0x030200
-        assistant->setArguments(args);
-#endif
-    }
-    assistant->openAssistant();
-    //assistant->showPage("index.html");
-#else // QT_VERSION 0x030200
-    if (helpEngine==NULL) {
+    if (helpEngine==nullptr)
+    {
         RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
                         RS_SYSTEM->getAppDir().toLatin1().data());
         RS_DEBUG->print("QC_ApplicationWindow::slotHelpManual(): appdir: %s",
                         RS_SYSTEM->getAppDir().toLatin1().data());
 
-        if ((RS_SYSTEM->getDocPath().length()>0) && (QFile::exists(RS_SYSTEM->getDocPath()+ "/LibreCADdoc.qhc")==true)) {
+        if ((RS_SYSTEM->getDocPath().length()>0) && (QFile::exists(RS_SYSTEM->getDocPath()+ "/LibreCADdoc.qhc")==true))
+        {
             helpEngine = new QHelpEngine(RS_SYSTEM->getDocPath() + "/LibreCADdoc.qhc", this);
 
             helpEngine->setupData();
@@ -2806,14 +2768,12 @@ void QC_ApplicationWindow::slotHelpManual() {
             connect(helpEngine->contentWidget(), SIGNAL(linkActivated(const QUrl &)), helpBrowser, SLOT(setSource(const QUrl &)));
             addDockWidget(Qt::TopDockWidgetArea, helpWindow);
         } else {
-            QMessageBox::information(this, tr("Help files not found"), tr("Bugger, I couldn't find the helpfiles on the filesystem."));
+            QMessageBox::information(this, tr("Help files not found"), tr("The help files were not found."));
         }
-
     }
     if (helpWindow) {
         helpWindow->show();
     }
-#endif // QT_VERSION 0x040400
 }
 
 /**
