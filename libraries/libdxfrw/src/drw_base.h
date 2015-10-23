@@ -149,12 +149,10 @@ enum TransparencyCodes {
 */
 class DRW_Coord {
 public:
-    DRW_Coord() { x = 0; y = 0; z = 0; }
-    DRW_Coord(double ix, double iy, double iz) {
-        x = ix; y = iy; z = iz;
-    }
+    DRW_Coord():x(0), y(0),z(0) {}
+    DRW_Coord(double ix, double iy, double iz): x(ix), y(iy),z(iz){}
 
-     DRW_Coord operator = (const DRW_Coord& data) {
+     DRW_Coord& operator = (const DRW_Coord& data) {
         x = data.x;  y = data.y;  z = data.z;
         return *this;
     }
@@ -183,16 +181,9 @@ public:
 */
 class DRW_Vertex2D {
 public:
-    DRW_Vertex2D() {
-//        eType = DRW::LWPOLYLINE;
-        stawidth = endwidth = bulge = 0;
-    }
-    DRW_Vertex2D(double sx, double sy, double b) {
-        stawidth = endwidth = 0;
-        x = sx;
-        y =sy;
-        bulge = b;
-    }
+    DRW_Vertex2D(): x(0), y(0), stawidth(0), endwidth(0), bulge(0){}
+    DRW_Vertex2D(double sx, double sy, double b): x(sx), y(sy), stawidth(0),
+                                                  endwidth(0), bulge(b) {}
 
 public:
     double x;                 /*!< x coordinate, code 10 */
