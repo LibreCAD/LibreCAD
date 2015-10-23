@@ -129,62 +129,58 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
  * Constructor. Initializes the app.
  */
 QC_ApplicationWindow::QC_ApplicationWindow()
-        : QMainWindow(0),
-        QG_MainWindowInterface()
-      ,m_qDraftModeTitle(" ["+tr("Draft Mode")+"]")
+    : QMainWindow(0)
+    , QG_MainWindowInterface()
+    , m_qDraftModeTitle(" ["+tr("Draft Mode")+"]")
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
     setAttribute(Qt::WA_DeleteOnClose);
     appWindow = this;
-#if QT_VERSION < 0x040400
-    assistant = NULL;
-#else
-    helpEngine = NULL;
-    helpWindow = NULL;
-#endif // QT_VERSION 0x040400
+    #if QT_VERSION < 0x040400
+        assistant = NULL;
+    #else
+        helpEngine = NULL;
+        helpWindow = NULL;
+    #endif // QT_VERSION 0x040400
 
     mdiAreaCAD = NULL;
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
-     setWindowIcon(QIcon(QC_APP_ICON));
+    setWindowIcon(QIcon(QC_APP_ICON));
 
-        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating action handler");
+    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating action handler");
     actionHandler = new QG_ActionHandler(this);
-        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating action handler: OK");
+    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating action handler: OK");
 
-#ifdef RS_SCRIPTING
+    #ifdef RS_SCRIPTING
         RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating scripter");
-    scripter = new QS_Scripter(this, this);
+        scripter = new QS_Scripter(this, this);
         RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating scripter: OK");
-#endif
+    #endif
 
+    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init view");
     initView();
-        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
-
-        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: menus_and_toolbars");
+    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: menus_and_toolbars");
     menus_and_toolbars();
-        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init view");
-
+    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
     initStatusBar();
 
-        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory");
+    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory");
     dialogFactory = new QC_DialogFactory(this, optionWidget);
-        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory: OK");
-        RS_DEBUG->print("setting dialog factory object");
-        if (RS_DialogFactory::instance()==NULL) {
-                RS_DEBUG->print("no RS_DialogFactory instance");
-        }
-        else {
-                RS_DEBUG->print("got RS_DialogFactory instance");
-        }
+    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory: OK");
+    RS_DEBUG->print("setting dialog factory object");
+    if (RS_DialogFactory::instance()==NULL) {
+        RS_DEBUG->print("no RS_DialogFactory instance");
+    } else {
+        RS_DEBUG->print("got RS_DialogFactory instance");
+    }
     RS_DialogFactory::instance()->setFactoryObject(dialogFactory);
-        RS_DEBUG->print("setting dialog factory object: OK");
+    RS_DEBUG->print("setting dialog factory object: OK");
 
-        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init settings");
+    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init settings");
     initSettings();
-
-        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init MDI");
+    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init MDI");
     initMDI();
 
     // Activate autosave timer
