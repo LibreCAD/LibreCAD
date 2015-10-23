@@ -25,6 +25,8 @@
 **
 **********************************************************************/
 
+#include "qc_applicationwindow.h"
+
 #include <QStatusBar>
 #include <QMenuBar>
 #include <QDockWidget>
@@ -38,13 +40,8 @@
 #include <QUrl>
 #include <QtHelp>
 #include "helpbrowser.h"
-
-#include "qc_applicationwindow.h"
-// RVT_PORT added
 #include <QImageWriter>
-#if QT_VERSION >= 0x040300
 #include <QtSvg>
-#endif
 
 #if QT_VERSION >= 0x050000
 # include <QtPrintSupport/QPrinter>
@@ -1218,10 +1215,9 @@ void QC_ApplicationWindow::slotTileVertical() {
 
 void QC_ApplicationWindow::slotToggleTab() {
     mdiAreaTab = ! mdiAreaTab;
-    if(mdiAreaTab){
-#if QT_VERSION >= 0x040400
+    if(mdiAreaTab)
+    {
         mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
-#endif
         QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
         QMdiSubWindow* active=mdiAreaCAD->activeSubWindow();
         for(int i=0;i<windows.size();i++){
@@ -1235,26 +1231,12 @@ void QC_ApplicationWindow::slotToggleTab() {
             m->showMaximized();
             qobject_cast<QC_MDIWindow*>(m->widget())->slotZoomAuto();
         }
-
-    }else{
-#if QT_VERSION >= 0x040400
+    }
+    else
+    {
         mdiAreaCAD->setViewMode(QMdiArea::SubWindowView);
-#endif
         slotCascade();
-        //            mdiAreaCAD->setViewMode(QMdiArea::SubWindowView);
-        //            QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
-        //            QMdiSubWindow* active=mdiAreaCAD->activeSubWindow();
-//            for(int i=0;i<windows.size();i++){
-//                QMdiSubWindow* m=windows.at(i);
-//                m->show();
-//                if(m!=active){
-//                    m->lower();
-//                }else{
-//                    m->showMaximized();
-//                    m->raise();
-//                }
-//            }
-        }
+    }
 }
 /**
  * Called when something changed in the pen tool bar
@@ -1842,9 +1824,8 @@ void QC_ApplicationWindow::slotFileExport() {
 
         QStringList filters;
         QList<QByteArray> supportedImageFormats = QImageWriter::supportedImageFormats();
-    #if QT_VERSION >= 0x040300
         supportedImageFormats.push_back("svg"); // add svg
-    #endif
+
         for (QString format: supportedImageFormats) {
             format = format.toLower();
             QString st;
@@ -1864,11 +1845,8 @@ void QC_ApplicationWindow::slotFileExport() {
 
         // set dialog options: filters, mode, accept, directory, filename
         QFileDialog fileDlg(this, tr("Export as"));
-#if QT_VERSION < 0x040400
-        emu_qt44_QFileDialog_setNameFilters(fileDlg, filters);
-#else
+
         fileDlg.setNameFilters(filters);
-#endif
         fileDlg.setFileMode(QFileDialog::AnyFile);
         fileDlg.selectNameFilter(defFilter);
         fileDlg.setAcceptMode(QFileDialog::AcceptSave);
@@ -1891,21 +1869,13 @@ void QC_ApplicationWindow::slotFileExport() {
         if (!cancel) {
             RS_SETTINGS->beginGroup("/Export");
             RS_SETTINGS->writeEntry("/ExportImage", QFileInfo(fn).absolutePath());
-#if QT_VERSION < 0x040400
-            RS_SETTINGS->writeEntry("/ExportImageFilter",
-                                    emu_qt44_QFileDialog_selectedNameFilter(fileDlg) );
-#else
             RS_SETTINGS->writeEntry("/ExportImageFilter",
                                     fileDlg.selectedNameFilter());
-#endif
             RS_SETTINGS->endGroup();
 
             // find out extension:
-#if QT_VERSION < 0x040400
-            QString filter = emu_qt44_QFileDialog_selectedNameFilter(fileDlg);
-#else
+
             QString filter = fileDlg.selectedNameFilter();
-#endif
             QString format = "";
             int i = filter.indexOf("(*.");
             if (i!=-1) {
@@ -1973,13 +1943,12 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     bool ret = false;
     // set vars for normal pictures and vectors (svg)
     QPixmap* picture = new QPixmap(size);
-#if QT_VERSION >= 0x040300
+
     QSvgGenerator* vector = new QSvgGenerator();
-#endif
+
     // set buffer var
     QPaintDevice* buffer;
 
-#if QT_VERSION >= 0x040300
     if(format.toLower() != "svg") {
         buffer = picture;
     } else {
@@ -1988,21 +1957,16 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
         vector->setFileName(name);
         buffer = vector;
     }
-#else
-    buffer = picture;
-#endif
 
     // set painter with buffer
     RS_PainterQt painter(buffer);
 
     // black background:
     if (black) {
-//RLZ        painter.setBackgroundColor(RS_Color(0,0,0));
         painter.setBackground(RS_Color(0,0,0));
     }
     // white background:
     else {
-//RLZ        painter.setBackgroundColor(RS_Color(255,255,255));
         painter.setBackground(RS_Color(255,255,255));
     }
 
@@ -2027,9 +1991,8 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     }
 
     // end the picture output
-#if QT_VERSION >= 0x040300
-    if(format.toLower() != "svg") {
-#endif
+    if(format.toLower() != "svg")
+    {
         // RVT_PORT QImageIO iio;
         QImageWriter iio;
         QImage img = picture->toImage();
@@ -2041,18 +2004,14 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
             ret = true;
         }
         QString error=iio.errorString();
-#if QT_VERSION >= 0x040300
     }
-#endif
     QApplication::restoreOverrideCursor();
 
     // GraphicView deletes painter
     painter.end();
     // delete vars
     delete picture;
-#if QT_VERSION >= 0x040300
     delete vector;
-#endif
 
     if (ret) {
         statusBar()->showMessage(tr("Export complete"), 2000);
@@ -2143,11 +2102,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     QPrinter printer(QPrinter::HighResolution);
 
     bool landscape = false;
-#if QT_VERSION < 0x040400
-    emu_qt44_QPrinter_setPaperSize(printer, RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape)));
-#else
     QPrinter::PageSize paperSize=RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape));
-#endif // QT_VERSION 0x040400
     if(paperSize==QPrinter::Custom){
         RS_Vector&& s=graphic->getPaperSize();
         if(landscape) s=s.flipXY();
@@ -2181,11 +2136,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         filters << defFilter
                 << "Any files (*)";
 
-#if QT_VERSION < 0x040400
-        emu_qt44_QFileDialog_setNameFilters(fileDlg, filters);
-#else
         fileDlg.setNameFilters(filters);
-#endif
         fileDlg.setFileMode(QFileDialog::AnyFile);
         fileDlg.selectNameFilter(defFilter);
         fileDlg.setAcceptMode(QFileDialog::AcceptSave);
