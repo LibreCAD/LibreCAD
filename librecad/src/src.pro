@@ -184,7 +184,8 @@ HEADERS += \
     lib/engine/rs_variable.h \
     lib/engine/rs_variabledict.h \
     lib/engine/rs_vector.h \
-    lib/fileio/rs_fileio.h \
+	lib/engine/lc_rect.h \
+	lib/fileio/rs_fileio.h \
     lib/filters/rs_filtercxf.h \
     lib/filters/rs_filterdxfrw.h \
     lib/filters/rs_filterdxf1.h \
@@ -225,7 +226,7 @@ HEADERS += \
     lib/generators/lc_xmlwriterinterface.h \
     lib/generators/lc_xmlwriterqxmlstreamwriter.h \
     actions/lc_actionfileexportmakercam.h \
-    ui/qg_commandhistory.h
+	ui/qg_commandhistory.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -280,7 +281,8 @@ SOURCES += \
     lib/engine/rs_utility.cpp \
     lib/engine/rs_variabledict.cpp \
     lib/engine/rs_vector.cpp \
-    lib/fileio/rs_fileio.cpp \
+	lib/engine/lc_rect.cpp \
+	lib/fileio/rs_fileio.cpp \
     lib/filters/rs_filtercxf.cpp \
     lib/filters/rs_filterdxfrw.cpp \
     lib/filters/rs_filterdxf1.cpp \
@@ -318,7 +320,7 @@ SOURCES += \
     actions/lc_actionfileexportmakercam.cpp \
     lib/engine/rs_atomicentity.cpp \
     lib/engine/rs_undocycle.cpp \
-    ui/qg_commandhistory.cpp
+	ui/qg_commandhistory.cpp
 
 # ################################################################################
 # Command
