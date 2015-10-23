@@ -89,7 +89,9 @@ public:
 	double dotP(const RS_Vector& v1) const;
 
     RS_Vector operator + (const RS_Vector& v) const;
-    RS_Vector operator - (const RS_Vector& v) const;
+	RS_Vector operator + (double d) const;
+	RS_Vector operator - (const RS_Vector& v) const;
+	RS_Vector operator - (double d) const;
 	RS_Vector operator * (const RS_Vector& v) const;
 	RS_Vector operator / (const RS_Vector& v) const;
     RS_Vector operator * (const double& s) const;

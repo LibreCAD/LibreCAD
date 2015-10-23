@@ -378,6 +378,22 @@ RS_Vector RS_Vector::operator - (const RS_Vector& v) const {
 #endif
 }
 
+RS_Vector RS_Vector::operator + (double d) const {
+#ifdef  RS_VECTOR2D
+	return RS_Vector(x + d, y + d);
+#else
+	return RS_Vector(x + d, y + d, z + d);
+#endif
+}
+
+RS_Vector RS_Vector::operator - (double d) const {
+#ifdef  RS_VECTOR2D
+	return RS_Vector(x - d, y - d);
+#else
+	return RS_Vector(x - d, y - d, z - d);
+#endif
+}
+
 RS_Vector RS_Vector::operator * (const RS_Vector& v) const {
 #ifdef  RS_VECTOR2D
 	return RS_Vector(x * v.x, y * v.y);
