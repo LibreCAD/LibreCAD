@@ -553,7 +553,7 @@ QString RS_Dimension::stripZerosAngle(QString angle, int zeros){
         angle.append(format);
     }
     if (zeros & 1){
-        if (angle[0] == QChar('0') & angle[1] == QChar('.'))
+		if (angle[0] == QChar('0') && angle[1] == QChar('.'))
         angle = angle.remove(0, 1);
     }
     return angle;
@@ -580,7 +580,7 @@ QString RS_Dimension::stripZerosLinear(QString linear, int zeros){
         linear.truncate(end+1);
     }
     if (zeros & 4){
-        if (linear[0] == QChar('0') & linear[1] == QChar('.'))
+		if (linear[0] == QChar('0') && linear[1] == QChar('.'))
         linear = linear.remove(0, 1);
     }
     return linear;
