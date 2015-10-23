@@ -423,6 +423,8 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     writer->writeDouble(46, ent->dimdle);
     writer->writeDouble(47, ent->dimtp);
     writer->writeDouble(48, ent->dimtm);
+    if ( version > DRW::AC1018 || ent->dimfxl !=0 )
+        writer->writeDouble(49, ent->dimfxl);
     writer->writeDouble(140, ent->dimtxt);
     writer->writeDouble(141, ent->dimcen);
     writer->writeDouble(142, ent->dimtsz);
@@ -487,6 +489,8 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     if (version > DRW::AC1014) {
         writer->writeInt16(289, ent->dimatfit);
     }
+    if ( version > DRW::AC1018 && ent->dimfxlon !=0 )
+        writer->writeInt16(290, ent->dimfxlon);
     if (version > DRW::AC1009) {
         writer->writeUtf8String(340, ent->dimtxsty);
     }
