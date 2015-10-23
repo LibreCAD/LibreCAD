@@ -50,10 +50,7 @@ void DRW_TableEntry::parseCode(int code, dxfReader *reader){
     case 1011:
     case 1012:
     case 1013:
-        curr = new DRW_Variant();
-        curr->addCoord();
-        curr->setCoordX(reader->getDouble());
-        curr->code = code;
+        curr = new DRW_Variant(code, DRW_Coord(reader->getDouble(), 0.0, 0.0));
         extData.push_back(curr);
         break;
     case 1020:

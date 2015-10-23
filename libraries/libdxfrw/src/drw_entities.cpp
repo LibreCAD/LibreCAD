@@ -116,10 +116,7 @@ bool DRW_Entity::parseCode(int code, dxfReader *reader){
     case 1011:
     case 1012:
     case 1013:
-        curr = new DRW_Variant();
-        curr->addCoord();
-        curr->setCoordX(reader->getDouble());
-        curr->code = code;
+        curr = new DRW_Variant(code, DRW_Coord(reader->getDouble(), 0.0, 0.0));
         extData.push_back(curr);
         break;
     case 1020:
@@ -159,28 +156,28 @@ bool DRW_Entity::parseDxfGroups(int code, dxfReader *reader){
     int nc;
     std::string appName= reader->getString();
     if (!appName.empty() && appName.at(0)== '{'){
-        curr.addString(appName.substr(1, (int) appName.size()-1));
-        curr.code = code;
+        curr.addString(code, appName.substr(1, (int) appName.size()-1));
         ls.push_back(curr);
         while (code !=102 && appName.at(0)== '}'){
-            reader->readRec(&nc);
-            curr.code = code;
+            reader->readRec(&nc);//RLZ curr.code = code or nc?
+//            curr.code = code;
+            //RLZ code == 330 || code == 360 OR nc == 330 || nc == 360 ?
             if (code == 330 || code == 360)
-                curr.addInt(reader->getHandleString());
+                curr.addInt(code, reader->getHandleString());//RLZ code or nc
             else {
                 switch (reader->type) {
                 case dxfReader::STRING:
-                    curr.addString(reader->getString());
+                    curr.addString(code, reader->getString());//RLZ code or nc
                     break;
                 case dxfReader::INT32:
                 case dxfReader::INT64:
-                    curr.addInt(reader->getInt32());
+                    curr.addInt(code, reader->getInt32());//RLZ code or nc
                     break;
                 case dxfReader::DOUBLE:
-                    curr.addDouble(reader->getDouble());
+                    curr.addDouble(code, reader->getDouble());//RLZ code or nc
                     break;
                 case dxfReader::BOOL:
-                    curr.addInt(reader->getInt32());
+                    curr.addInt(code, reader->getInt32());//RLZ code or nc
                     break;
                 default:
                     break;

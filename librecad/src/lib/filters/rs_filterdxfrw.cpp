@@ -205,12 +205,12 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::addLayer: layer %s have extended data", layer->getName().toStdString().c_str());
         bool isLCdata = false;
         for (std::vector<DRW_Variant*>::const_iterator it=data.extData.begin(); it!=data.extData.end(); ++it){
-            if ((*it)->code == 1001){
+            if ((*it)->code() == 1001){
                 if (*(*it)->content.s == std::string("LibreCad"))
                     isLCdata = true;
                 else
                     isLCdata = false;
-            } else if (isLCdata && (*it)->code == 1070){
+            } else if (isLCdata && (*it)->code() == 1070){
                 if ((*it)->content.i == 1){
                     layer->setConstruction(true);
                 }
@@ -1280,23 +1280,23 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
     for ( it=data->vars.begin() ; it != data->vars.end(); ++it ){
         QString key = QString::fromStdString((*it).first);
         DRW_Variant *var = (*it).second;
-        switch (var->type) {
+        switch (var->type()) {
         case DRW_Variant::COORD:
             container->addVariable(key,
 #ifdef  RS_VECTOR2D
-            RS_Vector(var->content.v->x, var->content.v->y), var->code);
+            RS_Vector(var->content.v->x, var->content.v->y), var->code());
 #else
-            RS_Vector(var->content.v->x, var->content.v->y, var->content.v->z), var->code);
+            RS_Vector(var->content.v->x, var->content.v->y, var->content.v->z), var->code());
 #endif
             break;
         case DRW_Variant::STRING:
-            container->addVariable(key, QString::fromUtf8(var->content.s->c_str()), var->code);
+            container->addVariable(key, QString::fromUtf8(var->content.s->c_str()), var->code());
             break;
         case DRW_Variant::INTEGER:
-            container->addVariable(key, var->content.i, var->code);
+            container->addVariable(key, var->content.i, var->code());
             break;
         case DRW_Variant::DOUBLE:
-            container->addVariable(key, var->content.d, var->code);
+            container->addVariable(key, var->content.d, var->code());
             break;
         default:
             break;
