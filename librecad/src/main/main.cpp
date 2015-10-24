@@ -317,13 +317,14 @@ int main(int argc, char** argv)
     #endif
 
     RS_DEBUG->print("main: creating main window..");
-    QC_ApplicationWindow * appWin = new QC_ApplicationWindow();
+    //QC_ApplicationWindow * appWin = new QC_ApplicationWindow();
+    QC_ApplicationWindow appWin;
     RS_DEBUG->print("main: setting caption");
-    appWin->setWindowTitle(XSTR(QC_APPNAME));
+    appWin.setWindowTitle(XSTR(QC_APPNAME));
     RS_DEBUG->print("main: show main window");
-    appWin->show();
+    appWin.show();
     RS_DEBUG->print("main: set focus");
-    appWin->setFocus();
+    appWin.setFocus();
     RS_DEBUG->print("main: creating main window: OK");
 
     #ifdef QSPLASHSCREEN_H
@@ -354,7 +355,7 @@ int main(int argc, char** argv)
                 qApp->processEvents();
             }
         #endif
-        appWin->slotFileOpen(*it, RS2::FormatUnknown);
+        appWin.slotFileOpen(*it, RS2::FormatUnknown);
         files_loaded = true;
     }
     RS_DEBUG->print("main: loading files: OK");
@@ -375,16 +376,14 @@ int main(int argc, char** argv)
 
     if (!files_loaded)
     {
-        appWin->slotFileNewNew();
+        appWin.slotFileNewNew();
     }
 
-    appWin->slotRunStartScript();
-
-    int r = app.exec();
+    appWin.slotRunStartScript();
 
     RS_DEBUG->print("main: finished");
 
-    return r;
+    return app.exec();;
 }
 
 

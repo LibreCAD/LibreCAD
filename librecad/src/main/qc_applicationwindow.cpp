@@ -119,13 +119,10 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
  * Constructor. Initializes the app.
  */
 QC_ApplicationWindow::QC_ApplicationWindow()
-    : QMainWindow(0)
-    , QG_MainWindowInterface()
-    , m_qDraftModeTitle(" ["+tr("Draft Mode")+"]")
+    : m_qDraftModeTitle(" ["+tr("Draft Mode")+"]")
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
-    setAttribute(Qt::WA_DeleteOnClose);
     appWindow = this;
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
@@ -307,24 +304,18 @@ w->getGraphicView()->redraw();
  */
 QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow");
-#ifdef RS_SCRIPTING
+    #ifdef RS_SCRIPTING
 
-    RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
-                    "deleting scripter");
+        RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
+                        "deleting scripter");
 
-    delete scripter;
+        delete scripter;
 
-    RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
-                    "deleting scripter: OK");
+        RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
+                        "deleting scripter: OK");
 
-#endif
+    #endif
 
-    RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
-                    "deleting action handler");
-    delete actionHandler;
-
-    RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
-                    "deleting action handler: OK");
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting dialog factory");
 
@@ -332,21 +323,6 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting dialog factory: OK");
-
-    RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
-        "deleting help..");
-
-    if (helpEngine) {
-        delete helpEngine;
-    }
-    if (helpWindow) {
-        delete helpWindow;
-    }
-
-    RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
-                    "deleting help: OK");
-
-    RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: OK");
 }
 
 
@@ -516,8 +492,6 @@ void QC_ApplicationWindow::closeEvent(QCloseEvent* ce) {
             ce->accept();
         }
     }
-//we shouldn't need this; saving should be done within ~QG_SnapToolBar()
-    //snapToolBar->saveSnapMode();
 
     RS_DEBUG->print("QC_ApplicationWindow::closeEvent(): OK");
 }
@@ -1330,8 +1304,6 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     //QG_DIALOGFACTORY->setOptionWidget(optionWidget);
     // Link the dialog factory to the command widget:
     QG_DIALOGFACTORY->setCommandWidget(commandWidget);
-    // Link the dialog factory to the main app window:
-    QG_DIALOGFACTORY->setMainWindow(this);
 
     QMdiSubWindow* subWindow=mdiAreaCAD->addSubWindow(w);
 
@@ -3808,7 +3780,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     menu_bar->addMenu(help_menu);
 
     // menuBar configuration
-    recentFiles.reset(new QG_RecentFiles(9));
+    recentFiles = new QG_RecentFiles(this, 9);
     openedFiles.clear();
 }
 

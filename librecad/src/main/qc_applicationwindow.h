@@ -66,9 +66,8 @@ class LC_SimpleTests;
  *
  * @author Andrew Mustun
  */
-class QC_ApplicationWindow: public QMainWindow,
-    public QG_MainWindowInterface
-        {
+class QC_ApplicationWindow: public QMainWindow
+{
     Q_OBJECT
 
 public:
@@ -281,12 +280,6 @@ public:
         void redrawAll();
         void updateGrids();
 
-        /**
-         * Implementation from QG_MainWindowInterface.
-         */
-        virtual void setFocus2() {
-                setFocus();
-        }
         QG_BlockWidget* getBlockWidget(void)
         {
             return blockWidget;
@@ -330,8 +323,8 @@ private:
     QMdiSubWindow* activedMdiSubWindow;
     bool mdiAreaTab;
 
-        /** Dialog factory */
-        QC_DialogFactory* dialogFactory;
+    /** Dialog factory */
+    QC_DialogFactory* dialogFactory;
 
     /** Layer list widget */
     QG_LayerWidget* layerWidget;
@@ -363,11 +356,11 @@ private:
     QToolBar* optionWidget;
 
     /** Recent files list */
-	std::unique_ptr<QG_RecentFiles> recentFiles;
+	QG_RecentFiles* recentFiles;
     QStringList openedFiles;
 
     /** Action handler. */
-        QG_ActionHandler* actionHandler;
+    QG_ActionHandler* actionHandler;
 
 #ifdef RS_SCRIPTING
         /** Scripting interface. */

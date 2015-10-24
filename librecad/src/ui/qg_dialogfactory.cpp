@@ -104,7 +104,6 @@
 #include "qg_polylineoptions.h"
 #include "qg_polylineequidistantoptions.h"
 #include "qg_layerwidget.h"
-#include "qg_mainwindowinterface.h"
 #include "rs_actionprintpreview.h"
 #include "rs_blocklist.h"
 #include "qg_polylineequidistantoptions.h"
@@ -137,7 +136,6 @@ QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* ow)
 	mouseWidget = nullptr;
 	selectionWidget = nullptr;
 	commandWidget = nullptr;
-	mainWindow = nullptr;
 	polylineEquidistantOptions=nullptr;
 	snapMiddleOptions=nullptr;
 	snapDistOptions=nullptr;
@@ -170,20 +168,6 @@ void QG_DialogFactory::requestWarningDialog(const QString& warning) {
                              warning,
                              QMessageBox::Ok);
 }
-
-
-
-/**
- * Requests a new document from the main window.
- */
-RS_GraphicView* QG_DialogFactory::requestNewDocument(const QString& fileName, RS_Document* doc) {
-		if (mainWindow) {
-                mainWindow->createNewDocument(fileName, doc);
-                return mainWindow->getGraphicView();
-        }
-		return nullptr;
-}
-
 
 /**
  * Shows a dialog for adding a layer. Doesn't add the layer.

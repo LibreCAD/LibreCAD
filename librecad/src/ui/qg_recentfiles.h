@@ -36,12 +36,12 @@ class QWidget;
 /**
  * This class can store recent files in a list.
  */
-class QG_RecentFiles: public QObject {
-
+class QG_RecentFiles: public QObject
+{
 	Q_OBJECT
 
 public:
-	QG_RecentFiles(int number, QWidget* parent = nullptr);
+	QG_RecentFiles(QObject* parent, int number);
 	virtual ~QG_RecentFiles();
 
     void add(const QString& filename);

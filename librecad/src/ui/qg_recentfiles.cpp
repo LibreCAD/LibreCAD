@@ -37,11 +37,10 @@
  * Constructor
  * @param number Number of files that can be stored in the list at maximum
  */
-QG_RecentFiles::QG_RecentFiles(int number, QWidget* parent):
-	QObject(parent)
-	,number(number)
-{
-}
+QG_RecentFiles::QG_RecentFiles(QObject* parent, int number)
+    : QObject(parent)
+    , number(number)
+{}
 
 QG_RecentFiles::~QG_RecentFiles()
 {

@@ -103,19 +103,6 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, Qt::WindowFlags wf
  */
 QC_MDIWindow::~QC_MDIWindow()
 {
-    //avoid switching to invalid subwindow, bug#3509368
-	auto windows = cadMdiArea->subWindowList();
-	for(auto p: windows){
-		QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(p->widget());
-		if(m){
-			p->showMaximized();
-			p->raise();
-			cadMdiArea->setActiveSubWindow(p);
-			break;
-		}else{
-			cadMdiArea->removeSubWindow(p);
-		}
-	}
 	if(!(graphicView && graphicView->isCleanUp())){
 		//do not clear layer/block lists, if application is being closed
 

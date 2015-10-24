@@ -82,8 +82,8 @@ public:
          * window for the given document or for a new document isf no document
          * is given.
          */
-    virtual RS_GraphicView* requestNewDocument(const QString& fileName = QString::null,
-                        RS_Document* doc=NULL) = 0;
+//    virtual RS_GraphicView* requestNewDocument(const QString& fileName = QString::null,
+//                        RS_Document* doc=NULL) = 0;
 
     /**
      * This virtual method must be overwritten and must provide

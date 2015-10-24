@@ -42,7 +42,6 @@ class QG_ArcTangentialOptions;
 class QG_PrintPreviewOptions;
 //class PrintPreviewOptions;
 class QG_CommandWidget;
-class QG_MainWindowInterface;
 class RS_Document;
 class QG_LineAngleOptions;
 class RS_Vector;
@@ -102,15 +101,8 @@ public:
     /**
      * Links the dialog factory to a main app window.
      */
-    virtual void setMainWindow(QG_MainWindowInterface* mw) {
-        mainWindow = mw;
-    }
-
 
     virtual void requestWarningDialog(const QString& warning);
-
-    virtual RS_GraphicView* requestNewDocument(const QString& fileName = QString::null,
-						RS_Document* doc=nullptr);
 
     virtual RS_Layer* requestNewLayerDialog(
 		RS_LayerList* layerList = nullptr);
@@ -264,8 +256,6 @@ protected:
     //! Pointer to arcTangential Option widge
     QG_ArcTangentialOptions* arcTangentialOptions;
     QG_PolylineEquidistantOptions* polylineEquidistantOptions;
-    //! Pointer to the main app window
-    QG_MainWindowInterface* mainWindow;
 private:
     // pointers to snap option widgets
     QG_SnapMiddleOptions* snapMiddleOptions;
