@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="lv">
 <context>
@@ -248,6 +249,10 @@
         <source>UNKNOWN</source>
         <translation>NEZINĀMS</translation>
     </message>
+    <message>
+        <source>SPLINEPOINTS</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_SameProp</name>
@@ -269,6 +274,17 @@
     <message>
         <source>Sample plugin</source>
         <translation>Parauga spraudnis</translation>
+    </message>
+</context>
+<context>
+    <name>PicFile</name>
+    <message>
+        <source>Read PIC file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>import PIC file</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -410,7 +426,7 @@
         <translation>Datne %1 neeksistē</translation>
     </message>
     <message>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>Nevar atvērt datni %1</translation>
     </message>
 </context>
@@ -608,6 +624,57 @@
     </message>
 </context>
 <context>
+    <name>picPunto</name>
+    <message>
+        <source>File...</source>
+        <translation type="unfinished">Datne...</translation>
+    </message>
+    <message>
+        <source>Scale:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation type="unfinished">Pieņemt</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Atcelt</translation>
+    </message>
+    <message>
+        <source>Select file</source>
+        <translation type="unfinished">Izvēlieties datni</translation>
+    </message>
+    <message>
+        <source>Scale Factor is empty or invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file %1 not exist</source>
+        <translation type="unfinished">Datne %1 neeksistē</translation>
+    </message>
+    <message>
+        <source>Can&apos;t open the file %1</source>
+        <translation type="unfinished">Nevar atvērt datni %1</translation>
+    </message>
+    <message>
+        <source>%1 objects imported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>picPunto drawLine: first point is empty %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>picPunto drawLine: next point is empty %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>format error in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>plot</name>
     <message>
         <source>Plot plugin</source>
@@ -626,7 +693,7 @@
     </message>
     <message>
         <source>This plugin allows you to plot mathematical equations.
-If you don't want to use the parametric form, just leave out "Equation2".
+If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
@@ -663,6 +730,21 @@ Izmantojiet savos vienādojums t vai x kā mainīgos/parametrus.
     <message>
         <source>Cancel</source>
         <translation>Atcelt</translation>
+    </message>
+    <message>
+        <source>Line Segments</source>
+        <comment>Plot Equation to generate RS_Line segments</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polyline</source>
+        <comment>Plot Equation to generate RS_Polyline</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SplinePoints</source>
+        <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
