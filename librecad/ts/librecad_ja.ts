@@ -5,7 +5,7 @@
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>2 Points, Radius</source>
-        <translation>２点；半径</translation>
+        <translation type="obsolete">２点；半径</translation>
     </message>
     <message>
         <source>radius=%1 is too small for points selected
@@ -42,7 +42,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
         <source>&amp;Spline through points</source>
-        <translation>通過点指示(&amp;S)</translation>
+        <translation type="obsolete">通過点指示(&amp;S)</translation>
     </message>
     <message>
         <source>Specify first control point</source>
@@ -74,10 +74,704 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_ActionFactory</name>
+    <message>
+        <source>&amp;Window Zoom</source>
+        <translation type="unfinished">指定範囲を拡大表示(&amp;W)</translation>
+    </message>
+    <message>
+        <source>Zoom &amp;Panning</source>
+        <translation type="unfinished">拡大図形の移動(&amp;P)</translation>
+    </message>
+    <message>
+        <source>Select Entity</source>
+        <translation type="unfinished">図形選択</translation>
+    </message>
+    <message>
+        <source>Select Window</source>
+        <translation type="unfinished">ウィンドウ選択</translation>
+    </message>
+    <message>
+        <source>Deselect Window</source>
+        <translation type="unfinished">ウィンドウ内の図形を非選択</translation>
+    </message>
+    <message>
+        <source>(De-)Select &amp;Contour</source>
+        <translation type="unfinished">(非)選択 輪郭線(&amp;C)</translation>
+    </message>
+    <message>
+        <source>Select Intersected Entities</source>
+        <translation type="unfinished">交差図形選択</translation>
+    </message>
+    <message>
+        <source>Deselect Intersected Entities</source>
+        <translation type="unfinished">交差図形群の選択解除</translation>
+    </message>
+    <message>
+        <source>(De-)Select Layer</source>
+        <translation type="unfinished">レイヤーの選択/非選択</translation>
+    </message>
+    <message>
+        <source>&amp;Points</source>
+        <translation type="unfinished">点(&amp;P)</translation>
+    </message>
+    <message>
+        <source>&amp;2 Points</source>
+        <translation type="unfinished">２点(&amp;2)</translation>
+    </message>
+    <message>
+        <source>&amp;Angle</source>
+        <translation type="unfinished">角度(&amp;A)</translation>
+    </message>
+    <message>
+        <source>&amp;Horizontal</source>
+        <translation type="unfinished">水平(&amp;H)</translation>
+    </message>
+    <message>
+        <source>Vertical</source>
+        <translation type="unfinished">垂直</translation>
+    </message>
+    <message>
+        <source>&amp;Freehand Line</source>
+        <translation type="unfinished">フリーハンド線分(&amp;F)</translation>
+    </message>
+    <message>
+        <source>&amp;Parallel</source>
+        <translation type="unfinished">平行線分(&amp;P)</translation>
+    </message>
+    <message>
+        <source>Parallel through point</source>
+        <translation type="unfinished">一点通過平行</translation>
+    </message>
+    <message>
+        <source>Rectangle</source>
+        <translation type="unfinished">矩形</translation>
+    </message>
+    <message>
+        <source>Bisector</source>
+        <translation type="unfinished">角の２等分線</translation>
+    </message>
+    <message>
+        <source>Tangent (P,C)</source>
+        <translation type="unfinished">接線(１点、中心)</translation>
+    </message>
+    <message>
+        <source>Tangent (C,C)</source>
+        <translation type="unfinished">接線 ２円</translation>
+    </message>
+    <message>
+        <source>Tangent &amp;Orthogonal</source>
+        <translation type="unfinished">円弧に接する垂線(&amp;O)</translation>
+    </message>
+    <message>
+        <source>Orthogonal</source>
+        <translation type="unfinished">垂線</translation>
+    </message>
+    <message>
+        <source>Relative angle</source>
+        <translation type="unfinished">相対角度</translation>
+    </message>
+    <message>
+        <source>Pol&amp;ygon (Cen,Cor)</source>
+        <translation type="unfinished">多角形(&amp;y) 中心、コーナー</translation>
+    </message>
+    <message>
+        <source>Polygo&amp;n (Cor,Cor)</source>
+        <translation type="unfinished">多角形(&amp;n) コーナー、コーナー</translation>
+    </message>
+    <message>
+        <source>Center, &amp;Point</source>
+        <translation type="unfinished">中心、円周上の点(&amp;O)</translation>
+    </message>
+    <message>
+        <source>Center, &amp;Radius</source>
+        <translation type="unfinished">中心、半径(&amp;R)</translation>
+    </message>
+    <message>
+        <source>2 Points</source>
+        <translation type="unfinished">２点</translation>
+    </message>
+    <message>
+        <source>2 Points, Radius</source>
+        <translation type="unfinished">２点；半径</translation>
+    </message>
+    <message>
+        <source>3 Points</source>
+        <translation type="unfinished">３点</translation>
+    </message>
+    <message>
+        <source>&amp;Concentric</source>
+        <translation type="unfinished">同心円(&amp;C)</translation>
+    </message>
+    <message>
+        <source>Circle &amp;Inscribed</source>
+        <translation type="unfinished">内接円(&amp;I)</translation>
+    </message>
+    <message>
+        <source>Tangential 2 Circles, Radius</source>
+        <comment>circle tangential with two circles, and given radius</comment>
+        <translation type="unfinished">円 接する２つ円、半径</translation>
+    </message>
+    <message>
+        <source>Tangential 2 Circles, 1 Point</source>
+        <translation type="unfinished">円 接する２つ円、半径</translation>
+    </message>
+    <message>
+        <source>Tangential &amp;3 Circles</source>
+        <translation type="unfinished">３点に接する円(&amp;3)</translation>
+    </message>
+    <message>
+        <source>Tangential, 2 P&amp;oints</source>
+        <translation type="unfinished">２点に接する円(&amp;P)</translation>
+    </message>
+    <message>
+        <source>&amp;Center, Point, Angles</source>
+        <translation type="unfinished">中心(&amp;C)、点、角度</translation>
+    </message>
+    <message>
+        <source>&amp;3 Points</source>
+        <translation type="unfinished">３点(&amp;3)</translation>
+    </message>
+    <message>
+        <source>Arc &amp;Tangential</source>
+        <translation type="unfinished">端点に円弧(&amp;T)</translation>
+    </message>
+    <message>
+        <source>&amp;Ellipse (Axis)</source>
+        <translation type="unfinished">楕円 長軸・短軸(&amp;E)</translation>
+    </message>
+    <message>
+        <source>Ellipse &amp;Arc (Axis)</source>
+        <translation type="unfinished">軸で楕円弧(&amp;A)</translation>
+    </message>
+    <message>
+        <source>Ellipse &amp;Foci Point</source>
+        <translation type="unfinished">楕円 焦点(&amp;F)</translation>
+    </message>
+    <message>
+        <source>Ellipse &amp;4 Point</source>
+        <translation type="unfinished">楕円 ４点(&amp;4)</translation>
+    </message>
+    <message>
+        <source>Ellipse Center and &amp;3 Points</source>
+        <translation type="unfinished">楕円 中心と３点(&amp;3)</translation>
+    </message>
+    <message>
+        <source>Ellipse &amp;Inscribed</source>
+        <translation type="unfinished">内接楕円(&amp;I)</translation>
+    </message>
+    <message>
+        <source>&amp;Spline</source>
+        <translation type="unfinished">スプライン(&amp;S)</translation>
+    </message>
+    <message>
+        <source>&amp;Spline through points</source>
+        <translation type="unfinished">通過点指示(&amp;S)</translation>
+    </message>
+    <message>
+        <source>&amp;Polyline</source>
+        <translation type="unfinished">ポリライン(&amp;P)</translation>
+    </message>
+    <message>
+        <source>Draw polylines</source>
+        <translation type="unfinished">ポリライン作図</translation>
+    </message>
+    <message>
+        <source>&amp;Add node</source>
+        <translation type="unfinished">ノード追加(&amp;A)</translation>
+    </message>
+    <message>
+        <source>Add polyline&apos;s node</source>
+        <translation type="unfinished">ポリライン・ノードを追加</translation>
+    </message>
+    <message>
+        <source>A&amp;ppend node</source>
+        <translation type="unfinished">ノード結合(&amp;p)</translation>
+    </message>
+    <message>
+        <source>Append polyline&apos;s node</source>
+        <translation type="unfinished">ポリラインノード結合</translation>
+    </message>
+    <message>
+        <source>&amp;Delete node</source>
+        <translation type="unfinished">ノード削除(&amp;D)</translation>
+    </message>
+    <message>
+        <source>Delete polyline&apos;s node</source>
+        <translation type="unfinished">ポリライン・ノードを削除</translation>
+    </message>
+    <message>
+        <source>Delete &amp;between two nodes</source>
+        <translation type="unfinished">二ノード間を削除(&amp;b)</translation>
+    </message>
+    <message>
+        <source>Delete between two nodes</source>
+        <translation type="unfinished">二ノード間を削除</translation>
+    </message>
+    <message>
+        <source>&amp;Trim segments</source>
+        <translation type="unfinished">セグメントの部分削除(&amp;T)</translation>
+    </message>
+    <message>
+        <source>Trim polyline&apos;s segments</source>
+        <translation type="unfinished">ポリラインのセグメントをトリム</translation>
+    </message>
+    <message>
+        <source>Create &amp;Equidistant Polylines</source>
+        <translation type="unfinished">等間隔ポリライン作成(&amp;E)</translation>
+    </message>
+    <message>
+        <source>Create Equidistant Polylines</source>
+        <translation type="unfinished">等間隔ポリライン作成</translation>
+    </message>
+    <message>
+        <source>Create Polyline from Existing &amp;Segments</source>
+        <translation type="unfinished">既存セグメントからポリライン作成(&amp;S)</translation>
+    </message>
+    <message>
+        <source>Create Polyline from Existing Segments</source>
+        <translation type="unfinished">既存セグメントからポリライン作成</translation>
+    </message>
+    <message>
+        <source>&amp;MText</source>
+        <translation type="unfinished">マルチテキスト(&amp;M)</translation>
+    </message>
+    <message>
+        <source>&amp;Text</source>
+        <translation type="unfinished">テキスト(&amp;T)</translation>
+    </message>
+    <message>
+        <source>&amp;Hatch</source>
+        <translation type="unfinished">ハッチング(&amp;H)</translation>
+    </message>
+    <message>
+        <source>Insert &amp;Image</source>
+        <translation type="unfinished">画像挿入(&amp;I)</translation>
+    </message>
+    <message>
+        <source>&amp;Aligned</source>
+        <translation type="unfinished">並列(&amp;A)</translation>
+    </message>
+    <message>
+        <source>&amp;Linear</source>
+        <translation type="unfinished">寸法(&amp;L)</translation>
+    </message>
+    <message>
+        <source>&amp;Vertical</source>
+        <translation type="unfinished">垂直(&amp;V)</translation>
+    </message>
+    <message>
+        <source>&amp;Radial</source>
+        <translation type="unfinished">半径(&amp;R)</translation>
+    </message>
+    <message>
+        <source>&amp;Diametric</source>
+        <translation type="unfinished">直径(&amp;D)</translation>
+    </message>
+    <message>
+        <source>&amp;Angular</source>
+        <translation type="unfinished">角度(&amp;A)</translation>
+    </message>
+    <message>
+        <source>&amp;Leader</source>
+        <translation type="unfinished">補助線(&amp;L)</translation>
+    </message>
+    <message>
+        <source>&amp;Attributes</source>
+        <translation type="unfinished">選択要素の属性変更(&amp;A)</translation>
+    </message>
+    <message>
+        <source>&amp;Delete</source>
+        <translation type="unfinished">削除(&amp;D)</translation>
+    </message>
+    <message>
+        <source>Delete Freehand</source>
+        <translation type="unfinished">フリーハンドを削除</translation>
+    </message>
+    <message>
+        <source>&amp;Move / Copy</source>
+        <translation type="unfinished">移動／複写(&amp;M)</translation>
+    </message>
+    <message>
+        <source>Re&amp;vert direction</source>
+        <translation type="unfinished">基準点を入れ替える(&amp;v)</translation>
+    </message>
+    <message>
+        <source>Ctrl+R</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Rotate</source>
+        <translation type="unfinished">回転(&amp;R)</translation>
+    </message>
+    <message>
+        <source>&amp;Scale</source>
+        <translation type="unfinished">スケール(&amp;S)</translation>
+    </message>
+    <message>
+        <source>&amp;Mirror</source>
+        <translation type="unfinished">鏡面(&amp;M)</translation>
+    </message>
+    <message>
+        <source>M&amp;ove and Rotate</source>
+        <translation type="unfinished">移動と回転(&amp;v)</translation>
+    </message>
+    <message>
+        <source>Rotate T&amp;wo</source>
+        <translation type="unfinished">二点で回転(&amp;T)</translation>
+    </message>
+    <message>
+        <source>&amp;Properties</source>
+        <translation type="unfinished">要素の属性変更(&amp;P)</translation>
+    </message>
+    <message>
+        <source>&amp;Trim</source>
+        <translation type="unfinished">トリム(&amp;T)</translation>
+    </message>
+    <message>
+        <source>&amp;Trim Two</source>
+        <translation type="unfinished">２つの要素でトリム(&amp;T)</translation>
+    </message>
+    <message>
+        <source>&amp;Lengthen</source>
+        <translation type="unfinished">伸長(&amp;L)</translation>
+    </message>
+    <message>
+        <source>&amp;Offset</source>
+        <translation type="unfinished">オフセット(&amp;O)</translation>
+    </message>
+    <message>
+        <source>&amp;Divide</source>
+        <translation type="unfinished">分割(&amp;D)</translation>
+    </message>
+    <message>
+        <source>&amp;Stretch</source>
+        <translation type="unfinished">伸張(&amp;S)</translation>
+    </message>
+    <message>
+        <source>&amp;Bevel</source>
+        <translation type="unfinished">Ｃ面取り(&amp;B)</translation>
+    </message>
+    <message>
+        <source>&amp;Fillet</source>
+        <translation type="unfinished">丸み面取り(&amp;F)</translation>
+    </message>
+    <message>
+        <source>&amp;Explode Text into Letters</source>
+        <translation type="unfinished">テキストを文字に分解(&amp;E)</translation>
+    </message>
+    <message>
+        <source>Point inside contour</source>
+        <translation type="unfinished">輪郭線の内部の点</translation>
+    </message>
+    <message>
+        <source>&amp;Distance Point to Point</source>
+        <translation type="unfinished">２点間の距離(&amp;D)</translation>
+    </message>
+    <message>
+        <source>&amp;Distance Entity to Point</source>
+        <translation type="unfinished">垂線の長さ(&amp;D)</translation>
+    </message>
+    <message>
+        <source>An&amp;gle between two lines</source>
+        <translation type="unfinished">2線間の角度(&amp;g)</translation>
+    </message>
+    <message>
+        <source>&amp;Total length of selected entities</source>
+        <translation type="unfinished">選択された図形群の全長(&amp;T)</translation>
+    </message>
+    <message>
+        <source>Polygonal &amp;Area</source>
+        <translation type="unfinished">多角形の面積(&amp;A)</translation>
+    </message>
+    <message>
+        <source>&amp;Selection pointer</source>
+        <translation type="unfinished">ポインターを選択(&amp;S)</translation>
+    </message>
+    <message>
+        <source>&amp;Undo</source>
+        <translation type="unfinished">取り消し(&amp;U)</translation>
+    </message>
+    <message>
+        <source>&amp;Redo</source>
+        <translation type="unfinished">やり直し(&amp;R)</translation>
+    </message>
+    <message>
+        <source>Cu&amp;t</source>
+        <translation type="unfinished">切り取り(&amp;t)</translation>
+    </message>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Paste</source>
+        <translation type="unfinished">貼り付け(&amp;P)</translation>
+    </message>
+    <message>
+        <source>move to bottom</source>
+        <translation type="unfinished">最背面に</translation>
+    </message>
+    <message>
+        <source>set to bottom</source>
+        <translation type="unfinished">最背面に設定</translation>
+    </message>
+    <message>
+        <source>lower after entity</source>
+        <translation type="unfinished">ひとつ背面に</translation>
+    </message>
+    <message>
+        <source>lower over entity</source>
+        <translation type="unfinished">上と入れ替え</translation>
+    </message>
+    <message>
+        <source>raise over entity</source>
+        <translation type="unfinished">ひとつ前面に</translation>
+    </message>
+    <message>
+        <source>move to top</source>
+        <translation type="unfinished">最前面に移動</translation>
+    </message>
+    <message>
+        <source>set to top</source>
+        <translation type="unfinished">最前面に設定</translation>
+    </message>
+    <message>
+        <source>&amp;Show all</source>
+        <translation type="unfinished">すべて表示(&amp;S)</translation>
+    </message>
+    <message>
+        <source>&amp;Hide all</source>
+        <translation type="unfinished">すべて非表示(&amp;H)</translation>
+    </message>
+    <message>
+        <source>&amp;Add Layer</source>
+        <translation type="unfinished">レイヤー追加(&amp;A)</translation>
+    </message>
+    <message>
+        <source>&amp;Remove Layer</source>
+        <translation type="unfinished">レイヤー削除(&amp;R)</translation>
+    </message>
+    <message>
+        <source>&amp;Edit Layer</source>
+        <translation type="unfinished">レイヤー編集(&amp;E)</translation>
+    </message>
+    <message>
+        <source>Toggle Layer Loc&amp;k</source>
+        <translation type="unfinished">レイヤー固定の切り替え(&amp;k)</translation>
+    </message>
+    <message>
+        <source>&amp;Toggle Layer Visibility</source>
+        <translation type="unfinished">表示/非表示の切り替え(&amp;T)</translation>
+    </message>
+    <message>
+        <source>Toggle Layer &amp;Print</source>
+        <translation type="unfinished">印刷の有無を切り替え(&amp;P)</translation>
+    </message>
+    <message>
+        <source>Toggle &amp;Construction Layer</source>
+        <translation type="unfinished">作図補助レイヤーの切り替え(&amp;C)</translation>
+    </message>
+    <message>
+        <source>&amp;Add Block</source>
+        <translation type="unfinished">部品追加(&amp;A)</translation>
+    </message>
+    <message>
+        <source>&amp;Remove Block</source>
+        <translation type="unfinished">部品削除(&amp;R)</translation>
+    </message>
+    <message>
+        <source>&amp;Rename Block</source>
+        <translation type="unfinished">部品名変更(&amp;R)</translation>
+    </message>
+    <message>
+        <source>&amp;Edit Block</source>
+        <translation type="unfinished">部品編集(&amp;E)</translation>
+    </message>
+    <message>
+        <source>&amp;Save Block</source>
+        <translation type="unfinished">部品保存(&amp;S)</translation>
+    </message>
+    <message>
+        <source>&amp;Insert Block</source>
+        <translation type="unfinished">部品挿入(&amp;I)</translation>
+    </message>
+    <message>
+        <source>Toggle Block &amp;Visibility</source>
+        <translation type="unfinished">部品を表示/非表示(&amp;V)</translation>
+    </message>
+    <message>
+        <source>&amp;Create Block</source>
+        <translation type="unfinished">部品作成(&amp;C)</translation>
+    </message>
+    <message>
+        <source>Ex&amp;plode</source>
+        <translation type="unfinished">分解(&amp;p)</translation>
+    </message>
+    <message>
+        <source>&amp;Preferences</source>
+        <translation type="unfinished">参照(&amp;P)</translation>
+    </message>
+    <message>
+        <source>&amp;Application Preferences</source>
+        <translation type="unfinished">アプリケーションの設定(&amp;A)</translation>
+    </message>
+    <message>
+        <source>Current &amp;Drawing Preferences</source>
+        <translation type="unfinished">図面の設定(&amp;D)</translation>
+    </message>
+    <message>
+        <source>Open IDE</source>
+        <translation type="unfinished">スクリプト用統合環境を開く</translation>
+    </message>
+    <message>
+        <source>Run Script..</source>
+        <translation type="unfinished">スクリプト実行..</translation>
+    </message>
+    <message>
+        <source>&amp;Delete selected</source>
+        <translation type="unfinished">選択された図形群を削除(&amp;D)</translation>
+    </message>
+    <message>
+        <source>Select &amp;All</source>
+        <translation type="unfinished">全て選択(&amp;A)</translation>
+    </message>
+    <message>
+        <source>Deselect &amp;all</source>
+        <translation type="unfinished">全てを選択解除(&amp;a)</translation>
+    </message>
+    <message>
+        <source>Ctrl+K</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert Selection</source>
+        <translation type="unfinished">逆選択</translation>
+    </message>
+    <message>
+        <source>Export as &amp;MakerCAM SVG...</source>
+        <translation type="unfinished">MakerCAM SVGでエクスポート(&amp;M)...</translation>
+    </message>
+    <message>
+        <source>Regenerate Dimension Entities</source>
+        <translation type="unfinished">寸法図形再生成</translation>
+    </message>
+    <message>
+        <source>Zoom &amp;In</source>
+        <translation type="unfinished">拡大(&amp;I)</translation>
+    </message>
+    <message>
+        <source>Zoom &amp;Out</source>
+        <translation type="unfinished">縮小(&amp;O)</translation>
+    </message>
+    <message>
+        <source>&amp;Auto Zoom</source>
+        <translation type="unfinished">画面に合わせて拡大/縮小(&amp;A)</translation>
+    </message>
+    <message>
+        <source>Previous &amp;View</source>
+        <translation type="unfinished">前の画面(&amp;V)</translation>
+    </message>
+    <message>
+        <source>&amp;Redraw</source>
+        <translation type="unfinished">再描画(&amp;R)</translation>
+    </message>
+    <message>
+        <source>&amp;New</source>
+        <translation type="unfinished">新規作成(&amp;N)</translation>
+    </message>
+    <message>
+        <source>New From &amp;Template</source>
+        <translation type="unfinished">テンプレートから新規作成(&amp;T)</translation>
+    </message>
+    <message>
+        <source>&amp;Open...</source>
+        <translation type="unfinished">開く(&amp;O)...</translation>
+    </message>
+    <message>
+        <source>&amp;Save</source>
+        <translation type="unfinished">保存(&amp;S)</translation>
+    </message>
+    <message>
+        <source>Save &amp;as...</source>
+        <translation type="unfinished">別名で保存(&amp;a)...</translation>
+    </message>
+    <message>
+        <source>&amp;Export as image</source>
+        <translation type="unfinished">画像でエクスポート(&amp;E)</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation type="unfinished">閉じる(&amp;C)</translation>
+    </message>
+    <message>
+        <source>&amp;Print...</source>
+        <translation type="unfinished">印刷(&amp;P)...</translation>
+    </message>
+    <message>
+        <source>Export as PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print Pre&amp;view</source>
+        <translation type="unfinished">印刷プレビュー(&amp;v)</translation>
+    </message>
+    <message>
+        <source>&amp;Quit</source>
+        <translation type="unfinished">終了(&amp;Q)</translation>
+    </message>
+    <message>
+        <source>&amp;Block</source>
+        <translation type="unfinished">部品(&amp;B)</translation>
+    </message>
+    <message>
+        <source>&amp;Fullscreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+Meta+F</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>F11</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+F11</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Grid</source>
+        <translation type="unfinished">グリッド(&amp;G)</translation>
+    </message>
+    <message>
+        <source>Ctrl+G</source>
+        <comment>Toggle Grid</comment>
+        <translation type="unfinished">Ctrl+G</translation>
+    </message>
+    <message>
+        <source>&amp;Draft</source>
+        <translation type="unfinished">作図(&amp;D)</translation>
+    </message>
+    <message>
+        <source>&amp;Statusbar</source>
+        <translation type="unfinished">ステータスバー(&amp;S)</translation>
+    </message>
+    <message>
+        <source>Ctrl+I</source>
+        <comment>Hide Statusbar</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Focus on &amp;Command Line</source>
+        <translation type="unfinished">指令枠に焦点を合わせる(&amp;C)</translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionFileExportMakerCam</name>
     <message>
         <source>Export as &amp;MakerCAM SVG...</source>
-        <translation>MakerCAM SVGでエクスポート(&amp;M)...</translation>
+        <translation type="obsolete">MakerCAM SVGでエクスポート(&amp;M)...</translation>
     </message>
     <message>
         <source>Export as</source>
@@ -88,7 +782,14 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>LC_ActionLayersToggleConstruction</name>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>作図補助レイヤーの切り替え(&amp;C)</translation>
+        <translation type="obsolete">作図補助レイヤーの切り替え(&amp;C)</translation>
+    </message>
+</context>
+<context>
+    <name>LC_CustomToolbar</name>
+    <message>
+        <source>Add or Remove Action</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -100,6 +801,29 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Insert Image</source>
         <translation>画像を挿入</translation>
+    </message>
+</context>
+<context>
+    <name>LG_DimzerosBox</name>
+    <message>
+        <source>select:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove 0&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove 0&quot;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -163,7 +887,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
-        <translation>指令枠に焦点を合わせる(&amp;C)</translation>
+        <translation type="obsolete">指令枠に焦点を合わせる(&amp;C)</translation>
     </message>
     <message>
         <source>&amp;Select</source>
@@ -179,7 +903,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Arc</source>
-        <translation>円弧(&amp;A)</translation>
+        <translation type="obsolete">円弧(&amp;A)</translation>
     </message>
     <message>
         <source>&amp;Circle</source>
@@ -191,7 +915,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation>スプライン(&amp;S)</translation>
+        <translation type="obsolete">スプライン(&amp;S)</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -386,7 +1110,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
-        <translation>故障、ヘルプファイルをシステムの中に見つけることができない.</translation>
+        <translation type="obsolete">故障、ヘルプファイルをシステムの中に見つけることができない.</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
@@ -446,7 +1170,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Draw &amp;Order</source>
-        <translation>図形の配置(&amp;O)</translation>
+        <translation type="obsolete">図形の配置(&amp;O)</translation>
     </message>
     <message>
         <source>New document from template: </source>
@@ -474,7 +1198,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Pen Selection</source>
-        <translation>ペン選択</translation>
+        <translation type="obsolete">ペン選択</translation>
     </message>
     <message>
         <source>Snap Selection</source>
@@ -518,7 +1242,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>&amp;Text</source>
-        <translation>テキスト(&amp;T)</translation>
+        <translation type="obsolete">テキスト(&amp;T)</translation>
     </message>
     <message>
         <source>Export</source>
@@ -538,6 +1262,90 @@ Please check its existence and permissions.</source>
     <message>
         <source>Online (Wiki)</source>
         <translation>オンライン (Wiki)</translation>
+    </message>
+    <message>
+        <source>The help files were not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">線分</translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">円</translation>
+    </message>
+    <message>
+        <source>&amp;Curve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Curve</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipse</source>
+        <translation type="unfinished">楕円</translation>
+    </message>
+    <message>
+        <source>Polyline</source>
+        <translation type="unfinished">ポリライン</translation>
+    </message>
+    <message>
+        <source>&amp;Misc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Misc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dimension</source>
+        <translation type="unfinished">寸法</translation>
+    </message>
+    <message>
+        <source>Modify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pen</source>
+        <translation type="unfinished">ペン</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DockWidgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Dockwidgets</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -560,68 +1368,68 @@ Please check its existence and permissions.</source>
     <name>QG_ActionFactory</name>
     <message>
         <source>&amp;Close</source>
-        <translation>閉じる(&amp;C)</translation>
+        <translation type="obsolete">閉じる(&amp;C)</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation>グリッド(&amp;G)</translation>
+        <translation type="obsolete">グリッド(&amp;G)</translation>
     </message>
     <message>
         <source>&amp;Application Preferences</source>
-        <translation>アプリケーションの設定(&amp;A)</translation>
+        <translation type="obsolete">アプリケーションの設定(&amp;A)</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation>ステータスバー(&amp;S)</translation>
+        <translation type="obsolete">ステータスバー(&amp;S)</translation>
     </message>
     <message>
         <source>&amp;Draft</source>
-        <translation>作図(&amp;D)</translation>
+        <translation type="obsolete">作図(&amp;D)</translation>
     </message>
     <message>
         <source>Open IDE</source>
-        <translation>スクリプト用統合環境を開く</translation>
+        <translation type="obsolete">スクリプト用統合環境を開く</translation>
     </message>
     <message>
         <source>Run Script..</source>
-        <translation>スクリプト実行..</translation>
+        <translation type="obsolete">スクリプト実行..</translation>
     </message>
     <message>
         <source>&amp;Preferences</source>
-        <translation>参照(&amp;P)</translation>
+        <translation type="obsolete">参照(&amp;P)</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation>印刷(&amp;P)...</translation>
+        <translation type="obsolete">印刷(&amp;P)...</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>終了(&amp;Q)</translation>
+        <translation type="obsolete">終了(&amp;Q)</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation>ポインターを選択(&amp;S)</translation>
+        <translation type="obsolete">ポインターを選択(&amp;S)</translation>
     </message>
     <message>
         <source>Export as PDF</source>
-        <translation>PDFでエクスポート</translation>
+        <translation type="obsolete">PDFでエクスポート</translation>
     </message>
     <message>
         <source>&amp;Block</source>
-        <translation>部品(&amp;B)</translation>
+        <translation type="obsolete">部品(&amp;B)</translation>
     </message>
     <message>
         <source>&amp;Export as image</source>
-        <translation>画像でエクスポート(&amp;E)</translation>
+        <translation type="obsolete">画像でエクスポート(&amp;E)</translation>
     </message>
     <message>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
-        <translation>Ctrl+G</translation>
+        <translation type="obsolete">Ctrl+G</translation>
     </message>
     <message>
         <source>CAD ToolBar</source>
-        <translation>CAD ツールバー</translation>
+        <translation type="obsolete">CAD ツールバー</translation>
     </message>
 </context>
 <context>
@@ -949,7 +1757,15 @@ in a separate window</source>
     </message>
     <message>
         <source>select&amp;All</source>
-        <translation>全て選択(&amp;A)</translation>
+        <translation type="obsolete">全て選択(&amp;A)</translation>
+    </message>
+    <message>
+        <source>Select &amp;All</source>
+        <translation type="unfinished">全て選択(&amp;A)</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished">クリア</translation>
     </message>
 </context>
 <context>
@@ -972,7 +1788,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Clear</source>
-        <translation>クリア</translation>
+        <translation type="obsolete">クリア</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;type in coordinates or commands&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -2426,19 +3242,19 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Include all</source>
-        <translation>すべて読み込む</translation>
+        <translation type="obsolete">すべて読み込む</translation>
     </message>
     <message>
         <source>supress leading</source>
-        <translation>リードすることを抑制する</translation>
+        <translation type="obsolete">リードすることを抑制する</translation>
     </message>
     <message>
         <source>supress trailing</source>
-        <translation>引くことを抑制する</translation>
+        <translation type="obsolete">引くことを抑制する</translation>
     </message>
     <message>
         <source>supress all</source>
-        <translation>すべて抑える</translation>
+        <translation type="obsolete">すべて抑える</translation>
     </message>
     <message>
         <source>Length Factor:</source>
@@ -2510,11 +3326,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Supress in feet</source>
-        <translation>フィートで抑える</translation>
+        <translation type="obsolete">フィートで抑える</translation>
     </message>
     <message>
         <source>Supress in inch</source>
-        <translation>インチで抑える</translation>
+        <translation type="obsolete">インチで抑える</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -2593,7 +3409,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;Show large crosshairs</source>
-        <translation>十字カーソル表示(&amp;S)</translation>
+        <translation type="obsolete">十字カーソル表示(&amp;S)</translation>
     </message>
     <message>
         <source>Number of p&amp;review entities:</source>
@@ -2790,6 +3606,58 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <message>
         <source>Modify layer of selected entities, at  layer activation</source>
         <translation>レイヤーをアクティブにするときに、選択された要素のレイヤーを修正する</translation>
+    </message>
+    <message>
+        <source>Snap indicator:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Anti-aliasing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair</source>
+        <translation type="unfinished">十字線</translation>
+    </message>
+    <message>
+        <source>Spiderweb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Toolbar:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>restores program geometry/layout to original state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>restores the program to its original state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6439,26 +7307,36 @@ Continue?</source>
         <source>Calculator error for input: </source>
         <translation>計算のための入力でエラー：</translation>
     </message>
+    <message>
+        <source>circlecr</source>
+        <comment>circle with center and radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cc</source>
+        <comment>circle with center and radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksAdd</name>
     <message>
         <source>&amp;Add Block</source>
-        <translation>部品追加(&amp;A)</translation>
+        <translation type="obsolete">部品追加(&amp;A)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksAttributes</name>
     <message>
         <source>&amp;Rename Block</source>
-        <translation>部品名変更(&amp;R)</translation>
+        <translation type="obsolete">部品名変更(&amp;R)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
         <source>&amp;Create Block</source>
-        <translation>部品作成(&amp;C)</translation>
+        <translation type="obsolete">部品作成(&amp;C)</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -6473,32 +7351,32 @@ Continue?</source>
     <name>RS_ActionBlocksEdit</name>
     <message>
         <source>&amp;Edit Block</source>
-        <translation>部品編集(&amp;E)</translation>
+        <translation type="obsolete">部品編集(&amp;E)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksExplode</name>
     <message>
         <source>Ex&amp;plode</source>
-        <translation>分解(&amp;p)</translation>
+        <translation type="obsolete">分解(&amp;p)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksFreezeAll</name>
     <message>
         <source>&amp;Hide all</source>
-        <translation>すべて非表示(&amp;H)</translation>
+        <translation type="obsolete">すべて非表示(&amp;H)</translation>
     </message>
     <message>
         <source>&amp;Show all</source>
-        <translation>すべて表示(&amp;S)</translation>
+        <translation type="obsolete">すべて表示(&amp;S)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksInsert</name>
     <message>
         <source>&amp;Insert Block</source>
-        <translation>部品挿入(&amp;I)</translation>
+        <translation type="obsolete">部品挿入(&amp;I)</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -6545,14 +7423,14 @@ Continue?</source>
     <name>RS_ActionBlocksRemove</name>
     <message>
         <source>&amp;Remove Block</source>
-        <translation>部品削除(&amp;R)</translation>
+        <translation type="obsolete">部品削除(&amp;R)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksSave</name>
     <message>
         <source>&amp;Save Block</source>
-        <translation>部品保存(&amp;S)</translation>
+        <translation type="obsolete">部品保存(&amp;S)</translation>
     </message>
     <message>
         <source>No block activated to save</source>
@@ -6563,7 +7441,7 @@ Continue?</source>
     <name>RS_ActionBlocksToggleView</name>
     <message>
         <source>Toggle Block &amp;Visibility</source>
-        <translation>部品を表示/非表示(&amp;V)</translation>
+        <translation type="obsolete">部品を表示/非表示(&amp;V)</translation>
     </message>
 </context>
 <context>
@@ -6581,7 +7459,7 @@ Continue?</source>
     <name>RS_ActionDimAligned</name>
     <message>
         <source>&amp;Aligned</source>
-        <translation>並列(&amp;A)</translation>
+        <translation type="obsolete">並列(&amp;A)</translation>
     </message>
     <message>
         <source>Specify first extension line origin</source>
@@ -6612,7 +7490,7 @@ Continue?</source>
     <name>RS_ActionDimAngular</name>
     <message>
         <source>&amp;Angular</source>
-        <translation>角度(&amp;A)</translation>
+        <translation type="obsolete">角度(&amp;A)</translation>
     </message>
     <message>
         <source>Select first line</source>
@@ -6639,7 +7517,7 @@ Continue?</source>
     <name>RS_ActionDimDiametric</name>
     <message>
         <source>&amp;Diametric</source>
-        <translation>直径(&amp;D)</translation>
+        <translation type="obsolete">直径(&amp;D)</translation>
     </message>
     <message>
         <source>Not a circle or arc entity</source>
@@ -6670,7 +7548,7 @@ Continue?</source>
     <name>RS_ActionDimLeader</name>
     <message>
         <source>&amp;Leader</source>
-        <translation>補助線(&amp;L)</translation>
+        <translation type="obsolete">補助線(&amp;L)</translation>
     </message>
     <message>
         <source>Specify target point</source>
@@ -6693,15 +7571,15 @@ Continue?</source>
     <name>RS_ActionDimLinear</name>
     <message>
         <source>&amp;Linear</source>
-        <translation>寸法(&amp;L)</translation>
+        <translation type="obsolete">寸法(&amp;L)</translation>
     </message>
     <message>
         <source>&amp;Horizontal</source>
-        <translation>水平(&amp;H)</translation>
+        <translation type="obsolete">水平(&amp;H)</translation>
     </message>
     <message>
         <source>&amp;Vertical</source>
-        <translation>垂直(&amp;V)</translation>
+        <translation type="obsolete">垂直(&amp;V)</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -6740,7 +7618,7 @@ Continue?</source>
     <name>RS_ActionDimRadial</name>
     <message>
         <source>&amp;Radial</source>
-        <translation>半径(&amp;R)</translation>
+        <translation type="obsolete">半径(&amp;R)</translation>
     </message>
     <message>
         <source>Not a circle or arc entity</source>
@@ -6771,7 +7649,7 @@ Continue?</source>
     <name>RS_ActionDrawArc</name>
     <message>
         <source>&amp;Center, Point, Angles</source>
-        <translation>中心(&amp;C)、点、角度</translation>
+        <translation type="obsolete">中心(&amp;C)、点、角度</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -6818,7 +7696,7 @@ Continue?</source>
     <name>RS_ActionDrawArc3P</name>
     <message>
         <source>&amp;3 Points</source>
-        <translation>３点(&amp;3)</translation>
+        <translation type="obsolete">３点(&amp;3)</translation>
     </message>
     <message>
         <source>Invalid arc data.</source>
@@ -6869,14 +7747,14 @@ Continue?</source>
     </message>
     <message>
         <source>Arc &amp;Tangential</source>
-        <translation>端点に円弧(&amp;T)</translation>
+        <translation type="obsolete">端点に円弧(&amp;T)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
         <source>Center, &amp;Point</source>
-        <translation>中心、円周上の点(&amp;O)</translation>
+        <translation type="obsolete">中心、円周上の点(&amp;O)</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -6923,7 +7801,7 @@ Continue?</source>
     </message>
     <message>
         <source>2 Points</source>
-        <translation>２点</translation>
+        <translation type="obsolete">２点</translation>
     </message>
 </context>
 <context>
@@ -6954,14 +7832,14 @@ Continue?</source>
     </message>
     <message>
         <source>3 Points</source>
-        <translation>３点</translation>
+        <translation type="obsolete">３点</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircleCR</name>
     <message>
         <source>Center, &amp;Radius</source>
-        <translation>中心、半径(&amp;R)</translation>
+        <translation type="obsolete">中心、半径(&amp;R)</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -6992,7 +7870,7 @@ Continue?</source>
     <name>RS_ActionDrawCircleInscribe</name>
     <message>
         <source>Circle &amp;Inscribed</source>
-        <translation>内接円(&amp;I)</translation>
+        <translation type="obsolete">内接円(&amp;I)</translation>
     </message>
     <message>
         <source>Specify the first line</source>
@@ -7043,7 +7921,7 @@ Continue?</source>
     </message>
     <message>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>２点に接する円(&amp;P)</translation>
+        <translation type="obsolete">２点に接する円(&amp;P)</translation>
     </message>
 </context>
 <context>
@@ -7071,7 +7949,7 @@ Continue?</source>
     <message>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential to two give circles and with radius</comment>
-        <translation>円 接する２つ円、半径</translation>
+        <translation type="obsolete">円 接する２つ円、半径</translation>
     </message>
 </context>
 <context>
@@ -7102,7 +7980,7 @@ Continue?</source>
     </message>
     <message>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation>円 接する２つ円、半径</translation>
+        <translation type="obsolete">円 接する２つ円、半径</translation>
     </message>
 </context>
 <context>
@@ -7133,18 +8011,18 @@ Continue?</source>
     </message>
     <message>
         <source>Tangential &amp;3 Circles</source>
-        <translation>３点に接する円(&amp;3)</translation>
+        <translation type="obsolete">３点に接する円(&amp;3)</translation>
     </message>
     <message>
         <source>Draw tangential circle of 3 given points, lines, arcs/circles</source>
-        <translation>3点（線/円/弧）に接する円を描く</translation>
+        <translation type="obsolete">3点（線/円/弧）に接する円を描く</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <source>Ellipse &amp;4 Point</source>
-        <translation>楕円 ４点(&amp;4)</translation>
+        <translation type="obsolete">楕円 ４点(&amp;4)</translation>
     </message>
     <message>
         <source>Specify the first point on ellipse</source>
@@ -7179,11 +8057,11 @@ Continue?</source>
     <name>RS_ActionDrawEllipseAxis</name>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation>軸で楕円弧(&amp;A)</translation>
+        <translation type="obsolete">軸で楕円弧(&amp;A)</translation>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
-        <translation>楕円 長軸・短軸(&amp;E)</translation>
+        <translation type="obsolete">楕円 長軸・短軸(&amp;E)</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -7222,7 +8100,7 @@ Continue?</source>
     <name>RS_ActionDrawEllipseCenter3Points</name>
     <message>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation>楕円 中心と３点(&amp;3)</translation>
+        <translation type="obsolete">楕円 中心と３点(&amp;3)</translation>
     </message>
     <message>
         <source>Specify the center of ellipse</source>
@@ -7253,7 +8131,7 @@ Continue?</source>
     <name>RS_ActionDrawEllipseFociPoint</name>
     <message>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>楕円 焦点(&amp;F)</translation>
+        <translation type="obsolete">楕円 焦点(&amp;F)</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -7292,7 +8170,7 @@ Continue?</source>
     <name>RS_ActionDrawEllipseInscribe</name>
     <message>
         <source>Ellipse &amp;Inscribed</source>
-        <translation>内接楕円(&amp;I)</translation>
+        <translation type="obsolete">内接楕円(&amp;I)</translation>
     </message>
     <message>
         <source>Specify the first line</source>
@@ -7327,7 +8205,7 @@ Continue?</source>
     <name>RS_ActionDrawHatch</name>
     <message>
         <source>&amp;Hatch</source>
-        <translation>ハッチング(&amp;H)</translation>
+        <translation type="obsolete">ハッチング(&amp;H)</translation>
     </message>
     <message>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
@@ -7390,7 +8268,7 @@ Continue?</source>
     </message>
     <message>
         <source>Insert &amp;Image</source>
-        <translation>画像挿入(&amp;I)</translation>
+        <translation type="obsolete">画像挿入(&amp;I)</translation>
     </message>
     <message>
         <source>Enter dpi:</source>
@@ -7401,7 +8279,7 @@ Continue?</source>
     <name>RS_ActionDrawLine</name>
     <message>
         <source>&amp;2 Points</source>
-        <translation>２点(&amp;2)</translation>
+        <translation type="obsolete">２点(&amp;2)</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -7440,7 +8318,7 @@ Continue?</source>
     <name>RS_ActionDrawLineAngle</name>
     <message>
         <source>&amp;Angle</source>
-        <translation>角度(&amp;A)</translation>
+        <translation type="obsolete">角度(&amp;A)</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -7468,18 +8346,18 @@ Continue?</source>
     </message>
     <message>
         <source>&amp;Horizontal</source>
-        <translation>水平(&amp;H)</translation>
+        <translation type="obsolete">水平(&amp;H)</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation>垂直</translation>
+        <translation type="obsolete">垂直</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineBisector</name>
     <message>
         <source>Bisector</source>
-        <translation>角の２等分線</translation>
+        <translation type="obsolete">角の２等分線</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -7519,7 +8397,7 @@ Continue?</source>
     <name>RS_ActionDrawLineFree</name>
     <message>
         <source>&amp;Freehand Line</source>
-        <translation>フリーハンド線分(&amp;F)</translation>
+        <translation type="obsolete">フリーハンド線分(&amp;F)</translation>
     </message>
     <message>
         <source>Click and drag to draw a line</source>
@@ -7550,14 +8428,14 @@ Continue?</source>
     </message>
     <message>
         <source>Vertical</source>
-        <translation>垂直</translation>
+        <translation type="obsolete">垂直</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineOrthTan</name>
     <message>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>円弧に接する垂線(&amp;O)</translation>
+        <translation type="obsolete">円弧に接する垂線(&amp;O)</translation>
     </message>
     <message>
         <source>Select a line</source>
@@ -7600,18 +8478,18 @@ Continue?</source>
     </message>
     <message>
         <source>&amp;Concentric</source>
-        <translation>同心円(&amp;C)</translation>
+        <translation type="obsolete">同心円(&amp;C)</translation>
     </message>
     <message>
         <source>&amp;Parallel</source>
-        <translation>平行線分(&amp;P)</translation>
+        <translation type="obsolete">平行線分(&amp;P)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallelThrough</name>
     <message>
         <source>Parallel through point</source>
-        <translation>一点通過平行</translation>
+        <translation type="obsolete">一点通過平行</translation>
     </message>
     <message>
         <source>Select entity</source>
@@ -7653,7 +8531,7 @@ Continue?</source>
     <name>RS_ActionDrawLinePolygonCenCor</name>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>多角形(&amp;y) 中心、コーナー</translation>
+        <translation type="obsolete">多角形(&amp;y) 中心、コーナー</translation>
     </message>
     <message>
         <source>Specify center</source>
@@ -7680,7 +8558,7 @@ Continue?</source>
     <name>RS_ActionDrawLinePolygonCorCor</name>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>多角形(&amp;n) コーナー、コーナー</translation>
+        <translation type="obsolete">多角形(&amp;n) コーナー、コーナー</translation>
     </message>
     <message>
         <source>Specify first corner</source>
@@ -7715,7 +8593,7 @@ Continue?</source>
     <name>RS_ActionDrawLineRectangle</name>
     <message>
         <source>Rectangle</source>
-        <translation>矩形</translation>
+        <translation type="obsolete">矩形</translation>
     </message>
     <message>
         <source>Specify first corner</source>
@@ -7738,7 +8616,7 @@ Continue?</source>
     <name>RS_ActionDrawLineRelAngle</name>
     <message>
         <source>Relative angle</source>
-        <translation>相対角度</translation>
+        <translation type="obsolete">相対角度</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -7762,14 +8640,14 @@ Continue?</source>
     </message>
     <message>
         <source>Orthogonal</source>
-        <translation>垂線</translation>
+        <translation type="obsolete">垂線</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <source>Tangent (P,C)</source>
-        <translation>接線(１点、中心)</translation>
+        <translation type="obsolete">接線(１点、中心)</translation>
     </message>
     <message>
         <source>Specify point</source>
@@ -7792,7 +8670,7 @@ Continue?</source>
     <name>RS_ActionDrawLineTangent2</name>
     <message>
         <source>Tangent (C,C)</source>
-        <translation>接線 ２円</translation>
+        <translation type="obsolete">接線 ２円</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -7815,7 +8693,7 @@ Continue?</source>
     <name>RS_ActionDrawMText</name>
     <message>
         <source>&amp;MText</source>
-        <translation>マルチテキスト(&amp;M)</translation>
+        <translation type="obsolete">マルチテキスト(&amp;M)</translation>
     </message>
     <message>
         <source>Specify insertion point</source>
@@ -7838,7 +8716,7 @@ Continue?</source>
     <name>RS_ActionDrawPoint</name>
     <message>
         <source>&amp;Points</source>
-        <translation>点(&amp;P)</translation>
+        <translation type="obsolete">点(&amp;P)</translation>
     </message>
     <message>
         <source>Specify location</source>
@@ -7873,11 +8751,11 @@ Continue?</source>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation>ポリライン(&amp;P)</translation>
+        <translation type="obsolete">ポリライン(&amp;P)</translation>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation>ポリライン作図</translation>
+        <translation type="obsolete">ポリライン作図</translation>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
@@ -7892,7 +8770,7 @@ Continue?</source>
     <name>RS_ActionDrawSpline</name>
     <message>
         <source>&amp;Spline</source>
-        <translation>スプライン(&amp;S)</translation>
+        <translation type="obsolete">スプライン(&amp;S)</translation>
     </message>
     <message>
         <source>Specify first control point</source>
@@ -7923,7 +8801,7 @@ Continue?</source>
     <name>RS_ActionDrawText</name>
     <message>
         <source>&amp;Text</source>
-        <translation>テキスト(&amp;T)</translation>
+        <translation type="obsolete">テキスト(&amp;T)</translation>
     </message>
     <message>
         <source>Specify insertion point</source>
@@ -7950,11 +8828,11 @@ Continue?</source>
     <name>RS_ActionEditCopy</name>
     <message>
         <source>&amp;Copy</source>
-        <translation>複写(&amp;C)</translation>
+        <translation type="obsolete">複写(&amp;C)</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation>切り取り(&amp;t)</translation>
+        <translation type="obsolete">切り取り(&amp;t)</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -7969,7 +8847,7 @@ Continue?</source>
     <name>RS_ActionEditPaste</name>
     <message>
         <source>&amp;Paste</source>
-        <translation>貼り付け(&amp;P)</translation>
+        <translation type="obsolete">貼り付け(&amp;P)</translation>
     </message>
     <message>
         <source>Set reference point</source>
@@ -7984,11 +8862,11 @@ Continue?</source>
     <name>RS_ActionEditUndo</name>
     <message>
         <source>&amp;Undo</source>
-        <translation>取り消し(&amp;U)</translation>
+        <translation type="obsolete">取り消し(&amp;U)</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation>やり直し(&amp;R)</translation>
+        <translation type="obsolete">やり直し(&amp;R)</translation>
     </message>
     <message>
         <source>Nothing to undo!</source>
@@ -8003,35 +8881,35 @@ Continue?</source>
     <name>RS_ActionFileNew</name>
     <message>
         <source>&amp;New</source>
-        <translation>新規作成(&amp;N)</translation>
+        <translation type="obsolete">新規作成(&amp;N)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileNewTemplate</name>
     <message>
         <source>New From &amp;Template</source>
-        <translation>テンプレートから新規作成(&amp;T)</translation>
+        <translation type="obsolete">テンプレートから新規作成(&amp;T)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileOpen</name>
     <message>
         <source>&amp;Open...</source>
-        <translation>開く(&amp;O)...</translation>
+        <translation type="obsolete">開く(&amp;O)...</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileSave</name>
     <message>
         <source>&amp;Save</source>
-        <translation>保存(&amp;S)</translation>
+        <translation type="obsolete">保存(&amp;S)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionFileSaveAs</name>
     <message>
         <source>Save &amp;as...</source>
-        <translation>別名で保存(&amp;a)...</translation>
+        <translation type="obsolete">別名で保存(&amp;a)...</translation>
     </message>
 </context>
 <context>
@@ -8058,7 +8936,7 @@ Continue?</source>
     </message>
     <message>
         <source>An&amp;gle between two lines</source>
-        <translation>2線間の角度(&amp;g)</translation>
+        <translation type="obsolete">2線間の角度(&amp;g)</translation>
     </message>
     <message>
         <source>Angle: %1</source>
@@ -8093,7 +8971,7 @@ Continue?</source>
     </message>
     <message>
         <source>Polygonal &amp;Area</source>
-        <translation>多角形の面積(&amp;A)</translation>
+        <translation type="obsolete">多角形の面積(&amp;A)</translation>
     </message>
     <message>
         <source>Closing Point: %1/%2</source>
@@ -8104,7 +8982,7 @@ Continue?</source>
     <name>RS_ActionInfoDist</name>
     <message>
         <source>&amp;Distance Point to Point</source>
-        <translation>２点間の距離(&amp;D)</translation>
+        <translation type="obsolete">２点間の距離(&amp;D)</translation>
     </message>
     <message>
         <source>Specify first point of distance</source>
@@ -8131,7 +9009,7 @@ Continue?</source>
     <name>RS_ActionInfoDist2</name>
     <message>
         <source>&amp;Distance Entity to Point</source>
-        <translation>垂線の長さ(&amp;D)</translation>
+        <translation type="obsolete">垂線の長さ(&amp;D)</translation>
     </message>
     <message>
         <source>Distance: %1</source>
@@ -8158,7 +9036,7 @@ Continue?</source>
     <name>RS_ActionInfoInside</name>
     <message>
         <source>Point inside contour</source>
-        <translation>輪郭線の内部の点</translation>
+        <translation type="obsolete">輪郭線の内部の点</translation>
     </message>
     <message>
         <source>Point is inside selected contour.</source>
@@ -8181,7 +9059,7 @@ Continue?</source>
     <name>RS_ActionInfoTotalLength</name>
     <message>
         <source>&amp;Total length of selected entities</source>
-        <translation>選択された図形群の全長(&amp;T)</translation>
+        <translation type="obsolete">選択された図形群の全長(&amp;T)</translation>
     </message>
     <message>
         <source>Total Length of selected entities: %1</source>
@@ -8196,53 +9074,53 @@ Continue?</source>
     <name>RS_ActionLayersAdd</name>
     <message>
         <source>&amp;Add Layer</source>
-        <translation>レイヤー追加(&amp;A)</translation>
+        <translation type="obsolete">レイヤー追加(&amp;A)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersEdit</name>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation>レイヤー編集(&amp;E)</translation>
+        <translation type="obsolete">レイヤー編集(&amp;E)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersFreezeAll</name>
     <message>
         <source>&amp;Hide all</source>
-        <translation>すべて非表示(&amp;H)</translation>
+        <translation type="obsolete">すべて非表示(&amp;H)</translation>
     </message>
     <message>
         <source>&amp;Show all</source>
-        <translation>すべて表示(&amp;S)</translation>
+        <translation type="obsolete">すべて表示(&amp;S)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersRemove</name>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation>レイヤー削除(&amp;R)</translation>
+        <translation type="obsolete">レイヤー削除(&amp;R)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleLock</name>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>レイヤー固定の切り替え(&amp;k)</translation>
+        <translation type="obsolete">レイヤー固定の切り替え(&amp;k)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersTogglePrint</name>
     <message>
         <source>Toggle Layer &amp;Print</source>
-        <translation>印刷の有無を切り替え(&amp;P)</translation>
+        <translation type="obsolete">印刷の有無を切り替え(&amp;P)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionLayersToggleView</name>
     <message>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>表示/非表示の切り替え(&amp;T)</translation>
+        <translation type="obsolete">表示/非表示の切り替え(&amp;T)</translation>
     </message>
 </context>
 <context>
@@ -8291,14 +9169,14 @@ Continue?</source>
     <name>RS_ActionModifyAttributes</name>
     <message>
         <source>&amp;Attributes</source>
-        <translation>選択要素の属性変更(&amp;A)</translation>
+        <translation type="obsolete">選択要素の属性変更(&amp;A)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyBevel</name>
     <message>
         <source>&amp;Bevel</source>
-        <translation>Ｃ面取り(&amp;B)</translation>
+        <translation type="obsolete">Ｃ面取り(&amp;B)</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -8361,7 +9239,7 @@ Continue?</source>
     </message>
     <message>
         <source>&amp;Divide</source>
-        <translation>分割(&amp;D)</translation>
+        <translation type="obsolete">分割(&amp;D)</translation>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
@@ -8372,14 +9250,14 @@ Continue?</source>
     <name>RS_ActionModifyDelete</name>
     <message>
         <source>&amp;Delete</source>
-        <translation>削除(&amp;D)</translation>
+        <translation type="obsolete">削除(&amp;D)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
         <source>Delete Freehand</source>
-        <translation>フリーハンドを削除</translation>
+        <translation type="obsolete">フリーハンドを削除</translation>
     </message>
     <message>
         <source>Specify first break point on a polyline</source>
@@ -8407,11 +9285,11 @@ Continue?</source>
     </message>
     <message>
         <source>Parent of second entity is NULL</source>
-        <translation>二番目の図形の親はＮＵＬＬ</translation>
+        <translation type="obsolete">二番目の図形の親はＮＵＬＬ</translation>
     </message>
     <message>
         <source>One of the chosen entities is NULL</source>
-        <translation>選択された図形群の一つはＮＵＬＬ</translation>
+        <translation type="obsolete">選択された図形群の一つはＮＵＬＬ</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
@@ -8419,22 +9297,42 @@ Continue?</source>
     </message>
     <message>
         <source>Parent of first entity is NULL</source>
-        <translation>一番目の図形の親はＮＵＬＬ</translation>
+        <translation type="obsolete">一番目の図形の親はＮＵＬＬ</translation>
     </message>
     <message>
         <source>First entity is NULL</source>
-        <translation>一番目の図形はＮＵＬＬ</translation>
+        <translation type="obsolete">一番目の図形はＮＵＬＬ</translation>
     </message>
     <message>
         <source>Second entity is NULL</source>
-        <translation>二番目の図形はＮＵＬＬ</translation>
+        <translation type="obsolete">二番目の図形はＮＵＬＬ</translation>
+    </message>
+    <message>
+        <source>Parent of second entity is nullptr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>One of the chosen entities is nullptr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parent of first entity is nullptr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>First entity is nullptr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Second entity is nullptr</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyDeleteQuick</name>
     <message>
         <source>&amp;Delete selected</source>
-        <translation>選択された図形群を削除(&amp;D)</translation>
+        <translation type="obsolete">選択された図形群を削除(&amp;D)</translation>
     </message>
     <message>
         <source>Pick entity to delete</source>
@@ -8449,21 +9347,21 @@ Continue?</source>
     <name>RS_ActionModifyEntity</name>
     <message>
         <source>&amp;Properties</source>
-        <translation>要素の属性変更(&amp;P)</translation>
+        <translation type="obsolete">要素の属性変更(&amp;P)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyExplodeText</name>
     <message>
         <source>&amp;Explode Text into Letters</source>
-        <translation>テキストを文字に分解(&amp;E)</translation>
+        <translation type="obsolete">テキストを文字に分解(&amp;E)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMirror</name>
     <message>
         <source>&amp;Mirror</source>
-        <translation>鏡面(&amp;M)</translation>
+        <translation type="obsolete">鏡面(&amp;M)</translation>
     </message>
     <message>
         <source>Specify first point of mirror line</source>
@@ -8486,7 +9384,7 @@ Continue?</source>
     <name>RS_ActionModifyMove</name>
     <message>
         <source>&amp;Move / Copy</source>
-        <translation>移動／複写(&amp;M)</translation>
+        <translation type="obsolete">移動／複写(&amp;M)</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -8513,7 +9411,7 @@ Continue?</source>
     <name>RS_ActionModifyMoveRotate</name>
     <message>
         <source>M&amp;ove and Rotate</source>
-        <translation>移動と回転(&amp;v)</translation>
+        <translation type="obsolete">移動と回転(&amp;v)</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -8544,7 +9442,7 @@ Continue?</source>
     <name>RS_ActionModifyOffset</name>
     <message>
         <source>&amp;Offset</source>
-        <translation>オフセット(&amp;O)</translation>
+        <translation type="obsolete">オフセット(&amp;O)</translation>
     </message>
     <message>
         <source>Specify direction of offset</source>
@@ -8559,18 +9457,14 @@ Continue?</source>
     <name>RS_ActionModifyRevertDirection</name>
     <message>
         <source>Re&amp;vert direction</source>
-        <translation>基準点を入れ替える(&amp;v)</translation>
-    </message>
-    <message>
-        <source>Ctrl+R</source>
-        <translation></translation>
+        <translation type="obsolete">基準点を入れ替える(&amp;v)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyRotate</name>
     <message>
         <source>&amp;Rotate</source>
-        <translation>回転(&amp;R)</translation>
+        <translation type="obsolete">回転(&amp;R)</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -8593,7 +9487,7 @@ Continue?</source>
     <name>RS_ActionModifyRotate2</name>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation>二点で回転(&amp;T)</translation>
+        <translation type="obsolete">二点で回転(&amp;T)</translation>
     </message>
     <message>
         <source>Specify absolute reference point</source>
@@ -8640,14 +9534,14 @@ Continue?</source>
     </message>
     <message>
         <source>&amp;Fillet</source>
-        <translation>丸み面取り(&amp;F)</translation>
+        <translation type="obsolete">丸み面取り(&amp;F)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
     <message>
         <source>&amp;Scale</source>
-        <translation>スケール(&amp;S)</translation>
+        <translation type="obsolete">スケール(&amp;S)</translation>
     </message>
     <message>
         <source>Specify reference point</source>
@@ -8662,7 +9556,7 @@ Continue?</source>
     <name>RS_ActionModifyStretch</name>
     <message>
         <source>&amp;Stretch</source>
-        <translation>伸張(&amp;S)</translation>
+        <translation type="obsolete">伸張(&amp;S)</translation>
     </message>
     <message>
         <source>Specify first corner</source>
@@ -8693,11 +9587,11 @@ Continue?</source>
     <name>RS_ActionModifyTrim</name>
     <message>
         <source>&amp;Trim</source>
-        <translation>トリム(&amp;T)</translation>
+        <translation type="obsolete">トリム(&amp;T)</translation>
     </message>
     <message>
         <source>&amp;Trim Two</source>
-        <translation>２つの要素でトリム(&amp;T)</translation>
+        <translation type="obsolete">２つの要素でトリム(&amp;T)</translation>
     </message>
     <message>
         <source>Select first trim entity</source>
@@ -8728,7 +9622,7 @@ Continue?</source>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
         <source>&amp;Lengthen</source>
-        <translation>伸長(&amp;L)</translation>
+        <translation type="obsolete">伸長(&amp;L)</translation>
     </message>
     <message>
         <source>No entity found. </source>
@@ -8759,38 +9653,38 @@ Continue?</source>
     <name>RS_ActionOptionsDrawing</name>
     <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation>図面の設定(&amp;D)</translation>
+        <translation type="obsolete">図面の設定(&amp;D)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionOrder</name>
     <message>
         <source>move to bottom</source>
-        <translation>最背面に</translation>
+        <translation type="obsolete">最背面に</translation>
     </message>
     <message>
         <source>set to bottom</source>
-        <translation>最背面に設定</translation>
+        <translation type="obsolete">最背面に設定</translation>
     </message>
     <message>
         <source>lower after entity</source>
-        <translation>ひとつ背面に</translation>
+        <translation type="obsolete">ひとつ背面に</translation>
     </message>
     <message>
         <source>lower over entity</source>
-        <translation>上と入れ替え</translation>
+        <translation type="obsolete">上と入れ替え</translation>
     </message>
     <message>
         <source>raise over entity</source>
-        <translation>ひとつ前面に</translation>
+        <translation type="obsolete">ひとつ前面に</translation>
     </message>
     <message>
         <source>move to top</source>
-        <translation>最前面に移動</translation>
+        <translation type="obsolete">最前面に移動</translation>
     </message>
     <message>
         <source>set to top</source>
-        <translation>最前面に設定</translation>
+        <translation type="obsolete">最前面に設定</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -8809,7 +9703,7 @@ Continue?</source>
     <name>RS_ActionPolylineAdd</name>
     <message>
         <source>&amp;Add node</source>
-        <translation>ノード追加(&amp;A)</translation>
+        <translation type="obsolete">ノード追加(&amp;A)</translation>
     </message>
     <message>
         <source>Specify polyline to add nodes</source>
@@ -8841,7 +9735,7 @@ Continue?</source>
     </message>
     <message>
         <source>Add polyline&apos;s node</source>
-        <translation>ポリライン・ノードを追加</translation>
+        <translation type="obsolete">ポリライン・ノードを追加</translation>
     </message>
     <message>
         <source>Adding point is not on entity.</source>
@@ -8852,7 +9746,7 @@ Continue?</source>
     <name>RS_ActionPolylineAppend</name>
     <message>
         <source>A&amp;ppend node</source>
-        <translation>ノード結合(&amp;p)</translation>
+        <translation type="obsolete">ノード結合(&amp;p)</translation>
     </message>
     <message>
         <source>Click somewhere near the beginning or end of existing polyline.</source>
@@ -8884,7 +9778,7 @@ Continue?</source>
     </message>
     <message>
         <source>Append polyline&apos;s node</source>
-        <translation>ポリラインノード結合</translation>
+        <translation type="obsolete">ポリラインノード結合</translation>
     </message>
     <message>
         <source>Specify the polyline somewhere near the beginning or end point</source>
@@ -8903,7 +9797,7 @@ Continue?</source>
     <name>RS_ActionPolylineDel</name>
     <message>
         <source>&amp;Delete node</source>
-        <translation>ノード削除(&amp;D)</translation>
+        <translation type="obsolete">ノード削除(&amp;D)</translation>
     </message>
     <message>
         <source>Specify polyline to delete node</source>
@@ -8931,7 +9825,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete polyline&apos;s node</source>
-        <translation>ポリライン・ノードを削除</translation>
+        <translation type="obsolete">ポリライン・ノードを削除</translation>
     </message>
     <message>
         <source>Deleting point is invalid.</source>
@@ -8946,7 +9840,7 @@ Continue?</source>
     <name>RS_ActionPolylineDelBetween</name>
     <message>
         <source>Delete &amp;between two nodes</source>
-        <translation>二ノード間を削除(&amp;b)</translation>
+        <translation type="obsolete">二ノード間を削除(&amp;b)</translation>
     </message>
     <message>
         <source>Specify polyline to delete between two nodes</source>
@@ -8978,7 +9872,7 @@ Continue?</source>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation>二ノード間を削除</translation>
+        <translation type="obsolete">二ノード間を削除</translation>
     </message>
     <message>
         <source>No Entity found.</source>
@@ -9001,7 +9895,7 @@ Continue?</source>
     <name>RS_ActionPolylineEquidistant</name>
     <message>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation>等間隔ポリライン作成(&amp;E)</translation>
+        <translation type="obsolete">等間隔ポリライン作成(&amp;E)</translation>
     </message>
     <message>
         <source>Choose the original polyline</source>
@@ -9021,14 +9915,14 @@ Continue?</source>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation>等間隔ポリライン作成</translation>
+        <translation type="obsolete">等間隔ポリライン作成</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionPolylineSegment</name>
     <message>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation>既存セグメントからポリライン作成(&amp;S)</translation>
+        <translation type="obsolete">既存セグメントからポリライン作成(&amp;S)</translation>
     </message>
     <message>
         <source>Choose one of the segments on the original polyline</source>
@@ -9044,7 +9938,7 @@ Continue?</source>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation>既存セグメントからポリライン作成</translation>
+        <translation type="obsolete">既存セグメントからポリライン作成</translation>
     </message>
     <message>
         <source>Entity must be a line, arc or polyline.</source>
@@ -9059,7 +9953,7 @@ Continue?</source>
     <name>RS_ActionPolylineTrim</name>
     <message>
         <source>&amp;Trim segments</source>
-        <translation>セグメントの部分削除(&amp;T)</translation>
+        <translation type="obsolete">セグメントの部分削除(&amp;T)</translation>
     </message>
     <message>
         <source>Specify polyline to trim</source>
@@ -9095,7 +9989,7 @@ Continue?</source>
     </message>
     <message>
         <source>Trim polyline&apos;s segments</source>
-        <translation>ポリラインのセグメントをトリム</translation>
+        <translation type="obsolete">ポリラインのセグメントをトリム</translation>
     </message>
     <message>
         <source>Specifying point is invalid.</source>
@@ -9106,7 +10000,7 @@ Continue?</source>
     <name>RS_ActionPrintPreview</name>
     <message>
         <source>Print Pre&amp;view</source>
-        <translation>印刷プレビュー(&amp;v)</translation>
+        <translation type="obsolete">印刷プレビュー(&amp;v)</translation>
     </message>
     <message>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
@@ -9224,22 +10118,18 @@ Continue?</source>
     <name>RS_ActionSelectAll</name>
     <message>
         <source>Select &amp;All</source>
-        <translation>全て選択(&amp;A)</translation>
+        <translation type="obsolete">全て選択(&amp;A)</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation>全てを選択解除(&amp;a)</translation>
-    </message>
-    <message>
-        <source>Ctrl+K</source>
-        <translation></translation>
+        <translation type="obsolete">全てを選択解除(&amp;a)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectContour</name>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation>(非)選択 輪郭線(&amp;C)</translation>
+        <translation type="obsolete">(非)選択 輪郭線(&amp;C)</translation>
     </message>
     <message>
         <source>Entity must be an Atomic Entity.</source>
@@ -9250,11 +10140,11 @@ Continue?</source>
     <name>RS_ActionSelectIntersected</name>
     <message>
         <source>Select Intersected Entities</source>
-        <translation>交差図形選択</translation>
+        <translation type="obsolete">交差図形選択</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
-        <translation>交差図形群の選択解除</translation>
+        <translation type="obsolete">交差図形群の選択解除</translation>
     </message>
     <message>
         <source>Choose first point of intersection line</source>
@@ -9277,32 +10167,32 @@ Continue?</source>
     <name>RS_ActionSelectInvert</name>
     <message>
         <source>Invert Selection</source>
-        <translation>逆選択</translation>
+        <translation type="obsolete">逆選択</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectLayer</name>
     <message>
         <source>(De-)Select Layer</source>
-        <translation>レイヤーの選択/非選択</translation>
+        <translation type="obsolete">レイヤーの選択/非選択</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectSingle</name>
     <message>
         <source>Select Entity</source>
-        <translation>図形選択</translation>
+        <translation type="obsolete">図形選択</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionSelectWindow</name>
     <message>
         <source>Select Window</source>
-        <translation>ウィンドウ選択</translation>
+        <translation type="obsolete">ウィンドウ選択</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation>ウィンドウ内の図形を非選択</translation>
+        <translation type="obsolete">ウィンドウ内の図形を非選択</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9359,7 +10249,7 @@ Continue?</source>
     <name>RS_ActionToolRegenerateDimensions</name>
     <message>
         <source>Regenerate Dimension Entities</source>
-        <translation>寸法図形再生成</translation>
+        <translation type="obsolete">寸法図形再生成</translation>
     </message>
     <message>
         <source>Regenerated %1 dimension entities</source>
@@ -9374,33 +10264,33 @@ Continue?</source>
     <name>RS_ActionZoomAuto</name>
     <message>
         <source>&amp;Auto Zoom</source>
-        <translation>画面に合わせて拡大/縮小(&amp;A)</translation>
+        <translation type="obsolete">画面に合わせて拡大/縮小(&amp;A)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomIn</name>
     <message>
         <source>Zoom &amp;In</source>
-        <translation>拡大(&amp;I)</translation>
+        <translation type="obsolete">拡大(&amp;I)</translation>
     </message>
     <message>
         <source>Zooms in</source>
-        <translation>拡大</translation>
+        <translation type="obsolete">拡大</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation>縮小(&amp;O)</translation>
+        <translation type="obsolete">縮小(&amp;O)</translation>
     </message>
     <message>
         <source>Zooms out</source>
-        <translation>縮小</translation>
+        <translation type="obsolete">縮小</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomPan</name>
     <message>
         <source>Zoom &amp;Panning</source>
-        <translation>拡大図形の移動(&amp;P)</translation>
+        <translation type="obsolete">拡大図形の移動(&amp;P)</translation>
     </message>
     <message>
         <source>Click and drag to pan zoom</source>
@@ -9419,21 +10309,21 @@ Continue?</source>
     <name>RS_ActionZoomPrevious</name>
     <message>
         <source>Previous &amp;View</source>
-        <translation>前の画面(&amp;V)</translation>
+        <translation type="obsolete">前の画面(&amp;V)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomRedraw</name>
     <message>
         <source>&amp;Redraw</source>
-        <translation>再描画(&amp;R)</translation>
+        <translation type="obsolete">再描画(&amp;R)</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionZoomWindow</name>
     <message>
         <source>&amp;Window Zoom</source>
-        <translation>指定範囲を拡大表示(&amp;W)</translation>
+        <translation type="obsolete">指定範囲を拡大表示(&amp;W)</translation>
     </message>
     <message>
         <source>Specify first edge</source>
