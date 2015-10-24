@@ -25,6 +25,7 @@ unix/
 # Win/MSVC generated files and binaries
 windows/
 release/
+debug/
 *.ncb
 *.suo
 *.idb
