@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="lv">
 <context>
@@ -411,7 +410,7 @@
         <translation>Datne %1 neeksistē</translation>
     </message>
     <message>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>Nevar atvērt datni %1</translation>
     </message>
 </context>
@@ -627,39 +626,43 @@
     </message>
     <message>
         <source>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+If you don't want to use the parametric form, just leave out "Equation2".
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Šis spraudnis ļauj attēlot matemātiskos vienādojumus.
+Ja nevēlaties izmantot parametrisko formu, vienkārši izlaidiet “Vienādojums 2”.
+Varat izmanto “pi”, ja ir vajadzīga π vērtība (piemēram, 3*pi).
+Izmantojiet savos vienādojums t vai x kā mainīgos/parametrus.
+</translation>
     </message>
     <message>
         <source>Equation 1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vienādojums 1:</translation>
     </message>
     <message>
         <source>Equation 2:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vienādojums 2:</translation>
     </message>
     <message>
         <source>start value:</source>
-        <translation type="unfinished"></translation>
+        <translation>sākuma vērtība:</translation>
     </message>
     <message>
         <source>end value:</source>
-        <translation type="unfinished"></translation>
+        <translation>beigu vērtība:</translation>
     </message>
     <message>
         <source>step size:</source>
-        <translation type="unfinished"></translation>
+        <translation>soļa vērtība:</translation>
     </message>
     <message>
         <source>Draw</source>
-        <translation type="unfinished">Zīmēt</translation>
+        <translation>Zīmēt</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Atcelt</translation>
+        <translation>Atcelt</translation>
     </message>
 </context>
 <context>
