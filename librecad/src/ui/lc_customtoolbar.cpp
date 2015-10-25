@@ -30,7 +30,8 @@
 #include <QFile>
 #include <QAction>
 
-LC_CustomToolbar::LC_CustomToolbar(QString name, QWidget* parent): QToolBar(name, parent)
+LC_CustomToolbar::LC_CustomToolbar(const QString& name, QWidget* parent)
+    : QToolBar(name, parent)
 {
     QAction* action = new QAction(tr("Add or Remove Action"), parent);
     action->setShortcut(QKeySequence("F2"));
@@ -48,14 +49,15 @@ LC_CustomToolbar::~LC_CustomToolbar()
             return;
 
         QTextStream txt_stream(&file);
-        foreach (QString token, state_list)
+        foreach (const QString& token, state_list)
         {
             txt_stream << token << "\n";
         }
     }
 }
 
-void LC_CustomToolbar::actions_from_file(QString path, QMap<QString, QAction*> map_a)
+void LC_CustomToolbar::actions_from_file(const QString& path,
+                                         const QMap<QString, QAction*>& a_map)
 {
     QFile file(path);    
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -74,9 +76,9 @@ void LC_CustomToolbar::actions_from_file(QString path, QMap<QString, QAction*> m
             addSeparator();
             state_list << line;
         }
-        else if (map_a.contains(line))
+        else if (a_map.contains(line))
         {
-            addAction(map_a[line]);
+            addAction(a_map[line]);
             state_list << line;
         }
     }

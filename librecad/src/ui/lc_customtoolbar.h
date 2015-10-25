@@ -9,10 +9,11 @@ class LC_CustomToolbar : public QToolBar
 
 public:
 
-    LC_CustomToolbar(QString name, QWidget* parent);
+    LC_CustomToolbar(const QString& name, QWidget* parent);
     ~LC_CustomToolbar();
 
-    void actions_from_file(QString path, QMap<QString, QAction*> map_a);
+    void actions_from_file(const QString& path,
+                           const QMap<QString, QAction*>& a_map);
     void add_separator();
 
     QStringList state_list;
