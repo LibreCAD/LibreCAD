@@ -37,6 +37,7 @@
 #include "lc_quadratic.h"
 #include "rs_painterqt.h"
 #include "rs_circle.h"
+#include "lc_rect.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -541,26 +542,25 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
     }
 
     //only draw the visible portion of line
-	std::vector<RS_Vector> endPoints(0);
-        RS_Vector vpMin(view->toGraph(0,view->getHeight()));
-        RS_Vector vpMax(view->toGraph(view->getWidth(),0));
-         QPolygonF visualBox(QRectF(vpMin.x,vpMin.y,vpMax.x-vpMin.x, vpMax.y-vpMin.y));
-	if (getStartpoint().isInWindowOrdered(vpMin, vpMax) ) endPoints.push_back(getStartpoint());
-	if (getEndpoint().isInWindowOrdered(vpMin, vpMax) ) endPoints.push_back(getEndpoint());
+	LC_Rect const viewportRect{view->toGraph(0, 0),
+				view->toGraph(view->getWidth(), view->getHeight())};
+	RS_VectorSolutions endPoints(0);
+	if (viewportRect.inArea(getStartpoint(), RS_TOLERANCE))
+		 endPoints.push_back(getStartpoint());
+	if (viewportRect.inArea(getEndpoint(), RS_TOLERANCE))
+		 endPoints.push_back(getEndpoint());
 	if (endPoints.size()<2){
+		RS_EntityContainer ec(nullptr);
+		ec.addRectangle(viewportRect.minP(), viewportRect.maxP());
+		for(auto p: ec) {
+			auto const vpIts=RS_Information::getIntersection(this, p, true);
+			if (!vpIts.size()) continue;
+			if (!endPoints.size() ||
+					endPoints.getClosestDistance(vpIts.at(0)) >= RS_TOLERANCE * 10.) {
+				endPoints.push_back(vpIts.at(0));
+			}
 
-		 std::vector<RS_Vector> vertex;
-         for(unsigned short i=0;i<4;i++){
-             const QPointF& vp(visualBox.at(i));
-			 vertex.emplace_back(vp.x(),vp.y());
-         }
-		 for(size_t i=0;i < vertex.size(); ++i){
-			 size_t const j = (i+1)%vertex.size();
-			 RS_Line line{vertex.at(i),vertex.at(j)};
-			 auto vpIts=RS_Information::getIntersection(static_cast<RS_Entity*>(this), &line, true);
-			 if (!vpIts.size()) continue;
-			 endPoints.push_back(vpIts.get(0));
-         }
+		}
     }
 	if (endPoints.size()<2) return;
 	if ((endPoints[0] - getStartpoint()).squared() >
