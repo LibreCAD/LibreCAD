@@ -2003,16 +2003,6 @@ void QC_ApplicationWindow::slotFileClose() {
 
     if(w){
         openedFiles.removeAll(w->getDocument()->getFilename());
-        //        int pos=openedFiles.indexOf(w->getDocument()->getFilename());
-        //        if(pos>=0) {
-        //            openedFiles.erase(openedFiles.begin()+pos);
-        //        }
-
-        //properly close print preview if exists
-        QC_MDIWindow *ppv = w->getPrintPreview();
-        if (ppv) {
-            mdiAreaCAD->removeSubWindow(ppv->parentWidget());
-        }
     }
 
     mdiAreaCAD->closeActiveSubWindow();
