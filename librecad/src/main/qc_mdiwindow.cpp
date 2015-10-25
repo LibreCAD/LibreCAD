@@ -35,12 +35,10 @@
 #endif 
 #include <QCloseEvent>
 
-#include <QMainWindow>
 #include <QCursor>
 #include <QMessageBox>
 #include <QFileInfo>
 #include <QMdiArea>
-#include <QMdiSubWindow>
 #include <QPainter>
 
 #include "rs_graphic.h"
@@ -62,7 +60,7 @@ int QC_MDIWindow::idCounter = 0;
  * @param parent Parent widget. Usually a workspace.
  */
 QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, Qt::WindowFlags wflags)
-                            : QMainWindow(parent, wflags)
+                            : QMdiSubWindow(parent, wflags)
 {
     setAttribute(Qt::WA_DeleteOnClose);
     cadMdiArea=qobject_cast<QMdiArea*>(parent);
@@ -80,7 +78,7 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, Qt::WindowFlags wf
     graphicView->setObjectName("graphicview");
     connect(graphicView, SIGNAL(previous_zoom_state(bool)),
             parent->window(), SLOT(setPreviousZoomEnable(bool)));
-    setCentralWidget(graphicView);
+    setWidget(graphicView);
 
     id = idCounter++;
     setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
@@ -295,7 +293,6 @@ void QC_MDIWindow::slotPenChanged(const RS_Pen& pen) {
     }
     RS_DEBUG->print("QC_MDIWindow::slotPenChanged() end");
 }
-
 
 
 /**

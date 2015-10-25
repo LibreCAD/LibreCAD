@@ -27,6 +27,8 @@
 #ifndef QC_APPLICATIONWINDOW_H
 #define QC_APPLICATIONWINDOW_H
 
+#include <QMainWindow>
+
 #include <memory>
 #include "qc_mdiwindow.h"
 #include "qg_mainwindowinterface.h"

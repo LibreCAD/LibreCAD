@@ -26,6 +26,8 @@
 **********************************************************************/
 
 #include "qg_layerwidget.h"
+#include "qg_actionhandler.h"
+#include "qc_applicationwindow.h"
 
 #include <QScrollBar>
 #include <QTableView>
@@ -35,8 +37,8 @@
 #include <QBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
-#include "qg_actionhandler.h"
-#include "qc_applicationwindow.h"
+#include <QContextMenuEvent>
+#include <QKeyEvent>
 
 QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
     layerVisible = QIcon(":/ui/visibleblock.png");

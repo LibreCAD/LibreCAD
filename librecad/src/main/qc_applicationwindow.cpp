@@ -568,9 +568,9 @@ void QC_ApplicationWindow::initMDI() {
  */
 QC_MDIWindow const* QC_ApplicationWindow::getMDIWindow() const{
     if (mdiAreaCAD) {
-        QMdiSubWindow const* w=mdiAreaCAD->currentSubWindow();
+        QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
         if(w) {
-            return qobject_cast<QC_MDIWindow*>(w->widget());
+            return qobject_cast<QC_MDIWindow*>(w);
         }
     }
     return nullptr;
@@ -580,7 +580,7 @@ QC_MDIWindow* QC_ApplicationWindow::getMDIWindow(){
     if (mdiAreaCAD) {
         QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
         if(w) {
-            return qobject_cast<QC_MDIWindow*>(w->widget());
+            return qobject_cast<QC_MDIWindow*>(w);
         }
     }
     return nullptr;
@@ -866,7 +866,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
     }
     if(w==activedMdiSubWindow) return;
     activedMdiSubWindow=w;
-    QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(w->widget());
+    QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(w);
 
 //    QList<QMdiSubWindow*> windows=mdiAreaCAD->subWindowList();
 //    int activeIndex=windows.indexOf(w);
@@ -1023,14 +1023,11 @@ void QC_ApplicationWindow::slotWindowsMenuActivated(bool /*id*/) {
 
         if (w->widget())
         {
-
-//            qobject_cast<QC_MDIWindow*>(w->widget())->slotZoomAuto();
             for(int i=0;i<mdiAreaCAD->subWindowList().size();i++){
                 QMdiSubWindow* m=mdiAreaCAD->subWindowList().at(i);
                 if( m != w){
                     m->hide();
                 }
-                //                qobject_cast<QC_MDIWindow*>(m)->zoomAuto();
             }
         }
         // RVT_PORT need to reset/cleanup current menu here to avoid menu clutter
@@ -1049,7 +1046,7 @@ void QC_ApplicationWindow::slotZoomAuto() {
     QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
     for(int i=0;i<windows.size();i++){
         QMdiSubWindow *window = windows.at(i);
-        qobject_cast<QC_MDIWindow*>(window->widget())->slotZoomAuto();
+        qobject_cast<QC_MDIWindow*>(window)->slotZoomAuto();
     }
 }
 
@@ -1110,8 +1107,7 @@ void QC_ApplicationWindow::slotCascade() {
 //                    window->setWindowState(Qt::WindowNoState);
 //            }
             window->setGeometry(geo.x(),geo.y(),width,height);
-//            qobject_cast<QC_MDIWindow*>(window)->zoomAuto();
-            qobject_cast<QC_MDIWindow*>(window->widget())->slotZoomAuto();
+            qobject_cast<QC_MDIWindow*>(window)->slotZoomAuto();
         }
         mdiAreaCAD->setActiveSubWindow(active);
 //        windows.at(active)->activateWindow();
@@ -1148,7 +1144,7 @@ void QC_ApplicationWindow::slotTileHorizontal() {
         int actHeight = qMax(heightForEach, preferredHeight);
 
         window->setGeometry(0, y, mdiAreaCAD->width(), actHeight);
-         qobject_cast<QC_MDIWindow*>(window->widget())->slotZoomAuto();
+         qobject_cast<QC_MDIWindow*>(window)->slotZoomAuto();
         y+=actHeight;
     }
     mdiAreaCAD->activeSubWindow()->raise();
@@ -1181,7 +1177,7 @@ void QC_ApplicationWindow::slotTileVertical() {
         int actWidth = qMax(widthForEach, preferredWidth);
 
         window->setGeometry(x, 0, actWidth, mdiAreaCAD->height());
-         qobject_cast<QC_MDIWindow*>(window->widget())->slotZoomAuto();
+         qobject_cast<QC_MDIWindow*>(window)->slotZoomAuto();
         x+=actWidth;
     }
     mdiAreaCAD->activeSubWindow()->raise();
@@ -1203,7 +1199,7 @@ void QC_ApplicationWindow::slotToggleTab() {
                 m->raise();
             }
             m->showMaximized();
-            qobject_cast<QC_MDIWindow*>(m->widget())->slotZoomAuto();
+            qobject_cast<QC_MDIWindow*>(m)->slotZoomAuto();
         }
     }
     else
@@ -1452,7 +1448,6 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
             }else{
                 active->setGeometry(geo);
             }
-            //            qobject_cast<QC_MDIWindow*>(active->widget())->zoomAuto();
         }
         RS_DEBUG->print("QC_ApplicationWindow::slotFileNewTemplate: load Template failed");
     } else
@@ -1603,7 +1598,7 @@ void QC_ApplicationWindow::
                    }else{
                        active->setGeometry(geo);
                    }
-                   qobject_cast<QC_MDIWindow*>(active->widget())->slotZoomAuto();
+                   qobject_cast<QC_MDIWindow*>(active)->slotZoomAuto();
                }
                return;
         }
@@ -2431,16 +2426,16 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
 /**
  * Redraws all mdi windows.
  */
-void QC_ApplicationWindow::redrawAll() {
-    if (mdiAreaCAD) {
-        QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
-        for (int i = 0; i < windows.size(); ++i) {
-            QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
-            if (m) {
-                QG_GraphicView* gv = m->getGraphicView();
-                if (gv) {
-                    gv->redraw();
-                }
+void QC_ApplicationWindow::redrawAll()
+{
+    if (mdiAreaCAD)
+    {
+        foreach (const QC_MDIWindow* win, window_list)
+        {
+            if (win)
+            {
+                QG_GraphicView* gv = win->getGraphicView();
+                if (gv) {gv->redraw();}
             }
         }
     }
@@ -2455,7 +2450,7 @@ void QC_ApplicationWindow::updateGrids() {
     if (mdiAreaCAD) {
         QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
         for (int i = 0; i < windows.size(); ++i) {
-            QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
+            QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i));
             if (m) {
                 QG_GraphicView* gv = m->getGraphicView();
                 if (gv) {
@@ -2513,7 +2508,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
 
     QList<QMdiSubWindow*> windows = mdiAreaCAD->subWindowList();
     for (int i = 0; i < windows.size(); ++i) {
-        QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i)->widget());
+        QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i));
         if (m) {
             QG_GraphicView* gv = m->getGraphicView();
 			if (gv) {
@@ -2711,7 +2706,7 @@ bool QC_ApplicationWindow::queryExit(bool force) {
          QList<QMdiSubWindow*> list = mdiAreaCAD->subWindowList();
 
          while (!list.isEmpty()) {
-             QC_MDIWindow *tmp=qobject_cast<QC_MDIWindow*>(list.takeFirst()->widget());
+             QC_MDIWindow *tmp=qobject_cast<QC_MDIWindow*>(list.takeFirst());
              if( tmp){
                  slotFilePrintPreview(false);
                  succ = tmp->closeMDI(force);
