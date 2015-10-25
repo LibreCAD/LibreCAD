@@ -39,7 +39,7 @@
 #include "lc_quadratic.h"
 #include "lc_splinepoints.h"
 #include "rs_math.h"
-
+#include "lc_rect.h"
 
 /**
  * Default constructor.
@@ -238,12 +238,12 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
     }
 	{
 	// a little check to avoid doing unneeded intersections, an attempt to avoid O(N^2) increasing of checking two-entity information
-		QRectF const rect1{QPointF{e1->getMin().x, e1->getMin().y},
-						   QPointF{e1->getMax().x, e1->getMax().y}};
-		QRectF const rect2{QPointF{e2->getMin().x, e2->getMin().y},
-						   QPointF{e2->getMax().x, e2->getMax().y}};
-		if (onEntities && !rect1.intersects(rect2))
+		LC_Rect const rect1{e1->getMin(), e1->getMax()};
+		LC_Rect const rect2{e2->getMin(), e2->getMax()};
+
+		if (onEntities && !rect1.intersects(rect2, RS_TOLERANCE)) {
 			return ret;
+		}
 	}
 
     //avoid intersections between line segments the same spline
