@@ -27,10 +27,13 @@
 #include "lc_dockwidget.h"
 
 #include <QToolButton>
+#include <QGridLayout>
+#include <QFrame>
 
-LC_DockWidget::LC_DockWidget(QWidget* parent): QDockWidget(parent)
-    ,frame(new QFrame(this))
-    ,grid(new QGridLayout)
+LC_DockWidget::LC_DockWidget(QWidget* parent)
+    : QDockWidget(parent)
+    , frame(new QFrame(this))
+    , grid(new QGridLayout)
 {
 	frame->setContentsMargins(0,0,0,0);
 	setWidget(frame);
@@ -40,14 +43,14 @@ LC_DockWidget::LC_DockWidget(QWidget* parent): QDockWidget(parent)
 	frame->setLayout(grid);
 }
 
-void LC_DockWidget::add_actions(QList<QAction*> list, int columns, int icon_size)
+void LC_DockWidget::add_actions(const QList<QAction*>& list, int columns, int icon_size)
 {
-	for(auto const& item: list)
+	for (auto const& item: list)
     {
 		QToolButton* toolbutton = new QToolButton(this);
 		toolbutton->setDefaultAction(item);
 		toolbutton->setIconSize(QSize(icon_size, icon_size));
-		int const count=grid->count();
+		int const count = grid->count();
 		grid->addWidget(toolbutton, count/columns, count%columns);
     }
 }
