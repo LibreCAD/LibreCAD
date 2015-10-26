@@ -133,6 +133,29 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
 </context>
 <context>
+    <name>LG_DimzerosBox</name>
+    <message>
+        <source>select:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove 0&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove 0&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -619,7 +642,7 @@ Automatické ukládání bylo vypnuto.</translation>
     </message>
     <message>
         <source>CAD Tools</source>
-        <translation>Nástroje CADu</translation>
+        <translation type="obsolete">Nástroje CADu</translation>
     </message>
     <message>
         <source>Export as</source>
@@ -673,6 +696,10 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Online (Wiki)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2193,7 +2220,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>CTRL-G</source>
-        <translation>CTRL-G</translation>
+        <translation type="obsolete">CTRL-G</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
@@ -2209,6 +2236,15 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Export as image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+G</source>
+        <comment>Toggle Grid</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CAD ToolBar</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2442,7 +2478,7 @@ v samostatném okně</translation>
     <name>QG_CadToolBar</name>
     <message>
         <source>CAD Tools</source>
-        <translation>Nástroje CADu</translation>
+        <translation type="obsolete">Nástroje CADu</translation>
     </message>
 </context>
 <context>
@@ -3333,6 +3369,17 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_CommandHistory</name>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="unfinished">&amp;Kopírovat</translation>
+    </message>
+    <message>
+        <source>select&amp;All</source>
+        <translation type="unfinished">Vybrat &amp;vše</translation>
+    </message>
+</context>
+<context>
     <name>QG_CommandWidget</name>
     <message>
         <source>Command Line</source>
@@ -3360,11 +3407,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation>&amp;Kopírovat</translation>
+        <translation type="obsolete">&amp;Kopírovat</translation>
     </message>
     <message>
         <source>select&amp;All</source>
-        <translation>Vybrat &amp;vše</translation>
+        <translation type="obsolete">Vybrat &amp;vše</translation>
     </message>
     <message>
         <source>escape</source>
@@ -4873,7 +4920,7 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
     </message>
     <message>
         <source>Extension line extension:</source>
-        <translation>Přesah vynášecí čáry:</translation>
+        <translation type="obsolete">Přesah vynášecí čáry:</translation>
     </message>
     <message>
         <source>Arrow size:</source>
@@ -4881,7 +4928,7 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
     </message>
     <message>
         <source>Extension line offset:</source>
-        <translation>Vzdálenost vynášecí čáry:</translation>
+        <translation type="obsolete">Vzdálenost vynášecí čáry:</translation>
     </message>
     <message>
         <source>Dimension line gap:</source>
@@ -5077,11 +5124,11 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
     </message>
     <message>
         <source>Alignment:</source>
-        <translation>Zarovnání:</translation>
+        <translation type="obsolete">Zarovnání:</translation>
     </message>
     <message>
         <source>Dimension Aligned</source>
-        <translation>Podle zarovnání kóty</translation>
+        <translation type="obsolete">Podle zarovnání kóty</translation>
     </message>
     <message>
         <source>Horizontal</source>
@@ -5113,7 +5160,7 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
     </message>
     <message>
         <source>General Factor:</source>
-        <translation>Základní koeficient:</translation>
+        <translation type="obsolete">Základní koeficient:</translation>
     </message>
     <message>
         <source>0.2</source>
@@ -5149,7 +5196,119 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zarovnání textu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Zarovnání textu.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Text style:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;.&apos; (Period)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;,&apos; (Comma)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decimal separator:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Linear units:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color:</source>
+        <translation type="unfinished">Barva:</translation>
+    </message>
+    <message>
+        <source>Length Factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angular units:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Linear zeros:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Format units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text size &amp; position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length to enlarge over dimension line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dimension lines, arrows &amp; ticks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angular zeros:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angular precision:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enlarge:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Linear precision:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aligned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text alignment:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extension lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed length:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fixed extension line legth</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5264,7 +5423,7 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
     </message>
     <message>
         <source>Colors</source>
-        <translation>Barvy</translation>
+        <translation type="obsolete">Barvy</translation>
     </message>
     <message>
         <source>Backgr&amp;ound:</source>
@@ -5284,11 +5443,11 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
     </message>
     <message>
         <source>White</source>
-        <translation type="obsolete">Bílá</translation>
+        <translation type="unfinished">Bílá</translation>
     </message>
     <message>
         <source>Gray</source>
-        <translation type="obsolete">Šedá</translation>
+        <translation type="unfinished">Šedá</translation>
     </message>
     <message>
         <source>Darkgray</source>
@@ -5344,7 +5503,7 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
     </message>
     <message>
         <source>#000000</source>
-        <translation>#000000</translation>
+        <translation type="obsolete">#000000</translation>
     </message>
     <message>
         <source>#ffffff</source>
@@ -5356,7 +5515,7 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
     </message>
     <message>
         <source>#808080</source>
-        <translation>#808080</translation>
+        <translation type="obsolete">#808080</translation>
     </message>
     <message>
         <source>S&amp;elected Color:</source>
@@ -5420,11 +5579,11 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
     </message>
     <message>
         <source>#FFFFFF</source>
-        <translation>#FFFFFF</translation>
+        <translation type="obsolete">#FFFFFF</translation>
     </message>
     <message>
         <source>#C0C0C0</source>
-        <translation>#C0C0C0</translation>
+        <translation type="obsolete">#C0C0C0</translation>
     </message>
     <message>
         <source>400</source>
@@ -5456,19 +5615,19 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
     </message>
     <message>
         <source>#00FFFF</source>
-        <translation>#00FFFF</translation>
+        <translation type="obsolete">#00FFFF</translation>
     </message>
     <message>
         <source>#0000FF</source>
-        <translation>#0000FF</translation>
+        <translation type="obsolete">#0000FF</translation>
     </message>
     <message>
         <source>#FFFF00</source>
-        <translation>#FFFF00</translation>
+        <translation type="obsolete">#FFFF00</translation>
     </message>
     <message>
         <source>#FF00FF</source>
-        <translation>#FF00FF</translation>
+        <translation type="obsolete">#FF00FF</translation>
     </message>
     <message>
         <source>St&amp;art Handle Color:</source>
@@ -5489,6 +5648,82 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
     <message>
         <source>Display Splash</source>
         <translation>Zobrazit spouštěcí okno</translation>
+    </message>
+    <message>
+        <source>Graphic Colors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aquamarine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Azure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DeepSkyBlue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DodgerBlue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HoneyDew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lavender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LightGrey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Navy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PaleGreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pink</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Salmon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Violet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wheat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GUI Colors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer/ Block Selection:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activation a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities are modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modify layer of selected entities, at  layer activation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7962,7 +8197,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation>Hladina &quot;%1&quot; a všechny prvky v ní budou odstraněny.</translation>
+        <translation type="obsolete">Hladina &quot;%1&quot; a všechny prvky v ní budou odstraněny.</translation>
     </message>
     <message>
         <source>Layer &quot;%1&quot; can never be removed.</source>
@@ -7987,6 +8222,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
         <translation>Hladina s názvem &quot;%1&quot; již existuje. Zadejte prosím jiný název.</translation>
+    </message>
+    <message>
+        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+This action can NOT be undone.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8083,7 +8323,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Žádná</translation>
+        <translation type="obsolete">Žádná</translation>
     </message>
     <message>
         <source>Inch</source>
@@ -8211,7 +8451,7 @@ Přejete si ho přepsat?</translation>
     </message>
     <message>
         <source>Block %1 already exist, renamed to: %2</source>
-        <translation>Blok %1 již existuje, přejmenován na: %2</translation>
+        <translation type="obsolete">Blok %1 již existuje, přejmenován na: %2</translation>
     </message>
     <message>
         <source>All Image Files (%1) </source>
@@ -8331,15 +8571,1181 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error reading file matadata in dwg file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>error reading blocks in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error reading objects in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>: duplicated command: %1 is already taken by %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>point</source>
+        <comment>draw point</comment>
+        <translation type="unfinished">bod</translation>
+    </message>
+    <message>
+        <source>po</source>
+        <comment>draw point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>line</source>
+        <comment>draw line</comment>
+        <translation type="unfinished">úsečka</translation>
+    </message>
+    <message>
+        <source>li</source>
+        <comment>draw line</comment>
+        <translation type="unfinished">us</translation>
+    </message>
+    <message>
+        <source>l</source>
+        <comment>draw line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>polyline</source>
+        <comment>draw polyline</comment>
+        <translation type="unfinished">křivka</translation>
+    </message>
+    <message>
+        <source>pl</source>
+        <comment>draw polyline</comment>
+        <translation type="unfinished">kr</translation>
+    </message>
+    <message>
+        <source>free</source>
+        <comment>draw freehand line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fhl</source>
+        <comment>draw freehand line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spline</source>
+        <comment>draw spline</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spl</source>
+        <comment>draw spline</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spline2</source>
+        <comment>spline through points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stp</source>
+        <comment>spline through points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>offset</source>
+        <comment>create offset</comment>
+        <translation type="unfinished">ekvid</translation>
+    </message>
+    <message>
+        <source>parallel</source>
+        <comment>create offset</comment>
+        <translation type="unfinished">rovnoběžně</translation>
+    </message>
+    <message>
+        <source>o</source>
+        <comment>create offset</comment>
+        <translation type="unfinished">e</translation>
+    </message>
+    <message>
+        <source>pa</source>
+        <comment>create offset</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ptp</source>
+        <comment>parallel through point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pp</source>
+        <comment>parallel through point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bisect</source>
+        <comment>angle bisector</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bi</source>
+        <comment>angle bisector</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tangentpc</source>
+        <comment>tangent point and circle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tanpc</source>
+        <comment>tangent point and circle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>perp</source>
+        <comment>perpendicular line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ortho</source>
+        <comment>perpendicular line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vertical</source>
+        <comment>vertical line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ver</source>
+        <comment>vertical line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>horizontal</source>
+        <comment>horizontal line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hor</source>
+        <comment>horizontal line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rectangle</source>
+        <comment>draw rectangle</comment>
+        <translation type="unfinished">obdélník</translation>
+    </message>
+    <message>
+        <source>rectang</source>
+        <comment>draw rectangle</comment>
+        <translation type="unfinished">obdél</translation>
+    </message>
+    <message>
+        <source>rect</source>
+        <comment>draw rectangle</comment>
+        <translation type="unfinished">obd</translation>
+    </message>
+    <message>
+        <source>rec</source>
+        <comment>draw rectangle</comment>
+        <translation type="unfinished">obd</translation>
+    </message>
+    <message>
+        <source>polygon2v</source>
+        <comment>polygon by 2 vertices</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>poly2</source>
+        <comment>polygon by 2 vertices</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arc</source>
+        <comment>draw arc</comment>
+        <translation type="unfinished">oblouk</translation>
+    </message>
+    <message>
+        <source>a</source>
+        <comment>draw arc</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circle</source>
+        <comment>draw circle</comment>
+        <translation type="unfinished">kružnice</translation>
+    </message>
+    <message>
+        <source>ci</source>
+        <comment>draw circle</comment>
+        <translation type="unfinished">kruz</translation>
+    </message>
+    <message>
+        <source>circle2</source>
+        <comment>circle 2 points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>c2</source>
+        <comment>circle 2 points</comment>
+        <translation type="unfinished">k2b</translation>
+    </message>
+    <message>
+        <source>circle3</source>
+        <comment>circle 3 points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>c3</source>
+        <comment>circle 3 points</comment>
+        <translation type="unfinished">k3b</translation>
+    </message>
+    <message>
+        <source>circlecr</source>
+        <comment>circle with center and radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cc</source>
+        <comment>circle with center and radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tan3</source>
+        <comment>circle tangent to 3</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ct3</source>
+        <comment>circle tangent to 3</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ellipseinscribed</source>
+        <comment>inscribed ellipse</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ei</source>
+        <comment>inscribed ellipse</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ie</source>
+        <comment>inscribed ellipse</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hatch</source>
+        <comment>draw hatch</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ha</source>
+        <comment>draw hatch</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mtext</source>
+        <comment>draw mtext</comment>
+        <translation type="unfinished">vtext</translation>
+    </message>
+    <message>
+        <source>mtxt</source>
+        <comment>draw mtext</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>text</source>
+        <comment>draw text</comment>
+        <translation type="unfinished">text</translation>
+    </message>
+    <message>
+        <source>txt</source>
+        <comment>draw text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>regen</source>
+        <comment>zoom - redraw</comment>
+        <translation type="unfinished">obnovit</translation>
+    </message>
+    <message>
+        <source>redraw</source>
+        <comment>zoom - redraw</comment>
+        <translation type="unfinished">překresli</translation>
+    </message>
+    <message>
+        <source>rg</source>
+        <comment>zoom - redraw</comment>
+        <translation type="unfinished">prekr</translation>
+    </message>
+    <message>
+        <source>zr</source>
+        <comment>zoom - redraw</comment>
+        <translation type="unfinished">prekr</translation>
+    </message>
+    <message>
+        <source>zoomwindow</source>
+        <comment>zoom - window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zw</source>
+        <comment>zoom - window</comment>
+        <translation type="unfinished">zo</translation>
+    </message>
+    <message>
+        <source>zoomauto</source>
+        <comment>zoom - auto</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>za</source>
+        <comment>zoom - auto</comment>
+        <translation type="unfinished">az</translation>
+    </message>
+    <message>
+        <source>zoompan</source>
+        <comment>zoom - pan</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zp</source>
+        <comment>zoom - pan</comment>
+        <translation type="unfinished">pp</translation>
+    </message>
+    <message>
+        <source>zoomprevious</source>
+        <comment>zoom - previous</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zv</source>
+        <comment>zoom - previous</comment>
+        <translation type="unfinished">př</translation>
+    </message>
+    <message>
+        <source>kill</source>
+        <comment>kill all actions</comment>
+        <translation type="unfinished">zruš</translation>
+    </message>
+    <message>
+        <source>k</source>
+        <comment>kill all actions</comment>
+        <translation type="unfinished">zr</translation>
+    </message>
+    <message>
+        <source>undo</source>
+        <comment>undo cycle</comment>
+        <translation type="unfinished">zpět</translation>
+    </message>
+    <message>
+        <source>u</source>
+        <comment>undo cycle</comment>
+        <translation type="unfinished">z</translation>
+    </message>
+    <message>
+        <source>redo</source>
+        <comment>redo cycle</comment>
+        <translation type="unfinished">vpřed</translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>redo cycle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dimaligned</source>
+        <comment>dimension - aligned</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>da</source>
+        <comment>dimension - aligned</comment>
+        <translation type="unfinished">kz</translation>
+    </message>
+    <message>
+        <source>dimhorizontal</source>
+        <comment>dimension - horizontal</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dh</source>
+        <comment>dimension - horizontal</comment>
+        <translation type="unfinished">kv</translation>
+    </message>
+    <message>
+        <source>dimvertical</source>
+        <comment>dimension - vertical</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dv</source>
+        <comment>dimension - vertical</comment>
+        <translation type="unfinished">ks</translation>
+    </message>
+    <message>
+        <source>dimlinear</source>
+        <comment>dimension - linear</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dl</source>
+        <comment>dimension - linear</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dr</source>
+        <comment>dimension - linear</comment>
+        <translation type="unfinished">kp</translation>
+    </message>
+    <message>
+        <source>dimangular</source>
+        <comment>dimension - angular</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dan</source>
+        <comment>dimension - angular</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dimradial</source>
+        <comment>dimension - radial</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dimradius</source>
+        <comment>dimension - radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dimdiametric</source>
+        <comment>dimension - diametric</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dimdiameter</source>
+        <comment>dimension - diametric</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dd</source>
+        <comment>dimension - diametric</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dimleader</source>
+        <comment>dimension - leader</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ld</source>
+        <comment>dimension - leader</comment>
+        <translation type="unfinished">odk</translation>
+    </message>
+    <message>
+        <source>dimregen</source>
+        <comment>dimension - regenerate</comment>
+        <translation type="unfinished">prkot</translation>
+    </message>
+    <message>
+        <source>restrictnothing</source>
+        <comment>restrict - nothing</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rn</source>
+        <comment>restrict - nothing</comment>
+        <translation type="unfinished">bom</translation>
+    </message>
+    <message>
+        <source>restrictorthogonal</source>
+        <comment>restrict - orthogonal</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rr</source>
+        <comment>restrict - orthogonal</comment>
+        <translation type="unfinished">pk</translation>
+    </message>
+    <message>
+        <source>restricthorizontal</source>
+        <comment>restrict - horizontal</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rh</source>
+        <comment>restrict - horizontal</comment>
+        <translation type="unfinished">pv</translation>
+    </message>
+    <message>
+        <source>restrictvertical</source>
+        <comment>restrict - vertical</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rv</source>
+        <comment>restrict - vertical</comment>
+        <translation type="unfinished">ps</translation>
+    </message>
+    <message>
+        <source>move</source>
+        <comment>modify - move (copy)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mv</source>
+        <comment>modify - move (copy)</comment>
+        <translation type="unfinished">pos</translation>
+    </message>
+    <message>
+        <source>bevel</source>
+        <comment>modify - bevel</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bev</source>
+        <comment>modify - bevel</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ch</source>
+        <comment>modify - bevel</comment>
+        <translation type="unfinished">zk</translation>
+    </message>
+    <message>
+        <source>fillet</source>
+        <comment>modify - fillet</comment>
+        <translation type="unfinished">zaobli</translation>
+    </message>
+    <message>
+        <source>fi</source>
+        <comment>modify - fillet</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>divide</source>
+        <comment>modify - divide (cut)</comment>
+        <translation type="unfinished">rozdel</translation>
+    </message>
+    <message>
+        <source>cut</source>
+        <comment>modify - divide (cut)</comment>
+        <translation type="unfinished">orez</translation>
+    </message>
+    <message>
+        <source>div</source>
+        <comment>modify - divide (cut)</comment>
+        <translation type="unfinished">roz</translation>
+    </message>
+    <message>
+        <source>mirror</source>
+        <comment>modify -  mirror</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mi</source>
+        <comment>modify -  mirror</comment>
+        <translation type="unfinished">zrc</translation>
+    </message>
+    <message>
+        <source>revert</source>
+        <comment>modify -  revert direction</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rev</source>
+        <comment>modify -  revert direction</comment>
+        <translation type="unfinished">opac</translation>
+    </message>
+    <message>
+        <source>rotate</source>
+        <comment>modify - rotate</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ro</source>
+        <comment>modify - rotate</comment>
+        <translation type="unfinished">ot</translation>
+    </message>
+    <message>
+        <source>scale</source>
+        <comment>modify - scale</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sz</source>
+        <comment>modify - scale</comment>
+        <translation type="unfinished">mer</translation>
+    </message>
+    <message>
+        <source>trim</source>
+        <comment>modify - trim (extend)</comment>
+        <translation type="unfinished">zkrátit</translation>
+    </message>
+    <message>
+        <source>tm</source>
+        <comment>modify - trim (extend)</comment>
+        <translation type="unfinished">zkrv</translation>
+    </message>
+    <message>
+        <source>trim2</source>
+        <comment>modify - multi trim (extend)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tm2</source>
+        <comment>modify - multi trim (extend)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lengthen</source>
+        <comment>modify - lengthen</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>le</source>
+        <comment>modify - lengthen</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stretch</source>
+        <comment>modify - stretch</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ss</source>
+        <comment>modify - stretch</comment>
+        <translation type="unfinished">tah</translation>
+    </message>
+    <message>
+        <source>delete</source>
+        <comment>modify - delete (erase)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>er</source>
+        <comment>modify - delete (erase)</comment>
+        <translation type="unfinished">smaz</translation>
+    </message>
+    <message>
+        <source>del</source>
+        <comment>modify - delete (erase)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>explode</source>
+        <comment>explode block/polyline into entities</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>xp</source>
+        <comment>explode block/polyline into entities</comment>
+        <translation type="unfinished">rozl</translation>
+    </message>
+    <message>
+        <source>snapfree</source>
+        <comment>snap - free</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>os</source>
+        <comment>snap - free</comment>
+        <translation type="unfinished">uz</translation>
+    </message>
+    <message>
+        <source>sf</source>
+        <comment>snap - free</comment>
+        <translation type="unfinished">uz</translation>
+    </message>
+    <message>
+        <source>snapcenter</source>
+        <comment>snap - center</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sc</source>
+        <comment>snap - center</comment>
+        <translation type="unfinished">ust</translation>
+    </message>
+    <message>
+        <source>snapdist</source>
+        <comment>snap - distance to endpoints</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sd</source>
+        <comment>snap - distance to endpoints</comment>
+        <translation type="unfinished">uv</translation>
+    </message>
+    <message>
+        <source>snapend</source>
+        <comment>snap - end points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>se</source>
+        <comment>snap - end points</comment>
+        <translation type="unfinished">uk</translation>
+    </message>
+    <message>
+        <source>snapgrid</source>
+        <comment>snap - grid</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sg</source>
+        <comment>snap - grid</comment>
+        <translation type="unfinished">um</translation>
+    </message>
+    <message>
+        <source>snapintersection</source>
+        <comment>snap - intersection</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>si</source>
+        <comment>snap - intersection</comment>
+        <translation type="unfinished">up</translation>
+    </message>
+    <message>
+        <source>snapmiddle</source>
+        <comment>snap - middle points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sm</source>
+        <comment>snap - middle points</comment>
+        <translation type="unfinished">upol</translation>
+    </message>
+    <message>
+        <source>snaponentity</source>
+        <comment>snap - on entity</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sn</source>
+        <comment>snap - on entity</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>np</source>
+        <comment>snap - on entity</comment>
+        <translation type="unfinished">ubb</translation>
+    </message>
+    <message>
+        <source>setrelativezero</source>
+        <comment>set relative zero position</comment>
+        <translation type="unfinished">nastavrelativpoc</translation>
+    </message>
+    <message>
+        <source>rz</source>
+        <comment>set relative zero position</comment>
+        <translation type="unfinished">relp</translation>
+    </message>
+    <message>
+        <source>selectall</source>
+        <comment>Select all entities</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sa</source>
+        <comment>Select all entities</comment>
+        <translation type="unfinished">vv</translation>
+    </message>
+    <message>
+        <source>deselectall</source>
+        <comment>deselect all entities</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tn</source>
+        <comment>deselect all entities</comment>
+        <translation type="unfinished">zvvs</translation>
+    </message>
+    <message>
+        <source>modifyattr</source>
+        <comment>modify attribute</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attr</source>
+        <comment>modify attribute</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ma</source>
+        <comment>modify attribute</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>properties</source>
+        <comment>modify properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>prop</source>
+        <comment>modify properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>distance</source>
+        <comment>distance point to point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dist</source>
+        <comment>distance point to point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dpp</source>
+        <comment>distance point to point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>angle</source>
+        <comment>measure angle</comment>
+        <translation type="unfinished">úhel</translation>
+    </message>
+    <message>
+        <source>ang</source>
+        <comment>measure angle</comment>
+        <translation type="unfinished">uh</translation>
+    </message>
+    <message>
+        <source>area</source>
+        <comment>measure area</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ar</source>
+        <comment>measure area</comment>
+        <translation type="unfinished">obl</translation>
+    </message>
+    <message>
+        <source>angle</source>
+        <translation type="unfinished">úhel</translation>
+    </message>
+    <message>
+        <source>dpi</source>
+        <translation type="unfinished">dpi</translation>
+    </message>
+    <message>
+        <source>close</source>
+        <translation type="unfinished">uzavřít</translation>
+    </message>
+    <message>
+        <source>chord length</source>
+        <translation type="unfinished">délka tětivy</translation>
+    </message>
+    <message>
+        <source>columns</source>
+        <translation type="unfinished">sloupce</translation>
+    </message>
+    <message>
+        <source>columnspacing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>factor</source>
+        <translation type="unfinished">měřítko</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <translation type="unfinished">délka</translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <comment>bevel/fillet lenght1</comment>
+        <translation type="unfinished">délka1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <comment>bevel/fillet lenght2</comment>
+        <translation type="unfinished">délka2</translation>
+    </message>
+    <message>
+        <source>number</source>
+        <translation type="unfinished">počet</translation>
+    </message>
+    <message>
+        <source>radius</source>
+        <translation type="unfinished">poloměr</translation>
+    </message>
+    <message>
+        <source>rows</source>
+        <translation type="unfinished">řádky</translation>
+    </message>
+    <message>
+        <source>rowspacing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>through</source>
+        <translation type="unfinished">skrz</translation>
+    </message>
+    <message>
+        <source>trim</source>
+        <translation type="unfinished">zkrátit</translation>
+    </message>
+    <message>
+        <source>ang</source>
+        <comment>angle</comment>
+        <translation type="unfinished">uh</translation>
+    </message>
+    <message>
+        <source>an</source>
+        <comment>angle</comment>
+        <translation type="unfinished">uh</translation>
+    </message>
+    <message>
+        <source>center</source>
+        <translation type="unfinished">střed</translation>
+    </message>
+    <message>
+        <source>cen</source>
+        <comment>center</comment>
+        <translation type="unfinished">str</translation>
+    </message>
+    <message>
+        <source>ce</source>
+        <comment>center</comment>
+        <translation type="unfinished">str</translation>
+    </message>
+    <message>
+        <source>cl</source>
+        <comment>chord length</comment>
+        <translation type="unfinished">dt</translation>
+    </message>
+    <message>
+        <source>c</source>
+        <comment>close</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cols</source>
+        <comment>columns</comment>
+        <translation type="unfinished">sl</translation>
+    </message>
+    <message>
+        <source>co</source>
+        <comment>columns</comment>
+        <translation type="unfinished">sl</translation>
+    </message>
+    <message>
+        <source>columnspacing</source>
+        <comment>columnspacing for inserts</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>colspacing</source>
+        <comment>columnspacing for inserts</comment>
+        <translation type="unfinished">vzdálenostx</translation>
+    </message>
+    <message>
+        <source>cs</source>
+        <comment>columnspacing for inserts</comment>
+        <translation type="unfinished">vzdx</translation>
+    </message>
+    <message>
+        <source>fact</source>
+        <comment>factor</comment>
+        <translation type="unfinished">mer</translation>
+    </message>
+    <message>
+        <source>f</source>
+        <comment>factor</comment>
+        <translation type="unfinished">m</translation>
+    </message>
+    <message>
+        <source>help</source>
+        <translation type="unfinished">pomoc</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <comment>help</comment>
+        <translation type="unfinished">?</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <comment>length</comment>
+        <translation type="unfinished">délka</translation>
+    </message>
+    <message>
+        <source>len</source>
+        <comment>length</comment>
+        <translation type="unfinished">del</translation>
+    </message>
+    <message>
+        <source>l</source>
+        <comment>length</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <comment>length1</comment>
+        <translation type="unfinished">délka1</translation>
+    </message>
+    <message>
+        <source>len1</source>
+        <comment>length1</comment>
+        <translation type="unfinished">del1</translation>
+    </message>
+    <message>
+        <source>l1</source>
+        <comment>length1</comment>
+        <translation type="unfinished">d1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <comment>length2</comment>
+        <translation type="unfinished">délka2</translation>
+    </message>
+    <message>
+        <source>len2</source>
+        <comment>length2</comment>
+        <translation type="unfinished">del2</translation>
+    </message>
+    <message>
+        <source>l2</source>
+        <comment>length2</comment>
+        <translation type="unfinished">d2</translation>
+    </message>
+    <message>
+        <source>number</source>
+        <comment>number</comment>
+        <translation type="unfinished">počet</translation>
+    </message>
+    <message>
+        <source>num</source>
+        <comment>number</comment>
+        <translation type="unfinished">poc</translation>
+    </message>
+    <message>
+        <source>n</source>
+        <comment>number</comment>
+        <translation type="unfinished">p</translation>
+    </message>
+    <message>
+        <source>ra</source>
+        <comment>radius</comment>
+        <translation type="unfinished">po</translation>
+    </message>
+    <message>
+        <source>reversed</source>
+        <comment>reversed</comment>
+        <translation type="unfinished">opačný</translation>
+    </message>
+    <message>
+        <source>rev</source>
+        <comment>reversed</comment>
+        <translation type="unfinished">opac</translation>
+    </message>
+    <message>
+        <source>row</source>
+        <comment>row</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rowspacing</source>
+        <comment>rowspacing for inserts</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rs</source>
+        <comment>rowspacing for inserts</comment>
+        <translation type="unfinished">vzdy</translation>
+    </message>
+    <message>
+        <source>text</source>
+        <translation type="unfinished">text</translation>
+    </message>
+    <message>
+        <source>t</source>
+        <comment>text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>t</source>
+        <comment>through</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>undo</source>
+        <translation type="unfinished">zpět</translation>
+    </message>
+    <message>
+        <source>u</source>
+        <comment>undo</comment>
+        <translation type="unfinished">z</translation>
+    </message>
+    <message>
+        <source>redo</source>
+        <translation type="unfinished">vpřed</translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>redo</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>back</source>
+        <translation type="unfinished">zpět</translation>
+    </message>
+    <message>
+        <source>b</source>
+        <comment>back</comment>
+        <translation type="unfinished">zpe</translation>
+    </message>
+    <message>
+        <source>paperoffset</source>
+        <translation type="unfinished">posunpapir</translation>
+    </message>
+    <message>
+        <source>graphoffset</source>
+        <translation type="unfinished">posunvykres</translation>
+    </message>
+    <message>
+        <source>Command: %1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RS_Commands:: command not found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command not found: %1</source>
+        <translation type="unfinished">Příkaz nenalezen: %1</translation>
+    </message>
+    <message>
+        <source>Accepted keycode: %1</source>
+        <translation type="unfinished">Přijata klávesová zkratka: %1</translation>
+    </message>
+    <message>
+        <source>Available commands:</source>
+        <translation type="unfinished">Dostupné příkazy:</translation>
+    </message>
+    <message>
+        <source>cal</source>
+        <comment>command to trigger cli calculator</comment>
+        <translation type="unfinished">vyp</translation>
+    </message>
+    <message>
+        <source>calculate</source>
+        <comment>command to trigger cli calculator</comment>
+        <translation type="unfinished">vypocti</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <comment>unknown length unit</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading file metadata in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculator error for input: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9250,6 +10656,10 @@ Continue?</source>
         <source>Tangential &amp;3 Circles</source>
         <translation>Tečná &amp;3 kružnicemi</translation>
     </message>
+    <message>
+        <source>Draw tangential circle of 3 given points, lines, arcs/circles</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipse4Points</name>
@@ -9409,6 +10819,14 @@ Continue?</source>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
         <translation>Zadejte bod na elipse nebo celkovou vzdálenost k ohniskům</translation>
+    </message>
+    <message>
+        <source>specify a point on ellipse, or total distance to foci</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total distance %1 is smaller than distance between foci</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10657,7 +12075,11 @@ Continue?</source>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5 </source>
-        <translation>Vzdálenost: %1 v kartézských souřadnicích: (%2 , %3), polární: (%4&lt;%5 </translation>
+        <translation type="obsolete">Vzdálenost: %1 v kartézských souřadnicích: (%2 , %3), polární: (%4&lt;%5 </translation>
+    </message>
+    <message>
+        <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
+        <translation type="unfinished">Vzdálenost: %1 v kartézských souřadnicích: (%2 , %3), polární: (%4&lt;%5  {1 ?} {2 ?} {3)?} {4&lt;?} {5)?}</translation>
     </message>
 </context>
 <context>
@@ -11096,11 +12518,11 @@ Continue?</source>
     </message>
     <message>
         <source>Parent of second entity is NULL</source>
-        <translation>Nadřazený prvek druhého prvku je NULL</translation>
+        <translation type="obsolete">Nadřazený prvek druhého prvku je NULL</translation>
     </message>
     <message>
         <source>One of the chosen entities is NULL</source>
-        <translation>Jeden ze zvolených prvků je NULL</translation>
+        <translation type="obsolete">Jeden ze zvolených prvků je NULL</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
@@ -11108,15 +12530,35 @@ Continue?</source>
     </message>
     <message>
         <source>Parent of first entity is NULL</source>
-        <translation>Nadřazený prvek prvního prvku je NULL</translation>
+        <translation type="obsolete">Nadřazený prvek prvního prvku je NULL</translation>
     </message>
     <message>
         <source>First entity is NULL</source>
-        <translation>První prvek je NULL</translation>
+        <translation type="obsolete">První prvek je NULL</translation>
     </message>
     <message>
         <source>Second entity is NULL</source>
-        <translation>Druhý prvek je NULL</translation>
+        <translation type="obsolete">Druhý prvek je NULL</translation>
+    </message>
+    <message>
+        <source>Parent of second entity is nullptr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>One of the chosen entities is nullptr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parent of first entity is nullptr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>First entity is nullptr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Second entity is nullptr</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12346,7 +13788,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms in</source>
-        <translation type="obsolete">Přiblíží</translation>
+        <translation type="unfinished">Přiblíží</translation>
     </message>
     <message>
         <source>Zoom out</source>
@@ -12358,7 +13800,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms out</source>
-        <translation type="obsolete">Oddálí</translation>
+        <translation type="unfinished">Oddálí</translation>
     </message>
 </context>
 <context>
@@ -12457,7 +13899,7 @@ Continue?</source>
     <name>RS_Commands</name>
     <message>
         <source>line</source>
-        <translation>úsečka</translation>
+        <translation type="obsolete">úsečka</translation>
     </message>
     <message>
         <source>l</source>
@@ -12466,7 +13908,7 @@ Continue?</source>
     </message>
     <message>
         <source>rectangle</source>
-        <translation>obdélník</translation>
+        <translation type="obsolete">obdélník</translation>
     </message>
     <message>
         <source>rec</source>
@@ -12480,33 +13922,33 @@ Continue?</source>
     </message>
     <message>
         <source>text</source>
-        <translation>text</translation>
+        <translation type="obsolete">text</translation>
     </message>
     <message>
         <source>regen</source>
-        <translation>obnovit</translation>
+        <translation type="obsolete">obnovit</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation>zpět</translation>
+        <translation type="obsolete">zpět</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation>z</translation>
+        <translation type="obsolete">z</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation>vpřed</translation>
+        <translation type="obsolete">vpřed</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation>v</translation>
+        <translation type="obsolete">v</translation>
     </message>
     <message>
         <source>arc</source>
-        <translation>oblouk</translation>
+        <translation type="obsolete">oblouk</translation>
     </message>
     <message>
         <source>a</source>
@@ -12515,32 +13957,32 @@ Continue?</source>
     </message>
     <message>
         <source>angle</source>
-        <translation>úhel</translation>
+        <translation type="obsolete">úhel</translation>
     </message>
     <message>
         <source>factor</source>
-        <translation>měřítko</translation>
+        <translation type="obsolete">měřítko</translation>
     </message>
     <message>
         <source>columns</source>
-        <translation>sloupce</translation>
+        <translation type="obsolete">sloupce</translation>
     </message>
     <message>
         <source>rows</source>
-        <translation>řádky</translation>
+        <translation type="obsolete">řádky</translation>
     </message>
     <message>
         <source>columnspacing</source>
-        <translation>šířkasloupců</translation>
+        <translation type="obsolete">šířkasloupců</translation>
     </message>
     <message>
         <source>rowspacing</source>
-        <translation>řádkování</translation>
+        <translation type="obsolete">řádkování</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>uh</translation>
+        <translation type="obsolete">uh</translation>
     </message>
     <message>
         <source>a</source>
@@ -12550,17 +13992,17 @@ Continue?</source>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>mer</translation>
+        <translation type="obsolete">mer</translation>
     </message>
     <message>
         <source>f</source>
         <comment>factor</comment>
-        <translation>m</translation>
+        <translation type="obsolete">m</translation>
     </message>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>sl</translation>
+        <translation type="obsolete">sl</translation>
     </message>
     <message>
         <source>c</source>
@@ -12575,36 +14017,36 @@ Continue?</source>
     <message>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>vzdálenost v ose x</translation>
+        <translation type="obsolete">vzdálenost v ose x</translation>
     </message>
     <message>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>vzdálenostx</translation>
+        <translation type="obsolete">vzdálenostx</translation>
     </message>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>vzdx</translation>
+        <translation type="obsolete">vzdx</translation>
     </message>
     <message>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>vzdálenost v ose y</translation>
+        <translation type="obsolete">vzdálenost v ose y</translation>
     </message>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation>vzdy</translation>
+        <translation type="obsolete">vzdy</translation>
     </message>
     <message>
         <source>center</source>
-        <translation>střed</translation>
+        <translation type="obsolete">střed</translation>
     </message>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation>str</translation>
+        <translation type="obsolete">str</translation>
     </message>
     <message>
         <source>c</source>
@@ -12628,7 +14070,7 @@ Continue?</source>
     </message>
     <message>
         <source>point</source>
-        <translation>bod</translation>
+        <translation type="obsolete">bod</translation>
     </message>
     <message>
         <source>po</source>
@@ -12637,76 +14079,76 @@ Continue?</source>
     </message>
     <message>
         <source>offset</source>
-        <translation>ekvid</translation>
+        <translation type="obsolete">ekvid</translation>
     </message>
     <message>
         <source>o</source>
         <comment>offset</comment>
-        <translation>e</translation>
+        <translation type="obsolete">e</translation>
     </message>
     <message>
         <source>parallel</source>
-        <translation>rovnoběžně</translation>
+        <translation type="obsolete">rovnoběžně</translation>
     </message>
     <message>
         <source>length</source>
-        <translation>délka</translation>
+        <translation type="obsolete">délka</translation>
     </message>
     <message>
         <source>close</source>
-        <translation>uzavřít</translation>
+        <translation type="obsolete">uzavřít</translation>
     </message>
     <message>
         <source>number</source>
-        <translation>počet</translation>
+        <translation type="obsolete">počet</translation>
     </message>
     <message>
         <source>through</source>
-        <translation>skrz</translation>
+        <translation type="obsolete">skrz</translation>
     </message>
     <message>
         <source>help</source>
-        <translation>pomoc</translation>
+        <translation type="obsolete">pomoc</translation>
     </message>
     <message>
         <source>?</source>
         <comment>help</comment>
-        <translation>?</translation>
+        <translation type="obsolete">?</translation>
     </message>
     <message>
         <source>length</source>
         <comment>length</comment>
-        <translation>délka</translation>
+        <translation type="obsolete">délka</translation>
     </message>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation>del</translation>
+        <translation type="obsolete">del</translation>
     </message>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation>d</translation>
+        <translation type="obsolete">d</translation>
     </message>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation>uz</translation>
+        <translation type="obsolete">uz</translation>
     </message>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation>poc</translation>
+        <translation type="obsolete">poc</translation>
     </message>
     <message>
         <source>n</source>
         <comment>number</comment>
-        <translation>p</translation>
+        <translation type="obsolete">p</translation>
     </message>
     <message>
         <source>t</source>
         <comment>through</comment>
-        <translation>sk</translation>
+        <translation type="obsolete">sk</translation>
     </message>
     <message>
         <source>par</source>
@@ -12715,49 +14157,49 @@ Continue?</source>
     </message>
     <message>
         <source>length1</source>
-        <translation>délka1</translation>
+        <translation type="obsolete">délka1</translation>
     </message>
     <message>
         <source>length2</source>
-        <translation>délka2</translation>
+        <translation type="obsolete">délka2</translation>
     </message>
     <message>
         <source>radius</source>
-        <translation>poloměr</translation>
+        <translation type="obsolete">poloměr</translation>
     </message>
     <message>
         <source>trim</source>
-        <translation>zkrátit</translation>
+        <translation type="obsolete">zkrátit</translation>
     </message>
     <message>
         <source>length1</source>
         <comment>length1</comment>
-        <translation>délka1</translation>
+        <translation type="obsolete">délka1</translation>
     </message>
     <message>
         <source>len1</source>
         <comment>length1</comment>
-        <translation>del1</translation>
+        <translation type="obsolete">del1</translation>
     </message>
     <message>
         <source>l1</source>
         <comment>length1</comment>
-        <translation>d1</translation>
+        <translation type="obsolete">d1</translation>
     </message>
     <message>
         <source>length2</source>
         <comment>length2</comment>
-        <translation>délka2</translation>
+        <translation type="obsolete">délka2</translation>
     </message>
     <message>
         <source>len2</source>
         <comment>length2</comment>
-        <translation>del2</translation>
+        <translation type="obsolete">del2</translation>
     </message>
     <message>
         <source>l2</source>
         <comment>length2</comment>
-        <translation>d2</translation>
+        <translation type="obsolete">d2</translation>
     </message>
     <message>
         <source>r</source>
@@ -12767,11 +14209,11 @@ Continue?</source>
     <message>
         <source>t</source>
         <comment>text</comment>
-        <translation>t</translation>
+        <translation type="obsolete">t</translation>
     </message>
     <message>
         <source>chord length</source>
-        <translation>délka tětivy</translation>
+        <translation type="obsolete">délka tětivy</translation>
     </message>
     <message>
         <source>length</source>
@@ -12785,11 +14227,11 @@ Continue?</source>
     </message>
     <message>
         <source>Command: %1</source>
-        <translation>Příkaz: %1</translation>
+        <translation type="obsolete">Příkaz: %1</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation>Dostupné příkazy:</translation>
+        <translation type="obsolete">Dostupné příkazy:</translation>
     </message>
     <message>
         <source>ln</source>
@@ -12798,7 +14240,7 @@ Continue?</source>
     </message>
     <message>
         <source>circle</source>
-        <translation>kružnice</translation>
+        <translation type="obsolete">kružnice</translation>
     </message>
     <message>
         <source>ci</source>
@@ -12818,7 +14260,7 @@ Continue?</source>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation>zo</translation>
+        <translation type="obsolete">zo</translation>
     </message>
     <message>
         <source>zoom - window</source>
@@ -12827,7 +14269,7 @@ Continue?</source>
     <message>
         <source>za</source>
         <comment>zoom - auto</comment>
-        <translation>az</translation>
+        <translation type="obsolete">az</translation>
     </message>
     <message>
         <source>zoom - auto</source>
@@ -12836,7 +14278,7 @@ Continue?</source>
     <message>
         <source>zp</source>
         <comment>zoom - pan</comment>
-        <translation>pp</translation>
+        <translation type="obsolete">pp</translation>
     </message>
     <message>
         <source>zoom - pan</source>
@@ -12895,27 +14337,27 @@ Continue?</source>
     <message>
         <source>da</source>
         <comment>dimension - aligned</comment>
-        <translation>kz</translation>
+        <translation type="obsolete">kz</translation>
     </message>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>kv</translation>
+        <translation type="obsolete">kv</translation>
     </message>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation>ks</translation>
+        <translation type="obsolete">ks</translation>
     </message>
     <message>
         <source>dr</source>
         <comment>dimension - linear</comment>
-        <translation>kp</translation>
+        <translation type="obsolete">kp</translation>
     </message>
     <message>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation>odk</translation>
+        <translation type="obsolete">odk</translation>
     </message>
     <message>
         <source>rd</source>
@@ -12945,17 +14387,17 @@ Continue?</source>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>um</translation>
+        <translation type="obsolete">um</translation>
     </message>
     <message>
         <source>se</source>
         <comment>snap - end</comment>
-        <translation>uk</translation>
+        <translation type="obsolete">uk</translation>
     </message>
     <message>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation>up</translation>
+        <translation type="obsolete">up</translation>
     </message>
     <message>
         <source>sn</source>
@@ -12965,17 +14407,17 @@ Continue?</source>
     <message>
         <source>sm</source>
         <comment>snap - middle</comment>
-        <translation>upol</translation>
+        <translation type="obsolete">upol</translation>
     </message>
     <message>
         <source>sn</source>
         <comment>snap - nearest</comment>
-        <translation>ubl</translation>
+        <translation type="obsolete">ubl</translation>
     </message>
     <message>
         <source>np</source>
         <comment>snap - nearest point</comment>
-        <translation>ubb</translation>
+        <translation type="obsolete">ubb</translation>
     </message>
     <message>
         <source>fr*</source>
@@ -12990,12 +14432,12 @@ Continue?</source>
     <message>
         <source>tn</source>
         <comment>Deselect all</comment>
-        <translation>zvvs</translation>
+        <translation type="obsolete">zvvs</translation>
     </message>
     <message>
         <source>ch</source>
         <comment>modify - bevel (chamfer)</comment>
-        <translation>zk</translation>
+        <translation type="obsolete">zk</translation>
     </message>
     <message>
         <source>mt</source>
@@ -13005,57 +14447,57 @@ Continue?</source>
     <message>
         <source>xt</source>
         <comment>modify - trim (extend)</comment>
-        <translation>zkrr</translation>
+        <translation type="obsolete">zkrr</translation>
     </message>
     <message>
         <source>rm</source>
         <comment>modify - trim</comment>
-        <translation>zkr</translation>
+        <translation type="obsolete">zkr</translation>
     </message>
     <message>
         <source>mv</source>
         <comment>modify - move</comment>
-        <translation>pos</translation>
+        <translation type="obsolete">pos</translation>
     </message>
     <message>
         <source>mi</source>
         <comment>modify - mirror</comment>
-        <translation>zrc</translation>
+        <translation type="obsolete">zrc</translation>
     </message>
     <message>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>ot</translation>
+        <translation type="obsolete">ot</translation>
     </message>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>mer</translation>
+        <translation type="obsolete">mer</translation>
     </message>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>tah</translation>
+        <translation type="obsolete">tah</translation>
     </message>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>smaz</translation>
+        <translation type="obsolete">smaz</translation>
     </message>
     <message>
         <source>oo</source>
         <comment>modify - undo (oops)</comment>
-        <translation>zp</translation>
+        <translation type="obsolete">zp</translation>
     </message>
     <message>
         <source>uu</source>
         <comment>modify - redo</comment>
-        <translation>zno</translation>
+        <translation type="obsolete">zno</translation>
     </message>
     <message>
         <source>xp</source>
         <comment>modify - explode</comment>
-        <translation>rozl</translation>
+        <translation type="obsolete">rozl</translation>
     </message>
     <message>
         <source>ex</source>
@@ -13064,11 +14506,11 @@ Continue?</source>
     </message>
     <message>
         <source>dimregen</source>
-        <translation>prkot</translation>
+        <translation type="obsolete">prkot</translation>
     </message>
     <message>
         <source>po</source>
-        <translation>bo</translation>
+        <translation type="obsolete">bo</translation>
     </message>
     <message>
         <source>ln</source>
@@ -13076,281 +14518,281 @@ Continue?</source>
     </message>
     <message>
         <source>l</source>
-        <translation>u</translation>
+        <translation type="obsolete">u</translation>
     </message>
     <message>
         <source>a</source>
-        <translation>uh</translation>
+        <translation type="obsolete">uh</translation>
     </message>
     <message>
         <source>ci</source>
-        <translation>kruz</translation>
+        <translation type="obsolete">kruz</translation>
     </message>
     <message>
         <source>rec</source>
-        <translation>obd</translation>
+        <translation type="obsolete">obd</translation>
     </message>
     <message>
         <source>rectang</source>
-        <translation>obdél</translation>
+        <translation type="obsolete">obdél</translation>
     </message>
     <message>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation>prekr</translation>
+        <translation type="obsolete">prekr</translation>
     </message>
     <message>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation>prekr</translation>
+        <translation type="obsolete">prekr</translation>
     </message>
     <message>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation>př</translation>
+        <translation type="obsolete">př</translation>
     </message>
     <message>
         <source>r</source>
-        <translation>r</translation>
+        <translation type="obsolete">r</translation>
     </message>
     <message>
         <source>polyline</source>
-        <translation>křivka</translation>
+        <translation type="obsolete">křivka</translation>
     </message>
     <message>
         <source>pa</source>
         <comment>parallel</comment>
-        <translation>rov</translation>
+        <translation type="obsolete">rov</translation>
     </message>
     <message>
         <source>tm</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>zkrv</translation>
+        <translation type="obsolete">zkrv</translation>
     </message>
     <message>
         <source>da</source>
-        <translation>kz</translation>
+        <translation type="obsolete">kz</translation>
     </message>
     <message>
         <source>dh</source>
-        <translation>kv</translation>
+        <translation type="obsolete">kv</translation>
     </message>
     <message>
         <source>dr</source>
-        <translation>kp</translation>
+        <translation type="obsolete">kp</translation>
     </message>
     <message>
         <source>dv</source>
-        <translation>ks</translation>
+        <translation type="obsolete">ks</translation>
     </message>
     <message>
         <source>ld</source>
-        <translation>odk</translation>
+        <translation type="obsolete">odk</translation>
     </message>
     <message>
         <source>tm</source>
-        <translation>zkrv</translation>
+        <translation type="obsolete">zkrv</translation>
     </message>
     <message>
         <source>xt</source>
-        <translation>zkrr</translation>
+        <translation type="obsolete">zkrr</translation>
     </message>
     <message>
         <source>rm</source>
-        <translation>zkr</translation>
+        <translation type="obsolete">zkr</translation>
     </message>
     <message>
         <source>mv</source>
-        <translation>pos</translation>
+        <translation type="obsolete">pos</translation>
     </message>
     <message>
         <source>ch</source>
-        <translation>zk</translation>
+        <translation type="obsolete">zk</translation>
     </message>
     <message>
         <source>mi</source>
-        <translation>zrc</translation>
+        <translation type="obsolete">zrc</translation>
     </message>
     <message>
         <source>ro</source>
-        <translation>ot</translation>
+        <translation type="obsolete">ot</translation>
     </message>
     <message>
         <source>sz</source>
-        <translation>mer</translation>
+        <translation type="obsolete">mer</translation>
     </message>
     <message>
         <source>ss</source>
-        <translation>tah</translation>
+        <translation type="obsolete">tah</translation>
     </message>
     <message>
         <source>er</source>
-        <translation>smaz</translation>
+        <translation type="obsolete">smaz</translation>
     </message>
     <message>
         <source>oo</source>
-        <translation>zp</translation>
+        <translation type="obsolete">zp</translation>
     </message>
     <message>
         <source>uu</source>
-        <translation>zno</translation>
+        <translation type="obsolete">zno</translation>
     </message>
     <message>
         <source>xp</source>
-        <translation>rozl</translation>
+        <translation type="obsolete">rozl</translation>
     </message>
     <message>
         <source>os</source>
-        <translation>uz</translation>
+        <translation type="obsolete">uz</translation>
     </message>
     <message>
         <source>sg</source>
-        <translation>um</translation>
+        <translation type="obsolete">um</translation>
     </message>
     <message>
         <source>se</source>
-        <translation>uk</translation>
+        <translation type="obsolete">uk</translation>
     </message>
     <message>
         <source>si</source>
-        <translation>up</translation>
+        <translation type="obsolete">up</translation>
     </message>
     <message>
         <source>sn</source>
-        <translation>us</translation>
+        <translation type="obsolete">us</translation>
     </message>
     <message>
         <source>sm</source>
-        <translation>upol</translation>
+        <translation type="obsolete">upol</translation>
     </message>
     <message>
         <source>np</source>
-        <translation>ubb</translation>
+        <translation type="obsolete">ubb</translation>
     </message>
     <message>
         <source>tn</source>
-        <translation>zvvs</translation>
+        <translation type="obsolete">zvvs</translation>
     </message>
     <message>
         <source>kill</source>
-        <translation>zruš</translation>
+        <translation type="obsolete">zruš</translation>
     </message>
     <message>
         <source>k</source>
-        <translation>zr</translation>
+        <translation type="obsolete">zr</translation>
     </message>
     <message>
         <source>back</source>
-        <translation>zpět</translation>
+        <translation type="obsolete">zpět</translation>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation>zpe</translation>
+        <translation type="obsolete">zpe</translation>
     </message>
     <message>
         <source>li</source>
-        <translation>us</translation>
+        <translation type="obsolete">us</translation>
     </message>
     <message>
         <source>pl</source>
-        <translation>kr</translation>
+        <translation type="obsolete">kr</translation>
     </message>
     <message>
         <source>pa</source>
-        <translation>rov</translation>
+        <translation type="obsolete">rov</translation>
     </message>
     <message>
         <source>ar</source>
-        <translation>obl</translation>
+        <translation type="obsolete">obl</translation>
     </message>
     <message>
         <source>rect</source>
-        <translation>obd</translation>
+        <translation type="obsolete">obd</translation>
     </message>
     <message>
         <source>redraw</source>
-        <translation>překresli</translation>
+        <translation type="obsolete">překresli</translation>
     </message>
     <message>
         <source>zr</source>
-        <translation>prekr</translation>
+        <translation type="obsolete">prekr</translation>
     </message>
     <message>
         <source>zw</source>
-        <translation>zo</translation>
+        <translation type="obsolete">zo</translation>
     </message>
     <message>
         <source>za</source>
-        <translation>az</translation>
+        <translation type="obsolete">az</translation>
     </message>
     <message>
         <source>zp</source>
-        <translation>pp</translation>
+        <translation type="obsolete">pp</translation>
     </message>
     <message>
         <source>zv</source>
-        <translation>př</translation>
+        <translation type="obsolete">př</translation>
     </message>
     <message>
         <source>u</source>
-        <translation>z</translation>
+        <translation type="obsolete">z</translation>
     </message>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation>uz</translation>
+        <translation type="obsolete">uz</translation>
     </message>
     <message>
         <source>sc</source>
-        <translation>ust</translation>
+        <translation type="obsolete">ust</translation>
     </message>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>ust</translation>
+        <translation type="obsolete">ust</translation>
     </message>
     <message>
         <source>sd</source>
-        <translation>uv</translation>
+        <translation type="obsolete">uv</translation>
     </message>
     <message>
         <source>sd</source>
         <comment>snap - distance</comment>
-        <translation>uv</translation>
+        <translation type="obsolete">uv</translation>
     </message>
     <message>
         <source>sf</source>
-        <translation>uz</translation>
+        <translation type="obsolete">uz</translation>
     </message>
     <message>
         <source>sf</source>
         <comment>snap - free</comment>
-        <translation>uz</translation>
+        <translation type="obsolete">uz</translation>
     </message>
     <message>
         <source>sa</source>
-        <translation>vv</translation>
+        <translation type="obsolete">vv</translation>
     </message>
     <message>
         <source>sa</source>
         <comment>Select all</comment>
-        <translation>vv</translation>
+        <translation type="obsolete">vv</translation>
     </message>
     <message>
         <source>number</source>
         <comment>number</comment>
-        <translation>počet</translation>
+        <translation type="obsolete">počet</translation>
     </message>
     <message>
         <source>reversed</source>
         <comment>reversed</comment>
-        <translation>opačný</translation>
+        <translation type="obsolete">opačný</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>opac</translation>
+        <translation type="obsolete">opac</translation>
     </message>
     <message>
         <source>r</source>
@@ -13368,145 +14810,145 @@ Continue?</source>
     </message>
     <message>
         <source>Command not found: %1</source>
-        <translation>Příkaz nenalezen: %1</translation>
+        <translation type="obsolete">Příkaz nenalezen: %1</translation>
     </message>
     <message>
         <source>Accepted keycode: %1</source>
-        <translation>Přijata klávesová zkratka: %1</translation>
+        <translation type="obsolete">Přijata klávesová zkratka: %1</translation>
     </message>
     <message>
         <source>mtext</source>
-        <translation>vtext</translation>
+        <translation type="obsolete">vtext</translation>
     </message>
     <message>
         <source>dpi</source>
-        <translation>dpi</translation>
+        <translation type="obsolete">dpi</translation>
     </message>
     <message>
         <source>re</source>
-        <translation>os</translation>
+        <translation type="obsolete">os</translation>
     </message>
     <message>
         <source>re</source>
         <comment>modify - revert direction</comment>
-        <translation>os</translation>
+        <translation type="obsolete">os</translation>
     </message>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation>bom</translation>
+        <translation type="obsolete">bom</translation>
     </message>
     <message>
         <source>rn</source>
-        <translation>bom</translation>
+        <translation type="obsolete">bom</translation>
     </message>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation>pk</translation>
+        <translation type="obsolete">pk</translation>
     </message>
     <message>
         <source>rr</source>
-        <translation>pk</translation>
+        <translation type="obsolete">pk</translation>
     </message>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation>pv</translation>
+        <translation type="obsolete">pv</translation>
     </message>
     <message>
         <source>rh</source>
-        <translation>pv</translation>
+        <translation type="obsolete">pv</translation>
     </message>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation>ps</translation>
+        <translation type="obsolete">ps</translation>
     </message>
     <message>
         <source>rv</source>
-        <translation>ps</translation>
+        <translation type="obsolete">ps</translation>
     </message>
     <message>
         <source>setrelativezero</source>
-        <translation>nastavrelativpoc</translation>
+        <translation type="obsolete">nastavrelativpoc</translation>
     </message>
     <message>
         <source>setrelativezero</source>
         <comment>snap - set relative zero position</comment>
-        <translation>nastavrelativpoc</translation>
+        <translation type="obsolete">nastavrelativpoc</translation>
     </message>
     <message>
         <source>rz</source>
-        <translation>relp</translation>
+        <translation type="obsolete">relp</translation>
     </message>
     <message>
         <source>paperoffset</source>
-        <translation>posunpapir</translation>
+        <translation type="obsolete">posunpapir</translation>
     </message>
     <message>
         <source>graphoffset</source>
-        <translation>posunvykres</translation>
+        <translation type="obsolete">posunvykres</translation>
     </message>
     <message>
         <source>fillet</source>
         <comment>modify - fillet</comment>
-        <translation>zaobli</translation>
+        <translation type="obsolete">zaobli</translation>
     </message>
     <message>
         <source>divide</source>
         <comment>modify - divide</comment>
-        <translation>rozdel</translation>
+        <translation type="obsolete">rozdel</translation>
     </message>
     <message>
         <source>div</source>
         <comment>modify - divide</comment>
-        <translation>roz</translation>
+        <translation type="obsolete">roz</translation>
     </message>
     <message>
         <source>cut</source>
         <comment>modify - divide</comment>
-        <translation>orez</translation>
+        <translation type="obsolete">orez</translation>
     </message>
     <message>
         <source>an</source>
         <comment>angle</comment>
-        <translation>uh</translation>
+        <translation type="obsolete">uh</translation>
     </message>
     <message>
         <source>ce</source>
         <comment>center</comment>
-        <translation>str</translation>
+        <translation type="obsolete">str</translation>
     </message>
     <message>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation>dt</translation>
+        <translation type="obsolete">dt</translation>
     </message>
     <message>
         <source>co</source>
         <comment>columns</comment>
-        <translation>sl</translation>
+        <translation type="obsolete">sl</translation>
     </message>
     <message>
         <source>ra</source>
         <comment>radius</comment>
-        <translation>po</translation>
+        <translation type="obsolete">po</translation>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation>rad</translation>
+        <translation type="obsolete">rad</translation>
     </message>
     <message>
         <source>cal</source>
         <comment>command to trigger cli calculator</comment>
-        <translation>vyp</translation>
+        <translation type="obsolete">vyp</translation>
     </message>
     <message>
         <source>calculate</source>
         <comment>command to trigger cli calculator</comment>
-        <translation>vypocti</translation>
+        <translation type="obsolete">vypocti</translation>
     </message>
 </context>
 </TS>

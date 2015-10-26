@@ -133,6 +133,29 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LG_DimzerosBox</name>
+    <message>
+        <source>select:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove 0&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remove 0&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -628,7 +651,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>CAD Tools</source>
-        <translation>Εργαλεία CAD</translation>
+        <translation type="obsolete">Εργαλεία CAD</translation>
     </message>
     <message>
         <source>Export as</source>
@@ -678,6 +701,10 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Online (Wiki)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2182,7 +2209,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>CTRL-G</source>
-        <translation>CTRL-G</translation>
+        <translation type="obsolete">CTRL-G</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
@@ -2206,6 +2233,15 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Export as image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+G</source>
+        <comment>Toggle Grid</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CAD ToolBar</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2435,7 +2471,7 @@ in a separate window</source>
     <name>QG_CadToolBar</name>
     <message>
         <source>CAD Tools</source>
-        <translation>Εργαλεία CAD</translation>
+        <translation type="obsolete">Εργαλεία CAD</translation>
     </message>
 </context>
 <context>
@@ -3354,6 +3390,17 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>QG_CommandHistory</name>
+    <message>
+        <source>&amp;Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>select&amp;All</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QG_CommandWidget</name>
     <message>
         <source>Command Line</source>
@@ -3379,14 +3426,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;type in coordinates or commands&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;πληκτρολογήστε συντεταγμένες ή εντολές&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>select&amp;All</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>escape</source>
@@ -4896,7 +4935,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Extension line extension:</source>
-        <translation>Επέκταση βοηθητικής γραμμής:</translation>
+        <translation type="obsolete">Επέκταση βοηθητικής γραμμής:</translation>
     </message>
     <message>
         <source>Arrow size:</source>
@@ -4904,7 +4943,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Extension line offset:</source>
-        <translation>Διάκενο βοηθητικής γραμμής:</translation>
+        <translation type="obsolete">Διάκενο βοηθητικής γραμμής:</translation>
     </message>
     <message>
         <source>Dimension line gap:</source>
@@ -5102,7 +5141,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Alignment:</source>
-        <translation>Στοίχιση:</translation>
+        <translation type="obsolete">Στοίχιση:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignement.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5110,7 +5149,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Dimension Aligned</source>
-        <translation>Ευθυγραμμισμένη διάσταση</translation>
+        <translation type="obsolete">Ευθυγραμμισμένη διάσταση</translation>
     </message>
     <message>
         <source>Horizontal</source>
@@ -5142,7 +5181,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>General Factor:</source>
-        <translation>Γενικός συντελεστής:</translation>
+        <translation type="obsolete">Γενικός συντελεστής:</translation>
     </message>
     <message>
         <source>0.2</source>
@@ -5178,7 +5217,119 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Στοίχιση κειμένου.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Στοίχιση κειμένου.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Text style:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;.&apos; (Period)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;,&apos; (Comma)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decimal separator:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Linear units:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color:</source>
+        <translation type="unfinished">Χρώμα:</translation>
+    </message>
+    <message>
+        <source>Length Factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angular units:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Linear zeros:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Format units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text size &amp; position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length to enlarge over dimension line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width:</source>
+        <translation type="unfinished">Πλάτος:</translation>
+    </message>
+    <message>
+        <source>Dimension lines, arrows &amp; ticks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angular zeros:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angular precision:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enlarge:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Linear precision:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aligned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text alignment:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extension lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fixed length:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fixed extension line legth</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5293,7 +5444,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Colors</source>
-        <translation>Χρώματα</translation>
+        <translation type="obsolete">Χρώματα</translation>
     </message>
     <message>
         <source>Backgr&amp;ound:</source>
@@ -5313,11 +5464,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>White</source>
-        <translation type="obsolete">Άσπρο</translation>
+        <translation type="unfinished">Άσπρο</translation>
     </message>
     <message>
         <source>Gray</source>
-        <translation type="obsolete">Γκρί</translation>
+        <translation type="unfinished">Γκρί</translation>
     </message>
     <message>
         <source>Darkgray</source>
@@ -5373,7 +5524,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>#000000</source>
-        <translation>#000000</translation>
+        <translation type="obsolete">#000000</translation>
     </message>
     <message>
         <source>#ffffff</source>
@@ -5385,7 +5536,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>#808080</source>
-        <translation>#808080</translation>
+        <translation type="obsolete">#808080</translation>
     </message>
     <message>
         <source>A&amp;utomatically scale grid</source>
@@ -5449,11 +5600,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>#FFFFFF</source>
-        <translation>#FFFFFF</translation>
+        <translation type="obsolete">#FFFFFF</translation>
     </message>
     <message>
         <source>#C0C0C0</source>
-        <translation>#C0C0C0</translation>
+        <translation type="obsolete">#C0C0C0</translation>
     </message>
     <message>
         <source>#A54747</source>
@@ -5489,19 +5640,19 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>#00FFFF</source>
-        <translation>#00FFFF</translation>
+        <translation type="obsolete">#00FFFF</translation>
     </message>
     <message>
         <source>#0000FF</source>
-        <translation>#0000FF</translation>
+        <translation type="obsolete">#0000FF</translation>
     </message>
     <message>
         <source>#FFFF00</source>
-        <translation>#FFFF00</translation>
+        <translation type="obsolete">#FFFF00</translation>
     </message>
     <message>
         <source>#FF00FF</source>
-        <translation>#FF00FF</translation>
+        <translation type="obsolete">#FF00FF</translation>
     </message>
     <message>
         <source>St&amp;art Handle Color:</source>
@@ -5522,6 +5673,82 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Display Splash</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Graphic Colors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aquamarine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Azure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DeepSkyBlue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DodgerBlue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HoneyDew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lavender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LightGrey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Navy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PaleGreen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pink</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Salmon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Violet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wheat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GUI Colors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer/ Block Selection:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activation a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities are modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modify layer of selected entities, at  layer activation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8001,7 +8228,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation>Η στρώση &quot;%1&quot; και όλες οι οντότητες πάνω σε αυτή θα αφαιρεθούν.</translation>
+        <translation type="obsolete">Η στρώση &quot;%1&quot; και όλες οι οντότητες πάνω σε αυτή θα αφαιρεθούν.</translation>
     </message>
     <message>
         <source>Layer &quot;%1&quot; can never be removed.</source>
@@ -8026,6 +8253,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
         <translation>Η στρώση με όνομα &quot;%1&quot; υπάρχει ήδη. Παρακαλούμε να καθορίσετε διαφορετικό όνομα.</translation>
+    </message>
+    <message>
+        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+This action can NOT be undone.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8122,7 +8354,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>None</source>
-        <translation>Κανένα</translation>
+        <translation type="obsolete">Κανένα</translation>
     </message>
     <message>
         <source>Inch</source>
@@ -8250,7 +8482,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Block %1 already exist, renamed to: %2</source>
-        <translation>Το μπλοκ %1 υπάρχει ήδη, μετονομασία σε: %2</translation>
+        <translation type="obsolete">Το μπλοκ %1 υπάρχει ήδη, μετονομασία σε: %2</translation>
     </message>
     <message>
         <source>All Image Files (%1) </source>
@@ -8370,15 +8602,1181 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>error reading file matadata in dwg file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>error reading blocks in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>error reading objects in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>: duplicated command: %1 is already taken by %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>point</source>
+        <comment>draw point</comment>
+        <translation type="unfinished">σημείο</translation>
+    </message>
+    <message>
+        <source>po</source>
+        <comment>draw point</comment>
+        <translation type="unfinished">ση</translation>
+    </message>
+    <message>
+        <source>line</source>
+        <comment>draw line</comment>
+        <translation type="unfinished">γραμμή</translation>
+    </message>
+    <message>
+        <source>li</source>
+        <comment>draw line</comment>
+        <translation type="unfinished">γρ</translation>
+    </message>
+    <message>
+        <source>l</source>
+        <comment>draw line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>polyline</source>
+        <comment>draw polyline</comment>
+        <translation type="unfinished">πολυγραμμή</translation>
+    </message>
+    <message>
+        <source>pl</source>
+        <comment>draw polyline</comment>
+        <translation type="unfinished">πλ</translation>
+    </message>
+    <message>
+        <source>free</source>
+        <comment>draw freehand line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fhl</source>
+        <comment>draw freehand line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spline</source>
+        <comment>draw spline</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spl</source>
+        <comment>draw spline</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spline2</source>
+        <comment>spline through points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stp</source>
+        <comment>spline through points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>offset</source>
+        <comment>create offset</comment>
+        <translation type="unfinished">αναπαραγωγή</translation>
+    </message>
+    <message>
+        <source>parallel</source>
+        <comment>create offset</comment>
+        <translation type="unfinished">παράλληλα</translation>
+    </message>
+    <message>
+        <source>o</source>
+        <comment>create offset</comment>
+        <translation type="unfinished">αναπ</translation>
+    </message>
+    <message>
+        <source>pa</source>
+        <comment>create offset</comment>
+        <translation type="unfinished">με</translation>
+    </message>
+    <message>
+        <source>ptp</source>
+        <comment>parallel through point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pp</source>
+        <comment>parallel through point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bisect</source>
+        <comment>angle bisector</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bi</source>
+        <comment>angle bisector</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tangentpc</source>
+        <comment>tangent point and circle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tanpc</source>
+        <comment>tangent point and circle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>perp</source>
+        <comment>perpendicular line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ortho</source>
+        <comment>perpendicular line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vertical</source>
+        <comment>vertical line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ver</source>
+        <comment>vertical line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>horizontal</source>
+        <comment>horizontal line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hor</source>
+        <comment>horizontal line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rectangle</source>
+        <comment>draw rectangle</comment>
+        <translation type="unfinished">ορθογώνιο</translation>
+    </message>
+    <message>
+        <source>rectang</source>
+        <comment>draw rectangle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rect</source>
+        <comment>draw rectangle</comment>
+        <translation type="unfinished">ορθογ</translation>
+    </message>
+    <message>
+        <source>rec</source>
+        <comment>draw rectangle</comment>
+        <translation type="unfinished">ορθ</translation>
+    </message>
+    <message>
+        <source>polygon2v</source>
+        <comment>polygon by 2 vertices</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>poly2</source>
+        <comment>polygon by 2 vertices</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arc</source>
+        <comment>draw arc</comment>
+        <translation type="unfinished">τόξο</translation>
+    </message>
+    <message>
+        <source>a</source>
+        <comment>draw arc</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circle</source>
+        <comment>draw circle</comment>
+        <translation type="unfinished">κύκλος</translation>
+    </message>
+    <message>
+        <source>ci</source>
+        <comment>draw circle</comment>
+        <translation type="unfinished">κυ</translation>
+    </message>
+    <message>
+        <source>circle2</source>
+        <comment>circle 2 points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>c2</source>
+        <comment>circle 2 points</comment>
+        <translation type="unfinished">κ2</translation>
+    </message>
+    <message>
+        <source>circle3</source>
+        <comment>circle 3 points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>c3</source>
+        <comment>circle 3 points</comment>
+        <translation type="unfinished">κ3</translation>
+    </message>
+    <message>
+        <source>circlecr</source>
+        <comment>circle with center and radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cc</source>
+        <comment>circle with center and radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tan3</source>
+        <comment>circle tangent to 3</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ct3</source>
+        <comment>circle tangent to 3</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ellipseinscribed</source>
+        <comment>inscribed ellipse</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ei</source>
+        <comment>inscribed ellipse</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ie</source>
+        <comment>inscribed ellipse</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hatch</source>
+        <comment>draw hatch</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ha</source>
+        <comment>draw hatch</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mtext</source>
+        <comment>draw mtext</comment>
+        <translation type="unfinished">πκείμενο</translation>
+    </message>
+    <message>
+        <source>mtxt</source>
+        <comment>draw mtext</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>text</source>
+        <comment>draw text</comment>
+        <translation type="unfinished">κείμενο</translation>
+    </message>
+    <message>
+        <source>txt</source>
+        <comment>draw text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>regen</source>
+        <comment>zoom - redraw</comment>
+        <translation type="unfinished">επαναδημιουργία</translation>
+    </message>
+    <message>
+        <source>redraw</source>
+        <comment>zoom - redraw</comment>
+        <translation type="unfinished">επανασχεδίαση</translation>
+    </message>
+    <message>
+        <source>rg</source>
+        <comment>zoom - redraw</comment>
+        <translation type="unfinished">σχεδ</translation>
+    </message>
+    <message>
+        <source>zr</source>
+        <comment>zoom - redraw</comment>
+        <translation type="unfinished">επσχ</translation>
+    </message>
+    <message>
+        <source>zoomwindow</source>
+        <comment>zoom - window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zw</source>
+        <comment>zoom - window</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zoomauto</source>
+        <comment>zoom - auto</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>za</source>
+        <comment>zoom - auto</comment>
+        <translation type="unfinished">αυτμεγ</translation>
+    </message>
+    <message>
+        <source>zoompan</source>
+        <comment>zoom - pan</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zp</source>
+        <comment>zoom - pan</comment>
+        <translation type="unfinished">μετ - εστ</translation>
+    </message>
+    <message>
+        <source>zoomprevious</source>
+        <comment>zoom - previous</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>zv</source>
+        <comment>zoom - previous</comment>
+        <translation type="unfinished">εστπ</translation>
+    </message>
+    <message>
+        <source>kill</source>
+        <comment>kill all actions</comment>
+        <translation type="unfinished">σκότωσε</translation>
+    </message>
+    <message>
+        <source>k</source>
+        <comment>kill all actions</comment>
+        <translation type="unfinished">σκοτ</translation>
+    </message>
+    <message>
+        <source>undo</source>
+        <comment>undo cycle</comment>
+        <translation type="unfinished">αναίρεση</translation>
+    </message>
+    <message>
+        <source>u</source>
+        <comment>undo cycle</comment>
+        <translation type="unfinished">αν</translation>
+    </message>
+    <message>
+        <source>redo</source>
+        <comment>redo cycle</comment>
+        <translation type="unfinished">ξανά</translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>redo cycle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dimaligned</source>
+        <comment>dimension - aligned</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>da</source>
+        <comment>dimension - aligned</comment>
+        <translation type="unfinished">δσ</translation>
+    </message>
+    <message>
+        <source>dimhorizontal</source>
+        <comment>dimension - horizontal</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dh</source>
+        <comment>dimension - horizontal</comment>
+        <translation type="unfinished">δο</translation>
+    </message>
+    <message>
+        <source>dimvertical</source>
+        <comment>dimension - vertical</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dv</source>
+        <comment>dimension - vertical</comment>
+        <translation type="unfinished">δκ</translation>
+    </message>
+    <message>
+        <source>dimlinear</source>
+        <comment>dimension - linear</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dl</source>
+        <comment>dimension - linear</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dr</source>
+        <comment>dimension - linear</comment>
+        <translation type="unfinished">δγ</translation>
+    </message>
+    <message>
+        <source>dimangular</source>
+        <comment>dimension - angular</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dan</source>
+        <comment>dimension - angular</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dimradial</source>
+        <comment>dimension - radial</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dimradius</source>
+        <comment>dimension - radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dimdiametric</source>
+        <comment>dimension - diametric</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dimdiameter</source>
+        <comment>dimension - diametric</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dd</source>
+        <comment>dimension - diametric</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dimleader</source>
+        <comment>dimension - leader</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ld</source>
+        <comment>dimension - leader</comment>
+        <translation type="unfinished">δδ</translation>
+    </message>
+    <message>
+        <source>dimregen</source>
+        <comment>dimension - regenerate</comment>
+        <translation type="unfinished">επαναδημδια</translation>
+    </message>
+    <message>
+        <source>restrictnothing</source>
+        <comment>restrict - nothing</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rn</source>
+        <comment>restrict - nothing</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>restrictorthogonal</source>
+        <comment>restrict - orthogonal</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rr</source>
+        <comment>restrict - orthogonal</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>restricthorizontal</source>
+        <comment>restrict - horizontal</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rh</source>
+        <comment>restrict - horizontal</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>restrictvertical</source>
+        <comment>restrict - vertical</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rv</source>
+        <comment>restrict - vertical</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>move</source>
+        <comment>modify - move (copy)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mv</source>
+        <comment>modify - move (copy)</comment>
+        <translation type="unfinished">τμ</translation>
+    </message>
+    <message>
+        <source>bevel</source>
+        <comment>modify - bevel</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bev</source>
+        <comment>modify - bevel</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ch</source>
+        <comment>modify - bevel</comment>
+        <translation type="unfinished">τφ</translation>
+    </message>
+    <message>
+        <source>fillet</source>
+        <comment>modify - fillet</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fi</source>
+        <comment>modify - fillet</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>divide</source>
+        <comment>modify - divide (cut)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cut</source>
+        <comment>modify - divide (cut)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>div</source>
+        <comment>modify - divide (cut)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mirror</source>
+        <comment>modify -  mirror</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mi</source>
+        <comment>modify -  mirror</comment>
+        <translation type="unfinished">τσ</translation>
+    </message>
+    <message>
+        <source>revert</source>
+        <comment>modify -  revert direction</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rev</source>
+        <comment>modify -  revert direction</comment>
+        <translation type="unfinished">αντ</translation>
+    </message>
+    <message>
+        <source>rotate</source>
+        <comment>modify - rotate</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ro</source>
+        <comment>modify - rotate</comment>
+        <translation type="unfinished">τπ</translation>
+    </message>
+    <message>
+        <source>scale</source>
+        <comment>modify - scale</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sz</source>
+        <comment>modify - scale</comment>
+        <translation type="unfinished">τκ</translation>
+    </message>
+    <message>
+        <source>trim</source>
+        <comment>modify - trim (extend)</comment>
+        <translation type="unfinished">περικοπή</translation>
+    </message>
+    <message>
+        <source>tm</source>
+        <comment>modify - trim (extend)</comment>
+        <translation type="unfinished">επεκ</translation>
+    </message>
+    <message>
+        <source>trim2</source>
+        <comment>modify - multi trim (extend)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tm2</source>
+        <comment>modify - multi trim (extend)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lengthen</source>
+        <comment>modify - lengthen</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>le</source>
+        <comment>modify - lengthen</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stretch</source>
+        <comment>modify - stretch</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ss</source>
+        <comment>modify - stretch</comment>
+        <translation type="unfinished">κτ</translation>
+    </message>
+    <message>
+        <source>delete</source>
+        <comment>modify - delete (erase)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>er</source>
+        <comment>modify - delete (erase)</comment>
+        <translation type="unfinished">τδ</translation>
+    </message>
+    <message>
+        <source>del</source>
+        <comment>modify - delete (erase)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>explode</source>
+        <comment>explode block/polyline into entities</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>xp</source>
+        <comment>explode block/polyline into entities</comment>
+        <translation type="unfinished">δχ</translation>
+    </message>
+    <message>
+        <source>snapfree</source>
+        <comment>snap - free</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>os</source>
+        <comment>snap - free</comment>
+        <translation type="unfinished">ελξχ</translation>
+    </message>
+    <message>
+        <source>sf</source>
+        <comment>snap - free</comment>
+        <translation type="unfinished">λξχ</translation>
+    </message>
+    <message>
+        <source>snapcenter</source>
+        <comment>snap - center</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sc</source>
+        <comment>snap - center</comment>
+        <translation type="unfinished">λξκ</translation>
+    </message>
+    <message>
+        <source>snapdist</source>
+        <comment>snap - distance to endpoints</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sd</source>
+        <comment>snap - distance to endpoints</comment>
+        <translation type="unfinished">λξα</translation>
+    </message>
+    <message>
+        <source>snapend</source>
+        <comment>snap - end points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>se</source>
+        <comment>snap - end points</comment>
+        <translation type="unfinished">ελτ</translation>
+    </message>
+    <message>
+        <source>snapgrid</source>
+        <comment>snap - grid</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sg</source>
+        <comment>snap - grid</comment>
+        <translation type="unfinished">ελκα</translation>
+    </message>
+    <message>
+        <source>snapintersection</source>
+        <comment>snap - intersection</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>si</source>
+        <comment>snap - intersection</comment>
+        <translation type="unfinished">ελδ</translation>
+    </message>
+    <message>
+        <source>snapmiddle</source>
+        <comment>snap - middle points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sm</source>
+        <comment>snap - middle points</comment>
+        <translation type="unfinished">ελμ</translation>
+    </message>
+    <message>
+        <source>snaponentity</source>
+        <comment>snap - on entity</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sn</source>
+        <comment>snap - on entity</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>np</source>
+        <comment>snap - on entity</comment>
+        <translation type="unfinished">ελκσ</translation>
+    </message>
+    <message>
+        <source>setrelativezero</source>
+        <comment>set relative zero position</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rz</source>
+        <comment>set relative zero position</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>selectall</source>
+        <comment>Select all entities</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sa</source>
+        <comment>Select all entities</comment>
+        <translation type="unfinished">επο</translation>
+    </message>
+    <message>
+        <source>deselectall</source>
+        <comment>deselect all entities</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tn</source>
+        <comment>deselect all entities</comment>
+        <translation type="unfinished">αο</translation>
+    </message>
+    <message>
+        <source>modifyattr</source>
+        <comment>modify attribute</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attr</source>
+        <comment>modify attribute</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ma</source>
+        <comment>modify attribute</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>properties</source>
+        <comment>modify properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>prop</source>
+        <comment>modify properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>distance</source>
+        <comment>distance point to point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dist</source>
+        <comment>distance point to point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dpp</source>
+        <comment>distance point to point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>angle</source>
+        <comment>measure angle</comment>
+        <translation type="unfinished">γωνία</translation>
+    </message>
+    <message>
+        <source>ang</source>
+        <comment>measure angle</comment>
+        <translation type="unfinished">γων</translation>
+    </message>
+    <message>
+        <source>area</source>
+        <comment>measure area</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ar</source>
+        <comment>measure area</comment>
+        <translation type="unfinished">τοξ</translation>
+    </message>
+    <message>
+        <source>angle</source>
+        <translation type="unfinished">γωνία</translation>
+    </message>
+    <message>
+        <source>dpi</source>
+        <translation type="unfinished">σαι</translation>
+    </message>
+    <message>
+        <source>close</source>
+        <translation type="unfinished">κλείσε</translation>
+    </message>
+    <message>
+        <source>chord length</source>
+        <translation type="unfinished">μήκος χορδής</translation>
+    </message>
+    <message>
+        <source>columns</source>
+        <translation type="unfinished">στήλες</translation>
+    </message>
+    <message>
+        <source>columnspacing</source>
+        <translation type="unfinished">διάκενοστηλών</translation>
+    </message>
+    <message>
+        <source>factor</source>
+        <translation type="unfinished">συντελεστής</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <translation type="unfinished">μήκος</translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <comment>bevel/fillet lenght1</comment>
+        <translation type="unfinished">μήκος1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <comment>bevel/fillet lenght2</comment>
+        <translation type="unfinished">μήκος2</translation>
+    </message>
+    <message>
+        <source>number</source>
+        <translation type="unfinished">αριθμός</translation>
+    </message>
+    <message>
+        <source>radius</source>
+        <translation type="unfinished">ακτίνα</translation>
+    </message>
+    <message>
+        <source>rows</source>
+        <translation type="unfinished">σειρές</translation>
+    </message>
+    <message>
+        <source>rowspacing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>through</source>
+        <translation type="unfinished">διαμέσω</translation>
+    </message>
+    <message>
+        <source>trim</source>
+        <translation type="unfinished">περικοπή</translation>
+    </message>
+    <message>
+        <source>ang</source>
+        <comment>angle</comment>
+        <translation type="unfinished">γων</translation>
+    </message>
+    <message>
+        <source>an</source>
+        <comment>angle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>center</source>
+        <translation type="unfinished">κέντρο</translation>
+    </message>
+    <message>
+        <source>cen</source>
+        <comment>center</comment>
+        <translation type="unfinished">κεντ</translation>
+    </message>
+    <message>
+        <source>ce</source>
+        <comment>center</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cl</source>
+        <comment>chord length</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>c</source>
+        <comment>close</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cols</source>
+        <comment>columns</comment>
+        <translation type="unfinished">στ</translation>
+    </message>
+    <message>
+        <source>co</source>
+        <comment>columns</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>columnspacing</source>
+        <comment>columnspacing for inserts</comment>
+        <translation type="unfinished">διάκενοστηλών</translation>
+    </message>
+    <message>
+        <source>colspacing</source>
+        <comment>columnspacing for inserts</comment>
+        <translation type="unfinished">διάκστηλών</translation>
+    </message>
+    <message>
+        <source>cs</source>
+        <comment>columnspacing for inserts</comment>
+        <translation type="unfinished">δσ</translation>
+    </message>
+    <message>
+        <source>fact</source>
+        <comment>factor</comment>
+        <translation type="unfinished">συντ</translation>
+    </message>
+    <message>
+        <source>f</source>
+        <comment>factor</comment>
+        <translation type="unfinished">σ</translation>
+    </message>
+    <message>
+        <source>help</source>
+        <translation type="unfinished">βοήθεια</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <comment>help</comment>
+        <translation type="unfinished">?</translation>
+    </message>
+    <message>
+        <source>length</source>
+        <comment>length</comment>
+        <translation type="unfinished">μήκος</translation>
+    </message>
+    <message>
+        <source>len</source>
+        <comment>length</comment>
+        <translation type="unfinished">μηκ</translation>
+    </message>
+    <message>
+        <source>l</source>
+        <comment>length</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <comment>length1</comment>
+        <translation type="unfinished">μήκος1</translation>
+    </message>
+    <message>
+        <source>len1</source>
+        <comment>length1</comment>
+        <translation type="unfinished">μηκ1</translation>
+    </message>
+    <message>
+        <source>l1</source>
+        <comment>length1</comment>
+        <translation type="unfinished">μ1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <comment>length2</comment>
+        <translation type="unfinished">μήκος2</translation>
+    </message>
+    <message>
+        <source>len2</source>
+        <comment>length2</comment>
+        <translation type="unfinished">μηκ2</translation>
+    </message>
+    <message>
+        <source>l2</source>
+        <comment>length2</comment>
+        <translation type="unfinished">μ2</translation>
+    </message>
+    <message>
+        <source>number</source>
+        <comment>number</comment>
+        <translation type="unfinished">αριθμός</translation>
+    </message>
+    <message>
+        <source>num</source>
+        <comment>number</comment>
+        <translation type="unfinished">αρι</translation>
+    </message>
+    <message>
+        <source>n</source>
+        <comment>number</comment>
+        <translation type="unfinished">α</translation>
+    </message>
+    <message>
+        <source>ra</source>
+        <comment>radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reversed</source>
+        <comment>reversed</comment>
+        <translation type="unfinished">αντίστροφο</translation>
+    </message>
+    <message>
+        <source>rev</source>
+        <comment>reversed</comment>
+        <translation type="unfinished">αντ</translation>
+    </message>
+    <message>
+        <source>row</source>
+        <comment>row</comment>
+        <translation type="unfinished">σειρά</translation>
+    </message>
+    <message>
+        <source>rowspacing</source>
+        <comment>rowspacing for inserts</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rs</source>
+        <comment>rowspacing for inserts</comment>
+        <translation type="unfinished">δι</translation>
+    </message>
+    <message>
+        <source>text</source>
+        <translation type="unfinished">κείμενο</translation>
+    </message>
+    <message>
+        <source>t</source>
+        <comment>text</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>t</source>
+        <comment>through</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>undo</source>
+        <translation type="unfinished">αναίρεση</translation>
+    </message>
+    <message>
+        <source>u</source>
+        <comment>undo</comment>
+        <translation type="unfinished">αν</translation>
+    </message>
+    <message>
+        <source>redo</source>
+        <translation type="unfinished">ξανά</translation>
+    </message>
+    <message>
+        <source>r</source>
+        <comment>redo</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>back</source>
+        <translation type="unfinished">επιστροφή</translation>
+    </message>
+    <message>
+        <source>b</source>
+        <comment>back</comment>
+        <translation type="unfinished">επιστρ</translation>
+    </message>
+    <message>
+        <source>paperoffset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>graphoffset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command: %1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RS_Commands:: command not found: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command not found: %1</source>
+        <translation type="unfinished">Η εντολή δεν βρέθηκε: %1</translation>
+    </message>
+    <message>
+        <source>Accepted keycode: %1</source>
+        <translation type="unfinished">Δεκτός κωδικός πλήκτρου: %1</translation>
+    </message>
+    <message>
+        <source>Available commands:</source>
+        <translation type="unfinished">Διαθέσιμες εντολές:</translation>
+    </message>
+    <message>
+        <source>cal</source>
+        <comment>command to trigger cli calculator</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calculate</source>
+        <comment>command to trigger cli calculator</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <comment>unknown length unit</comment>
+        <translation type="unfinished">Κανένα</translation>
+    </message>
+    <message>
+        <source>error reading file metadata in dwg file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculator error for input: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9317,6 +10715,10 @@ Continue?</source>
         <source>Tangential &amp;3 Circles</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Draw tangential circle of 3 given points, lines, arcs/circles</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionDrawEllipse4Points</name>
@@ -9476,6 +10878,14 @@ Continue?</source>
     <message>
         <source>Specify a point on ellipse or total distance to foci</source>
         <translation>Καθορίστε ένα σημείο πάνω στην έλλειψη ή την ολική απόσταση από τις εστίες</translation>
+    </message>
+    <message>
+        <source>specify a point on ellipse, or total distance to foci</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total distance %1 is smaller than distance between foci</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10728,7 +12138,11 @@ Continue?</source>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5 </source>
-        <translation>Απόσταση: %1 Καρτεσιανή: (%2 , %3), Πολική: (%4&lt;%5 </translation>
+        <translation type="obsolete">Απόσταση: %1 Καρτεσιανή: (%2 , %3), Πολική: (%4&lt;%5 </translation>
+    </message>
+    <message>
+        <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
+        <translation type="unfinished">Απόσταση: %1 Καρτεσιανή: (%2 , %3), Πολική: (%4&lt;%5  {1 ?} {2 ?} {3)?} {4&lt;?} {5)?}</translation>
     </message>
 </context>
 <context>
@@ -11159,11 +12573,11 @@ Continue?</source>
     </message>
     <message>
         <source>Parent of second entity is NULL</source>
-        <translation>Ο γονέας της δεύτερης οντότητας είναι ΚΕΝΟ</translation>
+        <translation type="obsolete">Ο γονέας της δεύτερης οντότητας είναι ΚΕΝΟ</translation>
     </message>
     <message>
         <source>One of the chosen entities is NULL</source>
-        <translation>Μία από τις επιλεγμένες οντότητες είναι ΚΕΝΟ</translation>
+        <translation type="obsolete">Μία από τις επιλεγμένες οντότητες είναι ΚΕΝΟ</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
@@ -11171,15 +12585,35 @@ Continue?</source>
     </message>
     <message>
         <source>Parent of first entity is NULL</source>
-        <translation>Ο γονέας της πρώτης οντότητας είναι ΚΕΝΟ</translation>
+        <translation type="obsolete">Ο γονέας της πρώτης οντότητας είναι ΚΕΝΟ</translation>
     </message>
     <message>
         <source>First entity is NULL</source>
-        <translation>Η πρώτη οντότητα είναι ΚΕΝΟ</translation>
+        <translation type="obsolete">Η πρώτη οντότητα είναι ΚΕΝΟ</translation>
     </message>
     <message>
         <source>Second entity is NULL</source>
-        <translation>Η δεύτερη οντότητα είναι ΚΕΝΟ</translation>
+        <translation type="obsolete">Η δεύτερη οντότητα είναι ΚΕΝΟ</translation>
+    </message>
+    <message>
+        <source>Parent of second entity is nullptr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>One of the chosen entities is nullptr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parent of first entity is nullptr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>First entity is nullptr</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Second entity is nullptr</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12397,7 +13831,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms in</source>
-        <translation type="obsolete">Μεγέθυνση</translation>
+        <translation type="unfinished">Μεγέθυνση</translation>
     </message>
     <message>
         <source>Zoom out</source>
@@ -12409,7 +13843,7 @@ Continue?</source>
     </message>
     <message>
         <source>Zooms out</source>
-        <translation type="obsolete">Σμίκρυνση</translation>
+        <translation type="unfinished">Σμίκρυνση</translation>
     </message>
 </context>
 <context>
@@ -12508,7 +13942,7 @@ Continue?</source>
     <name>RS_Commands</name>
     <message>
         <source>line</source>
-        <translation>γραμμή</translation>
+        <translation type="obsolete">γραμμή</translation>
     </message>
     <message>
         <source>l</source>
@@ -12517,7 +13951,7 @@ Continue?</source>
     </message>
     <message>
         <source>rectangle</source>
-        <translation>ορθογώνιο</translation>
+        <translation type="obsolete">ορθογώνιο</translation>
     </message>
     <message>
         <source>rec</source>
@@ -12531,33 +13965,33 @@ Continue?</source>
     </message>
     <message>
         <source>text</source>
-        <translation>κείμενο</translation>
+        <translation type="obsolete">κείμενο</translation>
     </message>
     <message>
         <source>regen</source>
-        <translation>επαναδημιουργία</translation>
+        <translation type="obsolete">επαναδημιουργία</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation>αναίρεση</translation>
+        <translation type="obsolete">αναίρεση</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation>αν</translation>
+        <translation type="obsolete">αν</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation>ξανά</translation>
+        <translation type="obsolete">ξανά</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation>επ</translation>
+        <translation type="obsolete">επ</translation>
     </message>
     <message>
         <source>arc</source>
-        <translation>τόξο</translation>
+        <translation type="obsolete">τόξο</translation>
     </message>
     <message>
         <source>a</source>
@@ -12566,32 +14000,32 @@ Continue?</source>
     </message>
     <message>
         <source>angle</source>
-        <translation>γωνία</translation>
+        <translation type="obsolete">γωνία</translation>
     </message>
     <message>
         <source>factor</source>
-        <translation>συντελεστής</translation>
+        <translation type="obsolete">συντελεστής</translation>
     </message>
     <message>
         <source>columns</source>
-        <translation>στήλες</translation>
+        <translation type="obsolete">στήλες</translation>
     </message>
     <message>
         <source>rows</source>
-        <translation>σειρές</translation>
+        <translation type="obsolete">σειρές</translation>
     </message>
     <message>
         <source>columnspacing</source>
-        <translation>διάκενοστηλών</translation>
+        <translation type="obsolete">διάκενοστηλών</translation>
     </message>
     <message>
         <source>rowspacing</source>
-        <translation>διάκενογραμμών</translation>
+        <translation type="obsolete">διάκενογραμμών</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>γων</translation>
+        <translation type="obsolete">γων</translation>
     </message>
     <message>
         <source>a</source>
@@ -12601,17 +14035,17 @@ Continue?</source>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>συντ</translation>
+        <translation type="obsolete">συντ</translation>
     </message>
     <message>
         <source>f</source>
         <comment>factor</comment>
-        <translation>σ</translation>
+        <translation type="obsolete">σ</translation>
     </message>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation>στ</translation>
+        <translation type="obsolete">στ</translation>
     </message>
     <message>
         <source>c</source>
@@ -12626,36 +14060,36 @@ Continue?</source>
     <message>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>διάκενοστηλών</translation>
+        <translation type="obsolete">διάκενοστηλών</translation>
     </message>
     <message>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>διάκστηλών</translation>
+        <translation type="obsolete">διάκστηλών</translation>
     </message>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>δσ</translation>
+        <translation type="obsolete">δσ</translation>
     </message>
     <message>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>διακγρ</translation>
+        <translation type="obsolete">διακγρ</translation>
     </message>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation>δι</translation>
+        <translation type="obsolete">δι</translation>
     </message>
     <message>
         <source>center</source>
-        <translation>κέντρο</translation>
+        <translation type="obsolete">κέντρο</translation>
     </message>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation>κεντ</translation>
+        <translation type="obsolete">κεντ</translation>
     </message>
     <message>
         <source>c</source>
@@ -12679,7 +14113,7 @@ Continue?</source>
     </message>
     <message>
         <source>point</source>
-        <translation>σημείο</translation>
+        <translation type="obsolete">σημείο</translation>
     </message>
     <message>
         <source>po</source>
@@ -12688,76 +14122,76 @@ Continue?</source>
     </message>
     <message>
         <source>offset</source>
-        <translation>αναπαραγωγή</translation>
+        <translation type="obsolete">αναπαραγωγή</translation>
     </message>
     <message>
         <source>o</source>
         <comment>offset</comment>
-        <translation>αναπ</translation>
+        <translation type="obsolete">αναπ</translation>
     </message>
     <message>
         <source>parallel</source>
-        <translation>παράλληλα</translation>
+        <translation type="obsolete">παράλληλα</translation>
     </message>
     <message>
         <source>length</source>
-        <translation>μήκος</translation>
+        <translation type="obsolete">μήκος</translation>
     </message>
     <message>
         <source>close</source>
-        <translation>κλείσε</translation>
+        <translation type="obsolete">κλείσε</translation>
     </message>
     <message>
         <source>number</source>
-        <translation>αριθμός</translation>
+        <translation type="obsolete">αριθμός</translation>
     </message>
     <message>
         <source>through</source>
-        <translation>διαμέσω</translation>
+        <translation type="obsolete">διαμέσω</translation>
     </message>
     <message>
         <source>help</source>
-        <translation>βοήθεια</translation>
+        <translation type="obsolete">βοήθεια</translation>
     </message>
     <message>
         <source>?</source>
         <comment>help</comment>
-        <translation>?</translation>
+        <translation type="obsolete">?</translation>
     </message>
     <message>
         <source>length</source>
         <comment>length</comment>
-        <translation>μήκος</translation>
+        <translation type="obsolete">μήκος</translation>
     </message>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation>μηκ</translation>
+        <translation type="obsolete">μηκ</translation>
     </message>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation>μ</translation>
+        <translation type="obsolete">μ</translation>
     </message>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation>κλ</translation>
+        <translation type="obsolete">κλ</translation>
     </message>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation>αρι</translation>
+        <translation type="obsolete">αρι</translation>
     </message>
     <message>
         <source>n</source>
         <comment>number</comment>
-        <translation>α</translation>
+        <translation type="obsolete">α</translation>
     </message>
     <message>
         <source>t</source>
         <comment>through</comment>
-        <translation>δια</translation>
+        <translation type="obsolete">δια</translation>
     </message>
     <message>
         <source>par</source>
@@ -12766,49 +14200,49 @@ Continue?</source>
     </message>
     <message>
         <source>length1</source>
-        <translation>μήκος1</translation>
+        <translation type="obsolete">μήκος1</translation>
     </message>
     <message>
         <source>length2</source>
-        <translation>μήκος2</translation>
+        <translation type="obsolete">μήκος2</translation>
     </message>
     <message>
         <source>radius</source>
-        <translation>ακτίνα</translation>
+        <translation type="obsolete">ακτίνα</translation>
     </message>
     <message>
         <source>trim</source>
-        <translation>περικοπή</translation>
+        <translation type="obsolete">περικοπή</translation>
     </message>
     <message>
         <source>length1</source>
         <comment>length1</comment>
-        <translation>μήκος1</translation>
+        <translation type="obsolete">μήκος1</translation>
     </message>
     <message>
         <source>len1</source>
         <comment>length1</comment>
-        <translation>μηκ1</translation>
+        <translation type="obsolete">μηκ1</translation>
     </message>
     <message>
         <source>l1</source>
         <comment>length1</comment>
-        <translation>μ1</translation>
+        <translation type="obsolete">μ1</translation>
     </message>
     <message>
         <source>length2</source>
         <comment>length2</comment>
-        <translation>μήκος2</translation>
+        <translation type="obsolete">μήκος2</translation>
     </message>
     <message>
         <source>len2</source>
         <comment>length2</comment>
-        <translation>μηκ2</translation>
+        <translation type="obsolete">μηκ2</translation>
     </message>
     <message>
         <source>l2</source>
         <comment>length2</comment>
-        <translation>μ2</translation>
+        <translation type="obsolete">μ2</translation>
     </message>
     <message>
         <source>r</source>
@@ -12818,11 +14252,11 @@ Continue?</source>
     <message>
         <source>t</source>
         <comment>text</comment>
-        <translation>κει</translation>
+        <translation type="obsolete">κει</translation>
     </message>
     <message>
         <source>chord length</source>
-        <translation>μήκος χορδής</translation>
+        <translation type="obsolete">μήκος χορδής</translation>
     </message>
     <message>
         <source>length</source>
@@ -12836,11 +14270,11 @@ Continue?</source>
     </message>
     <message>
         <source>Command: %1</source>
-        <translation>Εντολή: %1</translation>
+        <translation type="obsolete">Εντολή: %1</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation>Διαθέσιμες εντολές:</translation>
+        <translation type="obsolete">Διαθέσιμες εντολές:</translation>
     </message>
     <message>
         <source>ln</source>
@@ -12849,7 +14283,7 @@ Continue?</source>
     </message>
     <message>
         <source>circle</source>
-        <translation>κύκλος</translation>
+        <translation type="obsolete">κύκλος</translation>
     </message>
     <message>
         <source>ci</source>
@@ -12869,12 +14303,12 @@ Continue?</source>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation>εστπαρ</translation>
+        <translation type="obsolete">εστπαρ</translation>
     </message>
     <message>
         <source>za</source>
         <comment>zoom - auto</comment>
-        <translation>αυτμεγ</translation>
+        <translation type="obsolete">αυτμεγ</translation>
     </message>
     <message>
         <source>zoom - auto</source>
@@ -12883,7 +14317,7 @@ Continue?</source>
     <message>
         <source>zp</source>
         <comment>zoom - pan</comment>
-        <translation>μετ - εστ</translation>
+        <translation type="obsolete">μετ - εστ</translation>
     </message>
     <message>
         <source>zoom - pan</source>
@@ -12937,27 +14371,27 @@ Continue?</source>
     <message>
         <source>da</source>
         <comment>dimension - aligned</comment>
-        <translation>δσ</translation>
+        <translation type="obsolete">δσ</translation>
     </message>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>δο</translation>
+        <translation type="obsolete">δο</translation>
     </message>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation>δκ</translation>
+        <translation type="obsolete">δκ</translation>
     </message>
     <message>
         <source>dr</source>
         <comment>dimension - linear</comment>
-        <translation>δγ</translation>
+        <translation type="obsolete">δγ</translation>
     </message>
     <message>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation>δδ</translation>
+        <translation type="obsolete">δδ</translation>
     </message>
     <message>
         <source>rd</source>
@@ -12987,17 +14421,17 @@ Continue?</source>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>ελκα</translation>
+        <translation type="obsolete">ελκα</translation>
     </message>
     <message>
         <source>se</source>
         <comment>snap - end</comment>
-        <translation>ελτ</translation>
+        <translation type="obsolete">ελτ</translation>
     </message>
     <message>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation>ελδ</translation>
+        <translation type="obsolete">ελδ</translation>
     </message>
     <message>
         <source>sn</source>
@@ -13007,17 +14441,17 @@ Continue?</source>
     <message>
         <source>sm</source>
         <comment>snap - middle</comment>
-        <translation>ελμ</translation>
+        <translation type="obsolete">ελμ</translation>
     </message>
     <message>
         <source>sn</source>
         <comment>snap - nearest</comment>
-        <translation>ελκο</translation>
+        <translation type="obsolete">ελκο</translation>
     </message>
     <message>
         <source>np</source>
         <comment>snap - nearest point</comment>
-        <translation>ελκσ</translation>
+        <translation type="obsolete">ελκσ</translation>
     </message>
     <message>
         <source>fr*</source>
@@ -13027,12 +14461,12 @@ Continue?</source>
     <message>
         <source>tn</source>
         <comment>Deselect all</comment>
-        <translation>αο</translation>
+        <translation type="obsolete">αο</translation>
     </message>
     <message>
         <source>ch</source>
         <comment>modify - bevel (chamfer)</comment>
-        <translation>τφ</translation>
+        <translation type="obsolete">τφ</translation>
     </message>
     <message>
         <source>mt</source>
@@ -13042,67 +14476,67 @@ Continue?</source>
     <message>
         <source>xt</source>
         <comment>modify - trim (extend)</comment>
-        <translation>επ</translation>
+        <translation type="obsolete">επ</translation>
     </message>
     <message>
         <source>rm</source>
         <comment>modify - trim</comment>
-        <translation>τδ</translation>
+        <translation type="obsolete">τδ</translation>
     </message>
     <message>
         <source>mv</source>
         <comment>modify - move</comment>
-        <translation>τμ</translation>
+        <translation type="obsolete">τμ</translation>
     </message>
     <message>
         <source>mi</source>
         <comment>modify - mirror</comment>
-        <translation>τσ</translation>
+        <translation type="obsolete">τσ</translation>
     </message>
     <message>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>τπ</translation>
+        <translation type="obsolete">τπ</translation>
     </message>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>τκ</translation>
+        <translation type="obsolete">τκ</translation>
     </message>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>κτ</translation>
+        <translation type="obsolete">κτ</translation>
     </message>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>τδ</translation>
+        <translation type="obsolete">τδ</translation>
     </message>
     <message>
         <source>oo</source>
         <comment>modify - undo (oops)</comment>
-        <translation>ωχ</translation>
+        <translation type="obsolete">ωχ</translation>
     </message>
     <message>
         <source>uu</source>
         <comment>modify - redo</comment>
-        <translation>ξν</translation>
+        <translation type="obsolete">ξν</translation>
     </message>
     <message>
         <source>xp</source>
         <comment>modify - explode</comment>
         <translatorcomment>διαχωρισμός</translatorcomment>
-        <translation>δχ</translation>
+        <translation type="obsolete">δχ</translation>
     </message>
     <message>
         <source>dimregen</source>
         <translatorcomment>επαναδημιουργία οντοτήτων διάστασης</translatorcomment>
-        <translation>επαναδημδια</translation>
+        <translation type="obsolete">επαναδημδια</translation>
     </message>
     <message>
         <source>po</source>
-        <translation>ση</translation>
+        <translation type="obsolete">ση</translation>
     </message>
     <message>
         <source>ln</source>
@@ -13111,283 +14545,283 @@ Continue?</source>
     <message>
         <source>l</source>
         <translatorcomment>μήκος;</translatorcomment>
-        <translation>μ</translation>
+        <translation type="obsolete">μ</translation>
     </message>
     <message>
         <source>a</source>
         <translatorcomment>τόξο;</translatorcomment>
-        <translation>τξ</translation>
+        <translation type="obsolete">τξ</translation>
     </message>
     <message>
         <source>ci</source>
-        <translation>κυ</translation>
+        <translation type="obsolete">κυ</translation>
     </message>
     <message>
         <source>rec</source>
-        <translation>ορθ</translation>
+        <translation type="obsolete">ορθ</translation>
     </message>
     <message>
         <source>rectang</source>
-        <translation>ορθογ</translation>
+        <translation type="obsolete">ορθογ</translation>
     </message>
     <message>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation>σχεδ</translation>
+        <translation type="obsolete">σχεδ</translation>
     </message>
     <message>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation>επσχ</translation>
+        <translation type="obsolete">επσχ</translation>
     </message>
     <message>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation>εστπ</translation>
+        <translation type="obsolete">εστπ</translation>
     </message>
     <message>
         <source>r</source>
-        <translation>επ</translation>
+        <translation type="obsolete">επ</translation>
     </message>
     <message>
         <source>polyline</source>
-        <translation>πολυγραμμή</translation>
+        <translation type="obsolete">πολυγραμμή</translation>
     </message>
     <message>
         <source>pa</source>
         <comment>parallel</comment>
-        <translation>με</translation>
+        <translation type="obsolete">με</translation>
     </message>
     <message>
         <source>tm</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>επεκ</translation>
+        <translation type="obsolete">επεκ</translation>
     </message>
     <message>
         <source>da</source>
-        <translation>δσ</translation>
+        <translation type="obsolete">δσ</translation>
     </message>
     <message>
         <source>dh</source>
-        <translation>δο</translation>
+        <translation type="obsolete">δο</translation>
     </message>
     <message>
         <source>dr</source>
-        <translation>δγ</translation>
+        <translation type="obsolete">δγ</translation>
     </message>
     <message>
         <source>dv</source>
-        <translation>δκ</translation>
+        <translation type="obsolete">δκ</translation>
     </message>
     <message>
         <source>ld</source>
-        <translation>δδ</translation>
+        <translation type="obsolete">δδ</translation>
     </message>
     <message>
         <source>tm</source>
-        <translation>επεκ</translation>
+        <translation type="obsolete">επεκ</translation>
     </message>
     <message>
         <source>xt</source>
-        <translation>επ</translation>
+        <translation type="obsolete">επ</translation>
     </message>
     <message>
         <source>rm</source>
-        <translation>τδ</translation>
+        <translation type="obsolete">τδ</translation>
     </message>
     <message>
         <source>mv</source>
-        <translation>τμ</translation>
+        <translation type="obsolete">τμ</translation>
     </message>
     <message>
         <source>ch</source>
-        <translation>τφ</translation>
+        <translation type="obsolete">τφ</translation>
     </message>
     <message>
         <source>mi</source>
-        <translation>τσ</translation>
+        <translation type="obsolete">τσ</translation>
     </message>
     <message>
         <source>ro</source>
-        <translation>τπ</translation>
+        <translation type="obsolete">τπ</translation>
     </message>
     <message>
         <source>sz</source>
-        <translation>τκ</translation>
+        <translation type="obsolete">τκ</translation>
     </message>
     <message>
         <source>ss</source>
-        <translation>κτ</translation>
+        <translation type="obsolete">κτ</translation>
     </message>
     <message>
         <source>er</source>
-        <translation>τδ</translation>
+        <translation type="obsolete">τδ</translation>
     </message>
     <message>
         <source>oo</source>
-        <translation>ωχ</translation>
+        <translation type="obsolete">ωχ</translation>
     </message>
     <message>
         <source>uu</source>
-        <translation>ξν</translation>
+        <translation type="obsolete">ξν</translation>
     </message>
     <message>
         <source>xp</source>
-        <translation>δχ</translation>
+        <translation type="obsolete">δχ</translation>
     </message>
     <message>
         <source>os</source>
-        <translation>ελξχ</translation>
+        <translation type="obsolete">ελξχ</translation>
     </message>
     <message>
         <source>sg</source>
-        <translation>ελκα</translation>
+        <translation type="obsolete">ελκα</translation>
     </message>
     <message>
         <source>se</source>
-        <translation>ελτ</translation>
+        <translation type="obsolete">ελτ</translation>
     </message>
     <message>
         <source>si</source>
-        <translation>ελδ</translation>
+        <translation type="obsolete">ελδ</translation>
     </message>
     <message>
         <source>sn</source>
-        <translation>ελκο</translation>
+        <translation type="obsolete">ελκο</translation>
     </message>
     <message>
         <source>sm</source>
-        <translation>ελμ</translation>
+        <translation type="obsolete">ελμ</translation>
     </message>
     <message>
         <source>np</source>
-        <translation>ελκσ</translation>
+        <translation type="obsolete">ελκσ</translation>
     </message>
     <message>
         <source>tn</source>
-        <translation>αο</translation>
+        <translation type="obsolete">αο</translation>
     </message>
     <message>
         <source>kill</source>
-        <translation>σκότωσε</translation>
+        <translation type="obsolete">σκότωσε</translation>
     </message>
     <message>
         <source>k</source>
-        <translation>σκοτ</translation>
+        <translation type="obsolete">σκοτ</translation>
     </message>
     <message>
         <source>back</source>
-        <translation>επιστροφή</translation>
+        <translation type="obsolete">επιστροφή</translation>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation>επιστρ</translation>
+        <translation type="obsolete">επιστρ</translation>
     </message>
     <message>
         <source>li</source>
-        <translation>γρ</translation>
+        <translation type="obsolete">γρ</translation>
     </message>
     <message>
         <source>pl</source>
         <translatorcomment>;;;;</translatorcomment>
-        <translation>πλ</translation>
+        <translation type="obsolete">πλ</translation>
     </message>
     <message>
         <source>pa</source>
-        <translation>με</translation>
+        <translation type="obsolete">με</translation>
     </message>
     <message>
         <source>ar</source>
-        <translation>τοξ</translation>
+        <translation type="obsolete">τοξ</translation>
     </message>
     <message>
         <source>rect</source>
-        <translation>ορθογ</translation>
+        <translation type="obsolete">ορθογ</translation>
     </message>
     <message>
         <source>redraw</source>
-        <translation>επανασχεδίαση</translation>
+        <translation type="obsolete">επανασχεδίαση</translation>
     </message>
     <message>
         <source>zr</source>
-        <translation>επσχ</translation>
+        <translation type="obsolete">επσχ</translation>
     </message>
     <message>
         <source>zw</source>
-        <translation>εστπα</translation>
+        <translation type="obsolete">εστπα</translation>
     </message>
     <message>
         <source>za</source>
-        <translation>αυτμεγ</translation>
+        <translation type="obsolete">αυτμεγ</translation>
     </message>
     <message>
         <source>zp</source>
-        <translation>μετ - εστ</translation>
+        <translation type="obsolete">μετ - εστ</translation>
     </message>
     <message>
         <source>zv</source>
-        <translation>εστπ</translation>
+        <translation type="obsolete">εστπ</translation>
     </message>
     <message>
         <source>u</source>
-        <translation>αν</translation>
+        <translation type="obsolete">αν</translation>
     </message>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation>ελξχ</translation>
+        <translation type="obsolete">ελξχ</translation>
     </message>
     <message>
         <source>sc</source>
-        <translation>λξκ</translation>
+        <translation type="obsolete">λξκ</translation>
     </message>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>λξκ</translation>
+        <translation type="obsolete">λξκ</translation>
     </message>
     <message>
         <source>sd</source>
-        <translation>λξα</translation>
+        <translation type="obsolete">λξα</translation>
     </message>
     <message>
         <source>sd</source>
         <comment>snap - distance</comment>
-        <translation>λξα</translation>
+        <translation type="obsolete">λξα</translation>
     </message>
     <message>
         <source>sf</source>
-        <translation>λξχ</translation>
+        <translation type="obsolete">λξχ</translation>
     </message>
     <message>
         <source>sf</source>
         <comment>snap - free</comment>
-        <translation>λξχ</translation>
+        <translation type="obsolete">λξχ</translation>
     </message>
     <message>
         <source>sa</source>
-        <translation>επο</translation>
+        <translation type="obsolete">επο</translation>
     </message>
     <message>
         <source>sa</source>
         <comment>Select all</comment>
-        <translation>επο</translation>
+        <translation type="obsolete">επο</translation>
     </message>
     <message>
         <source>number</source>
         <comment>number</comment>
-        <translation>αριθμός</translation>
+        <translation type="obsolete">αριθμός</translation>
     </message>
     <message>
         <source>reversed</source>
         <comment>reversed</comment>
-        <translation>αντίστροφο</translation>
+        <translation type="obsolete">αντίστροφο</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>αντ</translation>
+        <translation type="obsolete">αντ</translation>
     </message>
     <message>
         <source>r</source>
@@ -13405,146 +14839,34 @@ Continue?</source>
     </message>
     <message>
         <source>Command not found: %1</source>
-        <translation>Η εντολή δεν βρέθηκε: %1</translation>
+        <translation type="obsolete">Η εντολή δεν βρέθηκε: %1</translation>
     </message>
     <message>
         <source>Accepted keycode: %1</source>
-        <translation>Δεκτός κωδικός πλήκτρου: %1</translation>
+        <translation type="obsolete">Δεκτός κωδικός πλήκτρου: %1</translation>
     </message>
     <message>
         <source>mtext</source>
-        <translation>πκείμενο</translation>
+        <translation type="obsolete">πκείμενο</translation>
     </message>
     <message>
         <source>dpi</source>
         <translatorcomment>στιγμές ανά ίντσα</translatorcomment>
-        <translation>σαι</translation>
+        <translation type="obsolete">σαι</translation>
     </message>
     <message>
         <source>re</source>
-        <translation>αφ</translation>
+        <translation type="obsolete">αφ</translation>
     </message>
     <message>
         <source>re</source>
         <comment>modify - revert direction</comment>
-        <translation>αφ</translation>
-    </message>
-    <message>
-        <source>rn</source>
-        <comment>restrict - nothing</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rr</source>
-        <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rr</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rh</source>
-        <comment>restrict - horizontal</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rv</source>
-        <comment>restrict - vertical</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rv</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>setrelativezero</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>setrelativezero</source>
-        <comment>snap - set relative zero position</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rz</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>paperoffset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>graphoffset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fillet</source>
-        <comment>modify - fillet</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>divide</source>
-        <comment>modify - divide</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>div</source>
-        <comment>modify - divide</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cut</source>
-        <comment>modify - divide</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>an</source>
-        <comment>angle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ce</source>
-        <comment>center</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cl</source>
-        <comment>chord length</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>co</source>
-        <comment>columns</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ra</source>
-        <comment>radius</comment>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">αφ</translation>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation type="unfinished">σειρά</translation>
-    </message>
-    <message>
-        <source>cal</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>calculate</source>
-        <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">σειρά</translation>
     </message>
 </context>
 </TS>
