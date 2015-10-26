@@ -111,9 +111,9 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
  *	*/
 #define WTB_MAX_SIZE        79
 
- QAction* QC_ApplicationWindow::previousZoom=NULL;
- QAction* QC_ApplicationWindow::undoButton=NULL;
- QAction* QC_ApplicationWindow::redoButton=NULL;
+ QAction* QC_ApplicationWindow::previousZoom=nullptr;
+ QAction* QC_ApplicationWindow::undoButton=nullptr;
+ QAction* QC_ApplicationWindow::redoButton=nullptr;
 
 /**
  * Constructor. Initializes the app.
@@ -149,7 +149,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     dialogFactory = new QC_DialogFactory(this, optionWidget);
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory: OK");
     RS_DEBUG->print("setting dialog factory object");
-    if (RS_DialogFactory::instance()==NULL) {
+    if (RS_DialogFactory::instance()==nullptr) {
         RS_DEBUG->print("no RS_DialogFactory instance");
     } else {
         RS_DEBUG->print("got RS_DialogFactory instance");
@@ -364,7 +364,7 @@ void QC_ApplicationWindow::slotRunScript(const QString& name) {
         RS_DEBUG->print("QC_ApplicationWindow::slotRunScript");
 
 
-        if (scripter==NULL) {
+        if (scripter==nullptr) {
                 RS_DEBUG->print(RS_Debug::D_WARNING,
                         "QC_ApplicationWindow::slotRunScript: "
                         "scripter not initialized");
@@ -536,7 +536,7 @@ void QC_ApplicationWindow::initMDI() {
     vb->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     layout->setContentsMargins ( 0, 0, 0, 0 );
     mdiAreaCAD = new QMdiArea(this);
-    activedMdiSubWindow=NULL;
+    activedMdiSubWindow=nullptr;
     mdiAreaTab = false;
     layout->addWidget(mdiAreaCAD);
 //    mdiAreaCAD->setScrollBarsEnabled(false);
@@ -564,7 +564,7 @@ void QC_ApplicationWindow::initMDI() {
 
 }
 /**
- * @return Pointer to the currently active MDI Window or NULL if no
+ * @return Pointer to the currently active MDI Window or nullptr if no
  * MDI Window is active.
  */
 QC_MDIWindow const* QC_ApplicationWindow::getMDIWindow() const{
@@ -851,12 +851,12 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 
     RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated begin");
 
-    if(w==NULL) {
+    if(w==nullptr) {
         emit windowsChanged(false);
         activedMdiSubWindow=w;
         return;
     }
-    if(w->widget() == NULL) {
+    if(w->widget() == nullptr) {
         mdiAreaCAD->removeSubWindow(w);
 
         mdiAreaCAD->activateNextSubWindow();
@@ -889,7 +889,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
         if (m->getDocument()->rtti()==RS2::EntityGraphic) {
             blockWidget->setBlockList(m->getDocument()->getBlockList());
         } else {
-            blockWidget->setBlockList(NULL);
+            blockWidget->setBlockList(nullptr);
         }
 
         // Update all inserts in this graphic (blocks might have changed):
@@ -920,7 +920,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
         if(snapToolBar){
             actionHandler->slotSetSnaps(snapToolBar->getSnaps());
         }else {
-            RS_DEBUG->print(RS_Debug::D_ERROR,"snapToolBar is NULL\n");
+            RS_DEBUG->print(RS_Debug::D_ERROR,"snapToolBar is nullptr\n");
         }
     }
 
@@ -1239,7 +1239,7 @@ void QC_ApplicationWindow::slotSnapsChanged(RS_SnapMode snaps) {
 
 /**
  * Creates a new MDI window with the given document or a new
- *  document if 'doc' is NULL.
+ *  document if 'doc' is nullptr.
  */
 
 QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
@@ -1424,7 +1424,7 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
         geo=activedMdiSubWindow->geometry();
         maximized=activedMdiSubWindow->isMaximized();
     }
-    QC_MDIWindow* w =NULL;
+    QC_MDIWindow* w =nullptr;
 	if (!slotFileNewHelper(fileName, w)) {
         // error
         QString msg=tr("Cannot open the file\n%1\nPlease "
@@ -1440,12 +1440,12 @@ void QC_ApplicationWindow::slotFileNewTemplate() {
             w->closeMDI(true,false); //force closing, without asking user for confirmation
         }
         QMdiSubWindow* active=mdiAreaCAD->currentSubWindow();
-        activedMdiSubWindow=NULL; //to allow reactivate the previous active
+        activedMdiSubWindow=nullptr; //to allow reactivate the previous active
         if( active){//restore old geometry
             mdiAreaCAD->setActiveSubWindow(active);
             active->raise();
             active->setFocus();
-            if(old==NULL || maximized){
+            if(old==nullptr || maximized){
                 active->showMaximized();
             }else{
                 active->setGeometry(geo);
@@ -1590,12 +1590,12 @@ void QC_ApplicationWindow::
                slotFilePrintPreview(false);
                w->closeMDI(true,false); //force closing, without asking user for confirmation
                QMdiSubWindow* active=mdiAreaCAD->currentSubWindow();
-               activedMdiSubWindow=NULL; //to allow reactivate the previous active
+               activedMdiSubWindow=nullptr; //to allow reactivate the previous active
                if( active){//restore old geometry
                    mdiAreaCAD->setActiveSubWindow(active);
                    active->raise();
                    active->setFocus();
-                   if(old==NULL || maximized){
+                   if(old==nullptr || maximized){
                        active->showMaximized();
                    }else{
                        active->setGeometry(geo);
@@ -1821,7 +1821,7 @@ void QC_ApplicationWindow::slotFileExport() {
         fileDlg.setAcceptMode(QFileDialog::AcceptSave);
         fileDlg.setDirectory(defDir);
         fn = QFileInfo(w->getDocument()->getFilename()).baseName();
-        if(fn==NULL)
+        if(fn==nullptr)
             fn = "unnamed";
         fileDlg.selectFile(fn);
 
@@ -1891,7 +1891,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
         const QString& format, QSize size, QSize borders, bool black, bool bw) {
 
     QC_MDIWindow* w = getMDIWindow();
-    if (w==NULL) {
+    if (w==nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QC_ApplicationWindow::slotFileExport: "
                 "no window opened");
@@ -1899,7 +1899,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     }
 
     RS_Graphic* graphic = w->getDocument()->getGraphic();
-    if (graphic==NULL) {
+    if (graphic==nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QC_ApplicationWindow::slotFileExport: "
                 "no graphic");
@@ -2010,7 +2010,7 @@ void QC_ApplicationWindow::slotFileClose() {
     }
 
     mdiAreaCAD->closeActiveSubWindow();
-    activedMdiSubWindow=NULL;
+    activedMdiSubWindow=nullptr;
     QMdiSubWindow* m=mdiAreaCAD->currentSubWindow();
     if(m){
         slotWindowActivated(m);
@@ -2027,9 +2027,9 @@ void QC_ApplicationWindow::slotFileClose() {
 void QC_ApplicationWindow::slotFileClosing() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClosing()");
 
-    layerWidget->setLayerList(NULL, false);
-    blockWidget->setBlockList(NULL);
-    coordinateWidget->setGraphic(NULL);
+    layerWidget->setLayerList(nullptr, false);
+    blockWidget->setBlockList(nullptr);
+    coordinateWidget->setGraphic(nullptr);
     QC_MDIWindow* w = getMDIWindow();
     if(w)
         openedFiles.removeAll(w->getDocument()->getFilename());
@@ -2047,7 +2047,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     RS_DEBUG->print(RS_Debug::D_INFORMATIONAL,"QC_ApplicationWindow::slotFilePrint(%s)", printPDF ? "PDF" : "Native");
 
     QC_MDIWindow* w = getMDIWindow();
-    if (w==NULL) {
+    if (w==nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QC_ApplicationWindow::slotFilePrint: "
                 "no window opened");
@@ -2055,7 +2055,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     }
 
     RS_Graphic* graphic = w->getDocument()->getGraphic();
-    if (graphic==NULL) {
+    if (graphic==nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QC_ApplicationWindow::slotFilePrint: "
                 "no graphic");
