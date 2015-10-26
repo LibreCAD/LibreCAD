@@ -338,6 +338,7 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* e)
         if (!recent_actions.isEmpty())
         {
             QMenu* context_menu = new QMenu(this);
+            context_menu->setAttribute(Qt::WA_DeleteOnClose);
             context_menu->addActions(recent_actions);
             context_menu->exec(mapToGlobal(e->pos()));
         }
