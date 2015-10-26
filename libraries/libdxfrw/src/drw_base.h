@@ -149,10 +149,8 @@ enum TransparencyCodes {
 */
 class DRW_Coord {
 public:
-    DRW_Coord():x(0), y(0),z(0) {} // { x = 0; y = 0; z = 0; }
-    DRW_Coord(double ix, double iy, double iz): x(ix), y(iy),z(iz){}/*{
-        x = ix; y = iy; z = iz;
-    }*/
+    DRW_Coord():x(0), y(0),z(0) {}
+    DRW_Coord(double ix, double iy, double iz): x(ix), y(iy),z(iz){}
 
      DRW_Coord& operator = (const DRW_Coord& data) {
         x = data.x;  y = data.y;  z = data.z;
@@ -183,16 +181,9 @@ public:
 */
 class DRW_Vertex2D {
 public:
-    DRW_Vertex2D(): x(0), y(0), stawidth(0), endwidth(0), bulge(0){
-//        eType = DRW::LWPOLYLINE;
-//        stawidth = endwidth = bulge = 0;
-    }
-    DRW_Vertex2D(double sx, double sy, double b): x(sx), y(sy), stawidth(0), endwidth(0), bulge(b) {
-//        stawidth = endwidth = 0;
-//        x = sx;
-//        y =sy;
-//        bulge = b;
-    }
+    DRW_Vertex2D(): x(0), y(0), stawidth(0), endwidth(0), bulge(0){}
+
+    DRW_Vertex2D(double sx, double sy, double b): x(sx), y(sy), stawidth(0), endwidth(0), bulge(b) {}
 
 public:
     double x;                 /*!< x coordinate, code 10 */
@@ -218,37 +209,23 @@ public:
         INVALID
     };
 //TODO: add INT64 support
-    DRW_Variant(): sdata(std::string()), vdata(), content(0), vType(INVALID), vCode(0) {
-//        type = INVALID;
-    }
+    DRW_Variant(): sdata(std::string()), vdata(), content(0), vType(INVALID), vCode(0) {}
 
-    DRW_Variant(int c, dint32 i): sdata(std::string()), vdata(), content(i), vType(INTEGER), vCode(c){
-//        code = c; addInt(i);
-    }
-    DRW_Variant(int c, duint32 i): sdata(std::string()), vdata(), content(static_cast<dint32>(i)), vType(INTEGER), vCode(c) {
-//        code = c; addInt(static_cast<dint32>(i));//RLZ: verify if work with big numbers
-    }
-    DRW_Variant(int c, double d): sdata(std::string()), vdata(), content(d), vType(DOUBLE), vCode(c) {
-//        code = c; addDouble(d);
-    }
-    DRW_Variant(int c, UTF8STRING s): sdata(s), vdata(), content(&sdata), vType(STRING), vCode(c) {
-//        code = c; addString(s);
-    }
-    DRW_Variant(int c, DRW_Coord crd): sdata(std::string()), vdata(crd), content(&vdata), vType(COORD), vCode(c) {
-//        code = c; addCoord(crd);
-    }
+    DRW_Variant(int c, dint32 i): sdata(std::string()), vdata(), content(i), vType(INTEGER), vCode(c){}
+
+    DRW_Variant(int c, duint32 i): sdata(std::string()), vdata(), content(static_cast<dint32>(i)), vType(INTEGER), vCode(c) {}
+
+    DRW_Variant(int c, double d): sdata(std::string()), vdata(), content(d), vType(DOUBLE), vCode(c) {}
+
+    DRW_Variant(int c, UTF8STRING s): sdata(s), vdata(), content(&sdata), vType(STRING), vCode(c) {}
+
+    DRW_Variant(int c, DRW_Coord crd): sdata(std::string()), vdata(crd), content(&vdata), vType(COORD), vCode(c) {}
+
     DRW_Variant(const DRW_Variant& d): sdata(d.sdata), vdata(d.vdata), content(d.content), vType(d.vType), vCode(d.vCode) {
-//        code = d.code;
-//        type = d.type;
-//        content = d.content;
-        if (d.vType == COORD) {
-//            vdata = d.vdata;
+        if (d.vType == COORD)
             content.v = &vdata;
-        }
-        if (d.vType == STRING) {
-//            sdata = d.sdata;
+        if (d.vType == STRING)
             content.s = &sdata;
-        }
     }
 
     ~DRW_Variant() {
@@ -257,9 +234,7 @@ public:
     void addString(int c, UTF8STRING s) {vType = STRING; sdata = s; content.s = &sdata; vCode=c;}
     void addInt(int c, int i) {vType = INTEGER; content.i = i; vCode=c;}
     void addDouble(int c, double d) {vType = DOUBLE; content.d = d; vCode=c;}
-//    void addCoord() {setType(COORD); vdata.x=0.0; vdata.y=0.0; vdata.z=0.0; content.v = &vdata;}
     void addCoord(int c, DRW_Coord v) {vType = COORD; vdata = v; content.v = &vdata; vCode=c;}
-//    void setType(enum TYPE t) { type = t;}
     void setCoordX(double d) { if (vType == COORD) vdata.x = d;}
     void setCoordY(double d) { if (vType == COORD) vdata.y = d;}
     void setCoordZ(double d) { if (vType == COORD) vdata.z = d;}
