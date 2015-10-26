@@ -56,7 +56,6 @@ public:
 public slots:
 
 	void slotPenChanged(const RS_Pen& p);
-
     void slotFileNew();
     bool slotFileNewTemplate(const QString& fileName, RS2::FormatType type);
     bool slotFileOpen(const QString& fileName, RS2::FormatType type);
@@ -65,7 +64,6 @@ public slots:
     bool slotFileClose(bool force);
     void slotFilePrint();
     void slotZoomAuto();
-
 
 public:
     /** @return Pointer to graphic view */
@@ -99,8 +97,10 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, QC_MDIWindow& w);
 
+    bool has_children();
+
 signals:
-    void signalClosing();
+    void signalClosing(QC_MDIWindow*);
 
 protected:
     void closeEvent(QCloseEvent*);

@@ -147,7 +147,7 @@ public slots:
     /** closes the current file */
     void slotFileClose();
     /** closing the current file */
-    void slotFileClosing();
+    void slotFileClosing(QC_MDIWindow*);
     /** prints the current file */
     void slotFilePrint(bool printPDF=false);
     void slotFilePrintPDF();
@@ -194,7 +194,7 @@ public slots:
 
     void setPreviousZoomEnable(bool enable);
 
-    void hide_options();
+    void hide_options(QC_MDIWindow*);
 
 signals:
     void gridChanged(bool on);

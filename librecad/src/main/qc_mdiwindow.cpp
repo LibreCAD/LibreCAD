@@ -230,14 +230,16 @@ bool QC_MDIWindow::closeMDI(bool force, bool ask)
         RS_DEBUG->print("  closing block");
         RS_DEBUG->print("  notifying parent about closing this window");
         parentWindow->removeChildWindow(this);
-        emit(signalClosing());
+        emit(signalClosing(this));
         ret = true;
     }
 
     // This is a graphic document. ask user for closing.
     else if (!ask || slotFileClose(force)) {
         RS_DEBUG->print("  closing graphic");
-        // close all child windows:
+
+        emit(signalClosing(this));
+
         if (childWindows.length() > 0)
         {
             for(auto p: childWindows)
@@ -247,8 +249,6 @@ bool QC_MDIWindow::closeMDI(bool force, bool ask)
             }
 		childWindows.clear();
         }
-
-        emit(signalClosing());
 
         ret = true;
     }
@@ -586,3 +586,10 @@ std::ostream& operator << (std::ostream& os, QC_MDIWindow& w) {
     return os;
 }
 
+/**
+ * Return true if this window has children (QC_MDIWindow).
+ */
+bool QC_MDIWindow::has_children()
+{
+    return !childWindows.isEmpty();
+}

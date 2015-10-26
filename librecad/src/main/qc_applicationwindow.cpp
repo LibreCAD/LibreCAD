@@ -1256,10 +1256,8 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     window_list << w;
     actionHandler->set_view(w->getGraphicView());
     actionHandler->set_document(w->getDocument());
-        //w->setWindowState(WindowMaximized);
-    connect(w, SIGNAL(signalClosing()),
-            this, SLOT(slotFileClosing()));
-    connect(w, SIGNAL(signalClosing()), this, SLOT(hide_options()));
+    connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
+            this, SLOT(slotFileClosing(QC_MDIWindow*)));
 
     if (w->getDocument()->rtti()==RS2::EntityBlock) {
         w->setWindowTitle(tr("Block '%1'").arg(((RS_Block*)(w->getDocument()))->getName()));
@@ -2024,15 +2022,15 @@ void QC_ApplicationWindow::slotFileClose() {
  * Called when a MDI window is actually about to close. Used to
  * detach widgets from the document.
  */
-void QC_ApplicationWindow::slotFileClosing() {
+void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
+{
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClosing()");
 
     layerWidget->setLayerList(nullptr, false);
     blockWidget->setBlockList(nullptr);
     coordinateWidget->setGraphic(nullptr);
-    QC_MDIWindow* w = getMDIWindow();
-    if(w)
-        openedFiles.removeAll(w->getDocument()->getFilename());
+
+    openedFiles.removeAll(win->getDocument()->getFilename());
 
     mdiAreaCAD->activatePreviousSubWindow();
     mdiAreaCAD->currentSubWindow()->showMaximized();
@@ -2276,7 +2274,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 QMdiSubWindow* subWindow=mdiAreaCAD->addSubWindow(w);
                 subWindow->showMaximized();
                 parent->addChildWindow(w);
-                connect(w, SIGNAL(signalClosing()), this, SLOT(hide_options()));
+                connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
+                        this, SLOT(hide_options(QC_MDIWindow*)));
 
                 w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
                 w->setWindowIcon(QIcon(":/main/document.png"));
@@ -3817,7 +3816,7 @@ void QC_ApplicationWindow::slot_fullscreen(bool checked)
     checked?showFullScreen():showMaximized();
 }
 
-void QC_ApplicationWindow::hide_options()
+void QC_ApplicationWindow::hide_options(QC_MDIWindow* win)
 {
-    getGraphicView()->getDefaultAction()->hideOptions();
+    win->getGraphicView()->getDefaultAction()->hideOptions();
 }
