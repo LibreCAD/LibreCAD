@@ -210,34 +210,36 @@ void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e) {
         if (checkCommand("help", c)) {
             RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                              + getAvailableCommands().join(", "));
-            return;
-        }
-        break;
+			e->accept();
+			return;
+		}
+		break;
 
     case SetEndpoint:
         if (checkCommand("close", c)) {
             close();
-            updateMouseButtonHints();
-            return;
+			e->accept();
+			updateMouseButtonHints();
+			return;
         }
 
         if (checkCommand("undo", c)) {
             undo();
-            updateMouseButtonHints();
-            return;
+			e->accept();
+			updateMouseButtonHints();
+			return;
         }
-        break;
+		break;
 
     default:
-        break;
+		return;
     }
     if (checkCommand("redo", c)) {
         redo();
-        updateMouseButtonHints();
-        return;
+		e->accept();
+		updateMouseButtonHints();
 	}
-	e->accept();
-    //    RS_DEBUG->print("RS_ActionDrawLine::commandEvent: OK");
+	//    RS_DEBUG->print("RS_ActionDrawLine::commandEvent: OK");
 }
 
 QStringList RS_ActionDrawLine::getAvailableCommands() {
