@@ -885,14 +885,17 @@ double RS_VectorSolutions::getClosestDistance(const RS_Vector& coord,
 {
     double ret=RS_MAXDOUBLE*RS_MAXDOUBLE;
     int i=vector.size();
-    if (counts<i && counts>=0) i=counts;
-	for(const RS_Vector& vp: vector){
+	if (counts < i && counts >= 0) i=counts;
+	std::for_each(vector.begin(), vector.begin() + i,
+				  [&ret, &coord](RS_Vector const& vp) {
 		if(vp.valid) {
 			double d=(coord - vp).squared();
-            if(d<ret) ret=d;
-        }
-    }
-    return sqrt(ret);
+			if(d<ret) ret=d;
+		}
+	}
+	);
+
+	return sqrt(ret);
 }
 
 /** switch x,y for all vectors */
