@@ -223,7 +223,6 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
 		RS_DEBUG->print("RS_Information::getIntersection() for nullptr entities");
         return ret;
     }
-	if (e1->isConstruction() || e2->isConstruction()) return ret;
     if (e1->getId() == e2->getId()) {
         RS_DEBUG->print("RS_Information::getIntersection() of the same entity");
         return ret;
@@ -236,7 +235,8 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
         isDimension(e1->rtti()) || isDimension(e2->rtti())) {
         return ret;
     }
-	{
+
+	if (onEntities && !(e1->isConstruction() || e2->isConstruction())) {
 	// a little check to avoid doing unneeded intersections, an attempt to avoid O(N^2) increasing of checking two-entity information
 		LC_Rect const rect1{e1->getMin(), e1->getMax()};
 		LC_Rect const rect2{e2->getMin(), e2->getMax()};
@@ -286,9 +286,9 @@ RS_VectorSolutions RS_Information::getIntersection(RS_Entity const* e1,
                         (e2->isConstruction(true) || e2->isPointOnEntity(vp, tol))
                         )
                     ) {
-//                std::cout<<"Ignored intersection "<<ret.get(i)<<std::endl;
-//                std::cout<<"because: e1->isPointOnEntity(ret.get(i), tol)="<<e1->isPointOnEntity(ret.get(i), tol)
-//                    <<"\t(e2->isPointOnEntity(ret.get(i), tol)="<<e2->isPointOnEntity(ret.get(i), tol)<<std::endl;
+//				std::cout<<"Ignored intersection "<<vp<<std::endl;
+//				std::cout<<"because: e1->isPointOnEntity(ret.get(i), tol)="<<e1->isPointOnEntity(vp, tol)
+//					<<"\t(e2->isPointOnEntity(ret.get(i), tol)="<<e2->isPointOnEntity(vp, tol)<<std::endl;
                 continue;
             }
         }
