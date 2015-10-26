@@ -765,31 +765,6 @@ void RS_Snapper::drawSnapper()
             graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
             RS_DEBUG->print("RS_Snapper::Snapped draw end");
         }
-        if (snapCoord.valid && snapCoord!=snapSpot)
-        {
-            RS_OverlayLine *line=new RS_OverlayLine(nullptr,
-            {graphicView->toGui(snapSpot)+RS_Vector{-5.,0.},
-             graphicView->toGui(snapSpot)+RS_Vector{-1.,4.}});
-            line->setPen(line_pen);
-            container->addEntity(line);
-            line=new RS_OverlayLine(nullptr,
-            {graphicView->toGui(snapSpot)+RS_Vector{0.,5.},
-             graphicView->toGui(snapSpot)+RS_Vector{4.,1.}});
-            line->setPen(line_pen);
-            container->addEntity(line);
-            line=new RS_OverlayLine(nullptr,
-            {graphicView->toGui(snapSpot)+RS_Vector{5.,0.},
-             graphicView->toGui(snapSpot)+RS_Vector{1.,-4.}});
-            line->setPen(line_pen);
-            container->addEntity(line);
-            line=new RS_OverlayLine(nullptr,
-            {graphicView->toGui(snapSpot)+RS_Vector{0.,-5.},
-             graphicView->toGui(snapSpot)+RS_Vector{-4.,-1.}});
-            line->setPen(line_pen);
-            container->addEntity(line);
-
-            graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
-        }
     }
 }
 
