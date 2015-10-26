@@ -61,7 +61,6 @@ void QG_PrintPreviewOptions::languageChange()
 }
 
 void QG_PrintPreviewOptions::init() {
-    updateDisabled = false;
     imperialScales
             << "1\" = 1\""
             << "1\" = 2\""
@@ -97,11 +96,9 @@ void QG_PrintPreviewOptions::init() {
 
 void QG_PrintPreviewOptions::destroy() {
     RS_SETTINGS->beginGroup("/PrintPreview");
-    RS_SETTINGS->writeEntry("/PrintScaleFixed", QString(updateDisabled?"1":"0"));
+    RS_SETTINGS->writeEntry("/PrintScaleFixed", updateDisabled?1:0);
     RS_SETTINGS->writeEntry("/BlackWhiteSet", QString(blackWhiteDisabled?"1":"0"));
-    if(updateDisabled){
-        RS_SETTINGS->writeEntry("/PrintScaleValue",cbScale->currentText());
-    }
+    RS_SETTINGS->writeEntry("/PrintScaleValue", cbScale->currentText());
     RS_SETTINGS->endGroup();
     action=NULL;
 }
@@ -116,12 +113,10 @@ void QG_PrintPreviewOptions::setScaleFixed(bool fixed)
     if(cFixed->isChecked() != fixed) {
         cFixed->setChecked(fixed);
     }
-    if(updateDisabled){
-        RS_SETTINGS->beginGroup("/PrintPreview");
-        RS_SETTINGS->writeEntry("/PrintScaleFixed", QString(updateDisabled?"1":"0"));
-        RS_SETTINGS->writeEntry("/PrintScaleValue",cbScale->currentText());
-        RS_SETTINGS->endGroup();
-    }
+    RS_SETTINGS->beginGroup("/PrintPreview");
+    RS_SETTINGS->writeEntry("/PrintScaleFixed", updateDisabled?1:0);
+    RS_SETTINGS->writeEntry("/PrintScaleValue", cbScale->currentText());
+    RS_SETTINGS->endGroup();
 }
 
 void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {

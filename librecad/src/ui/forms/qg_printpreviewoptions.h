@@ -62,7 +62,7 @@ protected slots:
 private:
     QStringList imperialScales;
     QStringList metricScales;
-    bool updateDisabled;
+    bool updateDisabled{false};
     bool blackWhiteDisabled;
     int defaultScales;
 
