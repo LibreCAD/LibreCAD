@@ -549,60 +549,72 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
 		 endPoints.push_back(getStartpoint());
 	if (viewportRect.inArea(getEndpoint(), RS_TOLERANCE))
 		 endPoints.push_back(getEndpoint());
+
+	RS_EntityContainer ec(nullptr);
+	ec.addRectangle(viewportRect.minP(), viewportRect.maxP());
+
 	if (endPoints.size()<2){
-		RS_EntityContainer ec(nullptr);
-		ec.addRectangle(viewportRect.minP(), viewportRect.maxP());
+		RS_VectorSolutions vpIts;
 		for(auto p: ec) {
-			auto const vpIts=RS_Information::getIntersection(this, p, true);
-			if (!vpIts.size()) continue;
-			if (!endPoints.size() ||
-					endPoints.getClosestDistance(vpIts.at(0)) >= RS_TOLERANCE * 10.) {
-				endPoints.push_back(vpIts.at(0));
+			auto const sol=RS_Information::getIntersection(this, p, true);
+			for (auto const& vp: sol) {
+				if (vpIts.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
+					continue;
+				vpIts.push_back(vp);
 			}
-
 		}
-    }
-	if (endPoints.size()<2) return;
-	if ((endPoints[0] - getStartpoint()).squared() >
-            (endPoints[1] - getStartpoint()).squared() ) std::swap(endPoints[0],endPoints[1]);
+		for (auto const& vp: vpIts) {
+			if (endPoints.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
+				continue;
+			endPoints.push_back(vp);
+		}
+	}
 
-    RS_Vector pStart(view->toGui(endPoints.at(0)));
-    RS_Vector pEnd(view->toGui(endPoints.at(1)));
+	if (endPoints.size()<2) return;
+
+	if ((endPoints[0] - getStartpoint()).squared() >
+			(endPoints[1] - getStartpoint()).squared() )
+		std::swap(endPoints[0],endPoints[1]);
+
+	RS_Vector pStart{view->toGui(endPoints.at(0))};
+	RS_Vector pEnd{view->toGui(endPoints.at(1))};
     //    std::cout<<"draw line: "<<pStart<<" to "<<pEnd<<std::endl;
-    RS_Vector direction=pEnd-pStart;
+	RS_Vector direction = pEnd-pStart;
+
 	if (isConstruction(true) && direction.squared() > RS_TOLERANCE){
         //extend line on a construction layer to fill the whole view
-        RS_Vector lb(0,0);
-        RS_Vector rt(view->getWidth(),view->getHeight());
-		std::vector<RS_Vector> rect;
-		rect.push_back(lb);
-		rect.push_back({rt.x,lb.y});
-		rect.push_back(rt);
-		rect.push_back({lb.x,rt.y});
-		rect.push_back(lb);
-        RS_VectorSolutions sol;
-        RS_Line dLine(pStart,pEnd);
-		for(int i=0; i < 4; ++i){
-            RS_Line bLine(rect.at(i),rect.at(i+1));
-            RS_VectorSolutions sol2=RS_Information::getIntersection(&bLine, &dLine);
-            if( sol2.getNumber()>0 && bLine.isPointOnEntity(sol2.get(0),RS_TOLERANCE)) {
-                sol.push_back(sol2.get(0));
-            }
-        }
-        switch(sol.getNumber()){
-        case 2:
-            pStart=sol.get(0);
-            pEnd=sol.get(1);
-            break;
-        case 3:
-        case 4:
-            pStart=sol.get(0);
-            pEnd=sol.get(2);
-            break;
-        default:
-            return;
-        }
-        direction=pEnd-pStart;
+		RS_VectorSolutions vpIts;
+		for(auto p: ec) {
+			auto const sol=RS_Information::getIntersection(this, p, false);
+			for (auto const& vp: sol) {
+				if (vpIts.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
+					continue;
+				vpIts.push_back(vp);
+			}
+		}
+
+		//draw construction lines up to viewport border
+		switch (vpIts.size()) {
+		case 2:
+			// no need to sort intersections
+			break;
+		case 3:
+		case 4: {
+			// will use the inner two points
+			size_t i{0};
+			for (size_t j = 2; j < vpIts.size(); ++j) {
+				if (viewportRect.inArea(vpIts.at(j), RS_TOLERANCE * 10.))
+					std::swap(vpIts[j], vpIts[i++]);
+			}
+		}
+			break;
+		default:
+			//should not happen
+			return;
+		}
+		pStart=view->toGui(vpIts.get(0));
+		pEnd=view->toGui(vpIts.get(1));
+		direction=pEnd-pStart;
     }
     double  length=direction.magnitude();
     patternOffset -= length;
