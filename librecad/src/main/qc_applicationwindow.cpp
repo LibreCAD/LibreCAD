@@ -544,6 +544,7 @@ void QC_ApplicationWindow::initMDI() {
     mdiAreaCAD->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     mdiAreaCAD->setFocusPolicy(Qt::ClickFocus);
     mdiAreaCAD->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
+    mdiAreaCAD->setActivationOrder(QMdiArea::ActivationHistoryOrder);
 #if QT_VERSION >= 0x040800
     mdiAreaCAD->setTabsClosable(true);
 #endif
@@ -1258,6 +1259,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
         //w->setWindowState(WindowMaximized);
     connect(w, SIGNAL(signalClosing()),
             this, SLOT(slotFileClosing()));
+    connect(w, SIGNAL(signalClosing()), this, SLOT(hide_options()));
 
     if (w->getDocument()->rtti()==RS2::EntityBlock) {
         w->setWindowTitle(tr("Block '%1'").arg(((RS_Block*)(w->getDocument()))->getName()));
@@ -1997,6 +1999,8 @@ void QC_ApplicationWindow::slotFileClose() {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClose(): begin");
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClose(): detaching lists");
+    getGraphicView()->getDefaultAction()->hideOptions();
+
     QC_MDIWindow* w = getMDIWindow();
 
     window_list.removeOne(w);
@@ -2029,6 +2033,9 @@ void QC_ApplicationWindow::slotFileClosing() {
     QC_MDIWindow* w = getMDIWindow();
     if(w)
         openedFiles.removeAll(w->getDocument()->getFilename());
+
+    mdiAreaCAD->activatePreviousSubWindow();
+    mdiAreaCAD->currentSubWindow()->showMaximized();
 }
 
 
@@ -2229,10 +2236,10 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
         if (parent->getGraphicView()->isPrintPreview())
         {
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): close");
-            getGraphicView()->getDefaultAction()->hideOptions();
             slotFileClose();
             emit(printPreviewChanged(false));
-            if(mdiAreaCAD->subWindowList().size()>0)
+
+            if(mdiAreaCAD->subWindowList().size() > 0)
             {
                 QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
                 if(w)
@@ -2269,7 +2276,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 QMdiSubWindow* subWindow=mdiAreaCAD->addSubWindow(w);
                 subWindow->showMaximized();
                 parent->addChildWindow(w);
-                connect(w, SIGNAL(signalClosing()), this, SLOT(slotFileClose()));
+                connect(w, SIGNAL(signalClosing()), this, SLOT(hide_options()));
 
                 w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
                 w->setWindowIcon(QIcon(":/main/document.png"));
@@ -2313,13 +2320,11 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 if(graphic){
                     graphic->fitToPage();
                 }
-//                w->getGraphicView()->zoomPage();
-//                setFocus();
+                w->getGraphicView()->getDefaultAction()->showOptions();
 
                 slotWindowActivated(subWindow);
-//            std::cout<<"QC_ApplicationWindow::slotFilePrintPreview(bool on): new: emit(printPreviewChanged(true))"<<std::endl;
-//            std::cout<<"QC_ApplicationWindow::slotFilePrintPreview(bool on): create"<<std::endl;
-            emit(printPreviewChanged(true));
+
+                emit(printPreviewChanged(true));
             }
         }
     }
@@ -3810,4 +3815,9 @@ void QC_ApplicationWindow::slot_fullscreen(bool checked)
     // SIGNAL = http://doc.qt.io/qt-5/qaction.html#checked-prop
 
     checked?showFullScreen():showMaximized();
+}
+
+void QC_ApplicationWindow::hide_options()
+{
+    getGraphicView()->getDefaultAction()->hideOptions();
 }

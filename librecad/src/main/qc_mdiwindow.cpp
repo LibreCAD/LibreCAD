@@ -213,7 +213,9 @@ QC_MDIWindow* QC_MDIWindow::getPrintPreview() {
  * @param force Disable cancel button (demo versions)
  * @param ask Ask user before closing.
  */
-bool QC_MDIWindow::closeMDI(bool force, bool ask) {
+bool QC_MDIWindow::closeMDI(bool force, bool ask)
+{
+    RS_DEBUG->print("QC_MDIWindow::closeMDI begin");
     // should never happen:
     if (document==NULL) {
         return true;
@@ -221,17 +223,13 @@ bool QC_MDIWindow::closeMDI(bool force, bool ask) {
 
     bool ret = false;
 
-	bool isBlock = (parentWindow);
-
     // This is a block and we don't need to ask the user for closing
     //   since it's still available in the parent drawing after closing.
-    if (isBlock) {
+    if (parentWindow)
+    {
         RS_DEBUG->print("  closing block");
-        // tell parent window we're not here anymore.
-		if (parentWindow) {
-            RS_DEBUG->print("    notifying parent about closing this window");
-            parentWindow->removeChildWindow(this);
-        }
+        RS_DEBUG->print("  notifying parent about closing this window");
+        parentWindow->removeChildWindow(this);
         emit(signalClosing());
         ret = true;
     }
@@ -240,11 +238,15 @@ bool QC_MDIWindow::closeMDI(bool force, bool ask) {
     else if (!ask || slotFileClose(force)) {
         RS_DEBUG->print("  closing graphic");
         // close all child windows:
-		for(auto p: childWindows){
-			cadMdiArea->removeSubWindow(p);
-			p->close();
-		}
+        if (childWindows.length() > 0)
+        {
+            for(auto p: childWindows)
+            {
+                cadMdiArea->removeSubWindow(p);
+                p->close();
+            }
 		childWindows.clear();
+        }
 
         emit(signalClosing());
 

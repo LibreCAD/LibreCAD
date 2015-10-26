@@ -194,6 +194,8 @@ public slots:
 
     void setPreviousZoomEnable(bool enable);
 
+    void hide_options();
+
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);
