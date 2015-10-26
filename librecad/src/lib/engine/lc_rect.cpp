@@ -45,10 +45,6 @@ LC_Rect::Area(const Coordinate& coordA, const Coordinate& coordB) :
 _minP{std::min(coordA.x, coordB.x), std::min(coordA.y, coordB.y)},
 _maxP{std::max(coordA.x, coordB.x), std::max(coordA.y, coordB.y)}
 {
-if (coordA.x == coordB.x && coordA.y == coordB.y) {
-			throw "Points describe a volume, not a area.";
-  }
-
 }
 
 LC_Rect::Area() : _minP{0., 0.}, _maxP{0., 0.} {}
