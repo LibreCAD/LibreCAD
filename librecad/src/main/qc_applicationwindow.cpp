@@ -3792,9 +3792,14 @@ void QC_ApplicationWindow::add_action(QMenu* menu, QToolBar* toolbar, QAction* a
     toolbar->addAction(action);
 }
 
+/**
+ * Called by Qt after a toolbar or dockwidget right-click.
+ * See QMainWindow::createPopupMenu() for more information.
+ */
 QMenu* QC_ApplicationWindow::createPopupMenu()
 {
     QMenu* context_menu = new QMenu("Context");
+    context_menu->setAttribute(Qt::WA_DeleteOnClose);
 
     QMenu* tb_menu = new QMenu("Toolbars", context_menu);
     tb_menu->addActions(toolbar_view_actions);
