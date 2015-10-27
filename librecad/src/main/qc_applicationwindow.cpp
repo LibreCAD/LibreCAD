@@ -546,6 +546,7 @@ void QC_ApplicationWindow::initMDI() {
     mdiAreaCAD->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
     mdiAreaCAD->setActivationOrder(QMdiArea::ActivationHistoryOrder);
 #if QT_VERSION >= 0x040800
+    mdiAreaCAD->setTabsMovable(true);
     mdiAreaCAD->setTabsClosable(true);
 #endif
     vb->setLayout(layout);
