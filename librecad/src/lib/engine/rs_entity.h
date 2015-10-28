@@ -48,8 +48,6 @@ class RS_Polyline;
 class RS_Text;
 class RS_Layer;
 class LC_Quadratic;
-class RS_GraphicView;
-
 class RS_Vector;
 class RS_VectorSolutions;
 

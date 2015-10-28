@@ -29,20 +29,13 @@
 
 #include <QMainWindow>
 
-#include <memory>
-#include "qc_mdiwindow.h"
-#include "qg_mainwindowinterface.h"
+#include "rs_pen.h"
+#include "rs_snapper.h"
 
 #ifdef RS_SCRIPTING
 #include "qs_scripter.h"
 #include <qsproject.h>
 #endif
-
-#if QT_VERSION < 0x040400
-class QAssistantClient;
-#endif
-
-#include "lc_customtoolbar.h"
 
 class QMdiArea;
 class QMdiSubWindow;
@@ -63,6 +56,11 @@ class QHelpEngine;
 class QC_PluginInterface;
 class QG_ActiveLayerName;
 class LC_SimpleTests;
+class LC_CustomToolbar;
+class QG_ActionHandler;
+class RS_GraphicView;
+class RS_Document;
+
 /**
  * Main application window. Hold together document, view and controls.
  *
@@ -88,7 +86,7 @@ public:
 
     bool queryExit(bool force);
 
-        /** Catch hotkey for giving focus to command line. */
+    /** Catch hotkey for giving focus to command line. */
     virtual void keyPressEvent(QKeyEvent* e);
     virtual void keyReleaseEvent(QKeyEvent* e);
     void setRedoEnable(bool enable);
@@ -101,7 +99,6 @@ public slots:
     void slotFocus();
     void slotBack();
     void slotKillAllActions();
-    //void slotNext();
     void slotEnter();
     void slotFocusCommandLine();
     void slotError(const QString& msg);
@@ -163,7 +160,6 @@ public slots:
     /** toggle the statusbar */
     void slotViewStatusBar(bool toggle);
 
-    // void slotBlocksEdit();
     void slotOptionsGeneral();
 
     void slotImportBlock();
@@ -241,9 +237,9 @@ public:
 	const RS_Document* getDocument() const;
 	RS_Document* getDocument();
 
-        /**
-         * Creates a new document. Implementation from RS_MainWindowInterface.
-         */
+    /**
+     * Creates a new document. Implementation from RS_MainWindowInterface.
+     */
 	void createNewDocument(const QString& fileName = QString::null, RS_Document* doc=nullptr);
 
     /**
@@ -264,40 +260,37 @@ public:
 		return actionHandler;
 	}
 
-        //virtual QToolBar* createToolBar(const QString& name);
-        //virtual void addToolBarButton(QToolBar* tb);
-
     /**
      * @return Pointer to the qsa object.
      */
-#ifdef RS_SCRIPTING
-    QSProject* getQSAProject() {
-				if (scripter!=nullptr) {
-                return scripter->getQSAProject();
-                }
-                else {
-						return nullptr;
-                }
-    }
-#endif
-
-        void redrawAll();
-        void updateGrids();
-
-        QG_BlockWidget* getBlockWidget(void)
-        {
-            return blockWidget;
+    #ifdef RS_SCRIPTING
+        QSProject* getQSAProject() {
+                    if (scripter!=nullptr) {
+                    return scripter->getQSAProject();
+                    }
+                    else {
+                            return nullptr;
+                    }
         }
+    #endif
 
-		QG_SnapToolBar* getSnapToolBar(void)
-		{
-			return snapToolBar;
-		}
+    void redrawAll();
+    void updateGrids();
 
-		QG_SnapToolBar const* getSnapToolBar(void) const
-		{
-			return snapToolBar;
-		}
+    QG_BlockWidget* getBlockWidget(void)
+    {
+        return blockWidget;
+    }
+
+    QG_SnapToolBar* getSnapToolBar(void)
+    {
+        return snapToolBar;
+    }
+
+    QG_SnapToolBar const* getSnapToolBar(void) const
+    {
+        return snapToolBar;
+    }
 
 protected:
     void closeEvent(QCloseEvent*);
@@ -366,10 +359,10 @@ private:
     /** Action handler. */
     QG_ActionHandler* actionHandler;
 
-#ifdef RS_SCRIPTING
-        /** Scripting interface. */
-        QS_Scripter* scripter;
-#endif
+    #ifdef RS_SCRIPTING
+            /** Scripting interface. */
+            QS_Scripter* scripter;
+    #endif
 
     QMenu* windowsMenu;
     QMenu* scriptMenu;
@@ -407,11 +400,11 @@ private:
 
     //display "Draft Mode" in window title for draft mode
     const QString m_qDraftModeTitle;
-#ifdef LC_DEBUGGING
-	LC_SimpleTests* m_pSimpleTest;
-#endif
+    #ifdef LC_DEBUGGING
+        LC_SimpleTests* m_pSimpleTest;
+    #endif
 
-//Plugin support
+    //Plugin support
     void loadPlugins();
     QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
 	QList<QC_PluginInterface*> loadedPlugins;

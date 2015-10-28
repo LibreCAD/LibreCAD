@@ -26,6 +26,7 @@
 **********************************************************************/
 
 #include "qc_applicationwindow.h"
+#include "qc_mdiwindow.h"
 
 #include <QStatusBar>
 #include <QMenuBar>
@@ -58,7 +59,7 @@
 #include "rs_actionlibraryinsert.h"
 #include "rs_painterqt.h"
 #include "rs_selection.h"
-#include "rs_settings.h"
+#include "rs_document.h"
 
 #include "qg_snaptoolbar.h"
 #include "qg_blockwidget.h"
@@ -74,6 +75,8 @@
 #include "qg_mousewidget.h"
 #include "qg_pentoolbar.h"
 #include "qg_recentfiles.h"
+#include "qg_actionhandler.h"
+#include "qg_graphicview.h"
 
 #include "rs_dialogfactory.h"
 #include "qc_dialogfactory.h"
@@ -85,6 +88,7 @@
 #include "lc_simpletests.h"
 #include "lc_actionfactory.h"
 #include "lc_dockwidget.h"
+#include "lc_customtoolbar.h"
 
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;

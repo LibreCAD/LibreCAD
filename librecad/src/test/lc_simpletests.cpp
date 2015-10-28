@@ -21,6 +21,8 @@
 #include "rs_point.h"
 #include "rs_text.h"
 #include "rs_entitycontainer.h"
+#include "rs_layer.h"
+#include "rs_graphicview.h"
 
 LC_SimpleTests::LC_SimpleTests(QWidget *parent):
 	QObject(parent)
