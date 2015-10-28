@@ -2207,17 +2207,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
         if (parent->getGraphicView()->isPrintPreview())
         {
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): close");
-            slotFileClose();
+            mdiAreaCAD->closeActiveSubWindow();
             emit(printPreviewChanged(false));
-
-            if(mdiAreaCAD->subWindowList().size() > 0)
-            {
-                QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
-                if(w)
-                {
-                    mdiAreaCAD->setActiveSubWindow(w);
-                }
-            }
             return;
         }
     }
