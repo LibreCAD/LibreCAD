@@ -856,10 +856,6 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
     activedMdiSubWindow=w;
     QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(w);
 
-//    QList<QMdiSubWindow*> windows=mdiAreaCAD->subWindowList();
-//    int activeIndex=windows.indexOf(w);
-//    std::cout<<"QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w): activated "<< activeIndex <<std::endl;
-
     if (m && m->getDocument()) {
 
         RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated: "
@@ -883,7 +879,6 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
         m->getDocument()->updateInserts();
         // whether to enable undo/redo buttons
         m->getDocument()->setGUIButtons();
-//        m->zoomAuto();
         m->getGraphicView()->redraw();
 
         // set snapmode from snap toolbar
@@ -913,7 +908,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 
     // Disable/Enable menu and toolbar items
     emit windowsChanged(m && m->getDocument());
-//    emit windowsChanged(true);
+
     RS_DEBUG->print("RVT_PORT emit windowsChanged(true);");
 
     RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated end");
@@ -1980,27 +1975,19 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
 /**
  * Menu file -> close.
  */
-void QC_ApplicationWindow::slotFileClose() {
+void QC_ApplicationWindow::slotFileClose()
+{
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClose(): begin");
-
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileClose(): detaching lists");
-    getGraphicView()->getDefaultAction()->hideOptions();
 
     QC_MDIWindow* w = getMDIWindow();
 
-    window_list.removeOne(w);
-
-    if(w){
+    if (w)
+    {
         openedFiles.removeAll(w->getDocument()->getFilename());
+        window_list.removeOne(w);
+        mdiAreaCAD->closeActiveSubWindow();
+        activedMdiSubWindow = nullptr;
     }
-
-    mdiAreaCAD->closeActiveSubWindow();
-    activedMdiSubWindow=nullptr;
-    QMdiSubWindow* m=mdiAreaCAD->currentSubWindow();
-    if(m){
-        slotWindowActivated(m);
-    }
-
 }
 
 
@@ -2020,9 +2007,6 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
     coordinateWidget->setGraphic(nullptr);
 
     openedFiles.removeAll(win->getDocument()->getFilename());
-
-    mdiAreaCAD->activatePreviousSubWindow();
-    mdiAreaCAD->currentSubWindow()->showMaximized();
 }
 
 
