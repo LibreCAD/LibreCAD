@@ -32,9 +32,9 @@
 #else
 # include <QPrinter>
 # include <QPrintDialog>
-#endif 
-#include <QCloseEvent>
+#endif
 
+#include <QCloseEvent>
 #include <QCursor>
 #include <QMessageBox>
 #include <QFileInfo>
@@ -101,6 +101,7 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, Qt::WindowFlags wf
  */
 QC_MDIWindow::~QC_MDIWindow()
 {
+    RS_DEBUG->print("~QC_MDIWindow");
 	if(!(graphicView && graphicView->isCleanUp())){
 		//do not clear layer/block lists, if application is being closed
 

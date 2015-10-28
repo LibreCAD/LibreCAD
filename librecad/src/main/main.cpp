@@ -381,9 +381,11 @@ int main(int argc, char** argv)
 
     appWin.slotRunStartScript();
 
-    RS_DEBUG->print("main: finished");
+    int return_code = app.exec();
 
-    return app.exec();;
+    RS_DEBUG->print("main: exited Qt event loop");
+
+    return return_code;
 }
 
 

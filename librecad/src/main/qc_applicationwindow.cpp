@@ -473,25 +473,11 @@ void QC_ApplicationWindow::finishSplashScreen() {
 /**
  * Close Event. Called when the user tries to close the app.
  */
-void QC_ApplicationWindow::closeEvent(QCloseEvent* ce) {
+void QC_ApplicationWindow::closeEvent(QCloseEvent* ce)
+{
     RS_DEBUG->print("QC_ApplicationWindow::closeEvent()");
 
-    if (!queryExit(false)) {
-        ce->ignore();
-    }
-    else
-    {
-        if(mdiAreaCAD==nullptr){
-            ce->accept();
-            return;
-        }
-        mdiAreaCAD->closeAllSubWindows();
-        if (mdiAreaCAD->currentSubWindow()) {
-            ce->ignore();
-        } else {
-            ce->accept();
-        }
-    }
+    queryExit(false) ? ce->accept() : ce->ignore();
 
     RS_DEBUG->print("QC_ApplicationWindow::closeEvent(): OK");
 }
@@ -2027,6 +2013,8 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
 {
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClosing()");
 
+    window_list.removeOne(win);
+
     layerWidget->setLayerList(nullptr, false);
     blockWidget->setBlockList(nullptr);
     coordinateWidget->setGraphic(nullptr);
@@ -2343,7 +2331,7 @@ void QC_ApplicationWindow::slotFileQuit() {
     statusBar()->showMessage(tr("Exiting application..."));
 
     if (queryExit(false)) {
-        qApp->exit(0);
+        qApp->quit();
     }
 }
 
@@ -2697,23 +2685,20 @@ bool QC_ApplicationWindow::queryExit(bool force) {
 
     bool succ = true;
 
+    QList<QMdiSubWindow*> list = mdiAreaCAD->subWindowList();
 
-         QList<QMdiSubWindow*> list = mdiAreaCAD->subWindowList();
-
-         while (!list.isEmpty()) {
-             QC_MDIWindow *tmp=qobject_cast<QC_MDIWindow*>(list.takeFirst());
-             if( tmp){
-                 slotFilePrintPreview(false);
-                 succ = tmp->closeMDI(force);
-                 if (!succ) {
-                     break;
-                 }
-             }
+    while (!list.isEmpty())
+    {
+        QC_MDIWindow* tmp = qobject_cast<QC_MDIWindow*>(list.takeFirst());
+        if (tmp)
+        {
+            slotFilePrintPreview(false);
+            succ = tmp->closeMDI(force);
+            if (!succ) {break;}
         }
-
-    if (succ) {
-        storeSettings();
     }
+
+    if (succ) {storeSettings();}
 
     RS_DEBUG->print("QC_ApplicationWindow::queryExit(): OK");
 
