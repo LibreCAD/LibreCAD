@@ -540,6 +540,16 @@ void QC_ApplicationWindow::initMDI() {
     mdiAreaCAD->setTabsMovable(true);
     mdiAreaCAD->setTabsClosable(true);
 #endif
+
+    RS_SETTINGS->beginGroup("/Defaults");
+
+    if (RS_SETTINGS->readNumEntry("/TabMode", 0))
+    {
+        mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
+        mdiAreaTab = true;
+    }
+    RS_SETTINGS->endGroup();
+
     vb->setLayout(layout);
     setCentralWidget(vb);
     connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),

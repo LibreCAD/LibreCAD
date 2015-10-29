@@ -178,6 +178,7 @@ void QG_DlgOptionsGeneral::init() {
     // Auto save timer
     cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5));
     cbAutoBackup->setChecked(RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)?true:false);
+    tab_mode_check_box->setChecked(RS_SETTINGS->readNumEntry("/TabMode", 0)?true:false);
     RS_SETTINGS->endGroup();
 
 	//update entities to selected entities to the current active layer
@@ -261,6 +262,7 @@ void QG_DlgOptionsGeneral::ok()
             RS_Units::unitToString( RS_Units::stringToUnit( cbUnit->currentText() ), false/*untr.*/) );
         RS_SETTINGS->writeEntry("/AutoSaveTime", cbAutoSaveTime->value() );
         RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/TabMode", tab_mode_check_box->isChecked()?1:0);
         RS_SETTINGS->endGroup();
 
         //update entities to selected entities to the current active layer

@@ -1853,6 +1853,13 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QCheckBox" name="tab_mode_check_box">
+            <property name="text">
+             <string>Start in tab mode</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
