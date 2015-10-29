@@ -142,6 +142,8 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating scripter: OK");
     #endif
 
+    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init MDI");
+    initMDI();
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init view");
     initView();
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: menus_and_toolbars");
@@ -152,6 +154,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory");
     dialogFactory = new QC_DialogFactory(this, optionWidget);
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory: OK");
+
     RS_DEBUG->print("setting dialog factory object");
     if (RS_DialogFactory::instance()==nullptr) {
         RS_DEBUG->print("no RS_DialogFactory instance");
@@ -163,8 +166,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init settings");
     initSettings();
-    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init MDI");
-    initMDI();
 
     // Activate autosave timer
     autosaveTimer = new QTimer(this);
@@ -544,13 +545,6 @@ void QC_ApplicationWindow::initMDI() {
     connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
             this, SLOT(slotWindowActivated(QMdiSubWindow*)));
 
-    //this event filter allows sending key events to the command widget, therefore, no
-    // need to activate the command widget before typing commands.
-    // Since this nice feature causes a bug of lost key events when the command widget is on
-    // a screen different from the main window, disabled for the time being
-    //send key events for mdiAreaCAD to command widget by default
-    mdiAreaCAD->installEventFilter(commandWidget);
-
     RS_DEBUG->print("QC_ApplicationWindow::initMDI() end");
 
 }
@@ -750,6 +744,13 @@ void QC_ApplicationWindow::initView()
     connect(commandWidget->leCommand, SIGNAL(escape()), this, SLOT(setFocus()));
     dock_command->setWidget(commandWidget);
     addDockWidget(Qt::RightDockWidgetArea, dock_command);
+
+    //this event filter allows sending key events to the command widget, therefore, no
+    // need to activate the command widget before typing commands.
+    // Since this nice feature causes a bug of lost key events when the command widget is on
+    // a screen different from the main window, disabled for the time being
+    //send key events for mdiAreaCAD to command widget by default
+    mdiAreaCAD->installEventFilter(commandWidget);
 
     RS_SETTINGS->beginGroup("/Appearance");
     QString layer_select_color(RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC"));
@@ -1977,26 +1978,6 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
 
 
 /**
- * Menu file -> close.
- */
-void QC_ApplicationWindow::slotFileClose()
-{
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileClose(): begin");
-
-    QC_MDIWindow* w = getMDIWindow();
-
-    if (w)
-    {
-        openedFiles.removeAll(w->getDocument()->getFilename());
-        window_list.removeOne(w);
-        mdiAreaCAD->closeActiveSubWindow();
-        activedMdiSubWindow = nullptr;
-    }
-}
-
-
-
-/**
  * Called when a MDI window is actually about to close. Used to
  * detach widgets from the document.
  */
@@ -2011,8 +1992,9 @@ void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
     coordinateWidget->setGraphic(nullptr);
 
     openedFiles.removeAll(win->getDocument()->getFilename());
-}
 
+    activedMdiSubWindow = nullptr;
+}
 
 
 /**
@@ -2993,6 +2975,9 @@ void QC_ApplicationWindow::menus_and_toolbars()
     file_menu->addSeparator();
 
     file_menu->addAction(map_a["FileClose"]);
+    connect(map_a["FileClose"], SIGNAL(triggered(bool)),
+            mdiAreaCAD, SLOT(closeActiveSubWindow()));
+
     file_menu->addAction(map_a["FileQuit"]);
 
     file_menu->addSeparator();

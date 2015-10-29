@@ -1184,7 +1184,6 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action = new QAction(tr("&Close"), main_window);
     action->setIcon(QIcon(":/actions/fileclose.png"));
     action->setShortcut(QKeySequence::Close);
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileClose()));
     action->setShortcutContext(Qt::WidgetShortcut);
     action->setData("FileClose");
     a_map["FileClose"] = action;
