@@ -1199,6 +1199,9 @@ void QG_ActionHandler::slotEditKillAllActions() {
     setCurrentAction(RS2::ActionEditKillAllActions);
 }
 void QG_ActionHandler::slotEditUndo() {
+	//to avoid operation on deleted entities, Undo action invalid all suspended
+	//actions
+	killAllActions();
     setCurrentAction(RS2::ActionEditUndo);
 }
 
