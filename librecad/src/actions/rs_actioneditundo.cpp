@@ -40,15 +40,10 @@ RS_ActionEditUndo::RS_ActionEditUndo(bool undo,
                                      RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_ActionInterface("Edit Undo",
-                    container, graphicView) {
-
-    this->undo = undo;
+					container, graphicView)
+		, undo(undo)
+{
 }
-
-
-
-RS_ActionEditUndo::~RS_ActionEditUndo() {}
-
 
 void RS_ActionEditUndo::init(int status) {
     RS_ActionInterface::init(status);
@@ -60,13 +55,13 @@ void RS_ActionEditUndo::init(int status) {
 void RS_ActionEditUndo::trigger() {
     if (undo) {
         if(!document->undo()) {
-            if( RS_DIALOGFACTORY != NULL ) {
+			if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->commandMessage(tr("Nothing to undo!"));
             }
         }
     } else {
         if(!document->redo()) {
-            if( RS_DIALOGFACTORY != NULL ) {
+			if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->commandMessage(tr("Nothing to redo!"));
             }
         }
@@ -83,6 +78,4 @@ void RS_ActionEditUndo::trigger() {
     finish(false);
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 }
-
-
 // EOF
