@@ -25,17 +25,20 @@
 #ifndef LC_ACTIONFACTORY_H
 #define LC_ACTIONFACTORY_H
 
-#include "qg_actionhandler.h"
+#include <QObject>
 
 class QActionGroup;
+class QAction;
 
 class LC_ActionFactory : public QObject
 {
     Q_OBJECT
 
 public:
-    LC_ActionFactory(QObject* parent = 0);
-    QMap<QString, QAction*> action_map(QG_ActionHandler* action_handler, QActionGroup* tools);
+    LC_ActionFactory(QObject* parent);
+    QMap<QString, QAction*> action_map(QObject* action_handler
+                                      ,QActionGroup* tools
+                                      ,QActionGroup* disable_group);
 };
 
 #endif

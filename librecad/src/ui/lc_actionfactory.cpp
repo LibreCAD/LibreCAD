@@ -29,13 +29,14 @@
 // Andrew Mustun, Claude Sylvain, R. van Twisk, Dongxu Li, Rallaz, Armin Stebich, ravas, korhadris
 
 #include "lc_actionfactory.h"
-#include <QObject>
 #include <QAction>
 #include <QActionGroup>
 
 LC_ActionFactory::LC_ActionFactory(QObject* parent) : QObject(parent) {}
 
-QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_handler, QActionGroup* tools)
+QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
+                                                    ,QActionGroup* tools
+                                                    ,QActionGroup* disable_group)
 {
     QObject* main_window = parent();
     QMap<QString, QAction*> a_map;
@@ -729,7 +730,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
 
     // <[~ Edit ~]>
 
-    action = new QAction(tr("&Selection pointer"), main_window);
+    action = new QAction(tr("&Selection pointer"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("go-previous-view", QIcon(":/actions/back.png")));
     #else
@@ -740,7 +741,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("EditKillAllActions");
     a_map["EditKillAllActions"] = action;
 
-    action = new QAction(tr("&Undo"), main_window);
+    action = new QAction(tr("&Undo"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/actions/undo2.png")));
     #else
@@ -752,7 +753,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("EditUndo");
     a_map["EditUndo"] = action;
 
-    action = new QAction(tr("&Redo"), main_window);
+    action = new QAction(tr("&Redo"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/actions/redo2.png")));
     #else
@@ -764,7 +765,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("EditRedo");
     a_map["EditRedo"] = action;
 
-    action = new QAction(tr("Cu&t"), main_window);
+    action = new QAction(tr("Cu&t"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("edit-cut", QIcon(":/actions/editcut2.png")));
     #else
@@ -776,7 +777,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("EditCut");
     a_map["EditCut"] = action;
 
-    action = new QAction(tr("&Copy"), main_window);
+    action = new QAction(tr("&Copy"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("edit-copy", QIcon(":/actions/editcopy2.png")));
     #else
@@ -788,7 +789,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("EditCopy");
     a_map["EditCopy"] = action;
 
-    action = new QAction(tr("&Paste"), main_window);
+    action = new QAction(tr("&Paste"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("edit-paste", QIcon(":/actions/editpaste2.png")));
     #else
@@ -800,7 +801,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("EditPaste");
     a_map["EditPaste"] = action;
 
-    action = new QAction(tr("move to bottom"), action_handler);
+    action = new QAction(tr("move to bottom"), disable_group);
     action->setShortcut(QKeySequence(Qt::Key_End));
     action->setIcon(QIcon(":/extui/order_bottom.png"));
     action->setStatusTip(tr("set to bottom"));
@@ -809,7 +810,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("OrderBottom");
     a_map["OrderBottom"] = action;
 
-    action = new QAction(tr("lower after entity"), action_handler);
+    action = new QAction(tr("lower after entity"), disable_group);
     action->setShortcut(QKeySequence(Qt::Key_PageDown));
     action->setIcon(QIcon(":/extui/order_lower.png"));
     action->setStatusTip(tr("lower over entity"));
@@ -818,7 +819,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("OrderLower");
     a_map["OrderLower"] = action;
 
-    action = new QAction(tr("raise over entity"), action_handler);
+    action = new QAction(tr("raise over entity"), disable_group);
     action->setShortcut(QKeySequence(Qt::Key_PageUp));
     action->setIcon(QIcon(":/extui/order_raise.png"));
     action->setStatusTip(tr("raise over entity"));
@@ -827,7 +828,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("OrderRaise");
     a_map["OrderRaise"] = action;
 
-    action = new QAction(tr("move to top"), action_handler);
+    action = new QAction(tr("move to top"), disable_group);
     action->setShortcut(QKeySequence(Qt::Key_Home));
     action->setIcon(QIcon(":/extui/order_top.png"));
     action->setStatusTip(tr("set to top"));
@@ -838,134 +839,144 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
 
     // <[~ Layer ~]>
 
-    action = new QAction(QIcon(":/ui/visibleblock.png"), tr("&Show all"), action_handler);
+    action = new QAction(QIcon(":/ui/visibleblock.png"),
+                         tr("&Show all"), disable_group);
     connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotLayersDefreezeAll()));
+            action_handler, SLOT(slotLayersDefreezeAll()));
     action->setData("LayersDefreezeAll");
     a_map["LayersDefreezeAll"] = action;
 
-    action = new QAction(QIcon(":/ui/hiddenblock.png"), tr("&Hide all"), action_handler);
+    action = new QAction(QIcon(":/ui/hiddenblock.png"),
+                         tr("&Hide all"), disable_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersFreezeAll()));
     action->setData("LayersFreezeAll");
     a_map["LayersFreezeAll"] = action;
 
-    action = new QAction(QIcon(":/ui/layeradd.png"), tr("&Add Layer"), action_handler);
+    action = new QAction(QIcon(":/ui/layeradd.png"),
+                         tr("&Add Layer"), disable_group);
     action->setShortcut(QKeySequence("Ctrl+L"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersAdd()));
     action->setData("LayersAdd");
     a_map["LayersAdd"] = action;
 
-    action = new QAction(QIcon(":/ui/layerremove.png"), tr("&Remove Layer"), action_handler);
+    action = new QAction(QIcon(":/ui/layerremove.png"),
+                         tr("&Remove Layer"), disable_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersRemove()));
     action->setData("LayersRemove");
     a_map["LayersRemove"] = action;
 
-    action = new QAction(QIcon(":/ui/layeredit.png"), tr("&Edit Layer"), action_handler);
+    action = new QAction(QIcon(":/ui/layeredit.png"),
+                         tr("&Edit Layer"), disable_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersEdit()));
     action->setData("LayersEdit");
     a_map["LayersEdit"] = action;
 
-    action = new QAction(QIcon(":/ui/lockedlayer.png"), tr("Toggle Layer Loc&k"), action_handler);
+    action = new QAction(QIcon(":/ui/lockedlayer.png"),
+                         tr("Toggle Layer Loc&k"), disable_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersToggleLock()));
     action->setData("LayersToggleLock");
     a_map["LayersToggleLock"] = action;
 
-    action = new QAction(tr("&Toggle Layer Visibility"), action_handler);
+    action = new QAction(tr("&Toggle Layer Visibility"), disable_group);
     action->setIcon(QIcon(":/ui/layertoggle.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersToggleView()));
     action->setData("LayersToggleView");
     a_map["LayersToggleView"] = action;
 
-    action = new QAction(tr("Toggle Layer &Print"), action_handler);
+    action = new QAction(tr("Toggle Layer &Print"), disable_group);
     action->setIcon(QIcon(":/ui/fileprint.png"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotLayersTogglePrint()));
+    connect(action, SIGNAL(triggered()), action_handler,
+            SLOT(slotLayersTogglePrint()));
     action->setData("LayersTogglePrint");
     a_map["LayersTogglePrint"] = action;
 
-    action = new QAction(tr("Toggle &Construction Layer"), action_handler);
+    action = new QAction(tr("Toggle &Construction Layer"), disable_group);
     action->setIcon(QIcon(":/ui/constructionlayer.png"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotLayersToggleConstruction()));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotLayersToggleConstruction()));
     action->setData("LayersToggleConstruction");
     a_map["LayersToggleConstruction"] = action;
 
     // <[~ Block ~]>
 
-    action = new QAction(tr("&Show all"), action_handler);
+    action = new QAction(tr("&Show all"), disable_group);
     action->setIcon(QIcon(":/ui/blockdefreeze.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksDefreezeAll()));
     action->setData("BlocksDefreezeAll");
     a_map["BlocksDefreezeAll"] = action;
 
-    action= new QAction(tr("&Hide all"), action_handler);
+    action= new QAction(tr("&Hide all"), disable_group);
     action->setIcon(QIcon(":/ui/blockfreeze.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksFreezeAll()));
     action->setData("BlocksFreezeAll");
     a_map["BlocksFreezeAll"] = action;
 
-    action = new QAction(QIcon(":/ui/blockadd.png"), tr("&Add Block"), action_handler);
+    action = new QAction(QIcon(":/ui/blockadd.png"),
+                         tr("&Add Block"), disable_group);
 
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksAdd()));
     action->setData("BlocksAdd");
     a_map["BlocksAdd"] = action;
 
-    action = new QAction(tr("&Remove Block"), action_handler);
+    action = new QAction(tr("&Remove Block"), disable_group);
     action->setIcon(QIcon(":/ui/blockremove.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksRemove()));
     action->setData("BlocksRemove");
     a_map["BlocksRemove"] = action;
 
-    action = new QAction(tr("&Rename Block"), action_handler);
+    action = new QAction(tr("&Rename Block"), disable_group);
     action->setIcon(QIcon(":/ui/blockattributes.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksAttributes()));
     action->setData("BlocksAttributes");
     a_map["BlocksAttributes"] = action;
 
-    action = new QAction( tr("&Edit Block"), action_handler);
+    action = new QAction( tr("&Edit Block"), disable_group);
     action->setIcon(QIcon(":/ui/blockedit.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksEdit()));
     action->setData("BlocksEdit");
     a_map["BlocksEdit"] = action;
 
-    action = new QAction( tr("&Save Block"), action_handler);
+    action = new QAction( tr("&Save Block"), disable_group);
     action->setIcon(QIcon(":/main/filesave.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksSave()));
     action->setData("BlocksSave");
     a_map["BlocksSave"] = action;
 
-    action = new QAction(tr("&Insert Block"), action_handler);
+    action = new QAction(tr("&Insert Block"), disable_group);
     action->setIcon(QIcon(":/ui/blockinsert.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksInsert()));
     action->setData("BlocksInsert");
     a_map["BlocksInsert"] = action;
 
-    action = new QAction(QIcon(":/ui/layertoggle.png"), tr("Toggle Block &Visibility"), action_handler);
+    action = new QAction(tr("Toggle Block &Visibility"), disable_group);
+    action->setIcon(QIcon(":/ui/layertoggle.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksToggleView()));
     action->setData("BlocksToggleView");
     a_map["BlocksToggleView"] = action;
 
-    action = new QAction(QIcon(":/extui/menublock.png"), tr("&Create Block"), action_handler);
-
+    action = new QAction(tr("&Create Block"), disable_group);
+    action->setIcon(QIcon(":/extui/menublock.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksCreate()));
     action->setData("BlocksCreate");
     a_map["BlocksCreate"] = action;
 
-    action = new QAction(tr("Ex&plode"), action_handler);
+    action = new QAction(tr("Ex&plode"), disable_group);
     action->setIcon(QIcon(":/extui/modifyexplode.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksExplode()));
@@ -987,7 +998,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("OptionsGeneral");
     a_map["OptionsGeneral"] = action;
 
-    action = new QAction( QIcon(":/actions/drawingprefs.png"), tr("Current &Drawing Preferences"), action_handler);
+    action = new QAction( QIcon(":/actions/drawingprefs.png"), tr("Current &Drawing Preferences"), disable_group);
     // Preferences shortcut was itroduced on 4.6
     #if QT_VERSION >= 0x040600
     action->setShortcut(QKeySequence::Preferences);
@@ -997,13 +1008,13 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("OptionsDrawing");
     a_map["OptionsDrawing"] = action;
 
-    action = new QAction(tr("Open IDE"), main_window);
+    action = new QAction(tr("Open IDE"), disable_group);
     connect(action, SIGNAL(triggered()),
     main_window, SLOT(slotScriptOpenIDE()));
     action->setData("ScriptOpenIDE");
     a_map["ScriptOpenIDE"] = action;
 
-    action = new QAction(tr("Run Script.."), main_window);
+    action = new QAction(tr("Run Script.."), disable_group);
     connect(action, SIGNAL(triggered()),
     main_window, SLOT(slotScriptRun()));
     action->setData("ScriptRun");
@@ -1011,7 +1022,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
 
     // <[~ Modify ~]>
 
-    action = new QAction(tr("&Delete selected"), main_window);
+    action = new QAction(tr("&Delete selected"), disable_group);
     action->setIcon(QIcon(":/extui/modifydelete.png"));
     action->setShortcut(QKeySequence::Delete);
     connect(action, SIGNAL(triggered()),
@@ -1019,7 +1030,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("ModifyDeleteQuick");
     a_map["ModifyDeleteQuick"] = action;
 
-    action = new QAction(tr("Select &All"), main_window);
+    action = new QAction(tr("Select &All"), disable_group);
     action->setShortcut(QKeySequence::SelectAll);
     action->setIcon(QIcon(":/extui/selectall.png"));
     connect(action, SIGNAL(triggered()),
@@ -1029,7 +1040,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
 
     // <[~ Select ~]>
 
-    action = new QAction(tr("Deselect &all"), main_window);
+    action = new QAction(tr("Deselect &all"), disable_group);
     // RVT April 29, 2011 - Added esc key to de-select all entities
     action->setShortcuts(QList<QKeySequence>() << QKeySequence(tr("Ctrl+K")));
     action->setIcon(QIcon(":/extui/selectnothing.png"));
@@ -1038,7 +1049,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("DeselectAll");
     a_map["DeselectAll"] = action;
 
-    action = new QAction(tr("Invert Selection"), action_handler);
+    action = new QAction(tr("Invert Selection"), disable_group);
     action->setIcon(QIcon(":/extui/selectinvert.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectInvert()));
@@ -1047,19 +1058,19 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
 
     // <[~ Misc ~]>
 
-    action = new QAction(tr("Export as &MakerCAM SVG..."), main_window);
+    action = new QAction(tr("Export as &MakerCAM SVG..."), disable_group);
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotFileExportMakerCam()));
     action->setData("FileExportMakerCam");
     a_map["FileExportMakerCam"] = action;
 
-    action = new QAction(tr("Regenerate Dimension Entities"), main_window);
+    action = new QAction(tr("Regenerate Dimension Entities"), disable_group);
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotToolRegenerateDimensions()));
     action->setData("ToolRegenerateDimensions");
     a_map["ToolRegenerateDimensions"] = action;
 
     // <[~ Zoom ~]>
 
-    action = new QAction(tr("Zoom &In"), main_window);
+    action = new QAction(tr("Zoom &In"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/actions/zoomin.png")));
     #else
@@ -1070,7 +1081,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("ZoomIn");
     a_map["ZoomIn"] = action;
 
-    action = new QAction(tr("Zoom &Out"), main_window);
+    action = new QAction(tr("Zoom &Out"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/actions/zoomout.png")));
     #else
@@ -1081,7 +1092,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("ZoomOut");
     a_map["ZoomOut"] = action;
 
-    action = new QAction(tr("&Auto Zoom"), action_handler);
+    action = new QAction(tr("&Auto Zoom"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("zoom-fit-best", QIcon(":/actions/zoomauto.png")));
     #else
@@ -1091,7 +1102,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("ZoomAuto");
     a_map["ZoomAuto"] = action;
 
-    action = new QAction(tr("Previous &View"), action_handler);
+    action = new QAction(tr("Previous &View"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("zoom-previous", QIcon(":/actions/zoomprevious.png")));
     #else
@@ -1103,7 +1114,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("ZoomPrevious");
     a_map["ZoomPrevious"] = action;
 
-    action = new QAction(tr("&Redraw"), action_handler);
+    action = new QAction(tr("&Redraw"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("view-refresh", QIcon(":/actions/zoomredraw.png")));
     #else
@@ -1151,7 +1162,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("FileOpen");
     a_map["FileOpen"] = action;
 
-    action = new QAction(tr("&Save"), main_window);
+    action = new QAction(tr("&Save"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("document-save", QIcon(":/actions/filesave2.png")));
     #else
@@ -1162,7 +1173,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("FileSave");
     a_map["FileSave"] = action;
 
-    action = new QAction(tr("Save &as..."), main_window);
+    action = new QAction(tr("Save &as..."), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("document-save-as", QIcon(":/actions/filesaveas.png")));
     #else
@@ -1176,7 +1187,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("FileSaveAs");
     a_map["FileSaveAs"] = action;
 
-    action = new QAction( QIcon(":/actions/fileexport.png"), tr("&Export as image"), main_window);
+    action = new QAction( QIcon(":/actions/fileexport.png"), tr("&Export as image"), disable_group);
     connect(action, SIGNAL( triggered()), main_window, SLOT(slotFileExport()));
     action->setData("FileExport");
     a_map["FileExport"] = action;
@@ -1200,13 +1211,13 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("FilePrint");
     a_map["FilePrint"] = action;
 
-    action = new QAction(tr("Export as PDF"), main_window);
+    action = new QAction(tr("Export as PDF"), disable_group);
     action->setIcon(QIcon(":/actions/fileexportpdf.png"));
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFilePrintPDF()));
     action->setData("FilePrintPDF");
     a_map["FilePrintPDF"] = action;
 
-    action = new QAction(tr("Print Pre&view"), main_window);
+    action = new QAction(tr("Print Pre&view"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("document-print-preview", QIcon(":/actions/fileprintpreview.png")));
     #else
@@ -1229,7 +1240,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("FileQuit");
     a_map["FileQuit"] = action;
 
-    action = new QAction(QIcon(":/ui/blockinsert.png"), tr("&Block"), main_window);
+    action = new QAction(QIcon(":/ui/blockinsert.png"), tr("&Block"), disable_group);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotImportBlock()));
     action->setData("BlocksImport");
     a_map["BlocksImport"] = action;
@@ -1253,7 +1264,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("Fullscreen");
     a_map["Fullscreen"] = action;
 
-    action = new QAction(tr("&Grid"), main_window);
+    action = new QAction(tr("&Grid"), disable_group);
     action->setIcon(QIcon(":/actions/view_grid.svg"));
     action->setShortcut(QKeySequence(tr("Ctrl+G", "Toggle Grid")));
     action->setCheckable(true);
@@ -1263,7 +1274,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setData("ViewGrid");
     a_map["ViewGrid"] = action;
 
-    action = new QAction(tr("&Draft"), main_window);
+    action = new QAction(tr("&Draft"), disable_group);
     action->setIcon(QIcon(":/actions/viewdraft.png"));
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)), main_window, SLOT(slotViewDraft(bool)));
