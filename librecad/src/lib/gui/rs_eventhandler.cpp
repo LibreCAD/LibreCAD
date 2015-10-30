@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QObject>
 #include <QRegExp>
 #include <QAction>
 #include <QMouseEvent>

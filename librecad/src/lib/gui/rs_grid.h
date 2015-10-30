@@ -28,6 +28,8 @@
 #ifndef RS_GRID_H
 #define RS_GRID_H
 
+#include <QObject>
+
 #include "rs_vector.h"
 
 class RS_GraphicView;

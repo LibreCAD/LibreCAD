@@ -30,6 +30,8 @@
 
 #define RS_MAXACTIONS 16
 
+#include <QObject>
+
 #include "rs_vector.h"
 
 class RS_ActionInterface;
