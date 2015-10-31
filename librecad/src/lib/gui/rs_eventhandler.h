@@ -28,8 +28,6 @@
 #ifndef RS_EVENTHANDLER_H
 #define RS_EVENTHANDLER_H
 
-#define RS_MAXACTIONS 16
-
 #include <QObject>
 
 #include "rs_vector.h"
