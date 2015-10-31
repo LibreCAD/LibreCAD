@@ -47,8 +47,7 @@ const double minimumGridWidth=1.0e-8;
  * Constructor.
  */
 RS_Grid::RS_Grid(RS_GraphicView* graphicView)
-    :QObject(graphicView)
-	,graphicView(graphicView)
+    :graphicView(graphicView)
     ,baseGrid(false)
 {}
 

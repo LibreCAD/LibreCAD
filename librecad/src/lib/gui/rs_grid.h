@@ -28,8 +28,6 @@
 #ifndef RS_GRID_H
 #define RS_GRID_H
 
-#include <QObject>
-
 #include "rs_vector.h"
 
 class RS_GraphicView;
@@ -41,9 +39,8 @@ class QRectF;
  *
  * @author Andrew Mustun
  */
-class RS_Grid : public QObject
+class RS_Grid
 {
-    Q_OBJECT
 
 public:
 	RS_Grid(RS_GraphicView* graphicView);
