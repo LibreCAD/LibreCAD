@@ -1589,7 +1589,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QSpinBox" name="sb_icon_size"/>
+           <widget class="QSpinBox" name="sb_icon_size">
+            <property name="minimum">
+             <number>8</number>
+            </property>
+            <property name="maximum">
+             <number>150</number>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
