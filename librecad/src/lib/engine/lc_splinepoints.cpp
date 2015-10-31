@@ -33,6 +33,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_painterqt.h"
 #include "lc_quadratic.h"
 #include "rs_information.h"
+#include "rs_math.h"
 
 LC_SplinePointsData::LC_SplinePointsData(bool _closed, bool _cut):
 	closed(_closed)

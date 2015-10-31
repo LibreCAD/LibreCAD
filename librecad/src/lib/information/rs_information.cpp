@@ -26,7 +26,6 @@
 **********************************************************************/
 
 #include <vector>
-#include <QRectF>
 #include "rs_information.h"
 #include "rs_entitycontainer.h"
 #include "rs_vector.h"
