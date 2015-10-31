@@ -26,6 +26,7 @@
 #define LC_ACTIONFACTORY_H
 
 #include <QObject>
+#include <QMap>
 
 class QActionGroup;
 class QAction;
