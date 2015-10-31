@@ -42,8 +42,8 @@ class QG_SnapToolBar : public QToolBar
 public:
     QG_SnapToolBar(QWidget* parent
                   ,QG_ActionHandler* ah
-                  ,QActionGroup* disable_group);
-    virtual ~QG_SnapToolBar();
+				  ,QActionGroup* disable_group);
+	~QG_SnapToolBar() = default;
 
 	RS_SnapMode getSnaps ( void ) const;
     void saveSnapMode(void );

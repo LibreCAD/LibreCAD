@@ -115,17 +115,6 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent
     RS_SETTINGS->endGroup();
 }
 
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_SnapToolBar::~QG_SnapToolBar()
-{
-    //@Save default snap mode to prefrences.
-    //never being called
-    saveSnapMode();
-    // no need to delete child widgets, Qt does it all for us
-}
-
 void QG_SnapToolBar::saveSnapMode()
 {
     //@write default snap mode from prefrences.
@@ -219,5 +208,8 @@ void QG_SnapToolBar::slotRestrictOrthogonal(bool checked)
 void QG_SnapToolBar::actionTriggered()
 {
     actionHandler->slotSetSnaps(getSnaps());
+	//save the current snap mode after any mode change, instead of relying
+	// on the dtor to save the mode, in order to avoid segfault at closing
+	saveSnapMode();
 }
 
