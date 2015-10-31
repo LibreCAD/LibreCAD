@@ -24,13 +24,13 @@
 **
 **********************************************************************/
 
-#include <QRectF>
 #include "rs_grid.h"
 #include "rs_graphicview.h"
 #include "rs_units.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"
 #include "rs_math.h"
+#include "lc_rect.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -164,7 +164,7 @@ void RS_Grid::updatePointArray() {
 		bottom -= gridWidth.y;
 
 		//top/bottom is reversed with RectF definition
-		QRectF const rect(QPointF(left, bottom), QPointF(right, top));
+		LC_Rect const rect{{left, bottom}, {right, top}};
 
 		// populate grid points and metaGrid line positions: pts, metaX, metaY
 		if(isometric){
@@ -363,13 +363,13 @@ RS_Vector RS_Grid::getImperialGridWidth(RS_Vector const& userGrid, bool scaleGri
 }
 
 
-void RS_Grid::createOrthogonalGrid(QRectF const& rect, RS_Vector const& gridWidth)
+void RS_Grid::createOrthogonalGrid(LC_Rect const& rect, RS_Vector const& gridWidth)
 {
-	double const left=rect.left();
-	double const right=rect.right();
+	double const left=rect.minP().x;
+	double const right=rect.maxP().x;
 	//top/bottom reversed
-	double const top=rect.bottom();
-	double const bottom=rect.top();
+	double const top=rect.maxP().y;
+	double const bottom=rect.minP().y;
 
 	cellV.set(fabs(gridWidth.x),fabs(gridWidth.y));
 	int numberX = (RS_Math::round((right-left) / gridWidth.x) + 1);
@@ -433,13 +433,13 @@ void RS_Grid::createOrthogonalGrid(QRectF const& rect, RS_Vector const& gridWidt
 	}
 }
 
-void RS_Grid::createIsometricGrid(QRectF const& rect, RS_Vector const& gridWidth)
+void RS_Grid::createIsometricGrid(LC_Rect const& rect, RS_Vector const& gridWidth)
 {
-	double const left=rect.left();
-	double const right=rect.right();
+	double const left=rect.minP().x;
+	double const right=rect.maxP().x;
 	//top/bottom reversed
-	double const top=rect.bottom();
-	double const bottom=rect.top();
+	double const top=rect.maxP().y;
+	double const bottom=rect.minP().y;
 	int numberY = (RS_Math::round((top-bottom) / gridWidth.y) + 1);
 	double dx=sqrt(3.)*gridWidth.y;
 	cellV.set(fabs(dx),fabs(gridWidth.y));
