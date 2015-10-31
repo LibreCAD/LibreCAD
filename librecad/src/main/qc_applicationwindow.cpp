@@ -2932,6 +2932,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     connect(this, SIGNAL(windowsChanged(bool)), tools, SLOT(setEnabled(bool)));
 
     QActionGroup* disable_group = new QActionGroup(this);
+    disable_group->setExclusive(false);
     connect(this, SIGNAL(windowsChanged(bool)), disable_group, SLOT(setEnabled(bool)));
 
     LC_ActionFactory a_factory(this);
@@ -3428,12 +3429,11 @@ void QC_ApplicationWindow::menus_and_toolbars()
     snap_menu->setObjectName("snap_menu");
     snap_menu->setTearOffEnabled(true);
 
-    snapToolBar = new QG_SnapToolBar(tr("Snap Selection"), actionHandler, this);
+    snapToolBar = new QG_SnapToolBar(this, actionHandler, disable_group);
+    snapToolBar->setWindowTitle(tr("Snap Selection"));
     snapToolBar->setSizePolicy(toolBarPolicy);
     snapToolBar->setObjectName("snap_toolbar" );
     actionHandler->set_snap_toolbar(snapToolBar);
-
-    connect(this, SIGNAL(windowsChanged(bool)), snapToolBar, SLOT(setEnabled(bool)));
 
     snap_menu->addActions(snapToolBar->actions());
 

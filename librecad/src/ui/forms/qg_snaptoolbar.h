@@ -32,7 +32,6 @@ class QG_ActionHandler;
 #include <QToolBar>
 
 #include "rs_snapper.h"
-#include "qg_actionhandler.h"
 
 #include "ui_qg_snaptoolbar.h"
 
@@ -41,7 +40,9 @@ class QG_SnapToolBar : public QToolBar
     Q_OBJECT
 
 public:
-    QG_SnapToolBar( const QString & title, QG_ActionHandler* ah, QWidget * parent = 0 );
+    QG_SnapToolBar(QWidget* parent
+                  ,QG_ActionHandler* ah
+                  ,QActionGroup* disable_group);
     virtual ~QG_SnapToolBar();
 
 	RS_SnapMode getSnaps ( void ) const;
@@ -59,7 +60,6 @@ private slots:
     void slotRestrictNothing(bool checked);
 
 private:
-	void init();
 
 	QG_ActionHandler* actionHandler;
 

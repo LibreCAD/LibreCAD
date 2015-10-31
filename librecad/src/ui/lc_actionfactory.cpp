@@ -1199,7 +1199,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setData("FileClose");
     a_map["FileClose"] = action;
 
-    action = new QAction(tr("&Print..."), main_window);
+    action = new QAction(tr("&Print..."), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("document-print", QIcon(":/actions/fileprint.png")));
     #else
