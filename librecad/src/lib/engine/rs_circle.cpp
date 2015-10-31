@@ -37,6 +37,7 @@
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 #include "rs_linetypepattern.h"
+#include "rs_math.h"
 #include "lc_hyperbola.h"
 #include "lc_quadratic.h"
 RS_CircleData::RS_CircleData(const RS_Vector& _center,

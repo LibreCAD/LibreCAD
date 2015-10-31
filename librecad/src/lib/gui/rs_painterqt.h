@@ -31,6 +31,7 @@
 #include <QPainter>
 
 #include "rs_painter.h"
+#include "rs_pen.h"
 
 /**
  * The Qt implementation of a painter. It can draw objects such as

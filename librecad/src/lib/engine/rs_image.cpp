@@ -33,6 +33,7 @@
 #include "rs_debug.h"
 #include "rs_graphicview.h"
 #include "rs_painterqt.h"
+#include "rs_math.h"
 
 RS_ImageData::RS_ImageData(int _handle,
 						   const RS_Vector& _insertionPoint,

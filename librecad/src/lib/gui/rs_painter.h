@@ -28,12 +28,12 @@
 #ifndef RS_PAINTER_H
 #define RS_PAINTER_H
 
-#include "rs_color.h"
-#include "rs_math.h"
-#include "rs_pen.h"
 #include "rs_vector.h"
 
+class RS_Color;
+class RS_Pen;
 class QPainterPath;
+class QRectF;
 
 /**
  * This class is a common interface for a painter class. Such
@@ -146,12 +146,8 @@ public:
 
     virtual void setClipRect(int x, int y, int w, int h) = 0;
     virtual void resetClipping() = 0;
-    int toScreenX(double x) {
-        return RS_Math::round(offset.x + x);
-    }
-    int toScreenY(double y) {
-        return RS_Math::round(offset.y + y);
-    }
+	int toScreenX(double x) const;
+	int toScreenY(double y) const;
 
 protected:
     /**

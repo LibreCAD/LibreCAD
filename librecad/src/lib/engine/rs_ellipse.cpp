@@ -34,6 +34,7 @@
 #include "rs_painter.h"
 #include "rs_information.h"
 #include "rs_linetypepattern.h"
+#include "rs_math.h"
 #include  "lc_quadratic.h"
 #include "rs_painterqt.h"
 
