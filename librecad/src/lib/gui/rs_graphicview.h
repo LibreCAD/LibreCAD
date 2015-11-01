@@ -61,6 +61,7 @@ class RS_GraphicView : public QWidget
 
 public:
 	RS_GraphicView(QWidget * parent = 0, Qt::WindowFlags f = 0);
+	virtual ~RS_GraphicView();
 
     void cleanUp();
 
@@ -384,7 +385,7 @@ public:
 protected:
 
     RS_EntityContainer* container{nullptr}; // Holds a pointer to all the enties
-	RS_EventHandler* eventHandler;
+	std::unique_ptr<RS_EventHandler> eventHandler;
 
 
 	int mx=0;   //!< Last known mouse cursor position
@@ -409,7 +410,7 @@ protected:
 	/** End handle color */
 	RS_Color endHandleColor;
 	/** Grid */
-	RS_Grid* grid;
+	std::unique_ptr<RS_Grid> grid;
 	/**
 		 * Current default snap mode for this graphic view. Used for new
 		 * actions.
@@ -451,7 +452,7 @@ private:
 	int borderRight=0;
 	int borderBottom=0;
 
-	RS_Vector relativeZero=RS_Vector(false);
+	RS_Vector relativeZero{false};
 	bool relativeZeroLocked=false;
 	//! Print preview flag
 	bool printPreview=false;

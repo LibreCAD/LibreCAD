@@ -54,10 +54,10 @@
  */
 RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
     :QWidget(parent, f)
-	,eventHandler(new RS_EventHandler(this))
+	,eventHandler{new RS_EventHandler{this}}
 	,gridColor(Qt::gray)
-	,metaGridColor(RS_Color(64,64,64))
-	,grid(new RS_Grid(this))
+	,metaGridColor{64, 64, 64}
+	,grid{new RS_Grid{this}}
 	,drawingMode(RS2::ModeFull)
 	,savedViews(16)
 	,previousViewTime(QDateTime::currentDateTime())
@@ -74,12 +74,13 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
     RS_SETTINGS->endGroup();
 }
 
+RS_GraphicView::~RS_GraphicView(){}
+
 /**
  * Must be called by any derrived class in the destructor.
  */
 void RS_GraphicView::cleanUp() {
 	m_bIsCleanUp=true;
-    delete grid;
 }
 
 /**
@@ -1866,11 +1867,11 @@ RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics pos
 }
 
 RS_Grid* RS_GraphicView::getGrid() const{
-	return grid;
+	return grid.get();
 }
 
 RS_EventHandler* RS_GraphicView::getEventHandler() const{
-	return eventHandler;
+	return eventHandler.get();
 }
 
 void RS_GraphicView::setBackground(const RS_Color& bg) {
