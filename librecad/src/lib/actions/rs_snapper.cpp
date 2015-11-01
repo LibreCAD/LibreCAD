@@ -39,7 +39,6 @@
 #include "rs_coordinateevent.h"
 #include "rs_entitycontainer.h"
 
-
 /**
   * Disable all snapping.
   *
@@ -528,9 +527,21 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
 
     // set default distance for points inside solids
 	RS_EntityContainer ec(nullptr,false);
+	//isContainer
+	bool isContainer{false};
+	switch(enType){
+	case RS2::EntityPolyline:
+	case RS2::EntityContainer:
+	case RS2::EntitySpline:
+		isContainer=true;
+		break;
+	default:
+		break;
+	}
+
 	for(RS_Entity* en= container->firstEntity(level);en;en=container->nextEntity(level)){
         if(en->isVisible()==false) continue;
-        if(en->rtti() != enType && RS2::isContainer(enType)){
+		if(en->rtti() != enType && isContainer){
             //whether this entity is a member of member of the type enType
             RS_Entity* parent(en->getParent());
 			bool matchFound{false};

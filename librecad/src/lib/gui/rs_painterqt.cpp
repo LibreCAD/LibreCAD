@@ -28,6 +28,56 @@
 #include "rs_painterqt.h"
 #include "rs_math.h"
 
+namespace {
+/**
+ * Wrapper for Qt
+ * convert RS2::LineType to Qt::PenStyle
+ */
+Qt::PenStyle rsToQtLineType(RS2::LineType t) {
+	switch (t) {
+	case RS2::NoPen:
+		return Qt::NoPen;
+	case RS2::SolidLine:
+		return Qt::SolidLine;
+	case RS2::DotLine:
+	case RS2::DotLineTiny:
+	case RS2::DotLine2:
+	case RS2::DotLineX2:
+		return Qt::DotLine;
+	case RS2::DashLine:
+	case RS2::DashLineTiny:
+	case RS2::DashLine2:
+	case RS2::DashLineX2:
+		return Qt::DashLine;
+	case RS2::DashDotLine:
+	case RS2::DashDotLineTiny:
+	case RS2::DashDotLine2:
+	case RS2::DashDotLineX2:
+		return Qt::DashDotLine;
+	case RS2::DivideLine:
+	case RS2::DivideLineTiny:
+	case RS2::DivideLine2:
+	case RS2::DivideLineX2:
+		return Qt::DashDotDotLine;
+	case RS2::CenterLine:
+	case RS2::CenterLineTiny:
+	case RS2::CenterLine2:
+	case RS2::CenterLineX2:
+		return Qt::DashDotLine;
+	case RS2::BorderLine:
+	case RS2::BorderLineTiny:
+	case RS2::BorderLine2:
+	case RS2::BorderLineX2:
+		return Qt::DashDotLine;
+	case RS2::LineByLayer:
+	case RS2::LineByBlock:
+	default:
+		return Qt::SolidLine;
+	}
+	return Qt::SolidLine;
+}
+}
+
 /**
  * Constructor.
  */
@@ -499,7 +549,7 @@ void RS_PainterQt::setPen(const RS_Pen& pen) {
         lpen.setColor(RS_Color(0,0,0));
     }
     QPen p(lpen.getColor(), RS_Math::round(lpen.getScreenWidth()),
-           RS2::rsToQtLineType(lpen.getLineType()));
+		   rsToQtLineType(lpen.getLineType()));
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
     QPainter::setPen(p);

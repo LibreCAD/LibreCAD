@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-
+#include<QSize>
 #include "rs_staticgraphicview.h"
 
 #include "rs_graphic.h"
@@ -35,12 +35,16 @@
  * @param w Width
  * @param h Height
  */
-RS_StaticGraphicView::RS_StaticGraphicView(int w, int h, RS_Painter* p, QSize b) {
-	setBackground(RS_Color(255,255,255));
-    width = w;
-    height = h;
-    painter = p;
-    setBorders(b.width(), b.height(), b.width(), b.height());
+RS_StaticGraphicView::RS_StaticGraphicView(int w, int h, RS_Painter* p,
+										   QSize const* pb):
+	width(w)
+  ,height(h)
+  ,painter(p)
+{
+	setBackground({255,255,255});
+	QSize b{5, 5};
+	if (pb) b = *pb;
+	setBorders(b.width(), b.height(), b.width(), b.height());
 }
 
 /**

@@ -322,7 +322,8 @@ SOURCES += \
     ui/qg_commandhistory.cpp \
     ui/lc_customtoolbar.cpp \
     ui/lc_dockwidget.cpp \
-    lib/engine/lc_rect.cpp
+    lib/engine/lc_rect.cpp \
+    lib/engine/rs.cpp
 
 # ################################################################################
 # Command
