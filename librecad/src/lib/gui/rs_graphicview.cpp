@@ -79,6 +79,7 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
  */
 void RS_GraphicView::cleanUp() {
 	m_bIsCleanUp=true;
+    delete grid;
 }
 
 /**
