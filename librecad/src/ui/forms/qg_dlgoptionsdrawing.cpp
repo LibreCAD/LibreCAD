@@ -497,7 +497,8 @@ void QG_DlgOptionsDrawing::validate() {
         graphic->addVariable("$DIMCLRE", colNum, 70);
         colNum = RS_FilterDXFRW::colorToNumber(cbDimClrT->getColor(), &colRGB);
         graphic->addVariable("$DIMCLRT", colNum, 70);
-        graphic->addVariable("$DIMTXSTY", cbDimTxSty->getFont()->getFileName() , 2);
+		if (cbDimTxSty->getFont())
+			graphic->addVariable("$DIMTXSTY", cbDimTxSty->getFont()->getFileName() , 2);
         graphic->addVariable("$DIMDSEP", (cbDimDSep->currentIndex()==1)? 44 : 0, 70);
 
         // splines:
