@@ -31,6 +31,7 @@
 #include "rs_vector.h"
 
 class RS_GraphicView;
+class QString;
 namespace lc {
 	namespace geo {
 		class Area;

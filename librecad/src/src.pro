@@ -320,7 +320,8 @@ SOURCES += \
     actions/lc_actionfileexportmakercam.cpp \
     lib/engine/rs_atomicentity.cpp \
     lib/engine/rs_undocycle.cpp \
-	ui/qg_commandhistory.cpp
+	ui/qg_commandhistory.cpp \
+    lib/engine/rs.cpp
 
 # ################################################################################
 # Command

@@ -161,7 +161,7 @@ void QG_CommandWidget::tabPressed() {
             QString longestString = "";
             QString shortestString = "";
             int lengthShortestString(0);
-            int lengthReducedChoice = reducedChoice.count();
+//            int lengthReducedChoice = reducedChoice.count();
 
             // Finding which is the longest string
             for(QStringList::Iterator it = reducedChoice.begin(); it != reducedChoice.end(); ++it) {
@@ -169,7 +169,7 @@ void QG_CommandWidget::tabPressed() {
                     longestString = (*it);
                 }
             }
-            int lengthLongestString = longestString.length();
+//            int lengthLongestString = longestString.length();
 
             // Finding which is the shortest string
             lengthShortestString = longestString.length();

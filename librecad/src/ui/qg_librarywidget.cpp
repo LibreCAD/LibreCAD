@@ -417,7 +417,7 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     // create all directories needed:
     RS_SYSTEM->createPaths(iconCacheLocation + dir);
 
-    QString foo=iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
+//    QString foo=iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
     pngPath = iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
 
     QPixmap* buffer = new QPixmap(128,128);

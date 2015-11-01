@@ -26,6 +26,7 @@
 
 #include "qg_actionfactory.h"
 
+#include <cassert>
 #include <QDockWidget>
 #include <QMenu>
 #include <QToolBar>
