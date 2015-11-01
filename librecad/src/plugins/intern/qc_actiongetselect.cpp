@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <QMouseEvent>
+#include <QKeyEvent>
 #include "qc_actiongetselect.h"
 #include "doc_plugin_interface.h"
 #include "rs_dialogfactory.h"
@@ -40,6 +41,7 @@ QC_ActionGetSelect::QC_ActionGetSelect(RS_EntityContainer& container,
 		,completed(false)
 		,message(tr("Select objects:"))
 {
+    actionType = RS2::ActionSelect;
 }
 
 
@@ -71,6 +73,15 @@ void QC_ActionGetSelect::init(int status) {
 
 void QC_ActionGetSelect::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
+		RS_DIALOGFACTORY->updateMouseWidget();
+        completed = true;
+    }
+}
+
+void QC_ActionGetSelect::keyPressEvent(QKeyEvent* e)
+{
+    if (e->key()==Qt::Key_Escape || e->key()==Qt::Key_Enter)
+    {
 		RS_DIALOGFACTORY->updateMouseWidget();
         completed = true;
     }

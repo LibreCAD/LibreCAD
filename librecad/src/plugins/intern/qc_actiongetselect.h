@@ -57,6 +57,7 @@ public:
     virtual void init(int status=0);
 	
     virtual void mouseReleaseEvent(QMouseEvent* e);
+    virtual void keyPressEvent(QKeyEvent* e);
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
