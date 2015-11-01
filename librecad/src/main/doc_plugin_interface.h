@@ -131,7 +131,7 @@ private:
     RS_Document *doc;
     RS_Graphic *docGr;
     RS_GraphicView *gView;
-    QWidget* main;
+    QWidget* main_window;
     bool haveUndo;
 };
 
