@@ -26,10 +26,11 @@
 #ifndef QG_DLGOPTIONSDRAWING_H
 #define QG_DLGOPTIONSDRAWING_H
 
+#include<memory>
 #include "ui_qg_dlgoptionsdrawing.h"
-#include "rs_vector.h"
 
 class RS_Graphic;
+class RS_Vector;
 
 class QG_DlgOptionsDrawing : public QDialog, public Ui::QG_DlgOptionsDrawing
 {
@@ -37,8 +38,7 @@ class QG_DlgOptionsDrawing : public QDialog, public Ui::QG_DlgOptionsDrawing
 
 public:
     QG_DlgOptionsDrawing(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
-    ~QG_DlgOptionsDrawing();
-    static int current_tab;
+	~QG_DlgOptionsDrawing();
 
 public slots:
     virtual void setGraphic( RS_Graphic * g );
@@ -80,9 +80,8 @@ private:
 private:
     QStringList listPrec1;
     RS_Graphic* graphic;
-    RS_Vector spacing;
+	std::unique_ptr<RS_Vector> spacing;
     void init();
-
 };
 
 #endif // QG_DLGOPTIONSDRAWING_H

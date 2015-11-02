@@ -30,14 +30,6 @@
 #include "rs_debug.h"
 
 /**
- * Constructor.
- */
-RS_VariableDict::RS_VariableDict()
-{
-}
-
-
-/**
  * Removes all variables in the blocklist.
  */
 void RS_VariableDict::clear()
@@ -153,11 +145,11 @@ void RS_VariableDict::add(const QString& key,
  * @return The value for the given variable or the given default value
  * if the variable couldn't be found.
  */
-RS_Vector RS_VariableDict::getVector(const QString& key, const RS_Vector& def)
+RS_Vector RS_VariableDict::getVector(const QString& key, const RS_Vector& def) const
 {
     RS_Vector ret;
 
-    QHash<QString, RS_Variable>::iterator i = variables.find(key);
+	auto i = variables.find(key);
     if (variables.end() != i && RS2::VariableVector == i.value().getType()) {
         ret = i.value().getVector();
     } else {
@@ -177,13 +169,13 @@ RS_Vector RS_VariableDict::getVector(const QString& key, const RS_Vector& def)
  * @return The value for the given variable or the given default value
  * if the variable couldn't be found.
  */
-QString RS_VariableDict::getString(const QString& key, const QString& def)
+QString RS_VariableDict::getString(const QString& key, const QString& def) const
 {
     QString ret;
 
     RS_DEBUG->print("RS_VariableDict::getString: key: '%s'", key.toLatin1().data());
 
-    QHash<QString, RS_Variable>::iterator i = variables.find(key);
+	auto i = variables.find(key);
     if (variables.end() != i && RS2::VariableString == i.value().getType()) {
         ret = i.value().getString();
     }
@@ -204,11 +196,11 @@ QString RS_VariableDict::getString(const QString& key, const QString& def)
  * @return The value for the given variable or the given default value
  * if the variable couldn't be found.
  */
-int RS_VariableDict::getInt(const QString& key, int def)
+int RS_VariableDict::getInt(const QString& key, int def) const
 {
     int ret = 0;
 
-    QHash<QString, RS_Variable>::iterator i = variables.find(key);
+	auto i = variables.find(key);
     if (variables.end() != i && RS2::VariableInt == i.value().getType()) {
         ret = i.value().getInt();
     } else {
@@ -228,11 +220,11 @@ int RS_VariableDict::getInt(const QString& key, int def)
  * @return The value for the given variable or the given default value
  * if the variable couldn't be found.
  */
-double RS_VariableDict::getDouble(const QString& key, double def)
+double RS_VariableDict::getDouble(const QString& key, double def) const
 {
     double ret = 0.0;
 
-    QHash<QString, RS_Variable>::iterator i = variables.find(key);
+	auto i = variables.find(key);
      if (variables.end() != i && RS2::VariableDouble == i.value().getType()) {
         ret = i.value().getDouble();
     } else {
@@ -278,7 +270,7 @@ void RS_VariableDict::remove(const QString& key)
 std::ostream& operator << (std::ostream& os, RS_VariableDict& d)
 {
     os << "Variables: \n";
-    QHash<QString, RS_Variable>::iterator it = d.variables.begin();
+	auto it = d.variables.begin();
     while (it != d.variables.end()) {
         os << it.key().toLatin1().data() << ": ";
         switch (it.value().getType()) {

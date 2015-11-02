@@ -25,6 +25,7 @@
 **********************************************************************/
 #include "qg_dlgoptionsdrawing.h"
 
+#include <cfloat>
 #include <QMessageBox>
 #include "rs_filterdxfrw.h"
 #include "rs_graphic.h"
@@ -39,11 +40,14 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  true to construct a modal dialog.
  */
-
-int QG_DlgOptionsDrawing::current_tab = 0;
+namespace {
+int current_tab = 0;
+}
 
 QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent, bool modal, Qt::WindowFlags fl)
     : QDialog(parent, fl)
+	,graphic{nullptr}
+	,spacing{new RS_Vector{}}
 {
     setModal(modal);
     setupUi(this);
@@ -68,9 +72,9 @@ QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing()
         chType=RS2::RightCrosshair;
     }
     RS_SETTINGS->writeEntry("/CrosshairType", QString::number(static_cast<int>(chType)));
-    if(spacing.valid){
-        RS_SETTINGS->writeEntry("/GridSpacingX", spacing.x);
-        RS_SETTINGS->writeEntry("/GridSpacingY", spacing.y);
+	if(spacing->valid){
+		RS_SETTINGS->writeEntry("/GridSpacingX", spacing->x);
+		RS_SETTINGS->writeEntry("/GridSpacingY", spacing->y);
     }
     RS_SETTINGS->endGroup();
 }
@@ -83,19 +87,17 @@ void QG_DlgOptionsDrawing::languageChange()
 {
     retranslateUi(this);
 }
+
 void QG_DlgOptionsDrawing::init() {
-    graphic = NULL;
+	graphic = nullptr;
 
     // precision list:
-    QString s;
-    for (int i=0; i<=8; i++) {
-        s = QString("%1").arg(0.0,0,'f', i);
-        listPrec1 << s;
-    }
+	for (int i=0; i<=8; i++)
+		listPrec1 << QString("%1").arg(0.0,0,'f', i);
 
     // Main drawing unit:
     for (int i=RS2::None; i<RS2::LastUnit; i++) {
-        cbUnit->addItem(RS_Units::unitToString((RS2::Unit)i));
+		cbUnit->addItem(RS_Units::unitToString(static_cast<RS2::Unit>(i)));
     }
 
     // init units combobox:
@@ -120,7 +122,7 @@ void QG_DlgOptionsDrawing::init() {
 
     // Paper format:
     for (int i=RS2::Custom; i<=RS2::NPageSize; i++) {
-        cbPaperFormat->addItem(RS_Units::paperFormatToString((RS2::PaperFormat)i));
+		cbPaperFormat->addItem(RS_Units::paperFormatToString(static_cast<RS2::PaperFormat>(i)));
     }
     cbDimTxSty->init();
 }
@@ -132,8 +134,8 @@ void QG_DlgOptionsDrawing::init() {
 void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     graphic = g;
 
-    if (graphic==NULL) {
-        std::cout<<" QG_DlgOptionsDrawing::setGraphic(NULL)\n";
+	if (graphic==nullptr) {
+		std::cout<<" QG_DlgOptionsDrawing::setGraphic(nullptr)\n";
         return;
     }
 
@@ -221,10 +223,10 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
         rbCrosshairRight->setDisabled(false);
     }
 
-    spacing = graphic->getVariableVector("$GRIDUNIT",
-                                                   RS_Vector(0.0,0.0));
-    cbXSpacing->setEditText( QString("%1").arg(spacing.x));
-    cbYSpacing->setEditText( QString("%1").arg(spacing.y));
+	*spacing = graphic->getVariableVector("$GRIDUNIT",
+												   {0.0,0.0});
+	cbXSpacing->setEditText( QString("%1").arg(spacing->x));
+	cbYSpacing->setEditText( QString("%1").arg(spacing->y));
 
     if (cbXSpacing->currentText()=="0") {
         cbXSpacing->setEditText(tr("auto"));
@@ -236,7 +238,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     cbYSpacing->setEnabled(cbGridOn->isChecked());
 
     // dimension text height:
-    RS2::Unit unit = (RS2::Unit)cbUnit->currentIndex();
+	RS2::Unit unit = static_cast<RS2::Unit>(cbUnit->currentIndex());
 
     // dimension general factor:
     double dimfactor = graphic->getVariableDouble("$DIMLFAC", 1.0);
@@ -380,7 +382,7 @@ void QG_DlgOptionsDrawing::validate() {
 
 	if (graphic) {
         // units:
-        graphic->setUnit((RS2::Unit)cbUnit->currentIndex());
+		graphic->setUnit(static_cast<RS2::Unit>(cbUnit->currentIndex()));
 
         graphic->addVariable("$LUNITS", cbLengthFormat->currentIndex()+1, 70);
         graphic->addVariable("$LUPREC", cbLengthPrecision->currentIndex(), 70);
@@ -389,15 +391,15 @@ void QG_DlgOptionsDrawing::validate() {
 
         // paper:
         graphic->setPaperFormat(
-                    (RS2::PaperFormat)cbPaperFormat->currentIndex(),
+					static_cast<RS2::PaperFormat>(cbPaperFormat->currentIndex()),
                     rbLandscape->isChecked());
         // custom paper size:
-        if ((RS2::PaperFormat)cbPaperFormat->currentIndex()==RS2::Custom) {
+		if (static_cast<RS2::PaperFormat>(cbPaperFormat->currentIndex()) == RS2::Custom) {
             graphic->setPaperSize(
                         RS_Units::convert(
                             RS_Vector(RS_Math::eval(lePaperWidth->text()),
                                       RS_Math::eval(lePaperHeight->text())),
-                            (RS2::Unit) cbUnit->currentIndex(),
+							static_cast<RS2::Unit>(cbUnit->currentIndex()),
 							RS2::Millimeter)
 						);
 			bool landscape;
@@ -409,29 +411,28 @@ void QG_DlgOptionsDrawing::validate() {
         //graphic->addVariable("$GRIDMODE", (int)cbGridOn->isChecked() , 70);
         graphic->setGridOn(cbGridOn->isChecked());
 #ifdef  RS_VECTOR2D
-        spacing=RS_Vector(0.0,0.0);
+		*spacing=RS_Vector{0.0,0.0};
 #else
-        spacing=RS_Vector(0.0,0.0,0.0);
+		*spacing=RS_Vector{0.0,0.0,0.0};
 #endif
         if (cbXSpacing->currentText()==tr("auto")) {
-            spacing.x = 0.0;
+			spacing->x = 0.0;
         } else {
-            spacing.x = cbXSpacing->currentText().toDouble();
+			spacing->x = cbXSpacing->currentText().toDouble();
         }
         if (cbYSpacing->currentText()==tr("auto")) {
-            spacing.y = 0.0;
+			spacing->y = 0.0;
         } else {
-            spacing.y = cbYSpacing->currentText().toDouble();
+			spacing->y = cbYSpacing->currentText().toDouble();
         }
-        graphic->addVariable("$GRIDUNIT", spacing, 10);
+		graphic->addVariable("$GRIDUNIT", *spacing, 10);
 
         // dim:
         bool ok1;
         double oldValue=graphic->getVariableDouble("$DIMTXT",1.);
-        double newValue=RS_Math::eval(cbDimTextHeight->currentText(),&ok1);
-        ok1 &= (fabs(oldValue-newValue)>RS_TOLERANCE);
+		double newValue=RS_Math::eval(cbDimTextHeight->currentText(), &ok1);
         //only update text height if a valid new position is specified, bug#3470605
-        if(ok1){
+		if(ok1 && (fabs(oldValue-newValue)>RS_TOLERANCE)){
             graphic->addVariable("$DIMTXT",newValue, 40);
         }
         graphic->addVariable("$DIMEXE",
@@ -449,11 +450,11 @@ void QG_DlgOptionsDrawing::validate() {
         ok1 = ok1 || ok2;
         oldValue=graphic->getVariableDouble("$DIMLFAC",1);
         newValue=RS_Math::eval(cbDimFactor->currentText(),&ok2);
-        ok2 &= (fabs(oldValue-newValue)>RS_TOLERANCE);
+		ok2 &= (fabs(oldValue-newValue)>RS_TOLERANCE);
         ok1 = ok1 || ok2;
         oldValue=graphic->getVariableDouble("$DIMSCALE",1);
         newValue=RS_Math::eval(cbDimScale->currentText(),&ok2);
-        ok2 &= (fabs(oldValue-newValue)>RS_TOLERANCE);
+		ok2 &= (fabs(oldValue-newValue)>RS_TOLERANCE);
         ok1 = ok1 || ok2;
 
         graphic->addVariable("$DIMASZ",
@@ -476,7 +477,7 @@ void QG_DlgOptionsDrawing::validate() {
         graphic->addVariable("$DIMLFAC", dimFactor, 40);
         //DIMSCALE, general scale for dimensions
         double dimScale = RS_Math::eval(cbDimScale->currentText());
-        if (dimScale<0 || dimScale == 0)
+		if (dimScale <= DBL_EPSILON)
             dimScale = 1.0;
         graphic->addVariable("$DIMSCALE", dimScale, 40);
         graphic->addVariable("$DIMLWD", cbDimLwD->getWidth(), 70);
@@ -693,13 +694,13 @@ void QG_DlgOptionsDrawing::updateCBAnglePrecision(QComboBox* u, QComboBox* p) {
 void QG_DlgOptionsDrawing::updatePreview() {
     QString prev;
     prev = RS_Units::formatLinear(14.43112351,
-                                  (RS2::Unit)cbUnit->currentIndex(),
-                                  (RS2::LinearFormat)(cbLengthFormat->currentIndex()),
+								  static_cast<RS2::Unit>(cbUnit->currentIndex()),
+								  static_cast<RS2::LinearFormat>(cbLengthFormat->currentIndex()),
                                   cbLengthPrecision->currentIndex());
     lLinear->setText(prev);
 
     prev = RS_Units::formatAngle(0.5327714,
-                                 (RS2::AngleFormat)cbAngleFormat->currentIndex(),
+								 static_cast<RS2::AngleFormat>(cbAngleFormat->currentIndex()),
                                  cbAnglePrecision->currentIndex());
     lAngular->setText(prev);
 }
@@ -718,7 +719,7 @@ void  QG_DlgOptionsDrawing::updatePaperSize() {
 		s = RS_Units::convert(
                     graphic->getPaperSize(),
                     RS2::Millimeter,
-                    (RS2::Unit) cbUnit->currentIndex()
+					static_cast<RS2::Unit>(cbUnit->currentIndex())
 					);
         //RS_Vector plimmin = graphic->getVariableVector("$PLIMMIN", RS_Vector(0,0));
 		//RS_Vector plimmax = graphic->getVariableVector("$PLIMMAX", RS_Vector(100,100));
@@ -728,7 +729,7 @@ void  QG_DlgOptionsDrawing::updatePaperSize() {
 		s = RS_Units::convert(
                     RS_Units::paperFormatToSize(format),
                     RS2::Millimeter,
-                    (RS2::Unit) cbUnit->currentIndex()
+					static_cast<RS2::Unit>(cbUnit->currentIndex())
 					);
 	}
 
