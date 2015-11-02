@@ -343,6 +343,11 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* e)
             context_menu->exec(mapToGlobal(e->pos()));
         }
     }
+    else if (e->button() == Qt::XButton1)
+    {
+        enter();
+        emit xbutton1_was_pressed();
+    }
     else
     {
         RS_GraphicView::mouseReleaseEvent(e);

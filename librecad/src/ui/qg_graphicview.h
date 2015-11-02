@@ -147,6 +147,9 @@ protected:
 
 private:
 	bool antialiasing{false};
+
+signals:
+    void xbutton1_was_pressed();
 };
 
 #endif
