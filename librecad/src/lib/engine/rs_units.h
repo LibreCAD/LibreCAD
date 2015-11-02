@@ -32,6 +32,7 @@
 #include "rs.h"
 
 class RS_Vector;
+class QString;
 
 /**
  * Conversion methods for units
