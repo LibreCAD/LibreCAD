@@ -329,30 +329,33 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e) {
 }
 
 
-void QG_GraphicView::mouseReleaseEvent(QMouseEvent* e)
+void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
 {
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent");
 
-    if (e->button()==Qt::RightButton && !eventHandler->hasAction())
+    switch (event->button())
     {
-        if (!recent_actions.isEmpty())
+    case Qt::RightButton:
+        if (!eventHandler->hasAction()
+         && !recent_actions.isEmpty())
         {
             QMenu* context_menu = new QMenu(this);
             context_menu->setAttribute(Qt::WA_DeleteOnClose);
             context_menu->addActions(recent_actions);
-            context_menu->exec(mapToGlobal(e->pos()));
+            context_menu->exec(mapToGlobal(event->pos()));
         }
-    }
-    else if (e->button() == Qt::XButton1)
-    {
+        else RS_GraphicView::mouseReleaseEvent(event);
+        break;
+
+    case Qt::XButton1:
         enter();
         emit xbutton1_was_pressed();
-    }
-    else
-    {
-        RS_GraphicView::mouseReleaseEvent(e);
-    }
+        break;
 
+    default:
+        RS_GraphicView::mouseReleaseEvent(event);
+        break;
+    }
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
 }
 
