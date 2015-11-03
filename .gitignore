@@ -38,6 +38,7 @@ debug/
 *.rc
 *.bak
 object_script.LibreCAD.*
+object_script.libdxfrw.*
 # Win/qmake generated project files
 #*.vcproj
 #*.sln
@@ -73,5 +74,3 @@ core
 *.core
 vgcore.*
 core.*
-libraries/libdxfrw/object_script.libdxfrw.Debug
-libraries/libdxfrw/object_script.libdxfrw.Release
