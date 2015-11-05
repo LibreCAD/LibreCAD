@@ -248,7 +248,6 @@ public:
 	void back();
 	void enter();
 
-	void mousePressEvent(QMouseEvent* e);
 	void mouseLeaveEvent();
 	void mouseEnterEvent();
 	void keyPressEvent(QKeyEvent* e);

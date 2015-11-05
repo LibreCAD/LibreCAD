@@ -294,18 +294,6 @@ void RS_GraphicView::enter() {
 	}
 }
 
-
-
-/**
- * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify LibreCAD about mouse events.
- */
-void RS_GraphicView::mousePressEvent(QMouseEvent* e) {
-	if (eventHandler) {
-		eventHandler->mousePressEvent(e);
-	}
-}
-
 /**
  * Called by the actual GUI class which implements the RS_GraphicView
  * interface to notify LibreCAD about mouse events.
