@@ -1340,7 +1340,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     actionHandler->set_document(w->getDocument());
     connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
             this, SLOT(slotFileClosing(QC_MDIWindow*)));
-    connect(w->getGraphicView(), SIGNAL(xbutton1_was_pressed()),
+    connect(w->getGraphicView(), SIGNAL(xbutton1_released()),
             commandWidget, SLOT(trigger()));
 
     if (w->getDocument()->rtti()==RS2::EntityBlock) {

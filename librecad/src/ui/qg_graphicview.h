@@ -149,7 +149,7 @@ private:
 	bool antialiasing{false};
 
 signals:
-    void xbutton1_was_pressed();
+    void xbutton1_released();
 };
 
 #endif

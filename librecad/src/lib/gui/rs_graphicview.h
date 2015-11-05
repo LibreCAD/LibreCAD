@@ -249,7 +249,6 @@ public:
 	void enter();
 
 	void mousePressEvent(QMouseEvent* e);
-	void mouseReleaseEvent(QMouseEvent* e);
 	void mouseMoveEvent(QMouseEvent* e);
 	void mouseLeaveEvent();
 	void mouseEnterEvent();

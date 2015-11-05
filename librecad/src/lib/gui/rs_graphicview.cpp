@@ -307,30 +307,6 @@ void RS_GraphicView::mousePressEvent(QMouseEvent* e) {
 }
 
 
-
-/**
- * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify LibreCAD about mouse events.
- */
-void RS_GraphicView::mouseReleaseEvent(QMouseEvent* e)
-{
-	RS_DEBUG->print("RS_GraphicView::mouseReleaseEvent");
-    if (eventHandler)
-    {
-        if (e->button()!=Qt::RightButton || eventHandler->hasAction())
-        {
-			eventHandler->mouseReleaseEvent(e);
-		}
-        else
-        {
-            back();
-			e->accept();
-		}
-	}
-	RS_DEBUG->print("RS_GraphicView::mouseReleaseEvent: OK");
-}
-
-
 /*	*
  *	Function name:
  *

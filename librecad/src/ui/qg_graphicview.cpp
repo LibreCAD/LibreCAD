@@ -333,6 +333,8 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
 {
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent");
 
+    event->accept();
+
     switch (event->button())
     {
     case Qt::RightButton:
@@ -344,16 +346,16 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
             context_menu->addActions(recent_actions);
             context_menu->exec(mapToGlobal(event->pos()));
         }
-        else RS_GraphicView::mouseReleaseEvent(event);
+        else back();
         break;
 
     case Qt::XButton1:
         enter();
-        emit xbutton1_was_pressed();
+        emit xbutton1_released();
         break;
 
     default:
-        RS_GraphicView::mouseReleaseEvent(event);
+        eventHandler->mouseReleaseEvent(event);
         break;
     }
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
