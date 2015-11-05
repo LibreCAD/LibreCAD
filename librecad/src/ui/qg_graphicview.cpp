@@ -292,14 +292,6 @@ void QG_GraphicView::resizeEvent(QResizeEvent* /*e*/) {
     RS_DEBUG->print("QG_GraphicView::resizeEvent end");
 }
 
-
-
-void QG_GraphicView::emulateMouseMoveEvent() {
-    QMouseEvent e(QEvent::MouseMove, QPoint(mx, my),
-                    Qt::NoButton, Qt::NoButton, Qt::NoModifier);//RLZ
-    //mouseMoveEvent(&e);
-}
-
 void QG_GraphicView::mousePressEvent(QMouseEvent* event)
 {
     // pan zoom with middle mouse button

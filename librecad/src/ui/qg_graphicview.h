@@ -92,7 +92,6 @@ public:
 	void set_antialiasing(bool state);
 
 protected:
-    virtual void emulateMouseMoveEvent();
     virtual void mousePressEvent(QMouseEvent* e);
     virtual void mouseDoubleClickEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);

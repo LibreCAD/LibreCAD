@@ -237,14 +237,6 @@ public:
 	void killSelectActions();
 	void killAllActions();
 
-	/**
-	 * Must be overwritten to emulate a mouse move event with
-	 * the last known mouse position.
-	 *
-	 * @see mx, my
-	 */
-	virtual void emulateMouseMoveEvent() = 0;
-
 	void back();
 	void enter();
 
@@ -383,10 +375,6 @@ protected:
 
     RS_EntityContainer* container{nullptr}; // Holds a pointer to all the enties
 	std::unique_ptr<RS_EventHandler> eventHandler;
-
-
-	int mx=0;   //!< Last known mouse cursor position
-	int my=0;   //!< Last known mouse cursor position
 
 	/** background color (any color) */
 	RS_Color background;
