@@ -689,7 +689,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionModifyOffset:
     {
-        std::set<RS2::EntityType> const allowedOffsetTypes={RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline};
+		auto allowedOffsetTypes={RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline};
         if(!document->countSelected(true, allowedOffsetTypes)){
             a = new RS_ActionSelect(this, *document, *view,RS2::ActionModifyOffsetNoSelect, allowedOffsetTypes);
 			break;

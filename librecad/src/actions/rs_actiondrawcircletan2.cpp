@@ -20,7 +20,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include<set>
 #include<QAction>
 #include <QMouseEvent>
 #include "rs_actiondrawcircletan2.h"
@@ -32,7 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_point.h"
 
 namespace {
-const std::set<RS2::EntityType> enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+auto enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
 }
 
 /**

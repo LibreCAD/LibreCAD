@@ -20,7 +20,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include<set>
 #include<QAction>
 #include <QMouseEvent>
 #include "rs_actiondrawlineorthtan.h"
@@ -32,7 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_line.h"
 
 namespace{
-const std::set<RS2::EntityType> circleList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse}; //this holds a list of entity types which supports tangent
+auto circleList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse}; //this holds a list of entity types which supports tangent
 }
 
 /**

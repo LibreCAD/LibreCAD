@@ -28,7 +28,6 @@
 #ifndef RS_SNAPPER_H
 #define RS_SNAPPER_H
 
-#include <set>
 #include "rs.h"
 #include "rs_vector.h"
 #include "rs_pen.h"
@@ -167,7 +166,7 @@ public:
                            RS2::ResolveLevel level=RS2::ResolveNone);
     RS_Entity* catchEntity(QMouseEvent* e, RS2::EntityType enType,
                            RS2::ResolveLevel level=RS2::ResolveNone);
-    RS_Entity* catchEntity(QMouseEvent* e, const std::set<RS2::EntityType>& enTypeList,
+	RS_Entity* catchEntity(QMouseEvent* e, const std::initializer_list<RS2::EntityType>& enTypeList,
                            RS2::ResolveLevel level=RS2::ResolveNone);
 
     /**

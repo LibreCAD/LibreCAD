@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include<set>
 #include<QAction>
 #include <QMouseEvent>
 #include "rs_actionmodifyround.h"
@@ -36,7 +35,7 @@
 #include "rs_modification.h"
 
 namespace{
-const std::set<RS2::EntityType> eType={ RS2::EntityLine , RS2::EntityPolyline , RS2::EntityArc ,
+auto eType={ RS2::EntityLine , RS2::EntityPolyline , RS2::EntityArc ,
                                            RS2::EntityCircle , RS2::EntityEllipse , RS2::EntitySpline};
 }
 

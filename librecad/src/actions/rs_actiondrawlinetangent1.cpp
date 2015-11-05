@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include<set>
 #include<QAction>
 #include <QMouseEvent>
 #include "rs_actiondrawlinetangent1.h"
@@ -36,9 +35,9 @@
 #include "rs_coordinateevent.h"
 
 namespace{
-const std::set<RS2::EntityType> circleType={RS2::EntityArc,RS2::EntityCircle,
-											   RS2::EntityEllipse, RS2::EntitySplinePoints
-											  };
+auto circleType={RS2::EntityArc, RS2::EntityCircle,
+				 RS2::EntityEllipse, RS2::EntitySplinePoints
+				};
 }
 RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 		RS_EntityContainer& container,
