@@ -28,9 +28,9 @@
 #ifndef RS_SNAPPER_H
 #define RS_SNAPPER_H
 
+#include<memory>
 #include "rs.h"
 #include "rs_vector.h"
-#include "rs_pen.h"
 
 class RS_Entity;
 class RS_GraphicView;
@@ -60,18 +60,6 @@ struct RS_SnapMode {
 	double distance=5.; /// The distance to snap before defaulting to free snaping.
 
     /**
-      * Default Constructor
-      *
-      * Creates a RS_SnapMode that specifies only free snapping.
-      *
-      */
-	RS_SnapMode()=default;
-	~RS_SnapMode()=default;
-	RS_SnapMode(RS_SnapMode const& ) = default;
-
-	RS_SnapMode& operator =(RS_SnapMode const& ) = default;
-
-    /**
       * Disable all snapping.
       *
       * This effectivly puts the object into free snap mode.
@@ -96,7 +84,7 @@ class RS_Snapper {
 public:
 	RS_Snapper() = delete;
     RS_Snapper(RS_EntityContainer& container, RS_GraphicView& graphicView);
-	virtual ~RS_Snapper() = default;
+	virtual ~RS_Snapper();
 
     void init();
 	//!
@@ -118,9 +106,9 @@ public:
     /** Sets a new snap mode. */
     void setSnapMode(const RS_SnapMode& snapMode);
 
-	RS_SnapMode *getSnapMode(void) {
-        return &this->snapMode;
-    }
+	RS_SnapMode const* getSnapMode() const;
+	RS_SnapMode* getSnapMode();
+
     /** Sets a new snap restriction. */
     void setSnapRestriction(RS2::SnapRestriction /*snapRes*/) {
         //this->snapRes = snapRes;
@@ -172,11 +160,7 @@ public:
     /**
      * Suspends this snapper while another action takes place.
      */
-    virtual void suspend() {
-                // RVT Don't delete the snapper here!
-        // RVT_PORT (can be deleted)();
-        snapSpot = snapCoord = RS_Vector(false);
-    }
+	virtual void suspend();
 
     /**
      * Resumes this snapper after it has been suspended.
@@ -197,9 +181,7 @@ protected:
     double getSnapRange() const;
     RS_EntityContainer* container;
     RS_GraphicView* graphicView;
-    RS_Entity* keyEntity;
-    RS_Vector snapCoord;
-    RS_Vector snapSpot;
+	RS_Entity* keyEntity;
     RS_SnapMode snapMode;
     //RS2::SnapRestriction snapRes;
     /**
@@ -223,9 +205,8 @@ protected:
     bool finished{false};
 
 private:
-    QString snap_indicator;
-    RS_Pen line_pen;
-    RS_Pen circle_pen;
+	struct ImpData;
+	std::unique_ptr<ImpData> pImpData;
 };
 
 #endif
