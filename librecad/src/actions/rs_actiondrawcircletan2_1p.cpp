@@ -52,7 +52,7 @@ RS_ActionDrawCircleTan2_1P::RS_ActionDrawCircleTan2_1P(
 	actionType=RS2::ActionDrawCircleTan2_1P;
 }
 
-RS_ActionDrawCircleTan2_1P::~RS_ActionDrawCircleTan2_1P(){}
+RS_ActionDrawCircleTan2_1P::~RS_ActionDrawCircleTan2_1P() = default;
 
 void RS_ActionDrawCircleTan2_1P::init(int status) {
     if(status>=0) {

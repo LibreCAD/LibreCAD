@@ -48,7 +48,7 @@ RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
 	reset();
 }
 
-RS_ActionDrawSpline::~RS_ActionDrawSpline() {}
+RS_ActionDrawSpline::~RS_ActionDrawSpline() = default;
 
 void RS_ActionDrawSpline::reset() {
 	spline = nullptr;

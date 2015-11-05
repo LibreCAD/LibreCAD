@@ -47,7 +47,7 @@ RS_ActionDrawCircle::RS_ActionDrawCircle(RS_EntityContainer& container,
 
 
 
-RS_ActionDrawCircle::~RS_ActionDrawCircle() {}
+RS_ActionDrawCircle::~RS_ActionDrawCircle() = default;
 
 void RS_ActionDrawCircle::reset() {
 	data.reset(new RS_CircleData(RS_Vector(false), 0.0));

@@ -50,7 +50,7 @@ RS_ActionDrawLine::RS_ActionDrawLine(RS_EntityContainer& container,
     RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine: OK");
 }
 
-RS_ActionDrawLine::~RS_ActionDrawLine(){}
+RS_ActionDrawLine::~RS_ActionDrawLine() = default;
 
 void RS_ActionDrawLine::reset() {
 	RS_DEBUG->print("RS_ActionDrawLine::reset");

@@ -46,7 +46,7 @@ RS_ActionInfoInside::RS_ActionInfoInside(RS_EntityContainer& container,
 	}
 }
 
-RS_ActionInfoInside::~RS_ActionInfoInside() {}
+RS_ActionInfoInside::~RS_ActionInfoInside() = default;
 
 void RS_ActionInfoInside::trigger() {
     bool onContour = false;

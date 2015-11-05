@@ -51,7 +51,7 @@ RS_ActionDimRadial::RS_ActionDimRadial(
     reset();
 }
 
-RS_ActionDimRadial::~RS_ActionDimRadial(){}
+RS_ActionDimRadial::~RS_ActionDimRadial() = default;
 
 void RS_ActionDimRadial::reset() {
     RS_ActionDimension::reset();

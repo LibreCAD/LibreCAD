@@ -44,7 +44,7 @@ RS_ActionDrawCircle2P::RS_ActionDrawCircle2P(RS_EntityContainer& container,
     reset();
 }
 
-RS_ActionDrawCircle2P::~RS_ActionDrawCircle2P() {}
+RS_ActionDrawCircle2P::~RS_ActionDrawCircle2P() = default;
 
 void RS_ActionDrawCircle2P::reset() {
 	data->reset();

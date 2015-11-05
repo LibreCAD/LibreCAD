@@ -43,7 +43,7 @@ RS_ActionModifyRotate::RS_ActionModifyRotate(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyRotate;
 }
 
-RS_ActionModifyRotate::~RS_ActionModifyRotate(){}
+RS_ActionModifyRotate::~RS_ActionModifyRotate() = default;
 
 void RS_ActionModifyRotate::init(int status) {
     RS_ActionInterface::init(status);

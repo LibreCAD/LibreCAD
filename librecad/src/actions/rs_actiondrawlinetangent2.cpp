@@ -50,7 +50,7 @@ RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
     setStatus(SetCircle1);
 }
 
-RS_ActionDrawLineTangent2::~RS_ActionDrawLineTangent2(){}
+RS_ActionDrawLineTangent2::~RS_ActionDrawLineTangent2() = default;
 
 
 void RS_ActionDrawLineTangent2::finish(bool updateTB){

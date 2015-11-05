@@ -44,7 +44,7 @@ RS_ActionDrawMText::RS_ActionDrawMText(RS_EntityContainer& container,
 	actionType=RS2::ActionDrawMText;
 }
 
-RS_ActionDrawMText::~RS_ActionDrawMText(){}
+RS_ActionDrawMText::~RS_ActionDrawMText() = default;
 
 void RS_ActionDrawMText::init(int status) {
     RS_ActionInterface::init(status);

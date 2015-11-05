@@ -46,7 +46,7 @@ RS_ActionDrawEllipseCenter3Points::RS_ActionDrawEllipseCenter3Points(
 	actionType=RS2::ActionDrawEllipseCenter3Points;
 }
 
-RS_ActionDrawEllipseCenter3Points::~RS_ActionDrawEllipseCenter3Points(){}
+RS_ActionDrawEllipseCenter3Points::~RS_ActionDrawEllipseCenter3Points() = default;
 
 void RS_ActionDrawEllipseCenter3Points::init(int status) {
     RS_PreviewActionInterface::init(status);

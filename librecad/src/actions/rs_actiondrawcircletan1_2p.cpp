@@ -57,7 +57,7 @@ RS_ActionDrawCircleTan1_2P::RS_ActionDrawCircleTan1_2P(
 	actionType = RS2::ActionDrawCircleTan1_2P;
 }
 
-RS_ActionDrawCircleTan1_2P::~RS_ActionDrawCircleTan1_2P(){}
+RS_ActionDrawCircleTan1_2P::~RS_ActionDrawCircleTan1_2P() = default;
 
 void RS_ActionDrawCircleTan1_2P::init(int status) {
     RS_PreviewActionInterface::init(status);

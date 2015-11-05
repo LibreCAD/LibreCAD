@@ -52,7 +52,7 @@ RS_ActionDrawImage::RS_ActionDrawImage(RS_EntityContainer& container,
 	actionType=RS2::ActionDrawImage;
 }
 
-RS_ActionDrawImage::~RS_ActionDrawImage() {}
+RS_ActionDrawImage::~RS_ActionDrawImage() = default;
 
 
 void RS_ActionDrawImage::init(int status) {

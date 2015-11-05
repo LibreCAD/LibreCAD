@@ -45,7 +45,7 @@ RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(
 	actionType=RS2::ActionDrawCircleInscribe;
 }
 
-RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe(){}
+RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe() = default;
 
 void RS_ActionDrawCircleInscribe::clearLines(bool checkStatus)
 {

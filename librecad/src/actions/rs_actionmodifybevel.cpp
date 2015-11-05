@@ -49,7 +49,7 @@ RS_ActionModifyBevel::RS_ActionModifyBevel(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyBevel;
 }
 
-RS_ActionModifyBevel::~RS_ActionModifyBevel(){}
+RS_ActionModifyBevel::~RS_ActionModifyBevel() = default;
 
 
 void RS_ActionModifyBevel::init(int status) {

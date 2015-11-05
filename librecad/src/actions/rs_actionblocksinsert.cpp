@@ -54,7 +54,7 @@ RS_ActionBlocksInsert::RS_ActionBlocksInsert(RS_EntityContainer& container,
 
 
 
-RS_ActionBlocksInsert::~RS_ActionBlocksInsert() {}
+RS_ActionBlocksInsert::~RS_ActionBlocksInsert()  = default;
 
 
 void RS_ActionBlocksInsert::init(int status) {

@@ -49,7 +49,7 @@ RS_ActionDrawArc3P::RS_ActionDrawArc3P(RS_EntityContainer& container,
 
 
 
-RS_ActionDrawArc3P::~RS_ActionDrawArc3P() {}
+RS_ActionDrawArc3P::~RS_ActionDrawArc3P() = default;
 
 
 void RS_ActionDrawArc3P::reset() {

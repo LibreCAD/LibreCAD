@@ -47,7 +47,7 @@ RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(
 
 
 
-RS_ActionDrawLineHorVert::~RS_ActionDrawLineHorVert() {}
+RS_ActionDrawLineHorVert::~RS_ActionDrawLineHorVert() = default;
 
 void RS_ActionDrawLineHorVert::reset() {
 	data.reset(new RS_LineData());

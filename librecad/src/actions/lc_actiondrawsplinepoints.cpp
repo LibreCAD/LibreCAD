@@ -47,7 +47,7 @@ LC_ActionDrawSplinePoints::LC_ActionDrawSplinePoints(RS_EntityContainer& contain
 	setName("DrawSplinePoints");
 }
 
-LC_ActionDrawSplinePoints::~LC_ActionDrawSplinePoints() {}
+LC_ActionDrawSplinePoints::~LC_ActionDrawSplinePoints() = default;
 
 void LC_ActionDrawSplinePoints::reset() {
 	spline.reset();

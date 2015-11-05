@@ -45,7 +45,7 @@ RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(
 	actionType=RS2::ActionDrawEllipseInscribe;
 }
 
-RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe(){}
+RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe() = default;
 
 void RS_ActionDrawEllipseInscribe::clearLines(bool checkStatus)
 {

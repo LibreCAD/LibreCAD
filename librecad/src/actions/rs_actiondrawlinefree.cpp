@@ -41,7 +41,7 @@ RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
 	actionType=RS2::ActionDrawLineFree;
 }
 
-RS_ActionDrawLineFree::~RS_ActionDrawLineFree() {}
+RS_ActionDrawLineFree::~RS_ActionDrawLineFree() = default;
 
 void RS_ActionDrawLineFree::trigger() {
 	deleteSnapper();

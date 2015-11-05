@@ -43,7 +43,7 @@ RS_ActionModifyMirror::RS_ActionModifyMirror(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyMirror;
 }
 
-RS_ActionModifyMirror::~RS_ActionModifyMirror(){}
+RS_ActionModifyMirror::~RS_ActionModifyMirror() = default;
 
 void RS_ActionModifyMirror::init(int status) {
     RS_ActionInterface::init(status);

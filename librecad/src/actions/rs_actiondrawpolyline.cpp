@@ -54,7 +54,7 @@ RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
 
 
 
-RS_ActionDrawPolyline::~RS_ActionDrawPolyline() {}
+RS_ActionDrawPolyline::~RS_ActionDrawPolyline() = default;
 
 
 void RS_ActionDrawPolyline::reset() {

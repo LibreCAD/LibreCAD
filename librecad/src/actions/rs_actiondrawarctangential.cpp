@@ -49,7 +49,7 @@ RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(RS_EntityContainer& conta
 
 
 
-RS_ActionDrawArcTangential::~RS_ActionDrawArcTangential() {}
+RS_ActionDrawArcTangential::~RS_ActionDrawArcTangential() = default;
 
 void RS_ActionDrawArcTangential::reset() {
     baseEntity = NULL;

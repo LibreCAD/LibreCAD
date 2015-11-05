@@ -45,7 +45,7 @@ RS_ActionDrawCircle3P::RS_ActionDrawCircle3P(RS_EntityContainer& container,
     reset();
 }
 
-RS_ActionDrawCircle3P::~RS_ActionDrawCircle3P() {}
+RS_ActionDrawCircle3P::~RS_ActionDrawCircle3P() = default;
 
 
 void RS_ActionDrawCircle3P::reset() {

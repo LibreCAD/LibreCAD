@@ -46,7 +46,7 @@ RS_ActionEditPaste::RS_ActionEditPaste( RS_EntityContainer& container,
 
 
 
-RS_ActionEditPaste::~RS_ActionEditPaste() {}
+RS_ActionEditPaste::~RS_ActionEditPaste() = default;
 
 
 void RS_ActionEditPaste::init(int status) {

@@ -48,7 +48,7 @@ RS_ActionDrawArc::RS_ActionDrawArc(RS_EntityContainer& container,
     reset();
 }
 
-RS_ActionDrawArc::~RS_ActionDrawArc(){}
+RS_ActionDrawArc::~RS_ActionDrawArc() = default;
 
 void RS_ActionDrawArc::reset() {
 

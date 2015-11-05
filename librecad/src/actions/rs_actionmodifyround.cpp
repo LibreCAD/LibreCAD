@@ -54,7 +54,7 @@ RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyRound;
 }
 
-RS_ActionModifyRound::~RS_ActionModifyRound(){}
+RS_ActionModifyRound::~RS_ActionModifyRound() = default;
 
 void RS_ActionModifyRound::init(int status) {
     RS_ActionInterface::init(status);

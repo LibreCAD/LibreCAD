@@ -47,7 +47,7 @@ RS_ActionModifyOffset::RS_ActionModifyOffset(RS_EntityContainer& container,
 	data->useCurrentLayer = true;
 }
 
-RS_ActionModifyOffset::~RS_ActionModifyOffset() {}
+RS_ActionModifyOffset::~RS_ActionModifyOffset() = default;
 
 void RS_ActionModifyOffset::init(int status) {
     RS_ActionInterface::init(status);

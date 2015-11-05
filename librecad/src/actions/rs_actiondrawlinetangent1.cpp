@@ -51,7 +51,7 @@ RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 	actionType=RS2::ActionDrawLineTangent1;
 }
 
-RS_ActionDrawLineTangent1::~RS_ActionDrawLineTangent1(){}
+RS_ActionDrawLineTangent1::~RS_ActionDrawLineTangent1() = default;
 
 void RS_ActionDrawLineTangent1::trigger() {
 	RS_PreviewActionInterface::trigger();

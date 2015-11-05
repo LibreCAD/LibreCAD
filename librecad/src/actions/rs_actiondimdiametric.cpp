@@ -48,7 +48,7 @@ RS_ActionDimDiametric::RS_ActionDimDiametric(
     reset();
 }
 
-RS_ActionDimDiametric::~RS_ActionDimDiametric(){}
+RS_ActionDimDiametric::~RS_ActionDimDiametric() = default;
 
 void RS_ActionDimDiametric::reset() {
     RS_ActionDimension::reset();

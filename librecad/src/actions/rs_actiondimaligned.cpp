@@ -46,7 +46,7 @@ RS_ActionDimAligned::RS_ActionDimAligned(RS_EntityContainer& container,
 
 
 
-RS_ActionDimAligned::~RS_ActionDimAligned() {}
+RS_ActionDimAligned::~RS_ActionDimAligned()  = default;
 
 void RS_ActionDimAligned::reset() {
     RS_ActionDimension::reset();

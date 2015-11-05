@@ -45,7 +45,7 @@ RS_ActionModifyMoveRotate::RS_ActionModifyMoveRotate(
 	actionType=RS2::ActionModifyMoveRotate;
 }
 
-RS_ActionModifyMoveRotate::~RS_ActionModifyMoveRotate(){}
+RS_ActionModifyMoveRotate::~RS_ActionModifyMoveRotate() = default;
 
 
 void RS_ActionModifyMoveRotate::init(int status) {

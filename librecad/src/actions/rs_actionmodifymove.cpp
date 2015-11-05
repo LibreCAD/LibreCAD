@@ -42,7 +42,7 @@ RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyMove;
 }
 
-RS_ActionModifyMove::~RS_ActionModifyMove(){}
+RS_ActionModifyMove::~RS_ActionModifyMove() = default;
 
 void RS_ActionModifyMove::trigger() {
 

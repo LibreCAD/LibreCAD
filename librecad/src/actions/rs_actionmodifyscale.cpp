@@ -42,7 +42,7 @@ RS_ActionModifyScale::RS_ActionModifyScale(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyScale;
 }
 
-RS_ActionModifyScale::~RS_ActionModifyScale(){}
+RS_ActionModifyScale::~RS_ActionModifyScale() = default;
 
 
 void RS_ActionModifyScale::init(int status) {

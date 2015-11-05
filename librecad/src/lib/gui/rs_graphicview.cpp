@@ -74,7 +74,7 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
     RS_SETTINGS->endGroup();
 }
 
-RS_GraphicView::~RS_GraphicView(){}
+RS_GraphicView::~RS_GraphicView() = default;
 
 /**
  * Must be called by any derrived class in the destructor.

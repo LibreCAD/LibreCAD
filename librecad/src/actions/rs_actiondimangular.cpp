@@ -46,7 +46,7 @@ RS_ActionDimAngular::RS_ActionDimAngular(
 }
 
 
-RS_ActionDimAngular::~RS_ActionDimAngular(){}
+RS_ActionDimAngular::~RS_ActionDimAngular() = default;
 
 void RS_ActionDimAngular::reset() {
     RS_ActionDimension::reset();

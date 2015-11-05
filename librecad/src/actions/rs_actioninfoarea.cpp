@@ -45,7 +45,7 @@ RS_ActionInfoArea::RS_ActionInfoArea(RS_EntityContainer& container,
 	actionType=RS2::ActionInfoArea;
 }
 
-RS_ActionInfoArea::~RS_ActionInfoArea(){}
+RS_ActionInfoArea::~RS_ActionInfoArea() = default;
 
 
 void RS_ActionInfoArea::init(int status) {

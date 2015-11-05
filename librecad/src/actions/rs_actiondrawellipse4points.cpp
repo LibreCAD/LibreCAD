@@ -47,7 +47,7 @@ RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
 	actionType=RS2::ActionDrawEllipse4Points;
 }
 
-RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points(){}
+RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points() = default;
 
 void RS_ActionDrawEllipse4Points::init(int status) {
     RS_PreviewActionInterface::init(status);

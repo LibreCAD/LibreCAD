@@ -61,7 +61,7 @@ RS_ActionDimLinear::RS_ActionDimLinear(RS_EntityContainer& container,
 
 
 
-RS_ActionDimLinear::~RS_ActionDimLinear() {}
+RS_ActionDimLinear::~RS_ActionDimLinear() = default;
 
 void RS_ActionDimLinear::reset() {
     RS_ActionDimension::reset();

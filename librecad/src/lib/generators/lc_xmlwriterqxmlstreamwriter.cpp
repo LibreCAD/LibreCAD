@@ -33,7 +33,7 @@ LC_XMLWriterQXmlStreamWriter::LC_XMLWriterQXmlStreamWriter():
 	xmlWriter->setCodec("UTF-8");
 }
 
-LC_XMLWriterQXmlStreamWriter::~LC_XMLWriterQXmlStreamWriter() {}
+LC_XMLWriterQXmlStreamWriter::~LC_XMLWriterQXmlStreamWriter() = default;
 
 void LC_XMLWriterQXmlStreamWriter::createRootElement(const std::string &name, const std::string &namespace_uri) {
     xmlWriter->writeStartDocument();
