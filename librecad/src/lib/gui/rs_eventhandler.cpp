@@ -84,7 +84,7 @@ void RS_EventHandler::enter() {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::mousePressEvent(QMouseEvent* e) {
     if(hasAction()){
@@ -104,7 +104,7 @@ void RS_EventHandler::mousePressEvent(QMouseEvent* e) {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
     if(hasAction()){
@@ -130,27 +130,19 @@ void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
-void RS_EventHandler::mouseMoveEvent(QMouseEvent* e) {
-    if(hasAction()){
+void RS_EventHandler::mouseMoveEvent(QMouseEvent* e)
+{
+    if(hasAction())
+    {
         currentActions.last()->mouseMoveEvent(e);
-        e->accept();
-    } else {
-        if (defaultAction) {
-            defaultAction->mouseMoveEvent(e);
-            e->accept();
-        } else {
-            e->ignore();
-        }
-        //RS_DEBUG->print("currently no action defined");
     }
+    else  defaultAction->mouseMoveEvent(e);
 }
 
-
-
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::mouseLeaveEvent() {
 
@@ -167,7 +159,7 @@ void RS_EventHandler::mouseLeaveEvent() {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::mouseEnterEvent() {
 
@@ -183,7 +175,7 @@ void RS_EventHandler::mouseEnterEvent() {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::keyPressEvent(QKeyEvent* e) {
 
@@ -204,7 +196,7 @@ void RS_EventHandler::keyPressEvent(QKeyEvent* e) {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::keyReleaseEvent(QKeyEvent* e) {
 
