@@ -2843,21 +2843,6 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
         //need to pass Escape to actions, issue#285
         case Qt::Key_Escape:
             slotBack();
-        case Qt::Key_Shift:
-        case Qt::Key_Control:
-        case Qt::Key_Meta:
-        case Qt::Key_Alt:
-        case Qt::Key_CapsLock: {
-            QMainWindow::keyPressEvent(e);
-
-            // forward to actions:
-            RS_GraphicView* graphicView = getGraphicView();
-            if (graphicView) {
-                graphicView->keyPressEvent(e);
-            }
-            e->accept();
-        }
-            break;
 
         case Qt::Key_Return:
         case Qt::Key_Enter:
@@ -2886,30 +2871,6 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
     if (e->isAccepted()) {
         RS_DEBUG->print("QC_ApplicationWindow::KeyPressEvent: Accepted");
         return;
-    }
-
-    QMainWindow::keyPressEvent(e);
-}
-
-
-void QC_ApplicationWindow::keyReleaseEvent(QKeyEvent* e) {
-
-    switch (e->key()) {
-    case Qt::Key_Shift:
-    case Qt::Key_Control:
-    case Qt::Key_Meta:
-    case Qt::Key_Alt:
-    case Qt::Key_CapsLock: {
-            QMainWindow::keyReleaseEvent(e);
-
-            // forward to actions:
-            RS_GraphicView* graphicView = getGraphicView();
-            if (graphicView) {
-                graphicView->keyReleaseEvent(e);
-            }
-            e->accept();
-        }
-        break;
     }
 
     QMainWindow::keyPressEvent(e);

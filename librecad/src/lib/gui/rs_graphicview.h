@@ -240,10 +240,6 @@ public:
 	void back();
 	void enter();
 
-	void mouseLeaveEvent();
-	void mouseEnterEvent();
-	void keyPressEvent(QKeyEvent* e);
-	void keyReleaseEvent(QKeyEvent* e);
 	void commandEvent(RS_CommandEvent* e);
 	void enableCoordinateInput();
 	void disableCoordinateInput();

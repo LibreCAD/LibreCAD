@@ -88,7 +88,6 @@ public:
 
     /** Catch hotkey for giving focus to command line. */
     virtual void keyPressEvent(QKeyEvent* e);
-    virtual void keyReleaseEvent(QKeyEvent* e);
     void setRedoEnable(bool enable);
     void setUndoEnable(bool enable);
 

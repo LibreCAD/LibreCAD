@@ -283,8 +283,6 @@ void RS_GraphicView::back()
     }
 }
 
-
-
 /**
  * Go forward with the current action.
  */
@@ -295,54 +293,6 @@ void RS_GraphicView::enter() {
 }
 
 /**
- * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify LibreCAD about mouse events.
- */
-void RS_GraphicView::mouseLeaveEvent() {
-	if (eventHandler) {
-		eventHandler->mouseLeaveEvent();
-	}
-}
-
-
-
-/**
- * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify LibreCAD about mouse events.
- */
-void RS_GraphicView::mouseEnterEvent() {
-	if (eventHandler) {
-		eventHandler->mouseEnterEvent();
-	}
-}
-
-
-
-/**
- * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify LibreCAD about key events.
- */
-void RS_GraphicView::keyPressEvent(QKeyEvent* e) {
-	if (eventHandler) {
-		eventHandler->keyPressEvent(e);
-	}
-}
-
-
-
-/**
- * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify LibreCAD about key events.
- */
-void RS_GraphicView::keyReleaseEvent(QKeyEvent* e) {
-	if (eventHandler) {
-		eventHandler->keyReleaseEvent(e);
-	}
-}
-
-
-
-/**
  * Called by the actual GUI class which implements a command line.
  */
 void RS_GraphicView::commandEvent(RS_CommandEvent* e) {
@@ -350,8 +300,6 @@ void RS_GraphicView::commandEvent(RS_CommandEvent* e) {
 		eventHandler->commandEvent(e);
 	}
 }
-
-
 
 /**
  * Enables coordinate input in the command line.

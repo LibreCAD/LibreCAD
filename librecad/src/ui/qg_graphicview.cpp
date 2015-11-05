@@ -455,13 +455,13 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
 }
 
 void QG_GraphicView::leaveEvent(QEvent* e) {
-    RS_GraphicView::mouseLeaveEvent();
+    eventHandler->mouseLeaveEvent();
     QWidget::leaveEvent(e);
 }
 
 
 void QG_GraphicView::enterEvent(QEvent* e) {
-    RS_GraphicView::mouseEnterEvent();
+    eventHandler->mouseEnterEvent();
     QWidget::enterEvent(e);
 }
 
@@ -472,7 +472,7 @@ void QG_GraphicView::focusOutEvent(QFocusEvent* e) {
 
 
 void QG_GraphicView::focusInEvent(QFocusEvent* e) {
-    RS_GraphicView::mouseEnterEvent();
+    eventHandler->mouseEnterEvent();
     QWidget::focusInEvent(e);
 }
 
@@ -602,12 +602,8 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 }
 
 
-void QG_GraphicView::keyPressEvent(QKeyEvent* e) {
-    //if (e->key()==Qt::Key_Control) {
-    //	setCtrlPressed(true);
-    //}
-
-
+void QG_GraphicView::keyPressEvent(QKeyEvent* e)
+{
     if (container==NULL) {
         return;
     }
@@ -641,16 +637,13 @@ void QG_GraphicView::keyPressEvent(QKeyEvent* e) {
         setCurrentAction(new RS_ActionZoomScroll(direction,
                          *container, *this));
     }
-
-    RS_GraphicView::keyPressEvent(e);
+    eventHandler->keyPressEvent(e);
 }
 
 
-void QG_GraphicView::keyReleaseEvent(QKeyEvent* e) {
-    //if (e->key()==Qt::Key_Control) {
-    //	setCtrlPressed(false);
-    //}
-    RS_GraphicView::keyReleaseEvent(e);
+void QG_GraphicView::keyReleaseEvent(QKeyEvent* e)
+{
+    eventHandler->keyReleaseEvent(e);
 }
 
 
