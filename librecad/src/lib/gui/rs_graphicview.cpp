@@ -306,63 +306,6 @@ void RS_GraphicView::mousePressEvent(QMouseEvent* e) {
 	}
 }
 
-
-/*	*
- *	Function name:
- *
- *	Description:		- Called by the actual GUI class which implements the
- *							  RS_GraphicView interface to notify LibreCAD about
- *							  mouse events.
- *
- *	Author(s):			..., Claude Sylvain
- *	Created:				?
- *	Last modified:		23 July 2011
- *
- *	Parameters:			QMouseEvent* e:
- *								...
- *
- *	Returns:				void
- *	*/
-
-void RS_GraphicView::mouseMoveEvent(QMouseEvent* e) {
-	RS_DEBUG->print("RS_GraphicView::mouseMoveEvent begin");
-
-    RS_Graphic* graphic = nullptr;
-
-	if (container->rtti()==RS2::EntityGraphic) {
-		graphic = (RS_Graphic*)container;
-	}
-
-	RS_DEBUG->print("RS_GraphicView::mouseMoveEvent 001");
-
-	if (e) {
-		mx = e->x();
-		my = e->y();
-	}
-
-	RS_DEBUG->print("RS_GraphicView::mouseMoveEvent 002");
-
-	if (eventHandler) {
-		eventHandler->mouseMoveEvent(e);
-	}
-
-	RS_DEBUG->print("RS_GraphicView::mouseMoveEvent 003");
-
-	if (	((!eventHandler) || !eventHandler->hasAction()) &&
-			(graphic))
-	{
-		RS_Vector	mouse		= toGraph(RS_Vector(mx, my));
-		RS_Vector	relMouse	= mouse - getRelativeZero();
-
-		if (RS_DIALOGFACTORY)
-			RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
-	}
-
-	RS_DEBUG->print("RS_GraphicView::mouseMoveEvent end");
-}
-
-
-
 /**
  * Called by the actual GUI class which implements the RS_GraphicView
  * interface to notify LibreCAD about mouse events.

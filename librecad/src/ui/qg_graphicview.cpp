@@ -362,21 +362,10 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
 }
 
 
-void QG_GraphicView::mouseMoveEvent(QMouseEvent* e) {
-    //RS_DEBUG->print("QG_GraphicView::mouseMoveEvent begin");
-    //QMouseEvent rsm = QG_Qt2Rs::mouseEvent(e);
-
-    RS_GraphicView::mouseMoveEvent(e);
-    QWidget::mouseMoveEvent(e);
-
-#ifdef Q_OS_WIN32
-        // make sure that we can still use hotkeys and the mouse wheel
-        if (parent()) {
-                ((QWidget*)parent())->setFocus();
-        }
-#endif
-
-    //RS_DEBUG->print("QG_GraphicView::mouseMoveEvent end");
+void QG_GraphicView::mouseMoveEvent(QMouseEvent* event)
+{
+    event->accept();
+    eventHandler->mouseMoveEvent(event);
 }
 
 bool QG_GraphicView::event(QEvent *event) {
