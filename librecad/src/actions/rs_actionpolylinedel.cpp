@@ -32,20 +32,23 @@
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
-
-
+#include "rs_preview.h"
 
 RS_ActionPolylineDel::RS_ActionPolylineDel(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Delete node",
-						   container, graphicView) {
+						   container, graphicView)
+		, delPoint(new RS_Vector{})
+{
 	actionType=RS2::ActionPolylineDel;
 }
 
+RS_ActionPolylineDel::~RS_ActionPolylineDel() = default;
+
 void RS_ActionPolylineDel::init(int status) {
     RS_ActionInterface::init(status);
-    delEntity = NULL;
-    delPoint = RS_Vector(false);
+	delEntity = nullptr;
+	*delPoint = {};
 }
 
 
@@ -54,16 +57,16 @@ void RS_ActionPolylineDel::trigger() {
 
     RS_DEBUG->print("RS_ActionPolylineDel::trigger()");
 
-        if (delEntity && delPoint.valid &&
-            delEntity->isPointOnEntity(delPoint)) {
+		if (delEntity && delPoint->valid &&
+			delEntity->isPointOnEntity(*delPoint)) {
 
                 delEntity->setHighlighted(false);
                 graphicView->drawEntity(delEntity);
 
                 RS_Modification m(*container, graphicView);
-                delEntity = m.deletePolylineNode((RS_Polyline&)*delEntity, delPoint );
+				delEntity = m.deletePolylineNode((RS_Polyline&)*delEntity, *delPoint );
 
-                delPoint = RS_Vector(false);
+				*delPoint = RS_Vector(false);
 
             RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
@@ -100,7 +103,7 @@ void RS_ActionPolylineDel::mouseReleaseEvent(QMouseEvent* e) {
                 switch (getStatus()) {
                 case ChooseEntity:
                     delEntity = catchEntity(e);
-                    if (delEntity==NULL) {
+					if (delEntity==nullptr) {
                         RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
                     } else if (delEntity->rtti()!=RS2::EntityPolyline) {
 
@@ -118,12 +121,12 @@ void RS_ActionPolylineDel::mouseReleaseEvent(QMouseEvent* e) {
                     break;
 
                 case SetDelPoint:
-                    delPoint = snapPoint(e);
-                    if (delEntity==NULL) {
+					*delPoint = snapPoint(e);
+					if (delEntity==nullptr) {
                                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-                    } else if (!delPoint.valid) {
+					} else if (!delPoint->valid) {
                                 RS_DIALOGFACTORY->commandMessage(tr("Deleting point is invalid."));
-                    } else if (!delEntity->isPointOnEntity(delPoint)) {
+					} else if (!delEntity->isPointOnEntity(*delPoint)) {
                                 RS_DIALOGFACTORY->commandMessage(
                                     tr("Deleting point is not on entity."));
                     } else {

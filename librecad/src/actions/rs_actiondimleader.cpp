@@ -34,6 +34,7 @@
 #include "rs_leader.h"
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
 
 
 RS_ActionDimLeader::RS_ActionDimLeader(RS_EntityContainer& container,
@@ -43,6 +44,8 @@ RS_ActionDimLeader::RS_ActionDimLeader(RS_EntityContainer& container,
 	actionType=RS2::ActionDimLeader;
     reset();
 }
+
+RS_ActionDimLeader::~RS_ActionDimLeader() = default;
 
 void RS_ActionDimLeader::reset() {
     //data = RS_LineData(RS_Vector(false), RS_Vector(false));

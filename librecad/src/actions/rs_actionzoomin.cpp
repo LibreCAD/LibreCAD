@@ -29,7 +29,6 @@
 #include <QAction>
 #include "rs_graphicview.h"
 
-
 /**
  * Default constructor.
  *
@@ -40,15 +39,17 @@ RS_ActionZoomIn::RS_ActionZoomIn(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView,
                                  RS2::ZoomDirection direction,
                                  RS2::Axis axis,
-                                 const RS_Vector& center,
+								 RS_Vector const* pCenter,
                                  double factor)
         :RS_ActionInterface("Zoom in", container, graphicView)
         ,zoom_factor(factor)
         ,direction(direction)
         ,axis(axis)
-        ,center(center)
+		,center(pCenter?new RS_Vector{*pCenter}:new RS_Vector{})
 {
 }
+
+RS_ActionZoomIn::~RS_ActionZoomIn() = default;
 
 void RS_ActionZoomIn::init(int status) {
     RS_ActionInterface::init(status);
@@ -75,9 +76,9 @@ void RS_ActionZoomIn::trigger() {
 
     case RS2::Both:
         if (direction==RS2::In) {
-            graphicView->zoomIn(zoom_factor, center);
+			graphicView->zoomIn(zoom_factor, *center);
         } else {
-            graphicView->zoomOut(zoom_factor, center);
+			graphicView->zoomOut(zoom_factor, *center);
         }
         break;
     }

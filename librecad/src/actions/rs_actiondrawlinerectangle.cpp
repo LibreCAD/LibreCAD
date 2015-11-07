@@ -34,14 +34,31 @@
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
 #include "rs_polyline.h"
+#include "rs_preview.h"
+
+struct RS_ActionDrawLineRectangle::Points {
+	/**
+	 * 1st corner.
+	 */
+	RS_Vector corner1;
+	/**
+	 * 2nd corner.
+	 */
+	RS_Vector corner2;
+};
 
 RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw rectangles",
-                           container, graphicView) {
+						   container, graphicView)
+		, pPoints(new Points{})
+{
 	actionType=RS2::ActionDrawLineRectangle;
 }
+
+RS_ActionDrawLineRectangle::~RS_ActionDrawLineRectangle() = default;
+
 
 void RS_ActionDrawLineRectangle::trigger() {
 	RS_PreviewActionInterface::trigger();
@@ -49,12 +66,12 @@ void RS_ActionDrawLineRectangle::trigger() {
 	RS_Polyline* polyline = new RS_Polyline(container);
 
 	// create and add rectangle:
-	polyline->addVertex(corner1);
+	polyline->addVertex(pPoints->corner1);
 	polyline->setLayerToActive();
 	polyline->setPenToActive();
-	polyline->addVertex({corner2.x, corner1.y});
-	polyline->addVertex(corner2);
-	polyline->addVertex({corner1.x, corner2.y});
+	polyline->addVertex({pPoints->corner2.x, pPoints->corner1.y});
+	polyline->addVertex(pPoints->corner2);
+	polyline->addVertex({pPoints->corner1.x, pPoints->corner2.y});
 	polyline->setClosed(true);
 	polyline->endPolyline();
 	container->addEntity(polyline);
@@ -68,7 +85,7 @@ void RS_ActionDrawLineRectangle::trigger() {
 
     // upd. view
 	graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(corner2);
+	graphicView->moveRelativeZero(pPoints->corner2);
 }
 
 
@@ -77,10 +94,10 @@ void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineRectangle::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-    if (getStatus()==SetCorner2 && corner1.valid) {
-        corner2 = mouse;
+	if (getStatus()==SetCorner2 && pPoints->corner1.valid) {
+		pPoints->corner2 = mouse;
         deletePreview();
-		preview->addRectangle(corner1, corner2);
+		preview->addRectangle(pPoints->corner1, pPoints->corner2);
 		drawPreview();
     }
 
@@ -105,13 +122,13 @@ void RS_ActionDrawLineRectangle::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetCorner1:
-        corner1 = mouse;
+		pPoints->corner1 = mouse;
         graphicView->moveRelativeZero(mouse);
         setStatus(SetCorner2);
         break;
 
     case SetCorner2:
-        corner2 = mouse;
+		pPoints->corner2 = mouse;
         trigger();
         setStatus(SetCorner1);
         break;

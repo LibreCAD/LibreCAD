@@ -33,41 +33,43 @@
 #include "rs_modification.h"
 #include "rs_polyline.h"
 
-
-
 RS_ActionPolylineAdd::RS_ActionPolylineAdd(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Add node",
 						   container, graphicView)
 		,addEntity(nullptr)
 		,addSegment(nullptr)
+		, addCoord(new RS_Vector{})
 {
 	actionType=RS2::ActionPolylineAdd;
 }
 
+RS_ActionPolylineAdd::~RS_ActionPolylineAdd() = default;
+
 void RS_ActionPolylineAdd::init(int status) {
         RS_ActionInterface::init(status);
 		addEntity = addSegment = nullptr;
-        addCoord = RS_Vector(false);
+		*addCoord = {};
 }
-
-
 
 void RS_ActionPolylineAdd::trigger() {
 
         RS_PreviewActionInterface::trigger();
         RS_DEBUG->print("RS_ActionPolylineAdd::trigger()");
 
-        if (addEntity && addSegment->isAtomic() && addCoord.valid &&
-                addSegment->isPointOnEntity(addCoord)) {
+		if (addEntity && addSegment->isAtomic() && addCoord->valid &&
+				addSegment->isPointOnEntity(*addCoord)) {
 
                 addEntity->setHighlighted(false);
                 graphicView->drawEntity(addEntity);
 
                 RS_Modification m(*container, graphicView);
-                addEntity = m.addPolylineNode((RS_Polyline&)*addEntity, (RS_AtomicEntity&)*addSegment, addCoord );
+				addEntity = m.addPolylineNode(
+							*static_cast<RS_Polyline*>(addEntity),
+							(RS_AtomicEntity&) *addSegment,
+							*addCoord );
 
-                addCoord = RS_Vector(false);
+				*addCoord = {};
 
                 RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
         }
@@ -118,10 +120,10 @@ void RS_ActionPolylineAdd::mouseReleaseEvent(QMouseEvent* e) {
                         break;
 
                 case SetAddCoord:
-                        addCoord = snapPoint(e);
+						*addCoord = snapPoint(e);
 						if (!addEntity) {
                                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-                        } else if (!addCoord.valid) {
+						} else if (!addCoord->valid) {
                                 RS_DIALOGFACTORY->commandMessage(tr("Adding point is invalid."));
                         } else {
                                 RS_Vector clickCoord = snapPoint(e);

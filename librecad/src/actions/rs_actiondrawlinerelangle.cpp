@@ -35,6 +35,7 @@
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_preview.h"
 
 RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(
 		RS_EntityContainer& container,
@@ -44,11 +45,14 @@ RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(
 	:RS_PreviewActionInterface("Draw Lines with relative angles",
 							   container, graphicView)
 	,entity(nullptr)
+	, pos(new RS_Vector{})
 	,angle(angle)
 	,length(10.)
 	,fixedAngle(fixedAngle)
 {
 }
+
+RS_ActionDrawLineRelAngle::~RS_ActionDrawLineRelAngle() = default;
 
 
 RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
@@ -65,7 +69,7 @@ void RS_ActionDrawLineRelAngle::trigger() {
     deletePreview();
 
     RS_Creation creation(container, graphicView);
-    creation.createLineRelAngle(pos,
+	creation.createLineRelAngle(*pos,
                                 entity,
                                 angle,
                                 length);
@@ -117,7 +121,7 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent* e) {
     case SetPos: {
             //length = graphicView->toGraphDX(graphicView->getWidth());
             //RS_Vector mouse = snapPoint(e);
-            pos = snapPoint(e);
+			*pos = snapPoint(e);
 
 			/*RS_Creation creation(nullptr, nullptr);
             RS_Line* l = creation.createLineRelAngle(mouse,
@@ -128,7 +132,7 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent* e) {
             deletePreview();
 
 			RS_Creation creation(preview.get(), nullptr, false);
-            creation.createLineRelAngle(pos,
+			creation.createLineRelAngle(*pos,
                                         entity,
                                         angle,
                                         length);
@@ -205,7 +209,7 @@ void RS_ActionDrawLineRelAngle::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetPos:
-        pos = e->getCoordinate();
+		*pos = e->getCoordinate();
         trigger();
         break;
 

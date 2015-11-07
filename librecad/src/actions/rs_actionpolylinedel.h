@@ -47,7 +47,7 @@ public:
 public:
     RS_ActionPolylineDel(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionPolylineDel() = default;
+	~RS_ActionPolylineDel() override;
 
     virtual void init(int status=0);
 	
@@ -61,7 +61,7 @@ public:
 
 private:
     RS_Entity* delEntity;
-    RS_Vector delPoint;
+	std::unique_ptr<RS_Vector> delPoint;
 };
 
 #endif

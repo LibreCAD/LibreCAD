@@ -74,15 +74,11 @@ public:
 
 protected:
     RS_Entity* catchCircle(QMouseEvent* e);
-    RS_AtomicEntity* circle;
-	std::vector<RS_Vector> points;
-    private:
-	std::unique_ptr<RS_CircleData> cData;
-    RS_Vector coord;
-    double radius;
-    bool valid;
-    //keep a list of centers found
-    RS_VectorSolutions centers;
+	RS_AtomicEntity* circle;
+
+private:
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

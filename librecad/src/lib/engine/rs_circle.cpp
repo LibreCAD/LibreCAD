@@ -40,19 +40,14 @@
 #include "rs_math.h"
 #include "lc_hyperbola.h"
 #include "lc_quadratic.h"
-RS_CircleData::RS_CircleData(const RS_Vector& _center,
-			  double _radius):
-	center(_center)
-  ,radius(_radius)
+
+RS_CircleData::RS_CircleData(RS_Vector const& center, double radius):
+	center(center)
+	, radius(radius)
 {
 }
 
-void RS_CircleData::reset() {
-	center = RS_Vector(false);
-	radius = 0.0;
-}
-
-bool RS_CircleData::isValid() const{
+bool RS_CircleData::isValid() const {
 	return (center.valid && radius>RS_TOLERANCE);
 }
 
@@ -281,9 +276,9 @@ bool RS_Circle::createInscribe(const RS_Vector& coord, const std::vector<RS_Line
 std::vector<RS_Entity* > RS_Circle::offsetTwoSides(const double& distance) const
 {
 	std::vector<RS_Entity*> ret(0,nullptr);
-	ret.push_back(new RS_Circle(nullptr,RS_CircleData(getCenter(),getRadius()+distance)));
+	ret.push_back(new RS_Circle(nullptr, {getCenter(),getRadius()+distance}));
 	if(fabs(getRadius()-distance)>RS_TOLERANCE)
-	ret.push_back(new RS_Circle(nullptr,RS_CircleData(getCenter(),fabs(getRadius()-distance))));
+	ret.push_back(new RS_Circle(nullptr, {getCenter(),fabs(getRadius()-distance)}));
     return ret;
 }
 
@@ -329,7 +324,7 @@ std::vector<RS_Circle> RS_Circle::createTan3(const std::vector<RS_AtomicEntity*>
     if(circles.size()!=3) return ret;
 	 std::vector<RS_Circle> cs;
 	 for(auto c: circles){
-		 cs.emplace_back(RS_Circle(nullptr,RS_CircleData(c->getCenter(),c->getRadius())));
+		 cs.emplace_back(RS_Circle(nullptr, {c->getCenter(),c->getRadius()}));
 	 }
     unsigned short flags=0;
     do{
@@ -437,9 +432,9 @@ std::vector<RS_Circle> RS_Circle::solveAppolloniusSingle(const std::vector<RS_Ci
 //        qDebug()<<"c0.size()="<<c0.size();
         for(size_t i=0; i<c0.size(); i++){
             const double dc =  c0[i].distanceTo(centers[i0]);
-			ret.push_back(RS_Circle(nullptr, RS_CircleData(c0[i], fabs(dc - radii[i0]))));
+			ret.push_back(RS_Circle(nullptr, {c0[i], fabs(dc - radii[i0])}));
             if( dc > radii[i0]) {
-				ret.push_back(RS_Circle(nullptr, RS_CircleData(c0[i], dc + radii[i0])));
+				ret.push_back(RS_Circle(nullptr, {c0[i], dc + radii[i0]}));
             }
         }
         return ret;
@@ -484,7 +479,7 @@ std::vector<RS_Circle> RS_Circle::solveAppolloniusSingle(const std::vector<RS_Ci
     std::vector<double>&& vr=RS_Math::quadraticSolver(ce);
     for(size_t i=0; i < vr.size();i++){
         if(vr.at(i)<RS_TOLERANCE) continue;
-		ret.push_back(RS_Circle(nullptr,RS_CircleData(vp+vq*vr.at(i),fabs(vr.at(i)))));
+		ret.emplace_back(RS_Circle(nullptr, {vp+vq*vr.at(i),fabs(vr.at(i))}));
     }
 //    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //    std::cout<<"Found "<<ret.size()<<" solutions"<<std::endl;

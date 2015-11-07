@@ -36,12 +36,29 @@
 #include "rs_arc.h"
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
+
+struct RS_ActionDrawArc3P::Points {
+RS_ArcData data;
+/**
+ * 1st point.
+ */
+RS_Vector point1;
+/**
+ * 2nd point.
+ */
+RS_Vector point2;
+/**
+ * 3nd point.
+ */
+RS_Vector point3;
+};
 
 RS_ActionDrawArc3P::RS_ActionDrawArc3P(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw arcs 3P",
 						   container, graphicView)
-		,data(new RS_ArcData())
+		, pPoints(new Points())
 {
 	actionType=RS2::ActionDrawArc3P;
     reset();
@@ -53,10 +70,7 @@ RS_ActionDrawArc3P::~RS_ActionDrawArc3P() = default;
 
 
 void RS_ActionDrawArc3P::reset() {
-	data->reset();
-    point1 = RS_Vector(false);
-    point2 = RS_Vector(false);
-    point3 = RS_Vector(false);
+	pPoints.reset();
 }
 
 
@@ -73,9 +87,8 @@ void RS_ActionDrawArc3P::trigger() {
     RS_PreviewActionInterface::trigger();
 
     preparePreview();
-	if (data->isValid()) {
-        RS_Arc* arc = new RS_Arc(container,
-								 *data);
+	if (pPoints->data.isValid()) {
+		RS_Arc* arc = new RS_Arc{container, pPoints->data};
         arc->setLayerToActive();
         arc->setPenToActive();
         container->addEntity(arc);
@@ -101,12 +114,12 @@ void RS_ActionDrawArc3P::trigger() {
 
 
 void RS_ActionDrawArc3P::preparePreview() {
-	data->reset();
-    if (point1.valid && point2.valid && point3.valid) {
-		RS_Arc arc(NULL, *data);
-        bool suc = arc.createFrom3P(point1, point2, point3);
+	pPoints->data = {};
+	if (pPoints->point1.valid && pPoints->point2.valid && pPoints->point3.valid) {
+		RS_Arc arc(NULL, pPoints->data);
+		bool suc = arc.createFrom3P(pPoints->point1, pPoints->point2, pPoints->point3);
         if (suc) {
-			data.reset(new RS_ArcData(arc.getData()));
+			pPoints->data = arc.getData();
         }
     }
 }
@@ -117,13 +130,13 @@ void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent* e) {
 
     switch (getStatus()) {
     case SetPoint1:
-        point1 = mouse;
+		pPoints->point1 = mouse;
         break;
 
     case SetPoint2:
-        point2 = mouse;
-        if (point1.valid) {
-			RS_Line* line = new RS_Line{preview.get(), point1, point2};
+		pPoints->point2 = mouse;
+		if (pPoints->point1.valid) {
+			RS_Line* line = new RS_Line{preview.get(), pPoints->point1, pPoints->point2};
 
             deletePreview();
             preview->addEntity(line);
@@ -132,10 +145,10 @@ void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetPoint3:
-        point3 = mouse;
+		pPoints->point3 = mouse;
         preparePreview();
-		if (data->isValid()) {
-			RS_Arc* arc = new RS_Arc(preview.get(), *data);
+		if (pPoints->data.isValid()) {
+			RS_Arc* arc = new RS_Arc(preview.get(), pPoints->data);
 
             deletePreview();
             preview->addEntity(arc);
@@ -170,19 +183,19 @@ void RS_ActionDrawArc3P::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetPoint1:
-        point1 = mouse;
+		pPoints->point1 = mouse;
         graphicView->moveRelativeZero(mouse);
         setStatus(SetPoint2);
         break;
 
     case SetPoint2:
-        point2 = mouse;
+		pPoints->point2 = mouse;
         graphicView->moveRelativeZero(mouse);
         setStatus(SetPoint3);
         break;
 
     case SetPoint3:
-        point3 = mouse;
+		pPoints->point3 = mouse;
         trigger();
         break;
 

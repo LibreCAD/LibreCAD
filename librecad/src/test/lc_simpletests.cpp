@@ -531,9 +531,7 @@ void LC_SimpleTests::slotTestInsertBlock() {
 		block->addEntity(arc);
 
 		// Add one blue circle:
-		RS_CircleData circleData(RS_Vector(20.0,15.0),
-								 12.5);
-		circle = new RS_Circle(block, circleData);
+		circle = new RS_Circle(block, {{20.0,15.0}, 12.5});
 		circle->setLayerToActive();
 		circle->setPen(RS_Pen(RS_Color(0, 0, 255),
 							  RS2::Width01,
@@ -650,10 +648,11 @@ void LC_SimpleTests::slotTestInsertEllipse() {
 			double xp = 1000.*a;
 
 			ellipse = new RS_Ellipse(graphic,
-			{xp,0.}, v,
-									 0.5,
-									 0., 2.*M_PI,
-									 false);
+			{{xp,0.}, v,
+			 0.5,
+			 0., 2.*M_PI,
+			 false}
+									 );
 
 			ellipse->setPen(RS_Pen(RS_Color(255, 0, 255),
 								   RS2::Width01,

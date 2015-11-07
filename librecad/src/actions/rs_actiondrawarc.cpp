@@ -36,6 +36,7 @@
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_preview.h"
 
 RS_ActionDrawArc::RS_ActionDrawArc(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView)
@@ -117,8 +118,7 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent* e) {
 			data->radius = data->center.distanceTo(mouse);
             deletePreview();
 			preview->addEntity(new RS_Circle(preview.get(),
-											 RS_CircleData(data->center,
-														   data->radius)));
+			{data->center, data->radius}));
             drawPreview();
         }
         break;

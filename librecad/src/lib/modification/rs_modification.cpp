@@ -1636,19 +1636,19 @@ bool RS_Modification::scale(RS_ScaleData& data) {
     //non-isotropic scaling, replacing selected circles with ellipses
 				RS_Circle *c=static_cast<RS_Circle*>(ec);
 				ec= new RS_Ellipse{container,
-						c->getCenter(), {c->getRadius(),0.},
+				{c->getCenter(), {c->getRadius(),0.},
 						1.,
-						0., 0., false};
+						0., 0., false}};
             } else if ( ec->rtti() == RS2::EntityArc ) {
     //non-isotropic scaling, replacing selected arcs with ellipses
 				RS_Arc *c=static_cast<RS_Arc*>(ec);
 				ec= new RS_Ellipse{container,
-								   c->getCenter(),
+								   {c->getCenter(),
 								   {c->getRadius(),0.},
 								   1.0,
 								   c->getAngle1(),
 								   c->getAngle2(),
-								   c->isReversed()};
+								   c->isReversed()}};
             }
             }
 			selectedList.push_back(ec);

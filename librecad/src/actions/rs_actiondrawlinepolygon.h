@@ -46,7 +46,7 @@ class RS_ActionDrawLinePolygonCenCor : public RS_PreviewActionInterface {
 public:
     RS_ActionDrawLinePolygonCenCor(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLinePolygonCenCor() = default;
+	virtual ~RS_ActionDrawLinePolygonCenCor() override;
 
     virtual void trigger();
 	
@@ -72,10 +72,8 @@ public:
 	}
 
 private:
-	/** Center of polygon */
-	RS_Vector center;
-	/** Edge */
-	RS_Vector corner;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 	/** Number of edges. */
 	int number;
 	/** Last status before entering text. */

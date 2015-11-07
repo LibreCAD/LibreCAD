@@ -29,8 +29,6 @@
 
 #include "rs_previewactioninterface.h"
 
-struct RS_LineData;
-
 /**
  * This action class can handle user events to draw
  * simple lines with the start- and endpoint given.
@@ -78,21 +76,8 @@ public:
 
 protected:
 	RS_Vector snapToAngle(const RS_Vector& currentCoord);
-	/**
-	* Line data defined so far.
-	*/
-	std::unique_ptr<RS_LineData> data;
-	/**
-		 * Start point of the series of lines. Used for close function.
-		 */
-	RS_Vector start;
-
-	/**
-		 * Point history (for undo)
-		 */
-	int historyIndex;
-	std::vector<RS_Vector> history;
-
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

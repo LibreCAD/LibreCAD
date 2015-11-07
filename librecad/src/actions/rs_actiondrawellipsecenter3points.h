@@ -25,9 +25,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_previewactioninterface.h"
 
-struct RS_CircleData;
-struct RS_EllipseData;
-
 /**
  * Draw ellipse by center and 3 points on ellipse
  *
@@ -67,10 +64,8 @@ public:
     virtual void updateMouseCursor();
 
 private:
-	RS_VectorSolutions points;
-	std::unique_ptr<RS_CircleData> cData;
-	std::unique_ptr<RS_EllipseData> eData;
-    bool valid;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

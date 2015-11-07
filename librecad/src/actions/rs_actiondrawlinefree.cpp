@@ -30,12 +30,13 @@
 #include "rs_polyline.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_preview.h"
 
 RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw freehand lines",
 					container, graphicView)
-		,vertex(false)
+		,vertex(new RS_Vector{})
 {
 	preview->setOwner(false);
 	actionType=RS2::ActionDrawLineFree;
@@ -75,7 +76,7 @@ void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector v = snapPoint(e);
     drawSnapper();
     if (getStatus()==Dragging && polyline.get()) {
-        if( (graphicView->toGui(v) - graphicView->toGui(vertex)).squared()< 1. ){
+		if( (graphicView->toGui(v) - graphicView->toGui(*vertex)).squared()< 1. ){
             //do not add the same mouse position
             return;
         }
@@ -85,7 +86,7 @@ void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
             drawPreview();
         }
 
-        vertex = v;
+		*vertex = v;
 
         RS_DEBUG->print("RS_ActionDrawLineFree::%s:"
                         " line added: %d", __func__, ent->getId());
@@ -100,9 +101,9 @@ void RS_ActionDrawLineFree::mousePressEvent(QMouseEvent* e) {
         case SetStartpoint:
             setStatus(Dragging);
         case Dragging:
-            vertex = snapPoint(e);
+			*vertex = snapPoint(e);
 			polyline.reset(new RS_Polyline(container,
-									   RS_PolylineData(vertex, vertex, 0))
+									   RS_PolylineData(*vertex, *vertex, 0))
 						   );
             polyline->setLayerToActive();
             polyline->setPenToActive();
@@ -119,7 +120,7 @@ void RS_ActionDrawLineFree::mousePressEvent(QMouseEvent* e) {
 void RS_ActionDrawLineFree::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         if(getStatus()==Dragging){
-        vertex = RS_Vector(false);
+		*vertex = {};
         trigger();
         }
     } else if (e->button()==Qt::RightButton) {

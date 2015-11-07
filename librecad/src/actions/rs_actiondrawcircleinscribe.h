@@ -67,14 +67,15 @@ public:
 
 protected:
 	std::vector<RS_Line*> lines;
-    private:
+
+private:
 	/**
 	 * @brief clearLines unset highlighten lines, and clear the vector "lines"
 	 * @param checkStatus keep lines members according to getStatus()
 	 */
 	void clearLines(bool checkStatus=false);
-	std::unique_ptr<RS_CircleData> cData;
-    RS_Vector coord;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
     bool valid;
 };
 

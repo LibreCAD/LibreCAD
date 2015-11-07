@@ -29,9 +29,6 @@
 
 #include "rs_previewactioninterface.h"
 
-struct RS_PolylineData;
-struct RS_ArcData;
-class RS_Polyline;
 
 /**
  * This action class can handle user events to draw 
@@ -112,35 +109,8 @@ protected:
 	int m_Reversed;
     bool calculatedSegment;
 
-    /**
-     * Line data defined so far.
-     */
-	std::unique_ptr<RS_PolylineData> data;
-	std::unique_ptr<RS_ArcData> arc_data;
-    /**
-     * Polyline entity we're working on.
-     */
-    RS_Polyline* polyline;
-	
-    /**
-     * last point.
-     */
-    RS_Vector point;
-    RS_Vector calculatedEndpoint;
-	/**
-	 * Start point of the series of lines. Used for close function.
-	 */
-	RS_Vector start;
-
-	/**
-	 * Point history (for undo)
-	 */
-        QList<RS_Vector> history;
-	
-	/**
-	 * Bulge history (for undo)
-	 */
-        QList<double> bHistory;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

@@ -36,6 +36,7 @@ RS_ActionInfoInside::RS_ActionInfoInside(RS_EntityContainer& container,
 										 RS_GraphicView& graphicView)
 	:RS_ActionInterface("Info Inside",
 						container, graphicView)
+	, pt(new RS_Vector{})
 	,contour(new RS_EntityContainer(nullptr, false))
 {
 	actionType=RS2::ActionInfoInside;
@@ -50,7 +51,7 @@ RS_ActionInfoInside::~RS_ActionInfoInside() = default;
 
 void RS_ActionInfoInside::trigger() {
     bool onContour = false;
-	if (RS_Information::isPointInsideContour(pt, contour.get(), &onContour)) {
+	if (RS_Information::isPointInsideContour(*pt, contour.get(), &onContour)) {
         RS_DIALOGFACTORY->commandMessage(tr("Point is inside selected contour."));
     } else {
         RS_DIALOGFACTORY->commandMessage(tr("Point is outside selected contour."));
@@ -71,7 +72,7 @@ void RS_ActionInfoInside::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     } else {
-        pt = snapPoint(e);
+		*pt = snapPoint(e);
         trigger();
     }
 }

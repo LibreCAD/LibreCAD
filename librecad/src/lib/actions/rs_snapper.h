@@ -30,7 +30,6 @@
 
 #include<memory>
 #include "rs.h"
-#include "rs_vector.h"
 
 class RS_Entity;
 class RS_GraphicView;

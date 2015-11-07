@@ -328,7 +328,7 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
         //ellipse
 		double const ratio=sqrt(a*a - f*f)/a;
 		RS_Vector const& majorP=RS_Vector{angle}*a;
-		RS_Ellipse const ellipse{center,majorP,ratio,0.,0.,false};
+		RS_Ellipse const ellipse{nullptr, {center,majorP,ratio,0.,0.,false}};
 		auto const& lc0=ellipse.getQuadratic();
 
         m_mQuad=lc0.getQuad();

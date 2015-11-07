@@ -31,6 +31,19 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
+#include "rs_preview.h"
+
+struct RS_ActionDrawLineHorVert::Points {
+	/**
+	 * Line data.
+	 */
+	RS_LineData data;
+	/**
+	 * 2 points
+	 */
+	RS_Vector p1;
+	RS_Vector p2;
+};
 
 
 
@@ -39,7 +52,7 @@ RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw horizontal/vertical lines",
 						   container, graphicView)
-		,data(new RS_LineData())
+		, pPoints(new Points{})
 {
     reset();
     RS_DEBUG->print("RS_ActionDrawLineHorVert::constructor");
@@ -50,7 +63,7 @@ RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(
 RS_ActionDrawLineHorVert::~RS_ActionDrawLineHorVert() = default;
 
 void RS_ActionDrawLineHorVert::reset() {
-	data.reset(new RS_LineData());
+	pPoints->data = {{}, {}};
 }
 
 
@@ -67,7 +80,7 @@ void RS_ActionDrawLineHorVert::init(int status) {
 void RS_ActionDrawLineHorVert::trigger() {
     RS_PreviewActionInterface::trigger();
 
-	RS_Line* line = new RS_Line(container, *data);
+	RS_Line* line = new RS_Line(container, pPoints->data);
     line->setLayerToActive();
     line->setPenToActive();
     container->addEntity(line);
@@ -92,16 +105,16 @@ void RS_ActionDrawLineHorVert::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineHorVert::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-    if (getStatus()==SetEndpoint && p1.valid) {
-        RS_Vector p2x = RS_Vector(mouse.x, p1.y);
-        RS_Vector p2y = RS_Vector(p1.x, mouse.y);
+	if (getStatus()==SetEndpoint && pPoints->p1.valid) {
+		RS_Vector p2x = RS_Vector(mouse.x, pPoints->p1.y);
+		RS_Vector p2y = RS_Vector(pPoints->p1.x, mouse.y);
         if (mouse.distanceTo(p2y) > mouse.distanceTo(p2x))
-            p2 = p2x;
+			pPoints->p2 = p2x;
         else
-            p2 = p2y;
+			pPoints->p2 = p2y;
         deletePreview();
-		data.reset(new RS_LineData{p1, p2});
-		preview->addEntity(new RS_Line{preview.get(), *data});
+		pPoints->data = {pPoints->p1, pPoints->p2};
+		preview->addEntity(new RS_Line{preview.get(), pPoints->data});
         drawPreview();
     }
 
@@ -116,12 +129,12 @@ void RS_ActionDrawLineHorVert::mouseReleaseEvent(QMouseEvent* e) {
 
         switch (getStatus()) {
         case SetStartpoint:
-            p1 = mouse;
+			pPoints->p1 = mouse;
             setStatus(SetEndpoint);
             break;
 
         case SetEndpoint:
-            p2 = mouse;
+			pPoints->p2 = mouse;
             trigger();
             setStatus(SetStartpoint);
             break;

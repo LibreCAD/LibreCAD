@@ -27,6 +27,7 @@
 
 #include "rs_actiondrawmtext.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_TextOptions as a child of 'parent', with the
@@ -85,7 +86,7 @@ void QG_MTextOptions::setAction(RS_ActionInterface* a, bool update) {
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
 			"QG_TextOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
 
 }

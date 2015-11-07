@@ -31,10 +31,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_circle.h"
 #include "lc_quadratic.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
 
 namespace {
 auto enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
 }
+
+struct RS_ActionDrawCircleTan2_1P::Points {
+	RS_Vector point;
+	RS_CircleData cData;
+	RS_Vector coord;
+	double radius = 0.;
+	bool valid = false;
+	//keep a list of centers found
+	RS_VectorSolutions centers;
+};
+
 /**
  * Constructor.
  *
@@ -43,10 +55,8 @@ RS_ActionDrawCircleTan2_1P::RS_ActionDrawCircleTan2_1P(
         RS_EntityContainer& container,
         RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw tangent circle 2P",
-                               container, graphicView),
-	  cData(new RS_CircleData(RS_Vector(0.,0.),1.))
-	,radius(0.)
-	,valid(false)
+							   container, graphicView)
+	, pPoints(new Points{})
 {
 	actionType=RS2::ActionDrawCircleTan2_1P;
 }
@@ -89,7 +99,7 @@ void RS_ActionDrawCircleTan2_1P::finish(bool updateTB){
 
 void RS_ActionDrawCircleTan2_1P::trigger() {
     RS_PreviewActionInterface::trigger();
-	RS_Circle* c=new RS_Circle(container, *cData);
+	RS_Circle* c=new RS_Circle(container, pPoints->cData);
 
     container->addEntity(c);
 
@@ -116,13 +126,13 @@ void RS_ActionDrawCircleTan2_1P::trigger() {
 bool RS_ActionDrawCircleTan2_1P::getCenters()
 {
     if(circles.size()<2) return false;
-    LC_Quadratic lc0(circles[0], point);
-    LC_Quadratic lc1(circles[1], point);
+	LC_Quadratic lc0(circles[0], pPoints->point);
+	LC_Quadratic lc1(circles[1], pPoints->point);
 
-	auto list=LC_Quadratic::getIntersection(lc0,lc1);
-    centers.clean();
+	auto const& list=LC_Quadratic::getIntersection(lc0,lc1);
+	pPoints->centers.clear();
 	for(const RS_Vector& vp: list){
-		auto ds=vp.distanceTo(point)-RS_TOLERANCE;
+		auto ds=vp.distanceTo(pPoints->point)-RS_TOLERANCE;
         bool validBranch(true);
         for(int j=0;j<2;j++){
             if(circles[j]->rtti()==RS2::EntityCircle||circles[j]->rtti()==RS2::EntityArc){
@@ -132,9 +142,9 @@ bool RS_ActionDrawCircleTan2_1P::getCenters()
                 }
             }
         }
-        if(validBranch)  centers.push_back(vp);
+		if(validBranch)  pPoints->centers.push_back(vp);
     }
-    return centers.size()>0;
+	return pPoints->centers.size()>0;
 }
 
 void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent* e) {
@@ -142,18 +152,18 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent* e) {
 
     switch( getStatus()){
     case SetPoint:
-        coord=snapPoint(e);
-        point=coord;
+		pPoints->coord=snapPoint(e);
+		pPoints->point=pPoints->coord;
         break;
     case SetCenter:
-        coord=graphicView->toGraph(e->x(),e->y());
+		pPoints->coord=graphicView->toGraph(e->x(),e->y());
         break;
     default:
         return;
     }
     deletePreview();
     if(preparePreview()){
-		RS_Circle* e=new RS_Circle(preview.get(), *cData);
+		RS_Circle* e=new RS_Circle(preview.get(), pPoints->cData);
         preview->addEntity(e);
         drawPreview();
     }
@@ -162,8 +172,8 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent* e) {
 
 bool RS_ActionDrawCircleTan2_1P::preparePreview(){
 	if (!getCenters()) return false;
-	cData->center=centers.getClosest(coord);
-	cData->radius=point.distanceTo(cData->center);
+	pPoints->cData.center=pPoints->centers.getClosest(pPoints->coord);
+	pPoints->cData.radius=pPoints->point.distanceTo(pPoints->cData.center);
     return true;
 }
 
@@ -207,7 +217,7 @@ void RS_ActionDrawCircleTan2_1P::mouseReleaseEvent(QMouseEvent* e) {
         }
             break;
         case SetCenter:
-            coord=graphicView->toGraph(e->x(),e->y());
+			pPoints->coord=graphicView->toGraph(e->x(),e->y());
             if(preparePreview()) trigger();
             break;
 
@@ -230,10 +240,10 @@ void RS_ActionDrawCircleTan2_1P::coordinateEvent(RS_CoordinateEvent* e) {
     switch(getStatus()){
 
     case SetPoint:
-        point=mouse;
-        coord=mouse;
+		pPoints->point=mouse;
+		pPoints->coord=mouse;
         if(getCenters()) {
-            if(centers.size()==1) trigger();
+			if(pPoints->centers.size()==1) trigger();
             else setStatus(getStatus()+1);
         }
         break;
@@ -314,8 +324,7 @@ void RS_ActionDrawCircleTan2_1P::commandEvent(RS_CommandEvent* e) {
 */
 
 QStringList RS_ActionDrawCircleTan2_1P::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
+	return {};
 }
 
 void RS_ActionDrawCircleTan2_1P::updateMouseButtonHints() {

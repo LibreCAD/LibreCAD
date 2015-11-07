@@ -32,22 +32,31 @@
 #include "rs_graphicview.h"
 #include "rs_polyline.h"
 #include "rs_modification.h"
+#include "rs_preview.h"
+
+struct RS_ActionModifyDeleteFree::Points {
+	RS_Vector v1;
+	RS_Vector v2;
+};
 
 RS_ActionModifyDeleteFree::RS_ActionModifyDeleteFree(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_ActionInterface("Delete Entities Freehand",
 					container, graphicView)
+		, pPoints(new Points{})
 {
 	init();
 }
+
+RS_ActionModifyDeleteFree::~RS_ActionModifyDeleteFree() = default;
+
 
 void RS_ActionModifyDeleteFree::init(int status) {
     RS_ActionInterface::init(status);
 	polyline = nullptr;
 	e1 = e2 = nullptr;
-    v1 = v2 = RS_Vector(false);
-
+	pPoints.reset();
     RS_SnapMode *s = getSnapMode();
     s->snapOnEntity = true;
 }
@@ -69,8 +78,8 @@ void RS_ActionModifyDeleteFree::trigger() {
                     RS_Polyline* pl2;
                     RS_Modification m(*container);
                     m.splitPolyline(*polyline,
-                                    *e1, v1,
-                                    *e2, v2,
+									*e1, pPoints->v1,
+									*e2, pPoints->v2,
                                     &pl1, &pl2);
 
                     if (document) {
@@ -111,7 +120,7 @@ void RS_ActionModifyDeleteFree::mouseReleaseEvent(QMouseEvent* e) {
 
         switch (getStatus()) {
         case 0: {
-                v1 = snapPoint(e);
+				pPoints->v1 = snapPoint(e);
                 e1 = getKeyEntity();
                 if (e1) {
                     RS_EntityContainer* parent = e1->getParent();
@@ -135,7 +144,7 @@ void RS_ActionModifyDeleteFree::mouseReleaseEvent(QMouseEvent* e) {
             break;
 
         case 1: {
-                v2 = snapPoint(e);
+				pPoints->v2 = snapPoint(e);
                 e2 = getKeyEntity();
 
                 if (e2) {

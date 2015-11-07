@@ -29,8 +29,6 @@
 
 #include "rs_previewactioninterface.h"
 
-struct RS_LineData;
-
 /**
  * This action class can handle user events to draw 
  * rectangles with two corners given.
@@ -51,7 +49,7 @@ public:
 public:
     RS_ActionDrawLineRectangle(RS_EntityContainer& container,
                                RS_GraphicView& graphicView);
-	~RS_ActionDrawLineRectangle() = default;
+	~RS_ActionDrawLineRectangle();
 
     virtual void trigger();
     virtual void mouseMoveEvent(QMouseEvent* e);
@@ -64,14 +62,8 @@ public:
     virtual void updateMouseCursor();
 
 protected:
-    /**
-     * 1st corner.
-     */
-    RS_Vector corner1;
-    /**
-     * 2nd corner.
-     */
-    RS_Vector corner2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

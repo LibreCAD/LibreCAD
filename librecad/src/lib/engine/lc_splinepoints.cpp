@@ -807,7 +807,7 @@ double LC_SplinePoints::getDistanceToPoint(const RS_Vector& coord,
 //RS_Vector LC_SplinePoints::getNearestCenter(const RS_Vector& /*coord*/,
 //	double* dist) const
 //{
-//	if(dist != NULL)
+//	if(dist != nullptr)
 //	{
 //		*dist = RS_MAXDOUBLE;
 //	}
@@ -970,7 +970,7 @@ RS_Vector LC_SplinePoints::getNearestDist(double /*distance*/,
 	const RS_Vector& /*coord*/, double* dist) const
 {
 printf("getNearestDist\n");
-	if(dist != NULL)
+	if(dist != nullptr)
 	{
 		*dist = RS_MAXDOUBLE;
 	}
@@ -1144,8 +1144,8 @@ void LC_SplinePoints::addControlPoint(const RS_Vector& v)
 
 double* GetMatrix(int iCount, bool bClosed, double *dt)
 {
-	if(bClosed && iCount < 3) return NULL;
-	if(!bClosed && iCount < 4) return NULL;
+	if(bClosed && iCount < 3) return nullptr;
+	if(!bClosed && iCount < 4) return nullptr;
 
 	int iDim = 0;
 	if(bClosed) iDim = 5*iCount - 6; // n + 2*(n - 1) + 2*(n - 2)
@@ -1798,7 +1798,7 @@ void LC_SplinePoints::drawSimple(RS_Painter* painter, RS_GraphicView* view)
 
 void LC_SplinePoints::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset)
 {
-	if(painter == NULL || view == NULL)
+	if(painter == nullptr || view == nullptr)
 	{
 		return;
 	}
@@ -1806,7 +1806,7 @@ void LC_SplinePoints::draw(RS_Painter* painter, RS_GraphicView* view, double& pa
     RS_Pen penSaved = painter->getPen();
 
 	// Pattern:
-    const RS_LineTypePattern* pat = NULL;
+	const RS_LineTypePattern* pat = nullptr;
 	if(isSelected())
 	{
 //		styleFactor=1.;
@@ -2074,7 +2074,7 @@ RS_Vector LC_SplinePoints::getTangentDirection(const RS_Vector& point) const
 	if(n < 2) return vStart;
 
 	double dt = 0.0;
-	int iQuad = GetNearestQuad(point, NULL, &dt);
+	int iQuad = GetNearestQuad(point, nullptr, &dt);
 	if(iQuad < 0) return vStart;
 
 	int i = GetQuadPoints(iQuad, &vStart, &vControl, &vEnd);
@@ -2108,7 +2108,7 @@ bool LC_SplinePoints::offsetCut(const RS_Vector& coord, const double& distance)
 	if(n < 2) return false;
 
 	double dt;
-	int iQuad = GetNearestQuad(coord, NULL, &dt);
+	int iQuad = GetNearestQuad(coord, nullptr, &dt);
 	if(iQuad < 0) return false;
 
 	RS_Vector vStart(false), vEnd(false), vControl(false);
@@ -2288,7 +2288,7 @@ bool LC_SplinePoints::offsetSpline(const RS_Vector& coord, const double& distanc
 	if(n < 2) return false;
 
 	double dt;
-	int iQuad = GetNearestQuad(coord, NULL, &dt);
+	int iQuad = GetNearestQuad(coord, nullptr, &dt);
 	if(iQuad < 0) return false;
 
 	RS_Vector vStart(false), vEnd(false), vControl(false);
@@ -2493,21 +2493,21 @@ bool LC_SplinePoints::offset(const RS_Vector& coord, const double& distance)
 std::vector<RS_Entity*> AddLineOffsets(const RS_Vector& vx1,
 	const RS_Vector& vx2, const double& distance)
 {
-	std::vector<RS_Entity*> ret(0,NULL);
+	std::vector<RS_Entity*> ret(0,nullptr);
 
 	double dDist = (vx2 - vx1).magnitude();
 
 	if(dDist < RS_TOLERANCE)
 	{
-		ret.push_back(new RS_Circle(NULL, RS_CircleData(vx1, distance)));
+		ret.push_back(new RS_Circle(nullptr, {vx1, distance}));
 		return ret;
 	}
 
 	LC_SplinePointsData spd1(false, false);
 	LC_SplinePointsData spd2(false, false);
 
-	LC_SplinePoints *sp1 = new LC_SplinePoints(NULL, spd1);
-	LC_SplinePoints *sp2 = new LC_SplinePoints(NULL, spd2);
+	LC_SplinePoints *sp1 = new LC_SplinePoints(nullptr, spd1);
+	LC_SplinePoints *sp2 = new LC_SplinePoints(nullptr, spd2);
 
 	dDist = distance/dDist;
 
@@ -2524,7 +2524,7 @@ std::vector<RS_Entity*> AddLineOffsets(const RS_Vector& vx1,
 
 std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& distance) const
 {
-	std::vector<RS_Entity*> ret(0,NULL);
+	std::vector<RS_Entity*> ret(0,nullptr);
 
 	size_t iPoints = data.splinePoints.size();
 	size_t n = data.controlPoints.size();
@@ -2546,8 +2546,8 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& dist
 	{
 		if(n < 3) return ret;
 
-		sp1 = new LC_SplinePoints(NULL, spd1);
-		sp2 = new LC_SplinePoints(NULL, spd2);
+		sp1 = new LC_SplinePoints(nullptr, spd1);
+		sp2 = new LC_SplinePoints(nullptr, spd2);
 
 		vPoint = data.splinePoints.at(0);
 
@@ -2610,7 +2610,7 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& dist
 		vStart = data.controlPoints.at(0);
 		if(n < 2)
 		{
-			ret.push_back(new RS_Circle(NULL, RS_CircleData(vStart, distance)));
+			ret.push_back(new RS_Circle(nullptr, {vStart, distance}));
 			return ret;
 		}
 
@@ -2631,8 +2631,8 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& dist
 			dl2 = (vEnd - vPoint).magnitude();
 			dt = dl1/(dl1 + dl2);
 
-			sp1 = new LC_SplinePoints(NULL, spd1);
-			sp2 = new LC_SplinePoints(NULL, spd2);
+			sp1 = new LC_SplinePoints(nullptr, spd1);
+			sp2 = new LC_SplinePoints(nullptr, spd2);
 
 			vTan = GetQuadDir(vStart, vControl, vEnd, 0.0);
 			if(vTan.valid)
@@ -2666,8 +2666,8 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& dist
 			return ret;
 		}
 
-		sp1 = new LC_SplinePoints(NULL, spd1);
-		sp2 = new LC_SplinePoints(NULL, spd2);
+		sp1 = new LC_SplinePoints(nullptr, spd1);
+		sp2 = new LC_SplinePoints(nullptr, spd2);
 
 		vEnd = (data.controlPoints.at(1) + data.controlPoints.at(2))/2.0;
 
@@ -2751,7 +2751,7 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& dist
 
 std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesCut(const double& distance) const
 {
-	std::vector<RS_Entity*> ret(0,NULL);
+	std::vector<RS_Entity*> ret(0,nullptr);
 
 	size_t n = data.controlPoints.size();
 
@@ -2769,8 +2769,8 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesCut(const double& distanc
 	{
 		if(n < 3) return ret;
 
-		sp1 = new LC_SplinePoints(NULL, spd1);
-		sp2 = new LC_SplinePoints(NULL, spd2);
+		sp1 = new LC_SplinePoints(nullptr, spd1);
+		sp2 = new LC_SplinePoints(nullptr, spd2);
 
 		vStart = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
 		vControl = data.controlPoints.at(0);
@@ -2818,7 +2818,7 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesCut(const double& distanc
 		vStart = data.controlPoints.at(0);
 		if(n < 2)
 		{
-			ret.push_back(new RS_Circle(NULL, RS_CircleData(vStart, distance)));
+			ret.push_back(new RS_Circle(nullptr, RS_CircleData(vStart, distance)));
 			return ret;
 		}
 
@@ -2840,8 +2840,8 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesCut(const double& distanc
 
 		if(n < 4)
 		{
-			sp1 = new LC_SplinePoints(NULL, spd1);
-			sp2 = new LC_SplinePoints(NULL, spd2);
+			sp1 = new LC_SplinePoints(nullptr, spd1);
+			sp2 = new LC_SplinePoints(nullptr, spd2);
 
 			vTan = GetQuadDir(vStart, vControl, vEnd, 0.0);
 			if(vTan.valid)
@@ -2881,8 +2881,8 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesCut(const double& distanc
 			return ret;
 		}
 
-		sp1 = new LC_SplinePoints(NULL, spd1);
-		sp2 = new LC_SplinePoints(NULL, spd2);
+		sp1 = new LC_SplinePoints(nullptr, spd1);
+		sp2 = new LC_SplinePoints(nullptr, spd2);
 
 		vEnd = (data.controlPoints.at(1) + data.controlPoints.at(2))/2.0;
 
@@ -3631,10 +3631,10 @@ void LC_SplinePoints::trimEndpoint(const RS_Vector& pos)
 
 LC_SplinePoints* LC_SplinePoints::cut(const RS_Vector& pos)
 {
-	LC_SplinePoints *ret = NULL;
+	LC_SplinePoints *ret = nullptr;
 
 	double dt;
-	int iQuad = GetNearestQuad(pos, NULL, &dt);
+	int iQuad = GetNearestQuad(pos, nullptr, &dt);
 	if(iQuad < 1) return ret;
 
 	RS_Vector vStart(false), vControl(false), vEnd(false);
@@ -3652,7 +3652,7 @@ LC_SplinePoints* LC_SplinePoints::cut(const RS_Vector& pos)
 	{
 		// if the spline is closed, we must delete splinePoints, add the pos
 		// as start and end point and reorder control points. We must return
-		// NULL since there will still be only one spline
+		// nullptr since there will still be only one spline
 		for(int i = 0 ; i < iQuad - 1; i++)
 		{
 			vNewControl = data.controlPoints.front();

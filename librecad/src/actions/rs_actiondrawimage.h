@@ -93,8 +93,8 @@ public:
 
 
 protected:
-	std::unique_ptr<RS_ImageData> data;
-	std::unique_ptr<QImage> img;
+	struct ImageData;
+	std::unique_ptr<ImageData> pImg;
 	
 	/** Last status before entering option. */
 	Status lastStatus;

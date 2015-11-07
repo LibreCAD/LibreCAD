@@ -49,7 +49,7 @@ private:
 public:
     RS_ActionDrawLineBisector(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-	~RS_ActionDrawLineBisector() = default;
+	~RS_ActionDrawLineBisector();
 	
 	virtual void init(int status=0);
 
@@ -85,10 +85,8 @@ private:
     double length;
 	/** Number of bisectors to create. */
 	int number;
-	/** Mouse pos when choosing the 1st line */
-	RS_Vector coord1;
-	/** Mouse pos when choosing the 2nd line */
-	RS_Vector coord2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 	/** Last status before entering length or number. */
 	Status lastStatus;
 };

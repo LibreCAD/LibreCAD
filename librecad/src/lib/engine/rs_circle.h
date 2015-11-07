@@ -39,14 +39,9 @@ class LC_Quadratic;
  */
 struct RS_CircleData {
 	RS_CircleData() = default;
-
-	RS_CircleData(const RS_Vector& m_vCenter,
-				  double radius);
-	bool operator == (RS_CircleData const& rhs) const;
-
-	void reset();
-
+	RS_CircleData(RS_Vector const& center, double radius);
 	bool isValid() const;
+	bool operator == (RS_CircleData const&) const;
 	RS_Vector center;
 	double radius;
 };

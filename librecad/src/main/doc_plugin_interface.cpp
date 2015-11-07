@@ -170,7 +170,7 @@ Plugin_Entity::Plugin_Entity(RS_EntityContainer* parent, enum DPI::ETYPE type){
         break;
     case DPI::ELLIPSE:
 		entity = new RS_Ellipse{parent,
-				{0.,0.}, {0.,0.},0.,0.,0.,false};
+		{{0.,0.}, {0.,0.},0.,0.,0.,false}};
         break;
     case DPI::IMAGE:
         entity = new RS_Image(parent, RS_ImageData());

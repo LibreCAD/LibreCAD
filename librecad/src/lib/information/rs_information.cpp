@@ -645,10 +645,10 @@ RS_VectorSolutions RS_Information::getIntersectionCircleEllipse(RS_Circle* c1,
 	if (!(c1 && e1)) return ret;
 
 	RS_Ellipse const e2{c1->getParent(),
-			c1->getCenter(), {c1->getRadius(),0.},
+			{c1->getCenter(), {c1->getRadius(),0.},
 			1.0,
 			0., 2.*M_PI,
-			false};
+			false}};
 	return getIntersectionEllipseEllipse(e1, &e2);
 }
 
@@ -659,11 +659,11 @@ RS_VectorSolutions RS_Information::getIntersectionArcEllipse(RS_Arc * a1,
         return ret;
 	}
 	RS_Ellipse const e2{a1->getParent(),
-			a1->getCenter(),
+			{a1->getCenter(),
 			{a1->getRadius(), 0.},
 			1.0,
 			a1->getAngle1(), a1->getAngle2(),
-			a1->isReversed()};
+			a1->isReversed()}};
 	return getIntersectionEllipseEllipse(e1, &e2);
 }
 

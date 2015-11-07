@@ -37,6 +37,7 @@
 #include "rs_coordinateevent.h"
 #include "rs_creation.h"
 #include "rs_math.h"
+#include "rs_preview.h"
 
 /**
  * Constructor.
@@ -115,7 +116,7 @@ void RS_ActionBlocksInsert::mouseMoveEvent(QMouseEvent* e) {
             deletePreview();
             //preview->addAllFrom(*block);
 			//preview->move(data->insertionPoint);
-			RS_Creation creation(preview.get(), NULL, false);
+			RS_Creation creation(preview.get(), nullptr, false);
 			// Create insert as preview only
 			data->updateMode = RS2::PreviewUpdate;
 			creation.createInsert(data.get());

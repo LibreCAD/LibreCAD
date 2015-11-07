@@ -101,7 +101,7 @@ protected:
     /**
      * Point that determines end angle.
      */
-    RS_Vector point;
+	std::unique_ptr<RS_Vector> point;
     /**
   * Arc data calculated.
   */

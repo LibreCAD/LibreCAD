@@ -29,7 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
-
+class RS_Vector;
 
 /**
  * This action class can handle user events to draw parallel 
@@ -48,7 +48,7 @@ class RS_ActionDrawLineParallelThrough : public RS_PreviewActionInterface {
 public:
     RS_ActionDrawLineParallelThrough(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineParallelThrough() = default;
+	~RS_ActionDrawLineParallelThrough();
 	
     virtual void trigger();
 	
@@ -76,7 +76,7 @@ private:
 	/** Number of parallels. */
 	int number=1;
 	/** Coordinate of the mouse. */
-	RS_Vector coord;
+	std::unique_ptr<RS_Vector> coord;
 	/** Original entity. */
 	RS_Entity* entity=nullptr;
 	/** Last status before entering length or number. */

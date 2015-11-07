@@ -37,13 +37,18 @@
 RS_ActionDrawPoint::RS_ActionDrawPoint(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw Points",
-						   container, graphicView) {
+						   container, graphicView)
+		, pt(new RS_Vector{})
+{
 	actionType=RS2::ActionDrawPoint;
 }
 
+RS_ActionDrawPoint::~RS_ActionDrawPoint() = default;
+
+
 void RS_ActionDrawPoint::trigger() {
-    if (pt.valid) {
-        RS_Point* point = new RS_Point(container, RS_PointData(pt));
+	if (pt->valid) {
+		RS_Point* point = new RS_Point(container, RS_PointData(*pt));
         container->addEntity(point);
 
         if (document) {
@@ -52,7 +57,7 @@ void RS_ActionDrawPoint::trigger() {
             document->endUndoCycle();
         }
 
-		graphicView->moveRelativeZero(pt);
+		graphicView->moveRelativeZero(*pt);
 		graphicView->redraw((RS2::RedrawMethod) (RS2::RedrawDrawing | RS2::RedrawOverlay));
     }
 }
@@ -77,13 +82,13 @@ void RS_ActionDrawPoint::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawPoint::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (e==nullptr) {
         return;
     }
 
     RS_Vector mouse = e->getCoordinate();
 
-    pt = mouse;
+	*pt = mouse;
     trigger();
 }
 
@@ -104,8 +109,7 @@ void RS_ActionDrawPoint::commandEvent(RS_CommandEvent* e) {
 
 
 QStringList RS_ActionDrawPoint::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
+	return {};
 }
 
 

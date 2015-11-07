@@ -44,13 +44,13 @@ struct RS_EllipseData {
     //! Endpoint of major axis relative to center.
     RS_Vector majorP;
     //! Ratio of minor axis to major axis.
-    double ratio;
+	double ratio;
     //! Start angle
-    double angle1;
+	double angle1;
     //! End angle
-    double angle2;
+	double angle2;
     //! Reversed (cw) flag
-    bool reversed;
+	bool reversed;
 };
 
 std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed);
@@ -64,19 +64,6 @@ class RS_Ellipse : public RS_AtomicEntity {
 public:
 	RS_Ellipse()=default;
 	RS_Ellipse(RS_EntityContainer* parent, const RS_EllipseData& d);
-	RS_Ellipse(const RS_EllipseData& d);
-	RS_Ellipse(RS_EntityContainer* parent,
-			   const RS_Vector& center,
-			   const RS_Vector& majorP,
-			   double ratio,
-			   double angle1, double angle2,
-			   bool reversed = false);
-	RS_Ellipse(const RS_Vector& center,
-			   const RS_Vector& majorP,
-			   double ratio,
-			   double angle1, double angle2,
-			   bool reversed = false);
-	~RS_Ellipse()=default;
 
 	virtual RS_Entity* clone() const;
 

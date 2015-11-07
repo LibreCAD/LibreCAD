@@ -35,12 +35,15 @@
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
 
 RS_ActionDimAngular::RS_ActionDimAngular(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_ActionDimension("Draw Angular Dimensions",
-                    container, graphicView) {
+					container, graphicView)
+		, center(new RS_Vector{})
+{
 	actionType= RS2::ActionDimAngular;
     reset();
 }
@@ -58,8 +61,8 @@ void RS_ActionDimAngular::reset() {
 				);
 	line1 = nullptr;
 	line2 = nullptr;
-	center = RS_Vector{}; //default to invalid vector
-    RS_DIALOGFACTORY->requestOptions(this, true, true);
+	*center = {}; //default to invalid vector
+	RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
 
 
@@ -103,7 +106,7 @@ void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e) {
 	switch (getStatus()) {
 
     case SetPos:
-        if (line1 && line2 && center.valid) {
+		if (line1 && line2 && center->valid) {
 			edata->definitionPoint4 = snapPoint(e);
 
 			RS_DimAngular* d = new RS_DimAngular(preview.get(), *data, *edata);
@@ -146,10 +149,10 @@ void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e) {
                         RS_Information::getIntersectionLineLine(line1, line2);
 
                     if (sol.get(0).valid) {
-                        center = sol.get(0);
+						*center = sol.get(0);
 
-                        if (center.distanceTo(line1->getStartpoint()) <
-                                center.distanceTo(line1->getEndpoint())) {
+						if (center->distanceTo(line1->getStartpoint()) <
+								center->distanceTo(line1->getEndpoint())) {
 							edata->definitionPoint1 = line1->getStartpoint();
 							edata->definitionPoint2 = line1->getEndpoint();
                         } else {
@@ -157,15 +160,15 @@ void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e) {
 							edata->definitionPoint2 = line1->getStartpoint();
                         }
 
-                        if (center.distanceTo(line2->getStartpoint()) <
-                                center.distanceTo(line2->getEndpoint())) {
+						if (center->distanceTo(line2->getStartpoint()) <
+								center->distanceTo(line2->getEndpoint())) {
 							edata->definitionPoint3 = line2->getStartpoint();
 							data->definitionPoint = line2->getEndpoint();
                         } else {
 							edata->definitionPoint3 = line2->getEndpoint();
 							data->definitionPoint = line2->getStartpoint();
                         }
-                        graphicView->moveRelativeZero(center);
+						graphicView->moveRelativeZero(*center);
                         setStatus(SetPos);
                     }
                 }

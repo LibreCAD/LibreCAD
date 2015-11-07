@@ -42,9 +42,10 @@ RS_ActionEditCopy::RS_ActionEditCopy(bool copy,
                                      RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_ActionInterface("Edit Copy",
-                    container, graphicView) {
-
-    this->copy = copy;
+					container, graphicView)
+		, copy(copy)
+		, referencePoint(new RS_Vector{})
+{
 }
 
 
@@ -62,7 +63,7 @@ void RS_ActionEditCopy::init(int status) {
 void RS_ActionEditCopy::trigger() {
 
     RS_Modification m(*container, graphicView);
-    m.copy(referencePoint, !copy);
+	m.copy(*referencePoint, !copy);
 
     //graphicView->redraw();
     finish(false);
@@ -94,7 +95,7 @@ void RS_ActionEditCopy::coordinateEvent(RS_CoordinateEvent* e) {
         return;
     }
 
-    referencePoint = e->getCoordinate();
+	*referencePoint = e->getCoordinate();
     trigger();
 }
 

@@ -29,6 +29,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_commandevent.h"
 #include "rs_circle.h"
 #include "rs_line.h"
+#include "rs_preview.h"
+
+struct RS_ActionDrawCircleInscribe::Points {
+	RS_CircleData cData;
+	RS_Vector coord;
+};
 
 /**
  * Constructor.
@@ -38,9 +44,9 @@ RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw circle inscribed",
-                           container, graphicView),
-		  cData(new RS_CircleData(RS_Vector(0.,0.),1.))
-		,valid(false)
+						   container, graphicView)
+		, pPoints(new Points{})
+		, valid(false)
 {
 	actionType=RS2::ActionDrawCircleInscribe;
 }
@@ -77,7 +83,7 @@ void RS_ActionDrawCircleInscribe::trigger() {
     RS_PreviewActionInterface::trigger();
 
 
-	RS_Circle* circle=new RS_Circle(container, *cData);
+	RS_Circle* circle=new RS_Circle(container, pPoints->cData);
 
     deletePreview();
     container->addEntity(circle);
@@ -111,7 +117,7 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
         }
 		if(en->getParent() && en->getParent()->ignoredOnModification())
 			return;
-        coord= graphicView->toGraph(e->x(), e->y());
+		pPoints->coord= graphicView->toGraph(e->x(), e->y());
 		deletePreview();
 		while(lines.size()==3){
 			lines.back()->setHighlighted(false);
@@ -122,7 +128,7 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
 		lines.push_back(static_cast<RS_Line*>(en));
 		graphicView->drawEntity(lines.back());
         if(preparePreview()) {
-			RS_Circle* e=new RS_Circle(preview.get(), *cData);
+			RS_Circle* e=new RS_Circle(preview.get(), pPoints->cData);
             preview->addEntity(e);
             drawPreview();
         }
@@ -135,10 +141,10 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
 bool RS_ActionDrawCircleInscribe::preparePreview(){
     valid=false;
     if(getStatus() == SetLine3) {
-		RS_Circle c(preview.get(), *cData);
-        valid= c.createInscribe(coord, lines);
+		RS_Circle c(preview.get(), pPoints->cData);
+		valid= c.createInscribe(pPoints->coord, lines);
         if(valid){
-			cData.reset(new RS_CircleData(c.getData()));
+			pPoints->cData = c.getData();
         }
     }
     return valid;
@@ -165,7 +171,7 @@ void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent* e) {
 			lines.pop_back();
 		}
 		lines.push_back(static_cast<RS_Line*>(en));
-		coord= graphicView->toGraph(e->x(), e->y());
+		pPoints->coord= graphicView->toGraph(e->x(), e->y());
         switch (getStatus()) {
         case SetLine1:
         case SetLine2:

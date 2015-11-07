@@ -820,8 +820,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                 }*/
                     graphic->setActivePen(pen);
                     graphic->addEntity(new RS_Circle(graphic,
-                                                     RS_CircleData(RS_Vector(vcx, vcy),
-                                                                   vcr)));
+					{{vcx, vcy}, vcr}));
                 }
 
 

@@ -76,9 +76,8 @@ public:
 	double getAngle() const;
 
 private:
-	std::unique_ptr<RS_MoveRotateData> data;
-    RS_Vector targetPoint;
-
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 	/** Last status before entering angle. */
 	Status lastStatus;
 	/**

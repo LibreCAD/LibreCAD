@@ -48,23 +48,21 @@ public:
 public:
     RS_ActionInfoAngle(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionInfoAngle() = default;
+	~RS_ActionInfoAngle();
 
 	virtual void init(int status);
     virtual void trigger();
-    virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 
 private:
 	RS_Entity* entity1;
-	RS_Vector point1;
 
     RS_Entity* entity2;
-	RS_Vector point2;
 
-	RS_Vector intersection;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

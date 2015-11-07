@@ -64,16 +64,12 @@ public:
         virtual QStringList getAvailableCommands();
 
     virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	virtual void updateMouseCursor();
 
 protected:
-    // 4 points on ellipse
-    RS_VectorSolutions points;
-    private:
-	std::unique_ptr<RS_CircleData> cData;
-	std::unique_ptr<RS_EllipseData> eData;
-    bool valid,evalid;
-    bool m_bUniqueEllipse; //a message of non-unique ellipse is shown
+	// 4 points on ellipse
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

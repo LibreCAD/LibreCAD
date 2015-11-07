@@ -33,7 +33,42 @@
 #include "rs_commands.h"
 #include "rs_polyline.h"
 #include "rs_coordinateevent.h"
+#include "rs_arc.h"
+#include "rs_line.h"
+#include "rs_preview.h"
 
+struct RS_ActionDrawPolyline::Points {
+
+	/**
+	 * Line data defined so far.
+	 */
+	RS_PolylineData data;
+	RS_ArcData arc_data;
+	/**
+	 * Polyline entity we're working on.
+	 */
+	RS_Polyline* polyline;
+
+	/**
+	 * last point.
+	 */
+	RS_Vector point;
+	RS_Vector calculatedEndpoint;
+	/**
+	 * Start point of the series of lines. Used for close function.
+	 */
+	RS_Vector start;
+
+	/**
+	 * Point history (for undo)
+	 */
+		QList<RS_Vector> history;
+
+	/**
+	 * Bulge history (for undo)
+	 */
+		QList<double> bHistory;
+};
 
 RS_ActionPolylineAppend::RS_ActionPolylineAppend(RS_EntityContainer& container,
 	RS_GraphicView& graphicView)
@@ -47,14 +82,14 @@ void RS_ActionPolylineAppend::trigger() {
 
 	RS_PreviewActionInterface::trigger();
 
-	if (!polyline) {
+	if (!pPoints->polyline) {
 		return;
 	}
 
 	// add the entity
 	//RS_Polyline* polyline = new RS_Polyline(container, data);
-	polyline->setLayerToActive();
-	polyline->setPenToActive();
+	pPoints->polyline->setLayerToActive();
+	pPoints->polyline->setPenToActive();
 
 	// upd. undo list:
 	if (document) {
@@ -62,7 +97,7 @@ void RS_ActionPolylineAppend::trigger() {
                 // RVT_PORT need to decide on how to handle undo cycles
                 originalPolyline->setUndoState(true);
 		document->addUndoable(originalPolyline);
-		document->addUndoable(polyline);
+		document->addUndoable(pPoints->polyline);
                 document->endUndoCycle();
 	}
 
@@ -70,13 +105,13 @@ void RS_ActionPolylineAppend::trigger() {
 	deleteSnapper();
 	graphicView->moveRelativeZero(RS_Vector(0.0,0.0));
 	graphicView->deleteEntity(originalPolyline);
-	graphicView->drawEntity(polyline);
-	graphicView->moveRelativeZero(polyline->getEndpoint());
+	graphicView->drawEntity(pPoints->polyline);
+	graphicView->moveRelativeZero(pPoints->polyline->getEndpoint());
 	drawSnapper();
 	RS_DEBUG->print("RS_ActionDrawPolyline::trigger(): polyline added: %d",
-					polyline->getId());
+					pPoints->polyline->getId());
 
-	polyline = nullptr;
+	pPoints->polyline = nullptr;
 }
 
 
@@ -103,14 +138,14 @@ void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent* e) {
 				double dist = graphicView->toGraphDX(snapRange)*0.9;
 				RS_Entity* nearestSegment = originalPolyline->getNearestEntity( RS_Vector(graphicView->toGraphX(e->x()),
 									graphicView->toGraphY(e->y())), &dist, RS2::ResolveNone);
-				polyline = static_cast<RS_Polyline*>(originalPolyline->clone());
-				container->addEntity(polyline);
+				pPoints->polyline = static_cast<RS_Polyline*>(originalPolyline->clone());
+				container->addEntity(pPoints->polyline);
 				prepend = false;
 				if (nearestSegment == entFirst){
 					prepend = true;
-                                        point = originalPolyline->getStartpoint();
+					pPoints->point = originalPolyline->getStartpoint();
 				}else if (nearestSegment == entLast){
-                                        point = originalPolyline->getEndpoint();
+					pPoints->point = originalPolyline->getEndpoint();
 				}else{
 					RS_DIALOGFACTORY->commandMessage(
 						tr("Click somewhere near the beginning or end of existing polyline."));
@@ -139,36 +174,36 @@ void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent* e) {
 
 	switch (getStatus()) {
 	case SetStartpoint:
-		history.clear();
-                history.append(point);
-		bHistory.clear();
-                bHistory.append(0.0);
-		start = point;
+		pPoints->history.clear();
+				pPoints->history.append(pPoints->point);
+		pPoints->bHistory.clear();
+				pPoints->bHistory.append(0.0);
+		pPoints->start = pPoints->point;
 		setStatus(SetNextPoint);
-		graphicView->moveRelativeZero(point);
+		graphicView->moveRelativeZero(pPoints->point);
 		updateMouseButtonHints();
 		break;
 
 	case SetNextPoint:
 		graphicView->moveRelativeZero(mouse);
-		point = mouse;
-                history.append(mouse);
-                bHistory.append(0.0);
-				if (!polyline) {
-			polyline = new RS_Polyline(container, *data);
-			polyline->addVertex(start, 0.0, prepend);
+		pPoints->point = mouse;
+				pPoints->history.append(mouse);
+				pPoints->bHistory.append(0.0);
+				if (!pPoints->polyline) {
+			pPoints->polyline = new RS_Polyline(container, pPoints->data);
+			pPoints->polyline->addVertex(pPoints->start, 0.0, prepend);
 		}
-		if (polyline) {
-			polyline->addVertex(mouse, 0.0, prepend);
+		if (pPoints->polyline) {
+			pPoints->polyline->addVertex(mouse, 0.0, prepend);
 //			polyline->setEndpoint(mouse);
-			if (polyline->count()==1) {
-				polyline->setLayerToActive();
-				polyline->setPenToActive();
+			if (pPoints->polyline->count()==1) {
+				pPoints->polyline->setLayerToActive();
+				pPoints->polyline->setPenToActive();
 			}
                         // RVT_PORT (can be deleted) deletePreview();
 			//clearPreview();
 			deleteSnapper();
-			graphicView->drawEntity(polyline);
+			graphicView->drawEntity(pPoints->polyline);
 			drawSnapper();
 		}
 		//trigger();
@@ -191,15 +226,15 @@ void RS_ActionPolylineAppend::updateMouseButtonHints() {
 	case SetNextPoint: {
                         QString msg = "";
 
-                        if (history.size()>=3) {
+						if (pPoints->history.size()>=3) {
 				msg += RS_COMMANDS->command("close");
 				msg += "/";
 			}
-                        if (history.size()>=2) {
+						if (pPoints->history.size()>=2) {
 				msg += RS_COMMANDS->command("undo");
 			}
 
-                        if (history.size()>=2) {
+						if (pPoints->history.size()>=2) {
 				RS_DIALOGFACTORY->updateMouseWidget(
 					tr("Specify next point or [%1]").arg(msg),
 					tr("Back"));
@@ -217,11 +252,11 @@ void RS_ActionPolylineAppend::updateMouseButtonHints() {
 }
 
 void RS_ActionPolylineAppend::undo() {
-    if (history.size()>1) {
-        history.removeLast();
-        bHistory.removeLast();
+	if (pPoints->history.size()>1) {
+		pPoints->history.removeLast();
+		pPoints->bHistory.removeLast();
         deletePreview();
-        point = history.last();
+		pPoints->point = pPoints->history.last();
     } else {
         RS_DIALOGFACTORY->commandMessage(
             tr("Cannot undo: "

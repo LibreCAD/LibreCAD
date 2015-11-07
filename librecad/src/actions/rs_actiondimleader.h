@@ -51,7 +51,7 @@ public:
 public:
     RS_ActionDimLeader(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-	~RS_ActionDimLeader() = default;
+	virtual ~RS_ActionDimLeader();
 
     void reset();
 

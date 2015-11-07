@@ -114,35 +114,6 @@ RS_Ellipse::RS_Ellipse(RS_EntityContainer* parent,
     calculateBorders();
 }
 
-RS_Ellipse::RS_Ellipse(const RS_EllipseData& d)
-	:RS_AtomicEntity(nullptr)
-	,data(d)
-{
-	//calculateEndpoints();
-	calculateBorders();
-}
-
-RS_Ellipse::RS_Ellipse(RS_EntityContainer* parent,
-					   const RS_Vector& center,
-					   const RS_Vector& majorP,
-					   double ratio,
-					   double angle1, double angle2,
-					   bool reversed):
-	RS_AtomicEntity(parent)
-  ,data({center, majorP, ratio, angle1, angle2, reversed})
-{
-}
-
-RS_Ellipse::RS_Ellipse(const RS_Vector& center,
-					   const RS_Vector& majorP,
-					   double ratio,
-					   double angle1, double angle2,
-					   bool reversed):
-	RS_AtomicEntity(nullptr)
-  ,data({center, majorP, ratio, angle1, angle2, reversed})
-{
-}
-
 RS_Entity* RS_Ellipse::clone() const {
 	RS_Ellipse* e = new RS_Ellipse(*this);
 	e->initId();

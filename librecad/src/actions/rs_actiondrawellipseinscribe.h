@@ -23,12 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWELLIPSEINSCRIBE_H
 #define RS_ACTIONDRAWELLIPSEINSCRIBE_H
 
-#include <vector>
 #include "rs_previewactioninterface.h"
-
-struct RS_EllipseData;
-class RS_Line;
-
 /**
  * Draw ellipse by foci and a point on ellipse
  *
@@ -69,12 +64,11 @@ public:
 
 protected:
     // 4 points on ellipse
-	std::vector<RS_Line*> lines;
-	private:
+private:
 	void clearLines(bool checkStatus=false);
 
-	std::unique_ptr<RS_EllipseData> eData;
-    bool valid;
+	struct Points;
+	std::unique_ptr<Points> pPoints;;
 };
 
 #endif

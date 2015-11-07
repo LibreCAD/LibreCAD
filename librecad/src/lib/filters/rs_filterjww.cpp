@@ -320,10 +320,11 @@ void RS_FilterJWW::addEllipse(const DL_EllipseData& data) {
 		RS_Vector v2{data.mx, data.my};
 
 		RS_Ellipse* entity = new RS_Ellipse{currentContainer,
-											v1, v2,
-											data.ratio,
-											data.angle1, data.angle2,
-											false};
+		{v1, v2,
+				data.ratio,
+				data.angle1, data.angle2,
+				false}
+};
         setEntityAttributes(entity, attributes);
 
         currentContainer->addEntity(entity);
@@ -340,9 +341,7 @@ void RS_FilterJWW::addCircle(const DL_CircleData& data) {
         //	   p1[0], p1[1], p1[2],
         //	   p2[0], p2[1], p2[2]);
 
-        RS_Vector v(data.cx, data.cy);
-        RS_CircleData d(v, data.radius);
-        RS_Circle* entity = new RS_Circle(currentContainer, d);
+		RS_Circle* entity = new RS_Circle(currentContainer, {{data.cx, data.cy}, data.radius});
         setEntityAttributes(entity, attributes);
 
         currentContainer->addEntity(entity);
@@ -964,8 +963,7 @@ void RS_FilterJWW::addHatchEdge(const DL_HatchEdgeData& data) {
                 case 2:
                         if (data.ccw && data.angle1<1.0e-6 && data.angle2>2*M_PI-1.0e-6) {
                                 e = new RS_Circle(hatchLoop,
-                                                                  RS_CircleData(RS_Vector(data.cx, data.cy),
-                                                                                                data.radius));
+								{{data.cx, data.cy}, data.radius});
                         } else {
                                 if (data.ccw) {
                                         e = new RS_Arc(

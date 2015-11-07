@@ -43,10 +43,12 @@ RS_ActionBlocksCreate::RS_ActionBlocksCreate(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Blocks Create",
 						   container, graphicView)
-		,referencePoint(false)
+		,referencePoint(new RS_Vector{})
 {
 	actionType=RS2::ActionBlocksCreate;
 }
+
+RS_ActionBlocksCreate::~RS_ActionBlocksCreate() = default;
 
 
 void RS_ActionBlocksCreate::init(int status) {
@@ -64,11 +66,11 @@ void RS_ActionBlocksCreate::trigger() {
 
             if (!d.name.isEmpty()) {
                 RS_Creation creation(container, graphicView);
-				creation.createBlock(&d, referencePoint, true);
+				creation.createBlock(&d, *referencePoint, true);
 
                 RS_InsertData id(
                     d.name,
-                    referencePoint,
+					*referencePoint,
                     RS_Vector(1.0,1.0),
                     0.0,
                     1, 1, RS_Vector(0.0,0.0)
@@ -132,7 +134,7 @@ void RS_ActionBlocksCreate::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetReferencePoint:
-        referencePoint = e->getCoordinate();
+		*referencePoint = e->getCoordinate();
         trigger();
         break;
 

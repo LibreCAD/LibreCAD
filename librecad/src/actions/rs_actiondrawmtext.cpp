@@ -33,12 +33,13 @@
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
 
 RS_ActionDrawMText::RS_ActionDrawMText(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw Text",
 						   container, graphicView)
-		,pos(false)
+		,pos(new RS_Vector{})
 		,textChanged(true)
 {
 	actionType=RS2::ActionDrawMText;
@@ -103,7 +104,7 @@ void RS_ActionDrawMText::trigger() {
 
     RS_DEBUG->print("RS_ActionDrawText::trigger()");
 
-    if (pos.valid) {
+	if (pos->valid) {
         deletePreview();
 
 		RS_MText* text = new RS_MText(container, *data);
@@ -119,13 +120,13 @@ void RS_ActionDrawMText::trigger() {
                 graphicView->redraw(RS2::RedrawDrawing);
 
         textChanged = true;
-        setStatus(SetPos);
+		setStatus(SetPos);
     }
 }
 
 
 void RS_ActionDrawMText::preparePreview() {
-	data->insertionPoint = pos;
+	data->insertionPoint = *pos;
 	RS_MText* text = new RS_MText(preview.get(), *data);
     text->update();
     preview->addEntity(text);
@@ -138,9 +139,9 @@ void RS_ActionDrawMText::mouseMoveEvent(QMouseEvent* e) {
 
     if (getStatus()==SetPos) {
         RS_Vector mouse = snapPoint(e);
-        RS_Vector mov = mouse-pos;
-        pos = mouse;
-        if (textChanged || pos.valid == false || preview->isEmpty()) {
+		RS_Vector mov = mouse-*pos;
+		*pos = mouse;
+		if (textChanged || pos->valid == false || preview->isEmpty()) {
             deletePreview();
             preparePreview();
         } else {

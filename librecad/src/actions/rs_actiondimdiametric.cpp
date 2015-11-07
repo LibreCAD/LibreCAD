@@ -37,13 +37,16 @@
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_preview.h"
 
 
 RS_ActionDimDiametric::RS_ActionDimDiametric(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_ActionDimension("Draw Diametric Dimensions",
-                    container, graphicView) {
+					container, graphicView)
+		, pos(new RS_Vector{})
+{
 	actionType=RS2::ActionDimDiametric;
     reset();
 }
@@ -57,7 +60,7 @@ void RS_ActionDimDiametric::reset() {
 								0.0)
 				);
 	entity = nullptr;
-    pos = RS_Vector(false);
+	*pos = {};
     RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
 
@@ -100,18 +103,20 @@ void RS_ActionDimDiametric::trigger() {
 
 void RS_ActionDimDiametric::preparePreview() {
     if (entity) {
-        double radius=0.0;
-        RS_Vector center = RS_Vector(false);
+		double radius{0.};
+		RS_Vector center{false};
         if (entity->rtti()==RS2::EntityArc) {
-            radius = ((RS_Arc*)entity)->getRadius();
-            center = ((RS_Arc*)entity)->getCenter();
+			RS_Arc* p = static_cast<RS_Arc*>(entity);
+			radius = p->getRadius();
+			center = p->getCenter();
         } else if (entity->rtti()==RS2::EntityCircle) {
-            radius = ((RS_Circle*)entity)->getRadius();
-            center = ((RS_Circle*)entity)->getCenter();
+			RS_Circle* p = static_cast<RS_Circle*>(entity);
+			radius = p->getRadius();
+			center = p->getCenter();
         }
-        double angle = center.angleTo(pos);
+		double angle = center.angleTo(*pos);
 
-		data->definitionPoint.setPolar(radius, angle+M_PI);
+		data->definitionPoint.setPolar(radius, angle + M_PI);
 		data->definitionPoint += center;
 
 		edata->definitionPoint.setPolar(radius, angle);
@@ -128,7 +133,7 @@ void RS_ActionDimDiametric::mouseMoveEvent(QMouseEvent* e) {
 
     case SetPos:
 		if (entity) {
-			pos = snapPoint(e);
+			*pos = snapPoint(e);
 
             preparePreview();
 			RS_DimDiametric* d = new RS_DimDiametric(preview.get(), *data, *edata);
@@ -201,7 +206,7 @@ void RS_ActionDimDiametric::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetPos:
-        pos = e->getCoordinate();
+		*pos = e->getCoordinate();
         trigger();
         reset();
         setStatus(SetEntity);
@@ -244,8 +249,8 @@ void RS_ActionDimDiametric::commandEvent(RS_CommandEvent* e) {
         bool ok;
         double a = RS_Math::eval(c, &ok);
 		if (ok) {
-            pos.setPolar(1.0, RS_Math::deg2rad(a));
-			pos += data->definitionPoint;
+			pos->setPolar(1.0, RS_Math::deg2rad(a));
+			*pos += data->definitionPoint;
             trigger();
             reset();
             setStatus(SetEntity);

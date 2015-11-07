@@ -46,7 +46,7 @@ class RS_ActionDrawLinePolygonCorCor : public RS_PreviewActionInterface {
 public:
     RS_ActionDrawLinePolygonCorCor(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawLinePolygonCorCor() = default;
+	virtual ~RS_ActionDrawLinePolygonCorCor() override;
 	
     virtual void trigger();
 	
@@ -72,10 +72,8 @@ public:
 	}
 
 private:
-	/** 1st corner */
-	RS_Vector corner1;
-	/** 2nd corner */
-	RS_Vector corner2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 	/** Number of edges. */
 	int number;
 	/** Last status before entering text. */

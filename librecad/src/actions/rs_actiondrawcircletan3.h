@@ -51,7 +51,7 @@ public:
 public:
     RS_ActionDrawCircleTan3(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView);
-	~RS_ActionDrawCircleTan3()=default;
+	virtual ~RS_ActionDrawCircleTan3() override;
 
     virtual void init(int status=0);
 
@@ -74,13 +74,9 @@ public:
 	std::vector<double> verifyCenter(const RS_Vector& center) const;
 	std::vector<double> getRadii(RS_AtomicEntity* entity, const RS_Vector& center) const;
     RS_Entity* catchCircle(QMouseEvent* e);
-	std::vector<RS_AtomicEntity*> circles;
-	std::shared_ptr<RS_CircleData> cData;
-    RS_Vector coord;
-    bool valid;
-	//keep a list of centers found
-	std::vector<std::shared_ptr<RS_CircleData> > candidates;
-    RS_VectorSolutions centers;
+
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 
 };
 

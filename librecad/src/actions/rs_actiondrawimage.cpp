@@ -39,6 +39,12 @@
 #include "rs_actiondrawimage.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_preview.h"
+
+struct RS_ActionDrawImage::ImageData {
+	RS_ImageData data;
+	QImage img;
+};
 
 /**
  * Constructor.
@@ -47,7 +53,8 @@ RS_ActionDrawImage::RS_ActionDrawImage(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Image",
 							   container, graphicView)
-	,lastStatus(ShowDialog)
+	, pImg(new ImageData{})
+	, lastStatus(ShowDialog)
 {
 	actionType=RS2::ActionDrawImage;
 }
@@ -60,14 +67,14 @@ void RS_ActionDrawImage::init(int status) {
 
     reset();
 
-	data->file = RS_DIALOGFACTORY->requestImageOpenDialog();
+	pImg->data.file = RS_DIALOGFACTORY->requestImageOpenDialog();
     // RVT_PORT should we really redarw here?? graphicView->redraw();
 
-	if (!data->file.isEmpty()) {
-		//std::cout << "file: " << data->file << "\n";
-		//qDebug() << "file: " << data->file;
+	if (!pImg->data.file.isEmpty()) {
+		//std::cout << "file: " << pImg->data.file << "\n";
+		//qDebug() << "file: " << pImg->data.file;
 
-		img.reset(new QImage(data->file));
+		pImg->img = QImage(pImg->data.file);
 
         setStatus(SetTargetPoint);
     } else {
@@ -79,15 +86,15 @@ void RS_ActionDrawImage::init(int status) {
 
 
 void RS_ActionDrawImage::reset() {
-	data.reset(new RS_ImageData(
+	pImg->data = {
 				   0,
-				   RS_Vector(0.0,0.0),
-				   RS_Vector(1.0,0.0),
-				   RS_Vector(0.0,1.0),
-				   RS_Vector(1.0,1.0),
+				   {0.0,0.0},
+				   {1.0,0.0},
+				   {0.0,1.0},
+				   {1.0,1.0},
 				   "",
-				   50, 50, 0)
-			   );
+				   50, 50, 0
+			   };
 }
 
 
@@ -95,9 +102,9 @@ void RS_ActionDrawImage::reset() {
 void RS_ActionDrawImage::trigger() {
     deletePreview();
 
-	if (!data->file.isEmpty()) {
+	if (!pImg->data.file.isEmpty()) {
         RS_Creation creation(container, graphicView);
-		creation.createImage(data.get());
+		creation.createImage(& pImg->data);
     }
 
     graphicView->redraw(RS2::RedrawDrawing);
@@ -107,13 +114,13 @@ void RS_ActionDrawImage::trigger() {
 
 void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent* e) {
 	if (getStatus() == SetTargetPoint) {
-		data->insertionPoint = snapPoint(e);
+		pImg->data.insertionPoint = snapPoint(e);
 
         deletePreview();
-        //RS_Creation creation(preview, NULL, false);
+		//RS_Creation creation(preview, nullptr, false);
         //creation.createInsert(data);
-		double const w=img->width();
-		double const h=img->height();
+		double const w=pImg->img.width();
+		double const h=pImg->img.height();
 		RS_Line* line = new RS_Line{preview.get(), {0., 0.}, {w, 0.}};
         preview->addEntity(line);
 		line = new RS_Line{preview.get(), {w, 0.}, {w, h}};
@@ -123,9 +130,9 @@ void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent* e) {
 		line = new RS_Line{preview.get(), {0., h}, {0., 0.}};
         preview->addEntity(line);
 		preview->scale({0., 0.},
-			{data->uVector.magnitude(), data->uVector.magnitude()});
-		preview->rotate({0.,0.}, data->uVector.angle());
-		preview->move(data->insertionPoint);
+			{pImg->data.uVector.magnitude(), pImg->data.uVector.magnitude()});
+		preview->rotate({0.,0.}, pImg->data.uVector.angle());
+		preview->move(pImg->data.insertionPoint);
 		drawPreview();
     }
 }
@@ -145,11 +152,11 @@ void RS_ActionDrawImage::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawImage::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+	if (e==nullptr) {
         return;
     }
 
-	data->insertionPoint = e->getCoordinate();
+	pImg->data.insertionPoint = e->getCoordinate();
     trigger();
 }
 
@@ -228,23 +235,23 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
 
 
 double RS_ActionDrawImage::getAngle() const {
-	return data->uVector.angle();
+	return pImg->data.uVector.angle();
 }
 
 void RS_ActionDrawImage::setAngle(double a) const{
-	double l = data->uVector.magnitude();
-	data->uVector.setPolar(l, a);
-	data->vVector.setPolar(l, a+M_PI_2);
+	double l = pImg->data.uVector.magnitude();
+	pImg->data.uVector.setPolar(l, a);
+	pImg->data.vVector.setPolar(l, a+M_PI_2);
 }
 
 double RS_ActionDrawImage::getFactor() const {
-	return data->uVector.magnitude();
+	return pImg->data.uVector.magnitude();
 }
 
 void RS_ActionDrawImage::setFactor(double f) const {
-	double a = data->uVector.angle();
-	data->uVector.setPolar(f, a);
-	data->vVector.setPolar(f, a+M_PI_2);
+	double a = pImg->data.uVector.angle();
+	pImg->data.uVector.setPolar(f, a);
+	pImg->data.vVector.setPolar(f, a+M_PI_2);
 }
 
 double RS_ActionDrawImage::dpiToScale(double dpi) const {
@@ -300,7 +307,7 @@ void RS_ActionDrawImage::hideOptions() {
 
 
 void RS_ActionDrawImage::updateMouseButtonHints() {
-    if(RS_DIALOGFACTORY==NULL) return;
+	if(RS_DIALOGFACTORY==nullptr) return;
     switch (getStatus()) {
     case SetTargetPoint:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),

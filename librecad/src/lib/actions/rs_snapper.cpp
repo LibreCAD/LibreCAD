@@ -717,7 +717,8 @@ void RS_Snapper::drawSnapper()
             RS_DEBUG->print("RS_Snapper::Snapped draw start");
 
             // Circle to show snap area
-			RS_Circle *circle=new RS_Circle(container, RS_CircleData(pImpData->snapCoord, 4/graphicView->getFactor().x));
+			RS_Circle *circle=new RS_Circle(container,
+			{pImpData->snapCoord, 4./graphicView->getFactor().x});
 			circle->setPen(pImpData->circle_pen);
 
             container->addEntity(circle);

@@ -33,14 +33,24 @@
 #include "rs_line.h"
 #include "rs_graphic.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
+
+struct RS_ActionInfoDist::Points {
+	RS_Vector point1;
+	RS_Vector point2;
+};
 
 
 RS_ActionInfoDist::RS_ActionInfoDist(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Info Dist",
-						   container, graphicView) {
+						   container, graphicView)
+		, pPoints(new Points{})
+{
 	actionType=RS2::ActionInfoDist;
 }
+
+RS_ActionInfoDist::~RS_ActionInfoDist()=default;
 
 void RS_ActionInfoDist::init(int status) {
     RS_ActionInterface::init(status);
@@ -52,8 +62,8 @@ void RS_ActionInfoDist::trigger() {
 
     RS_DEBUG->print("RS_ActionInfoDist::trigger()");
 
-	if (point1.valid && point2.valid) {
-		auto dV = point2 - point1;
+	if (pPoints->point1.valid && pPoints->point2.valid) {
+		auto dV = pPoints->point2 - pPoints->point1;
 		QStringList dists;
 		for(double a: {dV.magnitude(), dV.x, dV.y}){
 			dists<<RS_Units::formatLinear(a, graphic->getUnit(),
@@ -86,12 +96,12 @@ void RS_ActionInfoDist::mouseMoveEvent(QMouseEvent* e) {
             break;
 
         case SetPoint2:
-            if (point1.valid) {
-                point2 = mouse;
+			if (pPoints->point1.valid) {
+				pPoints->point2 = mouse;
 
                 deletePreview();
 
-				preview->addEntity(new RS_Line{preview.get(), point1, point2});
+				preview->addEntity(new RS_Line{preview.get(), pPoints->point1, pPoints->point2});
 
                 drawPreview();
             }
@@ -128,16 +138,16 @@ void RS_ActionInfoDist::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetPoint1:
-        point1 = mouse;
-        graphicView->moveRelativeZero(point1);
+		pPoints->point1 = mouse;
+		graphicView->moveRelativeZero(pPoints->point1);
         setStatus(SetPoint2);
         break;
 
     case SetPoint2:
-        if (point1.valid) {
-            point2 = mouse;
+		if (pPoints->point1.valid) {
+			pPoints->point2 = mouse;
             deletePreview();
-                graphicView->moveRelativeZero(point2);
+				graphicView->moveRelativeZero(pPoints->point2);
             trigger();
             setStatus(SetPoint1);
         }

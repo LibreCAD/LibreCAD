@@ -29,8 +29,6 @@
 
 #include "rs_previewactioninterface.h"
 
-struct RS_LineData;
-
 /**
  * This action class can handle user events to draw 
  * horizontal/vertical lines from a given startpoint
@@ -65,15 +63,8 @@ public:
     virtual void updateMouseCursor();
 
 protected:
-    /**
-     * Line data.
-     */
-	std::unique_ptr<RS_LineData> data;
-    /**
-     * 2 points
-     */
-    RS_Vector p1;
-    RS_Vector p2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

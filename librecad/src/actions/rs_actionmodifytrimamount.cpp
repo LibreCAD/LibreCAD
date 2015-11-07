@@ -33,6 +33,7 @@
 #include "rs_commandevent.h"
 #include "rs_modification.h"
 #include "rs_math.h"
+#include "rs_preview.h"
 
 RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(
 		RS_EntityContainer& container,
@@ -40,12 +41,14 @@ RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(
 	:RS_ActionInterface("Trim Entity by a given amount",
 						container, graphicView)
 	,trimEntity(nullptr)
-	,trimCoord(false)
+	,trimCoord(new RS_Vector{})
 	,distance(0.0)
 	,byTotal(false)
 {
 	actionType=RS2::ActionModifyTrimAmount;
 }
+
+RS_ActionModifyTrimAmount::~RS_ActionModifyTrimAmount() = default;
 
 void RS_ActionModifyTrimAmount::init(int status) {
     RS_ActionInterface::init(status);
@@ -71,7 +74,7 @@ void RS_ActionModifyTrimAmount::trigger() {
             d = distance;
         }
 
-        m.trimAmount(trimCoord, (RS_AtomicEntity*)trimEntity, d);
+		m.trimAmount(*trimCoord, (RS_AtomicEntity*)trimEntity, d);
 
         trimEntity = NULL;
         setStatus(ChooseTrimEntity);
@@ -84,7 +87,7 @@ void RS_ActionModifyTrimAmount::trigger() {
 
 void RS_ActionModifyTrimAmount::mouseReleaseEvent(QMouseEvent* e) {
 
-    trimCoord = graphicView->toGraph(e->x(), e->y());
+	*trimCoord = graphicView->toGraph(e->x(), e->y());
     trimEntity = catchEntity(e);
 
     if (e->button()==Qt::LeftButton) {

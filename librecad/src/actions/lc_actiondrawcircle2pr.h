@@ -45,7 +45,7 @@ public:
 public:
     LC_ActionDrawCircle2PR(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-	~LC_ActionDrawCircle2PR()=default;
+	~LC_ActionDrawCircle2PR();
 
     void reset();
 
@@ -65,14 +65,8 @@ public:
     virtual void updateMouseCursor();
 
 protected:
-    /**
-     * 1st point.
-     */
-    RS_Vector point1;
-    /**
-     * 2nd point.
-     */
-    RS_Vector point2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

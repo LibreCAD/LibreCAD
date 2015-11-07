@@ -35,6 +35,7 @@
 #include "rs_commandevent.h"
 #include "rs_constructionline.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
 
 RS_ActionDimAligned::RS_ActionDimAligned(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

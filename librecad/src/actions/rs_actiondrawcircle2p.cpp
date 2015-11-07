@@ -33,12 +33,25 @@
 #include "rs_commandevent.h"
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
+
+struct RS_ActionDrawCircle2P::Points {
+	/**
+	 * 1st point.
+	 */
+	RS_Vector point1;
+	/**
+	 * 2nd point.
+	 */
+	RS_Vector point2;
+};
 
 RS_ActionDrawCircle2P::RS_ActionDrawCircle2P(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw circles",
 						   container, graphicView)
-		,data(new RS_CircleData())
+		, data(new RS_CircleData())
+		, pPoints(new Points{})
 {
 	actionType=RS2::ActionDrawCircle2P;
     reset();
@@ -47,9 +60,9 @@ RS_ActionDrawCircle2P::RS_ActionDrawCircle2P(RS_EntityContainer& container,
 RS_ActionDrawCircle2P::~RS_ActionDrawCircle2P() = default;
 
 void RS_ActionDrawCircle2P::reset() {
-	data->reset();
-    point1 = RS_Vector(false);
-    point2 = RS_Vector(false);
+	data.reset(new RS_CircleData{});
+	pPoints->point1 = {};
+	pPoints->point2 = {};
 }
 
 
@@ -96,10 +109,10 @@ void RS_ActionDrawCircle2P::trigger() {
 
 
 void RS_ActionDrawCircle2P::preparePreview() {
-	data->reset();
-    if (point1.valid && point2.valid) {
-		RS_Circle circle(NULL, *data);
-        bool suc = circle.createFrom2P(point1, point2);
+	data.reset(new RS_CircleData{});
+	if (pPoints->point1.valid && pPoints->point2.valid) {
+		RS_Circle circle(nullptr, *data);
+		bool suc = circle.createFrom2P(pPoints->point1, pPoints->point2);
         if (suc) {
 			data.reset(new RS_CircleData(circle.getData()));
         }
@@ -111,11 +124,11 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
     case SetPoint1:
-        point1 = mouse;
+		pPoints->point1 = mouse;
         break;
 
     case SetPoint2:
-        point2 = mouse;
+		pPoints->point2 = mouse;
         preparePreview();
 		if (data->isValid()) {
 			RS_Circle* circle = new RS_Circle(preview.get(), *data);
@@ -153,13 +166,13 @@ void RS_ActionDrawCircle2P::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetPoint1:
-        point1 = mouse;
+		pPoints->point1 = mouse;
         graphicView->moveRelativeZero(mouse);
         setStatus(SetPoint2);
         break;
 
     case SetPoint2:
-        point2 = mouse;
+		pPoints->point2 = mouse;
         graphicView->moveRelativeZero(mouse);
         trigger();
         break;

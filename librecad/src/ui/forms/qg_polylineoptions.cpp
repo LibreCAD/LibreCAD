@@ -29,6 +29,7 @@
 #include "rs_actiondrawpolyline.h"
 #include "rs_settings.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_PolylineOptions as a child of 'parent', with the
@@ -98,8 +99,9 @@ void QG_PolylineOptions::setAction(RS_ActionInterface* a, bool update) {
         rbNeg->setChecked(reversed);
         updateMode(mode);
     } else {
-        std::cerr << "QG_PolylineOptions::setAction: wrong action type\n";
-        action = NULL;
+		RS_DEBUG->print(RS_Debug::D_ERROR, QString("QG_PolylineOptions::setAction:"
+						+ tr("wrong action type")).toStdString().c_str());
+		action = nullptr;
     }
 }
 

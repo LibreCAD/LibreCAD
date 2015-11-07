@@ -28,6 +28,8 @@
 
 #include "rs_previewactioninterface.h"
 
+class RS_Polyline;
+
 /**
  * This action class can handle Create Polyline Existing from Segments
  *

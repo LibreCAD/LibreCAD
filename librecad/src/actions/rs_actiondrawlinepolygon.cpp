@@ -33,19 +33,27 @@
 #include "rs_commandevent.h"
 #include "rs_creation.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
+
+struct RS_ActionDrawLinePolygonCenCor::Points {
+	/** Center of polygon */
+	RS_Vector center;
+	/** Edge */
+	RS_Vector corner;
+};
 
 RS_ActionDrawLinePolygonCenCor::RS_ActionDrawLinePolygonCenCor(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
 		:RS_PreviewActionInterface("Draw Polygons (Center,Corner)", container, graphicView)
-		,center(false)
-		,corner(false)
+		, pPoints(new Points{})
 		,number(3)
 		,lastStatus(SetCenter)
 {
 	actionType=RS2::ActionDrawLinePolygonCenCor;
 }
 
+RS_ActionDrawLinePolygonCenCor::~RS_ActionDrawLinePolygonCenCor() = default;
 
 void RS_ActionDrawLinePolygonCenCor::trigger() {
     RS_PreviewActionInterface::trigger();
@@ -53,7 +61,7 @@ void RS_ActionDrawLinePolygonCenCor::trigger() {
     deletePreview();
 
     RS_Creation creation(container, graphicView);
-    bool ok = creation.createPolygon(center, corner, number);
+	bool ok = creation.createPolygon(pPoints->center, pPoints->corner, number);
 
     if (!ok) {
         RS_DEBUG->print("RS_ActionDrawLinePolygon::trigger:"
@@ -73,12 +81,12 @@ void RS_ActionDrawLinePolygonCenCor::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetCorner:
-        if (center.valid) {
-            corner = mouse;
+		if (pPoints->center.valid) {
+			pPoints->corner = mouse;
             deletePreview();
 
 			RS_Creation creation(preview.get(), nullptr, false);
-            creation.createPolygon(center, corner, number);
+			creation.createPolygon(pPoints->center, pPoints->corner, number);
 
             drawPreview();
         }
@@ -108,13 +116,13 @@ void RS_ActionDrawLinePolygonCenCor::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetCenter:
-        center = mouse;
+		pPoints->center = mouse;
         setStatus(SetCorner);
         graphicView->moveRelativeZero(mouse);
         break;
 
     case SetCorner:
-        corner = mouse;
+		pPoints->corner = mouse;
         trigger();
         break;
 

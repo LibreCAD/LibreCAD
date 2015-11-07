@@ -50,7 +50,7 @@ public:
 public:
     RS_ActionInfoDist(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-	~RS_ActionInfoDist()=default;
+	~RS_ActionInfoDist() override;
 
     virtual void init(int status=0);
     virtual void trigger();
@@ -64,8 +64,8 @@ public:
     virtual void updateMouseCursor();
 
 private:
-    RS_Vector point1;
-    RS_Vector point2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

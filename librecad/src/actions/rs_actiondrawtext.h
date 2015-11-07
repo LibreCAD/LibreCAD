@@ -37,55 +37,55 @@ struct RS_TextData;
  * @author Andrew Mustun
  */
 class RS_ActionDrawText : public RS_PreviewActionInterface {
-        Q_OBJECT
+	Q_OBJECT
 public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        ShowDialog,           /**< Showing the text dialog. */
-        SetPos,               /**< Setting the position. */
-        SetSecPos,            /**< Setting the second point for aligned of fit text. */
-        SetText               /**< Settting the text in the command line. */
-    };
+	/**
+	 * Action States.
+	 */
+	enum Status {
+		ShowDialog,           /**< Showing the text dialog. */
+		SetPos,               /**< Setting the position. */
+		SetSecPos,            /**< Setting the second point for aligned of fit text. */
+		SetText               /**< Settting the text in the command line. */
+	};
 
 public:
-    RS_ActionDrawText(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
+	RS_ActionDrawText(RS_EntityContainer& container,
+					  RS_GraphicView& graphicView);
 	~RS_ActionDrawText();
 
-    virtual void init(int status=0);
+	virtual void init(int status=0);
 
-        void reset();
+	void reset();
 
-    virtual void trigger();
-        void preparePreview();
+	virtual void trigger();
+	void preparePreview();
 
-    virtual void mouseMoveEvent(QMouseEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
+	virtual void mouseMoveEvent(QMouseEvent* e);
+	virtual void mouseReleaseEvent(QMouseEvent* e);
 
-        virtual void coordinateEvent(RS_CoordinateEvent* e);
-    virtual void commandEvent(RS_CommandEvent* e);
-        virtual QStringList getAvailableCommands();
+	virtual void coordinateEvent(RS_CoordinateEvent* e);
+	virtual void commandEvent(RS_CommandEvent* e);
+	virtual QStringList getAvailableCommands();
 
-    virtual void hideOptions();
-    virtual void showOptions();
+	virtual void hideOptions();
+	virtual void showOptions();
 
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+	virtual void updateMouseButtonHints();
+	virtual void updateMouseCursor();
 
-        void setText(const QString& t);
-		const QString& getText() const;
+	void setText(const QString& t);
+	const QString& getText() const;
 
-        void setAngle(double a);
-		double getAngle() const;
+	void setAngle(double a);
+	double getAngle() const;
 
 private:
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 	std::unique_ptr<RS_TextData> data;
-        //RS_Text* text;
-    RS_Vector pos;
-    RS_Vector secPos;
-    bool textChanged;
+	//RS_Text* text;
+	bool textChanged;
 };
 
 #endif

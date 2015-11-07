@@ -49,7 +49,7 @@ public:
 public:
     RS_ActionBlocksCreate(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-	~RS_ActionBlocksCreate() = default;
+	~RS_ActionBlocksCreate();
 
     virtual void init(int status=0);
 
@@ -69,7 +69,7 @@ public:
     virtual void updateMouseCursor();
 
 protected:
-        RS_Vector referencePoint;
+	std::unique_ptr<RS_Vector> referencePoint;
 };
 
 #endif

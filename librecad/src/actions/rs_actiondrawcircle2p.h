@@ -75,14 +75,8 @@ protected:
      * Circle data defined so far.
      */
 	std::unique_ptr<RS_CircleData> data;
-    /**
-     * 1st point.
-     */
-    RS_Vector point1;
-    /**
-     * 2nd point.
-     */
-    RS_Vector point2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

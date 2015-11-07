@@ -33,6 +33,7 @@
 #include "rs_clipboard.h"
 #include "rs_modification.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
 
 /**
  * Constructor.
@@ -42,7 +43,9 @@
 RS_ActionEditPaste::RS_ActionEditPaste( RS_EntityContainer& container,
                                         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Edit Paste",
-                           container, graphicView) {}
+						   container, graphicView)
+		, targetPoint(new RS_Vector{})
+{}
 
 
 
@@ -60,7 +63,7 @@ void RS_ActionEditPaste::trigger() {
     deletePreview();
 
     RS_Modification m(*container, graphicView);
-    m.paste(RS_PasteData(targetPoint, 1.0, 0.0, false, ""));
+	m.paste(RS_PasteData(*targetPoint, 1.0, 0.0, false, ""));
     //std::cout << *RS_Clipboard::instance();
 
 	graphicView->redraw(RS2::RedrawDrawing); 
@@ -72,17 +75,17 @@ void RS_ActionEditPaste::trigger() {
 void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case SetTargetPoint:
-        targetPoint = snapPoint(e);
+		*targetPoint = snapPoint(e);
 
         deletePreview();
         preview->addAllFrom(*RS_CLIPBOARD->getGraphic());
-        preview->move(targetPoint);
+		preview->move(*targetPoint);
 
 		if (graphic) {
 			RS2::Unit sourceUnit = RS_CLIPBOARD->getGraphic()->getUnit();
 			RS2::Unit targetUnit = graphic->getUnit();
-			double f = RS_Units::convert(1.0, sourceUnit, targetUnit);
-        	preview->scale(targetPoint, RS_Vector(f,f));
+			double const f = RS_Units::convert(1.0, sourceUnit, targetUnit);
+			preview->scale(*targetPoint, {f, f});
 		}
         drawPreview();
         break;
@@ -106,11 +109,9 @@ void RS_ActionEditPaste::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionEditPaste::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
-        return;
-    }
+	if (e==nullptr) return;
 
-    targetPoint = e->getCoordinate();
+	*targetPoint = e->getCoordinate();
     trigger();
 }
 

@@ -34,6 +34,12 @@
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_preview.h"
+
+struct RS_ActionPrintPreview::Points {
+	RS_Vector v1;
+	RS_Vector v2;
+};
 
 /**
  * Constructor.
@@ -41,12 +47,17 @@
 RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
                                              RS_GraphicView& graphicView)
     :RS_ActionInterface("Print Preview",
-                        container, graphicView), hasOptions(false),scaleFixed(false)
-    ,m_bPaperOffset(false)
+						container, graphicView)
+	, hasOptions(false)
+	, scaleFixed(false)
+	, m_bPaperOffset(false)
+	, pPoints(new Points{})
 {
     showOptions();
 	actionType=RS2::ActionFilePrintPreview;
 }
+
+RS_ActionPrintPreview::~RS_ActionPrintPreview()=default;
 
 void RS_ActionPrintPreview::init(int status) {
     RS_ActionInterface::init(status);
@@ -56,15 +67,15 @@ void RS_ActionPrintPreview::init(int status) {
 void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case Moving:
-        v2 = graphicView->toGraph(e->x(), e->y());
+		pPoints->v2 = graphicView->toGraph(e->x(), e->y());
         if (graphic) {
             RS_Vector pinsbase = graphic->getPaperInsertionBase();
 
             double scale = graphic->getPaperScale();
 
-            graphic->setPaperInsertionBase(pinsbase-v2*scale+v1*scale);
+			graphic->setPaperInsertionBase(pinsbase-pPoints->v2*scale+pPoints->v1*scale);
         }
-        v1 = v2;
+		pPoints->v1 = pPoints->v2;
         graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
         break;
 
@@ -79,7 +90,7 @@ void RS_ActionPrintPreview::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case Neutral:
-            v1 = graphicView->toGraph(e->x(), e->y());
+			pPoints->v1 = graphicView->toGraph(e->x(), e->y());
             setStatus(Moving);
             break;
 

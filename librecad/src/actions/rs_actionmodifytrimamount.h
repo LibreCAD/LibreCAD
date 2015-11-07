@@ -49,7 +49,7 @@ public:
 public:
     RS_ActionModifyTrimAmount(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyTrimAmount() = default;
+	~RS_ActionModifyTrimAmount() override;
 
     virtual void init(int status=0);
 
@@ -83,8 +83,8 @@ public:
 
 private:
     RS_Entity* trimEntity;
-        RS_Vector trimCoord;
-        double distance;
+	std::unique_ptr<RS_Vector> trimCoord;
+	double distance;
     bool byTotal;
         /**
          * Commands

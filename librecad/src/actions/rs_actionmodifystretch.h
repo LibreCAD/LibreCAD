@@ -51,7 +51,7 @@ public:
 public:
     RS_ActionModifyStretch(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyStretch() = default;
+	~RS_ActionModifyStretch();
 	
     virtual void init(int status=0);
     virtual void trigger();
@@ -64,10 +64,8 @@ public:
     virtual void updateMouseCursor();
 
 private:
-	RS_Vector firstCorner;
-	RS_Vector secondCorner;
-    RS_Vector referencePoint;
-    RS_Vector targetPoint;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

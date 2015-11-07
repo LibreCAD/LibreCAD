@@ -772,7 +772,9 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
 	 if( c < 1. - RS_TOLERANCE) {
 		 //two circles intersection or one circle in the other, there's an ellipse path
 		 ret.push_back(
-					 new RS_Ellipse{{cp,vp,sqrt(1. - c*c),0.,0.,false}});
+					 new RS_Ellipse(nullptr,
+									{cp, vp, sqrt(1. - c*c), 0., 0., false}
+					 ));
 	 }
     if( dist + e2 ->getRadius() < e1->getRadius() +RS_TOLERANCE ) {
         //one circle inside of another, the path is an ellipse
