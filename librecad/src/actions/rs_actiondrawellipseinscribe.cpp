@@ -45,7 +45,7 @@ RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(
 	actionType=RS2::ActionDrawEllipseInscribe;
 }
 
-RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe(){}
+RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe() = default;
 
 QAction* RS_ActionDrawEllipseInscribe::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;

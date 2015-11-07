@@ -48,7 +48,7 @@ RS_ActionDimDiametric::RS_ActionDimDiametric(
     reset();
 }
 
-RS_ActionDimDiametric::~RS_ActionDimDiametric(){}
+RS_ActionDimDiametric::~RS_ActionDimDiametric() = default;
 
 QAction* RS_ActionDimDiametric::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Diametric")

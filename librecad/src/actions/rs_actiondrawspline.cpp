@@ -48,7 +48,7 @@ RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
 	reset();
 }
 
-RS_ActionDrawSpline::~RS_ActionDrawSpline() {}
+RS_ActionDrawSpline::~RS_ActionDrawSpline() = default;
 
 QAction* RS_ActionDrawSpline::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	return new QAction(QIcon(":/extui/menuspline.png"), tr("&Spline"), nullptr);

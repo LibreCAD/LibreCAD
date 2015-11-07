@@ -432,19 +432,19 @@ void RS_Entity::setHighlighted(bool on) {
 }
 
 RS_Vector RS_Entity::getStartpoint() const {
-	return RS_Vector{};
+	return {};
 }
 
 RS_Vector RS_Entity::getEndpoint() const {
-	return RS_Vector{};
+	return {};
 }
 
 RS_VectorSolutions RS_Entity::getTangentPoint(const RS_Vector& /*point*/) const {
-	return RS_VectorSolutions{};
+	return {};
 }
 
 RS_Vector RS_Entity::getTangentDirection(const RS_Vector& /*point*/)const{
-	return RS_Vector{};
+	return {};
 }
 /**
  * @return true if the entity is highlighted.

@@ -48,7 +48,7 @@ RS_ActionDrawArc::RS_ActionDrawArc(RS_EntityContainer& container,
     reset();
 }
 
-RS_ActionDrawArc::~RS_ActionDrawArc(){}
+RS_ActionDrawArc::~RS_ActionDrawArc() = default;
 
 QAction* RS_ActionDrawArc::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	QAction* action = new QAction(tr("&Center, Point, Angles"),nullptr);

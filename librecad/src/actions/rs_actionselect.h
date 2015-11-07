@@ -43,7 +43,7 @@ public:
     RS_ActionSelect(RS_EntityContainer& container,
                     RS_GraphicView& graphicView,
                     RS2::ActionType nextAction,
-                    std::set<RS2::EntityType> const& entityTypeList=std::set<RS2::EntityType>());
+					std::initializer_list<RS2::EntityType> const& entityTypeList=std::initializer_list<RS2::EntityType>());
 	~RS_ActionSelect()=default;
 
     virtual void init(int status);
@@ -57,7 +57,7 @@ public:
     void requestFinish(bool keep=false);
 
 private:
-    std::set<RS2::EntityType> const entityTypeList;
+	std::initializer_list<RS2::EntityType> const entityTypeList;
     RS2::ActionType nextAction;
     bool selectSingle;
 };

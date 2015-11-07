@@ -61,7 +61,7 @@ RS_ActionDimLinear::RS_ActionDimLinear(RS_EntityContainer& container,
 
 
 
-RS_ActionDimLinear::~RS_ActionDimLinear() {}
+RS_ActionDimLinear::~RS_ActionDimLinear() = default;
 
 
 QAction* RS_ActionDimLinear::createGUIAction(RS2::ActionType type, QObject* /*parent*/) {

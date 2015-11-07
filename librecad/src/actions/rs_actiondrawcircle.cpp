@@ -47,7 +47,7 @@ RS_ActionDrawCircle::RS_ActionDrawCircle(RS_EntityContainer& container,
 
 
 
-RS_ActionDrawCircle::~RS_ActionDrawCircle() {}
+RS_ActionDrawCircle::~RS_ActionDrawCircle() = default;
 
 
 QAction* RS_ActionDrawCircle::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

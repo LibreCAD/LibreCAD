@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include<set>
 #include<QAction>
 #include <QMouseEvent>
 #include "rs_actiondrawlinetangent2.h"
@@ -35,7 +34,7 @@
 #include "rs_line.h"
 
 namespace{
-const std::set<RS2::EntityType> circleType={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse};
+auto circleType={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse};
 }
 
 RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
@@ -50,7 +49,7 @@ RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
     setStatus(SetCircle1);
 }
 
-RS_ActionDrawLineTangent2::~RS_ActionDrawLineTangent2(){}
+RS_ActionDrawLineTangent2::~RS_ActionDrawLineTangent2() = default;
 
 
 QAction* RS_ActionDrawLineTangent2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

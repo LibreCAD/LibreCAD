@@ -35,7 +35,7 @@
 RS_ActionSelect::RS_ActionSelect(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView,
                                  RS2::ActionType nextAction,
-                                 std::set<RS2::EntityType> const& entityTypeList)
+								 std::initializer_list<RS2::EntityType> const& entityTypeList)
 	:RS_ActionInterface("Select Entities", container, graphicView)
 	,entityTypeList(entityTypeList)
 	,nextAction(nextAction)
@@ -102,7 +102,9 @@ void RS_ActionSelect::updateToolBar() {
 
 					for(auto e: *container){
 						if (e && e->isSelected()) {
-							if(!entityTypeList.count(e->rtti()))
+							if(std::find(entityTypeList.begin(),
+								     entityTypeList.end(),
+								      e->rtti()) == entityTypeList.end())
 								e->setSelected(false);
                         }
                     }

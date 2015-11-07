@@ -49,7 +49,7 @@ RS_ActionDrawArc3P::RS_ActionDrawArc3P(RS_EntityContainer& container,
 
 
 
-RS_ActionDrawArc3P::~RS_ActionDrawArc3P() {}
+RS_ActionDrawArc3P::~RS_ActionDrawArc3P() = default;
 
 
 QAction* RS_ActionDrawArc3P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

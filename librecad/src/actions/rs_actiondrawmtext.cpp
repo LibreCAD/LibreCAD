@@ -44,7 +44,7 @@ RS_ActionDrawMText::RS_ActionDrawMText(RS_EntityContainer& container,
 	actionType=RS2::ActionDrawMText;
 }
 
-RS_ActionDrawMText::~RS_ActionDrawMText(){}
+RS_ActionDrawMText::~RS_ActionDrawMText() = default;
 
 
 QAction* RS_ActionDrawMText::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

@@ -54,7 +54,7 @@ RS_ActionDrawImage::RS_ActionDrawImage(RS_EntityContainer& container,
 
 
 
-RS_ActionDrawImage::~RS_ActionDrawImage() {}
+RS_ActionDrawImage::~RS_ActionDrawImage() = default;
 
 
 QAction* RS_ActionDrawImage::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

@@ -36,13 +36,13 @@
 RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
 											 RS_GraphicView& graphicView,
 											 RS_ActionInterface* actionSelect,
-											 std::set<RS2::EntityType> const& entityTypeList)
+											 std::initializer_list<RS2::EntityType> const& entityTypeList)
 	:RS_ActionInterface("Select Entities", container, graphicView)
 	,entityTypeList(entityTypeList)
 	,en(nullptr)
 {
 	actionType=RS2::ActionSelectSingle;
-    if(actionSelect != NULL){
+	if(actionSelect){
         if(actionSelect->rtti() == RS2::ActionSelect) {
             this->actionSelect=static_cast<RS_ActionSelect*>(actionSelect);
                 this->actionSelect->requestFinish(true);
@@ -62,10 +62,11 @@ QAction* RS_ActionSelectSingle::createGUIAction(RS2::ActionType /*type*/, QObjec
 
 
 void RS_ActionSelectSingle::trigger() {
-	if (en && (entityTypeList.empty() ||
-			   entityTypeList.count(en->rtti())
-			   )
-	){
+	bool typeMatch{true};
+	if (en && entityTypeList.size())
+		typeMatch = std::find(entityTypeList.begin(), entityTypeList.end(), en->rtti())
+				!= entityTypeList.end();
+	if (en && typeMatch) {
         RS_Selection s(*container, graphicView);
         s.selectSingle(en);
 

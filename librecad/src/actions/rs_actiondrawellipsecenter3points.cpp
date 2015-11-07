@@ -46,7 +46,7 @@ RS_ActionDrawEllipseCenter3Points::RS_ActionDrawEllipseCenter3Points(
 	actionType=RS2::ActionDrawEllipseCenter3Points;
 }
 
-RS_ActionDrawEllipseCenter3Points::~RS_ActionDrawEllipseCenter3Points(){}
+RS_ActionDrawEllipseCenter3Points::~RS_ActionDrawEllipseCenter3Points() = default;
 
 QAction* RS_ActionDrawEllipseCenter3Points::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;

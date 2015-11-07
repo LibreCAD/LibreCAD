@@ -45,7 +45,7 @@ RS_ActionDrawCircle3P::RS_ActionDrawCircle3P(RS_EntityContainer& container,
     reset();
 }
 
-RS_ActionDrawCircle3P::~RS_ActionDrawCircle3P() {}
+RS_ActionDrawCircle3P::~RS_ActionDrawCircle3P() = default;
 
 
 QAction* RS_ActionDrawCircle3P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

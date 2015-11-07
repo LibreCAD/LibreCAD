@@ -47,7 +47,7 @@ RS_ActionModifyOffset::RS_ActionModifyOffset(RS_EntityContainer& container,
 	data->useCurrentLayer = true;
 }
 
-RS_ActionModifyOffset::~RS_ActionModifyOffset() {}
+RS_ActionModifyOffset::~RS_ActionModifyOffset() = default;
 
 QAction* RS_ActionModifyOffset::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	QAction* action = new QAction(QIcon(":/extui/arcspara.png"), tr("&Offset"),nullptr);

@@ -49,7 +49,7 @@ RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(RS_EntityContainer& conta
 
 
 
-RS_ActionDrawArcTangential::~RS_ActionDrawArcTangential() {}
+RS_ActionDrawArcTangential::~RS_ActionDrawArcTangential() = default;
 
 
 QAction* RS_ActionDrawArcTangential::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

@@ -43,7 +43,7 @@ RS_ActionDimension::RS_ActionDimension(const char* name,
 
 
 
-RS_ActionDimension::~RS_ActionDimension() {}
+RS_ActionDimension::~RS_ActionDimension() = default;
 
 
 

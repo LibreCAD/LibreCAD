@@ -50,7 +50,7 @@ RS_ActionDrawLine::RS_ActionDrawLine(RS_EntityContainer& container,
     RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine: OK");
 }
 
-RS_ActionDrawLine::~RS_ActionDrawLine(){}
+RS_ActionDrawLine::~RS_ActionDrawLine() = default;
 
 
 QAction* RS_ActionDrawLine::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

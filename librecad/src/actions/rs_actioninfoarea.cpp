@@ -45,7 +45,7 @@ RS_ActionInfoArea::RS_ActionInfoArea(RS_EntityContainer& container,
 	actionType=RS2::ActionInfoArea;
 }
 
-RS_ActionInfoArea::~RS_ActionInfoArea(){}
+RS_ActionInfoArea::~RS_ActionInfoArea() = default;
 
 QAction* RS_ActionInfoArea::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     /*    QAction* action = new QAction(tr("Polygonal Area"),

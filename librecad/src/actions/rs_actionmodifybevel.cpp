@@ -49,7 +49,7 @@ RS_ActionModifyBevel::RS_ActionModifyBevel(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyBevel;
 }
 
-RS_ActionModifyBevel::~RS_ActionModifyBevel(){}
+RS_ActionModifyBevel::~RS_ActionModifyBevel() = default;
 
 QAction* RS_ActionModifyBevel::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	QAction* action = new QAction(QIcon(":/extui/modifybevel.png"), tr("&Bevel"), nullptr);

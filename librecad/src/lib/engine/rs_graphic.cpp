@@ -89,7 +89,7 @@ blockList(true),paperScaleFixed(false)
 /**
  * Destructor.
  */
-RS_Graphic::~RS_Graphic() {}
+RS_Graphic::~RS_Graphic() = default;
 
 
 

@@ -47,7 +47,7 @@ RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(
 
 
 
-RS_ActionDrawLineHorVert::~RS_ActionDrawLineHorVert() {}
+RS_ActionDrawLineHorVert::~RS_ActionDrawLineHorVert() = default;
 
 
 QAction* RS_ActionDrawLineHorVert::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

@@ -46,7 +46,7 @@ RS_ActionEditPaste::RS_ActionEditPaste( RS_EntityContainer& container,
 
 
 
-RS_ActionEditPaste::~RS_ActionEditPaste() {}
+RS_ActionEditPaste::~RS_ActionEditPaste() = default;
 
 
 QAction* RS_ActionEditPaste::createGUIAction(RS2::ActionType /*type*/, QObject* parent) {

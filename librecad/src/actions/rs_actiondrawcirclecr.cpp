@@ -51,7 +51,7 @@ RS_ActionDrawCircleCR::RS_ActionDrawCircleCR(RS_EntityContainer& container,
 
 
 
-RS_ActionDrawCircleCR::~RS_ActionDrawCircleCR() {}
+RS_ActionDrawCircleCR::~RS_ActionDrawCircleCR() = default;
 
 
 QAction* RS_ActionDrawCircleCR::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
@@ -64,7 +64,7 @@ QAction* RS_ActionDrawCircleCR::createGUIAction(RS2::ActionType /*type*/, QObjec
 
 
 void RS_ActionDrawCircleCR::reset() {
-	data.reset(new RS_CircleData(RS_Vector(false), 0.0));
+	data.reset(new RS_CircleData{RS_Vector{false}, 0.0});
 }
 
 

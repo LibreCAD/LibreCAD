@@ -67,10 +67,11 @@ RS_GraphicView::RS_GraphicView()
 	init();
 }
 
+RS_GraphicView::~RS_GraphicView() = default;
+
 /**
  * Destructor.
  */
-RS_GraphicView::~RS_GraphicView() {}
 
 void RS_GraphicView::init()
 {

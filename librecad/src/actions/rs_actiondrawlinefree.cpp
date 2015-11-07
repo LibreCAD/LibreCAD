@@ -41,7 +41,7 @@ RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
 	actionType=RS2::ActionDrawLineFree;
 }
 
-RS_ActionDrawLineFree::~RS_ActionDrawLineFree() {}
+RS_ActionDrawLineFree::~RS_ActionDrawLineFree() = default;
 
 QAction* RS_ActionDrawLineFree::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     return new QAction(QIcon(":/extui/linesfree.png"), tr("&Freehand Line"), nullptr);

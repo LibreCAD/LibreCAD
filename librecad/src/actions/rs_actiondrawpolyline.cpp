@@ -54,7 +54,7 @@ RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
 
 
 
-RS_ActionDrawPolyline::~RS_ActionDrawPolyline() {}
+RS_ActionDrawPolyline::~RS_ActionDrawPolyline() = default;
 
 
 QAction* RS_ActionDrawPolyline::createGUIAction(RS2::ActionType /*type*/,

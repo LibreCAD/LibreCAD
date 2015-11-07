@@ -48,7 +48,7 @@ QAction* RS_ActionModifyMove::createGUIAction(RS2::ActionType /*type*/, QObject*
     return action;
 }
 
-RS_ActionModifyMove::~RS_ActionModifyMove(){}
+RS_ActionModifyMove::~RS_ActionModifyMove() = default;
 
 void RS_ActionModifyMove::trigger() {
 

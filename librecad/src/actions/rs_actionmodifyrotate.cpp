@@ -43,7 +43,7 @@ RS_ActionModifyRotate::RS_ActionModifyRotate(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyRotate;
 }
 
-RS_ActionModifyRotate::~RS_ActionModifyRotate(){}
+RS_ActionModifyRotate::~RS_ActionModifyRotate() = default;
 
 QAction* RS_ActionModifyRotate::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	QAction* action = new QAction(QIcon(":/extui/modifyrotate.png"), tr("&Rotate"), NULL);

@@ -51,7 +51,7 @@ RS_ActionDimRadial::RS_ActionDimRadial(
     reset();
 }
 
-RS_ActionDimRadial::~RS_ActionDimRadial(){}
+RS_ActionDimRadial::~RS_ActionDimRadial() = default;
 
 QAction* RS_ActionDimRadial::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Radial")

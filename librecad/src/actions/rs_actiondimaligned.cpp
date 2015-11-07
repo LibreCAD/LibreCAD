@@ -46,7 +46,7 @@ RS_ActionDimAligned::RS_ActionDimAligned(RS_EntityContainer& container,
 
 
 
-RS_ActionDimAligned::~RS_ActionDimAligned() {}
+RS_ActionDimAligned::~RS_ActionDimAligned()  = default;
 
 QAction* RS_ActionDimAligned::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
         //tr("Aligned")

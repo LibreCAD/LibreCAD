@@ -47,7 +47,7 @@ RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
 	actionType=RS2::ActionDrawEllipse4Points;
 }
 
-RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points(){}
+RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points() = default;
 
 QAction* RS_ActionDrawEllipse4Points::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;

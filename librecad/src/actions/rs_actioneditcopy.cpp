@@ -49,7 +49,7 @@ RS_ActionEditCopy::RS_ActionEditCopy(bool copy,
 
 
 
-RS_ActionEditCopy::~RS_ActionEditCopy() {}
+RS_ActionEditCopy::~RS_ActionEditCopy() = default;
 
 
 
