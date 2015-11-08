@@ -804,7 +804,6 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action = new QAction(tr("move to bottom"), disable_group);
     action->setShortcut(QKeySequence(Qt::Key_End));
     action->setIcon(QIcon(":/extui/order_bottom.png"));
-    action->setStatusTip(tr("set to bottom"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotOrderBottom()));
     action->setData("OrderBottom");
@@ -813,7 +812,6 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action = new QAction(tr("lower after entity"), disable_group);
     action->setShortcut(QKeySequence(Qt::Key_PageDown));
     action->setIcon(QIcon(":/extui/order_lower.png"));
-    action->setStatusTip(tr("lower over entity"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotOrderLower()));
     action->setData("OrderLower");
@@ -822,7 +820,6 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action = new QAction(tr("raise over entity"), disable_group);
     action->setShortcut(QKeySequence(Qt::Key_PageUp));
     action->setIcon(QIcon(":/extui/order_raise.png"));
-    action->setStatusTip(tr("raise over entity"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotOrderRaise()));
     action->setData("OrderRaise");
@@ -831,7 +828,6 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action = new QAction(tr("move to top"), disable_group);
     action->setShortcut(QKeySequence(Qt::Key_Home));
     action->setIcon(QIcon(":/extui/order_top.png"));
-    action->setStatusTip(tr("set to top"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotOrderTop()));
     action->setData("OrderTop");
