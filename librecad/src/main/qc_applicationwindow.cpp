@@ -3134,33 +3134,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     add_action(view_menu, view_toolbar, map_a["ZoomWindow"]);
     add_action(view_menu, view_toolbar, map_a["ZoomPan"]);
 
-    // <[~ Select ~]>
-
-    QMenu* select_menu = new QMenu(tr("&Select"), menu_bar);
-    select_menu->setObjectName("Select");
-    select_menu->setTearOffEnabled(true);
-
-    list_a.clear();
-
-    list_a
-            << map_a["DeselectAll"]
-            << map_a["SelectAll"]
-            << map_a["SelectSingle"]
-            << map_a["SelectContour"]
-            << map_a["SelectWindow"]
-            << map_a["DeselectWindow"]
-            << map_a["SelectIntersected"]
-            << map_a["DeselectIntersected"]
-            << map_a["SelectLayer"]
-            << map_a["SelectInvert"];
-
-    select_menu->addActions(list_a);
-
-    LC_DockWidget* dock_select = new LC_DockWidget(this);
-    dock_select->setObjectName("dock_select");
-    dock_select->setWindowTitle(tr("Select"));
-    dock_select->add_actions(list_a, columns, icon_size);
-
     // <[~ Draw ~]>
 
     QMenu* draw_menu = new QMenu(tr("&Draw"), menu_bar);
@@ -3380,6 +3353,45 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     misc_menu->addActions(list_a);
     misc_toolbar->addActions(list_a);
+
+    // <[~ Select ~]>
+
+    QMenu* select_menu = new QMenu(tr("&Select"), menu_bar);
+    select_menu->setObjectName("Select");
+    select_menu->setTearOffEnabled(true);
+
+    list_a.clear();
+
+    list_a
+            << map_a["DeselectAll"]
+            << map_a["SelectAll"]
+            << map_a["SelectSingle"]
+            << map_a["SelectContour"]
+            << map_a["SelectWindow"]
+            << map_a["DeselectWindow"]
+            << map_a["SelectIntersected"]
+            << map_a["DeselectIntersected"]
+            << map_a["SelectLayer"]
+            << map_a["SelectInvert"];
+
+    select_menu->addActions(list_a);
+
+    QToolBar* select_toolbar = new QToolBar(tr("Select"), this);
+    select_toolbar->setSizePolicy(toolBarPolicy);
+    select_toolbar->setObjectName("select_toolbar");
+    select_toolbar->addActions(list_a);
+    select_toolbar->hide();
+
+    tool_button = new QToolButton;
+    tool_button->setPopupMode(QToolButton::InstantPopup);
+    tool_button->setIcon(QIcon(":/extui/menuselect.png"));
+    categories_toolbar->addWidget(tool_button);
+    tool_button->addActions(list_a);
+
+    LC_DockWidget* dock_select = new LC_DockWidget(this);
+    dock_select->setObjectName("dock_select");
+    dock_select->setWindowTitle(tr("Select"));
+    dock_select->add_actions(list_a, columns, icon_size);
 
     // <[~ Dimension ~]>
 
@@ -3732,7 +3744,8 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << penToolBar->toggleViewAction()
             << dockwidgets_toolbar->toggleViewAction()
             << optionWidget->toggleViewAction()
-            << order_toolbar->toggleViewAction();
+            << order_toolbar->toggleViewAction()
+            << select_toolbar->toggleViewAction();
 
     if (custom_toolbar)
     {
@@ -3765,6 +3778,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     addToolBar(Qt::BottomToolBarArea, snapToolBar);
     addToolBar(Qt::BottomToolBarArea, info_toolbar);
     addToolBar(Qt::BottomToolBarArea, dockwidgets_toolbar);
+    addToolBar(Qt::BottomToolBarArea, select_toolbar);
 
     // <[~ MenuBar Layout~]>
 
