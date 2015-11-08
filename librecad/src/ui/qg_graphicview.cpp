@@ -585,14 +585,38 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
     // zoom in / out:
     else if (e->modifiers()==0) {
+
+		/*
+		 * FIXME - there is surly a better way to get the center of the main view port. 
+		 */
+		RS_Vector mainViewCenter = toGraph(RS_Vector((getWidth()-vScrollBar->width())/2, (getHeight()-hScrollBar->height())/2));
+
 		if (e->delta()>0) {
+			const double zoomInOvershoot=1.20;
+
+			RS_Vector effect=RS_Vector(mouse);
+			{
+				effect-=mainViewCenter;
+				effect.scale(zoomInOvershoot);
+				effect+=mainViewCenter;
+			}
+
 			setCurrentAction(new RS_ActionZoomIn(*container, *this,
 												 RS2::In, RS2::Both,
-												 &mouse));
+												 &effect));
 		} else {
+			const double zoomOutUndershoot=0.30;
+
+			RS_Vector effect=RS_Vector(mouse);
+			{
+				effect-=mainViewCenter;
+				effect.scale(zoomOutUndershoot);
+				effect+=mainViewCenter;
+			}
+
 			setCurrentAction(new RS_ActionZoomIn(*container, *this,
 												 RS2::Out, RS2::Both,
-												 &mouse));
+												 &effect));
 		}
     }
 
