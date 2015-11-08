@@ -2994,7 +2994,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     QToolBar* categories_toolbar = new QToolBar(tr("Categories"), this);
     categories_toolbar->setSizePolicy(toolBarPolicy);
     categories_toolbar->setObjectName("categories_toolbar");
-    categories_toolbar->hide();
 
     // <[~ File ~]>
 
@@ -3095,7 +3094,6 @@ void QC_ApplicationWindow::menus_and_toolbars()
     QToolBar* order_toolbar = new QToolBar(tr("Order"), this);
     order_toolbar->setSizePolicy(toolBarPolicy);
     order_toolbar->setObjectName("order_toolbar");
-    order_toolbar->hide();
 
     add_action(order_menu, order_toolbar, map_a["OrderTop"]);
     add_action(order_menu, order_toolbar, map_a["OrderBottom"]);
@@ -3675,6 +3673,16 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_dimension->raise();
     addDockWidget(Qt::LeftDockWidgetArea, dock_modify);
 
+    dock_line->hide();
+    dock_polyline->hide();
+    dock_circle->hide();
+    dock_curve->hide();
+    dock_ellipse->hide();
+    dock_dimension->hide();
+    dock_info->hide();
+    dock_modify->hide();
+    dock_select->hide();
+
     // <[~ DockWidgets Menu ~]>
 
     QMenu* dockwidgets_menu = new QMenu(tr("&Dockwidgets"), menu_bar);
@@ -3738,17 +3746,20 @@ void QC_ApplicationWindow::menus_and_toolbars()
     addToolBar(Qt::TopToolBarArea, file_toolbar);
     addToolBar(Qt::TopToolBarArea, edit_toolbar);
     addToolBar(Qt::TopToolBarArea, view_toolbar);
+    addToolBar(Qt::TopToolBarArea, settings_toolbar);
+    addToolBarBreak();
     addToolBar(Qt::TopToolBarArea, penToolBar);
     addToolBar(Qt::TopToolBarArea, optionWidget);
-    addToolBar(Qt::TopToolBarArea, settings_toolbar);
-    addToolBar(Qt::TopToolBarArea, order_toolbar);
-    addToolBar(Qt::BottomToolBarArea, categories_toolbar);
+
+    addToolBar(Qt::LeftToolBarArea, categories_toolbar);
+    addToolBar(Qt::LeftToolBarArea, order_toolbar);
+    addToolBar(Qt::LeftToolBarArea, misc_toolbar);
+
     addToolBar(Qt::BottomToolBarArea, line_toolbar);
     addToolBar(Qt::BottomToolBarArea, circle_toolbar);
     addToolBar(Qt::BottomToolBarArea, curve_toolbar);
     addToolBar(Qt::BottomToolBarArea, ellipse_toolbar);
     addToolBar(Qt::BottomToolBarArea, polyline_toolbar);
-    addToolBar(Qt::BottomToolBarArea, misc_toolbar);
     addToolBar(Qt::BottomToolBarArea, dimension_toolbar);
     addToolBar(Qt::BottomToolBarArea, modify_toolbar);
     addToolBar(Qt::BottomToolBarArea, snapToolBar);
