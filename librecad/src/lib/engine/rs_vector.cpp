@@ -77,6 +77,11 @@ RS_Vector::RS_Vector(bool valid):
 {
 }
 
+RS_Vector::operator bool() const
+{
+	return valid;
+}
+
 /**
  * Sets to a unit vector by the direction angle
  */
@@ -556,6 +561,16 @@ bool RS_Vector::operator == (const RS_Vector& v) const {
 #else
     return (x==v.x && y==v.y && z==v.z && valid==v.valid);
 #endif
+}
+
+bool RS_Vector::operator == (bool valid) const
+{
+	return this->valid == valid;
+}
+
+bool RS_Vector::operator != (bool valid) const
+{
+	return this->valid != valid;
 }
 
 /**

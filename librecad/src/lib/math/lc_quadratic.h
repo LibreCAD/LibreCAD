@@ -70,8 +70,21 @@ public:
       return false, if linear
  */
 	bool isQuadratic() const;
+
+	//!
+	//! \brief operator bool explicit and implicit conversion to bool
+	//!
+	explicit operator bool() const;
 	bool isValid() const;
 	void setValid(bool value);
+	//!
+	//! \brief operator == comparison of validity with bool
+	//! \param valid boolean parameter
+	//! \return true is the parameter valid is the same as validity
+	//!
+	bool operator == (bool valid) const;
+	bool operator != (bool valid) const;
+
 	boost::numeric::ublas::vector<double>& getLinear();
 	 const boost::numeric::ublas::vector<double>& getLinear() const;
 	 boost::numeric::ublas::matrix<double>& getQuad();

@@ -50,6 +50,11 @@ public:
     explicit RS_Vector(bool valid);
 	~RS_Vector()=default;
 
+	//!
+	//! \brief operator bool explicit and implicit conversion to bool
+	//!
+	explicit operator bool() const;
+
 	void set(double angle); // set to unit vector by the direction of angle
 #ifdef  RS_VECTOR2D
     void set(double vx, double vy);
@@ -109,6 +114,13 @@ public:
     bool operator != (const RS_Vector& v) const {
         return !operator==(v);
     }
+	//!
+	//! \brief operator == comparison of validity with bool
+	//! \param valid boolean parameter
+	//! \return true is the parameter valid is the same as validity
+	//!
+	bool operator == (bool valid) const;
+	bool operator != (bool valid) const;
 
     static RS_Vector minimum(const RS_Vector& v1, const RS_Vector& v2);
     static RS_Vector maximum(const RS_Vector& v1, const RS_Vector& v2);
