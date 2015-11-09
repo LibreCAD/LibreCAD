@@ -117,8 +117,11 @@ public slots:
 	void slotDrawPoint();
 	void slotDrawLine();
 	void slotDrawLineAngle();
+	void slotDrawLineAngle2();
 	void slotDrawLineHorizontal();
+	void slotDrawLineHorizontal2();
 	void slotDrawLineVertical();
+	void slotDrawLineVertical2();
 	void slotDrawLineFree();
 	void slotDrawLineHorVert();
 	void slotDrawLineParallel();
