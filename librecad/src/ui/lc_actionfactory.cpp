@@ -34,6 +34,22 @@
 
 LC_ActionFactory::LC_ActionFactory(QObject* parent) : QObject(parent) {}
 
+QIcon mirror(QIcon icon, bool horizontal, bool vertical)
+{
+	QSize size(150, 150);
+	QPixmap pixmap1=icon.pixmap(size);
+
+	QImage image=pixmap1.toImage();
+	QImage mirrored=image.mirrored(horizontal, vertical);
+
+	QPixmap pixmap2(size);
+	{
+		pixmap2.convertFromImage(mirrored);
+	}
+
+	return QIcon(pixmap2);
+}
+
 QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
                                                     ,QActionGroup* tools
                                                     ,QActionGroup* disable_group)
@@ -137,17 +153,35 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setData("DrawLineAngle");
     a_map["DrawLineAngle"] = action;
 
+	action = new QAction(mirror(QIcon(":/extui/linesangle.png"), true, true), tr("&Angle"), tools);
+	connect(action, SIGNAL(triggered()),
+	action_handler, SLOT(slotDrawLineAngle2()));
+	action->setData("DrawLineAngle2");
+	a_map["DrawLineAngle2"] = action;
+
     action = new QAction(QIcon(":/extui/lineshor.png"), tr("&Horizontal"), tools);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineHorizontal()));
     action->setData("DrawLineHorizontal");
     a_map["DrawLineHorizontal"] = action;
 
+	action = new QAction(mirror(QIcon(":/extui/lineshor.png"), true, false), tr("&Horizontal"), tools);
+	connect(action, SIGNAL(triggered()),
+	action_handler, SLOT(slotDrawLineHorizontal2()));
+	action->setData("DrawLineHorizontal2");
+	a_map["DrawLineHorizontal2"] = action;
+
     action = new QAction(QIcon(":/extui/linesver.png"), tr("Vertical"), tools);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineVertical()));
     action->setData("DrawLineVertical");
     a_map["DrawLineVertical"] = action;
+
+	action = new QAction(mirror(QIcon(":/extui/linesver.png"), false, true), tr("Vertical"), tools);
+	connect(action, SIGNAL(triggered()),
+	action_handler, SLOT(slotDrawLineVertical2()));
+	action->setData("DrawLineVertical2");
+	a_map["DrawLineVertical2"] = action;
 
     action = new QAction(tr("Vertical"), tools);
     connect(action, SIGNAL(triggered()),

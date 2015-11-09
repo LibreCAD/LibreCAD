@@ -3174,8 +3174,11 @@ void QC_ApplicationWindow::menus_and_toolbars()
     list_a
             << map_a["DrawLine"]
             << map_a["DrawLineAngle"]
+            << map_a["DrawLineAngle2"]
             << map_a["DrawLineHorizontal"]
+            << map_a["DrawLineHorizontal2"]
             << map_a["DrawLineVertical"]
+            << map_a["DrawLineVertical2"]
             << map_a["DrawLineRectangle"]
             << map_a["DrawLineParallelThrough"]
             << map_a["DrawLineBisector"]
