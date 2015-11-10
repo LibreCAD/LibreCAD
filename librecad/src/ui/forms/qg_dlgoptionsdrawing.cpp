@@ -25,6 +25,7 @@
 **********************************************************************/
 #include "qg_dlgoptionsdrawing.h"
 
+#include <iostream>
 #include <cfloat>
 #include <QMessageBox>
 #include "rs_filterdxfrw.h"

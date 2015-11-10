@@ -28,7 +28,7 @@
 #ifndef RS_FONT_H
 #define RS_FONT_H
 
-#include <iostream>
+#include <iosfwd>
 #include <QStringList>
 #include <QMap>
 #include "rs_blocklist.h"

@@ -29,6 +29,7 @@
 #ifndef RS_ENTITY_H
 #define RS_ENTITY_H
 
+#include <map>
 #include "rs_vector.h"
 #include "rs_pen.h"
 #include "rs_undoable.h"
@@ -50,6 +51,7 @@ class RS_Layer;
 class LC_Quadratic;
 class RS_Vector;
 class RS_VectorSolutions;
+class QString;
 
 /**
  * Base class for an entity (line, arc, circle, ...)

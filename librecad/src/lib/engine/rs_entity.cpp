@@ -29,6 +29,7 @@
 #include <iostream>
 #include <utility>
 #include <QPolygon>
+#include <QString>
 
 #include "rs_entity.h"
 #include "rs_arc.h"

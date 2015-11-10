@@ -32,6 +32,8 @@
 
 #include <cmath>
 #include <muParser.h>
+#include <QString>
+#include <QDebug>
 
 #include "rs_math.h"
 #include "rs_vector.h"

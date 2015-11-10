@@ -24,6 +24,9 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
+
+#include <iostream>
+#include <QString>
 #include "rs_layer.h"
 
 RS_LayerData::RS_LayerData(const QString& name,

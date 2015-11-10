@@ -28,7 +28,7 @@
 #ifndef RS_UNDOLISTITEM_H
 #define RS_UNDOLISTITEM_H
 
-#include <iostream>
+#include <iosfwd>
 #include <set>
 
 #include "rs_entity.h"

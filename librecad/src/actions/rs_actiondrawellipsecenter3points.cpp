@@ -32,6 +32,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
 
+#include <QDebug>
+
 struct RS_ActionDrawEllipseCenter3Points::Points {
 RS_VectorSolutions points;
 RS_CircleData cData;

@@ -25,6 +25,7 @@
 **********************************************************************/
 
 
+#include <QString>
 #include <QFileInfo>
 #include "rs_creation.h"
 #include "rs_document.h"
