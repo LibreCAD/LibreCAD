@@ -30,6 +30,7 @@
 #include "rs_previewactioninterface.h"
 #include "rs_modification.h"
 
+class QPointF;
 
 /**
  * This action class can handle user events to get a point from plugin.

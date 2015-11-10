@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <QString>
 #include "rs_scriptlist.h"
 
 #include "rs_system.h"
