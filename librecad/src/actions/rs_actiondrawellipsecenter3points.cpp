@@ -35,10 +35,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QDebug>
 
 struct RS_ActionDrawEllipseCenter3Points::Points {
-RS_VectorSolutions points;
-RS_CircleData cData;
-RS_EllipseData eData;
-bool valid{false};
+	RS_VectorSolutions points;
+	RS_CircleData cData;
+	RS_EllipseData eData;
+	bool valid{false};
 };
 
 /**
@@ -106,7 +106,7 @@ void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent* e) {
         switch(getStatus()) {
 
         case SetPoint1:
-        {
+		{
 			RS_Circle* circle=new RS_Circle(preview.get(), pPoints->cData);
             deletePreview();
             preview->addEntity(circle);
@@ -137,10 +137,11 @@ bool RS_ActionDrawEllipseCenter3Points::preparePreview(){
     case SetPoint1:
     {
 		RS_Circle c(preview.get(), pPoints->cData);
-		pPoints->valid= c.createFromCR(pPoints->points.get(0),
+		pPoints->valid= c.createFromCR(pPoints->points.at(0),
 							  pPoints->points.get(0).distanceTo(pPoints->points.get(1)));
-		if(pPoints->valid){
-			pPoints->cData = {};
+
+		if (pPoints->valid){
+			pPoints->cData = c.getData();
         }
 
     }
@@ -150,14 +151,14 @@ bool RS_ActionDrawEllipseCenter3Points::preparePreview(){
     {
 		RS_Ellipse e(preview.get(), pPoints->eData);
 		pPoints->valid= e.createFromCenter3Points(pPoints->points);
-		if(pPoints->valid){
-			pPoints->eData = {};
+		if (pPoints->valid){
+			pPoints->eData = e.getData();
         }
     }
         break;
     default:
         break;
-    }
+	}
 	return pPoints->valid;
 }
 
@@ -180,7 +181,7 @@ void RS_ActionDrawEllipseCenter3Points::coordinateEvent(RS_CoordinateEvent* e) {
 	if (!e) return;
     RS_Vector mouse = e->getCoordinate();
 	pPoints->points.alloc(getStatus()+1);
-	pPoints->points.set(getStatus(),mouse);
+	pPoints->points.set(getStatus(), mouse);
 
     switch (getStatus()) {
     case SetCenter:

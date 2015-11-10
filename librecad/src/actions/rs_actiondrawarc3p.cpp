@@ -70,7 +70,7 @@ RS_ActionDrawArc3P::~RS_ActionDrawArc3P() = default;
 
 
 void RS_ActionDrawArc3P::reset() {
-	pPoints.reset();
+	pPoints.reset(new Points{});
 }
 
 

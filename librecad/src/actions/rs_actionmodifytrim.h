@@ -61,8 +61,8 @@ public:
 
 
 private:
-    RS_Entity* limitEntity;
     RS_Entity* trimEntity;
+	RS_Entity* limitEntity;
 	struct Points;
 	std::unique_ptr<Points> pPoints;
 	bool both;

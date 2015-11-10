@@ -56,7 +56,7 @@ void RS_ActionModifyDeleteFree::init(int status) {
     RS_ActionInterface::init(status);
 	polyline = nullptr;
 	e1 = e2 = nullptr;
-	pPoints.reset();
+	pPoints.reset(new Points{});
     RS_SnapMode *s = getSnapMode();
     s->snapOnEntity = true;
 }
