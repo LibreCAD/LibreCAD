@@ -30,6 +30,7 @@
 #include "rs_previewactioninterface.h"
 
 struct RS_ImageData;
+class QImage;
 
 /**
  * This action class can handle user events for inserting bitmaps into the
