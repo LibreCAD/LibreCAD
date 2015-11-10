@@ -33,11 +33,11 @@
 #include <sys/_size_t.h>
 #endif
 
-#include <iostream>
-#include <QString>
+#include <iosfwd>
 
 #include "rs_pen.h"
 
+class QString;
 
 /**
  * Holds the data that defines a layer.

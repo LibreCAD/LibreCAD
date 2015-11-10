@@ -25,7 +25,7 @@
 **
 **********************************************************************/
 
-
+#include <QString>
 #include "rs_variabledict.h"
 #include "rs_debug.h"
 

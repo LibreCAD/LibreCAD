@@ -28,7 +28,7 @@
 #ifndef RS_UTILITY_H
 #define RS_UTILITY_H
 
-#include <QString>
+class QString;
 
 /**
  * Various utilities.

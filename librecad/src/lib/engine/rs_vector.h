@@ -28,8 +28,8 @@
 #ifndef RS_VECTOR_H
 #define RS_VECTOR_H
 
-#include <iostream>
 #include <vector>
+#include <iosfwd>
 #include "rs.h"
 
 /**

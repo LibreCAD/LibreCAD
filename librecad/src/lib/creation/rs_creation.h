@@ -28,7 +28,6 @@
 #ifndef RS_CREATION_H
 #define RS_CREATION_H
 
-#include <QString>
 #include "rs_vector.h"
 
 class RS_Document;
@@ -47,6 +46,7 @@ class RS_Image;
 struct RS_InsertData;
 class RS_Insert;
 class RS_Block;
+class QString;
 
 /**
  * Data needed to insert library items.

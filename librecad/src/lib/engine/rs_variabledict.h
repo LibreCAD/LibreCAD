@@ -30,10 +30,10 @@
 #define RS_VARIABLEDICT_H
 
 #include <QHash>
-#include <QString>
 #include "rs_variable.h"
 
 class RS_Vector;
+class QString;
 
 /**
  * Dictionary of variables. The variables are stored as key / value

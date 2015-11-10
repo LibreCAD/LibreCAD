@@ -34,6 +34,10 @@ class RS_Color;
 class RS_Pen;
 class QPainterPath;
 class QRectF;
+class QPolygon;
+class QPolygonF;
+class QImage;
+class QBrush;
 
 /**
  * This class is a common interface for a painter class. Such
@@ -51,7 +55,7 @@ public:
         offset = RS_Vector(0.0,0.0);
         drawSelectedEntities=false;
     }
-    virtual ~RS_Painter() {}
+	virtual ~RS_Painter() = default;
 
     /**
      * Sets the drawing mode.
