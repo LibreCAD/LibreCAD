@@ -23,7 +23,6 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <initializer_list>
 #include "qg_polylineoptions.h"
 
 #include "rs_actiondrawpolyline.h"
