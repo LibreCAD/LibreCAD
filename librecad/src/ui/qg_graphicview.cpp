@@ -63,78 +63,33 @@
  * Constructor.
  */
 QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* doc)
-        :RS_GraphicView(parent, f)
-        ,hScrollBar(new QG_ScrollBar(Qt::Horizontal, this))
-        ,vScrollBar(new QG_ScrollBar(Qt::Vertical, this))
-        ,layout(new QGridLayout(this))
-        ,gridStatus(new QLabel("-", this))
-        ,curCad(new QCursor(QPixmap(":ui/cur_cad_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
-        ,curDel(new QCursor(QPixmap(":ui/cur_del_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
-        ,curSelect(new QCursor(QPixmap(":ui/cur_select_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
-        ,curMagnifier(new QCursor(QPixmap(":ui/cur_glass_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
-        ,curHand(new QCursor(QPixmap(":ui/cur_hand_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
-        ,redrawMethod(RS2::RedrawAll)
-        ,isSmoothScrolling(false)
+    :RS_GraphicView(parent, f)
+    ,curCad(new QCursor(QPixmap(":ui/cur_cad_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
+    ,curDel(new QCursor(QPixmap(":ui/cur_del_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
+    ,curSelect(new QCursor(QPixmap(":ui/cur_select_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
+    ,curMagnifier(new QCursor(QPixmap(":ui/cur_glass_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
+    ,curHand(new QCursor(QPixmap(":ui/cur_hand_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
+    ,redrawMethod(RS2::RedrawAll)
+    ,isSmoothScrolling(false)
 {
     RS_DEBUG->print("QG_GraphicView::QG_GraphicView()..");
 
-    RS_DEBUG->print("  Setting Container..");
-    if (doc) {
+    if (doc)
+    {
         setContainer(doc);
         doc->setGraphicView(this);
+        setDefaultAction(new RS_ActionDefault(*doc, *this));
     }
-    RS_DEBUG->print("  container set.");
+
     setFactorX(4.0);
     setFactorY(4.0);
-    setOffset(50, 50);
     setBorders(10, 10, 10, 10);
 
-	if (doc) {
-		setDefaultAction(new RS_ActionDefault(*doc, *this));
-	}
-
-    layout->setMargin(0);
-    layout->setSpacing(0);
-    layout->setColumnStretch(0, 1);
-    layout->setColumnStretch(1, 0);
-    layout->setColumnStretch(2, 0);
-    layout->setRowStretch(0, 1);
-    layout->setRowStretch(1, 0);
-
-    hScrollBar->setSingleStep(50);
-    hScrollBar->setCursor(Qt::ArrowCursor);
-    layout->addWidget(hScrollBar, 1, 0);
-    layout->addItem(new QSpacerItem(0, hScrollBar->sizeHint().height()), 1, 0);
-    connect(hScrollBar, SIGNAL(valueChanged(int)),
-            this, SLOT(slotHScrolled(int)));
-
-    vScrollBar->setSingleStep(50);
-    vScrollBar->setCursor(Qt::ArrowCursor);
-    layout->addWidget(vScrollBar, 0, 2);
-    layout->addItem(new QSpacerItem(vScrollBar->sizeHint().width(), 0), 0, 2);
-    connect(vScrollBar, SIGNAL(valueChanged(int)),
-            this, SLOT(slotVScrolled(int)));
-
-    // Dummy widgets for scrollbar corners:
-    //layout->addWidget(new QWidget(this), 1, 1);
-    //QWidget* w = new QWidget(this);
-    //w->setEraseColor(QColor(255,0,0));
-
-    gridStatus->setAlignment(Qt::AlignRight);
-    layout->addWidget(gridStatus, 1, 1, 1, 2);
-    layout->addItem(new QSpacerItem(50, 0), 0, 1);
-
     setMouseTracking(true);
-        // flickering under win:
-    //setFocusPolicy(WheelFocus);
-
     setFocusPolicy(Qt::NoFocus);
 
-    // See https://sourceforge.net/tracker/?func=detail&aid=3289298&group_id=342582&atid=1433844 (Left-mouse drag shrinks window)
+    // SourceForge issue 45 (Left-mouse drag shrinks window)
     setAttribute(Qt::WA_NoMousePropagation);
-
-	int aa = RS_SETTINGS->readNumEntry("/Appearance/Antialiasing");
-	set_antialiasing(aa?true:false);
 }
 
 
@@ -151,8 +106,12 @@ QG_GraphicView::~QG_GraphicView() {
 /**
  * @return width of widget.
  */
-int QG_GraphicView::getWidth() const{
-    return width() - vScrollBar->sizeHint().width();
+int QG_GraphicView::getWidth() const
+{
+    if (hasScrollBars)
+        return width() - vScrollBar->sizeHint().width();
+    else
+        return width();
 }
 
 
@@ -160,8 +119,12 @@ int QG_GraphicView::getWidth() const{
 /**
  * @return height of widget.
  */
-int QG_GraphicView::getHeight() const{
-    return height() - hScrollBar->sizeHint().height();
+int QG_GraphicView::getHeight() const
+{
+    if (hasScrollBars)
+        return height() - hScrollBar->sizeHint().height();
+    else
+        return height();
 }
 
 
@@ -175,7 +138,6 @@ void QG_GraphicView::setBackground(const RS_Color& bg) {
     palette.setColor(backgroundRole(), bg);
     setPalette(palette);
 }
-
 
 
 /**
@@ -256,18 +218,16 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType c) {
         break;
 
     }
-
 }
-
 
 
 /**
  * Sets the text for the grid status widget in the left bottom corner.
  */
-void QG_GraphicView::updateGridStatusWidget(const QString& text) {
-    gridStatus->setText(text);
+void QG_GraphicView::updateGridStatusWidget(const QString& text)
+{
+   if (hasScrollBars) gridStatus->setText(text);
 }
-
 
 
 /**
@@ -278,7 +238,6 @@ void QG_GraphicView::redraw(RS2::RedrawMethod method) {
         update(); // Paint when reeady to pain
 //	repaint(); //Paint immediate
 }
-
 
 
 void QG_GraphicView::resizeEvent(QResizeEvent* /*e*/) {
@@ -895,7 +854,45 @@ void QG_GraphicView::paintEvent(QPaintEvent *)
     RS_DEBUG->print("QG_GraphicView::paintEvent end");
 }
 
-void QG_GraphicView::set_antialiasing(bool state)
+void QG_GraphicView::setAntiAliasing(bool state)
 {
 	antialiasing = state;
+}
+
+void QG_GraphicView::addScrollBars()
+{
+    hasScrollBars = true;
+
+    hScrollBar = new QG_ScrollBar(Qt::Horizontal, this);
+    vScrollBar = new QG_ScrollBar(Qt::Vertical, this);
+    gridStatus = new QLabel("-", this);
+    layout = new QGridLayout(this);
+
+    setOffset(50, 50);
+
+    layout->setMargin(0);
+    layout->setSpacing(0);
+    layout->setColumnStretch(0, 1);
+    layout->setColumnStretch(1, 0);
+    layout->setColumnStretch(2, 0);
+    layout->setRowStretch(0, 1);
+    layout->setRowStretch(1, 0);
+
+    hScrollBar->setSingleStep(50);
+    hScrollBar->setCursor(Qt::ArrowCursor);
+    layout->addWidget(hScrollBar, 1, 0);
+    layout->addItem(new QSpacerItem(0, hScrollBar->sizeHint().height()), 1, 0);
+    connect(hScrollBar, SIGNAL(valueChanged(int)),
+            this, SLOT(slotHScrolled(int)));
+
+    vScrollBar->setSingleStep(50);
+    vScrollBar->setCursor(Qt::ArrowCursor);
+    layout->addWidget(vScrollBar, 0, 2);
+    layout->addItem(new QSpacerItem(vScrollBar->sizeHint().width(), 0), 0, 2);
+    connect(vScrollBar, SIGNAL(valueChanged(int)),
+            this, SLOT(slotVScrolled(int)));
+
+    gridStatus->setAlignment(Qt::AlignRight);
+    layout->addWidget(gridStatus, 1, 1, 1, 2);
+    layout->addItem(new QSpacerItem(50, 0), 0, 1);
 }

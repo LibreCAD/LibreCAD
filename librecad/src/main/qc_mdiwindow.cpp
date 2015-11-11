@@ -57,7 +57,7 @@ int QC_MDIWindow::idCounter = 0;
  *
  * @param doc Pointer to an existing document of NULL if a new
  *   document shall be created for this window.
- * @param parent Parent widget. Usually a workspace.
+ * @param parent An instance of QMdiArea.
  */
 QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, Qt::WindowFlags wflags)
                             : QMdiSubWindow(parent, wflags)
@@ -76,8 +76,17 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, Qt::WindowFlags wf
 
     graphicView = new QG_GraphicView(this, 0, document);
     graphicView->setObjectName("graphicview");
+
+    RS_SETTINGS->beginGroup("/Appearance");
+    int aa = RS_SETTINGS->readNumEntry("/Antialiasing");
+    int scrollbars = RS_SETTINGS->readNumEntry("/ScrollBars", 1);
+    RS_SETTINGS->endGroup();
+    graphicView->setAntiAliasing(aa?true:false);
+    if (scrollbars) graphicView->addScrollBars();
+
     connect(graphicView, SIGNAL(previous_zoom_state(bool)),
             parent->window(), SLOT(setPreviousZoomEnable(bool)));
+
     setWidget(graphicView);
 
     id = idCounter++;

@@ -2552,7 +2552,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
         QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i));
         if (m) {
             QG_GraphicView* gv = m->getGraphicView();
-			if (gv) {
+            if (gv) {
                 gv->setBackground(background);
                 gv->setGridColor(gridColor);
                 gv->setMetaGridColor(metaGridColor);
@@ -2561,7 +2561,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
                 gv->setStartHandleColor(startHandleColor);
                 gv->setHandleColor(handleColor);
                 gv->setEndHandleColor(endHandleColor);
-				gv->set_antialiasing(antialiasing?true:false);
+                gv->setAntiAliasing(antialiasing?true:false);
                 gv->redraw(RS2::RedrawGrid);
             }
         }

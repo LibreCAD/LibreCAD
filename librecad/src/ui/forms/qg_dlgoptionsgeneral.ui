@@ -1303,7 +1303,7 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
+          <item row="6" column="0">
            <widget class="QLabel" name="lMaxPreview">
             <property name="text">
              <string>Number of p&amp;review entities:</string>
@@ -1316,7 +1316,7 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
+          <item row="6" column="1">
            <widget class="QComboBox" name="cbMaxPreview">
             <property name="editable">
              <bool>true</bool>
@@ -1353,7 +1353,7 @@
             </item>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="5" column="0">
            <widget class="QLabel" name="lMinGridSpacing">
             <property name="text">
              <string>Minimal Grid Spacing (px):</string>
@@ -1366,7 +1366,7 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
+          <item row="5" column="1">
            <widget class="QComboBox" name="cbMinGridSpacing">
             <property name="editable">
              <bool>true</bool>
@@ -1442,6 +1442,13 @@
               <string>Spiderweb</string>
              </property>
             </item>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="scrollbars_check_box">
+            <property name="text">
+             <string>Scrollbars</string>
+            </property>
            </widget>
           </item>
          </layout>

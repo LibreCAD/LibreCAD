@@ -107,9 +107,6 @@ void QG_DlgOptionsGeneral::init() {
 
     // graphic view:
 
-	int checked = RS_SETTINGS->readNumEntry("/Antialiasing");
-	cb_antialiasing->setChecked(checked?true:false);
-
     // crosshairs:
     QString showCrosshairs = RS_SETTINGS->readEntry("/ShowCrosshairs", "1");
     cbShowCrosshairs->setChecked(showCrosshairs=="1");
@@ -122,6 +119,12 @@ void QG_DlgOptionsGeneral::init() {
     cbScaleGrid->setChecked(scaleGrid=="1");
     QString minGridSpacing = RS_SETTINGS->readEntry("/MinGridSpacing", "10");
     cbMinGridSpacing->setCurrentIndex( cbMinGridSpacing->findText(minGridSpacing) );
+
+    int checked = RS_SETTINGS->readNumEntry("/Antialiasing");
+    cb_antialiasing->setChecked(checked?true:false);
+
+    checked = RS_SETTINGS->readNumEntry("/ScrollBars");
+    scrollbars_check_box->setChecked(checked?true:false);
 
     // preview:
 	initComboBox(cbMaxPreview, RS_SETTINGS->readEntry("/MaxPreview", "100"));
@@ -231,7 +234,8 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/IconSize", sb_icon_size->value() );
         RS_SETTINGS->writeEntry("/SetIconSize", cb_icon_size->isChecked()?1:0);
-		RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/ScrollBars", scrollbars_check_box->isChecked()?1:0);
         RS_SETTINGS->endGroup();
 
         RS_SETTINGS->beginGroup("Colors");
