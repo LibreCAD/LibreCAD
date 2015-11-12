@@ -31,6 +31,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
+#include "rs_settings.h"
 
 #include "rs_actionblocksadd.h"
 #include "rs_actionblocksattributes.h"
@@ -1286,11 +1287,23 @@ void QG_ActionHandler::slotDrawLine() {
 }
 
 void QG_ActionHandler::slotDrawLineAngle() {
-    setCurrentAction(RS2::ActionDrawLineAngle);
+	RS_SETTINGS->writeEntry("/LineAngleSnapPoint", 0);
+	setCurrentAction(RS2::ActionDrawLineAngle);
+}
+
+void QG_ActionHandler::slotDrawLineAngle2() {
+	RS_SETTINGS->writeEntry("/LineAngleSnapPoint", 2);
+	setCurrentAction(RS2::ActionDrawLineAngle);
 }
 
 void QG_ActionHandler::slotDrawLineHorizontal() {
-    setCurrentAction(RS2::ActionDrawLineHorizontal);
+	RS_SETTINGS->writeEntry("/LineAngleSnapPoint", 0);
+	setCurrentAction(RS2::ActionDrawLineHorizontal);
+}
+
+void QG_ActionHandler::slotDrawLineHorizontal2() {
+	RS_SETTINGS->writeEntry("/LineAngleSnapPoint", 2);
+	setCurrentAction(RS2::ActionDrawLineHorizontal);
 }
 
 void QG_ActionHandler::slotDrawLineHorVert() {
@@ -1298,7 +1311,13 @@ void QG_ActionHandler::slotDrawLineHorVert() {
 }
 
 void QG_ActionHandler::slotDrawLineVertical() {
-    setCurrentAction(RS2::ActionDrawLineVertical);
+	RS_SETTINGS->writeEntry("/LineAngleSnapPoint", 0);
+	setCurrentAction(RS2::ActionDrawLineVertical);
+}
+
+void QG_ActionHandler::slotDrawLineVertical2() {
+	RS_SETTINGS->writeEntry("/LineAngleSnapPoint", 2);
+	setCurrentAction(RS2::ActionDrawLineVertical);
 }
 
 void QG_ActionHandler::slotDrawLineFree() {

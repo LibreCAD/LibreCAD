@@ -29,6 +29,7 @@
 #include "qg_actionhandler.h"
 #include "qc_applicationwindow.h"
 
+#include <QBitmap>
 #include <QScrollBar>
 #include <QTableView>
 #include <QHeaderView>
@@ -108,6 +109,16 @@ QModelIndex QG_LayerModel::getIndex (RS_Layer * lay){
     return createIndex ( row, NAME);
 }
 
+QPixmap createColorSampleForLayer(RS_Layer* layer)
+{
+	QPixmap pixmap(QSize(20,20));
+	{
+		pixmap.fill(layer->getPen().getColor().toQColor());
+	}
+
+	return pixmap;
+}
+
 QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
     if (!index.isValid() || index.row() >= listLayer.size())
         return QVariant();
@@ -134,6 +145,12 @@ QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
             return layerConstruction.pixmap(QSize(14,14),
                                             lay->isConstruction() ? QIcon::Normal : QIcon::Disabled,
                                             QIcon::On);
+
+		case COLOR_SAMPLE:
+		{
+			return createColorSampleForLayer(lay);
+		}
+
         default:
             break;
 
@@ -172,6 +189,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layerView->setColumnWidth(QG_LayerModel::LOCKED, 18);
     layerView->setColumnWidth(QG_LayerModel::PRINT, 24);
     layerView->setColumnWidth(QG_LayerModel::CONSTRUCTION, 18);
+	layerView->setColumnWidth(QG_LayerModel::COLOR_SAMPLE, 24);
     layerView->verticalHeader()->hide();
     layerView->horizontalHeader()->setStretchLastSection(true);
     layerView->horizontalHeader()->hide();
