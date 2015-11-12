@@ -610,7 +610,10 @@ void QG_GraphicView::keyReleaseEvent(QKeyEvent* e)
  * Called whenever the graphic view has changed.
  * Adjusts the scrollbar ranges / steps.
  */
-void QG_GraphicView::adjustOffsetControls() {
+void QG_GraphicView::adjustOffsetControls()
+{
+    if (hasScrollBars)
+    {
         static bool running = false;
 
         if (running) {
@@ -619,74 +622,75 @@ void QG_GraphicView::adjustOffsetControls() {
 
         running = true;
 
-    RS_DEBUG->print("QG_GraphicView::adjustOffsetControls() begin");
+        RS_DEBUG->print("QG_GraphicView::adjustOffsetControls() begin");
 
-    if (container==NULL || hScrollBar==NULL || vScrollBar==NULL) {
-        return;
-    }
+        if (container==NULL || hScrollBar==NULL || vScrollBar==NULL) {
+            return;
+        }
 
-    int ox = getOffsetX();
-    int oy = getOffsetY();
+        int ox = getOffsetX();
+        int oy = getOffsetY();
 
-    RS_Vector min = container->getMin();
-    RS_Vector max = container->getMax();
+        RS_Vector min = container->getMin();
+        RS_Vector max = container->getMax();
 
-    // no drawing yet - still allow to scroll
-    if (max.x < min.x+1.0e-6 ||
-            max.y < min.y+1.0e-6 ||
-                max.x > RS_MAXDOUBLE ||
-                max.x < RS_MINDOUBLE ||
-                min.x > RS_MAXDOUBLE ||
-                min.x < RS_MINDOUBLE ||
-                max.y > RS_MAXDOUBLE ||
-                max.y < RS_MINDOUBLE ||
-                min.y > RS_MAXDOUBLE ||
-                min.y < RS_MINDOUBLE ) {
-        min = RS_Vector(-10,-10);
-        max = RS_Vector(100,100);
-	}
-
-
-	int minVal = (int)(-ox-getWidth()*0.5
-					   - QG_SCROLLMARGIN - getBorderLeft());
-	int maxVal = (int)(-ox+getWidth()*0.5
-					   + QG_SCROLLMARGIN + getBorderRight());
-
-	if (minVal<=maxVal) {
-		hScrollBar->setRange(minVal, maxVal);
-	}
-
-	minVal = (int)(oy-getHeight()*0.5
-				   - QG_SCROLLMARGIN - getBorderTop());
-	maxVal = (int)(oy+getHeight()*0.5
-				   +QG_SCROLLMARGIN + getBorderBottom());
-
-	if (minVal<=maxVal) {
-		vScrollBar->setRange(minVal, maxVal);
-	}
-
-	hScrollBar->setPageStep(getWidth());
-	vScrollBar->setPageStep(getHeight());
-
-	hScrollBar->setValue(-ox);
-	vScrollBar->setValue(oy);
+        // no drawing yet - still allow to scroll
+        if (max.x < min.x+1.0e-6 ||
+                max.y < min.y+1.0e-6 ||
+                    max.x > RS_MAXDOUBLE ||
+                    max.x < RS_MINDOUBLE ||
+                    min.x > RS_MAXDOUBLE ||
+                    min.x < RS_MINDOUBLE ||
+                    max.y > RS_MAXDOUBLE ||
+                    max.y < RS_MINDOUBLE ||
+                    min.y > RS_MAXDOUBLE ||
+                    min.y < RS_MINDOUBLE ) {
+            min = RS_Vector(-10,-10);
+            max = RS_Vector(100,100);
+        }
 
 
-    slotHScrolled(-ox);
-    slotVScrolled(oy);
+        int minVal = (int)(-ox-getWidth()*0.5
+                           - QG_SCROLLMARGIN - getBorderLeft());
+        int maxVal = (int)(-ox+getWidth()*0.5
+                           + QG_SCROLLMARGIN + getBorderRight());
+
+        if (minVal<=maxVal) {
+            hScrollBar->setRange(minVal, maxVal);
+        }
+
+        minVal = (int)(oy-getHeight()*0.5
+                       - QG_SCROLLMARGIN - getBorderTop());
+        maxVal = (int)(oy+getHeight()*0.5
+                       +QG_SCROLLMARGIN + getBorderBottom());
+
+        if (minVal<=maxVal) {
+            vScrollBar->setRange(minVal, maxVal);
+        }
+
+        hScrollBar->setPageStep(getWidth());
+        vScrollBar->setPageStep(getHeight());
+
+        hScrollBar->setValue(-ox);
+        vScrollBar->setValue(oy);
 
 
-    RS_DEBUG->print("H min: %d / max: %d / step: %d / value: %d\n",
-                    hScrollBar->minimum(), hScrollBar->maximum(),
-                    hScrollBar->pageStep(), ox);
-//    DEBUG_HEADER
-    RS_DEBUG->print(/*RS_Debug::D_WARNING, */"V min: %d / max: %d / step: %d / value: %d\n",
-                    vScrollBar->minimum(), vScrollBar->maximum(),
-                    vScrollBar->pageStep(), oy);
+        slotHScrolled(-ox);
+        slotVScrolled(oy);
 
-    RS_DEBUG->print("QG_GraphicView::adjustOffsetControls() end");
+
+        RS_DEBUG->print("H min: %d / max: %d / step: %d / value: %d\n",
+                        hScrollBar->minimum(), hScrollBar->maximum(),
+                        hScrollBar->pageStep(), ox);
+    //    DEBUG_HEADER
+        RS_DEBUG->print(/*RS_Debug::D_WARNING, */"V min: %d / max: %d / step: %d / value: %d\n",
+                        vScrollBar->minimum(), vScrollBar->maximum(),
+                        vScrollBar->pageStep(), oy);
+
+        RS_DEBUG->print("QG_GraphicView::adjustOffsetControls() end");
 
         running = false;
+    }
 }
 
 
