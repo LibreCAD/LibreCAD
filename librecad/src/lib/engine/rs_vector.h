@@ -82,11 +82,11 @@ public:
     RS_Vector toInteger();
 
     RS_Vector move(const RS_Vector& offset);
-    RS_Vector rotate(const double& ang);
+	RS_Vector rotate(double ang);
     RS_Vector rotate(const RS_Vector& angleVector);
-    RS_Vector rotate(const RS_Vector& center, const double& ang);
+	RS_Vector rotate(const RS_Vector& center, double ang);
     RS_Vector rotate(const RS_Vector& center, const RS_Vector& angleVector);
-    RS_Vector scale(const double& factor);
+	RS_Vector scale(double factor);
     RS_Vector scale(const RS_Vector& factor);
 	RS_Vector scale(const RS_Vector& factor) const;
 	RS_Vector scale(const RS_Vector& center, const RS_Vector& factor);
@@ -99,16 +99,16 @@ public:
 	RS_Vector operator - (double d) const;
 	RS_Vector operator * (const RS_Vector& v) const;
 	RS_Vector operator / (const RS_Vector& v) const;
-    RS_Vector operator * (const double& s) const;
-    RS_Vector operator / (const double& s) const;
+	RS_Vector operator * (double s) const;
+	RS_Vector operator / (double s) const;
     RS_Vector operator - () const;
 
 	RS_Vector operator += (const RS_Vector& v);
 	RS_Vector operator -= (const RS_Vector& v);
 	RS_Vector operator *= (const RS_Vector& v);
 	RS_Vector operator /= (const RS_Vector& v);
-	RS_Vector operator *= (const double& s);
-	RS_Vector operator /= (const double& s);
+	RS_Vector operator *= (double s);
+	RS_Vector operator /= (double s);
 
     bool operator == (const RS_Vector& v) const;
     bool operator != (const RS_Vector& v) const {
@@ -165,7 +165,6 @@ public:
 	~RS_VectorSolutions()=default;
 
 	void alloc(size_t num);
-	void clean();
     void clear();
 	/**
 	 * @brief get range safe method of member access
@@ -195,9 +194,9 @@ void set(size_t i, const RS_Vector& v);
 	std::vector<RS_Vector>::const_iterator end() const;
 	std::vector<RS_Vector>::iterator begin();
 	std::vector<RS_Vector>::iterator end();
-	void rotate(const double& ang);
+	void rotate(double ang);
     void rotate(const RS_Vector& angleVector);
-    void rotate(const RS_Vector& center, const double& ang);
+	void rotate(const RS_Vector& center, double ang);
     void rotate(const RS_Vector& center, const RS_Vector& angleVector);
     void move(const RS_Vector& vp);
     void scale(const RS_Vector& center, const RS_Vector& factor);

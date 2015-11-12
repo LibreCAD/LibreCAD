@@ -58,7 +58,7 @@ RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points() = default;
 
 void RS_ActionDrawEllipse4Points::init(int status) {
     RS_PreviewActionInterface::init(status);
-	if(getStatus() == SetPoint1) pPoints->points.clean();
+	if(getStatus() == SetPoint1) pPoints->points.clear();
 }
 
 void RS_ActionDrawEllipse4Points::trigger() {
