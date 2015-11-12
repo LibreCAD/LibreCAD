@@ -3144,25 +3144,32 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     list_a.clear();
 
+	/**
+	 * This list yields the contents and order of the standard line tools widget/window/docklet.
+	 */
     list_a
             << map_a["DrawLine"]
-            << map_a["DrawLineAngle"]
-            << map_a["DrawLineAngle2"]
-            << map_a["DrawLineHorizontal"]
-            << map_a["DrawLineHorizontal2"]
             << map_a["DrawLineVertical"]
+            << map_a["DrawLineAngle"]
+            << map_a["DrawLineRelAngle"]
+            << map_a["DrawLineBisector"]
+
+            << map_a["DrawLineHorizontal2"]
+            << map_a["DrawLineOrthogonal"]
+            << map_a["DrawLineHorizontal"]
+            << map_a["DrawLineParallel"]
+            << map_a["DrawLineParallelThrough"]
+
+            << map_a["DrawLineAngle2"]
             << map_a["DrawLineVertical2"]
             << map_a["DrawLineRectangle"]
-            << map_a["DrawLineParallelThrough"]
-            << map_a["DrawLineParallel"]
-            << map_a["DrawLineBisector"]
+            << map_a["DrawLinePolygonCenCor"]
+            << map_a["DrawLinePolygonCorCor"]
+
             << map_a["DrawLineTangent1"]
             << map_a["DrawLineTangent2"]
             << map_a["DrawLineOrthTan"]
-            << map_a["DrawLineOrthogonal"]
-            << map_a["DrawLineRelAngle"]
-            << map_a["DrawLinePolygonCenCor"]
-            << map_a["DrawLinePolygonCorCor"];
+            ;
 
     sub_menu= draw_menu->addMenu(tr("&Line"));
     sub_menu->setIcon(QIcon(":/extui/menuline.png"));

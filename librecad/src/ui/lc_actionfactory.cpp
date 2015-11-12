@@ -141,7 +141,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     // <[~ Line ~]>
 
     action = new QAction(tr("&2 Points"), tools);
-    action->setIcon(QIcon(":/extui/linesnormal.png"));
+    action->setIcon(mirror(QIcon(":/extui/linesnormal.png"), false, true));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLine()));
     action->setData("DrawLine");
@@ -211,7 +211,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     a_map["DrawLineParallelThrough"] = action;
 
     action = new QAction(tr("Rectangle"), tools);
-    action->setIcon(QIcon(":/extui/linesrect.png"));
+    action->setIcon(mirror(QIcon(":/extui/linesrect.png"), true, false));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineRectangle()));
     action->setData("DrawLineRectangle");
