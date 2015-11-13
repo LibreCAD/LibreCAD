@@ -545,6 +545,20 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     // zoom in / out:
     else if (e->modifiers()==0) {
 
+		/**
+		 * The zoomFactor effects how quickly the scroll wheel will zoom in & out.
+		 * 
+		 * Benchmarks:
+		 * 1.250 - the original; fast & usable, but seems a choppy & a bit 'jarring'
+		 * 1.175 - still a bit choppy
+		 * 1.150 - smoother than the original, but still 'quick' enough for good navigation.
+		 * 1.137 - seems to work well for me
+		 * 1.125 - about the lowest that would be acceptable and useful, a tad on the slow side for me
+		 * 1.100 - a very slow & deliberate zooming, but feels very "cautious", "controlled", "safe", and "precise".
+		 * 1.000 - goes nowhere. :)
+		 */
+		const double zoomFactor=1.137;
+
 		RS_Vector mainViewCenter = toGraph(getWidth()/2, getHeight()/2);
 
 		if (e->delta()>0) {
@@ -559,7 +573,9 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
 			setCurrentAction(new RS_ActionZoomIn(*container, *this,
 												 RS2::In, RS2::Both,
-												 &effect));
+												 &effect,
+												 zoomFactor
+												));
 		} else {
 			const double zoomOutUndershoot=0.30;
 
@@ -572,7 +588,9 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
 			setCurrentAction(new RS_ActionZoomIn(*container, *this,
 												 RS2::Out, RS2::Both,
-												 &effect));
+												 &effect,
+												 zoomFactor
+												));
 		}
     }
 
