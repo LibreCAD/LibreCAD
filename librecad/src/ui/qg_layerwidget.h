@@ -49,6 +49,7 @@ public:
         LOCKED,
         PRINT,
         CONSTRUCTION,
+		COLOR_SAMPLE,
         NAME,
         LAST
     };
