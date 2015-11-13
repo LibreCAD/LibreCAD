@@ -110,7 +110,7 @@ void RS_ActionDefault::keyReleaseEvent(QKeyEvent* e) {
 
 void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
-    RS_Vector mouse = graphicView->toGraph(RS_Vector(e->x(), e->y()));
+    RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
     RS_Vector relMouse = mouse - graphicView->getRelativeZero();
 
     RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);

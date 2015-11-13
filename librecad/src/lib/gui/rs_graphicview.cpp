@@ -341,9 +341,9 @@ void RS_GraphicView::zoomIn(double f, const RS_Vector& center) {
     }
 
 	zoomWindow(
-				toGraph(RS_Vector(0,0))
+				toGraph(0, 0)
 				.scale(c, RS_Vector(1.0/f,1.0/f)),
-				toGraph(RS_Vector(getWidth(),getHeight()))
+				toGraph(getWidth(), getHeight())
 				.scale(c, RS_Vector(1.0/f,1.0/f)));
 
 	//adjustOffsetControls();

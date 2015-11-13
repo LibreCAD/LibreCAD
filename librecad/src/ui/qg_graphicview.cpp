@@ -333,7 +333,7 @@ bool QG_GraphicView::event(QEvent *event) {
 
             // It seems the NativeGestureEvent::pos() incorrectly reports global coordinates
             QPoint g = mapFromGlobal(nge->globalPos());
-            RS_Vector mouse = toGraph(RS_Vector(g.x(), g.y()));
+            RS_Vector mouse = toGraph(g.x(), g.y());
             setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
 												 RS2::Both, &mouse, factor));
         }
@@ -450,7 +450,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         return;
     }
 
-    RS_Vector mouse = toGraph(RS_Vector(e->x(), e->y()));
+    RS_Vector mouse = toGraph(e->x(), e->y());
 
 #if QT_VERSION >= 0x050200
     QPoint numPixels = e->pixelDelta();
@@ -545,15 +545,12 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     // zoom in / out:
     else if (e->modifiers()==0) {
 
-		/*
-		 * FIXME - there is surly a better way to get the center of the main view port. 
-		 */
-		RS_Vector mainViewCenter = toGraph(RS_Vector(getWidth()/2, getHeight()/2));
+		RS_Vector mainViewCenter = toGraph(getWidth()/2, getHeight()/2);
 
 		if (e->delta()>0) {
 			const double zoomInOvershoot=1.20;
 
-			RS_Vector effect=RS_Vector(mouse);
+			RS_Vector effect{mouse};
 			{
 				effect-=mainViewCenter;
 				effect.scale(zoomInOvershoot);
@@ -566,7 +563,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 		} else {
 			const double zoomOutUndershoot=0.30;
 
-			RS_Vector effect=RS_Vector(mouse);
+			RS_Vector effect{mouse};
 			{
 				effect-=mainViewCenter;
 				effect.scale(zoomOutUndershoot);
@@ -788,7 +785,7 @@ RS_Vector QG_GraphicView::getMousePosition() const
     //if cursor is not on widget, return the widget center position
     if(!rect().contains(vp))
         vp=QPoint(width()/2, height()/2);
-    return toGraph(RS_Vector(vp.x(), vp.y()));
+    return toGraph(vp.x(), vp.y());
 }
 
 void QG_GraphicView::getPixmapForView(std::unique_ptr<QPixmap>& pm)
