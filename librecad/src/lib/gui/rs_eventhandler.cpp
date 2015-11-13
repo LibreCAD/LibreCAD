@@ -135,10 +135,10 @@ void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
 void RS_EventHandler::mouseMoveEvent(QMouseEvent* e)
 {
     if(hasAction())
-    {
         currentActions.last()->mouseMoveEvent(e);
-    }
-    else  defaultAction->mouseMoveEvent(e);
+
+    else if (defaultAction)
+        defaultAction->mouseMoveEvent(e);
 }
 
 /**
