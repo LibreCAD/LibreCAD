@@ -77,13 +77,6 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, Qt::WindowFlags wf
     graphicView = new QG_GraphicView(this, 0, document);
     graphicView->setObjectName("graphicview");
 
-    RS_SETTINGS->beginGroup("/Appearance");
-    int aa = RS_SETTINGS->readNumEntry("/Antialiasing");
-    int scrollbars = RS_SETTINGS->readNumEntry("/ScrollBars", 1);
-    RS_SETTINGS->endGroup();
-    graphicView->setAntiAliasing(aa?true:false);
-    if (scrollbars) graphicView->addScrollBars();
-
     connect(graphicView, SIGNAL(previous_zoom_state(bool)),
             parent->window(), SLOT(setPreviousZoomEnable(bool)));
 

@@ -85,6 +85,13 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* 
     setFactorY(4.0);
     setBorders(10, 10, 10, 10);
 
+    RS_SETTINGS->beginGroup("/Appearance");
+    int aa = RS_SETTINGS->readNumEntry("/Antialiasing");
+    int scrollbars = RS_SETTINGS->readNumEntry("/ScrollBars", 1);
+    RS_SETTINGS->endGroup();
+    setAntiAliasing(aa?true:false);
+    if (scrollbars) addScrollBars();
+
     setMouseTracking(true);
     setFocusPolicy(Qt::NoFocus);
 
