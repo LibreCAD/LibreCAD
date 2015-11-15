@@ -91,6 +91,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* 
     RS_SETTINGS->endGroup();
     setAntiAliasing(aa?true:false);
     if (scrollbars) addScrollBars();
+    else if (!doc) addScrollBars(); // always add to hatch preview
 
     setMouseTracking(true);
     setFocusPolicy(Qt::NoFocus);
