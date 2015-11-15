@@ -74,10 +74,16 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
     RS_SETTINGS->endGroup();
 }
 
-RS_GraphicView::~RS_GraphicView() = default;
+RS_GraphicView::~RS_GraphicView()
+{
+    foreach (RS_EntityContainer* x, overlayEntities)
+    {
+        delete x;
+    }
+}
 
 /**
- * Must be called by any derrived class in the destructor.
+ * Must be called by any derived class in the destructor.
  */
 void RS_GraphicView::cleanUp() {
 	m_bIsCleanUp=true;
@@ -1708,7 +1714,7 @@ void RS_GraphicView::moveRelativeZero(const RS_Vector& pos) {
 
 
 /**
- * Remove all overlay entities
+ * Gets the specified overlay container.
  */
 RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics position)
 {
