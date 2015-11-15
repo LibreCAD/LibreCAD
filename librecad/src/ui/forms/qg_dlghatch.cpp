@@ -80,7 +80,7 @@ void QG_DlgHatch::showEvent ( QShowEvent * e) {
     gvPreview->zoomAuto();
 }
 
-void QG_DlgHatch::destroy() {
+QG_DlgHatch::~QG_DlgHatch() {
     if (isNew) {
         RS_SETTINGS->beginGroup("/Draw");
         RS_SETTINGS->writeEntry("/HatchSolid", (int)cbSolid->isChecked());
@@ -93,7 +93,6 @@ void QG_DlgHatch::destroy() {
     }
         delete preview;
 }
-
 
 void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
     hatch = &h;
