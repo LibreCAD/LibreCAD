@@ -341,7 +341,7 @@ bool QG_GraphicView::event(QEvent *event) {
 
             // It seems the NativeGestureEvent::pos() incorrectly reports global coordinates
             QPoint g = mapFromGlobal(nge->globalPos());
-            RS_Vector mouse = toGraph(RS_Vector(g.x(), g.y()));
+            RS_Vector mouse = toGraph(g.x(), g.y());
             setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
 												 RS2::Both, &mouse, factor));
         }
@@ -458,7 +458,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         return;
     }
 
-    RS_Vector mouse = toGraph(RS_Vector(e->x(), e->y()));
+    RS_Vector mouse = toGraph(e->x(), e->y());
 
 #if QT_VERSION >= 0x050200
     QPoint numPixels = e->pixelDelta();
@@ -552,14 +552,53 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
     // zoom in / out:
     else if (e->modifiers()==0) {
+
+		/**
+		 * The zoomFactor effects how quickly the scroll wheel will zoom in & out.
+		 * 
+		 * Benchmarks:
+		 * 1.250 - the original; fast & usable, but seems a choppy & a bit 'jarring'
+		 * 1.175 - still a bit choppy
+		 * 1.150 - smoother than the original, but still 'quick' enough for good navigation.
+		 * 1.137 - seems to work well for me
+		 * 1.125 - about the lowest that would be acceptable and useful, a tad on the slow side for me
+		 * 1.100 - a very slow & deliberate zooming, but feels very "cautious", "controlled", "safe", and "precise".
+		 * 1.000 - goes nowhere. :)
+		 */
+		const double zoomFactor=1.137;
+
+		RS_Vector mainViewCenter = toGraph(getWidth()/2, getHeight()/2);
+
 		if (e->delta()>0) {
+			const double zoomInOvershoot=1.20;
+
+			RS_Vector effect{mouse};
+			{
+				effect-=mainViewCenter;
+				effect.scale(zoomInOvershoot);
+				effect+=mainViewCenter;
+			}
+
 			setCurrentAction(new RS_ActionZoomIn(*container, *this,
 												 RS2::In, RS2::Both,
-												 &mouse));
+												 &effect,
+												 zoomFactor
+												));
 		} else {
+			const double zoomOutUndershoot=0.30;
+
+			RS_Vector effect{mouse};
+			{
+				effect-=mainViewCenter;
+				effect.scale(zoomOutUndershoot);
+				effect+=mainViewCenter;
+			}
+
 			setCurrentAction(new RS_ActionZoomIn(*container, *this,
 												 RS2::Out, RS2::Both,
-												 &mouse));
+												 &effect,
+												 zoomFactor
+												));
 		}
     }
 
@@ -772,7 +811,7 @@ RS_Vector QG_GraphicView::getMousePosition() const
     //if cursor is not on widget, return the widget center position
     if(!rect().contains(vp))
         vp=QPoint(width()/2, height()/2);
-    return toGraph(RS_Vector(vp.x(), vp.y()));
+    return toGraph(vp.x(), vp.y());
 }
 
 void QG_GraphicView::getPixmapForView(std::unique_ptr<QPixmap>& pm)
