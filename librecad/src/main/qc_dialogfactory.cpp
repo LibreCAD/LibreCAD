@@ -84,7 +84,7 @@ void QC_DialogFactory::closeEditBlockWindow(RS_Block* block) {
     for (int i = 0; i <mdiAreaCAD->subWindowList().size(); ) {
         RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: window: %d",
                         i);
-        QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(mdiAreaCAD->subWindowList().at(i)->widget());
+        QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(mdiAreaCAD->subWindowList().at(i));
         if(m==NULL) {
             mdiAreaCAD->removeSubWindow(mdiAreaCAD->subWindowList().at(i));
             continue;
