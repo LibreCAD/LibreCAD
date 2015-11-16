@@ -1718,9 +1718,9 @@ bool QG_DialogFactory::requestHatchDialog(RS_Hatch* hatch) {
     dlg.setHatch(*hatch, true);
     if (dlg.exec()) {
         dlg.updateHatch();
+        dlg.saveSettings();
         return true;
     }
-
     return false;
 }
 

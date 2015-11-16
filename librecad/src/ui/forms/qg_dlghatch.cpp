@@ -80,18 +80,9 @@ void QG_DlgHatch::showEvent ( QShowEvent * e) {
     gvPreview->zoomAuto();
 }
 
-QG_DlgHatch::~QG_DlgHatch() {
-    if (isNew) {
-        RS_SETTINGS->beginGroup("/Draw");
-        RS_SETTINGS->writeEntry("/HatchSolid", (int)cbSolid->isChecked());
-        RS_SETTINGS->writeEntry("/HatchPattern", cbPattern->currentText());
-        RS_SETTINGS->writeEntry("/HatchScale", leScale->text());
-        RS_SETTINGS->writeEntry("/HatchAngle", leAngle->text());
-        RS_SETTINGS->writeEntry("/HatchPreview",
-                                (int)cbEnablePreview->isChecked());
-        RS_SETTINGS->endGroup();
-    }
-        delete preview;
+QG_DlgHatch::~QG_DlgHatch()
+{
+    delete preview;
 }
 
 void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
@@ -194,4 +185,18 @@ void QG_DlgHatch::updatePreview(RS_Pattern* ) {
     }
 
     gvPreview->zoomAuto();
+}
+
+void QG_DlgHatch::saveSettings()
+{
+    if (isNew)
+    {
+        RS_SETTINGS->beginGroup("/Draw");
+        RS_SETTINGS->writeEntry("/HatchSolid", cbSolid->isChecked());
+        RS_SETTINGS->writeEntry("/HatchPattern", cbPattern->currentText());
+        RS_SETTINGS->writeEntry("/HatchScale", leScale->text());
+        RS_SETTINGS->writeEntry("/HatchAngle", leAngle->text());
+        RS_SETTINGS->writeEntry("/HatchPreview", cbEnablePreview->isChecked());
+        RS_SETTINGS->endGroup();
+    }
 }
