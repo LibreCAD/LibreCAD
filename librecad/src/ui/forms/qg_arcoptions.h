@@ -26,10 +26,16 @@
 #ifndef QG_ARCOPTIONS_H
 #define QG_ARCOPTIONS_H
 
-#include "ui_qg_arcoptions.h"
-#include "rs_actiondrawarc.h"
+#include<memory>
+#include<QWidget>
 
-class QG_ArcOptions : public QWidget, public Ui::QG_ArcOptions
+class RS_ActionDrawArc;
+class RS_ActionInterface;
+namespace Ui {
+class Ui_ArcOptions;
+}
+
+class QG_ArcOptions : public QWidget
 {
     Q_OBJECT
 
@@ -43,12 +49,13 @@ public slots:
 
 protected:
     RS_ActionDrawArc* action;
+	std::unique_ptr<Ui::Ui_ArcOptions> ui;
 
 protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
+	void saveSettings();
 
 };
 
