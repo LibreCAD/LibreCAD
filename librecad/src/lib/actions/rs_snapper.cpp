@@ -29,6 +29,7 @@
 #include<QMouseEvent>
 #include "rs_snapper.h"
 
+#include "rs_point.h"
 #include "rs_circle.h"
 #include "rs_line.h"
 #include "rs_dialogfactory.h"
@@ -296,6 +297,16 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
     //else snapCoord = snapSpot;
 
 	snapPoint(pImpData->snapSpot, false);
+
+	//If the cursor is too-close to the snapSpot (by number of screen pixels), then hide it.
+	if (graphicView->toGui(pImpData->snapSpot).distanceTo(graphicView->toGui(mouseCoord)) < 32 /* xenoRadius */)
+	{
+		graphicView->setCursor(Qt::BlankCursor);
+	}
+	else
+	{
+		graphicView->setCursor(Qt::CrossCursor);
+	}
 
 	return pImpData->snapCoord;
 }
@@ -716,16 +727,18 @@ void RS_Snapper::drawSnapper()
         {
             RS_DEBUG->print("RS_Snapper::Snapped draw start");
 
-            // Circle to show snap area
-			RS_Circle *circle=new RS_Circle(container,
-			{pImpData->snapCoord, 4./graphicView->getFactor().x});
-			circle->setPen(pImpData->circle_pen);
-
-            container->addEntity(circle);
-
             // crosshairs:
             if (showCrosshairs==true)
             {
+				//Draw the actual point that they would be placing...
+				RS_Point *point=new RS_Point(container, pImpData->snapCoord);
+				{
+					point->setPen(pImpData->circle_pen);
+					container->addEntity(point);
+				}
+
+				double xenoRadius=16;
+
                 if(graphicView->isGridIsometric())
                 {
                     //isometric crosshair
@@ -758,22 +771,56 @@ void RS_Snapper::drawSnapper()
                 }
                 else //orthogonal crosshair
                 {
+					double snapX=graphicView->toGuiX(pImpData->snapCoord.x);
+					double snapY=graphicView->toGuiY(pImpData->snapCoord.y);
+
+					double viewWidth=double(graphicView->getWidth());
+					double viewHeight=double(graphicView->getHeight());
+
 					if (pImpData->snap_indicator=="Crosshair")
                     {
-                        RS_OverlayLine *line=new RS_OverlayLine(nullptr,
-						{{0., graphicView->toGuiY(pImpData->snapCoord.y)},
-						 {double(graphicView->getWidth()),
-						  graphicView->toGuiY(pImpData->snapCoord.y)}
-                                                                });
-						line->setPen(pImpData->line_pen);
-                        container->addEntity(line);
+                        RS_OverlayLine *line;
 
-                        line=new RS_OverlayLine(nullptr,
-						{{graphicView->toGuiX(pImpData->snapCoord.x),0.},
-						 {graphicView->toGuiX(pImpData->snapCoord.x),
-                          double(graphicView->getHeight())}});
-						line->setPen(pImpData->line_pen);
-                        container->addEntity(line);
+						// ----O     (Left)
+						line=new RS_OverlayLine(nullptr, {
+							{0., snapY},
+							{snapX-xenoRadius, snapY}
+						});
+						{
+							line->setPen(pImpData->line_pen);
+							container->addEntity(line);
+						}
+
+						//     O---- (Right)
+						line=new RS_OverlayLine(nullptr, {
+							{snapX+xenoRadius, snapY},
+							{viewWidth, snapY}
+						});
+						{
+							line->setPen(pImpData->line_pen);
+							container->addEntity(line);
+						}
+
+						// (Top)
+						line=new RS_OverlayLine(nullptr, {
+							{snapX, 0.},
+							{snapX, snapY-xenoRadius}
+						});
+						{
+							line->setPen(pImpData->line_pen);
+							container->addEntity(line);
+						}
+
+						// (Bottom)
+						line=new RS_OverlayLine(nullptr, {
+							{snapX, snapY+xenoRadius},
+							{snapX, viewHeight}
+						});
+						{
+							line->setPen(pImpData->line_pen);
+							container->addEntity(line);
+						}
+
                     }
                     else // "Spiderweb"
                     {
@@ -805,6 +852,16 @@ void RS_Snapper::drawSnapper()
                     }
                 }
             }
+            else
+			{
+				//If we are not showing the crosshairs, then we need to *circle* the point they are snapping to.
+				RS_Circle *circle=new RS_Circle(container, {pImpData->snapCoord, 4./graphicView->getFactor().x});
+				{
+					circle->setPen(pImpData->circle_pen);
+					container->addEntity(circle);
+				}
+			}
+
             graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event
             RS_DEBUG->print("RS_Snapper::Snapped draw end");
         }
