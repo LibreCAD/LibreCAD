@@ -107,12 +107,18 @@ void QG_DlgOptionsGeneral::init() {
 
     // graphic view:
 
-    // crosshairs:
-    QString showCrosshairs = RS_SETTINGS->readEntry("/ShowCrosshairs", "1");
-    cbShowCrosshairs->setChecked(showCrosshairs=="1");
+    // Snap Indicators
+    bool indicator_lines_state = RS_SETTINGS->readNumEntry("/indicator_lines_state", 1);
+    indicator_lines_checkbox->setChecked(indicator_lines_state);
 
-    QString snapindicator = RS_SETTINGS->readEntry("/SnapIndicator", "Crosshair");
-    cb_snapindicator->setCurrentIndex(snapindicator=="Crosshair"?0:1);
+    QString indicator_lines_type = RS_SETTINGS->readEntry("/indicator_lines_type", "Crosshair");
+    indicator_lines_combobox->setCurrentText(indicator_lines_type);
+
+    bool indicator_shape_state = RS_SETTINGS->readNumEntry("/indicator_shape_state", 1);
+    indicator_shape_checkbox->setChecked(indicator_shape_state);
+
+    QString indicator_shape_type = RS_SETTINGS->readEntry("/indicator_shape_type", "Circle");
+    indicator_shape_combobox->setCurrentText(indicator_shape_type);
     
     // scale grid:
     QString scaleGrid = RS_SETTINGS->readEntry("/ScaleGrid", "1");
@@ -228,8 +234,10 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/MaxPreview", cbMaxPreview->currentText());
         RS_SETTINGS->writeEntry("/Language",cbLanguage->itemData(cbLanguage->currentIndex()));
         RS_SETTINGS->writeEntry("/LanguageCmd",cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
-        RS_SETTINGS->writeEntry("/ShowCrosshairs", QString("%1").arg((int)cbShowCrosshairs->isChecked()));
-        RS_SETTINGS->writeEntry("/SnapIndicator", cb_snapindicator->currentText());
+        RS_SETTINGS->writeEntry("/indicator_lines_state", indicator_lines_checkbox->isChecked());
+        RS_SETTINGS->writeEntry("/indicator_lines_type", indicator_lines_combobox->currentText());
+        RS_SETTINGS->writeEntry("/indicator_shape_state", indicator_shape_checkbox->isChecked());
+        RS_SETTINGS->writeEntry("/indicator_shape_type", indicator_shape_combobox->currentText());
         RS_SETTINGS->writeEntry("/StatusBarFontSize", cbSizeStatus->currentText());
         RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/IconSize", sb_icon_size->value() );

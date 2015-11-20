@@ -1293,30 +1293,7 @@
           <string>Graphic View</string>
          </property>
          <layout class="QGridLayout">
-          <item row="2" column="0" colspan="2">
-           <widget class="QCheckBox" name="cbScaleGrid">
-            <property name="text">
-             <string>A&amp;utomatically scale grid</string>
-            </property>
-            <property name="shortcut">
-             <string>Alt+U</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="lMaxPreview">
-            <property name="text">
-             <string>Number of p&amp;review entities:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbMaxPreview</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
+          <item row="7" column="1">
            <widget class="QComboBox" name="cbMaxPreview">
             <property name="editable">
              <bool>true</bool>
@@ -1353,7 +1330,30 @@
             </item>
            </widget>
           </item>
-          <item row="5" column="0">
+          <item row="7" column="0">
+           <widget class="QLabel" name="lMaxPreview">
+            <property name="text">
+             <string>Number of p&amp;review entities:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbMaxPreview</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbScaleGrid">
+            <property name="text">
+             <string>A&amp;utomatically scale grid</string>
+            </property>
+            <property name="shortcut">
+             <string>Alt+U</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
            <widget class="QLabel" name="lMinGridSpacing">
             <property name="text">
              <string>Minimal Grid Spacing (px):</string>
@@ -1366,7 +1366,7 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
+          <item row="6" column="1">
            <widget class="QComboBox" name="cbMinGridSpacing">
             <property name="editable">
              <bool>true</bool>
@@ -1413,28 +1413,35 @@
             </item>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="4" column="0">
            <widget class="QCheckBox" name="cb_antialiasing">
             <property name="text">
              <string>Anti-aliasing</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="cbShowCrosshairs">
+          <item row="5" column="0">
+           <widget class="QCheckBox" name="scrollbars_check_box">
             <property name="text">
-             <string>Snap indicator</string>
-            </property>
-            <property name="shortcut">
-             <string>Alt+S</string>
+             <string>Scrollbars</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QComboBox" name="cb_snapindicator">
+           <widget class="QComboBox" name="indicator_lines_combobox">
             <item>
              <property name="text">
               <string>Crosshair</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Crosshair2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Orthogonal</string>
              </property>
             </item>
             <item>
@@ -1444,11 +1451,35 @@
             </item>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QCheckBox" name="scrollbars_check_box">
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="indicator_lines_checkbox">
             <property name="text">
-             <string>Scrollbars</string>
+             <string>Snap indicator lines</string>
             </property>
+            <property name="shortcut">
+             <string>Alt+S</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="indicator_shape_checkbox">
+            <property name="text">
+             <string>Snap indicator shape</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="indicator_shape_combobox">
+            <item>
+             <property name="text">
+              <string>Circle</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Point</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>
@@ -1964,7 +1995,7 @@
  <tabstops>
   <tabstop>cbLanguage</tabstop>
   <tabstop>cbLanguageCmd</tabstop>
-  <tabstop>cbShowCrosshairs</tabstop>
+  <tabstop>indicator_lines_checkbox</tabstop>
   <tabstop>cbScaleGrid</tabstop>
   <tabstop>cbMinGridSpacing</tabstop>
   <tabstop>cbMaxPreview</tabstop>

@@ -200,12 +200,13 @@ protected:
     /**
      * Show large cross hairs.
      */
-    bool showCrosshairs;
     bool finished{false};
 
 private:
 	struct ImpData;
 	std::unique_ptr<ImpData> pImpData;
+    bool indicator_lines_state; //!< snap indicator lines on/off
+    bool indicator_shape_state; //!< snap indicator shape on/off
 };
 
 #endif
