@@ -1295,5 +1295,13 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setData("FocusCommand");
     a_map["FocusCommand"] = action;
 
+    action = new QAction(tr("Tool Sidebar"), main_window);
+    connect(action, SIGNAL(toggled(bool)),
+            main_window, SLOT(slotToggleToolSidebar(bool)));
+    action->setCheckable(true);
+    action->setChecked(false);
+    action->setData("ToggleToolSidebar");
+    a_map["ToggleToolSidebar"] = action;
+
     return a_map;
 }

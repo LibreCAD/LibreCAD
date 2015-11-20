@@ -188,6 +188,7 @@ public slots:
     void setPreviousZoomEnable(bool enable);
 
     void hide_options(QC_MDIWindow*);
+    void slotToggleToolSidebar(bool state);
 
 signals:
     void gridChanged(bool on);
@@ -411,6 +412,7 @@ private:
     QList<QAction*> dockwidget_view_actions;
     QAction* statusbar_view_action;
     QList<QC_MDIWindow*> window_list;
+    QList<QWidget*> tool_sidebar;
 };
 
 

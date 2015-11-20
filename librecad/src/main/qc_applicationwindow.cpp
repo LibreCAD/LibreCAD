@@ -3646,6 +3646,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dockwidgets_toolbar->setSizePolicy(toolBarPolicy);
     dockwidgets_toolbar->setObjectName("dockwidgets_toolbar");
     dockwidgets_toolbar->addAction(map_a["ViewStatusBar"]);
+    dockwidgets_toolbar->addAction(map_a["ToggleToolSidebar"]);
     dockwidgets_toolbar->addAction(dock_block->toggleViewAction());
     dockwidgets_toolbar->addAction(dock_library->toggleViewAction());
     dockwidgets_toolbar->addAction(dock_command->toggleViewAction());
@@ -3671,7 +3672,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     m_pSimpleTest=new LC_SimpleTests(this);
 #endif
 
-    // <[~ Sidebar ~]>
+    // <[~ Tool Sidebar ~]>
 
     addDockWidget(Qt::LeftDockWidgetArea, dock_line);
     tabifyDockWidget(dock_line, dock_polyline);
@@ -3696,6 +3697,17 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_modify->hide();
     dock_select->hide();
 
+    tool_sidebar
+            << dock_line
+            << dock_polyline
+            << dock_circle
+            << dock_curve
+            << dock_ellipse
+            << dock_dimension
+            << dock_info
+            << dock_modify
+            << dock_select;
+
     // <[~ DockWidgets Menu ~]>
 
     QMenu* dockwidgets_menu = new QMenu(tr("&Dockwidgets"), menu_bar);
@@ -3703,6 +3715,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dockwidgets_menu->setTearOffEnabled(true);
 
     dockwidget_view_actions
+            << map_a["ToggleToolSidebar"]
             << dock_block->toggleViewAction()
             << dock_library->toggleViewAction()
             << dock_command->toggleViewAction()
@@ -3858,4 +3871,12 @@ void QC_ApplicationWindow::slot_fullscreen(bool checked)
 void QC_ApplicationWindow::hide_options(QC_MDIWindow* win)
 {
     win->getGraphicView()->getDefaultAction()->hideOptions();
+}
+
+void QC_ApplicationWindow::slotToggleToolSidebar(bool checked)
+{
+    foreach (QWidget* x, tool_sidebar)
+    {
+        x->setVisible(checked);
+    }
 }
