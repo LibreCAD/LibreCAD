@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QG_LineAngleOptions</class>
- <widget class="QWidget" name="QG_LineAngleOptions">
+ <class>Ui_LineAngleOptions</class>
+ <widget class="QWidget" name="Ui_LineAngleOptions">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -35,7 +35,16 @@
    <property name="spacing">
     <number>1</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -185,7 +194,7 @@
   <connection>
    <sender>leAngle</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_LineAngleOptions</receiver>
+   <receiver>Ui_LineAngleOptions</receiver>
    <slot>updateAngle(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -201,7 +210,7 @@
   <connection>
    <sender>leLength</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_LineAngleOptions</receiver>
+   <receiver>Ui_LineAngleOptions</receiver>
    <slot>updateLength(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -217,7 +226,7 @@
   <connection>
    <sender>cbSnapPoint</sender>
    <signal>activated(int)</signal>
-   <receiver>QG_LineAngleOptions</receiver>
+   <receiver>Ui_LineAngleOptions</receiver>
    <slot>updateSnapPoint(int)</slot>
    <hints>
     <hint type="sourcelabel">

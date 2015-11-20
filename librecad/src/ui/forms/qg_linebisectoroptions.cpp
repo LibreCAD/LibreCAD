@@ -29,6 +29,7 @@
 #include "rs_settings.h"
 #include "rs_math.h"
 #include "rs_debug.h"
+#include "ui_qg_linebisectoroptions.h"
 
 /*
  *  Constructs a QG_LineBisectorOptions as a child of 'parent', with the
@@ -36,9 +37,9 @@
  */
 QG_LineBisectorOptions::QG_LineBisectorOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_LineBisectorOptions{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
@@ -46,8 +47,7 @@ QG_LineBisectorOptions::QG_LineBisectorOptions(QWidget* parent, Qt::WindowFlags 
  */
 QG_LineBisectorOptions::~QG_LineBisectorOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -56,19 +56,19 @@ QG_LineBisectorOptions::~QG_LineBisectorOptions()
  */
 void QG_LineBisectorOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_LineBisectorOptions::destroy() {
+void QG_LineBisectorOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Draw");
-    RS_SETTINGS->writeEntry("/LineBisectorLength", leLength->text());
-    RS_SETTINGS->writeEntry("/LineBisectorNumber", sbNumber->text());
+	RS_SETTINGS->writeEntry("/LineBisectorLength", ui->leLength->text());
+	RS_SETTINGS->writeEntry("/LineBisectorNumber", ui->sbNumber->text());
     RS_SETTINGS->endGroup();
 }
 
 void QG_LineBisectorOptions::setAction(RS_ActionInterface* a, bool update) {
     if (a && a->rtti()==RS2::ActionDrawLineBisector) {
-        action = (RS_ActionDrawLineBisector*)a;
+		action = static_cast<RS_ActionDrawLineBisector*>(a);
 
         QString sl;
         QString sn;
@@ -81,12 +81,12 @@ void QG_LineBisectorOptions::setAction(RS_ActionInterface* a, bool update) {
             sn = RS_SETTINGS->readEntry("/LineBisectorNumber", "1");
             RS_SETTINGS->endGroup();
         }
-        leLength->setText(sl);
-        sbNumber->setValue(sn.toInt());
+		ui->leLength->setText(sl);
+		ui->sbNumber->setValue(sn.toInt());
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, 
 			"QG_LineBisectorOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
 }
 

@@ -68,7 +68,7 @@ void QG_BevelOptions::saveSettings() {
 
 void QG_BevelOptions::setAction(RS_ActionInterface* a, bool update) {
     if (a && a->rtti()==RS2::ActionModifyBevel) {
-        action = (RS_ActionModifyBevel*)a;
+		action = static_cast<RS_ActionModifyBevel*>(a);
 
         QString sd1;
         QString sd2;

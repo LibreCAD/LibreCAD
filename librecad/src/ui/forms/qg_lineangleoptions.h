@@ -26,12 +26,16 @@
 #ifndef QG_LINEANGLEOPTIONS_H
 #define QG_LINEANGLEOPTIONS_H
 
-#include "ui_qg_lineangleoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionDrawLineAngle;
+namespace Ui {
+class Ui_LineAngleOptions;
+}
 
-class QG_LineAngleOptions : public QWidget, public Ui::QG_LineAngleOptions
+class QG_LineAngleOptions : public QWidget
 {
     Q_OBJECT
 
@@ -52,9 +56,9 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-    bool m_bFixedAngle;
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_LineAngleOptions> ui;
+	bool m_bFixedAngle;
 };
 
 #endif // QG_LINEANGLEOPTIONS_H

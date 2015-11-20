@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QG_CircleTan2Options</class>
- <widget class="QWidget" name="QG_CircleTan2Options">
+ <class>Ui_CircleTan2Options</class>
+ <widget class="QWidget" name="Ui_CircleTan2Options">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -94,7 +94,7 @@
   <connection>
    <sender>leRadius</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_CircleTan2Options</receiver>
+   <receiver>Ui_CircleTan2Options</receiver>
    <slot>updateRadius(QString)</slot>
    <hints>
     <hint type="sourcelabel">

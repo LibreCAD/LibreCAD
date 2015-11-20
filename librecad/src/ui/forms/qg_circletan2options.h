@@ -22,12 +22,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef QG_CIRCLETAN2OPTIONS_H
 #define QG_CIRCLETAN2OPTIONS_H
 
-#include "ui_qg_circletan2options.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionDrawCircleTan2;
 
-class QG_CircleTan2Options : public QWidget, public Ui::QG_CircleTan2Options
+namespace Ui {
+class Ui_CircleTan2Options;
+}
+
+class QG_CircleTan2Options : public QWidget
 {
     Q_OBJECT
 
@@ -46,8 +51,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_CircleTan2Options> ui;
 };
 
 #endif

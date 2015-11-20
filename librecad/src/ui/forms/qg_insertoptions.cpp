@@ -29,6 +29,7 @@
 #include "rs_actionblocksinsert.h"
 #include "rs_settings.h"
 #include "rs_math.h"
+#include "ui_qg_insertoptions.h"
 
 /*
  *  Constructs a QG_InsertOptions as a child of 'parent', with the
@@ -36,9 +37,9 @@
  */
 QG_InsertOptions::QG_InsertOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_InsertOptions{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
@@ -46,8 +47,7 @@ QG_InsertOptions::QG_InsertOptions(QWidget* parent, Qt::WindowFlags fl)
  */
 QG_InsertOptions::~QG_InsertOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -56,23 +56,23 @@ QG_InsertOptions::~QG_InsertOptions()
  */
 void QG_InsertOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_InsertOptions::destroy() {
+void QG_InsertOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Insert");
-    RS_SETTINGS->writeEntry("/InsertAngle", leAngle->text());
-    RS_SETTINGS->writeEntry("/InsertFactor", leFactor->text());
-    RS_SETTINGS->writeEntry("/InsertColumns", sbColumns->text());
-    RS_SETTINGS->writeEntry("/InsertRows", sbRows->text());
-    RS_SETTINGS->writeEntry("/InsertColumnSpacing", leColumnSpacing->text());
-    RS_SETTINGS->writeEntry("/InsertRowSpacing", leRowSpacing->text());
+	RS_SETTINGS->writeEntry("/InsertAngle", ui->leAngle->text());
+	RS_SETTINGS->writeEntry("/InsertFactor", ui->leFactor->text());
+	RS_SETTINGS->writeEntry("/InsertColumns", ui->sbColumns->text());
+	RS_SETTINGS->writeEntry("/InsertRows", ui->sbRows->text());
+	RS_SETTINGS->writeEntry("/InsertColumnSpacing", ui->leColumnSpacing->text());
+	RS_SETTINGS->writeEntry("/InsertRowSpacing", ui->leRowSpacing->text());
     RS_SETTINGS->endGroup();
 }
 
 void QG_InsertOptions::setAction(RS_ActionInterface* a, bool update) {
     if (a && a->rtti()==RS2::ActionBlocksInsert) {
-        action = (RS_ActionBlocksInsert*)a;
+		action = static_cast<RS_ActionBlocksInsert*>(a);
 
         QString sAngle;
         QString sFactor;
@@ -97,26 +97,26 @@ void QG_InsertOptions::setAction(RS_ActionInterface* a, bool update) {
             sRowSpacing = RS_SETTINGS->readEntry("/InsertRowSpacing", "1.0");
             RS_SETTINGS->endGroup();
         }
-	leAngle->setText(sAngle);
-	leFactor->setText(sFactor);
-    	sbColumns->setValue(sColumns.toInt());
-        sbRows->setValue(sRows.toInt());
-        leColumnSpacing->setText(sColumnSpacing);
-        leRowSpacing->setText(sRowSpacing);
+	ui->leAngle->setText(sAngle);
+	ui->leFactor->setText(sFactor);
+		ui->sbColumns->setValue(sColumns.toInt());
+		ui->sbRows->setValue(sRows.toInt());
+		ui->leColumnSpacing->setText(sColumnSpacing);
+		ui->leRowSpacing->setText(sRowSpacing);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, 
 			"QG_InsertOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
 }
 
 void QG_InsertOptions::updateData() {
     if (action) {
-        action->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
-        action->setFactor(RS_Math::eval(leFactor->text()));
-        action->setColumns(sbColumns->value());
-        action->setRows(sbRows->value());
-        action->setColumnSpacing(RS_Math::eval(leColumnSpacing->text()));
-        action->setRowSpacing(RS_Math::eval(leRowSpacing->text()));
+		action->setAngle(RS_Math::deg2rad(RS_Math::eval(ui->leAngle->text())));
+		action->setFactor(RS_Math::eval(ui->leFactor->text()));
+		action->setColumns(ui->sbColumns->value());
+		action->setRows(ui->sbRows->value());
+		action->setColumnSpacing(RS_Math::eval(ui->leColumnSpacing->text()));
+		action->setRowSpacing(RS_Math::eval(ui->leRowSpacing->text()));
     }
 }
