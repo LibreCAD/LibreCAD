@@ -145,7 +145,7 @@
   <connection>
    <sender>rbPos</sender>
    <signal>toggled(bool)</signal>
-   <receiver>Ui_ArcOptions</receiver>
+   <receiver>QG_ArcOptions</receiver>
    <slot>updateDirection(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -161,7 +161,7 @@
   <connection>
    <sender>rbNeg</sender>
    <signal>toggled(bool)</signal>
-   <receiver>Ui_ArcOptions</receiver>
+   <receiver>QG_ArcOptions</receiver>
    <slot>updateDirection(bool)</slot>
    <hints>
     <hint type="sourcelabel">

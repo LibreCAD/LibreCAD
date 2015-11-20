@@ -26,12 +26,16 @@
 #ifndef QG_LINEOPTIONS_H
 #define QG_LINEOPTIONS_H
 
-#include "ui_qg_lineoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionDrawLine;
+namespace Ui {
+class Ui_LineOptions;
+}
 
-class QG_LineOptions : public QWidget, public Ui::QG_LineOptions
+class QG_LineOptions : public QWidget
 {
     Q_OBJECT
 
@@ -51,6 +55,8 @@ protected:
 protected slots:
     virtual void languageChange();
 
+private:
+	std::unique_ptr<Ui::Ui_LineOptions> ui;
 };
 
 #endif // QG_LINEOPTIONS_H

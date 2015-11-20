@@ -27,6 +27,7 @@
 
 #include "rs_actiondrawmtext.h"
 #include "rs_math.h"
+#include "ui_qg_mtextoptions.h"
 #include "rs_debug.h"
 
 /*
@@ -35,18 +36,15 @@
  */
 QG_MTextOptions::QG_MTextOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_MTextOptions{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_MTextOptions::~QG_MTextOptions()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
+QG_MTextOptions::~QG_MTextOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -54,12 +52,12 @@ QG_MTextOptions::~QG_MTextOptions()
  */
 void QG_MTextOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
 void QG_MTextOptions::setAction(RS_ActionInterface* a, bool update) {
     if (a && a->rtti()==RS2::ActionDrawMText) {
-        action = (RS_ActionDrawMText*)a;
+		action = static_cast<RS_ActionDrawMText*>(a);
 
         QString st;
         QString sa;
@@ -80,9 +78,9 @@ void QG_MTextOptions::setAction(RS_ActionInterface* a, bool update) {
             st = RS_FilterDXF::toNativeString(action->getText().local8Bit());
         }
 //#else*/
-        teText->setText(st);
+		ui->teText->setText(st);
 //#endif
-        leAngle->setText(sa);
+		ui->leAngle->setText(sa);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
 			"QG_TextOptions::setAction: wrong action type");
@@ -101,13 +99,13 @@ void QG_MTextOptions::updateText() {
             )
         );
 //#else*/
-       action->setText(teText->toPlainText());
+	   action->setText(ui->teText->toPlainText());
 //#endif
     }
 }
 
 void QG_MTextOptions::updateAngle() {
     if (action) {
-        action->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
+		action->setAngle(RS_Math::deg2rad(RS_Math::eval(ui->leAngle->text())));
     }
 }

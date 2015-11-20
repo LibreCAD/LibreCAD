@@ -28,6 +28,7 @@
 #include "rs_actiondrawspline.h"
 #include "lc_actiondrawsplinepoints.h"
 #include "rs_settings.h"
+#include "ui_qg_splineoptions.h"
 #include "rs_debug.h"
 
 /*
@@ -36,9 +37,10 @@
  */
 QG_SplineOptions::QG_SplineOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
-	,action(nullptr)
+	, action(nullptr)
+	, ui(new Ui::Ui_SplineOptions{})
 {
-    setupUi(this);
+	ui->setupUi(this);
 }
 
 /*
@@ -46,8 +48,7 @@ QG_SplineOptions::QG_SplineOptions(QWidget* parent, Qt::WindowFlags fl)
  */
 QG_SplineOptions::~QG_SplineOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -56,13 +57,13 @@ QG_SplineOptions::~QG_SplineOptions()
  */
 void QG_SplineOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_SplineOptions::destroy() {
+void QG_SplineOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Draw");
-    RS_SETTINGS->writeEntry("/SplineDegree", cbDegree->currentText().toInt());
-    RS_SETTINGS->writeEntry("/SplineClosed", (int)cbClosed->isChecked());
+	RS_SETTINGS->writeEntry("/SplineDegree", ui->cbDegree->currentText().toInt());
+	RS_SETTINGS->writeEntry("/SplineClosed", (int)ui->cbClosed->isChecked());
     RS_SETTINGS->endGroup();
 }
 
@@ -102,16 +103,16 @@ void QG_SplineOptions::setAction(RS_ActionInterface* a, bool update)
     }
     if(a->rtti()==RS2::ActionDrawSpline)
     {
-        cbDegree->setCurrentIndex(cbDegree->findText(QString::number(degree)));
-        lDegree->show();
-        cbDegree->show();
+		ui->cbDegree->setCurrentIndex(ui->cbDegree->findText(QString::number(degree)));
+		ui->lDegree->show();
+		ui->cbDegree->show();
     }
     else
     {
-        lDegree->hide();
-        cbDegree->hide();
+		ui->lDegree->hide();
+		ui->cbDegree->hide();
     }
-    cbClosed->setChecked(closed);
+	ui->cbClosed->setChecked(closed);
 }
 
 void QG_SplineOptions::setClosed(bool c) {

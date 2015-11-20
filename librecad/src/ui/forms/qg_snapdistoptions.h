@@ -26,9 +26,14 @@
 #ifndef QG_SNAPDISTOPTIONS_H
 #define QG_SNAPDISTOPTIONS_H
 
-#include "ui_qg_snapdistoptions.h"
+#include<memory>
+#include<QWidget>
 
-class QG_SnapDistOptions : public QWidget, public Ui::QG_SnapDistOptions
+namespace Ui {
+class Ui_SnapDistOptions;
+}
+
+class QG_SnapDistOptions : public QWidget
 {
     Q_OBJECT
 
@@ -47,8 +52,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_SnapDistOptions> ui;
 };
 
 #endif // QG_SNAPDISTOPTIONS_H

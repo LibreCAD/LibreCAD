@@ -26,12 +26,16 @@
 #ifndef QG_LINEPARALLELOPTIONS_H
 #define QG_LINEPARALLELOPTIONS_H
 
-#include "ui_qg_lineparalleloptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionDrawLineParallel;
+namespace Ui {
+class Ui_LineParallelOptions;
+}
 
-class QG_LineParallelOptions : public QWidget, public Ui::QG_LineParallelOptions
+class QG_LineParallelOptions : public QWidget
 {
     Q_OBJECT
 
@@ -40,9 +44,9 @@ public:
     ~QG_LineParallelOptions();
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateDist( const QString & d );
-    virtual void updateNumber( int n );
+	virtual void setAction(RS_ActionInterface * a, bool update );
+	virtual void updateDist(const QString & d );
+	virtual void updateNumber(int n );
 
 protected:
     RS_ActionDrawLineParallel* action;
@@ -51,8 +55,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_LineParallelOptions> ui;
 };
 
 #endif // QG_LINEPARALLELOPTIONS_H

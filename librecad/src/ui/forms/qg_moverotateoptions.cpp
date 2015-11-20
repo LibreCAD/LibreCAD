@@ -28,6 +28,7 @@
 #include "rs_actionmodifymoverotate.h"
 #include "rs_settings.h"
 #include "rs_math.h"
+#include "ui_qg_moverotateoptions.h"
 #include "rs_debug.h"
 
 /*
@@ -36,21 +37,21 @@
  */
 QG_MoveRotateOptions::QG_MoveRotateOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_MoveRotateOptions{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
-void QG_MoveRotateOptions::destroy() {
+void QG_MoveRotateOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Modify");
-    RS_SETTINGS->writeEntry("/MoveRotate", leAngle->text());
+	RS_SETTINGS->writeEntry("/MoveRotate", ui->leAngle->text());
     RS_SETTINGS->endGroup();
 }
 
 
 void QG_MoveRotateOptions::setAction(RS_ActionInterface* a, bool update) {
     if (a && a->rtti()==RS2::ActionModifyMoveRotate) {
-        action = (RS_ActionModifyMoveRotate*)a;
+		action = static_cast<RS_ActionModifyMoveRotate*>(a);
 
         QString sa;
         if (update) {
@@ -61,11 +62,11 @@ void QG_MoveRotateOptions::setAction(RS_ActionInterface* a, bool update) {
             RS_SETTINGS->endGroup();
             action->setAngle(RS_Math::deg2rad(sa.toDouble()));
         }
-        leAngle->setText(sa);
+		ui->leAngle->setText(sa);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, 
 			"QG_CircleOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
 
 }
@@ -80,8 +81,7 @@ void QG_MoveRotateOptions::updateAngle(const QString& a) {
  */
 QG_MoveRotateOptions::~QG_MoveRotateOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -90,6 +90,6 @@ QG_MoveRotateOptions::~QG_MoveRotateOptions()
  */
 void QG_MoveRotateOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 

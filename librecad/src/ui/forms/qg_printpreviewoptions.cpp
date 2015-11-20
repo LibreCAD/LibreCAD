@@ -28,6 +28,7 @@
 
 #include "rs_actionprintpreview.h"
 #include "rs_math.h"
+#include "ui_qg_printpreviewoptions.h"
 #include "rs_debug.h"
 
 /*
@@ -36,9 +37,10 @@
  */
 QG_PrintPreviewOptions::QG_PrintPreviewOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, defaultScales{0}
+	, ui(new Ui::Ui_PrintPreviewOptions{})
 {
-    setupUi(this);
-    defaultScales=0;
+	ui->setupUi(this);
     init();
 }
 
@@ -47,8 +49,7 @@ QG_PrintPreviewOptions::QG_PrintPreviewOptions(QWidget* parent, Qt::WindowFlags 
  */
 QG_PrintPreviewOptions::~QG_PrintPreviewOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -57,7 +58,7 @@ QG_PrintPreviewOptions::~QG_PrintPreviewOptions()
  */
 void QG_PrintPreviewOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
 void QG_PrintPreviewOptions::init() {
@@ -89,33 +90,33 @@ void QG_PrintPreviewOptions::init() {
     updateDisabled= RS_SETTINGS->readNumEntry("/PrintScaleFixed", 0)!=0;
     blackWhiteDisabled= RS_SETTINGS->readNumEntry("/BlackWhiteSet", 0)!=0;
     RS_SETTINGS->endGroup();
-    action=NULL;
+	action=nullptr;
     //make sure user scale is accepted
-    cbScale->setInsertPolicy(QComboBox::InsertAtTop);
+	ui->cbScale->setInsertPolicy(QComboBox::InsertAtTop);
 }
 
-void QG_PrintPreviewOptions::destroy() {
+void QG_PrintPreviewOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/PrintPreview");
     RS_SETTINGS->writeEntry("/PrintScaleFixed", updateDisabled?1:0);
     RS_SETTINGS->writeEntry("/BlackWhiteSet", QString(blackWhiteDisabled?"1":"0"));
-    RS_SETTINGS->writeEntry("/PrintScaleValue", cbScale->currentText());
+	RS_SETTINGS->writeEntry("/PrintScaleValue", ui->cbScale->currentText());
     RS_SETTINGS->endGroup();
-    action=NULL;
+	action=nullptr;
 }
 
 /** print scale fixed to saved value **/
 void QG_PrintPreviewOptions::setScaleFixed(bool fixed)
 {
-    if(action != NULL) action->setPaperScaleFixed(fixed);
+	if (action) action->setPaperScaleFixed(fixed);
     updateDisabled=fixed;
-    cbScale->setDisabled(fixed);
-    bFit->setVisible(!fixed);
-    if(cFixed->isChecked() != fixed) {
-        cFixed->setChecked(fixed);
+	ui->cbScale->setDisabled(fixed);
+	ui->bFit->setVisible(!fixed);
+	if(ui->cFixed->isChecked() != fixed) {
+		ui->cFixed->setChecked(fixed);
     }
     RS_SETTINGS->beginGroup("/PrintPreview");
     RS_SETTINGS->writeEntry("/PrintScaleFixed", updateDisabled?1:0);
-    RS_SETTINGS->writeEntry("/PrintScaleValue", cbScale->currentText());
+	RS_SETTINGS->writeEntry("/PrintScaleValue", ui->cbScale->currentText());
     RS_SETTINGS->endGroup();
 }
 
@@ -151,14 +152,14 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
             double f=action->getScale();
             bool btmp=updateDisabled;
             updateDisabled = true;
-            cbScale->setDuplicatesEnabled(false);
+			ui->cbScale->setDuplicatesEnabled(false);
             RS2::Unit u = action->getUnit();
             if (u==RS2::Inch) {
-                cbScale->insertItems(0,imperialScales);
+				ui->cbScale->insertItems(0,imperialScales);
             } else {
-                cbScale->insertItems(0,metricScales);
+				ui->cbScale->insertItems(0,metricScales);
             }
-            defaultScales=cbScale->count();
+			defaultScales=ui->cbScale->count();
             updateScaleBox(f);
             updateDisabled = btmp;
             setScaleFixed(updateDisabled);
@@ -168,7 +169,7 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_PrintPreviewOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
 }
 
@@ -189,8 +190,8 @@ void QG_PrintPreviewOptions::center() {
 
 void QG_PrintPreviewOptions::setBlackWhite(bool on) {
     if (action) {
-        if(bBlackWhite->isChecked() != on) {
-            bBlackWhite->setChecked(on);
+		if(ui->bBlackWhite->isChecked() != on) {
+			ui->bBlackWhite->setChecked(on);
         }
         blackWhiteDisabled = on;
         action->setBlackWhite(on);
@@ -217,7 +218,7 @@ void QG_PrintPreviewOptions::scale(const double& factor) {
 void QG_PrintPreviewOptions::scale(const QString& s0) {
     QString s;
     if (updateDisabled) {
-        s=cbScale->currentText();
+		s=ui->cbScale->currentText();
     }else{
         s=s0;
     }
@@ -270,8 +271,8 @@ void QG_PrintPreviewOptions::updateScaleBox(){
 void QG_PrintPreviewOptions::updateScaleBox(const double& f){
     //    std::cout<<"void QG_PrintPreviewOptions::updateScaleBox() f="<<f<<std::endl;
     int i;
-    for(i=0;i<cbScale->count();i++){
-        QString s=cbScale->itemText(i);
+	for(i=0;i<ui->cbScale->count();i++){
+		QString s=ui->cbScale->itemText(i);
         int i0 = s.indexOf(':');
         bool ok1,ok2;
         double n = s.left(i0).toDouble(&ok1);
@@ -280,9 +281,9 @@ void QG_PrintPreviewOptions::updateScaleBox(const double& f){
 
         if(fabs(f-n/d)<RS_TOLERANCE) break;
     }
-    if(i<cbScale->count()){
-        cbScale->setCurrentIndex(i);
-        //        std::cout<<"QG_PrintPreviewOptions::updateScaleBox(): old: "<<qPrintable(cbScale->currentText())<<std::endl;
+	if(i<ui->cbScale->count()){
+		ui->cbScale->setCurrentIndex(i);
+		//        std::cout<<"QG_PrintPreviewOptions::updateScaleBox(): old: "<<qPrintable(ui->cbScale->currentText())<<std::endl;
         return;
     }
     QString s("");
@@ -291,32 +292,32 @@ void QG_PrintPreviewOptions::updateScaleBox(const double& f){
     }else{
         if(fabs(f)>RS_TOLERANCE) s=QString("1:%1").arg(1./f);
     }
-    if(cbScale->count()>defaultScales){
+	if(ui->cbScale->count()>defaultScales){
         i=defaultScales;
-        cbScale->setItemText(defaultScales,s);
+		ui->cbScale->setItemText(defaultScales,s);
     }else{
-        cbScale->addItem(s);
-        i=cbScale->count()-1;
+		ui->cbScale->addItem(s);
+		i=ui->cbScale->count()-1;
     }
-    cbScale->setCurrentIndex(i);
-    //    std::cout<<"QG_PrintPreviewOptions::updateScaleBox(): new: "<<qPrintable(cbScale->currentText())<<std::endl;
+	ui->cbScale->setCurrentIndex(i);
+	//    std::cout<<"QG_PrintPreviewOptions::updateScaleBox(): new: "<<qPrintable(ui->cbScale->currentText())<<std::endl;
 }
 
 //void QG_PrintPreviewOptions::updateScaleBox(const QString& s) {
-//    if(cbScale->count()>defaultScales) std::cout<<"cbScale->last()="<<qPrintable(cbScale->itemText(defaultScales))<<std::endl;
+//    if(ui->cbScale->count()>defaultScales) std::cout<<"ui->cbScale->last()="<<qPrintable(ui->cbScale->itemText(defaultScales))<<std::endl;
 //    std::cout<<"void QG_PrintPreviewOptions::updateScaleBox(QString) s="<<qPrintable(s)<<std::endl;
-//    int index=cbScale->findText(s);
-//    std::cout<<"QG_PrintPreviewOptions::updateScaleBox(): cbScale->findText(s)="<<index<<std::endl;
+//    int index=ui->cbScale->findText(s);
+//    std::cout<<"QG_PrintPreviewOptions::updateScaleBox(): ui->cbScale->findText(s)="<<index<<std::endl;
 //    //add the current sccale, bug#343794
 //    if(index>=defaultScales){
 //        index=defaultScales;
-//        cbScale->setItemText(defaultScales,s);
+//        ui->cbScale->setItemText(defaultScales,s);
 //    }else{
 //        if(index<0){
-//            cbScale->addItem(s);
-//            index=cbScale->count() -1;
+//            ui->cbScale->addItem(s);
+//            index=ui->cbScale->count() -1;
 //        }
 //    }
 
-//    cbScale->setCurrentIndex(index);
+//    ui->cbScale->setCurrentIndex(index);
 //}

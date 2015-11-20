@@ -26,12 +26,16 @@
 #ifndef QG_LINEPARALLELTHROUGHOPTIONS_H
 #define QG_LINEPARALLELTHROUGHOPTIONS_H
 
-#include "ui_qg_lineparallelthroughoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionDrawLineParallelThrough;
+namespace Ui {
+class Ui_LineParallelThroughOptions;
+}
 
-class QG_LineParallelThroughOptions : public QWidget, public Ui::QG_LineParallelThroughOptions
+class QG_LineParallelThroughOptions : public QWidget
 {
     Q_OBJECT
 
@@ -40,8 +44,8 @@ public:
     ~QG_LineParallelThroughOptions();
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateNumber( int n );
+	virtual void setAction(RS_ActionInterface * a, bool update);
+	virtual void updateNumber(int n );
 
 protected:
     RS_ActionDrawLineParallelThrough* action;
@@ -50,8 +54,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_LineParallelThroughOptions> ui;
 };
 
 #endif // QG_LINEPARALLELTHROUGHOPTIONS_H

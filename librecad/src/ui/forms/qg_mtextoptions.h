@@ -26,12 +26,16 @@
 #ifndef QG_MTEXTOPTIONS_H
 #define QG_MTEXTOPTIONS_H
 
-#include "ui_qg_mtextoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionDrawMText;
+namespace Ui {
+class Ui_MTextOptions;
+}
 
-class QG_MTextOptions : public QWidget, public Ui::QG_MTextOptions
+class QG_MTextOptions : public QWidget
 {
     Q_OBJECT
 
@@ -50,6 +54,8 @@ protected:
 protected slots:
     virtual void languageChange();
 
+private:
+	std::unique_ptr<Ui::Ui_MTextOptions> ui;
 };
 
 #endif // QG_TEXTOPTIONS_H

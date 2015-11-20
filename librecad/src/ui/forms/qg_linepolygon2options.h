@@ -26,12 +26,16 @@
 #ifndef QG_LINEPOLYGON2OPTIONS_H
 #define QG_LINEPOLYGON2OPTIONS_H
 
-#include "ui_qg_linepolygon2options.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionDrawLinePolygonCorCor;
+namespace Ui {
+class Ui_LinePolygon2Options;
+}
 
-class QG_LinePolygon2Options : public QWidget, public Ui::QG_LinePolygon2Options
+class QG_LinePolygon2Options : public QWidget
 {
     Q_OBJECT
 
@@ -50,8 +54,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_LinePolygon2Options> ui;
 };
 
 #endif // QG_LINEPOLYGON2OPTIONS_H

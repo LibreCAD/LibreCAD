@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QG_PolylineEquidistantOptions</class>
- <widget class="QWidget" name="QG_PolylineEquidistantOptions">
+ <class>Ui_PolylineEquidistantOptions</class>
+ <widget class="QWidget" name="Ui_PolylineEquidistantOptions">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -147,7 +147,7 @@
   <connection>
    <sender>leDist</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_PolylineEquidistantOptions</receiver>
+   <receiver>Ui_PolylineEquidistantOptions</receiver>
    <slot>updateDist(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -163,7 +163,7 @@
   <connection>
    <sender>leNumber</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QG_PolylineEquidistantOptions</receiver>
+   <receiver>Ui_PolylineEquidistantOptions</receiver>
    <slot>updateNumber(QString)</slot>
    <hints>
     <hint type="sourcelabel">

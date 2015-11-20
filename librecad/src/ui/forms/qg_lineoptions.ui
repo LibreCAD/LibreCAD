@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QG_LineOptions</class>
- <widget class="QWidget" name="QG_LineOptions">
+ <class>Ui_LineOptions</class>
+ <widget class="QWidget" name="Ui_LineOptions">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -110,7 +110,7 @@
   <connection>
    <sender>bClose</sender>
    <signal>clicked()</signal>
-   <receiver>QG_LineOptions</receiver>
+   <receiver>Ui_LineOptions</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -126,7 +126,7 @@
   <connection>
    <sender>bUndo</sender>
    <signal>clicked()</signal>
-   <receiver>QG_LineOptions</receiver>
+   <receiver>Ui_LineOptions</receiver>
    <slot>undo()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -142,7 +142,7 @@
   <connection>
    <sender>bRedo</sender>
    <signal>clicked()</signal>
-   <receiver>QG_LineOptions</receiver>
+   <receiver>Ui_LineOptions</receiver>
    <slot>redo()</slot>
    <hints>
     <hint type="sourcelabel">

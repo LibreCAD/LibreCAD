@@ -26,13 +26,16 @@
 #ifndef QG_SPLINEOPTIONS_H
 #define QG_SPLINEOPTIONS_H
 
-#include "ui_qg_splineoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionDrawSpline;
-//class LC_ActionDrawSplinePoints;
+namespace Ui {
+class Ui_SplineOptions;
+}
 
-class QG_SplineOptions : public QWidget, public Ui::QG_SplineOptions
+class QG_SplineOptions : public QWidget
 {
     Q_OBJECT
 
@@ -54,8 +57,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_SplineOptions> ui;
 };
 
 #endif // QG_SPLINEOPTIONS_H

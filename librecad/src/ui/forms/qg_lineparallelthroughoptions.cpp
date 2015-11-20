@@ -27,6 +27,7 @@
 
 #include "rs_actiondrawlineparallelthrough.h"
 #include "rs_settings.h"
+#include "ui_qg_lineparallelthroughoptions.h"
 #include "rs_debug.h"
 
 /*
@@ -35,9 +36,9 @@
  */
 QG_LineParallelThroughOptions::QG_LineParallelThroughOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_LineParallelThroughOptions{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
@@ -45,8 +46,7 @@ QG_LineParallelThroughOptions::QG_LineParallelThroughOptions(QWidget* parent, Qt
  */
 QG_LineParallelThroughOptions::~QG_LineParallelThroughOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -55,12 +55,12 @@ QG_LineParallelThroughOptions::~QG_LineParallelThroughOptions()
  */
 void QG_LineParallelThroughOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_LineParallelThroughOptions::destroy() {
+void QG_LineParallelThroughOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Draw");
-    RS_SETTINGS->writeEntry("/LineParallelNumber", sbNumber->text());
+	RS_SETTINGS->writeEntry("/LineParallelNumber", ui->sbNumber->text());
     RS_SETTINGS->endGroup();
 }
 
@@ -76,11 +76,11 @@ void QG_LineParallelThroughOptions::setAction(RS_ActionInterface* a, bool update
             sn = RS_SETTINGS->readEntry("/LineParallelNumber", "1");
             RS_SETTINGS->endGroup();
         }
-        sbNumber->setValue(sn.toInt());
+		ui->sbNumber->setValue(sn.toInt());
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, 
 			"QG_LineParallelThroughOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
 
 }

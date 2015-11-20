@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QG_SnapMiddleOptions</class>
- <widget class="QWidget" name="QG_SnapMiddleOptions">
+ <class>Ui_SnapMiddleOptions</class>
+ <widget class="QWidget" name="Ui_SnapMiddleOptions">
   <property name="geometry">
    <rect>
     <x>0</x>

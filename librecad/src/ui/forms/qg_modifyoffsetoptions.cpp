@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_actionmodifyoffset.h"
 #include "rs_settings.h"
+#include "ui_qg_modifyoffsetoptions.h"
 #include "rs_math.h"
 
 /*
@@ -38,9 +39,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 QG_ModifyOffsetOptions::QG_ModifyOffsetOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_ModifyOffsetOptions{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
@@ -48,8 +49,7 @@ QG_ModifyOffsetOptions::QG_ModifyOffsetOptions(QWidget* parent, Qt::WindowFlags 
  */
 QG_ModifyOffsetOptions::~QG_ModifyOffsetOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -58,12 +58,12 @@ QG_ModifyOffsetOptions::~QG_ModifyOffsetOptions()
  */
 void QG_ModifyOffsetOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_ModifyOffsetOptions::destroy() {
+void QG_ModifyOffsetOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Draw");
-    RS_SETTINGS->writeEntry("/ModifyOffsetDistance", leDist->text());
+	RS_SETTINGS->writeEntry("/ModifyOffsetDistance", ui->leDist->text());
     RS_SETTINGS->endGroup();
 }
 
@@ -75,11 +75,11 @@ void QG_ModifyOffsetOptions::setDist(double& d, bool initial) {
         QString r = RS_SETTINGS->readEntry("/ModifyOffsetDistance", "1.0");
         RS_SETTINGS->endGroup();
 
-        leDist->setText(r);
+		ui->leDist->setText(r);
         *dist=RS_Math::eval(r,&ok);
 		if (!ok) *dist=1.;
     } else {
-        *dist=RS_Math::eval(leDist->text(),&ok);
+		*dist=RS_Math::eval(ui->leDist->text(),&ok);
 		if (!ok) *dist=1.;
     }
 }

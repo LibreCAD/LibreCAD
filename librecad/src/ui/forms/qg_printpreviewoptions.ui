@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QG_PrintPreviewOptions</class>
- <widget class="QWidget" name="QG_PrintPreviewOptions">
+ <class>Ui_PrintPreviewOptions</class>
+ <widget class="QWidget" name="Ui_PrintPreviewOptions">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -177,7 +177,7 @@
   <connection>
    <sender>bCenter</sender>
    <signal>clicked()</signal>
-   <receiver>QG_PrintPreviewOptions</receiver>
+   <receiver>Ui_PrintPreviewOptions</receiver>
    <slot>center()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -193,7 +193,7 @@
   <connection>
    <sender>bBlackWhite</sender>
    <signal>toggled(bool)</signal>
-   <receiver>QG_PrintPreviewOptions</receiver>
+   <receiver>Ui_PrintPreviewOptions</receiver>
    <slot>setBlackWhite(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -209,7 +209,7 @@
   <connection>
    <sender>cbScale</sender>
    <signal>currentIndexChanged(QString)</signal>
-   <receiver>QG_PrintPreviewOptions</receiver>
+   <receiver>Ui_PrintPreviewOptions</receiver>
    <slot>scale(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -225,7 +225,7 @@
   <connection>
    <sender>bFit</sender>
    <signal>clicked()</signal>
-   <receiver>QG_PrintPreviewOptions</receiver>
+   <receiver>Ui_PrintPreviewOptions</receiver>
    <slot>fit()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -241,7 +241,7 @@
   <connection>
    <sender>cFixed</sender>
    <signal>clicked(bool)</signal>
-   <receiver>QG_PrintPreviewOptions</receiver>
+   <receiver>Ui_PrintPreviewOptions</receiver>
    <slot>setScaleFixed(bool)</slot>
    <hints>
     <hint type="sourcelabel">
