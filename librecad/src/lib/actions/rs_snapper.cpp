@@ -800,7 +800,7 @@ void RS_Snapper::drawSnapper()
                     container->addEntity(line);
                 }
             }
-            else if (pImpData->indicator_lines_type == "Orthogonal")
+            else if (pImpData->indicator_lines_type == "Isometric")
             {
                 //isometric crosshair
                 RS2::CrosshairType chType=graphicView->getCrosshairType();
