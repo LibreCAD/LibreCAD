@@ -661,7 +661,8 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setData("ModifyStretch");
     a_map["ModifyStretch"] = action;
 
-    action = new QAction(QIcon(":/extui/modifybevel.png"), tr("&Bevel"), tools);
+    action = new QAction(tr("&Bevel"), tools);
+    action->setIcon(QIcon(":/tools/bevel.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyBevel()));
     action->setData("ModifyBevel");
@@ -688,7 +689,8 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setData("InfoInside");
     a_map["InfoInside"] = action;
 
-    action = new QAction(QIcon(":/extui/restricthorizontal.png"), tr("&Distance Point to Point"), tools);
+    action = new QAction(tr("&Distance Point to Point"), tools);
+    action->setIcon(QIcon(":/tools/distance_point_to_point.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoDist()));
     action->setData("InfoDist");

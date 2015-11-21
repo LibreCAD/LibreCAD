@@ -603,6 +603,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionzoomwindow.cpp
 
 RESOURCES += ../res/actions/actions.qrc
+RESOURCES += ../res/tools/tools.qrc
 
 # ################################################################################
 # UI
