@@ -112,13 +112,15 @@ void QG_DlgOptionsGeneral::init() {
     indicator_lines_checkbox->setChecked(indicator_lines_state);
 
     QString indicator_lines_type = RS_SETTINGS->readEntry("/indicator_lines_type", "Crosshair");
-    indicator_lines_combobox->setCurrentText(indicator_lines_type);
+    int index = indicator_lines_combobox->findText(indicator_lines_type);
+    indicator_lines_combobox->setCurrentIndex(index);
 
     bool indicator_shape_state = RS_SETTINGS->readNumEntry("/indicator_shape_state", 1);
     indicator_shape_checkbox->setChecked(indicator_shape_state);
 
     QString indicator_shape_type = RS_SETTINGS->readEntry("/indicator_shape_type", "Circle");
-    indicator_shape_combobox->setCurrentText(indicator_shape_type);
+    index = indicator_shape_combobox->findText(indicator_shape_type);
+    indicator_shape_combobox->setCurrentIndex(index);
     
     // scale grid:
     QString scaleGrid = RS_SETTINGS->readEntry("/ScaleGrid", "1");
