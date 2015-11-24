@@ -61,6 +61,13 @@ class QG_ActionHandler;
 class RS_GraphicView;
 class RS_Document;
 
+
+struct Sidebar
+{
+    QAction* view_action;
+    QList<QWidget*> widgets;
+};
+
 /**
  * Main application window. Hold together document, view and controls.
  *
@@ -188,7 +195,7 @@ public slots:
     void setPreviousZoomEnable(bool enable);
 
     void hide_options(QC_MDIWindow*);
-    void slotToggleToolSidebar(bool state);
+    void slotToggleToolSidebar(bool checked);
 
 signals:
     void gridChanged(bool on);
@@ -299,6 +306,8 @@ protected:
 
 private:
 
+    QMenu* createPopupMenu();
+
     QString format_filename_caption(const QString &qstring_in);
     /** Helper function for Menu file -> New & New.... */
 	bool slotFileNewHelper(QString fileName, QC_MDIWindow* w = nullptr);
@@ -308,6 +317,22 @@ private:
      * @param w, pointer to window widget
      */
     void updateWindowTitle(QWidget* w);
+
+    //Plugin support
+    void loadPlugins();
+    QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
+
+    #ifdef RS_SCRIPTING
+        /** Scripting interface. */
+        QS_Scripter* scripter;
+    #endif
+
+    #ifdef LC_DEBUGGING
+        LC_SimpleTests* m_pSimpleTest;
+    #endif
+
+    //display "Draft Mode" in window title for draft mode
+    const QString m_qDraftModeTitle;
 
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;
@@ -320,6 +345,15 @@ private:
 
     /** Dialog factory */
     QC_DialogFactory* dialogFactory;
+
+    /** Recent files list */
+	QG_RecentFiles* recentFiles;
+
+    /** Action handler. */
+    QG_ActionHandler* actionHandler;
+
+    // --- Dockwidgets ---
+    Sidebar tool_sidebar; //!< a group of dockwidgets
 
     /** Layer list widget */
     QG_LayerWidget* layerWidget;
@@ -339,6 +373,10 @@ private:
     QG_CommandWidget* commandWidget;
     QDockWidget* dock_command;
 
+    QHelpEngine* helpEngine{nullptr};
+    QDockWidget* helpWindow{nullptr};
+
+    // --- Statusbar ---
     /** Coordinate widget */
     QG_CoordinateWidget* coordinateWidget;
     /** Mouse widget */
@@ -347,72 +385,48 @@ private:
     QG_SelectionWidget* selectionWidget;
     QG_ActiveLayerName* m_pActiveLayerName;
 
-    /** Option widget for individual tool options */
-    QToolBar* optionWidget;
-
-    /** Recent files list */
-	QG_RecentFiles* recentFiles;
-    QStringList openedFiles;
-
-    /** Action handler. */
-    QG_ActionHandler* actionHandler;
-
-    #ifdef RS_SCRIPTING
-            /** Scripting interface. */
-            QS_Scripter* scripter;
-    #endif
-
+    // --- Menus ---
     QMenu* windowsMenu;
     QMenu* scriptMenu;
     QMenu* helpMenu;
     QMenu* testMenu;
 
-    QList <QAction*> recentFilesAction;
-    /** the main toolbars */
+    // --- Toolbars ---
     QToolBar* dockwidgets_toolbar;
     QToolBar* circleToolBar;
     QToolBar* file_toolbar;
     QToolBar* edit_toolbar;
     QToolBar* view_toolbar;
+    QG_SnapToolBar* snapToolBar;
+    QG_PenToolBar* penToolBar; //!< for selecting the current pen
+    QToolBar* optionWidget; //!< for individual tool options
     LC_CustomToolbar* custom_toolbar{nullptr};
+
+    // --- Actions ---
     static QAction* previousZoom;
     static QAction* undoButton;
     static QAction* redoButton;
+
+    QAction* scriptOpenIDE;
+    QAction* scriptRun;
+    QAction* helpAboutApp;
+    QAction* helpManual;
+
+    QAction* statusbar_view_action;
+
+    // --- Flags ---
     bool previousZoomEnable{false};
     bool undoEnable{false};
     bool redoEnable{false};
 
-    QG_SnapToolBar* snapToolBar;
-
-    // Toolbar for selecting the current pen
-    QG_PenToolBar* penToolBar;
-
-    QHelpEngine* helpEngine{nullptr};
-    QDockWidget* helpWindow{nullptr};
-
-    QAction* scriptOpenIDE;
-    QAction* scriptRun;
-
-    QAction* helpAboutApp;
-    QAction* helpManual;
-
-    //display "Draft Mode" in window title for draft mode
-    const QString m_qDraftModeTitle;
-    #ifdef LC_DEBUGGING
-        LC_SimpleTests* m_pSimpleTest;
-    #endif
-
-    //Plugin support
-    void loadPlugins();
-    QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
-	QList<QC_PluginInterface*> loadedPlugins;
-
-    QMenu* createPopupMenu();
+    // --- Lists ---
+    QList<QC_PluginInterface*> loadedPlugins;
     QList<QAction*> toolbar_view_actions;
     QList<QAction*> dockwidget_view_actions;
-    QAction* statusbar_view_action;
     QList<QC_MDIWindow*> window_list;
-    QList<QWidget*> tool_sidebar;
+    QList<QAction*> recentFilesAction;
+
+    QStringList openedFiles;
 };
 
 

@@ -753,6 +753,7 @@ void QC_ApplicationWindow::initSettings() {
 void QC_ApplicationWindow::restoreDocks() {
     RS_SETTINGS->beginGroup("/Geometry");
     restoreState ( RS_SETTINGS->readByteArrayEntry("/DockWindows", ""));
+    tool_sidebar.view_action->setChecked(RS_SETTINGS->readNumEntry("/ToolSidebarState", 0));
     RS_SETTINGS->endGroup();
 }
 
@@ -771,6 +772,7 @@ void QC_ApplicationWindow::storeSettings() {
         RS_SETTINGS->writeEntry("/WindowX", x());
         RS_SETTINGS->writeEntry("/WindowY", y());
         RS_SETTINGS->writeEntry("/DockWindows", QVariant (saveState()));
+        RS_SETTINGS->writeEntry("/ToolSidebarState", tool_sidebar.view_action->isChecked());
         RS_SETTINGS->endGroup();
         //save snapMode
         snapToolBar->saveSnapMode();
@@ -3697,7 +3699,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
     dock_modify->hide();
     dock_select->hide();
 
-    tool_sidebar
+    tool_sidebar.widgets
             << dock_line
             << dock_polyline
             << dock_circle
@@ -3707,6 +3709,8 @@ void QC_ApplicationWindow::menus_and_toolbars()
             << dock_info
             << dock_modify
             << dock_select;
+
+    tool_sidebar.view_action = map_a["ToggleToolSidebar"];
 
     // <[~ DockWidgets Menu ~]>
 
@@ -3875,7 +3879,7 @@ void QC_ApplicationWindow::hide_options(QC_MDIWindow* win)
 
 void QC_ApplicationWindow::slotToggleToolSidebar(bool checked)
 {
-    foreach (QWidget* x, tool_sidebar)
+    foreach (QWidget* x, tool_sidebar.widgets)
     {
         x->setVisible(checked);
     }
