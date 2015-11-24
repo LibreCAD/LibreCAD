@@ -140,7 +140,7 @@ void QG_ArcTangentialOptions::updateByRadius(const bool br) {
 		ui->leAngle->setDisabled(br);
 }
 
-void QG_ArcTangentialOptions::on_leRadius_textEdited()
+void QG_ArcTangentialOptions::on_leRadius_editingFinished()
 {
 	if(ui->rbRadius->isChecked()) {
         bool ok;
@@ -154,7 +154,7 @@ void QG_ArcTangentialOptions::on_leRadius_textEdited()
     }
 }
 
-void QG_ArcTangentialOptions::on_leAngle_textEdited()
+void QG_ArcTangentialOptions::on_leAngle_editingFinished()
 {
 	if(ui->rbAngle->isChecked()) {
         bool ok;

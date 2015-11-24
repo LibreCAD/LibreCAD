@@ -136,9 +136,9 @@
  <connections>
   <connection>
    <sender>leRadius</sender>
-   <signal>returnPressed()</signal>
-   <receiver>Ui_ArcTangentialOptions</receiver>
-   <slot>on_leRadius_textEdited()</slot>
+   <signal>editingFinished()</signal>
+   <receiver>QG_ArcTangentialOptions</receiver>
+   <slot>on_leRadius_editingFinished()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>70</x>
@@ -152,9 +152,9 @@
   </connection>
   <connection>
    <sender>leAngle</sender>
-   <signal>returnPressed()</signal>
-   <receiver>Ui_ArcTangentialOptions</receiver>
-   <slot>on_leAngle_textEdited()</slot>
+   <signal>editingFinished()</signal>
+   <receiver>QG_ArcTangentialOptions</receiver>
+   <slot>on_leAngle_editingFinished()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>70</x>

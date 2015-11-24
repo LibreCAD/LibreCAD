@@ -57,9 +57,9 @@ protected slots:
     virtual void languageChange();
 
 private slots:
-    void on_leRadius_textEdited();
+	void on_leRadius_editingFinished();
 
-    void on_leAngle_textEdited();
+	void on_leAngle_editingFinished();
 
     void on_rbRadius_clicked(bool checked);
 
