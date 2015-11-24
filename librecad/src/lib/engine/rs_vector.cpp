@@ -123,11 +123,11 @@ void RS_Vector::setPolar(double radius, double angle) {
 }
 
 RS_Vector RS_Vector::polar(double rho, double theta){
-	return RS_Vector(rho*cos(theta), rho*sin(theta)
+	return {rho*cos(theta), rho*sin(theta)
 				 #ifndef RS_VECTOR2D
 					 , 0.
 				 #endif
-					 );
+					 };
 }
 
 /**

@@ -34,6 +34,7 @@
 #include "rs_modification.h"
 #include "rs_math.h"
 #include "rs_preview.h"
+#include "rs_atomicentity.h"
 
 RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(
 		RS_EntityContainer& container,
@@ -74,16 +75,14 @@ void RS_ActionModifyTrimAmount::trigger() {
             d = distance;
         }
 
-		m.trimAmount(*trimCoord, (RS_AtomicEntity*)trimEntity, d);
+		m.trimAmount(*trimCoord, static_cast<RS_AtomicEntity*>(trimEntity), d);
 
-        trimEntity = NULL;
+		trimEntity = nullptr;
         setStatus(ChooseTrimEntity);
 
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
 }
-
-
 
 void RS_ActionModifyTrimAmount::mouseReleaseEvent(QMouseEvent* e) {
 
@@ -96,7 +95,7 @@ void RS_ActionModifyTrimAmount::mouseReleaseEvent(QMouseEvent* e) {
             if (trimEntity && trimEntity->isAtomic()) {
                 trigger();
             } else {
-                if (trimEntity==NULL) {
+				if (trimEntity == nullptr) {
                     RS_DIALOGFACTORY->commandMessage(
                         tr("No entity found. "));
                 } else if (trimEntity->rtti()==RS2::EntityInsert) {
@@ -118,8 +117,6 @@ void RS_ActionModifyTrimAmount::mouseReleaseEvent(QMouseEvent* e) {
         init(getStatus()-1);
     }
 }
-
-
 
 void RS_ActionModifyTrimAmount::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();

@@ -67,19 +67,19 @@ public:
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 
-        double getDistance() {
-                return distance;
-        }
-        bool getByTotal() {
-                return byTotal ;
-        }
+	double getDistance() const {
+		return distance;
+	}
+	bool getByTotal() const {
+		return byTotal ;
+	}
 
-        void setDistance(double d) {
-                distance = d;
-        }
-        void setByTotal(bool on) {
-                byTotal = on;
-        }
+	void setDistance(double d) {
+		distance = d;
+	}
+	void setByTotal(bool on) {
+		byTotal = on;
+	}
 
 private:
     RS_Entity* trimEntity;

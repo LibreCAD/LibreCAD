@@ -62,7 +62,8 @@ void QG_TrimAmountOptions::languageChange()
 void QG_TrimAmountOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Modify");
 	RS_SETTINGS->writeEntry("/TrimAmount", ui->leDist->text());
-	RS_SETTINGS->writeEntry("/TrimAmountTotal", ui->cbTotalLength->isChecked()?QString("1"):QString("0"));
+	QString const total = ui->cbTotalLength->isChecked()?"1":"0";
+	RS_SETTINGS->writeEntry("/TrimAmountTotal", total);
     RS_SETTINGS->endGroup();
 }
 
@@ -86,6 +87,9 @@ void QG_TrimAmountOptions::setAction(RS_ActionInterface* a, bool update) {
         }
 
 		ui->leDist->setText(sd);
+		//initialize trim amount distance for action
+		updateDist(sd);
+
 		ui->cbTotalLength->setChecked(byTotal);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
@@ -100,9 +104,14 @@ void QG_TrimAmountOptions::updateDist(const QString& d) {
     }
 }
 
+void QG_TrimAmountOptions::on_leDist_editingFinished()
+{
+	updateDist(ui->leDist->text());
+}
+
 void QG_TrimAmountOptions::on_cbTotalLength_toggled(bool checked)
 {
-    if (action) {
-        action->setByTotal(checked);
-    }
+	if (action) {
+		action->setByTotal(checked);
+	}
 }
