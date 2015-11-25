@@ -41,14 +41,20 @@
 #include "rs_entitycontainer.h"
 #include "rs_pen.h"
 
+struct RS_Snapper::Indicator
+{
+    bool lines_state;
+    QString lines_type;
+    RS_Pen lines_pen;
+
+    bool shape_state;
+    QString shape_type;
+    RS_Pen shape_pen;
+};
 
 struct RS_Snapper::ImpData {
-RS_Pen line_pen;
-RS_Pen circle_pen;
 RS_Vector snapCoord;
 RS_Vector snapSpot;
-QString indicator_lines_type;
-QString indicator_shape_type;
 };
 
 /**
@@ -94,11 +100,15 @@ RS_Snapper::RS_Snapper(RS_EntityContainer& container, RS_GraphicView& graphicVie
     :container(&container)
     ,graphicView(&graphicView)
 	,pImpData(new ImpData{})
+    ,snap_indicator(new Indicator{})
 {
     init();
 }
 
-RS_Snapper::~RS_Snapper() = default;
+RS_Snapper::~RS_Snapper()
+{
+    delete snap_indicator;
+}
 
 /**
  * Initialize (called by all constructors)
@@ -112,19 +122,19 @@ void RS_Snapper::init()
 	m_SnapDistance = 1.0;
 
     RS_SETTINGS->beginGroup("/Appearance");
-    indicator_lines_state = RS_SETTINGS->readNumEntry("/indicator_lines_state", 1);
-    pImpData->indicator_lines_type = RS_SETTINGS->readEntry("/indicator_lines_type", "Crosshair");
-    indicator_shape_state = RS_SETTINGS->readNumEntry("/indicator_shape_state", 1);
-    pImpData->indicator_shape_type = RS_SETTINGS->readEntry("/indicator_shape_type", "Circle");
+    snap_indicator->lines_state = RS_SETTINGS->readNumEntry("/indicator_lines_state", 1);
+    snap_indicator->lines_type = RS_SETTINGS->readEntry("/indicator_lines_type", "Crosshair");
+    snap_indicator->shape_state = RS_SETTINGS->readNumEntry("/indicator_shape_state", 1);
+    snap_indicator->shape_type = RS_SETTINGS->readEntry("/indicator_shape_type", "Circle");
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("Colors");
     QString snap_color = RS_SETTINGS->readEntry("/snap_indicator", Colors::snap_indicator);
     RS_SETTINGS->endGroup();
 
-	pImpData->line_pen = RS_Pen(RS_Color(snap_color), RS2::Width00, RS2::DashLine2);
-	pImpData->circle_pen = RS_Pen(RS_Color(snap_color), RS2::Width00, RS2::SolidLine);
-	pImpData->circle_pen.setScreenWidth(1);
+	snap_indicator->lines_pen = RS_Pen(RS_Color(snap_color), RS2::Width00, RS2::DashLine2);
+	snap_indicator->shape_pen = RS_Pen(RS_Color(snap_color), RS2::Width00, RS2::SolidLine);
+	snap_indicator->shape_pen.setScreenWidth(1);
 
     snapRange=getSnapRange();
 }
@@ -160,7 +170,7 @@ RS_Vector RS_Snapper::snapFree(QMouseEvent* e) {
     }
 	pImpData->snapSpot=graphicView->toGraph(e->x(), e->y());
 	pImpData->snapCoord=pImpData->snapSpot;
-    indicator_lines_state=true;
+    snap_indicator->lines_state=true;
 	return pImpData->snapCoord;
 }
 
@@ -728,16 +738,18 @@ void RS_Snapper::drawSnapper()
 
         RS_DEBUG->print("RS_Snapper::Snapped draw start");
 
-        if (indicator_lines_state)
+        if (snap_indicator->lines_state)
         {
-            if (pImpData->indicator_lines_type == "Crosshair")
+            QString type = snap_indicator->lines_type;
+
+            if (type == "Crosshair")
             {
                 RS_OverlayLine *line = new RS_OverlayLine(nullptr,
                     {{0., graphicView->toGuiY(pImpData->snapCoord.y)},
                     {double(graphicView->getWidth()),
                     graphicView->toGuiY(pImpData->snapCoord.y)}});
 
-                line->setPen(pImpData->line_pen);
+                line->setPen(snap_indicator->lines_pen);
                 container->addEntity(line);
 
                 line = new RS_OverlayLine(nullptr,
@@ -745,10 +757,10 @@ void RS_Snapper::drawSnapper()
                     {graphicView->toGuiX(pImpData->snapCoord.x),
                     double(graphicView->getHeight())}});
 
-                line->setPen(pImpData->line_pen);
+                line->setPen(snap_indicator->lines_pen);
                 container->addEntity(line);
             }
-            else if (pImpData->indicator_lines_type == "Crosshair2")
+            else if (type == "Crosshair2")
             {
                 double xenoRadius=16;
 
@@ -766,7 +778,7 @@ void RS_Snapper::drawSnapper()
                     {snapX-xenoRadius, snapY}
                 });
                 {
-                    line->setPen(pImpData->line_pen);
+                    line->setPen(snap_indicator->lines_pen);
                     container->addEntity(line);
                 }
 
@@ -776,7 +788,7 @@ void RS_Snapper::drawSnapper()
                     {viewWidth, snapY}
                 });
                 {
-                    line->setPen(pImpData->line_pen);
+                    line->setPen(snap_indicator->lines_pen);
                     container->addEntity(line);
                 }
 
@@ -786,7 +798,7 @@ void RS_Snapper::drawSnapper()
                     {snapX, snapY-xenoRadius}
                 });
                 {
-                    line->setPen(pImpData->line_pen);
+                    line->setPen(snap_indicator->lines_pen);
                     container->addEntity(line);
                 }
 
@@ -796,11 +808,11 @@ void RS_Snapper::drawSnapper()
                     {snapX, viewHeight}
                 });
                 {
-                    line->setPen(pImpData->line_pen);
+                    line->setPen(snap_indicator->lines_pen);
                     container->addEntity(line);
                 }
             }
-            else if (pImpData->indicator_lines_type == "Isometric")
+            else if (type == "Isometric")
             {
                 //isometric crosshair
                 RS2::CrosshairType chType=graphicView->getCrosshairType();
@@ -823,14 +835,14 @@ void RS_Snapper::drawSnapper()
                 RS_Vector center(graphicView->toGui(pImpData->snapCoord));
                 RS_OverlayLine *line=new RS_OverlayLine(container,
                 {center-direction1,center+direction1});
-                line->setPen(pImpData->line_pen);
+                line->setPen(snap_indicator->lines_pen);
                 container->addEntity(line);
                 line=new RS_OverlayLine(nullptr,
                 {center-direction2,center+direction2});
-                line->setPen(pImpData->line_pen);
+                line->setPen(snap_indicator->lines_pen);
                 container->addEntity(line);
             }
-            else if (pImpData->indicator_lines_type == "Spiderweb")
+            else if (type == "Spiderweb")
             {
                 RS_OverlayLine* line;
                 RS_Vector point1;
@@ -840,39 +852,69 @@ void RS_Snapper::drawSnapper()
                 point2 = RS_Vector{graphicView->toGuiX(pImpData->snapCoord.x),
                                    graphicView->toGuiY(pImpData->snapCoord.y)};
                 line=new RS_OverlayLine{nullptr, {point1, point2}};
-                line->setPen(pImpData->line_pen);
+                line->setPen(snap_indicator->lines_pen);
                 container->addEntity(line);
 
                 point1 = RS_Vector(0, graphicView->getHeight());
                 line = new RS_OverlayLine{nullptr, {point1, point2}};
-                line->setPen(pImpData->line_pen);
+                line->setPen(snap_indicator->lines_pen);
                 container->addEntity(line);
 
                 point1 = RS_Vector(graphicView->getWidth(), 0);
                 line = new RS_OverlayLine(nullptr, {point1, point2});
-                line->setPen(pImpData->line_pen);
+                line->setPen(snap_indicator->lines_pen);
                 container->addEntity(line);
 
                 point1 = RS_Vector(graphicView->getWidth(), graphicView->getHeight());
                 line = new RS_OverlayLine(nullptr, {point1, point2});
-                line->setPen(pImpData->line_pen);
+                line->setPen(snap_indicator->lines_pen);
                 container->addEntity(line);
             }
         }
-        if (indicator_shape_state)
+        if (snap_indicator->shape_state)
         {
-            if (pImpData->indicator_shape_type == "Circle")
+            QString type = snap_indicator->shape_type;
+
+            if (type == "Circle")
             {
                 RS_Circle *circle=new RS_Circle(container,
                     {pImpData->snapCoord, 4./graphicView->getFactor().x});
-                circle->setPen(pImpData->circle_pen);
+                circle->setPen(snap_indicator->shape_pen);
                 container->addEntity(circle);
             }
-            else if (pImpData->indicator_shape_type == "Point")
+            else if (type == "Point")
             {
                 RS_Point *point=new RS_Point(container, pImpData->snapCoord);
-                point->setPen(pImpData->circle_pen);
+                point->setPen(snap_indicator->shape_pen);
                 container->addEntity(point);
+            }
+            else if (type == "Square")
+            {
+                RS_Vector snap_point{graphicView->toGuiX(pImpData->snapCoord.x),
+                                     graphicView->toGuiY(pImpData->snapCoord.y)};
+
+                double a = 6.0;
+                RS_Vector p1 = snap_point + RS_Vector(-a, a);
+                RS_Vector p2 = snap_point + RS_Vector(a, a);
+                RS_Vector p3 = snap_point + RS_Vector(a, -a);
+                RS_Vector p4 = snap_point + RS_Vector(-a, -a);
+
+                RS_OverlayLine* line;
+                line=new RS_OverlayLine{nullptr, {p1, p2}};
+                line->setPen(snap_indicator->shape_pen);
+                container->addEntity(line);
+
+                line = new RS_OverlayLine{nullptr, {p2, p3}};
+                line->setPen(snap_indicator->shape_pen);
+                container->addEntity(line);
+
+                line = new RS_OverlayLine(nullptr, {p3, p4});
+                line->setPen(snap_indicator->shape_pen);
+                container->addEntity(line);
+
+                line = new RS_OverlayLine(nullptr, {p4, p1});
+                line->setPen(snap_indicator->shape_pen);
+                container->addEntity(line);
             }
         }
         graphicView->redraw(RS2::RedrawOverlay); // redraw will happen in the mouse movement event

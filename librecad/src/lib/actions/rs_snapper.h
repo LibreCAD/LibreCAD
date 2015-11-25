@@ -197,16 +197,14 @@ protected:
      * Snap range for catching entities.
      */
     int snapRange;
-    /**
-     * Show large cross hairs.
-     */
     bool finished{false};
 
 private:
 	struct ImpData;
 	std::unique_ptr<ImpData> pImpData;
-    bool indicator_lines_state; //!< snap indicator lines on/off
-    bool indicator_shape_state; //!< snap indicator shape on/off
+
+    struct Indicator;
+    Indicator* snap_indicator{nullptr};
 };
 
 #endif
