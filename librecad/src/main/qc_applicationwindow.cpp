@@ -725,7 +725,7 @@ void QC_ApplicationWindow::slotUpdateActiveLayer()
  */
 void QC_ApplicationWindow::initSettings() {
     RS_DEBUG->print("QC_ApplicationWindow::initSettings()");
-    recentFiles->initSettings();
+    recentFiles->addFiles(file_menu);
 
     RS_SETTINGS->beginGroup("/Geometry");
     int windowWidth = RS_SETTINGS->readNumEntry("/WindowWidth", 950);
@@ -2999,7 +2999,7 @@ void QC_ApplicationWindow::menus_and_toolbars()
 
     // <[~ File ~]>
 
-    QMenu* file_menu = new QMenu(tr("&File"), menu_bar);
+    file_menu = new QMenu(tr("&File"), menu_bar);
     file_menu->setObjectName("File");
     file_menu->setTearOffEnabled(true);
 
@@ -3883,4 +3883,13 @@ void QC_ApplicationWindow::slotToggleToolSidebar(bool checked)
     {
         x->setVisible(checked);
     }
+}
+
+void QC_ApplicationWindow::slotFileOpenRecent(QAction* action)
+{
+	RS_DEBUG->print("QC_ApplicationWindow::slotFileOpenRecent()");
+
+    statusBar()->showMessage(tr("Opening recent file..."));
+    QString fileName = action->data().toString();
+    slotFileOpen(fileName, RS2::FormatUnknown);
 }

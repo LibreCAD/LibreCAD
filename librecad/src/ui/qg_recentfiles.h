@@ -32,6 +32,7 @@
 
 class QAction;
 class QWidget;
+class QMenu;
 
 /**
  * This class can store recent files in a list.
@@ -59,15 +60,8 @@ public:
 	int getNumber() const;
 
 	int indexOf(const QString& filename) const;
-	void initSettings();
+	void addFiles(QMenu* file_menu);
 	void updateRecentFilesMenu();
-
-private slots:
-	/**
-	* \brief opens a recent file document
-	* @param id File Menu id of the file
-	*/
-	void slotFileOpenRecent();
 
 private:
 	int const number;

@@ -137,6 +137,7 @@ public slots:
      * opens the given file.
      */
     void slotFileOpen(const QString& fileName, RS2::FormatType type);
+    void slotFileOpenRecent(QAction* action);
     /** saves a document */
     void slotFileSave();
     /** saves a document under a different filename*/
@@ -390,6 +391,7 @@ private:
     QMenu* scriptMenu;
     QMenu* helpMenu;
     QMenu* testMenu;
+    QMenu* file_menu;
 
     // --- Toolbars ---
     QToolBar* dockwidgets_toolbar;
