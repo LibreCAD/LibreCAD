@@ -88,7 +88,7 @@ void LC_CustomToolbar::slot_add_or_remove_action()
 {
     if (most_recent_action )
     {
-        QString token = most_recent_action->data().toString();
+        QString token = most_recent_action->objectName();
 
         if (state_list.contains(token))
         {
