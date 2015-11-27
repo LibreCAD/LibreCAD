@@ -205,6 +205,10 @@ protected:
     bool finished{false};
 
 private:
+	//draw crosshair isometric
+	void drawCrossHairIso();
+	//draw crosshair orthogonal
+	void drawCrossHairOrth();
 	struct ImpData;
 	std::unique_ptr<ImpData> pImpData;
 };
