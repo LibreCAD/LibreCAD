@@ -39,6 +39,7 @@
 #include "rs_actioninterface.h"
 #include "rs_document.h"
 #include "rs_hatch.h"
+#include "lc_splinepoints.h"
 #include "rs_dimlinear.h"
 
 #include "rs_actiondimlinear.h"
@@ -76,6 +77,7 @@
 #include "qg_dlgrotate2.h"
 #include "qg_dlgscale.h"
 #include "qg_dlgspline.h"
+#include "lc_dlgsplinepoints.h"
 #include "qg_dlgtext.h"
 #include "qg_imageoptions.h"
 #include "qg_insertoptions.h"
@@ -1551,6 +1553,16 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             }
         }
         break;
+
+	case RS2::EntitySplinePoints: {
+			LC_DlgSplinePoints dlg(parent);
+			dlg.setSpline(*static_cast<LC_SplinePoints*>(entity));
+			if (dlg.exec()) {
+				dlg.updateSpline();
+				ret = true;
+			}
+		}
+		break;
 
     case RS2::EntityInsert: {
             QG_DlgInsert dlg(parent);
