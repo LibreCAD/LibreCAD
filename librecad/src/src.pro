@@ -226,7 +226,8 @@ HEADERS += \
     lib/generators/lc_xmlwriterinterface.h \
     lib/generators/lc_xmlwriterqxmlstreamwriter.h \
     actions/lc_actionfileexportmakercam.h \
-	ui/qg_commandhistory.h
+	ui/qg_commandhistory.h \
+    ui/forms/lc_dlgsplinepoints.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -321,7 +322,8 @@ SOURCES += \
     lib/engine/rs_atomicentity.cpp \
     lib/engine/rs_undocycle.cpp \
 	ui/qg_commandhistory.cpp \
-    lib/engine/rs.cpp
+    lib/engine/rs.cpp \
+    ui/forms/lc_dlgsplinepoints.cpp
 
 # ################################################################################
 # Command
@@ -864,7 +866,8 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_trimamountoptions.ui \
     ui/forms/qg_widgetpen.ui \
     ui/forms/qg_snaptoolbar.ui \
-    ui/forms/qg_activelayername.ui
+    ui/forms/qg_activelayername.ui \
+    ui/forms/lc_dlgsplinepoints.ui
 
 RESOURCES += ../res/ui/ui.qrc
 
