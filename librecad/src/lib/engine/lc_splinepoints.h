@@ -27,9 +27,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <vector>
 #include "rs_atomicentity.h"
-#include "rs_linetypepattern.h"
 
 class QPolygonF;
+class RS_LineTypePattern;
 
 /**
  * Holds the data that defines a line.
@@ -49,8 +49,7 @@ struct LC_SplinePointsData
 	/**
 	* Default constructor. Leaves the data object uninitialized.
 	*/
-    LC_SplinePointsData() = default;
-	~LC_SplinePointsData() = default;
+	LC_SplinePointsData() = default;
 
 	LC_SplinePointsData(bool closed, bool cut);
 
