@@ -20,6 +20,7 @@ public:
 public slots:
 	virtual void setSpline(LC_SplinePoints& b);
 	virtual void updateSpline();
+	void updatePoints();
 
 protected slots:
 	virtual void languageChange();
