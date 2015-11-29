@@ -85,8 +85,8 @@ private:
     bool offsetSpline(const RS_Vector& coord, const double& distance);
 	std::vector<RS_Entity*> offsetTwoSidesSpline(const double& distance) const;
 	std::vector<RS_Entity*> offsetTwoSidesCut(const double& distance) const;
-public:
     LC_SplinePointsData data;
+
 public:
     LC_SplinePoints(RS_EntityContainer* parent, const LC_SplinePointsData& d);
 	virtual ~LC_SplinePoints() = default;
@@ -174,7 +174,7 @@ public:
 	virtual RS_Vector getTangentDirection(const RS_Vector& point) const;
 
 	virtual RS_Vector getNearestEndpoint(const RS_Vector& coord,
-		double* dist = NULL) const;
+		double* dist = nullptr) const;
     /**
      * @brief getNearestPointOnEntity
      * @param coord
@@ -184,17 +184,17 @@ public:
      * @return
      */
 	virtual RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-		bool onEntity = true, double* dist = NULL, RS_Entity** entity = NULL) const;
+		bool onEntity = true, double* dist = nullptr, RS_Entity** entity = nullptr) const;
 //	virtual RS_Vector getNearestCenter(const RS_Vector& coord,
-//		double* dist = NULL) const;
+//		double* dist = nullptr) const;
 	virtual RS_Vector getNearestMiddle(const RS_Vector& coord,
-		double* dist = NULL, int middlePoints = 1) const;
+		double* dist = nullptr, int middlePoints = 1) const;
 	virtual RS_Vector getNearestDist(double distance,
-		const RS_Vector& coord, double* dist = NULL) const;
+		const RS_Vector& coord, double* dist = nullptr) const;
 	//virtual RS_Vector getNearestRef(const RS_Vector& coord,
-	//                                 double* dist = NULL);
+	//                                 double* dist = nullptr);
 	virtual double getDistanceToPoint(const RS_Vector& coord,
-		RS_Entity** entity = NULL, RS2::ResolveLevel level = RS2::ResolveNone,
+		RS_Entity** entity = nullptr, RS2::ResolveLevel level = RS2::ResolveNone,
 		double solidDist = RS_MAXDOUBLE) const;
 
 	bool addPoint(const RS_Vector& v);

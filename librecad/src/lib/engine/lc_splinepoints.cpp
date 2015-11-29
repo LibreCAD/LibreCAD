@@ -919,17 +919,23 @@ RS_Vector LC_SplinePoints::getNearestPointOnEntity(const RS_Vector& coord,
 	double dt = 0.0;
 	int iQuad = GetNearestQuad(coord, dist, &dt);
 
-	if(iQuad < 0) return vRes;
+	if(iQuad < 0)
+		return vRes;
 
 	int n = GetQuadPoints(iQuad, &vStart, &vControl, &vEnd);
 
-	if(n < 1) return vRes;
+	if(n < 1)
+		return vRes;
 
-	if(n < 2) vRes = vStart;
-	else if(n < 3) vRes = vStart*(1.0 - dt) + vEnd*dt;
-	else vRes = GetQuadAtPoint(vStart, vControl, vEnd, dt);
+	if (n < 2)
+		vRes = vStart;
+	else if(n < 3)
+		vRes = vStart*(1.0 - dt) + vEnd*dt;
+	else
+		vRes = GetQuadAtPoint(vStart, vControl, vEnd, dt);
 
-	if(entity) *entity = const_cast<LC_SplinePoints*>(this);
+	if(entity)
+		*entity = const_cast<LC_SplinePoints*>(this);
 	return vRes;
 }
 

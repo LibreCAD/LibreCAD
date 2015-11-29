@@ -85,6 +85,7 @@ void LC_DlgSplinePoints::updateSpline()
 	auto model = static_cast<QStandardItemModel*>(ui->tvPoints->model());
 	size_t const n = model->rowCount();
 	auto& d = bezier->getData();
+	qDebug()<<"cut: "<<bezier->getData().cut;
 
 	//update points
 	bool const useSpline = ui->rbSplinePoints->isChecked();
@@ -92,7 +93,7 @@ void LC_DlgSplinePoints::updateSpline()
 	size_t const n0 = vps.size();
 	//update points
 	for (size_t i = 0; i < n; ++i) {
-		auto& vp = vps.at(i<n0?i:n0-1);
+		auto& vp = vps.at(i<n0?i:n0 - 1);
 		auto const& vpx = model->item(i, 0)->text();
 		vp.x = RS_Math::eval(vpx, vp.x);
 		auto const& vpy = model->item(i, 1)->text();
