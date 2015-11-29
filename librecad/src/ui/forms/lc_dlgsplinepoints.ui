@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>406</width>
-    <height>234</height>
+    <height>320</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>300</width>
-    <height>190</height>
+    <width>400</width>
+    <height>320</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -86,7 +86,7 @@
      <item>
       <widget class="QGroupBox" name="buttonGroup8">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
          <horstretch>1</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -95,13 +95,53 @@
         <string>Geometry</string>
        </property>
        <layout class="QGridLayout">
-        <item row="2" column="0">
+        <item row="0" column="0" colspan="2">
+         <widget class="QCheckBox" name="cbClosed">
+          <property name="text">
+           <string>Closed</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="2">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QRadioButton" name="rbSplinePoints">
+            <property name="text">
+             <string>Spline Points</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="rbControlPoints">
+            <property name="text">
+             <string>Control Points</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="2" column="0" colspan="2">
          <widget class="QTableView" name="tvPoints">
+          <property name="minimumSize">
+           <size>
+            <width>320</width>
+            <height>240</height>
+           </size>
+          </property>
           <property name="toolTip">
            <string>Points on Spline</string>
           </property>
           <property name="whatsThis">
            <string>Points on Spline</string>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QAbstractScrollArea::AdjustToContents</enum>
+          </property>
+          <property name="textElideMode">
+           <enum>Qt::ElideRight</enum>
           </property>
           <attribute name="horizontalHeaderCascadingSectionResizes">
            <bool>false</bool>
@@ -123,20 +163,6 @@
            </size>
           </property>
          </spacer>
-        </item>
-        <item row="0" column="0" colspan="2">
-         <widget class="QCheckBox" name="cbClosed">
-          <property name="text">
-           <string>Closed</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>Spline Points</string>
-          </property>
-         </widget>
         </item>
        </layout>
       </widget>

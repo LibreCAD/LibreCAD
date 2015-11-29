@@ -1,5 +1,4 @@
 #include <QStandardItemModel>
-#include <QDebug>
 #include "lc_dlgsplinepoints.h"
 #include "lc_splinepoints.h"
 #include "rs_graphic.h"
@@ -12,6 +11,10 @@ LC_DlgSplinePoints::LC_DlgSplinePoints(QWidget* parent, bool modal, Qt::WindowFl
 {
 	setModal(modal);
 	ui->setupUi(this);
+
+	connect(ui->rbSplinePoints, SIGNAL(toggled(bool)),
+			this, SLOT(updatePoints())
+			);
 }
 
 LC_DlgSplinePoints::~LC_DlgSplinePoints() = default;
@@ -40,15 +43,26 @@ void LC_DlgSplinePoints::setSpline(LC_SplinePoints& b)
 	//number of control points
 	auto const& bData = b.getData();
 	auto const n = bData.splinePoints.size();
-	auto model = new QStandardItemModel(n, 2, this);
+	if (n <= 2) {
+		ui->rbControlPoints->setChecked(true);
+		ui->rbSplinePoints->setEnabled(false);
+	} else
+		ui->rbSplinePoints->setChecked(true);
+	updatePoints();
+}
+
+void LC_DlgSplinePoints::updatePoints()
+{
+	bool const useSpline = ui->rbSplinePoints->isChecked();
+
+	auto const& bData = bezier->getData();
+	auto const& pts = useSpline?bData.splinePoints:bData.controlPoints;
+	auto model = new QStandardItemModel(pts.size(), 2, this);
 	model->setHorizontalHeaderLabels({"x", "y"});
+
 	//set spline data
-	//TODO fix data editing for saved drawings
-	//currently, there's no spline points after reading the spline from a saved
-	//drawing, i.e., n = 0
-	for (size_t row = 0; row < n; ++row) {
-		auto const& vp = bData.splinePoints.at(row);
-		qDebug()<<"Appending point: ("<<vp.x<<" , "<<vp.y<<")";
+	for (size_t row = 0; row < pts.size(); ++row) {
+		auto const& vp = pts.at(row);
 		QStandardItem* x = new QStandardItem(QString::number(vp.x));
 		model->setItem(row, 0, x);
 		QStandardItem* y = new QStandardItem(QString::number(vp.y));
@@ -70,11 +84,14 @@ void LC_DlgSplinePoints::updateSpline()
 	auto model = static_cast<QStandardItemModel*>(ui->tvPoints->model());
 	size_t const n = model->rowCount();
 	auto& d = bezier->getData();
-	auto& vps = d.splinePoints;
+
+	//update points
+	bool const useSpline = ui->rbSplinePoints->isChecked();
+	auto& vps = useSpline?d.splinePoints:d.controlPoints;
 	size_t const n0 = vps.size();
 	//update points
 	for (size_t i = 0; i < n; ++i) {
-		auto& vp = vps.at(i<n0?i:n0-1);
+		auto& vp = vps.at(i<n0?i:n0 - 1);
 		auto const& vpx = model->item(i, 0)->text();
 		vp.x = RS_Math::eval(vpx, vp.x);
 		auto const& vpy = model->item(i, 1)->text();
