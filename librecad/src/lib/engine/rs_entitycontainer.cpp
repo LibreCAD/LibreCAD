@@ -25,8 +25,9 @@
 **********************************************************************/
 
 
-#include <QObject>
 #include <cmath>
+#include <set>
+#include <QObject>
 
 #include "rs_dialogfactory.h"
 #include "qg_dialogfactory.h"
@@ -492,17 +493,15 @@ unsigned int RS_EntityContainer::countDeep() const{
  */
 unsigned int RS_EntityContainer::countSelected(bool deep, std::initializer_list<RS2::EntityType> const& types) {
     unsigned int c=0;
+	std::set<RS2::EntityType> type = types;
 
 	for (RS_Entity* t: entities){
 
-		if (t->isSelected()) {
-
-			if(!types.size() ||
-					std::find(types.begin(), types.end(), t->rtti()) != types.end()
-					)
+		if (t->isSelected())
+			if (!types.size() || type.count(t->rtti()))
 				c++;
-        }
-		if(t->isContainer())
+
+		if (t->isContainer())
 			c += static_cast<RS_EntityContainer*>(t)->countSelected(deep);
     }
 
