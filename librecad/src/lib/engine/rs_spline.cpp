@@ -338,7 +338,7 @@ void RS_Spline::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 		vp.mirror(axisPoint1, axisPoint2);
 	}
 
-//    update();
+	update();
 }
 
 
