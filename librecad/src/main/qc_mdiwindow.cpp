@@ -34,6 +34,7 @@
 # include <QPrintDialog>
 #endif
 
+#include <QApplication>
 #include <QCloseEvent>
 #include <QCursor>
 #include <QMessageBox>
