@@ -137,9 +137,6 @@
           <property name="whatsThis">
            <string>Points on Spline</string>
           </property>
-          <property name="sizeAdjustPolicy">
-           <enum>QAbstractScrollArea::AdjustToContents</enum>
-          </property>
           <property name="textElideMode">
            <enum>Qt::ElideRight</enum>
           </property>

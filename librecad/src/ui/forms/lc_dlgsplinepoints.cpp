@@ -1,5 +1,4 @@
 #include <QStandardItemModel>
-#include <QDebug>
 #include "lc_dlgsplinepoints.h"
 #include "lc_splinepoints.h"
 #include "rs_graphic.h"
@@ -85,7 +84,6 @@ void LC_DlgSplinePoints::updateSpline()
 	auto model = static_cast<QStandardItemModel*>(ui->tvPoints->model());
 	size_t const n = model->rowCount();
 	auto& d = bezier->getData();
-	qDebug()<<"cut: "<<bezier->getData().cut;
 
 	//update points
 	bool const useSpline = ui->rbSplinePoints->isChecked();
