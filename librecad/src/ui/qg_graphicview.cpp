@@ -601,8 +601,14 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 												));
 		}
     }
+    redraw();
 
-        redraw();
+    QMouseEvent* event = new QMouseEvent(QEvent::MouseMove,
+                                         QPoint(e->x(), e->y()),
+                                         Qt::NoButton, Qt::NoButton,
+                                         Qt::NoModifier);
+    eventHandler->mouseMoveEvent(event);
+    delete event;
 
     e->accept();
 }
