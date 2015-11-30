@@ -309,16 +309,6 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e) {
 
 	snapPoint(pImpData->snapSpot, false);
 
-	//If the cursor is too-close to the snapSpot (by number of screen pixels), then hide it.
-	if (graphicView->toGui(pImpData->snapSpot).distanceTo(graphicView->toGui(mouseCoord)) < 32 /* xenoRadius */)
-	{
-		graphicView->setCursor(Qt::BlankCursor);
-	}
-	else
-	{
-		graphicView->setCursor(Qt::CrossCursor);
-	}
-
 	return pImpData->snapCoord;
 }
 
