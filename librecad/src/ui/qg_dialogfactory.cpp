@@ -1608,7 +1608,7 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
         break;
 
     case RS2::EntitySpline: {
-            QG_DlgSpline dlg(parent);
+			QG_DlgSpline dlg(nullptr, false);
             dlg.setSpline(*((RS_Spline*)entity));
             if (dlg.exec()) {
                 dlg.updateSpline();
@@ -1618,7 +1618,7 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
         break;
 
 	case RS2::EntitySplinePoints: {
-			LC_DlgSplinePoints dlg(parent);
+			LC_DlgSplinePoints dlg(nullptr, false);
 			dlg.setSpline(*static_cast<LC_SplinePoints*>(entity));
 			if (dlg.exec()) {
 				dlg.updateSpline();
