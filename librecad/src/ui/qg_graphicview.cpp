@@ -890,6 +890,10 @@ void QG_GraphicView::paintEvent(QPaintEvent *)
     {
         PixmapLayer3->fill(Qt::transparent);
         RS_PainterQt painter3(PixmapLayer3.get());
+        if (antialiasing)
+        {
+            painter3.setRenderHint(QPainter::Antialiasing);
+        }
         drawLayer3((RS_Painter*)&painter3);
         painter3.end();
     }
