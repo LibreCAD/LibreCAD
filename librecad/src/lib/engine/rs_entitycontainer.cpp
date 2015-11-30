@@ -490,14 +490,16 @@ unsigned int RS_EntityContainer::countDeep() const{
 /**
  * Counts the selected entities in this container.
  */
-unsigned int RS_EntityContainer::countSelected(bool deep, std::set<RS2::EntityType> const& types) {
+unsigned int RS_EntityContainer::countSelected(bool deep, std::initializer_list<RS2::EntityType> const& types) {
     unsigned int c=0;
 
 	for (RS_Entity* t: entities){
 
 		if (t->isSelected()) {
 
-			if(!types.size() || types.count(t->rtti()))
+			if(!types.size() ||
+					std::find(types.begin(), types.end(), t->rtti()) != types.end()
+					)
 				c++;
         }
 		if(t->isContainer())

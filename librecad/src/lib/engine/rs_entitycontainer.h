@@ -29,7 +29,6 @@
 #define RS_ENTITYCONTAINER_H
 
 #include <vector>
-#include <set>
 #include "rs_entity.h"
 
 /**
@@ -121,7 +120,7 @@ public:
 	* @param deep count sub-containers, if true
 	* @param types if is not empty, only counts by types listed
 	*/
-	virtual unsigned countSelected(bool deep=true, std::set<RS2::EntityType> const& types = std::set<RS2::EntityType>());
+	virtual unsigned countSelected(bool deep=true, std::initializer_list<RS2::EntityType> const& types = {});
     virtual double totalSelectedLength();
 
     /**
