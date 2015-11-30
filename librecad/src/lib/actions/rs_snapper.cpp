@@ -58,42 +58,6 @@ RS_Vector snapSpot;
 };
 
 /**
-  * Disable all snapping.
-  *
-  * This effectivly puts the object into free snap mode.
-  *
-  * @returns A refrence to itself.
-  */
- RS_SnapMode const & RS_SnapMode::clear()
-{
-	snapFree     = false;
-	snapGrid     = false;
-	snapEndpoint     = false;
-	snapMiddle       = false;
-	snapDistance       = false;
-	snapCenter       = false;
-	snapOnEntity     = false;
-	snapIntersection = false;
-
-	restriction = RS2::RestrictNothing;
-
-	return *this;
-}
-
-bool RS_SnapMode::operator ==(RS_SnapMode const& rhs) const{
-	if ( snapFree != rhs.snapFree) return false;
-	if ( snapGrid != rhs.snapGrid) return false;
-	if ( snapEndpoint != rhs.snapEndpoint) return false;
-	if ( snapMiddle != rhs.snapMiddle) return false;
-	if ( snapDistance != rhs.snapDistance) return false;
-	if ( snapCenter != rhs.snapCenter) return false;
-	if ( snapOnEntity != rhs.snapOnEntity) return false;
-	if ( snapIntersection != rhs.snapIntersection) return false;
-	if ( restriction != rhs.restriction) return false;
-	return true;
-}
-
-/**
  * Constructor.
  */
 RS_Snapper::RS_Snapper(RS_EntityContainer& container, RS_GraphicView& graphicView)
@@ -101,9 +65,7 @@ RS_Snapper::RS_Snapper(RS_EntityContainer& container, RS_GraphicView& graphicVie
     ,graphicView(&graphicView)
 	,pImpData(new ImpData{})
     ,snap_indicator(new Indicator{})
-{
-    init();
-}
+{}
 
 RS_Snapper::~RS_Snapper()
 {
@@ -142,6 +104,42 @@ void RS_Snapper::init()
 void RS_Snapper::finish() {
     finished = true;
     deleteSnapper();
+}
+
+/**
+  * Disable all snapping.
+  *
+  * This effectivly puts the object into free snap mode.
+  *
+  * @returns A refrence to itself.
+  */
+ RS_SnapMode const & RS_SnapMode::clear()
+{
+	snapFree     = false;
+	snapGrid     = false;
+	snapEndpoint     = false;
+	snapMiddle       = false;
+	snapDistance       = false;
+	snapCenter       = false;
+	snapOnEntity     = false;
+	snapIntersection = false;
+
+	restriction = RS2::RestrictNothing;
+
+	return *this;
+}
+
+bool RS_SnapMode::operator ==(RS_SnapMode const& rhs) const{
+	if ( snapFree != rhs.snapFree) return false;
+	if ( snapGrid != rhs.snapGrid) return false;
+	if ( snapEndpoint != rhs.snapEndpoint) return false;
+	if ( snapMiddle != rhs.snapMiddle) return false;
+	if ( snapDistance != rhs.snapDistance) return false;
+	if ( snapCenter != rhs.snapCenter) return false;
+	if ( snapOnEntity != rhs.snapOnEntity) return false;
+	if ( snapIntersection != rhs.snapIntersection) return false;
+	if ( restriction != rhs.restriction) return false;
+	return true;
 }
 
 void RS_Snapper::setSnapMode(const RS_SnapMode& snapMode) {
@@ -726,11 +724,13 @@ void RS_Snapper::deleteSnapper() {// RVT_PORT (can be deleted??)
 
 
 /**
- * We could properly speed this up by calling the draw function of this snapper within the paint event
- * this will avoid creating/deletion of the lines
+ * creates the snap indicator
  */
 void RS_Snapper::drawSnapper()
 {
+    // We could properly speed this up by calling the draw function of this snapper within the paint event
+    // this will avoid creating/deletion of the lines
+
     graphicView->getOverlayContainer(RS2::Snapper)->clear();
 	if (!finished && pImpData->snapSpot.valid)
     {
