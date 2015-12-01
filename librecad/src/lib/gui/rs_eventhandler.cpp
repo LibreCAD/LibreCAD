@@ -661,4 +661,16 @@ void RS_EventHandler::set_relative_zero(const RS_Vector& point)
     relative_zero = point;
 }
 
+bool RS_EventHandler::inSelectionMode()
+{
+    switch (getCurrentAction()->rtti())
+    {
+        case RS2::ActionDefault:
+        case RS2::ActionSelectSingle:
+            return true;
+        default:
+            return false;
+    }
+}
+
 // EOF

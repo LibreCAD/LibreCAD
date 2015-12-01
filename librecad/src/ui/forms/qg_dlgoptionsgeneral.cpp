@@ -121,6 +121,9 @@ void QG_DlgOptionsGeneral::init() {
     QString indicator_shape_type = RS_SETTINGS->readEntry("/indicator_shape_type", "Circle");
     index = indicator_shape_combobox->findText(indicator_shape_type);
     indicator_shape_combobox->setCurrentIndex(index);
+
+    bool cursor_hiding = RS_SETTINGS->readNumEntry("/cursor_hiding", 0);
+    cursor_hiding_checkbox->setChecked(cursor_hiding);
     
     // scale grid:
     QString scaleGrid = RS_SETTINGS->readEntry("/ScaleGrid", "1");
@@ -238,8 +241,9 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/LanguageCmd",cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
         RS_SETTINGS->writeEntry("/indicator_lines_state", indicator_lines_checkbox->isChecked());
         RS_SETTINGS->writeEntry("/indicator_lines_type", indicator_lines_combobox->currentText());
-        RS_SETTINGS->writeEntry("/indicator_shape_state", indicator_shape_checkbox->isChecked());
+        RS_SETTINGS->writeEntry("/indicator_shape_state", indicator_shape_checkbox->isChecked());      
         RS_SETTINGS->writeEntry("/indicator_shape_type", indicator_shape_combobox->currentText());
+        RS_SETTINGS->writeEntry("/cursor_hiding", cursor_hiding_checkbox->isChecked());
         RS_SETTINGS->writeEntry("/StatusBarFontSize", cbSizeStatus->currentText());
         RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/IconSize", sb_icon_size->value() );

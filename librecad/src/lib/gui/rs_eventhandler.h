@@ -88,6 +88,9 @@ public:
     void setSnapRestriction(RS2::SnapRestriction sr);
     RS_Vector relative_zero;
 
+    //! return true if the current action is for selecting
+    bool inSelectionMode();
+
 private:
     /**
          * @brief cliCalEvent, process cli "cal" calculator command

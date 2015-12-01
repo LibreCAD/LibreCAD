@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>707</width>
-    <height>600</height>
+    <height>621</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1293,7 +1293,7 @@
           <string>Graphic View</string>
          </property>
          <layout class="QGridLayout">
-          <item row="7" column="1">
+          <item row="9" column="1">
            <widget class="QComboBox" name="cbMaxPreview">
             <property name="editable">
              <bool>true</bool>
@@ -1330,7 +1330,7 @@
             </item>
            </widget>
           </item>
-          <item row="7" column="0">
+          <item row="9" column="0">
            <widget class="QLabel" name="lMaxPreview">
             <property name="text">
              <string>Number of p&amp;review entities:</string>
@@ -1343,7 +1343,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0" colspan="2">
+          <item row="4" column="0" colspan="2">
            <widget class="QCheckBox" name="cbScaleGrid">
             <property name="text">
              <string>A&amp;utomatically scale grid</string>
@@ -1353,7 +1353,7 @@
             </property>
            </widget>
           </item>
-          <item row="6" column="0">
+          <item row="8" column="0">
            <widget class="QLabel" name="lMinGridSpacing">
             <property name="text">
              <string>Minimal Grid Spacing (px):</string>
@@ -1366,7 +1366,7 @@
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
+          <item row="8" column="1">
            <widget class="QComboBox" name="cbMinGridSpacing">
             <property name="editable">
              <bool>true</bool>
@@ -1413,14 +1413,14 @@
             </item>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="5" column="0">
            <widget class="QCheckBox" name="cb_antialiasing">
             <property name="text">
              <string>Anti-aliasing</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
+          <item row="6" column="0">
            <widget class="QCheckBox" name="scrollbars_check_box">
             <property name="text">
              <string>Scrollbars</string>
@@ -1485,6 +1485,39 @@
               <string>Square</string>
              </property>
             </item>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="cursor_hiding_checkbox">
+            <property name="text">
+             <string>Hide cursor when snapping</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Icons</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QCheckBox" name="cb_icon_size">
+            <property name="text">
+             <string>Custom size</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="sb_icon_size">
+            <property name="minimum">
+             <number>8</number>
+            </property>
+            <property name="maximum">
+             <number>150</number>
+            </property>
            </widget>
           </item>
          </layout>
@@ -1612,32 +1645,6 @@
             <property name="icon">
              <iconset resource="../../../res/ui/ui.qrc">
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QGroupBox" name="groupBox_2">
-         <property name="title">
-          <string>Icons</string>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="QCheckBox" name="cb_icon_size">
-            <property name="text">
-             <string>Custom size</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QSpinBox" name="sb_icon_size">
-            <property name="minimum">
-             <number>8</number>
-            </property>
-            <property name="maximum">
-             <number>150</number>
             </property>
            </widget>
           </item>

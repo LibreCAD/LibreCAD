@@ -148,6 +148,7 @@ protected:
 private:
     bool antialiasing{false};
     bool hasScrollBars{false};
+    bool cursor_hiding{false};
 
 signals:
     void xbutton1_released();

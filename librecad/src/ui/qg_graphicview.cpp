@@ -88,6 +88,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* 
     RS_SETTINGS->beginGroup("/Appearance");
     int aa = RS_SETTINGS->readNumEntry("/Antialiasing");
     int scrollbars = RS_SETTINGS->readNumEntry("/ScrollBars", 1);
+    cursor_hiding = RS_SETTINGS->readNumEntry("/cursor_hiding", 0);
     RS_SETTINGS->endGroup();
     setAntiAliasing(aa?true:false);
     if (scrollbars) addScrollBars();
@@ -312,6 +313,9 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
         break;
     }
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
+
+    if (cursor_hiding && !eventHandler->inSelectionMode())
+        setCursor(Qt::BlankCursor);
 }
 
 
@@ -430,6 +434,9 @@ void QG_GraphicView::leaveEvent(QEvent* e) {
 void QG_GraphicView::enterEvent(QEvent* e) {
     eventHandler->mouseEnterEvent();
     QWidget::enterEvent(e);
+
+    if (cursor_hiding && !eventHandler->inSelectionMode())
+        setCursor(Qt::BlankCursor);
 }
 
 
