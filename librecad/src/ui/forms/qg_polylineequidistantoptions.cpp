@@ -100,9 +100,8 @@ void QG_PolylineEquidistantOptions::updateDist() {
 		if (!ok)
             dist=10.;
 
-			ui->leDist->setText(QString::number(dist, 'g', 3));
+		ui->leDist->setText(QString::number(dist, 'g', 3));
 		action->setDist(dist);
-		update();
     }
 }
 
