@@ -667,6 +667,12 @@ bool RS_EventHandler::inSelectionMode()
     {
         case RS2::ActionDefault:
         case RS2::ActionSelectSingle:
+        case RS2::ActionSelectWindow:
+        case RS2::ActionDeselectWindow:
+        case RS2::ActionSelectContour:
+        case RS2::ActionSelectIntersected:
+        case RS2::ActionDeselectIntersected:
+        case RS2::ActionSelectLayer:
             return true;
         default:
             return false;
