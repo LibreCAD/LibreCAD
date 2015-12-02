@@ -42,7 +42,7 @@
 RS_EventHandler::RS_EventHandler(QObject* parent) : QObject(parent)
 {
     connect(parent, SIGNAL(relative_zero_changed(const RS_Vector&)),
-            this, SLOT(set_relative_zero(const RS_Vector&)));
+            this, SLOT(setRelativeZero(const RS_Vector&)));
 }
 
 /**
@@ -530,7 +530,7 @@ void RS_EventHandler::killAllActions()
         {
             if (right_click_quits)
             {
-                real_action->setChecked(false);
+                q_action->setChecked(false);
                 right_click_quits = false;
             }
 			p->finish();
@@ -579,7 +579,7 @@ void RS_EventHandler::cleanUp() {
         {
             if (right_click_quits)
             {
-                real_action->setChecked(false);
+                q_action->setChecked(false);
                 right_click_quits = false;
             }
             delete *it;
@@ -649,14 +649,14 @@ void RS_EventHandler::debugActions() const{
     }
 }
 
-void RS_EventHandler::set_action(QAction* q_action)
+void RS_EventHandler::setQAction(QAction* action)
 {
-    real_action = q_action;
+    q_action = action;
     right_click_quits = true;
     killAllActions();
 }
 
-void RS_EventHandler::set_relative_zero(const RS_Vector& point)
+void RS_EventHandler::setRelativeZero(const RS_Vector& point)
 {
     relative_zero = point;
 }

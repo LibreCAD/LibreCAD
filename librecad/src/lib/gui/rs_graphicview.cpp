@@ -1847,7 +1847,7 @@ bool RS_GraphicView::isCleanUp(void) const
 
 void RS_GraphicView::set_action(QAction* q_action)
 {
-    eventHandler->set_action(q_action);
+    eventHandler->setQAction(q_action);
 
     if (recent_actions.contains(q_action))
     {
