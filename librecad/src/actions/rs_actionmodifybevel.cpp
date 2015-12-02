@@ -273,7 +273,7 @@ void RS_ActionModifyBevel::updateMouseButtonHints() {
 }
 
 void RS_ActionModifyBevel::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

@@ -202,7 +202,7 @@ void RS_ActionDrawLineOrthTan::updateMouseCursor() {
         if(isFinished()) {
     graphicView->setMouseCursor(RS2::ArrowCursor);
         }else{
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
         }
 }
 

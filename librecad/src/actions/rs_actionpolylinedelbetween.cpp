@@ -205,7 +205,7 @@ void RS_ActionPolylineDelBetween::updateMouseButtonHints() {
 
 
 void RS_ActionPolylineDelBetween::updateMouseCursor() {
-        graphicView->setMouseCursor(RS2::CadCursor);
+        graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

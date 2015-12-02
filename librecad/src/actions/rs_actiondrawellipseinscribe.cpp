@@ -312,7 +312,7 @@ void RS_ActionDrawEllipseInscribe::updateMouseButtonHints() {
 }
 
 void RS_ActionDrawEllipseInscribe::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

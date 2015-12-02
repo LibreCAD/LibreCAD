@@ -345,7 +345,7 @@ void RS_ActionDrawLineRelAngle::hideOptions() {
 
 
 void RS_ActionDrawLineRelAngle::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

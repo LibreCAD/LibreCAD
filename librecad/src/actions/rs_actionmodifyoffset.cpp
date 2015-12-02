@@ -126,7 +126,7 @@ void RS_ActionModifyOffset::hideOptions() {
 }
 
 void RS_ActionModifyOffset::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

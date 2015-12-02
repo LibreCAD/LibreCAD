@@ -232,7 +232,7 @@ void RS_ActionDrawHatch::updateMouseButtonHints() {
 }
 
 void RS_ActionDrawHatch::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

@@ -149,7 +149,7 @@ void RS_ActionInfoAngle::updateMouseButtonHints() {
 }
 
 void RS_ActionInfoAngle::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

@@ -364,7 +364,7 @@ void RS_ActionPolylineEquidistant::hideOptions() {
 }
 
 void RS_ActionPolylineEquidistant::updateMouseCursor() {
-        graphicView->setMouseCursor(RS2::CadCursor);
+        graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 void RS_ActionPolylineEquidistant::updateMouseButtonHints() {

@@ -324,7 +324,7 @@ void RS_ActionDrawLineBisector::hideOptions() {
 
 
 void RS_ActionDrawLineBisector::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

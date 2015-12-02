@@ -211,7 +211,9 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType c) {
         setCursor(Qt::ClosedHandCursor);
         break;
     case RS2::CadCursor:
-        setCursor(*curCad);
+        cursor_hiding
+            ? setCursor(Qt::BlankCursor)
+            : setCursor(*curCad);
         break;
     case RS2::DelCursor:
         setCursor(*curDel);
@@ -313,9 +315,6 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
         break;
     }
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
-
-    if (cursor_hiding && !eventHandler->inSelectionMode())
-        setCursor(Qt::BlankCursor);
 }
 
 
@@ -434,9 +433,6 @@ void QG_GraphicView::leaveEvent(QEvent* e) {
 void QG_GraphicView::enterEvent(QEvent* e) {
     eventHandler->mouseEnterEvent();
     QWidget::enterEvent(e);
-
-    if (cursor_hiding && !eventHandler->inSelectionMode())
-        setCursor(Qt::BlankCursor);
 }
 
 

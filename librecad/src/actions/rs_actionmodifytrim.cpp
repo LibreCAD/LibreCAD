@@ -202,6 +202,6 @@ void RS_ActionModifyTrim::updateMouseButtonHints() {
 
 
 void RS_ActionModifyTrim::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 

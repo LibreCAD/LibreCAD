@@ -272,7 +272,7 @@ QStringList RS_ActionDrawLineParallelThrough::getAvailableCommands() {
 
 
 void RS_ActionDrawLineParallelThrough::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 

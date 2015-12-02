@@ -199,7 +199,7 @@ void RS_ActionDrawLineTangent1::updateMouseButtonHints() {
 }
 
 void RS_ActionDrawLineTangent1::updateMouseCursor() {
-	graphicView->setMouseCursor(RS2::CadCursor);
+	graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

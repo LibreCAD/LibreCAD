@@ -308,7 +308,7 @@ void RS_ActionDrawCircleInscribe::updateMouseButtonHints() {
 
 
 void RS_ActionDrawCircleInscribe::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF
