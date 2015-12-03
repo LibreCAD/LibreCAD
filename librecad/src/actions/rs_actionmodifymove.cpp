@@ -168,7 +168,7 @@ void RS_ActionModifyMove::updateMouseButtonHints() {
 
 void RS_ActionModifyMove::updateMouseCursor() {
         if(graphicView != NULL){
-    graphicView->setMouseCursor(RS2::SelectCursor);
+    graphicView->setMouseCursor(RS2::CadCursor);
         }
 }
 

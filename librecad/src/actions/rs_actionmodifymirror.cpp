@@ -173,7 +173,7 @@ void RS_ActionModifyMirror::updateMouseButtonHints() {
 }
 
 void RS_ActionModifyMirror::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::SelectCursor);
+    graphicView->setMouseCursor(RS2::CadCursor);
 }
 
 // EOF
