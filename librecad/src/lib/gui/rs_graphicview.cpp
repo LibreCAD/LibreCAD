@@ -25,11 +25,11 @@
 **
 **********************************************************************/
 
+#include <climits>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QAction>
 #include <QMouseEvent>
-#include <climits>
 #include "rs_graphicview.h"
 
 #include "rs_line.h"
