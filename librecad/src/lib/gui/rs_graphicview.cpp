@@ -25,10 +25,10 @@
 **
 **********************************************************************/
 
+#include <climits>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QAction>
-#include <climits>
 #include "qc_applicationwindow.h"
 #include "rs_graphicview.h"
 

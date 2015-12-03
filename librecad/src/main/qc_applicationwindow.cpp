@@ -2747,12 +2747,12 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     // black background:
     if (black) {
 //RLZ        painter.setBackgroundColor(RS_Color(0,0,0));
-        painter.setBackground(RS_Color(0,0,0));
+		painter.setBackground(Qt::black);
     }
     // white background:
     else {
 //RLZ        painter.setBackgroundColor(RS_Color(255,255,255));
-        painter.setBackground(RS_Color(255,255,255));
+		painter.setBackground(Qt::white);
     }
 
     // black/white:
@@ -2770,10 +2770,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
     }
     gv.setContainer(graphic);
     gv.zoomAuto(false);
-    for (RS_Entity* e=graphic->firstEntity(RS2::ResolveAll);
-			e; e=graphic->nextEntity(RS2::ResolveAll)) {
-        gv.drawEntity(&painter, e);
-    }
+	gv.drawEntity(&painter, gv.getContainer());
 
     // end the picture output
 #if QT_VERSION >= 0x040300
@@ -2789,7 +2786,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
         if (iio.write(img)) {
             ret = true;
         }
-        QString error=iio.errorString();
+//        QString error=iio.errorString();
 #if QT_VERSION >= 0x040300
     }
 #endif
