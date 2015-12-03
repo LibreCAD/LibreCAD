@@ -40,9 +40,9 @@ class RS_ActionDrawCircleTan1_2P : public RS_PreviewActionInterface {
      */
     enum Status {
         SetCircle1=0,   //  Setting the First Circle.  */
-        SetPoint1=1,   //  Setting the Second Circle.  */
-        SetPoint2=2,   //  select the closest tangential Circle.  */
-        SetCenter   //  select the closest tangential Circle.  */
+        SetPoint1=1,   //  Setting the First Point.  */
+        SetPoint2=2,   //  Setting the Second Point.  */
+        SetCenter   //  Setting the internal or external tangent circle's center.  */
     };
 
 public:

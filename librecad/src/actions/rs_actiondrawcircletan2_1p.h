@@ -40,9 +40,9 @@ public:
      * Action States.
      */
     enum Status {
-        SetCircle1=0,   //  Setting the First Circle.  */
-        SetCircle2=1,   //  Setting the First Circle.  */
-        SetPoint=2,   //  Setting the Second Circle.  */
+        SetCircle1=0,   //  Setting the first circle.  */
+        SetCircle2=1,   //  Setting the second circle.  */
+        SetPoint=2,   //  Setting point on the desired circle.  */
         SetCenter
     };
 

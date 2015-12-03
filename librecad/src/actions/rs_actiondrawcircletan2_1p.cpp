@@ -355,8 +355,19 @@ void RS_ActionDrawCircleTan2_1P::updateMouseButtonHints() {
     }
 }
 
-void RS_ActionDrawCircleTan2_1P::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::SelectCursor);
+void RS_ActionDrawCircleTan2_1P::updateMouseCursor()
+{
+    switch (getStatus())
+    {
+        case SetCircle1:
+        case SetCircle2:
+        case SetCenter:
+            graphicView->setMouseCursor(RS2::SelectCursor);
+            break;
+        case SetPoint:
+            graphicView->setMouseCursor(RS2::CadCursor);
+            break;
+    }
 }
 
 // EOF

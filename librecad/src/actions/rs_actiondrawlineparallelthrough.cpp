@@ -271,8 +271,18 @@ QStringList RS_ActionDrawLineParallelThrough::getAvailableCommands() {
 
 
 
-void RS_ActionDrawLineParallelThrough::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::SelectCursor);
+void RS_ActionDrawLineParallelThrough::updateMouseCursor()
+{
+    switch (getStatus())
+    {
+        case SetEntity:
+            graphicView->setMouseCursor(RS2::SelectCursor);
+            break;
+        case SetNumber:
+        case SetPos:
+            graphicView->setMouseCursor(RS2::CadCursor);
+            break;
+    }
 }
 
 

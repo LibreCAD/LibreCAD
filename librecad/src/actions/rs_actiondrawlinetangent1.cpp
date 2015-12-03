@@ -198,8 +198,17 @@ void RS_ActionDrawLineTangent1::updateMouseButtonHints() {
 	}
 }
 
-void RS_ActionDrawLineTangent1::updateMouseCursor() {
-	graphicView->setMouseCursor(RS2::SelectCursor);
+void RS_ActionDrawLineTangent1::updateMouseCursor()
+{
+    switch (getStatus())
+    {
+        case SetPoint:
+            graphicView->setMouseCursor(RS2::CadCursor);
+            break;
+        case SetCircle:
+            graphicView->setMouseCursor(RS2::SelectCursor);
+            break;
+    }
 }
 
 // EOF
