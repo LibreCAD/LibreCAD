@@ -20,9 +20,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include<QAction>
-#include <QMouseEvent>
 #include "rs_actiondrawcircletan3.h"
+#include <QAction>
+#include <QMouseEvent>
 
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
@@ -40,7 +40,7 @@ auto enTypeList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::Entity
 
 struct RS_ActionDrawCircleTan3::Points {
 		std::vector<RS_AtomicEntity*> circles;
-		std::shared_ptr<RS_CircleData> cData;
+		std::shared_ptr<RS_CircleData> cData{std::make_shared<RS_CircleData>()};
 		RS_Vector coord;
 		bool valid{false};
 		//keep a list of centers found
@@ -282,7 +282,7 @@ bool RS_ActionDrawCircleTan3::getData(){
 			pPoints->candidates.push_back(data);
 		}
 
-	}else{
+	} else {
 		RS_Circle c{nullptr, *pPoints->cData};
 		auto solutions=c.createTan3(pPoints->circles);
 		pPoints->candidates.clear();
