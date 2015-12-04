@@ -85,15 +85,6 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* 
     setFactorY(4.0);
     setBorders(10, 10, 10, 10);
 
-    RS_SETTINGS->beginGroup("/Appearance");
-    int aa = RS_SETTINGS->readNumEntry("/Antialiasing");
-    int scrollbars = RS_SETTINGS->readNumEntry("/ScrollBars", 1);
-    cursor_hiding = RS_SETTINGS->readNumEntry("/cursor_hiding", 0);
-    RS_SETTINGS->endGroup();
-    setAntiAliasing(aa?true:false);
-    if (scrollbars) addScrollBars();
-    else if (!doc) addScrollBars(); // always add to hatch preview
-
     setMouseTracking(true);
     setFocusPolicy(Qt::NoFocus);
 
@@ -117,7 +108,7 @@ QG_GraphicView::~QG_GraphicView() {
  */
 int QG_GraphicView::getWidth() const
 {
-    if (hasScrollBars)
+    if (scrollbars)
         return width() - vScrollBar->sizeHint().width();
     else
         return width();
@@ -130,7 +121,7 @@ int QG_GraphicView::getWidth() const
  */
 int QG_GraphicView::getHeight() const
 {
-    if (hasScrollBars)
+    if (scrollbars)
         return height() - hScrollBar->sizeHint().height();
     else
         return height();
@@ -237,7 +228,7 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType c) {
  */
 void QG_GraphicView::updateGridStatusWidget(const QString& text)
 {
-   if (hasScrollBars) gridStatus->setText(text);
+   if (scrollbars) gridStatus->setText(text);
 }
 
 
@@ -324,7 +315,8 @@ void QG_GraphicView::mouseMoveEvent(QMouseEvent* event)
     eventHandler->mouseMoveEvent(event);
 }
 
-bool QG_GraphicView::event(QEvent *event) {
+bool QG_GraphicView::event(QEvent *event)
+{
 #if QT_VERSION >= 0x050200
     if (event->type() == QEvent::NativeGesture) {
         QNativeGestureEvent *nge = static_cast<QNativeGestureEvent *>(event);
@@ -472,8 +464,10 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     if (isSmoothScrolling) {
         if (e->phase() == Qt::ScrollEnd) isSmoothScrolling = false;
 
-        if (!numPixels.isNull()) {
-            if (e->modifiers()==Qt::ControlModifier) {
+        if (!numPixels.isNull())
+        {
+            if (e->modifiers()==Qt::ControlModifier)
+            {
                 // Hold ctrl to zoom. 1 % per pixel
                 double v = -numPixels.y() / 100.;
                 RS2::ZoomDirection direction;
@@ -487,14 +481,13 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
                 setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
 													 RS2::Both, &mouse, factor));
-            } else {
+            }
+            else if (scrollbars)
+            {
                 // otherwise, scroll
 				//scroll by scrollbars: issue #479
 				hScrollBar->setValue(hScrollBar->value() - numPixels.x());
 				vScrollBar->setValue(vScrollBar->value() - numPixels.y());
-
-//                setCurrentAction(new RS_ActionZoomScroll(numPixels.x(), numPixels.y(),
-//                                                         *container, *this));
             }
             redraw();
         }
@@ -538,7 +531,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         }
     }
 
-    if (scroll) {
+    if (scroll && scrollbars) {
 		//scroll by scrollbars: issue #479
 		switch(direction){
 		case RS2::Left:
@@ -668,7 +661,7 @@ void QG_GraphicView::keyReleaseEvent(QKeyEvent* e)
  */
 void QG_GraphicView::adjustOffsetControls()
 {
-    if (hasScrollBars)
+    if (scrollbars)
     {
         static bool running = false;
 
@@ -918,14 +911,14 @@ void QG_GraphicView::paintEvent(QPaintEvent *)
     RS_DEBUG->print("QG_GraphicView::paintEvent end");
 }
 
-void QG_GraphicView::setAntiAliasing(bool state)
+void QG_GraphicView::setAntialiasing(bool state)
 {
 	antialiasing = state;
 }
 
-void QG_GraphicView::addScrollBars()
+void QG_GraphicView::addScrollbars()
 {
-    hasScrollBars = true;
+    scrollbars = true;
 
     hScrollBar = new QG_ScrollBar(Qt::Horizontal, this);
     vScrollBar = new QG_ScrollBar(Qt::Vertical, this);
@@ -959,4 +952,14 @@ void QG_GraphicView::addScrollBars()
     gridStatus->setAlignment(Qt::AlignRight);
     layout->addWidget(gridStatus, 1, 1, 1, 2);
     layout->addItem(new QSpacerItem(50, 0), 0, 1);
+}
+
+bool QG_GraphicView::hasScrollbars()
+{
+    return scrollbars;
+}
+
+void QG_GraphicView::setCursorHiding(bool state)
+{
+    cursor_hiding = state;
 }

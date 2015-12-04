@@ -65,6 +65,7 @@ void QG_DlgHatch::init() {
     preview = new RS_EntityContainer();
     gvPreview->setContainer(preview);
     gvPreview->setBorders(15,15,15,15);
+    gvPreview->addScrollbars();
 
     cbPattern->init();
 

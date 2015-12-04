@@ -89,8 +89,10 @@ public:
      */
     virtual RS_Vector getMousePosition() const;
 
-    void setAntiAliasing(bool state);
-    void addScrollBars();
+    void setAntialiasing(bool state);
+    void setCursorHiding(bool state);
+    void addScrollbars();
+    bool hasScrollbars();
 
 protected:
     virtual void mousePressEvent(QMouseEvent* e);
@@ -147,7 +149,7 @@ protected:
 
 private:
     bool antialiasing{false};
-    bool hasScrollBars{false};
+    bool scrollbars{false};
     bool cursor_hiding{false};
 
 signals:

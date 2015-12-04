@@ -1336,10 +1336,26 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     statusBar()->showMessage(tr("Creating new file..."));
 
     RS_DEBUG->print("  creating MDI window");
+
     QC_MDIWindow* w = new QC_MDIWindow(doc, mdiAreaCAD, 0);
+
     window_list << w;
-    actionHandler->set_view(w->getGraphicView());
+
+    RS_SETTINGS->beginGroup("/Appearance");
+    int aa = RS_SETTINGS->readNumEntry("/Antialiasing", 0);
+    int scrollbars = RS_SETTINGS->readNumEntry("/ScrollBars", 1);
+    int cursor_hiding = RS_SETTINGS->readNumEntry("/cursor_hiding", 0);
+    RS_SETTINGS->endGroup();
+
+    QG_GraphicView* view = w->getGraphicView();
+
+    view->setAntialiasing(aa);
+    view->setCursorHiding(cursor_hiding);
+    if (scrollbars) view->addScrollbars();
+
+    actionHandler->set_view(view);
     actionHandler->set_document(w->getDocument());
+
     connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
             this, SLOT(slotFileClosing(QC_MDIWindow*)));
     connect(w->getGraphicView(), SIGNAL(xbutton1_released()),
@@ -2562,7 +2578,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
                 gv->setStartHandleColor(startHandleColor);
                 gv->setHandleColor(handleColor);
                 gv->setEndHandleColor(endHandleColor);
-                gv->setAntiAliasing(antialiasing?true:false);
+                gv->setAntialiasing(antialiasing?true:false);
                 gv->redraw(RS2::RedrawGrid);
             }
         }
