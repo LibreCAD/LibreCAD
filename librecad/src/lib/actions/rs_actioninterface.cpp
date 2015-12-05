@@ -107,8 +107,7 @@ void RS_ActionInterface::init(int status) {
 
     setStatus(status);
     if (status>=0) {
-        //graphicView->setMouseCursor(cursor);
-                updateMouseButtonHints();
+        updateMouseButtonHints();
         updateMouseCursor();
     }else{
         //delete snapper when finished, bug#3416878
@@ -256,7 +255,6 @@ void RS_ActionInterface::finish(bool /*updateTB*/)
 		finished = true;
 		hideOptions();
 		RS_Snapper::finish();
-        graphicView->setMouseCursor(RS2::ArrowCursor);
 	}
 	RS_DEBUG->print("RS_ActionInterface::finish: OK");
 }
@@ -273,7 +271,6 @@ void RS_ActionInterface::setPredecessor(RS_ActionInterface* pre) {
  * Suspends this action while another action takes place.
  */
 void RS_ActionInterface::suspend() {
-    graphicView->setMouseCursor(RS2::ArrowCursor);
     RS_Snapper::suspend();
 }
 
