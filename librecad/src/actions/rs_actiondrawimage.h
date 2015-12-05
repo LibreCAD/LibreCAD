@@ -26,7 +26,7 @@
 
 #ifndef RS_ACTIONDRAWIMAGE_H
 #define RS_ACTIONDRAWIMAGE_H
-
+#include<memory>
 #include "rs_previewactioninterface.h"
 
 struct RS_ImageData;

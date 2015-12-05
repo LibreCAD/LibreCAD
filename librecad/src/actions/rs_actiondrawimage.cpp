@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 #include<cmath>
-#include <memory>
 #include <QAction>
 #include <QImage>
 #include <QMouseEvent>

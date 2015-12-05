@@ -65,9 +65,6 @@ public:
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 
-protected:
-	std::vector<RS_Line*> lines;
-
 private:
 	/**
 	 * @brief clearLines unset highlighten lines, and clear the vector "lines"

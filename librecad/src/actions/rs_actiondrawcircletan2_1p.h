@@ -70,7 +70,6 @@ public:
 
 protected:
     RS_Entity* catchCircle(QMouseEvent* e);
-	std::vector<RS_AtomicEntity*> circles;
 private:
 	struct Points;
 	std::unique_ptr<Points> pPoints;

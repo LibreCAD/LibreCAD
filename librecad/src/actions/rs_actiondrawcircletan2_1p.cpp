@@ -19,7 +19,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-
+#include<vector>
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_actiondrawcircletan2_1p.h"
@@ -45,6 +45,7 @@ struct RS_ActionDrawCircleTan2_1P::Points {
 	bool valid = false;
 	//keep a list of centers found
 	RS_VectorSolutions centers;
+        std::vector<RS_AtomicEntity*> circles;
 };
 
 /**
@@ -67,30 +68,30 @@ void RS_ActionDrawCircleTan2_1P::init(int status) {
     if(status>=0) {
         RS_Snapper::suspend();
     }
-	if(status>(int) circles.size()) status=(int) circles.size();
+	if(status>(int) pPoints->circles.size()) status=(int) pPoints->circles.size();
     RS_PreviewActionInterface::init(status);
 	for(int i=0; i<status; ++i){
-		if(!circles[i]) {
+		if(!pPoints->circles[i]) {
             status=i;
             break;
         }
     }
     bool updateNeeded(false);
-	for(size_t i=status>=0?status:0; i<circles.size(); ++i){
-        if(circles[i])
-            if(circles[i]->isHighlighted()){
-                circles[i]->setHighlighted(false);
+	for(size_t i=status>=0?status:0; i<pPoints->circles.size(); ++i){
+        if(pPoints->circles[i])
+            if(pPoints->circles[i]->isHighlighted()){
+                pPoints->circles[i]->setHighlighted(false);
                 updateNeeded=true;
             }
     }
     if(updateNeeded) graphicView->redraw(RS2::RedrawDrawing);
-	circles.resize(status>=0?status:0);
+	pPoints->circles.resize(status>=0?status:0);
 }
 
 
 void RS_ActionDrawCircleTan2_1P::finish(bool updateTB){
-    if( circles.size() >0) {
-		for(RS_AtomicEntity*const circle: circles)
+    if( pPoints->circles.size() >0) {
+		for(RS_AtomicEntity*const circle: pPoints->circles)
             circle->setHighlighted(false);
         graphicView->redraw(RS2::RedrawDrawing);
     }
@@ -111,10 +112,10 @@ void RS_ActionDrawCircleTan2_1P::trigger() {
     }
 
 
-	for(RS_AtomicEntity*const circle: circles)
+	for(RS_AtomicEntity*const circle: pPoints->circles)
         circle->setHighlighted(false);
     graphicView->redraw(RS2::RedrawDrawing);
-    circles.clear();
+    pPoints->circles.clear();
 
 
     RS_DEBUG->print("RS_ActionDrawCircleTan2_1P::trigger():"
@@ -125,9 +126,9 @@ void RS_ActionDrawCircleTan2_1P::trigger() {
 
 bool RS_ActionDrawCircleTan2_1P::getCenters()
 {
-    if(circles.size()<2) return false;
-	LC_Quadratic lc0(circles[0], pPoints->point);
-	LC_Quadratic lc1(circles[1], pPoints->point);
+    if(pPoints->circles.size()<2) return false;
+	LC_Quadratic lc0(pPoints->circles[0], pPoints->point);
+	LC_Quadratic lc1(pPoints->circles[1], pPoints->point);
 
 	auto const& list=LC_Quadratic::getIntersection(lc0,lc1);
 	pPoints->centers.clear();
@@ -135,8 +136,8 @@ bool RS_ActionDrawCircleTan2_1P::getCenters()
 		auto ds=vp.distanceTo(pPoints->point)-RS_TOLERANCE;
         bool validBranch(true);
         for(int j=0;j<2;j++){
-            if(circles[j]->rtti()==RS2::EntityCircle||circles[j]->rtti()==RS2::EntityArc){
-                if( vp.distanceTo(circles[j]->getCenter()) <= ds) {
+            if(pPoints->circles[j]->rtti()==RS2::EntityCircle||pPoints->circles[j]->rtti()==RS2::EntityArc){
+                if( vp.distanceTo(pPoints->circles[j]->getCenter()) <= ds) {
                     validBranch=false;
                     break;
                 }
@@ -182,7 +183,7 @@ RS_Entity* RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent* e) {
     RS_Entity*  en = catchEntity(e,enTypeList, RS2::ResolveAll);
 	if (!en) return ret;
 	if (!en->isVisible()) return ret;
-	for(auto p: circles){
+	for(auto p: pPoints->circles){
 		if(p && en->getId() == p->getId()) return ret; //do not pull in the same line again
     }
 	if(en->getParent() && en->getParent()->ignoredOnModification()){
@@ -199,12 +200,12 @@ void RS_ActionDrawCircleTan2_1P::mouseReleaseEvent(QMouseEvent* e) {
         case SetCircle1:
         case SetCircle2:
         {
-            circles.resize(getStatus());
+            pPoints->circles.resize(getStatus());
             RS_AtomicEntity*  en = static_cast<RS_AtomicEntity*>(catchCircle(e));
 			if (!en) return;
 //            circle = static_cast<RS_AtomicEntity*>(en);
             en->setHighlighted(true);
-			circles.push_back(en);
+			pPoints->circles.push_back(en);
             graphicView->redraw(RS2::RedrawDrawing);
             setStatus(getStatus()+1);
         }

@@ -27,6 +27,7 @@
 #ifndef RS_ACTIONDIMLEADER_H
 #define RS_ACTIONDIMLEADER_H
 
+#include<memory>
 #include "rs_previewactioninterface.h"
 
 class RS_Leader;
@@ -76,8 +77,8 @@ protected:
 	/**
 	 * Points set so far.
 	 */
-	std::vector<RS_Vector> points;
-
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif
