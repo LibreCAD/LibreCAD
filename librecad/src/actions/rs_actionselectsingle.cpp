@@ -83,10 +83,11 @@ void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         //need to finish the parent RS_ActionSelect as well, bug#3437138
             //need to check actionSelect is set, bug#3437138
+        init(getStatus()-1);
         if(actionSelect) {
             actionSelect->requestFinish(false);
+            actionSelect->finish();
         }
-        init(getStatus()-1);
     } else {
         if(entityTypeList.size()) {
 //            std::cout<<"RS_ActionSelectSingle::mouseReleaseEvent(): entityTypeList->size()="<< entityTypeList->size()<<std::endl;
