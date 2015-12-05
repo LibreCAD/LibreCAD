@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
 #include "rs_block.h"
 
 #include "rs_graphic.h"
@@ -116,4 +116,10 @@ void RS_Block::setModified(bool m) {
         p->setModified(m);
     }
     modified = m;
+}
+
+std::ostream& operator << (std::ostream& os, const RS_Block& b) {
+    os << " name: " << b.getName().toLatin1().data() << "\n";
+    os << " entities: " << (RS_EntityContainer&)b << "\n";
+    return os;
 }

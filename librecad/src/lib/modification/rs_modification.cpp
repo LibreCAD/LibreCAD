@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<cmath>
 #include "rs_modification.h"
 
 #include "rs_arc.h"

@@ -25,7 +25,7 @@
 **********************************************************************/
 
 #include "rs_actiondrawlinerelangle.h"
-
+#include<cmath>
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_dialogfactory.h"

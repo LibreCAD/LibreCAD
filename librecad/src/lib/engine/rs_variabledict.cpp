@@ -24,7 +24,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-
+#include<iostream>
 #include <QString>
 #include "rs_variabledict.h"
 #include "rs_debug.h"

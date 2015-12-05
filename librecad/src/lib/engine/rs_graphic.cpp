@@ -24,6 +24,8 @@
 **
 **********************************************************************/
 
+#include <iostream>
+#include <cmath>
 #include <QDir>
 #include <QDebug>
 

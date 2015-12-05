@@ -24,7 +24,8 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
+#include<cmath>
 #include "rs_solid.h"
 
 #include "rs_line.h"

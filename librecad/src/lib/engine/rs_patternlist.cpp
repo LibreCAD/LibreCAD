@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
 #include "rs_patternlist.h"
 
 #include "rs_system.h"

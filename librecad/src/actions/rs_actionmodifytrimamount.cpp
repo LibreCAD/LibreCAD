@@ -24,8 +24,8 @@
 **
 **********************************************************************/
 
+#include<cmath>
 #include "rs_actionmodifytrimamount.h"
-
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_dialogfactory.h"

@@ -44,10 +44,7 @@ public:
     }
 
     friend std::ostream& operator << (std::ostream& os,
-                                      const RS_LeaderData& /*ld*/) {
-        os << "(Leader)";
-        return os;
-    }
+                                      const RS_LeaderData& /*ld*/); 
 
         /** true: leader has an arrow head. false: no arrow. */
         bool arrowHead;

@@ -27,9 +27,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <vector>
 #include "rs_atomicentity.h"
-#include "rs_linetypepattern.h"
 
 class QPolygonF;
+struct RS_LineTypePattern;
 
 /**
  * Holds the data that defines a line.

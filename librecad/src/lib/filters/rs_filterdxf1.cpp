@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-
+#include<cstdlib>
 #include "rs_filterdxfrw.h"
 #include "rs_filterdxf1.h"
 

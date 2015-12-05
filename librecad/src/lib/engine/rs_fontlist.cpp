@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <iostream>
 #include <QHash>
 #include "rs_fontlist.h"
 #include "rs_debug.h"

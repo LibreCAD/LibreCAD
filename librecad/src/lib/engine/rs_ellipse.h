@@ -243,7 +243,7 @@ public:
  * @return line integral \oint x dy along the entity
  * \oint x dy = Cx y + \frac{1}{4}((a^{2}+b^{2})sin(2a)cos^{2}(t)-ab(2sin^{2}(a)sin(2t)-2t-sin(2t)))
  */
-	virtual double areaLineIntegral() const;
+	virtual double areaLineIntegral() const override;
 
 protected:
     RS_EllipseData data;

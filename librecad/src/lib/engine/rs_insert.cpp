@@ -24,7 +24,8 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
+#include<cmath>
 #include "rs_insert.h"
 
 #include "rs_arc.h"

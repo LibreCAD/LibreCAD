@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<cmath>
 #include<QPolygon>
 #include "rs_pen.h"
 #include "rs_color.h"

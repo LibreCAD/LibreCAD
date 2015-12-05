@@ -23,6 +23,8 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include <iostream>
+#include <cmath>
 #include <memory>
 #include <QPainterPath>
 #include <QBrush>

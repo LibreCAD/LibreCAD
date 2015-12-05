@@ -24,7 +24,8 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
+#include<cmath>
 #include "rs_font.h"
 #include "rs_mtext.h"
 

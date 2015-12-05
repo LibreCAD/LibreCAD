@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-
+#include<cmath>
 #include <QString>
 #include <QFileInfo>
 #include "rs_creation.h"

@@ -253,7 +253,7 @@ m0 x + m1 y + m2 =0
      * @return line integral \oint x dy along the entity
      * \oint x dy = c_x r \sin t + \frac{1}{4}r^2\sin 2t +  \frac{1}{2}r^2 t
      */
-    virtual double areaLineIntegral() const;
+    virtual double areaLineIntegral() const override;
 
 protected:
     RS_ArcData data;

@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<iostream>
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_dimension.h"
