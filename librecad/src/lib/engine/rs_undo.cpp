@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
 #include "qc_applicationwindow.h"
 #include "rs_undocycle.h"
 #include "rs_undo.h"

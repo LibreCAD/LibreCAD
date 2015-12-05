@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <iostream>
 #include <cmath>
 #include "rs_dimradial.h"
 #include "rs_line.h"

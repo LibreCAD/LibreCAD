@@ -25,7 +25,8 @@
 **
 **********************************************************************/
 
-#include <climits>
+#include<climits>
+#include<cmath>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QAction>

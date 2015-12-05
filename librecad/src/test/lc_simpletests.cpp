@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include <fstream>
 #include <QMenuBar>
 #include "lc_simpletests.h"

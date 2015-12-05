@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<iostream>
 #include <QImage>
 #include "rs_image.h"
 #include "rs_line.h"

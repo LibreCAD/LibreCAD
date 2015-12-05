@@ -23,7 +23,7 @@
 **
 **********************************************************************/
 
-
+#include<cstdlib>
 #include <QStringList>
 #include <QTextCodec>
 

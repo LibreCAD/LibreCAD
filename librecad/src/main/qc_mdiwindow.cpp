@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<iostream>
 #include "qc_mdiwindow.h"
 
 #if QT_VERSION >= 0x050000

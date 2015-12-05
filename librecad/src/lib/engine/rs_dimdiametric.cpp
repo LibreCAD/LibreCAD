@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
 #include "rs_dimdiametric.h"
 #include "rs_mtext.h"
 #include "rs_solid.h"

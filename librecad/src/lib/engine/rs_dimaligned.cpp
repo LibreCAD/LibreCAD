@@ -24,7 +24,8 @@
 **
 **********************************************************************/
 
-
+#include <iostream>
+#include <cmath>
 #include "rs_dimaligned.h"
 #include "rs_line.h"
 

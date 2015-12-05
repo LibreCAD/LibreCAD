@@ -20,7 +20,7 @@
 ** 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 **
 **********************************************************************/
-
+#include<cmath>
 #include "lc_makercamsvg.h"
 
 #include "lc_xmlwriterinterface.h"

@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
 #include "rs_overlaybox.h"
 
 #include "rs_debug.h"
@@ -81,6 +81,13 @@ void RS_OverlayBox::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pa
 std::ostream& operator << (std::ostream& os, const RS_OverlayBox& l) {
     os << " Line: " << l.getData() << "\n";
     return os;
+}
+
+std::ostream& operator << (std::ostream& os, const RS_OverlayBoxData& ld) {
+        os << "(" << ld.corner1 <<
+              "/" << ld.corner2 <<
+              ")";
+        return os;
 }
 
 

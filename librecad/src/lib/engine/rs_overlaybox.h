@@ -48,12 +48,7 @@ public:
 
     friend class RS_OverlayBox;
 
-    friend std::ostream& operator << (std::ostream& os, const RS_OverlayBoxData& ld) {
-        os << "(" << ld.corner1 <<
-              "/" << ld.corner2 <<
-              ")";
-        return os;
-    }
+    friend std::ostream& operator << (std::ostream& os, const RS_OverlayBoxData& ld);
 
 public:
     RS_Vector corner1;

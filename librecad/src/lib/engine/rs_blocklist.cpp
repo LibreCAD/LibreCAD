@@ -25,6 +25,7 @@
 **********************************************************************/
 
 #include <set>
+#include <iostream>
 #include <QString>
 #include <QRegExp>
 #include "rs_debug.h"

@@ -24,7 +24,8 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
+#include<cmath>
 #include "rs_dimangular.h"
 #include "rs_math.h"
 
