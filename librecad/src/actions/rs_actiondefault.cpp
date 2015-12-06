@@ -57,11 +57,6 @@ RS_ActionDefault::RS_ActionDefault(RS_EntityContainer& container,
 
 RS_ActionDefault::~RS_ActionDefault() = default;
 
-QAction* RS_ActionDefault::createGUIAction(RS2::ActionType /*type*/,
-                                           QObject* /*parent*/) {
-	return nullptr;
-}
-
 
 void RS_ActionDefault::init(int status) {
     RS_DEBUG->print("RS_ActionDefault::init");
@@ -305,7 +300,8 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
 
 			bool cross = (pPoints->v1.x > pPoints->v2.x);
             RS_Selection s(*container, graphicView);
-			s.selectWindow(pPoints->v1, pPoints->v2, true, cross);
+            bool select = (e->modifiers() & Qt::ShiftModifier) ? false : true;
+			s.selectWindow(pPoints->v1, pPoints->v2, select, cross);
 
             RS_DIALOGFACTORY->updateSelectionWidget(
                         container->countSelected(),container->totalSelectedLength());

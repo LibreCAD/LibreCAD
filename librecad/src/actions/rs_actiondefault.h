@@ -57,8 +57,6 @@ public:
                      RS_GraphicView& graphicView);
 	virtual ~RS_ActionDefault();
 
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
 	virtual void finish(bool /*updateTB*/ = true ){}
 
     virtual void init(int status=0);
