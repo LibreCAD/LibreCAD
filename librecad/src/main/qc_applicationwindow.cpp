@@ -613,7 +613,6 @@ void QC_ApplicationWindow::initMDI() {
     layout->setContentsMargins ( 0, 0, 0, 0 );
     mdiAreaCAD = new QMdiArea(this);
     activedMdiSubWindow=nullptr;
-    mdiAreaTab = false;
     layout->addWidget(mdiAreaCAD);
 //    mdiAreaCAD->setScrollBarsEnabled(false);
     mdiAreaCAD->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
@@ -627,11 +626,9 @@ void QC_ApplicationWindow::initMDI() {
 #endif
 
     RS_SETTINGS->beginGroup("/Defaults");
-
     if (RS_SETTINGS->readNumEntry("/TabMode", 0))
     {
         mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
-        mdiAreaTab = true;
     }
     RS_SETTINGS->endGroup();
 
@@ -1054,7 +1051,7 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
 
     if ( mdiAreaCAD->subWindowList().isEmpty()) {
         return; //no sub-window to show
-    } else if( mdiAreaTab) {
+    } else if (mdiAreaCAD->viewMode() == QMdiArea::TabbedView) {
         windowsMenu->addAction( tr("Su&b-Window mode"), this, SLOT(slotToggleTab()));
     } else {
         windowsMenu->addAction( tr("Ta&b mode"), this, SLOT(slotToggleTab()));
@@ -1268,9 +1265,12 @@ void QC_ApplicationWindow::slotTileVertical() {
     mdiAreaCAD->activeSubWindow()->raise();
 }
 
-void QC_ApplicationWindow::slotToggleTab() {
-    mdiAreaTab = ! mdiAreaTab;
-    if(mdiAreaTab)
+/**
+ * toggles between subwindow and tab mode for the MdiArea
+ */
+void QC_ApplicationWindow::slotToggleTab()
+{
+    if (mdiAreaCAD->viewMode() == QMdiArea::SubWindowView)
     {
         mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
         QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
@@ -1293,6 +1293,7 @@ void QC_ApplicationWindow::slotToggleTab() {
         slotCascade();
     }
 }
+
 /**
  * Called when something changed in the pen tool bar
  * (e.g. color, width, style).
