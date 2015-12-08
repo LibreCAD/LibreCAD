@@ -89,6 +89,7 @@
 #include "lc_actionfactory.h"
 #include "lc_dockwidget.h"
 #include "lc_customtoolbar.h"
+#include "lc_centralwidget.h"
 
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
@@ -227,8 +228,22 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating scripter: OK");
     #endif
 
-    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init MDI");
-    initMDI();
+    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating LC_CentralWidget");
+
+    LC_CentralWidget* central = new LC_CentralWidget(this);
+
+    mdiAreaCAD = central->getMdiArea();
+
+    setCentralWidget(central);
+
+    RS_SETTINGS->beginGroup("/Defaults");
+    if (RS_SETTINGS->readNumEntry("/TabMode", 0))
+        mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
+    RS_SETTINGS->endGroup();
+
+    connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
+            this, SLOT(slotWindowActivated(QMdiSubWindow*)));
+
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init view");
     initView();
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: menus_and_toolbars");
@@ -600,46 +615,6 @@ void 	QC_ApplicationWindow::dragEnterEvent(QDragEnterEvent * event)
     }
 }
 
-/**
- * Initializes the MDI mdiAreaCAD.
- */
-void QC_ApplicationWindow::initMDI() {
-    RS_DEBUG->print("QC_ApplicationWindow::initMDI() begin");
-
-    QFrame *vb = new QFrame(this);
-    vb->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    QVBoxLayout *layout = new QVBoxLayout;
-    vb->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-    layout->setContentsMargins ( 0, 0, 0, 0 );
-    mdiAreaCAD = new QMdiArea(this);
-    activedMdiSubWindow=nullptr;
-    layout->addWidget(mdiAreaCAD);
-//    mdiAreaCAD->setScrollBarsEnabled(false);
-    mdiAreaCAD->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    mdiAreaCAD->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    mdiAreaCAD->setFocusPolicy(Qt::ClickFocus);
-    mdiAreaCAD->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    mdiAreaCAD->setActivationOrder(QMdiArea::ActivationHistoryOrder);
-#if QT_VERSION >= 0x040800
-    mdiAreaCAD->setTabsMovable(true);
-    mdiAreaCAD->setTabsClosable(true);
-#endif
-
-    RS_SETTINGS->beginGroup("/Defaults");
-    if (RS_SETTINGS->readNumEntry("/TabMode", 0))
-    {
-        mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
-    }
-    RS_SETTINGS->endGroup();
-
-    vb->setLayout(layout);
-    setCentralWidget(vb);
-    connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
-            this, SLOT(slotWindowActivated(QMdiSubWindow*)));
-
-    RS_DEBUG->print("QC_ApplicationWindow::initMDI() end");
-
-}
 /**
  * @return Pointer to the currently active MDI Window or nullptr if no
  * MDI Window is active.

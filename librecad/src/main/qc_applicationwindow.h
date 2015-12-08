@@ -88,7 +88,6 @@ public:
     void initSettings();
     void restoreDocks();
     void storeSettings();
-    void initMDI();
     void initView();
 
     bool queryExit(bool force);

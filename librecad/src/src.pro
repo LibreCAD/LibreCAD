@@ -693,7 +693,8 @@ HEADERS += ui/lc_actionfactory.h \
     ui/forms/qg_splineoptions.h \
     ui/forms/qg_textoptions.h \
     ui/forms/qg_trimamountoptions.h \
-    ui/forms/qg_widgetpen.h
+    ui/forms/qg_widgetpen.h \
+    ui/lc_centralwidget.h
 
 SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
@@ -777,7 +778,8 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/forms/qg_splineoptions.cpp \
     ui/forms/qg_textoptions.cpp \
     ui/forms/qg_trimamountoptions.cpp \
-    ui/forms/qg_widgetpen.cpp
+    ui/forms/qg_widgetpen.cpp \
+    ui/lc_centralwidget.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_arcoptions.ui \
