@@ -1424,7 +1424,17 @@ double RS_EntityContainer::getDistanceToPoint(const RS_Vector& coord,
 
             RS_DEBUG->print("entity: getDistanceToPoint: OK");
 
-            if (curDist<minDist) {
+			/*
+			 * By using '<=', we will prefer the *last* item in the container if there are multiple
+			 * entities that are *exactly* the same distance away, which should tend to be the one
+			 * drawn most recently, and the one most likely to be visible (as it is also the order
+			 * that the software draws the entities). This makes a difference when one entity is
+			 * drawn directly over top of another, and it's reasonable to assume that humans will
+			 * tend to want to reference entities that they see or have recently drawn as opposed
+			 * to deeper more forgotten and invisible ones...
+			 */
+			if (curDist<=minDist)
+			{
                 switch(level){
                 case RS2::ResolveAll:
                 case RS2::ResolveAllButTextImage:
