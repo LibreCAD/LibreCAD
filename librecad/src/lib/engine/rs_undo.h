@@ -29,7 +29,7 @@
 #define RS_UNDO_H
 
 #include <memory>
-#include <QList>
+#include <vector>
 
 class RS_UndoCycle;
 class RS_Undoable;
@@ -49,8 +49,8 @@ public:
     virtual bool undo();
     virtual bool redo();
 
-	virtual std::shared_ptr<RS_UndoCycle> getUndoCycle();
-	virtual std::shared_ptr<RS_UndoCycle> getRedoCycle();
+//	virtual std::shared_ptr<RS_UndoCycle> getUndoCycle();
+//	virtual std::shared_ptr<RS_UndoCycle> getRedoCycle();
 
     virtual int countUndoCycles();
     virtual int countRedoCycles();
@@ -70,17 +70,17 @@ public:
 	  *\brief enable/disable redo/undo buttons in main application window
 	  *\author: Dongxu Li
       **/
-    virtual void setGUIButtons();
+	void setGUIButtons() const;
 
     friend std::ostream& operator << (std::ostream& os, RS_Undo& a);
 
     static bool test();
 
-protected:
+private:
 
 	void addUndoCycle(std::shared_ptr<RS_UndoCycle> const& i);
     //! List of undo list items. every item is something that can be undone.
-	QList<std::shared_ptr<RS_UndoCycle>> undoList;
+	std::vector<std::shared_ptr<RS_UndoCycle>> undoList;
 
     /**
      * Index that points to the current position in the undo list.
