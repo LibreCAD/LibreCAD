@@ -44,6 +44,7 @@
 #include "rs_modification.h"
 #include "rs_information.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 /**
  * Default constructor.

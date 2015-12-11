@@ -31,8 +31,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_polyline.h"
-
-
+#include "rs_debug.h"
 
 RS_ActionOrder::RS_ActionOrder(RS_EntityContainer& container,
         RS_GraphicView& graphicView, RS2::ActionType type)

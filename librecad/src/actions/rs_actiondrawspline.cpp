@@ -35,7 +35,7 @@
 #include "rs_commandevent.h"
 #include "rs_point.h"
 #include "rs_coordinateevent.h"
-
+#include "rs_debug.h"
 
 RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
 										 RS_GraphicView& graphicView)

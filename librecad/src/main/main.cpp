@@ -46,6 +46,7 @@ QSplashScreen *splash=nullptr;
 #include "qg_dlginitial.h"
 
 #include "qc_applicationwindow.h"
+#include "rs_debug.h"
 
 #ifndef QC_SPLASH_TXTCOL
 # define QC_SPLASH_TXTCOL Qt::black

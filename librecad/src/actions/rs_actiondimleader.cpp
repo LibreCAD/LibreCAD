@@ -34,6 +34,7 @@
 #include "rs_leader.h"
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 
 RS_ActionDimLeader::RS_ActionDimLeader(RS_EntityContainer& container,

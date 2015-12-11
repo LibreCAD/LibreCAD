@@ -33,8 +33,7 @@
 #include "rs_arc.h"
 #include "rs_line.h"
 #include "rs_polyline.h"
-
-
+#include "rs_debug.h"
 
 RS_ActionPolylineSegment::RS_ActionPolylineSegment(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

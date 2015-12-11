@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_circle.h"
 #include "rs_ellipse.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.

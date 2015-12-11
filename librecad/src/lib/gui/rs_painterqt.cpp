@@ -27,6 +27,7 @@
 #include<cmath>
 #include "rs_painterqt.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 namespace {
 /**

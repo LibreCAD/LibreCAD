@@ -31,6 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_circle.h"
 #include "lc_quadratic.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 namespace {
 auto enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};

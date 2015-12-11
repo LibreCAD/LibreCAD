@@ -28,6 +28,7 @@
 #include "rs_actiondrawspline.h"
 #include "lc_actiondrawsplinepoints.h"
 #include "rs_settings.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_SplineOptions as a child of 'parent', with the

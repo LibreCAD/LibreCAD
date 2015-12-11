@@ -34,6 +34,7 @@
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
 #include "rs_modification.h"
+#include "rs_debug.h"
 
 RS_ActionModifyMoveRotate::RS_ActionModifyMoveRotate(
     RS_EntityContainer& container,

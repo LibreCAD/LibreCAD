@@ -30,8 +30,7 @@
 #include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_selection.h"
-
-
+#include "rs_debug.h"
 
 RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
 											 RS_GraphicView& graphicView,

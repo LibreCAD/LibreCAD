@@ -32,6 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_creation.h"
 #include "rs_line.h"
+#include "rs_debug.h"
 
 namespace{
 auto circleType={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse};

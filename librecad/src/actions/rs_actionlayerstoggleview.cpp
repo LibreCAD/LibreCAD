@@ -28,8 +28,7 @@
 
 #include <QAction>
 #include "rs_graphic.h"
-
-
+#include "rs_debug.h"
 
 RS_ActionLayersToggleView::RS_ActionLayersToggleView(
     RS_EntityContainer& container,

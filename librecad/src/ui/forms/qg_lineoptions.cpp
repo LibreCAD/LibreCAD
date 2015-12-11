@@ -26,6 +26,7 @@
 #include "qg_lineoptions.h"
 
 #include "rs_actiondrawline.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_LineOptions as a child of 'parent', with the

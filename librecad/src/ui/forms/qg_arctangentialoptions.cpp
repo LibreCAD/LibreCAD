@@ -29,6 +29,7 @@
 
 #include "rs_settings.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"

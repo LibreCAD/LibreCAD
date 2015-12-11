@@ -27,6 +27,7 @@
 
 #include "rs_actiondrawlinepolygon.h"
 #include "rs_settings.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_LinePolygonOptions as a child of 'parent', with the

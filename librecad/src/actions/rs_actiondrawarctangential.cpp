@@ -35,6 +35,7 @@
 #include "ui_qg_arctangentialoptions.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 
 RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(RS_EntityContainer& container,

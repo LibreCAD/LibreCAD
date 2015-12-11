@@ -33,6 +33,7 @@
 #include "rs_commandevent.h"
 #include "rs_creation.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 RS_ActionDrawLinePolygonCorCor::RS_ActionDrawLinePolygonCorCor(
     RS_EntityContainer& container,

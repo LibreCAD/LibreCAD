@@ -32,6 +32,7 @@
 #include "rs_graphic.h"
 #include "rs_layer.h"
 #include "qg_layerwidget.h"
+#include "rs_debug.h"
 
 RS_ActionLayersEdit::RS_ActionLayersEdit(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

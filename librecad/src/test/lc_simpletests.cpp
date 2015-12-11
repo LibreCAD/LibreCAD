@@ -23,6 +23,7 @@
 #include "rs_point.h"
 #include "rs_text.h"
 #include "rs_entitycontainer.h"
+#include "rs_debug.h"
 
 LC_SimpleTests::LC_SimpleTests(QWidget *parent):
 	QObject(parent)

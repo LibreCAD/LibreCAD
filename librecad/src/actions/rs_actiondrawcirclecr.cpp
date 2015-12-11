@@ -34,6 +34,7 @@
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.

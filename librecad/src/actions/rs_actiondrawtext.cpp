@@ -34,6 +34,7 @@
 #include "rs_line.h"
 #include "rs_text.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 RS_ActionDrawText::RS_ActionDrawText(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)

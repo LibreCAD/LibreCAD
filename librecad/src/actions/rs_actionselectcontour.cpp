@@ -32,8 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_selection.h"
 #include "rs_selection.h"
-
-
+#include "rs_debug.h"
 
 RS_ActionSelectContour::RS_ActionSelectContour(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

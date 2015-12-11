@@ -165,6 +165,7 @@
 #include "qg_mainwindowinterface.h"
 #include "qg_snaptoolbar.h"
 #include "qc_applicationwindow.h"
+#include "rs_debug.h"
 
 /**
  * Constructor

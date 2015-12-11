@@ -31,7 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
-
+#include "rs_debug.h"
 
 RS_ActionLayersToggleLock::RS_ActionLayersToggleLock(
         RS_EntityContainer& container,

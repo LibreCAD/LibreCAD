@@ -33,6 +33,7 @@
 #include "rs_clipboard.h"
 #include "rs_modification.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.

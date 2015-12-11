@@ -28,8 +28,7 @@
 #include "qc_applicationwindow.h"
 #include "rs_undocycle.h"
 #include "rs_undo.h"
-
-
+#include "rs_debug.h"
 
 /**
  * Default constructor.
@@ -38,10 +37,6 @@ RS_Undo::RS_Undo():
 	undoPointer(-1)
 {
 }
-
-RS_Undo::~RS_Undo() {
-}
-
 
 /**
  * @return Number of Cycles that can be undone.

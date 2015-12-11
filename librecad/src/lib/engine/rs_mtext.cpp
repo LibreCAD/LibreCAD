@@ -32,6 +32,7 @@
 #include "rs_fontlist.h"
 #include "rs_insert.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 RS_MTextData::RS_MTextData(const RS_Vector& _insertionPoint,
 			double _height,

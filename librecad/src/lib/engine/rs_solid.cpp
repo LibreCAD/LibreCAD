@@ -32,6 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 #include "rs_information.h"
+#include "rs_debug.h"
 
 RS_SolidData::RS_SolidData():
 	corner{{RS_Vector(false), RS_Vector(false), RS_Vector(false), RS_Vector(false)}}

@@ -28,6 +28,7 @@
 
 #include <QAction>
 #include "rs_graphic.h"
+#include "rs_debug.h"
 
 RS_ActionFileSaveAs::RS_ActionFileSaveAs(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

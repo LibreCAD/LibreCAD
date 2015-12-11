@@ -44,7 +44,7 @@ class RS_Undoable;
 class RS_Undo {
 public:
     RS_Undo();
-	virtual ~RS_Undo();
+	virtual ~RS_Undo() = default;
 
     virtual bool undo();
     virtual bool redo();

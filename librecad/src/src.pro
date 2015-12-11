@@ -323,7 +323,8 @@ SOURCES += \
     lib/engine/rs_undocycle.cpp \
 	ui/qg_commandhistory.cpp \
     lib/engine/rs.cpp \
-    ui/forms/lc_dlgsplinepoints.cpp
+    ui/forms/lc_dlgsplinepoints.cpp \
+    lib/engine/rs_flags.cpp
 
 # ################################################################################
 # Command

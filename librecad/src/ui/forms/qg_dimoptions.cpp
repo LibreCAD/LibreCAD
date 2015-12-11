@@ -26,6 +26,7 @@
 #include "qg_dimoptions.h"
 
 #include "rs_settings.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_DimOptions as a child of 'parent', with the

@@ -30,6 +30,7 @@
 #include "rs_solid.h"
 #include "rs_graphic.h"
 #include "rs_units.h"
+#include "rs_debug.h"
 
 RS_DimDiametricData::RS_DimDiametricData():
 	definitionPoint(false),

@@ -48,6 +48,7 @@
 #include "rs_vector.h"
 #include "rs_information.h"
 #include "lc_quadratic.h"
+#include "rs_debug.h"
 
 /**
  * Default constructor.

@@ -43,6 +43,7 @@
 #include "rs_staticgraphicview.h"
 #include "rs_actionlibraryinsert.h"
 #include "qg_actionhandler.h"
+#include "rs_debug.h"
 
 #if QT_VERSION < 0x040400
 #include "emu_qt44.h"

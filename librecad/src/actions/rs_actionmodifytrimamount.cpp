@@ -33,6 +33,7 @@
 #include "rs_commandevent.h"
 #include "rs_modification.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(
 		RS_EntityContainer& container,

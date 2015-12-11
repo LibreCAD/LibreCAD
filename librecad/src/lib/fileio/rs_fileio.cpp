@@ -37,6 +37,7 @@
 #include "rs_filterjww.h"
 #include "rs_filterlff.h"
 #include "rs_filterdxfrw.h"
+#include "rs_debug.h"
 
 /**
  * Calls the import method of the filter responsible for the format

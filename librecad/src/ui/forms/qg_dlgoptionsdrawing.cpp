@@ -33,6 +33,7 @@
 #include "rs_settings.h"
 #include "rs_math.h"
 #include "rs_font.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_DlgOptionsDrawing as a child of 'parent', with the

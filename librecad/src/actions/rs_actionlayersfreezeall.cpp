@@ -28,6 +28,7 @@
 
 #include <QAction>
 #include "rs_graphic.h"
+#include "rs_debug.h"
 
 RS_ActionLayersFreezeAll::RS_ActionLayersFreezeAll(bool freeze,
         RS_EntityContainer& container,

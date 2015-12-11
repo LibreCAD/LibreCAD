@@ -23,11 +23,10 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-
-
 #ifndef RS_UNDOABLE_H
 #define RS_UNDOABLE_H
 
+#include "rs.h"
 #include "rs_flags.h"
 
 class RS_UndoCycle;
@@ -43,15 +42,19 @@ class RS_UndoCycle;
  */
 class RS_Undoable : public RS_Flags {
 public:
-    RS_Undoable();
+	RS_Undoable() = default;
     virtual ~RS_Undoable();
+	RS_Undoable(RS_Undoable const&);
+	RS_Undoable& operator = (RS_Undoable const&);
+	RS_Undoable(RS_Undoable &&);
+	RS_Undoable& operator = (RS_Undoable &&);
 
-    /**
+	/**
      * Runtime type identification for undoables.
      * Note that this is voluntarily. The default implementation 
      * returns RS2::UndoableUnknown.
      */
-    virtual RS2::UndoableType undoRtti() {
+	virtual RS2::UndoableType undoRtti() const {
         return RS2::UndoableUnknown;
     }
 
@@ -69,7 +72,7 @@ public:
     //friend std::ostream& operator << (std::ostream& os, RS_Undoable& a);
 
 private:
-    RS_UndoCycle* cycle;
+	RS_UndoCycle* cycle = nullptr;
 };
 
 #endif

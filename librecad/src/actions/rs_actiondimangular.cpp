@@ -35,6 +35,7 @@
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 RS_ActionDimAngular::RS_ActionDimAngular(
     RS_EntityContainer& container,

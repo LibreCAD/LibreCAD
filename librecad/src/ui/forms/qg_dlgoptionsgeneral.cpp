@@ -31,6 +31,7 @@
 #include "rs_settings.h"
 #include "rs_units.h"
 #include "qg_filedialog.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_DlgOptionsGeneral as a child of 'parent', with the

@@ -34,6 +34,7 @@
 #include "rs_creation.h"
 #include "rs_line.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 RS_ActionDrawLineBisector::RS_ActionDrawLineBisector(
     RS_EntityContainer& container,

@@ -37,6 +37,7 @@
 #include <QLineEdit>
 #include "qg_actionhandler.h"
 #include "qc_applicationwindow.h"
+#include "rs_debug.h"
 
 QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
     layerVisible = QIcon(":/ui/visibleblock.png");

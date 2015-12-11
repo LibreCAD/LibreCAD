@@ -38,6 +38,7 @@
 #include "rs_system.h"
 #include "rs_block.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 
 /**

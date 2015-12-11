@@ -91,7 +91,7 @@ public:
      * Identify all entities as undoable entities.
      * @return RS2::UndoableEntity
      */
-    virtual RS2::UndoableType undoRtti() {
+	virtual RS2::UndoableType undoRtti() const override {
         return RS2::UndoableEntity;
     }
 

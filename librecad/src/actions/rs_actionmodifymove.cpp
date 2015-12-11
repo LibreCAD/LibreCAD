@@ -32,6 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_coordinateevent.h"
 #include "rs_modification.h"
+#include "rs_debug.h"
 
 RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

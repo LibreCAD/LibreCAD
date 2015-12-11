@@ -40,6 +40,8 @@
 #include "rs_math.h"
 #include "lc_hyperbola.h"
 #include "lc_quadratic.h"
+#include "rs_debug.h"
+
 RS_CircleData::RS_CircleData(const RS_Vector& _center,
 			  double _radius):
 	center(_center)

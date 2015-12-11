@@ -2,6 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015 Dongxu Li (dongxuli2011@gmail.com)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -24,42 +25,40 @@
 **
 **********************************************************************/
 
-#include "rs_actionlayersremove.h"
+#include "rs_flags.h"
 
-#include <QAction>
-#include "rs_dialogfactory.h"
-#include "rs_graphic.h"
-#include "qg_layerwidget.h"
-#include "rs_debug.h"
-
-RS_ActionLayersRemove::RS_ActionLayersRemove(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Remove Layer", container, graphicView) {}
-
-
-QAction* RS_ActionLayersRemove::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	return new QAction(QIcon(":/ui/layerremove.png"), tr("&Remove Layer"), nullptr);
+/** Constructor with initialisation to the given flags. */
+RS_Flags::RS_Flags(unsigned f):
+	flags(f)
+{
 }
 
-void RS_ActionLayersRemove::trigger() {
-    RS_DEBUG->print("RS_ActionLayersRemove::trigger");
 
-    if (graphic) {
-        RS_Layer* layer =
-            RS_DIALOGFACTORY->requestLayerRemovalDialog(graphic->getLayerList());
-
-        // Now remove the layer from the layer list:
-		graphic->removeLayer(layer);
-
-		graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
-    }
-    finish(false);
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+unsigned RS_Flags::getFlags() const {
+	return flags;
 }
 
-void RS_ActionLayersRemove::init(int status) {
-    RS_ActionInterface::init(status);
-    trigger();
+void RS_Flags::resetFlags() {
+	flags=0;
 }
 
-// EOF
+void RS_Flags::setFlags(unsigned f) {
+	flags=f;
+}
+
+void RS_Flags::setFlag(unsigned f) {
+	flags |= f;
+}
+
+void RS_Flags::delFlag(unsigned f) {
+	flags &= ~f;
+}
+
+void RS_Flags::toggleFlag(unsigned f) {
+	flags ^= f;
+}
+
+bool RS_Flags::getFlag(unsigned f) const {
+	return flags&f;
+}
+

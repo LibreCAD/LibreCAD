@@ -48,6 +48,7 @@
 #include <QStringList>
 
 #include <qtextcodec.h>
+#include "rs_debug.h"
 
 /**
  * Default constructor.

@@ -111,6 +111,7 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
 #endif
 
 #include <QSplashScreen>
+#include "rs_debug.h"
     extern QSplashScreen *splash;
 
 

@@ -29,24 +29,19 @@
 
 #include "rs_undocycle.h"
 
-
-/**
- * Default constructor.
- */
-RS_Undoable::RS_Undoable() {
-    cycle = NULL;
-}
-
-
+//undocycle must be explicitly set
+RS_Undoable::RS_Undoable(RS_Undoable const&) = default;
+RS_Undoable& RS_Undoable::operator = (RS_Undoable const&) = default;
+RS_Undoable::RS_Undoable(RS_Undoable &&) = default;
+RS_Undoable& RS_Undoable::operator = (RS_Undoable &&) = default;
 
 /**
  * Destructor. Makes sure that this undoable is removed from 
  * its undo cycle before it is deleted.
  */
 RS_Undoable::~RS_Undoable() {
-    if (cycle) {
+	if (cycle)
         cycle->removeUndoable(this);
-    }
 }
 
 
