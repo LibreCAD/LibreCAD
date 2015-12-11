@@ -51,6 +51,7 @@
 #include "intern/qc_actiongetselect.h"
 #include "intern/qc_actiongetent.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 #if QT_VERSION < 0x040500
 #include "emu_qt45.h"

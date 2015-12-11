@@ -37,6 +37,7 @@
 #include "rs_math.h"
 #include  "lc_quadratic.h"
 #include "rs_painterqt.h"
+#include "rs_debug.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h" /* C99 math */

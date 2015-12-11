@@ -33,6 +33,7 @@
 #include "rs_modification.h"
 #include "rs_polyline.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 RS_ActionPolylineDel::RS_ActionPolylineDel(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

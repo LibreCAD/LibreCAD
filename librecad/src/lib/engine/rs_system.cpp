@@ -33,6 +33,7 @@
 #include "rs_settings.h"
 #include "rs_system.h"
 #include "rs.h"
+#include "rs_debug.h"
 
 #if QT_VERSION < 0x040400
 #include "emu_qt44.h"

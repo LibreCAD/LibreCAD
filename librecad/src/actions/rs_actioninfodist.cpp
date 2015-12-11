@@ -34,6 +34,7 @@
 #include "rs_graphic.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 struct RS_ActionInfoDist::Points {
 	RS_Vector point1;

@@ -31,7 +31,6 @@
 #include "dl_codes.h"
 #include "dl_writer_ascii.h"
 
-
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"
@@ -54,6 +53,7 @@
 #include "lc_splinepoints.h"
 #include "rs_system.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 
 /**

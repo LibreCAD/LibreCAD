@@ -34,6 +34,7 @@
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
     RS_EntityContainer& container,

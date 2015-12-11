@@ -39,6 +39,7 @@
 #include "lc_splinepoints.h"
 #include "rs_math.h"
 #include "lc_rect.h"
+#include "rs_debug.h"
 
 /**
  * Default constructor.

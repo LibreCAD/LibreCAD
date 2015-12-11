@@ -30,6 +30,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_selection.h"
 #include "rs_snapper.h"
+#include "rs_debug.h"
 
 
 QC_ActionGetEnt::QC_ActionGetEnt(RS_EntityContainer& container,

@@ -29,6 +29,7 @@
 
 #include "rs_dialogfactory.h"
 #include "rs_graphic.h"
+#include "rs_debug.h"
 
 
 RS_ActionInfoTotalLength::RS_ActionInfoTotalLength(RS_EntityContainer& container,

@@ -32,6 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 struct RS_ActionModifyTrim::Points {
 	RS_Vector limitCoord;

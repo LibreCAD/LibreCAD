@@ -163,6 +163,7 @@
 #include "rs_actionorder.h"
 
 #include "qg_snaptoolbar.h"
+#include "rs_debug.h"
 
 /**
  * Constructor

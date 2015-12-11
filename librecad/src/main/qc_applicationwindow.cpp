@@ -51,6 +51,7 @@
 # include <QPrinter>
 # include <QPrintDialog>
 #endif
+#include <QSplashScreen>
 
 #include "rs_actionprintpreview.h"
 #include "rs_settings.h"
@@ -90,6 +91,7 @@
 #include "lc_dockwidget.h"
 #include "lc_customtoolbar.h"
 #include "lc_centralwidget.h"
+#include "rs_debug.h"
 
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
@@ -101,7 +103,6 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
 # define QC_ABOUT_ICON ":/main/intro_librecad.png"
 #endif
 
-#include <QSplashScreen>
     extern QSplashScreen *splash;
 
 

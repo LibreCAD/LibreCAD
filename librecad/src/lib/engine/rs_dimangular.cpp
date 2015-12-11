@@ -36,6 +36,7 @@
 #include "rs_information.h"
 #include "rs_solid.h"
 #include "rs_mtext.h"
+#include "rs_debug.h"
 
 RS_DimAngularData::RS_DimAngularData():
 	definitionPoint1(false),

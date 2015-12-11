@@ -50,6 +50,7 @@
 #include "rs_mtext.h"
 #include "rs_pen.h"
 #include "qg_graphicview.h"
+#include "rs_debug.h"
 
 int QC_MDIWindow::idCounter = 0;
 

@@ -32,6 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 
 RS_ActionInfoDist2::RS_ActionInfoDist2(RS_EntityContainer& container,

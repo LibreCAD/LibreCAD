@@ -31,6 +31,7 @@
 #include "rs_settings.h"
 
 #include "qc_applicationwindow.h"
+#include "rs_debug.h"
 
 QC_GraphicView::QC_GraphicView(RS_Document* doc, QWidget* parent)
         :QG_GraphicView(parent, "graphicview") {

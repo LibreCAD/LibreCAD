@@ -34,6 +34,7 @@
 #include "rs_math.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 RS_ActionModifyRotate::RS_ActionModifyRotate(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

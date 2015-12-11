@@ -36,6 +36,7 @@
 #include "rs_arc.h"
 #include "rs_line.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 struct RS_ActionDrawPolyline::Points {
 

@@ -34,6 +34,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_quadratic.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 namespace{
 //list of entity types supported by current action

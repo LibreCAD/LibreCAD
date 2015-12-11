@@ -30,6 +30,7 @@
 #include "rs_commands.h"
 #include "rs_dialogfactory.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.

@@ -32,6 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_coordinateevent.h"
 #include "rs_modification.h"
+#include "rs_debug.h"
 
 RS_ActionModifyRotate2::RS_ActionModifyRotate2(
     RS_EntityContainer& container,

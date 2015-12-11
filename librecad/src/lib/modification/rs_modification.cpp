@@ -43,7 +43,7 @@
 #include "rs_layer.h"
 #include "lc_splinepoints.h"
 #include "rs_math.h"
-
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 
 #ifdef EMU_C99

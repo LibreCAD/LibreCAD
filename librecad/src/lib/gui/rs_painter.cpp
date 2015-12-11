@@ -29,6 +29,7 @@
 #include "rs_color.h"
 #include "rs_painter.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 void RS_Painter::createArc(QPolygon& pa,
                              const RS_Vector& cp, double radius,

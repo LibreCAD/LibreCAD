@@ -112,6 +112,7 @@
 #include "qg_snapmiddleoptions.h"
 #include "qg_snapdistoptions.h"
 #include "rs_vector.h"
+#include "rs_debug.h"
 
 #if QT_VERSION < 0x040400
 #include "emu_qt44.h"

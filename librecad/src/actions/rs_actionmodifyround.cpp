@@ -34,6 +34,7 @@
 #include "rs_math.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 namespace{
 auto eType={ RS2::EntityLine , RS2::EntityPolyline , RS2::EntityArc ,

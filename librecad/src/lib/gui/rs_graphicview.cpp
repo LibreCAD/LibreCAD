@@ -45,6 +45,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_layer.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"

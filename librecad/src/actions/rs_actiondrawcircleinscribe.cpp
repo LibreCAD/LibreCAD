@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_circle.h"
 #include "rs_line.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 struct RS_ActionDrawCircleInscribe::Points {
 	RS_CircleData cData;

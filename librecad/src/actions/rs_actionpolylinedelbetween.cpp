@@ -34,6 +34,7 @@
 #include "rs_polyline.h"
 #include "rs_atomicentity.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 struct RS_ActionPolylineDelBetween::Points {
 	RS_Vector nodePoint1;

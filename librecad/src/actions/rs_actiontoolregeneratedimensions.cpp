@@ -31,6 +31,7 @@
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_dimension.h"
+#include "rs_debug.h"
 
 
 

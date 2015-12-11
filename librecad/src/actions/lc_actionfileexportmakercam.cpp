@@ -32,6 +32,7 @@
 #include "lc_makercamsvg.h"
 #include "rs_settings.h"
 #include "lc_xmlwriterqxmlstreamwriter.h"
+#include "rs_debug.h"
 
 LC_ActionFileExportMakerCam::LC_ActionFileExportMakerCam(RS_EntityContainer& container,
                                                          RS_GraphicView& graphicView)

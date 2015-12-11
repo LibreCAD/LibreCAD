@@ -33,6 +33,7 @@
 #include "rs_selection.h"
 #include "rs_overlaybox.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 struct RS_ActionDefault::Points {
 	RS_Vector v1;

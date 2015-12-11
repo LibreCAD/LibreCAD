@@ -37,6 +37,7 @@
 #include "rs_point.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 struct LC_ActionDrawSplinePoints::Points {
 	/**

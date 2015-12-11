@@ -35,6 +35,7 @@
 #include "rs_math.h"
 #include "rs_preview.h"
 #include "rs_atomicentity.h"
+#include "rs_debug.h"
 
 RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(
 		RS_EntityContainer& container,

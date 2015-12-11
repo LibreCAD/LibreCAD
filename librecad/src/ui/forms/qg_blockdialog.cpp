@@ -27,6 +27,7 @@
 #include "qg_blockdialog.h"
 #include "rs_blocklist.h"
 #include "rs_block.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_BlockDialog as a child of 'parent', with the

@@ -37,6 +37,7 @@
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 struct RS_ActionDrawLine::Points {
 	/**

@@ -33,6 +33,7 @@
 #include "rs_selection.h"
 #include "rs_line.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 struct RS_ActionSelectIntersected::Points {
 	RS_Vector v1;

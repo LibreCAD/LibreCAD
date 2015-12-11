@@ -34,6 +34,7 @@
 #include "qg_graphicview.h"
 
 #include "rs_blocklist.h"
+#include "rs_debug.h"
 
 
 QC_DialogFactory::QC_DialogFactory(QWidget* parent, QToolBar* ow) :

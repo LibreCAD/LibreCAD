@@ -25,6 +25,7 @@
 #include "rs_entitycontainer.h"
 #include "rs_layer.h"
 #include "rs_graphicview.h"
+#include "rs_debug.h"
 
 LC_SimpleTests::LC_SimpleTests(QWidget *parent):
 	QObject(parent)

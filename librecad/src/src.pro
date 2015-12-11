@@ -325,7 +325,8 @@ SOURCES += \
     ui/lc_dockwidget.cpp \
     lib/engine/lc_rect.cpp \
     lib/engine/rs.cpp \
-    ui/forms/lc_dlgsplinepoints.cpp
+    ui/forms/lc_dlgsplinepoints.cpp \
+    lib/engine/rs_flags.cpp
 
 # ################################################################################
 # Command

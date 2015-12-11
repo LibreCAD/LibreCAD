@@ -30,6 +30,7 @@
 #include "rs_settings.h"
 #include "rs_math.h"
 #include "ui_qg_insertoptions.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_InsertOptions as a child of 'parent', with the

@@ -35,6 +35,7 @@
 #include "rs_text.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 struct RS_ActionDrawText::Points {
 	RS_Vector pos;

@@ -50,6 +50,7 @@
 
 #include "qg_scrollbar.h"
 #include "rs_modification.h"
+#include "rs_debug.h"
 
 #define QG_SCROLLMARGIN 400
 

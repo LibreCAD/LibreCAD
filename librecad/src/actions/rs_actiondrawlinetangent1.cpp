@@ -34,6 +34,7 @@
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 namespace{
 auto circleType={RS2::EntityArc, RS2::EntityCircle,

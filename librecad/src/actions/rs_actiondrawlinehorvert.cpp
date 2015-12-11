@@ -32,6 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 struct RS_ActionDrawLineHorVert::Points {
 	/**

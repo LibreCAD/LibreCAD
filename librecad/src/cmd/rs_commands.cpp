@@ -32,6 +32,7 @@
 
 #include "rs_system.h"
 #include "rs_dialogfactory.h"
+#include "rs_debug.h"
 
 namespace {
 struct LC_CommandItem {

@@ -40,6 +40,7 @@
 #include "rs_coordinateevent.h"
 #include "rs_entitycontainer.h"
 #include "rs_pen.h"
+#include "rs_debug.h"
 
 struct RS_Snapper::Indicator
 {

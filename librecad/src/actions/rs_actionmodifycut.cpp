@@ -31,6 +31,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
+#include "rs_debug.h"
 
 
 RS_ActionModifyCut::RS_ActionModifyCut(RS_EntityContainer& container,

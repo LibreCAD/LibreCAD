@@ -35,6 +35,7 @@
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 struct RS_ActionDimLeader::Points {
 std::vector<RS_Vector> points;

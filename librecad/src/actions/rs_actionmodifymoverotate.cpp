@@ -35,6 +35,7 @@
 #include "rs_math.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 struct RS_ActionModifyMoveRotate::Points {
 	RS_MoveRotateData data;

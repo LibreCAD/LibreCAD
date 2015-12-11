@@ -54,6 +54,7 @@
 #include "rs_units.h"
 #include "rs_utility.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 namespace {
 const std::string NAMESPACE_URI_SVG = "http://www.w3.org/2000/svg";

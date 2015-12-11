@@ -36,6 +36,7 @@
 #include "rs_painter.h"
 #include "lc_quadratic.h"
 #include "rs_painterqt.h"
+#include "rs_debug.h"
 
 
 #ifdef EMU_C99

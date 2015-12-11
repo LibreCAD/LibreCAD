@@ -34,6 +34,7 @@
 #include "rs_creation.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 struct RS_ActionDrawLinePolygonCorCor::Points {
 	/** 1st corner */

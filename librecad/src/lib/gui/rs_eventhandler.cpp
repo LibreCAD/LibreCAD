@@ -35,6 +35,7 @@
 #include "rs_commands.h"
 #include "rs_math.h"
 #include "rs_snapper.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.

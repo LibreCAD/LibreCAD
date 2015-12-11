@@ -33,6 +33,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_preview.h"
 
 #include <QDebug>
+#include "rs_debug.h"
 
 struct RS_ActionDrawEllipseCenter3Points::Points {
 	RS_VectorSolutions points;

@@ -35,6 +35,7 @@
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 struct RS_ActionDrawLineBisector::Points {
 	/** Mouse pos when choosing the 1st line */

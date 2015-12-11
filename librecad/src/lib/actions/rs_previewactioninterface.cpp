@@ -29,6 +29,7 @@
 
 #include "rs_graphicview.h"
 #include "rs_preview.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.
