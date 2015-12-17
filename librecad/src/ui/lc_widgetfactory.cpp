@@ -448,6 +448,9 @@ void LC_WidgetFactory::createToolbars(QG_ActionHandler* action_handler)
     dockwidgets_toolbar->setObjectName("dockwidgets_toolbar");
     dockwidgets_toolbar->addAction(a_map["LeftDockAreaToggle"]);
     dockwidgets_toolbar->addAction(a_map["RightDockAreaToggle"]);
+    dockwidgets_toolbar->addAction(a_map["TopDockAreaToggle"]);
+    dockwidgets_toolbar->addAction(a_map["BottomDockAreaToggle"]);
+    dockwidgets_toolbar->addAction(a_map["FloatingDockwidgetsToggle"]);
 
     // <[~ Toolbars Layout~]>
 

@@ -1309,7 +1309,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler)
     action->setObjectName("FocusCommand");
     a_map["FocusCommand"] = action;
 
-    action = new QAction(tr("Left DockArea"), main_window);
+    action = new QAction(tr("Left"), main_window);
     connect(action, SIGNAL(toggled(bool)),
             main_window, SLOT(toggleLeftDockArea(bool)));
     action->setCheckable(true);
@@ -1317,13 +1317,37 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler)
     action->setObjectName("LeftDockAreaToggle");
     a_map["LeftDockAreaToggle"] = action;
 
-    action = new QAction(tr("Right DockArea"), main_window);
+    action = new QAction(tr("Right"), main_window);
     connect(action, SIGNAL(toggled(bool)),
             main_window, SLOT(toggleRightDockArea(bool)));
     action->setCheckable(true);
     action->setChecked(true);
     action->setObjectName("RightDockAreaToggle");
     a_map["RightDockAreaToggle"] = action;
+
+    action = new QAction(tr("Top"), main_window);
+    connect(action, SIGNAL(toggled(bool)),
+            main_window, SLOT(toggleTopDockArea(bool)));
+    action->setCheckable(true);
+    action->setChecked(true);
+    action->setObjectName("TopDockAreaToggle");
+    a_map["TopDockAreaToggle"] = action;
+
+    action = new QAction(tr("Bottom"), main_window);
+    connect(action, SIGNAL(toggled(bool)),
+            main_window, SLOT(toggleBottomDockArea(bool)));
+    action->setCheckable(true);
+    action->setChecked(true);
+    action->setObjectName("BottomDockAreaToggle");
+    a_map["BottomDockAreaToggle"] = action;
+
+    action = new QAction(tr("Floating"), main_window);
+    connect(action, SIGNAL(toggled(bool)),
+            main_window, SLOT(toggleFloatingDockwidgets(bool)));
+    action->setCheckable(true);
+    action->setChecked(true);
+    action->setObjectName("FloatingDockwidgetsToggle");
+    a_map["FloatingDockwidgetsToggle"] = action;
 
     return a_map;
 }

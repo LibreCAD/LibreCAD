@@ -287,6 +287,9 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     dock_areas.left = a_map["LeftDockAreaToggle"];
     dock_areas.right = a_map["RightDockAreaToggle"];
+    dock_areas.top = a_map["TopDockAreaToggle"];
+    dock_areas.bottom = a_map["BottomDockAreaToggle"];
+    dock_areas.floating = a_map["FloatingDockwidgetsToggle"];
 
     snapToolBar = widget_factory.snap_toolbar;
     penToolBar = widget_factory.pen_toolbar;
@@ -800,6 +803,9 @@ void QC_ApplicationWindow::restoreDocks() {
     restoreState(RS_SETTINGS->readByteArrayEntry("/DockWindows", ""));
     dock_areas.left->setChecked(RS_SETTINGS->readNumEntry("/LeftDockArea", 0));
     dock_areas.right->setChecked(RS_SETTINGS->readNumEntry("/RightDockArea", 1));
+    dock_areas.top->setChecked(RS_SETTINGS->readNumEntry("/TopDockArea", 1));
+    dock_areas.bottom->setChecked(RS_SETTINGS->readNumEntry("/BottomDockArea", 1));
+    dock_areas.floating->setChecked(RS_SETTINGS->readNumEntry("/FloatingDockwidgets", 1));
     RS_SETTINGS->endGroup();
 }
 
@@ -820,6 +826,9 @@ void QC_ApplicationWindow::storeSettings() {
         RS_SETTINGS->writeEntry("/DockWindows", QVariant (saveState()));
         RS_SETTINGS->writeEntry("/LeftDockArea", dock_areas.left->isChecked());
         RS_SETTINGS->writeEntry("/RightDockArea", dock_areas.right->isChecked());
+        RS_SETTINGS->writeEntry("/TopDockArea", dock_areas.top->isChecked());
+        RS_SETTINGS->writeEntry("/BottomDockArea", dock_areas.bottom->isChecked());
+        RS_SETTINGS->writeEntry("/FloatingDockwidgets", dock_areas.floating->isChecked());
         RS_SETTINGS->endGroup();
         //save snapMode
         snapToolBar->saveSnapMode();
@@ -2994,9 +3003,7 @@ void QC_ApplicationWindow::slotFileOpenRecent(QAction* action)
 
 void QC_ApplicationWindow::toggleLeftDockArea(bool checked)
 {
-    QList<QDockWidget*> docks = findChildren<QDockWidget*>();
-
-    foreach (QDockWidget* x, docks)
+    foreach (QDockWidget* x, findChildren<QDockWidget*>())
     {
         if (dockWidgetArea(x) == Qt::LeftDockWidgetArea && !x->isFloating())
             x->setVisible(checked);
@@ -3005,11 +3012,36 @@ void QC_ApplicationWindow::toggleLeftDockArea(bool checked)
 
 void QC_ApplicationWindow::toggleRightDockArea(bool checked)
 {
-    // QList<QDockWidget*> docks = findChildren<QDockWidget*>();
-
     foreach (QDockWidget* x, findChildren<QDockWidget*>())
     {
         if (dockWidgetArea(x) == Qt::RightDockWidgetArea && !x->isFloating())
+            x->setVisible(checked);
+    }
+}
+
+void QC_ApplicationWindow::toggleTopDockArea(bool checked)
+{
+    foreach (QDockWidget* x, findChildren<QDockWidget*>())
+    {
+        if (dockWidgetArea(x) == Qt::TopDockWidgetArea && !x->isFloating())
+            x->setVisible(checked);
+    }
+}
+
+void QC_ApplicationWindow::toggleBottomDockArea(bool checked)
+{
+    foreach (QDockWidget* x, findChildren<QDockWidget*>())
+    {
+        if (dockWidgetArea(x) == Qt::BottomDockWidgetArea && !x->isFloating())
+            x->setVisible(checked);
+    }
+}
+
+void QC_ApplicationWindow::toggleFloatingDockwidgets(bool checked)
+{
+    foreach (QDockWidget* x, findChildren<QDockWidget*>())
+    {
+        if (x->isFloating())
             x->setVisible(checked);
     }
 }

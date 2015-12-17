@@ -67,6 +67,7 @@ struct DockAreas
     QAction* right;
     QAction* top;
     QAction* bottom;
+    QAction* floating;
 };
 
 /**
@@ -196,6 +197,9 @@ public slots:
 
     void toggleRightDockArea(bool checked);
     void toggleLeftDockArea(bool checked);
+    void toggleTopDockArea(bool checked);
+    void toggleBottomDockArea(bool checked);
+    void toggleFloatingDockwidgets(bool checked);
 
 signals:
     void gridChanged(bool on);
