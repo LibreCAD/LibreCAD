@@ -1,0 +1,824 @@
+/*
+**********************************************************************************
+**
+** This file was created for the LibreCAD project (librecad.org), a 2D CAD program.
+**
+** Copyright (C) 2015 ravas (ravas@outlook.com)
+**
+** This program is free software; you can redistribute it and/or
+** modify it under the terms of the GNU General Public License
+** as published by the Free Software Foundation; either version 2
+** of the License, or (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**
+**********************************************************************************
+*/
+
+#include "lc_widgetfactory.h"
+#include "lc_actionfactory.h"
+#include "lc_dockwidget.h"
+#include "lc_customtoolbar.h"
+
+#include "qg_actionhandler.h"
+#include "qg_snaptoolbar.h"
+#include "qg_blockwidget.h"
+#include "qg_layerwidget.h"
+#include "qg_librarywidget.h"
+#include "qg_commandwidget.h"
+#include "qg_selectionwidget.h"
+#include "qg_activelayername.h"
+#include "qg_mousewidget.h"
+#include "qg_pentoolbar.h"
+
+#include <QMenu>
+#include <QFile>
+#include <QMenuBar>
+#include <QActionGroup>
+#include <QMainWindow>
+
+LC_WidgetFactory::LC_WidgetFactory(QMainWindow* main_win,
+                                   const QMap<QString, QAction*>& action_map)
+    : QObject(nullptr)
+    , main_window(main_win)
+    , a_map(action_map)
+{
+    file_actions
+            << a_map["FileNew"]
+            << a_map["FileNewTemplate"]
+            << a_map["FileOpen"]
+            << a_map["FileSave"]
+            << a_map["FileSaveAs"];
+
+    line_actions
+            << a_map["DrawLine"]
+            << a_map["DrawLineAngle"]
+            << a_map["DrawLineHorizontal"]
+            << a_map["DrawLineVertical"]
+            << a_map["DrawLineRectangle"]
+            << a_map["DrawLineParallelThrough"]
+            << a_map["DrawLineParallel"]
+            << a_map["DrawLineBisector"]
+            << a_map["DrawLineTangent1"]
+            << a_map["DrawLineTangent2"]
+            << a_map["DrawLineOrthTan"]
+            << a_map["DrawLineOrthogonal"]
+            << a_map["DrawLineRelAngle"]
+            << a_map["DrawLinePolygonCenCor"]
+            << a_map["DrawLinePolygonCorCor"];
+
+    circle_actions
+            << a_map["DrawCircle"]
+            << a_map["DrawCircle2P"]
+            << a_map["DrawCircle2PR"]
+            << a_map["DrawCircle3P"]
+            << a_map["DrawCircleCR"]
+            << a_map["DrawCircleTan2_1P"]
+            << a_map["DrawCircleTan1_2P"]
+            << a_map["DrawCircleTan2"]
+            << a_map["DrawCircleTan3"];
+
+    curve_actions
+            << a_map["DrawArc"]
+            << a_map["DrawArc3P"]
+            << a_map["DrawArcTangential"]
+            << a_map["DrawSpline"]
+            << a_map["DrawSplinePoints"]
+            << a_map["DrawEllipseArcAxis"]
+            << a_map["DrawLineFree"];
+
+    ellipse_actions
+            << a_map["DrawEllipseAxis"]
+            << a_map["DrawEllipseFociPoint"]
+            << a_map["DrawEllipse4Points"]
+            << a_map["DrawEllipseCenter3Points"]
+            << a_map["DrawEllipseInscribe"];
+
+    polyline_actions
+            << a_map["DrawPolyline"]
+            << a_map["PolylineAdd"]
+            << a_map["PolylineAppend"]
+            << a_map["PolylineDel"]
+            << a_map["PolylineDelBetween"]
+            << a_map["PolylineTrim"]
+            << a_map["PolylineEquidistant"]
+            << a_map["PolylineSegment"];
+
+    misc_actions
+            << a_map["DrawMText"]
+            << a_map["DrawHatch"]
+            << a_map["DrawImage"]
+            << a_map["BlocksCreate"]
+            << a_map["DrawPoint"];
+
+    select_actions
+            << a_map["DeselectAll"]
+            << a_map["SelectAll"]
+            << a_map["SelectSingle"]
+            << a_map["SelectContour"]
+            << a_map["SelectWindow"]
+            << a_map["DeselectWindow"]
+            << a_map["SelectIntersected"]
+            << a_map["DeselectIntersected"]
+            << a_map["SelectLayer"]
+            << a_map["SelectInvert"];
+
+    dimension_actions
+            << a_map["DimAligned"]
+            << a_map["DimLinear"]
+            << a_map["DimLinearHor"]
+            << a_map["DimLinearVer"]
+            << a_map["DimRadial"]
+            << a_map["DimDiametric"]
+            << a_map["DimAngular"]
+            << a_map["DimLeader"];
+
+    modify_actions
+            << a_map["ModifyMove"]
+            << a_map["ModifyRotate"]
+            << a_map["ModifyScale"]
+            << a_map["ModifyMirror"]
+            << a_map["ModifyMoveRotate"]
+            << a_map["ModifyRotate2"]
+            << a_map["ModifyRevertDirection"]
+            << a_map["ModifyTrim"]
+            << a_map["ModifyTrim2"]
+            << a_map["ModifyTrimAmount"]
+            << a_map["ModifyOffset"]
+            << a_map["ModifyBevel"]
+            << a_map["ModifyRound"]
+            << a_map["ModifyCut"]
+            << a_map["ModifyStretch"]
+            << a_map["ModifyEntity"]
+            << a_map["ModifyAttributes"]
+            << a_map["ModifyExplodeText"]
+            << a_map["BlocksExplode"]
+            << a_map["ModifyDeleteQuick"];
+
+    info_actions
+            << a_map["InfoDist"]
+            << a_map["InfoDist2"]
+            << a_map["InfoAngle"]
+            << a_map["InfoTotalLength"]
+            << a_map["InfoArea"];
+
+    layer_actions
+            << a_map["LayersDefreezeAll"]
+            << a_map["LayersFreezeAll"]
+            << a_map["LayersAdd"]
+            << a_map["LayersRemove"]
+            << a_map["LayersEdit"]
+            << a_map["LayersToggleLock"]
+            << a_map["LayersToggleView"]
+            << a_map["LayersTogglePrint"]
+            << a_map["LayersToggleConstruction"];
+
+    block_actions
+            << a_map["BlocksDefreezeAll"]
+            << a_map["BlocksFreezeAll"]
+            << a_map["BlocksToggleView"]
+            << a_map["BlocksAdd"]
+            << a_map["BlocksRemove"]
+            << a_map["BlocksAttributes"]
+            << a_map["BlocksInsert"]
+            << a_map["BlocksEdit"]
+            << a_map["BlocksSave"]
+            << a_map["BlocksCreate"]
+            << a_map["BlocksExplode"];
+}
+
+
+void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size)
+{
+    LC_DockWidget* dock_line = new LC_DockWidget(main_window);
+    dock_line->setObjectName("dock_line");
+    dock_line->setWindowTitle(tr("Line"));
+    dock_line->add_actions(line_actions, columns, icon_size);
+
+    LC_DockWidget* dock_circle = new LC_DockWidget(main_window);
+    dock_circle->setObjectName("dock_circle");
+    dock_circle->setWindowTitle(tr("Circle"));
+    dock_circle->add_actions(circle_actions, columns, icon_size);
+
+    LC_DockWidget* dock_curve = new LC_DockWidget(main_window);
+    dock_curve->setObjectName("dock_curve");
+    dock_curve->setWindowTitle(tr("Curve"));
+    dock_curve->add_actions(curve_actions, columns, icon_size);
+
+    LC_DockWidget* dock_ellipse = new LC_DockWidget(main_window);
+    dock_ellipse->setObjectName("dock_ellipse");
+    dock_ellipse->setWindowTitle(tr("Ellipse"));
+    dock_ellipse->add_actions(ellipse_actions, columns, icon_size);
+
+    LC_DockWidget* dock_polyline = new LC_DockWidget(main_window);
+    dock_polyline->setObjectName("dock_polyline");
+    dock_polyline->setWindowTitle(tr("Polyline"));
+    dock_polyline->add_actions(polyline_actions, columns, icon_size);
+
+    LC_DockWidget* dock_select = new LC_DockWidget(main_window);
+    dock_select->setObjectName("dock_select");
+    dock_select->setWindowTitle(tr("Select"));
+    dock_select->add_actions(select_actions, columns, icon_size);
+
+    LC_DockWidget* dock_dimension = new LC_DockWidget(main_window);
+    dock_dimension->setObjectName("dock_dimension");
+    dock_dimension->setWindowTitle(tr("Dimension"));
+    dock_dimension->add_actions(dimension_actions, columns, icon_size);
+
+    LC_DockWidget* dock_modify = new LC_DockWidget(main_window);
+    dock_modify->setObjectName("dock_modify");
+    dock_modify->setWindowTitle(tr("Modify"));
+    dock_modify->add_actions(modify_actions, columns, icon_size);
+
+    LC_DockWidget* dock_info = new LC_DockWidget(main_window);
+    dock_info->setObjectName("dock_info");
+    dock_info->setWindowTitle(tr("Info"));
+    dock_info->add_actions(info_actions, columns, icon_size);
+
+    main_window->addDockWidget(Qt::LeftDockWidgetArea, dock_line);
+    main_window->tabifyDockWidget(dock_line, dock_polyline);
+    dock_line->raise();
+    main_window->addDockWidget(Qt::LeftDockWidgetArea, dock_circle);
+    main_window->tabifyDockWidget(dock_circle, dock_curve);
+    main_window->tabifyDockWidget(dock_curve, dock_ellipse);
+    dock_circle->raise();
+    main_window->addDockWidget(Qt::LeftDockWidgetArea, dock_dimension);
+    main_window->tabifyDockWidget(dock_dimension, dock_info);
+    main_window->tabifyDockWidget(dock_info, dock_select);
+    dock_dimension->raise();
+    main_window->addDockWidget(Qt::LeftDockWidgetArea, dock_modify);
+
+    dock_line->hide();
+    dock_polyline->hide();
+    dock_circle->hide();
+    dock_curve->hide();
+    dock_ellipse->hide();
+    dock_dimension->hide();
+    dock_info->hide();
+    dock_modify->hide();
+    dock_select->hide();
+}
+
+void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
+{
+    QDockWidget* dock_layer = new QDockWidget(main_window);
+    dock_layer->setWindowTitle(tr("Layer List"));
+    dock_layer->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dock_layer->setObjectName("layer_dockwidget");
+    layer_widget = new QG_LayerWidget(action_handler, dock_layer, "Layer");
+    layer_widget->setFocusPolicy(Qt::NoFocus);
+    connect(layer_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
+    connect(main_window, SIGNAL(windowsChanged(bool)), layer_widget, SLOT(setEnabled(bool)));
+    dock_layer->setWidget(layer_widget);
+
+    QDockWidget* dock_block = new QDockWidget(main_window);
+    dock_block->setWindowTitle(tr("Block List"));
+    dock_block->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dock_block->setObjectName("block_dockwidget");
+    block_widget = new QG_BlockWidget(action_handler, dock_block, "Block");
+    block_widget->setFocusPolicy(Qt::NoFocus);
+    connect(block_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
+    connect(main_window, SIGNAL(windowsChanged(bool)), block_widget, SLOT(setEnabled(bool)));
+    dock_block->setWidget(block_widget);
+
+    QDockWidget* dock_library = new QDockWidget(main_window);
+    dock_library->setWindowTitle(tr("Library Browser"));
+    dock_library->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dock_library->setObjectName("library_dockwidget");
+    library_widget = new QG_LibraryWidget(dock_library, "Library");
+    library_widget->setActionHandler(action_handler);
+    library_widget->setFocusPolicy(Qt::NoFocus);
+    connect(library_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
+    connect(main_window, SIGNAL(windowsChanged(bool)),
+            (QObject*)library_widget->bInsert, SLOT(setEnabled(bool)));
+    dock_library->setWidget(library_widget);
+    dock_library->resize(240, 400);
+
+    QDockWidget* dock_command = new QDockWidget(tr("Command line"), main_window);
+    dock_command->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dock_command->setObjectName("command_dockwidget");
+    command_widget = new QG_CommandWidget(dock_command, "Command");
+    command_widget->setActionHandler(action_handler);
+    connect(main_window, SIGNAL(windowsChanged(bool)), command_widget, SLOT(setEnabled(bool)));
+    connect(command_widget->leCommand, SIGNAL(escape()), main_window, SLOT(setFocus()));
+    dock_command->setWidget(command_widget);
+
+    main_window->addDockWidget(Qt::RightDockWidgetArea, dock_library);
+    main_window->tabifyDockWidget(dock_library, dock_block);
+    main_window->tabifyDockWidget(dock_block, dock_layer);
+    main_window->addDockWidget(Qt::RightDockWidgetArea, dock_command);
+}
+
+void LC_WidgetFactory::createToolbars(QG_ActionHandler* action_handler)
+{
+    QSizePolicy toolBarPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    QToolBar* file_toolbar = new QToolBar(tr("File"), main_window);
+    file_toolbar->setSizePolicy(toolBarPolicy);
+    file_toolbar->setObjectName("file_toolbar");
+    file_toolbar->addActions(file_actions);
+    file_toolbar->addAction(a_map["FilePrint"]);
+    file_toolbar->addAction(a_map["FilePrintPreview"]);
+
+    QToolBar* settings_toolbar = new QToolBar(tr("Settings"), main_window);
+    settings_toolbar->setSizePolicy(toolBarPolicy);
+    settings_toolbar->setObjectName("settings_toolbar");
+    settings_toolbar->addAction(a_map["OptionsGeneral"]);
+    settings_toolbar->addAction(a_map["OptionsDrawing"]);
+
+    QToolBar* edit_toolbar = new QToolBar(tr("Edit"), main_window);
+    edit_toolbar->setSizePolicy(toolBarPolicy);
+    edit_toolbar->setObjectName("edit_toolbar");
+    edit_toolbar->addAction(a_map["EditKillAllActions"]);
+    edit_toolbar->addSeparator();
+    edit_toolbar->addAction(a_map["EditUndo"]);
+    edit_toolbar->addAction(a_map["EditRedo"]);
+    edit_toolbar->addSeparator();
+    edit_toolbar->addAction(a_map["EditCut"]);
+    edit_toolbar->addAction(a_map["EditCopy"]);
+    edit_toolbar->addAction(a_map["EditPaste"]);
+
+    QToolBar* order_toolbar = new QToolBar(tr("Order"), main_window);
+    order_toolbar->setSizePolicy(toolBarPolicy);
+    order_toolbar->setObjectName("order_toolbar");
+    order_toolbar->addAction(a_map["OrderTop"]);
+    order_toolbar->addAction(a_map["OrderBottom"]);
+    order_toolbar->addAction(a_map["OrderRaise"]);
+    order_toolbar->addAction(a_map["OrderLower"]);
+
+    QToolBar* view_toolbar = new QToolBar(tr("View"), main_window);
+    view_toolbar->setObjectName("view_toolbar");
+    view_toolbar->setSizePolicy(toolBarPolicy);
+    view_toolbar->addAction(a_map["ViewGrid"]);
+    view_toolbar->addAction(a_map["ViewDraft"]);
+    view_toolbar->addSeparator();
+    view_toolbar->addAction(a_map["ZoomRedraw"]);
+    view_toolbar->addAction(a_map["ZoomIn"]);
+    view_toolbar->addAction(a_map["ZoomOut"]);
+    view_toolbar->addAction(a_map["ZoomAuto"]);
+    view_toolbar->addAction(a_map["ZoomPrevious"]);
+    view_toolbar->addAction(a_map["ZoomWindow"]);
+    view_toolbar->addAction(a_map["ZoomPan"]);
+
+    QToolBar* line_toolbar = new QToolBar(tr("Line"), main_window);
+    line_toolbar->setSizePolicy(toolBarPolicy);
+    line_toolbar->setObjectName("line_toolbar");
+    line_toolbar->addActions(line_actions);
+    line_toolbar->hide();
+
+    QToolBar* circle_toolbar = new QToolBar(tr("Circle"), main_window);
+    circle_toolbar->setSizePolicy(toolBarPolicy);
+    circle_toolbar->setObjectName ("circle_toolbar");
+    circle_toolbar->addActions(circle_actions);
+    circle_toolbar->hide();
+
+    QToolBar* curve_toolbar = new QToolBar(tr("Curve"), main_window);
+    curve_toolbar->setSizePolicy(toolBarPolicy);
+    curve_toolbar->setObjectName("curve_toolbar");
+    curve_toolbar->addActions(curve_actions);
+    curve_toolbar->hide();
+
+    QToolBar* ellipse_toolbar = new QToolBar(tr("Ellipse"), main_window);
+    ellipse_toolbar->setSizePolicy(toolBarPolicy);
+    ellipse_toolbar->setObjectName("ellipse_toolbar");
+    ellipse_toolbar->addActions(ellipse_actions);
+    ellipse_toolbar->hide();
+
+    QToolBar* polyline_toolbar = new QToolBar(tr("Polyline"), main_window);
+    polyline_toolbar->setSizePolicy(toolBarPolicy);
+    polyline_toolbar->setObjectName("polyline_toolbar");
+    polyline_toolbar->addActions(polyline_actions);
+    polyline_toolbar->hide();
+
+    QToolBar* misc_toolbar = new QToolBar(tr("Misc"), main_window);
+    misc_toolbar->setSizePolicy(toolBarPolicy);
+    misc_toolbar->setObjectName("misc_toolbar");
+    misc_toolbar->addActions(misc_actions);
+
+    QToolBar* select_toolbar = new QToolBar(tr("Select"), main_window);
+    select_toolbar->setSizePolicy(toolBarPolicy);
+    select_toolbar->setObjectName("select_toolbar");
+    select_toolbar->addActions(select_actions);
+    select_toolbar->hide();
+
+    QToolBar* dimension_toolbar = new QToolBar(tr("Dimension"), main_window);
+    dimension_toolbar->setSizePolicy(toolBarPolicy);
+    dimension_toolbar->setObjectName("dimension_toolbar");
+    dimension_toolbar->addActions(dimension_actions);
+    dimension_toolbar->hide();
+
+    QToolBar* modify_toolbar = new QToolBar(tr("Modify"), main_window);
+    modify_toolbar->setSizePolicy(toolBarPolicy);
+    modify_toolbar->setObjectName("modify_toolbar");
+    modify_toolbar->addActions(modify_actions);
+    modify_toolbar->hide();
+
+    QToolBar* info_toolbar = new QToolBar(tr("Info"), main_window);
+    info_toolbar->setSizePolicy(toolBarPolicy);
+    info_toolbar->setObjectName("info_toolbar");
+    info_toolbar->addActions(info_actions);
+    info_toolbar->hide();
+
+    snap_toolbar = new QG_SnapToolBar(main_window, action_handler);
+    snap_toolbar->setWindowTitle(tr("Snap Selection"));
+    snap_toolbar->setSizePolicy(toolBarPolicy);
+    snap_toolbar->setObjectName("snap_toolbar" );
+    action_handler->set_snap_toolbar(snap_toolbar);
+
+    pen_toolbar = new QG_PenToolBar(tr("Pen"), main_window);
+    pen_toolbar->setSizePolicy(toolBarPolicy);
+    pen_toolbar->setObjectName("pen_toolbar");
+
+    options_toolbar = new QToolBar(tr("Tool Options"), main_window);
+    options_toolbar->setSizePolicy(toolBarPolicy);
+    options_toolbar->setObjectName("options_toolbar");
+
+    // <[~ Dockwidgets Toolbar ~]>
+
+    QToolBar* dockwidgets_toolbar = new QToolBar(main_window);
+    dockwidgets_toolbar->setWindowTitle(tr("DockWidgets"));
+    dockwidgets_toolbar->setSizePolicy(toolBarPolicy);
+    dockwidgets_toolbar->setObjectName("dockwidgets_toolbar");
+    dockwidgets_toolbar->addAction(a_map["LeftDockAreaToggle"]);
+    dockwidgets_toolbar->addAction(a_map["RightDockAreaToggle"]);
+
+    // <[~ Toolbars Layout~]>
+
+    main_window->addToolBar(Qt::TopToolBarArea, file_toolbar);
+    main_window->addToolBar(Qt::TopToolBarArea, edit_toolbar);
+    main_window->addToolBar(Qt::TopToolBarArea, view_toolbar);
+    main_window->addToolBar(Qt::TopToolBarArea, settings_toolbar);
+    main_window->addToolBarBreak();
+    main_window->addToolBar(Qt::TopToolBarArea, pen_toolbar);
+    main_window->addToolBar(Qt::TopToolBarArea, options_toolbar);
+
+    main_window->addToolBar(Qt::LeftToolBarArea, order_toolbar);
+    main_window->addToolBar(Qt::LeftToolBarArea, misc_toolbar);
+
+    main_window->addToolBar(Qt::BottomToolBarArea, line_toolbar);
+    main_window->addToolBar(Qt::BottomToolBarArea, circle_toolbar);
+    main_window->addToolBar(Qt::BottomToolBarArea, curve_toolbar);
+    main_window->addToolBar(Qt::BottomToolBarArea, ellipse_toolbar);
+    main_window->addToolBar(Qt::BottomToolBarArea, polyline_toolbar);
+    main_window->addToolBar(Qt::BottomToolBarArea, dimension_toolbar);
+    main_window->addToolBar(Qt::BottomToolBarArea, modify_toolbar);
+    main_window->addToolBar(Qt::BottomToolBarArea, snap_toolbar);
+    main_window->addToolBar(Qt::BottomToolBarArea, info_toolbar);
+    main_window->addToolBar(Qt::BottomToolBarArea, dockwidgets_toolbar);
+    main_window->addToolBar(Qt::BottomToolBarArea, select_toolbar);
+}
+
+QToolBar* LC_WidgetFactory::createCategoriesToolbar()
+{
+    QSizePolicy toolBarPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    QToolBar* categories_toolbar = new QToolBar(tr("Categories"), main_window);
+    categories_toolbar->setSizePolicy(toolBarPolicy);
+    categories_toolbar->setObjectName("categories_toolbar");
+
+    QToolButton* tool_button;
+
+    tool_button = new QToolButton;
+    tool_button->setPopupMode(QToolButton::InstantPopup);
+    tool_button->setIcon(QIcon(":/extui/menuline.png"));
+    categories_toolbar->addWidget(tool_button);
+    tool_button->addActions(line_actions);
+
+    tool_button = new QToolButton;
+    tool_button->setPopupMode(QToolButton::InstantPopup);
+    tool_button->setIcon(QIcon(":/extui/menucircle.png"));
+    categories_toolbar->addWidget(tool_button);
+    tool_button->addActions(circle_actions);
+
+    tool_button = new QToolButton;
+    tool_button->setPopupMode(QToolButton::InstantPopup);
+    tool_button->setIcon(QIcon(":/extui/linesfree.png"));
+    categories_toolbar->addWidget(tool_button);
+    tool_button->addActions(curve_actions);
+
+    tool_button = new QToolButton;
+    tool_button->setPopupMode(QToolButton::InstantPopup);
+    tool_button->setIcon(QIcon(":/extui/menuellipse.png"));
+    categories_toolbar->addWidget(tool_button);
+    tool_button->addActions(ellipse_actions);
+
+    tool_button = new QToolButton;
+    tool_button->setPopupMode(QToolButton::InstantPopup);
+    tool_button->setIcon(QIcon(":/extui/menupolyline.png"));
+    categories_toolbar->addWidget(tool_button);
+    tool_button->addActions(polyline_actions);
+
+    tool_button = new QToolButton;
+    tool_button->setPopupMode(QToolButton::InstantPopup);
+    tool_button->setIcon(QIcon(":/extui/menuselect.png"));
+    categories_toolbar->addWidget(tool_button);
+    tool_button->addActions(select_actions);
+
+    tool_button = new QToolButton;
+    tool_button->setPopupMode(QToolButton::InstantPopup);
+    tool_button->setIcon(QIcon(":/extui/dimhor.png"));
+    categories_toolbar->addWidget(tool_button);
+    tool_button->addActions(dimension_actions);
+
+    tool_button = new QToolButton;
+    tool_button->setPopupMode(QToolButton::InstantPopup);
+    tool_button->setIcon(QIcon(":/extui/menuedit.png"));
+    categories_toolbar->addWidget(tool_button);
+    tool_button->addActions(modify_actions);
+
+    tool_button = new QToolButton;
+    tool_button->setPopupMode(QToolButton::InstantPopup);
+    tool_button->setIcon(QIcon(":/extui/menumeasure.png"));
+    categories_toolbar->addWidget(tool_button);
+    tool_button->addActions(info_actions);
+
+    main_window->addToolBar(Qt::LeftToolBarArea, categories_toolbar);
+
+    return categories_toolbar;
+}
+
+/**
+ * @return pointer to the custom toolbar or nullptr if the file was not found
+ */
+LC_CustomToolbar* LC_WidgetFactory::createCustomToolbar(const QString& path
+                                                       ,QActionGroup* tools)
+{
+    LC_CustomToolbar* custom_toolbar = nullptr;
+
+    if (QFile::exists(path))
+    {
+        custom_toolbar = new LC_CustomToolbar(main_window);
+        custom_toolbar->setWindowTitle(tr("Custom"));
+        custom_toolbar->actions_from_file(path, a_map);
+        custom_toolbar->setObjectName("custom_toolbar");
+        custom_toolbar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        connect(tools, SIGNAL(triggered(QAction*)),
+                custom_toolbar, SLOT(slot_most_recent_action(QAction*)));
+        main_window->addToolBar(Qt::TopToolBarArea, custom_toolbar);
+    }
+    return custom_toolbar;
+}
+
+void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
+{
+    QMenu* sub_menu;
+    // <[~ File ~]>
+
+    file_menu = new QMenu(tr("&File"), menu_bar);
+    file_menu->setObjectName("File");
+    file_menu->setTearOffEnabled(true);
+    file_menu->addActions(file_actions);
+    sub_menu = file_menu->addMenu(QIcon(":/actions/fileimport.png"), tr("Import"));
+    sub_menu->setObjectName("Import");
+    sub_menu->addAction(a_map["DrawImage"]);
+    sub_menu->addAction(a_map["BlocksImport"]);
+    sub_menu = file_menu->addMenu(QIcon(":/actions/fileexport.png"), tr("Export"));
+    sub_menu->setObjectName("Export");
+    sub_menu->addAction(a_map["FileExportMakerCam"]);
+    sub_menu->addAction(a_map["FilePrintPDF"]);
+    sub_menu->addAction(a_map["FileExport"]);
+    file_menu->addSeparator();
+    file_menu->addAction(a_map["FilePrint"]);
+    file_menu->addAction(a_map["FilePrintPreview"]);
+    file_menu->addSeparator();
+    file_menu->addAction(a_map["FileClose"]);
+    file_menu->addAction(a_map["FileQuit"]);
+    file_menu->addSeparator();
+
+    // <[~ Settings ~]>
+
+    QMenu* settings_menu = new QMenu(tr("Settings"), menu_bar);
+    settings_menu->setObjectName("settings_menu");
+    settings_menu->setTearOffEnabled(true);
+    settings_menu->addAction(a_map["OptionsGeneral"]);
+    settings_menu->addAction(a_map["OptionsDrawing"]);
+
+    // <[~ Edit ~]>
+
+    QMenu* edit_menu = new QMenu(tr("&Edit"), menu_bar);
+    edit_menu->setObjectName("Edit");
+    edit_menu->setTearOffEnabled(true);
+    edit_menu->addAction(a_map["EditKillAllActions"]);
+    edit_menu->addSeparator();
+    edit_menu->addAction(a_map["EditUndo"]);
+    edit_menu->addAction(a_map["EditRedo"]);
+    edit_menu->addSeparator();
+    edit_menu->addAction(a_map["EditCut"]);
+    edit_menu->addAction(a_map["EditCopy"]);
+    edit_menu->addAction(a_map["EditPaste"]);
+    edit_menu->addAction(a_map["ModifyDeleteQuick"]);
+
+    // <[~ Order ~]>
+
+    QMenu* order_menu = new QMenu(tr("&Order"), menu_bar);
+    order_menu->setObjectName("order_menu");
+    order_menu->setTearOffEnabled(true);
+    order_menu->addAction(a_map["OrderTop"]);
+    order_menu->addAction(a_map["OrderBottom"]);
+    order_menu->addAction(a_map["OrderRaise"]);
+    order_menu->addAction(a_map["OrderLower"]);
+
+    // <[~ View ~]>
+
+    QMenu* view_menu = new QMenu(tr("&View"), menu_bar);
+    view_menu->setObjectName("view_menu");
+    view_menu->setTearOffEnabled(true);
+    view_menu->addAction(a_map["Fullscreen"]);
+    view_menu->addAction(a_map["ViewStatusBar"]);
+    view_menu->addAction(a_map["ViewGrid"]);
+    view_menu->addAction(a_map["ViewDraft"]);
+    view_menu->addSeparator();
+    view_menu->addAction(a_map["ZoomRedraw"]);
+    view_menu->addAction(a_map["ZoomIn"]);
+    view_menu->addAction(a_map["ZoomOut"]);
+    view_menu->addAction(a_map["ZoomAuto"]);
+    view_menu->addAction(a_map["ZoomPrevious"]);
+    view_menu->addAction(a_map["ZoomWindow"]);
+    view_menu->addAction(a_map["ZoomPan"]);
+
+    // <[~ Draw ~]>
+
+    QMenu* draw_menu = new QMenu(tr("&Draw"), menu_bar);
+    draw_menu->setObjectName("Draw");
+    draw_menu->setTearOffEnabled(true);
+
+    // <[~ Lines ~]>
+
+    sub_menu= draw_menu->addMenu(tr("&Line"));
+    sub_menu->setIcon(QIcon(":/extui/menuline.png"));
+    sub_menu->setObjectName("Line");
+    sub_menu->addActions(line_actions);
+
+    // <[~ Circles ~]>
+
+    sub_menu= draw_menu->addMenu(tr("&Circle"));
+    sub_menu->setIcon(QIcon(":/extui/menucircle.png"));
+    sub_menu->setObjectName("Circle");
+    sub_menu->addActions(circle_actions);
+
+    // <[~ Curves ~]>
+
+    sub_menu = draw_menu->addMenu(tr("&Curve"));
+    sub_menu->setIcon(QIcon(":/extui/linesfree.png"));
+    sub_menu->setObjectName("Curve");
+    sub_menu->addActions(curve_actions);
+
+    // <[~ Ellipses ~]>
+
+    sub_menu= draw_menu->addMenu(tr("&Ellipse"));
+    sub_menu->setIcon(QIcon(":/extui/menuellipse.png"));
+    sub_menu->setObjectName("Ellipse");
+    sub_menu->addActions(ellipse_actions);
+
+    // <[~ Polylines ~]>
+
+    sub_menu= draw_menu->addMenu(tr("&Polyline"));
+    sub_menu->setIcon(QIcon(":/extui/menupolyline.png"));
+    sub_menu->setObjectName("Polyline");
+    sub_menu->addActions(polyline_actions);
+
+    // <[~ Misc ~]>
+
+    QMenu* misc_menu = new QMenu(tr("&Misc"), menu_bar);
+    misc_menu->setObjectName("misc_menu");
+    misc_menu->setTearOffEnabled(true);
+    misc_menu->addActions(misc_actions);
+
+    // <[~ Select ~]>
+
+    QMenu* select_menu = new QMenu(tr("&Select"), menu_bar);
+    select_menu->setObjectName("Select");
+    select_menu->setTearOffEnabled(true);
+    select_menu->addActions(select_actions);
+
+    // <[~ Dimension ~]>
+
+    QMenu* dimension_menu = new QMenu(tr("&Dimension"), menu_bar);
+    dimension_menu->setObjectName("dimension_menu");
+    dimension_menu->setTearOffEnabled(true);
+    dimension_menu->addActions(dimension_actions);
+
+    // <[~ Modify ~]>
+
+    QMenu* modify_menu = new QMenu(tr("&Modify"), menu_bar);
+    modify_menu->setObjectName("Modify");
+    modify_menu->setTearOffEnabled(true);
+    modify_menu->addActions(modify_actions);
+
+    // <[~ Snapping ~]>
+
+    QMenu* snap_menu = new QMenu(tr("&Snap"), menu_bar);
+    snap_menu->setObjectName("snap_menu");
+    snap_menu->setTearOffEnabled(true);
+    // QToolBar* snap_tb = main_window->findChild<QToolBar*>("snap_toolbar");
+    snap_menu->addActions(snap_toolbar->actions());
+
+    // <[~ Info ~]>
+
+    QMenu* info_menu = new QMenu(tr("&Info"), menu_bar);
+    info_menu->setObjectName("Info");
+    info_menu->setTearOffEnabled(true);
+    info_menu->addActions(info_actions);
+
+    // <[~ Layer ~]>
+
+    QMenu* layer_menu = new QMenu(tr("&Layer"), menu_bar);
+    layer_menu->setObjectName("layer_menu");
+    layer_menu->setTearOffEnabled(true);
+    layer_menu->addActions(layer_actions);
+
+    // <[~ Block ~]>
+
+    QMenu* block_menu = new QMenu(tr("&Block"), menu_bar);
+    block_menu->setObjectName("block_menu");
+    block_menu->setTearOffEnabled(true);
+    block_menu->addActions(block_actions);
+
+    // <[~ Windows ~]>
+
+    windows_menu = new QMenu(tr("&Window"), menu_bar);
+    windows_menu->setObjectName("windows_menu");
+    windows_menu->setTearOffEnabled(true);
+
+    connect(windows_menu, SIGNAL(aboutToShow()),
+            main_window, SLOT(slotWindowsMenuAboutToShow()));
+
+    // <[~ Help ~]>
+
+    QMenu* help_menu = new QMenu(tr("&Help"), menu_bar);
+    help_menu->setObjectName("Help");
+    help_menu->setTearOffEnabled(true);
+
+    QAction* help_manual = new QAction(QIcon(":/main/manual.png"), tr("&Manual"), main_window);
+    connect(help_manual, SIGNAL(triggered()), main_window, SLOT(slotHelpManual()));
+    help_menu->addAction(help_manual);
+
+    QAction* wiki_link = new QAction(tr("Online (Wiki)"), main_window);
+    connect(wiki_link, SIGNAL(triggered()), main_window, SLOT(goto_wiki()));
+    help_menu->addAction(wiki_link);
+
+    help_menu->addSeparator();
+
+    QAction* help_about = new QAction(QIcon(":/main/librecad.png"), tr("About"), main_window);
+    connect(help_about, SIGNAL(triggered()), main_window, SLOT(slotHelpAbout()));
+    help_menu->addAction(help_about);
+
+    // <[~ DockWidgets Menu ~]>
+
+    QMenu* dockwidgets_menu = new QMenu(tr("&Dockwidgets"), menu_bar);
+    dockwidgets_menu->setObjectName("dockwidgets_menu");
+    dockwidgets_menu->setTearOffEnabled(true);
+
+    dockwidgets_menu->addAction(a_map["LeftDockAreaToggle"]);
+    dockwidgets_menu->addAction(a_map["RightDockAreaToggle"]);
+
+    QList<QDockWidget*> dockwidgets = main_window->findChildren<QDockWidget*>();
+
+    foreach (QDockWidget* dw, dockwidgets)
+    {
+        dockwidgets_menu->addAction(dw->toggleViewAction());
+    }
+
+    dockwidgets_menu->addAction(a_map["FocusCommand"]);
+
+    // <[~ Toolbars Menu ~]>
+
+    QMenu* toolbars_menu = new QMenu(tr("&Toolbars"), menu_bar);
+    toolbars_menu->setObjectName("toolbars_menu");
+    toolbars_menu->setTearOffEnabled(true);
+
+    QList<QToolBar*> toolbars = main_window->findChildren<QToolBar*>();
+
+    foreach (QToolBar* tb, toolbars)
+    {
+        toolbars_menu->addAction(tb->toggleViewAction());
+    }
+
+    // <[~ MenuBar Layout~]>
+
+    menu_bar->addMenu(file_menu);
+    menu_bar->addMenu(settings_menu);
+    menu_bar->addMenu(edit_menu);
+    menu_bar->addMenu(view_menu);
+    menu_bar->addMenu(order_menu);
+    menu_bar->addMenu(select_menu);
+    menu_bar->addMenu(draw_menu);
+    menu_bar->addMenu(misc_menu);
+    menu_bar->addMenu(dimension_menu);
+    menu_bar->addMenu(modify_menu);
+    menu_bar->addMenu(snap_menu);
+    menu_bar->addMenu(info_menu);
+    menu_bar->addMenu(layer_menu);
+    menu_bar->addMenu(block_menu);
+    menu_bar->addMenu(toolbars_menu);
+    menu_bar->addMenu(dockwidgets_menu);
+    menu_bar->addMenu(windows_menu);
+    menu_bar->addMenu(help_menu);
+}

@@ -34,12 +34,15 @@
  *  Constructs a QG_CadToolBarSnap as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_SnapToolBar::QG_SnapToolBar(QWidget* parent
-                              ,QG_ActionHandler* ah
-                              ,QActionGroup* disable_group)
+QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah)
 	: QToolBar(parent)
     , actionHandler(ah)
 {
+    QActionGroup* disable_group = new QActionGroup(this);
+    disable_group->setExclusive(false);
+    connect(parent, SIGNAL(windowsChanged(bool)),
+            disable_group, SLOT(setEnabled(bool)));
+
     snapFree = new QAction(QIcon(":/extui/snapfree.png"), tr("Free Snap"), disable_group);
     snapFree->setCheckable(true);
     connect(snapFree, SIGNAL(triggered()), this, SLOT(actionTriggered()));

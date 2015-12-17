@@ -30,8 +30,8 @@
 #include <QFile>
 #include <QAction>
 
-LC_CustomToolbar::LC_CustomToolbar(const QString& name, QWidget* parent)
-    : QToolBar(name, parent)
+LC_CustomToolbar::LC_CustomToolbar(QWidget* parent)
+    : QToolBar(parent)
 {
     QAction* action = new QAction(tr("Add or Remove Action"), parent);
     action->setShortcut(QKeySequence("F2"));

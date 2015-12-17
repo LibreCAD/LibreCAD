@@ -37,9 +37,10 @@ class LC_ActionFactory : public QObject
 
 public:
     LC_ActionFactory(QObject* parent);
-    QMap<QString, QAction*> action_map(QObject* action_handler
-                                      ,QActionGroup* tools
-                                      ,QActionGroup* disable_group);
+    QMap<QString, QAction*> action_map(QObject* action_handler);
+
+    QActionGroup* tool_group;
+    QActionGroup* disable_group;
 };
 
 #endif

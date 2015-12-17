@@ -32,11 +32,23 @@
 #include <QAction>
 #include <QActionGroup>
 
-LC_ActionFactory::LC_ActionFactory(QObject* parent) : QObject(parent) {}
+LC_ActionFactory::LC_ActionFactory(QObject* parent)
+    : QObject(parent)
+    , tool_group(new QActionGroup(parent))
+    , disable_group(new QActionGroup(parent))
+{
+    disable_group->setExclusive(false);
 
-QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
-                                                    ,QActionGroup* tools
-                                                    ,QActionGroup* disable_group)
+    connect(parent, SIGNAL(windowsChanged(bool)),
+            disable_group, SLOT(setEnabled(bool)));
+    connect(parent, SIGNAL(windowsChanged(bool)),
+            tool_group, SLOT(setEnabled(bool)));
+
+    connect(tool_group, SIGNAL(triggered(QAction*)),
+            parent, SLOT(slot_set_action(QAction*)));
+}
+
+QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler)
 {
     QObject* main_window = parent();
     QMap<QString, QAction*> a_map;
@@ -44,7 +56,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
 
     // <[~ Zoom ~]>
 
-    action = new QAction(tr("&Window Zoom"), tools);
+    action = new QAction(tr("&Window Zoom"), tool_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("zoom-select", QIcon(":/actions/zoomwindow.png")));
     #else
@@ -54,7 +66,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setObjectName("ZoomWindow");
     a_map["ZoomWindow"] = action;
 
-    action = new QAction(tr("Zoom &Panning"), tools);
+    action = new QAction(tr("Zoom &Panning"), tool_group);
     action->setIcon(QIcon(":/actions/zoompan.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotZoomPan()));
@@ -63,49 +75,49 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
 
     // <[~ Select ~]>
 
-    action = new QAction(tr("Select Entity"), tools);
+    action = new QAction(tr("Select Entity"), tool_group);
     action->setIcon(QIcon(":/extui/selectsingle.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectSingle()));
     action->setObjectName("SelectSingle");
     a_map["SelectSingle"] = action;
 
-    action = new QAction(tr("Select Window"), tools);
+    action = new QAction(tr("Select Window"), tool_group);
     action->setIcon(QIcon(":/extui/selectwindow.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectWindow()));
     action->setObjectName("SelectWindow");
     a_map["SelectWindow"] = action;
 
-    action = new QAction(tr("Deselect Window"), tools);
+    action = new QAction(tr("Deselect Window"), tool_group);
     action->setIcon(QIcon(":/extui/deselectwindow.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDeselectWindow()));
     action->setObjectName("DeselectWindow");
     a_map["DeselectWindow"] = action;
 
-    action = new QAction(tr("(De-)Select &Contour"), tools);
+    action = new QAction(tr("(De-)Select &Contour"), tool_group);
     action->setIcon(QIcon(":/extui/selectcontour.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectContour()));
     action->setObjectName("SelectContour");
     a_map["SelectContour"] = action;
 
-    action = new QAction(tr("Select Intersected Entities"), tools);
+    action = new QAction(tr("Select Intersected Entities"), tool_group);
     action->setIcon(QIcon(":/extui/selectinters.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectIntersected()));
     action->setObjectName("SelectIntersected");
     a_map["SelectIntersected"] = action;
 
-    action = new QAction(tr("Deselect Intersected Entities"), tools);
+    action = new QAction(tr("Deselect Intersected Entities"), tool_group);
     action->setIcon(QIcon(":/extui/deselectinters.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDeselectIntersected()));
     action->setObjectName("DeselectIntersected");
     a_map["DeselectIntersected"] = action;
 
-    action = new QAction(tr("(De-)Select Layer"), tools);
+    action = new QAction(tr("(De-)Select Layer"), tool_group);
     action->setIcon(QIcon(":/extui/selectlayer.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectLayer()));
@@ -114,7 +126,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
 
     // <[~ Draw ~]>
 
-    action = new QAction(tr("&Points"), tools);
+    action = new QAction(tr("&Points"), tool_group);
     action->setIcon(QIcon(":/extui/points.png"));
 
     connect(action, SIGNAL(triggered()),
@@ -124,112 +136,112 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
 
     // <[~ Line ~]>
 
-    action = new QAction(tr("&2 Points"), tools);
+    action = new QAction(tr("&2 Points"), tool_group);
     action->setIcon(QIcon(":/extui/linesnormal.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLine()));
     action->setObjectName("DrawLine");
     a_map["DrawLine"] = action;
 
-    action = new QAction(QIcon(":/extui/linesangle.png"), tr("&Angle"), tools);
+    action = new QAction(QIcon(":/extui/linesangle.png"), tr("&Angle"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineAngle()));
     action->setObjectName("DrawLineAngle");
     a_map["DrawLineAngle"] = action;
 
-    action = new QAction(QIcon(":/extui/lineshor.png"), tr("&Horizontal"), tools);
+    action = new QAction(QIcon(":/extui/lineshor.png"), tr("&Horizontal"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineHorizontal()));
     action->setObjectName("DrawLineHorizontal");
     a_map["DrawLineHorizontal"] = action;
 
-    action = new QAction(QIcon(":/extui/linesver.png"), tr("Vertical"), tools);
+    action = new QAction(QIcon(":/extui/linesver.png"), tr("Vertical"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineVertical()));
     action->setObjectName("DrawLineVertical");
     a_map["DrawLineVertical"] = action;
 
-    action = new QAction(tr("Vertical"), tools);
+    action = new QAction(tr("Vertical"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineHorVert()));
     action->setObjectName("DrawLineHorVert");
     a_map["DrawLineHorVert"] = action;
 
-    action = new QAction(tr("&Freehand Line"), tools);
+    action = new QAction(tr("&Freehand Line"), tool_group);
     action->setIcon(QIcon(":/extui/linesfree.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineFree()));
     action->setObjectName("DrawLineFree");
     a_map["DrawLineFree"] = action;
 
-    action = new QAction(tr("&Parallel"), tools);
+    action = new QAction(tr("&Parallel"), tool_group);
     action->setIcon(QIcon(":/extui/linespara.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineParallel()));
     action->setObjectName("DrawLineParallel");
     a_map["DrawLineParallel"] = action;
 
-    action = new QAction(tr("Parallel through point"), tools);
+    action = new QAction(tr("Parallel through point"), tool_group);
     action->setIcon(QIcon(":/extui/linesparathrough.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineParallelThrough()));
     action->setObjectName("DrawLineParallelThrough");
     a_map["DrawLineParallelThrough"] = action;
 
-    action = new QAction(tr("Rectangle"), tools);
+    action = new QAction(tr("Rectangle"), tool_group);
     action->setIcon(QIcon(":/extui/linesrect.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineRectangle()));
     action->setObjectName("DrawLineRectangle");
     a_map["DrawLineRectangle"] = action;
 
-    action = new QAction(QIcon(":/extui/linesbisector.png"),tr("Bisector"), tools);
+    action = new QAction(QIcon(":/extui/linesbisector.png"),tr("Bisector"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineBisector()));
     action->setObjectName("DrawLineBisector");
     a_map["DrawLineBisector"] = action;
 
-    action = new QAction(QIcon(":/extui/linestan1.png"), tr("Tangent (P,C)"), tools);
+    action = new QAction(QIcon(":/extui/linestan1.png"), tr("Tangent (P,C)"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineTangent1()));
     action->setObjectName("DrawLineTangent1");
     a_map["DrawLineTangent1"] = action;
 
-    action = new QAction(QIcon(":/extui/linestan2.png"), tr("Tangent (C,C)"), tools);
+    action = new QAction(QIcon(":/extui/linestan2.png"), tr("Tangent (C,C)"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineTangent2()));
     action->setObjectName("DrawLineTangent2");
     a_map["DrawLineTangent2"] = action;
 
-    action = new QAction(tr("Tangent &Orthogonal"), tools);
+    action = new QAction(tr("Tangent &Orthogonal"), tool_group);
     action->setIcon(QIcon(":/extui/linesorthtan.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineOrthTan()));
     action->setObjectName("DrawLineOrthTan");
     a_map["DrawLineOrthTan"] = action;
 
-    action = new QAction(tr("Orthogonal"), tools);
+    action = new QAction(tr("Orthogonal"), tool_group);
     action->setIcon(QIcon(":/extui/linesorthogonal.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineOrthogonal()));
     action->setObjectName("DrawLineOrthogonal");
     a_map["DrawLineOrthogonal"] = action;
 
-    action = new QAction(tr("Relative angle"), tools);
+    action = new QAction(tr("Relative angle"), tool_group);
     action->setIcon(QIcon(":/extui/linesrelativeangle.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineRelAngle()));
     action->setObjectName("DrawLineRelAngle");
     a_map["DrawLineRelAngle"] = action;
 
-    action = new QAction(tr("Pol&ygon (Cen,Cor)"), tools);
+    action = new QAction(tr("Pol&ygon (Cen,Cor)"), tool_group);
     action->setIcon(QIcon(":/extui/linespolygon.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLinePolygon()));
     action->setObjectName("DrawLinePolygonCenCor");
     a_map["DrawLinePolygonCenCor"] = action;
 
-    action = new QAction(tr("Polygo&n (Cor,Cor)"), tools);
+    action = new QAction(tr("Polygo&n (Cor,Cor)"), tool_group);
     action->setIcon(QIcon(":/extui/linespolygon2.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLinePolygon2()));
@@ -238,38 +250,38 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
 
     // <[~ Circle ~]>
 
-    action = new QAction(QIcon(":/extui/circles.png"), tr("Center, &Point"), tools);
+    action = new QAction(QIcon(":/extui/circles.png"), tr("Center, &Point"), tool_group);
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawCircle()));
     action->setObjectName("DrawCircle");
     a_map["DrawCircle"] = action;
 
-    action = new QAction(tr("Center, &Radius"), tools);
+    action = new QAction(tr("Center, &Radius"), tool_group);
     action->setIcon(QIcon(":/extui/circlescr.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleCR()));
     action->setObjectName("DrawCircleCR");
     a_map["DrawCircleCR"] = action;
 
-    action = new QAction(tr("2 Points"), tools);
+    action = new QAction(tr("2 Points"), tool_group);
     action->setIcon(QIcon(":/extui/circles2p.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircle2P()));
     action->setObjectName("DrawCircle2P");
     a_map["DrawCircle2P"] = action;
 
-    action = new QAction(QIcon(":/extui/circle2pr.png"), tr("2 Points, Radius"), tools);
+    action = new QAction(QIcon(":/extui/circle2pr.png"), tr("2 Points, Radius"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircle2PR()));
     action->setObjectName("DrawCircle2PR");
     a_map["DrawCircle2PR"] = action;
 
-    action = new QAction(QIcon(":/extui/circles3p.png"), tr("3 Points"), tools);
+    action = new QAction(QIcon(":/extui/circles3p.png"), tr("3 Points"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircle3P()));
     action->setObjectName("DrawCircle3P");
     a_map["DrawCircle3P"] = action;
 
-    action = new QAction(tr("&Concentric"), tools);
+    action = new QAction(tr("&Concentric"), tool_group);
     action->setIcon(QIcon(":/extui/circlespara.png"));
     action->setCheckable(true);
     connect(action, SIGNAL(triggered()),
@@ -277,34 +289,34 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setObjectName("DrawCircleParallel");
     a_map["DrawCircleParallel"] = action;
 
-    action = new QAction(QIcon(":/extui/circleinscribe.png"), tr("Circle &Inscribed"), tools);
+    action = new QAction(QIcon(":/extui/circleinscribe.png"), tr("Circle &Inscribed"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleInscribe()));
     action->setObjectName("DrawCircleInscribe");
     a_map["DrawCircleInscribe"] = action;
 
-    action = new QAction(tr("Tangential 2 Circles, Radius",  "circle tangential with two circles, and given radius"), tools);
+    action = new QAction(tr("Tangential 2 Circles, Radius",  "circle tangential with two circles, and given radius"), tool_group);
     action->setIcon(QIcon(":/extui/circletan2.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleTan2()));
     action->setObjectName("DrawCircleTan2");
     a_map["DrawCircleTan2"] = action;
 
-    action = new QAction(tr("Tangential 2 Circles, 1 Point"), tools);
+    action = new QAction(tr("Tangential 2 Circles, 1 Point"), tool_group);
     action->setIcon(QIcon(":/extui/circletan2_1p.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleTan2_1P()));
     action->setObjectName("DrawCircleTan2_1P");
     a_map["DrawCircleTan2_1P"] = action;
 
-    action = new QAction(tr("Tangential &3 Circles"), tools);
+    action = new QAction(tr("Tangential &3 Circles"), tool_group);
     action->setIcon(QIcon(":/extui/circletan3.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleTan3()));
     action->setObjectName("DrawCircleTan3");
     a_map["DrawCircleTan3"] = action;
 
-    action = new QAction(tr("Tangential, 2 P&oints"), tools);
+    action = new QAction(tr("Tangential, 2 P&oints"), tool_group);
     action->setIcon(QIcon(":/extui/circletan1_2p.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleTan1_2P()));
@@ -313,7 +325,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
 
     // <[~ Arc ~]>
 
-    action = new QAction(tr("&Center, Point, Angles"), tools);
+    action = new QAction(tr("&Center, Point, Angles"), tool_group);
     action->setIcon(QIcon(":/extui/arcscraa.png"));
     action->setCheckable(true);
     connect(action, SIGNAL(triggered()),
@@ -321,7 +333,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setObjectName("DrawArc");
     a_map["DrawArc"] = action;
 
-    action = new QAction(tr("&3 Points"), tools);
+    action = new QAction(tr("&3 Points"), tool_group);
     action->setIcon(QIcon(":/extui/arcs3p.png"));
     action->setCheckable(true);
     connect(action, SIGNAL(triggered()),
@@ -329,7 +341,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setObjectName("DrawArc3P");
     a_map["DrawArc3P"] = action;
 
-    action = new QAction(tr("&Concentric"), tools);
+    action = new QAction(tr("&Concentric"), tool_group);
     action->setIcon(QIcon(":/extui/arcspara.png"));
     action->setCheckable(true);
     connect(action, SIGNAL(triggered()),
@@ -337,7 +349,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setObjectName("DrawArcParallel");
     a_map["DrawArcParallel"] = action;
 
-    action = new QAction(QIcon(":/extui/arcstangential.png"), tr("Arc &Tangential"), tools);
+    action = new QAction(QIcon(":/extui/arcstangential.png"), tr("Arc &Tangential"), tool_group);
     action->setCheckable(true);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawArcTangential()));
@@ -346,38 +358,38 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
 
     // <[~ Ellipse ~]>
 
-    action = new QAction(QIcon(":/extui/ellipsesaxes.png"), tr("&Ellipse (Axis)"), tools);
+    action = new QAction(QIcon(":/extui/ellipsesaxes.png"), tr("&Ellipse (Axis)"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipseAxis()));
     action->setObjectName("DrawEllipseAxis");
     a_map["DrawEllipseAxis"] = action;
 
-    action = new QAction(QIcon(":/extui/ellipsearcsaxes.png"), tr("Ellipse &Arc (Axis)"), tools);
+    action = new QAction(QIcon(":/extui/ellipsearcsaxes.png"), tr("Ellipse &Arc (Axis)"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipseArcAxis()));
     action->setObjectName("DrawEllipseArcAxis");
     a_map["DrawEllipseArcAxis"] = action;
 
-    action = new QAction(QIcon(":/extui/ellipsefocipoint.png"), tr("Ellipse &Foci Point"), tools);
+    action = new QAction(QIcon(":/extui/ellipsefocipoint.png"), tr("Ellipse &Foci Point"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipseFociPoint()));
     action->setObjectName("DrawEllipseFociPoint");
     a_map["DrawEllipseFociPoint"] = action;
 
-    action = new QAction(tr("Ellipse &4 Point"), tools);
+    action = new QAction(tr("Ellipse &4 Point"), tool_group);
     action->setIcon(QIcon(":/extui/ellipse4points.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipse4Points()));
     action->setObjectName("DrawEllipse4Points");
     a_map["DrawEllipse4Points"] = action;
 
-    action = new QAction(QIcon(":/extui/ellipsecenter3points.png"), tr("Ellipse Center and &3 Points"), tools);
+    action = new QAction(QIcon(":/extui/ellipsecenter3points.png"), tr("Ellipse Center and &3 Points"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipseCenter3Points()));
     action->setObjectName("DrawEllipseCenter3Points");
     a_map["DrawEllipseCenter3Points"] = action;
 
-    action = new QAction(QIcon(":/extui/ellipseinscribed.png"), tr("Ellipse &Inscribed"), tools);
+    action = new QAction(QIcon(":/extui/ellipseinscribed.png"), tr("Ellipse &Inscribed"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipseInscribe()));
     action->setObjectName("DrawEllipseInscribe");
@@ -385,13 +397,13 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
 
     // <[~ Spline ~]>
 
-    action = new QAction(QIcon(":/extui/menuspline.png"), tr("&Spline"), tools);
+    action = new QAction(QIcon(":/extui/menuspline.png"), tr("&Spline"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawSpline()));
     action->setObjectName("DrawSpline");
     a_map["DrawSpline"] = action;
 
-    action = new QAction(QIcon(":/extui/menusplinepoints.png"), tr("&Spline through points"), tools);
+    action = new QAction(QIcon(":/extui/menusplinepoints.png"), tr("&Spline through points"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawSplinePoints()));
     action->setObjectName("DrawSplinePoints");
@@ -399,14 +411,14 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
 
     // <[~ Polyline ~]>
 
-    action = new QAction(QIcon(":/extui/polyline.png"), tr("&Polyline"), tools);
+    action = new QAction(QIcon(":/extui/polyline.png"), tr("&Polyline"), tool_group);
     action->setStatusTip(tr("Draw polylines"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawPolyline()));
     action->setObjectName("DrawPolyline");
     a_map["DrawPolyline"] = action;
 
-    action = new QAction(tr("&Add node"), tools);
+    action = new QAction(tr("&Add node"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylineadd.png"));
     action->setStatusTip(tr("Add polyline's node"));
@@ -415,7 +427,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setObjectName("PolylineAdd");
     a_map["PolylineAdd"] = action;
 
-    action = new QAction(tr("A&ppend node"), tools);
+    action = new QAction(tr("A&ppend node"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylineappend.png"));
     action->setStatusTip(tr("Append polyline's node"));
@@ -424,7 +436,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setObjectName("PolylineAppend");
     a_map["PolylineAppend"] = action;
 
-    action = new QAction(tr("&Delete node"), tools);
+    action = new QAction(tr("&Delete node"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylinedel.png"));
     action->setStatusTip(tr("Delete polyline's node"));
@@ -433,7 +445,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setObjectName("PolylineDel");
     a_map["PolylineDel"] = action;
 
-    action = new QAction(tr("Delete &between two nodes"), tools);
+    action = new QAction(tr("Delete &between two nodes"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylinedelbetween.png"));
     action->setStatusTip(tr("Delete between two nodes"));
@@ -442,7 +454,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setObjectName("PolylineDelBetween");
     a_map["PolylineDelBetween"] = action;
 
-    action = new QAction(tr("&Trim segments"), tools);
+    action = new QAction(tr("&Trim segments"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylinetrim.png"));
     action->setStatusTip(tr("Trim polyline's segments"));
@@ -451,14 +463,14 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setObjectName("PolylineTrim");
     a_map["PolylineTrim"] = action;
 
-    action = new QAction(QIcon(":/extui/polylineequidstant.png"), tr("Create &Equidistant Polylines"), tools);
+    action = new QAction(QIcon(":/extui/polylineequidstant.png"), tr("Create &Equidistant Polylines"), tool_group);
     action->setStatusTip(tr("Create Equidistant Polylines"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineEquidistant()));
     action->setObjectName("PolylineEquidistant");
     a_map["PolylineEquidistant"] = action;
 
-    action = new QAction(tr("Create Polyline from Existing &Segments"), tools);
+    action = new QAction(tr("Create Polyline from Existing &Segments"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylinesegment.png"));
     action->setStatusTip(tr("Create Polyline from Existing Segments"));
@@ -469,26 +481,26 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
 
     // <[~ Misc ~]>
 
-    action = new QAction(QIcon(":/extui/menutext.png"), tr("&MText"), tools);
+    action = new QAction(QIcon(":/extui/menutext.png"), tr("&MText"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawMText()));
     action->setObjectName("DrawMText");
     a_map["DrawMText"] = action;
 
-    action = new QAction(tr("&Text"), tools);
+    action = new QAction(tr("&Text"), tool_group);
     action->setIcon(QIcon(":/extui/menutext.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawText()));
     action->setObjectName("DrawText");
     a_map["DrawText"] = action;
 
-    action = new QAction(QIcon(":/extui/menuhatch.png"), tr("&Hatch"), tools);
+    action = new QAction(QIcon(":/extui/menuhatch.png"), tr("&Hatch"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawHatch()));
     action->setObjectName("DrawHatch");
     a_map["DrawHatch"] = action;
 
-    action = new QAction(QIcon(":/extui/menuimage.png"), tr("Insert &Image"), tools);
+    action = new QAction(QIcon(":/extui/menuimage.png"), tr("Insert &Image"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawImage()));
     action->setObjectName("DrawImage");
@@ -496,55 +508,55 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
 
     // <[~ Dimension ~]>
 
-    action = new QAction(tr("&Aligned"), tools);
+    action = new QAction(tr("&Aligned"), tool_group);
     action->setIcon(QIcon(":/extui/dimaligned.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimAligned()));
     action->setObjectName("DimAligned");
     a_map["DimAligned"] = action;
 
-    action = new QAction(tr("&Linear"), tools);
+    action = new QAction(tr("&Linear"), tool_group);
     action->setIcon(QIcon(":/extui/dimlinear.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLinear()));
     action->setObjectName("DimLinear");
     a_map["DimLinear"] = action;
 
-    action = new QAction(tr("&Horizontal"), tools);
+    action = new QAction(tr("&Horizontal"), tool_group);
     action->setIcon(QIcon(":/extui/dimhor.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLinearHor()));
     action->setObjectName("DimLinearHor");
     a_map["DimLinearHor"] = action;
 
-    action = new QAction(tr("&Vertical"), tools);
+    action = new QAction(tr("&Vertical"), tool_group);
     action->setIcon(QIcon(":/extui/dimver.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLinearVer()));
     action->setObjectName("DimLinearVer");
     a_map["DimLinearVer"] = action;
 
-    action = new QAction(tr("&Radial"), tools);
+    action = new QAction(tr("&Radial"), tool_group);
     action->setIcon(QIcon(":/extui/dimradial.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimRadial()));
     action->setObjectName("DimRadial");
     a_map["DimRadial"] = action;
 
-    action = new QAction(tr("&Diametric"), tools);
+    action = new QAction(tr("&Diametric"), tool_group);
     action->setIcon(QIcon(":/extui/dimdiametric.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimDiametric()));
     action->setObjectName("DimDiametric");
     a_map["DimDiametric"] = action;
 
-    action = new QAction(QIcon(":/extui/dimangular.png"), tr("&Angular"), tools);
+    action = new QAction(QIcon(":/extui/dimangular.png"), tr("&Angular"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimAngular()));
     action->setObjectName("DimAngular");
     a_map["DimAngular"] = action;
 
-    action = new QAction(QIcon(":/extui/dimleader.png"), tr("&Leader"), tools);
+    action = new QAction(QIcon(":/extui/dimleader.png"), tr("&Leader"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLeader()));
     action->setObjectName("DimLeader");
@@ -552,129 +564,129 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
 
     // <[~ Modify ~]>
 
-    action = new QAction(tr("&Attributes"), tools);
+    action = new QAction(tr("&Attributes"), tool_group);
     action->setIcon(QIcon(":/extui/modifyattributes.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyAttributes()));
     action->setObjectName("ModifyAttributes");
     a_map["ModifyAttributes"] = action;
 
-    action = new QAction(QIcon(":/extui/modifydelete.png"), tr("&Delete"), tools);
+    action = new QAction(QIcon(":/extui/modifydelete.png"), tr("&Delete"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyDelete()));
     action->setObjectName("ModifyDelete");
     a_map["ModifyDelete"] = action;
 
-    action = new QAction(tr("Delete Freehand"), tools);
+    action = new QAction(tr("Delete Freehand"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyDeleteFree()));
     action->setObjectName("ModifyDeleteFree");
     a_map["ModifyDeleteFree"] = action;
 
-    action = new QAction(QIcon(":/extui/modifymove.png"), tr("&Move / Copy"), tools);
+    action = new QAction(QIcon(":/extui/modifymove.png"), tr("&Move / Copy"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyMove()));
     action->setObjectName("ModifyMove");
     a_map["ModifyMove"] = action;
 
-    action = new QAction(tr("Re&vert direction"), tools);
+    action = new QAction(tr("Re&vert direction"), tool_group);
     action->setIcon(QIcon(":/extui/reverse.png"));
     action->setShortcut(QKeySequence(tr("Ctrl+R")));
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotModifyRevertDirection()));
     action->setObjectName("ModifyRevertDirection");
     a_map["ModifyRevertDirection"] = action;
 
-    action = new QAction(QIcon(":/extui/modifyrotate.png"), tr("&Rotate"), tools);
+    action = new QAction(QIcon(":/extui/modifyrotate.png"), tr("&Rotate"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyRotate()));
     action->setObjectName("ModifyRotate");
     a_map["ModifyRotate"] = action;
 
-    action = new QAction(QIcon(":/extui/modifyscale.png"), tr("&Scale"), tools);
+    action = new QAction(QIcon(":/extui/modifyscale.png"), tr("&Scale"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyScale()));
     action->setObjectName("ModifyScale");
     a_map["ModifyScale"] = action;
 
-    action = new QAction(QIcon(":/extui/modifymirror.png"), tr("&Mirror"), tools);
+    action = new QAction(QIcon(":/extui/modifymirror.png"), tr("&Mirror"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyMirror()));
     action->setObjectName("ModifyMirror");
     a_map["ModifyMirror"] = action;
 
-    action = new QAction(QIcon(":/extui/modifymoverotate.png"), tr("M&ove and Rotate"), tools);
+    action = new QAction(QIcon(":/extui/modifymoverotate.png"), tr("M&ove and Rotate"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyMoveRotate()));
     action->setObjectName("ModifyMoveRotate");
     a_map["ModifyMoveRotate"] = action;
 
-    action = new QAction(QIcon(":/extui/modifyrotate2.png"), tr("Rotate T&wo"), tools);
+    action = new QAction(QIcon(":/extui/modifyrotate2.png"), tr("Rotate T&wo"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyRotate2()));
     action->setObjectName("ModifyRotate2");
     a_map["ModifyRotate2"] = action;
 
-    action = new QAction(tr("&Properties"), tools);
+    action = new QAction(tr("&Properties"), tool_group);
     action->setIcon(QIcon(":/extui/modifyentity.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyEntity()));
     action->setObjectName("ModifyEntity");
     a_map["ModifyEntity"] = action;
 
-    action = new QAction(tr("&Trim"), tools);
+    action = new QAction(tr("&Trim"), tool_group);
     action->setIcon(QIcon(":/extui/modifytrim.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyTrim()));
     action->setObjectName("ModifyTrim");
     a_map["ModifyTrim"] = action;
 
-    action = new QAction(tr("&Trim Two"), tools);
+    action = new QAction(tr("&Trim Two"), tool_group);
     action->setIcon(QIcon(":/extui/modifytrim2.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyTrim2()));
     action->setObjectName("ModifyTrim2");
     a_map["ModifyTrim2"] = action;
 
-    action = new QAction(tr("&Lengthen"), tools);
+    action = new QAction(tr("&Lengthen"), tool_group);
     action->setIcon(QIcon(":/extui/modifytrimamount.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyTrimAmount()));
     action->setObjectName("ModifyTrimAmount");
     a_map["ModifyTrimAmount"] = action;
 
-    action = new QAction(QIcon(":/extui/arcspara.png"), tr("&Offset"),tools);
+    action = new QAction(QIcon(":/extui/arcspara.png"), tr("&Offset"),tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyOffset()));
     action->setObjectName("ModifyOffset");
     a_map["ModifyOffset"] = action;
 
-    action = new QAction(tr("&Divide"), tools);
+    action = new QAction(tr("&Divide"), tool_group);
     action->setIcon(QIcon(":/extui/modifycut.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyCut()));
     action->setObjectName("ModifyCut");
     a_map["ModifyCut"] = action;
 
-    action = new QAction(QIcon(":/extui/modifystretch.png"), tr("&Stretch"), tools);
+    action = new QAction(QIcon(":/extui/modifystretch.png"), tr("&Stretch"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyStretch()));
     action->setObjectName("ModifyStretch");
     a_map["ModifyStretch"] = action;
 
-    action = new QAction(tr("&Bevel"), tools);
+    action = new QAction(tr("&Bevel"), tool_group);
     action->setIcon(QIcon(":/tools/bevel.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyBevel()));
     action->setObjectName("ModifyBevel");
     a_map["ModifyBevel"] = action;
 
-    action = new QAction(QIcon(":/extui/modifyround.png"), tr("&Fillet"), tools);
+    action = new QAction(QIcon(":/extui/modifyround.png"), tr("&Fillet"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyRound()));
     action->setObjectName("ModifyRound");
     a_map["ModifyRound"] = action;
 
-    action = new QAction(tr("&Explode Text into Letters"), tools);
+    action = new QAction(tr("&Explode Text into Letters"), tool_group);
     action->setIcon(QIcon(":/extui/modifyexplodetext.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyExplodeText()));
@@ -683,38 +695,38 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
 
     // <[~ Info ~]>
 
-    action = new QAction(tr("Point inside contour"), tools);
+    action = new QAction(tr("Point inside contour"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoInside()));
     action->setObjectName("InfoInside");
     a_map["InfoInside"] = action;
 
-    action = new QAction(tr("&Distance Point to Point"), tools);
+    action = new QAction(tr("&Distance Point to Point"), tool_group);
     action->setIcon(QIcon(":/tools/distance_point_to_point.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoDist()));
     action->setObjectName("InfoDist");
     a_map["InfoDist"] = action;
 
-    action = new QAction(QIcon(":/extui/infodist2.png"), tr("&Distance Entity to Point"), tools);
+    action = new QAction(QIcon(":/extui/infodist2.png"), tr("&Distance Entity to Point"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoDist2()));
     action->setObjectName("InfoDist2");
     a_map["InfoDist2"] = action;
 
-    action = new QAction(QIcon(":/extui/infoangle.png"), tr("An&gle between two lines"), tools);
+    action = new QAction(QIcon(":/extui/infoangle.png"), tr("An&gle between two lines"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoAngle()));
     action->setObjectName("InfoAngle");
     a_map["InfoAngle"] = action;
 
-    action = new QAction(QIcon(":/extui/infototallength.png"), tr("&Total length of selected entities"), tools);
+    action = new QAction(QIcon(":/extui/infototallength.png"), tr("&Total length of selected entities"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoTotalLength()));
     action->setObjectName("InfoTotalLength");
     a_map["InfoTotalLength"] = action;
 
-    action = new QAction(tr("Polygonal &Area"), tools);
+    action = new QAction(tr("Polygonal &Area"), tool_group);
     action->setIcon(QIcon(":/extui/infoarea.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoArea()));
@@ -974,7 +986,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setObjectName("BlocksCreate");
     a_map["BlocksCreate"] = action;
 
-    action = new QAction(tr("Ex&plode"), disable_group);
+    action = new QAction(tr("Ex&plode"), tool_group);
     action->setIcon(QIcon(":/extui/modifyexplode.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksExplode()));
@@ -1297,13 +1309,21 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler
     action->setObjectName("FocusCommand");
     a_map["FocusCommand"] = action;
 
-    action = new QAction(tr("Tool Sidebar"), main_window);
+    action = new QAction(tr("Left DockArea"), main_window);
     connect(action, SIGNAL(toggled(bool)),
-            main_window, SLOT(slotToggleToolSidebar(bool)));
+            main_window, SLOT(toggleLeftDockArea(bool)));
     action->setCheckable(true);
     action->setChecked(false);
-    action->setObjectName("ToggleToolSidebar");
-    a_map["ToggleToolSidebar"] = action;
+    action->setObjectName("LeftDockAreaToggle");
+    a_map["LeftDockAreaToggle"] = action;
+
+    action = new QAction(tr("Right DockArea"), main_window);
+    connect(action, SIGNAL(toggled(bool)),
+            main_window, SLOT(toggleRightDockArea(bool)));
+    action->setCheckable(true);
+    action->setChecked(true);
+    action->setObjectName("RightDockAreaToggle");
+    a_map["RightDockAreaToggle"] = action;
 
     return a_map;
 }

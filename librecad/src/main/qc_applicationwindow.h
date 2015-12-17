@@ -61,11 +61,12 @@ class QG_ActionHandler;
 class RS_GraphicView;
 class RS_Document;
 
-
-struct Sidebar
+struct DockAreas
 {
-    QAction* view_action;
-    QList<QWidget*> widgets;
+    QAction* left;
+    QAction* right;
+    QAction* top;
+    QAction* bottom;
 };
 
 /**
@@ -81,14 +82,11 @@ public:
     QC_ApplicationWindow();
     ~QC_ApplicationWindow();
 
-    void menus_and_toolbars();
-    void add_action(QMenu* menu, QToolBar* toolbar, QAction* action);
     void set_icon_size();
     void initStatusBar();
     void initSettings();
     void restoreDocks();
     void storeSettings();
-    void initView();
 
     bool queryExit(bool force);
 
@@ -195,7 +193,9 @@ public slots:
     void setPreviousZoomEnable(bool enable);
 
     void hide_options(QC_MDIWindow*);
-    void slotToggleToolSidebar(bool checked);
+
+    void toggleRightDockArea(bool checked);
+    void toggleLeftDockArea(bool checked);
 
 signals:
     void gridChanged(bool on);
@@ -254,16 +254,6 @@ public:
      */
 	const QMainWindow* getMainWindow() const;
 	QMainWindow* getMainWindow();
-
-    /**
-     * @return Pointer to action handler. Implementation from QG_MainWindowInterface.
-     */
-	QG_ActionHandler const* getActionHandler() const{
-        return actionHandler;
-    }
-	QG_ActionHandler* getActionHandler(){
-		return actionHandler;
-	}
 
     /**
      * @return Pointer to the qsa object.
@@ -338,6 +328,8 @@ private:
     static QC_ApplicationWindow* appWindow;
     QTimer *autosaveTimer;
 
+    QG_ActionHandler* actionHandler;
+
     /** MdiArea for MDI */
     QMdiArea* mdiAreaCAD{nullptr};
     QMdiSubWindow* activedMdiSubWindow;
@@ -348,11 +340,9 @@ private:
     /** Recent files list */
 	QG_RecentFiles* recentFiles;
 
-    /** Action handler. */
-    QG_ActionHandler* actionHandler;
-
     // --- Dockwidgets ---
-    Sidebar tool_sidebar; //!< a group of dockwidgets
+    //! toggle actions for the dock areas
+    DockAreas dock_areas;
 
     /** Layer list widget */
     QG_LayerWidget* layerWidget;
@@ -360,17 +350,8 @@ private:
     QG_BlockWidget* blockWidget;
     /** Library browser widget */
     QG_LibraryWidget* libraryWidget;
-
-    /** Layer list dock widget */
-    QDockWidget* dock_layer;
-    /** Block list dock widget */
-    QDockWidget* dock_block;
-    /** Library list dock widget */
-    QDockWidget* dock_library;
-
     /** Command line */
     QG_CommandWidget* commandWidget;
-    QDockWidget* dock_command;
 
     QHelpEngine* helpEngine{nullptr};
     QDockWidget* helpWindow{nullptr};
@@ -392,15 +373,9 @@ private:
     QMenu* file_menu;
 
     // --- Toolbars ---
-    QToolBar* dockwidgets_toolbar;
-    QToolBar* circleToolBar;
-    QToolBar* file_toolbar;
-    QToolBar* edit_toolbar;
-    QToolBar* view_toolbar;
     QG_SnapToolBar* snapToolBar;
     QG_PenToolBar* penToolBar; //!< for selecting the current pen
     QToolBar* optionWidget; //!< for individual tool options
-    LC_CustomToolbar* custom_toolbar{nullptr};
 
     // --- Actions ---
     static QAction* previousZoom;
