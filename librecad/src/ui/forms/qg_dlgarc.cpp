@@ -95,8 +95,7 @@ void QG_DlgArc::updateArc() {
     arc->setAngle2(RS_Math::deg2rad(RS_Math::eval(leAngle2->text())));
     arc->setReversed(cbReversed->isChecked());
     arc->setPen(wPen->getPen());
-    arc->setLayer(cbLayer->currentText());
-    arc->calculateEndpoints();
+	arc->setLayer(cbLayer->currentText());
     arc->calculateBorders();
 }
 

@@ -155,13 +155,9 @@ public:
     }
 
     /** @return Start point of the entity. */
-	virtual RS_Vector getStartpoint() const override {
-        return startpoint;
-    }
+	virtual RS_Vector getStartpoint() const override;
     /** @return End point of the entity. */
-	virtual RS_Vector getEndpoint() const override {
-        return endpoint;
-    }
+	virtual RS_Vector getEndpoint() const override;
 	virtual std::vector<RS_Entity* > offsetTwoSides(const double& distance) const override;
     /**
           * implementations must revert the direction of an atomic entity
@@ -236,7 +232,6 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, const RS_Arc& a);
 
-	void calculateEndpoints();
 	virtual void calculateBorders() override;
     /** return the equation of the entity
 for quadratic,
@@ -257,18 +252,7 @@ m0 x + m1 y + m2 =0
 	virtual double areaLineIntegral() const override;
 
 protected:
-    RS_ArcData data;
-
-    /**
-     * Startpoint. This is redundant but stored for performance
-     * reasons.
-     */
-    RS_Vector startpoint;
-    /**
-     * Endpoint. This is redundant but stored for performance
-     * reasons.
-     */
-    RS_Vector endpoint;
+	RS_ArcData data;
 };
 
 #endif

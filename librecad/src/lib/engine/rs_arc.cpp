@@ -37,7 +37,7 @@
 #include "lc_quadratic.h"
 #include "rs_painterqt.h"
 #include "rs_debug.h"
-
+#include "lc_rect.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -82,7 +82,6 @@ std::ostream& operator << (std::ostream& os, const RS_ArcData& ad) {
 RS_Arc::RS_Arc(RS_EntityContainer* parent,
                const RS_ArcData& d)
     : RS_AtomicEntity(parent), data(d) {
-    calculateEndpoints();
     calculateBorders();
 }
 
@@ -153,7 +152,6 @@ bool RS_Arc::createFrom2PDirectionRadius(const RS_Vector& startPoint,
     if (fabs(diff-M_PI)<1.0e-1) {
         data.reversed = true;
     }
-    calculateEndpoints();
     calculateBorders();
 
     return true;
@@ -192,7 +190,6 @@ bool RS_Arc::createFrom2PDirectionAngle(const RS_Vector& startPoint,
     }else{
     data.angle2 = RS_Math::correctAngle(data.angle1 +angleLength);
     }
-    calculateEndpoints();
     calculateBorders();
 
     return true;
@@ -233,30 +230,20 @@ bool RS_Arc::createFrom2PBulge(const RS_Vector& startPoint, const RS_Vector& end
     data.angle1 = data.center.angleTo(startPoint);
     data.angle2 = data.center.angleTo(endPoint);
 
-    calculateEndpoints();
     calculateBorders();
 
     return true;
 }
 
-
-
-/**
- * Recalculates the endpoints using the angles and the radius.
- */
-void RS_Arc::calculateEndpoints() {
-    startpoint.set(data.center.x + cos(data.angle1) * data.radius,
-                   data.center.y + sin(data.angle1) * data.radius);
-    endpoint.set(data.center.x + cos(data.angle2) * data.radius,
-                 data.center.y + sin(data.angle2) * data.radius);
-}
-
-
 void RS_Arc::calculateBorders() {
-    double minX = std::min(startpoint.x, endpoint.x);
-    double minY = std::min(startpoint.y, endpoint.y);
-    double maxX = std::max(startpoint.x, endpoint.x);
-    double maxY = std::max(startpoint.y, endpoint.y);
+	RS_Vector const startpoint = data.center + RS_Vector::polar(data.radius, data.angle1);
+	RS_Vector const endpoint = data.center + RS_Vector::polar(data.radius, data.angle2);
+	LC_Rect const rect{startpoint, endpoint};
+
+	double minX = rect.lowerLeftCorner().x;
+	double minY = rect.lowerLeftCorner().y;
+	double maxX = rect.upperRightCorner().x;
+	double maxY = rect.upperRightCorner().y;
 
     double a1 = isReversed() ? data.angle2 : data.angle1;
     double a2 = isReversed() ? data.angle1 : data.angle2;
@@ -278,11 +265,21 @@ void RS_Arc::calculateBorders() {
 }
 
 
+RS_Vector RS_Arc::getStartpoint() const
+{
+	return data.center + RS_Vector::polar(data.radius, data.angle1);
+}
+
+/** @return End point of the entity. */
+RS_Vector RS_Arc::getEndpoint() const
+{
+	return data.center + RS_Vector::polar(data.radius, data.angle2);
+}
 
 RS_VectorSolutions RS_Arc::getRefPoints() const
 {
 	//order: start, end, center
-	return {startpoint, endpoint, data.center};
+	return {getStartpoint(), getEndpoint(), data.center};
 }
 
 double RS_Arc::getDirection1() const {
@@ -309,18 +306,21 @@ double RS_Arc::getDirection2() const {
 RS_Vector RS_Arc::getNearestEndpoint(const RS_Vector& coord, double* dist) const{
     double dist1, dist2;
 
-    dist1 = (startpoint-coord).squared();
-    dist2 = (endpoint-coord).squared();
+	auto const startpoint = getStartpoint();
+	auto const endpoint = getEndpoint();
+
+	dist1 = coord.squaredTo(startpoint);
+	dist2 = coord.squaredTo(endpoint);
 
     if (dist2<dist1) {
-		if (dist) {
+		if (dist)
             *dist = sqrt(dist2);
-        }
+
          return endpoint;
     } else {
-		if (dist) {
+		if (dist)
             *dist = sqrt(dist1);
-        }
+
         return startpoint;
     }
 
@@ -459,21 +459,20 @@ RS_Vector RS_Arc::getNearestDist(double distance,
 								 double* dist) const{
 
     if (data.radius<RS_TOLERANCE) {
-		if (dist) {
+		if (dist)
             *dist = RS_MAXDOUBLE;
-        }
-        return RS_Vector(false);
+
+		return {};
     }
 
     double aDist = distance / data.radius;
     if (isReversed()) aDist= -aDist;
     double a;
-    if(coord.distanceTo(getStartpoint()) < coord.distanceTo(getEndpoint())) {
-        a=getAngle1() + aDist;
-    }else {
-        a=getAngle2() - aDist;
-    }
 
+	if(coord.distanceTo(getStartpoint()) < coord.distanceTo(getEndpoint()))
+        a=getAngle1() + aDist;
+	else
+        a=getAngle2() - aDist;
 
 	RS_Vector ret = RS_Vector::polar(data.radius, a);
     ret += getCenter();
@@ -488,7 +487,7 @@ RS_Vector RS_Arc::getNearestDist(double distance,
 								 bool startp) const{
 
     if (data.radius<RS_TOLERANCE) {
-        return RS_Vector(false);
+		return {};
     }
 
     double a;
@@ -525,17 +524,16 @@ RS_Vector RS_Arc::getNearestOrthTan(const RS_Vector& coord,
         double angle=normal.getAngle1();
 		RS_Vector vp = RS_Vector::polar(getRadius(),angle);
 		std::vector<RS_Vector> sol;
-        for(int i=0;i <= 1;i++){
-                if(!onEntity ||
-                   RS_Math::isAngleBetween(angle,getAngle1(),getAngle2(),isReversed())) {
-                if(i){
-				sol.push_back(- vp);
-                }else {
-				sol.push_back(vp);
-                }
-        }
-                angle=RS_Math::correctAngle(angle+M_PI);
-        }
+		for(int i=0; i <= 1; i++){
+			if(!onEntity ||
+					RS_Math::isAngleBetween(angle,getAngle1(),getAngle2(),isReversed())) {
+				if (i)
+					sol.push_back(- vp);
+				else
+					sol.push_back(vp);
+			}
+			angle=RS_Math::correctAngle(angle+M_PI);
+		}
 		switch(sol.size()) {
                 case 0:
                         return RS_Vector(false);
@@ -559,13 +557,6 @@ void RS_Arc::moveStartpoint(const RS_Vector& pos) {
     createFrom2PBulge(pos, getEndpoint(), bulge);
     correctAngles(); // make sure angleLength is no more than 2*M_PI
     //}
-
-    // normal arc: move angle1
-    /*else {
-        data.angle1 = data.center.angleTo(pos);
-        calculateEndpoints();
-        calculateBorders();
-    }*/
 }
 
 
@@ -577,14 +568,8 @@ void RS_Arc::moveEndpoint(const RS_Vector& pos) {
     createFrom2PBulge(getStartpoint(), pos, bulge);
     correctAngles(); // make sure angleLength is no more than 2*M_PI
     //}
-
-    // normal arc: move angle1
-    /*else {
-        data.angle2 = data.center.angleTo(pos);
-        calculateEndpoints();
-        calculateBorders();
-    }*/
 }
+
 /**
   * this function creates offset
   *@coord, position indicates the direction of offset
@@ -605,7 +590,6 @@ bool RS_Arc::offset(const RS_Vector& coord, const double& distance) {
         }
     }
     setRadius(r0);
-    calculateEndpoints();
     calculateBorders();
     return true;
 }
@@ -623,9 +607,9 @@ std::vector<RS_Entity* > RS_Arc::offsetTwoSides(const double& distance) const
       */
 void RS_Arc::revertDirection(){
     std::swap(data.angle1,data.angle2);
-    std::swap(startpoint,endpoint);
     data.reversed = ! data.reversed;
 }
+
 /**
  * make sure angleLength() is not more than 2*M_PI
  */
@@ -640,7 +624,6 @@ void RS_Arc::correctAngles() {
 void RS_Arc::trimStartpoint(const RS_Vector& pos) {
     data.angle1 = data.center.angleTo(pos);
     correctAngles(); // make sure angleLength is no more than 2*M_PI
-    calculateEndpoints();
     calculateBorders();
 }
 
@@ -649,7 +632,6 @@ void RS_Arc::trimStartpoint(const RS_Vector& pos) {
 void RS_Arc::trimEndpoint(const RS_Vector& pos) {
     data.angle2 = data.center.angleTo(pos);
     correctAngles(); // make sure angleLength is no more than 2*M_PI
-    calculateEndpoints();
     calculateBorders();
 }
 
@@ -775,17 +757,12 @@ RS_Vector RS_Arc::prepareTrim(const RS_Vector& trimCoord,
 void RS_Arc::reverse() {
     std::swap(data.angle1,data.angle2);
     data.reversed = !data.reversed;
-//    calculateEndpoints();
-    std::swap(startpoint,endpoint);
-    //reversing the order of start/end doesn't change position
 //    calculateBorders();
 }
 
 
 void RS_Arc::move(const RS_Vector& offset) {
     data.center.move(offset);
-    startpoint.move(offset);
-    endpoint.move(offset);
     moveBorders(offset);
 }
 
@@ -796,7 +773,6 @@ void RS_Arc::rotate(const RS_Vector& center, const double& angle) {
     data.center.rotate(center, angle);
     data.angle1 = RS_Math::correctAngle(data.angle1+angle);
     data.angle2 = RS_Math::correctAngle(data.angle2+angle);
-    calculateEndpoints();
     calculateBorders();
     RS_DEBUG->print("RS_Arc::rotate: OK");
 }
@@ -807,7 +783,6 @@ void RS_Arc::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     double angle(angleVector.angle());
     data.angle1 = RS_Math::correctAngle(data.angle1+angle);
     data.angle2 = RS_Math::correctAngle(data.angle2+angle);
-    calculateEndpoints();
     calculateBorders();
     RS_DEBUG->print("RS_Arc::rotate: OK");
 }
@@ -828,12 +803,8 @@ void RS_Arc::scale(const RS_Vector& center, const RS_Vector& factor) {
     data.center.scale(center, factor);
     data.radius *= factor.x;
     data.radius = fabs( data.radius );
-//    calculateEndpoints();
     //todo, does this handle negative factors properly?
-    startpoint.scale(center,factor);
-    endpoint.scale(center,factor);
-    scaleBorders(center,factor);
-//    calculateBorders();
+	calculateBorders();
 }
 
 
@@ -845,7 +816,6 @@ void RS_Arc::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     setAngle1(RS_Math::correctAngle(a - getAngle1()));
     setAngle2(RS_Math::correctAngle(a - getAngle2()));
     correctAngles(); // make sure angleLength is no more than 2*M_PI
-    calculateEndpoints();
     calculateBorders();
 }
 
