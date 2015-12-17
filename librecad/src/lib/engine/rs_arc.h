@@ -223,7 +223,7 @@ public:
     virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
     virtual void scale(const RS_Vector& center, const RS_Vector& factor);
     virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
-    virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
+	virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     virtual void stretch(const RS_Vector& firstCorner,
                          const RS_Vector& secondCorner,
                          const RS_Vector& offset);
