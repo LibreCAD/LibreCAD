@@ -2304,10 +2304,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
         {
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): show existing");
 
-            //no need to search, casting parentWindow works like a charm
-            ppv->parentWidget()->showMaximized();
-            mdiAreaCAD->setActiveSubWindow(qobject_cast<QMdiSubWindow*>(ppv->parentWidget())); // fix
-//            std::cout<<"QC_ApplicationWindow::slotFilePrintPreview(bool on): emit(printPreviewChanged(true))"<<std::endl;
+            ppv->showMaximized();
+            mdiAreaCAD->setActiveSubWindow(qobject_cast<QMdiSubWindow*>(ppv));
             emit(printPreviewChanged(true));
         }
         else
