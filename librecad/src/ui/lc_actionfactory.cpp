@@ -693,6 +693,13 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler)
     action->setObjectName("ModifyExplodeText");
     a_map["ModifyExplodeText"] = action;
 
+    action = new QAction(tr("Ex&plode"), tool_group);
+    action->setIcon(QIcon(":/extui/modifyexplode.png"));
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotBlocksExplode()));
+    action->setObjectName("BlocksExplode");
+    a_map["BlocksExplode"] = action;
+
     // <[~ Info ~]>
 
     action = new QAction(tr("Point inside contour"), tool_group);
@@ -985,13 +992,6 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler)
     action_handler, SLOT(slotBlocksCreate()));
     action->setObjectName("BlocksCreate");
     a_map["BlocksCreate"] = action;
-
-    action = new QAction(tr("Ex&plode"), tool_group);
-    action->setIcon(QIcon(":/extui/modifyexplode.png"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotBlocksExplode()));
-    action->setObjectName("BlocksExplode");
-    a_map["BlocksExplode"] = action;
 
     // <[~ Option ~]>
 
