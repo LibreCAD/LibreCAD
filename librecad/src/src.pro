@@ -868,7 +868,8 @@ HEADERS += \
     plugins/intern/qc_actiongetpoint.h \
     plugins/intern/qc_actiongetselect.h \
     plugins/intern/qc_actiongetent.h \
-    main/main.h
+    main/main.h \
+    main/mainwindowx.h
 
 SOURCES += \
     main/qc_applicationwindow.cpp \
@@ -879,7 +880,8 @@ SOURCES += \
     plugins/intern/qc_actiongetpoint.cpp \
     plugins/intern/qc_actiongetselect.cpp \
     plugins/intern/qc_actiongetent.cpp \
-    main/main.cpp
+    main/main.cpp \
+    main/mainwindowx.cpp
 
 # If C99 emulation is needed, add the respective source files.
 contains(DEFINES, EMU_C99) {

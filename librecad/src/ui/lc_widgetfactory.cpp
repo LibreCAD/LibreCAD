@@ -22,6 +22,8 @@
 **********************************************************************************
 */
 
+
+#include "mainwindowx.h"
 #include "lc_widgetfactory.h"
 #include "lc_actionfactory.h"
 #include "lc_dockwidget.h"
@@ -42,9 +44,8 @@
 #include <QFile>
 #include <QMenuBar>
 #include <QActionGroup>
-#include <QMainWindow>
 
-LC_WidgetFactory::LC_WidgetFactory(QMainWindow* main_win,
+LC_WidgetFactory::LC_WidgetFactory(MainWindowX* main_win,
                                    const QMap<QString, QAction*>& action_map)
     : QObject(nullptr)
     , main_window(main_win)
@@ -779,17 +780,23 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     dockwidgets_menu->setObjectName("dockwidgets_menu");
     dockwidgets_menu->setTearOffEnabled(true);
 
-    dockwidgets_menu->addAction(a_map["LeftDockAreaToggle"]);
-    dockwidgets_menu->addAction(a_map["RightDockAreaToggle"]);
-
     QList<QDockWidget*> dockwidgets = main_window->findChildren<QDockWidget*>();
+
+    main_window->sortWidgetsByTitle(dockwidgets);
 
     foreach (QDockWidget* dw, dockwidgets)
     {
-        dockwidgets_menu->addAction(dw->toggleViewAction());
+        if (main_window->dockWidgetArea(dw) == Qt::RightDockWidgetArea)
+            dockwidgets_menu->addAction(dw->toggleViewAction());
     }
 
-    dockwidgets_menu->addAction(a_map["FocusCommand"]);
+    dockwidgets_menu->addSeparator();
+
+    foreach (QDockWidget* dw, dockwidgets)
+    {
+        if (main_window->dockWidgetArea(dw) == Qt::LeftDockWidgetArea)
+            dockwidgets_menu->addAction(dw->toggleViewAction());
+    }
 
     // <[~ Toolbars Menu ~]>
 
@@ -798,6 +805,8 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     toolbars_menu->setTearOffEnabled(true);
 
     QList<QToolBar*> toolbars = main_window->findChildren<QToolBar*>();
+
+    main_window->sortWidgetsByTitle(toolbars);
 
     foreach (QToolBar* tb, toolbars)
     {

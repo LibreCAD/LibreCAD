@@ -27,7 +27,7 @@
 #ifndef QC_APPLICATIONWINDOW_H
 #define QC_APPLICATIONWINDOW_H
 
-#include <QMainWindow>
+#include "mainwindowx.h"
 
 #include "rs_pen.h"
 #include "rs_snapper.h"
@@ -75,7 +75,7 @@ struct DockAreas
  *
  * @author Andrew Mustun
  */
-class QC_ApplicationWindow: public QMainWindow
+class QC_ApplicationWindow: public MainWindowX
 {
     Q_OBJECT
 
