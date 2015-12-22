@@ -195,12 +195,6 @@ public slots:
 
     void hide_options(QC_MDIWindow*);
 
-    void toggleRightDockArea(bool checked);
-    void toggleLeftDockArea(bool checked);
-    void toggleTopDockArea(bool checked);
-    void toggleBottomDockArea(bool checked);
-    void toggleFloatingDockwidgets(bool checked);
-
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);
