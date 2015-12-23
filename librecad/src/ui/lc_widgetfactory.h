@@ -11,7 +11,6 @@ class QMenuBar;
 class QToolBar;
 class QActionGroup;
 
-class MainWindowX;
 class QG_PenToolBar;
 class QG_SnapToolBar;
 class QG_LayerWidget;
@@ -20,7 +19,7 @@ class QG_ActionHandler;
 class QG_LibraryWidget;
 class QG_CommandWidget;
 class LC_CustomToolbar;
-
+class QC_ApplicationWindow;
 
 /**
  * creates the widgets and adds them to the main window;
@@ -31,7 +30,7 @@ class LC_WidgetFactory : public QObject
     Q_OBJECT
 
 public:
-    LC_WidgetFactory(MainWindowX* main_win,
+    LC_WidgetFactory(QC_ApplicationWindow* main_win,
                      const QMap<QString, QAction*>& action_map);
 
     void createToolbars(QG_ActionHandler* action_handler);
@@ -59,7 +58,7 @@ public:
 
 
 private:
-    MainWindowX* main_window;
+    QC_ApplicationWindow* main_window;
     const QMap<QString, QAction*>& a_map;
 
     QList<QAction*> file_actions;
