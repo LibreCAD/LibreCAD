@@ -1,6 +1,7 @@
 
 # include user-defined things in every qmake project
 exists( custom.pro ):include( custom.pro )
+exists( custom.pri ):include( custom.pri )
 
 include( settings.pri )
 
