@@ -779,6 +779,14 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     dockwidgets_menu->setObjectName("dockwidgets_menu");
     dockwidgets_menu->setTearOffEnabled(true);
 
+    dockwidgets_menu->addAction(a_map["LeftDockAreaToggle"]);
+    dockwidgets_menu->addAction(a_map["RightDockAreaToggle"]);
+    dockwidgets_menu->addAction(a_map["TopDockAreaToggle"]);
+    dockwidgets_menu->addAction(a_map["BottomDockAreaToggle"]);
+    dockwidgets_menu->addAction(a_map["FloatingDockwidgetsToggle"]);
+
+    dockwidgets_menu->addSeparator();
+
     QList<QDockWidget*> dockwidgets = main_window->findChildren<QDockWidget*>();
 
     main_window->sortWidgetsByTitle(dockwidgets);
