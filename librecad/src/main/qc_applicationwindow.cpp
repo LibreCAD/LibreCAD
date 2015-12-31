@@ -394,14 +394,6 @@ QMenu *QC_ApplicationWindow::findMenu(const QString &searchMenu, const QObjectLi
     return 0;
 }
 
-const QMainWindow* QC_ApplicationWindow::getMainWindow() const{
-    return this;
-}
-
-QMainWindow* QC_ApplicationWindow::getMainWindow() {
-    return this;
-}
-
 /**
  * Loads the found plugins.
  */

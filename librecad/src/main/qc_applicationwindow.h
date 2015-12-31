@@ -230,14 +230,6 @@ public:
      */
 	void createNewDocument(const QString& fileName = QString::null, RS_Document* doc=nullptr);
 
-    /**
-     * Implementation from QG_MainWindowInterface.
-     *
-     * @return Pointer to this.
-     */
-	const QMainWindow* getMainWindow() const;
-	QMainWindow* getMainWindow();
-
     void redrawAll();
     void updateGrids();
 
