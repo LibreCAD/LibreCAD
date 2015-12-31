@@ -32,11 +32,6 @@
 #include "rs_pen.h"
 #include "rs_snapper.h"
 
-#ifdef RS_SCRIPTING
-#include "qs_scripter.h"
-#include <qsproject.h>
-#endif
-
 class QMdiArea;
 class QMdiSubWindow;
 class QC_MDIWindow;
@@ -165,15 +160,6 @@ public slots:
     void slotOptionsGeneral();
 
     void slotImportBlock();
-    void slotScriptOpenIDE();
-    void slotScriptRun();
-
-    void slotRunStartScript();
-    void slotRunScript();
-    void slotRunScript(const QString& name);
-
-    void slotInsertBlock();
-    void slotInsertBlock(const QString& name);
 
     /** shows an about dlg*/
     void slotHelpAbout();
@@ -251,20 +237,6 @@ public:
      */
 	const QMainWindow* getMainWindow() const;
 	QMainWindow* getMainWindow();
-
-    /**
-     * @return Pointer to the qsa object.
-     */
-    #ifdef RS_SCRIPTING
-        QSProject* getQSAProject() {
-                    if (scripter!=nullptr) {
-                    return scripter->getQSAProject();
-                    }
-                    else {
-                            return nullptr;
-                    }
-        }
-    #endif
 
     void redrawAll();
     void updateGrids();

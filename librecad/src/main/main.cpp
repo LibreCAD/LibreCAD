@@ -33,10 +33,6 @@
 
 QSplashScreen *splash=nullptr;
 
-#ifdef RS_SCRIPTING
-    #include <qsproject.h>
-#endif
-
 #include "rs_fontlist.h"
 #include "rs_patternlist.h"
 #include "rs_scriptlist.h"
@@ -379,8 +375,6 @@ int main(int argc, char** argv)
     {
         appWin.slotFileNewNew();
     }
-
-    appWin.slotRunStartScript();
 
     int return_code = app.exec();
 

@@ -1018,18 +1018,6 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler)
     action->setObjectName("OptionsDrawing");
     a_map["OptionsDrawing"] = action;
 
-    action = new QAction(tr("Open IDE"), disable_group);
-    connect(action, SIGNAL(triggered()),
-    main_window, SLOT(slotScriptOpenIDE()));
-    action->setObjectName("ScriptOpenIDE");
-    a_map["ScriptOpenIDE"] = action;
-
-    action = new QAction(tr("Run Script.."), disable_group);
-    connect(action, SIGNAL(triggered()),
-    main_window, SLOT(slotScriptRun()));
-    action->setObjectName("ScriptRun");
-    a_map["ScriptRun"] = action;
-
     // <[~ Modify ~]>
 
     action = new QAction(tr("&Delete selected"), disable_group);

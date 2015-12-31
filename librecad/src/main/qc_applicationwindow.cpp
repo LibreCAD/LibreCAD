@@ -234,12 +234,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     m_pActiveLayerName=new QG_ActiveLayerName(this);
     statusBar()->addWidget(m_pActiveLayerName);
 
-    #ifdef RS_SCRIPTING
-        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating scripter");
-        scripter = new QS_Scripter(this, this);
-        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating scripter: OK");
-    #endif
-
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating LC_CentralWidget");
 
     LC_CentralWidget* central = new LC_CentralWidget(this);
@@ -494,17 +488,6 @@ w->getGraphicView()->redraw();
  */
 QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow");
-    #ifdef RS_SCRIPTING
-
-        RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
-                        "deleting scripter");
-
-        delete scripter;
-
-        RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
-                        "deleting scripter: OK");
-
-    #endif
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting dialog factory");
@@ -514,109 +497,6 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting dialog factory: OK");
 }
-
-
-
-/**
- * Runs the start script if scripting is available.
- */
-void QC_ApplicationWindow::slotRunStartScript() {
-        slotRunScript("autostart.qs");
-        restoreDocks();
-}
-
-
-
-/**
- * Runs a script. The action that triggers this slot has to carry the
- * name of the script file.
- */
-void QC_ApplicationWindow::slotRunScript() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotRunScript");
-
-    const QObject* s = sender();
-    if (s) {
-        QString script = ((QAction*)s)->text();
-        RS_DEBUG->print("QC_ApplicationWindow::slotRunScript: %s",
-                        script.toLatin1().data());
-                slotRunScript(script);
-    }
-}
-
-
-
-/**
- * Runs the script with the given name.
- */
-void QC_ApplicationWindow::slotRunScript(const QString& name) {
-    Q_UNUSED(name);
-#ifdef RS_SCRIPTING
-        RS_DEBUG->print("QC_ApplicationWindow::slotRunScript");
-
-
-        if (scripter==nullptr) {
-                RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "QC_ApplicationWindow::slotRunScript: "
-                        "scripter not initialized");
-                return;
-        }
-
-    statusBar()->showMessage(tr("Running script '%1'").arg(name), 2000);
-
-        QStringList scriptList = RS_SYSTEM->getScriptList();
-        scriptList.push_back(RS_SYSTEM->getHomeDir() + "/." XSTR(QC_APPKEY) "/" + name);
-
-        for (QStringList::Iterator it = scriptList.begin(); it!=scriptList.end(); ++it) {
-                RS_DEBUG->print("QC_ApplicationWindow::slotRunScript: "
-                        "checking script '%s'", (*it).latin1());
-                QFileInfo fi(*it);
-                if (fi.exists() && fi.fileName()==name) {
-                        RS_DEBUG->print("QC_ApplicationWindow::slotRunScript: running '%s'",
-                                (*it).latin1());
-                        scripter->runScript(*it, "main");
-                }
-        }
-#endif
-}
-
-
-
-/**
- * Called from toolbar buttons that were added by scripts to
- * insert blocks.
- */
-void QC_ApplicationWindow::slotInsertBlock() {
-    const QObject* s = sender();
-    if (s) {
-        QString block = ((QAction*)s)->text();
-        RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: %s",
-                        block.toLatin1().data());
-                slotInsertBlock(block);
-    }
-}
-
-
-
-/**
- * Called to insert blocks.
- */
-void QC_ApplicationWindow::slotInsertBlock(const QString& name) {
-        RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: '%s'", name.toLatin1().data());
-
-    statusBar()->showMessage(tr("Inserting block '%1'").arg(name), 2000);
-
-
-        RS_GraphicView* graphicView = getGraphicView();
-        RS_Document* document = getDocument();
-        if (graphicView && document) {
-                RS_ActionLibraryInsert* action =
-                        new RS_ActionLibraryInsert(*document, *graphicView);
-                action->setFile(name);
-                graphicView->setCurrentAction(action);
-        }
-}
-
-
 
 /**
  * Shows the main application window and a splash screen.
@@ -2584,28 +2464,6 @@ void QC_ApplicationWindow::slotImportBlock() {
                         "QC_ApplicationWindow::slotImportBlock: Can't read file: '%s'", dxfPath.toLatin1().data());
     }
 }
-
-/**
- * Menu script -> show ide
- */
-void QC_ApplicationWindow::slotScriptOpenIDE() {
-#ifdef RS_SCRIPTING
-    scripter->openIDE();
-#endif
-}
-
-
-
-/**
- * Menu script -> run
- */
-void QC_ApplicationWindow::slotScriptRun() {
-#ifdef RS_SCRIPTING
-    scripter->runScript();
-#endif
-}
-
-
 
 /**
  * Menu help -> about.
