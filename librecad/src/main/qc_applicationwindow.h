@@ -80,7 +80,6 @@ public:
 
     void set_icon_size();
     void initSettings();
-    void restoreDocks();
     void storeSettings();
 
     bool queryExit(bool force);

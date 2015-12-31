@@ -651,14 +651,6 @@ void QC_ApplicationWindow::initSettings() {
     resize(windowWidth, windowHeight);
     move(windowX, windowY);
 
-    restoreDocks();
-}
-
-
-/**
- * Restores the position of the dock windows.
- */
-void QC_ApplicationWindow::restoreDocks() {
     RS_SETTINGS->beginGroup("/Geometry");
     restoreState(RS_SETTINGS->readByteArrayEntry("/DockWindows", ""));
     dock_areas.left->setChecked(RS_SETTINGS->readNumEntry("/LeftDockArea", 0));
