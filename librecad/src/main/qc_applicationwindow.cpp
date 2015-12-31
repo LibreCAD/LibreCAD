@@ -222,6 +222,18 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
     setWindowIcon(QIcon(QC_APP_ICON));
 
+    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
+
+    statusBar()->setMinimumHeight(32);
+    coordinateWidget = new QG_CoordinateWidget(statusBar(), "coordinates");
+    statusBar()->addWidget(coordinateWidget);
+    mouseWidget = new QG_MouseWidget(statusBar(), "mouse info");
+    statusBar()->addWidget(mouseWidget);
+    selectionWidget = new QG_SelectionWidget(statusBar(), "selections");
+    statusBar()->addWidget(selectionWidget);
+    m_pActiveLayerName=new QG_ActiveLayerName(this);
+    statusBar()->addWidget(m_pActiveLayerName);
+
     #ifdef RS_SCRIPTING
         RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating scripter");
         scripter = new QS_Scripter(this, this);
@@ -321,9 +333,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     layerWidget->setStyleSheet("selection-background-color: " + layer_select_color);
     blockWidget->setStyleSheet("selection-background-color: " + layer_select_color);
-
-    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
-    initStatusBar();
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory");
     dialogFactory = new QC_DialogFactory(this, optionWidget);
@@ -742,23 +751,6 @@ void QC_ApplicationWindow::slotEnableActions(bool enable) {
         undoButton->setEnabled(enable&& undoEnable);
         redoButton->setEnabled(enable&& redoEnable);
     }
-}
-
-/**
- * Initializes the status bar at the bottom.
- */
-void QC_ApplicationWindow::initStatusBar() {
-    RS_DEBUG->print("QC_ApplicationWindow::initStatusBar()");
-
-    statusBar()->setMinimumHeight(32);
-    coordinateWidget = new QG_CoordinateWidget(statusBar(), "coordinates");
-    statusBar()->addWidget(coordinateWidget);
-    mouseWidget = new QG_MouseWidget(statusBar(), "mouse info");
-    statusBar()->addWidget(mouseWidget);
-    selectionWidget = new QG_SelectionWidget(statusBar(), "selections");
-    statusBar()->addWidget(selectionWidget);
-    m_pActiveLayerName=new QG_ActiveLayerName(this);
-    statusBar()->addWidget(m_pActiveLayerName);
 }
 
 void QC_ApplicationWindow::slotUpdateActiveLayer()

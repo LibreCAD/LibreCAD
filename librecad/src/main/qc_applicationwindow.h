@@ -84,7 +84,6 @@ public:
     ~QC_ApplicationWindow();
 
     void set_icon_size();
-    void initStatusBar();
     void initSettings();
     void restoreDocks();
     void storeSettings();
