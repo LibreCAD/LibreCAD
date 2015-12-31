@@ -2180,7 +2180,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 subWindow->showMaximized();
                 parent->addChildWindow(w);
                 connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
-                        this, SLOT(hide_options(QC_MDIWindow*)));
+                        this, SLOT(hideOptions(QC_MDIWindow*)));
 
                 w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
                 w->setWindowIcon(QIcon(":/main/document.png"));
@@ -2776,14 +2776,14 @@ void QC_ApplicationWindow::updateWindowTitle(QWidget *w)
     }
 }
 
-void QC_ApplicationWindow::slot_set_action(QAction* q_action)
+void QC_ApplicationWindow::relayAction(QAction* q_action)
 {
     // SIGNAL = http://doc.qt.io/qt-5/qactiongroup.html#triggered
 
     getGraphicView()->set_action(q_action);
 }
 
-void QC_ApplicationWindow::goto_wiki()
+void QC_ApplicationWindow::gotoWiki()
 {
     QDesktopServices::openUrl(QUrl("http://wiki.librecad.org/"));
 }
@@ -2820,14 +2820,14 @@ QMenu* QC_ApplicationWindow::createPopupMenu()
     return context_menu;
 }
 
-void QC_ApplicationWindow::slot_fullscreen(bool checked)
+void QC_ApplicationWindow::toggleFullscreen(bool checked)
 {
     // SIGNAL = http://doc.qt.io/qt-5/qaction.html#checked-prop
 
     checked?showFullScreen():showMaximized();
 }
 
-void QC_ApplicationWindow::hide_options(QC_MDIWindow* win)
+void QC_ApplicationWindow::hideOptions(QC_MDIWindow* win)
 {
     win->getGraphicView()->getDefaultAction()->hideOptions();
 }

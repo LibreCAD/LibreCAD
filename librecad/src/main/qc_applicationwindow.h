@@ -91,7 +91,7 @@ public:
     void setUndoEnable(bool enable);
 
 public slots:
-    void slot_set_action(QAction* q_action);
+    void relayAction(QAction* q_action);
     virtual void show();
     void finishSplashScreen();
     void slotFocus();
@@ -172,13 +172,13 @@ public slots:
     void slotUpdateActiveLayer();
 	void execPlug();
 
-    void goto_wiki();
+    void gotoWiki();
 
-    void slot_fullscreen(bool checked);
+    void toggleFullscreen(bool checked);
 
     void setPreviousZoomEnable(bool enable);
 
-    void hide_options(QC_MDIWindow*);
+    void hideOptions(QC_MDIWindow*);
 
 signals:
     void gridChanged(bool on);
@@ -272,11 +272,6 @@ private:
     //Plugin support
     void loadPlugins();
     QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
-
-    #ifdef RS_SCRIPTING
-        /** Scripting interface. */
-        QS_Scripter* scripter;
-    #endif
 
     #ifdef LC_DEBUGGING
         LC_SimpleTests* m_pSimpleTest;

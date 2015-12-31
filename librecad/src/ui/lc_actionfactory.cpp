@@ -45,7 +45,7 @@ LC_ActionFactory::LC_ActionFactory(QObject* parent)
             tool_group, SLOT(setEnabled(bool)));
 
     connect(tool_group, SIGNAL(triggered(QAction*)),
-            parent, SLOT(slot_set_action(QAction*)));
+            parent, SLOT(relayAction(QAction*)));
 }
 
 QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler)
@@ -1258,7 +1258,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler)
         #endif
     #endif
     action->setCheckable(true);
-    connect(action, SIGNAL(toggled(bool)), main_window, SLOT(slot_fullscreen(bool)));
+    connect(action, SIGNAL(toggled(bool)), main_window, SLOT(toggleFullscreen(bool)));
     action->setObjectName("Fullscreen");
     a_map["Fullscreen"] = action;
 
