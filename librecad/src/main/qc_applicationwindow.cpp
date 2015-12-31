@@ -210,7 +210,6 @@ QPrinter::PageSize rsToQtPaperFormat(RS2::PaperFormat f) {
  * Constructor. Initializes the app.
  */
 QC_ApplicationWindow::QC_ApplicationWindow()
-    : m_qDraftModeTitle(" ["+tr("Draft Mode")+"]")
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
@@ -1657,7 +1656,7 @@ void QC_ApplicationWindow::slotFileSaveAs() {
                 recentFiles->add(name);
                 w->setWindowTitle(format_filename_caption(name));
                 if(w->getGraphicView()->isDraftMode())
-                    w->setWindowTitle(w->windowTitle()+m_qDraftModeTitle);
+                    w->setWindowTitle(w->windowTitle() + " ["+tr("Draft Mode")+"]");
 
                 if (!autosaveTimer->isActive()) {
                     RS_SETTINGS->beginGroup("/Defaults");
@@ -2299,20 +2298,23 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
             windows<<w;
     windows.append(this);
 
+
+
     //handle "Draft Mode" in window titles
+
+    QString draft_mode = " ["+tr("Draft Mode")+"]";
     if(toggle){
         for(QWidget* w: windows){
             QString title=w->windowTitle();
-//            qDebug()<<"position="<<w->windowTitle().lastIndexOf(m_qDraftModeTitle)<<" "<<m_qDraftModeTitle.size()<<" "<<w->windowTitle().size();
             //avoid duplicated "Draft Mode" string in window title
-            if(title.size()>m_qDraftModeTitle.size() && title.size()-1 != title.lastIndexOf(m_qDraftModeTitle)+m_qDraftModeTitle.size())
-                w->setWindowTitle(title+m_qDraftModeTitle);
+            if(title.size()>draft_mode.size() && title.size()-1 != title.lastIndexOf(draft_mode)+draft_mode.size())
+                w->setWindowTitle(title+draft_mode);
         }
     } else {
         for(QWidget* w: windows){
             QString title=w->windowTitle();
-            if(title.size()>m_qDraftModeTitle.size() && title.count(m_qDraftModeTitle)==1){
-                title.remove(title.lastIndexOf(m_qDraftModeTitle),m_qDraftModeTitle.size());
+            if(title.size()>draft_mode.size() && title.count(draft_mode)==1){
+                title.remove(title.lastIndexOf(draft_mode),draft_mode.size());
                 w->setWindowTitle(title);
             }
         }
@@ -2766,10 +2768,11 @@ void QC_ApplicationWindow::updateWindowTitle(QWidget *w)
     RS_SETTINGS->beginGroup("/Appearance");
     bool draftMode=RS_SETTINGS->readNumEntry("/DraftMode", 0);
     RS_SETTINGS->endGroup();
+
+    QString draft_mode = " ["+tr("Draft Mode")+"]";
     if(draftMode){
-//        qDebug()<<"position="<<w->windowTitle().lastIndexOf(m_qDraftModeTitle)<<" "<<m_qDraftModeTitle.size()<<" "<<w->windowTitle().size();
-        if(w->windowTitle().lastIndexOf(m_qDraftModeTitle))
-        w->setWindowTitle(w->windowTitle()+m_qDraftModeTitle);
+        if(w->windowTitle().lastIndexOf(draft_mode))
+        w->setWindowTitle(w->windowTitle()+draft_mode);
     }
 }
 

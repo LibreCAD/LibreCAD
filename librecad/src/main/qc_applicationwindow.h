@@ -282,9 +282,6 @@ private:
         LC_SimpleTests* m_pSimpleTest;
     #endif
 
-    //display "Draft Mode" in window title for draft mode
-    const QString m_qDraftModeTitle;
-
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;
     QTimer *autosaveTimer;
