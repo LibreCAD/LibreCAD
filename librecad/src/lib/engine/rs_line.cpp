@@ -602,10 +602,10 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
 		case 4: {
 			// will use the inner two points
 			size_t i{0};
-			for (size_t j = 2; j < vpIts.size(); ++j) {
+			for (size_t j = 0; j < vpIts.size(); ++j)
 				if (viewportRect.inArea(vpIts.at(j), RS_TOLERANCE * 10.))
 					std::swap(vpIts[j], vpIts[i++]);
-			}
+
 		}
 			break;
 		default:
