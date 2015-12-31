@@ -339,9 +339,9 @@ private:
     QToolBar* optionWidget; //!< for individual tool options
 
     // --- Actions ---
-    static QAction* previousZoom;
-    static QAction* undoButton;
-    static QAction* redoButton;
+    QAction* previousZoom;
+    QAction* undoButton;
+    QAction* redoButton;
 
     QAction* scriptOpenIDE;
     QAction* scriptRun;

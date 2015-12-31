@@ -120,9 +120,6 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
  *	*/
 #define WTB_MAX_SIZE        79
 
- QAction* QC_ApplicationWindow::previousZoom=nullptr;
- QAction* QC_ApplicationWindow::undoButton=nullptr;
- QAction* QC_ApplicationWindow::redoButton=nullptr;
 namespace {
 /**
  * Wrapper for Qt.
