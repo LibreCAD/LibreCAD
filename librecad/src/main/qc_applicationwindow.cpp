@@ -367,6 +367,11 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     //accept drop events to open files
     setAcceptDrops(true);
+
+    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+    setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 }
 
 /**
