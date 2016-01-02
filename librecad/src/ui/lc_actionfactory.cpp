@@ -993,7 +993,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler)
     action->setObjectName("BlocksCreate");
     a_map["BlocksCreate"] = action;
 
-    // <[~ Option ~]>
+    // <[~ Options ~]>
 
     action = new QAction(QIcon(":/actions/configure.png"),
     #ifdef __APPLE__
@@ -1017,6 +1017,12 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler)
     action_handler, SLOT(slotOptionsDrawing()));
     action->setObjectName("OptionsDrawing");
     a_map["OptionsDrawing"] = action;
+
+    action = new QAction(tr("Widget Options"), disable_group);
+    action->setObjectName("WidgetOptions");
+    a_map["WidgetOptions"] = action;
+    connect(action, SIGNAL(triggered()),
+            main_window, SLOT(widgetOptionsDialog()));
 
     // <[~ Modify ~]>
 

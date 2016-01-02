@@ -96,6 +96,8 @@
 #include "lc_simpletests.h"
 #include "rs_debug.h"
 
+#include "lc_widgetoptionsdialog.h"
+
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
 
@@ -246,12 +248,13 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
             this, SLOT(slotWindowActivated(QMdiSubWindow*)));
 
-    RS_SETTINGS->beginGroup("/Appearance");
-    bool custom_size = RS_SETTINGS->readNumEntry("/SetIconSize", 0);
-    int icon_size = custom_size ? RS_SETTINGS->readNumEntry("/IconSize", 22) : 22;
+    RS_SETTINGS->beginGroup("Widgets");
+    bool custom_size = RS_SETTINGS->readNumEntry("/AllowToolbarIconSize", 0);
+    int icon_size = custom_size ? RS_SETTINGS->readNumEntry("/ToolbarIconSize", 24) : 24;
     RS_SETTINGS->endGroup();
 
-    set_icon_size();
+    if (custom_size)
+        setIconSize(QSize(icon_size, icon_size));
 
     actionHandler = new QG_ActionHandler(this);
 
@@ -659,6 +662,16 @@ void QC_ApplicationWindow::initSettings() {
     dock_areas.bottom->setChecked(RS_SETTINGS->readNumEntry("/BottomDockArea", 1));
     dock_areas.floating->setChecked(RS_SETTINGS->readNumEntry("/FloatingDockwidgets", 1));
     RS_SETTINGS->endGroup();
+
+    RS_SETTINGS->beginGroup("Widgets");
+    int allow_menu_text_size = RS_SETTINGS->readNumEntry("/AllowMenuTextSize", 0);
+    if (allow_menu_text_size)
+    {
+        int menu_text_size = RS_SETTINGS->readNumEntry("/MenuTextSize", 12);
+        qApp->setStyleSheet(QString("QMenu {font-size : %1px}").arg(menu_text_size));
+    }
+    RS_SETTINGS->endGroup();
+
 }
 
 
@@ -2375,8 +2388,6 @@ void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
 void QC_ApplicationWindow::slotOptionsGeneral() {
     RS_DIALOGFACTORY->requestOptionsGeneralDialog();
 
-    set_icon_size();
-
     RS_SETTINGS->beginGroup("Colors");
     QColor background(RS_SETTINGS->readEntry("/background", Colors::background));
     QColor gridColor(RS_SETTINGS->readEntry("/grid", Colors::grid));
@@ -2780,18 +2791,6 @@ void QC_ApplicationWindow::gotoWiki()
     QDesktopServices::openUrl(QUrl("http://wiki.librecad.org/"));
 }
 
-void QC_ApplicationWindow::set_icon_size()
-{
-    RS_SETTINGS->beginGroup("/Appearance");
-    bool custom_size = RS_SETTINGS->readNumEntry("/SetIconSize", 0);
-    if (custom_size)
-    {
-        int icon_size = RS_SETTINGS->readNumEntry("/IconSize", 24);
-        setIconSize(QSize(icon_size, icon_size));
-    }
-    RS_SETTINGS->endGroup();
-}
-
 /**
  * Called by Qt after a toolbar or dockwidget right-click.
  * See QMainWindow::createPopupMenu() for more information.
@@ -2831,4 +2830,45 @@ void QC_ApplicationWindow::slotFileOpenRecent(QAction* action)
     statusBar()->showMessage(tr("Opening recent file..."));
     QString fileName = action->data().toString();
     slotFileOpen(fileName, RS2::FormatUnknown);
+}
+
+
+void QC_ApplicationWindow::widgetOptionsDialog()
+{
+    LC_WidgetOptionsDialog dlg;
+
+    QSettings settings;
+    settings.beginGroup("Widgets");
+
+    int allow_toolbar_icon_size = settings.value("AllowToolbarIconSize", 0).toInt();
+    dlg.toolbar_icon_size_checkbox->setChecked(allow_toolbar_icon_size);
+    int toolbar_icon_size = settings.value("ToolbarIconSize", 24).toInt();
+    dlg.toolbar_icon_size_spinbox->setValue(toolbar_icon_size);
+
+    int allow_menu_text_size = settings.value("AllowMenuTextSize", 0).toInt();
+    dlg.menu_text_size_checkbox->setChecked(allow_menu_text_size);
+    int menu_text_size = settings.value("MenuTextSize", 12).toInt();
+    dlg.menu_text_size_spinbox->setValue(menu_text_size);
+
+    if (dlg.exec())
+    {
+        int allow_toolbar_icon_size = dlg.toolbar_icon_size_checkbox->isChecked();
+        settings.setValue("AllowToolbarIconSize", allow_toolbar_icon_size);
+        if (allow_toolbar_icon_size)
+        {
+            int toolbar_icon_size = dlg.toolbar_icon_size_spinbox->value();
+            settings.setValue("ToolbarIconSize", toolbar_icon_size);
+            setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
+        }
+
+        int allow_menu_text_size = dlg.menu_text_size_checkbox->isChecked();
+        settings.setValue("AllowMenuTextSize", allow_menu_text_size);
+        if (allow_menu_text_size)
+        {
+            int menu_text_size = dlg.menu_text_size_spinbox->value();
+            settings.setValue("MenuTextSize", menu_text_size);
+            qApp->setStyleSheet(QString("QMenu {font-size : %1px}").arg(menu_text_size));
+        }
+    }
+    settings.endGroup();
 }

@@ -602,6 +602,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     settings_menu->setTearOffEnabled(true);
     settings_menu->addAction(a_map["OptionsGeneral"]);
     settings_menu->addAction(a_map["OptionsDrawing"]);
+    settings_menu->addAction(a_map["WidgetOptions"]);
 
     // <[~ Edit ~]>
 

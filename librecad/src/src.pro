@@ -228,7 +228,8 @@ HEADERS += \
     ui/lc_customtoolbar.h \
     ui/lc_dockwidget.h \
     lib/engine/lc_rect.h \
-    ui/forms/lc_dlgsplinepoints.h
+    ui/forms/lc_dlgsplinepoints.h \
+    ui/forms/lc_widgetoptionsdialog.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -326,7 +327,8 @@ SOURCES += \
     lib/engine/lc_rect.cpp \
     lib/engine/rs.cpp \
     ui/forms/lc_dlgsplinepoints.cpp \
-    lib/engine/rs_flags.cpp
+    lib/engine/rs_flags.cpp \
+    ui/forms/lc_widgetoptionsdialog.cpp
 
 # ################################################################################
 # Command
@@ -851,7 +853,8 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_widgetpen.ui \
     ui/forms/qg_snaptoolbar.ui \
     ui/forms/qg_activelayername.ui \
-    ui/forms/lc_dlgsplinepoints.ui
+    ui/forms/lc_dlgsplinepoints.ui \
+    ui/forms/lc_widgetoptionsdialog.ui
 
 RESOURCES += ../res/ui/ui.qrc
 

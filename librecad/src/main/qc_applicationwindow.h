@@ -78,7 +78,6 @@ public:
     QC_ApplicationWindow();
     ~QC_ApplicationWindow();
 
-    void set_icon_size();
     void initSettings();
     void storeSettings();
 
@@ -178,6 +177,8 @@ public slots:
     void setPreviousZoomEnable(bool enable);
 
     void hideOptions(QC_MDIWindow*);
+
+    void widgetOptionsDialog();
 
 signals:
     void gridChanged(bool on);

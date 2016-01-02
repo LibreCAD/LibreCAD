@@ -63,11 +63,9 @@ int main(int argc, char** argv)
 {
     RS_DEBUG->setLevel(RS_Debug::D_WARNING);
 
-    QCoreApplication::setApplicationName(XSTR(QC_APPNAME));
-
-    #if QT_VERSION > 0x040400
-        QCoreApplication::setApplicationVersion(XSTR(QC_VERSION));
-    #endif
+    QCoreApplication::setOrganizationName("LibreCAD");
+    QCoreApplication::setApplicationName("/LibreCAD");
+    QCoreApplication::setApplicationVersion("master");
 
     QApplication app(argc, argv);
 
