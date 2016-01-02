@@ -440,17 +440,17 @@ void LC_WidgetFactory::createToolbars(QG_ActionHandler* action_handler)
     options_toolbar->setSizePolicy(toolBarPolicy);
     options_toolbar->setObjectName("options_toolbar");
 
-    // <[~ Dockwidgets Toolbar ~]>
+    // <[~ Dock Areas Toolbar ~]>
 
-    QToolBar* dockwidgets_toolbar = new QToolBar(main_window);
-    dockwidgets_toolbar->setWindowTitle(QC_ApplicationWindow::tr("DockWidgets"));
-    dockwidgets_toolbar->setSizePolicy(toolBarPolicy);
-    dockwidgets_toolbar->setObjectName("dockwidgets_toolbar");
-    dockwidgets_toolbar->addAction(a_map["LeftDockAreaToggle"]);
-    dockwidgets_toolbar->addAction(a_map["RightDockAreaToggle"]);
-    dockwidgets_toolbar->addAction(a_map["TopDockAreaToggle"]);
-    dockwidgets_toolbar->addAction(a_map["BottomDockAreaToggle"]);
-    dockwidgets_toolbar->addAction(a_map["FloatingDockwidgetsToggle"]);
+    QToolBar* dockareas_toolbar = new QToolBar(main_window);
+    dockareas_toolbar->setWindowTitle(QC_ApplicationWindow::tr("Dock Areas"));
+    dockareas_toolbar->setSizePolicy(toolBarPolicy);
+    dockareas_toolbar->setObjectName("dockareas_toolbar");
+    dockareas_toolbar->addAction(a_map["LeftDockAreaToggle"]);
+    dockareas_toolbar->addAction(a_map["RightDockAreaToggle"]);
+    dockareas_toolbar->addAction(a_map["TopDockAreaToggle"]);
+    dockareas_toolbar->addAction(a_map["BottomDockAreaToggle"]);
+    dockareas_toolbar->addAction(a_map["FloatingDockwidgetsToggle"]);
 
     // <[~ Toolbars Layout~]>
 
@@ -474,7 +474,7 @@ void LC_WidgetFactory::createToolbars(QG_ActionHandler* action_handler)
     main_window->addToolBar(Qt::BottomToolBarArea, modify_toolbar);
     main_window->addToolBar(Qt::BottomToolBarArea, snap_toolbar);
     main_window->addToolBar(Qt::BottomToolBarArea, info_toolbar);
-    main_window->addToolBar(Qt::BottomToolBarArea, dockwidgets_toolbar);
+    main_window->addToolBar(Qt::BottomToolBarArea, dockareas_toolbar);
     main_window->addToolBar(Qt::BottomToolBarArea, select_toolbar);
 }
 

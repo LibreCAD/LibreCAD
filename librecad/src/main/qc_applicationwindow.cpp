@@ -658,9 +658,9 @@ void QC_ApplicationWindow::initSettings() {
     restoreState(RS_SETTINGS->readByteArrayEntry("/DockWindows", ""));
     dock_areas.left->setChecked(RS_SETTINGS->readNumEntry("/LeftDockArea", 0));
     dock_areas.right->setChecked(RS_SETTINGS->readNumEntry("/RightDockArea", 1));
-    dock_areas.top->setChecked(RS_SETTINGS->readNumEntry("/TopDockArea", 1));
-    dock_areas.bottom->setChecked(RS_SETTINGS->readNumEntry("/BottomDockArea", 1));
-    dock_areas.floating->setChecked(RS_SETTINGS->readNumEntry("/FloatingDockwidgets", 1));
+    dock_areas.top->setChecked(RS_SETTINGS->readNumEntry("/TopDockArea", 0));
+    dock_areas.bottom->setChecked(RS_SETTINGS->readNumEntry("/BottomDockArea", 0));
+    dock_areas.floating->setChecked(RS_SETTINGS->readNumEntry("/FloatingDockwidgets", 0));
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("Widgets");
