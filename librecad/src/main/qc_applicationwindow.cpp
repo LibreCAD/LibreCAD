@@ -2877,3 +2877,28 @@ void QC_ApplicationWindow::widgetOptionsDialog()
     }
     settings.endGroup();
 }
+
+/**
+ * This slot modifies the commandline's title bar
+ * depending on the dock area it is moved to.
+ */
+void QC_ApplicationWindow::modifyCommandTitleBar(Qt::DockWidgetArea area)
+{
+    QDockWidget* cmd_dockwidget = findChild<QDockWidget*>("command_dockwidget");
+
+    if (area == Qt::BottomDockWidgetArea || area == Qt::TopDockWidgetArea)
+    {
+        cmd_dockwidget->setWindowTitle("Cmd");
+        cmd_dockwidget->setFeatures(QDockWidget::DockWidgetClosable
+                                   |QDockWidget::DockWidgetMovable
+                                   |QDockWidget::DockWidgetFloatable
+                                   |QDockWidget::DockWidgetVerticalTitleBar);
+    }
+    else
+    {
+        cmd_dockwidget->setWindowTitle(tr("Command line"));
+        cmd_dockwidget->setFeatures(QDockWidget::DockWidgetClosable
+                                   |QDockWidget::DockWidgetMovable
+                                   |QDockWidget::DockWidgetFloatable);
+    }
+}

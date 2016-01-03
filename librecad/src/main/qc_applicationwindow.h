@@ -180,6 +180,8 @@ public slots:
 
     void widgetOptionsDialog();
 
+    void modifyCommandTitleBar(Qt::DockWidgetArea area);
+
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);

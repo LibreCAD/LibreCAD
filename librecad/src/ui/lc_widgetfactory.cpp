@@ -310,6 +310,9 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     connect(command_widget->leCommand, SIGNAL(escape()), main_window, SLOT(setFocus()));
     dock_command->setWidget(command_widget);
 
+    connect(dock_command, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),
+            main_window, SLOT(modifyCommandTitleBar(Qt::DockWidgetArea)));
+
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_library);
     main_window->tabifyDockWidget(dock_library, dock_block);
     main_window->tabifyDockWidget(dock_block, dock_layer);
