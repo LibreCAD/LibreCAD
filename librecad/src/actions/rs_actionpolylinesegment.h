@@ -56,7 +56,9 @@ public:
 	
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-	virtual bool convertPolyline(RS_Entity* selectedEntity);
+	//! create polyline from segments
+	//! @param useSelected only create from selected entities
+	virtual bool convertPolyline(RS_Entity* selectedEntity, bool useSelected = false);
 
 private:
     RS_Vector appendPol(RS_Polyline *current, RS_Polyline *toAdd, bool reversed);
