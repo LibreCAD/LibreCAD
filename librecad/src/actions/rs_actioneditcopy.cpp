@@ -97,13 +97,6 @@ void RS_ActionEditCopy::trigger() {
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 }
 
-
-void RS_ActionEditCopy::mouseMoveEvent(QMouseEvent* e) {
-    snapPoint(e);
-}
-
-
-
 void RS_ActionEditCopy::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
