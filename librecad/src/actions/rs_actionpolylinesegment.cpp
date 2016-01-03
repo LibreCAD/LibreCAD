@@ -59,6 +59,28 @@ QAction* RS_ActionPolylineSegment::createGUIAction(RS2::ActionType /*type*/, QOb
 void RS_ActionPolylineSegment::init(int status) {
     RS_ActionInterface::init(status);
 	targetEntity = nullptr;
+	//Experimental feature: trigger action, if already has selected entities
+	if (container->countSelected(true, entityType)) {
+		//find a selected entity
+		//TODO, find a better starting point
+		for (RS_Entity* e = container->firstEntity(RS2::ResolveAllButInserts);
+				e;
+				e = container->nextEntity(RS2::ResolveAllButInserts)) {
+			if (e->isSelected() &&
+					std::count(entityType.begin(), entityType.end(), e->rtti())) {
+				targetEntity = e;
+				break;
+			}
+		}
+		if (targetEntity) {
+			convertPolyline(targetEntity, true);
+			RS_DIALOGFACTORY->commandMessage(tr("Polyline created"));
+			graphicView->redraw();
+			RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+			finish(false);
+			return;
+		}
+	}
 }
 
 /**
@@ -125,7 +147,7 @@ RS_Vector RS_ActionPolylineSegment::appendPol(RS_Polyline *current, RS_Polyline 
  *
  * @author Rallaz
  */
-bool RS_ActionPolylineSegment::convertPolyline(RS_Entity* selectedEntity) {
+bool RS_ActionPolylineSegment::convertPolyline(RS_Entity* selectedEntity, bool useSelected) {
 
     RS_DEBUG->print("RS_ActionPolylineSegment::convertPolyline");
 
@@ -133,10 +155,14 @@ bool RS_ActionPolylineSegment::convertPolyline(RS_Entity* selectedEntity) {
     QList<RS_Entity*> completed;
     RS_Vector start = selectedEntity->getStartpoint();
     RS_Vector end = selectedEntity->getEndpoint();
-    completed.append(selectedEntity);
+	if (!useSelected || (selectedEntity && selectedEntity->isSelected()))
+		completed.append(selectedEntity);
 //get list with useful entities
-    for (unsigned i=0; i<container->count(); ++i) {
-        RS_Entity* e1 = container->entityAt(i);
+
+	for (RS_Entity* e1 = container->firstEntity(RS2::ResolveAllButInserts);
+			e1;
+			e1 = container->nextEntity(RS2::ResolveAllButInserts)) {
+		if (useSelected && !e1->isSelected()) continue;
         if (e1->isLocked() || !e1->isVisible() || e1 == selectedEntity) continue;
         if (e1->rtti()==RS2::EntityLine || e1->rtti()==RS2::EntityArc
                 || e1->rtti()==RS2::EntityPolyline) {
