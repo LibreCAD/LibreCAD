@@ -37,24 +37,21 @@ class RS_Polyline;
  */
 class RS_ActionPolylineSegment : public RS_PreviewActionInterface {
 	Q_OBJECT
-public:
     /**
      * Action States.
      */
     enum Status {
-    	ChooseEntity	/**< Choosing one of the polyline segments. */
+		ChooseEntity = 0	/**< Choosing one of the polyline segments. */
     };
 
 public:
     RS_ActionPolylineSegment(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-	~RS_ActionPolylineSegment()=default;
 
     virtual void init(int status=0);
 	
     virtual void trigger();
 	
-    virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
 	
     virtual void updateMouseButtonHints();
