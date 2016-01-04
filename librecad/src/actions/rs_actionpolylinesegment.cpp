@@ -35,7 +35,10 @@
 #include "rs_polyline.h"
 #include "rs_debug.h"
 
-
+namespace {
+std::initializer_list<RS2::EntityType>
+entityType{RS2::EntityLine, RS2::EntityPolyline, RS2::EntityArc};
+}
 
 RS_ActionPolylineSegment::RS_ActionPolylineSegment(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -46,7 +49,29 @@ RS_ActionPolylineSegment::RS_ActionPolylineSegment(RS_EntityContainer& container
 
 void RS_ActionPolylineSegment::init(int status) {
     RS_ActionInterface::init(status);
-    targetEntity = NULL;
+	targetEntity = nullptr;
+	//Experimental feature: trigger action, if already has selected entities
+	if (container->countSelected(true, entityType)) {
+		//find a selected entity
+		//TODO, find a better starting point
+		for (RS_Entity* e = container->firstEntity(RS2::ResolveAllButInserts);
+				e;
+				e = container->nextEntity(RS2::ResolveAllButInserts)) {
+			if (e->isSelected() &&
+					std::count(entityType.begin(), entityType.end(), e->rtti())) {
+				targetEntity = e;
+				break;
+			}
+		}
+		if (targetEntity) {
+			convertPolyline(targetEntity, true);
+			RS_DIALOGFACTORY->commandMessage(tr("Polyline created"));
+			graphicView->redraw();
+			RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+			finish(false);
+			return;
+		}
+	}
 }
 
 /**
@@ -113,7 +138,7 @@ RS_Vector RS_ActionPolylineSegment::appendPol(RS_Polyline *current, RS_Polyline 
  *
  * @author Rallaz
  */
-bool RS_ActionPolylineSegment::convertPolyline(RS_Entity* selectedEntity) {
+bool RS_ActionPolylineSegment::convertPolyline(RS_Entity* selectedEntity, bool useSelected) {
 
     RS_DEBUG->print("RS_ActionPolylineSegment::convertPolyline");
 
@@ -121,10 +146,14 @@ bool RS_ActionPolylineSegment::convertPolyline(RS_Entity* selectedEntity) {
     QList<RS_Entity*> completed;
     RS_Vector start = selectedEntity->getStartpoint();
     RS_Vector end = selectedEntity->getEndpoint();
-    completed.append(selectedEntity);
+	if (!useSelected || (selectedEntity && selectedEntity->isSelected()))
+		completed.append(selectedEntity);
 //get list with useful entities
-    for (unsigned i=0; i<container->count(); ++i) {
-        RS_Entity* e1 = container->entityAt(i);
+
+	for (RS_Entity* e1 = container->firstEntity(RS2::ResolveAllButInserts);
+			e1;
+			e1 = container->nextEntity(RS2::ResolveAllButInserts)) {
+		if (useSelected && !e1->isSelected()) continue;
         if (e1->isLocked() || !e1->isVisible() || e1 == selectedEntity) continue;
         if (e1->rtti()==RS2::EntityLine || e1->rtti()==RS2::EntityArc
                 || e1->rtti()==RS2::EntityPolyline) {
@@ -240,7 +269,7 @@ void RS_ActionPolylineSegment::trigger() {
 //        container->optimizeContours();
         convertPolyline(targetEntity);
 
-        targetEntity = NULL;
+		targetEntity = nullptr;
         setStatus(ChooseEntity);
 
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
@@ -250,42 +279,22 @@ void RS_ActionPolylineSegment::trigger() {
 ////////////////////////////////////////
 }
 
-
-
-void RS_ActionPolylineSegment::mouseMoveEvent(QMouseEvent* e) {
-    RS_DEBUG->print("RS_ActionPolylineSegment::mouseMoveEvent begin");
-
-    switch (getStatus()) {
-    case ChooseEntity:
-        snapPoint(e);
-        break;
-    default:
-        break;
-    }
-
-
-    RS_DEBUG->print("RS_ActionPolylineSegment::mouseMoveEvent end");
-}
-
-
-
 void RS_ActionPolylineSegment::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case ChooseEntity:
-            targetEntity = catchEntity(e);
-            if (targetEntity==NULL) {
+			targetEntity = catchEntity(e, entityType);
+
+			if (targetEntity==nullptr) {
                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-            } else if (targetEntity->rtti()!=RS2::EntityLine && targetEntity->rtti()!=RS2::EntityArc
-                            && targetEntity->rtti()!=RS2::EntityPolyline) {
-                RS_DIALOGFACTORY->commandMessage(
-                        tr("Entity must be a line, arc or polyline."));
-            } else if (targetEntity->rtti()==RS2::EntityPolyline && ((RS_Polyline*)targetEntity)->isClosed()){
+			} else if (targetEntity->rtti()==RS2::EntityPolyline && ((RS_Polyline*)targetEntity)->isClosed()){
                 RS_DIALOGFACTORY->commandMessage(
                         tr("Entity can not be a closed polyline."));
             } else {
+				//TODO, verify topology of selected
                 targetEntity->setHighlighted(true);
                 graphicView->drawEntity(targetEntity);
+
 //                setStatus(SetReferencePoint);
 ////////////////////////////////////////2006/06/15
                 graphicView->redraw();

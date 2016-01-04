@@ -48,8 +48,6 @@ RS_ActionEditCopy::RS_ActionEditCopy(bool copy,
 {
 }
 
-
-
 RS_ActionEditCopy::~RS_ActionEditCopy() = default;
 
 
@@ -71,13 +69,6 @@ void RS_ActionEditCopy::trigger() {
     //init(getStatus()-1);
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 }
-
-
-void RS_ActionEditCopy::mouseMoveEvent(QMouseEvent* e) {
-    snapPoint(e);
-}
-
-
 
 void RS_ActionEditCopy::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
