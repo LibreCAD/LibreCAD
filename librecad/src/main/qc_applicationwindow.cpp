@@ -2,10 +2,10 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015-2016 ravas (ravas@outlook.com)
 ** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-**
 **
 ** This file may be distributed and/or modified under the terms of the
 ** GNU General Public License version 2 as published by the Free Software
@@ -41,6 +41,7 @@
 #include <QtHelp>
 #include <QImageWriter>
 #include <QtSvg>
+#include <QStyleFactory>
 
 #include "main.h"
 #include "helpbrowser.h"
@@ -669,6 +670,14 @@ void QC_ApplicationWindow::initSettings() {
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("Widgets");
+
+    int allow_style = RS_SETTINGS->readNumEntry("/AllowStyle", 0);
+    if (allow_style)
+    {
+        QString style = RS_SETTINGS->readEntry("/Style", "");
+        QApplication::setStyle(QStyleFactory::create(style));
+    }
+
     int allow_menu_text_size = RS_SETTINGS->readNumEntry("/AllowMenuTextSize", 0);
     if (allow_menu_text_size)
     {
@@ -676,7 +685,6 @@ void QC_ApplicationWindow::initSettings() {
         qApp->setStyleSheet(QString("QMenu {font-size : %1px}").arg(menu_text_size));
     }
     RS_SETTINGS->endGroup();
-
 }
 
 
@@ -2838,12 +2846,25 @@ void QC_ApplicationWindow::slotFileOpenRecent(QAction* action)
 }
 
 
+
+/**
+ * This slot manipulates the widget options dialog,
+ * and reads / writes the associated settings.
+ */
 void QC_ApplicationWindow::widgetOptionsDialog()
 {
+    // writers: ravas, ...
+
     LC_WidgetOptionsDialog dlg;
 
     QSettings settings;
     settings.beginGroup("Widgets");
+
+    int allow_style = settings.value("AllowStyle", 0).toInt();
+    dlg.style_checkbox->setChecked(allow_style);
+    dlg.style_combobox->addItems(QStyleFactory::keys());
+    QString style = settings.value("Style", "").toString();
+    dlg.style_combobox->setCurrentIndex(dlg.style_combobox->findText(style));
 
     int allow_toolbar_icon_size = settings.value("AllowToolbarIconSize", 0).toInt();
     dlg.toolbar_icon_size_checkbox->setChecked(allow_toolbar_icon_size);
@@ -2857,6 +2878,15 @@ void QC_ApplicationWindow::widgetOptionsDialog()
 
     if (dlg.exec())
     {
+        int allow_style = dlg.style_checkbox->isChecked();
+        settings.setValue("AllowStyle", allow_style);
+        if (allow_style)
+        {
+            QString style = dlg.style_combobox->currentText();
+            settings.setValue("Style", style);
+            QApplication::setStyle(QStyleFactory::create(style));
+        }
+
         int allow_toolbar_icon_size = dlg.toolbar_icon_size_checkbox->isChecked();
         settings.setValue("AllowToolbarIconSize", allow_toolbar_icon_size);
         if (allow_toolbar_icon_size)
