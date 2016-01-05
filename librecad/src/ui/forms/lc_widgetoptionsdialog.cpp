@@ -23,9 +23,22 @@
 */
 
 #include "lc_widgetoptionsdialog.h"
+#include <QFileDialog>
 
 LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
     : QDialog(parent)
 {
     setupUi(this);
+
+    connect(stylesheet_button, SIGNAL(released()),
+            this, SLOT(chooseStyleSheet()));
+}
+
+void LC_WidgetOptionsDialog::chooseStyleSheet()
+{
+    QString path = QFileDialog::getOpenFileName(this);
+    if (!path.isEmpty())
+    {
+        stylesheet_field->setText(QDir::toNativeSeparators(path));
+    }
 }

@@ -15,6 +15,9 @@ class LC_WidgetOptionsDialog
 
 public:
     explicit LC_WidgetOptionsDialog(QWidget* parent = 0);
+
+public slots:
+    void chooseStyleSheet();
 };
 
 #endif // LC_WIDGETOPTIONSDIALOG_H

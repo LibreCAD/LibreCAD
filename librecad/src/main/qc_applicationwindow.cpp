@@ -42,7 +42,6 @@
 #include <QImageWriter>
 #include <QtSvg>
 #include <QStyleFactory>
-#include <QRegExp>
 
 #include "main.h"
 #include "helpbrowser.h"
@@ -679,11 +678,14 @@ void QC_ApplicationWindow::initSettings() {
         QApplication::setStyle(QStyleFactory::create(style));
     }
 
-    int allow_menu_text_size = RS_SETTINGS->readNumEntry("/AllowMenuTextSize", 0);
-    if (allow_menu_text_size)
+    QString sheet_path = RS_SETTINGS->readEntry("/StyleSheet", "");
+    if (!sheet_path.isEmpty() && QFile::exists(sheet_path))
     {
-        int menu_text_size = RS_SETTINGS->readNumEntry("/MenuTextSize", 12);
-        qApp->setStyleSheet(QString("QMenu {font-size : %1px}").arg(menu_text_size));
+        QFile file(sheet_path);
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            qApp->setStyleSheet(QString::fromLatin1(file.readAll()));
+        }
     }
     RS_SETTINGS->endGroup();
 }
@@ -2864,22 +2866,24 @@ void QC_ApplicationWindow::widgetOptionsDialog()
     int allow_style = settings.value("AllowStyle", 0).toInt();
     dlg.style_checkbox->setChecked(allow_style);
     dlg.style_combobox->addItems(QStyleFactory::keys());
-    QRegExp regex(".(.*)\\+?Style");
-    QString current_style = QApplication::style()->metaObject()->className();
-    if (regex.exactMatch(current_style))
-        current_style = regex.cap(1);
-    QString style = settings.value("Style", current_style).toString();
-    dlg.style_combobox->setCurrentIndex(dlg.style_combobox->findText(style));
+    if (allow_style)
+    {
+        QString a_style = settings.value("Style", "").toString();
+        if (!a_style.isEmpty())
+        {
+            int index = dlg.style_combobox->findText(a_style);
+            dlg.style_combobox->setCurrentIndex(index);
+        }
+    }
+
+    QString sheet_path = settings.value("StyleSheet", "").toString();
+    if (!sheet_path.isEmpty() && QFile::exists(sheet_path))
+        dlg.stylesheet_field->setText(sheet_path);
 
     int allow_toolbar_icon_size = settings.value("AllowToolbarIconSize", 0).toInt();
     dlg.toolbar_icon_size_checkbox->setChecked(allow_toolbar_icon_size);
     int toolbar_icon_size = settings.value("ToolbarIconSize", 24).toInt();
     dlg.toolbar_icon_size_spinbox->setValue(toolbar_icon_size);
-
-    int allow_menu_text_size = settings.value("AllowMenuTextSize", 0).toInt();
-    dlg.menu_text_size_checkbox->setChecked(allow_menu_text_size);
-    int menu_text_size = settings.value("MenuTextSize", 12).toInt();
-    dlg.menu_text_size_spinbox->setValue(menu_text_size);
 
     if (dlg.exec())
     {
@@ -2892,6 +2896,17 @@ void QC_ApplicationWindow::widgetOptionsDialog()
             QApplication::setStyle(QStyleFactory::create(style));
         }
 
+        QString sheet_path = dlg.stylesheet_field->text();
+        settings.setValue("StyleSheet", sheet_path);
+        if (!sheet_path.isEmpty() && QFile::exists(sheet_path))
+        {
+            QFile file(sheet_path);
+            if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+            {
+                qApp->setStyleSheet(QString::fromLatin1(file.readAll()));
+            }
+        }
+
         int allow_toolbar_icon_size = dlg.toolbar_icon_size_checkbox->isChecked();
         settings.setValue("AllowToolbarIconSize", allow_toolbar_icon_size);
         if (allow_toolbar_icon_size)
@@ -2899,15 +2914,6 @@ void QC_ApplicationWindow::widgetOptionsDialog()
             int toolbar_icon_size = dlg.toolbar_icon_size_spinbox->value();
             settings.setValue("ToolbarIconSize", toolbar_icon_size);
             setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
-        }
-
-        int allow_menu_text_size = dlg.menu_text_size_checkbox->isChecked();
-        settings.setValue("AllowMenuTextSize", allow_menu_text_size);
-        if (allow_menu_text_size)
-        {
-            int menu_text_size = dlg.menu_text_size_spinbox->value();
-            settings.setValue("MenuTextSize", menu_text_size);
-            qApp->setStyleSheet(QString("QMenu {font-size : %1px}").arg(menu_text_size));
         }
     }
     settings.endGroup();
