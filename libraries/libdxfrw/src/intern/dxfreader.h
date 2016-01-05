@@ -46,6 +46,7 @@ public:
     void setVersion(std::string *v, bool dxfFormat){decoder.setVersion(v, dxfFormat);}
     void setCodePage(std::string *c){decoder.setCodePage(c, true);}
     std::string getCodePage(){ return decoder.getCodePage();}
+	bool good() const;
 
 protected:
     virtual bool readCode(int *code) = 0; //return true if sucesful (not EOF)
