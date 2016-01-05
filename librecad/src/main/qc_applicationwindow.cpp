@@ -42,6 +42,7 @@
 #include <QImageWriter>
 #include <QtSvg>
 #include <QStyleFactory>
+#include <QRegExp>
 
 #include "main.h"
 #include "helpbrowser.h"
@@ -2863,7 +2864,11 @@ void QC_ApplicationWindow::widgetOptionsDialog()
     int allow_style = settings.value("AllowStyle", 0).toInt();
     dlg.style_checkbox->setChecked(allow_style);
     dlg.style_combobox->addItems(QStyleFactory::keys());
-    QString style = settings.value("Style", "").toString();
+    QRegExp regex(".(.*)\\+?Style");
+    QString current_style = QApplication::style()->metaObject()->className();
+    if (regex.exactMatch(current_style))
+        current_style = regex.cap(1);
+    QString style = settings.value("Style", current_style).toString();
     dlg.style_combobox->setCurrentIndex(dlg.style_combobox->findText(style));
 
     int allow_toolbar_icon_size = settings.value("AllowToolbarIconSize", 0).toInt();
