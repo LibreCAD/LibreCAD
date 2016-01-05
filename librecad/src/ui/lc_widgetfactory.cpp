@@ -606,6 +606,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     settings_menu->addAction(a_map["OptionsGeneral"]);
     settings_menu->addAction(a_map["OptionsDrawing"]);
     settings_menu->addAction(a_map["WidgetOptions"]);
+    settings_menu->addAction(a_map["ReloadStyleSheet"]);
 
     // <[~ Edit ~]>
 

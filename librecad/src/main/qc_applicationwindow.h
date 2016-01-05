@@ -87,6 +87,7 @@ public:
     virtual void keyPressEvent(QKeyEvent* e);
     void setRedoEnable(bool enable);
     void setUndoEnable(bool enable);
+    bool loadStyleSheet(QString path);
 
 public slots:
     void relayAction(QAction* q_action);
@@ -181,6 +182,7 @@ public slots:
     void widgetOptionsDialog();
 
     void modifyCommandTitleBar(Qt::DockWidgetArea area);
+    void reloadStyleSheet();
 
 signals:
     void gridChanged(bool on);
@@ -357,6 +359,9 @@ private:
     QList<QAction*> recentFilesAction;
 
     QStringList openedFiles;
+
+    // --- Strings ---
+    QString style_sheet_path;
 };
 
 

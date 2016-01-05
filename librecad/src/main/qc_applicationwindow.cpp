@@ -679,14 +679,8 @@ void QC_ApplicationWindow::initSettings() {
     }
 
     QString sheet_path = RS_SETTINGS->readEntry("/StyleSheet", "");
-    if (!sheet_path.isEmpty() && QFile::exists(sheet_path))
-    {
-        QFile file(sheet_path);
-        if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            qApp->setStyleSheet(QString::fromLatin1(file.readAll()));
-        }
-    }
+    if (loadStyleSheet(sheet_path))
+        style_sheet_path = sheet_path;
     RS_SETTINGS->endGroup();
 }
 
@@ -2848,8 +2842,6 @@ void QC_ApplicationWindow::slotFileOpenRecent(QAction* action)
     slotFileOpen(fileName, RS2::FormatUnknown);
 }
 
-
-
 /**
  * This slot manipulates the widget options dialog,
  * and reads / writes the associated settings.
@@ -2898,14 +2890,8 @@ void QC_ApplicationWindow::widgetOptionsDialog()
 
         QString sheet_path = dlg.stylesheet_field->text();
         settings.setValue("StyleSheet", sheet_path);
-        if (!sheet_path.isEmpty() && QFile::exists(sheet_path))
-        {
-            QFile file(sheet_path);
-            if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-            {
-                qApp->setStyleSheet(QString::fromLatin1(file.readAll()));
-            }
-        }
+        if (loadStyleSheet(sheet_path))
+            style_sheet_path = sheet_path;
 
         int allow_toolbar_icon_size = dlg.toolbar_icon_size_checkbox->isChecked();
         settings.setValue("AllowToolbarIconSize", allow_toolbar_icon_size);
@@ -2942,4 +2928,23 @@ void QC_ApplicationWindow::modifyCommandTitleBar(Qt::DockWidgetArea area)
                                    |QDockWidget::DockWidgetMovable
                                    |QDockWidget::DockWidgetFloatable);
     }
+}
+
+bool QC_ApplicationWindow::loadStyleSheet(QString path)
+{
+    if (!path.isEmpty() && QFile::exists(path))
+    {
+        QFile file(path);
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            qApp->setStyleSheet(QString::fromLatin1(file.readAll()));
+            return true;
+        }
+    }
+    return false;
+}
+
+void QC_ApplicationWindow::reloadStyleSheet()
+{
+    loadStyleSheet(style_sheet_path);
 }

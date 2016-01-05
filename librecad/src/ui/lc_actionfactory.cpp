@@ -1323,7 +1323,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler)
     connect(action, SIGNAL(toggled(bool)),
             main_window, SLOT(toggleTopDockArea(bool)));
     action->setCheckable(true);
-    action->setChecked(true);
+    action->setChecked(false);
     action->setObjectName("TopDockAreaToggle");
     a_map["TopDockAreaToggle"] = action;
 
@@ -1331,7 +1331,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler)
     connect(action, SIGNAL(toggled(bool)),
             main_window, SLOT(toggleBottomDockArea(bool)));
     action->setCheckable(true);
-    action->setChecked(true);
+    action->setChecked(false);
     action->setObjectName("BottomDockAreaToggle");
     a_map["BottomDockAreaToggle"] = action;
 
@@ -1339,9 +1339,16 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler)
     connect(action, SIGNAL(toggled(bool)),
             main_window, SLOT(toggleFloatingDockwidgets(bool)));
     action->setCheckable(true);
-    action->setChecked(true);
+    action->setChecked(false);
     action->setObjectName("FloatingDockwidgetsToggle");
     a_map["FloatingDockwidgetsToggle"] = action;
+
+    action = new QAction(tr("Reload Style Sheet"), main_window);
+    action->setShortcut(QKeySequence("Ctrl+T"));
+    connect(action, SIGNAL(triggered()),
+            main_window, SLOT(reloadStyleSheet()));
+    action->setObjectName("ReloadStyleSheet");
+    a_map["ReloadStyleSheet"] = action;
 
     return a_map;
 }
