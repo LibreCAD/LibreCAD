@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ja_JP">
+<TS version="2.0" language="ja">
 <context>
     <name>AsciiFile</name>
     <message>
@@ -58,7 +57,7 @@
     <message>
         <location filename="../list/list.cpp" line="46"/>
         <source>n</source>
-        <translation></translation>
+        <translation>n</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="60"/>
@@ -68,12 +67,12 @@
     <message>
         <location filename="../list/list.cpp" line="67"/>
         <source>X</source>
-        <translation></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
         <source>Y</source>
-        <translation></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="73"/>
@@ -532,7 +531,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>ファイル %1 は開くことができない</translation>
     </message>
 </context>
@@ -664,7 +663,7 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="245"/>
         <source>3D Arc</source>
-        <translation>弧</translation>
+        <translation>3D 弧</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="249"/>
@@ -807,7 +806,7 @@
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="139"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>ファイル %1 は開くことができない</translation>
     </message>
     <message>
@@ -856,7 +855,7 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+If you don't want to use the parametric form, just leave out "Equation2".
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>

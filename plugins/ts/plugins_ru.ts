@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="ru">
 <context>
@@ -208,7 +207,7 @@
     <message>
         <location filename="../list/list.cpp" line="165"/>
         <source>OVERLAYBOX</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../list/list.cpp" line="168"/>
@@ -282,7 +281,7 @@
     <message>
         <location filename="../list/list.cpp" line="210"/>
         <source>SPLINEPOINTS</source>
-        <translation type="unfinished"></translation>
+        <translation>ТОЧКИСПЛАЙНА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -297,7 +296,7 @@
     <message>
         <location filename="../list/list.cpp" line="219"/>
         <source>DIMALIGNED</source>
-        <translation>РАЗМЕР ВЫРОВНЕННЫЙ</translation>
+        <translation>РАЗМЕР ВЫРАВНЕННЫЙ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="222"/>
@@ -358,12 +357,12 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="38"/>
         <source>Read PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>PIC-файл</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="44"/>
         <source>import PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>Импорт PIC-файла</translation>
     </message>
 </context>
 <context>
@@ -540,7 +539,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>Невозможно открыть файл %1</translation>
     </message>
 </context>
@@ -637,7 +636,7 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="217"/>
         <source>Point+Measure</source>
-        <translation type="unfinished"></translation>
+        <translation>Точка+измерение</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="221"/>
@@ -647,17 +646,17 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="225"/>
         <source>Multi Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Мультиточка</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="229"/>
         <source>Multi Point+Measure</source>
-        <translation type="unfinished"></translation>
+        <translation>Мультиточка+измерение</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="233"/>
         <source>3D Multi Point</source>
-        <translation type="unfinished"></translation>
+        <translation>3D мультиточка</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="237"/>
@@ -667,7 +666,7 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="241"/>
         <source>Arc+Measure</source>
-        <translation type="unfinished"></translation>
+        <translation>Дуга+измерение</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="245"/>
@@ -682,7 +681,7 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="253"/>
         <source>Polygon+Measure</source>
-        <translation type="unfinished"></translation>
+        <translation>Многоугольник+измерение</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="257"/>
@@ -692,7 +691,7 @@
     <message>
         <location filename="../importshp/importshp.cpp" line="261"/>
         <source>Multipatch</source>
-        <translation type="unfinished"></translation>
+        <translation>Мультивключение</translation>
     </message>
     <message>
         <location filename="../importshp/importshp.cpp" line="281"/>
@@ -781,63 +780,63 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="67"/>
         <source>File...</source>
-        <translation type="unfinished">Файл...</translation>
+        <translation>Файл...</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="77"/>
         <source>Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштаб:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="81"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Применить</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="85"/>
         <source>Cancel</source>
-        <translation type="unfinished">Отмена</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="113"/>
         <source>Select file</source>
-        <translation type="unfinished">Выберите файл</translation>
+        <translation>Выберите файл</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="121"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштаб не указан или неверен</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="134"/>
         <source>The file %1 not exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл %1 не существует</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="139"/>
-        <source>Can&apos;t open the file %1</source>
-        <translation type="unfinished">Невозможно открыть файл %1</translation>
+        <source>Can't open the file %1</source>
+        <translation>Невозможно открыть файл %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="146"/>
         <source>%1 objects imported</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 объектов импортировано</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="168"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation>picPunto drawLine: пустая первая точка %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="181"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation>picPunto drawLine: пустая следующая точка %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="260"/>
         <location filename="../picfile/picfile.cpp" line="269"/>
         <source>format error in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ошибка формата в %1</translation>
     </message>
 </context>
 <context>
@@ -864,7 +863,7 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+If you don't want to use the parametric form, just leave out "Equation2".
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
@@ -913,19 +912,19 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>Линейные сегменты</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ломаная</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>Точки сплайна</translation>
     </message>
 </context>
 <context>
