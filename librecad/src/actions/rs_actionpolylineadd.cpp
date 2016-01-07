@@ -32,7 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
-
+#include "rs_debug.h"
 
 
 RS_ActionPolylineAdd::RS_ActionPolylineAdd(RS_EntityContainer& container,

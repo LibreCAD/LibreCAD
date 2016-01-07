@@ -31,7 +31,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
-
+#include "rs_debug.h"
 
 RS_ActionModifyOffset::RS_ActionModifyOffset(RS_EntityContainer& container,
                                              RS_GraphicView& graphicView)
@@ -47,7 +47,7 @@ RS_ActionModifyOffset::RS_ActionModifyOffset(RS_EntityContainer& container,
 	data->useCurrentLayer = true;
 }
 
-RS_ActionModifyOffset::~RS_ActionModifyOffset() {}
+RS_ActionModifyOffset::~RS_ActionModifyOffset() = default;
 
 QAction* RS_ActionModifyOffset::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	QAction* action = new QAction(QIcon(":/extui/arcspara.png"), tr("&Offset"),nullptr);

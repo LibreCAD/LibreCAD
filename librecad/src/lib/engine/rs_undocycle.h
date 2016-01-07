@@ -28,7 +28,7 @@
 #ifndef RS_UNDOLISTITEM_H
 #define RS_UNDOLISTITEM_H
 
-#include <iostream>
+#include <iosfwd>
 #include <set>
 
 #include "rs_entity.h"
@@ -64,6 +64,9 @@ public:
      * Removes an undoable from the list.
      */
 	void removeUndoable(RS_Undoable* u);
+
+	//! change undo state of all undoable in the current cycle
+	void changeUndoState();
 
     friend std::ostream& operator << (std::ostream& os,
 									  RS_UndoCycle& uc);

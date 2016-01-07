@@ -178,7 +178,7 @@ m0 x + m1 y + m2 =0
 * However, full ellipses and ellipse arcs are handled by RS_Ellipse
 * @return \pi r^2
 */
-    virtual double areaLineIntegral() const;
+    virtual double areaLineIntegral() const override;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Circle& a);
 

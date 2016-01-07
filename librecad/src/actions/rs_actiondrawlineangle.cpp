@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<cmath>
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_actiondrawlineangle.h"
@@ -35,6 +35,7 @@
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 RS_ActionDrawLineAngle::RS_ActionDrawLineAngle(RS_EntityContainer& container,
         RS_GraphicView& graphicView,

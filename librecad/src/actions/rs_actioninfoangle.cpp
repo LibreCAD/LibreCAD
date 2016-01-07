@@ -33,6 +33,7 @@
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_graphic.h"
+#include "rs_debug.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"

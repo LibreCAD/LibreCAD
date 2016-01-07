@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
 #include "rs_leader.h"
 
 #include "rs_debug.h"
@@ -204,5 +204,11 @@ std::ostream& operator << (std::ostream& os, const RS_Leader& l) {
     os << "\n}\n";
 
     return os;
+}
+
+std::ostream& operator << (std::ostream& os,
+                                      const RS_LeaderData& /*ld*/) {
+        os << "(Leader)";
+        return os;
 }
 

@@ -29,16 +29,13 @@
 #include <QAction>
 #include "rs_graphic.h"
 #include "rs_dialogfactory.h"
-
-
+#include "rs_debug.h"
 
 RS_ActionBlocksAttributes::RS_ActionBlocksAttributes(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_ActionInterface("Edit Block Attributes", container, graphicView) {}
-
-
-
+		RS_EntityContainer& container,
+		RS_GraphicView& graphicView):
+	RS_ActionInterface("Edit Block Attributes", container, graphicView)
+{}
 
 QAction* RS_ActionBlocksAttributes::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Rename Block")

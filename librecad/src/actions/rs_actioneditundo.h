@@ -39,8 +39,7 @@ class RS_ActionEditUndo : public RS_ActionInterface {
 public:
     RS_ActionEditUndo(bool undo,
                       RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
-    ~RS_ActionEditUndo();
+					  RS_GraphicView& graphicView);
 	
 	static QAction* createGUIAction(RS2::ActionType type, QObject* parent);
 
@@ -49,7 +48,7 @@ public:
 
 protected:
     /** Undo (true) or redo (false) */
-    bool undo;
+	bool const undo;
 };
 
 #endif

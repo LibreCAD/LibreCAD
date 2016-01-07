@@ -33,6 +33,7 @@
 #include "rs_information.h"
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 /**
  * @param both Trim both entities.

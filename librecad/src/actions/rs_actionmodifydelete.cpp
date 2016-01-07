@@ -30,8 +30,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
-
-
+#include "rs_debug.h"
 
 RS_ActionModifyDelete::RS_ActionModifyDelete(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

@@ -23,7 +23,7 @@
 **
 **********************************************************************/
 
-
+#include<cstdlib>
 #include <QStringList>
 #include <QTextCodec>
 
@@ -57,6 +57,7 @@
 
 #ifdef DWGSUPPORT
 #include "libdwgr.h"
+#include "rs_debug.h"
 #endif
 
 /**

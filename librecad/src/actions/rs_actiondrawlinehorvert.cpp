@@ -31,8 +31,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
-
-
+#include "rs_debug.h"
 
 RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(
     RS_EntityContainer& container,
@@ -47,7 +46,7 @@ RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(
 
 
 
-RS_ActionDrawLineHorVert::~RS_ActionDrawLineHorVert() {}
+RS_ActionDrawLineHorVert::~RS_ActionDrawLineHorVert() = default;
 
 
 QAction* RS_ActionDrawLineHorVert::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

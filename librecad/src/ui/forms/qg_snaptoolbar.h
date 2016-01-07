@@ -42,7 +42,7 @@ class QG_SnapToolBar : public QToolBar
 
 public:
     QG_SnapToolBar( const QString & title, QG_ActionHandler* ah, QWidget * parent = 0 );
-    virtual ~QG_SnapToolBar();
+	~QG_SnapToolBar() = default;
 
 	RS_SnapMode getSnaps ( void ) const;
     void saveSnapMode(void );

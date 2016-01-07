@@ -23,18 +23,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef QG_POLYLINEEQUIDISTANTOPTIONS_H
 #define QG_POLYLINEEQUIDISTANTOPTIONS_H
 
-#include "rs_actionpolylineequidistant.h"
-#include "ui_qg_polylineequidistantoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionDrawLineRelAngle;
+class RS_ActionPolylineEquidistant;
+namespace Ui {
+class PolylineEquidistantOptions;
+}
 /*
   * Create option widget used to draw equidistant polylines
   *
   *@Author Dongxu Li
  */
 
-class QG_PolylineEquidistantOptions : public QWidget, public Ui::QG_PolylineEquidistantOptions
+class QG_PolylineEquidistantOptions : public QWidget
 {
     Q_OBJECT
 
@@ -43,9 +47,9 @@ public:
     ~QG_PolylineEquidistantOptions();
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateDist( const QString & l );
-    virtual void updateNumber( const QString & l );
+	virtual void setAction(RS_ActionInterface * a, bool update);
+	virtual void updateDist();
+	virtual void updateNumber();
 
 protected:
     RS_ActionPolylineEquidistant* action;
@@ -55,7 +59,7 @@ protected slots:
 
 private:
     void saveOptions();
-
+	std::unique_ptr<Ui::PolylineEquidistantOptions> ui;
 };
 
 #endif // QG_POLYLINEEQUIDISTANTOPTIONS_H

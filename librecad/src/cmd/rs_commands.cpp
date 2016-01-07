@@ -32,6 +32,7 @@
 
 #include "rs_system.h"
 #include "rs_dialogfactory.h"
+#include "rs_debug.h"
 
 namespace {
 struct LC_CommandItem {
@@ -671,7 +672,10 @@ RS_Commands::RS_Commands() {
         {QObject::tr("back"),"back"},
         {QObject::tr("b","back"),"back"},
         //printer preview
-        {QObject::tr("paperoffset"),"paperoffset"},
+		{QObject::tr("bw"), "blackwhite"},
+		{QObject::tr("blackwhite"), "blackwhite"},
+		{QObject::tr("color"), "color"},
+		{QObject::tr("paperoffset"),"paperoffset"},
         {QObject::tr("graphoffset"),"graphoffset"}
 };
     for(auto const& p: transList){

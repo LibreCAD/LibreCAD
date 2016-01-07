@@ -29,6 +29,7 @@
 #include <iostream>
 #include <utility>
 #include <QPolygon>
+#include <QString>
 
 #include "rs_entity.h"
 #include "rs_arc.h"
@@ -47,6 +48,7 @@
 #include "rs_vector.h"
 #include "rs_information.h"
 #include "lc_quadratic.h"
+#include "rs_debug.h"
 
 /**
  * Default constructor.
@@ -432,19 +434,19 @@ void RS_Entity::setHighlighted(bool on) {
 }
 
 RS_Vector RS_Entity::getStartpoint() const {
-	return RS_Vector{};
+	return {};
 }
 
 RS_Vector RS_Entity::getEndpoint() const {
-	return RS_Vector{};
+	return {};
 }
 
 RS_VectorSolutions RS_Entity::getTangentPoint(const RS_Vector& /*point*/) const {
-	return RS_VectorSolutions{};
+	return {};
 }
 
 RS_Vector RS_Entity::getTangentDirection(const RS_Vector& /*point*/)const{
-	return RS_Vector{};
+	return {};
 }
 /**
  * @return true if the entity is highlighted.

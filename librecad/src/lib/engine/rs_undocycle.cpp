@@ -1,3 +1,4 @@
+#include <iostream>
 #include"rs_undocycle.h"
 
 /**
@@ -5,15 +6,22 @@
  * more Undoables.
  */
 void RS_UndoCycle::addUndoable(RS_Undoable* u) {
-	undoables.insert(u);
+	if (u) undoables.insert(u);
 }
 
 /**
  * Removes an undoable from the list.
  */
 void RS_UndoCycle::removeUndoable(RS_Undoable* u) {
-	undoables.erase(u);
+	if (u) undoables.erase(u);
 }
+
+void RS_UndoCycle::changeUndoState()
+{
+	for (RS_Undoable* u: undoables)
+		u->changeUndoState();
+}
+
 
 std::ostream& operator << (std::ostream& os,
 								  RS_UndoCycle& uc) {

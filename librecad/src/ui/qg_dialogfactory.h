@@ -33,6 +33,7 @@ class QG_PolylineEquidistantOptions;
 class QG_SnapMiddleOptions;
 class QG_SnapDistOptions;
 class QG_ModifyOffsetOptions;
+class QWidget;
 
 class QG_CadToolBar;
 class QToolBar;

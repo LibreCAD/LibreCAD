@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<cmath>
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_actiondrawarc.h"
@@ -36,6 +36,7 @@
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 RS_ActionDrawArc::RS_ActionDrawArc(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView)
@@ -48,7 +49,7 @@ RS_ActionDrawArc::RS_ActionDrawArc(RS_EntityContainer& container,
     reset();
 }
 
-RS_ActionDrawArc::~RS_ActionDrawArc(){}
+RS_ActionDrawArc::~RS_ActionDrawArc() = default;
 
 QAction* RS_ActionDrawArc::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	QAction* action = new QAction(tr("&Center, Point, Angles"),nullptr);

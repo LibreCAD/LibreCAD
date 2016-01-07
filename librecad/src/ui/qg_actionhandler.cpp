@@ -165,6 +165,7 @@
 #include "qg_mainwindowinterface.h"
 #include "qg_snaptoolbar.h"
 #include "qc_applicationwindow.h"
+#include "rs_debug.h"
 
 /**
  * Constructor
@@ -698,9 +699,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionModifyOffset:
     {
-        std::set<RS2::EntityType> const allowedOffsetTypes={RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline};
-        if(!doc->countSelected(true, allowedOffsetTypes)){
-            a = new RS_ActionSelect(*doc, *gv,RS2::ActionModifyOffsetNoSelect, allowedOffsetTypes);
+		auto allowedOffsetTypes={RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline};
+		if(!doc->countSelected(true, allowedOffsetTypes)){
+			a = new RS_ActionSelect(*doc, *gv, RS2::ActionModifyOffsetNoSelect, allowedOffsetTypes);
 			break;
 		}
 	}
@@ -1211,6 +1212,9 @@ void QG_ActionHandler::slotEditKillAllActions() {
     setCurrentAction(RS2::ActionEditKillAllActions);
 }
 void QG_ActionHandler::slotEditUndo() {
+	//to avoid operation on deleted entities, Undo action invalid all suspended
+	//actions
+	killAllActions();
     setCurrentAction(RS2::ActionEditUndo);
 }
 

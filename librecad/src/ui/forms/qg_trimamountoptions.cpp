@@ -28,6 +28,7 @@
 #include "rs_actionmodifytrimamount.h"
 #include "rs_settings.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_TrimAmountOptions as a child of 'parent', with the
@@ -37,7 +38,6 @@ QG_TrimAmountOptions::QG_TrimAmountOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
 {
     setupUi(this);
-
 }
 
 /*
@@ -85,18 +85,26 @@ void QG_TrimAmountOptions::setAction(RS_ActionInterface* a, bool update) {
         }
 
         leDist->setText(sd);
+		leDist->setCursorPosition(0);
         cbTotalLength->setChecked(byTotal);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_ModifyTrimAmountOptions::setAction: wrong action type");
-        this->action = NULL;
+		action = nullptr;
     }
 }
 
 void QG_TrimAmountOptions::updateDist(const QString& d) {
     if (action) {
-        action->setDistance(RS_Math::eval(d, 1.0));
-    }
+		bool ok;
+		double d0 = RS_Math::eval(d, &ok);
+		if (ok) {
+			leDist->setText(QString{"%1"}.arg(d0));
+			leDist->setCursorPosition(0);
+		} else
+			d0 = 1.0;
+		action->setDistance(d0);
+	}
 }
 
 void QG_TrimAmountOptions::on_cbTotalLength_toggled(bool checked)
@@ -105,3 +113,9 @@ void QG_TrimAmountOptions::on_cbTotalLength_toggled(bool checked)
         action->setByTotal(checked);
     }
 }
+
+void QG_TrimAmountOptions::on_leDist_editingFinished()
+{
+	updateDist(leDist->text());
+}
+

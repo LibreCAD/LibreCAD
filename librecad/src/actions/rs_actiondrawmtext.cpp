@@ -33,6 +33,7 @@
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 RS_ActionDrawMText::RS_ActionDrawMText(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
@@ -44,7 +45,7 @@ RS_ActionDrawMText::RS_ActionDrawMText(RS_EntityContainer& container,
 	actionType=RS2::ActionDrawMText;
 }
 
-RS_ActionDrawMText::~RS_ActionDrawMText(){}
+RS_ActionDrawMText::~RS_ActionDrawMText() = default;
 
 
 QAction* RS_ActionDrawMText::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

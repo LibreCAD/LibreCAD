@@ -33,6 +33,7 @@
 #include "rs_clipboard.h"
 #include "rs_modification.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.
@@ -46,7 +47,7 @@ RS_ActionEditPaste::RS_ActionEditPaste( RS_EntityContainer& container,
 
 
 
-RS_ActionEditPaste::~RS_ActionEditPaste() {}
+RS_ActionEditPaste::~RS_ActionEditPaste() = default;
 
 
 QAction* RS_ActionEditPaste::createGUIAction(RS2::ActionType /*type*/, QObject* parent) {

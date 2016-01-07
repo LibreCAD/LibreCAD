@@ -38,6 +38,7 @@
 #include "qg_cadtoolbarpolylines.h"
 #include "qg_cadtoolbarselect.h"
 #include "qg_cadtoolbarsplines.h"
+#include "rs_debug.h"
 
 #if QT_VERSION >= 0x050500
 #include "qc_applicationwindow.h"

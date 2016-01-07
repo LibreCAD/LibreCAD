@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<iostream>
 #include <QImage>
 #include "rs_image.h"
 #include "rs_line.h"
@@ -33,6 +33,7 @@
 #include "rs_debug.h"
 #include "rs_graphicview.h"
 #include "rs_painterqt.h"
+#include "rs_math.h"
 
 RS_ImageData::RS_ImageData(int _handle,
 						   const RS_Vector& _insertionPoint,

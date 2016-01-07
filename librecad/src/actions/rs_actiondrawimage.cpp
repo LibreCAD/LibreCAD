@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<cmath>
 #include <memory>
 #include <QAction>
 #include <QImage>
@@ -54,7 +54,7 @@ RS_ActionDrawImage::RS_ActionDrawImage(RS_EntityContainer& container,
 
 
 
-RS_ActionDrawImage::~RS_ActionDrawImage() {}
+RS_ActionDrawImage::~RS_ActionDrawImage() = default;
 
 
 QAction* RS_ActionDrawImage::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

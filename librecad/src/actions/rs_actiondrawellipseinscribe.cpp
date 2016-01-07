@@ -29,6 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_commandevent.h"
 #include "rs_ellipse.h"
 #include "rs_line.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.
@@ -45,7 +46,7 @@ RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(
 	actionType=RS2::ActionDrawEllipseInscribe;
 }
 
-RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe(){}
+RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe() = default;
 
 QAction* RS_ActionDrawEllipseInscribe::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;

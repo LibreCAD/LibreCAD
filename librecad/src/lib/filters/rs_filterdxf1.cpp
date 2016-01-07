@@ -24,10 +24,9 @@
 **
 **********************************************************************/
 
-
+#include<cstdlib>
 #include "rs_filterdxfrw.h"
 #include "rs_filterdxf1.h"
-
 
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -46,17 +45,17 @@
 #include "rs_leader.h"
 #include "rs_point.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 
 /**
  * Default constructor.
  */
 RS_FilterDXF1::RS_FilterDXF1()
-        :RS_FilterInterface() {
-
-    RS_DEBUG->print("Setting up DXF 1 filter...");
-
-	graphic = nullptr;
+		:RS_FilterInterface()
+		, graphic(nullptr)
+{
+	RS_DEBUG->print("Setting up DXF 1 filter...");
 }
 
 /**
@@ -87,7 +86,12 @@ bool RS_FilterDXF1::fileImport(RS_Graphic& g, const QString& file, RS2::FormatTy
     return false;
 }
 
-
+bool RS_FilterDXF1::fileExport(RS_Graphic& /*g*/, const QString& /*file*/,
+	RS2::FormatType /*type*/) {
+	RS_DEBUG->print(RS_Debug::D_WARNING,
+					"Exporting of QCad 1.x file not implemented");
+	return false;
+}
 
 /**
  * Reads a dxf1 file from buffer.

@@ -189,7 +189,7 @@ public:
         virtual void rotate(const RS_Vector& center, const double& angle);
         virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
         virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-        virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+		virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 
         virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
 		virtual void revertDirection();
@@ -201,6 +201,7 @@ public:
 
         virtual void calculateBorders();
 
+private:
 		static void rbasis(int c, double t, int npts, const std::vector<int>& x, const std::vector<double>& h, std::vector<double>& r);
 
 		static void knot(int num, int order, std::vector<int>& knotVector);

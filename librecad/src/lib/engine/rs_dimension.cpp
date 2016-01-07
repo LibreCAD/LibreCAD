@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<iostream>
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_dimension.h"
@@ -430,10 +430,10 @@ double RS_Dimension::getTextHeight() {
  * @return Dimension labels alignement text true= horizontal, false= aligned.
  */
 bool RS_Dimension::getAlignText() {
-    int v = getGraphicVariableInt("$DIMTIH", 2);
-    if (v>1) {
-        addGraphicVariable("$DIMTIH", 0, 70);
-        getGraphicVariableInt("$DIMTIH", 0);
+    int v = getGraphicVariableInt("$DIMTIH", 1);
+    if (v>0) {
+        addGraphicVariable("$DIMTIH", 1, 70);
+        getGraphicVariableInt("$DIMTIH", 1);
 		return true;
     }
 	return false;

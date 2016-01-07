@@ -32,6 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_coordinateevent.h"
 #include "rs_modification.h"
+#include "rs_debug.h"
 
 RS_ActionModifyRotate2::RS_ActionModifyRotate2(
     RS_EntityContainer& container,
@@ -43,7 +44,7 @@ RS_ActionModifyRotate2::RS_ActionModifyRotate2(
 	actionType=RS2::ActionModifyRotate2;
 }
 
-RS_ActionModifyRotate2::~RS_ActionModifyRotate2(){}
+RS_ActionModifyRotate2::~RS_ActionModifyRotate2() = default;
 
 QAction* RS_ActionModifyRotate2::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 		QAction* action = new QAction(QIcon(":/extui/modifyrotate2.png"), tr("Rotate T&wo"), NULL);

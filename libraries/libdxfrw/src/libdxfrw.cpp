@@ -2195,7 +2195,7 @@ bool dxfRW::processEntities(bool isblock) {
                 return false; //end of file without ENDSEC
         }
 
-    } while (next);
+	} while (next && reader->good());
     return true;
 }
 

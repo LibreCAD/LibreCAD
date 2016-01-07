@@ -23,7 +23,8 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<iostream>
+#include<cmath>
 #include "rs_point.h"
 #include "rs_circle.h"
 #include "rs_graphicview.h"
@@ -203,4 +204,11 @@ std::ostream& operator << (std::ostream& os, const RS_Point& p) {
     os << " Point: " << p.getData() << "\n";
     return os;
 }
+
+std::ostream& operator << (std::ostream& os, const RS_PointData& pd)
+{
+        os << "(" << pd.pos << ")";
+        return os;
+}
+
 // EOF

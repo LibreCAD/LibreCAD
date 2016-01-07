@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<cmath>
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_actiondrawpolyline.h"
@@ -37,6 +37,7 @@
 #include "rs_polyline.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -54,7 +55,7 @@ RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
 
 
 
-RS_ActionDrawPolyline::~RS_ActionDrawPolyline() {}
+RS_ActionDrawPolyline::~RS_ActionDrawPolyline() = default;
 
 
 QAction* RS_ActionDrawPolyline::createGUIAction(RS2::ActionType /*type*/,

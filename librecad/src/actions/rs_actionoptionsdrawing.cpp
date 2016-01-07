@@ -30,8 +30,6 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 
-
-
 RS_ActionOptionsDrawing::RS_ActionOptionsDrawing(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Drawing Options",

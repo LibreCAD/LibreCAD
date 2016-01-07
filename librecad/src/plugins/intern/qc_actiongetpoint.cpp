@@ -26,12 +26,14 @@
 
 #include "qc_actiongetpoint.h"
 
+#include <QPointF>
 #include <QMouseEvent>
 #include "rs_snapper.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 QC_ActionGetPoint::QC_ActionGetPoint(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

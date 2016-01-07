@@ -46,7 +46,7 @@ RS_ActionInfoInside::RS_ActionInfoInside(RS_EntityContainer& container,
 	}
 }
 
-RS_ActionInfoInside::~RS_ActionInfoInside() {}
+RS_ActionInfoInside::~RS_ActionInfoInside() = default;
 
 QAction* RS_ActionInfoInside::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action = new QAction(tr("Point inside contour"), nullptr);

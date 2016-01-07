@@ -33,6 +33,7 @@
 #include "rs_commands.h"
 #include "rs_polyline.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 
 RS_ActionPolylineAppend::RS_ActionPolylineAppend(RS_EntityContainer& container,

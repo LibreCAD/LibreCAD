@@ -42,16 +42,12 @@ RS_ActionEditCopy::RS_ActionEditCopy(bool copy,
                                      RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_ActionInterface("Edit Copy",
-                    container, graphicView) {
-
-    this->copy = copy;
+					container, graphicView)
+		, copy{copy}
+{
 }
 
-
-
-RS_ActionEditCopy::~RS_ActionEditCopy() {}
-
-
+RS_ActionEditCopy::~RS_ActionEditCopy() = default;
 
 QAction* RS_ActionEditCopy::createGUIAction(RS2::ActionType type, QObject* parent) {
     QAction* action;
@@ -100,13 +96,6 @@ void RS_ActionEditCopy::trigger() {
     //init(getStatus()-1);
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 }
-
-
-void RS_ActionEditCopy::mouseMoveEvent(QMouseEvent* e) {
-    snapPoint(e);
-}
-
-
 
 void RS_ActionEditCopy::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {

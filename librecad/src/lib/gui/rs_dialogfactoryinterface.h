@@ -29,6 +29,7 @@
 #define RS_DIALOGFACTORYINTERFACE_H
 
 #include "rs.h"
+#include <QString>
 
 class RS_ActionInterface;
 struct RS_ArcData;

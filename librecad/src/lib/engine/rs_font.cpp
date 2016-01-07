@@ -37,6 +37,7 @@
 #include "rs_fontchar.h"
 #include "rs_system.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 #if QT_VERSION < 0x040500
 #include "emu_qt45.h"

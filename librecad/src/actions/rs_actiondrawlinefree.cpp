@@ -30,6 +30,7 @@
 #include "rs_polyline.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_debug.h"
 
 RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -41,7 +42,7 @@ RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
 	actionType=RS2::ActionDrawLineFree;
 }
 
-RS_ActionDrawLineFree::~RS_ActionDrawLineFree() {}
+RS_ActionDrawLineFree::~RS_ActionDrawLineFree() = default;
 
 QAction* RS_ActionDrawLineFree::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     return new QAction(QIcon(":/extui/linesfree.png"), tr("&Freehand Line"), nullptr);

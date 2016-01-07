@@ -32,6 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_coordinateevent.h"
 #include "rs_modification.h"
+#include "rs_debug.h"
 
 RS_ActionModifyScale::RS_ActionModifyScale(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -42,7 +43,7 @@ RS_ActionModifyScale::RS_ActionModifyScale(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyScale;
 }
 
-RS_ActionModifyScale::~RS_ActionModifyScale(){}
+RS_ActionModifyScale::~RS_ActionModifyScale() = default;
 
 QAction* RS_ActionModifyScale::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	QAction* action = new QAction(QIcon(":/extui/modifyscale.png"), tr("&Scale"),  NULL);

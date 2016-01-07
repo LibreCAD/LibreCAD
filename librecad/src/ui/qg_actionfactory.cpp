@@ -26,6 +26,7 @@
 
 #include "qg_actionfactory.h"
 
+#include <cassert>
 #include <QDockWidget>
 #include <QMenu>
 #include <QToolBar>
@@ -158,6 +159,7 @@
 #include "rs_actionpolylinesegment.h"
 #include "rs_actionorder.h"
 #include "qg_cadtoolbar.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.

@@ -23,6 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include<cassert>
 #include<QAction>
 #include "qg_cadtoolbarcircles.h"
 #include "qg_cadtoolbar.h"

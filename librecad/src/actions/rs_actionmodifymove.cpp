@@ -32,6 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_coordinateevent.h"
 #include "rs_modification.h"
+#include "rs_debug.h"
 
 RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -48,7 +49,7 @@ QAction* RS_ActionModifyMove::createGUIAction(RS2::ActionType /*type*/, QObject*
     return action;
 }
 
-RS_ActionModifyMove::~RS_ActionModifyMove(){}
+RS_ActionModifyMove::~RS_ActionModifyMove() = default;
 
 void RS_ActionModifyMove::trigger() {
 

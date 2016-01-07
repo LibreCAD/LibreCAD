@@ -24,6 +24,8 @@
 **
 **********************************************************************/
 
+#include <iostream>
+#include <cmath>
 
 #include "rs_vector.h"
 
@@ -75,6 +77,11 @@ RS_Vector::RS_Vector(double angle):
 RS_Vector::RS_Vector(bool valid):
 	valid(valid)
 {
+}
+
+RS_Vector::operator bool() const
+{
+	return valid;
 }
 
 /**
@@ -556,6 +563,16 @@ bool RS_Vector::operator == (const RS_Vector& v) const {
 #else
     return (x==v.x && y==v.y && z==v.z && valid==v.valid);
 #endif
+}
+
+bool RS_Vector::operator == (bool valid) const
+{
+	return this->valid == valid;
+}
+
+bool RS_Vector::operator != (bool valid) const
+{
+	return this->valid != valid;
 }
 
 /**

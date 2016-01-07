@@ -41,7 +41,7 @@ RS_ActionModifyExplodeText::RS_ActionModifyExplodeText(RS_EntityContainer& conta
 
 
 
-RS_ActionModifyExplodeText::~RS_ActionModifyExplodeText() {}
+RS_ActionModifyExplodeText::~RS_ActionModifyExplodeText() = default;
 
 
 QAction* RS_ActionModifyExplodeText::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

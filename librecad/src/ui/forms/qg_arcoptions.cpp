@@ -26,6 +26,7 @@
 #include "qg_arcoptions.h"
 
 #include "rs_settings.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_ArcOptions as a child of 'parent', with the

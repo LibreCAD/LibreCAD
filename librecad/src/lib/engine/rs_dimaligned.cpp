@@ -24,7 +24,8 @@
 **
 **********************************************************************/
 
-
+#include <iostream>
+#include <cmath>
 #include "rs_dimaligned.h"
 #include "rs_line.h"
 
@@ -32,6 +33,7 @@
 #include "rs_units.h"
 #include "rs_constructionline.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 RS_DimAlignedData::RS_DimAlignedData():
 	extensionPoint1(false),

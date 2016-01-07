@@ -22,7 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QAction>
 #include <QMouseEvent>
-#include <set>
 #include "rs_actiondrawcircletan1_2p.h"
 
 #include "rs_dialogfactory.h"
@@ -34,10 +33,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_point.h"
 #include "lc_quadratic.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 namespace{
 //list of entity types supported by current action
-const std::set<RS2::EntityType> enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+auto enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
 }
 
 /**
@@ -57,7 +57,7 @@ RS_ActionDrawCircleTan1_2P::RS_ActionDrawCircleTan1_2P(
 	actionType = RS2::ActionDrawCircleTan1_2P;
 }
 
-RS_ActionDrawCircleTan1_2P::~RS_ActionDrawCircleTan1_2P(){}
+RS_ActionDrawCircleTan1_2P::~RS_ActionDrawCircleTan1_2P() = default;
 
 QAction* RS_ActionDrawCircleTan1_2P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;

@@ -36,6 +36,7 @@
 #include "rs_commandevent.h"
 #include "rs_point.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 LC_ActionDrawSplinePoints::LC_ActionDrawSplinePoints(RS_EntityContainer& container,
 													 RS_GraphicView& graphicView):
@@ -47,7 +48,7 @@ LC_ActionDrawSplinePoints::LC_ActionDrawSplinePoints(RS_EntityContainer& contain
 	setName("DrawSplinePoints");
 }
 
-LC_ActionDrawSplinePoints::~LC_ActionDrawSplinePoints() {}
+LC_ActionDrawSplinePoints::~LC_ActionDrawSplinePoints() = default;
 
 QAction* LC_ActionDrawSplinePoints::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/)
 {

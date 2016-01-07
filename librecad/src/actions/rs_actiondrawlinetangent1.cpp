@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include<set>
 #include<QAction>
 #include <QMouseEvent>
 #include "rs_actiondrawlinetangent1.h"
@@ -34,11 +33,12 @@
 #include "rs_creation.h"
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 namespace{
-const std::set<RS2::EntityType> circleType={RS2::EntityArc,RS2::EntityCircle,
-											   RS2::EntityEllipse, RS2::EntitySplinePoints
-											  };
+auto circleType={RS2::EntityArc, RS2::EntityCircle,
+				 RS2::EntityEllipse, RS2::EntitySplinePoints
+				};
 }
 RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 		RS_EntityContainer& container,
@@ -51,7 +51,7 @@ RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 	actionType=RS2::ActionDrawLineTangent1;
 }
 
-RS_ActionDrawLineTangent1::~RS_ActionDrawLineTangent1(){}
+RS_ActionDrawLineTangent1::~RS_ActionDrawLineTangent1() = default;
 
 QAction* RS_ActionDrawLineTangent1::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	return new QAction(QIcon(":/extui/linestan1.png"), tr("Tangent (P,C)"), nullptr);

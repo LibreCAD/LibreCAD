@@ -28,7 +28,7 @@
 #ifndef RS_VARIABLE_H
 #define RS_VARIABLE_H
 
-
+#include <QString>
 #include "rs.h"
 #include "rs_vector.h"
 
@@ -40,37 +40,37 @@
  * @author Andrew Mustun
  */
 class RS_Variable {
-public:
-	typedef struct {
-                QString s;
+	struct RS_VariableContents {
+		QString s;
 		int i;
 		double d;
 		RS_Vector v;
-	} RS_VariableContents;
+	};
+public:
 	
-    RS_Variable() {
-		type = RS2::VariableVoid;
-		code = 0;
-	}
-    RS_Variable(const RS_Vector& v, int c) {
+	RS_Variable() = default;
+	RS_Variable(const RS_Vector& v, int c):
+		code{c}
+	{
 		setVector(v);
-		code = c;
 	}
-    RS_Variable(const QString& v, int c) {
+	RS_Variable(const QString& v, int c):
+		code{c}
+	{
 		setString(v);
-		code = c;
 	}
-    RS_Variable(int v, int c) {
+	RS_Variable(int v, int c):
+		code{c}
+	 {
 		setInt(v);
-		code = c;
 	}
-    RS_Variable(double v, int c) {
+	RS_Variable(double v, int c):
+		code{c}
+	 {
 		setDouble(v);
-		code = c;
 	}
-    virtual ~RS_Variable() {}
 
-        void setString(const QString& str) {
+	void setString(const QString& str) {
 		contents.s = str;
 		type = RS2::VariableString;
 	}
@@ -87,23 +87,23 @@ public:
 		type = RS2::VariableVector;
 	}
 
-        QString getString() {
+	QString getString() const {
 		return contents.s;
 	}
-	int getInt() {
+	int getInt() const {
 		return contents.i;
 	}
-	double getDouble() {
+	double getDouble() const {
 		return contents.d;
 	}
-	RS_Vector getVector() {
+	RS_Vector getVector() const {
 		return contents.v;
 	}
 
-	RS2::VariableType getType() {
+	RS2::VariableType getType() const {
 		return type;
 	}
-	int getCode() {
+	int getCode() const {
 		return code;
 	}
 
@@ -111,8 +111,8 @@ public:
 
 private:
 	RS_VariableContents contents;
-	RS2::VariableType type;
-	int code;
+	RS2::VariableType type = RS2::VariableVoid;
+	int code = 0;
 };
 
 #endif

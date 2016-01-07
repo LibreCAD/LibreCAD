@@ -36,6 +36,7 @@
 #include "rs_commandevent.h"
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 RS_ActionDrawLine::RS_ActionDrawLine(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
@@ -50,7 +51,7 @@ RS_ActionDrawLine::RS_ActionDrawLine(RS_EntityContainer& container,
     RS_DEBUG->print("RS_ActionDrawLine::RS_ActionDrawLine: OK");
 }
 
-RS_ActionDrawLine::~RS_ActionDrawLine(){}
+RS_ActionDrawLine::~RS_ActionDrawLine() = default;
 
 
 QAction* RS_ActionDrawLine::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

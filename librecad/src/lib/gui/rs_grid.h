@@ -31,7 +31,14 @@
 #include "rs_vector.h"
 
 class RS_GraphicView;
-class QRectF;
+class QString;
+namespace lc {
+	namespace geo {
+		class Area;
+	}
+}
+
+using LC_Rect = lc::geo::Area;
 
 /**
  * This class represents a grid. Grids can be drawn on graphic
@@ -90,8 +97,8 @@ private:
 	RS_Grid(RS_Grid const&) = delete;
 	RS_Grid& operator = (RS_Grid const&) = delete;
 	//! \{ \brief create grid points
-	void createOrthogonalGrid(QRectF const& rect, RS_Vector const& gridWidth);
-	void createIsometricGrid(QRectF const& rect, RS_Vector const& gridWidth);
+	void createOrthogonalGrid(LC_Rect const& rect, RS_Vector const& gridWidth);
+	void createIsometricGrid(LC_Rect const& rect, RS_Vector const& gridWidth);
 	//! \}
 
 	//! \{ \brief determine grid width

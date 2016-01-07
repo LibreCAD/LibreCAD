@@ -25,7 +25,7 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
 #include "rs_debug.h"
 #include "rs_layerlist.h"
 #include "rs_layer.h"

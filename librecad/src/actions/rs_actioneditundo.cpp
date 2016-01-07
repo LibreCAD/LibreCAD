@@ -40,15 +40,10 @@ RS_ActionEditUndo::RS_ActionEditUndo(bool undo,
                                      RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_ActionInterface("Edit Undo",
-                    container, graphicView) {
-
-    this->undo = undo;
+					container, graphicView)
+		, undo(undo)
+{
 }
-
-
-
-RS_ActionEditUndo::~RS_ActionEditUndo() {}
-
 
 QAction* RS_ActionEditUndo::createGUIAction(RS2::ActionType type, QObject* parent) {
     QAction* action;
@@ -58,7 +53,7 @@ QAction* RS_ActionEditUndo::createGUIAction(RS2::ActionType type, QObject* paren
 #if QT_VERSION >= 0x040600
                 action->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/actions/undo2.png")));
 #else
-                action->setIcon(QIcon(":/actions/undo2.png"));
+				action->setIcon(QIcon(":/actions/undo2.png"));
 #endif
                 action->setShortcut(QKeySequence::Undo);
                 //action->zetStatusTip(tr("Undoes last action"));
@@ -87,13 +82,13 @@ void RS_ActionEditUndo::init(int status) {
 void RS_ActionEditUndo::trigger() {
     if (undo) {
         if(!document->undo()) {
-            if( RS_DIALOGFACTORY != NULL ) {
+			if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->commandMessage(tr("Nothing to undo!"));
             }
         }
     } else {
         if(!document->redo()) {
-            if( RS_DIALOGFACTORY != NULL ) {
+			if (RS_DIALOGFACTORY) {
                 RS_DIALOGFACTORY->commandMessage(tr("Nothing to redo!"));
             }
         }
@@ -110,6 +105,4 @@ void RS_ActionEditUndo::trigger() {
     finish(false);
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 }
-
-
 // EOF

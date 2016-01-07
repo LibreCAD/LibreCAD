@@ -27,10 +27,9 @@
 #ifndef RS_SCRIPT_H
 #define RS_SCRIPT_H
 
-#include <iostream>
-#include <QString>
+#include <iosfwd>
 
-
+class QString;
 
 /**
  * Class for representing a script. This is implemented as a QString

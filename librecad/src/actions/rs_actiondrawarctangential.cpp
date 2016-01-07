@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<cmath>
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_actiondrawarctangential.h"
@@ -35,6 +35,7 @@
 #include "ui_qg_arctangentialoptions.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 
 RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(RS_EntityContainer& container,
@@ -49,7 +50,7 @@ RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(RS_EntityContainer& conta
 
 
 
-RS_ActionDrawArcTangential::~RS_ActionDrawArcTangential() {}
+RS_ActionDrawArcTangential::~RS_ActionDrawArcTangential() = default;
 
 
 QAction* RS_ActionDrawArcTangential::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {

@@ -35,7 +35,7 @@
 #include "rs_commandevent.h"
 #include "rs_point.h"
 #include "rs_coordinateevent.h"
-
+#include "rs_debug.h"
 
 RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
 										 RS_GraphicView& graphicView)
@@ -48,7 +48,7 @@ RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
 	reset();
 }
 
-RS_ActionDrawSpline::~RS_ActionDrawSpline() {}
+RS_ActionDrawSpline::~RS_ActionDrawSpline() = default;
 
 QAction* RS_ActionDrawSpline::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	return new QAction(QIcon(":/extui/menuspline.png"), tr("&Spline"), nullptr);

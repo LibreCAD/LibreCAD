@@ -24,7 +24,8 @@
 **
 **********************************************************************/
 
-
+#include<cmath>
+#include <QString>
 #include <QFileInfo>
 #include "rs_creation.h"
 #include "rs_document.h"
@@ -43,6 +44,7 @@
 #include "rs_modification.h"
 #include "rs_information.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 /**
  * Default constructor.

@@ -33,6 +33,7 @@
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
 #include "rs_modification.h"
+#include "rs_debug.h"
 
 RS_ActionModifyMirror::RS_ActionModifyMirror(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -43,7 +44,7 @@ RS_ActionModifyMirror::RS_ActionModifyMirror(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyMirror;
 }
 
-RS_ActionModifyMirror::~RS_ActionModifyMirror(){}
+RS_ActionModifyMirror::~RS_ActionModifyMirror() = default;
 
 QAction* RS_ActionModifyMirror::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	QAction* action = new QAction(QIcon(":/extui/modifymirror.png"), tr("&Mirror"), NULL);

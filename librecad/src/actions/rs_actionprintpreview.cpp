@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<cmath>
 #include "rs_actionprintpreview.h"
 
 #include <QAction>
@@ -34,6 +34,7 @@
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.
@@ -142,7 +143,17 @@ void RS_ActionPrintPreview::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionPrintPreview::commandEvent(RS_CommandEvent*  e) {
     QString c = e->getCommand().trimmed().toLower();
 //    qDebug()<<"cmd="<<c;
-    if (checkCommand("graphoffset", c)) {
+	if (checkCommand("blackwhite", c)) {
+		setBlackWhite(true);
+		RS_DIALOGFACTORY->commandMessage(tr("Printout in Black/White"));
+		e->accept();
+		return;
+	} else if (checkCommand("color", c)) {
+		setBlackWhite(false);
+		RS_DIALOGFACTORY->commandMessage(tr("Printout in color"));
+		e->accept();
+		return;
+	} else if (checkCommand("graphoffset", c)) {
         m_bPaperOffset=false;
         RS_DIALOGFACTORY->commandMessage(tr("Printout offset in graph coordinates"));
         e->accept();
@@ -184,7 +195,9 @@ void RS_ActionPrintPreview::commandEvent(RS_CommandEvent*  e) {
 
 QStringList RS_ActionPrintPreview::getAvailableCommands() {
     QStringList cmd;
-    cmd +=command("graphoffset");
+	cmd +=command("blackwhite");
+	cmd +=command("color");
+	cmd +=command("graphoffset");
     cmd +=command("paperoffset");
     cmd +=command("help");
     return cmd;

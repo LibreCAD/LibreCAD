@@ -20,7 +20,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <set>
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_actiondrawcircletan2_1p.h"
@@ -32,9 +31,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_circle.h"
 #include "lc_quadratic.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 namespace {
-const std::set<RS2::EntityType> enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+auto enTypeList={RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
 }
 /**
  * Constructor.
@@ -52,7 +52,7 @@ RS_ActionDrawCircleTan2_1P::RS_ActionDrawCircleTan2_1P(
 	actionType=RS2::ActionDrawCircleTan2_1P;
 }
 
-RS_ActionDrawCircleTan2_1P::~RS_ActionDrawCircleTan2_1P(){}
+RS_ActionDrawCircleTan2_1P::~RS_ActionDrawCircleTan2_1P() = default;
 
 QAction* RS_ActionDrawCircleTan2_1P::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;

@@ -51,6 +51,7 @@ protected slots:
 
 private slots:
     void on_cbTotalLength_toggled(bool checked);
+	void on_leDist_editingFinished();
 
 private:
     void destroy();

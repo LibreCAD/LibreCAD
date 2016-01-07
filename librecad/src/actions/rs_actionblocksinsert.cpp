@@ -54,7 +54,7 @@ RS_ActionBlocksInsert::RS_ActionBlocksInsert(RS_EntityContainer& container,
 
 
 
-RS_ActionBlocksInsert::~RS_ActionBlocksInsert() {}
+RS_ActionBlocksInsert::~RS_ActionBlocksInsert()  = default;
 
 QAction* RS_ActionBlocksInsert::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Insert Block")

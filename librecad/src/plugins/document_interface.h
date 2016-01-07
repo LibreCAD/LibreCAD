@@ -28,10 +28,10 @@
 
 #include <QPointF>
 #include <QHash>
-#include <QString>
 #include <QVariant>
 #include<vector>
 //#include <QColor>
+class QString;
 
 namespace DPI {
     //! Vertical alignments.

@@ -29,8 +29,7 @@
 #include <QAction>
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
-
-
+#include "rs_debug.h"
 
 RS_ActionBlocksToggleView::RS_ActionBlocksToggleView(
     RS_EntityContainer& container,

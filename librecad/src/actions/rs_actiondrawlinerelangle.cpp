@@ -25,7 +25,7 @@
 **********************************************************************/
 
 #include "rs_actiondrawlinerelangle.h"
-
+#include<cmath>
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_dialogfactory.h"
@@ -35,6 +35,7 @@
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(
 		RS_EntityContainer& container,

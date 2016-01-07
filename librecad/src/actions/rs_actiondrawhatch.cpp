@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-
+#include <iostream>
 #include "rs_actiondrawhatch.h"
 
 #include <QAction>
@@ -31,8 +31,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
-
-
+#include "rs_debug.h"
 
 RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)

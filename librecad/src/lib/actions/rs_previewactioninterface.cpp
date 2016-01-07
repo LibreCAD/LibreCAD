@@ -23,11 +23,10 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-
 #include "rs_previewactioninterface.h"
 
 #include "rs_graphicview.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.

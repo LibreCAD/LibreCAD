@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<clocale>
 #include "main.h"
 
 #include <QApplication>
@@ -46,6 +46,7 @@ QSplashScreen *splash=nullptr;
 #include "qg_dlginitial.h"
 
 #include "qc_applicationwindow.h"
+#include "rs_debug.h"
 
 #ifndef QC_SPLASH_TXTCOL
 # define QC_SPLASH_TXTCOL Qt::black

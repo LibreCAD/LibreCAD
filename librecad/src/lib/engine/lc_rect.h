@@ -213,5 +213,5 @@ private:
 }
 }
 
-typedef lc::geo::Area LC_Rect;
+using LC_Rect = lc::geo::Area;
 #endif // LC_RECT_H

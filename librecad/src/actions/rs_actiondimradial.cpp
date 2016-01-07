@@ -36,6 +36,7 @@
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 
 RS_ActionDimRadial::RS_ActionDimRadial(
@@ -51,7 +52,7 @@ RS_ActionDimRadial::RS_ActionDimRadial(
     reset();
 }
 
-RS_ActionDimRadial::~RS_ActionDimRadial(){}
+RS_ActionDimRadial::~RS_ActionDimRadial() = default;
 
 QAction* RS_ActionDimRadial::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	// tr("Radial")

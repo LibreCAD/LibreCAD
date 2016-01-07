@@ -25,10 +25,11 @@
 **
 **********************************************************************/
 
+#include<climits>
+#include<cmath>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QAction>
-#include <climits>
 #include "qc_applicationwindow.h"
 #include "rs_graphicview.h"
 
@@ -43,6 +44,8 @@
 #include "rs_settings.h"
 #include "rs_dialogfactory.h"
 #include "rs_layer.h"
+#include "rs_math.h"
+#include "rs_debug.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -66,10 +69,11 @@ RS_GraphicView::RS_GraphicView()
 	init();
 }
 
+RS_GraphicView::~RS_GraphicView() = default;
+
 /**
  * Destructor.
  */
-RS_GraphicView::~RS_GraphicView() {}
 
 void RS_GraphicView::init()
 {

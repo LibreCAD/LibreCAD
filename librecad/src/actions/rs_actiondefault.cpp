@@ -32,8 +32,7 @@
 #include "rs_modification.h"
 #include "rs_selection.h"
 #include "rs_overlaybox.h"
-
-
+#include "rs_debug.h"
 
 /**
  * Constructor.

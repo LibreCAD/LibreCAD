@@ -23,10 +23,13 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<cmath>
 #include<QPolygon>
+#include "rs_pen.h"
+#include "rs_color.h"
 #include "rs_painter.h"
-
+#include "rs_math.h"
+#include "rs_debug.h"
 
 void RS_Painter::createArc(QPolygon& pa,
                              const RS_Vector& cp, double radius,
@@ -150,4 +153,11 @@ void RS_Painter::drawHandle(const RS_Vector& p, const RS_Color& c, int size) {
     fillRect((int)(p.x-size), (int)(p.y-size), 2*size, 2*size, c);
 }
 
+int RS_Painter::toScreenX(double x) const {
+	return RS_Math::round(offset.x + x);
+}
+
+int RS_Painter::toScreenY(double y) const{
+	return RS_Math::round(offset.y + y);
+}
 

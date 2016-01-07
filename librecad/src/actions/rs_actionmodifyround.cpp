@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include<set>
 #include<QAction>
 #include <QMouseEvent>
 #include "rs_actionmodifyround.h"
@@ -34,9 +33,10 @@
 #include "rs_information.h"
 #include "rs_math.h"
 #include "rs_modification.h"
+#include "rs_debug.h"
 
 namespace{
-const std::set<RS2::EntityType> eType={ RS2::EntityLine , RS2::EntityPolyline , RS2::EntityArc ,
+auto eType={ RS2::EntityLine , RS2::EntityPolyline , RS2::EntityArc ,
                                            RS2::EntityCircle , RS2::EntityEllipse , RS2::EntitySpline};
 }
 
@@ -54,7 +54,7 @@ RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyRound;
 }
 
-RS_ActionModifyRound::~RS_ActionModifyRound(){}
+RS_ActionModifyRound::~RS_ActionModifyRound() = default;
 
 QAction* RS_ActionModifyRound::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 		QAction* action = new QAction(QIcon(":/extui/modifyround.png"), tr("&Fillet"), NULL);

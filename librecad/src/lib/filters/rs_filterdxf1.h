@@ -42,8 +42,7 @@
  */
 class RS_FilterDXF1 : public RS_FilterInterface {
 public:
-    RS_FilterDXF1();
-    ~RS_FilterDXF1() {}
+	RS_FilterDXF1();
 
     virtual bool canImport(const QString& /*fileName*/, RS2::FormatType t) const {
 		return (t==RS2::FormatDXF1);
@@ -56,11 +55,7 @@ public:
     virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/);
 
     virtual bool fileExport(RS_Graphic& /*g*/, const QString& /*file*/,
-		RS2::FormatType /*type*/) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "Exporting of QCad 1.x file not implemented");
-		return false;
-    }
+		RS2::FormatType /*type*/);
 
     bool readFromBuffer();
 
@@ -117,7 +112,7 @@ protected:
     bool    dosFile;          // File is in DOS-format
     int       numElements;
     QString name;
-    QFile  file;
+	QFile file;
 }
 ;
 

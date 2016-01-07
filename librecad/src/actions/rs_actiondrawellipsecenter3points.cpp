@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_circle.h"
 #include "rs_ellipse.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.
@@ -46,7 +47,7 @@ RS_ActionDrawEllipseCenter3Points::RS_ActionDrawEllipseCenter3Points(
 	actionType=RS2::ActionDrawEllipseCenter3Points;
 }
 
-RS_ActionDrawEllipseCenter3Points::~RS_ActionDrawEllipseCenter3Points(){}
+RS_ActionDrawEllipseCenter3Points::~RS_ActionDrawEllipseCenter3Points() = default;
 
 QAction* RS_ActionDrawEllipseCenter3Points::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
     QAction* action;

@@ -101,6 +101,11 @@ int dxfReader::getHandleString(){
     return res;
 }
 
+bool dxfReader::good() const
+{
+	return filestr->good();
+}
+
 bool dxfReaderBinary::readCode(int *code) {
     unsigned short *int16p;
     char buffer[2];

@@ -34,6 +34,7 @@
 #include "rs_information.h"
 #include "rs_math.h"
 #include "rs_modification.h"
+#include "rs_debug.h"
 
 RS_ActionModifyBevel::RS_ActionModifyBevel(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -49,7 +50,7 @@ RS_ActionModifyBevel::RS_ActionModifyBevel(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyBevel;
 }
 
-RS_ActionModifyBevel::~RS_ActionModifyBevel(){}
+RS_ActionModifyBevel::~RS_ActionModifyBevel() = default;
 
 QAction* RS_ActionModifyBevel::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	QAction* action = new QAction(QIcon(":/extui/modifybevel.png"), tr("&Bevel"), nullptr);
@@ -65,7 +66,7 @@ void RS_ActionModifyBevel::init(int status) {
 
 void RS_ActionModifyBevel::trigger() {
 
-    RS_DEBUG->print("RS_ActionModifyBevel::trigger()");
+RS_DEBUG->print("RS_ActionModifyBevel::trigger()");
 
     if (entity1 && entity1->isAtomic() &&
             entity2 && entity2->isAtomic()) {

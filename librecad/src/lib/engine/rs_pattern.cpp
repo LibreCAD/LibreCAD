@@ -30,6 +30,7 @@
 #include "rs_system.h"
 #include "rs_fileio.h"
 #include "rs_layer.h"
+#include "rs_debug.h"
 
 
 /**

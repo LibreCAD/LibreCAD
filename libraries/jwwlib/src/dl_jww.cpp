@@ -40,6 +40,9 @@
 
 //#undef DEBUG
 #define SKIP_MOJI
+#ifdef DEBUG
+#include "rs_debug.h"
+#endif
 
 #define  ArraySize(arr)  (sizeof(arr)/sizeof(arr[0]))
 

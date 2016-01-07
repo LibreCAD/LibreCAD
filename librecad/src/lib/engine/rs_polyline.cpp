@@ -23,8 +23,9 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-
+#include<iostream>
+#include<cmath>
+#include<cassert>
 #include "rs_polyline.h"
 
 #include "rs_debug.h"

@@ -29,6 +29,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_commandevent.h"
 #include "rs_circle.h"
 #include "rs_line.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.
@@ -45,7 +46,7 @@ RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(
 	actionType=RS2::ActionDrawCircleInscribe;
 }
 
-RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe(){}
+RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe() = default;
 
 QAction* RS_ActionDrawCircleInscribe::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	return new QAction(QIcon(":/extui/circleinscribe.png"), tr("Circle &Inscribed"), NULL);

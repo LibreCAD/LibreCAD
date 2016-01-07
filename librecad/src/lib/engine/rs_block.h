@@ -137,11 +137,7 @@ public:
         return false;
     }
 
-    friend std::ostream& operator << (std::ostream& os, const RS_Block& b) {
-        os << " name: " << b.getName().toLatin1().data() << "\n";
-        os << " entities: " << (RS_EntityContainer&)b << "\n";
-        return os;
-    }
+    friend std::ostream& operator << (std::ostream& os, const RS_Block& b);
 
     /** 
 	 * sets a new name for the block. Only called by blocklist to

@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<iostream>
 #include "qc_mdiwindow.h"
 
 #if QT_VERSION >= 0x050000
@@ -34,7 +34,7 @@
 # include <QPrintDialog>
 #endif 
 #include <QCloseEvent>
-
+#include <QApplication>
 #include <QMainWindow>
 #include <QCursor>
 #include <QMessageBox>
@@ -52,6 +52,7 @@
 #include "rs_insert.h"
 #include "rs_mtext.h"
 #include "rs_pen.h"
+#include "rs_debug.h"
 
 int QC_MDIWindow::idCounter = 0;
 

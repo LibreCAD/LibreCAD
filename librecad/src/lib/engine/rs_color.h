@@ -30,6 +30,7 @@
 
 #include <QColor>
 
+#include "rs.h"
 #include "rs_flags.h"
 
 //! Color defined by layer not entity

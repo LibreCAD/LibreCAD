@@ -36,6 +36,7 @@
 #include "rs_painter.h"
 #include "lc_quadratic.h"
 #include "rs_painterqt.h"
+#include "rs_debug.h"
 
 
 #ifdef EMU_C99
@@ -280,7 +281,8 @@ void RS_Arc::calculateBorders() {
 
 RS_VectorSolutions RS_Arc::getRefPoints() const
 {
-	return RS_VectorSolutions({startpoint, endpoint, data.center});
+	//order: start, end, center
+	return {startpoint, endpoint, data.center};
 }
 
 double RS_Arc::getDirection1() const {
@@ -849,16 +851,31 @@ void RS_Arc::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
 
 
 
-void RS_Arc::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-    if(fabs(fabs(getAngleLength()-M_PI)-M_PI)<RS_TOLERANCE_ANGLE){
+void RS_Arc::moveRef(const RS_Vector& ref, const RS_Vector& offset)
+{
+	//avoid moving start/end points for full circle arcs
+	//as start/end points coincident
+	if (fabs(fabs(getAngleLength()-M_PI)-M_PI) < RS_TOLERANCE_ANGLE){
         move(offset);
         return;
-    }
-    if (ref.distanceTo(startpoint)<1.0e-4) {
-        moveStartpoint(startpoint+offset);
-    }else if (ref.distanceTo(endpoint)<1.0e-4) {
-        moveEndpoint(endpoint+offset);
-    }
+	}
+	auto const refs = getRefPoints();
+	double dMin;
+	size_t index;
+	RS_Vector const vp = refs.getClosest(ref, &dMin, &index);
+
+	//reference points must be by the order: start, end, center
+	switch (index) {
+	case 0:
+		moveStartpoint(vp + offset);
+		return;
+	case 1:
+		moveEndpoint(vp + offset);
+		return;
+	default:
+		move(offset);
+	}
+
     correctAngles(); // make sure angleLength is no more than 2*M_PI
 }
 

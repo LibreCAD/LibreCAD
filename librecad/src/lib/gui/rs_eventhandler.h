@@ -30,8 +30,6 @@
 
 #include "rs_graphicview.h"
 
-#define RS_MAXACTIONS 16
-
 /**
  * The event handler owns and manages all actions that are currently
  * active. All events going from the view to the actions come over

@@ -27,19 +27,7 @@
 #ifndef RS_H
 #define RS_H
 
-#include <Qt>
-#include <QtGlobal>
-#if QT_VERSION >= 0x050000
-# include <QtPrintSupport/QPrinter>
-#else
-# include <QPrinter>
-#endif 
-
-#define RS_TEST
-
-#ifdef RS_TEST
-#include <cassert>
-#endif
+//#define RS_TEST
 
 // Windoze XP can't handle the original MAX/MINDOUBLE's
 #define RS_MAXDOUBLE 1.0E+10
@@ -166,16 +154,6 @@ public:
 		,EntityPattern
     };
 
-    static bool isContainer(const EntityType enType){
-        switch(enType){
-        case EntityPolyline:
-        case EntityContainer:
-        case EntitySpline:
-            return true;
-        default:
-            return false;
-        }
-    }
 
     /**
      * Action types used by action factories.
@@ -716,100 +694,6 @@ public:
     };
 
     /**
-     * Wrapper for Qt
-     */
-    static Qt::PenStyle rsToQtLineType(RS2::LineType t) {
-        switch (t) {
-        case NoPen:
-            return Qt::NoPen;
-            break;
-        case SolidLine:
-            return Qt::SolidLine;
-            break;
-        case DotLine:
-        case DotLineTiny:
-        case DotLine2:
-        case DotLineX2:
-            return Qt::DotLine;
-            break;
-        case DashLine:
-        case DashLineTiny:
-        case DashLine2:
-        case DashLineX2:
-            return Qt::DashLine;
-            break;
-        case DashDotLine:
-        case DashDotLineTiny:
-        case DashDotLine2:
-        case DashDotLineX2:
-            return Qt::DashDotLine;
-            break;
-        case DivideLine:
-        case DivideLineTiny:
-        case DivideLine2:
-        case DivideLineX2:
-            return Qt::DashDotDotLine;
-            break;
-        case CenterLine:
-        case CenterLineTiny:
-        case CenterLine2:
-        case CenterLineX2:
-            return Qt::DashDotLine;
-            break;
-        case BorderLine:
-        case BorderLineTiny:
-        case BorderLine2:
-        case BorderLineX2:
-            return Qt::DashDotLine;
-            break;
-        case LineByLayer:
-        case LineByBlock:
-        default:
-            return Qt::SolidLine;
-            break;
-        }
-        return Qt::SolidLine;
-    }
-
-    /**
-     * Wrapper for Qt.
-     */
-    static RS2::LineType qtToRsPenStyle(Qt::PenStyle s) {
-        switch (s) {
-        case Qt::NoPen:
-            return NoPen;
-        case Qt::SolidLine:
-            return SolidLine;
-            break;
-        case Qt::DashLine:
-            return DashLine;
-            break;
-        case Qt::DotLine:
-            return DotLine;
-            break;
-        case Qt::DashDotLine:
-            return DashDotLine;
-            break;
-        case Qt::DashDotDotLine:
-            return DivideLine;
-            break;
-        default:
-            return SolidLine;
-            break;
-        }
-        return SolidLine;
-    }
-
-    /**
-     * \brief Struct that stores a line type pattern (e.g. dash dot dot).
-     */
-    struct LineTypePatternStruct {
-        double* pattern;
-        int num;
-    }
-    LineTypePattern;
-
-    /**
      * Enum of line widths:
      */
     enum LineWidth {
@@ -913,63 +797,7 @@ public:
     /**
      * Wrapper for Qt
      */
-    static LineWidth intToLineWidth(int w) {
-                if (w==-3) {
-                        return WidthDefault;
-                } else if (w==-2) {
-                        return WidthByBlock;
-                } else if (w==-1) {
-                        return WidthByLayer;
-                } else if (w<3) {
-                        return Width00;
-                } else if (w<8) {
-                        return Width01;
-                } else if (w<12) {
-                        return Width02;
-                } else if (w<14) {
-                        return Width03;
-                } else if (w<17) {
-                        return Width04;
-                } else if (w<19) {
-                        return Width05;
-                } else if (w<23) {
-                        return Width06;
-                } else if (w<28) {
-                        return Width07;
-                } else if (w<33) {
-                        return Width08;
-                } else if (w<38) {
-                        return Width09;
-                } else if (w<46) {
-                        return Width10;
-                } else if (w<52) {
-                        return Width11;
-                } else if (w<57) {
-                        return Width12;
-                } else if (w<66) {
-                        return Width13;
-                } else if (w<76) {
-                        return Width14;
-                } else if (w<86) {
-                        return Width15;
-                } else if (w<96) {
-                        return Width16;
-                } else if (w<104) {
-                        return Width17;
-                } else if (w<114) {
-                        return Width18;
-                } else if (w<131) {
-                        return Width19;
-                } else if (w<150) {
-                        return Width20;
-                } else if (w<180) {
-                        return Width21;
-                } else if (w<206) {
-                        return Width22;
-                } else {
-                        return Width23;
-                }
-    }
+	static LineWidth intToLineWidth(int w);
 
     /**
      * Enum of cursor types.
@@ -1003,6 +831,7 @@ public:
     /**
      * Wrapper for Qt.
      */
+	/*
     static Qt::CursorShape rsToQtCursorType(RS2::CursorType t) {
         switch (t) {
         case ArrowCursor:
@@ -1045,7 +874,7 @@ public:
             return Qt::ArrowCursor;
         }
     }
-
+*/
     /**
      * Paper formats.
      */
@@ -1092,93 +921,6 @@ public:
 
                 NPageSize
         };
-
-    /**
-     * Wrapper for Qt.
-     */
-    static QPrinter::PageSize rsToQtPaperFormat(RS2::PaperFormat f) {
-
-        switch (f) {
-        default:
-        case Custom:
-            return QPrinter::Custom;
-        case Letter:
-            return QPrinter::Letter;
-        case Legal:
-            return QPrinter::Legal;
-        case Executive:
-            return QPrinter::Executive;
-        case A0:
-            return QPrinter::A0;
-        case A1:
-            return QPrinter::A1;
-        case A2:
-            return QPrinter::A2;
-        case A3:
-            return QPrinter::A3;
-        case A4:
-            return QPrinter::A4;
-        case A5:
-            return QPrinter::A5;
-        case A6:
-            return QPrinter::A6;
-        case A7:
-            return QPrinter::A7;
-        case A8:
-            return QPrinter::A8;
-        case A9:
-            return QPrinter::A9;
-        case B0:
-            return QPrinter::B0;
-        case B1:
-            return QPrinter::B1;
-        case B2:
-            return QPrinter::B2;
-        case B3:
-            return QPrinter::B3;
-        case B4:
-            return QPrinter::B4;
-        case B5:
-            return QPrinter::B5;
-        case B6:
-            return QPrinter::B6;
-        case B7:
-            return QPrinter::B7;
-        case B8:
-            return QPrinter::B8;
-        case B9:
-            return QPrinter::B9;
-        case B10:
-            return QPrinter::B10;
-        case C5E:
-            return QPrinter::C5E;
-        case Comm10E:
-            return QPrinter::Comm10E;
-        case DLE:
-            return QPrinter::DLE;
-        case Folio:
-            return QPrinter::Folio;
-        case Ledger:
-            return QPrinter::Ledger;
-        case Tabloid:
-            return QPrinter::Tabloid;
-#if QT_MAJOR_VERSION >= 5
-        case Arch_A:
-            return QPrinter::ArchA;
-        case Arch_B:
-            return QPrinter::ArchB;
-        case Arch_C:
-            return QPrinter::ArchC;
-        case Arch_D:
-            return QPrinter::ArchD;
-        case Arch_E:
-            return QPrinter::ArchE;
-#endif
-        case NPageSize:
-            return QPrinter::NPageSize;
-        }
-
-    }
 
         /**
          * Items that can be put on a overlay, teh items are rendered in this order. Best is to leave snapper as last so

@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<cmath>
 #include "rs_modification.h"
 
 #include "rs_arc.h"
@@ -43,7 +43,7 @@
 #include "rs_layer.h"
 #include "lc_splinepoints.h"
 #include "rs_math.h"
-
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 
 #ifdef EMU_C99
@@ -2454,13 +2454,17 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
     }
 
     // find out whether we're bevelling within a polyline:
-    if (entity1->getParent() && entity1->getParent()->rtti()==RS2::EntityPolyline) {
+    if (entity1->getParent() &&
+            entity1->getParent()->rtti()==RS2::EntityPolyline) {
         RS_DEBUG->print("RS_Modification::bevel: trimming polyline segments");
         if (entity1->getParent()!=entity2->getParent()) {
             RS_DEBUG->print(RS_Debug::D_WARNING,
                             "RS_Modification::bevel: entities not in the same polyline");
             return false;
         }
+        //TODO: check if entity1 & entity2 are lines.
+        //bevel only can be with lines.
+
         // clone polyline for undo
         if (document && handleUndo) {
             RS_EntityContainer* cl =
@@ -2609,28 +2613,36 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
     } else {
         int idx1 = baseContainer->findEntity(trimmed1);
         int idx2 = baseContainer->findEntity(trimmed2);
+        int idx = idx1;
+        //Verify correct order segment in polylines
+        if (idx1 > idx2){
+            //inverted, reorder it (swap).
+            idx1 = idx2;
+            idx2 = idx;
+            RS_AtomicEntity* trimmedTmp = trimmed1;
+            trimmed1 = trimmed2;
+            trimmed2 = trimmedTmp;
+        }
+        idx = idx1;
 
         bevel->setSelected(baseContainer->isSelected());
         bevel->setLayer(baseContainer->getLayer());
         bevel->setPen(baseContainer->getPen());
 
-        bool insertAfter1 = ((idx1<idx2 && idx1!=0) ||
-                            (idx2==0 && idx1==(int)baseContainer->count()-1));
-
         // insert bevel at the right position:
-        //if ((idx1<idx2 && idx1!=0) ||
-        //	(idx2==0 && idx1==(int)baseContainer->count()-1)) {
-        if (insertAfter1) {
-            if (trimmed1->getEndpoint().distanceTo(bevel->getStartpoint())>1.0e-4) {
-                bevel->reverse();
-            }
-            baseContainer->insertEntity(idx1+1, bevel);
-        } else {
+        if (trimmed1 == baseContainer->first() && trimmed2 == baseContainer->last()){
+            //bevel are from last and first segments, add at the end
             if (trimmed2->getEndpoint().distanceTo(bevel->getStartpoint())>1.0e-4) {
                 bevel->reverse();
             }
-            baseContainer->insertEntity(idx2+1, bevel);
+            idx = idx2;
+        } else{
+            //consecutive segments
+            if (trimmed1->getEndpoint().distanceTo(bevel->getStartpoint())>1.0e-4) {
+                bevel->reverse();
+            }
         }
+        baseContainer->insertEntity(idx+1, bevel);
     }
 
     if (isPolyline) {
