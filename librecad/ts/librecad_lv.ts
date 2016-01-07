@@ -2,6 +2,37 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="lv">
 <context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Slānis:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Ģeometrija</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>2 Points, Radius</source>
@@ -123,6 +154,25 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     <message>
         <source>remove 0&quot;</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Līnijas relatīvā leņķa opcijas</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Atstatums:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished">Attālums no sākotnējās lauztās līnijas</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished">Kopijas:</translation>
     </message>
 </context>
 <context>
@@ -3995,19 +4045,19 @@ Lūdzu, izvēlieties mērvienības, kuras izmantot jauniem zīmējumiem, kā ar�
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Labi</translation>
+        <translation type="obsolete">&amp;Labi</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Atcelt</translation>
+        <translation type="obsolete">Atcelt</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -5472,34 +5522,34 @@ p, li { white-space: pre-wrap; }
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation>Līnijas krāsa</translation>
+        <translation type="obsolete">Līnijas krāsa</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation>Līnijas platums</translation>
+        <translation type="obsolete">Līnijas platums</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation>Līnijas tips</translation>
+        <translation type="obsolete">Līnijas tips</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Līnijas relatīvā leņķa opcijas</translation>
+        <translation type="obsolete">Līnijas relatīvā leņķa opcijas</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Atstatums:</translation>
+        <translation type="obsolete">Atstatums:</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation>Attālums no sākotnējās lauztās līnijas</translation>
+        <translation type="obsolete">Attālums no sākotnējās lauztās līnijas</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation>Kopijas:</translation>
+        <translation type="obsolete">Kopijas:</translation>
     </message>
 </context>
 <context>
@@ -7530,6 +7580,18 @@ Continue?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10174,11 +10236,15 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a line, arc or polyline.</source>
-        <translation>Objektam ir jābūt līnijai, lokam vai lauztai līnijai.</translation>
+        <translation type="obsolete">Objektam ir jābūt līnijai, lokam vai lauztai līnijai.</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
         <translation>Objekts nevar būt slēgta lauzta līnija.</translation>
+    </message>
+    <message>
+        <source>Polyline created</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10265,6 +10331,14 @@ Continue?</source>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
         <translation>Izdrukas nobīdes ignorē relatīvo nulli. Ignorē “@”</translation>
+    </message>
+    <message>
+        <source>Printout in Black/White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in color</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

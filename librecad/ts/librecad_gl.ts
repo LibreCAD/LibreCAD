@@ -2,6 +2,37 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="gl">
 <context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Capa:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Xeometría</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Pechada</translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>2 Points, Radius</source>
@@ -123,6 +154,25 @@ a distancia entre puntos=%2 é maior ca o diámetro=%3</translation>
     <message>
         <source>remove 0&quot;</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Opcións de liña con ángulo relativo</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Espazado:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished">Distancia de separación da poliliña orixinal</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished">Copias:</translation>
     </message>
 </context>
 <context>
@@ -3771,19 +3821,19 @@ Vostede pode trocar estas preferencias despois, no cadro de diálogo de opcións
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation type="obsolete">Cancelar</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -5162,34 +5212,34 @@ p, li { white-space: pre-wrap; }
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation>Cor da liña</translation>
+        <translation type="obsolete">Cor da liña</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation>Grosor da liña</translation>
+        <translation type="obsolete">Grosor da liña</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation>Tipo de liña</translation>
+        <translation type="obsolete">Tipo de liña</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Opcións de liña con ángulo relativo</translation>
+        <translation type="obsolete">Opcións de liña con ángulo relativo</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Espazado:</translation>
+        <translation type="obsolete">Espazado:</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation>Distancia de separación da poliliña orixinal</translation>
+        <translation type="obsolete">Distancia de separación da poliliña orixinal</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation>Copias:</translation>
+        <translation type="obsolete">Copias:</translation>
     </message>
 </context>
 <context>
@@ -7204,6 +7254,18 @@ Continue?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9859,11 +9921,15 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a line, arc or polyline.</source>
-        <translation>A entidade ten que ser unha liña, un arco ou unha poliliña.</translation>
+        <translation type="obsolete">A entidade ten que ser unha liña, un arco ou unha poliliña.</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
         <translation>A entidade no pode ser unha poliliña pechada.</translation>
+    </message>
+    <message>
+        <source>Polyline created</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9950,6 +10016,14 @@ Continue?</source>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
         <translation>Desprazamento da impresión ignora a orixe relativa. Esquecendo &apos;@&apos;</translation>
+    </message>
+    <message>
+        <source>Printout in Black/White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in color</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="el">
 <context>
@@ -200,7 +201,7 @@
     <message>
         <location filename="../list/list.cpp" line="162"/>
         <source>CONSTRUCTIONLINE</source>
-        <translatorcomment>CHECKME αυτοσχεδιαστική μετάφραση, καθώς και το "βοηθητική" έχει χρησιμοποιηθεί για το "extension" και ίσως είναι κάτι διαφορετικό</translatorcomment>
+        <translatorcomment>CHECKME αυτοσχεδιαστική μετάφραση, καθώς και το &quot;βοηθητική&quot; έχει χρησιμοποιηθεί για το &quot;extension&quot; και ίσως είναι κάτι διαφορετικό</translatorcomment>
         <translation>ΚΑΤΑΣΚΕΥΑΣΤΙΚΗΓΡΑΜΜΗ</translation>
     </message>
     <message>
@@ -281,7 +282,7 @@
     <message>
         <location filename="../list/list.cpp" line="210"/>
         <source>SPLINEPOINTS</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -296,7 +297,7 @@
     <message>
         <location filename="../list/list.cpp" line="219"/>
         <source>DIMALIGNED</source>
-        <translatorcomment>CHECKME ΣΤΟΙΧΙΣΜΕΝΗ 'Η ΕΥΘΥΓΡΑΜΜΙΣΜΕΝΗ ΚΑΙ ΓΙΑΤΙ ΚΑΙ ΠΡΟΣΟΧΗ ΣΤΑ ΑΛΛΑ</translatorcomment>
+        <translatorcomment>CHECKME ΣΤΟΙΧΙΣΜΕΝΗ &apos;Η ΕΥΘΥΓΡΑΜΜΙΣΜΕΝΗ ΚΑΙ ΓΙΑΤΙ ΚΑΙ ΠΡΟΣΟΧΗ ΣΤΑ ΑΛΛΑ</translatorcomment>
         <translation>ΔΙΑΣΤΑΣΗΣΤΟΙΧΙΣΜΕΝΗ</translation>
     </message>
     <message>
@@ -481,7 +482,7 @@
     <message>
         <location filename="../asciifile/asciifile.cpp" line="320"/>
         <source>Point 2D layer is empty</source>
-        <translatorcomment>CHECKME ALL TRANSLATIONS BELOW SOS μπορεί να είναι "κωδικών σημείων", "αριθμών (των) σημείων"</translatorcomment>
+        <translatorcomment>CHECKME ALL TRANSLATIONS BELOW SOS μπορεί να είναι &quot;κωδικών σημείων&quot;, &quot;αριθμών (των) σημείων&quot;</translatorcomment>
         <translation>Η στρώση 2Δ του σημείου είναι κενή</translation>
     </message>
     <message>
@@ -541,7 +542,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>Δεν είναι δυνατό το άνοιγμα του αρχείου %1</translation>
     </message>
 </context>
@@ -830,29 +831,29 @@
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="139"/>
-        <source>Can't open the file %1</source>
+        <source>Can&apos;t open the file %1</source>
         <translation>Δεν είναι δυνατό το άνοιγμα του αρχείου %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="146"/>
         <source>%1 objects imported</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="168"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="181"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="260"/>
         <location filename="../picfile/picfile.cpp" line="269"/>
         <source>format error in %1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -861,7 +862,7 @@
         <location filename="../plotequation/plot.cpp" line="21"/>
         <location filename="../plotequation/plot.cpp" line="28"/>
         <source>Plot plugin</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plot.cpp" line="28"/>
@@ -874,16 +875,16 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don't want to use the parametric form, just leave out "Equation2".
+If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
@@ -924,19 +925,19 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

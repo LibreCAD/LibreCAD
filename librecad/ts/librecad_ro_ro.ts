@@ -2,6 +2,37 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ro_RO">
 <context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Strat:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometrie</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Inchisa</translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>2 Points, Radius</source>
@@ -122,6 +153,25 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>remove 0&quot;</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Spatiere:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished">Distanta de la polilinia originala</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished">Copii:</translation>
     </message>
 </context>
 <context>
@@ -4712,19 +4762,19 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
 </context>
 <context>
@@ -6292,34 +6342,34 @@ p, li { white-space: pre-wrap; }
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation>Culoare linie</translation>
+        <translation type="obsolete">Culoare linie</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation>Grosime linie</translation>
+        <translation type="obsolete">Grosime linie</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation>Tip linie</translation>
+        <translation type="obsolete">Tip linie</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Optiuni pentru linie cu unghi relativ</translation>
+        <translation type="obsolete">Optiuni pentru linie cu unghi relativ</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Spatiere:</translation>
+        <translation type="obsolete">Spatiere:</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation>Distanta de la polilinia originala</translation>
+        <translation type="obsolete">Distanta de la polilinia originala</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation>Copii:</translation>
+        <translation type="obsolete">Copii:</translation>
     </message>
 </context>
 <context>
@@ -8390,6 +8440,18 @@ Continue?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11943,11 +12005,15 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a line, arc or polyline.</source>
-        <translation>Entitatea trebuie sa fie un obiect de tip linie, arc sau polilinie.</translation>
+        <translation type="obsolete">Entitatea trebuie sa fie un obiect de tip linie, arc sau polilinie.</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
         <translation>Entitatea nu poate fi o polilinie inchisa.</translation>
+    </message>
+    <message>
+        <source>Polyline created</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12045,6 +12111,14 @@ Continue?</source>
     </message>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in Black/White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

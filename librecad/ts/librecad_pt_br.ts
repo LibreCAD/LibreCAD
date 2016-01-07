@@ -2,6 +2,37 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="pt_BR">
 <context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Camada:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometria</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Fechado</translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>2 Points, Radius</source>
@@ -123,6 +154,25 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     <message>
         <source>remove 0&quot;</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Espaçamento:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished">Distância da polilinha original</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished">Cópias:</translation>
     </message>
 </context>
 <context>
@@ -5300,7 +5350,7 @@ Você poderá alterar estas configurações posteriormente em Opções de diálo
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation type="obsolete">Cancelar</translation>
     </message>
     <message>
         <source>Closed</source>
@@ -5336,15 +5386,15 @@ Você poderá alterar estas configurações posteriormente em Opções de diálo
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -7701,15 +7751,15 @@ p, li { white-space: pre-wrap; }
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation>Cor da linha</translation>
+        <translation type="obsolete">Cor da linha</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation>Largura da linha</translation>
+        <translation type="obsolete">Largura da linha</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation>Tipo de linha</translation>
+        <translation type="obsolete">Tipo de linha</translation>
     </message>
 </context>
 <context>
@@ -7740,19 +7790,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Opções de ângulo relativo da linha</translation>
+        <translation type="obsolete">Opções de ângulo relativo da linha</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Espaçamento:</translation>
+        <translation type="obsolete">Espaçamento:</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation>Distância da polilinha original</translation>
+        <translation type="obsolete">Distância da polilinha original</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation>Cópias:</translation>
+        <translation type="obsolete">Cópias:</translation>
     </message>
 </context>
 <context>
@@ -10431,6 +10481,18 @@ Continue?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -14325,11 +14387,15 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a line, arc or polyline.</source>
-        <translation>A entidade deve ser uma linha, arco ou polilinha.</translation>
+        <translation type="obsolete">A entidade deve ser uma linha, arco ou polilinha.</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
         <translation>A entidade não pode ser um polilinha fechada.</translation>
+    </message>
+    <message>
+        <source>Polyline created</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -14428,6 +14494,14 @@ Continue?</source>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
         <translation>Impressão offset ignora o zero relativo. Ignorando &apos;@&apos;</translation>
+    </message>
+    <message>
+        <source>Printout in Black/White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in color</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

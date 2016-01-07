@@ -32,6 +32,37 @@
     </message>
 </context>
 <context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Lag:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometri</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>2 Points, Radius</source>
@@ -151,6 +182,25 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>remove 0&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Valg for linie med relativ vinkel</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Afstand:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4835,19 +4885,19 @@ De kan altid ændre disse valg senere i dialogen &quot;Rediger&quot; i QCad.</tr
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation type="unfinished">Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Afbryd</translation>
+        <translation type="obsolete">Afbryd</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -6402,37 +6452,14 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_PenToolBar</name>
-    <message>
-        <source>Line color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Valg for linie med relativ vinkel</translation>
+        <translation type="obsolete">Valg for linie med relativ vinkel</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation type="unfinished">Afstand:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Afstand:</translation>
     </message>
 </context>
 <context>
@@ -8479,6 +8506,18 @@ Continue?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11971,11 +12010,11 @@ Continue?</source>
         <translation type="unfinished">Afbryd</translation>
     </message>
     <message>
-        <source>Entity must be a line, arc or polyline.</source>
+        <source>Entity can not be a closed polyline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Entity can not be a closed polyline.</source>
+        <source>Polyline created</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12070,6 +12109,14 @@ Continue?</source>
     </message>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in Black/White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

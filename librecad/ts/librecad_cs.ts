@@ -32,6 +32,37 @@
     </message>
 </context>
 <context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Hladina:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometrie</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>2 Points, Radius</source>
@@ -153,6 +184,25 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     <message>
         <source>remove 0&quot;</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Vlastnosti úsečky pod relativním úhlem</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Vzdálenost:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished">Vzdálenost od původní křivky</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished">Kopie:</translation>
     </message>
 </context>
 <context>
@@ -6071,19 +6121,19 @@ Toto nastavení můžete později změnit v dialogu Nastavení programu.</transl
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation type="obsolete">Zrušit</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -7656,34 +7706,34 @@ p, li { white-space: pre-wrap; }
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation>Barva čáry</translation>
+        <translation type="obsolete">Barva čáry</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation>Tloušťka čáry</translation>
+        <translation type="obsolete">Tloušťka čáry</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation>Druh čáry</translation>
+        <translation type="obsolete">Druh čáry</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Vlastnosti úsečky pod relativním úhlem</translation>
+        <translation type="obsolete">Vlastnosti úsečky pod relativním úhlem</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Vzdálenost:</translation>
+        <translation type="obsolete">Vzdálenost:</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation>Vzdálenost od původní křivky</translation>
+        <translation type="obsolete">Vzdálenost od původní křivky</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation>Kopie:</translation>
+        <translation type="obsolete">Kopie:</translation>
     </message>
 </context>
 <context>
@@ -9746,6 +9796,18 @@ Continue?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -13315,11 +13377,15 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a line, arc or polyline.</source>
-        <translation>Prvkem musí být úsečka, oblouk nebo křivka.</translation>
+        <translation type="obsolete">Prvkem musí být úsečka, oblouk nebo křivka.</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
         <translation>Prvek nemůže být uzavřená křivka.</translation>
+    </message>
+    <message>
+        <source>Polyline created</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -13414,6 +13480,14 @@ Continue?</source>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
         <translation>Posun výstupu ignoruje relativní počátek. Ignoruje se &apos;@&apos;</translation>
+    </message>
+    <message>
+        <source>Printout in Black/White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in color</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -28,6 +28,37 @@
     </message>
 </context>
 <context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Capa:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometría</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Cerrado</translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>2 Points, Radius</source>
@@ -149,6 +180,25 @@ distancia entre puntos=%2 es mayor que el diámetro=%3</translation>
     <message>
         <source>remove 0&quot;</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Espaciado:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished">Distancia desde la polilínea original</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished">Copias:</translation>
     </message>
 </context>
 <context>
@@ -6140,19 +6190,19 @@ Puede cambiar estos parámetros posteriormente en Edición/Preferencias de Libre
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Aceptar</translation>
+        <translation type="obsolete">&amp;Aceptar</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation type="obsolete">Cancelar</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -7719,34 +7769,34 @@ p, li { white-space: pre-wrap; }
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation>Color de línea</translation>
+        <translation type="obsolete">Color de línea</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation>Grosor de línea</translation>
+        <translation type="obsolete">Grosor de línea</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation>Tipo de línea</translation>
+        <translation type="obsolete">Tipo de línea</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Opciones de Línea en ángulo relativo</translation>
+        <translation type="obsolete">Opciones de Línea en ángulo relativo</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Espaciado:</translation>
+        <translation type="obsolete">Espaciado:</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation>Distancia desde la polilínea original</translation>
+        <translation type="obsolete">Distancia desde la polilínea original</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation>Copias:</translation>
+        <translation type="obsolete">Copias:</translation>
     </message>
 </context>
 <context>
@@ -9813,6 +9863,18 @@ Continue?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -13407,11 +13469,15 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a line, arc or polyline.</source>
-        <translation>La entidad debe ser una línea, arco o polilínea.</translation>
+        <translation type="obsolete">La entidad debe ser una línea, arco o polilínea.</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
         <translation>La entidad no puede ser una polilínea cerrada.</translation>
+    </message>
+    <message>
+        <source>Polyline created</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -13506,6 +13572,14 @@ Continue?</source>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
         <translation>Desplazamiento de impresión ignora el origen relativo. Ignorando &apos;@&apos;</translation>
+    </message>
+    <message>
+        <source>Printout in Black/White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in color</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
