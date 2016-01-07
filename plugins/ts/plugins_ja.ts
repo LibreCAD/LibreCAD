@@ -1,13 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ja_JP">
+<TS version="2.0" language="ja">
 <context>
     <name>AsciiFile</name>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="37"/>
         <location filename="../asciifile/asciifile.cpp" line="43"/>
         <source>Read ascii points</source>
-        <translation>ascii ポイントを読む</translation>
+        <translation>asciiポイントを読む</translation>
     </message>
 </context>
 <context>
@@ -24,7 +23,7 @@
         <location filename="../align/align.cpp" line="20"/>
         <location filename="../align/align.cpp" line="27"/>
         <source>Align</source>
-        <translation>合わせる</translation>
+        <translation>整列</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="40"/>
@@ -53,12 +52,12 @@
         <location filename="../list/list.cpp" line="23"/>
         <location filename="../list/list.cpp" line="30"/>
         <source>List entities</source>
-        <translation>要素一覧</translation>
+        <translation>要素の一覧</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="46"/>
         <source>n</source>
-        <translation></translation>
+        <translation>n</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="60"/>
@@ -68,12 +67,12 @@
     <message>
         <location filename="../list/list.cpp" line="67"/>
         <source>X</source>
-        <translation></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
         <source>Y</source>
-        <translation></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="73"/>
@@ -114,7 +113,7 @@
     <message>
         <location filename="../list/list.cpp" line="90"/>
         <source>LINE</source>
-        <translation>線</translation>
+        <translation>直線</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="95"/>
@@ -130,7 +129,7 @@
         <location filename="../list/list.cpp" line="103"/>
         <location filename="../list/list.cpp" line="127"/>
         <source>length</source>
-        <translation>長さ３D </translation>
+        <translation>長さ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="108"/>
@@ -244,7 +243,7 @@
     <message>
         <location filename="../list/list.cpp" line="188"/>
         <source>Closed</source>
-        <translation>閉じる</translation>
+        <translation>閉じている</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
@@ -532,7 +531,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>ファイル %1 は開くことができない</translation>
     </message>
 </context>
@@ -807,7 +806,7 @@
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="139"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>ファイル %1 は開くことができない</translation>
     </message>
     <message>
@@ -818,12 +817,12 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="168"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation>picPunto 線を引く:最初のポイントが未記入 %1</translation>
+        <translation>picPunto 線を引く: 最初のポイントが未記入 %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="181"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation>picPunto 線を引く:次のポイントが未記入 %1</translation>
+        <translation>picPunto 線を引く: 次のポイントが未記入 %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="260"/>
@@ -856,7 +855,7 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+If you don't want to use the parametric form, just leave out "Equation2".
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>

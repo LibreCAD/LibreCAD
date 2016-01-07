@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="ru">
 <context>
-    <name></name>
+    <name/>
     <message>
         <source>Loading..</source>
         <translation type="obsolete">Загрузка..</translation>
@@ -107,694 +106,694 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>LC_ActionFactory</name>
     <message>
         <source>&amp;Window Zoom</source>
-        <translation type="unfinished">Уве&amp;личить рамкой</translation>
+        <translation>Уве&amp;личить рамкой</translation>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
-        <translation type="unfinished">Масштабное пано&amp;рамирование</translation>
+        <translation>Масштабное пано&amp;рамирование</translation>
     </message>
     <message>
         <source>Select Entity</source>
-        <translation type="unfinished">Выбрать объект</translation>
+        <translation>Выбрать объект</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation type="unfinished">Выбрать рамкой</translation>
+        <translation>Выбрать рамкой</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation type="unfinished">Отменить выбор рамкой</translation>
+        <translation>Отменить выбор рамкой</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished">Выбрать &amp;замкнутый контур (отм. выбор)</translation>
+        <translation>Выбрать &amp;контуром</translation>
     </message>
     <message>
         <source>Select Intersected Entities</source>
-        <translation type="unfinished">Выбрать объекты секущей</translation>
+        <translation>Выбрать секущей</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
-        <translation type="unfinished">Отменить выбор секущей</translation>
+        <translation>Отменить выбор секущей</translation>
     </message>
     <message>
         <source>(De-)Select Layer</source>
-        <translation type="unfinished">Выбрать слой (отм. выбор)</translation>
+        <translation>Выбрать слой</translation>
     </message>
     <message>
         <source>&amp;Points</source>
-        <translation type="unfinished">&amp;Точки</translation>
+        <translation>&amp;Точки</translation>
     </message>
     <message>
         <source>&amp;2 Points</source>
-        <translation type="unfinished"></translation>
+        <translation>По &amp;2 точкам</translation>
     </message>
     <message>
         <source>&amp;Angle</source>
-        <translation type="unfinished">Под &amp;углом</translation>
+        <translation>Под &amp;углом</translation>
     </message>
     <message>
         <source>&amp;Horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Горизонтально</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Вертикально</translation>
     </message>
     <message>
         <source>&amp;Freehand Line</source>
-        <translation type="unfinished">&amp;Произвольная линия (кривая)</translation>
+        <translation>&amp;Произвольная кривая</translation>
     </message>
     <message>
         <source>&amp;Parallel</source>
-        <translation type="unfinished">Пара&amp;ллельно</translation>
+        <translation>Пара&amp;ллельно</translation>
     </message>
     <message>
         <source>Parallel through point</source>
-        <translation type="unfinished">Параллельно через точку</translation>
+        <translation>Параллельно &amp;через точку</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation type="unfinished">Прямоугольник</translation>
+        <translation>&amp;Прямоугольник</translation>
     </message>
     <message>
         <source>Bisector</source>
-        <translation type="unfinished">Бисектрисса</translation>
+        <translation>Би&amp;ссектриса </translation>
     </message>
     <message>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">Касательная (Т,О)</translation>
+        <translation>Касательная (Т,О)</translation>
     </message>
     <message>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">Касательная (О,О)</translation>
+        <translation>Касательная (О,О)</translation>
     </message>
     <message>
         <source>Tangent &amp;Orthogonal</source>
-        <translation type="unfinished">&amp;Перпендикулярно касательной</translation>
+        <translation>&amp;Перпендикулярно касательной</translation>
     </message>
     <message>
         <source>Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Перпендикулярно</translation>
     </message>
     <message>
         <source>Relative angle</source>
-        <translation type="unfinished">Относительный угол</translation>
+        <translation>Относительный угол</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="unfinished"></translation>
+        <translation>Поли&amp;гон (Ц, У)</translation>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="unfinished"></translation>
+        <translation>Поли&amp;гон (У, У)</translation>
     </message>
     <message>
         <source>Center, &amp;Point</source>
-        <translation type="unfinished">Центр, &amp;точка</translation>
+        <translation>Центр, &amp;точка</translation>
     </message>
     <message>
         <source>Center, &amp;Radius</source>
-        <translation type="unfinished">Центр, &amp;радиус</translation>
+        <translation>Центр, &amp;радиус</translation>
     </message>
     <message>
         <source>2 Points</source>
-        <translation type="unfinished">По 2 точкам</translation>
+        <translation>По 2 точкам</translation>
     </message>
     <message>
         <source>2 Points, Radius</source>
-        <translation type="unfinished">По 2 точкам и радиусу</translation>
+        <translation>По 2 точкам и радиусу</translation>
     </message>
     <message>
         <source>3 Points</source>
-        <translation type="unfinished"></translation>
+        <translation>По 3 точкам</translation>
     </message>
     <message>
         <source>&amp;Concentric</source>
-        <translation type="unfinished"></translation>
+        <translation>Ко&amp;нцентрично</translation>
     </message>
     <message>
         <source>Circle &amp;Inscribed</source>
-        <translation type="unfinished">&amp;Вписанная</translation>
+        <translation>&amp;Вписанная</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="unfinished">Касательная к 2 окружностям, ра&amp;диус</translation>
+        <translation>Касательно к 2 окружностям, ра&amp;диус</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="unfinished">Касательная к 2 окружностям, 1 точка</translation>
+        <translation>Касательно к 2 окружностям, 1 точка</translation>
     </message>
     <message>
         <source>Tangential &amp;3 Circles</source>
-        <translation type="unfinished">Касательная к &amp;3 окружностям</translation>
+        <translation>Касательно к &amp;3 окружностям</translation>
     </message>
     <message>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation type="unfinished">Ка&amp;сательная, 2 точки</translation>
+        <translation>Ка&amp;сательно, 2 точки</translation>
     </message>
     <message>
         <source>&amp;Center, Point, Angles</source>
-        <translation type="unfinished">&amp;Центр, точка, углы</translation>
+        <translation>&amp;Центр, точка, углы</translation>
     </message>
     <message>
         <source>&amp;3 Points</source>
-        <translation type="unfinished">По &amp;3 точкам</translation>
+        <translation>По &amp;3 точкам</translation>
     </message>
     <message>
         <source>Arc &amp;Tangential</source>
-        <translation type="unfinished">Ка&amp;сательно</translation>
+        <translation>Ка&amp;сательно</translation>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
-        <translation type="unfinished">&amp;Эллипс (с осью)</translation>
+        <translation>&amp;Эллипс (по осям)</translation>
     </message>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation type="unfinished">Эллиптическая &amp;дуга (по осям)</translation>
+        <translation>Эллиптическая &amp;дуга (по осям)</translation>
     </message>
     <message>
         <source>Ellipse &amp;Foci Point</source>
-        <translation type="unfinished">Эллипс по точкам &amp;фокусов</translation>
+        <translation>Эллипс по точкам &amp;фокусов</translation>
     </message>
     <message>
         <source>Ellipse &amp;4 Point</source>
-        <translation type="unfinished">Эллипс по &amp;4 точкам</translation>
+        <translation>Эллипс по &amp;4 точкам</translation>
     </message>
     <message>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation type="unfinished">Эллипс по центру и &amp;3 точкам</translation>
+        <translation>Эллипс по центру и &amp;3 точкам</translation>
     </message>
     <message>
         <source>Ellipse &amp;Inscribed</source>
-        <translation type="unfinished">&amp;Вписанный эллипс</translation>
+        <translation>&amp;Вписанный эллипс</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="unfinished">&amp;Кривая</translation>
+        <translation>&amp;Сплайн</translation>
     </message>
     <message>
         <source>&amp;Spline through points</source>
-        <translation type="unfinished">Кривая через &amp;точки</translation>
+        <translation>Сплайн по &amp;точкам</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ломаная</translation>
     </message>
     <message>
         <source>Draw polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать ломаную</translation>
     </message>
     <message>
         <source>&amp;Add node</source>
-        <translation type="unfinished">&amp;Добавить вершину</translation>
+        <translation>&amp;Добавить вершину</translation>
     </message>
     <message>
-        <source>Add polyline&apos;s node</source>
-        <translation type="unfinished">Добавить вершину ломаной</translation>
+        <source>Add polyline's node</source>
+        <translation>Добавить вершину ломаной</translation>
     </message>
     <message>
         <source>A&amp;ppend node</source>
-        <translation type="unfinished">&amp;Добавить вершину</translation>
+        <translation>&amp;Присоединить вершину</translation>
     </message>
     <message>
-        <source>Append polyline&apos;s node</source>
-        <translation type="unfinished">Добавить вершину ломаной</translation>
+        <source>Append polyline's node</source>
+        <translation>Присоединить вершину к ломаной</translation>
     </message>
     <message>
         <source>&amp;Delete node</source>
-        <translation type="unfinished">&amp;Удалить вершину</translation>
+        <translation>&amp;Удалить вершину</translation>
     </message>
     <message>
-        <source>Delete polyline&apos;s node</source>
-        <translation type="unfinished">Удалить вершину ломаной</translation>
+        <source>Delete polyline's node</source>
+        <translation>Удалить вершину ломаной</translation>
     </message>
     <message>
         <source>Delete &amp;between two nodes</source>
-        <translation type="unfinished">Удалить отрезок &amp;между двумя вершинами</translation>
+        <translation>Удалить отрезок &amp;между вершинами</translation>
     </message>
     <message>
         <source>Delete between two nodes</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить отрезок между вершинами</translation>
     </message>
     <message>
         <source>&amp;Trim segments</source>
-        <translation type="unfinished">&amp;Подогнать отрезок</translation>
+        <translation>&amp;Подогнать отрезки</translation>
     </message>
     <message>
-        <source>Trim polyline&apos;s segments</source>
-        <translation type="unfinished">Подогнать отрезок ломаной</translation>
+        <source>Trim polyline's segments</source>
+        <translation>Подогнать отрезки ломаной</translation>
     </message>
     <message>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation type="unfinished">Создание &amp;равноудаленных ломаных</translation>
+        <translation>Создать &amp;равноудаленные ломаные</translation>
     </message>
     <message>
         <source>Create Equidistant Polylines</source>
-        <translation type="unfinished">Создание равноудаленных ломаных</translation>
+        <translation>Создание равноудаленных ломаных</translation>
     </message>
     <message>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="unfinished">Создать ломаную из существующих &amp;отрезков</translation>
+        <translation>Создать ломаную из существующих &amp;отрезков</translation>
     </message>
     <message>
         <source>Create Polyline from Existing Segments</source>
-        <translation type="unfinished">Создать ломаную из существующих отрезков</translation>
+        <translation>Создание ломаной из существующих отрезков</translation>
     </message>
     <message>
         <source>&amp;MText</source>
-        <translation type="unfinished">&amp;Многострочный текст</translation>
+        <translation>&amp;Многострочный текст</translation>
     </message>
     <message>
         <source>&amp;Text</source>
-        <translation type="unfinished">&amp;Текст</translation>
+        <translation>&amp;Текст</translation>
     </message>
     <message>
         <source>&amp;Hatch</source>
-        <translation type="unfinished">&amp;Штриховка</translation>
+        <translation>&amp;Штриховка</translation>
     </message>
     <message>
         <source>Insert &amp;Image</source>
-        <translation type="unfinished">Вставить &amp;изображение</translation>
+        <translation>Вставить &amp;изображение</translation>
     </message>
     <message>
         <source>&amp;Aligned</source>
-        <translation type="unfinished">Вы&amp;ровненный</translation>
+        <translation>Вы&amp;равненный</translation>
     </message>
     <message>
         <source>&amp;Linear</source>
-        <translation type="unfinished">&amp;Линейный</translation>
+        <translation>&amp;Линейный</translation>
     </message>
     <message>
         <source>&amp;Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Вертикальный</translation>
     </message>
     <message>
         <source>&amp;Radial</source>
-        <translation type="unfinished">&amp;Радиальный</translation>
+        <translation>&amp;Радиальный</translation>
     </message>
     <message>
         <source>&amp;Diametric</source>
-        <translation type="unfinished">&amp;Диаметральный</translation>
+        <translation>&amp;Диаметральный</translation>
     </message>
     <message>
         <source>&amp;Angular</source>
-        <translation type="unfinished">&amp;Угловой</translation>
+        <translation>&amp;Угловой</translation>
     </message>
     <message>
         <source>&amp;Leader</source>
-        <translation type="unfinished">П&amp;олка-выноска</translation>
+        <translation>П&amp;олка-выноска</translation>
     </message>
     <message>
         <source>&amp;Attributes</source>
-        <translation type="unfinished">А&amp;трибуты</translation>
+        <translation>А&amp;трибуты</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished">У&amp;далить</translation>
+        <translation>У&amp;далить</translation>
     </message>
     <message>
         <source>Delete Freehand</source>
-        <translation type="unfinished">Удалить произвольную кривую</translation>
+        <translation>Удалить произвольную кривую</translation>
     </message>
     <message>
         <source>&amp;Move / Copy</source>
-        <translation type="unfinished">&amp;Сдвиг и копирование</translation>
+        <translation>&amp;Сдвиг и копирование</translation>
     </message>
     <message>
         <source>Re&amp;vert direction</source>
-        <translation type="unfinished">О&amp;братить направление</translation>
+        <translation>О&amp;братить направление</translation>
     </message>
     <message>
         <source>Ctrl+R</source>
-        <translation type="unfinished">Ctrl+R</translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <source>&amp;Rotate</source>
-        <translation type="unfinished">&amp;Поворот</translation>
+        <translation>&amp;Поворот</translation>
     </message>
     <message>
         <source>&amp;Scale</source>
-        <translation type="unfinished">&amp;Масштабировать</translation>
+        <translation>&amp;Масштабировать</translation>
     </message>
     <message>
         <source>&amp;Mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>Отр&amp;азить</translation>
     </message>
     <message>
         <source>M&amp;ove and Rotate</source>
-        <translation type="unfinished">Сдвиг и п&amp;оворот</translation>
+        <translation>Сдвиг и п&amp;оворот</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation type="unfinished">Вращать вокруг &amp;двух</translation>
+        <translation>Вращать вокруг &amp;двух</translation>
     </message>
     <message>
         <source>&amp;Properties</source>
-        <translation type="unfinished">Сво&amp;йства</translation>
+        <translation>Сво&amp;йства</translation>
     </message>
     <message>
         <source>&amp;Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Подо&amp;гнать</translation>
     </message>
     <message>
         <source>&amp;Trim Two</source>
-        <translation type="unfinished"></translation>
+        <translation>Подог&amp;нать два</translation>
     </message>
     <message>
         <source>&amp;Lengthen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Удлинить </translation>
     </message>
     <message>
         <source>&amp;Offset</source>
-        <translation type="unfinished">&amp;Смещение</translation>
+        <translation>См&amp;ещение</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
-        <translation type="unfinished">&amp;Разделить</translation>
+        <translation>Разде&amp;лить</translation>
     </message>
     <message>
         <source>&amp;Stretch</source>
-        <translation type="unfinished">&amp;Вытянуть</translation>
+        <translation>&amp;Вытянуть</translation>
     </message>
     <message>
         <source>&amp;Bevel</source>
-        <translation type="unfinished">&amp;Фаска</translation>
+        <translation>&amp;Фаска</translation>
     </message>
     <message>
         <source>&amp;Fillet</source>
-        <translation type="unfinished">С&amp;кругление</translation>
+        <translation>С&amp;кругление</translation>
     </message>
     <message>
         <source>&amp;Explode Text into Letters</source>
-        <translation type="unfinished">&amp;Разрушить текст на буквы</translation>
+        <translation>&amp;Разрушить текст на буквы</translation>
     </message>
     <message>
         <source>Point inside contour</source>
-        <translation type="unfinished">Точка внутри контура</translation>
+        <translation>Точка внутри контура</translation>
     </message>
     <message>
         <source>&amp;Distance Point to Point</source>
-        <translation type="unfinished">&amp;Расстояние от точки до точки</translation>
+        <translation>&amp;Расстояние от точки до точки</translation>
     </message>
     <message>
         <source>&amp;Distance Entity to Point</source>
-        <translation type="unfinished">Р&amp;асстояние от объекта до точки</translation>
+        <translation>Р&amp;асстояние от объекта до точки</translation>
     </message>
     <message>
         <source>An&amp;gle between two lines</source>
-        <translation type="unfinished">&amp;Угол между двумя линиями</translation>
+        <translation>&amp;Угол между двумя линиями</translation>
     </message>
     <message>
         <source>&amp;Total length of selected entities</source>
-        <translation type="unfinished">Су&amp;ммарная длина выбранных объектов</translation>
+        <translation>Су&amp;ммарная длина выбранных объектов</translation>
     </message>
     <message>
         <source>Polygonal &amp;Area</source>
-        <translation type="unfinished">&amp;Полигональная область</translation>
+        <translation>&amp;Полигональная область</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation type="unfinished">&amp;Указатель</translation>
+        <translation>&amp;Указатель</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished">О&amp;тменить</translation>
+        <translation>О&amp;тменить</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished">&amp;Повторить</translation>
+        <translation>&amp;Повторить</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished">Вы&amp;резать</translation>
+        <translation>Вы&amp;резать</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Копировать</translation>
+        <translation>&amp;Копировать</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
-        <translation type="unfinished">&amp;Вставить</translation>
+        <translation>&amp;Вставить</translation>
     </message>
     <message>
         <source>move to bottom</source>
-        <translation type="unfinished">на задний план</translation>
+        <translation>на задний план</translation>
     </message>
     <message>
         <source>set to bottom</source>
-        <translation type="unfinished">на задний план</translation>
+        <translation>на задний план</translation>
     </message>
     <message>
         <source>lower after entity</source>
-        <translation type="unfinished">за объектом</translation>
+        <translation>за объектом</translation>
     </message>
     <message>
         <source>lower over entity</source>
-        <translation type="unfinished">назад перед объектом</translation>
+        <translation>перед объектом</translation>
     </message>
     <message>
         <source>raise over entity</source>
-        <translation type="unfinished">перед объектом</translation>
+        <translation>перед объектом</translation>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished">на передний план</translation>
+        <translation>на передний план</translation>
     </message>
     <message>
         <source>set to top</source>
-        <translation type="unfinished">на верх</translation>
+        <translation>на верх</translation>
     </message>
     <message>
         <source>&amp;Show all</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Показать все</translation>
     </message>
     <message>
         <source>&amp;Hide all</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Скрыть все</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished">&amp;Добавить слой</translation>
+        <translation>&amp;Добавить слой</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished">&amp;Удалить слой</translation>
+        <translation>&amp;Удалить слой</translation>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation type="unfinished">&amp;Редактировать слой</translation>
+        <translation>Из&amp;менить слой</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished">Изменить &amp;защиту слоя</translation>
+        <translation>&amp;Защита слоя</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation type="unfinished">Изменить &amp;видимость слоя</translation>
+        <translation>&amp;Видимость слоя</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Print</source>
-        <translation type="unfinished">Изменить пе&amp;чать слоя</translation>
+        <translation>Пе&amp;чать слоя</translation>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished">Переключить &amp;вспомогательный</translation>
+        <translation>&amp;Вспомогательный</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
-        <translation type="unfinished"></translation>
+        <translation>До&amp;бавить блок</translation>
     </message>
     <message>
         <source>&amp;Remove Block</source>
-        <translation type="unfinished">Уд&amp;алить блок</translation>
+        <translation>У&amp;далить блок</translation>
     </message>
     <message>
         <source>&amp;Rename Block</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Переименовать блок</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
-        <translation type="unfinished">&amp;Редактировать блок</translation>
+        <translation>Из&amp;менить блок</translation>
     </message>
     <message>
         <source>&amp;Save Block</source>
-        <translation type="unfinished">&amp;Сохранить блок</translation>
+        <translation>&amp;Сохранить блок</translation>
     </message>
     <message>
         <source>&amp;Insert Block</source>
-        <translation type="unfinished">&amp;Вставить блок</translation>
+        <translation>&amp;Вставить блок</translation>
     </message>
     <message>
         <source>Toggle Block &amp;Visibility</source>
-        <translation type="unfinished">Изменить &amp;видимость блока</translation>
+        <translation>&amp;Видимость блока</translation>
     </message>
     <message>
         <source>&amp;Create Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Со&amp;здать блок</translation>
     </message>
     <message>
         <source>Ex&amp;plode</source>
-        <translation type="unfinished">Ра&amp;зрушить</translation>
+        <translation>Ра&amp;зрушить</translation>
     </message>
     <message>
         <source>&amp;Preferences</source>
-        <translation type="unfinished">&amp;Настройки</translation>
+        <translation>&amp;Настройки</translation>
     </message>
     <message>
         <source>&amp;Application Preferences</source>
-        <translation type="unfinished">На&amp;стройки программы</translation>
+        <translation>&amp;Настройки программы</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation type="unfinished">Текущие настройки &amp;чертежа</translation>
+        <translation>Текущие настройки &amp;чертежа</translation>
     </message>
     <message>
         <source>Open IDE</source>
-        <translation type="unfinished">Открыть IDE</translation>
+        <translation>Открыть IDE</translation>
     </message>
     <message>
         <source>Run Script..</source>
-        <translation type="unfinished">Выполнить сценарий...</translation>
+        <translation>Выполнить сценарий...</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
-        <translation type="unfinished">У&amp;далить выбранное</translation>
+        <translation>У&amp;далить выбранное</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
-        <translation type="unfinished">Выбр&amp;ать все</translation>
+        <translation>Выбр&amp;ать все</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation type="unfinished">Отменить вы&amp;бор всех объектов</translation>
+        <translation>Отменить вы&amp;бор всех объектов</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
-        <translation type="unfinished">Ctrl+K</translation>
+        <translation>Ctrl+K</translation>
     </message>
     <message>
         <source>Invert Selection</source>
-        <translation type="unfinished">Инвертировать выбор</translation>
+        <translation>Инвертировать выбор</translation>
     </message>
     <message>
         <source>Export as &amp;MakerCAM SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспорт в &amp;MakerCAM SVG...</translation>
     </message>
     <message>
         <source>Regenerate Dimension Entities</source>
-        <translation type="unfinished">Перестроить элементы размеров</translation>
+        <translation>Перестроить элементы размеров</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished">&amp;Приблизить</translation>
+        <translation>&amp;Приблизить</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished">О&amp;тдалить</translation>
+        <translation>О&amp;тдалить</translation>
     </message>
     <message>
         <source>&amp;Auto Zoom</source>
-        <translation type="unfinished">П&amp;оказать все</translation>
+        <translation>П&amp;оказать всё</translation>
     </message>
     <message>
         <source>Previous &amp;View</source>
-        <translation type="unfinished">Предыдущий &amp;вид</translation>
+        <translation>Предыдущий &amp;вид</translation>
     </message>
     <message>
         <source>&amp;Redraw</source>
-        <translation type="unfinished">&amp;Обновить изображение</translation>
+        <translation>&amp;Обновить изображение</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished">Созд&amp;ать</translation>
+        <translation>&amp;Новый</translation>
     </message>
     <message>
         <source>New From &amp;Template</source>
-        <translation type="unfinished">Новый из &amp;шаблона</translation>
+        <translation>Новый из &amp;шаблона</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
-        <translation type="unfinished">&amp;Открыть...</translation>
+        <translation>&amp;Открыть...</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Сохранить</translation>
+        <translation>&amp;Сохранить</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished">Сохранить &amp;как...</translation>
+        <translation>Сохранить &amp;как...</translation>
     </message>
     <message>
         <source>&amp;Export as image</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспорт в &amp;изображение</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished">&amp;Закрыть</translation>
+        <translation>&amp;Закрыть</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished">&amp;Печать...</translation>
+        <translation>&amp;Печать...</translation>
     </message>
     <message>
         <source>Export as PDF</source>
-        <translation type="unfinished">Экспорт в PDF</translation>
+        <translation>Экспорт в &amp;PDF</translation>
     </message>
     <message>
         <source>Print Pre&amp;view</source>
-        <translation type="unfinished"></translation>
+        <translation>Предпрос&amp;мотр печати</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Выход</translation>
+        <translation>&amp;Выход</translation>
     </message>
     <message>
         <source>&amp;Block</source>
-        <translation type="unfinished">&amp;Блок</translation>
+        <translation>&amp;Блок</translation>
     </message>
     <message>
         <source>&amp;Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>Полный &amp;экран</translation>
     </message>
     <message>
         <source>Ctrl+Meta+F</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Meta+F</translation>
     </message>
     <message>
         <source>F11</source>
-        <translation type="unfinished"></translation>
+        <translation>F11</translation>
     </message>
     <message>
         <source>Ctrl+F11</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F11</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation type="unfinished">&amp;Сетка</translation>
+        <translation>&amp;Сетка</translation>
     </message>
     <message>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <source>&amp;Draft</source>
-        <translation type="unfinished">&amp;Черновик</translation>
+        <translation>&amp;Черновик</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation type="unfinished">С&amp;трока состояния</translation>
+        <translation>С&amp;трока состояния</translation>
     </message>
     <message>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
-        <translation type="unfinished">Перейти к &amp;командной строке</translation>
+        <translation>Перейти к &amp;командной строке</translation>
     </message>
 </context>
 <context>
@@ -808,7 +807,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>LC_CustomToolbar</name>
     <message>
         <source>Add or Remove Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить или удалить действие</translation>
     </message>
 </context>
 <context>
@@ -826,23 +825,23 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>LG_DimzerosBox</name>
     <message>
         <source>select:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите:</translation>
     </message>
     <message>
         <source>remove left</source>
-        <translation type="unfinished"></translation>
+        <translation>Убрать слева</translation>
     </message>
     <message>
         <source>remove right</source>
-        <translation type="unfinished"></translation>
+        <translation>Убрать справа</translation>
     </message>
     <message>
-        <source>remove 0&apos;</source>
-        <translation type="unfinished"></translation>
+        <source>remove 0'</source>
+        <translation>Убрать нулевые минуты</translation>
     </message>
     <message>
-        <source>remove 0&quot;</source>
-        <translation type="unfinished"></translation>
+        <source>remove 0"</source>
+        <translation>Убрать нулевые секунды</translation>
     </message>
 </context>
 <context>
@@ -1006,7 +1005,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Loaded document: </source>
-        <translation>Загруженный документ: </translation>
+        <translation>Документ загружен: </translation>
     </message>
     <message>
         <source>Opening aborted</source>
@@ -1050,7 +1049,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Pen</source>
-        <translation type="unfinished">Перо</translation>
+        <translation>Перо</translation>
     </message>
     <message>
         <source>Tool Options</source>
@@ -1058,11 +1057,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Layer List</source>
-        <translation>Список слоёв</translation>
+        <translation>Слои</translation>
     </message>
     <message>
         <source>Block List</source>
-        <translation>Список блоков</translation>
+        <translation>Блоки</translation>
     </message>
     <message>
         <source>
@@ -1072,7 +1071,7 @@ Date: %1</source>
     </message>
     <message>
         <source>Library Browser</source>
-        <translation>Просмотр библиотеки</translation>
+        <translation>Библиотека</translation>
     </message>
     <message>
         <source>Print preview for %1</source>
@@ -1123,8 +1122,8 @@ Date: %1</source>
         <translation>Командная строка</translation>
     </message>
     <message>
-        <source>Block &apos;%1&apos;</source>
-        <translation>Блок &apos;%1&apos;</translation>
+        <source>Block '%1'</source>
+        <translation>Блок '%1'</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -1201,12 +1200,12 @@ You can save your work now.</source>
         <translation>&amp;Окно</translation>
     </message>
     <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation>Выполнение сценария &apos;%1&apos;</translation>
+        <source>Running script '%1'</source>
+        <translation>Выполнение сценария '%1'</translation>
     </message>
     <message>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translation>Вставка блока &apos;%1&apos;</translation>
+        <source>Inserting block '%1'</source>
+        <translation>Вставка блока '%1'</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -1243,7 +1242,7 @@ Auto-save disabled.</source>
         <translation>Справка</translation>
     </message>
     <message>
-        <source>Bugger, I couldn&apos;t find the helpfiles on the filesystem.</source>
+        <source>Bugger, I couldn't find the helpfiles on the filesystem.</source>
         <translation type="obsolete">Файлы помощи не найдены.</translation>
     </message>
     <message>
@@ -1279,7 +1278,7 @@ Auto-save disabled.</source>
         <translation>Ревизия системы управления версиями: %1</translation>
     </message>
     <message>
-        <source>Please donate to LibreCAD to help maintain the sourcecode and it&apos;s website.</source>
+        <source>Please donate to LibreCAD to help maintain the sourcecode and it's website.</source>
         <translation type="obsolete">Пожалуйста сделайте пожертвование на поддержку исходного кода и сайта.</translation>
     </message>
     <message>
@@ -1395,92 +1394,92 @@ Please check its existence and permissions.</source>
 Проверьте его наличие и права доступа.</translation>
     </message>
     <message>
-        <source>File &apos;%1&apos; does not exist. Opening aborted</source>
+        <source>File '%1' does not exist. Opening aborted</source>
         <translation>Файл «%1» не существует. Операция прервана.</translation>
     </message>
     <message>
         <source>The help files were not found.</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы справки не найдены.</translation>
     </message>
     <message>
         <source>Categories</source>
-        <translation type="unfinished"></translation>
+        <translation>Категории</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>&amp;Order</source>
-        <translation type="unfinished"></translation>
+        <translation>Поря&amp;док</translation>
     </message>
     <message>
         <source>Order</source>
-        <translation type="unfinished"></translation>
+        <translation>Порядок</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Выбрать</translation>
+        <translation>Выбрать</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished">Линия</translation>
+        <translation>Линия</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="unfinished">Окружность</translation>
+        <translation>Окружность</translation>
     </message>
     <message>
         <source>&amp;Curve</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Кривая</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation type="unfinished"></translation>
+        <translation>Кривая</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation type="unfinished">Эллипс</translation>
+        <translation>Эллипс</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Ломаная</translation>
     </message>
     <message>
         <source>&amp;Misc</source>
-        <translation type="unfinished"></translation>
+        <translation>Проч&amp;ее</translation>
     </message>
     <message>
         <source>Misc</source>
-        <translation type="unfinished"></translation>
+        <translation>Прочее</translation>
     </message>
     <message>
         <source>Dimension</source>
-        <translation type="unfinished">Размер</translation>
+        <translation>Размер</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation type="unfinished">Редактирование</translation>
+        <translation>Изменить</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Информация</translation>
+        <translation>Инфо</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Специальный</translation>
     </message>
     <message>
         <source>Online (Wiki)</source>
-        <translation type="unfinished"></translation>
+        <translation>Онлайн (Вики)</translation>
     </message>
     <message>
         <source>DockWidgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Стыкуемые доки</translation>
     </message>
     <message>
         <source>&amp;Dockwidgets</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Доки</translation>
     </message>
 </context>
 <context>
@@ -3020,7 +3019,7 @@ Please check its existence and permissions.</source>
     <message>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation type="unfinished"></translation>
+        <translation>отмена</translation>
     </message>
 </context>
 <context>
@@ -3038,16 +3037,16 @@ Please check its existence and permissions.</source>
         <translation>Текущий слой</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Название текущего активного слоя&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Название текущего активного слоя&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3106,11 +3105,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim</source>
-        <translation>Отсечь</translation>
+        <translation>Подогнать</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Установите, чтобы отсечь оба базовых объекта</translation>
+        <translation>Установите, чтобы подогнать два базовых объекта</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -3140,7 +3139,7 @@ p, li { white-space: pre-wrap; }
         <translation>Переименование блока</translation>
     </message>
     <message>
-        <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
+        <source>Could not name block. A block named "%1" already exists.</source>
         <translation>Переименование блока невозможно. Блок «%1» уже существует.</translation>
     </message>
     <message>
@@ -3306,88 +3305,88 @@ in a separate window</source>
         <translation type="obsolete">Концентрическая</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Circle inscribed in a triangle, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Circle inscribed in a triangle, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to 3 lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Построить окружность, вписанную в треугольник, &lt;span style=&quot;font-style:italic;&quot;&gt;т.е.&lt;/span&gt; касательно к трём линиям&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Построить окружность, вписанную в треугольник, &lt;span style="font-style:italic;"&gt;т.е.&lt;/span&gt; касательно к трём линиям&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of two circles, given the radius&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Начертить окружность с заданным радиусом, касательную к двум окружностям&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Начертить окружность с заданным радиусом, касательную к двум окружностям&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of three circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of three circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Начертить окружность, касательную к трём окружностям&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Начертить окружность, касательную к трём окружностям&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of a circle, passing two given points&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Начертить окружность, касательную к другой окружности и проходящую через две точки&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Начертить окружность, касательную к другой окружности и проходящую через две точки&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Draw a tangential Circle of two circles, passing a given point&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;&quot;&gt;Начертить окружность, касательную к двум окружностям и проходящую через заданную точку&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif';"&gt;Начертить окружность, касательную к двум окружностям и проходящую через заданную точку&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Draw a tangential Circle of three lines/arcs/circles&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Начертить окружность, касательную к трём линиям, дугам или окружностям&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Начертить окружность, касательную к трём линиям, дугам или окружностям&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:8pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;Draw Circle inscribed in a triangle, &lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt; font-style:italic;"&gt;i.e.&lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;"&gt;, tangential to 3 lines. Please use the newer feature &amp;quot;Circle Tangential 3&amp;quot; instead.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans&apos;; font-size:8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px;margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot;font-family:&apos;Sans Serif&apos;; font-size:9pt;&quot;&gt;Начертить окружность, вписанную втреугольник, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt;font-style:italic;&quot;&gt;т.е.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Sans Serif&apos;;font-size:9pt;&quot;&gt;, касательную к трём отрезкам. Лучше вместо этогоиспользуйте функцию «Окружность → По трём касательным».&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans'; font-size:8pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px;margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style="font-family:'Sans Serif'; font-size:9pt;"&gt;Начертить окружность, вписанную втреугольник, &lt;/span&gt;&lt;span style=" font-family:'Sans Serif'; font-size:9pt;font-style:italic;"&gt;т.е.&lt;/span&gt;&lt;span style=" font-family:'Sans Serif';font-size:9pt;"&gt;, касательную к трём отрезкам. Лучше вместо этогоиспользуйте функцию «Окружность → По трём касательным».&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Circle with 2 Points and Radius&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3468,16 +3467,16 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Эллипс с осями в направлении x/y и четырём точкам на эллипсе</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=&quot; font-style:italic;&quot;&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Draw Ellipse inscribed in a quadrilateral, &lt;span style=" font-style:italic;"&gt;i.e.&lt;/span&gt;, tangential to four lines&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Sans Serif&apos;; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Построить эллипс, вписанный в четырёхугольник, &lt;span style=&quot; font-style:italic;&quot;&gt;т.е.&lt;/span&gt; касательно к четырём прямым&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Построить эллипс, вписанный в четырёхугольник, &lt;span style=" font-style:italic;"&gt;т.е.&lt;/span&gt; касательно к четырём прямым&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Concentric</source>
@@ -3605,48 +3604,48 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Главная</translation>
     </message>
     <message>
-        <source>Show menu &quot;Lines&quot;</source>
-        <translation type="obsolete">Показать меню &quot;Линии&quot;</translation>
+        <source>Show menu "Lines"</source>
+        <translation type="obsolete">Показать меню "Линии"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Arcs&quot;</source>
-        <translation type="obsolete">Показать меню &quot;Дуги&quot;</translation>
+        <source>Show menu "Arcs"</source>
+        <translation type="obsolete">Показать меню "Дуги"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Circles&quot;</source>
-        <translation type="obsolete">Показать меню &quot;Окружности&quot;</translation>
+        <source>Show menu "Circles"</source>
+        <translation type="obsolete">Показать меню "Окружности"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Points&quot;</source>
-        <translation type="obsolete">Показать меню &quot;Точки&quot;</translation>
+        <source>Show menu "Points"</source>
+        <translation type="obsolete">Показать меню "Точки"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Measure&quot;</source>
-        <translation type="obsolete">Показать меню &quot;Измерение&quot;</translation>
+        <source>Show menu "Measure"</source>
+        <translation type="obsolete">Показать меню "Измерение"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Ellipses&quot;</source>
-        <translation type="obsolete">Показать меню &quot;Эллипсы&quot;</translation>
+        <source>Show menu "Ellipses"</source>
+        <translation type="obsolete">Показать меню "Эллипсы"</translation>
     </message>
     <message>
         <source>Hatches / Solid Fills</source>
         <translation type="obsolete">Штриховки / заливки цветом</translation>
     </message>
     <message>
-        <source>Show menu &quot;Edit&quot;</source>
-        <translation type="obsolete">Показать меню &quot;Редактирование&quot;</translation>
+        <source>Show menu "Edit"</source>
+        <translation type="obsolete">Показать меню "Редактирование"</translation>
     </message>
     <message>
-        <source>Show menu &quot;Dimensions&quot;</source>
-        <translation type="obsolete">Показать меню &quot;Размеры&quot;</translation>
+        <source>Show menu "Dimensions"</source>
+        <translation type="obsolete">Показать меню "Размеры"</translation>
     </message>
     <message>
         <source>Texts</source>
         <translation type="obsolete">Тексты</translation>
     </message>
     <message>
-        <source>Show menu &quot;Select&quot;</source>
-        <translation type="obsolete">Показать меню &quot;Выбор&quot;</translation>
+        <source>Show menu "Select"</source>
+        <translation type="obsolete">Показать меню "Выбор"</translation>
     </message>
     <message>
         <source>Create Block</source>
@@ -3661,23 +3660,23 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Точки</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Lines&quot;</source>
+        <source>Show toolbar "Lines"</source>
         <translation type="obsolete">Показать панель «Линии»</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Arcs&quot;</source>
+        <source>Show toolbar "Arcs"</source>
         <translation type="obsolete">Показать панель «Дуги»</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Circles&quot;</source>
+        <source>Show toolbar "Circles"</source>
         <translation type="obsolete">Показать панель «Окружности»</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Ellipses&quot;</source>
+        <source>Show toolbar "Ellipses"</source>
         <translation type="obsolete">Показать панель «Эллипсы»</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Polylines&quot;</source>
+        <source>Show toolbar "Polylines"</source>
         <translation type="obsolete">Показать панель «Ломаные»</translation>
     </message>
     <message>
@@ -3693,7 +3692,7 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Вставить текст</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Dimensions&quot;</source>
+        <source>Show toolbar "Dimensions"</source>
         <translation type="obsolete">Показать панель «Размеры»</translation>
     </message>
     <message>
@@ -3705,15 +3704,15 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Вставить изображение</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Modify&quot;</source>
+        <source>Show toolbar "Modify"</source>
         <translation type="obsolete">Показать панель «Редактирование»</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Info&quot;</source>
+        <source>Show toolbar "Info"</source>
         <translation type="obsolete">Показать панель «Инфо»</translation>
     </message>
     <message>
-        <source>Show toolbar &quot;Select&quot;</source>
+        <source>Show toolbar "Select"</source>
         <translation type="obsolete">Показать панель «Выделение»</translation>
     </message>
     <message>
@@ -4167,15 +4166,15 @@ p, li { white-space: pre-wrap; }
     <name>QG_CommandHistory</name>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Копировать</translation>
+        <translation>&amp;Копировать</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
-        <translation type="unfinished">Выбр&amp;ать все</translation>
+        <translation>Выбр&amp;ать все</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished">Очистить</translation>
+        <translation>Очистить</translation>
     </message>
 </context>
 <context>
@@ -4215,7 +4214,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation type="unfinished"></translation>
+        <translation>отмена</translation>
     </message>
 </context>
 <context>
@@ -4705,12 +4704,12 @@ p, li { white-space: pre-wrap; }
         <translation>Добро пожаловать</translation>
     </message>
     <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+        <source>&lt;font size="+1"&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Добро пожаловать в QCad&lt;/b&gt;
+        <translation>&lt;font size="+1"&gt;&lt;b&gt;Добро пожаловать в QCad&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Пожалуйста, выберите единицы измерения для новых чертежей и предпочитаемый язык&lt;br&gt;
@@ -5143,7 +5142,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation type="unfinished">[1100-11FF] Хангыль (корейский)</translation>
+        <translation>[1100-11FF] Хангыль (корейский)</translation>
     </message>
     <message>
         <source>[1200-137F] Ethiopic</source>
@@ -5151,11 +5150,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>[13A0-13FF] Cherokee</source>
-        <translation type="unfinished">[13A0-13FF] Письменность чероки</translation>
+        <translation>[13A0-13FF] Письменность чероки</translation>
     </message>
     <message>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation type="unfinished">[1400-167F] Канадское слоговое письмо</translation>
+        <translation>[1400-167F] Канадское слоговое письмо</translation>
     </message>
     <message>
         <source>[1680-169F] Ogham</source>
@@ -5187,7 +5186,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>[1800-18AF] Mongolian</source>
-        <translation type="unfinished">[1800-18AF] Старомонгольская письменность</translation>
+        <translation>[1800-18AF] Старомонгольское письмо</translation>
     </message>
     <message>
         <source>[1E00-1EFF] Latin Extended Additional</source>
@@ -5319,7 +5318,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation type="unfinished">[3130-318F] Чамо, комбинируемое с хангылем</translation>
+        <translation>[3130-318F] Чамо, комбинируемое с хангылем</translation>
     </message>
     <message>
         <source>[3190-319F] Kanbun</source>
@@ -5706,7 +5705,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>Грады</translation>
     </message>
     <message>
-        <source>Surveyor&apos;s units</source>
+        <source>Surveyor's units</source>
         <translation>Геодезические единицы</translation>
     </message>
     <message>
@@ -5714,8 +5713,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>Параметры</translation>
     </message>
     <message>
-        <source>For the length formats &apos;Engineering&apos; and &apos;Architectural&apos;, the unit must be set to Inch.</source>
-        <translation>Для форматов длин &apos;Инженерный&apos; и &apos;Архитектурный&apos; в качестве единиц измерения должны быть выбраны дюймы.</translation>
+        <source>For the length formats 'Engineering' and 'Architectural', the unit must be set to Inch.</source>
+        <translation>Для форматов длин 'Инженерный' и 'Архитектурный' в качестве единиц измерения должны быть выбраны дюймы.</translation>
     </message>
     <message>
         <source>Extension line extension:</source>
@@ -5914,7 +5913,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>Длина засечки:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won&apos;t be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension Tick size. Set it to 0 will disable the dimension tick. Dimension arrow won't be drawn when dimension tick is enabled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Засечки на размерных линиях. Установите 0 для отключения засечек. Стрелок на концах размерных линий не будет, если засечки включены.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
@@ -6003,115 +6002,115 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Text style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Стиль текста:</translation>
     </message>
     <message>
-        <source>&apos;.&apos; (Period)</source>
-        <translation type="unfinished"></translation>
+        <source>'.' (Period)</source>
+        <translation>. (точка)</translation>
     </message>
     <message>
-        <source>&apos;,&apos; (Comma)</source>
-        <translation type="unfinished"></translation>
+        <source>',' (Comma)</source>
+        <translation>, (запятая)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
-        <translation type="unfinished"></translation>
+        <translation>Десятичный разделитель:</translation>
     </message>
     <message>
         <source>Linear units:</source>
-        <translation type="unfinished"></translation>
+        <translation>Линейные единицы:</translation>
     </message>
     <message>
         <source>Color:</source>
-        <translation type="unfinished">Цвет:</translation>
+        <translation>Цвет:</translation>
     </message>
     <message>
         <source>Length Factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Коэффициент длины:</translation>
     </message>
     <message>
         <source>Angular units:</source>
-        <translation type="unfinished"></translation>
+        <translation>Угловые единицы:</translation>
     </message>
     <message>
         <source>Linear zeros:</source>
-        <translation type="unfinished"></translation>
+        <translation>Линейные нули:</translation>
     </message>
     <message>
         <source>Format units</source>
-        <translation type="unfinished"></translation>
+        <translation>Единицы формата</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Отступ вокруг текста&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Text size &amp; position</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер и положение текста</translation>
     </message>
     <message>
         <source>Length to enlarge over dimension line</source>
-        <translation type="unfinished"></translation>
+        <translation>Длина увеличения размерной линии.</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name="result_box"/&gt;without effect when tick size &lt;a name="result_box"/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Размер стрелок.&lt;a name="result_box"/&gt;Не имеет эффекта, если размер засечки&lt;a name="result_box"/&gt;не равен 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Ширина:</translation>
+        <translation>Ширина:</translation>
     </message>
     <message>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation type="unfinished"></translation>
+        <translation>Размерные линии, стрелки и засечки</translation>
     </message>
     <message>
         <source>Angular zeros:</source>
-        <translation type="unfinished"></translation>
+        <translation>Угловые нули:</translation>
     </message>
     <message>
         <source>Angular precision:</source>
-        <translation type="unfinished"></translation>
+        <translation>Угловая точность:</translation>
     </message>
     <message>
         <source>Enlarge:</source>
-        <translation type="unfinished"></translation>
+        <translation>Увеличить:</translation>
     </message>
     <message>
         <source>Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Сместить:</translation>
     </message>
     <message>
         <source>Linear precision:</source>
-        <translation type="unfinished"></translation>
+        <translation>Линейная точность:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name="result_box"/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Выравнивание текста&lt;a name="result_box"/&gt;относительно размерной линии.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
-        <translation type="unfinished"></translation>
+        <translation>Выравненный</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Смещение от точки отсчёта.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Text alignment:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выравнивание текста:</translation>
     </message>
     <message>
         <source>Extension lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Линии-выноски</translation>
     </message>
     <message>
         <source>Fixed length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Фиксированная длина:</translation>
     </message>
     <message>
         <source>fixed extension line legth</source>
-        <translation type="unfinished"></translation>
+        <translation>Фиксированная длина линии-выноски</translation>
     </message>
 </context>
 <context>
@@ -6246,11 +6245,11 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>White</source>
-        <translation type="unfinished">Белый</translation>
+        <translation>Белый</translation>
     </message>
     <message>
         <source>Gray</source>
-        <translation type="unfinished">Серый</translation>
+        <translation>Серый</translation>
     </message>
     <message>
         <source>Darkgray</source>
@@ -6446,131 +6445,131 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Graphic Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Графические цвета</translation>
     </message>
     <message>
         <source>Aquamarine</source>
-        <translation type="unfinished"></translation>
+        <translation>Аквамарин</translation>
     </message>
     <message>
         <source>Azure</source>
-        <translation type="unfinished"></translation>
+        <translation>Лазурь</translation>
     </message>
     <message>
         <source>DeepSkyBlue</source>
-        <translation type="unfinished"></translation>
+        <translation>Глубокая небесная синева</translation>
     </message>
     <message>
         <source>DodgerBlue</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>HoneyDew</source>
-        <translation type="unfinished"></translation>
+        <translation>Желто-оранжевый</translation>
     </message>
     <message>
         <source>Lavender</source>
-        <translation type="unfinished"></translation>
+        <translation>Сиреневый</translation>
     </message>
     <message>
         <source>LightGrey</source>
-        <translation type="unfinished"></translation>
+        <translation>Светло-серый</translation>
     </message>
     <message>
         <source>Navy</source>
-        <translation type="unfinished"></translation>
+        <translation>Тёмно-синий</translation>
     </message>
     <message>
         <source>PaleGreen</source>
-        <translation type="unfinished"></translation>
+        <translation>Бледно-зеленый</translation>
     </message>
     <message>
         <source>Pink</source>
-        <translation type="unfinished"></translation>
+        <translation>Розовый</translation>
     </message>
     <message>
         <source>Salmon</source>
-        <translation type="unfinished"></translation>
+        <translation>Оранжево-розовый</translation>
     </message>
     <message>
         <source>Silver</source>
-        <translation type="unfinished"></translation>
+        <translation>Серебряный</translation>
     </message>
     <message>
         <source>Violet</source>
-        <translation type="unfinished"></translation>
+        <translation>Фиолетовый</translation>
     </message>
     <message>
         <source>Wheat</source>
-        <translation type="unfinished"></translation>
+        <translation>Пшеничный</translation>
     </message>
     <message>
         <source>Snap indicator:</source>
-        <translation type="unfinished"></translation>
+        <translation>Указатель привязки:</translation>
     </message>
     <message>
         <source>Anti-aliasing</source>
-        <translation type="unfinished"></translation>
+        <translation>Антиалиасинг</translation>
     </message>
     <message>
         <source>Snap indicator</source>
-        <translation type="unfinished"></translation>
+        <translation>Указатель привязки</translation>
     </message>
     <message>
         <source>Crosshair</source>
-        <translation type="unfinished">Перекрестье</translation>
+        <translation>Перекрестье</translation>
     </message>
     <message>
         <source>Spiderweb</source>
-        <translation type="unfinished"></translation>
+        <translation>Паутина</translation>
     </message>
     <message>
         <source>GUI Colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвета интерфейса</translation>
     </message>
     <message>
         <source>Layer/ Block Selection:</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор слоя или блока:</translation>
     </message>
     <message>
         <source>Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Значки</translation>
     </message>
     <message>
         <source>Custom size</source>
-        <translation type="unfinished"></translation>
+        <translation>Указать размер</translation>
     </message>
     <message>
         <source>Custom Toolbar:</source>
-        <translation type="unfinished"></translation>
+        <translation>Индивидуальная панель:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activation a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities are modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;При изменении слоя все выбранные элементы будут перенесены на этот слой. Для изменения слоя нескольких элементов: выберите элементы и укажите слой в списке слоёв. Все выбранные элементы будут перенесены на указанный слой.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменять слой выбранных элементов при переключении слоя</translation>
     </message>
     <message>
         <source>Clear Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Сброс настроек</translation>
     </message>
     <message>
         <source>restores program geometry/layout to original state</source>
-        <translation type="unfinished"></translation>
+        <translation>Восстановить геометрию и расположение программы в состояние по умолчанию.</translation>
     </message>
     <message>
         <source>Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Расположение</translation>
     </message>
     <message>
         <source>restores the program to its original state</source>
-        <translation type="unfinished"></translation>
+        <translation>Восстановить программу в состояние по умолчанию.</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Всё</translation>
     </message>
 </context>
 <context>
@@ -6584,8 +6583,8 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>Слои</translation>
     </message>
     <message>
-        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
-        <translation>MakerCAM выпуска раннее ноября 2014 года не скрывает SVG контент имеющий установку параметра (&quot;display: none;&quot; или &quot;visibility: hidden;&quot;).</translation>
+        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe ("display: none;" or "visibility: hidden;").</source>
+        <translation>MakerCAM выпуска раннее ноября 2014 года не скрывает SVG контент имеющий установку параметра ("display: none;" или "visibility: hidden;").</translation>
     </message>
     <message>
         <source>Export invisible layers</source>
@@ -6612,12 +6611,12 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation>Эллипсы и эллиптические дуги</translation>
     </message>
     <message>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="unfinished"></translation>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the "transform" attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation>MakerCAM по состоянию на март 2015 не корректно отображает эллипсы и эллиптические дуги созданные тегом &lt;ellipse&gt; с поворотом атрибутом "transfrom" или тегом &lt;path&gt; сегментами эллиптических дуг.</translation>
     </message>
     <message utf8="true">
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation type="unfinished"></translation>
+        <translation>Аппроксимировать эллипсы и эллиптические дуги кубическими кривыми Безье</translation>
     </message>
 </context>
 <context>
@@ -7489,7 +7488,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>[10400-1044F] Deseret</source>
-        <translation type="unfinished">[10400-1044F] Десерет</translation>
+        <translation>[10400-1044F] Дезерет</translation>
     </message>
     <message>
         <source>[1D000-1D0FF] Byzantine Musical Symbols</source>
@@ -7671,7 +7670,7 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Jww Drawing %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Чертёж Jww %1</translation>
     </message>
     <message>
         <source>Drawing Exchange %1</source>
@@ -8480,12 +8479,16 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation type="obsolete">…</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;&lt;span style=" font-family:'Helvetica'; font-size:9pt;"&gt;Подсказка для действий по левой и правой кнопкам мыши&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -8630,11 +8633,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Trim</source>
-        <translation>Усечь</translation>
+        <translation>Подогнать</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Включите, чтобы усечь обе линии при скруглении</translation>
+        <translation>Включите, чтобы подогнать две линии при скруглении</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -8664,28 +8667,28 @@ p, li { white-space: pre-wrap; }
         <translation>Полная длина</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Number of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Число выбранных объектов&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Число выбранных объектов&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+        <source>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd"&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name="qrichtext" content="1" /&gt;&lt;style type="text/css"&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Суммарная длина выбранных объектов&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=" font-family:'Helvetica'; font-size:7pt; font-weight:400; font-style:normal;"&gt;
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"&gt;Суммарная длина выбранных объектов&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -9043,11 +9046,11 @@ p, li { white-space: pre-wrap; }
         <translation>Удалить слой</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
+        <source>Layer "%1" and all entities on it will be removed.</source>
         <translation type="obsolete">Слой «%1» и все объекты на нём будут удалены.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; can never be removed.</source>
+        <source>Layer "%1" can never be removed.</source>
         <translation>Слой «%1» никогда нельзя удалить.</translation>
     </message>
     <message>
@@ -9059,7 +9062,7 @@ p, li { white-space: pre-wrap; }
         <translation>Удалить блок</translation>
     </message>
     <message>
-        <source>Block &quot;%1&quot; and all its entities will be removed.</source>
+        <source>Block "%1" and all its entities will be removed.</source>
         <translation>Блок «%1» и все его объекты будут удалены.</translation>
     </message>
     <message>
@@ -9067,13 +9070,14 @@ p, li { white-space: pre-wrap; }
         <translation>Свойства слоя</translation>
     </message>
     <message>
-        <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
+        <source>Layer with a name "%1" already exists. Please specify a different name.</source>
         <translation>Слой «%1» уже существует. Укажите другое имя.</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.
+        <source>Layer "%1" and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Слой «%1» и всё его содержимое будет удалено.
+Это действие будет НЕВОЗМОЖНО отменить.</translation>
     </message>
 </context>
 <context>
@@ -9334,7 +9338,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>ZSoft Paintbrush</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>PC Paint</source>
@@ -9365,7 +9369,7 @@ Do you want to replace it?</source>
         <translation>неизвестная ошибка при открытии файла DWG</translation>
     </message>
     <message>
-        <source>can&apos;t open this dwg file</source>
+        <source>can't open this dwg file</source>
         <translation>невозможно открыть данный файл DWG</translation>
     </message>
     <message>
@@ -9415,7 +9419,8 @@ Do you want to replace it?</source>
     <message>
         <source>experimental, save your work first.
 Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>экспериментально, сперва сохраните совою работу.
+Продолжить?</translation>
     </message>
     <message>
         <source>error reading blocks in dwg file</source>
@@ -9427,332 +9432,332 @@ Continue?</source>
     </message>
     <message>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation type="unfinished"></translation>
+        <translation>: повтор команды: %1 уже занято %2</translation>
     </message>
     <message>
         <source>point</source>
         <comment>draw point</comment>
-        <translation type="unfinished">точка</translation>
+        <translation>точка</translation>
     </message>
     <message>
         <source>po</source>
         <comment>draw point</comment>
-        <translation type="unfinished">тч</translation>
+        <translation>тч</translation>
     </message>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation type="unfinished">линия</translation>
+        <translation>линия</translation>
     </message>
     <message>
         <source>li</source>
         <comment>draw line</comment>
-        <translation type="unfinished">ли</translation>
+        <translation>ли</translation>
     </message>
     <message>
         <source>l</source>
         <comment>draw line</comment>
-        <translation type="unfinished">д</translation>
+        <translation>л</translation>
     </message>
     <message>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation type="unfinished">ломаная</translation>
+        <translation>ломаная</translation>
     </message>
     <message>
         <source>pl</source>
         <comment>draw polyline</comment>
-        <translation type="unfinished">ло</translation>
+        <translation>ло</translation>
     </message>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>произвольная</translation>
     </message>
     <message>
         <source>fhl</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>произ</translation>
     </message>
     <message>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation>сплайн</translation>
     </message>
     <message>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation>спл</translation>
     </message>
     <message>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation>сплайн2</translation>
     </message>
     <message>
         <source>stp</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>offset</source>
         <comment>create offset</comment>
-        <translation type="unfinished">смещение</translation>
+        <translation>смещение</translation>
     </message>
     <message>
         <source>parallel</source>
         <comment>create offset</comment>
-        <translation type="unfinished">паралельно</translation>
+        <translation>параллельно</translation>
     </message>
     <message>
         <source>o</source>
         <comment>create offset</comment>
-        <translation type="unfinished">с</translation>
+        <translation>с</translation>
     </message>
     <message>
         <source>pa</source>
         <comment>create offset</comment>
-        <translation type="unfinished">па</translation>
+        <translation>па</translation>
     </message>
     <message>
         <source>ptp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>pp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>bisect</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>tangentpc</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>perp</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation>перп</translation>
     </message>
     <message>
         <source>ortho</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation>орто</translation>
     </message>
     <message>
         <source>vertical</source>
         <comment>vertical line</comment>
-        <translation type="unfinished"></translation>
+        <translation>вертикаль</translation>
     </message>
     <message>
         <source>ver</source>
         <comment>vertical line</comment>
-        <translation type="unfinished"></translation>
+        <translation>вер</translation>
     </message>
     <message>
         <source>horizontal</source>
         <comment>horizontal line</comment>
-        <translation type="unfinished"></translation>
+        <translation>горизонт</translation>
     </message>
     <message>
         <source>hor</source>
         <comment>horizontal line</comment>
-        <translation type="unfinished"></translation>
+        <translation>гор</translation>
     </message>
     <message>
         <source>rectangle</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished">прямоугольник</translation>
+        <translation>прямоугольник</translation>
     </message>
     <message>
         <source>rectang</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished">прямоуг</translation>
+        <translation>прямоуг</translation>
     </message>
     <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished">прям</translation>
+        <translation>прям</translation>
     </message>
     <message>
         <source>rec</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished">пря</translation>
+        <translation>пр</translation>
     </message>
     <message>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>arc</source>
         <comment>draw arc</comment>
-        <translation type="unfinished">дуга</translation>
+        <translation>дуга</translation>
     </message>
     <message>
         <source>a</source>
         <comment>draw arc</comment>
-        <translation type="unfinished">у</translation>
+        <translation>д</translation>
     </message>
     <message>
         <source>circle</source>
         <comment>draw circle</comment>
-        <translation type="unfinished">окружность</translation>
+        <translation>окружность</translation>
     </message>
     <message>
         <source>ci</source>
         <comment>draw circle</comment>
-        <translation type="unfinished">ок</translation>
+        <translation>ок</translation>
     </message>
     <message>
         <source>circle2</source>
         <comment>circle 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>окружность2</translation>
     </message>
     <message>
         <source>c2</source>
         <comment>circle 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>о2</translation>
     </message>
     <message>
         <source>circle3</source>
         <comment>circle 3 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>окружность3</translation>
     </message>
     <message>
         <source>c3</source>
         <comment>circle 3 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>о3</translation>
     </message>
     <message>
         <source>circlecr</source>
         <comment>circle with center and radius</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>cc</source>
         <comment>circle with center and radius</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>кас3</translation>
     </message>
     <message>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"></translation>
+        <translation>штриховка</translation>
     </message>
     <message>
         <source>ha</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"></translation>
+        <translation>шт</translation>
     </message>
     <message>
         <source>mtext</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished"></translation>
+        <translation>мтекст</translation>
     </message>
     <message>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished"></translation>
+        <translation>мтек</translation>
     </message>
     <message>
         <source>text</source>
         <comment>draw text</comment>
-        <translation type="unfinished">текст</translation>
+        <translation>текст</translation>
     </message>
     <message>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation type="unfinished"></translation>
+        <translation>тек</translation>
     </message>
     <message>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished">обновить</translation>
+        <translation>перестроить</translation>
     </message>
     <message>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished">обновить</translation>
+        <translation>обновить</translation>
     </message>
     <message>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished">об</translation>
+        <translation>об</translation>
     </message>
     <message>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished">уо</translation>
+        <translation>уоб</translation>
     </message>
     <message>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation type="unfinished"></translation>
+        <translation>увеличитьокном</translation>
     </message>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation type="unfinished">уо</translation>
+        <translation>уо</translation>
     </message>
     <message>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation type="unfinished"></translation>
+        <translation>увеличитьавто</translation>
     </message>
     <message>
         <source>za</source>
         <comment>zoom - auto</comment>
-        <translation type="unfinished">уа</translation>
+        <translation>уа</translation>
     </message>
     <message>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>zp</source>
@@ -9762,302 +9767,302 @@ Continue?</source>
     <message>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished">уп</translation>
+        <translation>уп</translation>
     </message>
     <message>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation type="unfinished"></translation>
+        <translation>прекратить</translation>
     </message>
     <message>
         <source>k</source>
         <comment>kill all actions</comment>
-        <translation type="unfinished"></translation>
+        <translation>пр</translation>
     </message>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation type="unfinished">отменить</translation>
+        <translation>отменить</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation type="unfinished">о</translation>
+        <translation>о</translation>
     </message>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation type="unfinished">повторить</translation>
+        <translation>повторить</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>п</translation>
     </message>
     <message>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation type="unfinished"></translation>
+        <translation>размвыравн</translation>
     </message>
     <message>
         <source>da</source>
         <comment>dimension - aligned</comment>
-        <translation type="unfinished">рр</translation>
+        <translation>рв</translation>
     </message>
     <message>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>размгориз</translation>
     </message>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation type="unfinished">рг</translation>
+        <translation>рг</translation>
     </message>
     <message>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>размверт</translation>
     </message>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation type="unfinished">рв</translation>
+        <translation>рв</translation>
     </message>
     <message>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished"></translation>
+        <translation>размлин</translation>
     </message>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished"></translation>
+        <translation>рл</translation>
     </message>
     <message>
         <source>dr</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished">рл</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"></translation>
+        <translation>размугл</translation>
     </message>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"></translation>
+        <translation>руг</translation>
     </message>
     <message>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished"></translation>
+        <translation>размрадиал</translation>
     </message>
     <message>
         <source>dimradius</source>
         <comment>dimension - radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>размрадиус</translation>
     </message>
     <message>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation>размдиаметр</translation>
     </message>
     <message>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation>размдиам</translation>
     </message>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation>рд</translation>
     </message>
     <message>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation type="unfinished"></translation>
+        <translation>размвын</translation>
     </message>
     <message>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation type="unfinished">пв</translation>
+        <translation>пв</translation>
     </message>
     <message>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation type="unfinished">разпер</translation>
+        <translation>размпер</translation>
     </message>
     <message>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"></translation>
+        <translation>безограничения</translation>
     </message>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"></translation>
+        <translation>он</translation>
     </message>
     <message>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>огрорт</translation>
     </message>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>оо</translation>
     </message>
     <message>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>огргор</translation>
     </message>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>ог</translation>
     </message>
     <message>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>огрверт</translation>
     </message>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>ов</translation>
     </message>
     <message>
         <source>move</source>
         <comment>modify - move (copy)</comment>
-        <translation type="unfinished"></translation>
+        <translation>сдвиг</translation>
     </message>
     <message>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation type="unfinished">сд</translation>
+        <translation>сд</translation>
     </message>
     <message>
         <source>bevel</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation>фаска</translation>
     </message>
     <message>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation>фас</translation>
     </message>
     <message>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished">иф</translation>
+        <translation>иф</translation>
     </message>
     <message>
         <source>fillet</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>divide</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation>разделить</translation>
     </message>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation>разд</translation>
     </message>
     <message>
         <source>mirror</source>
         <comment>modify -  mirror</comment>
-        <translation type="unfinished"></translation>
+        <translation>отразить</translation>
     </message>
     <message>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation type="unfinished">от</translation>
+        <translation>от</translation>
     </message>
     <message>
         <source>revert</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"></translation>
+        <translation>обратить</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"></translation>
+        <translation>обр</translation>
     </message>
     <message>
         <source>rotate</source>
         <comment>modify - rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>повернуть</translation>
     </message>
     <message>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation type="unfinished">по</translation>
+        <translation>по</translation>
     </message>
     <message>
         <source>scale</source>
         <comment>modify - scale</comment>
-        <translation type="unfinished"></translation>
+        <translation>масштаб</translation>
     </message>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation type="unfinished">ма</translation>
+        <translation>ма</translation>
     </message>
     <message>
         <source>trim</source>
         <comment>modify - trim (extend)</comment>
-        <translation type="unfinished">подогнать</translation>
+        <translation>подогнать</translation>
     </message>
     <message>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>под</translation>
     </message>
     <message>
         <source>trim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>подогнать2</translation>
     </message>
     <message>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>под2</translation>
     </message>
     <message>
         <source>lengthen</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>stretch</source>
         <comment>modify - stretch</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>ss</source>
@@ -10067,142 +10072,142 @@ Continue?</source>
     <message>
         <source>delete</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
+        <translation>удалить</translation>
     </message>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished">уд</translation>
+        <translation>уд</translation>
     </message>
     <message>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
+        <translation>удал</translation>
     </message>
     <message>
         <source>explode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>разрушить</translation>
     </message>
     <message>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation type="unfinished">ра</translation>
+        <translation>ра</translation>
     </message>
     <message>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation>привнет</translation>
     </message>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>sf</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation type="unfinished"></translation>
+        <translation>привцентр</translation>
     </message>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation type="unfinished">пц</translation>
+        <translation>пц</translation>
     </message>
     <message>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>привраст</translation>
     </message>
     <message>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation type="unfinished">пр</translation>
+        <translation>пр</translation>
     </message>
     <message>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation type="unfinished"></translation>
+        <translation>привкон</translation>
     </message>
     <message>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation type="unfinished">пк</translation>
+        <translation>пк</translation>
     </message>
     <message>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation type="unfinished"></translation>
+        <translation>привсет</translation>
     </message>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation type="unfinished">пс</translation>
+        <translation>пс</translation>
     </message>
     <message>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation type="unfinished"></translation>
+        <translation>привпресеч</translation>
     </message>
     <message>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation type="unfinished">пп</translation>
+        <translation>пп</translation>
     </message>
     <message>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation type="unfinished"></translation>
+        <translation>привсеред</translation>
     </message>
     <message>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation type="unfinished">пс</translation>
+        <translation>пср</translation>
     </message>
     <message>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>привобъект</translation>
     </message>
     <message>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished">пб</translation>
+        <translation>по</translation>
     </message>
     <message>
         <source>np</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished">пт</translation>
+        <translation>пр</translation>
     </message>
     <message>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation type="unfinished"></translation>
+        <translation>отнноль</translation>
     </message>
     <message>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation type="unfinished"></translation>
+        <translation>он</translation>
     </message>
     <message>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>tn</source>
@@ -10212,388 +10217,388 @@ Continue?</source>
     <message>
         <source>modifyattr</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
+        <translation>изматр</translation>
     </message>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
+        <translation>атр</translation>
     </message>
     <message>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
+        <translation>иа</translation>
     </message>
     <message>
         <source>properties</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>свойства</translation>
     </message>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>свойст</translation>
     </message>
     <message>
         <source>distance</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>расстояние</translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>расст</translation>
     </message>
     <message>
         <source>dpp</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>angle</source>
         <comment>measure angle</comment>
-        <translation type="unfinished">угол</translation>
+        <translation>угол</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation type="unfinished">уг</translation>
+        <translation>уг</translation>
     </message>
     <message>
         <source>area</source>
         <comment>measure area</comment>
-        <translation type="unfinished"></translation>
+        <translation>область</translation>
     </message>
     <message>
         <source>ar</source>
         <comment>measure area</comment>
-        <translation type="unfinished">ду</translation>
+        <translation>об</translation>
     </message>
     <message>
         <source>angle</source>
-        <translation type="unfinished">угол</translation>
+        <translation>угол</translation>
     </message>
     <message>
         <source>dpi</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>close</source>
-        <translation type="unfinished">закрыть</translation>
+        <translation>закрыть</translation>
     </message>
     <message>
         <source>chord length</source>
-        <translation type="unfinished">длина хорды</translation>
+        <translation>длина хорды</translation>
     </message>
     <message>
         <source>columns</source>
-        <translation type="unfinished">столбцов</translation>
+        <translation>столбцов</translation>
     </message>
     <message>
         <source>columnspacing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>factor</source>
-        <translation type="unfinished">коэффициент</translation>
+        <translation>коэффициент</translation>
     </message>
     <message>
         <source>length</source>
-        <translation type="unfinished">длина</translation>
+        <translation>длина</translation>
     </message>
     <message>
         <source>length1</source>
         <comment>bevel/fillet lenght1</comment>
-        <translation type="unfinished">длина1</translation>
+        <translation>длина1</translation>
     </message>
     <message>
         <source>length2</source>
         <comment>bevel/fillet lenght2</comment>
-        <translation type="unfinished">длина2</translation>
+        <translation>длина2</translation>
     </message>
     <message>
         <source>number</source>
-        <translation type="unfinished">номер</translation>
+        <translation>номер</translation>
     </message>
     <message>
         <source>radius</source>
-        <translation type="unfinished">радиус</translation>
+        <translation>радиус</translation>
     </message>
     <message>
         <source>rows</source>
-        <translation type="unfinished">строк</translation>
+        <translation>строк</translation>
     </message>
     <message>
         <source>rowspacing</source>
-        <translation type="unfinished">рядинтервал</translation>
+        <translation>рядинтервал</translation>
     </message>
     <message>
         <source>through</source>
-        <translation type="unfinished">через</translation>
+        <translation>через</translation>
     </message>
     <message>
         <source>trim</source>
-        <translation type="unfinished">подогнать</translation>
+        <translation>подогнать</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation type="unfinished">уг</translation>
+        <translation>уго</translation>
     </message>
     <message>
         <source>an</source>
         <comment>angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>уг</translation>
     </message>
     <message>
         <source>center</source>
-        <translation type="unfinished">центр</translation>
+        <translation>центр</translation>
     </message>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation type="unfinished">цен</translation>
+        <translation>цен</translation>
     </message>
     <message>
         <source>ce</source>
         <comment>center</comment>
-        <translation type="unfinished"></translation>
+        <translation>це</translation>
     </message>
     <message>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation type="unfinished"></translation>
+        <translation>з</translation>
     </message>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation type="unfinished">столб</translation>
+        <translation>столб</translation>
     </message>
     <message>
         <source>co</source>
         <comment>columns</comment>
-        <translation type="unfinished"></translation>
+        <translation>ст</translation>
     </message>
     <message>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"></translation>
+        <translation>столбинтервал</translation>
     </message>
     <message>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="unfinished">столбинтервал</translation>
+        <translation>стинтервал</translation>
     </message>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="unfinished">си</translation>
+        <translation>си</translation>
     </message>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation type="unfinished">коэф</translation>
+        <translation>коэф</translation>
     </message>
     <message>
         <source>f</source>
         <comment>factor</comment>
-        <translation type="unfinished">к</translation>
+        <translation>к</translation>
     </message>
     <message>
         <source>help</source>
-        <translation type="unfinished">помощь</translation>
+        <translation>помощь</translation>
     </message>
     <message>
         <source>?</source>
         <comment>help</comment>
-        <translation type="unfinished">?</translation>
+        <translation>?</translation>
     </message>
     <message>
         <source>length</source>
         <comment>length</comment>
-        <translation type="unfinished">длина</translation>
+        <translation>длина</translation>
     </message>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation type="unfinished">дл</translation>
+        <translation>дл</translation>
     </message>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation type="unfinished">д</translation>
+        <translation>д</translation>
     </message>
     <message>
         <source>length1</source>
         <comment>length1</comment>
-        <translation type="unfinished">длина1</translation>
+        <translation>длина1</translation>
     </message>
     <message>
         <source>len1</source>
         <comment>length1</comment>
-        <translation type="unfinished">дл1</translation>
+        <translation>дл1</translation>
     </message>
     <message>
         <source>l1</source>
         <comment>length1</comment>
-        <translation type="unfinished">д1</translation>
+        <translation>д1</translation>
     </message>
     <message>
         <source>length2</source>
         <comment>length2</comment>
-        <translation type="unfinished">длина2</translation>
+        <translation>длина2</translation>
     </message>
     <message>
         <source>len2</source>
         <comment>length2</comment>
-        <translation type="unfinished">дл2</translation>
+        <translation>дл2</translation>
     </message>
     <message>
         <source>l2</source>
         <comment>length2</comment>
-        <translation type="unfinished">д2</translation>
+        <translation>д2</translation>
     </message>
     <message>
         <source>number</source>
         <comment>number</comment>
-        <translation type="unfinished">номер</translation>
+        <translation>номер</translation>
     </message>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation type="unfinished">ном</translation>
+        <translation>ном</translation>
     </message>
     <message>
         <source>n</source>
         <comment>number</comment>
-        <translation type="unfinished">н</translation>
+        <translation>н</translation>
     </message>
     <message>
         <source>ra</source>
         <comment>radius</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>reversed</source>
         <comment>reversed</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation type="unfinished"></translation>
+        <translation>ряд</translation>
     </message>
     <message>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation type="unfinished">рядинтервал</translation>
+        <translation>рядинтервал</translation>
     </message>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation type="unfinished">ри</translation>
+        <translation>ри</translation>
     </message>
     <message>
         <source>text</source>
-        <translation type="unfinished">текст</translation>
+        <translation>текст</translation>
     </message>
     <message>
         <source>t</source>
         <comment>text</comment>
-        <translation type="unfinished"></translation>
+        <translation>т</translation>
     </message>
     <message>
         <source>t</source>
         <comment>through</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>undo</source>
-        <translation type="unfinished">отменить</translation>
+        <translation>отменить</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation type="unfinished">о</translation>
+        <translation>о</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation type="unfinished">повторить</translation>
+        <translation>повторить</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation type="unfinished"></translation>
+        <translation>п</translation>
     </message>
     <message>
         <source>back</source>
-        <translation type="unfinished">назад</translation>
+        <translation>назад</translation>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation type="unfinished">н</translation>
+        <translation>н</translation>
     </message>
     <message>
         <source>paperoffset</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>graphoffset</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Command: %1 (%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Команда: %1 (%2)</translation>
     </message>
     <message>
         <source>RS_Commands:: command not found: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">RS_Commands:: команда не найдена: %1</translation>
     </message>
     <message>
         <source>Command not found: %1</source>
-        <translation type="unfinished">Команда не найдена: %1</translation>
+        <translation>Команда не найдена: %1</translation>
     </message>
     <message>
         <source>Accepted keycode: %1</source>
-        <translation type="unfinished">Принята клавиатурная последовательность: %1</translation>
+        <translation>Принята клавиатурная последовательность: %1</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation type="unfinished">Доступные команды:</translation>
+        <translation>Доступные команды:</translation>
     </message>
     <message>
         <source>cal</source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"></translation>
+        <translation>выч</translation>
     </message>
     <message>
         <source>calculate</source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"></translation>
+        <translation>вычислить</translation>
     </message>
     <message>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation type="unfinished">Нет</translation>
+        <translation>Нет</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>ошибка чтения метаданных файла DWG</translation>
     </message>
     <message>
         <source>Calculator error for input: </source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка вычисления в: </translation>
     </message>
 </context>
 <context>
@@ -11665,11 +11670,11 @@ Continue?</source>
     </message>
     <message>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -12910,7 +12915,7 @@ Continue?</source>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation type="unfinished">Расстояние: %1; прямоугольные координаты (%2, %3); полярные (%4∠%5  {1 ?} {2 ?} {3)?} {4&lt;?} {5)?}</translation>
+        <translation>Расстояние: %1; прямоугольные координаты (%2, %3); полярные (%4∠%5)</translation>
     </message>
 </context>
 <context>
@@ -13150,8 +13155,8 @@ Continue?</source>
         <translation type="obsolete">Вставляет объект из библиотеки.</translation>
     </message>
     <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Невозможно открыть файл &apos;%1&apos;</translation>
+        <source>Cannot open file '%1'</source>
+        <translation>Невозможно открыть файл '%1'</translation>
     </message>
 </context>
 <context>
@@ -13369,23 +13374,23 @@ Continue?</source>
     </message>
     <message>
         <source>Parent of second entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>One of the chosen entities is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Parent of first entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>First entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Second entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -13914,7 +13919,7 @@ Continue?</source>
         <translation type="obsolete">&amp;Добавить вершину</translation>
     </message>
     <message>
-        <source>Add polyline&apos;s node</source>
+        <source>Add polyline's node</source>
         <translation type="obsolete">Добавить вершину ломаной</translation>
     </message>
     <message>
@@ -13938,7 +13943,7 @@ Continue?</source>
         <translation>Укажите ломаную для добавления вершин</translation>
     </message>
     <message>
-        <source>Specify adding node&apos;s point</source>
+        <source>Specify adding node's point</source>
         <translation>Укажите точку добавляемой вершины</translation>
     </message>
 </context>
@@ -13953,7 +13958,7 @@ Continue?</source>
         <translation type="obsolete">&amp;Добавить вершину</translation>
     </message>
     <message>
-        <source>Append polyline&apos;s node</source>
+        <source>Append polyline's node</source>
         <translation type="obsolete">Добавить вершину ломаной</translation>
     </message>
     <message>
@@ -14008,7 +14013,7 @@ Continue?</source>
         <translation type="obsolete">&amp;Удалить вершину</translation>
     </message>
     <message>
-        <source>Delete polyline&apos;s node</source>
+        <source>Delete polyline's node</source>
         <translation type="obsolete">Удалить вершину ломаной</translation>
     </message>
     <message>
@@ -14028,7 +14033,7 @@ Continue?</source>
         <translation>Укажите ломаную для удаления вершины</translation>
     </message>
     <message>
-        <source>Specify deleting node&apos;s point</source>
+        <source>Specify deleting node's point</source>
         <translation>Укажите удаляемую вершину</translation>
     </message>
     <message>
@@ -14115,7 +14120,7 @@ Continue?</source>
     </message>
     <message>
         <source>Choose the original polyline</source>
-        <translation>Определите исходную ломаную</translation>
+        <translation>Укажите исходную ломаную</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -14168,7 +14173,7 @@ Continue?</source>
         <translation type="obsolete">&amp;Подогнать отрезок</translation>
     </message>
     <message>
-        <source>Trim polyline&apos;s segments</source>
+        <source>Trim polyline's segments</source>
         <translation type="obsolete">Подогнать отрезок ломаной</translation>
     </message>
     <message>
@@ -14243,8 +14248,8 @@ Continue?</source>
         <translation>введите значение смещения вывода на печать в командной строке</translation>
     </message>
     <message>
-        <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation>Игнорирование относительного нуля в смещении вывода на печать. Игнорирование &apos;@&apos;</translation>
+        <source>Printout offset ignores relative zero. Ignoring '@'</source>
+        <translation>Игнорирование относительного нуля в смещении вывода на печать. Игнорирование '@'</translation>
     </message>
 </context>
 <context>

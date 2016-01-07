@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="de">
 <context>
@@ -282,7 +281,7 @@
     <message>
         <location filename="../list/list.cpp" line="210"/>
         <source>SPLINEPOINTS</source>
-        <translation type="unfinished"></translation>
+        <translation>SPLINEPUNKTE</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="213"/>
@@ -442,12 +441,12 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="38"/>
         <source>Read PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>PIC Datei einlesen</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="44"/>
         <source>import PIC file</source>
-        <translation type="unfinished"></translation>
+        <translation>PIC Datei importieren</translation>
     </message>
 </context>
 <context>
@@ -624,7 +623,7 @@
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="371"/>
-        <source>Can&apos;t open the file %1</source>
+        <source>Can't open the file %1</source>
         <translation>Kann Datei %1 nicht öffnen</translation>
     </message>
 </context>
@@ -881,63 +880,63 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="67"/>
         <source>File...</source>
-        <translation type="unfinished">Datei...</translation>
+        <translation>Datei...</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="77"/>
         <source>Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalierung:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="81"/>
         <source>Accept</source>
-        <translation type="unfinished">Übernehmen</translation>
+        <translation>Übernehmen</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="85"/>
         <source>Cancel</source>
-        <translation type="unfinished">Abbrechen</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="113"/>
         <source>Select file</source>
-        <translation type="unfinished">Datei auswählen</translation>
+        <translation>Datei auswählen</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="121"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalierungsfaktor ist leer oder ungültig</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="134"/>
         <source>The file %1 not exist</source>
-        <translation type="unfinished">Die Datei %1 existiert nicht</translation>
+        <translation>Die Datei %1 existiert nicht</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="139"/>
-        <source>Can&apos;t open the file %1</source>
-        <translation type="unfinished">Kann Datei %1 nicht öffnen</translation>
+        <source>Can't open the file %1</source>
+        <translation>Kann Datei %1 nicht öffnen</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="146"/>
         <source>%1 objects imported</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 Objekte importiert</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="168"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation>PIC Import: Erster Punkt ist leer %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="181"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation>PIC Import: Endpunkt ist leer %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="260"/>
         <location filename="../picfile/picfile.cpp" line="269"/>
         <source>format error in %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Formatfehler in %1</translation>
     </message>
 </context>
 <context>
@@ -964,12 +963,12 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
         <source>This plugin allows you to plot mathematical equations.
-If you don&apos;t want to use the parametric form, just leave out &quot;Equation2&quot;.
+If you don't want to use the parametric form, just leave out "Equation2".
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
         <translation>Dieses Plugin ermöglicht es mathematische Gleichungen zu plotten.
-Wenn man nicht die parametrische Form verwenden möchte, lässt man einfach &quot;Gleichung 2&quot; weg.
+Wenn man nicht die parametrische Form verwenden möchte, lässt man einfach "Gleichung 2" weg.
 Man kann pi verwenden, wenn der Wert von Pi (d. h. (3*pi)) benötigt wird.
 Als Variable/Parameter der Gleichung kann t oder x verwendet werden.
 </translation>
@@ -1013,19 +1012,19 @@ Als Variable/Parameter der Gleichung kann t oder x verwendet werden.
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>Liniensegmente</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation>Polylinie</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>Splinepunkte</translation>
     </message>
 </context>
 <context>
