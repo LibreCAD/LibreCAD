@@ -209,6 +209,7 @@ QPrinter::PageSize rsToQtPaperFormat(RS2::PaperFormat f) {
 	}
 }
 }
+
 /**
  * Constructor. Initializes the app.
  */
@@ -223,15 +224,15 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
 
-    statusBar()->setMinimumHeight(32);
-    coordinateWidget = new QG_CoordinateWidget(statusBar(), "coordinates");
-    statusBar()->addWidget(coordinateWidget);
-    mouseWidget = new QG_MouseWidget(statusBar(), "mouse info");
-    statusBar()->addWidget(mouseWidget);
-    selectionWidget = new QG_SelectionWidget(statusBar(), "selections");
-    statusBar()->addWidget(selectionWidget);
-    m_pActiveLayerName=new QG_ActiveLayerName(this);
-    statusBar()->addWidget(m_pActiveLayerName);
+    QStatusBar* status_bar = statusBar();
+    coordinateWidget = new QG_CoordinateWidget(status_bar, "coordinates");
+    status_bar->addWidget(coordinateWidget);
+    mouseWidget = new QG_MouseWidget(status_bar, "mouse info");
+    status_bar->addWidget(mouseWidget);
+    selectionWidget = new QG_SelectionWidget(status_bar, "selections");
+    status_bar->addWidget(selectionWidget);
+    m_pActiveLayerName = new QG_ActiveLayerName(this);
+    status_bar->addWidget(m_pActiveLayerName);
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating LC_CentralWidget");
 
@@ -2877,6 +2878,11 @@ void QC_ApplicationWindow::widgetOptionsDialog()
     int toolbar_icon_size = settings.value("ToolbarIconSize", 24).toInt();
     dlg.toolbar_icon_size_spinbox->setValue(toolbar_icon_size);
 
+    int allow_statusbar_height = settings.value("AllowStatusbarHeight", 0).toInt();
+    dlg.statusbar_height_checkbox->setChecked(allow_statusbar_height);
+    int statusbar_height = settings.value("StatusbarHeight", 32).toInt();
+    dlg.statusbar_height_spinbox->setValue(statusbar_height);
+
     if (dlg.exec())
     {
         int allow_style = dlg.style_checkbox->isChecked();
@@ -2900,6 +2906,15 @@ void QC_ApplicationWindow::widgetOptionsDialog()
             int toolbar_icon_size = dlg.toolbar_icon_size_spinbox->value();
             settings.setValue("ToolbarIconSize", toolbar_icon_size);
             setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
+        }
+
+        int allow_statusbar_height = dlg.statusbar_height_checkbox->isChecked();
+        settings.setValue("AllowStatusbarHeight", allow_statusbar_height);
+        if (allow_statusbar_height)
+        {
+            int statusbar_height = dlg.statusbar_height_spinbox->value();
+            settings.setValue("StatusbarHeight", statusbar_height);
+            statusBar()->setMinimumHeight(statusbar_height);
         }
     }
     settings.endGroup();
