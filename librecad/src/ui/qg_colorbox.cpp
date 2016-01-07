@@ -83,6 +83,9 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
         addItem(QIcon(":/ui/color00.png"), tr("By Layer"));
         addItem(QIcon(":/ui/color00.png"), tr("By Block"));
     }
+
+    addItem(QIcon(":/ui/colorxx.png"), tr("Custom"));
+
 //static colors starts here
     //addColor(QIcon(":/ui/color01.png"), red,Qt::red);
     QString red(tr("Red"));
@@ -106,9 +109,6 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     addColor(Qt::darkGray,tr("Dark Gray"));
     addColor(Qt::lightGray,tr("Light Gray"));
 //static colors ends here
-    // last item is reserved for "Others.." to trigger color picker
-    QString others(tr("Others.."));
-    addItem(QIcon(":/ui/colorxx.png"), others);
 
     connect(this, SIGNAL(activated(int)),
             this, SLOT(slotColorChanged(int)));
@@ -225,24 +225,28 @@ void QG_ColorBox::slotColorChanged(int index) {
             break;
         }
     }
-    if ( index >= colorIndexStart ) {
-        if(index < count() -1 ) {
-                QVariant q0=itemData(index);
-                if(q0 != QVariant::Invalid ) {
-            *currentColor=itemData(index).value<QColor>();
-                } else {
-            *currentColor=Qt::black; //default to black color
-                }
-        } else { // color picker for "Others.."
-            RS_Color selectedColor = QColorDialog::getColor(*currentColor, this);
-            //verify if user as clicked Ok or Cancel
-            if (selectedColor.isValid())
+
+    if (itemText(index) == "Custom")
+    {
+       RS_Color selectedColor = QColorDialog::getColor(*currentColor, this);
+       if (selectedColor.isValid())
             *currentColor = selectedColor;
+    }
+    else if (index >= colorIndexStart)
+    {
+        if(index < count() -1 )
+        {
+            QVariant q0=itemData(index);
+            if(q0 != QVariant::Invalid )
+            {
+                *currentColor=itemData(index).value<QColor>();
+            }
+            else
+            {
+                *currentColor=Qt::black; //default to black color
+            }
         }
     }
-
-    //printf("Current color is (%d): %s\n",
-    //       index, currentColor.name().latin1());
 
     emit colorChanged(*currentColor);
 }

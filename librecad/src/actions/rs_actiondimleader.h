@@ -27,6 +27,7 @@
 #ifndef RS_ACTIONDIMLEADER_H
 #define RS_ACTIONDIMLEADER_H
 
+#include<memory>
 #include "rs_previewactioninterface.h"
 
 class RS_Leader;
@@ -51,7 +52,7 @@ public:
 public:
     RS_ActionDimLeader(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-	~RS_ActionDimLeader() = default;
+	virtual ~RS_ActionDimLeader();
 
     void reset();
 
@@ -76,8 +77,8 @@ protected:
 	/**
 	 * Points set so far.
 	 */
-	std::vector<RS_Vector> points;
-
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

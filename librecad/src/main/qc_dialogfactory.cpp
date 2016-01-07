@@ -30,8 +30,11 @@
 #include "qc_dialogfactory.h"
 #include "qc_applicationwindow.h"
 #include "qg_blockwidget.h"
+#include "qc_mdiwindow.h"
+#include "qg_graphicview.h"
 
 #include "rs_blocklist.h"
+#include "rs_debug.h"
 
 
 QC_DialogFactory::QC_DialogFactory(QWidget* parent, QToolBar* ow) :
@@ -82,7 +85,7 @@ void QC_DialogFactory::closeEditBlockWindow(RS_Block* block) {
     for (int i = 0; i <mdiAreaCAD->subWindowList().size(); ) {
         RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: window: %d",
                         i);
-        QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(mdiAreaCAD->subWindowList().at(i)->widget());
+        QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(mdiAreaCAD->subWindowList().at(i));
         if(m==NULL) {
             mdiAreaCAD->removeSubWindow(mdiAreaCAD->subWindowList().at(i));
             continue;

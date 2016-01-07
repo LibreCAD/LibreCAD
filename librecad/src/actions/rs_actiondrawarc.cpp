@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<cmath>
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_actiondrawarc.h"
@@ -36,6 +36,8 @@
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 RS_ActionDrawArc::RS_ActionDrawArc(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView)
@@ -48,7 +50,7 @@ RS_ActionDrawArc::RS_ActionDrawArc(RS_EntityContainer& container,
     reset();
 }
 
-RS_ActionDrawArc::~RS_ActionDrawArc(){}
+RS_ActionDrawArc::~RS_ActionDrawArc() = default;
 
 void RS_ActionDrawArc::reset() {
 
@@ -117,8 +119,7 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent* e) {
 			data->radius = data->center.distanceTo(mouse);
             deletePreview();
 			preview->addEntity(new RS_Circle(preview.get(),
-											 RS_CircleData(data->center,
-														   data->radius)));
+			{data->center, data->radius}));
             drawPreview();
         }
         break;

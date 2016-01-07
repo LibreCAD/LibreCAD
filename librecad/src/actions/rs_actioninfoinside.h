@@ -51,7 +51,7 @@ public:
     virtual void updateMouseCursor();
 
 private:
-    RS_Vector pt;
+	std::unique_ptr<RS_Vector> pt;
 	std::unique_ptr<RS_EntityContainer> contour;
 };
 

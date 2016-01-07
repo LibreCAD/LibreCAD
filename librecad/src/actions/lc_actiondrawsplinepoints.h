@@ -27,9 +27,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_previewactioninterface.h"
 #include "rs_actiondrawspline.h"
 
-struct LC_SplinePointsData;
-class LC_SplinePoints;
-
 /**
  * This action class can handle user events to draw splines through points.
  *
@@ -77,22 +74,11 @@ public:
     virtual void setDegree(int /*deg*/){}
 
 private:
-	/**
-	* Spline data defined so far.
-	*/
-	std::unique_ptr<LC_SplinePointsData> data;
-
-	/**
-	* Spline used.
-	*/
-	std::unique_ptr<LC_SplinePoints> spline;
-
-	/**
-	* Point history (for undo)
-	*/
-	std::vector<RS_Vector> undoBuffer;
-
 	void redo();
+
+	struct Points;
+	std::unique_ptr<Points> pPoints;
+
 };
 
 #endif

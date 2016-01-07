@@ -64,9 +64,8 @@ public:
 	virtual void updateMouseCursor();
 
 private:
-	std::unique_ptr<RS_MoveData> data;
-	RS_Vector referencePoint;
-	RS_Vector targetPoint;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

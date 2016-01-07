@@ -30,8 +30,8 @@
 #include <QFile>
 #include <QAction>
 
-LC_CustomToolbar::LC_CustomToolbar(const QString& name, QWidget* parent)
-    : QToolBar(name, parent)
+LC_CustomToolbar::LC_CustomToolbar(QWidget* parent)
+    : QToolBar(parent)
 {
     QAction* action = new QAction(tr("Add or Remove Action"), parent);
     action->setShortcut(QKeySequence("F2"));
@@ -88,7 +88,7 @@ void LC_CustomToolbar::slot_add_or_remove_action()
 {
     if (most_recent_action )
     {
-        QString token = most_recent_action->data().toString();
+        QString token = most_recent_action->objectName();
 
         if (state_list.contains(token))
         {

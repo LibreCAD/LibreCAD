@@ -29,13 +29,26 @@
 // Andrew Mustun, Claude Sylvain, R. van Twisk, Dongxu Li, Rallaz, Armin Stebich, ravas, korhadris
 
 #include "lc_actionfactory.h"
-#include <QObject>
 #include <QAction>
 #include <QActionGroup>
 
-LC_ActionFactory::LC_ActionFactory(QObject* parent) : QObject(parent) {}
+LC_ActionFactory::LC_ActionFactory(QObject* parent)
+    : QObject(parent)
+    , tool_group(new QActionGroup(parent))
+    , disable_group(new QActionGroup(parent))
+{
+    disable_group->setExclusive(false);
 
-QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_handler, QActionGroup* tools)
+    connect(parent, SIGNAL(windowsChanged(bool)),
+            disable_group, SLOT(setEnabled(bool)));
+    connect(parent, SIGNAL(windowsChanged(bool)),
+            tool_group, SLOT(setEnabled(bool)));
+
+    connect(tool_group, SIGNAL(triggered(QAction*)),
+            parent, SLOT(relayAction(QAction*)));
+}
+
+QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler)
 {
     QObject* main_window = parent();
     QMap<QString, QAction*> a_map;
@@ -43,679 +56,688 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
 
     // <[~ Zoom ~]>
 
-    action = new QAction(tr("&Window Zoom"), tools);
+    action = new QAction(tr("&Window Zoom"), tool_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("zoom-select", QIcon(":/actions/zoomwindow.png")));
     #else
     action->setIcon(QIcon(":/actions/zoomwindow.png"));
     #endif
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomWindow()));
-    action->setData("ZoomWindow");
+    action->setObjectName("ZoomWindow");
     a_map["ZoomWindow"] = action;
 
-    action = new QAction(tr("Zoom &Panning"), tools);
+    action = new QAction(tr("Zoom &Panning"), tool_group);
     action->setIcon(QIcon(":/actions/zoompan.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotZoomPan()));
-    action->setData("ZoomPan");
+    action->setObjectName("ZoomPan");
     a_map["ZoomPan"] = action;
 
     // <[~ Select ~]>
 
-    action = new QAction(tr("Select Entity"), tools);
+    action = new QAction(tr("Select Entity"), tool_group);
     action->setIcon(QIcon(":/extui/selectsingle.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectSingle()));
-    action->setData("SelectSingle");
+    action->setObjectName("SelectSingle");
     a_map["SelectSingle"] = action;
 
-    action = new QAction(tr("Select Window"), tools);
+    action = new QAction(tr("Select Window"), tool_group);
     action->setIcon(QIcon(":/extui/selectwindow.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectWindow()));
-    action->setData("SelectWindow");
+    action->setObjectName("SelectWindow");
     a_map["SelectWindow"] = action;
 
-    action = new QAction(tr("Deselect Window"), tools);
+    action = new QAction(tr("Deselect Window"), tool_group);
     action->setIcon(QIcon(":/extui/deselectwindow.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDeselectWindow()));
-    action->setData("DeselectWindow");
+    action->setObjectName("DeselectWindow");
     a_map["DeselectWindow"] = action;
 
-    action = new QAction(tr("(De-)Select &Contour"), tools);
+    action = new QAction(tr("(De-)Select &Contour"), tool_group);
     action->setIcon(QIcon(":/extui/selectcontour.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectContour()));
-    action->setData("SelectContour");
+    action->setObjectName("SelectContour");
     a_map["SelectContour"] = action;
 
-    action = new QAction(tr("Select Intersected Entities"), tools);
+    action = new QAction(tr("Select Intersected Entities"), tool_group);
     action->setIcon(QIcon(":/extui/selectinters.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectIntersected()));
-    action->setData("SelectIntersected");
+    action->setObjectName("SelectIntersected");
     a_map["SelectIntersected"] = action;
 
-    action = new QAction(tr("Deselect Intersected Entities"), tools);
+    action = new QAction(tr("Deselect Intersected Entities"), tool_group);
     action->setIcon(QIcon(":/extui/deselectinters.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDeselectIntersected()));
-    action->setData("DeselectIntersected");
+    action->setObjectName("DeselectIntersected");
     a_map["DeselectIntersected"] = action;
 
-    action = new QAction(tr("(De-)Select Layer"), tools);
+    action = new QAction(tr("(De-)Select Layer"), tool_group);
     action->setIcon(QIcon(":/extui/selectlayer.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectLayer()));
-    action->setData("SelectLayer");
+    action->setObjectName("SelectLayer");
     a_map["SelectLayer"] = action;
 
     // <[~ Draw ~]>
 
-    action = new QAction(tr("&Points"), tools);
+    action = new QAction(tr("&Points"), tool_group);
     action->setIcon(QIcon(":/extui/points.png"));
 
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawPoint()));
-    action->setData("DrawPoint");
+    action->setObjectName("DrawPoint");
     a_map["DrawPoint"] = action;
 
     // <[~ Line ~]>
 
-    action = new QAction(tr("&2 Points"), tools);
+    action = new QAction(tr("&2 Points"), tool_group);
     action->setIcon(QIcon(":/extui/linesnormal.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLine()));
-    action->setData("DrawLine");
+    action->setObjectName("DrawLine");
     a_map["DrawLine"] = action;
 
-    action = new QAction(QIcon(":/extui/linesangle.png"), tr("&Angle"), tools);
+    action = new QAction(QIcon(":/extui/linesangle.png"), tr("&Angle"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineAngle()));
-    action->setData("DrawLineAngle");
+    action->setObjectName("DrawLineAngle");
     a_map["DrawLineAngle"] = action;
 
-    action = new QAction(QIcon(":/extui/lineshor.png"), tr("&Horizontal"), tools);
+    action = new QAction(QIcon(":/extui/lineshor.png"), tr("&Horizontal"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineHorizontal()));
-    action->setData("DrawLineHorizontal");
+    action->setObjectName("DrawLineHorizontal");
     a_map["DrawLineHorizontal"] = action;
 
-    action = new QAction(QIcon(":/extui/linesver.png"), tr("Vertical"), tools);
+    action = new QAction(QIcon(":/extui/linesver.png"), tr("Vertical"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineVertical()));
-    action->setData("DrawLineVertical");
+    action->setObjectName("DrawLineVertical");
     a_map["DrawLineVertical"] = action;
 
-    action = new QAction(tr("Vertical"), tools);
+    action = new QAction(tr("Vertical"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineHorVert()));
-    action->setData("DrawLineHorVert");
+    action->setObjectName("DrawLineHorVert");
     a_map["DrawLineHorVert"] = action;
 
-    action = new QAction(tr("&Freehand Line"), tools);
+    action = new QAction(tr("&Freehand Line"), tool_group);
     action->setIcon(QIcon(":/extui/linesfree.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineFree()));
-    action->setData("DrawLineFree");
+    action->setObjectName("DrawLineFree");
     a_map["DrawLineFree"] = action;
 
-    action = new QAction(tr("&Parallel"), tools);
+    action = new QAction(tr("&Parallel"), tool_group);
     action->setIcon(QIcon(":/extui/linespara.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineParallel()));
-    action->setData("DrawLineParallel");
+    action->setObjectName("DrawLineParallel");
     a_map["DrawLineParallel"] = action;
 
-    action = new QAction(tr("Parallel through point"), tools);
+    action = new QAction(tr("Parallel through point"), tool_group);
     action->setIcon(QIcon(":/extui/linesparathrough.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineParallelThrough()));
-    action->setData("DrawLineParallelThrough");
+    action->setObjectName("DrawLineParallelThrough");
     a_map["DrawLineParallelThrough"] = action;
 
-    action = new QAction(tr("Rectangle"), tools);
+    action = new QAction(tr("Rectangle"), tool_group);
     action->setIcon(QIcon(":/extui/linesrect.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineRectangle()));
-    action->setData("DrawLineRectangle");
+    action->setObjectName("DrawLineRectangle");
     a_map["DrawLineRectangle"] = action;
 
-    action = new QAction(QIcon(":/extui/linesbisector.png"),tr("Bisector"), tools);
+    action = new QAction(QIcon(":/extui/linesbisector.png"),tr("Bisector"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineBisector()));
-    action->setData("DrawLineBisector");
+    action->setObjectName("DrawLineBisector");
     a_map["DrawLineBisector"] = action;
 
-    action = new QAction(QIcon(":/extui/linestan1.png"), tr("Tangent (P,C)"), tools);
+    action = new QAction(QIcon(":/extui/linestan1.png"), tr("Tangent (P,C)"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineTangent1()));
-    action->setData("DrawLineTangent1");
+    action->setObjectName("DrawLineTangent1");
     a_map["DrawLineTangent1"] = action;
 
-    action = new QAction(QIcon(":/extui/linestan2.png"), tr("Tangent (C,C)"), tools);
+    action = new QAction(QIcon(":/extui/linestan2.png"), tr("Tangent (C,C)"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineTangent2()));
-    action->setData("DrawLineTangent2");
+    action->setObjectName("DrawLineTangent2");
     a_map["DrawLineTangent2"] = action;
 
-    action = new QAction(tr("Tangent &Orthogonal"), tools);
+    action = new QAction(tr("Tangent &Orthogonal"), tool_group);
     action->setIcon(QIcon(":/extui/linesorthtan.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineOrthTan()));
-    action->setData("DrawLineOrthTan");
+    action->setObjectName("DrawLineOrthTan");
     a_map["DrawLineOrthTan"] = action;
 
-    action = new QAction(tr("Orthogonal"), tools);
+    action = new QAction(tr("Orthogonal"), tool_group);
     action->setIcon(QIcon(":/extui/linesorthogonal.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineOrthogonal()));
-    action->setData("DrawLineOrthogonal");
+    action->setObjectName("DrawLineOrthogonal");
     a_map["DrawLineOrthogonal"] = action;
 
-    action = new QAction(tr("Relative angle"), tools);
+    action = new QAction(tr("Relative angle"), tool_group);
     action->setIcon(QIcon(":/extui/linesrelativeangle.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLineRelAngle()));
-    action->setData("DrawLineRelAngle");
+    action->setObjectName("DrawLineRelAngle");
     a_map["DrawLineRelAngle"] = action;
 
-    action = new QAction(tr("Pol&ygon (Cen,Cor)"), tools);
+    action = new QAction(tr("Pol&ygon (Cen,Cor)"), tool_group);
     action->setIcon(QIcon(":/extui/linespolygon.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLinePolygon()));
-    action->setData("DrawLinePolygonCenCor");
+    action->setObjectName("DrawLinePolygonCenCor");
     a_map["DrawLinePolygonCenCor"] = action;
 
-    action = new QAction(tr("Polygo&n (Cor,Cor)"), tools);
+    action = new QAction(tr("Polygo&n (Cor,Cor)"), tool_group);
     action->setIcon(QIcon(":/extui/linespolygon2.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawLinePolygon2()));
-    action->setData("DrawLinePolygonCorCor");
+    action->setObjectName("DrawLinePolygonCorCor");
     a_map["DrawLinePolygonCorCor"] = action;
 
     // <[~ Circle ~]>
 
-    action = new QAction(QIcon(":/extui/circles.png"), tr("Center, &Point"), tools);
+    action = new QAction(QIcon(":/extui/circles.png"), tr("Center, &Point"), tool_group);
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawCircle()));
-    action->setData("DrawCircle");
+    action->setObjectName("DrawCircle");
     a_map["DrawCircle"] = action;
 
-    action = new QAction(tr("Center, &Radius"), tools);
+    action = new QAction(tr("Center, &Radius"), tool_group);
     action->setIcon(QIcon(":/extui/circlescr.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleCR()));
-    action->setData("DrawCircleCR");
+    action->setObjectName("DrawCircleCR");
     a_map["DrawCircleCR"] = action;
 
-    action = new QAction(tr("2 Points"), tools);
+    action = new QAction(tr("2 Points"), tool_group);
     action->setIcon(QIcon(":/extui/circles2p.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircle2P()));
-    action->setData("DrawCircle2P");
+    action->setObjectName("DrawCircle2P");
     a_map["DrawCircle2P"] = action;
 
-    action = new QAction(QIcon(":/extui/circle2pr.png"), tr("2 Points, Radius"), tools);
+    action = new QAction(QIcon(":/extui/circle2pr.png"), tr("2 Points, Radius"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircle2PR()));
-    action->setData("DrawCircle2PR");
+    action->setObjectName("DrawCircle2PR");
     a_map["DrawCircle2PR"] = action;
 
-    action = new QAction(QIcon(":/extui/circles3p.png"), tr("3 Points"), tools);
+    action = new QAction(QIcon(":/extui/circles3p.png"), tr("3 Points"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircle3P()));
-    action->setData("DrawCircle3P");
+    action->setObjectName("DrawCircle3P");
     a_map["DrawCircle3P"] = action;
 
-    action = new QAction(tr("&Concentric"), tools);
+    action = new QAction(tr("&Concentric"), tool_group);
     action->setIcon(QIcon(":/extui/circlespara.png"));
     action->setCheckable(true);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleParallel()));
-    action->setData("DrawCircleParallel");
+    action->setObjectName("DrawCircleParallel");
     a_map["DrawCircleParallel"] = action;
 
-    action = new QAction(QIcon(":/extui/circleinscribe.png"), tr("Circle &Inscribed"), tools);
+    action = new QAction(QIcon(":/extui/circleinscribe.png"), tr("Circle &Inscribed"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleInscribe()));
-    action->setData("DrawCircleInscribe");
+    action->setObjectName("DrawCircleInscribe");
     a_map["DrawCircleInscribe"] = action;
 
-    action = new QAction(tr("Tangential 2 Circles, Radius",  "circle tangential with two circles, and given radius"), tools);
+    action = new QAction(tr("Tangential 2 Circles, Radius",  "circle tangential with two circles, and given radius"), tool_group);
     action->setIcon(QIcon(":/extui/circletan2.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleTan2()));
-    action->setData("DrawCircleTan2");
+    action->setObjectName("DrawCircleTan2");
     a_map["DrawCircleTan2"] = action;
 
-    action = new QAction(tr("Tangential 2 Circles, 1 Point"), tools);
+    action = new QAction(tr("Tangential 2 Circles, 1 Point"), tool_group);
     action->setIcon(QIcon(":/extui/circletan2_1p.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleTan2_1P()));
-    action->setData("DrawCircleTan2_1P");
+    action->setObjectName("DrawCircleTan2_1P");
     a_map["DrawCircleTan2_1P"] = action;
 
-    action = new QAction(tr("Tangential &3 Circles"), tools);
+    action = new QAction(tr("Tangential &3 Circles"), tool_group);
     action->setIcon(QIcon(":/extui/circletan3.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleTan3()));
-    action->setData("DrawCircleTan3");
+    action->setObjectName("DrawCircleTan3");
     a_map["DrawCircleTan3"] = action;
 
-    action = new QAction(tr("Tangential, 2 P&oints"), tools);
+    action = new QAction(tr("Tangential, 2 P&oints"), tool_group);
     action->setIcon(QIcon(":/extui/circletan1_2p.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawCircleTan1_2P()));
-    action->setData("DrawCircleTan1_2P");
+    action->setObjectName("DrawCircleTan1_2P");
     a_map["DrawCircleTan1_2P"] = action;
 
     // <[~ Arc ~]>
 
-    action = new QAction(tr("&Center, Point, Angles"), tools);
+    action = new QAction(tr("&Center, Point, Angles"), tool_group);
     action->setIcon(QIcon(":/extui/arcscraa.png"));
     action->setCheckable(true);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawArc()));
-    action->setData("DrawArc");
+    action->setObjectName("DrawArc");
     a_map["DrawArc"] = action;
 
-    action = new QAction(tr("&3 Points"), tools);
+    action = new QAction(tr("&3 Points"), tool_group);
     action->setIcon(QIcon(":/extui/arcs3p.png"));
     action->setCheckable(true);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawArc3P()));
-    action->setData("DrawArc3P");
+    action->setObjectName("DrawArc3P");
     a_map["DrawArc3P"] = action;
 
-    action = new QAction(tr("&Concentric"), tools);
+    action = new QAction(tr("&Concentric"), tool_group);
     action->setIcon(QIcon(":/extui/arcspara.png"));
     action->setCheckable(true);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawArcParallel()));
-    action->setData("DrawArcParallel");
+    action->setObjectName("DrawArcParallel");
     a_map["DrawArcParallel"] = action;
 
-    action = new QAction(QIcon(":/extui/arcstangential.png"), tr("Arc &Tangential"), tools);
+    action = new QAction(QIcon(":/extui/arcstangential.png"), tr("Arc &Tangential"), tool_group);
     action->setCheckable(true);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawArcTangential()));
-    action->setData("DrawArcTangential");
+    action->setObjectName("DrawArcTangential");
     a_map["DrawArcTangential"] = action;
 
     // <[~ Ellipse ~]>
 
-    action = new QAction(QIcon(":/extui/ellipsesaxes.png"), tr("&Ellipse (Axis)"), tools);
+    action = new QAction(QIcon(":/extui/ellipsesaxes.png"), tr("&Ellipse (Axis)"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipseAxis()));
-    action->setData("DrawEllipseAxis");
+    action->setObjectName("DrawEllipseAxis");
     a_map["DrawEllipseAxis"] = action;
 
-    action = new QAction(QIcon(":/extui/ellipsearcsaxes.png"), tr("Ellipse &Arc (Axis)"), tools);
+    action = new QAction(QIcon(":/extui/ellipsearcsaxes.png"), tr("Ellipse &Arc (Axis)"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipseArcAxis()));
-    action->setData("DrawEllipseArcAxis");
+    action->setObjectName("DrawEllipseArcAxis");
     a_map["DrawEllipseArcAxis"] = action;
 
-    action = new QAction(QIcon(":/extui/ellipsefocipoint.png"), tr("Ellipse &Foci Point"), tools);
+    action = new QAction(QIcon(":/extui/ellipsefocipoint.png"), tr("Ellipse &Foci Point"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipseFociPoint()));
-    action->setData("DrawEllipseFociPoint");
+    action->setObjectName("DrawEllipseFociPoint");
     a_map["DrawEllipseFociPoint"] = action;
 
-    action = new QAction(tr("Ellipse &4 Point"), tools);
+    action = new QAction(tr("Ellipse &4 Point"), tool_group);
     action->setIcon(QIcon(":/extui/ellipse4points.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipse4Points()));
-    action->setData("DrawEllipse4Points");
+    action->setObjectName("DrawEllipse4Points");
     a_map["DrawEllipse4Points"] = action;
 
-    action = new QAction(QIcon(":/extui/ellipsecenter3points.png"), tr("Ellipse Center and &3 Points"), tools);
+    action = new QAction(QIcon(":/extui/ellipsecenter3points.png"), tr("Ellipse Center and &3 Points"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipseCenter3Points()));
-    action->setData("DrawEllipseCenter3Points");
+    action->setObjectName("DrawEllipseCenter3Points");
     a_map["DrawEllipseCenter3Points"] = action;
 
-    action = new QAction(QIcon(":/extui/ellipseinscribed.png"), tr("Ellipse &Inscribed"), tools);
+    action = new QAction(QIcon(":/extui/ellipseinscribed.png"), tr("Ellipse &Inscribed"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawEllipseInscribe()));
-    action->setData("DrawEllipseInscribe");
+    action->setObjectName("DrawEllipseInscribe");
     a_map["DrawEllipseInscribe"] = action;
 
     // <[~ Spline ~]>
 
-    action = new QAction(QIcon(":/extui/menuspline.png"), tr("&Spline"), tools);
+    action = new QAction(QIcon(":/extui/menuspline.png"), tr("&Spline"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawSpline()));
-    action->setData("DrawSpline");
+    action->setObjectName("DrawSpline");
     a_map["DrawSpline"] = action;
 
-    action = new QAction(QIcon(":/extui/menusplinepoints.png"), tr("&Spline through points"), tools);
+    action = new QAction(QIcon(":/extui/menusplinepoints.png"), tr("&Spline through points"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawSplinePoints()));
-    action->setData("DrawSplinePoints");
+    action->setObjectName("DrawSplinePoints");
     a_map["DrawSplinePoints"] = action;
 
     // <[~ Polyline ~]>
 
-    action = new QAction(QIcon(":/extui/polyline.png"), tr("&Polyline"), tools);
+    action = new QAction(QIcon(":/extui/polyline.png"), tr("&Polyline"), tool_group);
     action->setStatusTip(tr("Draw polylines"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawPolyline()));
-    action->setData("DrawPolyline");
+    action->setObjectName("DrawPolyline");
     a_map["DrawPolyline"] = action;
 
-    action = new QAction(tr("&Add node"), tools);
+    action = new QAction(tr("&Add node"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylineadd.png"));
     action->setStatusTip(tr("Add polyline's node"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineAdd()));
-    action->setData("PolylineAdd");
+    action->setObjectName("PolylineAdd");
     a_map["PolylineAdd"] = action;
 
-    action = new QAction(tr("A&ppend node"), tools);
+    action = new QAction(tr("A&ppend node"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylineappend.png"));
     action->setStatusTip(tr("Append polyline's node"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineAppend()));
-    action->setData("PolylineAppend");
+    action->setObjectName("PolylineAppend");
     a_map["PolylineAppend"] = action;
 
-    action = new QAction(tr("&Delete node"), tools);
+    action = new QAction(tr("&Delete node"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylinedel.png"));
     action->setStatusTip(tr("Delete polyline's node"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineDel()));
-    action->setData("PolylineDel");
+    action->setObjectName("PolylineDel");
     a_map["PolylineDel"] = action;
 
-    action = new QAction(tr("Delete &between two nodes"), tools);
+    action = new QAction(tr("Delete &between two nodes"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylinedelbetween.png"));
     action->setStatusTip(tr("Delete between two nodes"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineDelBetween()));
-    action->setData("PolylineDelBetween");
+    action->setObjectName("PolylineDelBetween");
     a_map["PolylineDelBetween"] = action;
 
-    action = new QAction(tr("&Trim segments"), tools);
+    action = new QAction(tr("&Trim segments"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylinetrim.png"));
     action->setStatusTip(tr("Trim polyline's segments"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineTrim()));
-    action->setData("PolylineTrim");
+    action->setObjectName("PolylineTrim");
     a_map["PolylineTrim"] = action;
 
-    action = new QAction(QIcon(":/extui/polylineequidstant.png"), tr("Create &Equidistant Polylines"), tools);
+    action = new QAction(QIcon(":/extui/polylineequidstant.png"), tr("Create &Equidistant Polylines"), tool_group);
     action->setStatusTip(tr("Create Equidistant Polylines"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineEquidistant()));
-    action->setData("PolylineEquidistant");
+    action->setObjectName("PolylineEquidistant");
     a_map["PolylineEquidistant"] = action;
 
-    action = new QAction(tr("Create Polyline from Existing &Segments"), tools);
+    action = new QAction(tr("Create Polyline from Existing &Segments"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylinesegment.png"));
     action->setStatusTip(tr("Create Polyline from Existing Segments"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineSegment()));
-    action->setData("PolylineSegment");
+    action->setObjectName("PolylineSegment");
     a_map["PolylineSegment"] = action;
 
     // <[~ Misc ~]>
 
-    action = new QAction(QIcon(":/extui/menutext.png"), tr("&MText"), tools);
+    action = new QAction(QIcon(":/extui/menutext.png"), tr("&MText"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawMText()));
-    action->setData("DrawMText");
+    action->setObjectName("DrawMText");
     a_map["DrawMText"] = action;
 
-    action = new QAction(tr("&Text"), tools);
+    action = new QAction(tr("&Text"), tool_group);
     action->setIcon(QIcon(":/extui/menutext.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawText()));
-    action->setData("DrawText");
+    action->setObjectName("DrawText");
     a_map["DrawText"] = action;
 
-    action = new QAction(QIcon(":/extui/menuhatch.png"), tr("&Hatch"), tools);
+    action = new QAction(QIcon(":/extui/menuhatch.png"), tr("&Hatch"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawHatch()));
-    action->setData("DrawHatch");
+    action->setObjectName("DrawHatch");
     a_map["DrawHatch"] = action;
 
-    action = new QAction(QIcon(":/extui/menuimage.png"), tr("Insert &Image"), tools);
+    action = new QAction(QIcon(":/extui/menuimage.png"), tr("Insert &Image"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawImage()));
-    action->setData("DrawImage");
+    action->setObjectName("DrawImage");
     a_map["DrawImage"] = action;
 
     // <[~ Dimension ~]>
 
-    action = new QAction(tr("&Aligned"), tools);
+    action = new QAction(tr("&Aligned"), tool_group);
     action->setIcon(QIcon(":/extui/dimaligned.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimAligned()));
-    action->setData("DimAligned");
+    action->setObjectName("DimAligned");
     a_map["DimAligned"] = action;
 
-    action = new QAction(tr("&Linear"), tools);
+    action = new QAction(tr("&Linear"), tool_group);
     action->setIcon(QIcon(":/extui/dimlinear.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLinear()));
-    action->setData("DimLinear");
+    action->setObjectName("DimLinear");
     a_map["DimLinear"] = action;
 
-    action = new QAction(tr("&Horizontal"), tools);
+    action = new QAction(tr("&Horizontal"), tool_group);
     action->setIcon(QIcon(":/extui/dimhor.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLinearHor()));
-    action->setData("DimLinearHor");
+    action->setObjectName("DimLinearHor");
     a_map["DimLinearHor"] = action;
 
-    action = new QAction(tr("&Vertical"), tools);
+    action = new QAction(tr("&Vertical"), tool_group);
     action->setIcon(QIcon(":/extui/dimver.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLinearVer()));
-    action->setData("DimLinearVer");
+    action->setObjectName("DimLinearVer");
     a_map["DimLinearVer"] = action;
 
-    action = new QAction(tr("&Radial"), tools);
+    action = new QAction(tr("&Radial"), tool_group);
     action->setIcon(QIcon(":/extui/dimradial.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimRadial()));
-    action->setData("DimRadial");
+    action->setObjectName("DimRadial");
     a_map["DimRadial"] = action;
 
-    action = new QAction(tr("&Diametric"), tools);
+    action = new QAction(tr("&Diametric"), tool_group);
     action->setIcon(QIcon(":/extui/dimdiametric.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimDiametric()));
-    action->setData("DimDiametric");
+    action->setObjectName("DimDiametric");
     a_map["DimDiametric"] = action;
 
-    action = new QAction(QIcon(":/extui/dimangular.png"), tr("&Angular"), tools);
+    action = new QAction(QIcon(":/extui/dimangular.png"), tr("&Angular"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimAngular()));
-    action->setData("DimAngular");
+    action->setObjectName("DimAngular");
     a_map["DimAngular"] = action;
 
-    action = new QAction(QIcon(":/extui/dimleader.png"), tr("&Leader"), tools);
+    action = new QAction(QIcon(":/extui/dimleader.png"), tr("&Leader"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDimLeader()));
-    action->setData("DimLeader");
+    action->setObjectName("DimLeader");
     a_map["DimLeader"] = action;
 
     // <[~ Modify ~]>
 
-    action = new QAction(tr("&Attributes"), tools);
+    action = new QAction(tr("&Attributes"), tool_group);
     action->setIcon(QIcon(":/extui/modifyattributes.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyAttributes()));
-    action->setData("ModifyAttributes");
+    action->setObjectName("ModifyAttributes");
     a_map["ModifyAttributes"] = action;
 
-    action = new QAction(QIcon(":/extui/modifydelete.png"), tr("&Delete"), tools);
+    action = new QAction(QIcon(":/extui/modifydelete.png"), tr("&Delete"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyDelete()));
-    action->setData("ModifyDelete");
+    action->setObjectName("ModifyDelete");
     a_map["ModifyDelete"] = action;
 
-    action = new QAction(tr("Delete Freehand"), tools);
+    action = new QAction(tr("Delete Freehand"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyDeleteFree()));
-    action->setData("ModifyDeleteFree");
+    action->setObjectName("ModifyDeleteFree");
     a_map["ModifyDeleteFree"] = action;
 
-    action = new QAction(QIcon(":/extui/modifymove.png"), tr("&Move / Copy"), tools);
+    action = new QAction(QIcon(":/extui/modifymove.png"), tr("&Move / Copy"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyMove()));
-    action->setData("ModifyMove");
+    action->setObjectName("ModifyMove");
     a_map["ModifyMove"] = action;
 
-    action = new QAction(tr("Re&vert direction"), tools);
+    action = new QAction(tr("Re&vert direction"), tool_group);
     action->setIcon(QIcon(":/extui/reverse.png"));
     action->setShortcut(QKeySequence(tr("Ctrl+R")));
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotModifyRevertDirection()));
-    action->setData("ModifyRevertDirection");
+    action->setObjectName("ModifyRevertDirection");
     a_map["ModifyRevertDirection"] = action;
 
-    action = new QAction(QIcon(":/extui/modifyrotate.png"), tr("&Rotate"), tools);
+    action = new QAction(QIcon(":/extui/modifyrotate.png"), tr("&Rotate"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyRotate()));
-    action->setData("ModifyRotate");
+    action->setObjectName("ModifyRotate");
     a_map["ModifyRotate"] = action;
 
-    action = new QAction(QIcon(":/extui/modifyscale.png"), tr("&Scale"), tools);
+    action = new QAction(QIcon(":/extui/modifyscale.png"), tr("&Scale"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyScale()));
-    action->setData("ModifyScale");
+    action->setObjectName("ModifyScale");
     a_map["ModifyScale"] = action;
 
-    action = new QAction(QIcon(":/extui/modifymirror.png"), tr("&Mirror"), tools);
+    action = new QAction(QIcon(":/extui/modifymirror.png"), tr("&Mirror"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyMirror()));
-    action->setData("ModifyMirror");
+    action->setObjectName("ModifyMirror");
     a_map["ModifyMirror"] = action;
 
-    action = new QAction(QIcon(":/extui/modifymoverotate.png"), tr("M&ove and Rotate"), tools);
+    action = new QAction(QIcon(":/extui/modifymoverotate.png"), tr("M&ove and Rotate"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyMoveRotate()));
-    action->setData("ModifyMoveRotate");
+    action->setObjectName("ModifyMoveRotate");
     a_map["ModifyMoveRotate"] = action;
 
-    action = new QAction(QIcon(":/extui/modifyrotate2.png"), tr("Rotate T&wo"), tools);
+    action = new QAction(QIcon(":/extui/modifyrotate2.png"), tr("Rotate T&wo"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyRotate2()));
-    action->setData("ModifyRotate2");
+    action->setObjectName("ModifyRotate2");
     a_map["ModifyRotate2"] = action;
 
-    action = new QAction(tr("&Properties"), tools);
+    action = new QAction(tr("&Properties"), tool_group);
     action->setIcon(QIcon(":/extui/modifyentity.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyEntity()));
-    action->setData("ModifyEntity");
+    action->setObjectName("ModifyEntity");
     a_map["ModifyEntity"] = action;
 
-    action = new QAction(tr("&Trim"), tools);
+    action = new QAction(tr("&Trim"), tool_group);
     action->setIcon(QIcon(":/extui/modifytrim.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyTrim()));
-    action->setData("ModifyTrim");
+    action->setObjectName("ModifyTrim");
     a_map["ModifyTrim"] = action;
 
-    action = new QAction(tr("&Trim Two"), tools);
+    action = new QAction(tr("&Trim Two"), tool_group);
     action->setIcon(QIcon(":/extui/modifytrim2.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyTrim2()));
-    action->setData("ModifyTrim2");
+    action->setObjectName("ModifyTrim2");
     a_map["ModifyTrim2"] = action;
 
-    action = new QAction(tr("&Lengthen"), tools);
+    action = new QAction(tr("&Lengthen"), tool_group);
     action->setIcon(QIcon(":/extui/modifytrimamount.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyTrimAmount()));
-    action->setData("ModifyTrimAmount");
+    action->setObjectName("ModifyTrimAmount");
     a_map["ModifyTrimAmount"] = action;
 
-    action = new QAction(QIcon(":/extui/arcspara.png"), tr("&Offset"),tools);
+    action = new QAction(QIcon(":/extui/arcspara.png"), tr("&Offset"),tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyOffset()));
-    action->setData("ModifyOffset");
+    action->setObjectName("ModifyOffset");
     a_map["ModifyOffset"] = action;
 
-    action = new QAction(tr("&Divide"), tools);
+    action = new QAction(tr("&Divide"), tool_group);
     action->setIcon(QIcon(":/extui/modifycut.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyCut()));
-    action->setData("ModifyCut");
+    action->setObjectName("ModifyCut");
     a_map["ModifyCut"] = action;
 
-    action = new QAction(QIcon(":/extui/modifystretch.png"), tr("&Stretch"), tools);
+    action = new QAction(QIcon(":/extui/modifystretch.png"), tr("&Stretch"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyStretch()));
-    action->setData("ModifyStretch");
+    action->setObjectName("ModifyStretch");
     a_map["ModifyStretch"] = action;
 
-    action = new QAction(QIcon(":/extui/modifybevel.png"), tr("&Bevel"), tools);
+    action = new QAction(tr("&Bevel"), tool_group);
+    action->setIcon(QIcon(":/tools/bevel.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyBevel()));
-    action->setData("ModifyBevel");
+    action->setObjectName("ModifyBevel");
     a_map["ModifyBevel"] = action;
 
-    action = new QAction(QIcon(":/extui/modifyround.png"), tr("&Fillet"), tools);
+    action = new QAction(QIcon(":/extui/modifyround.png"), tr("&Fillet"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyRound()));
-    action->setData("ModifyRound");
+    action->setObjectName("ModifyRound");
     a_map["ModifyRound"] = action;
 
-    action = new QAction(tr("&Explode Text into Letters"), tools);
+    action = new QAction(tr("&Explode Text into Letters"), tool_group);
     action->setIcon(QIcon(":/extui/modifyexplodetext.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyExplodeText()));
-    action->setData("ModifyExplodeText");
+    action->setObjectName("ModifyExplodeText");
     a_map["ModifyExplodeText"] = action;
+
+    action = new QAction(tr("Ex&plode"), tool_group);
+    action->setIcon(QIcon(":/extui/modifyexplode.png"));
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotBlocksExplode()));
+    action->setObjectName("BlocksExplode");
+    a_map["BlocksExplode"] = action;
 
     // <[~ Info ~]>
 
-    action = new QAction(tr("Point inside contour"), tools);
+    action = new QAction(tr("Point inside contour"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoInside()));
-    action->setData("InfoInside");
+    action->setObjectName("InfoInside");
     a_map["InfoInside"] = action;
 
-    action = new QAction(QIcon(":/extui/restricthorizontal.png"), tr("&Distance Point to Point"), tools);
+    action = new QAction(tr("&Distance Point to Point"), tool_group);
+    action->setIcon(QIcon(":/tools/distance_point_to_point.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoDist()));
-    action->setData("InfoDist");
+    action->setObjectName("InfoDist");
     a_map["InfoDist"] = action;
 
-    action = new QAction(QIcon(":/extui/infodist2.png"), tr("&Distance Entity to Point"), tools);
+    action = new QAction(QIcon(":/extui/infodist2.png"), tr("&Distance Entity to Point"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoDist2()));
-    action->setData("InfoDist2");
+    action->setObjectName("InfoDist2");
     a_map["InfoDist2"] = action;
 
-    action = new QAction(QIcon(":/extui/infoangle.png"), tr("An&gle between two lines"), tools);
+    action = new QAction(QIcon(":/extui/infoangle.png"), tr("An&gle between two lines"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoAngle()));
-    action->setData("InfoAngle");
+    action->setObjectName("InfoAngle");
     a_map["InfoAngle"] = action;
 
-    action = new QAction(QIcon(":/extui/infototallength.png"), tr("&Total length of selected entities"), tools);
+    action = new QAction(QIcon(":/extui/infototallength.png"), tr("&Total length of selected entities"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoTotalLength()));
-    action->setData("InfoTotalLength");
+    action->setObjectName("InfoTotalLength");
     a_map["InfoTotalLength"] = action;
 
-    action = new QAction(tr("Polygonal &Area"), tools);
+    action = new QAction(tr("Polygonal &Area"), tool_group);
     action->setIcon(QIcon(":/extui/infoarea.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoArea()));
-    action->setData("InfoArea");
+    action->setObjectName("InfoArea");
     a_map["InfoArea"] = action;
 
     foreach (QAction* value, a_map)
@@ -729,7 +751,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
 
     // <[~ Edit ~]>
 
-    action = new QAction(tr("&Selection pointer"), main_window);
+    action = new QAction(tr("&Selection pointer"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("go-previous-view", QIcon(":/actions/back.png")));
     #else
@@ -737,10 +759,10 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     #endif
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditKillAllActions()));
-    action->setData("EditKillAllActions");
+    action->setObjectName("EditKillAllActions");
     a_map["EditKillAllActions"] = action;
 
-    action = new QAction(tr("&Undo"), main_window);
+    action = new QAction(tr("&Undo"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("edit-undo", QIcon(":/actions/undo2.png")));
     #else
@@ -749,10 +771,10 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setShortcut(QKeySequence::Undo);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditUndo()));
-    action->setData("EditUndo");
+    action->setObjectName("EditUndo");
     a_map["EditUndo"] = action;
 
-    action = new QAction(tr("&Redo"), main_window);
+    action = new QAction(tr("&Redo"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("edit-redo", QIcon(":/actions/redo2.png")));
     #else
@@ -761,10 +783,10 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setShortcut(QKeySequence::Redo);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditRedo()));
-    action->setData("EditRedo");
+    action->setObjectName("EditRedo");
     a_map["EditRedo"] = action;
 
-    action = new QAction(tr("Cu&t"), main_window);
+    action = new QAction(tr("Cu&t"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("edit-cut", QIcon(":/actions/editcut2.png")));
     #else
@@ -773,10 +795,10 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setShortcut(QKeySequence::Cut);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditCut()));
-    action->setData("EditCut");
+    action->setObjectName("EditCut");
     a_map["EditCut"] = action;
 
-    action = new QAction(tr("&Copy"), main_window);
+    action = new QAction(tr("&Copy"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("edit-copy", QIcon(":/actions/editcopy2.png")));
     #else
@@ -785,10 +807,10 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setShortcut(QKeySequence::Copy);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditCopy()));
-    action->setData("EditCopy");
+    action->setObjectName("EditCopy");
     a_map["EditCopy"] = action;
 
-    action = new QAction(tr("&Paste"), main_window);
+    action = new QAction(tr("&Paste"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("edit-paste", QIcon(":/actions/editpaste2.png")));
     #else
@@ -797,182 +819,181 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setShortcut(QKeySequence::Paste);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotEditPaste()));
-    action->setData("EditPaste");
+    action->setObjectName("EditPaste");
     a_map["EditPaste"] = action;
 
-    action = new QAction(tr("move to bottom"), action_handler);
+    action = new QAction(tr("move to bottom"), disable_group);
     action->setShortcut(QKeySequence(Qt::Key_End));
     action->setIcon(QIcon(":/extui/order_bottom.png"));
-    action->setStatusTip(tr("set to bottom"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotOrderBottom()));
-    action->setData("OrderBottom");
+    action->setObjectName("OrderBottom");
     a_map["OrderBottom"] = action;
 
-    action = new QAction(tr("lower after entity"), action_handler);
+    action = new QAction(tr("lower after entity"), disable_group);
     action->setShortcut(QKeySequence(Qt::Key_PageDown));
     action->setIcon(QIcon(":/extui/order_lower.png"));
-    action->setStatusTip(tr("lower over entity"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotOrderLower()));
-    action->setData("OrderLower");
+    action->setObjectName("OrderLower");
     a_map["OrderLower"] = action;
 
-    action = new QAction(tr("raise over entity"), action_handler);
+    action = new QAction(tr("raise over entity"), disable_group);
     action->setShortcut(QKeySequence(Qt::Key_PageUp));
     action->setIcon(QIcon(":/extui/order_raise.png"));
-    action->setStatusTip(tr("raise over entity"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotOrderRaise()));
-    action->setData("OrderRaise");
+    action->setObjectName("OrderRaise");
     a_map["OrderRaise"] = action;
 
-    action = new QAction(tr("move to top"), action_handler);
+    action = new QAction(tr("move to top"), disable_group);
     action->setShortcut(QKeySequence(Qt::Key_Home));
     action->setIcon(QIcon(":/extui/order_top.png"));
-    action->setStatusTip(tr("set to top"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotOrderTop()));
-    action->setData("OrderTop");
+    action->setObjectName("OrderTop");
     a_map["OrderTop"] = action;
 
     // <[~ Layer ~]>
 
-    action = new QAction(QIcon(":/ui/visibleblock.png"), tr("&Show all"), action_handler);
+    action = new QAction(QIcon(":/ui/visibleblock.png"),
+                         tr("&Show all"), disable_group);
     connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotLayersDefreezeAll()));
-    action->setData("LayersDefreezeAll");
+            action_handler, SLOT(slotLayersDefreezeAll()));
+    action->setObjectName("LayersDefreezeAll");
     a_map["LayersDefreezeAll"] = action;
 
-    action = new QAction(QIcon(":/ui/hiddenblock.png"), tr("&Hide all"), action_handler);
+    action = new QAction(QIcon(":/ui/hiddenblock.png"),
+                         tr("&Hide all"), disable_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersFreezeAll()));
-    action->setData("LayersFreezeAll");
+    action->setObjectName("LayersFreezeAll");
     a_map["LayersFreezeAll"] = action;
 
-    action = new QAction(QIcon(":/ui/layeradd.png"), tr("&Add Layer"), action_handler);
+    action = new QAction(QIcon(":/ui/layeradd.png"),
+                         tr("&Add Layer"), disable_group);
     action->setShortcut(QKeySequence("Ctrl+L"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersAdd()));
-    action->setData("LayersAdd");
+    action->setObjectName("LayersAdd");
     a_map["LayersAdd"] = action;
 
-    action = new QAction(QIcon(":/ui/layerremove.png"), tr("&Remove Layer"), action_handler);
+    action = new QAction(QIcon(":/ui/layerremove.png"),
+                         tr("&Remove Layer"), disable_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersRemove()));
-    action->setData("LayersRemove");
+    action->setObjectName("LayersRemove");
     a_map["LayersRemove"] = action;
 
-    action = new QAction(QIcon(":/ui/layeredit.png"), tr("&Edit Layer"), action_handler);
+    action = new QAction(QIcon(":/ui/layeredit.png"),
+                         tr("&Edit Layer"), disable_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersEdit()));
-    action->setData("LayersEdit");
+    action->setObjectName("LayersEdit");
     a_map["LayersEdit"] = action;
 
-    action = new QAction(QIcon(":/ui/lockedlayer.png"), tr("Toggle Layer Loc&k"), action_handler);
+    action = new QAction(QIcon(":/ui/lockedlayer.png"),
+                         tr("Toggle Layer Loc&k"), disable_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersToggleLock()));
-    action->setData("LayersToggleLock");
+    action->setObjectName("LayersToggleLock");
     a_map["LayersToggleLock"] = action;
 
-    action = new QAction(tr("&Toggle Layer Visibility"), action_handler);
+    action = new QAction(tr("&Toggle Layer Visibility"), disable_group);
     action->setIcon(QIcon(":/ui/layertoggle.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersToggleView()));
-    action->setData("LayersToggleView");
+    action->setObjectName("LayersToggleView");
     a_map["LayersToggleView"] = action;
 
-    action = new QAction(tr("Toggle Layer &Print"), action_handler);
+    action = new QAction(tr("Toggle Layer &Print"), disable_group);
     action->setIcon(QIcon(":/ui/fileprint.png"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotLayersTogglePrint()));
-    action->setData("LayersTogglePrint");
+    connect(action, SIGNAL(triggered()), action_handler,
+            SLOT(slotLayersTogglePrint()));
+    action->setObjectName("LayersTogglePrint");
     a_map["LayersTogglePrint"] = action;
 
-    action = new QAction(tr("Toggle &Construction Layer"), action_handler);
+    action = new QAction(tr("Toggle &Construction Layer"), disable_group);
     action->setIcon(QIcon(":/ui/constructionlayer.png"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotLayersToggleConstruction()));
-    action->setData("LayersToggleConstruction");
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotLayersToggleConstruction()));
+    action->setObjectName("LayersToggleConstruction");
     a_map["LayersToggleConstruction"] = action;
 
     // <[~ Block ~]>
 
-    action = new QAction(tr("&Show all"), action_handler);
+    action = new QAction(tr("&Show all"), disable_group);
     action->setIcon(QIcon(":/ui/blockdefreeze.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksDefreezeAll()));
-    action->setData("BlocksDefreezeAll");
+    action->setObjectName("BlocksDefreezeAll");
     a_map["BlocksDefreezeAll"] = action;
 
-    action= new QAction(tr("&Hide all"), action_handler);
+    action= new QAction(tr("&Hide all"), disable_group);
     action->setIcon(QIcon(":/ui/blockfreeze.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksFreezeAll()));
-    action->setData("BlocksFreezeAll");
+    action->setObjectName("BlocksFreezeAll");
     a_map["BlocksFreezeAll"] = action;
 
-    action = new QAction(QIcon(":/ui/blockadd.png"), tr("&Add Block"), action_handler);
+    action = new QAction(QIcon(":/ui/blockadd.png"),
+                         tr("&Add Block"), disable_group);
 
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksAdd()));
-    action->setData("BlocksAdd");
+    action->setObjectName("BlocksAdd");
     a_map["BlocksAdd"] = action;
 
-    action = new QAction(tr("&Remove Block"), action_handler);
+    action = new QAction(tr("&Remove Block"), disable_group);
     action->setIcon(QIcon(":/ui/blockremove.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksRemove()));
-    action->setData("BlocksRemove");
+    action->setObjectName("BlocksRemove");
     a_map["BlocksRemove"] = action;
 
-    action = new QAction(tr("&Rename Block"), action_handler);
+    action = new QAction(tr("&Rename Block"), disable_group);
     action->setIcon(QIcon(":/ui/blockattributes.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksAttributes()));
-    action->setData("BlocksAttributes");
+    action->setObjectName("BlocksAttributes");
     a_map["BlocksAttributes"] = action;
 
-    action = new QAction( tr("&Edit Block"), action_handler);
+    action = new QAction( tr("&Edit Block"), disable_group);
     action->setIcon(QIcon(":/ui/blockedit.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksEdit()));
-    action->setData("BlocksEdit");
+    action->setObjectName("BlocksEdit");
     a_map["BlocksEdit"] = action;
 
-    action = new QAction( tr("&Save Block"), action_handler);
+    action = new QAction( tr("&Save Block"), disable_group);
     action->setIcon(QIcon(":/main/filesave.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksSave()));
-    action->setData("BlocksSave");
+    action->setObjectName("BlocksSave");
     a_map["BlocksSave"] = action;
 
-    action = new QAction(tr("&Insert Block"), action_handler);
+    action = new QAction(tr("&Insert Block"), disable_group);
     action->setIcon(QIcon(":/ui/blockinsert.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksInsert()));
-    action->setData("BlocksInsert");
+    action->setObjectName("BlocksInsert");
     a_map["BlocksInsert"] = action;
 
-    action = new QAction(QIcon(":/ui/layertoggle.png"), tr("Toggle Block &Visibility"), action_handler);
+    action = new QAction(tr("Toggle Block &Visibility"), disable_group);
+    action->setIcon(QIcon(":/ui/layertoggle.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksToggleView()));
-    action->setData("BlocksToggleView");
+    action->setObjectName("BlocksToggleView");
     a_map["BlocksToggleView"] = action;
 
-    action = new QAction(QIcon(":/extui/menublock.png"), tr("&Create Block"), action_handler);
-
+    action = new QAction(tr("&Create Block"), disable_group);
+    action->setIcon(QIcon(":/extui/menublock.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksCreate()));
-    action->setData("BlocksCreate");
+    action->setObjectName("BlocksCreate");
     a_map["BlocksCreate"] = action;
 
-    action = new QAction(tr("Ex&plode"), action_handler);
-    action->setIcon(QIcon(":/extui/modifyexplode.png"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotBlocksExplode()));
-    action->setData("BlocksExplode");
-    a_map["BlocksExplode"] = action;
-
-    // <[~ Option ~]>
+    // <[~ Options ~]>
 
     action = new QAction(QIcon(":/actions/configure.png"),
     #ifdef __APPLE__
@@ -984,82 +1005,76 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
 
     connect(action, SIGNAL(triggered()),
     main_window, SLOT(slotOptionsGeneral()));
-    action->setData("OptionsGeneral");
+    action->setObjectName("OptionsGeneral");
     a_map["OptionsGeneral"] = action;
 
-    action = new QAction( QIcon(":/actions/drawingprefs.png"), tr("Current &Drawing Preferences"), action_handler);
+    action = new QAction( QIcon(":/actions/drawingprefs.png"), tr("Current &Drawing Preferences"), disable_group);
     // Preferences shortcut was itroduced on 4.6
     #if QT_VERSION >= 0x040600
     action->setShortcut(QKeySequence::Preferences);
     #endif
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotOptionsDrawing()));
-    action->setData("OptionsDrawing");
+    action->setObjectName("OptionsDrawing");
     a_map["OptionsDrawing"] = action;
 
-    action = new QAction(tr("Open IDE"), main_window);
+    action = new QAction(tr("Widget Options"), disable_group);
+    action->setObjectName("WidgetOptions");
+    a_map["WidgetOptions"] = action;
     connect(action, SIGNAL(triggered()),
-    main_window, SLOT(slotScriptOpenIDE()));
-    action->setData("ScriptOpenIDE");
-    a_map["ScriptOpenIDE"] = action;
-
-    action = new QAction(tr("Run Script.."), main_window);
-    connect(action, SIGNAL(triggered()),
-    main_window, SLOT(slotScriptRun()));
-    action->setData("ScriptRun");
-    a_map["ScriptRun"] = action;
+            main_window, SLOT(widgetOptionsDialog()));
 
     // <[~ Modify ~]>
 
-    action = new QAction(tr("&Delete selected"), main_window);
+    action = new QAction(tr("&Delete selected"), disable_group);
     action->setIcon(QIcon(":/extui/modifydelete.png"));
     action->setShortcut(QKeySequence::Delete);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyDeleteQuick()));
-    action->setData("ModifyDeleteQuick");
+    action->setObjectName("ModifyDeleteQuick");
     a_map["ModifyDeleteQuick"] = action;
 
-    action = new QAction(tr("Select &All"), main_window);
+    action = new QAction(tr("Select &All"), disable_group);
     action->setShortcut(QKeySequence::SelectAll);
     action->setIcon(QIcon(":/extui/selectall.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectAll()));
-    action->setData("SelectAll");
+    action->setObjectName("SelectAll");
     a_map["SelectAll"] = action;
 
     // <[~ Select ~]>
 
-    action = new QAction(tr("Deselect &all"), main_window);
+    action = new QAction(tr("Deselect &all"), disable_group);
     // RVT April 29, 2011 - Added esc key to de-select all entities
     action->setShortcuts(QList<QKeySequence>() << QKeySequence(tr("Ctrl+K")));
     action->setIcon(QIcon(":/extui/selectnothing.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDeselectAll()));
-    action->setData("DeselectAll");
+    action->setObjectName("DeselectAll");
     a_map["DeselectAll"] = action;
 
-    action = new QAction(tr("Invert Selection"), action_handler);
+    action = new QAction(tr("Invert Selection"), disable_group);
     action->setIcon(QIcon(":/extui/selectinvert.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotSelectInvert()));
-    action->setData("SelectInvert");
+    action->setObjectName("SelectInvert");
     a_map["SelectInvert"] = action;
 
     // <[~ Misc ~]>
 
-    action = new QAction(tr("Export as &MakerCAM SVG..."), main_window);
+    action = new QAction(tr("Export as &MakerCAM SVG..."), disable_group);
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotFileExportMakerCam()));
-    action->setData("FileExportMakerCam");
+    action->setObjectName("FileExportMakerCam");
     a_map["FileExportMakerCam"] = action;
 
-    action = new QAction(tr("Regenerate Dimension Entities"), main_window);
+    action = new QAction(tr("Regenerate Dimension Entities"), disable_group);
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotToolRegenerateDimensions()));
-    action->setData("ToolRegenerateDimensions");
+    action->setObjectName("ToolRegenerateDimensions");
     a_map["ToolRegenerateDimensions"] = action;
 
     // <[~ Zoom ~]>
 
-    action = new QAction(tr("Zoom &In"), main_window);
+    action = new QAction(tr("Zoom &In"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("zoom-in", QIcon(":/actions/zoomin.png")));
     #else
@@ -1067,10 +1082,10 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     #endif
     action->setShortcut(QKeySequence::ZoomIn);
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomIn()));
-    action->setData("ZoomIn");
+    action->setObjectName("ZoomIn");
     a_map["ZoomIn"] = action;
 
-    action = new QAction(tr("Zoom &Out"), main_window);
+    action = new QAction(tr("Zoom &Out"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("zoom-out", QIcon(":/actions/zoomout.png")));
     #else
@@ -1078,20 +1093,20 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     #endif
     action->setShortcut(QKeySequence::ZoomOut);
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomOut()));
-    action->setData("ZoomOut");
+    action->setObjectName("ZoomOut");
     a_map["ZoomOut"] = action;
 
-    action = new QAction(tr("&Auto Zoom"), action_handler);
+    action = new QAction(tr("&Auto Zoom"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("zoom-fit-best", QIcon(":/actions/zoomauto.png")));
     #else
     action->setIcon(QIcon(":/actions/zoomauto.png"));
     #endif
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomAuto()));
-    action->setData("ZoomAuto");
+    action->setObjectName("ZoomAuto");
     a_map["ZoomAuto"] = action;
 
-    action = new QAction(tr("Previous &View"), action_handler);
+    action = new QAction(tr("Previous &View"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("zoom-previous", QIcon(":/actions/zoomprevious.png")));
     #else
@@ -1100,10 +1115,10 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotZoomPrevious()));
     action->setEnabled(false);
-    action->setData("ZoomPrevious");
+    action->setObjectName("ZoomPrevious");
     a_map["ZoomPrevious"] = action;
 
-    action = new QAction(tr("&Redraw"), action_handler);
+    action = new QAction(tr("&Redraw"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("view-refresh", QIcon(":/actions/zoomredraw.png")));
     #else
@@ -1112,7 +1127,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setShortcut(QKeySequence::Refresh);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotZoomRedraw()));
-    action->setData("ZoomRedraw");
+    action->setObjectName("ZoomRedraw");
     a_map["ZoomRedraw"] = action;
 
     // ===========================
@@ -1127,7 +1142,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     #endif
     action->setShortcut(QKeySequence::New);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileNewNew()));
-    action->setData("FileNew");
+    action->setObjectName("FileNew");
     a_map["FileNew"] = action;
 
     action = new QAction(tr("New From &Template"), main_window);
@@ -1137,7 +1152,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setIcon(QIcon(":/actions/filenew.png"));
     #endif
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileNewTemplate()));
-    action->setData("FileNewTemplate");
+    action->setObjectName("FileNewTemplate");
     a_map["FileNewTemplate"] = action;
 
     action = new QAction(tr("&Open..."), main_window);
@@ -1148,10 +1163,10 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     #endif
     action->setShortcut(QKeySequence::Open);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileOpen()));
-    action->setData("FileOpen");
+    action->setObjectName("FileOpen");
     a_map["FileOpen"] = action;
 
-    action = new QAction(tr("&Save"), main_window);
+    action = new QAction(tr("&Save"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("document-save", QIcon(":/actions/filesave2.png")));
     #else
@@ -1159,10 +1174,10 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     #endif
     action->setShortcut(QKeySequence::Save);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSave()));
-    action->setData("FileSave");
+    action->setObjectName("FileSave");
     a_map["FileSave"] = action;
 
-    action = new QAction(tr("Save &as..."), main_window);
+    action = new QAction(tr("Save &as..."), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("document-save-as", QIcon(":/actions/filesaveas.png")));
     #else
@@ -1173,23 +1188,22 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setShortcut(QKeySequence::SaveAs);
     #endif
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileSaveAs()));
-    action->setData("FileSaveAs");
+    action->setObjectName("FileSaveAs");
     a_map["FileSaveAs"] = action;
 
-    action = new QAction( QIcon(":/actions/fileexport.png"), tr("&Export as image"), main_window);
+    action = new QAction( QIcon(":/actions/fileexport.png"), tr("&Export as image"), disable_group);
     connect(action, SIGNAL( triggered()), main_window, SLOT(slotFileExport()));
-    action->setData("FileExport");
+    action->setObjectName("FileExport");
     a_map["FileExport"] = action;
 
     action = new QAction(tr("&Close"), main_window);
     action->setIcon(QIcon(":/actions/fileclose.png"));
     action->setShortcut(QKeySequence::Close);
-    connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileClose()));
     action->setShortcutContext(Qt::WidgetShortcut);
-    action->setData("FileClose");
+    action->setObjectName("FileClose");
     a_map["FileClose"] = action;
 
-    action = new QAction(tr("&Print..."), main_window);
+    action = new QAction(tr("&Print..."), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("document-print", QIcon(":/actions/fileprint.png")));
     #else
@@ -1198,16 +1212,16 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setShortcut(QKeySequence::Print);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFilePrint()));
     connect(main_window, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
-    action->setData("FilePrint");
+    action->setObjectName("FilePrint");
     a_map["FilePrint"] = action;
 
-    action = new QAction(tr("Export as PDF"), main_window);
+    action = new QAction(tr("Export as PDF"), disable_group);
     action->setIcon(QIcon(":/actions/fileexportpdf.png"));
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFilePrintPDF()));
-    action->setData("FilePrintPDF");
+    action->setObjectName("FilePrintPDF");
     a_map["FilePrintPDF"] = action;
 
-    action = new QAction(tr("Print Pre&view"), main_window);
+    action = new QAction(tr("Print Pre&view"), disable_group);
     #if QT_VERSION >= 0x040600
     action->setIcon(QIcon::fromTheme("document-print-preview", QIcon(":/actions/fileprintpreview.png")));
     #else
@@ -1216,7 +1230,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setCheckable(true);
     connect(action, SIGNAL(triggered(bool)), main_window, SLOT(slotFilePrintPreview(bool)));
     connect(main_window, SIGNAL(printPreviewChanged(bool)), action, SLOT(setChecked(bool)));
-    action->setData("FilePrintPreview");
+    action->setObjectName("FilePrintPreview");
     a_map["FilePrintPreview"] = action;
 
     action = new QAction(tr("&Quit"), main_window);
@@ -1227,12 +1241,12 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setIcon(QIcon(":/actions/exit.png"));
     #endif
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileQuit()));
-    action->setData("FileQuit");
+    action->setObjectName("FileQuit");
     a_map["FileQuit"] = action;
 
-    action = new QAction(QIcon(":/ui/blockinsert.png"), tr("&Block"), main_window);
+    action = new QAction(QIcon(":/ui/blockinsert.png"), tr("&Block"), disable_group);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotImportBlock()));
-    action->setData("BlocksImport");
+    action->setObjectName("BlocksImport");
     a_map["BlocksImport"] = action;
 
     // <[~ View ~]>
@@ -1250,26 +1264,26 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
         #endif
     #endif
     action->setCheckable(true);
-    connect(action, SIGNAL(toggled(bool)), main_window, SLOT(slot_fullscreen(bool)));
-    action->setData("Fullscreen");
+    connect(action, SIGNAL(toggled(bool)), main_window, SLOT(toggleFullscreen(bool)));
+    action->setObjectName("Fullscreen");
     a_map["Fullscreen"] = action;
 
-    action = new QAction(tr("&Grid"), main_window);
+    action = new QAction(tr("&Grid"), disable_group);
     action->setIcon(QIcon(":/actions/view_grid.svg"));
     action->setShortcut(QKeySequence(tr("Ctrl+G", "Toggle Grid")));
     action->setCheckable(true);
     action->setChecked(true);
     connect(main_window, SIGNAL(gridChanged(bool)), action, SLOT(setChecked(bool)));
     connect(action, SIGNAL(toggled(bool)), main_window, SLOT(slotViewGrid(bool)));
-    action->setData("ViewGrid");
+    action->setObjectName("ViewGrid");
     a_map["ViewGrid"] = action;
 
-    action = new QAction(tr("&Draft"), main_window);
+    action = new QAction(tr("&Draft"), disable_group);
     action->setIcon(QIcon(":/actions/viewdraft.png"));
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)), main_window, SLOT(slotViewDraft(bool)));
     connect(main_window, SIGNAL(draftChanged(bool)), action, SLOT(setChecked(bool)));
-    action->setData("ViewDraft");
+    action->setObjectName("ViewDraft");
     a_map["ViewDraft"] = action;
 
     action = new QAction(tr("&Statusbar"), main_window);
@@ -1277,7 +1291,7 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     action->setChecked(true);
     action->setShortcut(QKeySequence(tr("Ctrl+I", "Hide Statusbar")));
     connect(action, SIGNAL(toggled(bool)), main_window, SLOT(slotViewStatusBar(bool)));
-    action->setData("ViewStatusBar");
+    action->setObjectName("ViewStatusBar");
     a_map["ViewStatusBar"] = action;
 
     action = new QAction(tr("Focus on &Command Line"), main_window);
@@ -1286,8 +1300,55 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QG_ActionHandler* action_ha
     commandLineShortcuts<<QKeySequence(Qt::CTRL + Qt::Key_M)<<QKeySequence(Qt::Key_Colon)<<QKeySequence(Qt::Key_Space);
     action->setShortcuts(commandLineShortcuts);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFocusCommandLine()));
-    action->setData("FocusCommand");
+    action->setObjectName("FocusCommand");
     a_map["FocusCommand"] = action;
+
+    action = new QAction(tr("Left"), main_window);
+    connect(action, SIGNAL(toggled(bool)),
+            main_window, SLOT(toggleLeftDockArea(bool)));
+    action->setCheckable(true);
+    action->setChecked(false);
+    action->setObjectName("LeftDockAreaToggle");
+    a_map["LeftDockAreaToggle"] = action;
+
+    action = new QAction(tr("Right"), main_window);
+    connect(action, SIGNAL(toggled(bool)),
+            main_window, SLOT(toggleRightDockArea(bool)));
+    action->setCheckable(true);
+    action->setChecked(true);
+    action->setObjectName("RightDockAreaToggle");
+    a_map["RightDockAreaToggle"] = action;
+
+    action = new QAction(tr("Top"), main_window);
+    connect(action, SIGNAL(toggled(bool)),
+            main_window, SLOT(toggleTopDockArea(bool)));
+    action->setCheckable(true);
+    action->setChecked(false);
+    action->setObjectName("TopDockAreaToggle");
+    a_map["TopDockAreaToggle"] = action;
+
+    action = new QAction(tr("Bottom"), main_window);
+    connect(action, SIGNAL(toggled(bool)),
+            main_window, SLOT(toggleBottomDockArea(bool)));
+    action->setCheckable(true);
+    action->setChecked(false);
+    action->setObjectName("BottomDockAreaToggle");
+    a_map["BottomDockAreaToggle"] = action;
+
+    action = new QAction(tr("Floating"), main_window);
+    connect(action, SIGNAL(toggled(bool)),
+            main_window, SLOT(toggleFloatingDockwidgets(bool)));
+    action->setCheckable(true);
+    action->setChecked(false);
+    action->setObjectName("FloatingDockwidgetsToggle");
+    a_map["FloatingDockwidgetsToggle"] = action;
+
+    action = new QAction(tr("Reload Style Sheet"), main_window);
+    action->setShortcut(QKeySequence("Ctrl+T"));
+    connect(action, SIGNAL(triggered()),
+            main_window, SLOT(reloadStyleSheet()));
+    action->setObjectName("ReloadStyleSheet");
+    a_map["ReloadStyleSheet"] = action;
 
     return a_map;
 }

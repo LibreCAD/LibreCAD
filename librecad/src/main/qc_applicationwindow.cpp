@@ -2,10 +2,10 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
+** Copyright (C) 2015-2016 ravas (ravas@outlook.com)
 ** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-**
 **
 ** This file may be distributed and/or modified under the terms of the
 ** GNU General Public License version 2 as published by the Free Software
@@ -39,9 +39,12 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QtHelp>
-#include "helpbrowser.h"
 #include <QImageWriter>
 #include <QtSvg>
+#include <QStyleFactory>
+
+#include "main.h"
+#include "helpbrowser.h"
 
 #if QT_VERSION >= 0x050000
 # include <QtPrintSupport/QPrinter>
@@ -50,6 +53,7 @@
 # include <QPrinter>
 # include <QPrintDialog>
 #endif
+#include <QSplashScreen>
 
 #include "rs_actionprintpreview.h"
 #include "rs_settings.h"
@@ -58,33 +62,42 @@
 #include "rs_actionlibraryinsert.h"
 #include "rs_painterqt.h"
 #include "rs_selection.h"
-#include "rs_settings.h"
+#include "rs_document.h"
 
+#include "lc_centralwidget.h"
+#include "qc_mdiwindow.h"
+#include "qg_graphicview.h"
+
+#include "lc_actionfactory.h"
+#include "qg_actionhandler.h"
+
+#include "lc_widgetfactory.h"
 #include "qg_snaptoolbar.h"
 #include "qg_blockwidget.h"
 #include "qg_layerwidget.h"
 #include "qg_librarywidget.h"
 #include "qg_commandwidget.h"
+#include "qg_pentoolbar.h"
 
 #include "qg_coordinatewidget.h"
-#include "qg_dlgimageoptions.h"
-#include "qg_filedialog.h"
 #include "qg_selectionwidget.h"
 #include "qg_activelayername.h"
 #include "qg_mousewidget.h"
-#include "qg_pentoolbar.h"
+
 #include "qg_recentfiles.h"
+#include "qg_dlgimageoptions.h"
+#include "qg_filedialog.h"
 
 #include "rs_dialogfactory.h"
 #include "qc_dialogfactory.h"
-#include "main.h"
 #include "doc_plugin_interface.h"
 #include "qc_plugininterface.h"
 #include "rs_commands.h"
 
 #include "lc_simpletests.h"
-#include "lc_actionfactory.h"
-#include "lc_dockwidget.h"
+#include "rs_debug.h"
+
+#include "lc_widgetoptionsdialog.h"
 
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
@@ -96,7 +109,6 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
 # define QC_ABOUT_ICON ":/main/intro_librecad.png"
 #endif
 
-#include <QSplashScreen>
     extern QSplashScreen *splash;
 
 
@@ -111,15 +123,96 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
  *	*/
 #define WTB_MAX_SIZE        79
 
- QAction* QC_ApplicationWindow::previousZoom=nullptr;
- QAction* QC_ApplicationWindow::undoButton=nullptr;
- QAction* QC_ApplicationWindow::redoButton=nullptr;
-
+namespace {
+/**
+ * Wrapper for Qt.
+ */
+QPrinter::PageSize rsToQtPaperFormat(RS2::PaperFormat f) {
+	switch (f) {
+	default:
+	case RS2::Custom:
+		return QPrinter::Custom;
+	case RS2::Letter:
+		return QPrinter::Letter;
+	case RS2::Legal:
+		return QPrinter::Legal;
+	case RS2::Executive:
+		return QPrinter::Executive;
+	case RS2::A0:
+		return QPrinter::A0;
+	case RS2::A1:
+		return QPrinter::A1;
+	case RS2::A2:
+		return QPrinter::A2;
+	case RS2::A3:
+		return QPrinter::A3;
+	case RS2::A4:
+		return QPrinter::A4;
+	case RS2::A5:
+		return QPrinter::A5;
+	case RS2::A6:
+		return QPrinter::A6;
+	case RS2::A7:
+		return QPrinter::A7;
+	case RS2::A8:
+		return QPrinter::A8;
+	case RS2::A9:
+		return QPrinter::A9;
+	case RS2::B0:
+		return QPrinter::B0;
+	case RS2::B1:
+		return QPrinter::B1;
+	case RS2::B2:
+		return QPrinter::B2;
+	case RS2::B3:
+		return QPrinter::B3;
+	case RS2::B4:
+		return QPrinter::B4;
+	case RS2::B5:
+		return QPrinter::B5;
+	case RS2::B6:
+		return QPrinter::B6;
+	case RS2::B7:
+		return QPrinter::B7;
+	case RS2::B8:
+		return QPrinter::B8;
+	case RS2::B9:
+		return QPrinter::B9;
+	case RS2::B10:
+		return QPrinter::B10;
+	case RS2::C5E:
+		return QPrinter::C5E;
+	case RS2::Comm10E:
+		return QPrinter::Comm10E;
+	case RS2::DLE:
+		return QPrinter::DLE;
+	case RS2::Folio:
+		return QPrinter::Folio;
+	case RS2::Ledger:
+		return QPrinter::Ledger;
+	case RS2::Tabloid:
+		return QPrinter::Tabloid;
+#if QT_MAJOR_VERSION >= 5
+	case RS2::Arch_A:
+		return QPrinter::ArchA;
+	case RS2::Arch_B:
+		return QPrinter::ArchB;
+	case RS2::Arch_C:
+		return QPrinter::ArchC;
+	case RS2::Arch_D:
+		return QPrinter::ArchD;
+	case RS2::Arch_E:
+		return QPrinter::ArchE;
+#endif
+	case RS2::NPageSize:
+		return QPrinter::NPageSize;
+	}
+}
+}
 /**
  * Constructor. Initializes the app.
  */
 QC_ApplicationWindow::QC_ApplicationWindow()
-    : m_qDraftModeTitle(" ["+tr("Draft Mode")+"]")
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
 
@@ -128,26 +221,117 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
     setWindowIcon(QIcon(QC_APP_ICON));
 
-    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating action handler");
-    actionHandler = new QG_ActionHandler(this);
-    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating action handler: OK");
-
-    #ifdef RS_SCRIPTING
-        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating scripter");
-        scripter = new QS_Scripter(this, this);
-        RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating scripter: OK");
-    #endif
-
-    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init view");
-    initView();
-    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: menus_and_toolbars");
-    menus_and_toolbars();
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init status bar");
-    initStatusBar();
+
+    statusBar()->setMinimumHeight(32);
+    coordinateWidget = new QG_CoordinateWidget(statusBar(), "coordinates");
+    statusBar()->addWidget(coordinateWidget);
+    mouseWidget = new QG_MouseWidget(statusBar(), "mouse info");
+    statusBar()->addWidget(mouseWidget);
+    selectionWidget = new QG_SelectionWidget(statusBar(), "selections");
+    statusBar()->addWidget(selectionWidget);
+    m_pActiveLayerName=new QG_ActiveLayerName(this);
+    statusBar()->addWidget(m_pActiveLayerName);
+
+    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating LC_CentralWidget");
+
+    LC_CentralWidget* central = new LC_CentralWidget(this);
+
+    setCentralWidget(central);
+
+    mdiAreaCAD = central->getMdiArea();
+
+    RS_SETTINGS->beginGroup("/Defaults");
+    if (RS_SETTINGS->readNumEntry("/TabMode", 0))
+        mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
+    RS_SETTINGS->endGroup();
+
+    connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
+            this, SLOT(slotWindowActivated(QMdiSubWindow*)));
+
+    RS_SETTINGS->beginGroup("Widgets");
+    bool custom_size = RS_SETTINGS->readNumEntry("/AllowToolbarIconSize", 0);
+    int icon_size = custom_size ? RS_SETTINGS->readNumEntry("/ToolbarIconSize", 24) : 24;
+    RS_SETTINGS->endGroup();
+
+    if (custom_size)
+        setIconSize(QSize(icon_size, icon_size));
+
+    actionHandler = new QG_ActionHandler(this);
+
+    LC_ActionFactory a_factory(this);
+    QMap<QString, QAction*> a_map;
+    a_map = a_factory.action_map(actionHandler);
+
+    LC_WidgetFactory widget_factory(this, a_map);
+    widget_factory.createLeftSidebar(5, icon_size);
+    widget_factory.createRightSidebar(actionHandler);
+    widget_factory.createCategoriesToolbar();
+    widget_factory.createToolbars(actionHandler);
+
+    QString path = RS_SETTINGS->readEntry("/Paths/CustomToolbar");
+
+    LC_CustomToolbar* custom_toolbar = nullptr;
+
+    if (!path.isEmpty())
+    {
+        custom_toolbar = widget_factory.createCustomToolbar(path, a_factory.tool_group);
+
+        if (custom_toolbar == nullptr)
+        {
+            RS_DEBUG->print("The custom toolbar file was not found.");
+            RS_SETTINGS->writeEntry("/Paths/CustomToolbar", QString::null);
+        }
+    }
+
+    widget_factory.createMenus(menuBar());
+
+    undoButton = a_map["EditUndo"];
+    redoButton = a_map["EditRedo"];
+    previousZoom = a_map["ZoomPrevious"];
+    statusbar_view_action = a_map["ViewStatusBar"];
+
+    dock_areas.left = a_map["LeftDockAreaToggle"];
+    dock_areas.right = a_map["RightDockAreaToggle"];
+    dock_areas.top = a_map["TopDockAreaToggle"];
+    dock_areas.bottom = a_map["BottomDockAreaToggle"];
+    dock_areas.floating = a_map["FloatingDockwidgetsToggle"];
+
+    snapToolBar = widget_factory.snap_toolbar;
+    penToolBar = widget_factory.pen_toolbar;
+    optionWidget = widget_factory.options_toolbar;
+
+    layerWidget = widget_factory.layer_widget;
+    blockWidget = widget_factory.block_widget;
+    commandWidget = widget_factory.command_widget;
+
+    file_menu = widget_factory.file_menu;
+    windowsMenu = widget_factory.windows_menu;
+
+    connect(a_map["FileClose"], SIGNAL(triggered(bool)),
+            mdiAreaCAD, SLOT(closeActiveSubWindow()));
+
+    connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
+            this, SLOT(slotPenChanged(RS_Pen)));
+
+    // This event filter allows sending key events to the command widget, therefore, no
+    // need to activate the command widget before typing commands.
+    // Since this nice feature causes a bug of lost key events when the command widget is on
+    // a screen different from the main window, disabled for the time being
+    // send key events for mdiAreaCAD to command widget by default
+    mdiAreaCAD->installEventFilter(commandWidget);
+
+    RS_SETTINGS->beginGroup("/Appearance");
+    QString layer_select_color(RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC"));
+    RS_SETTINGS->endGroup();
+
+    layerWidget->setStyleSheet("selection-background-color: " + layer_select_color);
+    blockWidget->setStyleSheet("selection-background-color: " + layer_select_color);
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory");
     dialogFactory = new QC_DialogFactory(this, optionWidget);
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory: OK");
+
     RS_DEBUG->print("setting dialog factory object");
     if (RS_DialogFactory::instance()==nullptr) {
         RS_DEBUG->print("no RS_DialogFactory instance");
@@ -157,10 +341,10 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_DialogFactory::instance()->setFactoryObject(dialogFactory);
     RS_DEBUG->print("setting dialog factory object: OK");
 
+    recentFiles = new QG_RecentFiles(this, 9);
+
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init settings");
     initSettings();
-    RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: init MDI");
-    initMDI();
 
     // Activate autosave timer
     autosaveTimer = new QTimer(this);
@@ -184,6 +368,11 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
     //accept drop events to open files
     setAcceptDrops(true);
+
+    setCorner(Qt::TopLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
+    setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
+    setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 }
 
 /**
@@ -208,14 +397,6 @@ QMenu *QC_ApplicationWindow::findMenu(const QString &searchMenu, const QObjectLi
         ++i;
     }
     return 0;
-}
-
-const QMainWindow* QC_ApplicationWindow::getMainWindow() const{
-    return this;
-}
-
-QMainWindow* QC_ApplicationWindow::getMainWindow() {
-    return this;
 }
 
 /**
@@ -304,17 +485,6 @@ w->getGraphicView()->redraw();
  */
 QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow");
-    #ifdef RS_SCRIPTING
-
-        RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
-                        "deleting scripter");
-
-        delete scripter;
-
-        RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
-                        "deleting scripter: OK");
-
-    #endif
 
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting dialog factory");
@@ -324,109 +494,6 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting dialog factory: OK");
 }
-
-
-
-/**
- * Runs the start script if scripting is available.
- */
-void QC_ApplicationWindow::slotRunStartScript() {
-        slotRunScript("autostart.qs");
-        restoreDocks();
-}
-
-
-
-/**
- * Runs a script. The action that triggers this slot has to carry the
- * name of the script file.
- */
-void QC_ApplicationWindow::slotRunScript() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotRunScript");
-
-    const QObject* s = sender();
-    if (s) {
-        QString script = ((QAction*)s)->text();
-        RS_DEBUG->print("QC_ApplicationWindow::slotRunScript: %s",
-                        script.toLatin1().data());
-                slotRunScript(script);
-    }
-}
-
-
-
-/**
- * Runs the script with the given name.
- */
-void QC_ApplicationWindow::slotRunScript(const QString& name) {
-    Q_UNUSED(name);
-#ifdef RS_SCRIPTING
-        RS_DEBUG->print("QC_ApplicationWindow::slotRunScript");
-
-
-        if (scripter==nullptr) {
-                RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "QC_ApplicationWindow::slotRunScript: "
-                        "scripter not initialized");
-                return;
-        }
-
-    statusBar()->showMessage(tr("Running script '%1'").arg(name), 2000);
-
-        QStringList scriptList = RS_SYSTEM->getScriptList();
-        scriptList.push_back(RS_SYSTEM->getHomeDir() + "/." XSTR(QC_APPKEY) "/" + name);
-
-        for (QStringList::Iterator it = scriptList.begin(); it!=scriptList.end(); ++it) {
-                RS_DEBUG->print("QC_ApplicationWindow::slotRunScript: "
-                        "checking script '%s'", (*it).latin1());
-                QFileInfo fi(*it);
-                if (fi.exists() && fi.fileName()==name) {
-                        RS_DEBUG->print("QC_ApplicationWindow::slotRunScript: running '%s'",
-                                (*it).latin1());
-                        scripter->runScript(*it, "main");
-                }
-        }
-#endif
-}
-
-
-
-/**
- * Called from toolbar buttons that were added by scripts to
- * insert blocks.
- */
-void QC_ApplicationWindow::slotInsertBlock() {
-    const QObject* s = sender();
-    if (s) {
-        QString block = ((QAction*)s)->text();
-        RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: %s",
-                        block.toLatin1().data());
-                slotInsertBlock(block);
-    }
-}
-
-
-
-/**
- * Called to insert blocks.
- */
-void QC_ApplicationWindow::slotInsertBlock(const QString& name) {
-        RS_DEBUG->print("QC_ApplicationWindow::slotInsertBlock: '%s'", name.toLatin1().data());
-
-    statusBar()->showMessage(tr("Inserting block '%1'").arg(name), 2000);
-
-
-        RS_GraphicView* graphicView = getGraphicView();
-        RS_Document* document = getDocument();
-        if (graphicView && document) {
-                RS_ActionLibraryInsert* action =
-                        new RS_ActionLibraryInsert(*document, *graphicView);
-                action->setFile(name);
-                graphicView->setCurrentAction(action);
-        }
-}
-
-
 
 /**
  * Shows the main application window and a splash screen.
@@ -473,25 +540,11 @@ void QC_ApplicationWindow::finishSplashScreen() {
 /**
  * Close Event. Called when the user tries to close the app.
  */
-void QC_ApplicationWindow::closeEvent(QCloseEvent* ce) {
+void QC_ApplicationWindow::closeEvent(QCloseEvent* ce)
+{
     RS_DEBUG->print("QC_ApplicationWindow::closeEvent()");
 
-    if (!queryExit(false)) {
-        ce->ignore();
-    }
-    else
-    {
-        if(mdiAreaCAD==nullptr){
-            ce->accept();
-            return;
-        }
-        mdiAreaCAD->closeAllSubWindows();
-        if (mdiAreaCAD->currentSubWindow()) {
-            ce->ignore();
-        } else {
-            ce->accept();
-        }
-    }
+    queryExit(false) ? ce->accept() : ce->ignore();
 
     RS_DEBUG->print("QC_ApplicationWindow::closeEvent(): OK");
 }
@@ -524,45 +577,6 @@ void 	QC_ApplicationWindow::dragEnterEvent(QDragEnterEvent * event)
     }
 }
 
-/**
- * Initializes the MDI mdiAreaCAD.
- */
-void QC_ApplicationWindow::initMDI() {
-    RS_DEBUG->print("QC_ApplicationWindow::initMDI() begin");
-
-    QFrame *vb = new QFrame(this);
-    vb->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    QVBoxLayout *layout = new QVBoxLayout;
-    vb->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
-    layout->setContentsMargins ( 0, 0, 0, 0 );
-    mdiAreaCAD = new QMdiArea(this);
-    activedMdiSubWindow=nullptr;
-    mdiAreaTab = false;
-    layout->addWidget(mdiAreaCAD);
-//    mdiAreaCAD->setScrollBarsEnabled(false);
-    mdiAreaCAD->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    mdiAreaCAD->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    mdiAreaCAD->setFocusPolicy(Qt::ClickFocus);
-    mdiAreaCAD->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Expanding);
-    mdiAreaCAD->setActivationOrder(QMdiArea::ActivationHistoryOrder);
-#if QT_VERSION >= 0x040800
-    mdiAreaCAD->setTabsClosable(true);
-#endif
-    vb->setLayout(layout);
-    setCentralWidget(vb);
-    connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
-            this, SLOT(slotWindowActivated(QMdiSubWindow*)));
-
-    //this event filter allows sending key events to the command widget, therefore, no
-    // need to activate the command widget before typing commands.
-    // Since this nice feature causes a bug of lost key events when the command widget is on
-    // a screen different from the main window, disabled for the time being
-    //send key events for mdiAreaCAD to command widget by default
-    mdiAreaCAD->installEventFilter(commandWidget);
-
-    RS_DEBUG->print("QC_ApplicationWindow::initMDI() end");
-
-}
 /**
  * @return Pointer to the currently active MDI Window or nullptr if no
  * MDI Window is active.
@@ -616,23 +630,6 @@ void QC_ApplicationWindow::slotEnableActions(bool enable) {
     }
 }
 
-/**
- * Initializes the status bar at the bottom.
- */
-void QC_ApplicationWindow::initStatusBar() {
-    RS_DEBUG->print("QC_ApplicationWindow::initStatusBar()");
-
-    statusBar()->setMinimumHeight(32);
-    coordinateWidget = new QG_CoordinateWidget(statusBar(), "coordinates");
-    statusBar()->addWidget(coordinateWidget);
-    mouseWidget = new QG_MouseWidget(statusBar(), "mouse info");
-    statusBar()->addWidget(mouseWidget);
-    selectionWidget = new QG_SelectionWidget(statusBar(), "selections");
-    statusBar()->addWidget(selectionWidget);
-    m_pActiveLayerName=new QG_ActiveLayerName(this);
-    statusBar()->addWidget(m_pActiveLayerName);
-}
-
 void QC_ApplicationWindow::slotUpdateActiveLayer()
 {
     if(layerWidget&&m_pActiveLayerName)
@@ -645,7 +642,7 @@ void QC_ApplicationWindow::slotUpdateActiveLayer()
  */
 void QC_ApplicationWindow::initSettings() {
     RS_DEBUG->print("QC_ApplicationWindow::initSettings()");
-    recentFiles->initSettings();
+    recentFiles->addFiles(file_menu);
 
     RS_SETTINGS->beginGroup("/Geometry");
     int windowWidth = RS_SETTINGS->readNumEntry("/WindowWidth", 950);
@@ -663,16 +660,27 @@ void QC_ApplicationWindow::initSettings() {
     resize(windowWidth, windowHeight);
     move(windowX, windowY);
 
-    restoreDocks();
-}
-
-
-/**
- * Restores the position of the dock windows.
- */
-void QC_ApplicationWindow::restoreDocks() {
     RS_SETTINGS->beginGroup("/Geometry");
-    restoreState ( RS_SETTINGS->readByteArrayEntry("/DockWindows", ""));
+    restoreState(RS_SETTINGS->readByteArrayEntry("/DockWindows", ""));
+    dock_areas.left->setChecked(RS_SETTINGS->readNumEntry("/LeftDockArea", 0));
+    dock_areas.right->setChecked(RS_SETTINGS->readNumEntry("/RightDockArea", 1));
+    dock_areas.top->setChecked(RS_SETTINGS->readNumEntry("/TopDockArea", 0));
+    dock_areas.bottom->setChecked(RS_SETTINGS->readNumEntry("/BottomDockArea", 0));
+    dock_areas.floating->setChecked(RS_SETTINGS->readNumEntry("/FloatingDockwidgets", 0));
+    RS_SETTINGS->endGroup();
+
+    RS_SETTINGS->beginGroup("Widgets");
+
+    int allow_style = RS_SETTINGS->readNumEntry("/AllowStyle", 0);
+    if (allow_style)
+    {
+        QString style = RS_SETTINGS->readEntry("/Style", "");
+        QApplication::setStyle(QStyleFactory::create(style));
+    }
+
+    QString sheet_path = RS_SETTINGS->readEntry("/StyleSheet", "");
+    if (loadStyleSheet(sheet_path))
+        style_sheet_path = sheet_path;
     RS_SETTINGS->endGroup();
 }
 
@@ -691,6 +699,11 @@ void QC_ApplicationWindow::storeSettings() {
         RS_SETTINGS->writeEntry("/WindowX", x());
         RS_SETTINGS->writeEntry("/WindowY", y());
         RS_SETTINGS->writeEntry("/DockWindows", QVariant (saveState()));
+        RS_SETTINGS->writeEntry("/LeftDockArea", dock_areas.left->isChecked());
+        RS_SETTINGS->writeEntry("/RightDockArea", dock_areas.right->isChecked());
+        RS_SETTINGS->writeEntry("/TopDockArea", dock_areas.top->isChecked());
+        RS_SETTINGS->writeEntry("/BottomDockArea", dock_areas.bottom->isChecked());
+        RS_SETTINGS->writeEntry("/FloatingDockwidgets", dock_areas.floating->isChecked());
         RS_SETTINGS->endGroup();
         //save snapMode
         snapToolBar->saveSnapMode();
@@ -698,76 +711,6 @@ void QC_ApplicationWindow::storeSettings() {
 
     RS_DEBUG->print("QC_ApplicationWindow::storeSettings(): OK");
 }
-
-
-/**
- * Initializes the view.
- */
-void QC_ApplicationWindow::initView()
-{
-    RS_DEBUG->print("QC_ApplicationWindow::initView()");
-    RS_DEBUG->print("layer widget..");
-
-    dock_layer = new QDockWidget("Layer", this);
-    dock_layer->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    dock_layer->setObjectName("LayerDW");
-    layerWidget = new QG_LayerWidget(actionHandler, dock_layer, "Layer");
-    layerWidget->setFocusPolicy(Qt::NoFocus);
-    connect(layerWidget, SIGNAL(escape()), this, SLOT(slotFocus()));
-    connect(this, SIGNAL(windowsChanged(bool)), layerWidget, SLOT(setEnabled(bool)));
-    dock_layer->setWidget(layerWidget);
-    dock_layer->setWindowTitle(tr("Layer List"));
-
-    RS_DEBUG->print("block widget..");
-
-    dock_block = new QDockWidget("Block", this);
-    dock_block->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    dock_block->setObjectName("BlockDW");
-    blockWidget = new QG_BlockWidget(actionHandler, dock_block, "Block");
-    blockWidget->setFocusPolicy(Qt::NoFocus);
-    connect(blockWidget, SIGNAL(escape()), this, SLOT(slotFocus()));
-    connect(this, SIGNAL(windowsChanged(bool)), blockWidget, SLOT(setEnabled(bool)));
-    dock_block->setWidget(blockWidget);
-    dock_block->setWindowTitle(tr("Block List"));
-
-    RS_DEBUG->print("library widget..");
-
-    dock_library = new QDockWidget("Library", this);
-    dock_library->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    dock_library->setObjectName("LibraryDW");
-    libraryWidget = new QG_LibraryWidget(dock_library, "Library");
-    libraryWidget->setActionHandler(actionHandler);
-    libraryWidget->setFocusPolicy(Qt::NoFocus);
-    connect(libraryWidget, SIGNAL(escape()), this, SLOT(slotFocus()));
-    connect(this, SIGNAL(windowsChanged(bool)),
-            (QObject*)libraryWidget->bInsert, SLOT(setEnabled(bool)));
-    dock_library->setWidget(libraryWidget);
-    dock_library->resize(240, 400);
-    dock_library->setWindowTitle(tr("Library Browser"));
-    addDockWidget(Qt::RightDockWidgetArea , dock_library);
-    tabifyDockWidget(dock_library, dock_block);
-    tabifyDockWidget(dock_block, dock_layer);
-
-    RS_DEBUG->print("command widget..");
-
-    dock_command = new QDockWidget(tr("Command line"), this);
-    dock_command->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    dock_command->setObjectName("CommandDW");
-    commandWidget = new QG_CommandWidget(dock_command, "Command");
-    commandWidget->setActionHandler(actionHandler);
-    connect(this, SIGNAL(windowsChanged(bool)), commandWidget, SLOT(setEnabled(bool)));
-    connect(commandWidget->leCommand, SIGNAL(escape()), this, SLOT(setFocus()));
-    dock_command->setWidget(commandWidget);
-    addDockWidget(Qt::RightDockWidgetArea, dock_command);
-
-    RS_SETTINGS->beginGroup("/Appearance");
-    QString layer_select_color(RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC"));
-    RS_SETTINGS->endGroup();
-
-    layerWidget->setStyleSheet("selection-background-color: " + layer_select_color);
-    blockWidget->setStyleSheet("selection-background-color: " + layer_select_color);
-}
-
 
 /**
  * Goes back to the previous menu or one step in the current action.
@@ -869,10 +812,6 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
     activedMdiSubWindow=w;
     QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(w);
 
-//    QList<QMdiSubWindow*> windows=mdiAreaCAD->subWindowList();
-//    int activeIndex=windows.indexOf(w);
-//    std::cout<<"QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w): activated "<< activeIndex <<std::endl;
-
     if (m && m->getDocument()) {
 
         RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated: "
@@ -896,7 +835,6 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
         m->getDocument()->updateInserts();
         // whether to enable undo/redo buttons
         m->getDocument()->setGUIButtons();
-//        m->zoomAuto();
         m->getGraphicView()->redraw();
 
         // set snapmode from snap toolbar
@@ -926,7 +864,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 
     // Disable/Enable menu and toolbar items
     emit windowsChanged(m && m->getDocument());
-//    emit windowsChanged(true);
+
     RS_DEBUG->print("RVT_PORT emit windowsChanged(true);");
 
     RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated end");
@@ -970,7 +908,7 @@ void QC_ApplicationWindow::slotWindowsMenuAboutToShow() {
 
     if ( mdiAreaCAD->subWindowList().isEmpty()) {
         return; //no sub-window to show
-    } else if( mdiAreaTab) {
+    } else if (mdiAreaCAD->viewMode() == QMdiArea::TabbedView) {
         windowsMenu->addAction( tr("Su&b-Window mode"), this, SLOT(slotToggleTab()));
     } else {
         windowsMenu->addAction( tr("Ta&b mode"), this, SLOT(slotToggleTab()));
@@ -1184,9 +1122,12 @@ void QC_ApplicationWindow::slotTileVertical() {
     mdiAreaCAD->activeSubWindow()->raise();
 }
 
-void QC_ApplicationWindow::slotToggleTab() {
-    mdiAreaTab = ! mdiAreaTab;
-    if(mdiAreaTab)
+/**
+ * toggles between subwindow and tab mode for the MdiArea
+ */
+void QC_ApplicationWindow::slotToggleTab()
+{
+    if (mdiAreaCAD->viewMode() == QMdiArea::SubWindowView)
     {
         mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
         QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
@@ -1209,6 +1150,7 @@ void QC_ApplicationWindow::slotToggleTab() {
         slotCascade();
     }
 }
+
 /**
  * Called when something changed in the pen tool bar
  * (e.g. color, width, style).
@@ -1252,14 +1194,30 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     statusBar()->showMessage(tr("Creating new file..."));
 
     RS_DEBUG->print("  creating MDI window");
+
     QC_MDIWindow* w = new QC_MDIWindow(doc, mdiAreaCAD, 0);
+
     window_list << w;
-    actionHandler->set_view(w->getGraphicView());
+
+    RS_SETTINGS->beginGroup("/Appearance");
+    int aa = RS_SETTINGS->readNumEntry("/Antialiasing", 0);
+    int scrollbars = RS_SETTINGS->readNumEntry("/ScrollBars", 1);
+    int cursor_hiding = RS_SETTINGS->readNumEntry("/cursor_hiding", 0);
+    RS_SETTINGS->endGroup();
+
+    QG_GraphicView* view = w->getGraphicView();
+
+    view->setAntialiasing(aa);
+    view->setCursorHiding(cursor_hiding);
+    if (scrollbars) view->addScrollbars();
+
+    actionHandler->set_view(view);
     actionHandler->set_document(w->getDocument());
-        //w->setWindowState(WindowMaximized);
-    connect(w, SIGNAL(signalClosing()),
-            this, SLOT(slotFileClosing()));
-    connect(w, SIGNAL(signalClosing()), this, SLOT(hide_options()));
+
+    connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
+            this, SLOT(slotFileClosing(QC_MDIWindow*)));
+    connect(w->getGraphicView(), SIGNAL(xbutton1_released()),
+            commandWidget, SLOT(trigger()));
 
     if (w->getDocument()->rtti()==RS2::EntityBlock) {
         w->setWindowTitle(tr("Block '%1'").arg(((RS_Block*)(w->getDocument()))->getName()));
@@ -1713,7 +1671,7 @@ void QC_ApplicationWindow::slotFileSaveAs() {
                 recentFiles->add(name);
                 w->setWindowTitle(format_filename_caption(name));
                 if(w->getGraphicView()->isDraftMode())
-                    w->setWindowTitle(w->windowTitle()+m_qDraftModeTitle);
+                    w->setWindowTitle(w->windowTitle() + " ["+tr("Draft Mode")+"]");
 
                 if (!autosaveTimer->isActive()) {
                     RS_SETTINGS->beginGroup("/Defaults");
@@ -1932,11 +1890,13 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
 
     // black background:
     if (black) {
-        painter.setBackground(RS_Color(0,0,0));
+//RLZ        painter.setBackgroundColor(RS_Color(0,0,0));
+		painter.setBackground(Qt::black);
     }
     // white background:
     else {
-        painter.setBackground(RS_Color(255,255,255));
+//RLZ        painter.setBackgroundColor(RS_Color(255,255,255));
+		painter.setBackground(Qt::white);
     }
 
     // black/white:
@@ -1946,18 +1906,15 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
 
     painter.eraseRect(0,0, size.width(), size.height());
 
-    RS_StaticGraphicView gv(size.width(), size.height(), &painter, borders);
+	RS_StaticGraphicView gv(size.width(), size.height(), &painter, &borders);
     if (black) {
-        gv.setBackground(RS_Color(0,0,0));
+		gv.setBackground(Qt::black);
     } else {
-        gv.setBackground(RS_Color(255,255,255));
+		gv.setBackground(Qt::white);
     }
     gv.setContainer(graphic);
     gv.zoomAuto(false);
-    for (RS_Entity* e=graphic->firstEntity(RS2::ResolveAll);
-            e; e=graphic->nextEntity(RS2::ResolveAll)) {
-        gv.drawEntity(&painter, e);
-    }
+	gv.drawEntity(&painter, gv.getContainer());
 
     // end the picture output
     if(format.toLower() != "svg")
@@ -1972,7 +1929,7 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
         if (iio.write(img)) {
             ret = true;
         }
-        QString error=iio.errorString();
+//        QString error=iio.errorString();
     }
     QApplication::restoreOverrideCursor();
 
@@ -1993,51 +1950,23 @@ bool QC_ApplicationWindow::slotFileExport(const QString& name,
 
 
 /**
- * Menu file -> close.
- */
-void QC_ApplicationWindow::slotFileClose() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileClose(): begin");
-
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileClose(): detaching lists");
-    getGraphicView()->getDefaultAction()->hideOptions();
-
-    QC_MDIWindow* w = getMDIWindow();
-
-    window_list.removeOne(w);
-
-    if(w){
-        openedFiles.removeAll(w->getDocument()->getFilename());
-    }
-
-    mdiAreaCAD->closeActiveSubWindow();
-    activedMdiSubWindow=nullptr;
-    QMdiSubWindow* m=mdiAreaCAD->currentSubWindow();
-    if(m){
-        slotWindowActivated(m);
-    }
-
-}
-
-
-
-/**
  * Called when a MDI window is actually about to close. Used to
  * detach widgets from the document.
  */
-void QC_ApplicationWindow::slotFileClosing() {
+void QC_ApplicationWindow::slotFileClosing(QC_MDIWindow* win)
+{
     RS_DEBUG->print("QC_ApplicationWindow::slotFileClosing()");
+
+    window_list.removeOne(win);
 
     layerWidget->setLayerList(nullptr, false);
     blockWidget->setBlockList(nullptr);
     coordinateWidget->setGraphic(nullptr);
-    QC_MDIWindow* w = getMDIWindow();
-    if(w)
-        openedFiles.removeAll(w->getDocument()->getFilename());
 
-    mdiAreaCAD->activatePreviousSubWindow();
-    mdiAreaCAD->currentSubWindow()->showMaximized();
+    openedFiles.removeAll(win->getDocument()->getFilename());
+
+    activedMdiSubWindow = nullptr;
 }
-
 
 
 /**
@@ -2066,7 +1995,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     QPrinter printer(QPrinter::HighResolution);
 
     bool landscape = false;
-    QPrinter::PageSize paperSize=RS2::rsToQtPaperFormat(graphic->getPaperFormat(&landscape));
+	QPrinter::PageSize paperSize=rsToQtPaperFormat(graphic->getPaperFormat(&landscape));
     if(paperSize==QPrinter::Custom){
         RS_Vector&& s=graphic->getPaperSize();
         if(landscape) s=s.flipXY();
@@ -2236,17 +2165,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
         if (parent->getGraphicView()->isPrintPreview())
         {
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): close");
-            slotFileClose();
+            mdiAreaCAD->closeActiveSubWindow();
             emit(printPreviewChanged(false));
-
-            if(mdiAreaCAD->subWindowList().size() > 0)
-            {
-                QMdiSubWindow* w=mdiAreaCAD->currentSubWindow();
-                if(w)
-                {
-                    mdiAreaCAD->setActiveSubWindow(w);
-                }
-            }
             return;
         }
     }
@@ -2259,10 +2179,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
         {
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): show existing");
 
-            //no need to search, casting parentWindow works like a charm
-            ppv->parentWidget()->showMaximized();
-            mdiAreaCAD->setActiveSubWindow(qobject_cast<QMdiSubWindow*>(ppv->parentWidget()));
-//            std::cout<<"QC_ApplicationWindow::slotFilePrintPreview(bool on): emit(printPreviewChanged(true))"<<std::endl;
+            ppv->showMaximized();
+            mdiAreaCAD->setActiveSubWindow(qobject_cast<QMdiSubWindow*>(ppv));
             emit(printPreviewChanged(true));
         }
         else
@@ -2276,7 +2194,8 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 QMdiSubWindow* subWindow=mdiAreaCAD->addSubWindow(w);
                 subWindow->showMaximized();
                 parent->addChildWindow(w);
-                connect(w, SIGNAL(signalClosing()), this, SLOT(hide_options()));
+                connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
+                        this, SLOT(hideOptions(QC_MDIWindow*)));
 
                 w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
                 w->setWindowIcon(QIcon(":/main/document.png"));
@@ -2343,7 +2262,7 @@ void QC_ApplicationWindow::slotFileQuit() {
     statusBar()->showMessage(tr("Exiting application..."));
 
     if (queryExit(false)) {
-        qApp->exit(0);
+        qApp->quit();
     }
 }
 
@@ -2394,20 +2313,23 @@ void QC_ApplicationWindow::slotViewDraft(bool toggle) {
             windows<<w;
     windows.append(this);
 
+
+
     //handle "Draft Mode" in window titles
+
+    QString draft_mode = " ["+tr("Draft Mode")+"]";
     if(toggle){
         for(QWidget* w: windows){
             QString title=w->windowTitle();
-//            qDebug()<<"position="<<w->windowTitle().lastIndexOf(m_qDraftModeTitle)<<" "<<m_qDraftModeTitle.size()<<" "<<w->windowTitle().size();
             //avoid duplicated "Draft Mode" string in window title
-            if(title.size()>m_qDraftModeTitle.size() && title.size()-1 != title.lastIndexOf(m_qDraftModeTitle)+m_qDraftModeTitle.size())
-                w->setWindowTitle(title+m_qDraftModeTitle);
+            if(title.size()>draft_mode.size() && title.size()-1 != title.lastIndexOf(draft_mode)+draft_mode.size())
+                w->setWindowTitle(title+draft_mode);
         }
     } else {
         for(QWidget* w: windows){
             QString title=w->windowTitle();
-            if(title.size()>m_qDraftModeTitle.size() && title.count(m_qDraftModeTitle)==1){
-                title.remove(title.lastIndexOf(m_qDraftModeTitle),m_qDraftModeTitle.size());
+            if(title.size()>draft_mode.size() && title.count(draft_mode)==1){
+                title.remove(title.lastIndexOf(draft_mode),draft_mode.size());
                 w->setWindowTitle(title);
             }
         }
@@ -2467,11 +2389,7 @@ void QC_ApplicationWindow::updateGrids() {
 void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
     RS_DEBUG->print("QC_ApplicationWindow::slotViewStatusBar()");
 
-	if (!toggle) {
-        statusBar()->hide();
-    } else {
-        statusBar()->show();
-    }
+    statusBar()->setVisible(toggle);
 }
 
 /**
@@ -2479,8 +2397,6 @@ void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
  */
 void QC_ApplicationWindow::slotOptionsGeneral() {
     RS_DIALOGFACTORY->requestOptionsGeneralDialog();
-
-    set_icon_size();
 
     RS_SETTINGS->beginGroup("Colors");
     QColor background(RS_SETTINGS->readEntry("/background", Colors::background));
@@ -2506,7 +2422,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
         QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(windows.at(i));
         if (m) {
             QG_GraphicView* gv = m->getGraphicView();
-			if (gv) {
+            if (gv) {
                 gv->setBackground(background);
                 gv->setGridColor(gridColor);
                 gv->setMetaGridColor(metaGridColor);
@@ -2515,7 +2431,7 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
                 gv->setStartHandleColor(startHandleColor);
                 gv->setHandleColor(handleColor);
                 gv->setEndHandleColor(endHandleColor);
-				gv->set_antialiasing(antialiasing?true:false);
+                gv->setAntialiasing(antialiasing?true:false);
                 gv->redraw(RS2::RedrawGrid);
             }
         }
@@ -2552,28 +2468,6 @@ void QC_ApplicationWindow::slotImportBlock() {
                         "QC_ApplicationWindow::slotImportBlock: Can't read file: '%s'", dxfPath.toLatin1().data());
     }
 }
-
-/**
- * Menu script -> show ide
- */
-void QC_ApplicationWindow::slotScriptOpenIDE() {
-#ifdef RS_SCRIPTING
-    scripter->openIDE();
-#endif
-}
-
-
-
-/**
- * Menu script -> run
- */
-void QC_ApplicationWindow::slotScriptRun() {
-#ifdef RS_SCRIPTING
-    scripter->runScript();
-#endif
-}
-
-
 
 /**
  * Menu help -> about.
@@ -2697,23 +2591,20 @@ bool QC_ApplicationWindow::queryExit(bool force) {
 
     bool succ = true;
 
+    QList<QMdiSubWindow*> list = mdiAreaCAD->subWindowList();
 
-         QList<QMdiSubWindow*> list = mdiAreaCAD->subWindowList();
-
-         while (!list.isEmpty()) {
-             QC_MDIWindow *tmp=qobject_cast<QC_MDIWindow*>(list.takeFirst());
-             if( tmp){
-                 slotFilePrintPreview(false);
-                 succ = tmp->closeMDI(force);
-                 if (!succ) {
-                     break;
-                 }
-             }
+    while (!list.isEmpty())
+    {
+        QC_MDIWindow* tmp = qobject_cast<QC_MDIWindow*>(list.takeFirst());
+        if (tmp)
+        {
+            slotFilePrintPreview(false);
+            succ = tmp->closeMDI(force);
+            if (!succ) {break;}
         }
-
-    if (succ) {
-        storeSettings();
     }
+
+    if (succ) {storeSettings();}
 
     RS_DEBUG->print("QC_ApplicationWindow::queryExit(): OK");
 
@@ -2800,21 +2691,6 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
         //need to pass Escape to actions, issue#285
         case Qt::Key_Escape:
             slotBack();
-        case Qt::Key_Shift:
-        case Qt::Key_Control:
-        case Qt::Key_Meta:
-        case Qt::Key_Alt:
-        case Qt::Key_CapsLock: {
-            QMainWindow::keyPressEvent(e);
-
-            // forward to actions:
-            RS_GraphicView* graphicView = getGraphicView();
-            if (graphicView) {
-                graphicView->keyPressEvent(e);
-            }
-            e->accept();
-        }
-            break;
 
         case Qt::Key_Return:
         case Qt::Key_Enter:
@@ -2843,30 +2719,6 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
     if (e->isAccepted()) {
         RS_DEBUG->print("QC_ApplicationWindow::KeyPressEvent: Accepted");
         return;
-    }
-
-    QMainWindow::keyPressEvent(e);
-}
-
-
-void QC_ApplicationWindow::keyReleaseEvent(QKeyEvent* e) {
-
-    switch (e->key()) {
-    case Qt::Key_Shift:
-    case Qt::Key_Control:
-    case Qt::Key_Meta:
-    case Qt::Key_Alt:
-    case Qt::Key_CapsLock: {
-            QMainWindow::keyReleaseEvent(e);
-
-            // forward to actions:
-            RS_GraphicView* graphicView = getGraphicView();
-            if (graphicView) {
-                graphicView->keyReleaseEvent(e);
-            }
-            e->accept();
-        }
-        break;
     }
 
     QMainWindow::keyPressEvent(e);
@@ -2929,880 +2781,39 @@ void QC_ApplicationWindow::updateWindowTitle(QWidget *w)
     RS_SETTINGS->beginGroup("/Appearance");
     bool draftMode=RS_SETTINGS->readNumEntry("/DraftMode", 0);
     RS_SETTINGS->endGroup();
+
+    QString draft_mode = " ["+tr("Draft Mode")+"]";
     if(draftMode){
-//        qDebug()<<"position="<<w->windowTitle().lastIndexOf(m_qDraftModeTitle)<<" "<<m_qDraftModeTitle.size()<<" "<<w->windowTitle().size();
-        if(w->windowTitle().lastIndexOf(m_qDraftModeTitle))
-        w->setWindowTitle(w->windowTitle()+m_qDraftModeTitle);
+        if(w->windowTitle().lastIndexOf(draft_mode))
+        w->setWindowTitle(w->windowTitle()+draft_mode);
     }
 }
 
-void QC_ApplicationWindow::slot_set_action(QAction* q_action)
+void QC_ApplicationWindow::relayAction(QAction* q_action)
 {
     // SIGNAL = http://doc.qt.io/qt-5/qactiongroup.html#triggered
 
     getGraphicView()->set_action(q_action);
 }
 
-void QC_ApplicationWindow::goto_wiki()
+void QC_ApplicationWindow::gotoWiki()
 {
     QDesktopServices::openUrl(QUrl("http://wiki.librecad.org/"));
 }
 
-
-// github.com/r-a-v-a-s/LibreCAD.git
-// ravas@outlook.com - 2015
-void QC_ApplicationWindow::menus_and_toolbars()
-{
-    RS_DEBUG->print("QC_ApplicationWindow::menus_and_toolbars()");
-
-    set_icon_size();
-
-    QSizePolicy toolBarPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-    QMenu* sub_menu;
-    QToolButton* tool_button;
-
-    QList<QAction*> list_a;
-
-    RS_SETTINGS->beginGroup("/Appearance");
-    bool custom_size = RS_SETTINGS->readNumEntry("/SetIconSize", 0);
-    int icon_size = custom_size ? RS_SETTINGS->readNumEntry("/IconSize", 22) : 22;
-    RS_SETTINGS->endGroup();
-
-    int columns = 5; // sidebar dockwidgets
-
-    QActionGroup* tools = new QActionGroup(this);
-    connect(tools, SIGNAL(triggered(QAction*)), this, SLOT(slot_set_action(QAction*)));
-    connect(this, SIGNAL(windowsChanged(bool)), tools, SLOT(setEnabled(bool)));
-
-    LC_ActionFactory a_factory(this);
-    QMap<QString, QAction*> map_a;
-    map_a = a_factory.action_map(actionHandler, tools);
-
-    QMenuBar* menu_bar = menuBar();
-
-    // <[~ Categories Toolbar ~]>
-
-    QToolBar* categories_toolbar = new QToolBar(tr("Categories"), this);
-    categories_toolbar->setSizePolicy(toolBarPolicy);
-    categories_toolbar->setObjectName("categories_toolbar");
-    categories_toolbar->hide();
-
-    // <[~ File ~]>
-
-    QMenu* file_menu = new QMenu(tr("&File"), menu_bar);
-    file_menu->setObjectName("File");
-    file_menu->setTearOffEnabled(true);
-
-    file_toolbar = new QToolBar(tr("File"), this);
-    file_toolbar->setSizePolicy(toolBarPolicy);
-    file_toolbar->setObjectName("file_toolbar");
-
-    list_a
-            << map_a["FileNew"]
-            << map_a["FileNewTemplate"]
-            << map_a["FileOpen"]
-            << map_a["FileSave"]
-            << map_a["FileSaveAs"];
-
-    file_menu->addActions(list_a);
-    file_toolbar->addActions(list_a);
-
-    sub_menu = file_menu->addMenu(QIcon(":/actions/fileimport.png"), tr("Import"));
-    sub_menu->setObjectName("Import");
-    sub_menu->addAction(map_a["DrawImage"]);
-    sub_menu->addAction(map_a["BlocksImport"]);
-
-    sub_menu = file_menu->addMenu(QIcon(":/actions/fileexport.png"), tr("Export"));
-    sub_menu->setObjectName("Export");
-    sub_menu->addAction(map_a["FileExportMakerCam"]);
-    sub_menu->addAction(map_a["FilePrintPDF"]);
-    sub_menu->addAction(map_a["FileExport"]);
-
-    file_menu->addSeparator();
-
-    file_menu->addAction(map_a["FilePrint"]);
-    file_menu->addAction(map_a["FilePrintPreview"]);
-    file_toolbar->addAction(map_a["FilePrint"]);
-    file_toolbar->addAction(map_a["FilePrintPreview"]);
-
-    file_menu->addSeparator();
-
-    file_menu->addAction(map_a["FileClose"]);
-    file_menu->addAction(map_a["FileQuit"]);
-
-    file_menu->addSeparator();
-
-    // <[~ Settings ~]>
-
-    QMenu* settings_menu = new QMenu(tr("Settings"), menu_bar);
-    settings_menu->setObjectName("settings_menu");
-    settings_menu->setTearOffEnabled(true);
-
-    QToolBar* settings_toolbar = new QToolBar(tr("Settings"), this);
-    settings_toolbar->setSizePolicy(toolBarPolicy);
-    settings_toolbar->setObjectName("settings_toolbar");
-
-    add_action(settings_menu, settings_toolbar, map_a["OptionsGeneral"]);
-    add_action(settings_menu, settings_toolbar, map_a["OptionsDrawing"]);
-
-    // <[~ Edit ~]>
-
-    QMenu* edit_menu = new QMenu(tr("&Edit"), menu_bar);
-    edit_menu->setObjectName("Edit");
-    edit_menu->setTearOffEnabled(true);
-
-    edit_toolbar = new QToolBar(tr("Edit"), this);
-    edit_toolbar->setSizePolicy(toolBarPolicy);
-    edit_toolbar->setObjectName("edit_toolbar");
-    connect(this, SIGNAL(windowsChanged(bool)), edit_toolbar, SLOT(setEnabled(bool)));
-
-    add_action(edit_menu, edit_toolbar, map_a["EditKillAllActions"]);
-
-    edit_toolbar->addSeparator();
-    edit_menu->addSeparator();
-
-    undoButton = map_a["EditUndo"];
-    redoButton = map_a["EditRedo"];
-
-    add_action(edit_menu, edit_toolbar, undoButton);
-    add_action(edit_menu, edit_toolbar, redoButton);
-
-    edit_toolbar->addSeparator();
-    edit_menu->addSeparator();
-
-    add_action(edit_menu, edit_toolbar, map_a["EditCut"]);
-    add_action(edit_menu, edit_toolbar, map_a["EditCopy"]);
-    add_action(edit_menu, edit_toolbar, map_a["EditPaste"]);
-    edit_menu->addAction(map_a["ModifyDeleteQuick"]);
-
-    // <[~ Order ~]>
-
-    QMenu* order_menu = new QMenu(tr("&Order"), menu_bar);
-    order_menu->setObjectName("order_menu");
-    order_menu->setTearOffEnabled(true);
-
-    QToolBar* order_toolbar = new QToolBar(tr("Order"), this);
-    order_toolbar->setSizePolicy(toolBarPolicy);
-    order_toolbar->setObjectName("order_toolbar");
-    connect(this, SIGNAL(windowsChanged(bool)), order_toolbar, SLOT(setEnabled(bool)));
-    order_toolbar->hide();
-
-    add_action(order_menu, order_toolbar, map_a["OrderTop"]);
-    add_action(order_menu, order_toolbar, map_a["OrderBottom"]);
-    add_action(order_menu, order_toolbar, map_a["OrderRaise"]);
-    add_action(order_menu, order_toolbar, map_a["OrderLower"]);
-
-    // <[~ View ~]>
-
-    QMenu* view_menu = new QMenu(tr("&View"), menu_bar);
-    view_menu->setObjectName("view_menu");
-    view_menu->setTearOffEnabled(true);
-
-    view_toolbar = new QToolBar(tr("View"), this);
-    view_toolbar->setSizePolicy(toolBarPolicy);
-    view_toolbar->setObjectName("view_toolbar");
-    connect(this, SIGNAL(windowsChanged(bool)), view_toolbar, SLOT(setEnabled(bool)));
-
-    view_menu->addAction(map_a["Fullscreen"]);
-    statusbar_view_action = map_a["ViewStatusBar"];
-    view_menu->addAction(statusbar_view_action);
-
-    add_action(view_menu, view_toolbar, map_a["ViewGrid"]);
-
-    RS_SETTINGS->beginGroup("/Appearance");
-    bool draftMode = (bool)RS_SETTINGS->readNumEntry("/DraftMode", 0);
-    RS_SETTINGS->endGroup();
-    add_action(view_menu, view_toolbar, map_a["ViewDraft"]);
-    map_a["ViewDraft"]->setChecked(draftMode);
-
-    view_menu->addSeparator();
-    view_toolbar->addSeparator();
-
-    add_action(view_menu, view_toolbar, map_a["ZoomRedraw"]);
-    add_action(view_menu, view_toolbar, map_a["ZoomIn"]);
-    add_action(view_menu, view_toolbar, map_a["ZoomOut"]);
-    add_action(view_menu, view_toolbar, map_a["ZoomAuto"]);
-    previousZoom = map_a["ZoomPrevious"];
-    add_action(view_menu, view_toolbar, previousZoom);
-    add_action(view_menu, view_toolbar, map_a["ZoomWindow"]);
-    add_action(view_menu, view_toolbar, map_a["ZoomPan"]);
-
-    // <[~ Select ~]>
-
-    QMenu* select_menu = new QMenu(tr("&Select"), menu_bar);
-    select_menu->setObjectName("Select");
-    select_menu->setTearOffEnabled(true);
-
-    list_a.clear();
-
-    list_a
-            << map_a["DeselectAll"]
-            << map_a["SelectAll"]
-            << map_a["SelectSingle"]
-            << map_a["SelectContour"]
-            << map_a["SelectWindow"]
-            << map_a["DeselectWindow"]
-            << map_a["SelectIntersected"]
-            << map_a["DeselectIntersected"]
-            << map_a["SelectLayer"]
-            << map_a["SelectInvert"];
-
-    select_menu->addActions(list_a);
-
-    LC_DockWidget* dock_select = new LC_DockWidget(this);
-    dock_select->setObjectName("dock_select");
-    dock_select->setWindowTitle(tr("Select"));
-    dock_select->add_actions(list_a, columns, icon_size);
-
-    // <[~ Draw ~]>
-
-    QMenu* draw_menu = new QMenu(tr("&Draw"), menu_bar);
-    draw_menu->setObjectName("Draw");
-    draw_menu->setTearOffEnabled(true);
-
-    // <[~ Lines ~]>
-
-    list_a.clear();
-
-    list_a
-            << map_a["DrawLine"]
-            << map_a["DrawLineAngle"]
-            << map_a["DrawLineHorizontal"]
-            << map_a["DrawLineVertical"]
-            << map_a["DrawLineRectangle"]
-            << map_a["DrawLineParallelThrough"]
-            << map_a["DrawLineBisector"]
-            << map_a["DrawLineTangent1"]
-            << map_a["DrawLineTangent2"]
-            << map_a["DrawLineOrthTan"]
-            << map_a["DrawLineOrthogonal"]
-            << map_a["DrawLineRelAngle"]
-            << map_a["DrawLinePolygonCenCor"]
-            << map_a["DrawLinePolygonCorCor"];
-
-    sub_menu= draw_menu->addMenu(tr("&Line"));
-    sub_menu->setIcon(QIcon(":/extui/menuline.png"));
-    sub_menu->setObjectName("Line");
-    sub_menu->addActions(list_a);
-
-    QToolBar* line_toolbar = new QToolBar(tr("Line"), this);
-    line_toolbar->setSizePolicy(toolBarPolicy);
-    line_toolbar->setObjectName("line_toolbar");
-    line_toolbar->addActions(list_a);
-
-    tool_button = new QToolButton;
-    tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menuline.png"));
-    categories_toolbar->addWidget(tool_button);
-    tool_button->addActions(list_a);
-
-    LC_DockWidget* dock_line = new LC_DockWidget(this);
-    dock_line->setObjectName("dock_line");
-    dock_line->setWindowTitle(tr("Line"));
-    dock_line->add_actions(list_a, columns, icon_size);
-
-    line_toolbar->hide();
-
-    // <[~ Circles ~]>
-
-    sub_menu= draw_menu->addMenu(tr("&Circle"));
-    sub_menu->setIcon(QIcon(":/extui/menucircle.png"));
-    sub_menu->setObjectName("Circle");
-
-    QToolBar* circle_toolbar = new QToolBar(tr("Circle"), this);
-    circle_toolbar->setSizePolicy(toolBarPolicy);
-    circle_toolbar->setObjectName ("circle_toolbar");
-
-    tool_button = new QToolButton;
-    tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menucircle.png"));
-    categories_toolbar->addWidget(tool_button);
-
-    list_a.clear();
-
-    list_a
-            << map_a["DrawCircle"]
-            << map_a["DrawCircle2P"]
-            << map_a["DrawCircle2PR"]
-            << map_a["DrawCircle3P"]
-            << map_a["DrawCircleCR"]
-            << map_a["DrawCircleTan2_1P"]
-            << map_a["DrawCircleTan1_2P"]
-            << map_a["DrawCircleTan2"]
-            << map_a["DrawCircleTan3"];
-
-    sub_menu->addActions(list_a);
-    circle_toolbar->addActions(list_a);
-    tool_button->addActions(list_a);
-
-    LC_DockWidget* dock_circle = new LC_DockWidget(this);
-    dock_circle->setObjectName("dock_circle");
-    dock_circle->setWindowTitle(tr("Circle"));
-    dock_circle->add_actions(list_a, columns, icon_size);
-
-    circle_toolbar->hide();
-
-    // <[~ Curves ~]>
-
-    sub_menu = draw_menu->addMenu(tr("&Curve"));
-    sub_menu->setIcon(QIcon(":/extui/linesfree.png"));
-    sub_menu->setObjectName("Curve");
-
-    QToolBar* curve_toolbar = new QToolBar(tr("Curve"), this);
-    curve_toolbar->setSizePolicy(toolBarPolicy);
-    curve_toolbar->setObjectName("curve_toolbar");
-
-    tool_button = new QToolButton;
-    tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/linesfree.png"));
-    categories_toolbar->addWidget(tool_button);
-
-    list_a.clear();
-
-    list_a
-            << map_a["DrawArc"]
-            << map_a["DrawArc3P"]
-            << map_a["DrawArcTangential"]
-            << map_a["DrawSpline"]
-            << map_a["DrawSplinePoints"]
-            << map_a["DrawEllipseArcAxis"]
-            << map_a["DrawLineFree"];
-
-    sub_menu->addActions(list_a);
-    curve_toolbar->addActions(list_a);
-    tool_button->addActions(list_a);
-
-    LC_DockWidget* dock_curve = new LC_DockWidget(this);
-    dock_curve->setObjectName("dock_curve");
-    dock_curve->setWindowTitle(tr("Curve"));
-    dock_curve->add_actions(list_a, columns, icon_size);
-
-    curve_toolbar->hide();
-
-    // <[~ Ellipses ~]>
-
-    sub_menu= draw_menu->addMenu(tr("&Ellipse"));
-    sub_menu->setIcon(QIcon(":/extui/menuellipse.png"));
-    sub_menu->setObjectName("Ellipse");
-
-    QToolBar* ellipse_toolbar = new QToolBar(tr("Ellipse"), this);
-    ellipse_toolbar->setSizePolicy(toolBarPolicy);
-    ellipse_toolbar->setObjectName("ellipse_toolbar");
-
-    tool_button = new QToolButton;
-    tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menuellipse.png"));
-    categories_toolbar->addWidget(tool_button);
-
-    list_a.clear();
-
-    list_a
-            << map_a["DrawEllipseAxis"]
-            << map_a["DrawEllipseFociPoint"]
-            << map_a["DrawEllipse4Points"]
-            << map_a["DrawEllipseCenter3Points"]
-            << map_a["DrawEllipseInscribe"];
-
-    sub_menu->addActions(list_a);
-    ellipse_toolbar->addActions(list_a);
-    tool_button->addActions(list_a);
-
-    LC_DockWidget* dock_ellipse = new LC_DockWidget(this);
-    dock_ellipse->setObjectName("dock_ellipse");
-    dock_ellipse->setWindowTitle(tr("Ellipse"));
-    dock_ellipse->add_actions(list_a, columns, icon_size);
-
-    ellipse_toolbar->hide();
-
-    // <[~ Polylines ~]>
-
-    sub_menu= draw_menu->addMenu(tr("&Polyline"));
-    sub_menu->setIcon(QIcon(":/extui/menupolyline.png"));
-    sub_menu->setObjectName("Polyline");
-
-    QToolBar* polyline_toolbar = new QToolBar(tr("Polyline"), this);
-    polyline_toolbar->setSizePolicy(toolBarPolicy);
-    polyline_toolbar->setObjectName("polyline_toolbar");
-
-    tool_button = new QToolButton;
-    tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menupolyline.png"));
-    categories_toolbar->addWidget(tool_button);
-
-    list_a.clear();
-
-    list_a
-            << map_a["DrawPolyline"]
-            << map_a["PolylineAdd"]
-            << map_a["PolylineAppend"]
-            << map_a["PolylineDel"]
-            << map_a["PolylineDelBetween"]
-            << map_a["PolylineTrim"]
-            << map_a["PolylineEquidistant"]
-            << map_a["PolylineSegment"];
-
-    sub_menu->addActions(list_a);
-    polyline_toolbar->addActions(list_a);
-    tool_button->addActions(list_a);
-
-    LC_DockWidget* dock_polyline = new LC_DockWidget(this);
-    dock_polyline->setObjectName("dock_polyline");
-    dock_polyline->setWindowTitle(tr("Polyline"));
-    dock_polyline->add_actions(list_a, columns, icon_size);
-
-    polyline_toolbar->hide();
-
-    // <[~ Misc ~]>
-
-    QMenu* misc_menu = new QMenu(tr("&Misc"), menu_bar);
-    misc_menu->setObjectName("misc_menu");
-    misc_menu->setTearOffEnabled(true);
-
-    QToolBar* misc_toolbar = new QToolBar(tr("Misc"), this);
-    misc_toolbar->setSizePolicy(toolBarPolicy);
-    misc_toolbar->setObjectName("misc_toolbar");
-
-    list_a.clear();
-
-    list_a
-            << map_a["DrawMText"]
-            << map_a["DrawHatch"]
-            << map_a["DrawImage"]
-            << map_a["BlocksCreate"]
-            << map_a["DrawPoint"];
-
-    misc_menu->addActions(list_a);
-    misc_toolbar->addActions(list_a);
-
-    // <[~ Dimension ~]>
-
-    QMenu* dimension_menu = new QMenu(tr("&Dimension"), menu_bar);
-    dimension_menu->setObjectName("dimension_menu");
-    dimension_menu->setTearOffEnabled(true);
-
-    QToolBar* dimension_toolbar = new QToolBar(tr("Dimension"), this);
-    dimension_toolbar->setSizePolicy(toolBarPolicy);
-    dimension_toolbar->setObjectName("dimension_toolbar");
-
-    tool_button = new QToolButton;
-    tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/dimhor.png"));
-    categories_toolbar->addWidget(tool_button);
-
-    list_a.clear();
-
-    list_a
-            << map_a["DimAligned"]
-            << map_a["DimLinear"]
-            << map_a["DimLinearHor"]
-            << map_a["DimLinearVer"]
-            << map_a["DimRadial"]
-            << map_a["DimDiametric"]
-            << map_a["DimAngular"]
-            << map_a["DimLeader"];
-
-    dimension_menu->addActions(list_a);
-    dimension_toolbar->addActions(list_a);
-    tool_button->addActions(list_a);
-
-    LC_DockWidget* dock_dimension = new LC_DockWidget(this);
-    dock_dimension->setObjectName("dock_dimension");
-    dock_dimension->setWindowTitle(tr("Dimension"));
-    dock_dimension->add_actions(list_a, columns, icon_size);
-
-    dimension_toolbar->hide();
-
-    // <[~ Modify ~]>
-
-    QMenu* modify_menu = new QMenu(tr("&Modify"), menu_bar);
-    modify_menu->setObjectName("Modify");
-    modify_menu->setTearOffEnabled(true);
-
-    QToolBar* modify_toolbar = new QToolBar(tr("Modify"), this);
-    modify_toolbar->setSizePolicy(toolBarPolicy);
-    modify_toolbar->setObjectName("modify_toolbar");
-
-    tool_button = new QToolButton;
-    tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menuedit.png"));
-    categories_toolbar->addWidget(tool_button);
-
-    list_a.clear();
-
-    list_a
-            << map_a["ModifyMove"]
-            << map_a["ModifyRotate"]
-            << map_a["ModifyScale"]
-            << map_a["ModifyMirror"]
-            << map_a["ModifyMoveRotate"]
-            << map_a["ModifyRotate2"]
-            << map_a["ModifyRevertDirection"]
-            << map_a["ModifyTrim"]
-            << map_a["ModifyTrim2"]
-            << map_a["ModifyTrimAmount"]
-            << map_a["ModifyOffset"]
-            << map_a["ModifyBevel"]
-            << map_a["ModifyRound"]
-            << map_a["ModifyCut"]
-            << map_a["ModifyStretch"]
-            << map_a["ModifyEntity"]
-            << map_a["ModifyAttributes"]
-            << map_a["ModifyExplodeText"]
-            << map_a["BlocksExplode"]
-            << map_a["ModifyDeleteQuick"];
-
-    modify_menu->addActions(list_a);
-    modify_toolbar->addActions(list_a);
-    tool_button->addActions(list_a);
-
-    LC_DockWidget* dock_modify = new LC_DockWidget(this);
-    dock_modify->setObjectName("dock_modify");
-    dock_modify->setWindowTitle(tr("Modify"));
-    dock_modify->add_actions(list_a, columns, icon_size);
-
-    modify_toolbar->hide();
-
-    // <[~ Snapping ~]>
-
-    QMenu* snap_menu = new QMenu(tr("&Snap"), menu_bar);
-    snap_menu->setObjectName("snap_menu");
-    snap_menu->setTearOffEnabled(true);
-
-    snapToolBar = new QG_SnapToolBar(tr("Snap Selection"), actionHandler, this);
-    snapToolBar->setSizePolicy(toolBarPolicy);
-    snapToolBar->setObjectName("snap_toolbar" );
-    actionHandler->set_snap_toolbar(snapToolBar);
-
-    connect(this, SIGNAL(windowsChanged(bool)), snapToolBar, SLOT(setEnabled(bool)));
-
-    snap_menu->addActions(snapToolBar->actions());
-
-    // <[~ Info ~]>
-
-    QMenu* info_menu = new QMenu(tr("&Info"), menu_bar);
-    info_menu->setObjectName("Info");
-    info_menu->setTearOffEnabled(true);
-
-    QToolBar* info_toolbar = new QToolBar(tr("Info"), this);
-    info_toolbar->setSizePolicy(toolBarPolicy);
-    info_toolbar->setObjectName("info_toolbar");
-
-    tool_button = new QToolButton;
-    tool_button->setPopupMode(QToolButton::InstantPopup);
-    tool_button->setIcon(QIcon(":/extui/menumeasure.png"));
-    categories_toolbar->addWidget(tool_button);
-
-    list_a.clear();
-
-    list_a
-            << map_a["InfoDist"]
-            << map_a["InfoDist2"]
-            << map_a["InfoAngle"]
-            << map_a["InfoTotalLength"]
-            << map_a["InfoArea"];
-
-    info_menu->addActions(list_a);
-    info_toolbar->addActions(list_a);
-    tool_button->addActions(list_a);
-
-    LC_DockWidget* dock_info = new LC_DockWidget(this);
-    dock_info->setObjectName("dock_info");
-    dock_info->setWindowTitle(tr("Info"));
-    dock_info->add_actions(list_a, columns, icon_size);
-
-    info_toolbar->hide();
-
-    // <[~ Layer ~]>
-
-    QMenu* layer_menu = new QMenu(tr("&Layer"), menu_bar);
-    layer_menu->setObjectName("layer_menu");
-    layer_menu->setTearOffEnabled(true);
-
-    list_a.clear();
-
-    list_a
-            << map_a["LayersDefreezeAll"]
-            << map_a["LayersFreezeAll"]
-            << map_a["LayersAdd"]
-            << map_a["LayersRemove"]
-            << map_a["LayersEdit"]
-            << map_a["LayersToggleLock"]
-            << map_a["LayersToggleView"]
-            << map_a["LayersTogglePrint"]
-            << map_a["LayersToggleConstruction"];
-
-    layer_menu->addActions(list_a);
-
-    // <[~ Block ~]>
-
-    QMenu* block_menu = new QMenu(tr("&Block"), menu_bar);
-    block_menu->setObjectName("block_menu");
-    block_menu->setTearOffEnabled(true);
-
-    list_a.clear();
-
-    list_a
-            << map_a["BlocksDefreezeAll"]
-            << map_a["BlocksFreezeAll"]
-            << map_a["BlocksToggleView"]
-            << map_a["BlocksAdd"]
-            << map_a["BlocksRemove"]
-            << map_a["BlocksAttributes"]
-            << map_a["BlocksInsert"]
-            << map_a["BlocksEdit"]
-            << map_a["BlocksSave"]
-            << map_a["BlocksCreate"]
-            << map_a["BlocksExplode"];
-
-    block_menu->addActions(list_a);
-
-    penToolBar = new QG_PenToolBar(tr("Pen"), this);
-    penToolBar->setSizePolicy(toolBarPolicy);
-    penToolBar->setObjectName("pen_toolbar");
-
-    connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
-    this, SLOT(slotPenChanged(RS_Pen)));
-
-    // <[~ Tool Options ~]>
-
-    optionWidget = new QToolBar(tr("Tool Options"), this);
-    optionWidget->setSizePolicy(toolBarPolicy);
-    optionWidget->setObjectName ("options_toolbar");
-
-    // <[~ Custom Toolbar ~]>
-
-    QString path = RS_SETTINGS->readEntry("/Paths/CustomToolbar");
-
-    if (!path.isEmpty())
-    {
-        if (QFile::exists(path))
-        {
-            custom_toolbar = new LC_CustomToolbar(tr("Custom"), this);
-            custom_toolbar->actions_from_file(path, map_a);
-            custom_toolbar->setObjectName("custom_toolbar");
-            custom_toolbar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-            connect(tools, SIGNAL(triggered(QAction*)), custom_toolbar, SLOT(slot_most_recent_action(QAction*)));
-            addToolBar(Qt::TopToolBarArea, custom_toolbar);
-        }
-        else
-        {
-            qDebug() << "The custom toolbar file was not found.";
-            RS_SETTINGS->writeEntry("/Paths/CustomToolbar", QString::null);
-        }
-    }
-
-    // <[~ Windows ~]>
-
-    windowsMenu = new QMenu(tr("&Window"), menu_bar);
-    windowsMenu->setObjectName("Window");
-    windowsMenu->setTearOffEnabled(true);
-
-    connect(windowsMenu, SIGNAL(aboutToShow()),
-            this, SLOT(slotWindowsMenuAboutToShow()));
-
-    // <[~ Help ~]>
-
-    helpAboutApp = new QAction(QIcon(QC_APP_ICON), tr("About"), this);
-    connect(helpAboutApp, SIGNAL(triggered()), this, SLOT(slotHelpAbout()));
-
-    helpManual = new QAction(QIcon(":/main/manual.png"), tr("&Manual"), this);
-    connect(helpManual, SIGNAL(triggered()), this, SLOT(slotHelpManual()));
-
-    QAction* wiki_link = new QAction(tr("Online (Wiki)"), this);
-    connect(wiki_link, SIGNAL(triggered()), this, SLOT(goto_wiki()));
-
-    // menuBar entry helpMenu
-    QMenu* help_menu = new QMenu(tr("&Help"), menu_bar);
-    help_menu->setObjectName("Help");
-    help_menu->setTearOffEnabled(true);
-
-    help_menu->addAction(helpManual);
-    help_menu->addAction(wiki_link);
-    help_menu->addSeparator();
-    help_menu->addAction(helpAboutApp);
-
-    // <[~ Dockwidgets Toolbar ~]>
-
-    dockwidgets_toolbar = new QToolBar(tr("DockWidgets"), this);
-    dockwidgets_toolbar->setSizePolicy(toolBarPolicy);
-    dockwidgets_toolbar->setObjectName("dockwidgets_toolbar");
-    dockwidgets_toolbar->addAction(map_a["ViewStatusBar"]);
-    dockwidgets_toolbar->addAction(dock_block->toggleViewAction());
-    dockwidgets_toolbar->addAction(dock_library->toggleViewAction());
-    dockwidgets_toolbar->addAction(dock_command->toggleViewAction());
-    dockwidgets_toolbar->addAction(dock_layer->toggleViewAction());
-
-    // <[~ Scripting?! ~]>
-
-#ifdef RS_SCRIPTING
-    scriptMenu = new QMenu(tr("&Scripts"));
-    scriptMenu->setObjectName("Scripts");
-    scriptMenu->addAction(map_a["ScriptOpenIDE"]);
-    scriptMenu->addAction(map_a["ScriptRun"]);
-    menuBar()->addMenu(scriptMenu);
-#else
-    scriptMenu = 0;
-    scriptOpenIDE = 0;
-    scriptRun = 0;
-#endif
-
-    // <[~ SimpleTests?! ~]>
-
-#ifdef LC_DEBUGGING
-    m_pSimpleTest=new LC_SimpleTests(this);
-#endif
-
-    // <[~ Sidebar ~]>
-
-    addDockWidget(Qt::LeftDockWidgetArea, dock_line);
-    tabifyDockWidget(dock_line, dock_polyline);
-    dock_line->raise();
-    addDockWidget(Qt::LeftDockWidgetArea, dock_circle);
-    tabifyDockWidget(dock_circle, dock_curve);
-    tabifyDockWidget(dock_curve, dock_ellipse);
-    dock_circle->raise();
-    addDockWidget(Qt::LeftDockWidgetArea, dock_dimension);
-    tabifyDockWidget(dock_dimension, dock_info);
-    tabifyDockWidget(dock_info, dock_select);
-    dock_dimension->raise();
-    addDockWidget(Qt::LeftDockWidgetArea, dock_modify);
-
-    // <[~ DockWidgets Menu ~]>
-
-    QMenu* dockwidgets_menu = new QMenu(tr("&Dockwidgets"), menu_bar);
-    dockwidgets_menu->setObjectName("Dockwidgets");
-    dockwidgets_menu->setTearOffEnabled(true);
-
-    dockwidget_view_actions
-            << dock_block->toggleViewAction()
-            << dock_library->toggleViewAction()
-            << dock_command->toggleViewAction()
-            << dock_layer->toggleViewAction()
-            << dock_line->toggleViewAction()
-            << dock_polyline->toggleViewAction()
-            << dock_circle->toggleViewAction()
-            << dock_curve->toggleViewAction()
-            << dock_ellipse->toggleViewAction()
-            << dock_dimension->toggleViewAction()
-            << dock_info->toggleViewAction()
-            << dock_modify->toggleViewAction()
-            << dock_select->toggleViewAction();
-
-    dockwidgets_menu->addActions(dockwidget_view_actions);
-    dockwidgets_menu->addAction(map_a["FocusCommand"]);
-
-    // <[~ Toolbars Menu ~]>
-
-    QMenu* toolbars_menu = new QMenu(tr("&Toolbars"), menu_bar);
-    toolbars_menu->setObjectName("toolbars_menu");
-    toolbars_menu->setTearOffEnabled(true);
-
-    toolbar_view_actions
-            << categories_toolbar->toggleViewAction()
-            << file_toolbar->toggleViewAction()
-            << settings_toolbar->toggleViewAction()
-            << edit_toolbar->toggleViewAction()
-            << view_toolbar->toggleViewAction()
-            << line_toolbar->toggleViewAction()
-            << circle_toolbar->toggleViewAction()
-            << curve_toolbar->toggleViewAction()
-            << ellipse_toolbar->toggleViewAction()
-            << polyline_toolbar->toggleViewAction()
-            << misc_toolbar->toggleViewAction()
-            << dimension_toolbar->toggleViewAction()
-            << modify_toolbar->toggleViewAction()
-            << snapToolBar->toggleViewAction()
-            << info_toolbar->toggleViewAction()
-            << penToolBar->toggleViewAction()
-            << dockwidgets_toolbar->toggleViewAction()
-            << optionWidget->toggleViewAction()
-            << order_toolbar->toggleViewAction();
-
-    if (custom_toolbar)
-    {
-        toolbar_view_actions << custom_toolbar->toggleViewAction();
-    }
-
-    toolbars_menu->addActions(toolbar_view_actions);
-
-    // <[~ Toolbars Layout~]>
-
-    addToolBar(Qt::TopToolBarArea, file_toolbar);
-    addToolBar(Qt::TopToolBarArea, edit_toolbar);
-    addToolBar(Qt::TopToolBarArea, view_toolbar);
-    addToolBar(Qt::TopToolBarArea, penToolBar);
-    addToolBar(Qt::TopToolBarArea, optionWidget);
-    addToolBar(Qt::TopToolBarArea, settings_toolbar);
-    addToolBar(Qt::TopToolBarArea, order_toolbar);
-    addToolBar(Qt::BottomToolBarArea, categories_toolbar);
-    addToolBar(Qt::BottomToolBarArea, line_toolbar);
-    addToolBar(Qt::BottomToolBarArea, circle_toolbar);
-    addToolBar(Qt::BottomToolBarArea, curve_toolbar);
-    addToolBar(Qt::BottomToolBarArea, ellipse_toolbar);
-    addToolBar(Qt::BottomToolBarArea, polyline_toolbar);
-    addToolBar(Qt::BottomToolBarArea, misc_toolbar);
-    addToolBar(Qt::BottomToolBarArea, dimension_toolbar);
-    addToolBar(Qt::BottomToolBarArea, modify_toolbar);
-    addToolBar(Qt::BottomToolBarArea, snapToolBar);
-    addToolBar(Qt::BottomToolBarArea, info_toolbar);
-    addToolBar(Qt::BottomToolBarArea, dockwidgets_toolbar);
-
-    // <[~ MenuBar Layout~]>
-
-    menu_bar->addMenu(file_menu);
-    menu_bar->addMenu(settings_menu);
-    menu_bar->addMenu(edit_menu);
-    menu_bar->addMenu(view_menu);
-    menu_bar->addMenu(order_menu);
-    menu_bar->addMenu(select_menu);
-    menu_bar->addMenu(draw_menu);
-    menu_bar->addMenu(misc_menu);
-    menu_bar->addMenu(dimension_menu);
-    menu_bar->addMenu(modify_menu);
-    menu_bar->addMenu(snap_menu);
-    menu_bar->addMenu(info_menu);
-    menu_bar->addMenu(layer_menu);
-    menu_bar->addMenu(block_menu);
-    menu_bar->addMenu(toolbars_menu);
-    menu_bar->addMenu(dockwidgets_menu);
-    menu_bar->addMenu(windowsMenu);
-    menu_bar->addMenu(help_menu);
-
-    // menuBar configuration
-    recentFiles = new QG_RecentFiles(this, 9);
-    openedFiles.clear();
-}
-
-
-void QC_ApplicationWindow::set_icon_size()
-{
-    RS_SETTINGS->beginGroup("/Appearance");
-    bool custom_size = RS_SETTINGS->readNumEntry("/SetIconSize", 0);
-    if (custom_size)
-    {
-        int icon_size = RS_SETTINGS->readNumEntry("/IconSize", 24);
-        setIconSize(QSize(icon_size, icon_size));
-    }
-    RS_SETTINGS->endGroup();
-}
-
-void QC_ApplicationWindow::add_action(QMenu* menu, QToolBar* toolbar, QAction* action)
-{
-    menu->addAction(action);
-    toolbar->addAction(action);
-}
-
+/**
+ * Called by Qt after a toolbar or dockwidget right-click.
+ * See QMainWindow::createPopupMenu() for more information.
+ */
 QMenu* QC_ApplicationWindow::createPopupMenu()
 {
     QMenu* context_menu = new QMenu("Context");
+    context_menu->setAttribute(Qt::WA_DeleteOnClose);
 
-    QMenu* tb_menu = new QMenu("Toolbars", context_menu);
-    tb_menu->addActions(toolbar_view_actions);
+    QMenu* tb_menu = menuBar()->findChild<QMenu*>("toolbars_menu");
     context_menu->addMenu(tb_menu);
 
-    QMenu* dw_menu = new QMenu("Dockwidgets", context_menu);
-    dw_menu->addActions(dockwidget_view_actions);
+    QMenu* dw_menu = menuBar()->findChild<QMenu*>("dockwidgets_menu");
     context_menu->addMenu(dw_menu);
 
     context_menu->addAction(statusbar_view_action);
@@ -3810,14 +2821,130 @@ QMenu* QC_ApplicationWindow::createPopupMenu()
     return context_menu;
 }
 
-void QC_ApplicationWindow::slot_fullscreen(bool checked)
+void QC_ApplicationWindow::toggleFullscreen(bool checked)
 {
     // SIGNAL = http://doc.qt.io/qt-5/qaction.html#checked-prop
 
     checked?showFullScreen():showMaximized();
 }
 
-void QC_ApplicationWindow::hide_options()
+void QC_ApplicationWindow::hideOptions(QC_MDIWindow* win)
 {
-    getGraphicView()->getDefaultAction()->hideOptions();
+    win->getGraphicView()->getDefaultAction()->hideOptions();
+}
+
+void QC_ApplicationWindow::slotFileOpenRecent(QAction* action)
+{
+	RS_DEBUG->print("QC_ApplicationWindow::slotFileOpenRecent()");
+
+    statusBar()->showMessage(tr("Opening recent file..."));
+    QString fileName = action->data().toString();
+    slotFileOpen(fileName, RS2::FormatUnknown);
+}
+
+/**
+ * This slot manipulates the widget options dialog,
+ * and reads / writes the associated settings.
+ */
+void QC_ApplicationWindow::widgetOptionsDialog()
+{
+    // writers: ravas, ...
+
+    LC_WidgetOptionsDialog dlg;
+
+    QSettings settings;
+    settings.beginGroup("Widgets");
+
+    int allow_style = settings.value("AllowStyle", 0).toInt();
+    dlg.style_checkbox->setChecked(allow_style);
+    dlg.style_combobox->addItems(QStyleFactory::keys());
+    if (allow_style)
+    {
+        QString a_style = settings.value("Style", "").toString();
+        if (!a_style.isEmpty())
+        {
+            int index = dlg.style_combobox->findText(a_style);
+            dlg.style_combobox->setCurrentIndex(index);
+        }
+    }
+
+    QString sheet_path = settings.value("StyleSheet", "").toString();
+    if (!sheet_path.isEmpty() && QFile::exists(sheet_path))
+        dlg.stylesheet_field->setText(sheet_path);
+
+    int allow_toolbar_icon_size = settings.value("AllowToolbarIconSize", 0).toInt();
+    dlg.toolbar_icon_size_checkbox->setChecked(allow_toolbar_icon_size);
+    int toolbar_icon_size = settings.value("ToolbarIconSize", 24).toInt();
+    dlg.toolbar_icon_size_spinbox->setValue(toolbar_icon_size);
+
+    if (dlg.exec())
+    {
+        int allow_style = dlg.style_checkbox->isChecked();
+        settings.setValue("AllowStyle", allow_style);
+        if (allow_style)
+        {
+            QString style = dlg.style_combobox->currentText();
+            settings.setValue("Style", style);
+            QApplication::setStyle(QStyleFactory::create(style));
+        }
+
+        QString sheet_path = dlg.stylesheet_field->text();
+        settings.setValue("StyleSheet", sheet_path);
+        if (loadStyleSheet(sheet_path))
+            style_sheet_path = sheet_path;
+
+        int allow_toolbar_icon_size = dlg.toolbar_icon_size_checkbox->isChecked();
+        settings.setValue("AllowToolbarIconSize", allow_toolbar_icon_size);
+        if (allow_toolbar_icon_size)
+        {
+            int toolbar_icon_size = dlg.toolbar_icon_size_spinbox->value();
+            settings.setValue("ToolbarIconSize", toolbar_icon_size);
+            setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
+        }
+    }
+    settings.endGroup();
+}
+
+/**
+ * This slot modifies the commandline's title bar
+ * depending on the dock area it is moved to.
+ */
+void QC_ApplicationWindow::modifyCommandTitleBar(Qt::DockWidgetArea area)
+{
+    QDockWidget* cmd_dockwidget = findChild<QDockWidget*>("command_dockwidget");
+
+    if (area == Qt::BottomDockWidgetArea || area == Qt::TopDockWidgetArea)
+    {
+        cmd_dockwidget->setWindowTitle("Cmd");
+        cmd_dockwidget->setFeatures(QDockWidget::DockWidgetClosable
+                                   |QDockWidget::DockWidgetMovable
+                                   |QDockWidget::DockWidgetFloatable
+                                   |QDockWidget::DockWidgetVerticalTitleBar);
+    }
+    else
+    {
+        cmd_dockwidget->setWindowTitle(tr("Command line"));
+        cmd_dockwidget->setFeatures(QDockWidget::DockWidgetClosable
+                                   |QDockWidget::DockWidgetMovable
+                                   |QDockWidget::DockWidgetFloatable);
+    }
+}
+
+bool QC_ApplicationWindow::loadStyleSheet(QString path)
+{
+    if (!path.isEmpty() && QFile::exists(path))
+    {
+        QFile file(path);
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            qApp->setStyleSheet(QString::fromLatin1(file.readAll()));
+            return true;
+        }
+    }
+    return false;
+}
+
+void QC_ApplicationWindow::reloadStyleSheet()
+{
+    loadStyleSheet(style_sheet_path);
 }

@@ -29,6 +29,8 @@
 
 #include "rs_previewactioninterface.h"
 
+class RS_Vector;
+
 /**
  * This action class can handle user events to draw lines with a given angle
  * to a given entity.
@@ -50,7 +52,7 @@ public:
                               RS_GraphicView& graphicView,
                               double angle=0.0,
                               bool fixedAngle=false);
-	~RS_ActionDrawLineRelAngle() = default;
+	~RS_ActionDrawLineRelAngle();
 	
 	virtual RS2::ActionType rtti() const;
 
@@ -95,7 +97,7 @@ private:
     /** Chosen entity */
     RS_Entity* entity;
     /** Chosen position */
-    RS_Vector pos;
+	std::unique_ptr<RS_Vector> pos;
     /**
      * Line angle.
      */

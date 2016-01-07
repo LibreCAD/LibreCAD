@@ -27,6 +27,7 @@
 #include "rs_actionfileopen.h"
 
 #include <QAction>
+#include "rs_debug.h"
 
 
 

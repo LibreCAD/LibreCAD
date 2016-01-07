@@ -53,7 +53,7 @@ public:
     RS_ActionDrawEllipseAxis(RS_EntityContainer& container,
                              RS_GraphicView& graphicView,
                              bool isArc);
-	~RS_ActionDrawEllipseAxis()=default;
+	~RS_ActionDrawEllipseAxis();
 
     virtual void init(int status=0);
 	
@@ -70,18 +70,8 @@ public:
     virtual void updateMouseCursor();
 
 protected:
-    /** Center of ellipse */
-    RS_Vector center;
-    /** Endpoint of major axis */
-	RS_Vector m_vMajorP;
-    /** Ratio major / minor */
-    double ratio;
-    /** Start angle */
-    double angle1;
-    /** End angle */
-    double angle2;
-    /** Do we produce an arc (true) or full ellipse (false) */
-    bool isArc;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

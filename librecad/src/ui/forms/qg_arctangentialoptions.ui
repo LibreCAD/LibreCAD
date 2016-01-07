@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QG_ArcTangentialOptions</class>
- <widget class="QWidget" name="QG_ArcTangentialOptions">
+ <class>Ui_ArcTangentialOptions</class>
+ <widget class="QWidget" name="Ui_ArcTangentialOptions">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -136,9 +136,9 @@
  <connections>
   <connection>
    <sender>leRadius</sender>
-   <signal>returnPressed()</signal>
+   <signal>editingFinished()</signal>
    <receiver>QG_ArcTangentialOptions</receiver>
-   <slot>on_leRadius_textEdited()</slot>
+   <slot>on_leRadius_editingFinished()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>70</x>
@@ -152,9 +152,9 @@
   </connection>
   <connection>
    <sender>leAngle</sender>
-   <signal>returnPressed()</signal>
+   <signal>editingFinished()</signal>
    <receiver>QG_ArcTangentialOptions</receiver>
-   <slot>on_leAngle_textEdited()</slot>
+   <slot>on_leAngle_editingFinished()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>70</x>

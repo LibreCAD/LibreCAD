@@ -30,19 +30,20 @@
 #include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_selection.h"
+#include "rs_debug.h"
 
 
 
 RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
 											 RS_GraphicView& graphicView,
 											 RS_ActionInterface* actionSelect,
-											 std::set<RS2::EntityType> const& entityTypeList)
+											 std::initializer_list<RS2::EntityType> const& entityTypeList)
 	:RS_ActionInterface("Select Entities", container, graphicView)
 	,entityTypeList(entityTypeList)
 	,en(nullptr)
 {
 	actionType=RS2::ActionSelectSingle;
-    if(actionSelect != NULL){
+	if(actionSelect){
         if(actionSelect->rtti() == RS2::ActionSelect) {
             this->actionSelect=static_cast<RS_ActionSelect*>(actionSelect);
                 this->actionSelect->requestFinish(true);
@@ -54,10 +55,11 @@ RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
 
 
 void RS_ActionSelectSingle::trigger() {
-	if (en && (entityTypeList.empty() ||
-			   entityTypeList.count(en->rtti())
-			   )
-	){
+	bool typeMatch{true};
+	if (en && entityTypeList.size())
+		typeMatch = std::find(entityTypeList.begin(), entityTypeList.end(), en->rtti())
+				!= entityTypeList.end();
+	if (en && typeMatch) {
         RS_Selection s(*container, graphicView);
         s.selectSingle(en);
 
@@ -78,17 +80,18 @@ void RS_ActionSelectSingle::keyPressEvent(QKeyEvent* e)
 }
 
 
-void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton) {
-        //need to finish the parent RS_ActionSelect as well, bug#3437138
-            //need to check actionSelect is set, bug#3437138
+void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e)
+{
+    if (e->button()==Qt::RightButton)
+    {
+        finish();
         if(actionSelect) {
-            actionSelect->requestFinish(false);
+            actionSelect->finish();
         }
-        init(getStatus()-1);
-    } else {
-        if(entityTypeList.size()) {
-//            std::cout<<"RS_ActionSelectSingle::mouseReleaseEvent(): entityTypeList->size()="<< entityTypeList->size()<<std::endl;
+    }
+    else
+    {
+        if (entityTypeList.size()) {
             en = catchEntity(e, entityTypeList);
         }else{
             en = catchEntity(e);

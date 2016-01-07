@@ -30,6 +30,7 @@
 #include "rs_actiondimension.h"
 
 struct RS_DimAngularData;
+class RS_Line;
 
 /**
  * This action class can handle user events to draw angular dimensions.
@@ -73,7 +74,7 @@ private:
     /** 2nd chosen line */
     RS_Line* line2;
 	/** Center of arc */
-	RS_Vector center;
+	std::unique_ptr<RS_Vector> center;
     /** Data of new dimension */
 	std::unique_ptr<RS_DimAngularData> edata;
 	/** Last status before entering text. */

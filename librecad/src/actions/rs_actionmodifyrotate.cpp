@@ -33,6 +33,8 @@
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
 #include "rs_modification.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 RS_ActionModifyRotate::RS_ActionModifyRotate(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -43,7 +45,7 @@ RS_ActionModifyRotate::RS_ActionModifyRotate(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyRotate;
 }
 
-RS_ActionModifyRotate::~RS_ActionModifyRotate(){}
+RS_ActionModifyRotate::~RS_ActionModifyRotate() = default;
 
 void RS_ActionModifyRotate::init(int status) {
     RS_ActionInterface::init(status);

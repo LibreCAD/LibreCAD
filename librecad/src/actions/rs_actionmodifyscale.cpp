@@ -32,17 +32,24 @@
 #include "rs_graphicview.h"
 #include "rs_coordinateevent.h"
 #include "rs_modification.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
+
+struct RS_ActionModifyScale::Points {
+	RS_ScaleData data;
+	RS_Vector referencePoint;
+};
 
 RS_ActionModifyScale::RS_ActionModifyScale(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Scale Entities",
 						   container, graphicView)
-		,data(new RS_ScaleData())
+		, pPoints(new Points{})
 {
 	actionType=RS2::ActionModifyScale;
 }
 
-RS_ActionModifyScale::~RS_ActionModifyScale(){}
+RS_ActionModifyScale::~RS_ActionModifyScale() = default;
 
 
 void RS_ActionModifyScale::init(int status) {
@@ -53,9 +60,9 @@ void RS_ActionModifyScale::init(int status) {
 void RS_ActionModifyScale::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyScale::trigger()");
-	if(data->factor.valid){
+	if(pPoints->data.factor.valid){
         RS_Modification m(*container, graphicView);
-		m.scale(*data);
+		m.scale(pPoints->data);
 
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
@@ -71,7 +78,7 @@ void RS_ActionModifyScale::mouseMoveEvent(QMouseEvent* e) {
         RS_Vector mouse = snapPoint(e);
         switch (getStatus()) {
         case SetReferencePoint:
-            referencePoint = mouse;
+			pPoints->referencePoint = mouse;
             break;
 
         default:
@@ -104,8 +111,8 @@ void RS_ActionModifyScale::coordinateEvent(RS_CoordinateEvent* e) {
 
     RS_Vector mouse = e->getCoordinate();
     setStatus(ShowDialog);
-	if (RS_DIALOGFACTORY->requestScaleDialog(*data)) {
-		data->referencePoint = mouse;
+	if (RS_DIALOGFACTORY->requestScaleDialog(pPoints->data)) {
+		pPoints->data.referencePoint = mouse;
         trigger();
         finish();
     }

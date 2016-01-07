@@ -33,6 +33,7 @@
 #include "rs_modification.h"
 #include "rs_polyline.h"
 #include "rs_atomicentity.h"
+#include "rs_debug.h"
 
 
 
@@ -197,7 +198,7 @@ void RS_ActionPolylineTrim::updateMouseButtonHints() {
 
 
 void RS_ActionPolylineTrim::updateMouseCursor() {
-        graphicView->setMouseCursor(RS2::CadCursor);
+        graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

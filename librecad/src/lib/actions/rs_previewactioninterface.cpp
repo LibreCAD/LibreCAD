@@ -28,6 +28,8 @@
 #include "rs_previewactioninterface.h"
 
 #include "rs_graphicview.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.
@@ -36,10 +38,11 @@
  * from this interface operates.
  */
 RS_PreviewActionInterface::RS_PreviewActionInterface(const char* name,
-        RS_EntityContainer& container,
-        RS_GraphicView& graphicView) :
-RS_ActionInterface(name, container, graphicView)
-,preview(new RS_Preview(&container))
+													 RS_EntityContainer& container,
+													 RS_GraphicView& graphicView) :
+	RS_ActionInterface(name, container, graphicView)
+  ,preview(new RS_Preview(&container))
+//  ,offset(new RS_Vector{})
 {
 
     RS_DEBUG->print("RS_PreviewActionInterface::RS_PreviewActionInterface: Setting up action with preview: \"%s\"", name);

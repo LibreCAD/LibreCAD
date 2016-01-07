@@ -35,6 +35,8 @@
 #include "rs_commandevent.h"
 #include "rs_actiondrawlineparallelthrough.h"
 #include "rs_math.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(
 		RS_EntityContainer& container,
@@ -43,11 +45,13 @@ RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(
 	,parallel(nullptr)
 	,distance(1.0)
 	,number(1)
-	,coord(false)
+	, coord(new RS_Vector{})
 	,entity(nullptr)
 {
 	actionType=RS2::ActionDrawLineParallel;
 }
+
+RS_ActionDrawLineParallel::~RS_ActionDrawLineParallel() = default;
 
 double RS_ActionDrawLineParallel::getDistance() const{
 	return distance;
@@ -69,7 +73,7 @@ void RS_ActionDrawLineParallel::trigger() {
     RS_PreviewActionInterface::trigger();
 
     RS_Creation creation(container, graphicView);
-    RS_Entity* e = creation.createParallel(coord,
+	RS_Entity* e = creation.createParallel(*coord,
                                            distance, number,
                                            entity);
 
@@ -82,8 +86,7 @@ void RS_ActionDrawLineParallel::trigger() {
 void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineParallel::mouseMoveEvent begin");
 
-    coord = RS_Vector(graphicView->toGraphX(e->x()),
-                      graphicView->toGraphY(e->y()));
+	*coord = {graphicView->toGraphX(e->x()), graphicView->toGraphY(e->y())};
 
     entity = catchEntity(e, RS2::ResolveAll);
 
@@ -92,7 +95,7 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent* e) {
             deletePreview();
 
 			RS_Creation creation(preview.get(), nullptr, false);
-            creation.createParallel(coord,
+			creation.createParallel(*coord,
                                     distance, number,
                                     entity);
 
@@ -240,7 +243,7 @@ QStringList RS_ActionDrawLineParallel::getAvailableCommands() {
 }
 
 void RS_ActionDrawLineParallel::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

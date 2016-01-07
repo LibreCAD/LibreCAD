@@ -40,9 +40,9 @@ public:
      * Action States.
      */
     enum Status {
-        SetCircle1=0,   //  Setting the First Circle.  */
-        SetCircle2=1,   //  Setting the First Circle.  */
-        SetPoint=2,   //  Setting the Second Circle.  */
+        SetCircle1=0,   //  Setting the first circle.  */
+        SetCircle2=1,   //  Setting the second circle.  */
+        SetPoint=2,   //  Setting point on the desired circle.  */
         SetCenter
     };
 
@@ -70,16 +70,9 @@ public:
 
 protected:
     RS_Entity* catchCircle(QMouseEvent* e);
-	std::vector<RS_AtomicEntity*> circles;
-    RS_Vector point;
-    private:
-	std::unique_ptr<RS_CircleData> cData;
-    RS_Vector coord;
-    double radius;
-    bool valid;
-	//keep a list of centers found
-    RS_VectorSolutions centers;
-
+private:
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

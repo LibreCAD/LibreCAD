@@ -36,7 +36,7 @@ RS_ActionSelect::RS_ActionSelect(QG_ActionHandler* a_handler,
                                  RS_EntityContainer& container,
                                  RS_GraphicView& graphicView,
                                  RS2::ActionType nextAction,
-                                 std::set<RS2::EntityType> const& entityTypeList)
+								 std::initializer_list<RS2::EntityType> const& entityTypeList)
 	:RS_ActionInterface("Select Entities", container, graphicView)
 	,entityTypeList(entityTypeList)
 	,nextAction(nextAction)

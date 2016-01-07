@@ -35,22 +35,26 @@
 #include "rs_information.h"
 #include "rs_arc.h"
 #include "rs_line.h"
+#include "rs_debug.h"
 
 RS_ActionPolylineEquidistant::RS_ActionPolylineEquidistant(RS_EntityContainer& container,
 														   RS_GraphicView& graphicView)
 	:RS_PreviewActionInterface("Create Equidistant Polylines",
 							   container, graphicView)
+	, targetPoint(new RS_Vector{})
 	,dist(1.)
 	,number(1)
 {
 	actionType=RS2::ActionPolylineEquidistant;
 }
 
+RS_ActionPolylineEquidistant::~RS_ActionPolylineEquidistant()=default;
+
 
 void RS_ActionPolylineEquidistant::init(int status) {
         RS_PreviewActionInterface::init(status);
 		originalEntity = nullptr;
-        targetPoint = RS_Vector(false);
+		*targetPoint = {};
         bRightSide = false;
 }
 
@@ -78,7 +82,7 @@ RS_Entity* RS_ActionPolylineEquidistant::calculateOffset(RS_Entity* newEntity,RS
 			return nullptr;
         arc->setData(((RS_Arc*)orgEntity)->getData());
         arc->setRadius(r);
-        arc->calculateEndpoints();
+		arc->calculateBorders();
         return newEntity;
     } else if (orgEntity->rtti()==RS2::EntityLine && newEntity->rtti()==RS2::EntityLine) {
         RS_Line* line0 = (RS_Line*)orgEntity;
@@ -186,7 +190,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                 } else if (currEntity->rtti()==RS2::EntityArc) {
                     //update bulge
                     arc1.setAngle1(arc1.getCenter().angleTo(v));
-                    arc1.calculateEndpoints();
+					arc1.calculateBorders();
                     bulge = arc1.getBulge();
                 }
                 first = false;
@@ -205,7 +209,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                 double startAngle = prevEntity->getStartpoint().angleTo(prevEntity->getEndpoint());
                 if (prevEntity->rtti()==RS2::EntityArc) {
                     arcFirst.setAngle2(arcFirst.getCenter().angleTo(v));
-                    arcFirst.calculateEndpoints();
+					arcFirst.calculateBorders();
                      newPolyline->setNextBulge(arcFirst.getBulge());
                 }
                 //check if the entity are reverted
@@ -214,7 +218,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                     RS_Vector v0 = calculateIntersection(prevEntity, currEntity);
                     if (prevEntity->rtti()==RS2::EntityArc) {
                         ((RS_Arc*)prevEntity)->setAngle2(arcFirst.getCenter().angleTo(v0));
-                        ((RS_Arc*)prevEntity)->calculateEndpoints();
+						((RS_Arc*)prevEntity)->calculateBorders();
                         newPolyline->setNextBulge( ((RS_Arc*)prevEntity)->getBulge() );
                     } else {
                         ((RS_Line*)prevEntity)->setEndpoint(v0);
@@ -224,7 +228,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                 }
                 if (currEntity->rtti()==RS2::EntityArc) {
                     arc1.setAngle1(arc1.getCenter().angleTo(v));
-                    arc1.calculateEndpoints();
+					arc1.calculateBorders();
                     bulge = arc1.getBulge();
                 } else
                     bulge = 0.0;
@@ -233,7 +237,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
                 newPolyline->addVertex(v, bulge, false);
                 if (currEntity->rtti()==RS2::EntityArc){
                     arcFirst.setData(arc1.getData());
-                    arcFirst.calculateEndpoints();
+					arcFirst.calculateBorders();
                     prevEntity = &arcFirst;
                 } else {
                     lineFirst.setStartpoint(line1.getStartpoint());
@@ -247,7 +251,7 @@ bool RS_ActionPolylineEquidistant::makeContour() {
             if (closed){
                 if (currEntity->rtti()==RS2::EntityArc) {
                     arc1.setAngle2(arc1.getCenter().angleTo(newPolyline->getStartpoint()));
-                    arc1.calculateEndpoints();
+					arc1.calculateBorders();
                     newPolyline->setNextBulge(arc1.getBulge());
                     bulge = arc1.getBulge();
                 }
@@ -276,7 +280,7 @@ void RS_ActionPolylineEquidistant::trigger() {
 
         RS_DEBUG->print("RS_ActionPolylineEquidistant::trigger()");
 
-		if (originalEntity && targetPoint.valid ) {
+		if (originalEntity && targetPoint->valid ) {
 
                 originalEntity->setHighlighted(false);
                 graphicView->drawEntity(originalEntity);
@@ -284,7 +288,7 @@ void RS_ActionPolylineEquidistant::trigger() {
                 makeContour();
 
 				originalEntity = nullptr;
-                targetPoint = RS_Vector(false);
+				*targetPoint = {};
                 bRightSide = false;
                 setStatus(ChooseEntity);
 
@@ -309,19 +313,19 @@ void RS_ActionPolylineEquidistant::mouseReleaseEvent(QMouseEvent* e) {
                                 RS_DIALOGFACTORY->commandMessage(
                                         tr("Entity must be a polyline."));
                         } else {
-                                targetPoint = snapFree(e);
+								*targetPoint = snapFree(e);
                                 originalEntity->setHighlighted(true);
                                 graphicView->drawEntity(originalEntity);
                                 double d = graphicView->toGraphDX(snapRange)*0.9;
-                                RS_Entity* Segment =  ((RS_Polyline*)originalEntity)->getNearestEntity( targetPoint, &d, RS2::ResolveNone);
+								RS_Entity* Segment =  ((RS_Polyline*)originalEntity)->getNearestEntity( *targetPoint, &d, RS2::ResolveNone);
                                 if (Segment->rtti() == RS2::EntityLine) {
                                 double ang = ((RS_Line*)Segment)->getAngle1();
-                                double ang1 = ((RS_Line*)Segment)->getStartpoint().angleTo(RS_Vector(targetPoint));
+								double ang1 = ((RS_Line*)Segment)->getStartpoint().angleTo(*targetPoint);
                                 if( ang > ang1 || ang + M_PI < ang1 )
                                         bRightSide = true;
                                 } else {
                                     RS_Vector cen = ((RS_Arc*)Segment)->getCenter();
-                                    if (cen.distanceTo(targetPoint) > ((RS_Arc*)Segment)->getRadius() && ((RS_Arc*)Segment)->getBulge() > 0 )
+									if (cen.distanceTo(*targetPoint) > ((RS_Arc*)Segment)->getRadius() && ((RS_Arc*)Segment)->getBulge() > 0 )
                                         bRightSide = true;
                                 }
 ////////////////////////////////////////2006/06/15
@@ -361,7 +365,7 @@ void RS_ActionPolylineEquidistant::hideOptions() {
 }
 
 void RS_ActionPolylineEquidistant::updateMouseCursor() {
-        graphicView->setMouseCursor(RS2::CadCursor);
+        graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 void RS_ActionPolylineEquidistant::updateMouseButtonHints() {

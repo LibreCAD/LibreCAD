@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-
+#include <iostream>
 #include "rs_actiondrawhatch.h"
 
 #include <QAction>
@@ -31,6 +31,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
+#include "rs_debug.h"
 
 
 
@@ -232,7 +233,7 @@ void RS_ActionDrawHatch::updateMouseButtonHints() {
 }
 
 void RS_ActionDrawHatch::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

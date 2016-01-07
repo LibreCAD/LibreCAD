@@ -33,18 +33,28 @@
 #include "rs_commandevent.h"
 #include "rs_creation.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
+
+struct RS_ActionDrawLinePolygonCorCor::Points {
+	/** 1st corner */
+	RS_Vector corner1;
+	/** 2nd corner */
+	RS_Vector corner2;
+};
 
 RS_ActionDrawLinePolygonCorCor::RS_ActionDrawLinePolygonCorCor(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
 		:RS_PreviewActionInterface("Draw Polygons (Corner,Corner)", container, graphicView)
-		,corner1(false)
-		,corner2(false)
+		, pPoints(new Points{})
 		,number(3)
 		,lastStatus(SetCorner1)
 {
 	actionType=RS2::ActionDrawLinePolygonCorCor;
 }
+
+RS_ActionDrawLinePolygonCorCor::~RS_ActionDrawLinePolygonCorCor() = default;
 
 void RS_ActionDrawLinePolygonCorCor::trigger() {
     RS_PreviewActionInterface::trigger();
@@ -52,7 +62,7 @@ void RS_ActionDrawLinePolygonCorCor::trigger() {
     deletePreview();
 
     RS_Creation creation(container, graphicView);
-    bool ok = creation.createPolygon2(corner1, corner2, number);
+	bool ok = creation.createPolygon2(pPoints->corner1, pPoints->corner2, number);
 
     if (!ok) {
         RS_DEBUG->print("RS_ActionDrawLinePolygon2::trigger:"
@@ -72,12 +82,12 @@ void RS_ActionDrawLinePolygonCorCor::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetCorner2:
-        if (corner1.valid) {
-            corner2 = mouse;
+		if (pPoints->corner1.valid) {
+			pPoints->corner2 = mouse;
             deletePreview();
 
 			RS_Creation creation(preview.get(), NULL, false);
-            creation.createPolygon2(corner1, corner2, number);
+			creation.createPolygon2(pPoints->corner1, pPoints->corner2, number);
 
             drawPreview();
         }
@@ -111,13 +121,13 @@ void RS_ActionDrawLinePolygonCorCor::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetCorner1:
-        corner1 = mouse;
+		pPoints->corner1 = mouse;
         setStatus(SetCorner2);
         graphicView->moveRelativeZero(mouse);
         break;
 
     case SetCorner2:
-        corner2 = mouse;
+		pPoints->corner2 = mouse;
         trigger();
         break;
 

@@ -26,12 +26,16 @@
 #ifndef QG_IMAGEOPTIONS_H
 #define QG_IMAGEOPTIONS_H
 
-#include "ui_qg_imageoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionDrawImage;
+namespace Ui {
+class Ui_ImageOptions;
+}
 
-class QG_ImageOptions : public QWidget, public Ui::QG_ImageOptions
+class QG_ImageOptions : public QWidget
 {
     Q_OBJECT
 
@@ -52,10 +56,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
-
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_ImageOptions> ui;
 };
 
 #endif // QG_IMAGEOPTIONS_H

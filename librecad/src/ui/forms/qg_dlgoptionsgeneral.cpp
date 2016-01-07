@@ -31,6 +31,7 @@
 #include "rs_settings.h"
 #include "rs_units.h"
 #include "qg_filedialog.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_DlgOptionsGeneral as a child of 'parent', with the
@@ -107,21 +108,35 @@ void QG_DlgOptionsGeneral::init() {
 
     // graphic view:
 
-	int checked = RS_SETTINGS->readNumEntry("/Antialiasing");
-	cb_antialiasing->setChecked(checked?true:false);
+    // Snap Indicators
+    bool indicator_lines_state = RS_SETTINGS->readNumEntry("/indicator_lines_state", 1);
+    indicator_lines_checkbox->setChecked(indicator_lines_state);
 
-    // crosshairs:
-    QString showCrosshairs = RS_SETTINGS->readEntry("/ShowCrosshairs", "1");
-    cbShowCrosshairs->setChecked(showCrosshairs=="1");
+    QString indicator_lines_type = RS_SETTINGS->readEntry("/indicator_lines_type", "Crosshair");
+    int index = indicator_lines_combobox->findText(indicator_lines_type);
+    indicator_lines_combobox->setCurrentIndex(index);
 
-    QString snapindicator = RS_SETTINGS->readEntry("/SnapIndicator", "Crosshair");
-    cb_snapindicator->setCurrentIndex(snapindicator=="Crosshair"?0:1);
+    bool indicator_shape_state = RS_SETTINGS->readNumEntry("/indicator_shape_state", 1);
+    indicator_shape_checkbox->setChecked(indicator_shape_state);
+
+    QString indicator_shape_type = RS_SETTINGS->readEntry("/indicator_shape_type", "Circle");
+    index = indicator_shape_combobox->findText(indicator_shape_type);
+    indicator_shape_combobox->setCurrentIndex(index);
+
+    bool cursor_hiding = RS_SETTINGS->readNumEntry("/cursor_hiding", 0);
+    cursor_hiding_checkbox->setChecked(cursor_hiding);
     
     // scale grid:
     QString scaleGrid = RS_SETTINGS->readEntry("/ScaleGrid", "1");
     cbScaleGrid->setChecked(scaleGrid=="1");
     QString minGridSpacing = RS_SETTINGS->readEntry("/MinGridSpacing", "10");
     cbMinGridSpacing->setCurrentIndex( cbMinGridSpacing->findText(minGridSpacing) );
+
+    int checked = RS_SETTINGS->readNumEntry("/Antialiasing");
+    cb_antialiasing->setChecked(checked?true:false);
+
+    checked = RS_SETTINGS->readNumEntry("/ScrollBars");
+    scrollbars_check_box->setChecked(checked?true:false);
 
     // preview:
 	initComboBox(cbMaxPreview, RS_SETTINGS->readEntry("/MaxPreview", "100"));
@@ -130,9 +145,6 @@ void QG_DlgOptionsGeneral::init() {
     QString sizeStatus = RS_SETTINGS->readEntry("/StatusBarFontSize", "9");
     cbSizeStatus->setCurrentIndex( cbSizeStatus->findText(sizeStatus) );
     cbSplash->setChecked(RS_SETTINGS->readNumEntry("/ShowSplash",1)==1);
-
-    sb_icon_size->setValue(RS_SETTINGS->readNumEntry("/IconSize", 24));
-    cb_icon_size->setChecked(RS_SETTINGS->readNumEntry("/SetIconSize", 1)?true:false);
 
     RS_SETTINGS->endGroup();
 
@@ -178,6 +190,7 @@ void QG_DlgOptionsGeneral::init() {
     // Auto save timer
     cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5));
     cbAutoBackup->setChecked(RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)?true:false);
+    tab_mode_check_box->setChecked(RS_SETTINGS->readNumEntry("/TabMode", 0)?true:false);
     RS_SETTINGS->endGroup();
 
 	//update entities to selected entities to the current active layer
@@ -224,13 +237,15 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/MaxPreview", cbMaxPreview->currentText());
         RS_SETTINGS->writeEntry("/Language",cbLanguage->itemData(cbLanguage->currentIndex()));
         RS_SETTINGS->writeEntry("/LanguageCmd",cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
-        RS_SETTINGS->writeEntry("/ShowCrosshairs", QString("%1").arg((int)cbShowCrosshairs->isChecked()));
-        RS_SETTINGS->writeEntry("/SnapIndicator", cb_snapindicator->currentText());
+        RS_SETTINGS->writeEntry("/indicator_lines_state", indicator_lines_checkbox->isChecked());
+        RS_SETTINGS->writeEntry("/indicator_lines_type", indicator_lines_combobox->currentText());
+        RS_SETTINGS->writeEntry("/indicator_shape_state", indicator_shape_checkbox->isChecked());      
+        RS_SETTINGS->writeEntry("/indicator_shape_type", indicator_shape_combobox->currentText());
+        RS_SETTINGS->writeEntry("/cursor_hiding", cursor_hiding_checkbox->isChecked());
         RS_SETTINGS->writeEntry("/StatusBarFontSize", cbSizeStatus->currentText());
         RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
-        RS_SETTINGS->writeEntry("/IconSize", sb_icon_size->value() );
-        RS_SETTINGS->writeEntry("/SetIconSize", cb_icon_size->isChecked()?1:0);
-		RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/ScrollBars", scrollbars_check_box->isChecked()?1:0);
         RS_SETTINGS->endGroup();
 
         RS_SETTINGS->beginGroup("Colors");
@@ -261,6 +276,7 @@ void QG_DlgOptionsGeneral::ok()
             RS_Units::unitToString( RS_Units::stringToUnit( cbUnit->currentText() ), false/*untr.*/) );
         RS_SETTINGS->writeEntry("/AutoSaveTime", cbAutoSaveTime->value() );
         RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/TabMode", tab_mode_check_box->isChecked()?1:0);
         RS_SETTINGS->endGroup();
 
         //update entities to selected entities to the current active layer

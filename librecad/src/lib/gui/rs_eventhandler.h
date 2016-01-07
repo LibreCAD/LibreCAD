@@ -28,7 +28,7 @@
 #ifndef RS_EVENTHANDLER_H
 #define RS_EVENTHANDLER_H
 
-#define RS_MAXACTIONS 16
+#include <QObject>
 
 #include "rs_vector.h"
 
@@ -53,7 +53,7 @@ public:
     RS_EventHandler(QObject* parent = 0);
     ~RS_EventHandler();
 
-    void set_action(QAction* q_action);
+    void setQAction(QAction* action);
 
     void back();
     void enter();
@@ -86,26 +86,27 @@ public:
 	void debugActions() const;
     void setSnapMode(RS_SnapMode sm);
     void setSnapRestriction(RS2::SnapRestriction sr);
-    RS_Vector relative_zero;
+
+    //! return true if the current action is for selecting
+    bool inSelectionMode();
 
 private:
     /**
-         * @brief cliCalEvent, process cli "cal" calculator command
-         * @param cmd, cli line to check for "cal" command
-         * @return true, if cli starts with "cal"
-         */
+     * @brief cliCalEvent, process cli "cal" calculator command
+     * @param cmd, cli line to check for "cal" command
+     * @return true, if cli starts with "cal"
+     */
     bool cliCalculator(const QString& cmd) const;
 
-	QAction* real_action{nullptr};
+	QAction* q_action{nullptr};
 	bool right_click_quits{false};
 	RS_ActionInterface* defaultAction{nullptr};
-	//    RS_ActionInterface* currentActions[RS_MAXACTIONS];
 	QList<RS_ActionInterface*> currentActions;
-//	int actionIndex;
 	bool coordinateInputEnabled{true};
+    RS_Vector relative_zero;
 
 public slots:
-    void set_relative_zero(const RS_Vector&);
+    void setRelativeZero(const RS_Vector&);
 };
 
 #endif

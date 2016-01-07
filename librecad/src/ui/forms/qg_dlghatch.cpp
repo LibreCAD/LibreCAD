@@ -65,6 +65,7 @@ void QG_DlgHatch::init() {
     preview = new RS_EntityContainer();
     gvPreview->setContainer(preview);
     gvPreview->setBorders(15,15,15,15);
+    gvPreview->addScrollbars();
 
     cbPattern->init();
 
@@ -80,20 +81,10 @@ void QG_DlgHatch::showEvent ( QShowEvent * e) {
     gvPreview->zoomAuto();
 }
 
-void QG_DlgHatch::destroy() {
-    if (isNew) {
-        RS_SETTINGS->beginGroup("/Draw");
-        RS_SETTINGS->writeEntry("/HatchSolid", (int)cbSolid->isChecked());
-        RS_SETTINGS->writeEntry("/HatchPattern", cbPattern->currentText());
-        RS_SETTINGS->writeEntry("/HatchScale", leScale->text());
-        RS_SETTINGS->writeEntry("/HatchAngle", leAngle->text());
-        RS_SETTINGS->writeEntry("/HatchPreview",
-                                (int)cbEnablePreview->isChecked());
-        RS_SETTINGS->endGroup();
-    }
-        delete preview;
+QG_DlgHatch::~QG_DlgHatch()
+{
+    delete preview;
 }
-
 
 void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
     hatch = &h;
@@ -184,10 +175,7 @@ void QG_DlgHatch::updatePreview(RS_Pattern* ) {
 
     RS_EntityContainer* loop = new RS_EntityContainer(prevHatch);
     loop->setPen(RS_Pen(RS2::FlagInvalid));
-	loop->addEntity(new RS_Line{loop, {0., 0.}, {prevSize, 0.}});
-	loop->addEntity(new RS_Line{loop, {prevSize, 0.}, {prevSize,prevSize}});
-	loop->addEntity(new RS_Line{loop, {prevSize,prevSize}, {prevSize, 0.}});
-	loop->addEntity(new RS_Line{loop, {prevSize, 0.}, {0., 0.}});
+	loop->addRectangle({0., 0.}, {prevSize,prevSize});
     prevHatch->addEntity(loop);
     preview->addEntity(prevHatch);
     if (!isSolid) {
@@ -195,4 +183,18 @@ void QG_DlgHatch::updatePreview(RS_Pattern* ) {
     }
 
     gvPreview->zoomAuto();
+}
+
+void QG_DlgHatch::saveSettings()
+{
+    if (isNew)
+    {
+        RS_SETTINGS->beginGroup("/Draw");
+        RS_SETTINGS->writeEntry("/HatchSolid", cbSolid->isChecked());
+        RS_SETTINGS->writeEntry("/HatchPattern", cbPattern->currentText());
+        RS_SETTINGS->writeEntry("/HatchScale", leScale->text());
+        RS_SETTINGS->writeEntry("/HatchAngle", leAngle->text());
+        RS_SETTINGS->writeEntry("/HatchPreview", cbEnablePreview->isChecked());
+        RS_SETTINGS->endGroup();
+    }
 }

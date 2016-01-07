@@ -24,8 +24,8 @@
 **
 **********************************************************************/
 
+#include<cmath>
 #include "rs_actionmodifytrimamount.h"
-
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_dialogfactory.h"
@@ -33,6 +33,9 @@
 #include "rs_commandevent.h"
 #include "rs_modification.h"
 #include "rs_math.h"
+#include "rs_preview.h"
+#include "rs_atomicentity.h"
+#include "rs_debug.h"
 
 RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(
 		RS_EntityContainer& container,
@@ -40,12 +43,14 @@ RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(
 	:RS_ActionInterface("Trim Entity by a given amount",
 						container, graphicView)
 	,trimEntity(nullptr)
-	,trimCoord(false)
+	,trimCoord(new RS_Vector{})
 	,distance(0.0)
 	,byTotal(false)
 {
 	actionType=RS2::ActionModifyTrimAmount;
 }
+
+RS_ActionModifyTrimAmount::~RS_ActionModifyTrimAmount() = default;
 
 void RS_ActionModifyTrimAmount::init(int status) {
     RS_ActionInterface::init(status);
@@ -71,20 +76,18 @@ void RS_ActionModifyTrimAmount::trigger() {
             d = distance;
         }
 
-        m.trimAmount(trimCoord, (RS_AtomicEntity*)trimEntity, d);
+		m.trimAmount(*trimCoord, static_cast<RS_AtomicEntity*>(trimEntity), d);
 
-        trimEntity = NULL;
+		trimEntity = nullptr;
         setStatus(ChooseTrimEntity);
 
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
 }
 
-
-
 void RS_ActionModifyTrimAmount::mouseReleaseEvent(QMouseEvent* e) {
 
-    trimCoord = graphicView->toGraph(e->x(), e->y());
+	*trimCoord = graphicView->toGraph(e->x(), e->y());
     trimEntity = catchEntity(e);
 
     if (e->button()==Qt::LeftButton) {
@@ -93,7 +96,7 @@ void RS_ActionModifyTrimAmount::mouseReleaseEvent(QMouseEvent* e) {
             if (trimEntity && trimEntity->isAtomic()) {
                 trigger();
             } else {
-                if (trimEntity==NULL) {
+				if (trimEntity == nullptr) {
                     RS_DIALOGFACTORY->commandMessage(
                         tr("No entity found. "));
                 } else if (trimEntity->rtti()==RS2::EntityInsert) {
@@ -115,8 +118,6 @@ void RS_ActionModifyTrimAmount::mouseReleaseEvent(QMouseEvent* e) {
         init(getStatus()-1);
     }
 }
-
-
 
 void RS_ActionModifyTrimAmount::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
@@ -194,7 +195,7 @@ void RS_ActionModifyTrimAmount::updateMouseButtonHints() {
 
 
 void RS_ActionModifyTrimAmount::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

@@ -26,16 +26,22 @@
 #ifndef QG_ARCTANGENTIALOPTIONS_H
 #define QG_ARCTANGENTIALOPTIONS_H
 
-#include "ui_qg_arctangentialoptions.h"
-#include "rs_actiondrawarctangential.h"
+#include<memory>
+#include<QWidget>
 
-class QG_ArcTangentialOptions : public QWidget, public Ui::QG_ArcTangentialOptions
+class RS_ActionInterface;
+class RS_ActionDrawArcTangential;
+namespace Ui {
+class Ui_ArcTangentialOptions;
+}
+
+class QG_ArcTangentialOptions : public QWidget
 {
     Q_OBJECT
 
 public:
     QG_ArcTangentialOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
-	~QG_ArcTangentialOptions() = default;
+	~QG_ArcTangentialOptions();
 
 public slots:
     virtual void setAction( RS_ActionInterface * a, bool update );
@@ -51,16 +57,17 @@ protected slots:
     virtual void languageChange();
 
 private slots:
-    void on_leRadius_textEdited();
+	void on_leRadius_editingFinished();
 
-    void on_leAngle_textEdited();
+	void on_leAngle_editingFinished();
 
     void on_rbRadius_clicked(bool checked);
 
     void on_rbAngle_clicked(bool checked);
 
 private:
-    void destroy();
+	std::unique_ptr<Ui::Ui_ArcTangentialOptions> ui;
+	void saveSettings();
 
 };
 

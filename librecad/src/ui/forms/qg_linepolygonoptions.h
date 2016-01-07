@@ -26,12 +26,16 @@
 #ifndef QG_LINEPOLYGONOPTIONS_H
 #define QG_LINEPOLYGONOPTIONS_H
 
-#include "ui_qg_linepolygonoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionDrawLinePolygonCenCor;
+namespace Ui {
+class Ui_LinePolygonOptions;
+}
 
-class QG_LinePolygonOptions : public QWidget, public Ui::QG_LinePolygonOptions
+class QG_LinePolygonOptions : public QWidget
 {
     Q_OBJECT
 
@@ -50,8 +54,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_LinePolygonOptions> ui;
 };
 
 #endif // QG_LINEPOLYGONOPTIONS_H

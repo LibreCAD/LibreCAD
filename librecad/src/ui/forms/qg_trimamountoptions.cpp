@@ -28,6 +28,8 @@
 #include "rs_actionmodifytrimamount.h"
 #include "rs_settings.h"
 #include "rs_math.h"
+#include "ui_qg_trimamountoptions.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_TrimAmountOptions as a child of 'parent', with the
@@ -35,9 +37,9 @@
  */
 QG_TrimAmountOptions::QG_TrimAmountOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_TrimAmountOptions{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
@@ -45,8 +47,7 @@ QG_TrimAmountOptions::QG_TrimAmountOptions(QWidget* parent, Qt::WindowFlags fl)
  */
 QG_TrimAmountOptions::~QG_TrimAmountOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -55,19 +56,20 @@ QG_TrimAmountOptions::~QG_TrimAmountOptions()
  */
 void QG_TrimAmountOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
-void QG_TrimAmountOptions::destroy() {
+void QG_TrimAmountOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Modify");
-    RS_SETTINGS->writeEntry("/TrimAmount", leDist->text());
-    RS_SETTINGS->writeEntry("/TrimAmountTotal", cbTotalLength->isChecked()?QString("1"):QString("0"));
+	RS_SETTINGS->writeEntry("/TrimAmount", ui->leDist->text());
+	QString const total = ui->cbTotalLength->isChecked()?"1":"0";
+	RS_SETTINGS->writeEntry("/TrimAmountTotal", total);
     RS_SETTINGS->endGroup();
 }
 
 void QG_TrimAmountOptions::setAction(RS_ActionInterface* a, bool update) {
     if (a && a->rtti()==RS2::ActionModifyTrimAmount) {
-        action = (RS_ActionModifyTrimAmount*)a;
+		action = static_cast<RS_ActionModifyTrimAmount*>(a);
 
         QString sd;
         bool byTotal;
@@ -84,12 +86,15 @@ void QG_TrimAmountOptions::setAction(RS_ActionInterface* a, bool update) {
             RS_SETTINGS->endGroup();
         }
 
-        leDist->setText(sd);
-        cbTotalLength->setChecked(byTotal);
+		ui->leDist->setText(sd);
+		//initialize trim amount distance for action
+		updateDist(sd);
+
+		ui->cbTotalLength->setChecked(byTotal);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_ModifyTrimAmountOptions::setAction: wrong action type");
-        this->action = NULL;
+		this->action = nullptr;
     }
 }
 
@@ -99,9 +104,14 @@ void QG_TrimAmountOptions::updateDist(const QString& d) {
     }
 }
 
+void QG_TrimAmountOptions::on_leDist_editingFinished()
+{
+	updateDist(ui->leDist->text());
+}
+
 void QG_TrimAmountOptions::on_cbTotalLength_toggled(bool checked)
 {
-    if (action) {
-        action->setByTotal(checked);
-    }
+	if (action) {
+		action->setByTotal(checked);
+	}
 }

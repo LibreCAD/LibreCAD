@@ -35,24 +35,45 @@
 #include "rs_commandevent.h"
 #include "rs_point.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
+struct RS_ActionDrawSpline::Points {
+
+	/**
+	 * Spline data defined so far.
+	 */
+	RS_SplineData data;
+	/**
+	 * Polyline entity we're working on.
+	 */
+	RS_Spline* spline{nullptr};
+	/**
+	 * Point history (for undo)
+	 */
+		QList<RS_Vector> history;
+
+	/**
+	 * Bulge history (for undo)
+	 */
+		//QList<double> bHistory;
+};
 
 RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
 										 RS_GraphicView& graphicView)
 	:RS_PreviewActionInterface("Draw splines",
 							   container, graphicView)
-	,data(new RS_SplineData(3, false))
-	,spline(nullptr)
+	,pPoints(new Points{})
 {
 	actionType=RS2::ActionDrawSpline;
 	reset();
 }
 
-RS_ActionDrawSpline::~RS_ActionDrawSpline() {}
+RS_ActionDrawSpline::~RS_ActionDrawSpline() = default;
 
 void RS_ActionDrawSpline::reset() {
-	spline = nullptr;
-	history.clear();
+	pPoints->spline = nullptr;
+	pPoints->history.clear();
 }
 
 
@@ -68,21 +89,21 @@ void RS_ActionDrawSpline::init(int status) {
 void RS_ActionDrawSpline::trigger() {
     RS_PreviewActionInterface::trigger();
 
-		if (!spline) {
+		if (!pPoints->spline) {
                 return;
         }
 
         // add the entity
     //RS_Spline* spline = new RS_Spline(container, data);
-    spline->setLayerToActive();
-    spline->setPenToActive();
-        spline->update();
-    container->addEntity(spline);
+	pPoints->spline->setLayerToActive();
+	pPoints->spline->setPenToActive();
+	pPoints->spline->update();
+	container->addEntity(pPoints->spline);
 
     // upd. undo list:
     if (document) {
         document->startUndoCycle();
-        document->addUndoable(spline);
+		document->addUndoable(pPoints->spline);
         document->endUndoCycle();
     }
 
@@ -91,9 +112,9 @@ void RS_ActionDrawSpline::trigger() {
         graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(r);
     RS_DEBUG->print("RS_ActionDrawSpline::trigger(): spline added: %d",
-                    spline->getId());
+					pPoints->spline->getId());
 
-		spline = nullptr;
+		pPoints->spline = nullptr;
     //history.clear();
 }
 
@@ -101,10 +122,10 @@ void RS_ActionDrawSpline::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawSpline::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-	if (getStatus()==SetNextPoint && spline /*&& point.valid*/) {
+	if (getStatus()==SetNextPoint && pPoints->spline /*&& point.valid*/) {
         deletePreview();
 
-				RS_Spline* tmpSpline = static_cast<RS_Spline*>(spline->clone());
+				RS_Spline* tmpSpline = static_cast<RS_Spline*>(pPoints->spline->clone());
                 tmpSpline->addControlPoint(mouse);
                 tmpSpline->update();
                 preview->addEntity(tmpSpline);
@@ -126,7 +147,9 @@ void RS_ActionDrawSpline::mouseReleaseEvent(QMouseEvent* e) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
-                if (getStatus()==SetNextPoint && spline && spline->getNumberOfControlPoints()>=spline->getDegree()+1) {
+				if (getStatus()==SetNextPoint &&
+						pPoints->spline &&
+						pPoints->spline->getNumberOfControlPoints()>=pPoints->spline->getDegree()+1) {
                         trigger();
                 }
         deletePreview();
@@ -145,11 +168,11 @@ void RS_ActionDrawSpline::coordinateEvent(RS_CoordinateEvent* e) {
     case SetStartpoint:
                 //data.startpoint = mouse;
         //point = mouse;
-        history.clear();
-        history.append(mouse);
-				if (!spline) {
-						spline = new RS_Spline(container, *data);
-                        spline->addControlPoint(mouse);
+		pPoints->history.clear();
+		pPoints->history.append(mouse);
+				if (!pPoints->spline) {
+						pPoints->spline = new RS_Spline(container, pPoints->data);
+						pPoints->spline->addControlPoint(mouse);
                 }
         //bHistory.clear();
         //bHistory.append(new double(0.0));
@@ -162,11 +185,11 @@ void RS_ActionDrawSpline::coordinateEvent(RS_CoordinateEvent* e) {
     case SetNextPoint:
         graphicView->moveRelativeZero(mouse);
         //point = mouse;
-        history.append(mouse);
+		pPoints->history.append(mouse);
         //bHistory.append(new double(0.0));
-				if (spline) {
+				if (pPoints->spline) {
                         //graphicView->deleteEntity(spline);
-                        spline->addControlPoint(mouse);
+						pPoints->spline->addControlPoint(mouse);
                         //spline->setEndpoint(mouse);
                         //if (spline->count()==1) {
                         //spline->setLayerToActive();
@@ -230,9 +253,9 @@ QStringList RS_ActionDrawSpline::getAvailableCommands() {
     case SetStartpoint:
         break;
     case SetNextPoint:
-        if (history.size()>=2) {
+		if (pPoints->history.size()>=2) {
             cmd += command("undo");
-		}else if (history.size()>=3) {
+		}else if (pPoints->history.size()>=3) {
             cmd += command("close");
         }
         break;
@@ -254,11 +277,11 @@ void RS_ActionDrawSpline::updateMouseButtonHints() {
     case SetNextPoint: {
             QString msg = "";
 
-            if (history.size()>=3) {
+			if (pPoints->history.size()>=3) {
                 msg += RS_COMMANDS->command("close");
                 msg += "/";
             }
-            if (history.size()>=2) {
+			if (pPoints->history.size()>=2) {
 				msg += RS_COMMANDS->command("undo");
                 RS_DIALOGFACTORY->updateMouseWidget(
                     tr("Specify next control point or [%1]").arg(msg),
@@ -317,19 +340,19 @@ void RS_ActionDrawSpline::close() {
 */
 
 void RS_ActionDrawSpline::undo() {
-    if (history.size()>1) {
-        history.removeLast();
+	if (pPoints->history.size()>1) {
+		pPoints->history.removeLast();
         //bHistory.removeLast();
         deletePreview();
         //graphicView->setCurrentAction(
         //    new RS_ActionEditUndo(true, *container, *graphicView));
-                if (!history.isEmpty()) {
+				if (!pPoints->history.isEmpty()) {
                 //point = *history.last();
                 }
-                if (spline) {
-                        spline->removeLastControlPoint();
-                        if (!history.isEmpty()) {
-                            RS_Vector v = history.last();
+				if (pPoints->spline) {
+						pPoints->spline->removeLastControlPoint();
+						if (!pPoints->history.isEmpty()) {
+							RS_Vector v = pPoints->history.last();
                             graphicView->moveRelativeZero(v);
                         }
                         graphicView->redraw(RS2::RedrawDrawing);
@@ -344,25 +367,25 @@ void RS_ActionDrawSpline::undo() {
 
 
 void RS_ActionDrawSpline::setDegree(int deg) {
-		data->degree = deg;
-		if (spline) {
-                spline->setDegree(deg);
+		pPoints->data.degree = deg;
+		if (pPoints->spline) {
+				pPoints->spline->setDegree(deg);
         }
 }
 
 int RS_ActionDrawSpline::getDegree() {
-		return data->degree;
+		return pPoints->data.degree;
 }
 
 void RS_ActionDrawSpline::setClosed(bool c) {
-		data->closed = c;
-		if (spline) {
-                spline->setClosed(c);
+		pPoints->data.closed = c;
+		if (pPoints->spline) {
+				pPoints->spline->setClosed(c);
         }
 }
 
 bool RS_ActionDrawSpline::isClosed() {
-		return data->closed;
+		return pPoints->data.closed;
 }
 
 // EOF

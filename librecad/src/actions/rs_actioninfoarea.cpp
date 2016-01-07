@@ -35,17 +35,18 @@
 #include "rs_infoarea.h"
 #include "rs_graphic.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
 
 RS_ActionInfoArea::RS_ActionInfoArea(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Info Area",
 							   container, graphicView)
-,ia(new RS_InfoArea())
+	,ia(new RS_InfoArea())
 {
 	actionType=RS2::ActionInfoArea;
 }
 
-RS_ActionInfoArea::~RS_ActionInfoArea(){}
+RS_ActionInfoArea::~RS_ActionInfoArea() = default;
 
 
 void RS_ActionInfoArea::init(int status) {

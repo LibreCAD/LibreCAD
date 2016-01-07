@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<iostream>
 #include "qc_mdiwindow.h"
 
 #if QT_VERSION >= 0x050000
@@ -32,9 +32,10 @@
 #else
 # include <QPrinter>
 # include <QPrintDialog>
-#endif 
-#include <QCloseEvent>
+#endif
 
+#include <QApplication>
+#include <QCloseEvent>
 #include <QCursor>
 #include <QMessageBox>
 #include <QFileInfo>
@@ -49,6 +50,7 @@
 #include "rs_mtext.h"
 #include "rs_pen.h"
 #include "qg_graphicview.h"
+#include "rs_debug.h"
 
 int QC_MDIWindow::idCounter = 0;
 
@@ -57,7 +59,7 @@ int QC_MDIWindow::idCounter = 0;
  *
  * @param doc Pointer to an existing document of NULL if a new
  *   document shall be created for this window.
- * @param parent Parent widget. Usually a workspace.
+ * @param parent An instance of QMdiArea.
  */
 QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, Qt::WindowFlags wflags)
                             : QMdiSubWindow(parent, wflags)
@@ -76,8 +78,10 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, Qt::WindowFlags wf
 
     graphicView = new QG_GraphicView(this, 0, document);
     graphicView->setObjectName("graphicview");
+
     connect(graphicView, SIGNAL(previous_zoom_state(bool)),
             parent->window(), SLOT(setPreviousZoomEnable(bool)));
+
     setWidget(graphicView);
 
     id = idCounter++;
@@ -101,6 +105,7 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, Qt::WindowFlags wf
  */
 QC_MDIWindow::~QC_MDIWindow()
 {
+    RS_DEBUG->print("~QC_MDIWindow");
 	if(!(graphicView && graphicView->isCleanUp())){
 		//do not clear layer/block lists, if application is being closed
 
@@ -230,14 +235,16 @@ bool QC_MDIWindow::closeMDI(bool force, bool ask)
         RS_DEBUG->print("  closing block");
         RS_DEBUG->print("  notifying parent about closing this window");
         parentWindow->removeChildWindow(this);
-        emit(signalClosing());
+        emit(signalClosing(this));
         ret = true;
     }
 
     // This is a graphic document. ask user for closing.
     else if (!ask || slotFileClose(force)) {
         RS_DEBUG->print("  closing graphic");
-        // close all child windows:
+
+        emit(signalClosing(this));
+
         if (childWindows.length() > 0)
         {
             for(auto p: childWindows)
@@ -247,8 +254,6 @@ bool QC_MDIWindow::closeMDI(bool force, bool ask)
             }
 		childWindows.clear();
         }
-
-        emit(signalClosing());
 
         ret = true;
     }
@@ -586,3 +591,10 @@ std::ostream& operator << (std::ostream& os, QC_MDIWindow& w) {
     return os;
 }
 
+/**
+ * Return true if this window has children (QC_MDIWindow).
+ */
+bool QC_MDIWindow::has_children()
+{
+    return !childWindows.isEmpty();
+}

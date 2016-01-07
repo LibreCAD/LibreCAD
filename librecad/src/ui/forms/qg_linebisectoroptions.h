@@ -26,12 +26,16 @@
 #ifndef QG_LINEBISECTOROPTIONS_H
 #define QG_LINEBISECTOROPTIONS_H
 
-#include "ui_qg_linebisectoroptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionDrawLineBisector;
+namespace Ui {
+class Ui_LineBisectorOptions;
+}
 
-class QG_LineBisectorOptions : public QWidget, public Ui::QG_LineBisectorOptions
+class QG_LineBisectorOptions : public QWidget
 {
     Q_OBJECT
 
@@ -51,8 +55,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_LineBisectorOptions> ui;
 };
 
 #endif // QG_LINEBISECTOROPTIONS_H

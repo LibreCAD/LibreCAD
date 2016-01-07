@@ -28,8 +28,8 @@
 #ifndef RS_VECTOR_H
 #define RS_VECTOR_H
 
-#include <iostream>
 #include <vector>
+#include <iosfwd>
 #include "rs.h"
 
 /**
@@ -49,6 +49,11 @@ public:
     //RS_Vector(double v[]);
     explicit RS_Vector(bool valid);
 	~RS_Vector()=default;
+
+	//!
+	//! \brief operator bool explicit and implicit conversion to bool
+	//!
+	explicit operator bool() const;
 
 	void set(double angle); // set to unit vector by the direction of angle
 #ifdef  RS_VECTOR2D
@@ -77,11 +82,11 @@ public:
     RS_Vector toInteger();
 
     RS_Vector move(const RS_Vector& offset);
-    RS_Vector rotate(const double& ang);
+	RS_Vector rotate(double ang);
     RS_Vector rotate(const RS_Vector& angleVector);
-    RS_Vector rotate(const RS_Vector& center, const double& ang);
+	RS_Vector rotate(const RS_Vector& center, double ang);
     RS_Vector rotate(const RS_Vector& center, const RS_Vector& angleVector);
-    RS_Vector scale(const double& factor);
+	RS_Vector scale(double factor);
     RS_Vector scale(const RS_Vector& factor);
 	RS_Vector scale(const RS_Vector& factor) const;
 	RS_Vector scale(const RS_Vector& center, const RS_Vector& factor);
@@ -94,21 +99,28 @@ public:
 	RS_Vector operator - (double d) const;
 	RS_Vector operator * (const RS_Vector& v) const;
 	RS_Vector operator / (const RS_Vector& v) const;
-    RS_Vector operator * (const double& s) const;
-    RS_Vector operator / (const double& s) const;
+	RS_Vector operator * (double s) const;
+	RS_Vector operator / (double s) const;
     RS_Vector operator - () const;
 
 	RS_Vector operator += (const RS_Vector& v);
 	RS_Vector operator -= (const RS_Vector& v);
 	RS_Vector operator *= (const RS_Vector& v);
 	RS_Vector operator /= (const RS_Vector& v);
-	RS_Vector operator *= (const double& s);
-	RS_Vector operator /= (const double& s);
+	RS_Vector operator *= (double s);
+	RS_Vector operator /= (double s);
 
     bool operator == (const RS_Vector& v) const;
     bool operator != (const RS_Vector& v) const {
         return !operator==(v);
     }
+	//!
+	//! \brief operator == comparison of validity with bool
+	//! \param valid boolean parameter
+	//! \return true is the parameter valid is the same as validity
+	//!
+	bool operator == (bool valid) const;
+	bool operator != (bool valid) const;
 
     static RS_Vector minimum(const RS_Vector& v1, const RS_Vector& v2);
     static RS_Vector maximum(const RS_Vector& v1, const RS_Vector& v2);
@@ -153,7 +165,6 @@ public:
 	~RS_VectorSolutions()=default;
 
 	void alloc(size_t num);
-	void clean();
     void clear();
 	/**
 	 * @brief get range safe method of member access
@@ -183,9 +194,9 @@ void set(size_t i, const RS_Vector& v);
 	std::vector<RS_Vector>::const_iterator end() const;
 	std::vector<RS_Vector>::iterator begin();
 	std::vector<RS_Vector>::iterator end();
-	void rotate(const double& ang);
+	void rotate(double ang);
     void rotate(const RS_Vector& angleVector);
-    void rotate(const RS_Vector& center, const double& ang);
+	void rotate(const RS_Vector& center, double ang);
     void rotate(const RS_Vector& center, const RS_Vector& angleVector);
     void move(const RS_Vector& vp);
     void scale(const RS_Vector& center, const RS_Vector& factor);

@@ -36,6 +36,8 @@
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 
 RS_ActionDimRadial::RS_ActionDimRadial(
@@ -44,22 +46,21 @@ RS_ActionDimRadial::RS_ActionDimRadial(
         :RS_ActionDimension("Draw Radial Dimensions",
 					container, graphicView)
 		,entity(nullptr)
-		,pos(false)
+		,pos(new RS_Vector{})
 		,lastStatus(SetEntity)
 {
 	actionType=RS2::ActionDimRadial;
     reset();
 }
 
-RS_ActionDimRadial::~RS_ActionDimRadial(){}
+RS_ActionDimRadial::~RS_ActionDimRadial() = default;
 
 void RS_ActionDimRadial::reset() {
     RS_ActionDimension::reset();
 
-	edata.reset(new RS_DimRadialData(RS_Vector{false}, 0.0)
-				);
+	edata.reset(new RS_DimRadialData{{}, 0.0});
 	entity = nullptr;
-	pos = RS_Vector{false};
+	*pos = {};
 	lastStatus = SetEntity;
     RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
@@ -103,7 +104,7 @@ void RS_ActionDimRadial::trigger() {
 
 void RS_ActionDimRadial::preparePreview() {
     if (entity) {
-		double angle = data->definitionPoint.angleTo(pos);
+		double angle = data->definitionPoint.angleTo(*pos);
         double radius=0.0;
         if (entity->rtti()==RS2::EntityArc) {
             radius = ((RS_Arc*)entity)->getRadius();
@@ -128,7 +129,7 @@ void RS_ActionDimRadial::mouseMoveEvent(QMouseEvent* e) {
 
     case SetPos:
         if (entity) {
-            pos = snapPoint(e);
+			*pos = snapPoint(e);
 
             preparePreview();
 
@@ -199,7 +200,7 @@ void RS_ActionDimRadial::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetPos:
-        pos = e->getCoordinate();
+		*pos = e->getCoordinate();
         trigger();
         reset();
         setStatus(SetEntity);
@@ -242,8 +243,8 @@ void RS_ActionDimRadial::commandEvent(RS_CommandEvent* e) {
         bool ok;
         double a = RS_Math::eval(c, &ok);
 		if (ok) {
-            pos.setPolar(1.0, RS_Math::deg2rad(a));
-			pos += data->definitionPoint;
+			pos->setPolar(1.0, RS_Math::deg2rad(a));
+			*pos += data->definitionPoint;
             trigger();
             reset();
             setStatus(SetEntity);

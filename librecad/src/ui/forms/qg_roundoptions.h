@@ -26,12 +26,16 @@
 #ifndef QG_ROUNDOPTIONS_H
 #define QG_ROUNDOPTIONS_H
 
-#include "ui_qg_roundoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionModifyRound;
+namespace Ui {
+class Ui_RoundOptions;
+}
 
-class QG_RoundOptions : public QWidget, public Ui::QG_RoundOptions
+class QG_RoundOptions : public QWidget
 {
     Q_OBJECT
 
@@ -50,8 +54,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_RoundOptions> ui;
 };
 
 #endif // QG_ROUNDOPTIONS_H

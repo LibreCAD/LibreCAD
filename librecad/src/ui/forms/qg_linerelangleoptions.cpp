@@ -28,6 +28,8 @@
 #include "rs_actiondrawlinerelangle.h"
 #include "rs_settings.h"
 #include "rs_math.h"
+#include "ui_qg_linerelangleoptions.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_LineRelAngleOptions as a child of 'parent', with the
@@ -35,9 +37,9 @@
  */
 QG_LineRelAngleOptions::QG_LineRelAngleOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_LineRelAngleOptions{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
@@ -45,8 +47,7 @@ QG_LineRelAngleOptions::QG_LineRelAngleOptions(QWidget* parent, Qt::WindowFlags 
  */
 QG_LineRelAngleOptions::~QG_LineRelAngleOptions()
 {
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+	saveSettings();
 }
 
 /*
@@ -55,7 +56,7 @@ QG_LineRelAngleOptions::~QG_LineRelAngleOptions()
  */
 void QG_LineRelAngleOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
 void QG_LineRelAngleOptions::setAction(RS_ActionInterface* a, bool update) {
@@ -64,13 +65,13 @@ void QG_LineRelAngleOptions::setAction(RS_ActionInterface* a, bool update) {
               ||
               a->rtti()==RS2::ActionDrawLineOrthogonal )
             ) {
-        action = (RS_ActionDrawLineRelAngle*)a;
+		action = static_cast<RS_ActionDrawLineRelAngle*>(a);
         if (action->hasFixedAngle()) {
-            lAngle->hide();
-            leAngle->hide();
+			ui->lAngle->hide();
+			ui->leAngle->hide();
         }else{
-            lAngle->show();
-            leAngle->show();
+			ui->lAngle->show();
+			ui->leAngle->show();
         }
 
         QString sa;
@@ -93,16 +94,16 @@ void QG_LineRelAngleOptions::setAction(RS_ActionInterface* a, bool update) {
             RS_SETTINGS->endGroup();
         }
 
-        leAngle->setText(sa);
-        leLength->setText(sl);
+		ui->leAngle->setText(sa);
+		ui->leLength->setText(sl);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, 
 			"QG_LineRelAngleOptions::setAction: wrong action type");
-        this->action = NULL;
+		action = nullptr;
     }
 }
 
-void QG_LineRelAngleOptions::destroy() {
+void QG_LineRelAngleOptions::saveSettings() {
     if (action) {
         RS_SETTINGS->beginGroup("/Draw");
         if (!action->hasFixedAngle()) {

@@ -50,7 +50,7 @@ public:
 public:
     RS_ActionPolylineDelBetween(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-	~RS_ActionPolylineDelBetween()=default;
+	~RS_ActionPolylineDelBetween();
 
     virtual void init(int status=0);
 	
@@ -65,8 +65,8 @@ public:
 private:
     RS_Entity* delEntity;
 	RS_AtomicEntity* delSegment;
-    RS_Vector nodePoint1;
-    RS_Vector nodePoint2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

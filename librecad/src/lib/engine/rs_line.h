@@ -214,7 +214,7 @@ m0 x + m1 y + m2 =0
      * @return line integral \oint x dy along the entity
      * \oint x dy = 0.5*(x0+x1)*(y1-y0)
      */
-    virtual double areaLineIntegral() const;
+    virtual double areaLineIntegral() const override;
 
 protected:
 	RS_LineData data;

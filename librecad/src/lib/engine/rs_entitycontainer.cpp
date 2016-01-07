@@ -24,9 +24,10 @@
 **
 **********************************************************************/
 
-
-#include <QObject>
+#include <iostream>
 #include <cmath>
+#include <set>
+#include <QObject>
 
 #include "rs_dialogfactory.h"
 #include "qg_dialogfactory.h"
@@ -490,17 +491,17 @@ unsigned int RS_EntityContainer::countDeep() const{
 /**
  * Counts the selected entities in this container.
  */
-unsigned int RS_EntityContainer::countSelected(bool deep, std::set<RS2::EntityType> const& types) {
+unsigned int RS_EntityContainer::countSelected(bool deep, std::initializer_list<RS2::EntityType> const& types) {
     unsigned int c=0;
+	std::set<RS2::EntityType> type = types;
 
 	for (RS_Entity* t: entities){
 
-		if (t->isSelected()) {
-
-			if(!types.size() || types.count(t->rtti()))
+		if (t->isSelected())
+			if (!types.size() || type.count(t->rtti()))
 				c++;
-        }
-		if(t->isContainer())
+
+		if (t->isContainer())
 			c += static_cast<RS_EntityContainer*>(t)->countSelected(deep);
     }
 
@@ -1423,7 +1424,17 @@ double RS_EntityContainer::getDistanceToPoint(const RS_Vector& coord,
 
             RS_DEBUG->print("entity: getDistanceToPoint: OK");
 
-            if (curDist<minDist) {
+			/*
+			 * By using '<=', we will prefer the *last* item in the container if there are multiple
+			 * entities that are *exactly* the same distance away, which should tend to be the one
+			 * drawn most recently, and the one most likely to be visible (as it is also the order
+			 * that the software draws the entities). This makes a difference when one entity is
+			 * drawn directly over top of another, and it's reasonable to assume that humans will
+			 * tend to want to reference entities that they see or have recently drawn as opposed
+			 * to deeper more forgotten and invisible ones...
+			 */
+			if (curDist<=minDist)
+			{
                 switch(level){
                 case RS2::ResolveAll:
                 case RS2::ResolveAllButTextImage:

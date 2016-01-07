@@ -26,6 +26,8 @@
 #include "qg_lineoptions.h"
 
 #include "rs_actiondrawline.h"
+#include "ui_qg_lineoptions.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_LineOptions as a child of 'parent', with the
@@ -33,18 +35,15 @@
  */
 QG_LineOptions::QG_LineOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
+	, ui(new Ui::Ui_LineOptions{})
 {
-    setupUi(this);
-
+	ui->setupUi(this);
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_LineOptions::~QG_LineOptions()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
+QG_LineOptions::~QG_LineOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -52,16 +51,16 @@ QG_LineOptions::~QG_LineOptions()
  */
 void QG_LineOptions::languageChange()
 {
-    retranslateUi(this);
+	ui->retranslateUi(this);
 }
 
 void QG_LineOptions::setAction(RS_ActionInterface* a) {
     if (a && a->rtti()==RS2::ActionDrawLine) {
-        action = (RS_ActionDrawLine*)a;
+		action = static_cast<RS_ActionDrawLine*>(a);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_LineOptions::setAction: wrong action type");
-        action = NULL;
+		action = nullptr;
     }
 }
 

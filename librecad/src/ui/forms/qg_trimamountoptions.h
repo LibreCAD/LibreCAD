@@ -26,12 +26,16 @@
 #ifndef QG_TRIMAMOUNTOPTIONS_H
 #define QG_TRIMAMOUNTOPTIONS_H
 
-#include "ui_qg_trimamountoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionModifyTrimAmount;
+namespace Ui {
+class Ui_TrimAmountOptions;
+}
 
-class QG_TrimAmountOptions : public QWidget, public Ui::QG_TrimAmountOptions
+class QG_TrimAmountOptions : public QWidget
 {
     Q_OBJECT
 
@@ -51,10 +55,11 @@ protected slots:
 
 private slots:
     void on_cbTotalLength_toggled(bool checked);
+	void on_leDist_editingFinished();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_TrimAmountOptions> ui;
 };
 
 #endif // QG_TRIMAMOUNTOPTIONS_H

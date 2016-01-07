@@ -28,7 +28,6 @@
 #ifndef RS_LINETYPEPATTERN_H
 #define RS_LINETYPEPATTERN_H
 
-#include <initializer_list>
 #include <vector>
 #include <cstddef>
 

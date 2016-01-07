@@ -29,21 +29,31 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_circle.h"
 #include "rs_point.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
+
+
+struct LC_ActionDrawCircle2PR::Points
+{
+	RS_Vector point1;
+	RS_Vector point2;
+};
 
 LC_ActionDrawCircle2PR::LC_ActionDrawCircle2PR(RS_EntityContainer& container,
 											   RS_GraphicView& graphicView)
 	:RS_ActionDrawCircleCR(container, graphicView)
+	,pPoints(new Points{})
 {
 	actionType=RS2::ActionDrawCircle2PR;
 	reset();
 }
 
+LC_ActionDrawCircle2PR::~LC_ActionDrawCircle2PR() = default;
+
 void LC_ActionDrawCircle2PR::reset() {
 	deletePreview();
-	data->reset();
-	data->radius=0.;
-	point1 = RS_Vector(false);
-	point2 = RS_Vector(false);
+	*data = {};
+	pPoints->point1 = {};
+	pPoints->point2 = {};
 }
 
 void LC_ActionDrawCircle2PR::init(int status) {
@@ -78,14 +88,14 @@ void LC_ActionDrawCircle2PR::trigger() {
 
 
 bool LC_ActionDrawCircle2PR::preparePreview(const RS_Vector& mouse) {
-	const RS_Vector vp=(point1 + point2)*0.5;
-	double const angle=point1.angleTo(point2) + 0.5*M_PI;
+	const RS_Vector vp=(pPoints->point1 + pPoints->point2)*0.5;
+	double const angle=pPoints->point1.angleTo(pPoints->point2) + 0.5*M_PI;
 	double const& r0=data->radius;
-	double const r=sqrt(r0*r0-0.25*point1.squaredTo(point2));
+	double const r=sqrt(r0*r0-0.25*pPoints->point1.squaredTo(pPoints->point2));
 
 	const RS_Vector dvp=RS_Vector(angle)*r;
-	const RS_Vector&& center1= vp + dvp;
-	const RS_Vector&& center2= vp - dvp;
+	const RS_Vector& center1= vp + dvp;
+	const RS_Vector& center2= vp - dvp;
 
 	if( center1.squaredTo(center2) < RS_TOLERANCE ) {
 		//no need to select center, as only one solution possible
@@ -114,11 +124,11 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent* e) {
 
 	switch (getStatus()) {
 	case SetPoint1:
-		point1 = mouse;
+		pPoints->point1 = mouse;
 		break;
 
 	case SetPoint2:
-		if(mouse.distanceTo(point1) <= 2.*data->radius) point2 = mouse;
+		if(mouse.distanceTo(pPoints->point1) <= 2.*data->radius) pPoints->point2 = mouse;
 		break;
 
 	case SelectCenter: {
@@ -165,19 +175,19 @@ void LC_ActionDrawCircle2PR::coordinateEvent(RS_CoordinateEvent* e) {
 
 	switch (getStatus()) {
 	case SetPoint1:
-		point1 = mouse;
+		pPoints->point1 = mouse;
 		graphicView->moveRelativeZero(mouse);
 		setStatus(SetPoint2);
 		break;
 
 	case SetPoint2:
-		if(mouse.distanceTo(point1) <= 2.*data->radius){
-			point2 = mouse;
+		if(mouse.distanceTo(pPoints->point1) <= 2.*data->radius){
+			pPoints->point2 = mouse;
 			graphicView->moveRelativeZero(mouse);
 			setStatus(SelectCenter);
 		}else{
 			RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is too small for points selected\ndistance between points=%2 is larger than diameter=%3").
-											 arg(data->radius).arg(point1.distanceTo(point2)).arg(2.*data->radius));
+											 arg(data->radius).arg(pPoints->point1.distanceTo(pPoints->point2)).arg(2.*data->radius));
 		}
 		break;
 

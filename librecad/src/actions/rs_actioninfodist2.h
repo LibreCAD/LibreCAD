@@ -64,7 +64,7 @@ public:
 
 private:
 	RS_Entity* entity;
-    RS_Vector point;
+	std::unique_ptr<RS_Vector> point;
 };
 
 #endif

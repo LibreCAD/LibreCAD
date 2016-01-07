@@ -31,6 +31,13 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
+
+struct RS_ActionModifyTrim::Points {
+	RS_Vector limitCoord;
+	RS_Vector trimCoord;
+};
 
 
 /**
@@ -39,18 +46,17 @@
 RS_ActionModifyTrim::RS_ActionModifyTrim(RS_EntityContainer& container,
         RS_GraphicView& graphicView, bool both)
         :RS_PreviewActionInterface("Trim Entity",
-                           container, graphicView) {
-
-    trimEntity = NULL;
-    trimCoord = RS_Vector(false);
-    limitEntity = NULL;
-    limitCoord = RS_Vector(false);
-    this->both = both;
+						   container, graphicView)
+		, trimEntity{nullptr}
+		, limitEntity{nullptr}
+		, pPoints(new Points{})
+		, both{both}
+{
 }
 
 RS_ActionModifyTrim::~RS_ActionModifyTrim(){
-    if (graphicView != NULL && graphicView->isCleanUp()==false){
-        if (limitEntity!= NULL){
+	if (graphicView != nullptr && graphicView->isCleanUp()==false){
+		if (limitEntity!= nullptr){
             if(limitEntity->isHighlighted()){
                 limitEntity->setHighlighted(false);
                 graphicView->drawEntity(limitEntity);
@@ -77,11 +83,11 @@ void RS_ActionModifyTrim::trigger() {
             limitEntity /* && limitEntity->isAtomic()*/) {
 
         RS_Modification m(*container, graphicView);
-        m.trim(trimCoord, (RS_AtomicEntity*)trimEntity,
-               limitCoord, /*(RS_AtomicEntity*)*/limitEntity,
+		m.trim(pPoints->trimCoord, (RS_AtomicEntity*)trimEntity,
+			   pPoints->limitCoord, /*(RS_AtomicEntity*)*/limitEntity,
                both);
 
-        trimEntity = NULL;
+		trimEntity = nullptr;
         if (both) {
             limitEntity->setHighlighted(false);
             graphicView->drawEntity(limitEntity);
@@ -104,12 +110,12 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent* e) {
 
     switch (getStatus()) {
     case ChooseLimitEntity:
-        limitCoord = mouse;
+		pPoints->limitCoord = mouse;
         limitEntity = se;
         break;
 
     case ChooseTrimEntity:
-        trimCoord = mouse;
+		pPoints->trimCoord = mouse;
         trimEntity = se;
         break;
 
@@ -130,7 +136,7 @@ void RS_ActionModifyTrim::mouseReleaseEvent(QMouseEvent* e) {
 
         switch (getStatus()) {
         case ChooseLimitEntity:
-            limitCoord = mouse;
+			pPoints->limitCoord = mouse;
             limitEntity = se;
             if (limitEntity && limitEntity->rtti() != RS2::EntityPolyline/*&& limitEntity->isAtomic()*/) {
                 limitEntity->setHighlighted(true);
@@ -140,7 +146,7 @@ void RS_ActionModifyTrim::mouseReleaseEvent(QMouseEvent* e) {
             break;
 
         case ChooseTrimEntity:
-            trimCoord = mouse;
+			pPoints->trimCoord = mouse;
             trimEntity = se;
             if (trimEntity && trimEntity->isAtomic()) {
                 trigger();
@@ -197,6 +203,6 @@ void RS_ActionModifyTrim::updateMouseButtonHints() {
 
 
 void RS_ActionModifyTrim::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 

@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-
+#include<vector>
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_actiondimleader.h"
@@ -34,24 +34,31 @@
 #include "rs_leader.h"
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
+struct RS_ActionDimLeader::Points {
+std::vector<RS_Vector> points;
+};
 
 RS_ActionDimLeader::RS_ActionDimLeader(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw leaders",
-                           container, graphicView) {
+                           container, graphicView)
+	, pPoints(new Points{})
+ {
 	actionType=RS2::ActionDimLeader;
     reset();
 }
+
+RS_ActionDimLeader::~RS_ActionDimLeader() = default;
 
 void RS_ActionDimLeader::reset() {
     //data = RS_LineData(RS_Vector(false), RS_Vector(false));
     //start = RS_Vector(false);
     //history.clear();
-    points.clear();
+    pPoints->points.clear();
 }
-
-
 
 void RS_ActionDimLeader::init(int status) {
     RS_PreviewActionInterface::init(status);
@@ -64,13 +71,13 @@ void RS_ActionDimLeader::init(int status) {
 void RS_ActionDimLeader::trigger() {
     RS_PreviewActionInterface::trigger();
 
-	if (points.size()){
+	if (pPoints->points.size()){
 
         RS_Leader* leader = new RS_Leader(container, RS_LeaderData(true));
         leader->setLayerToActive();
         leader->setPenToActive();
 
-		for(const auto& vp: points){
+		for(const auto& vp: pPoints->points){
 			leader->addVertex(vp);
 		}
 
@@ -100,20 +107,20 @@ void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDimLeader::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-	if (getStatus()==SetEndpoint && points.size()) {
+	if (getStatus()==SetEndpoint && pPoints->points.size()) {
         deletePreview();
 
 		// fill in lines that were already set:
 		RS_Vector last(false);
-		for(const auto& v: points){
+		for(const auto& v: pPoints->points){
 			if (last.valid) {
 				preview->addEntity(new RS_Line{preview.get(), last, v});
 			}
 			last = v;
 		}
 
-		if ( points.size() ) {
-			RS_Vector const& p = points.back();
+		if (pPoints->points.size() ) {
+			RS_Vector const& p = pPoints->points.back();
 			preview->addEntity(new RS_Line{preview.get(), p, mouse});
         }
         drawPreview();
@@ -162,8 +169,8 @@ void RS_ActionDimLeader::coordinateEvent(RS_CoordinateEvent* e) {
     switch (getStatus()) {
     case SetStartpoint:
         //data.startpoint = mouse;
-        points.clear();
-		points.push_back(mouse);
+        pPoints->points.clear();
+	pPoints->points.push_back(mouse);
         //start = data.startpoint;
         setStatus(SetEndpoint);
         graphicView->moveRelativeZero(mouse);
@@ -171,7 +178,7 @@ void RS_ActionDimLeader::coordinateEvent(RS_CoordinateEvent* e) {
 
     case SetEndpoint:
         //data.endpoint = mouse;
-		points.push_back(mouse);
+	pPoints->points.push_back(mouse);
         //trigger();
         //data.startpoint = data.endpoint;
         graphicView->moveRelativeZero(mouse);

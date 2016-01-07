@@ -49,7 +49,7 @@ public:
 public:
     RS_ActionModifyCut(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyCut() = default;
+	~RS_ActionModifyCut() override;
 
     virtual void init(int status=0);
     virtual void trigger();
@@ -60,7 +60,7 @@ public:
 
 private:
     RS_Entity* cutEntity;
-	RS_Vector cutCoord;
+	std::unique_ptr<RS_Vector> cutCoord;
 };
 
 #endif

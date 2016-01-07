@@ -63,7 +63,7 @@ public:
 	virtual void updateMouseCursor();
 
 protected:
-    RS_Vector targetPoint;
+	std::unique_ptr<RS_Vector> targetPoint;
 };
 
 #endif

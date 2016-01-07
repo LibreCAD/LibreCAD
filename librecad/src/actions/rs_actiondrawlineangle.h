@@ -29,8 +29,6 @@
 
 #include "rs_previewactioninterface.h"
 
-struct RS_LineData;
-
 /**
  * This action class can handle user events to draw 
  * simple lines at a gien angle.
@@ -91,30 +89,8 @@ public:
 	bool hasFixedAngle() const;
 
 protected:
-    /**
-     * Line data defined so far.
-     */
-	std::unique_ptr<RS_LineData> data;
-	/**
-	 * Position.
-	 */
-	RS_Vector pos;
-    /**
-     * Line angle.
-     */
-    double angle;
-	/**
-	 * Line length.
-	 */
-	double length;
-    /**
-     * Is the angle fixed?
-     */
-    bool fixedAngle;
-    /**
-     * Snap point (start, middle, end).
-     */
-	int snpPoint;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

@@ -25,11 +25,12 @@
 **
 **********************************************************************/
 
+#include<climits>
+#include<cmath>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QAction>
 #include <QMouseEvent>
-#include <climits>
 #include "rs_graphicview.h"
 
 #include "rs_line.h"
@@ -43,7 +44,8 @@
 #include "rs_settings.h"
 #include "rs_dialogfactory.h"
 #include "rs_layer.h"
-#include "rs_grid.h"
+#include "rs_math.h"
+#include "rs_debug.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -54,10 +56,10 @@
  */
 RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
     :QWidget(parent, f)
-	,eventHandler(new RS_EventHandler(this))
+	,eventHandler{new RS_EventHandler{this}}
 	,gridColor(Qt::gray)
-	,metaGridColor(RS_Color(64,64,64))
-	,grid(new RS_Grid(this))
+	,metaGridColor{64, 64, 64}
+	,grid{new RS_Grid{this}}
 	,drawingMode(RS2::ModeFull)
 	,savedViews(16)
 	,previousViewTime(QDateTime::currentDateTime())
@@ -74,8 +76,16 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
     RS_SETTINGS->endGroup();
 }
 
+RS_GraphicView::~RS_GraphicView()
+{
+    foreach (RS_EntityContainer* x, overlayEntities)
+    {
+        delete x;
+    }
+}
+
 /**
- * Must be called by any derrived class in the destructor.
+ * Must be called by any derived class in the destructor.
  */
 void RS_GraphicView::cleanUp() {
 	m_bIsCleanUp=true;
@@ -281,8 +291,6 @@ void RS_GraphicView::back()
     }
 }
 
-
-
 /**
  * Go forward with the current action.
  */
@@ -292,147 +300,6 @@ void RS_GraphicView::enter() {
 	}
 }
 
-
-
-/**
- * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify LibreCAD about mouse events.
- */
-void RS_GraphicView::mousePressEvent(QMouseEvent* e) {
-	if (eventHandler) {
-		eventHandler->mousePressEvent(e);
-	}
-}
-
-
-
-/**
- * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify LibreCAD about mouse events.
- */
-void RS_GraphicView::mouseReleaseEvent(QMouseEvent* e)
-{
-	RS_DEBUG->print("RS_GraphicView::mouseReleaseEvent");
-    if (eventHandler)
-    {
-        if (e->button()!=Qt::RightButton || eventHandler->hasAction())
-        {
-			eventHandler->mouseReleaseEvent(e);
-		}
-        else
-        {
-            back();
-			e->accept();
-		}
-	}
-	RS_DEBUG->print("RS_GraphicView::mouseReleaseEvent: OK");
-}
-
-
-/*	*
- *	Function name:
- *
- *	Description:		- Called by the actual GUI class which implements the
- *							  RS_GraphicView interface to notify LibreCAD about
- *							  mouse events.
- *
- *	Author(s):			..., Claude Sylvain
- *	Created:				?
- *	Last modified:		23 July 2011
- *
- *	Parameters:			QMouseEvent* e:
- *								...
- *
- *	Returns:				void
- *	*/
-
-void RS_GraphicView::mouseMoveEvent(QMouseEvent* e) {
-	RS_DEBUG->print("RS_GraphicView::mouseMoveEvent begin");
-
-    RS_Graphic* graphic = nullptr;
-
-	if (container->rtti()==RS2::EntityGraphic) {
-		graphic = (RS_Graphic*)container;
-	}
-
-	RS_DEBUG->print("RS_GraphicView::mouseMoveEvent 001");
-
-	if (e) {
-		mx = e->x();
-		my = e->y();
-	}
-
-	RS_DEBUG->print("RS_GraphicView::mouseMoveEvent 002");
-
-	if (eventHandler) {
-		eventHandler->mouseMoveEvent(e);
-	}
-
-	RS_DEBUG->print("RS_GraphicView::mouseMoveEvent 003");
-
-	if (	((!eventHandler) || !eventHandler->hasAction()) &&
-			(graphic))
-	{
-		RS_Vector	mouse		= toGraph(RS_Vector(mx, my));
-		RS_Vector	relMouse	= mouse - getRelativeZero();
-
-		if (RS_DIALOGFACTORY)
-			RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
-	}
-
-	RS_DEBUG->print("RS_GraphicView::mouseMoveEvent end");
-}
-
-
-
-/**
- * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify LibreCAD about mouse events.
- */
-void RS_GraphicView::mouseLeaveEvent() {
-	if (eventHandler) {
-		eventHandler->mouseLeaveEvent();
-	}
-}
-
-
-
-/**
- * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify LibreCAD about mouse events.
- */
-void RS_GraphicView::mouseEnterEvent() {
-	if (eventHandler) {
-		eventHandler->mouseEnterEvent();
-	}
-}
-
-
-
-/**
- * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify LibreCAD about key events.
- */
-void RS_GraphicView::keyPressEvent(QKeyEvent* e) {
-	if (eventHandler) {
-		eventHandler->keyPressEvent(e);
-	}
-}
-
-
-
-/**
- * Called by the actual GUI class which implements the RS_GraphicView
- * interface to notify LibreCAD about key events.
- */
-void RS_GraphicView::keyReleaseEvent(QKeyEvent* e) {
-	if (eventHandler) {
-		eventHandler->keyReleaseEvent(e);
-	}
-}
-
-
-
 /**
  * Called by the actual GUI class which implements a command line.
  */
@@ -441,8 +308,6 @@ void RS_GraphicView::commandEvent(RS_CommandEvent* e) {
 		eventHandler->commandEvent(e);
 	}
 }
-
-
 
 /**
  * Enables coordinate input in the command line.
@@ -484,9 +349,9 @@ void RS_GraphicView::zoomIn(double f, const RS_Vector& center) {
     }
 
 	zoomWindow(
-				toGraph(RS_Vector(0,0))
+				toGraph(0, 0)
 				.scale(c, RS_Vector(1.0/f,1.0/f)),
-				toGraph(RS_Vector(getWidth(),getHeight()))
+				toGraph(getWidth(), getHeight())
 				.scale(c, RS_Vector(1.0/f,1.0/f)));
 
 	//adjustOffsetControls();
@@ -1851,7 +1716,7 @@ void RS_GraphicView::moveRelativeZero(const RS_Vector& pos) {
 
 
 /**
- * Remove all overlay entities
+ * Gets the specified overlay container.
  */
 RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics position)
 {
@@ -1865,11 +1730,11 @@ RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics pos
 }
 
 RS_Grid* RS_GraphicView::getGrid() const{
-	return grid;
+	return grid.get();
 }
 
 RS_EventHandler* RS_GraphicView::getEventHandler() const{
-	return eventHandler;
+	return eventHandler.get();
 }
 
 void RS_GraphicView::setBackground(const RS_Color& bg) {
@@ -1984,7 +1849,7 @@ bool RS_GraphicView::isCleanUp(void) const
 
 void RS_GraphicView::set_action(QAction* q_action)
 {
-    eventHandler->set_action(q_action);
+    eventHandler->setQAction(q_action);
 
     if (recent_actions.contains(q_action))
     {

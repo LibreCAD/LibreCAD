@@ -32,6 +32,13 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
+
+struct RS_ActionZoomWindow::Points {
+	RS_Vector v1;
+	RS_Vector v2;
+};
 
 
 /**
@@ -44,17 +51,21 @@
 RS_ActionZoomWindow::RS_ActionZoomWindow(RS_EntityContainer& container,
         RS_GraphicView& graphicView, bool keepAspectRatio)
         : RS_PreviewActionInterface("Zoom Window",
-                            container, graphicView) {
-
-    this->keepAspectRatio = keepAspectRatio;
+							container, graphicView)
+		, pPoints(new Points{})
+		, keepAspectRatio(keepAspectRatio)
+{
 }
+
+RS_ActionZoomWindow::~RS_ActionZoomWindow() = default;
+
 
 void RS_ActionZoomWindow::init(int status) {
     RS_DEBUG->print("RS_ActionZoomWindow::init()");
 
     RS_PreviewActionInterface::init(status);
-    v1 = v2 = RS_Vector(false);
-    //deleteSnapper();
+	pPoints.reset(new Points{});
+	//deleteSnapper();
    // snapMode.clear();
    // snapMode.restriction = RS2::RestrictNothing;
 }
@@ -66,11 +77,11 @@ void RS_ActionZoomWindow::trigger() {
 
     RS_PreviewActionInterface::trigger();
 
-    if (v1.valid && v2.valid) {
+	if (pPoints->v1.valid && pPoints->v2.valid) {
         deletePreview();
         //deleteSnapper();
-        if (graphicView->toGuiDX(v1.distanceTo(v2))>5) {
-            graphicView->zoomWindow(v1, v2, keepAspectRatio);
+		if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2))>5) {
+			graphicView->zoomWindow(pPoints->v1, pPoints->v2, keepAspectRatio);
             init();
         }
     }
@@ -81,13 +92,10 @@ void RS_ActionZoomWindow::trigger() {
 void RS_ActionZoomWindow::mouseMoveEvent(QMouseEvent* e) {
     snapFree(e);
     drawSnapper();
-    if (getStatus()==SetSecondCorner && v1.valid) {
-        v2 = snapFree(e);
+	if (getStatus()==SetSecondCorner && pPoints->v1.valid) {
+		pPoints->v2 = snapFree(e);
         deletePreview();
-		preview->addEntity(new RS_Line{preview.get(), v1, {v2.x, v1.y}});
-		preview->addEntity(new RS_Line{preview.get(), {v2.x, v1.y}, v2});
-		preview->addEntity(new RS_Line{preview.get(), v2, {v1.x, v2.y}});
-		preview->addEntity(new RS_Line{preview.get(), {v1.x, v2.y}, v1});
+		preview->addRectangle(pPoints->v1, pPoints->v2);
         drawPreview();
     }
 }
@@ -98,7 +106,7 @@ void RS_ActionZoomWindow::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetFirstCorner:
-            v1 = snapFree(e);
+			pPoints->v1 = snapFree(e);
             drawSnapper();
             setStatus(SetSecondCorner);
             break;
@@ -109,7 +117,7 @@ void RS_ActionZoomWindow::mousePressEvent(QMouseEvent* e) {
     }
 
     RS_DEBUG->print("RS_ActionZoomWindow::mousePressEvent(): %f %f",
-                    v1.x, v1.y);
+					pPoints->v1.x, pPoints->v1.y);
 }
 
 
@@ -124,9 +132,9 @@ void RS_ActionZoomWindow::mouseReleaseEvent(QMouseEvent* e) {
         init(getStatus()-1);
     } else if (e->button()==Qt::LeftButton) {
         if (getStatus()==SetSecondCorner) {
-            v2 = snapFree(e);
-            if( fabs(v1.x-v2.x) < RS_TOLERANCE
-                    || fabs(v1.y-v2.y) < RS_TOLERANCE ) {//invalid zoom window
+			pPoints->v2 = snapFree(e);
+			if( fabs(pPoints->v1.x-pPoints->v2.x) < RS_TOLERANCE
+					|| fabs(pPoints->v1.y-pPoints->v2.y) < RS_TOLERANCE ) {//invalid zoom window
                 deletePreview();
                 init(getStatus()-1);
             }

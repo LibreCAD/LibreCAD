@@ -34,6 +34,15 @@
 #include "rs_creation.h"
 #include "rs_line.h"
 #include "rs_math.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
+
+struct RS_ActionDrawLineBisector::Points {
+	/** Mouse pos when choosing the 1st line */
+	RS_Vector coord1;
+	/** Mouse pos when choosing the 2nd line */
+	RS_Vector coord2;
+};
 
 RS_ActionDrawLineBisector::RS_ActionDrawLineBisector(
     RS_EntityContainer& container,
@@ -44,12 +53,14 @@ RS_ActionDrawLineBisector::RS_ActionDrawLineBisector(
 		,line2(nullptr)
 		,length(10.)
 		,number(1)
-		,coord1(false)
-		,coord2(false)
+		, pPoints(new Points{})
 		,lastStatus(SetLine1)
 {
 	actionType=RS2::ActionDrawLineBisector;
 }
+
+RS_ActionDrawLineBisector::~RS_ActionDrawLineBisector() = default;
+
 
 void RS_ActionDrawLineBisector::setLength(double l) {
 	length = l;
@@ -96,8 +107,8 @@ void RS_ActionDrawLineBisector::trigger() {
 	graphicView->redraw(RS2::RedrawDrawing);
 
     RS_Creation creation(container, graphicView);
-    creation.createBisector(coord1,
-                            coord2,
+	creation.createBisector(pPoints->coord1,
+							pPoints->coord2,
                             length,
                             number,
                             line1,
@@ -117,7 +128,7 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetLine2: {
-            coord2 = mouse;
+			pPoints->coord2 = mouse;
             RS_Entity* en = catchEntity(e, RS2::ResolveAll);
 			if(en==line1) break;
 			if (en && en->rtti()==RS2::EntityLine) {
@@ -131,8 +142,8 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent* e) {
                 deletePreview();
 
 				RS_Creation creation(preview.get(), nullptr, false);
-                creation.createBisector(coord1,
-                                        coord2,
+				creation.createBisector(pPoints->coord1,
+										pPoints->coord2,
                                         length,
                                         number,
                                         line1,
@@ -170,7 +181,7 @@ void RS_ActionDrawLineBisector::mouseReleaseEvent(QMouseEvent* e) {
 
         switch (getStatus()) {
         case SetLine1: {
-                coord1 = mouse;
+				pPoints->coord1 = mouse;
                 RS_Entity* en = catchEntity(e, RS2::ResolveAll);
 				if (en && en->rtti()==RS2::EntityLine) {
 					line1 = static_cast<RS_Line*>(en);
@@ -183,7 +194,7 @@ void RS_ActionDrawLineBisector::mouseReleaseEvent(QMouseEvent* e) {
             break;
 
         case SetLine2:
-            coord2 = mouse;
+			pPoints->coord2 = mouse;
             trigger();
             setStatus(SetLine1);
             break;
@@ -314,7 +325,7 @@ void RS_ActionDrawLineBisector::hideOptions() {
 
 
 void RS_ActionDrawLineBisector::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

@@ -24,13 +24,15 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
+#include<cmath>
 #include "rs_font.h"
 #include "rs_text.h"
 
 #include "rs_fontlist.h"
 #include "rs_insert.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 RS_TextData::RS_TextData(const RS_Vector& _insertionPoint,
 						 const RS_Vector& _secondPoint,

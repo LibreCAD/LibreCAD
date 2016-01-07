@@ -49,7 +49,7 @@ public:
 public:
     RS_ActionModifyTrimAmount(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~RS_ActionModifyTrimAmount() = default;
+	~RS_ActionModifyTrimAmount() override;
 
     virtual void init(int status=0);
 
@@ -67,24 +67,24 @@ public:
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 
-        double getDistance() {
-                return distance;
-        }
-        bool getByTotal() {
-                return byTotal ;
-        }
+	double getDistance() const {
+		return distance;
+	}
+	bool getByTotal() const {
+		return byTotal ;
+	}
 
-        void setDistance(double d) {
-                distance = d;
-        }
-        void setByTotal(bool on) {
-                byTotal = on;
-        }
+	void setDistance(double d) {
+		distance = d;
+	}
+	void setByTotal(bool on) {
+		byTotal = on;
+	}
 
 private:
     RS_Entity* trimEntity;
-        RS_Vector trimCoord;
-        double distance;
+	std::unique_ptr<RS_Vector> trimCoord;
+	double distance;
     bool byTotal;
         /**
          * Commands

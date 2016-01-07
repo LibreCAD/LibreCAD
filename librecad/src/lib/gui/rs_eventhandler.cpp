@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QObject>
 #include <QRegExp>
 #include <QAction>
 #include <QMouseEvent>
@@ -36,6 +35,7 @@
 #include "rs_commands.h"
 #include "rs_math.h"
 #include "rs_snapper.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.
@@ -43,7 +43,7 @@
 RS_EventHandler::RS_EventHandler(QObject* parent) : QObject(parent)
 {
     connect(parent, SIGNAL(relative_zero_changed(const RS_Vector&)),
-            this, SLOT(set_relative_zero(const RS_Vector&)));
+            this, SLOT(setRelativeZero(const RS_Vector&)));
 }
 
 /**
@@ -85,7 +85,7 @@ void RS_EventHandler::enter() {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::mousePressEvent(QMouseEvent* e) {
     if(hasAction()){
@@ -105,7 +105,7 @@ void RS_EventHandler::mousePressEvent(QMouseEvent* e) {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
     if(hasAction()){
@@ -131,27 +131,19 @@ void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
-void RS_EventHandler::mouseMoveEvent(QMouseEvent* e) {
-    if(hasAction()){
+void RS_EventHandler::mouseMoveEvent(QMouseEvent* e)
+{
+    if(hasAction())
         currentActions.last()->mouseMoveEvent(e);
-        e->accept();
-    } else {
-        if (defaultAction) {
-            defaultAction->mouseMoveEvent(e);
-            e->accept();
-        } else {
-            e->ignore();
-        }
-        //RS_DEBUG->print("currently no action defined");
-    }
+
+    else if (defaultAction)
+        defaultAction->mouseMoveEvent(e);
 }
 
-
-
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::mouseLeaveEvent() {
 
@@ -168,7 +160,7 @@ void RS_EventHandler::mouseLeaveEvent() {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::mouseEnterEvent() {
 
@@ -184,7 +176,7 @@ void RS_EventHandler::mouseEnterEvent() {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::keyPressEvent(QKeyEvent* e) {
 
@@ -205,7 +197,7 @@ void RS_EventHandler::keyPressEvent(QKeyEvent* e) {
 
 
 /**
- * Called by RS_GraphicView
+ * Called by QG_GraphicView
  */
 void RS_EventHandler::keyReleaseEvent(QKeyEvent* e) {
 
@@ -539,7 +531,7 @@ void RS_EventHandler::killAllActions()
         {
             if (right_click_quits)
             {
-                real_action->setChecked(false);
+                q_action->setChecked(false);
                 right_click_quits = false;
             }
 			p->finish();
@@ -588,7 +580,7 @@ void RS_EventHandler::cleanUp() {
         {
             if (right_click_quits)
             {
-                real_action->setChecked(false);
+                q_action->setChecked(false);
                 right_click_quits = false;
             }
             delete *it;
@@ -658,16 +650,34 @@ void RS_EventHandler::debugActions() const{
     }
 }
 
-void RS_EventHandler::set_action(QAction* q_action)
+void RS_EventHandler::setQAction(QAction* action)
 {
-    real_action = q_action;
+    q_action = action;
     right_click_quits = true;
     killAllActions();
 }
 
-void RS_EventHandler::set_relative_zero(const RS_Vector& point)
+void RS_EventHandler::setRelativeZero(const RS_Vector& point)
 {
     relative_zero = point;
+}
+
+bool RS_EventHandler::inSelectionMode()
+{
+    switch (getCurrentAction()->rtti())
+    {
+        case RS2::ActionDefault:
+        case RS2::ActionSelectSingle:
+        case RS2::ActionSelectWindow:
+        case RS2::ActionDeselectWindow:
+        case RS2::ActionSelectContour:
+        case RS2::ActionSelectIntersected:
+        case RS2::ActionDeselectIntersected:
+        case RS2::ActionSelectLayer:
+            return true;
+        default:
+            return false;
+    }
 }
 
 // EOF

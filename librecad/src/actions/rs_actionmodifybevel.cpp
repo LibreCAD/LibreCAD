@@ -34,22 +34,28 @@
 #include "rs_information.h"
 #include "rs_math.h"
 #include "rs_modification.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
+
+struct RS_ActionModifyBevel::Points {
+	RS_Vector coord1;
+	RS_Vector coord2;
+	RS_BevelData data;
+};
 
 RS_ActionModifyBevel::RS_ActionModifyBevel(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Bevel Entities",
 						   container, graphicView)
 		,entity1(nullptr)
-		,coord1(false)
 		,entity2(nullptr)
-		,coord2(false)
-		,data(new RS_BevelData())
+		, pPoints(new Points{})
 		,lastStatus(SetEntity1)
 {
 	actionType=RS2::ActionModifyBevel;
 }
 
-RS_ActionModifyBevel::~RS_ActionModifyBevel(){}
+RS_ActionModifyBevel::~RS_ActionModifyBevel() = default;
 
 
 void RS_ActionModifyBevel::init(int status) {
@@ -67,12 +73,12 @@ void RS_ActionModifyBevel::trigger() {
             entity2 && entity2->isAtomic()) {
 
         RS_Modification m(*container, graphicView);
-        m.bevel(coord1, (RS_AtomicEntity*)entity1,
-                coord2, (RS_AtomicEntity*)entity2,
-				*data);
+		m.bevel(pPoints->coord1, (RS_AtomicEntity*)entity1,
+				pPoints->coord2, (RS_AtomicEntity*)entity2,
+				pPoints->data);
 
-        coord1 = RS_Vector(false);
-        coord2 = RS_Vector(false);
+		pPoints->coord1 = {};
+		pPoints->coord2 = {};
         entity1 = nullptr;
         entity2 = nullptr;
         setStatus(SetEntity1);
@@ -89,13 +95,13 @@ void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent* e) {
 
     switch (getStatus()) {
     case SetEntity1:
-        coord1 = mouse;
+		pPoints->coord1 = mouse;
         entity1 = se;
         break;
 
     case SetEntity2:
                 if (entity1 && RS_Information::isTrimmable(entity1)) {
-                coord2 = mouse;
+				pPoints->coord2 = mouse;
                 entity2 = se;
                 }
         break;
@@ -155,7 +161,7 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent* e) {
             lastStatus = (Status)getStatus();
             setStatus(SetLength2);
         } else if (checkCommand("trim", c)) {
-			data->trim = !data->trim;
+			pPoints->data.trim = !pPoints->data.trim;
             RS_DIALOGFACTORY->requestOptions(this, true, true);
         }
         break;
@@ -165,7 +171,7 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent* e) {
             double l = RS_Math::eval(c, &ok);
             if (ok) {
                 e->accept();
-				data->length1 = l;
+				pPoints->data.length1 = l;
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
             }
@@ -178,7 +184,7 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent* e) {
             bool ok;
             double l = RS_Math::eval(c, &ok);
             if (ok) {
-				data->length2 = l;
+				pPoints->data.length2 = l;
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
             }
@@ -193,27 +199,27 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent* e) {
 }
 
 void RS_ActionModifyBevel::setLength1(double l1) {
-	data->length1 = l1;
+	pPoints->data.length1 = l1;
 }
 
 double RS_ActionModifyBevel::getLength1() const{
-	return data->length1;
+	return pPoints->data.length1;
 }
 
 void RS_ActionModifyBevel::setLength2(double l2) {
-	data->length2 = l2;
+	pPoints->data.length2 = l2;
 }
 
 double RS_ActionModifyBevel::getLength2() const{
-	return data->length2;
+	return pPoints->data.length2;
 }
 
 void RS_ActionModifyBevel::setTrim(bool t) {
-	data->trim = t;
+	pPoints->data.trim = t;
 }
 
 bool RS_ActionModifyBevel::isTrimOn() const{
-	return data->trim;
+	return pPoints->data.trim;
 }
 
 QStringList RS_ActionModifyBevel::getAvailableCommands() {
@@ -268,7 +274,7 @@ void RS_ActionModifyBevel::updateMouseButtonHints() {
 }
 
 void RS_ActionModifyBevel::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

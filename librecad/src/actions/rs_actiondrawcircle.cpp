@@ -34,6 +34,8 @@
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 RS_ActionDrawCircle::RS_ActionDrawCircle(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -47,10 +49,10 @@ RS_ActionDrawCircle::RS_ActionDrawCircle(RS_EntityContainer& container,
 
 
 
-RS_ActionDrawCircle::~RS_ActionDrawCircle() {}
+RS_ActionDrawCircle::~RS_ActionDrawCircle() = default;
 
 void RS_ActionDrawCircle::reset() {
-	data.reset(new RS_CircleData(RS_Vector(false), 0.0));
+	data.reset(new RS_CircleData{});
 }
 
 

@@ -39,14 +39,9 @@ class LC_Quadratic;
  */
 struct RS_CircleData {
 	RS_CircleData() = default;
-
-	RS_CircleData(const RS_Vector& m_vCenter,
-				  double radius);
-	bool operator == (RS_CircleData const& rhs) const;
-
-	void reset();
-
+	RS_CircleData(RS_Vector const& center, double radius);
 	bool isValid() const;
+	bool operator == (RS_CircleData const&) const;
 	RS_Vector center;
 	double radius;
 };
@@ -178,7 +173,7 @@ m0 x + m1 y + m2 =0
 * However, full ellipses and ellipse arcs are handled by RS_Ellipse
 * @return \pi r^2
 */
-    virtual double areaLineIntegral() const;
+    virtual double areaLineIntegral() const override;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Circle& a);
 

@@ -27,12 +27,19 @@
 
 #include "rs_debug.h"
 
+#include <iostream>
 #include <cstdio>
 #include <cstdarg>
+#include <QString>
 
 #include <QDateTime>
+#include <QDebug>
 
 RS_Debug* RS_Debug::uniqueInstance = nullptr;
+void debugHeader(char const* file, char const* func, int line)
+{
+	std::cout<<file<<" : "<<func<<" : line "<<line<<std::endl;
+}
 
 /**
  *  Gets the one and only RS_Debug instance

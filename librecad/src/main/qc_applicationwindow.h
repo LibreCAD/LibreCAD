@@ -27,22 +27,10 @@
 #ifndef QC_APPLICATIONWINDOW_H
 #define QC_APPLICATIONWINDOW_H
 
-#include <QMainWindow>
+#include "mainwindowx.h"
 
-#include <memory>
-#include "qc_mdiwindow.h"
-#include "qg_mainwindowinterface.h"
-
-#ifdef RS_SCRIPTING
-#include "qs_scripter.h"
-#include <qsproject.h>
-#endif
-
-#if QT_VERSION < 0x040400
-class QAssistantClient;
-#endif
-
-#include "lc_customtoolbar.h"
+#include "rs_pen.h"
+#include "rs_snapper.h"
 
 class QMdiArea;
 class QMdiSubWindow;
@@ -63,12 +51,26 @@ class QHelpEngine;
 class QC_PluginInterface;
 class QG_ActiveLayerName;
 class LC_SimpleTests;
+class LC_CustomToolbar;
+class QG_ActionHandler;
+class RS_GraphicView;
+class RS_Document;
+
+struct DockAreas
+{
+    QAction* left;
+    QAction* right;
+    QAction* top;
+    QAction* bottom;
+    QAction* floating;
+};
+
 /**
  * Main application window. Hold together document, view and controls.
  *
  * @author Andrew Mustun
  */
-class QC_ApplicationWindow: public QMainWindow
+class QC_ApplicationWindow: public MainWindowX
 {
     Q_OBJECT
 
@@ -76,32 +78,24 @@ public:
     QC_ApplicationWindow();
     ~QC_ApplicationWindow();
 
-    void menus_and_toolbars();
-    void add_action(QMenu* menu, QToolBar* toolbar, QAction* action);
-    void set_icon_size();
-    void initStatusBar();
     void initSettings();
-    void restoreDocks();
     void storeSettings();
-    void initMDI();
-    void initView();
 
     bool queryExit(bool force);
 
-        /** Catch hotkey for giving focus to command line. */
+    /** Catch hotkey for giving focus to command line. */
     virtual void keyPressEvent(QKeyEvent* e);
-    virtual void keyReleaseEvent(QKeyEvent* e);
     void setRedoEnable(bool enable);
     void setUndoEnable(bool enable);
+    bool loadStyleSheet(QString path);
 
 public slots:
-    void slot_set_action(QAction* q_action);
+    void relayAction(QAction* q_action);
     virtual void show();
     void finishSplashScreen();
     void slotFocus();
     void slotBack();
     void slotKillAllActions();
-    //void slotNext();
     void slotEnter();
     void slotFocusCommandLine();
     void slotError(const QString& msg);
@@ -134,6 +128,7 @@ public slots:
      * opens the given file.
      */
     void slotFileOpen(const QString& fileName, RS2::FormatType type);
+    void slotFileOpenRecent(QAction* action);
     /** saves a document */
     void slotFileSave();
     /** saves a document under a different filename*/
@@ -144,10 +139,8 @@ public slots:
     void slotFileExport();
     bool slotFileExport(const QString& name, const QString& format,
                 QSize size, QSize borders, bool black, bool bw=true);
-    /** closes the current file */
-    void slotFileClose();
     /** closing the current file */
-    void slotFileClosing();
+    void slotFileClosing(QC_MDIWindow*);
     /** prints the current file */
     void slotFilePrint(bool printPDF=false);
     void slotFilePrintPDF();
@@ -163,19 +156,9 @@ public slots:
     /** toggle the statusbar */
     void slotViewStatusBar(bool toggle);
 
-    // void slotBlocksEdit();
     void slotOptionsGeneral();
 
     void slotImportBlock();
-    void slotScriptOpenIDE();
-    void slotScriptRun();
-
-    void slotRunStartScript();
-    void slotRunScript();
-    void slotRunScript(const QString& name);
-
-    void slotInsertBlock();
-    void slotInsertBlock(const QString& name);
 
     /** shows an about dlg*/
     void slotHelpAbout();
@@ -188,13 +171,18 @@ public slots:
     void slotUpdateActiveLayer();
 	void execPlug();
 
-    void goto_wiki();
+    void gotoWiki();
 
-    void slot_fullscreen(bool checked);
+    void toggleFullscreen(bool checked);
 
     void setPreviousZoomEnable(bool enable);
 
-    void hide_options();
+    void hideOptions(QC_MDIWindow*);
+
+    void widgetOptionsDialog();
+
+    void modifyCommandTitleBar(Qt::DockWidgetArea area);
+    void reloadStyleSheet();
 
 signals:
     void gridChanged(bool on);
@@ -241,63 +229,28 @@ public:
 	const RS_Document* getDocument() const;
 	RS_Document* getDocument();
 
-        /**
-         * Creates a new document. Implementation from RS_MainWindowInterface.
-         */
+    /**
+     * Creates a new document. Implementation from RS_MainWindowInterface.
+     */
 	void createNewDocument(const QString& fileName = QString::null, RS_Document* doc=nullptr);
 
-    /**
-     * Implementation from QG_MainWindowInterface.
-     *
-     * @return Pointer to this.
-     */
-	const QMainWindow* getMainWindow() const;
-	QMainWindow* getMainWindow();
+    void redrawAll();
+    void updateGrids();
 
-    /**
-     * @return Pointer to action handler. Implementation from QG_MainWindowInterface.
-     */
-	QG_ActionHandler const* getActionHandler() const{
-        return actionHandler;
+    QG_BlockWidget* getBlockWidget(void)
+    {
+        return blockWidget;
     }
-	QG_ActionHandler* getActionHandler(){
-		return actionHandler;
-	}
 
-        //virtual QToolBar* createToolBar(const QString& name);
-        //virtual void addToolBarButton(QToolBar* tb);
-
-    /**
-     * @return Pointer to the qsa object.
-     */
-#ifdef RS_SCRIPTING
-    QSProject* getQSAProject() {
-				if (scripter!=nullptr) {
-                return scripter->getQSAProject();
-                }
-                else {
-						return nullptr;
-                }
+    QG_SnapToolBar* getSnapToolBar(void)
+    {
+        return snapToolBar;
     }
-#endif
 
-        void redrawAll();
-        void updateGrids();
-
-        QG_BlockWidget* getBlockWidget(void)
-        {
-            return blockWidget;
-        }
-
-		QG_SnapToolBar* getSnapToolBar(void)
-		{
-			return snapToolBar;
-		}
-
-		QG_SnapToolBar const* getSnapToolBar(void) const
-		{
-			return snapToolBar;
-		}
+    QG_SnapToolBar const* getSnapToolBar(void) const
+    {
+        return snapToolBar;
+    }
 
 protected:
     void closeEvent(QCloseEvent*);
@@ -307,6 +260,8 @@ protected:
     //! \}
 
 private:
+
+    QMenu* createPopupMenu();
 
     QString format_filename_caption(const QString &qstring_in);
     /** Helper function for Menu file -> New & New.... */
@@ -318,17 +273,33 @@ private:
      */
     void updateWindowTitle(QWidget* w);
 
+    //Plugin support
+    void loadPlugins();
+    QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
+
+    #ifdef LC_DEBUGGING
+        LC_SimpleTests* m_pSimpleTest;
+    #endif
+
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;
     QTimer *autosaveTimer;
 
+    QG_ActionHandler* actionHandler;
+
     /** MdiArea for MDI */
     QMdiArea* mdiAreaCAD{nullptr};
     QMdiSubWindow* activedMdiSubWindow;
-    bool mdiAreaTab;
 
     /** Dialog factory */
     QC_DialogFactory* dialogFactory;
+
+    /** Recent files list */
+	QG_RecentFiles* recentFiles;
+
+    // --- Dockwidgets ---
+    //! toggle actions for the dock areas
+    DockAreas dock_areas;
 
     /** Layer list widget */
     QG_LayerWidget* layerWidget;
@@ -336,18 +307,13 @@ private:
     QG_BlockWidget* blockWidget;
     /** Library browser widget */
     QG_LibraryWidget* libraryWidget;
-
-    /** Layer list dock widget */
-    QDockWidget* dock_layer;
-    /** Block list dock widget */
-    QDockWidget* dock_block;
-    /** Library list dock widget */
-    QDockWidget* dock_library;
-
     /** Command line */
     QG_CommandWidget* commandWidget;
-    QDockWidget* dock_command;
 
+    QHelpEngine* helpEngine{nullptr};
+    QDockWidget* helpWindow{nullptr};
+
+    // --- Statusbar ---
     /** Coordinate widget */
     QG_CoordinateWidget* coordinateWidget;
     /** Mouse widget */
@@ -356,71 +322,46 @@ private:
     QG_SelectionWidget* selectionWidget;
     QG_ActiveLayerName* m_pActiveLayerName;
 
-    /** Option widget for individual tool options */
-    QToolBar* optionWidget;
-
-    /** Recent files list */
-	QG_RecentFiles* recentFiles;
-    QStringList openedFiles;
-
-    /** Action handler. */
-    QG_ActionHandler* actionHandler;
-
-#ifdef RS_SCRIPTING
-        /** Scripting interface. */
-        QS_Scripter* scripter;
-#endif
-
+    // --- Menus ---
     QMenu* windowsMenu;
     QMenu* scriptMenu;
     QMenu* helpMenu;
     QMenu* testMenu;
+    QMenu* file_menu;
 
-    QList <QAction*> recentFilesAction;
-    /** the main toolbars */
-    QToolBar* dockwidgets_toolbar;
-    QToolBar* circleToolBar;
-    QToolBar* file_toolbar;
-    QToolBar* edit_toolbar;
-    QToolBar* view_toolbar;
-    LC_CustomToolbar* custom_toolbar{nullptr};
-    static QAction* previousZoom;
-    static QAction* undoButton;
-    static QAction* redoButton;
+    // --- Toolbars ---
+    QG_SnapToolBar* snapToolBar;
+    QG_PenToolBar* penToolBar; //!< for selecting the current pen
+    QToolBar* optionWidget; //!< for individual tool options
+
+    // --- Actions ---
+    QAction* previousZoom;
+    QAction* undoButton;
+    QAction* redoButton;
+
+    QAction* scriptOpenIDE;
+    QAction* scriptRun;
+    QAction* helpAboutApp;
+    QAction* helpManual;
+
+    QAction* statusbar_view_action;
+
+    // --- Flags ---
     bool previousZoomEnable{false};
     bool undoEnable{false};
     bool redoEnable{false};
 
-    QG_SnapToolBar* snapToolBar;
-
-    // Toolbar for selecting the current pen
-    QG_PenToolBar* penToolBar;
-
-    QHelpEngine* helpEngine{nullptr};
-    QDockWidget* helpWindow{nullptr};
-
-    QAction* scriptOpenIDE;
-    QAction* scriptRun;
-
-    QAction* helpAboutApp;
-    QAction* helpManual;
-
-    //display "Draft Mode" in window title for draft mode
-    const QString m_qDraftModeTitle;
-#ifdef LC_DEBUGGING
-	LC_SimpleTests* m_pSimpleTest;
-#endif
-
-//Plugin support
-    void loadPlugins();
-    QMenu *findMenu(const QString &searchMenu, const QObjectList thisMenuList, const QString& currentEntry);
-	QList<QC_PluginInterface*> loadedPlugins;
-
-    QMenu* createPopupMenu();
+    // --- Lists ---
+    QList<QC_PluginInterface*> loadedPlugins;
     QList<QAction*> toolbar_view_actions;
     QList<QAction*> dockwidget_view_actions;
-    QAction* statusbar_view_action;
     QList<QC_MDIWindow*> window_list;
+    QList<QAction*> recentFilesAction;
+
+    QStringList openedFiles;
+
+    // --- Strings ---
+    QString style_sheet_path;
 };
 
 

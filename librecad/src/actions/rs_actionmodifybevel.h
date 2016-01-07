@@ -84,10 +84,9 @@ public:
 
 private:
     RS_Entity* entity1;
-	RS_Vector coord1;
     RS_Entity* entity2;
-	RS_Vector coord2;
-	std::unique_ptr<RS_BevelData> data;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 	/** Last status before entering angle. */
 	Status lastStatus;
 };

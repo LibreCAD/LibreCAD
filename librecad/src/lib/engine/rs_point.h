@@ -38,10 +38,7 @@ struct RS_PointData {
         this->pos = pos;
     }
 
-    friend std::ostream& operator << (std::ostream& os, const RS_PointData& pd) {
-        os << "(" << pd.pos << ")";
-        return os;
-    }
+    friend std::ostream& operator << (std::ostream& os, const RS_PointData& pd);
 
     RS_Vector pos;
 };

@@ -73,7 +73,7 @@ private:
     /** Chosen entity (arc / circle) */
     RS_Entity* entity;
 	/** Chosen position */
-	RS_Vector pos;
+	std::unique_ptr<RS_Vector> pos;
     /** Data of new dimension */
 	std::unique_ptr<RS_DimRadialData> edata;
 	/** Last status before entering text. */

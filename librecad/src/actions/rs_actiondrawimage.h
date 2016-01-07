@@ -26,10 +26,11 @@
 
 #ifndef RS_ACTIONDRAWIMAGE_H
 #define RS_ACTIONDRAWIMAGE_H
-
+#include<memory>
 #include "rs_previewactioninterface.h"
 
 struct RS_ImageData;
+class QImage;
 
 /**
  * This action class can handle user events for inserting bitmaps into the
@@ -93,8 +94,8 @@ public:
 
 
 protected:
-	std::unique_ptr<RS_ImageData> data;
-	std::unique_ptr<QImage> img;
+	struct ImageData;
+	std::unique_ptr<ImageData> pImg;
 	
 	/** Last status before entering option. */
 	Status lastStatus;

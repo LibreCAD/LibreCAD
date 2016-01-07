@@ -23,7 +23,7 @@
 **
 **********************************************************************/
 
-
+#include<cstdlib>
 #include <QStringList>
 #include <QTextCodec>
 
@@ -57,6 +57,7 @@
 
 #ifdef DWGSUPPORT
 #include "libdwgr.h"
+#include "rs_debug.h"
 #endif
 
 /**
@@ -485,9 +486,9 @@ void RS_FilterDXFRW::addEllipse(const DRW_Ellipse& data) {
 			fabs(data.staparam) < RS_TOLERANCE)
 		ang2 = 0.;
 	RS_Ellipse* entity = new RS_Ellipse{currentContainer,
-										v1, v2,
+										{v1, v2,
 										data.ratio,
-										data.staparam, ang2};
+										data.staparam, ang2, false}};
     setEntityAttributes(entity, &data);
 
     currentContainer->addEntity(entity);
@@ -1106,8 +1107,8 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                     DRW_Arc *e2 = (DRW_Arc *)ent;
                     if (e2->isccw && e2->staangle<1.0e-6 && e2->endangle>RS_Math::deg2rad(360)-1.0e-6) {
                         e = new RS_Circle(hatchLoop,
-                                          RS_CircleData(RS_Vector(e2->basePoint.x, e2->basePoint.y),
-                                                        e2->radious));
+						{{e2->basePoint.x, e2->basePoint.y},
+														e2->radious});
                     } else {
 
                         if (e2->isccw) {
@@ -1151,9 +1152,9 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                         }
                     }
 					e = new RS_Ellipse{hatchLoop,
-					{e2->basePoint.x, e2->basePoint.y},
+					{{e2->basePoint.x, e2->basePoint.y},
 					{e2->secPoint.x, e2->secPoint.y},
-							e2->ratio, ang1, ang2, !e2->isccw};
+							e2->ratio, ang1, ang2, !e2->isccw}};
 					break;
                 }
                 default:

@@ -55,9 +55,7 @@ public:
 public:
     RS_ActionDefault(RS_EntityContainer& container,
                      RS_GraphicView& graphicView);
-	virtual ~RS_ActionDefault() = default;
-
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+	virtual ~RS_ActionDefault();
 
 	virtual void finish(bool /*updateTB*/ = true ){}
 
@@ -78,8 +76,8 @@ public:
 //    virtual void resume();
 
 protected:
-    RS_Vector v1;
-    RS_Vector v2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
     RS2::SnapRestriction restrBak;
 
 };

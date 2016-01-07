@@ -34,19 +34,25 @@
 #include "rs_line.h"
 #include "rs_text.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
+
+struct RS_ActionDrawText::Points {
+	RS_Vector pos;
+	RS_Vector secPos;
+};
 
 RS_ActionDrawText::RS_ActionDrawText(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw Text",
 						   container, graphicView)
-		,pos(false)
-		,secPos(false)
+		, pPoints(new Points{})
 		,textChanged(true)
 {
 	actionType=RS2::ActionDrawText;
 }
 
-RS_ActionDrawText::~RS_ActionDrawText(){}
+RS_ActionDrawText::~RS_ActionDrawText() = default;
 
 
 void RS_ActionDrawText::init(int status) {
@@ -103,7 +109,7 @@ void RS_ActionDrawText::trigger() {
 
     RS_DEBUG->print("RS_ActionDrawText::trigger()");
 
-    if (pos.valid) {
+	if (pPoints->pos.valid) {
         deletePreview();
 
 		RS_Text* text = new RS_Text(container, *data);
@@ -119,7 +125,7 @@ void RS_ActionDrawText::trigger() {
                 graphicView->redraw(RS2::RedrawDrawing);
 
         textChanged = true;
-        secPos = RS_Vector(false);
+		pPoints->secPos = {};
         setStatus(SetPos);
     }
 }
@@ -127,12 +133,12 @@ void RS_ActionDrawText::trigger() {
 
 void RS_ActionDrawText::preparePreview() {
 	if (data->halign == RS_TextData::HAFit || data->halign == RS_TextData::HAAligned) {
-        if (secPos.valid) {
-            RS_Line* text = new RS_Line(pos, secPos);
+		if (pPoints->secPos.valid) {
+			RS_Line* text = new RS_Line(pPoints->pos, pPoints->secPos);
             preview->addEntity(text);
         }
     } else {
-		data->insertionPoint = pos;
+		data->insertionPoint = pPoints->pos;
 		RS_Text* text = new RS_Text(preview.get(), *data);
         text->update();
         preview->addEntity(text);
@@ -146,9 +152,9 @@ void RS_ActionDrawText::mouseMoveEvent(QMouseEvent* e) {
 
     if (getStatus()==SetPos) {
         RS_Vector mouse = snapPoint(e);
-        RS_Vector mov = mouse-pos;
-        pos = mouse;
-        if (textChanged || pos.valid == false || preview->isEmpty()) {
+		RS_Vector mov = mouse - pPoints->pos;
+		pPoints->pos = mouse;
+		if (textChanged || pPoints->pos.valid == false || preview->isEmpty()) {
             deletePreview();
             preparePreview();
         } else {
@@ -157,7 +163,7 @@ void RS_ActionDrawText::mouseMoveEvent(QMouseEvent* e) {
         }
         drawPreview();
     } else if (getStatus()==SetSecPos) {
-        secPos = snapPoint(e);
+		pPoints->secPos = snapPoint(e);
         deletePreview();
         preparePreview();
         drawPreview();

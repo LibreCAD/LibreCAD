@@ -40,9 +40,9 @@ class RS_ActionDrawCircleTan1_2P : public RS_PreviewActionInterface {
      */
     enum Status {
         SetCircle1=0,   //  Setting the First Circle.  */
-        SetPoint1=1,   //  Setting the Second Circle.  */
-        SetPoint2=2,   //  select the closest tangential Circle.  */
-        SetCenter   //  select the closest tangential Circle.  */
+        SetPoint1=1,   //  Setting the First Point.  */
+        SetPoint2=2,   //  Setting the Second Point.  */
+        SetCenter   //  Setting the internal or external tangent circle's center.  */
     };
 
 public:
@@ -74,15 +74,11 @@ public:
 
 protected:
     RS_Entity* catchCircle(QMouseEvent* e);
-    RS_AtomicEntity* circle;
-	std::vector<RS_Vector> points;
-    private:
-	std::unique_ptr<RS_CircleData> cData;
-    RS_Vector coord;
-    double radius;
-    bool valid;
-    //keep a list of centers found
-    RS_VectorSolutions centers;
+	RS_AtomicEntity* circle;
+
+private:
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

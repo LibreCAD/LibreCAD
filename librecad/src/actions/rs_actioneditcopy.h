@@ -55,7 +55,6 @@ public:
 
     virtual void trigger();
 	
-    virtual void mouseMoveEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
 	
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
@@ -67,7 +66,7 @@ protected:
     /** Copy (true) or cut (false) */
     bool copy;
 
-	RS_Vector referencePoint;
+	std::unique_ptr<RS_Vector> referencePoint;
 };
 
 #endif

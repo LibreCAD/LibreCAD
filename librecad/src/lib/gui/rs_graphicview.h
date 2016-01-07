@@ -61,6 +61,7 @@ class RS_GraphicView : public QWidget
 
 public:
 	RS_GraphicView(QWidget * parent = 0, Qt::WindowFlags f = 0);
+	virtual ~RS_GraphicView();
 
     void cleanUp();
 
@@ -236,24 +237,9 @@ public:
 	void killSelectActions();
 	void killAllActions();
 
-	/**
-	 * Must be overwritten to emulate a mouse move event with
-	 * the last known mouse position.
-	 *
-	 * @see mx, my
-	 */
-	virtual void emulateMouseMoveEvent() = 0;
-
 	void back();
 	void enter();
 
-	void mousePressEvent(QMouseEvent* e);
-	void mouseReleaseEvent(QMouseEvent* e);
-	void mouseMoveEvent(QMouseEvent* e);
-	void mouseLeaveEvent();
-	void mouseEnterEvent();
-	void keyPressEvent(QKeyEvent* e);
-	void keyReleaseEvent(QKeyEvent* e);
 	void commandEvent(RS_CommandEvent* e);
 	void enableCoordinateInput();
 	void disableCoordinateInput();
@@ -384,11 +370,7 @@ public:
 protected:
 
     RS_EntityContainer* container{nullptr}; // Holds a pointer to all the enties
-	RS_EventHandler* eventHandler;
-
-
-	int mx=0;   //!< Last known mouse cursor position
-	int my=0;   //!< Last known mouse cursor position
+	std::unique_ptr<RS_EventHandler> eventHandler;
 
 	/** background color (any color) */
 	RS_Color background;
@@ -409,7 +391,7 @@ protected:
 	/** End handle color */
 	RS_Color endHandleColor;
 	/** Grid */
-	RS_Grid* grid;
+	std::unique_ptr<RS_Grid> grid;
 	/**
 		 * Current default snap mode for this graphic view. Used for new
 		 * actions.
@@ -451,7 +433,7 @@ private:
 	int borderRight=0;
 	int borderBottom=0;
 
-	RS_Vector relativeZero=RS_Vector(false);
+	RS_Vector relativeZero{false};
 	bool relativeZeroLocked=false;
 	//! Print preview flag
 	bool printPreview=false;

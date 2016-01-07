@@ -26,12 +26,17 @@
 #ifndef QG_MOVEROTATEOPTIONS_H
 #define QG_MOVEROTATEOPTIONS_H
 
-#include "ui_qg_moverotateoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionModifyMoveRotate;
 
-class QG_MoveRotateOptions : public QWidget, public Ui::QG_MoveRotateOptions
+namespace Ui {
+class Ui_MoveRotateOptions;
+}
+
+class QG_MoveRotateOptions : public QWidget
 {
     Q_OBJECT
 
@@ -50,8 +55,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_MoveRotateOptions> ui;
 };
 
 #endif // QG_MOVEROTATEOPTIONS_H

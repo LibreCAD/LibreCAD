@@ -39,6 +39,7 @@
 #include "rs_actioninterface.h"
 #include "rs_document.h"
 #include "rs_hatch.h"
+#include "lc_splinepoints.h"
 #include "rs_dimlinear.h"
 
 #include "rs_actiondimlinear.h"
@@ -76,6 +77,7 @@
 #include "qg_dlgrotate2.h"
 #include "qg_dlgscale.h"
 #include "qg_dlgspline.h"
+#include "lc_dlgsplinepoints.h"
 #include "qg_dlgtext.h"
 #include "qg_imageoptions.h"
 #include "qg_insertoptions.h"
@@ -110,6 +112,7 @@
 #include "qg_snapmiddleoptions.h"
 #include "qg_snapdistoptions.h"
 #include "rs_vector.h"
+#include "rs_debug.h"
 
 #if QT_VERSION < 0x040400
 #include "emu_qt44.h"
@@ -1543,7 +1546,7 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
         break;
 
     case RS2::EntitySpline: {
-            QG_DlgSpline dlg(parent);
+			QG_DlgSpline dlg(nullptr, false);
             dlg.setSpline(*((RS_Spline*)entity));
             if (dlg.exec()) {
                 dlg.updateSpline();
@@ -1551,6 +1554,16 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
             }
         }
         break;
+
+	case RS2::EntitySplinePoints: {
+			LC_DlgSplinePoints dlg(nullptr, false);
+			dlg.setSpline(*static_cast<LC_SplinePoints*>(entity));
+			if (dlg.exec()) {
+				dlg.updateSpline();
+				ret = true;
+			}
+		}
+		break;
 
     case RS2::EntityInsert: {
             QG_DlgInsert dlg(parent);
@@ -1718,9 +1731,9 @@ bool QG_DialogFactory::requestHatchDialog(RS_Hatch* hatch) {
     dlg.setHatch(*hatch, true);
     if (dlg.exec()) {
         dlg.updateHatch();
+        dlg.saveSettings();
         return true;
     }
-
     return false;
 }
 

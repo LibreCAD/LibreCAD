@@ -33,6 +33,8 @@
 #include "rs_information.h"
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 /**
  * @param both Trim both entities.
@@ -44,10 +46,11 @@ RS_ActionSnapIntersectionManual::RS_ActionSnapIntersectionManual(
 							   container, graphicView)
 	,entity1(nullptr)
 	,entity2(nullptr)
-	,coord(false)
+	,coord(new RS_Vector{})
 {
 }
 
+RS_ActionSnapIntersectionManual::~RS_ActionSnapIntersectionManual()=default;
 
 QAction* RS_ActionSnapIntersectionManual::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	//tr("Intersection Manually")
@@ -78,7 +81,7 @@ void RS_ActionSnapIntersectionManual::trigger() {
         entity2 = NULL;
         entity1 = NULL;
         if (predecessor) {
-            RS_Vector ip = sol.getClosest(coord);
+			RS_Vector ip = sol.getClosest(*coord);
 
             if (ip.valid) {
                 RS_CoordinateEvent e(ip);
@@ -104,7 +107,7 @@ void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent* e) {
 
     case ChooseEntity2: {
             entity2 = se;
-            coord = mouse;
+			*coord = mouse;
 
             RS_VectorSolutions sol =
                 RS_Information::getIntersection(entity1, entity2, false);
@@ -114,15 +117,13 @@ void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent* e) {
             //    break;
             //}
 
-            RS_Vector ip = sol.getClosest(coord);
+			RS_Vector ip = sol.getClosest(*coord);
 
             if (ip.valid) {
                 deletePreview();
                 preview->addEntity(
 					new RS_Circle(preview.get(),
-                                  RS_CircleData(
-                                      ip,
-                                      graphicView->toGraphDX(4))));
+				{ip, graphicView->toGraphDX(4)}));
                 drawPreview();
 
                 RS_DIALOGFACTORY->updateCoordinateWidget(ip,
@@ -157,8 +158,8 @@ void RS_ActionSnapIntersectionManual::mouseReleaseEvent(QMouseEvent* e) {
 
         case ChooseEntity2:
             entity2 = se;
-            coord = mouse;
-            if (entity2 && entity2->isAtomic() && coord.valid) {
+			*coord = mouse;
+			if (entity2 && entity2->isAtomic() && coord->valid) {
                 trigger();
             }
             break;

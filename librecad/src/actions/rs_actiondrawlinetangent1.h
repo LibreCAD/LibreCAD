@@ -63,7 +63,7 @@ private:
     /** Closest tangent. */
 	std::unique_ptr<RS_Line> tangent;
     /** Chosen startpoint */
-    RS_Vector point;
+	std::unique_ptr<RS_Vector> point;
     /** Chosen entity */
     RS_Entity* circle;
 };

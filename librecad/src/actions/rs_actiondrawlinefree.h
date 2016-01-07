@@ -59,7 +59,7 @@ public:
     virtual void updateMouseCursor();
 
 protected:
-    RS_Vector vertex;
+	std::unique_ptr<RS_Vector> vertex;
 	std::unique_ptr<RS_Polyline> polyline;
 };
 

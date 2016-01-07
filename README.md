@@ -78,7 +78,7 @@ cd LibreCAD
 This creates an executable "LibreCAD.app/Contents/MacOS/LibreCAD" and package "LibreCAD.dmg".
 
 OS X and MacPorts
-------------------------
+-----------------
 
 install MacPorts from [http://www.macports.org/](http://www.macports.org/)
 
@@ -107,8 +107,7 @@ This creates an executable "LibreCAD.app/Contents/MacOS/LibreCAD" and package "L
 Users of Ubuntu/Debian and derivatives
 --------------------------------------
 
-Make sure you have the Qt version 4 development packages installed by
-running the following commands:
+Make sure you have the Qt development packages installed. For to install Qt version 4, run the following commands:
 
 ```
 $ sudo apt-get install g++ gcc make git-core libqt4-dev qt4-qmake libqt4-help \
@@ -129,6 +128,15 @@ http://librecad.org/cms/home/from-source/linux.html
 
 LibreCAD builds with both Qt4 and Qt5. Note that you will most likely need to run __qmake-qt4__ or __qmake-qt5__ instead of just __qmake__.
 
+After the installation of dependency packages, download the LibreCAD source from the official [LibreCAD repository](https://github.com/LibreCAD/LibreCAD), and run the following commands in the top folder of the downloaded LibreCAD source code:
+
+```bash
+qmake-qt4 -r
+make
+```
+
+as described in section [Generic Unix Users](#Generic Unix Users).
+
 Users of Red Hat and similar distibutions
 -----------------------------------------
 
@@ -148,9 +156,7 @@ yum install qt-devel boost-devel muParser-devel
 
 will install the necessary build dependencies.
 
-Note that you will most likely need to run __qmake-qt4__ or __qmake-qt5__ instead of just __qmake__.
-
-__scripts/build-osx.sh__ bash building scripts are supplied. See [OS/X by building scripts](http://wiki.librecad.org/index.php/LibreCAD_Installation_from_Source#By_the_building_script)
+Building of LibreCAD in Red Hat is similar to the building procedure described in the [Ubuntu](#Users of Ubuntu/Debian and derivatives) section.
 
 FreeBSD users
 -------------
@@ -175,7 +181,7 @@ net/qt4-network textproc/clucene-qt4 x11-toolkits/qt4-gui
 ```
 - Run
 ```
-qmake-qt4 && make
+qmake-qt4 -r && make
 ```
 
 The executable is generated at __unix/librecad__

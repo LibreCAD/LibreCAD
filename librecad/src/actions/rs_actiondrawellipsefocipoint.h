@@ -45,7 +45,7 @@ public:
 public:
     RS_ActionDrawEllipseFociPoint(RS_EntityContainer& container,
                                   RS_GraphicView& graphicView);
-	~RS_ActionDrawEllipseFociPoint()=default;
+	virtual ~RS_ActionDrawEllipseFociPoint() override;
 
     virtual void init(int status=0);
 
@@ -62,14 +62,10 @@ public:
     virtual void updateMouseCursor();
 
 protected:
-    // Foci of ellipse
-    RS_Vector focus1,focus2;
-    // A point on ellipse
-    RS_Vector point;
-    private:
-    RS_Vector center,major;
-    double c; //hold half of distance between foci
-    double d; //hold half of distance
+	struct Points;
+	std::unique_ptr<Points> pPoints;
+private:
+	double findRatio() const;
 };
 
 #endif

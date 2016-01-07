@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/tools">
+        <file>bevel.svg</file>
+        <file>distance_point_to_point.svg</file>
+    </qresource>
+</RCC>

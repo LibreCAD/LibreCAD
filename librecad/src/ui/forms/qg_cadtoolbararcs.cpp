@@ -23,6 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include<cassert>
 #include<QVBoxLayout>
 #include<QToolButton>
 #include<QToolBar>

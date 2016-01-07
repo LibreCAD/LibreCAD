@@ -23,6 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include<cmath>
 #include "qg_dlgrotate.h"
 
 #include "rs_settings.h"

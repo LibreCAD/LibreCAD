@@ -51,7 +51,7 @@ LC_Quadratic::LC_Quadratic():
 
 LC_Quadratic::LC_Quadratic(const LC_Quadratic& lc0):
   m_bIsQuadratic(lc0.isQuadratic())
-  ,m_bValid(lc0.isValid())
+  ,m_bValid(lc0)
 {
     if(m_bValid==false) return;
   if(m_bIsQuadratic) m_mQuad=lc0.getQuad();
@@ -69,7 +69,7 @@ LC_Quadratic& LC_Quadratic::operator = (const LC_Quadratic& lc0)
     m_vLinear=lc0.getLinear();
     m_dConst=lc0.m_dConst;
     m_bIsQuadratic=lc0.isQuadratic();
-    m_bValid=lc0.isValid();
+	m_bValid=lc0.m_bValid;
     return *this;
 }
 
@@ -127,7 +127,7 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point
 
         center=circle->getCenter();
         r=circle->getRadius();
-        if(center.valid==false){
+		if(center == false){
             m_bValid=false;
             return;
         }
@@ -209,6 +209,11 @@ bool LC_Quadratic::isQuadratic() const {
 	return m_bIsQuadratic;
 }
 
+LC_Quadratic::operator bool() const
+{
+	return m_bValid;
+}
+
 bool LC_Quadratic::isValid() const
 {
 	return m_bValid;
@@ -217,6 +222,17 @@ bool LC_Quadratic::isValid() const
 void LC_Quadratic::setValid(bool value)
 {
 	m_bValid=value;
+}
+
+
+bool LC_Quadratic::operator == (bool valid) const
+{
+	return m_bValid == valid;
+}
+
+bool LC_Quadratic::operator != (bool valid) const
+{
+	return m_bValid != valid;
 }
 
 boost::numeric::ublas::vector<double>& LC_Quadratic::getLinear()
@@ -328,7 +344,7 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
         //ellipse
 		double const ratio=sqrt(a*a - f*f)/a;
 		RS_Vector const& majorP=RS_Vector{angle}*a;
-		RS_Ellipse const ellipse{center,majorP,ratio,0.,0.,false};
+		RS_Ellipse const ellipse{nullptr, {center,majorP,ratio,0.,0.,false}};
 		auto const& lc0=ellipse.getQuadratic();
 
         m_mQuad=lc0.getQuad();
@@ -457,7 +473,7 @@ LC_Quadratic LC_Quadratic::flipXY(void) const
 RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const LC_Quadratic& l2)
 {
     RS_VectorSolutions ret;
-    if( l1.isValid()==false || l2.isValid()==false ) {
+	if( l1 == false || l2 == false ) {
 //        DEBUG_HEADER
 //        std::cout<<l1<<std::endl;
 //        std::cout<<l2<<std::endl;
@@ -600,7 +616,7 @@ boost::numeric::ublas::matrix<double>  LC_Quadratic::rotationMatrix(const double
 std::ostream& operator << (std::ostream& os, const LC_Quadratic& q) {
 
     os << " quadratic form: ";
-    if(q.isValid()==false) {
+	if(q == false) {
         os<<" invalid quadratic form"<<std::endl;
         return os;
     }

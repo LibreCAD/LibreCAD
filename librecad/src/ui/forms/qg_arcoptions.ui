@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QG_ArcOptions</class>
- <widget class="QWidget" name="QG_ArcOptions">
+ <class>Ui_ArcOptions</class>
+ <widget class="QWidget" name="Ui_ArcOptions">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>113</width>
-    <height>22</height>
+    <height>28</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -52,13 +52,13 @@
    <property name="lineWidth" stdset="0">
     <number>0</number>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>2</x>
       <y>1</y>
-      <width>117</width>
-      <height>23</height>
+      <width>119</width>
+      <height>31</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1,1">

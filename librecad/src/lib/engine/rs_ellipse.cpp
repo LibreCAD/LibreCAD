@@ -34,8 +34,10 @@
 #include "rs_painter.h"
 #include "rs_information.h"
 #include "rs_linetypepattern.h"
+#include "rs_math.h"
 #include  "lc_quadratic.h"
 #include "rs_painterqt.h"
+#include "rs_debug.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h" /* C99 math */
@@ -111,35 +113,6 @@ RS_Ellipse::RS_Ellipse(RS_EntityContainer* parent,
 	,data(d) {
     //calculateEndpoints();
     calculateBorders();
-}
-
-RS_Ellipse::RS_Ellipse(const RS_EllipseData& d)
-	:RS_AtomicEntity(nullptr)
-	,data(d)
-{
-	//calculateEndpoints();
-	calculateBorders();
-}
-
-RS_Ellipse::RS_Ellipse(RS_EntityContainer* parent,
-					   const RS_Vector& center,
-					   const RS_Vector& majorP,
-					   double ratio,
-					   double angle1, double angle2,
-					   bool reversed):
-	RS_AtomicEntity(parent)
-  ,data({center, majorP, ratio, angle1, angle2, reversed})
-{
-}
-
-RS_Ellipse::RS_Ellipse(const RS_Vector& center,
-					   const RS_Vector& majorP,
-					   double ratio,
-					   double angle1, double angle2,
-					   bool reversed):
-	RS_AtomicEntity(nullptr)
-  ,data({center, majorP, ratio, angle1, angle2, reversed})
-{
 }
 
 RS_Entity* RS_Ellipse::clone() const {

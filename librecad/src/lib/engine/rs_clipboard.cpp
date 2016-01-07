@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-
+#include <iostream>
 #include "rs_clipboard.h"
 #include "rs_block.h"
 #include "rs_layer.h"

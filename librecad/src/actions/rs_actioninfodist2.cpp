@@ -32,6 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
 
 
 RS_ActionInfoDist2::RS_ActionInfoDist2(RS_EntityContainer& container,
@@ -39,7 +40,7 @@ RS_ActionInfoDist2::RS_ActionInfoDist2(RS_EntityContainer& container,
         :RS_PreviewActionInterface("Info Dist2",
                            container, graphicView)
 		,entity(nullptr)
-        ,point(false)
+		,point(new RS_Vector{})
 {
 	actionType=RS2::ActionInfoDist2;
 }
@@ -63,8 +64,8 @@ void RS_ActionInfoDist2::trigger() {
 
     RS_DEBUG->print("RS_ActionInfoDist2::trigger()");
 
-    if (point.valid && entity) {
-        double dist = entity->getDistanceToPoint(point);
+	if (point->valid && entity) {
+		double dist = entity->getDistanceToPoint(*point);
 		QString str = RS_Units::formatLinear(dist, graphic->getUnit(),
 											 graphic->getLinearFormat(), graphic->getLinearPrecision());
         RS_DIALOGFACTORY->commandMessage(tr("Distance: %1").arg(str));
@@ -88,7 +89,7 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent* e) {
     case SetPoint:
         if (entity) {
              RS_Vector&& mouse=snapPoint(e);
-            point = mouse;
+			*point = mouse;
         }
         break;
 
@@ -136,8 +137,8 @@ void RS_ActionInfoDist2::coordinateEvent(RS_CoordinateEvent* e) {
     }
 
     if (getStatus()==SetPoint && entity) {
-        point = e->getCoordinate();
-        graphicView->moveRelativeZero(point);
+		*point = e->getCoordinate();
+		graphicView->moveRelativeZero(*point);
         trigger();
         setStatus(SetEntity);
     }

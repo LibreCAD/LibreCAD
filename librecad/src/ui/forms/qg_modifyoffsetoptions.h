@@ -29,12 +29,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef QG_MODIFYOFFSETOPTIONS_H
 #define QG_MODIFYOFFSETOPTIONS_H
 
-#include "ui_qg_modifyoffsetoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionDrawModifyOffset;
+namespace Ui {
+class Ui_ModifyOffsetOptions;
+}
 
-class QG_ModifyOffsetOptions : public QWidget, public Ui::QG_ModifyOffsetOptions
+class QG_ModifyOffsetOptions : public QWidget
 {
     Q_OBJECT
 
@@ -55,8 +59,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_ModifyOffsetOptions> ui;
 };
 
 #endif

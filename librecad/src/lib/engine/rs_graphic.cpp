@@ -24,6 +24,8 @@
 **
 **********************************************************************/
 
+#include <iostream>
+#include <cmath>
 #include <QDir>
 #include <QDebug>
 
@@ -89,7 +91,7 @@ blockList(true),paperScaleFixed(false)
 /**
  * Destructor.
  */
-RS_Graphic::~RS_Graphic() {}
+RS_Graphic::~RS_Graphic() = default;
 
 
 

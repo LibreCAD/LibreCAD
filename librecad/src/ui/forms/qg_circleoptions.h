@@ -26,10 +26,16 @@
 #ifndef QG_CIRCLEOPTIONS_H
 #define QG_CIRCLEOPTIONS_H
 
-#include "rs_actiondrawcirclecr.h"
-#include "ui_qg_circleoptions.h"
+#include<memory>
+#include<QWidget>
 
-class QG_CircleOptions : public QWidget, public Ui::QG_CircleOptions
+class RS_ActionInterface;
+class RS_ActionDrawCircleCR;
+namespace Ui {
+class Ui_CircleOptions;
+}
+
+class QG_CircleOptions : public QWidget
 {
     Q_OBJECT
 
@@ -38,7 +44,7 @@ public:
     ~QG_CircleOptions();
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
+	virtual void setAction(RS_ActionInterface * a, bool update );
     virtual void updateRadius( const QString & r );
 
 protected:
@@ -48,8 +54,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_CircleOptions> ui;
 };
 
 #endif // QG_CIRCLEOPTIONS_H

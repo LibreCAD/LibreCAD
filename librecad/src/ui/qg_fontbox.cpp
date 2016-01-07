@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <QDebug>
 #include "qg_fontbox.h"
 
 #include "rs_font.h"

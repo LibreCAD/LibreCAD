@@ -43,6 +43,7 @@
 #include "rs_staticgraphicview.h"
 #include "rs_actionlibraryinsert.h"
 #include "qg_actionhandler.h"
+#include "rs_debug.h"
 
 #if QT_VERSION < 0x040400
 #include "emu_qt44.h"
@@ -417,7 +418,7 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     // create all directories needed:
     RS_SYSTEM->createPaths(iconCacheLocation + dir);
 
-    QString foo=iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
+//    QString foo=iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
     pngPath = iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
 
     QPixmap* buffer = new QPixmap(128,128);

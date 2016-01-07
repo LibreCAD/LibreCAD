@@ -21,7 +21,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "rs_actiondrawellipsefocipoint.h"
-
+#include<cmath>
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_dialogfactory.h"
@@ -30,6 +30,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_ellipse.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
+
+struct RS_ActionDrawEllipseFociPoint::Points {
+	// Foci of ellipse
+	RS_Vector focus1,focus2;
+	// A point on ellipse
+	RS_Vector point;
+	RS_Vector center,major;
+	double c; //hold half of distance between foci
+	double d; //hold half of distance
+};
 
 /**
  * Constructor.
@@ -39,32 +51,36 @@ RS_ActionDrawEllipseFociPoint::RS_ActionDrawEllipseFociPoint(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw ellipse by foci and a point",
-                           container, graphicView),
-          focus1(false),
-          focus2(false),
-          point(false)
+						   container, graphicView)
+		, pPoints(new Points{})
 {
 	actionType=RS2::ActionDrawEllipseFociPoint;
 }
+
+RS_ActionDrawEllipseFociPoint::~RS_ActionDrawEllipseFociPoint() = default;
 
 void RS_ActionDrawEllipseFociPoint::init(int status) {
     RS_PreviewActionInterface::init(status);
 
     if (status==SetFocus1) {
-        focus1.valid=false;
+		pPoints->focus1.valid=false;
     }
 }
 
+double RS_ActionDrawEllipseFociPoint::findRatio() const
+{
+	return 	sqrt(pPoints->d*pPoints->d-pPoints->c*pPoints->c)/pPoints->d;
 
+}
 
 void RS_ActionDrawEllipseFociPoint::trigger() {
     RS_PreviewActionInterface::trigger();
 
 	RS_Ellipse* ellipse = new RS_Ellipse{container,
-			center,
-			major*d,
-			sqrt(d*d-c*c)/d,
-			0., 0.,false
+	{pPoints->center,
+			pPoints->major*pPoints->d,
+			findRatio(),
+			0., 0.,false}
 };
     ellipse->setLayerToActive();
     ellipse->setPenToActive();
@@ -100,15 +116,16 @@ void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent* e) {
 
 
     case SetPoint:
-        point=mouse;
-        d=0.5*(focus1.distanceTo(point)+focus2.distanceTo(point));
-        if (d > c+ RS_TOLERANCE) {
+		pPoints->point=mouse;
+		pPoints->d=0.5*(pPoints->focus1.distanceTo(pPoints->point) +
+						pPoints->focus2.distanceTo(pPoints->point));
+		if (pPoints->d > pPoints->c+ RS_TOLERANCE) {
 			deletePreview();
 			preview->addEntity(new RS_Ellipse{preview.get(),
-											  center,
-											  major*d,
-											  sqrt(d*d-c*c)/d,
-											  0., 0.,false});
+											  {pPoints->center,
+											  pPoints->major*pPoints->d,
+											  findRatio(),
+											  0., 0.,false}});
             drawPreview();
         }
         break;
@@ -148,25 +165,25 @@ void RS_ActionDrawEllipseFociPoint::coordinateEvent(RS_CoordinateEvent* e) {
     switch (getStatus()) {
     case SetFocus1:
         graphicView->moveRelativeZero(mouse);
-        focus1=mouse;
+		pPoints->focus1=mouse;
         setStatus(SetFocus2);
         break;
 
     case SetFocus2:
-        c=0.5*focus1.distanceTo(mouse);
-        if(c>RS_TOLERANCE){
+		pPoints->c = 0.5*pPoints->focus1.distanceTo(mouse);
+		if(pPoints->c > RS_TOLERANCE){
             graphicView->moveRelativeZero(mouse);
-            focus2=mouse;
-            center=(focus1+focus2)*0.5;
-            major=focus1-center;
-            major /= c ;
+			pPoints->focus2=mouse;
+			pPoints->center=(pPoints->focus1+pPoints->focus2)*0.5;
+			pPoints->major=pPoints->focus1-pPoints->center;
+			pPoints->major /= pPoints->c ;
             setStatus(SetPoint);
         }
         break;
     case SetPoint:
-        point=mouse;
-        d=0.5*(focus1.distanceTo(point)+focus2.distanceTo(point));
-        if (d > c+ RS_TOLERANCE) {
+		pPoints->point=mouse;
+		pPoints->d=0.5*(pPoints->focus1.distanceTo(pPoints->point)+pPoints->focus2.distanceTo(pPoints->point));
+		if (pPoints->d > pPoints->c+ RS_TOLERANCE) {
             graphicView->moveRelativeZero(mouse);
             trigger();
         }
@@ -196,8 +213,8 @@ void RS_ActionDrawEllipseFociPoint::commandEvent(RS_CommandEvent* e) {
 		bool ok;
 		double a = RS_Math::eval(cmd, &ok);
 		if (ok) {
-			d=0.5*fabs(a);
-			if (d > c + RS_TOLERANCE) {
+			pPoints->d=0.5*fabs(a);
+			if (pPoints->d > pPoints->c + RS_TOLERANCE) {
 				trigger();
 			}else{
 				RS_DIALOGFACTORY->commandMessage(tr("Total distance %1 is smaller than distance between foci").arg(fabs(a)));

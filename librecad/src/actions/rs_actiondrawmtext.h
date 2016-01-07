@@ -82,7 +82,7 @@ public:
 private:
 	std::unique_ptr<RS_MTextData> data;
         //RS_Text* text;
-    RS_Vector pos;
+	std::unique_ptr<RS_Vector> pos;
         bool textChanged;
 };
 

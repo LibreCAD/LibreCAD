@@ -31,6 +31,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
+#include "rs_debug.h"
 
 
 RS_ActionModifyCut::RS_ActionModifyCut(RS_EntityContainer& container,
@@ -38,10 +39,12 @@ RS_ActionModifyCut::RS_ActionModifyCut(RS_EntityContainer& container,
         :RS_ActionInterface("Cut Entity",
 					container, graphicView)
 ,cutEntity(nullptr)
-,cutCoord(false)
+,cutCoord(new RS_Vector{})
 {
 	actionType=RS2::ActionModifyCut;
 }
+
+RS_ActionModifyCut::~RS_ActionModifyCut() = default;
 
 void RS_ActionModifyCut::init(int status) {
     RS_ActionInterface::init(status);
@@ -51,17 +54,17 @@ void RS_ActionModifyCut::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyCut::trigger()");
 
-    if (cutEntity && cutEntity->isAtomic() && cutCoord.valid &&
-            cutEntity->isPointOnEntity(cutCoord)) {
+	if (cutEntity && cutEntity->isAtomic() && cutCoord->valid &&
+			cutEntity->isPointOnEntity(*cutCoord)) {
 
         cutEntity->setHighlighted(false);
         graphicView->drawEntity(cutEntity);
 
         RS_Modification m(*container, graphicView);
-        m.cut(cutCoord, (RS_AtomicEntity*)cutEntity);
+		m.cut(*cutCoord, (RS_AtomicEntity*)cutEntity);
 
-        cutEntity = NULL;
-        cutCoord = RS_Vector(false);
+		cutEntity = nullptr;
+		*cutCoord = RS_Vector(false);
         setStatus(ChooseCutEntity);
 
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
@@ -95,7 +98,7 @@ void RS_ActionModifyCut::mouseReleaseEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case ChooseCutEntity:
             cutEntity = catchEntity(e);
-            if (cutEntity==NULL) {
+			if (cutEntity==nullptr) {
                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
             } else if(cutEntity->trimmable()){
                 cutEntity->setHighlighted(true);
@@ -107,12 +110,12 @@ void RS_ActionModifyCut::mouseReleaseEvent(QMouseEvent* e) {
             break;
 
         case SetCutCoord:
-            cutCoord = snapPoint(e);
-            if (cutEntity==NULL) {
+			*cutCoord = snapPoint(e);
+			if (cutEntity==nullptr) {
                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-            } else if (!cutCoord.valid) {
+			} else if (!cutCoord->valid) {
                 RS_DIALOGFACTORY->commandMessage(tr("Cutting point is invalid."));
-            } else if (!cutEntity->isPointOnEntity(cutCoord)) {
+			} else if (!cutEntity->isPointOnEntity(*cutCoord)) {
                 RS_DIALOGFACTORY->commandMessage(
                     tr("Cutting point is not on entity."));
             } else {

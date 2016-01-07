@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<clocale>
 #include "main.h"
 
 #include <QApplication>
@@ -32,10 +32,6 @@
 #include <QSplashScreen>
 
 QSplashScreen *splash=nullptr;
-
-#ifdef RS_SCRIPTING
-    #include <qsproject.h>
-#endif
 
 #include "rs_fontlist.h"
 #include "rs_patternlist.h"
@@ -46,6 +42,7 @@ QSplashScreen *splash=nullptr;
 #include "qg_dlginitial.h"
 
 #include "qc_applicationwindow.h"
+#include "rs_debug.h"
 
 #ifndef QC_SPLASH_TXTCOL
     #define QC_SPLASH_TXTCOL Qt::black
@@ -66,11 +63,9 @@ int main(int argc, char** argv)
 {
     RS_DEBUG->setLevel(RS_Debug::D_WARNING);
 
-    QCoreApplication::setApplicationName(XSTR(QC_APPNAME));
-
-    #if QT_VERSION > 0x040400
-        QCoreApplication::setApplicationVersion(XSTR(QC_VERSION));
-    #endif
+    QCoreApplication::setOrganizationName("LibreCAD");
+    QCoreApplication::setApplicationName("/LibreCAD");
+    QCoreApplication::setApplicationVersion("master");
 
     QApplication app(argc, argv);
 
@@ -379,11 +374,11 @@ int main(int argc, char** argv)
         appWin.slotFileNewNew();
     }
 
-    appWin.slotRunStartScript();
+    int return_code = app.exec();
 
-    RS_DEBUG->print("main: finished");
+    RS_DEBUG->print("main: exited Qt event loop");
 
-    return app.exec();;
+    return return_code;
 }
 
 

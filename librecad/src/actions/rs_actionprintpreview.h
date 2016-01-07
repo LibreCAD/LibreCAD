@@ -48,7 +48,7 @@ public:
 public:
     RS_ActionPrintPreview(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-	~RS_ActionPrintPreview()=default;
+	~RS_ActionPrintPreview();
 
     virtual void init(int status=0);
 	virtual void resume();
@@ -79,13 +79,13 @@ public:
     bool getPaperScaleFixed();
 
 
-protected:
-    //bool blackWhite;
-    bool hasOptions;
-    RS_Vector v1;
-    RS_Vector v2;
-    bool scaleFixed;
-    bool m_bPaperOffset;
+private:
+
+	bool hasOptions;
+	bool scaleFixed;
+	bool m_bPaperOffset;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

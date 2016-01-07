@@ -24,6 +24,8 @@
 **
 **********************************************************************/
 
+#include <set>
+#include <iostream>
 #include <QString>
 #include <QRegExp>
 #include "rs_debug.h"
@@ -212,6 +214,7 @@ void RS_BlockList::editBlock(RS_Block* block, const RS_Block& source) {
 RS_Block* RS_BlockList::find(const QString& name) {
     //RS_DEBUG->print("RS_BlockList::find");
 	// Todo : reduce this from O(N) to O(log(N)) complexity based on sorted list or hash
+	//DFS
 	std::vector<RS_BlockList const*> nodes;
 	std::set<RS_BlockList const*> searched;
 	searched.insert(nullptr);

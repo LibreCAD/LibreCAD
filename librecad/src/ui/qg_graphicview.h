@@ -61,7 +61,7 @@ public:
     virtual void adjustZoomControls();
     virtual void setBackground(const RS_Color& bg);
     virtual void setMouseCursor(RS2::CursorType c);
-        virtual void updateGridStatusWidget(const QString& text);
+    virtual void updateGridStatusWidget(const QString& text);
 
 	virtual	void getPixmapForView(std::unique_ptr<QPixmap>& pm);
 		
@@ -89,10 +89,12 @@ public:
      */
     virtual RS_Vector getMousePosition() const;
 
-	void set_antialiasing(bool state);
+    void setAntialiasing(bool state);
+    void setCursorHiding(bool state);
+    void addScrollbars();
+    bool hasScrollbars();
 
 protected:
-    virtual void emulateMouseMoveEvent();
     virtual void mousePressEvent(QMouseEvent* e);
     virtual void mouseDoubleClickEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
@@ -146,7 +148,12 @@ protected:
     bool isSmoothScrolling;
 
 private:
-	bool antialiasing{false};
+    bool antialiasing{false};
+    bool scrollbars{false};
+    bool cursor_hiding{false};
+
+signals:
+    void xbutton1_released();
 };
 
 #endif

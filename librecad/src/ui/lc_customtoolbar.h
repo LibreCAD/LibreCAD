@@ -9,7 +9,7 @@ class LC_CustomToolbar : public QToolBar
 
 public:
 
-    LC_CustomToolbar(const QString& name, QWidget* parent);
+    LC_CustomToolbar(QWidget* parent);
     ~LC_CustomToolbar();
 
     void actions_from_file(const QString& path,

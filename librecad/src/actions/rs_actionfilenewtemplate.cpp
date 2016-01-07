@@ -27,6 +27,7 @@
 #include "rs_actionfilenewtemplate.h"
 
 #include <QAction>
+#include "rs_debug.h"
 
 
 RS_ActionFileNewTemplate::RS_ActionFileNewTemplate(RS_EntityContainer& container,

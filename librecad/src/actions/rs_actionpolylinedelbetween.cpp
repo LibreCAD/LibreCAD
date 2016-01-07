@@ -33,22 +33,31 @@
 #include "rs_modification.h"
 #include "rs_polyline.h"
 #include "rs_atomicentity.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
-
+struct RS_ActionPolylineDelBetween::Points {
+	RS_Vector nodePoint1;
+	RS_Vector nodePoint2;
+};
 
 RS_ActionPolylineDelBetween::RS_ActionPolylineDelBetween(RS_EntityContainer& container,
                 RS_GraphicView& graphicView)
                 :RS_PreviewActionInterface("Delete between two nodes",
-												   container, graphicView) {
+												   container, graphicView)
+				, pPoints(new Points{})
+{
 	actionType=RS2::ActionPolylineDelBetween;
 }
+
+RS_ActionPolylineDelBetween::~RS_ActionPolylineDelBetween()=default;
 
 
 void RS_ActionPolylineDelBetween::init(int status) {
         RS_ActionInterface::init(status);
 		delEntity = nullptr;
-		delSegment = NULL;
-        nodePoint1 = nodePoint2 = RS_Vector(false);
+		delSegment = nullptr;
+		pPoints->nodePoint1 = pPoints->nodePoint2 = RS_Vector(false);
 }
 
 
@@ -57,16 +66,16 @@ void RS_ActionPolylineDelBetween::trigger() {
 
         RS_DEBUG->print("RS_ActionPolylineDelBetween::trigger()");
 
-        if (delEntity && delSegment->isAtomic() && nodePoint1.valid && nodePoint2.valid) {
+		if (delEntity && delSegment->isAtomic() && pPoints->nodePoint1.valid && pPoints->nodePoint2.valid) {
 
                 delEntity->setHighlighted(false);
                 graphicView->drawEntity(delEntity);
 
                 RS_Modification m(*container, graphicView);
-                delEntity = m.deletePolylineNodesBetween((RS_Polyline&)*delEntity, (RS_AtomicEntity&)*delSegment, nodePoint1, nodePoint2 );
+				delEntity = m.deletePolylineNodesBetween((RS_Polyline&)*delEntity, (RS_AtomicEntity&)*delSegment, pPoints->nodePoint1, pPoints->nodePoint2 );
 
-                delEntity = delSegment = NULL;
-                nodePoint1 = nodePoint2 = RS_Vector(false);
+				delEntity = delSegment = nullptr;
+				pPoints->nodePoint1 = pPoints->nodePoint2 = RS_Vector(false);
                 setStatus(SetNodePoint1);
 
                 RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
@@ -106,7 +115,7 @@ void RS_ActionPolylineDelBetween::mouseReleaseEvent(QMouseEvent* e) {
                 switch (getStatus()) {
                 case ChooseSegment:
                         delEntity = catchEntity(e);
-                        if (delEntity==NULL) {
+						if (delEntity==nullptr) {
                                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
                         } else if (delEntity->rtti()!=RS2::EntityPolyline) {
 
@@ -114,11 +123,11 @@ void RS_ActionPolylineDelBetween::mouseReleaseEvent(QMouseEvent* e) {
                                         tr("Entity must be a polyline."));
                         } else {
 							snapPoint(e);
-                                delSegment = NULL;
+								delSegment = nullptr;
                                 double dist = graphicView->toGraphDX(snapRange)*0.9;
                                 delSegment =  (RS_AtomicEntity*)((RS_Polyline*)delEntity)->getNearestEntity( RS_Vector(graphicView->toGraphX(e->x()),
                                                                         graphicView->toGraphY(e->y())), &dist, RS2::ResolveNone);
-                                if(delSegment == NULL)
+								if(delSegment == nullptr)
                                         break;
                                 delEntity->setHighlighted(true);
                                 graphicView->drawEntity(delEntity);
@@ -130,12 +139,12 @@ void RS_ActionPolylineDelBetween::mouseReleaseEvent(QMouseEvent* e) {
                         break;
 
                 case SetNodePoint1:
-                        nodePoint1 = snapPoint(e);
-                        if (delEntity==NULL) {
+						pPoints->nodePoint1 = snapPoint(e);
+						if (delEntity==nullptr) {
                                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-                        } else if (!nodePoint1.valid) {
+						} else if (!pPoints->nodePoint1.valid) {
                                 RS_DIALOGFACTORY->commandMessage(tr("Deleting point is invalid."));
-                        } else if (!delEntity->isPointOnEntity(nodePoint1)) {
+						} else if (!delEntity->isPointOnEntity(pPoints->nodePoint1)) {
                                 RS_DIALOGFACTORY->commandMessage(
                                         tr("Deleting point is not on entity."));
                         }else{
@@ -143,12 +152,12 @@ void RS_ActionPolylineDelBetween::mouseReleaseEvent(QMouseEvent* e) {
                         }
                         break;
                 case SetNodePoint2:
-                        nodePoint2 = snapPoint(e);
-                        if (delEntity==NULL) {
+						pPoints->nodePoint2 = snapPoint(e);
+						if (delEntity==nullptr) {
                                 RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-                        } else if (!nodePoint2.valid) {
+						} else if (!pPoints->nodePoint2.valid) {
                                 RS_DIALOGFACTORY->commandMessage(tr("Deletinging point is invalid."));
-                        } else if (!delEntity->isPointOnEntity(nodePoint2)) {
+						} else if (!delEntity->isPointOnEntity(pPoints->nodePoint2)) {
                                 RS_DIALOGFACTORY->commandMessage(
                                         tr("Deleteinging point is not on entity."));
                         } else {
@@ -197,7 +206,7 @@ void RS_ActionPolylineDelBetween::updateMouseButtonHints() {
 
 
 void RS_ActionPolylineDelBetween::updateMouseCursor() {
-        graphicView->setMouseCursor(RS2::CadCursor);
+        graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

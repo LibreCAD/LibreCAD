@@ -45,15 +45,7 @@ class RS_ActionDrawSpline : public RS_PreviewActionInterface {
     enum Status {
         SetStartpoint,   /**< Setting the startpoint.  */
         SetNextPoint      /**< Setting the next point. */
-    };
-	/**
-	 * Spline data defined so far.
-	 */
-	std::unique_ptr<RS_SplineData> data;
-	/**
-	 * Polyline entity we're working on.
-	 */
-	RS_Spline* spline;
+	};
 
 public:
     RS_ActionDrawSpline(RS_EntityContainer& container,
@@ -87,25 +79,9 @@ public:
     virtual bool isClosed();
 
 protected:
-    /**
-     * last point.
-     */
-    //RS_Vector point;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 
-	/**
-	 * Start point of the series of nodes. Used for close function.
-	 */
-	//RS_Vector start;
-
-	/**
-	 * Point history (for undo)
-	 */
-        QList<RS_Vector> history;
-	
-	/**
-	 * Bulge history (for undo)
-	 */
-        //QList<double> bHistory;
 };
 
 #endif

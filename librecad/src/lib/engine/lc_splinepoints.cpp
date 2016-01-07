@@ -33,18 +33,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_painterqt.h"
 #include "lc_quadratic.h"
 #include "rs_information.h"
+#include "rs_math.h"
+#include "rs_linetypepattern.h"
 
-LC_SplinePointsData::LC_SplinePointsData(bool _closed, bool _cut):
-	closed(_closed)
-  ,cut(_cut)
-{
-}
-
-std::ostream& operator << (std::ostream& os, const LC_SplinePointsData& ld)
-{
-	os << "( closed: " << ld.closed << ")";
-	return os;
-}
 
 namespace {
 RS_Vector GetQuadPoint(const RS_Vector& x1,
@@ -52,6 +43,28 @@ RS_Vector GetQuadPoint(const RS_Vector& x1,
 {
 	return x1*(1.0 - dt)*(1.0 - dt) + c1*2.0*dt*(1.0 - dt) + x2*dt*dt;
 }
+
+void StrokeQuad(std::vector<RS_Vector>* plist,
+				RS_Vector const& vx1,
+				RS_Vector const&  vc1,
+				RS_Vector const&  vx2, int iSeg)
+{
+	if(iSeg < 1)
+	{
+		plist->push_back(vx1);
+		return;
+	}
+
+	RS_Vector x(false);
+	double dt;
+	for(int i = 0; i < iSeg; i++)
+	{
+		dt = (double)i/(double)iSeg;
+		x = GetQuadPoint(vx1, vc1, vx2, dt);
+		plist->push_back(x);
+	}
+}
+
 
 RS_Vector GetQuadDir(const RS_Vector& x1,
 	const RS_Vector& c1, const RS_Vector& x2, double dt)
@@ -273,6 +286,271 @@ RS_Vector GetThreePointsControl(const RS_Vector& x1, const RS_Vector& x2, const 
 	RS_Vector vRes = (x2 - x1*(1.0 - dt)*(1.0 - dt) - x3*dt*dt)/dt/(1 - dt)/2.0;
 	return vRes;
 }
+
+double GetDistToLine(const RS_Vector& coord, const RS_Vector& x1,
+	const RS_Vector& x2, double* dist)
+{
+	double ddet = (x2 - x1).squared();
+	if(ddet < RS_TOLERANCE)
+	{
+		*dist = (coord - x1).magnitude();
+		return 0.0;
+	}
+
+	double dt = ((coord.x - x1.x)*(x2.x - x1.x) + (coord.y - x1.y)*(x2.y - x1.y))/ddet;
+
+	if(dt < RS_TOLERANCE)
+	{
+		*dist = (coord - x1).magnitude();
+		return 0.0;
+	}
+
+	if(dt > 1.0 - RS_TOLERANCE)
+	{
+		*dist = (coord - x2).magnitude();
+		return 1.0;
+	}
+
+	RS_Vector vRes = x1*(1.0 - dt) + x2*dt;
+	*dist = (coord - vRes).magnitude();
+	return dt;
+}
+
+RS_Vector GetQuadAtPoint(const RS_Vector& x1, const RS_Vector& c1,
+	const RS_Vector& x2, double dt)
+{
+	RS_Vector vRes = x1*(1.0 - dt)*(1.0 - dt) +
+		c1*2.0*dt*(1.0 - dt) + x2*dt*dt;
+	return vRes;
+}
+
+RS_Vector GetQuadDirAtPoint(const RS_Vector& x1, const RS_Vector& c1,
+	const RS_Vector& x2, double dt)
+{
+	RS_Vector vRes = (c1 - x1)*(1.0 - dt) + (x2 - c1)*dt;
+	return vRes;
+}
+
+double GetDistToQuadAtPointSquared(const RS_Vector& coord, const RS_Vector& x1,
+	const RS_Vector& c1, const RS_Vector& x2, double dt)
+{
+	if(dt < RS_TOLERANCE)
+	{
+		return (coord - x1).squared();
+	}
+
+	if(dt > 1.0 - RS_TOLERANCE)
+	{
+		return (coord - x2).squared();
+	}
+
+	RS_Vector vx = GetQuadAtPoint(x1, c1, x2, dt);
+	return (coord - vx).squared();
+}
+
+// returns true if the new distance was smaller than previous one
+bool SetNewDist(bool bResSet, double dNewDist, double dNewT,
+	double *pdDist, double *pdt)
+{
+	bool bRes = false;
+	if(bResSet)
+	{
+		if(dNewDist < *pdDist)
+		{
+			*pdDist = dNewDist;
+			*pdt = dNewT;
+			bRes = true;
+		}
+	}
+	else
+	{
+		*pdDist = dNewDist;
+		*pdt = dNewT;
+		bRes = true;
+	}
+	return bRes;
+}
+
+double GetDistToQuadSquared(const RS_Vector& coord, const RS_Vector& x1,
+	const RS_Vector& c1, const RS_Vector& x2, double* dist)
+{
+	double a1, a2, a3, a4;
+	a1 = (x2.x - 2.0*c1.x + x1.x)*(x2.x - 2.0*c1.x + x1.x) +
+		(x2.y - 2.0*c1.y + x1.y)*(x2.y - 2.0*c1.y + x1.y);
+	a2 = 3.0*((c1.x - x1.x)*(x2.x - 2.0*c1.x + x1.x) +
+		(c1.y - x1.y)*(x2.y - 2.0*c1.y + x1.y));
+	a3 = 2.0*(c1.x - x1.x)*(c1.x - x1.x) +
+		(x1.x - coord.x)*(x2.x - 2.0*c1.x + x1.x) +
+		2.0*(c1.y - x1.y)*(c1.y - x1.y) +
+		(x1.y - coord.y)*(x2.y - 2.0*c1.y + x1.y);
+	a4 = (x1.x - coord.x)*(c1.x - x1.x) + (x1.y - coord.y)*(c1.y - x1.y);
+
+	std::vector<double> dCoefs(0, 0.);
+	std::vector<double> dSol(0, 0.);
+
+	if(fabs(a1) > RS_TOLERANCE) // solve as cubic
+	{
+		dCoefs.push_back(a2/a1);
+		dCoefs.push_back(a3/a1);
+		dCoefs.push_back(a4/a1);
+		dSol = RS_Math::cubicSolver(dCoefs);
+	}
+	else if(fabs(a2) > RS_TOLERANCE) // solve as quadratic
+	{
+		dCoefs.push_back(a3/a2);
+		dCoefs.push_back(a4/a2);
+		dSol = RS_Math::quadraticSolver(dCoefs);
+	}
+	else if(fabs(a3) > RS_TOLERANCE) // solve as linear
+	{
+		dSol.push_back(-a4/a3);
+	}
+	else return -1.0;
+
+	bool bResSet = false;
+	double dDist, dNewDist;
+	double dRes;
+	for(const double& dSolValue: dSol)
+	{
+		dNewDist = GetDistToQuadAtPointSquared(coord, x1, c1, x2, dSolValue);
+		SetNewDist(bResSet, dNewDist, dSolValue, &dDist, &dRes);
+		bResSet = true;
+	}
+
+	dNewDist = (coord - x1).squared();
+	SetNewDist(bResSet, dNewDist, 0.0, &dDist, &dRes);
+
+	dNewDist = (coord - x2).squared();
+	SetNewDist(bResSet, dNewDist, 1.0, &dDist, &dRes);
+
+	*dist = dDist;
+
+	return dRes;
+}
+
+RS_Vector GetNearestMiddleLine(const RS_Vector& x1, const RS_Vector& x2,
+	const RS_Vector& coord, double* dist, int middlePoints)
+{
+	double dt = 1.0/(1.0 + middlePoints);
+	RS_Vector vMiddle;
+	RS_Vector vRes = x1*(1.0 - dt) + x2*dt;
+	double dMinDist = (vRes - coord).magnitude();
+	double dCurDist;
+
+	for(int i = 1; i < middlePoints; i++)
+	{
+		dt = (1.0 + i)/(1.0 + middlePoints);
+		vMiddle = x1*(1.0 - dt) + x2*dt;
+		dCurDist = (vMiddle - coord).magnitude();
+
+		if(dCurDist < dMinDist)
+		{
+			dMinDist = dCurDist;
+			vRes = vMiddle;
+		}
+	}
+
+	if(dist) *dist = dMinDist;
+	return vRes;
+}
+
+void AddQuadTangentPoints(RS_VectorSolutions *pVS, const RS_Vector& point,
+	const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2)
+{
+	RS_Vector vx1 = x2 - c1*2.0 + x1;
+	RS_Vector vx2 = c1 - x1;
+	RS_Vector vx3 = x1 - point;
+
+	double a1 = vx2.x*vx1.y - vx2.y*vx1.x;
+	double a2 = vx3.x*vx1.y - vx3.y*vx1.x;
+	double a3 = vx3.x*vx2.y - vx3.y*vx2.x;
+
+	std::vector<double> dSol(0, 0.);
+
+	if(fabs(a1) > RS_TOLERANCE)
+	{
+		std::vector<double> dCoefs(0, 0.);
+
+		dCoefs.push_back(a2/a1);
+		dCoefs.push_back(a3/a1);
+		dSol = RS_Math::quadraticSolver(dCoefs);
+
+	}
+	else if(fabs(a2) > RS_TOLERANCE)
+	{
+		dSol.push_back(-a3/a2);
+	}
+
+	for(double& d: dSol)
+	{
+		if(d > -RS_TOLERANCE && d < 1.0 + RS_TOLERANCE)
+		{
+			if(d < 0.0) d = 0.0;
+			if(d > 1.0) d = 1.0;
+			pVS->push_back(GetQuadPoint(x1, c1, x2, d));
+		}
+	}
+}
+
+void addLineQuadIntersect(RS_VectorSolutions *pVS,
+	const RS_Vector& vStart, const RS_Vector& vEnd,
+	const RS_Vector& vx1, const RS_Vector& vc1, const RS_Vector& vx2)
+{
+	RS_Vector x1 = vx2 - vc1*2.0 + vx1;
+	RS_Vector x2 = vc1 - vx1;
+	RS_Vector x3 = vx1 - vStart;
+	RS_Vector x4 = vEnd - vStart;
+
+	double a1 = x1.x*x4.y - x1.y*x4.x;
+	double a2 = 2.0*(x2.x*x4.y - x2.y*x4.x);
+	double a3 = x3.x*x4.y - x3.y*x4.x;
+
+	std::vector<double> dSol(0, 0.);
+
+	if(fabs(a1) > RS_TOLERANCE)
+	{
+		std::vector<double> dCoefs(0, 0.);
+
+		dCoefs.push_back(a2/a1);
+		dCoefs.push_back(a3/a1);
+		dSol = RS_Math::quadraticSolver(dCoefs);
+
+	}
+	else if(fabs(a2) > RS_TOLERANCE)
+	{
+		dSol.push_back(-a3/a2);
+	}
+
+	double ds;
+
+	for(double& d: dSol)
+	{
+		if(d > -RS_TOLERANCE && d < 1.0 + RS_TOLERANCE)
+		{
+			if(d < 0.0) d = 0.0;
+			if(d > 1.0) d = 1.0;
+
+			ds = -1.0;
+			x1 = GetQuadAtPoint(vx1, vc1, vx2, d);
+			if(fabs(x4.x) > RS_TOLERANCE) ds = (x1.x - vStart.x)/x4.x;
+			else if(fabs(x4.y) > RS_TOLERANCE) ds = (x1.y - vStart.y)/x4.y;
+
+			if(ds > -RS_TOLERANCE && ds < 1.0 + RS_TOLERANCE) pVS->push_back(x1);
+		}
+	}
+}
+}
+
+LC_SplinePointsData::LC_SplinePointsData(bool _closed, bool _cut):
+	closed(_closed)
+  ,cut(_cut)
+{
+}
+
+std::ostream& operator << (std::ostream& os, const LC_SplinePointsData& ld)
+{
+	os << "( closed: " << ld.closed << ")";
+	return os;
 }
 
 // RS_SplinePoints
@@ -477,146 +755,6 @@ RS_Vector LC_SplinePoints::getNearestEndpoint(const RS_Vector& coord,
 	return ret;
 }
 
-double GetDistToLine(const RS_Vector& coord, const RS_Vector& x1,
-	const RS_Vector& x2, double* dist)
-{
-	double ddet = (x2 - x1).squared();
-	if(ddet < RS_TOLERANCE)
-	{
-		*dist = (coord - x1).magnitude();
-		return 0.0;
-	}
-
-	double dt = ((coord.x - x1.x)*(x2.x - x1.x) + (coord.y - x1.y)*(x2.y - x1.y))/ddet;
-
-	if(dt < RS_TOLERANCE)
-	{
-		*dist = (coord - x1).magnitude();
-		return 0.0;
-	}
-
-	if(dt > 1.0 - RS_TOLERANCE)
-	{
-		*dist = (coord - x2).magnitude();
-		return 1.0;
-	}
-
-	RS_Vector vRes = x1*(1.0 - dt) + x2*dt;
-	*dist = (coord - vRes).magnitude();
-	return dt;
-}
-
-RS_Vector GetQuadAtPoint(const RS_Vector& x1, const RS_Vector& c1,
-	const RS_Vector& x2, double dt)
-{
-	RS_Vector vRes = x1*(1.0 - dt)*(1.0 - dt) +
-		c1*2.0*dt*(1.0 - dt) + x2*dt*dt;
-	return vRes;
-}
-
-RS_Vector GetQuadDirAtPoint(const RS_Vector& x1, const RS_Vector& c1,
-	const RS_Vector& x2, double dt)
-{
-	RS_Vector vRes = (c1 - x1)*(1.0 - dt) + (x2 - c1)*dt;
-	return vRes;
-}
-
-double GetDistToQuadAtPointSquared(const RS_Vector& coord, const RS_Vector& x1,
-	const RS_Vector& c1, const RS_Vector& x2, double dt)
-{
-	if(dt < RS_TOLERANCE)
-	{
-		return (coord - x1).squared();
-	}
-
-	if(dt > 1.0 - RS_TOLERANCE)
-	{
-		return (coord - x2).squared();
-	}
-
-	RS_Vector vx = GetQuadAtPoint(x1, c1, x2, dt);
-	return (coord - vx).squared();
-}
-
-// returns true if the new distance was smaller than previous one
-bool SetNewDist(bool bResSet, double dNewDist, double dNewT,
-	double *pdDist, double *pdt)
-{
-	bool bRes = false;
-	if(bResSet)
-	{
-		if(dNewDist < *pdDist)
-		{
-			*pdDist = dNewDist;
-			*pdt = dNewT;
-			bRes = true;
-		}
-	}
-	else
-	{
-		*pdDist = dNewDist;
-		*pdt = dNewT;
-		bRes = true;
-	}
-	return bRes;
-}
-
-double GetDistToQuadSquared(const RS_Vector& coord, const RS_Vector& x1,
-	const RS_Vector& c1, const RS_Vector& x2, double* dist)
-{
-	double a1, a2, a3, a4;
-	a1 = (x2.x - 2.0*c1.x + x1.x)*(x2.x - 2.0*c1.x + x1.x) +
-		(x2.y - 2.0*c1.y + x1.y)*(x2.y - 2.0*c1.y + x1.y);
-	a2 = 3.0*((c1.x - x1.x)*(x2.x - 2.0*c1.x + x1.x) +
-		(c1.y - x1.y)*(x2.y - 2.0*c1.y + x1.y));
-	a3 = 2.0*(c1.x - x1.x)*(c1.x - x1.x) +
-		(x1.x - coord.x)*(x2.x - 2.0*c1.x + x1.x) +
-		2.0*(c1.y - x1.y)*(c1.y - x1.y) +
-		(x1.y - coord.y)*(x2.y - 2.0*c1.y + x1.y);
-	a4 = (x1.x - coord.x)*(c1.x - x1.x) + (x1.y - coord.y)*(c1.y - x1.y);
-
-	std::vector<double> dCoefs(0, 0.);
-	std::vector<double> dSol(0, 0.);
-
-	if(fabs(a1) > RS_TOLERANCE) // solve as cubic
-	{
-		dCoefs.push_back(a2/a1);
-		dCoefs.push_back(a3/a1);
-		dCoefs.push_back(a4/a1);
-		dSol = RS_Math::cubicSolver(dCoefs);
-	}
-	else if(fabs(a2) > RS_TOLERANCE) // solve as quadratic
-	{
-		dCoefs.push_back(a3/a2);
-		dCoefs.push_back(a4/a2);
-		dSol = RS_Math::quadraticSolver(dCoefs);
-	}
-	else if(fabs(a3) > RS_TOLERANCE) // solve as linear
-	{
-		dSol.push_back(-a4/a3);
-	}
-	else return -1.0;
-
-	bool bResSet = false;
-	double dDist, dNewDist;
-	double dRes;
-    for(const double& dSolValue: dSol)
-	{
-        dNewDist = GetDistToQuadAtPointSquared(coord, x1, c1, x2, dSolValue);
-        SetNewDist(bResSet, dNewDist, dSolValue, &dDist, &dRes);
-		bResSet = true;
-	}
-
-	dNewDist = (coord - x1).squared();
-	SetNewDist(bResSet, dNewDist, 0.0, &dDist, &dRes);
-
-	dNewDist = (coord - x2).squared();
-	SetNewDist(bResSet, dNewDist, 1.0, &dDist, &dRes);
-
-	*dist = dDist;
-
-	return dRes;
-}
 
 // returns true if pvControl is set
 int LC_SplinePoints::GetQuadPoints(int iSeg, RS_Vector *pvStart, RS_Vector *pvControl,
@@ -781,17 +919,23 @@ RS_Vector LC_SplinePoints::getNearestPointOnEntity(const RS_Vector& coord,
 	double dt = 0.0;
 	int iQuad = GetNearestQuad(coord, dist, &dt);
 
-	if(iQuad < 0) return vRes;
+	if(iQuad < 0)
+		return vRes;
 
 	int n = GetQuadPoints(iQuad, &vStart, &vControl, &vEnd);
 
-	if(n < 1) return vRes;
+	if(n < 1)
+		return vRes;
 
-	if(n < 2) vRes = vStart;
-	else if(n < 3) vRes = vStart*(1.0 - dt) + vEnd*dt;
-	else vRes = GetQuadAtPoint(vStart, vControl, vEnd, dt);
+	if (n < 2)
+		vRes = vStart;
+	else if(n < 3)
+		vRes = vStart*(1.0 - dt) + vEnd*dt;
+	else
+		vRes = GetQuadAtPoint(vStart, vControl, vEnd, dt);
 
-	if(entity) *entity = const_cast<LC_SplinePoints*>(this);
+	if(entity)
+		*entity = const_cast<LC_SplinePoints*>(this);
 	return vRes;
 }
 
@@ -806,7 +950,7 @@ double LC_SplinePoints::getDistanceToPoint(const RS_Vector& coord,
 //RS_Vector LC_SplinePoints::getNearestCenter(const RS_Vector& /*coord*/,
 //	double* dist) const
 //{
-//	if(dist != NULL)
+//	if(dist != nullptr)
 //	{
 //		*dist = RS_MAXDOUBLE;
 //	}
@@ -814,31 +958,6 @@ double LC_SplinePoints::getDistanceToPoint(const RS_Vector& coord,
 //	return RS_Vector(false);
 //}
 
-RS_Vector GetNearestMiddleLine(const RS_Vector& x1, const RS_Vector& x2,
-	const RS_Vector& coord, double* dist, int middlePoints)
-{
-	double dt = 1.0/(1.0 + middlePoints);
-	RS_Vector vMiddle;
-	RS_Vector vRes = x1*(1.0 - dt) + x2*dt;
-	double dMinDist = (vRes - coord).magnitude();
-	double dCurDist;
-
-	for(int i = 1; i < middlePoints; i++)
-	{
-		dt = (1.0 + i)/(1.0 + middlePoints);
-		vMiddle = x1*(1.0 - dt) + x2*dt;
-		dCurDist = (vMiddle - coord).magnitude();
-
-		if(dCurDist < dMinDist)
-		{
-			dMinDist = dCurDist;
-			vRes = vMiddle;
-		}
-	}
-
-	if(dist) *dist = dMinDist;
-	return vRes;
-}
 
 RS_Vector LC_SplinePoints::GetSplinePointAtDist(double dDist, int iStartSeg,
 	double dStartT, int *piSeg, double *pdt) const
@@ -969,7 +1088,7 @@ RS_Vector LC_SplinePoints::getNearestDist(double /*distance*/,
 	const RS_Vector& /*coord*/, double* dist) const
 {
 printf("getNearestDist\n");
-	if(dist != NULL)
+	if(dist != nullptr)
 	{
 		*dist = RS_MAXDOUBLE;
 	}
@@ -1072,25 +1191,6 @@ std::vector<RS_Vector> const& LC_SplinePoints::getControlPoints() const
 	return data.controlPoints;
 }
 
-void StrokeQuad(std::vector<RS_Vector> *plist, RS_Vector vx1, RS_Vector vc1,
-	RS_Vector vx2, int iSeg)
-{
-	if(iSeg < 1)
-	{
-		plist->push_back(vx1);
-		return;
-	}
-
-	RS_Vector x(false);
-	double dt;
-	for(int i = 0; i < iSeg; i++)
-	{
-		dt = (double)i/(double)iSeg;
-		x = GetQuadPoint(vx1, vc1, vx2, dt);
-		plist->push_back(x);
-	}
-}
-
 std::vector<RS_Vector> LC_SplinePoints::getStrokePoints() const
 {
 	std::vector<RS_Vector> ret;
@@ -1143,8 +1243,8 @@ void LC_SplinePoints::addControlPoint(const RS_Vector& v)
 
 double* GetMatrix(int iCount, bool bClosed, double *dt)
 {
-	if(bClosed && iCount < 3) return NULL;
-	if(!bClosed && iCount < 4) return NULL;
+	if(bClosed && iCount < 3) return nullptr;
+	if(!bClosed && iCount < 4) return nullptr;
 
 	int iDim = 0;
 	if(bClosed) iDim = 5*iCount - 6; // n + 2*(n - 1) + 2*(n - 2)
@@ -1797,7 +1897,7 @@ void LC_SplinePoints::drawSimple(RS_Painter* painter, RS_GraphicView* view)
 
 void LC_SplinePoints::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset)
 {
-	if(painter == NULL || view == NULL)
+	if(painter == nullptr || view == nullptr)
 	{
 		return;
 	}
@@ -1805,7 +1905,7 @@ void LC_SplinePoints::draw(RS_Painter* painter, RS_GraphicView* view, double& pa
     RS_Pen penSaved = painter->getPen();
 
 	// Pattern:
-    const RS_LineTypePattern* pat = NULL;
+	const RS_LineTypePattern* pat = nullptr;
 	if(isSelected())
 	{
 //		styleFactor=1.;
@@ -1960,43 +2060,6 @@ double LC_SplinePoints::getDirection2() const
 	return(vEnd.angleTo(vStart));
 }
 
-void AddQuadTangentPoints(RS_VectorSolutions *pVS, const RS_Vector& point,
-	const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2)
-{
-	RS_Vector vx1 = x2 - c1*2.0 + x1;
-	RS_Vector vx2 = c1 - x1;
-	RS_Vector vx3 = x1 - point;
-
-	double a1 = vx2.x*vx1.y - vx2.y*vx1.x;
-	double a2 = vx3.x*vx1.y - vx3.y*vx1.x;
-	double a3 = vx3.x*vx2.y - vx3.y*vx2.x;
-
-	std::vector<double> dSol(0, 0.);
-
-	if(fabs(a1) > RS_TOLERANCE)
-	{
-		std::vector<double> dCoefs(0, 0.);
-
-		dCoefs.push_back(a2/a1);
-		dCoefs.push_back(a3/a1);
-		dSol = RS_Math::quadraticSolver(dCoefs);
-
-	}
-	else if(fabs(a2) > RS_TOLERANCE)
-	{
-		dSol.push_back(-a3/a2);
-	}
-
-    for(double& d: dSol)
-	{
-        if(d > -RS_TOLERANCE && d < 1.0 + RS_TOLERANCE)
-		{
-            if(d < 0.0) d = 0.0;
-            if(d > 1.0) d = 1.0;
-            pVS->push_back(GetQuadPoint(x1, c1, x2, d));
-		}
-	}
-}
 
 RS_VectorSolutions LC_SplinePoints::getTangentPoint(const RS_Vector& point) const
 {
@@ -2073,7 +2136,7 @@ RS_Vector LC_SplinePoints::getTangentDirection(const RS_Vector& point) const
 	if(n < 2) return vStart;
 
 	double dt = 0.0;
-	int iQuad = GetNearestQuad(point, NULL, &dt);
+	int iQuad = GetNearestQuad(point, nullptr, &dt);
 	if(iQuad < 0) return vStart;
 
 	int i = GetQuadPoints(iQuad, &vStart, &vControl, &vEnd);
@@ -2107,7 +2170,7 @@ bool LC_SplinePoints::offsetCut(const RS_Vector& coord, const double& distance)
 	if(n < 2) return false;
 
 	double dt;
-	int iQuad = GetNearestQuad(coord, NULL, &dt);
+	int iQuad = GetNearestQuad(coord, nullptr, &dt);
 	if(iQuad < 0) return false;
 
 	RS_Vector vStart(false), vEnd(false), vControl(false);
@@ -2287,7 +2350,7 @@ bool LC_SplinePoints::offsetSpline(const RS_Vector& coord, const double& distanc
 	if(n < 2) return false;
 
 	double dt;
-	int iQuad = GetNearestQuad(coord, NULL, &dt);
+	int iQuad = GetNearestQuad(coord, nullptr, &dt);
 	if(iQuad < 0) return false;
 
 	RS_Vector vStart(false), vEnd(false), vControl(false);
@@ -2492,21 +2555,21 @@ bool LC_SplinePoints::offset(const RS_Vector& coord, const double& distance)
 std::vector<RS_Entity*> AddLineOffsets(const RS_Vector& vx1,
 	const RS_Vector& vx2, const double& distance)
 {
-	std::vector<RS_Entity*> ret(0,NULL);
+	std::vector<RS_Entity*> ret(0,nullptr);
 
 	double dDist = (vx2 - vx1).magnitude();
 
 	if(dDist < RS_TOLERANCE)
 	{
-		ret.push_back(new RS_Circle(NULL, RS_CircleData(vx1, distance)));
+		ret.push_back(new RS_Circle(nullptr, {vx1, distance}));
 		return ret;
 	}
 
 	LC_SplinePointsData spd1(false, false);
 	LC_SplinePointsData spd2(false, false);
 
-	LC_SplinePoints *sp1 = new LC_SplinePoints(NULL, spd1);
-	LC_SplinePoints *sp2 = new LC_SplinePoints(NULL, spd2);
+	LC_SplinePoints *sp1 = new LC_SplinePoints(nullptr, spd1);
+	LC_SplinePoints *sp2 = new LC_SplinePoints(nullptr, spd2);
 
 	dDist = distance/dDist;
 
@@ -2523,7 +2586,7 @@ std::vector<RS_Entity*> AddLineOffsets(const RS_Vector& vx1,
 
 std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& distance) const
 {
-	std::vector<RS_Entity*> ret(0,NULL);
+	std::vector<RS_Entity*> ret(0,nullptr);
 
 	size_t iPoints = data.splinePoints.size();
 	size_t n = data.controlPoints.size();
@@ -2545,8 +2608,8 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& dist
 	{
 		if(n < 3) return ret;
 
-		sp1 = new LC_SplinePoints(NULL, spd1);
-		sp2 = new LC_SplinePoints(NULL, spd2);
+		sp1 = new LC_SplinePoints(nullptr, spd1);
+		sp2 = new LC_SplinePoints(nullptr, spd2);
 
 		vPoint = data.splinePoints.at(0);
 
@@ -2609,7 +2672,7 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& dist
 		vStart = data.controlPoints.at(0);
 		if(n < 2)
 		{
-			ret.push_back(new RS_Circle(NULL, RS_CircleData(vStart, distance)));
+			ret.push_back(new RS_Circle(nullptr, {vStart, distance}));
 			return ret;
 		}
 
@@ -2630,8 +2693,8 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& dist
 			dl2 = (vEnd - vPoint).magnitude();
 			dt = dl1/(dl1 + dl2);
 
-			sp1 = new LC_SplinePoints(NULL, spd1);
-			sp2 = new LC_SplinePoints(NULL, spd2);
+			sp1 = new LC_SplinePoints(nullptr, spd1);
+			sp2 = new LC_SplinePoints(nullptr, spd2);
 
 			vTan = GetQuadDir(vStart, vControl, vEnd, 0.0);
 			if(vTan.valid)
@@ -2665,8 +2728,8 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& dist
 			return ret;
 		}
 
-		sp1 = new LC_SplinePoints(NULL, spd1);
-		sp2 = new LC_SplinePoints(NULL, spd2);
+		sp1 = new LC_SplinePoints(nullptr, spd1);
+		sp2 = new LC_SplinePoints(nullptr, spd2);
 
 		vEnd = (data.controlPoints.at(1) + data.controlPoints.at(2))/2.0;
 
@@ -2750,7 +2813,7 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesSpline(const double& dist
 
 std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesCut(const double& distance) const
 {
-	std::vector<RS_Entity*> ret(0,NULL);
+	std::vector<RS_Entity*> ret(0,nullptr);
 
 	size_t n = data.controlPoints.size();
 
@@ -2768,8 +2831,8 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesCut(const double& distanc
 	{
 		if(n < 3) return ret;
 
-		sp1 = new LC_SplinePoints(NULL, spd1);
-		sp2 = new LC_SplinePoints(NULL, spd2);
+		sp1 = new LC_SplinePoints(nullptr, spd1);
+		sp2 = new LC_SplinePoints(nullptr, spd2);
 
 		vStart = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
 		vControl = data.controlPoints.at(0);
@@ -2817,7 +2880,7 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesCut(const double& distanc
 		vStart = data.controlPoints.at(0);
 		if(n < 2)
 		{
-			ret.push_back(new RS_Circle(NULL, RS_CircleData(vStart, distance)));
+			ret.push_back(new RS_Circle(nullptr, RS_CircleData(vStart, distance)));
 			return ret;
 		}
 
@@ -2839,8 +2902,8 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesCut(const double& distanc
 
 		if(n < 4)
 		{
-			sp1 = new LC_SplinePoints(NULL, spd1);
-			sp2 = new LC_SplinePoints(NULL, spd2);
+			sp1 = new LC_SplinePoints(nullptr, spd1);
+			sp2 = new LC_SplinePoints(nullptr, spd2);
 
 			vTan = GetQuadDir(vStart, vControl, vEnd, 0.0);
 			if(vTan.valid)
@@ -2880,8 +2943,8 @@ std::vector<RS_Entity*> LC_SplinePoints::offsetTwoSidesCut(const double& distanc
 			return ret;
 		}
 
-		sp1 = new LC_SplinePoints(NULL, spd1);
-		sp2 = new LC_SplinePoints(NULL, spd2);
+		sp1 = new LC_SplinePoints(nullptr, spd1);
+		sp2 = new LC_SplinePoints(nullptr, spd2);
 
 		vEnd = (data.controlPoints.at(1) + data.controlPoints.at(2))/2.0;
 
@@ -3001,53 +3064,6 @@ RS_VectorSolutions getLineLineIntersect(
 	return ret;
 }
 
-void addLineQuadIntersect(RS_VectorSolutions *pVS,
-	const RS_Vector& vStart, const RS_Vector& vEnd,
-	const RS_Vector& vx1, const RS_Vector& vc1, const RS_Vector& vx2)
-{
-	RS_Vector x1 = vx2 - vc1*2.0 + vx1;
-	RS_Vector x2 = vc1 - vx1;
-	RS_Vector x3 = vx1 - vStart;
-	RS_Vector x4 = vEnd - vStart;
-
-	double a1 = x1.x*x4.y - x1.y*x4.x;
-	double a2 = 2.0*(x2.x*x4.y - x2.y*x4.x);
-	double a3 = x3.x*x4.y - x3.y*x4.x;
-
-	std::vector<double> dSol(0, 0.);
-
-	if(fabs(a1) > RS_TOLERANCE)
-	{
-		std::vector<double> dCoefs(0, 0.);
-
-		dCoefs.push_back(a2/a1);
-		dCoefs.push_back(a3/a1);
-		dSol = RS_Math::quadraticSolver(dCoefs);
-
-	}
-	else if(fabs(a2) > RS_TOLERANCE)
-	{
-		dSol.push_back(-a3/a2);
-	}
-
-	double ds;
-
-    for(double& d: dSol)
-	{
-        if(d > -RS_TOLERANCE && d < 1.0 + RS_TOLERANCE)
-		{
-            if(d < 0.0) d = 0.0;
-            if(d > 1.0) d = 1.0;
-
-			ds = -1.0;
-			x1 = GetQuadAtPoint(vx1, vc1, vx2, d);
-			if(fabs(x4.x) > RS_TOLERANCE) ds = (x1.x - vStart.x)/x4.x;
-			else if(fabs(x4.y) > RS_TOLERANCE) ds = (x1.y - vStart.y)/x4.y;
-
-			if(ds > -RS_TOLERANCE && ds < 1.0 + RS_TOLERANCE) pVS->push_back(x1);
-		}
-	}
-}
 
 RS_VectorSolutions LC_SplinePoints::getLineIntersect(const RS_Vector& x1, const RS_Vector& x2)
 {
@@ -3630,10 +3646,10 @@ void LC_SplinePoints::trimEndpoint(const RS_Vector& pos)
 
 LC_SplinePoints* LC_SplinePoints::cut(const RS_Vector& pos)
 {
-	LC_SplinePoints *ret = NULL;
+	LC_SplinePoints *ret = nullptr;
 
 	double dt;
-	int iQuad = GetNearestQuad(pos, NULL, &dt);
+	int iQuad = GetNearestQuad(pos, nullptr, &dt);
 	if(iQuad < 1) return ret;
 
 	RS_Vector vStart(false), vControl(false), vEnd(false);
@@ -3651,7 +3667,7 @@ LC_SplinePoints* LC_SplinePoints::cut(const RS_Vector& pos)
 	{
 		// if the spline is closed, we must delete splinePoints, add the pos
 		// as start and end point and reorder control points. We must return
-		// NULL since there will still be only one spline
+		// nullptr since there will still be only one spline
 		for(int i = 0 ; i < iQuad - 1; i++)
 		{
 			vNewControl = data.controlPoints.front();

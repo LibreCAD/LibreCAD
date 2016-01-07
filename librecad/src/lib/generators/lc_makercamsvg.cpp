@@ -20,7 +20,7 @@
 ** 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 **
 **********************************************************************/
-
+#include<cmath>
 #include "lc_makercamsvg.h"
 
 #include "lc_xmlwriterinterface.h"
@@ -54,6 +54,7 @@
 #include "rs_units.h"
 #include "rs_utility.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 namespace {
 const std::string NAMESPACE_URI_SVG = "http://www.w3.org/2000/svg";

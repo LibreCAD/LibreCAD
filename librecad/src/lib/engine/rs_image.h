@@ -39,7 +39,6 @@ struct RS_ImageData {
      * Default constructor. Leaves the data object uninitialized.
      */
 	RS_ImageData() = default;
-	~RS_ImageData() = default;
 
     RS_ImageData(int handle,
                                 const RS_Vector& insertionPoint,

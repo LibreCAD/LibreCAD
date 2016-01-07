@@ -32,6 +32,8 @@
 
 #include <cmath>
 #include <muParser.h>
+#include <QString>
+#include <QDebug>
 
 #include "rs_math.h"
 #include "rs_vector.h"
@@ -40,6 +42,8 @@
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
+
+const double m_piX2 = M_PI*2; //2*PI
 
 /**
  * Rounds the given double to the closest int.
@@ -138,11 +142,11 @@ bool RS_Math::isAngleBetween(double a,
  * Corrects the given angle to the range of 0-2*Pi.
  */
 double RS_Math::correctAngle(double a) {
-    return M_PI + remainder(a - M_PI, 2*M_PI);
+    return M_PI + remainder(a - M_PI, m_piX2);
 }
 
 double RS_Math::correctAngleU(double a) {
-	return fabs(remainder(a, 2*M_PI));
+    return fabs(remainder(a, m_piX2));
 }
 
 
@@ -202,8 +206,10 @@ double RS_Math::makeAngleReadable(double angle, bool readable,
  */
 bool RS_Math::isAngleReadable(double angle) {
 	const double tolerance=0.001;
-	//return true for angle in 1st and 4th quadrants
-	return fabs(remainder(angle, 2.*M_PI)) < M_PI_2 - tolerance;
+    if (angle>M_PI_2)
+        return fabs(remainder(angle, m_piX2)) < (M_PI_2 - tolerance);
+    else
+        return fabs(remainder(angle, m_piX2)) < (M_PI_2 + tolerance);
 }
 
 /**

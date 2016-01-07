@@ -24,7 +24,8 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
+#include<cmath>
 #include <QObject>
 #include "rs_units.h"
 #include "rs_math.h"

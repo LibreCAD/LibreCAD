@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-
+#include<cmath>
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_actiondimlinear.h"
@@ -36,6 +36,8 @@
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 /**
  * Constructor.
@@ -61,7 +63,7 @@ RS_ActionDimLinear::RS_ActionDimLinear(RS_EntityContainer& container,
 
 
 
-RS_ActionDimLinear::~RS_ActionDimLinear() {}
+RS_ActionDimLinear::~RS_ActionDimLinear() = default;
 
 void RS_ActionDimLinear::reset() {
     RS_ActionDimension::reset();

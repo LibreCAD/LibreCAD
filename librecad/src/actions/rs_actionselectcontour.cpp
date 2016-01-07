@@ -32,6 +32,7 @@
 #include "rs_graphicview.h"
 #include "rs_selection.h"
 #include "rs_selection.h"
+#include "rs_debug.h"
 
 
 

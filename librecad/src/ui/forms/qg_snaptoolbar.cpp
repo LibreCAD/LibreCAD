@@ -28,28 +28,94 @@
 
 #include "qg_snaptoolbar.h"
 #include "rs_settings.h"
+#include "qg_actionhandler.h"
 
 /*
  *  Constructs a QG_CadToolBarSnap as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_SnapToolBar::QG_SnapToolBar( const QString & title, QG_ActionHandler* ah, QWidget * parent )
-	: QToolBar(title, parent)
+QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah)
+	: QToolBar(parent)
+    , actionHandler(ah)
 {
-    actionHandler=ah;
-//    actionHandler->setSnapToolBar(this);
-    init();
-}
+    QActionGroup* disable_group = new QActionGroup(this);
+    disable_group->setExclusive(false);
+    connect(parent, SIGNAL(windowsChanged(bool)),
+            disable_group, SLOT(setEnabled(bool)));
 
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_SnapToolBar::~QG_SnapToolBar()
-{
-    //@Save default snap mode to prefrences.
-    //never being called
-    saveSnapMode();
-    // no need to delete child widgets, Qt does it all for us
+    snapFree = new QAction(QIcon(":/extui/snapfree.png"), tr("Free Snap"), disable_group);
+    snapFree->setCheckable(true);
+    connect(snapFree, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    this->addAction(snapFree);
+    snapGrid = new QAction(QIcon(":/extui/snapgrid.png"), tr("Snap on grid"), disable_group);
+    snapGrid->setCheckable(true);
+    connect(snapGrid, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    this->addAction(snapGrid);
+    snapEnd = new QAction(QIcon(":/extui/snapendpoint.png"), tr("Snap on Endpoints"), disable_group);
+    snapEnd->setCheckable(true);
+    connect(snapEnd, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    this->addAction(snapEnd);
+    snapOnEntity = new QAction(QIcon(":/extui/snaponentity.png"), tr("Snap on Entity"), disable_group);
+    snapOnEntity->setCheckable(true);
+    connect(snapOnEntity, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    this->addAction(snapOnEntity);
+    snapCenter = new QAction(QIcon(":/extui/snapcenter.png"), tr("Snap Center"), disable_group);
+    snapCenter->setCheckable(true);
+    connect(snapCenter, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    this->addAction(snapCenter);
+    snapMiddle = new QAction(QIcon(":/extui/snapmiddle.png"), tr("Snap Middle"), disable_group);
+    snapMiddle->setCheckable(true);
+    connect(snapMiddle, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    this->addAction(snapMiddle);
+    snapDistance = new QAction(QIcon(":/extui/snapdist.png"), tr("Snap Distance"), disable_group);
+    snapDistance ->setCheckable(true);
+    connect(snapDistance, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    this->addAction(snapDistance);
+    snapIntersection = new QAction(QIcon(":/extui/snapintersection.png"), tr("Snap Intersection"), disable_group);
+    snapIntersection->setCheckable(true);
+    connect(snapIntersection, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+	this->addAction(snapIntersection);
+
+    this->addSeparator();
+
+    restrictHorizontal = new QAction(QIcon(":/extui/restricthorizontal.png"),
+                                     tr("Restrict Horizontal"), disable_group);
+    restrictHorizontal->setCheckable(true);
+    connect(restrictHorizontal, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    this->addAction(restrictHorizontal);
+    restrictVertical = new QAction(QIcon(":/extui/restrictvertical.png"),
+                                   tr("Restrict Vertical"), disable_group);
+    restrictVertical->setCheckable(true);
+    connect(restrictVertical, SIGNAL(triggered()), this, SLOT(actionTriggered()));
+    this->addAction(restrictVertical);
+
+    restrictOrthogonal = new QAction(QIcon(":/extui/restrictorthogonal.png"),
+                                   tr("Restrict Orthogonal"), disable_group);
+    restrictOrthogonal->setCheckable(true);
+    connect(restrictOrthogonal, SIGNAL(triggered(bool)), this,
+            SLOT(slotRestrictOrthogonal(bool)));
+	this->addAction(restrictOrthogonal);
+
+    restrictNothing = new QAction(QIcon(":/extui/restrictnothing.png"),
+                                   tr("Restrict Nothing"), disable_group);
+    restrictNothing->setCheckable(true);
+    connect(restrictNothing, SIGNAL(triggered(bool)), this,
+            SLOT(slotRestrictNothing(bool)));
+
+    this->addSeparator();
+    bRelZero = new QAction(QIcon(":/extui/relzeromove.png"), tr("Set relative zero position"), disable_group);
+    bRelZero->setCheckable(false);
+    connect(bRelZero, SIGNAL(triggered()), actionHandler, SLOT(slotSetRelativeZero()));
+    //connect(bRelZero, SIGNAL(triggered()), this, SLOT(slotSetRelativeZero()));
+    this->addAction(bRelZero);
+    bLockRelZero = new QAction(QIcon(":/extui/relzerolock.png"), tr("Lock relative zero position"), disable_group);
+    bLockRelZero->setCheckable(true);
+    connect(bLockRelZero, SIGNAL(toggled(bool)),actionHandler, SLOT(slotLockRelativeZero(bool)));
+    this->addAction(bLockRelZero);
+    //restore snapMode from saved preferences
+    RS_SETTINGS->beginGroup("/Snap");
+    setSnaps(RS_Snapper::intToSnapMode(RS_SETTINGS->readNumEntry("/SnapMode",0)));
+    RS_SETTINGS->endGroup();
 }
 
 void QG_SnapToolBar::saveSnapMode()
@@ -110,92 +176,6 @@ RS_SnapMode QG_SnapToolBar::getSnaps ( void ) const
     return s;
 }
 
-void QG_SnapToolBar::init()
-{
-    snapFree = new QAction(QIcon(":/extui/snapfree.png"), tr("Free Snap"), this);
-    snapFree->setCheckable(true);
-    connect(snapFree, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(snapFree);
-    snapGrid = new QAction(QIcon(":/extui/snapgrid.png"), tr("Snap on grid"), this);
-    snapGrid->setCheckable(true);
-    connect(snapGrid, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(snapGrid);
-    snapEnd = new QAction(QIcon(":/extui/snapendpoint.png"), tr("Snap on Endpoints"), this);
-    snapEnd->setCheckable(true);
-    connect(snapEnd, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(snapEnd);
-    snapOnEntity = new QAction(QIcon(":/extui/snaponentity.png"), tr("Snap on Entity"), this);
-    snapOnEntity->setCheckable(true);
-    connect(snapOnEntity, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(snapOnEntity);
-    snapCenter = new QAction(QIcon(":/extui/snapcenter.png"), tr("Snap Center"), this);
-    snapCenter->setCheckable(true);
-    connect(snapCenter, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(snapCenter);
-    snapMiddle = new QAction(QIcon(":/extui/snapmiddle.png"), tr("Snap Middle"), this);
-    snapMiddle->setCheckable(true);
-    connect(snapMiddle, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(snapMiddle);
-    snapDistance = new QAction(QIcon(":/extui/snapdist.png"), tr("Snap Distance"), this);
-    snapDistance ->setCheckable(true);
-    connect(snapDistance, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(snapDistance);
-    snapIntersection = new QAction(QIcon(":/extui/snapintersection.png"), tr("Snap Intersection"), this);
-    snapIntersection->setCheckable(true);
-    connect(snapIntersection, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-	this->addAction(snapIntersection);
-
-    this->addSeparator();
-
-    /*
-    restrictOrthoagonal = new QAction(QIcon(":/extui/restrictorthogonal.png"),
-                                      "Restrict Orthogonal", this);
-    restrictOrthoagonal->setCheckable(true);
-    connect(restrictOrthoagonal, SIGNAL(triggered(bool)),
-            this, SLOT(restrictOrthoagonalTriggered(bool)));
-    connect(restrictOrthoagonal, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(restrictOrthoagonal);
-    */
-    restrictHorizontal = new QAction(QIcon(":/extui/restricthorizontal.png"),
-                                     tr("Restrict Horizontal"), this);
-    restrictHorizontal->setCheckable(true);
-    connect(restrictHorizontal, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(restrictHorizontal);
-    restrictVertical = new QAction(QIcon(":/extui/restrictvertical.png"),
-                                   tr("Restrict Vertical"), this);
-    restrictVertical->setCheckable(true);
-    connect(restrictVertical, SIGNAL(triggered()), this, SLOT(actionTriggered()));
-    this->addAction(restrictVertical);
-
-    restrictOrthogonal = new QAction(QIcon(":/extui/restrictorthogonal.png"),
-                                   tr("Restrict Orthogonal"), this);
-    restrictOrthogonal->setCheckable(true);
-    connect(restrictOrthogonal, SIGNAL(triggered(bool)), this,
-            SLOT(slotRestrictOrthogonal(bool)));
-	this->addAction(restrictOrthogonal);
-
-    restrictNothing = new QAction(QIcon(":/extui/restrictnothing.png"),
-                                   tr("Restrict Nothing"), this);
-    restrictNothing->setCheckable(true);
-    connect(restrictNothing, SIGNAL(triggered(bool)), this,
-            SLOT(slotRestrictNothing(bool)));
-
-    this->addSeparator();
-    bRelZero = new QAction(QIcon(":/extui/relzeromove.png"), tr("Set relative zero position"), this);
-    bRelZero->setCheckable(false);
-    connect(bRelZero, SIGNAL(triggered()), actionHandler, SLOT(slotSetRelativeZero()));
-    //connect(bRelZero, SIGNAL(triggered()), this, SLOT(slotSetRelativeZero()));
-    this->addAction(bRelZero);
-    bLockRelZero = new QAction(QIcon(":/extui/relzerolock.png"), tr("Lock relative zero position"), this);
-    bLockRelZero->setCheckable(true);
-    connect(bLockRelZero, SIGNAL(toggled(bool)),actionHandler, SLOT(slotLockRelativeZero(bool)));
-    this->addAction(bLockRelZero);
-    //restore snapMode from saved preferences
-    RS_SETTINGS->beginGroup("/Snap");
-    setSnaps(RS_Snapper::intToSnapMode(RS_SETTINGS->readNumEntry("/SnapMode",0)));
-    RS_SETTINGS->endGroup();
-}
-
 bool QG_SnapToolBar::lockedRelativeZero() const
 {
     return bLockRelZero->isChecked();
@@ -231,5 +211,8 @@ void QG_SnapToolBar::slotRestrictOrthogonal(bool checked)
 void QG_SnapToolBar::actionTriggered()
 {
     actionHandler->slotSetSnaps(getSnaps());
+	//save the current snap mode after any mode change, instead of relying
+	// on the dtor to save the mode, in order to avoid segfault at closing
+	saveSnapMode();
 }
 

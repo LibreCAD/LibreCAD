@@ -50,7 +50,7 @@ public:
     RS_ActionSelectWindow(RS_EntityContainer& container,
                          RS_GraphicView& graphicView,
                          bool select);
-	~RS_ActionSelectWindow()=default;
+	~RS_ActionSelectWindow();
 
     virtual void init(int status=0);
 	
@@ -63,11 +63,10 @@ public:
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 
-protected:
-    RS_Vector v1;
-    RS_Vector v2;
-
-    bool select;
+private:
+	bool select;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

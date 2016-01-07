@@ -25,9 +25,8 @@
 **********************************************************************/
 #include <QFileInfo>
 #include <QAction>
+#include <QActionGroup>
 #include <QMenu>
-#include <QStatusBar>
-#include "qc_applicationwindow.h"
 #include "qg_recentfiles.h"
 
 #include "rs_debug.h"
@@ -102,37 +101,33 @@ int QG_RecentFiles::indexOf(const QString& filename) const{
 	return files.indexOf(filename) ;
 }
 
-void QG_RecentFiles::initSettings() {
-	RS_DEBUG->print("QG_RecentFiles::initSettings()");
+void QG_RecentFiles::addFiles(QMenu* file_menu)
+{
+    RS_DEBUG->print("QG_RecentFiles::addFiles()");
 
-	//RS_Settings settings(QC_REGISTRY, QC_APPKEY);
-	auto appWin=QC_ApplicationWindow::getAppWindow();
-	QMenu* fileMenu=appWin->findChild<QMenu*>("File");
-	if(!fileMenu) {
-		RS_DEBUG->print(RS_Debug::D_ERROR, "QC_ApplicationWindow::find file menu failed\n");
-		exit(0);
-	}
+    RS_SETTINGS->beginGroup("/RecentFiles");
+    for (int i=0; i<number; ++i)
+    {
+        QString filename = RS_SETTINGS->readEntry(QString("/File") +
+                           QString::number(i+1));
+        if (QFileInfo(filename).exists()) add(filename);
+    }
+    RS_SETTINGS->endGroup();
 
-	RS_SETTINGS->beginGroup("/RecentFiles");
-	for (int i=0; i<number; ++i) {
-		QString filename = RS_SETTINGS->readEntry(QString("/File") +
-						   QString::number(i+1));
-		if (QFileInfo(filename).exists()) add(filename);
-	}
-	RS_SETTINGS->endGroup();
-//    QList <QAction*> recentFilesAction;
+    QActionGroup* a_group = new QActionGroup(this);
+    connect(a_group, SIGNAL(triggered(QAction*)),
+            parent(), SLOT(slotFileOpenRecent(QAction*)));
 
-	for (int i = 0; i < number; ++i) {
-		recentFilesAction.push_back(new QAction(appWin));
-		QAction* a=recentFilesAction.back();
-		a->setVisible(false);
-		connect(a, SIGNAL(triggered()),
-				this, SLOT(slotFileOpenRecent()));
-		fileMenu->addAction(a);
-	}
-	if (count()>0) {
-		updateRecentFilesMenu();
-	}
+    for (int i = 0; i < number; ++i)
+    {
+        recentFilesAction.push_back(new QAction(a_group));
+        QAction* a=recentFilesAction.back();
+        a->setVisible(false);
+        file_menu->addAction(a);
+    }
+    if (count()>0) {
+        updateRecentFilesMenu();
+    }
 }
 
 
@@ -156,22 +151,6 @@ void QG_RecentFiles::updateRecentFilesMenu() {
 	for (int j = numRecentFiles; j < getNumber(); ++j)
 		recentFilesAction[j]->setVisible(false);
 	RS_DEBUG->print("QG_RecentFiles::updateRecentFilesMenu(): ok\n");
-}
-
-
-void QG_RecentFiles::slotFileOpenRecent() {
-	RS_DEBUG->print("QC_ApplicationWindow::slotFileOpenRecent()");
-
-	auto appWin=QC_ApplicationWindow::getAppWindow();
-
-	QAction *action = qobject_cast<QAction *>(sender());
-	if (action) {
-
-		appWin->statusBar()->showMessage(tr("Opening recent file..."));
-		QString fileName = action->data().toString();
-
-		appWin->slotFileOpen(fileName, RS2::FormatUnknown);
-	}
 }
 
 

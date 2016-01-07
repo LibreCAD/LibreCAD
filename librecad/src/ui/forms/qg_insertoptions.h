@@ -26,12 +26,16 @@
 #ifndef QG_INSERTOPTIONS_H
 #define QG_INSERTOPTIONS_H
 
-#include "ui_qg_insertoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionBlocksInsert;
+namespace Ui {
+class Ui_InsertOptions;
+}
 
-class QG_InsertOptions : public QWidget, public Ui::QG_InsertOptions
+class QG_InsertOptions : public QWidget
 {
     Q_OBJECT
 
@@ -50,8 +54,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_InsertOptions> ui;
 };
 
 #endif // QG_INSERTOPTIONS_H

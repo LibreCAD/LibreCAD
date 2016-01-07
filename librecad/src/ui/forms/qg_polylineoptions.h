@@ -26,12 +26,16 @@
 #ifndef QG_POLYLINEOPTIONS_H
 #define QG_POLYLINEOPTIONS_H
 
-#include "ui_qg_polylineoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionDrawPolyline;
+namespace Ui {
+class Ui_PolylineOptions;
+}
 
-class QG_PolylineOptions : public QWidget, public Ui::QG_PolylineOptions
+class QG_PolylineOptions : public QWidget
 {
     Q_OBJECT
 
@@ -56,7 +60,7 @@ protected slots:
 
 private:
     void destroy();
-
+	std::unique_ptr<Ui::Ui_PolylineOptions> ui;
 };
 
 #endif // QG_POLYLINEOPTIONS_H

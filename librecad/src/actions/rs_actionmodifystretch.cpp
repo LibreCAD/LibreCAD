@@ -33,24 +33,30 @@
 #include "rs_modification.h"
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
+
+struct RS_ActionModifyStretch::Points {
+	RS_Vector firstCorner;
+	RS_Vector secondCorner;
+	RS_Vector referencePoint;
+	RS_Vector targetPoint;
+};
 
 RS_ActionModifyStretch::RS_ActionModifyStretch(RS_EntityContainer& container,
 											   RS_GraphicView& graphicView)
 	:RS_PreviewActionInterface("Stretch Entities",
 							   container, graphicView)
-	,firstCorner(false)
-	,secondCorner(false)
-	,referencePoint(false)
-	,targetPoint(false)
+	, pPoints(new Points{})
 {
 	actionType=RS2::ActionModifyStretch;
 }
 
 void RS_ActionModifyStretch::init(int status) {
     RS_ActionInterface::init(status);
-
 }
 
+RS_ActionModifyStretch::~RS_ActionModifyStretch() = default;
 
 
 void RS_ActionModifyStretch::trigger() {
@@ -60,7 +66,9 @@ void RS_ActionModifyStretch::trigger() {
     deletePreview();
 
     RS_Modification m(*container, graphicView);
-    m.stretch(firstCorner, secondCorner, targetPoint-referencePoint);
+	m.stretch(pPoints->firstCorner,
+			  pPoints->secondCorner,
+			  pPoints->targetPoint - pPoints->referencePoint);
 
     setStatus(SetFirstCorner);
 
@@ -78,25 +86,10 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetSecondCorner:
-        if (firstCorner.valid) {
-            secondCorner = snapPoint(e);
-            deletePreview();
-            preview->addEntity(
-				new RS_Line{preview.get(),
-							{firstCorner.x, firstCorner.y},
-							{secondCorner.x, firstCorner.y}});
-            preview->addEntity(
-				new RS_Line{preview.get(),
-							{secondCorner.x, firstCorner.y},
-							{secondCorner.x, secondCorner.y}});
-            preview->addEntity(
-				new RS_Line{preview.get(),
-							{secondCorner.x, secondCorner.y},
-							{firstCorner.x, secondCorner.y}});
-            preview->addEntity(
-				new RS_Line{preview.get(),
-							{firstCorner.x, secondCorner.y},
-							{firstCorner.x, firstCorner.y}});
+		if (pPoints->firstCorner.valid) {
+			pPoints->secondCorner = snapPoint(e);
+			deletePreview();
+			preview->addRectangle(pPoints->firstCorner, pPoints->secondCorner);
             drawPreview();
         }
         break;
@@ -105,14 +98,14 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent* e) {
         break;
 
     case SetTargetPoint:
-        if (referencePoint.valid) {
-            targetPoint = mouse;
+		if (pPoints->referencePoint.valid) {
+			pPoints->targetPoint = mouse;
 
             deletePreview();
-            preview->addStretchablesFrom(*container, firstCorner, secondCorner);
+			preview->addStretchablesFrom(*container, pPoints->firstCorner, pPoints->secondCorner);
             //preview->move(targetPoint-referencePoint);
-            preview->stretch(firstCorner, secondCorner,
-                             targetPoint-referencePoint);
+			preview->stretch(pPoints->firstCorner, pPoints->secondCorner,
+							 pPoints->targetPoint-pPoints->referencePoint);
             drawPreview();
         }
         break;
@@ -147,25 +140,25 @@ void RS_ActionModifyStretch::coordinateEvent(RS_CoordinateEvent* e) {
 
     switch (getStatus()) {
     case SetFirstCorner:
-        firstCorner = mouse;
+		pPoints->firstCorner = mouse;
         setStatus(SetSecondCorner);
         break;
 
     case SetSecondCorner:
-        secondCorner = mouse;
+		pPoints->secondCorner = mouse;
         deletePreview();
         setStatus(SetReferencePoint);
         break;
 
     case SetReferencePoint:
-        referencePoint = mouse;
-        graphicView->moveRelativeZero(referencePoint);
+		pPoints->referencePoint = mouse;
+		graphicView->moveRelativeZero(pPoints->referencePoint);
         setStatus(SetTargetPoint);
         break;
 
     case SetTargetPoint:
-        targetPoint = mouse;
-        graphicView->moveRelativeZero(targetPoint);
+		pPoints->targetPoint = mouse;
+		graphicView->moveRelativeZero(pPoints->targetPoint);
         trigger();
         //finish();
         break;

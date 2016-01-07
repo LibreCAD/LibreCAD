@@ -54,8 +54,6 @@ public:
                           RS_GraphicView& graphicView);
     ~RS_ActionDrawCircle3P();
 
-    void reset();
-
     virtual void init(int status=0);
 	
     virtual void trigger();
@@ -75,19 +73,9 @@ protected:
     /**
      * Circle data defined so far.
      */
-	std::unique_ptr<RS_CircleData> data;
-    /**
-     * 1st point.
-     */
-    RS_Vector point1;
-    /**
-     * 2nd point.
-     */
-    RS_Vector point2;
-    /**
-     * 3nd point.
-     */
-    RS_Vector point3;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
+
 };
 
 #endif

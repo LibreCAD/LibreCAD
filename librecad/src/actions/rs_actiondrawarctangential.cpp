@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include<cmath>
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_actiondrawarctangential.h"
@@ -35,13 +35,16 @@
 #include "ui_qg_arctangentialoptions.h"
 #include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 
 RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(RS_EntityContainer& container,
                                                        RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw arcs tangential",
 							   container, graphicView)
-	,data(new RS_ArcData())
+	, point(new RS_Vector{})
+	, data(new RS_ArcData())
 {
 	actionType=RS2::ActionDrawArcTangential;
     reset();
@@ -49,12 +52,12 @@ RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(RS_EntityContainer& conta
 
 
 
-RS_ActionDrawArcTangential::~RS_ActionDrawArcTangential() {}
+RS_ActionDrawArcTangential::~RS_ActionDrawArcTangential() = default;
 
 void RS_ActionDrawArcTangential::reset() {
     baseEntity = NULL;
     isStartPoint = false;
-    point = RS_Vector(false);
+	*point = {};
 }
 
 
@@ -74,7 +77,7 @@ void RS_ActionDrawArcTangential::init(int status) {
 void RS_ActionDrawArcTangential::trigger() {
     RS_PreviewActionInterface::trigger();
 
-	if (!(point.valid && baseEntity)) {
+	if (!(point->valid && baseEntity)) {
         RS_DEBUG->print("RS_ActionDrawArcTangential::trigger: "
                         "conditions not met");
         return;
@@ -103,7 +106,7 @@ void RS_ActionDrawArcTangential::trigger() {
 
 
 void RS_ActionDrawArcTangential::preparePreview() {
-    if (baseEntity && point.valid) {
+	if (baseEntity && point->valid) {
         RS_Vector startPoint;
         double direction;
         if (isStartPoint) {
@@ -117,9 +120,9 @@ void RS_ActionDrawArcTangential::preparePreview() {
         RS_Arc arc(NULL, RS_ArcData());
         bool suc;
         if (byRadius) {
-			suc = arc.createFrom2PDirectionRadius(startPoint, point, direction, data->radius);
+			suc = arc.createFrom2PDirectionRadius(startPoint, *point, direction, data->radius);
         } else {
-            suc = arc.createFrom2PDirectionAngle(startPoint, point, direction, angleLength);
+			suc = arc.createFrom2PDirectionAngle(startPoint, *point, direction, angleLength);
         }
         if (suc) {
 			data.reset(new RS_ArcData(arc.getData()));
@@ -137,7 +140,7 @@ void RS_ActionDrawArcTangential::preparePreview() {
 
 void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
     if(getStatus() == SetEndAngle) {
-        point = snapPoint(e);
+		*point = snapPoint(e);
         preparePreview();
 		if (data->isValid()) {
 			RS_Arc* arc = new RS_Arc(preview.get(), *data);
@@ -204,7 +207,7 @@ void RS_ActionDrawArcTangential::coordinateEvent(RS_CoordinateEvent* e) {
         break;
 
     case SetEndAngle:
-        point = mouse;
+		*point = mouse;
         trigger();
         break;
 

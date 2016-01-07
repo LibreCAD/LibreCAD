@@ -26,10 +26,16 @@
 #ifndef QG_DIMLINEAROPTIONS_H
 #define QG_DIMLINEAROPTIONS_H
 
-#include "ui_qg_dimlinearoptions.h"
-#include "rs_actiondimlinear.h"
+#include<memory>
+#include<QWidget>
 
-class QG_DimLinearOptions : public QWidget, public Ui::QG_DimLinearOptions
+class RS_ActionInterface;
+class RS_ActionDimLinear;
+namespace Ui{
+class Ui_DimLinearOptions;
+}
+
+class QG_DimLinearOptions : public QWidget
 {
     Q_OBJECT
 
@@ -39,7 +45,7 @@ public:
 
 public slots:
     virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateAngle( const QString & a );
+	virtual void updateAngle( const QString& a );
     virtual void setHor();
     virtual void setVer();
 
@@ -50,8 +56,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_DimLinearOptions> ui;
 };
 
 #endif // QG_DIMLINEAROPTIONS_H

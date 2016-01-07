@@ -30,7 +30,6 @@
 
 #include <memory>
 #include "rs_actioninterface.h"
-#include "rs_preview.h"
 
 /**
  * This is the interface that must be implemented for all
@@ -61,10 +60,10 @@ protected:
      */
 	std::unique_ptr<RS_Preview> preview;
     bool hasPreview;//whether preview is in use
-    /**
-     * Current offset of the preview.
-     */
-    RS_Vector offset;
+//    /**
+//     * Current offset of the preview.
+//     */
+//	std::unique_ptr<RS_Vector> offset;
 };
 
 #endif

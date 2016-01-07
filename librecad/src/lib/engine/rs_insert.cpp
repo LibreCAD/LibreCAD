@@ -24,7 +24,8 @@
 **
 **********************************************************************/
 
-
+#include<iostream>
+#include<cmath>
 #include "rs_insert.h"
 
 #include "rs_arc.h"
@@ -34,6 +35,7 @@
 #include "rs_graphic.h"
 #include "rs_layer.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 RS_InsertData::RS_InsertData(const QString& _name,
 							 RS_Vector _insertionPoint,
@@ -151,15 +153,16 @@ void RS_Insert::update() {
                     if (e->rtti()== RS2::EntityArc) {
 						RS_Arc* a= static_cast<RS_Arc*>(e);
 						ne = new RS_Ellipse{this,
-						a->getCenter(), {a->getRadius(), 0.}, 1,
-								a->getAngle1(), a->getAngle2(),
-								a->isReversed()};
+						{a->getCenter(), {a->getRadius(), 0.},
+								1, a->getAngle1(), a->getAngle2(),
+								a->isReversed()}
+					};
                         ne->setLayer(e->getLayer());
                         ne->setPen(e->getPen(false));
                     } else if (e->rtti()== RS2::EntityCircle) {
 						RS_Circle* a= static_cast<RS_Circle*>(e);
 						ne = new RS_Ellipse{this,
-						a->getCenter(), {a->getRadius(), 0.}, 1, 0., 2.*M_PI
+						{ a->getCenter(), {a->getRadius(), 0.}, 1, 0., 2.*M_PI, false}
 					};
                         ne->setLayer(e->getLayer());
                         ne->setPen(e->getPen(false));

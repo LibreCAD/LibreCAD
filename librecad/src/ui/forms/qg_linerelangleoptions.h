@@ -26,12 +26,16 @@
 #ifndef QG_LINERELANGLEOPTIONS_H
 #define QG_LINERELANGLEOPTIONS_H
 
-#include "ui_qg_linerelangleoptions.h"
+#include<memory>
+#include<QWidget>
 
 class RS_ActionInterface;
 class RS_ActionDrawLineRelAngle;
+namespace Ui {
+class Ui_LineRelAngleOptions;
+}
 
-class QG_LineRelAngleOptions : public QWidget, public Ui::QG_LineRelAngleOptions
+class QG_LineRelAngleOptions : public QWidget
 {
     Q_OBJECT
 
@@ -40,9 +44,9 @@ public:
     ~QG_LineRelAngleOptions();
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateAngle( const QString & a );
-    virtual void updateLength( const QString & l );
+	virtual void setAction(RS_ActionInterface * a, bool update);
+	virtual void updateAngle(const QString & a);
+	virtual void updateLength(const QString & l);
 
 protected:
     RS_ActionDrawLineRelAngle* action;
@@ -51,8 +55,8 @@ protected slots:
     virtual void languageChange();
 
 private:
-    void destroy();
-
+	void saveSettings();
+	std::unique_ptr<Ui::Ui_LineRelAngleOptions> ui;
 };
 
 #endif // QG_LINERELANGLEOPTIONS_H

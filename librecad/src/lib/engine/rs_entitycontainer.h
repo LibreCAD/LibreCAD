@@ -29,7 +29,6 @@
 #define RS_ENTITYCONTAINER_H
 
 #include <vector>
-#include <set>
 #include "rs_entity.h"
 
 /**
@@ -121,7 +120,7 @@ public:
 	* @param deep count sub-containers, if true
 	* @param types if is not empty, only counts by types listed
 	*/
-	virtual unsigned countSelected(bool deep=true, std::set<RS2::EntityType> const& types = std::set<RS2::EntityType>());
+	virtual unsigned countSelected(bool deep=true, std::initializer_list<RS2::EntityType> const& types = {});
     virtual double totalSelectedLength();
 
     /**
@@ -184,7 +183,7 @@ public:
     virtual void rotate(const RS_Vector& center, const double& angle);
     virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
     virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+	virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2a) override;
 
     virtual void stretch(const RS_Vector& firstCorner,
                          const RS_Vector& secondCorner,
@@ -206,7 +205,7 @@ public:
      * @return line integral \oint x dy along the entity
      * returns absolute value
      */
-    virtual double areaLineIntegral() const;
+    virtual double areaLineIntegral() const override;
     /**
      * @brief ignoreForModification, ignore this entity for entity catch for certain actions
      * like catching circles to create tangent circles

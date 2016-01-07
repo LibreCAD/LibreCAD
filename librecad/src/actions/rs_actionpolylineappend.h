@@ -28,6 +28,8 @@
 
 #include "rs_actiondrawpolyline.h"
 
+class RS_Polyline;
+
 /**
  * This action class can handle user events to move entities.
  *

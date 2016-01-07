@@ -41,7 +41,7 @@ class RS_ActionModifyDeleteFree : public RS_ActionInterface {
 public:
     RS_ActionModifyDeleteFree(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-    ~RS_ActionModifyDeleteFree() = default;
+	~RS_ActionModifyDeleteFree();
 
     virtual void init(int status=0);
     virtual void trigger();
@@ -51,9 +51,9 @@ public:
 private:
     RS_Polyline* polyline;
     RS_Entity* e1;
-    RS_Vector v1;
-    RS_Entity* e2;
-    RS_Vector v2;
+	RS_Entity* e2;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 };
 
 #endif

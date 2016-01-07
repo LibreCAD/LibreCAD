@@ -56,7 +56,7 @@ class RS_ActionLibraryInsert : public RS_PreviewActionInterface {
 public:
     RS_ActionLibraryInsert(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-	virtual ~RS_ActionLibraryInsert() = default;
+	virtual ~RS_ActionLibraryInsert() override;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 	
@@ -79,23 +79,15 @@ public:
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
 
-        void setFile(const QString& file);
+	void setFile(const QString& file);
 
-	double getAngle() {
-		return data.angle;
-	}
+	double getAngle() const;
 
-	void setAngle(double a) {
-		data.angle = a;
-	}
+	void setAngle(double a);
 
-	double getFactor() {
-		return data.factor;
-	}
+	double getFactor() const;
 
-	void setFactor(double f) {
-		data.factor = f;
-	}
+	void setFactor(double f);
 
 	/*int getColumns() {
 		return data.cols;
@@ -132,8 +124,8 @@ public:
 protected:
 	//RS_Block* block;
 	//RS_InsertData data;
-	RS_Graphic prev;
-	RS_LibraryInsertData data;
+	struct Points;
+	std::unique_ptr<Points> pPoints;
 	
 	/** Last status before entering option. */
 	Status lastStatus;

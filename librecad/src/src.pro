@@ -227,7 +227,9 @@ HEADERS += \
     ui/qg_commandhistory.h \
     ui/lc_customtoolbar.h \
     ui/lc_dockwidget.h \
-    lib/engine/lc_rect.h
+    lib/engine/lc_rect.h \
+    ui/forms/lc_dlgsplinepoints.h \
+    ui/forms/lc_widgetoptionsdialog.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -322,7 +324,11 @@ SOURCES += \
     ui/qg_commandhistory.cpp \
     ui/lc_customtoolbar.cpp \
     ui/lc_dockwidget.cpp \
-    lib/engine/lc_rect.cpp
+    lib/engine/lc_rect.cpp \
+    lib/engine/rs.cpp \
+    ui/forms/lc_dlgsplinepoints.cpp \
+    lib/engine/rs_flags.cpp \
+    ui/forms/lc_widgetoptionsdialog.cpp
 
 # ################################################################################
 # Command
@@ -602,6 +608,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionzoomwindow.cpp
 
 RESOURCES += ../res/actions/actions.qrc
+RESOURCES += ../res/tools/tools.qrc
 
 # ################################################################################
 # UI
@@ -689,7 +696,9 @@ HEADERS += ui/lc_actionfactory.h \
     ui/forms/qg_splineoptions.h \
     ui/forms/qg_textoptions.h \
     ui/forms/qg_trimamountoptions.h \
-    ui/forms/qg_widgetpen.h
+    ui/forms/qg_widgetpen.h \
+    ui/lc_centralwidget.h \
+    ui/lc_widgetfactory.h
 
 SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
@@ -773,7 +782,9 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/forms/qg_splineoptions.cpp \
     ui/forms/qg_textoptions.cpp \
     ui/forms/qg_trimamountoptions.cpp \
-    ui/forms/qg_widgetpen.cpp
+    ui/forms/qg_widgetpen.cpp \
+    ui/lc_centralwidget.cpp \
+    ui/lc_widgetfactory.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_arcoptions.ui \
@@ -841,7 +852,9 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_trimamountoptions.ui \
     ui/forms/qg_widgetpen.ui \
     ui/forms/qg_snaptoolbar.ui \
-    ui/forms/qg_activelayername.ui
+    ui/forms/qg_activelayername.ui \
+    ui/forms/lc_dlgsplinepoints.ui \
+    ui/forms/lc_widgetoptionsdialog.ui
 
 RESOURCES += ../res/ui/ui.qrc
 
@@ -858,7 +871,8 @@ HEADERS += \
     plugins/intern/qc_actiongetpoint.h \
     plugins/intern/qc_actiongetselect.h \
     plugins/intern/qc_actiongetent.h \
-    main/main.h
+    main/main.h \
+    main/mainwindowx.h
 
 SOURCES += \
     main/qc_applicationwindow.cpp \
@@ -869,7 +883,8 @@ SOURCES += \
     plugins/intern/qc_actiongetpoint.cpp \
     plugins/intern/qc_actiongetselect.cpp \
     plugins/intern/qc_actiongetent.cpp \
-    main/main.cpp
+    main/main.cpp \
+    main/mainwindowx.cpp
 
 # If C99 emulation is needed, add the respective source files.
 contains(DEFINES, EMU_C99) {

@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include<set>
 #include<QAction>
 #include <QMouseEvent>
 #include "rs_actiondrawlinetangent1.h"
@@ -34,24 +33,27 @@
 #include "rs_creation.h"
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 namespace{
-const std::set<RS2::EntityType> circleType={RS2::EntityArc,RS2::EntityCircle,
-											   RS2::EntityEllipse, RS2::EntitySplinePoints
-											  };
+auto circleType={RS2::EntityArc, RS2::EntityCircle,
+				 RS2::EntityEllipse, RS2::EntitySplinePoints
+				};
 }
+
 RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 		RS_EntityContainer& container,
 		RS_GraphicView& graphicView)
 	:RS_PreviewActionInterface("Draw Tangents 1", container, graphicView)
 	,tangent(nullptr)
-	,point(false)
+	,point(new RS_Vector{})
 	,circle(nullptr)
 {
 	actionType=RS2::ActionDrawLineTangent1;
 }
 
-RS_ActionDrawLineTangent1::~RS_ActionDrawLineTangent1(){}
+RS_ActionDrawLineTangent1::~RS_ActionDrawLineTangent1() = default;
 
 void RS_ActionDrawLineTangent1::trigger() {
 	RS_PreviewActionInterface::trigger();
@@ -100,7 +102,7 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
 
 	switch (getStatus()) {
 	case SetPoint:
-		point = snapPoint(e);
+		*point = snapPoint(e);
 		break;
 
 	case SetCircle: {
@@ -119,7 +121,7 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
 			RS_Creation creation(nullptr, nullptr);
 			tangent.reset(
 						creation.createTangent1(mouse,
-												point,
+												*point,
 												circle)
 						);
 
@@ -169,8 +171,8 @@ void RS_ActionDrawLineTangent1::coordinateEvent(RS_CoordinateEvent* e) {
 	if (!e) return;
 	switch (getStatus()) {
 	case SetPoint:
-		point = e->getCoordinate();
-		graphicView->moveRelativeZero(point);
+		*point = e->getCoordinate();
+		graphicView->moveRelativeZero(*point);
 		setStatus(SetCircle);
 		break;
 
@@ -197,8 +199,17 @@ void RS_ActionDrawLineTangent1::updateMouseButtonHints() {
 	}
 }
 
-void RS_ActionDrawLineTangent1::updateMouseCursor() {
-	graphicView->setMouseCursor(RS2::CadCursor);
+void RS_ActionDrawLineTangent1::updateMouseCursor()
+{
+    switch (getStatus())
+    {
+        case SetPoint:
+            graphicView->setMouseCursor(RS2::CadCursor);
+            break;
+        case SetCircle:
+            graphicView->setMouseCursor(RS2::SelectCursor);
+            break;
+    }
 }
 
 // EOF

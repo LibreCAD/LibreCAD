@@ -51,6 +51,7 @@
 #include "intern/qc_actiongetselect.h"
 #include "intern/qc_actiongetent.h"
 #include "rs_math.h"
+#include "rs_debug.h"
 
 #if QT_VERSION < 0x040500
 #include "emu_qt45.h"
@@ -170,7 +171,7 @@ Plugin_Entity::Plugin_Entity(RS_EntityContainer* parent, enum DPI::ETYPE type){
         break;
     case DPI::ELLIPSE:
 		entity = new RS_Ellipse{parent,
-				{0.,0.}, {0.,0.},0.,0.,0.,false};
+		{{0.,0.}, {0.,0.},0.,0.,0.,false}};
         break;
     case DPI::IMAGE:
         entity = new RS_Image(parent, RS_ImageData());
@@ -764,7 +765,7 @@ Doc_plugin_interface::Doc_plugin_interface(RS_Document *d, RS_GraphicView* gv, Q
 doc(d)
 ,docGr(doc->getGraphic())
 ,gView(gv)
-,main(parent)
+,main_window(parent)
 ,haveUndo(false){
 }
 
@@ -1352,9 +1353,9 @@ bool Doc_plugin_interface::getInt(int *num, const QString& mesage, const QString
         tit = title;
 
 #if QT_VERSION < 0x040500
-    int data = emu_qt45_QInputDialog_getInt(main, tit, msg, 0, -2147483647, 2147483647, 1, &ok);
+    int data = emu_qt45_QInputDialog_getInt(main_window, tit, msg, 0, -2147483647, 2147483647, 1, &ok);
 #else
-    int data = QInputDialog::getInt(main, tit, msg, 0, -2147483647, 2147483647, 1, &ok);
+    int data = QInputDialog::getInt(main_window, tit, msg, 0, -2147483647, 2147483647, 1, &ok);
 #endif
 
     if (ok)
@@ -1373,7 +1374,7 @@ bool Doc_plugin_interface::getReal(qreal *num, const QString& mesage, const QStr
     else
         tit = title;
 
-    double data = QInputDialog::getDouble(main, tit, msg, 0, -2147483647, 2147483647, 4, &ok);
+    double data = QInputDialog::getDouble(main_window, tit, msg, 0, -2147483647, 2147483647, 4, &ok);
     if (ok )
         *num = data;
     return ok;
@@ -1390,7 +1391,7 @@ bool Doc_plugin_interface::getString(QString *txt, const QString& mesage, const 
     else
         tit = title;
 
-    QString text = QInputDialog::getText(main, tit,msg, QLineEdit::Normal,
+    QString text = QInputDialog::getText(main_window, tit,msg, QLineEdit::Normal,
                                          QString(), &ok);
     if (ok && !text.isEmpty()) {
         txt->clear();

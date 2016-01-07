@@ -29,7 +29,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_commandevent.h"
 #include "rs_ellipse.h"
 #include "rs_line.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
+struct RS_ActionDrawEllipseInscribe::Points {
+std::vector<RS_Line*> lines;
+RS_EllipseData eData;
+bool valid{false};
+};
 /**
  * Constructor.
  *
@@ -39,22 +46,21 @@ RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw ellipse inscribed",
 						   container, graphicView)
-		,eData(new RS_EllipseData{})
-		,valid(false)
+		, pPoints(new Points{})
 {
 	actionType=RS2::ActionDrawEllipseInscribe;
 }
 
-RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe(){}
+RS_ActionDrawEllipseInscribe::~RS_ActionDrawEllipseInscribe() = default;
 
 void RS_ActionDrawEllipseInscribe::clearLines(bool checkStatus)
 {
-	while(lines.size() ){
-		if(checkStatus && (int) lines.size()<=getStatus() )
+	while(pPoints->lines.size() ){
+		if(checkStatus && (int) pPoints->lines.size()<=getStatus() )
 			break;
-		lines.back()->setHighlighted(false);
-		graphicView->drawEntity(lines.back());
-		lines.pop_back();
+		pPoints->lines.back()->setHighlighted(false);
+		graphicView->drawEntity(pPoints->lines.back());
+		pPoints->lines.pop_back();
 	}
 }
 
@@ -76,7 +82,7 @@ void RS_ActionDrawEllipseInscribe::trigger() {
     RS_PreviewActionInterface::trigger();
 
 
-	RS_Ellipse* ellipse=new RS_Ellipse(container, *eData);
+	RS_Ellipse* ellipse=new RS_Ellipse(container, pPoints->eData);
 
     deletePreview();
     container->addEntity(ellipse);
@@ -88,7 +94,7 @@ void RS_ActionDrawEllipseInscribe::trigger() {
         document->endUndoCycle();
     }
 
-	for(RS_Line*const p: lines) {
+	for(RS_Line*const p: pPoints->lines) {
 		if(!p) continue;
 		p->setHighlighted(false);
 		graphicView->drawEntity(p);
@@ -112,7 +118,7 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
         RS_Entity*  en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
         if(!en) return;
         if(!(en->isVisible() && en->rtti()== RS2::EntityLine)) return;
-        for(auto p: lines){
+		for(auto p: pPoints->lines){
             if(en == p) return; //do not pull in the same line again
         }
 
@@ -123,11 +129,11 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
 		deletePreview();
 
 		clearLines(true);
-		lines.push_back(static_cast<RS_Line*>(en));
+		pPoints->lines.push_back(static_cast<RS_Line*>(en));
 		if(preparePreview()) {
-			lines.back()->setHighlighted(true);
-			graphicView->drawEntity(lines.back());
-			RS_Ellipse* e=new RS_Ellipse(preview.get(), *eData);
+			pPoints->lines.back()->setHighlighted(true);
+			graphicView->drawEntity(pPoints->lines.back());
+			RS_Ellipse* e=new RS_Ellipse(preview.get(), pPoints->eData);
             preview->addEntity(e);
             drawPreview();
         }
@@ -138,17 +144,17 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent* e) {
 
 
 bool RS_ActionDrawEllipseInscribe::preparePreview(){
-    valid=false;
+	pPoints->valid=false;
     if(getStatus() == SetLine4) {
 		RS_Ellipse e{preview.get(), RS_EllipseData()};
-        valid= e.createInscribeQuadrilateral(lines);
-        if(valid){
-			eData.reset(new RS_EllipseData(e.getData()));
-        }else if( RS_DIALOGFACTORY){
+		pPoints->valid= e.createInscribeQuadrilateral(pPoints->lines);
+		if (pPoints->valid){
+			pPoints->eData = e.getData();
+		} else if ( RS_DIALOGFACTORY){
             RS_DIALOGFACTORY->commandMessage(tr("Can not determine uniquely an ellipse"));
         }
     }
-    return valid;
+	return pPoints->valid;
 }
 
 void RS_ActionDrawEllipseInscribe::mouseReleaseEvent(QMouseEvent* e) {
@@ -158,14 +164,14 @@ void RS_ActionDrawEllipseInscribe::mouseReleaseEvent(QMouseEvent* e) {
         RS_Entity*  en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
         if(!en) return;
         if(!(en->isVisible() && en->rtti()== RS2::EntityLine)) return;
-        for(int i=0;i<getStatus();i++) {
-            if(en->getId() == lines[i]->getId()) return; //do not pull in the same line again
+		for(int i=0; i<getStatus(); ++i) {
+			if(en->getId() == pPoints->lines[i]->getId()) return; //do not pull in the same line again
         }
         if(en->getParent()) {
 			if ( en->getParent()->ignoredOnModification()) return;
         }
 		clearLines(true);
-		lines.push_back(static_cast<RS_Line*>(en));
+		pPoints->lines.push_back(static_cast<RS_Line*>(en));
 
         switch (getStatus()) {
         case SetLine1:
@@ -187,9 +193,9 @@ void RS_ActionDrawEllipseInscribe::mouseReleaseEvent(QMouseEvent* e) {
         // Return to last status:
         if(getStatus()>0){
 			clearLines(true);
-			lines.back()->setHighlighted(false);
-			graphicView->drawEntity(lines.back());
-            lines.pop_back();
+			pPoints->lines.back()->setHighlighted(false);
+			graphicView->drawEntity(pPoints->lines.back());
+			pPoints->lines.pop_back();
             deletePreview();
         }
         init(getStatus()-1);
@@ -307,7 +313,7 @@ void RS_ActionDrawEllipseInscribe::updateMouseButtonHints() {
 }
 
 void RS_ActionDrawEllipseInscribe::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

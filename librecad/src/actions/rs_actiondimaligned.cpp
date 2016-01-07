@@ -35,6 +35,8 @@
 #include "rs_commandevent.h"
 #include "rs_constructionline.h"
 #include "rs_coordinateevent.h"
+#include "rs_preview.h"
+#include "rs_debug.h"
 
 RS_ActionDimAligned::RS_ActionDimAligned(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -46,7 +48,7 @@ RS_ActionDimAligned::RS_ActionDimAligned(RS_EntityContainer& container,
 
 
 
-RS_ActionDimAligned::~RS_ActionDimAligned() {}
+RS_ActionDimAligned::~RS_ActionDimAligned()  = default;
 
 void RS_ActionDimAligned::reset() {
     RS_ActionDimension::reset();
