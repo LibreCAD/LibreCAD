@@ -2,6 +2,37 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="uk">
 <context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Геометрія</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>radius=%1 is too small for points selected
@@ -504,16 +535,8 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished">на задній план</translation>
     </message>
     <message>
-        <source>set to bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>lower after entity</source>
         <translation type="unfinished">за об&apos;єктом</translation>
-    </message>
-    <message>
-        <source>lower over entity</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>raise over entity</source>
@@ -522,10 +545,6 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>move to top</source>
         <translation type="unfinished">на передній план</translation>
-    </message>
-    <message>
-        <source>set to top</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Show all</source>
@@ -613,11 +632,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Open IDE</source>
-        <translation type="unfinished">Відкрити IDE</translation>
+        <translation type="obsolete">Відкрити IDE</translation>
     </message>
     <message>
         <source>Run Script..</source>
-        <translation type="unfinished">Виконати сценарій…</translation>
+        <translation type="obsolete">Виконати сценарій…</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
@@ -757,6 +776,34 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Focus on &amp;Command Line</source>
         <translation type="unfinished">Перейти до &amp;командного рядка</translation>
     </message>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished">Верхня</translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Floating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -784,6 +831,33 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_WidgetOptionsDialog</name>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LG_DimzerosBox</name>
     <message>
         <source>select:</source>
@@ -807,6 +881,25 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Параметри лінії під відносним кутом</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished">Відстань від базової ламаної</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished">Копій: </translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -821,7 +914,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Specify a point</source>
-        <translation>Визначити точку</translation>
+        <translation type="obsolete">Визначити точку</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -843,11 +936,11 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>QC_ApplicationWindow</name>
     <message>
         <source>Running script &apos;%1&apos;</source>
-        <translation>Виконання сценарію „%1“</translation>
+        <translation type="obsolete">Виконання сценарію „%1“</translation>
     </message>
     <message>
         <source>Inserting block &apos;%1&apos;</source>
-        <translation>Вставка блоку „%1“</translation>
+        <translation type="obsolete">Вставка блоку „%1“</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -947,7 +1040,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Scripts</source>
-        <translation>&amp;Сценарії</translation>
+        <translation type="obsolete">&amp;Сценарії</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -1007,7 +1100,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="obsolete">Відкриття нещодавно редагованого файлу…</translation>
+        <translation type="unfinished">Відкриття нещодавно редагованого файлу…</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -1366,11 +1459,11 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>DockWidgets</source>
+        <source>&amp;Dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Dockwidgets</source>
+        <source>Dock Areas</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2941,11 +3034,11 @@ p, li { white-space: pre-wrap; }
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation>Параметри дуги</translation>
+        <translation type="obsolete">Параметри дуги</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>За годинниковою стрілкою</translation>
+        <translation type="obsolete">За годинниковою стрілкою</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
@@ -2953,14 +3046,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Counterclockwise</source>
-        <translation>Проти годинникової стрілки</translation>
+        <translation type="obsolete">Проти годинникової стрілки</translation>
     </message>
 </context>
 <context>
     <name>QG_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation>Тангенціальні параметри дуги</translation>
+        <translation type="obsolete">Тангенціальні параметри дуги</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -2968,44 +3061,44 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation>Радіус дотичної дуги</translation>
+        <translation type="obsolete">Радіус дотичної дуги</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>Повний стягуючий кут дотичної дуги</translation>
+        <translation type="obsolete">Повний стягуючий кут дотичної дуги</translation>
     </message>
     <message>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Радіус</translation>
+        <translation type="obsolete">Радіус</translation>
     </message>
     <message>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Кут</translation>
+        <translation type="obsolete">Кут</translation>
     </message>
 </context>
 <context>
     <name>QG_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation>Параметри фаски</translation>
+        <translation type="obsolete">Параметри фаски</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Усікти</translation>
+        <translation type="obsolete">Усікти</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Позначте, щоб усікти обидва об’єкти до фаски</translation>
+        <translation type="obsolete">Позначте, щоб усікти обидва об’єкти до фаски</translation>
     </message>
     <message>
         <source>Length 1:</source>
-        <translation>Довжина 1:</translation>
+        <translation type="obsolete">Довжина 1:</translation>
     </message>
     <message>
         <source>Length 2:</source>
-        <translation>Довжина 2:</translation>
+        <translation type="obsolete">Довжина 2:</translation>
     </message>
 </context>
 <context>
@@ -3938,30 +4031,30 @@ p, li { white-space: pre-wrap; }
     <name>QG_CircleOptions</name>
     <message>
         <source>Circle Options</source>
-        <translation>Параметри кола</translation>
+        <translation type="obsolete">Параметри кола</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Радіус:</translation>
+        <translation type="obsolete">Радіус:</translation>
     </message>
 </context>
 <context>
     <name>QG_CircleTan2Options</name>
     <message>
         <source>Circle Tangential2 Options</source>
-        <translation>Параметри кола, дотичного до двох об’єктів</translation>
+        <translation type="obsolete">Параметри кола, дотичного до двох об’єктів</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Радіус дотичного кола&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Радіус дотичного кола&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Радіус: </translation>
+        <translation type="obsolete">Радіус: </translation>
     </message>
     <message>
         <source>Radius of tangential circle</source>
-        <translation>Радіус дотичного кола</translation>
+        <translation type="obsolete">Радіус дотичного кола</translation>
     </message>
 </context>
 <context>
@@ -4012,7 +4105,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Others..</source>
-        <translation>Інші…</translation>
+        <translation type="obsolete">Інші…</translation>
     </message>
     <message>
         <source>Unchanged</source>
@@ -4045,6 +4138,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Dark Gray</source>
         <translation>Темно-сірий</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4116,22 +4213,22 @@ p, li { white-space: pre-wrap; }
     <name>QG_DimLinearOptions</name>
     <message>
         <source>Linear Dimension Options</source>
-        <translation>Параметри лінійного розміру</translation>
+        <translation type="obsolete">Параметри лінійного розміру</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Кут:</translation>
+        <translation type="obsolete">Кут:</translation>
     </message>
 </context>
 <context>
     <name>QG_DimOptions</name>
     <message>
         <source>Dimension Options</source>
-        <translation>Параметри розміру</translation>
+        <translation type="obsolete">Параметри розміру</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation>Мітка:</translation>
+        <translation type="obsolete">Мітка:</translation>
     </message>
     <message utf8="true">
         <source>ø</source>
@@ -4139,11 +4236,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>°</source>
-        <translation>°</translation>
+        <translation type="obsolete">°</translation>
     </message>
     <message utf8="true">
         <source>±</source>
-        <translation>±</translation>
+        <translation type="obsolete">±</translation>
     </message>
     <message utf8="true">
         <source>¶</source>
@@ -4151,23 +4248,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>×</source>
-        <translation>×</translation>
+        <translation type="obsolete">×</translation>
     </message>
     <message utf8="true">
         <source>÷</source>
-        <translation>÷</translation>
+        <translation type="obsolete">÷</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>…</translation>
-    </message>
-    <message utf8="true">
-        <source>⌀</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <source>π</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">…</translation>
     </message>
 </context>
 <context>
@@ -6426,10 +6515,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Snap indicator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Crosshair</source>
         <translation type="unfinished">Хрестоподібний покажчик</translation>
     </message>
@@ -6443,14 +6528,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Layer/ Block Selection:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6483,6 +6560,46 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scrollbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">Коло</translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished">Точка</translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide cursor when snapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start in tab mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6847,19 +6964,19 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Гаразд</translation>
+        <translation type="obsolete">&amp;Гаразд</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Відміна</translation>
+        <translation type="obsolete">Відміна</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -7665,31 +7782,31 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <name>QG_ImageOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Параметри вставки</translation>
+        <translation type="obsolete">Параметри вставки</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Кут:</translation>
+        <translation type="obsolete">Кут:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Кут повороту</translation>
+        <translation type="obsolete">Кут повороту</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Коефіцієнт:</translation>
+        <translation type="obsolete">Коефіцієнт:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Коефіцієнт масштабування</translation>
+        <translation type="obsolete">Коефіцієнт масштабування</translation>
     </message>
     <message>
         <source>DPI</source>
-        <translation>DPI</translation>
+        <translation type="obsolete">DPI</translation>
     </message>
     <message>
         <source>DPI of Image</source>
-        <translation>DPI зображення</translation>
+        <translation type="obsolete">DPI зображення</translation>
     </message>
 </context>
 <context>
@@ -7851,47 +7968,47 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <name>QG_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Параметри вставки</translation>
+        <translation type="obsolete">Параметри вставки</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Кут:</translation>
+        <translation type="obsolete">Кут:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Кут повороту</translation>
+        <translation type="obsolete">Кут повороту</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Коефіцієнт:</translation>
+        <translation type="obsolete">Коефіцієнт:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Коефіцієнт масштабування</translation>
+        <translation type="obsolete">Коефіцієнт масштабування</translation>
     </message>
     <message>
         <source>Array:</source>
-        <translation>Масив:</translation>
+        <translation type="obsolete">Масив:</translation>
     </message>
     <message>
         <source>Number of Columns</source>
-        <translation>Кількість стовпців</translation>
+        <translation type="obsolete">Кількість стовпців</translation>
     </message>
     <message>
         <source>Number of Rows</source>
-        <translation>Число рядів</translation>
+        <translation type="obsolete">Число рядів</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Проміжок</translation>
+        <translation type="obsolete">Проміжок</translation>
     </message>
     <message>
         <source>Column Spacing</source>
-        <translation>Проміжок між стовпцями:</translation>
+        <translation type="obsolete">Проміжок між стовпцями:</translation>
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation>Відстань між рядами:</translation>
+        <translation type="obsolete">Відстань між рядами:</translation>
     </message>
 </context>
 <context>
@@ -8026,23 +8143,23 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LibraryInsertOptions</name>
     <message>
         <source>Library Insert Options</source>
-        <translation>Параметри вставки бібліотечного елемента</translation>
+        <translation type="obsolete">Параметри вставки бібліотечного елемента</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Кут:</translation>
+        <translation type="obsolete">Кут:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Кут повороту</translation>
+        <translation type="obsolete">Кут повороту</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Коефіцієнт:</translation>
+        <translation type="obsolete">Коефіцієнт:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Коефіцієнт масштабування</translation>
+        <translation type="obsolete">Коефіцієнт масштабування</translation>
     </message>
 </context>
 <context>
@@ -8064,184 +8181,184 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LineAngleOptions</name>
     <message>
         <source>Line Angle Options</source>
-        <translation>Параметри лінії під заданим кутом</translation>
+        <translation type="obsolete">Параметри лінії під заданим кутом</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Кут:</translation>
+        <translation type="obsolete">Кут:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Кут лінії</translation>
+        <translation type="obsolete">Кут лінії</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Довжина:</translation>
+        <translation type="obsolete">Довжина:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Довжина лінії</translation>
+        <translation type="obsolete">Довжина лінії</translation>
     </message>
     <message>
         <source>Snap Point:</source>
-        <translation>Точка прив’язки:</translation>
+        <translation type="obsolete">Точка прив’язки:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Початок</translation>
+        <translation type="obsolete">Початок</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Середина</translation>
+        <translation type="obsolete">Середина</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Кінець</translation>
+        <translation type="obsolete">Кінець</translation>
     </message>
 </context>
 <context>
     <name>QG_LineBisectorOptions</name>
     <message>
         <source>Line Bisector Options</source>
-        <translation>Параметри бісектриси</translation>
+        <translation type="obsolete">Параметри бісектриси</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Довжина:</translation>
+        <translation type="obsolete">Довжина:</translation>
     </message>
     <message>
         <source>Length of bisector</source>
-        <translation>Довжина бісектрісси</translation>
+        <translation type="obsolete">Довжина бісектрісси</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Кількість:</translation>
+        <translation type="obsolete">Кількість:</translation>
     </message>
     <message>
         <source>Number of bisectors to create</source>
-        <translation>Кількість створених бісектрис</translation>
+        <translation type="obsolete">Кількість створених бісектрис</translation>
     </message>
 </context>
 <context>
     <name>QG_LineOptions</name>
     <message>
         <source>Line Options</source>
-        <translation>Параметри лінії</translation>
+        <translation type="obsolete">Параметри лінії</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Закрити</translation>
+        <translation type="obsolete">Закрити</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Скасувати</translation>
+        <translation type="obsolete">Скасувати</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
-        <translation>Створити замкнений контур з існуючих ліній</translation>
+        <translation type="obsolete">Створити замкнений контур з існуючих ліній</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
-        <translation>Скасувати останню накреслену лінію</translation>
+        <translation type="obsolete">Скасувати останню накреслену лінію</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
-        <translation>Повторити останню накреслену лінію</translation>
+        <translation type="obsolete">Повторити останню накреслену лінію</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Повторити</translation>
+        <translation type="obsolete">Повторити</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
-        <translation>Параметри паралельної лінії</translation>
+        <translation type="obsolete">Параметри паралельної лінії</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Відстань:</translation>
+        <translation type="obsolete">Відстань:</translation>
     </message>
     <message>
         <source>Distance to original entity</source>
-        <translation>Відстань до вихідного об’єкту</translation>
+        <translation type="obsolete">Відстань до вихідного об’єкту</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Кількість:</translation>
+        <translation type="obsolete">Кількість:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Кількість створених паралельних ліній</translation>
+        <translation type="obsolete">Кількість створених паралельних ліній</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation>Параметри паралельної лінії через точку</translation>
+        <translation type="obsolete">Параметри паралельної лінії через точку</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Кількість:</translation>
+        <translation type="obsolete">Кількість:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Кількість створених паралельних ліній</translation>
+        <translation type="obsolete">Кількість створених паралельних ліній</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygon2Options</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Параметри багатокутника</translation>
+        <translation type="obsolete">Параметри багатокутника</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Кількість:</translation>
+        <translation type="obsolete">Кількість:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Кількість сторін</translation>
+        <translation type="obsolete">Кількість сторін</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygonOptions</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Параметри багатокутника</translation>
+        <translation type="obsolete">Параметри багатокутника</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Кількість:</translation>
+        <translation type="obsolete">Кількість:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Кількість сторін</translation>
+        <translation type="obsolete">Кількість сторін</translation>
     </message>
 </context>
 <context>
     <name>QG_LineRelAngleOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Параметри лінії під відносним кутом</translation>
+        <translation type="obsolete">Параметри лінії під відносним кутом</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Кут:</translation>
+        <translation type="obsolete">Кут:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Кут лінії</translation>
+        <translation type="obsolete">Кут лінії</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Довжина:</translation>
+        <translation type="obsolete">Довжина:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Довжина лінії</translation>
+        <translation type="obsolete">Довжина лінії</translation>
     </message>
 </context>
 <context>
@@ -8367,30 +8484,30 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_MTextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation>Параметри тексту</translation>
+        <translation type="obsolete">Параметри тексту</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>Текст:</translation>
+        <translation type="obsolete">Текст:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Кут:</translation>
+        <translation type="obsolete">Кут:</translation>
     </message>
 </context>
 <context>
     <name>QG_ModifyOffsetOptions</name>
     <message>
         <source>Modify Offset Options</source>
-        <translation>Змінити параметри зміщення</translation>
+        <translation type="obsolete">Змінити параметри зміщення</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Відстань:</translation>
+        <translation type="obsolete">Відстань:</translation>
     </message>
     <message>
         <source>Offset from original entity</source>
-        <translation>Зсув від вихідного об’єкту</translation>
+        <translation type="obsolete">Зсув від вихідного об’єкту</translation>
     </message>
 </context>
 <context>
@@ -8424,45 +8541,45 @@ p, li { white-space: pre-wrap; }
     <name>QG_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
-        <translation>Параметри зсуву/обертання</translation>
+        <translation type="obsolete">Параметри зсуву/обертання</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Кут:</translation>
+        <translation type="obsolete">Кут:</translation>
     </message>
 </context>
 <context>
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation>Колір лінії</translation>
+        <translation type="obsolete">Колір лінії</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation>Товщина лінії</translation>
+        <translation type="obsolete">Товщина лінії</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation>Тип лінії</translation>
+        <translation type="obsolete">Тип лінії</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Параметри лінії під відносним кутом</translation>
+        <translation type="obsolete">Параметри лінії під відносним кутом</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Проміжок: </translation>
+        <translation type="obsolete">Проміжок: </translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation>Відстань від базової ламаної</translation>
+        <translation type="obsolete">Відстань від базової ламаної</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation>Копій: </translation>
+        <translation type="obsolete">Копій: </translation>
     </message>
 </context>
 <context>
@@ -8470,15 +8587,15 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Polyline Options</source>
         <translatorcomment>Параметри полілінії</translatorcomment>
-        <translation>Параметри ламаної</translation>
+        <translation type="obsolete">Параметри ламаної</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Закрити</translation>
+        <translation type="obsolete">Закрити</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Скасувати</translation>
+        <translation type="obsolete">Скасувати</translation>
     </message>
     <message>
         <source>Arc</source>
@@ -8486,62 +8603,66 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Радіус:</translation>
+        <translation type="obsolete">Радіус:</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Лінія</translation>
+        <translation type="obsolete">Лінія</translation>
     </message>
     <message>
         <source>Tangential</source>
-        <translation>Тангенціальний</translation>
+        <translation type="obsolete">Тангенціальний</translation>
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation>Радіус дотичної</translation>
+        <translation type="obsolete">Радіус дотичної</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Кут</translation>
+        <translation type="obsolete">Кут</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Кут:</translation>
+        <translation type="obsolete">Кут:</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>За годинниковою стрілкою</translation>
+        <translation type="obsolete">За годинниковою стрілкою</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation>Проти годинникової стрілки</translation>
+        <translation type="obsolete">Проти годинникової стрілки</translation>
+    </message>
+    <message>
+        <source>wrong action type</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_PrintPreviewOptions</name>
     <message>
         <source>Print Preview Options</source>
-        <translation>Параметри попереднього перегляду</translation>
+        <translation type="obsolete">Параметри попереднього перегляду</translation>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation>Переключити режим чорний/білий</translation>
+        <translation type="obsolete">Переключити режим чорний/білий</translation>
     </message>
     <message>
         <source>Center to page</source>
-        <translation>По центру сторінки</translation>
+        <translation type="obsolete">По центру сторінки</translation>
     </message>
     <message>
         <source>Fit to page</source>
-        <translation>Вписати в сторінку</translation>
+        <translation type="obsolete">Вписати в сторінку</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Масштаб друку зафіксований на поточному значенні&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Масштаб друку зафіксований на поточному значенні&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>fixed</source>
-        <translation>зафіксований</translation>
+        <translation type="obsolete">зафіксований</translation>
     </message>
 </context>
 <context>
@@ -8552,26 +8673,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="unfinished">Відкриття нещодавно редагованого файлу…</translation>
+        <translation type="obsolete">Відкриття нещодавно редагованого файлу…</translation>
     </message>
 </context>
 <context>
     <name>QG_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation>Параметри округлення</translation>
+        <translation type="obsolete">Параметри округлення</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Усікти</translation>
+        <translation type="obsolete">Усікти</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Увімкніть, щоб усікти обидві лінії при округленні</translation>
+        <translation type="obsolete">Увімкніть, щоб усікти обидві лінії при округленні</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Радіус:</translation>
+        <translation type="obsolete">Радіус:</translation>
     </message>
 </context>
 <context>
@@ -8625,26 +8746,26 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Параметри прив’язки на відстані</translation>
+        <translation type="obsolete">Параметри прив’язки на відстані</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Відстань:</translation>
+        <translation type="obsolete">Відстань:</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Параметри відстані прив’язки</translation>
+        <translation type="obsolete">Параметри відстані прив’язки</translation>
     </message>
     <message>
         <source>Middle Points:</source>
-        <translation>Середніх точок: </translation>
+        <translation type="obsolete">Середніх точок: </translation>
     </message>
     <message>
         <source>Number of equidistant division points</source>
-        <translation>Кількість точок, що розділяють криву на рівні відрізки</translation>
+        <translation type="obsolete">Кількість точок, що розділяють криву на рівні відрізки</translation>
     </message>
 </context>
 <context>
@@ -8762,11 +8883,11 @@ p, li { white-space: pre-wrap; }
     <name>QG_SplineOptions</name>
     <message>
         <source>Spline Options</source>
-        <translation>Параметри сплайну</translation>
+        <translation type="obsolete">Параметри сплайну</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation>Ступінь:</translation>
+        <translation type="obsolete">Ступінь:</translation>
     </message>
     <message>
         <source>1</source>
@@ -8782,37 +8903,37 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Closed</source>
-        <translation>Закрито</translation>
+        <translation type="obsolete">Закрито</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Скасувати</translation>
+        <translation type="obsolete">Скасувати</translation>
     </message>
 </context>
 <context>
     <name>QG_TextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation>Параметри тексту</translation>
+        <translation type="obsolete">Параметри тексту</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>Текст:</translation>
+        <translation type="obsolete">Текст:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Кут:</translation>
+        <translation type="obsolete">Кут:</translation>
     </message>
 </context>
 <context>
     <name>QG_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation>Параметри усікання на величину</translation>
+        <translation type="obsolete">Параметри усікання на величину</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Відстань. Від’ємні значення для відсікання, позитивні для витягування. </translation>
+        <translation type="obsolete">Відстань. Від’ємні значення для відсікання, позитивні для витягування. </translation>
     </message>
     <message>
         <source>Amount:</source>
@@ -8820,15 +8941,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Length:</source>
-        <translation>Довжина: </translation>
+        <translation type="obsolete">Довжина: </translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>Відстань. Негативні значення для обрізки, позитивні для подовження. Негативний знак не враховується, коли встановлена ​​остаточна довжина відрізка.</translation>
+        <translation type="obsolete">Відстань. Негативні значення для обрізки, позитивні для подовження. Негативний знак не враховується, коли встановлена ​​остаточна довжина відрізка.</translation>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>Використовувати введену довжину як остаточну довжину відрізка після обрізки, замість розміру збільшення.</translation>
+        <translation type="obsolete">Використовувати введену довжину як остаточну довжину відрізка після обрізки, замість розміру збільшення.</translation>
     </message>
 </context>
 <context>
@@ -10518,6 +10639,18 @@ Continue?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -13297,11 +13430,15 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a line, arc or polyline.</source>
-        <translation>Об&apos;єкт повинен бути лінією, дугою або ламаною.</translation>
+        <translation type="obsolete">Об&apos;єкт повинен бути лінією, дугою або ламаною.</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
         <translation>Об&apos;єкт не може бути замкнутою ламаною.</translation>
+    </message>
+    <message>
+        <source>Polyline created</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -13390,6 +13527,14 @@ Continue?</source>
     </message>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in Black/White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -14074,6 +14219,651 @@ Continue?</source>
         <source>row</source>
         <comment>row</comment>
         <translation type="obsolete">рядок</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation type="unfinished">Параметри дуги</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="unfinished">Проти годинникової стрілки</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">За годинниковою стрілкою</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcTangentialOptions</name>
+    <message>
+        <source>Tangential Arc Options</source>
+        <translation type="unfinished">Тангенціальні параметри дуги</translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="unfinished">Радіус дотичної дуги</translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation type="unfinished">Повний стягуючий кут дотичної дуги</translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished">Радіус</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished">Кут</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_BevelOptions</name>
+    <message>
+        <source>Bevel Options</source>
+        <translation type="unfinished">Параметри фаски</translation>
+    </message>
+    <message>
+        <source>Check to trim both entities to the bevel</source>
+        <translation type="unfinished">Позначте, щоб усікти обидва об’єкти до фаски</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length 1:</source>
+        <translation type="unfinished">Довжина 1:</translation>
+    </message>
+    <message>
+        <source>Length 2:</source>
+        <translation type="unfinished">Довжина 2:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="unfinished">Параметри кола</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleTan2Options</name>
+    <message>
+        <source>Circle Tangential2 Options</source>
+        <translation type="unfinished">Параметри кола, дотичного до двох об’єктів</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Радіус дотичного кола&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius of tangential circle</source>
+        <translation type="unfinished">Радіус дотичного кола</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimLinearOptions</name>
+    <message>
+        <source>Linear Dimension Options</source>
+        <translation type="unfinished">Параметри лінійного розміру</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimOptions</name>
+    <message>
+        <source>Dimension Options</source>
+        <translation type="unfinished">Параметри розміру</translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="unfinished">Мітка:</translation>
+    </message>
+    <message utf8="true">
+        <source>⌀</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>°</source>
+        <translation type="unfinished">°</translation>
+    </message>
+    <message utf8="true">
+        <source>±</source>
+        <translation type="unfinished">±</translation>
+    </message>
+    <message utf8="true">
+        <source>π</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>×</source>
+        <translation type="unfinished">×</translation>
+    </message>
+    <message utf8="true">
+        <source>÷</source>
+        <translation type="unfinished">÷</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">…</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ImageOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished">Параметри вставки</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Кут повороту</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Коефіцієнт:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Коефіцієнт масштабування</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished">DPI</translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="unfinished">DPI зображення</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_InsertOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished">Параметри вставки</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Кут повороту</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Коефіцієнт:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Коефіцієнт масштабування</translation>
+    </message>
+    <message>
+        <source>Array:</source>
+        <translation type="unfinished">Масив:</translation>
+    </message>
+    <message>
+        <source>Number of Columns</source>
+        <translation type="unfinished">Кількість стовпців</translation>
+    </message>
+    <message>
+        <source>Number of Rows</source>
+        <translation type="unfinished">Число рядів</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Column Spacing</source>
+        <translation type="unfinished">Проміжок між стовпцями:</translation>
+    </message>
+    <message>
+        <source>Row Spacing</source>
+        <translation type="unfinished">Відстань між рядами:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LibraryInsertOptions</name>
+    <message>
+        <source>Library Insert Options</source>
+        <translation type="unfinished">Параметри вставки бібліотечного елемента</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Кут повороту</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Коефіцієнт:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Коефіцієнт масштабування</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineAngleOptions</name>
+    <message>
+        <source>Line Angle Options</source>
+        <translation type="unfinished">Параметри лінії під заданим кутом</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished">Кут лінії</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Довжина лінії</translation>
+    </message>
+    <message>
+        <source>Snap Point:</source>
+        <translation type="unfinished">Точка прив’язки:</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished">Початок</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">Середина</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="unfinished">Кінець</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineBisectorOptions</name>
+    <message>
+        <source>Line Bisector Options</source>
+        <translation type="unfinished">Параметри бісектриси</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of bisector</source>
+        <translation type="unfinished">Довжина бісектрісси</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of bisectors to create</source>
+        <translation type="unfinished">Кількість створених бісектрис</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineOptions</name>
+    <message>
+        <source>Line Options</source>
+        <translation type="unfinished">Параметри лінії</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation type="unfinished">Створити замкнений контур з існуючих ліній</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Закрити</translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="unfinished">Скасувати останню накреслену лінію</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Скасувати</translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation type="unfinished">Повторити останню накреслену лінію</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Повторити</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelOptions</name>
+    <message>
+        <source>Line Parallel Options</source>
+        <translation type="unfinished">Параметри паралельної лінії</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Відстань:</translation>
+    </message>
+    <message>
+        <source>Distance to original entity</source>
+        <translation type="unfinished">Відстань до вихідного об’єкту</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished">Кількість створених паралельних ліній</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelThroughOptions</name>
+    <message>
+        <source>Line Parallel Through Options</source>
+        <translation type="unfinished">Параметри паралельної лінії через точку</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished">Кількість створених паралельних ліній</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygon2Options</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished">Параметри багатокутника</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished">Кількість сторін</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygonOptions</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished">Параметри багатокутника</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished">Кількість сторін</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineRelAngleOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Параметри лінії під відносним кутом</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished">Кут лінії</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Довжина лінії</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Параметри тексту</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Текст:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ModifyOffsetOptions</name>
+    <message>
+        <source>Modify Offset Options</source>
+        <translation type="unfinished">Змінити параметри зміщення</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Відстань:</translation>
+    </message>
+    <message>
+        <source>Offset from original entity</source>
+        <translation type="unfinished">Зсув від вихідного об’єкту</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MoveRotateOptions</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation type="unfinished">Параметри зсуву/обертання</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PolylineOptions</name>
+    <message>
+        <source>Polyline Options</source>
+        <translation type="unfinished">Параметри ламаної</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Закрити</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Скасувати</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Лінія</translation>
+    </message>
+    <message>
+        <source>Tangential</source>
+        <translation type="unfinished">Тангенціальний</translation>
+    </message>
+    <message>
+        <source>Tan Radius</source>
+        <translation type="unfinished">Радіус дотичної</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished">Кут</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Counter Clockwise</source>
+        <translation type="unfinished">Проти годинникової стрілки</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">За годинниковою стрілкою</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PrintPreviewOptions</name>
+    <message>
+        <source>Print Preview Options</source>
+        <translation type="unfinished">Параметри попереднього перегляду</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Масштаб друку зафіксований на поточному значенні&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>fixed</source>
+        <translation type="unfinished">зафіксований</translation>
+    </message>
+    <message>
+        <source>Toggle Black / White mode</source>
+        <translation type="unfinished">Переключити режим чорний/білий</translation>
+    </message>
+    <message>
+        <source>Center to page</source>
+        <translation type="unfinished">По центру сторінки</translation>
+    </message>
+    <message>
+        <source>Fit to page</source>
+        <translation type="unfinished">Вписати в сторінку</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_RoundOptions</name>
+    <message>
+        <source>Round Options</source>
+        <translation type="unfinished">Параметри округлення</translation>
+    </message>
+    <message>
+        <source>Check to trim both edges to the rounding</source>
+        <translation type="unfinished">Увімкніть, щоб усікти обидві лінії при округленні</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapDistOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Відстань:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation type="unfinished">Середніх точок: </translation>
+    </message>
+    <message>
+        <source>Number of equidistant division points</source>
+        <translation type="unfinished">Кількість точок, що розділяють криву на рівні відрізки</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SplineOptions</name>
+    <message>
+        <source>Spline Options</source>
+        <translation type="unfinished">Параметри сплайну</translation>
+    </message>
+    <message>
+        <source>Degree:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Скасувати</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Параметри тексту</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Текст:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TrimAmountOptions</name>
+    <message>
+        <source>Trim Amount Options</source>
+        <translation type="unfinished">Параметри усікання на величину</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending.</source>
+        <translation type="unfinished">Відстань. Від’ємні значення для відсікання, позитивні для витягування. </translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation type="unfinished">Відстань. Негативні значення для обрізки, позитивні для подовження. Негативний знак не враховується, коли встановлена ​​остаточна довжина відрізка.</translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation type="unfinished">Використовувати введену довжину як остаточну довжину відрізка після обрізки, замість розміру збільшення.</translation>
     </message>
 </context>
 </TS>

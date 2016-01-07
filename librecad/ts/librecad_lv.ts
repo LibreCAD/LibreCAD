@@ -2,6 +2,37 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="lv">
 <context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Slānis:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Ģeometrija</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>2 Points, Radius</source>
@@ -514,7 +545,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     </message>
     <message>
         <source>set to bottom</source>
-        <translation type="unfinished">iestatīt uz apakšu</translation>
+        <translation type="obsolete">iestatīt uz apakšu</translation>
     </message>
     <message>
         <source>lower after entity</source>
@@ -522,7 +553,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     </message>
     <message>
         <source>lower over entity</source>
-        <translation type="unfinished">pazemināt virs objekta</translation>
+        <translation type="obsolete">pazemināt virs objekta</translation>
     </message>
     <message>
         <source>raise over entity</source>
@@ -534,7 +565,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     </message>
     <message>
         <source>set to top</source>
-        <translation type="unfinished">iestatīt uz virspusi</translation>
+        <translation type="obsolete">iestatīt uz virspusi</translation>
     </message>
     <message>
         <source>&amp;Show all</source>
@@ -622,11 +653,11 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     </message>
     <message>
         <source>Open IDE</source>
-        <translation type="unfinished">Atvērt IDE</translation>
+        <translation type="obsolete">Atvērt IDE</translation>
     </message>
     <message>
         <source>Run Script..</source>
-        <translation type="unfinished">Palaist skriptu...</translation>
+        <translation type="obsolete">Palaist skriptu...</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
@@ -766,6 +797,34 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
         <source>Focus on &amp;Command Line</source>
         <translation type="unfinished">Fokusēties uz &amp;komandrindu</translation>
     </message>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished">Augšējais</translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Floating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -793,6 +852,33 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     </message>
 </context>
 <context>
+    <name>LC_WidgetOptionsDialog</name>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LG_DimzerosBox</name>
     <message>
         <source>select:</source>
@@ -816,6 +902,25 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     </message>
 </context>
 <context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Līnijas relatīvā leņķa opcijas</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Atstatums:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished">Attālums no sākotnējās lauztās līnijas</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished">Kopijas:</translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -830,7 +935,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Specify a point</source>
-        <translation>Norādiet punktu</translation>
+        <translation type="obsolete">Norādiet punktu</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -920,7 +1025,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     </message>
     <message>
         <source>&amp;Scripts</source>
-        <translation>&amp;Skripti</translation>
+        <translation type="obsolete">&amp;Skripti</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -952,7 +1057,7 @@ attālums starp punktiem=%2 ir lielāks nekā diametrs=%3</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="obsolete">Atver nesenu datni...</translation>
+        <translation type="unfinished">Atver nesenu datni...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -1072,11 +1177,11 @@ Pārbaudiet tiesības.</translation>
     </message>
     <message>
         <source>Running script &apos;%1&apos;</source>
-        <translation>Darbina skriptu “%1”</translation>
+        <translation type="obsolete">Darbina skriptu “%1”</translation>
     </message>
     <message>
         <source>Inserting block &apos;%1&apos;</source>
-        <translation>Ievieto bloku “%1”</translation>
+        <translation type="obsolete">Ievieto bloku “%1”</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -1357,11 +1462,11 @@ Lūdzu, pārbaudiet, vai tā eksistē un vai ir pareizas atļaujas.</translation
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>DockWidgets</source>
+        <source>&amp;Dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Dockwidgets</source>
+        <source>Dock Areas</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1484,63 +1589,63 @@ p, li { white-space: pre-wrap; }
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation>Loka opcijas</translation>
+        <translation type="obsolete">Loka opcijas</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>Pulksteņrādītāja virzienā</translation>
+        <translation type="obsolete">Pulksteņrādītāja virzienā</translation>
     </message>
     <message>
         <source>Counterclockwise</source>
-        <translation>Pretēji pulksteņrādītāja virzienam</translation>
+        <translation type="obsolete">Pretēji pulksteņrādītāja virzienam</translation>
     </message>
 </context>
 <context>
     <name>QG_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation>Pieskares loka opcijas</translation>
+        <translation type="obsolete">Pieskares loka opcijas</translation>
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation>Pieskares loka rādiuss</translation>
+        <translation type="obsolete">Pieskares loka rādiuss</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>Pieskares loka kopējais pretnostatītais leņķis</translation>
+        <translation type="obsolete">Pieskares loka kopējais pretnostatītais leņķis</translation>
     </message>
     <message>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Rādiuss</translation>
+        <translation type="obsolete">Rādiuss</translation>
     </message>
     <message>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Leņķis</translation>
+        <translation type="obsolete">Leņķis</translation>
     </message>
 </context>
 <context>
     <name>QG_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation>Slīpuma opcijas</translation>
+        <translation type="obsolete">Slīpuma opcijas</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Īsināt</translation>
+        <translation type="obsolete">Īsināt</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Atzīmējiet, lai īsinātu abus objektus uz slīpumu</translation>
+        <translation type="obsolete">Atzīmējiet, lai īsinātu abus objektus uz slīpumu</translation>
     </message>
     <message>
         <source>Length 1:</source>
-        <translation>Garums 1:</translation>
+        <translation type="obsolete">Garums 1:</translation>
     </message>
     <message>
         <source>Length 2:</source>
-        <translation>Garums 2:</translation>
+        <translation type="obsolete">Garums 2:</translation>
     </message>
 </context>
 <context>
@@ -2298,30 +2403,30 @@ p, li { white-space: pre-wrap; }
     <name>QG_CircleOptions</name>
     <message>
         <source>Circle Options</source>
-        <translation>Riņķu opcijas</translation>
+        <translation type="obsolete">Riņķu opcijas</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Rādiuss:</translation>
+        <translation type="obsolete">Rādiuss:</translation>
     </message>
 </context>
 <context>
     <name>QG_CircleTan2Options</name>
     <message>
         <source>Circle Tangential2 Options</source>
-        <translation>Riņķa Pieskares2 opcijas</translation>
+        <translation type="obsolete">Riņķa Pieskares2 opcijas</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rādiuss zīmējamajam  pieskares riņķim &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rādiuss zīmējamajam  pieskares riņķim &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Rādiuss:</translation>
+        <translation type="obsolete">Rādiuss:</translation>
     </message>
     <message>
         <source>Radius of tangential circle</source>
-        <translation>Pieskares riņķa rādiuss</translation>
+        <translation type="obsolete">Pieskares riņķa rādiuss</translation>
     </message>
 </context>
 <context>
@@ -2372,7 +2477,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Others..</source>
-        <translation>Citas krāsas..</translation>
+        <translation type="obsolete">Citas krāsas..</translation>
     </message>
     <message>
         <source>Unchanged</source>
@@ -2405,6 +2510,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Dark Gray</source>
         <translation>Tumši pelēks</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2480,22 +2589,22 @@ p, li { white-space: pre-wrap; }
     <name>QG_DimLinearOptions</name>
     <message>
         <source>Linear Dimension Options</source>
-        <translation>Lineārās dimensijas opcijas</translation>
+        <translation type="obsolete">Lineārās dimensijas opcijas</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Leņķis:</translation>
+        <translation type="obsolete">Leņķis:</translation>
     </message>
 </context>
 <context>
     <name>QG_DimOptions</name>
     <message>
         <source>Dimension Options</source>
-        <translation>Dimensijas opcijas</translation>
+        <translation type="obsolete">Dimensijas opcijas</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation>Etiķete:</translation>
+        <translation type="obsolete">Etiķete:</translation>
     </message>
     <message utf8="true">
         <source>ø</source>
@@ -2503,11 +2612,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>°</source>
-        <translation>°</translation>
+        <translation type="obsolete">°</translation>
     </message>
     <message utf8="true">
         <source>±</source>
-        <translation>±</translation>
+        <translation type="obsolete">±</translation>
     </message>
     <message utf8="true">
         <source>¶</source>
@@ -2515,23 +2624,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>×</source>
-        <translation>×</translation>
+        <translation type="obsolete">×</translation>
     </message>
     <message utf8="true">
         <source>÷</source>
-        <translation>÷</translation>
+        <translation type="obsolete">÷</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="obsolete">...</translation>
     </message>
     <message utf8="true">
         <source>⌀</source>
-        <translation>⌀</translation>
+        <translation type="obsolete">⌀</translation>
     </message>
     <message utf8="true">
         <source>π</source>
-        <translation>π</translation>
+        <translation type="obsolete">π</translation>
     </message>
 </context>
 <context>
@@ -4492,10 +4601,6 @@ Lūdzu, izvēlieties mērvienības, kuras izmantot jauniem zīmējumiem, kā ar�
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Snap indicator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Crosshair</source>
         <translation type="unfinished">Krustiņš</translation>
     </message>
@@ -4509,14 +4614,6 @@ Lūdzu, izvēlieties mērvienības, kuras izmantot jauniem zīmējumiem, kā ar�
     </message>
     <message>
         <source>Layer/ Block Selection:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4549,6 +4646,46 @@ Lūdzu, izvēlieties mērvienības, kuras izmantot jauniem zīmējumiem, kā ar�
     </message>
     <message>
         <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scrollbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">Riņķis</translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished">Punkts</translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide cursor when snapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start in tab mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4814,19 +4951,19 @@ Lūdzu, izvēlieties mērvienības, kuras izmantot jauniem zīmējumiem, kā ar�
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;Labi</translation>
+        <translation type="obsolete">&amp;Labi</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Atcelt</translation>
+        <translation type="obsolete">Atcelt</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -5556,31 +5693,31 @@ Lūdzu, izvēlieties mērvienības, kuras izmantot jauniem zīmējumiem, kā ar�
     <name>QG_ImageOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Ievietošanas opcijas</translation>
+        <translation type="obsolete">Ievietošanas opcijas</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Leņķis:</translation>
+        <translation type="obsolete">Leņķis:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Rotācijas leņķis</translation>
+        <translation type="obsolete">Rotācijas leņķis</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Koeficients:</translation>
+        <translation type="obsolete">Koeficients:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Mēroga koeficients</translation>
+        <translation type="obsolete">Mēroga koeficients</translation>
     </message>
     <message>
         <source>DPI</source>
-        <translation>DPI</translation>
+        <translation type="obsolete">DPI</translation>
     </message>
     <message>
         <source>DPI of Image</source>
-        <translation>Attēla DPI</translation>
+        <translation type="obsolete">Attēla DPI</translation>
     </message>
 </context>
 <context>
@@ -5726,47 +5863,47 @@ Lūdzu, izvēlieties mērvienības, kuras izmantot jauniem zīmējumiem, kā ar�
     <name>QG_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Ievietošanas opcijas</translation>
+        <translation type="obsolete">Ievietošanas opcijas</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Leņķis:</translation>
+        <translation type="obsolete">Leņķis:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Rotācijas leņķis</translation>
+        <translation type="obsolete">Rotācijas leņķis</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Koeficients:</translation>
+        <translation type="obsolete">Koeficients:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Mēroga koeficients</translation>
+        <translation type="obsolete">Mēroga koeficients</translation>
     </message>
     <message>
         <source>Array:</source>
-        <translation>Masīvs:</translation>
+        <translation type="obsolete">Masīvs:</translation>
     </message>
     <message>
         <source>Number of Columns</source>
-        <translation>Kolonnu skaits</translation>
+        <translation type="obsolete">Kolonnu skaits</translation>
     </message>
     <message>
         <source>Number of Rows</source>
-        <translation>Rindu skaits</translation>
+        <translation type="obsolete">Rindu skaits</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Atstatums:</translation>
+        <translation type="obsolete">Atstatums:</translation>
     </message>
     <message>
         <source>Column Spacing</source>
-        <translation>Kolonnu atstarpe</translation>
+        <translation type="obsolete">Kolonnu atstarpe</translation>
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation>Rindu atstarpe</translation>
+        <translation type="obsolete">Rindu atstarpe</translation>
     </message>
 </context>
 <context>
@@ -5886,23 +6023,23 @@ Konstruēšanas slāņa saturam nevajadzētu parādīties izdrukā.</translation
     <name>QG_LibraryInsertOptions</name>
     <message>
         <source>Library Insert Options</source>
-        <translation>Bibliotēkas ievietošanas opcijas</translation>
+        <translation type="obsolete">Bibliotēkas ievietošanas opcijas</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Leņķis:</translation>
+        <translation type="obsolete">Leņķis:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Rotācijas leņķis</translation>
+        <translation type="obsolete">Rotācijas leņķis</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Koeficients:</translation>
+        <translation type="obsolete">Koeficients:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Mēroga koeficients</translation>
+        <translation type="obsolete">Mēroga koeficients</translation>
     </message>
 </context>
 <context>
@@ -5920,184 +6057,184 @@ Konstruēšanas slāņa saturam nevajadzētu parādīties izdrukā.</translation
     <name>QG_LineAngleOptions</name>
     <message>
         <source>Line Angle Options</source>
-        <translation>Līnijas leņķa opcijas</translation>
+        <translation type="obsolete">Līnijas leņķa opcijas</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Leņķis:</translation>
+        <translation type="obsolete">Leņķis:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Līnijas leņķis</translation>
+        <translation type="obsolete">Līnijas leņķis</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Garums:</translation>
+        <translation type="obsolete">Garums:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Līnijas garums</translation>
+        <translation type="obsolete">Līnijas garums</translation>
     </message>
     <message>
         <source>Snap Point:</source>
-        <translation>Palīgpunkts:</translation>
+        <translation type="obsolete">Palīgpunkts:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Sākums</translation>
+        <translation type="obsolete">Sākums</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Vidus</translation>
+        <translation type="obsolete">Vidus</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Beigas</translation>
+        <translation type="obsolete">Beigas</translation>
     </message>
 </context>
 <context>
     <name>QG_LineBisectorOptions</name>
     <message>
         <source>Line Bisector Options</source>
-        <translation>Līnijas bisektrises opcijas</translation>
+        <translation type="obsolete">Līnijas bisektrises opcijas</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Garums:</translation>
+        <translation type="obsolete">Garums:</translation>
     </message>
     <message>
         <source>Length of bisector</source>
-        <translation>Bisektrises garums</translation>
+        <translation type="obsolete">Bisektrises garums</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Skaits:</translation>
+        <translation type="obsolete">Skaits:</translation>
     </message>
     <message>
         <source>Number of bisectors to create</source>
-        <translation>Veidojamo bisektrišu skaits</translation>
+        <translation type="obsolete">Veidojamo bisektrišu skaits</translation>
     </message>
 </context>
 <context>
     <name>QG_LineOptions</name>
     <message>
         <source>Line Options</source>
-        <translation>Līnijas opcijas</translation>
+        <translation type="obsolete">Līnijas opcijas</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Noslēgt</translation>
+        <translation type="obsolete">Noslēgt</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Atsaukt</translation>
+        <translation type="obsolete">Atsaukt</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
-        <translation>Veidot slēgtu kontūru no zīmētajām līnijām</translation>
+        <translation type="obsolete">Veidot slēgtu kontūru no zīmētajām līnijām</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
-        <translation>Atsaukt pēdējo līnijas zīmēšanu</translation>
+        <translation type="obsolete">Atsaukt pēdējo līnijas zīmēšanu</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
-        <translation>Atcelt pēdējo līnijas zīmēšanas atsaukšanu</translation>
+        <translation type="obsolete">Atcelt pēdējo līnijas zīmēšanas atsaukšanu</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Atatsaukt</translation>
+        <translation type="obsolete">Atatsaukt</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
-        <translation>Paralēlo līniju opcijas</translation>
+        <translation type="obsolete">Paralēlo līniju opcijas</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Attālums:</translation>
+        <translation type="obsolete">Attālums:</translation>
     </message>
     <message>
         <source>Distance to original entity</source>
-        <translation>Attālums līdz sākotnējam objektam</translation>
+        <translation type="obsolete">Attālums līdz sākotnējam objektam</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Skaits:</translation>
+        <translation type="obsolete">Skaits:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Veidojamo paralēlo līniju skaits</translation>
+        <translation type="obsolete">Veidojamo paralēlo līniju skaits</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation>Paralēlo līniju caur opcijas</translation>
+        <translation type="obsolete">Paralēlo līniju caur opcijas</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Skaits:</translation>
+        <translation type="obsolete">Skaits:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Veidojamo paralēlo līniju skaits</translation>
+        <translation type="obsolete">Veidojamo paralēlo līniju skaits</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygon2Options</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Daudzstūra opcijas</translation>
+        <translation type="obsolete">Daudzstūra opcijas</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Skaits:</translation>
+        <translation type="obsolete">Skaits:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Malu skaits</translation>
+        <translation type="obsolete">Malu skaits</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygonOptions</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Daudzstūra opcijas</translation>
+        <translation type="obsolete">Daudzstūra opcijas</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Skaits:</translation>
+        <translation type="obsolete">Skaits:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Malu skaits</translation>
+        <translation type="obsolete">Malu skaits</translation>
     </message>
 </context>
 <context>
     <name>QG_LineRelAngleOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Līnijas relatīvā leņķa opcijas</translation>
+        <translation type="obsolete">Līnijas relatīvā leņķa opcijas</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Leņķis:</translation>
+        <translation type="obsolete">Leņķis:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Līnijas leņķis</translation>
+        <translation type="obsolete">Līnijas leņķis</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Garums:</translation>
+        <translation type="obsolete">Garums:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Līnijas garums</translation>
+        <translation type="obsolete">Līnijas garums</translation>
     </message>
 </context>
 <context>
@@ -6223,30 +6360,30 @@ Konstruēšanas slāņa saturam nevajadzētu parādīties izdrukā.</translation
     <name>QG_MTextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation>Teksta opcijas</translation>
+        <translation type="obsolete">Teksta opcijas</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>Teksts:</translation>
+        <translation type="obsolete">Teksts:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Leņķis:</translation>
+        <translation type="obsolete">Leņķis:</translation>
     </message>
 </context>
 <context>
     <name>QG_ModifyOffsetOptions</name>
     <message>
         <source>Modify Offset Options</source>
-        <translation>Modificēt nobīdes opcijas</translation>
+        <translation type="obsolete">Modificēt nobīdes opcijas</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Attālums:</translation>
+        <translation type="obsolete">Attālums:</translation>
     </message>
     <message>
         <source>Offset from original entity</source>
-        <translation>Nobīde no sākotnējā objekta</translation>
+        <translation type="obsolete">Nobīde no sākotnējā objekta</translation>
     </message>
 </context>
 <context>
@@ -6284,119 +6421,123 @@ p, li { white-space: pre-wrap; }
     <name>QG_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
-        <translation>Pārvietošanas, pagriešanas opcijas</translation>
+        <translation type="obsolete">Pārvietošanas, pagriešanas opcijas</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Leņķis:</translation>
+        <translation type="obsolete">Leņķis:</translation>
     </message>
 </context>
 <context>
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation>Līnijas krāsa</translation>
+        <translation type="obsolete">Līnijas krāsa</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation>Līnijas platums</translation>
+        <translation type="obsolete">Līnijas platums</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation>Līnijas tips</translation>
+        <translation type="obsolete">Līnijas tips</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Līnijas relatīvā leņķa opcijas</translation>
+        <translation type="obsolete">Līnijas relatīvā leņķa opcijas</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Atstatums:</translation>
+        <translation type="obsolete">Atstatums:</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation>Attālums no sākotnējās lauztās līnijas</translation>
+        <translation type="obsolete">Attālums no sākotnējās lauztās līnijas</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation>Kopijas:</translation>
+        <translation type="obsolete">Kopijas:</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation>Lauztas līnijas opcijas</translation>
+        <translation type="obsolete">Lauztas līnijas opcijas</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Noslēgt</translation>
+        <translation type="obsolete">Noslēgt</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Atsaukt</translation>
+        <translation type="obsolete">Atsaukt</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Līnija</translation>
+        <translation type="obsolete">Līnija</translation>
     </message>
     <message>
         <source>Tangential</source>
-        <translation>Pieskare</translation>
+        <translation type="obsolete">Pieskare</translation>
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation>Tan rādiuss</translation>
+        <translation type="obsolete">Tan rādiuss</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Leņķis</translation>
+        <translation type="obsolete">Leņķis</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Rādiuss:</translation>
+        <translation type="obsolete">Rādiuss:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Leņķis:</translation>
+        <translation type="obsolete">Leņķis:</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>Pulksteņrādītāja virzienā</translation>
+        <translation type="obsolete">Pulksteņrādītāja virzienā</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation>Pretēji pulksteņrādītāja virzienam</translation>
+        <translation type="obsolete">Pretēji pulksteņrādītāja virzienam</translation>
+    </message>
+    <message>
+        <source>wrong action type</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_PrintPreviewOptions</name>
     <message>
         <source>Print Preview Options</source>
-        <translation>Drukas priekšskatījuma opcijas</translation>
+        <translation type="obsolete">Drukas priekšskatījuma opcijas</translation>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation>Pārslēgt režīmu “melns / balts”</translation>
+        <translation type="obsolete">Pārslēgt režīmu “melns / balts”</translation>
     </message>
     <message>
         <source>Center to page</source>
-        <translation>Centrēt lappusē</translation>
+        <translation type="obsolete">Centrēt lappusē</translation>
     </message>
     <message>
         <source>Fit to page</source>
-        <translation>Ietilpināt lappusē</translation>
+        <translation type="obsolete">Ietilpināt lappusē</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drukāšanas mērogs ir fiksēts uz pašreizējo vērtību&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drukāšanas mērogs ir fiksēts uz pašreizējo vērtību&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>fixed</source>
-        <translation>fiksēts</translation>
+        <translation type="obsolete">fiksēts</translation>
     </message>
 </context>
 <context>
@@ -6407,26 +6548,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation>Atver nesenu datni...</translation>
+        <translation type="obsolete">Atver nesenu datni...</translation>
     </message>
 </context>
 <context>
     <name>QG_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation>Apaļošanas opcijas</translation>
+        <translation type="obsolete">Apaļošanas opcijas</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Īsināt</translation>
+        <translation type="obsolete">Īsināt</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Atzīmējiet, lai īsinātu abas malas uz apaļošanu</translation>
+        <translation type="obsolete">Atzīmējiet, lai īsinātu abas malas uz apaļošanu</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Rādiuss:</translation>
+        <translation type="obsolete">Rādiuss:</translation>
     </message>
 </context>
 <context>
@@ -6476,26 +6617,26 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Pievilkšanas attāluma opcijas</translation>
+        <translation type="obsolete">Pievilkšanas attāluma opcijas</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Attālums:</translation>
+        <translation type="obsolete">Attālums:</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Pievilkšanas attāluma opcijas</translation>
+        <translation type="obsolete">Pievilkšanas attāluma opcijas</translation>
     </message>
     <message>
         <source>Middle Points:</source>
-        <translation>Viduspunkti:</translation>
+        <translation type="obsolete">Viduspunkti:</translation>
     </message>
     <message>
         <source>Number of equidistant division points</source>
-        <translation>Vienāda attāluma dalījuma punktu skaits</translation>
+        <translation type="obsolete">Vienāda attāluma dalījuma punktu skaits</translation>
     </message>
 </context>
 <context>
@@ -6613,11 +6754,11 @@ p, li { white-space: pre-wrap; }
     <name>QG_SplineOptions</name>
     <message>
         <source>Spline Options</source>
-        <translation>Splainu opcijas</translation>
+        <translation type="obsolete">Splainu opcijas</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation>Pakāpe:</translation>
+        <translation type="obsolete">Pakāpe:</translation>
     </message>
     <message>
         <source>1</source>
@@ -6633,49 +6774,49 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Closed</source>
-        <translation>Aizvērts</translation>
+        <translation type="obsolete">Aizvērts</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Atsaukt</translation>
+        <translation type="obsolete">Atsaukt</translation>
     </message>
 </context>
 <context>
     <name>QG_TextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation>Teksta opcijas</translation>
+        <translation type="obsolete">Teksta opcijas</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>Teksts:</translation>
+        <translation type="obsolete">Teksts:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Leņķis:</translation>
+        <translation type="obsolete">Leņķis:</translation>
     </message>
 </context>
 <context>
     <name>QG_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation>Īsināšanas apjoma opcijas</translation>
+        <translation type="obsolete">Īsināšanas apjoma opcijas</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Attālums. Negatīvas vērtības īsināšanai, pozitīvas vērtības pagarināšanai.</translation>
+        <translation type="obsolete">Attālums. Negatīvas vērtības īsināšanai, pozitīvas vērtības pagarināšanai.</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Garums:</translation>
+        <translation type="obsolete">Garums:</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>Attālums. Negatīvas vērtības īsināšanai, pozitīvas vērtības pagarināšanai. Mīnusa zīme tiek ignorēta, kad īsina uz beigu kopējo garumu.</translation>
+        <translation type="obsolete">Attālums. Negatīvas vērtības īsināšanai, pozitīvas vērtības pagarināšanai. Mīnusa zīme tiek ignorēta, kad īsina uz beigu kopējo garumu.</translation>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>Ievades garums tiek izmantots kā kopējais garums pēc īsināšanas, nevis garuma pieaugums</translation>
+        <translation type="obsolete">Ievades garums tiek izmantots kā kopējais garums pēc īsināšanas, nevis garuma pieaugums</translation>
     </message>
 </context>
 <context>
@@ -8354,6 +8495,18 @@ Turpināt?</translation>
     </message>
     <message>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10994,11 +11147,15 @@ Turpināt?</translation>
     </message>
     <message>
         <source>Entity must be a line, arc or polyline.</source>
-        <translation>Objektam ir jābūt līnijai, lokam vai lauztai līnijai.</translation>
+        <translation type="obsolete">Objektam ir jābūt līnijai, lokam vai lauztai līnijai.</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
         <translation>Objekts nevar būt slēgta lauzta līnija.</translation>
+    </message>
+    <message>
+        <source>Polyline created</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11085,6 +11242,14 @@ Turpināt?</translation>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
         <translation>Izdrukas nobīdes ignorē relatīvo nulli. Ignorē “@”</translation>
+    </message>
+    <message>
+        <source>Printout in Black/White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in color</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12223,6 +12388,651 @@ Turpināt?</translation>
         <source>row</source>
         <comment>row</comment>
         <translation type="obsolete">rinda</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation type="unfinished">Loka opcijas</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="unfinished">Pretēji pulksteņrādītāja virzienam</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">Pulksteņrādītāja virzienā</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcTangentialOptions</name>
+    <message>
+        <source>Tangential Arc Options</source>
+        <translation type="unfinished">Pieskares loka opcijas</translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="unfinished">Pieskares loka rādiuss</translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation type="unfinished">Pieskares loka kopējais pretnostatītais leņķis</translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished">Rādiuss</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished">Leņķis</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_BevelOptions</name>
+    <message>
+        <source>Bevel Options</source>
+        <translation type="unfinished">Slīpuma opcijas</translation>
+    </message>
+    <message>
+        <source>Check to trim both entities to the bevel</source>
+        <translation type="unfinished">Atzīmējiet, lai īsinātu abus objektus uz slīpumu</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished">Īsināt</translation>
+    </message>
+    <message>
+        <source>Length 1:</source>
+        <translation type="unfinished">Garums 1:</translation>
+    </message>
+    <message>
+        <source>Length 2:</source>
+        <translation type="unfinished">Garums 2:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="unfinished">Riņķu opcijas</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Rādiuss:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleTan2Options</name>
+    <message>
+        <source>Circle Tangential2 Options</source>
+        <translation type="unfinished">Riņķa Pieskares2 opcijas</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Rādiuss zīmējamajam  pieskares riņķim &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Rādiuss:</translation>
+    </message>
+    <message>
+        <source>Radius of tangential circle</source>
+        <translation type="unfinished">Pieskares riņķa rādiuss</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimLinearOptions</name>
+    <message>
+        <source>Linear Dimension Options</source>
+        <translation type="unfinished">Lineārās dimensijas opcijas</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Leņķis:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimOptions</name>
+    <message>
+        <source>Dimension Options</source>
+        <translation type="unfinished">Dimensijas opcijas</translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="unfinished">Etiķete:</translation>
+    </message>
+    <message utf8="true">
+        <source>⌀</source>
+        <translation type="unfinished">⌀</translation>
+    </message>
+    <message utf8="true">
+        <source>°</source>
+        <translation type="unfinished">°</translation>
+    </message>
+    <message utf8="true">
+        <source>±</source>
+        <translation type="unfinished">±</translation>
+    </message>
+    <message utf8="true">
+        <source>π</source>
+        <translation type="unfinished">π</translation>
+    </message>
+    <message utf8="true">
+        <source>×</source>
+        <translation type="unfinished">×</translation>
+    </message>
+    <message utf8="true">
+        <source>÷</source>
+        <translation type="unfinished">÷</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ImageOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished">Ievietošanas opcijas</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Leņķis:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Rotācijas leņķis</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Koeficients:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Mēroga koeficients</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished">DPI</translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="unfinished">Attēla DPI</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_InsertOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished">Ievietošanas opcijas</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Leņķis:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Rotācijas leņķis</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Koeficients:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Mēroga koeficients</translation>
+    </message>
+    <message>
+        <source>Array:</source>
+        <translation type="unfinished">Masīvs:</translation>
+    </message>
+    <message>
+        <source>Number of Columns</source>
+        <translation type="unfinished">Kolonnu skaits</translation>
+    </message>
+    <message>
+        <source>Number of Rows</source>
+        <translation type="unfinished">Rindu skaits</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Atstatums:</translation>
+    </message>
+    <message>
+        <source>Column Spacing</source>
+        <translation type="unfinished">Kolonnu atstarpe</translation>
+    </message>
+    <message>
+        <source>Row Spacing</source>
+        <translation type="unfinished">Rindu atstarpe</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LibraryInsertOptions</name>
+    <message>
+        <source>Library Insert Options</source>
+        <translation type="unfinished">Bibliotēkas ievietošanas opcijas</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Leņķis:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Rotācijas leņķis</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Koeficients:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Mēroga koeficients</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineAngleOptions</name>
+    <message>
+        <source>Line Angle Options</source>
+        <translation type="unfinished">Līnijas leņķa opcijas</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Leņķis:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished">Līnijas leņķis</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Garums:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Līnijas garums</translation>
+    </message>
+    <message>
+        <source>Snap Point:</source>
+        <translation type="unfinished">Palīgpunkts:</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished">Sākums</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="unfinished">Beigas</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineBisectorOptions</name>
+    <message>
+        <source>Line Bisector Options</source>
+        <translation type="unfinished">Līnijas bisektrises opcijas</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Garums:</translation>
+    </message>
+    <message>
+        <source>Length of bisector</source>
+        <translation type="unfinished">Bisektrises garums</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Skaits:</translation>
+    </message>
+    <message>
+        <source>Number of bisectors to create</source>
+        <translation type="unfinished">Veidojamo bisektrišu skaits</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineOptions</name>
+    <message>
+        <source>Line Options</source>
+        <translation type="unfinished">Līnijas opcijas</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation type="unfinished">Veidot slēgtu kontūru no zīmētajām līnijām</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Noslēgt</translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="unfinished">Atsaukt pēdējo līnijas zīmēšanu</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Atsaukt</translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation type="unfinished">Atcelt pēdējo līnijas zīmēšanas atsaukšanu</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Atatsaukt</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelOptions</name>
+    <message>
+        <source>Line Parallel Options</source>
+        <translation type="unfinished">Paralēlo līniju opcijas</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Attālums:</translation>
+    </message>
+    <message>
+        <source>Distance to original entity</source>
+        <translation type="unfinished">Attālums līdz sākotnējam objektam</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Skaits:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished">Veidojamo paralēlo līniju skaits</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelThroughOptions</name>
+    <message>
+        <source>Line Parallel Through Options</source>
+        <translation type="unfinished">Paralēlo līniju caur opcijas</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Skaits:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished">Veidojamo paralēlo līniju skaits</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygon2Options</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished">Daudzstūra opcijas</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Skaits:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished">Malu skaits</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygonOptions</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished">Daudzstūra opcijas</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Skaits:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished">Malu skaits</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineRelAngleOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Līnijas relatīvā leņķa opcijas</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Leņķis:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished">Līnijas leņķis</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Garums:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Līnijas garums</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Teksta opcijas</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Teksts:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Leņķis:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ModifyOffsetOptions</name>
+    <message>
+        <source>Modify Offset Options</source>
+        <translation type="unfinished">Modificēt nobīdes opcijas</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Attālums:</translation>
+    </message>
+    <message>
+        <source>Offset from original entity</source>
+        <translation type="unfinished">Nobīde no sākotnējā objekta</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MoveRotateOptions</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation type="unfinished">Pārvietošanas, pagriešanas opcijas</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Leņķis:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PolylineOptions</name>
+    <message>
+        <source>Polyline Options</source>
+        <translation type="unfinished">Lauztas līnijas opcijas</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Noslēgt</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Atsaukt</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Līnija</translation>
+    </message>
+    <message>
+        <source>Tangential</source>
+        <translation type="unfinished">Pieskare</translation>
+    </message>
+    <message>
+        <source>Tan Radius</source>
+        <translation type="unfinished">Tan rādiuss</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished">Leņķis</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Rādiuss:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Leņķis:</translation>
+    </message>
+    <message>
+        <source>Counter Clockwise</source>
+        <translation type="unfinished">Pretēji pulksteņrādītāja virzienam</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">Pulksteņrādītāja virzienā</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PrintPreviewOptions</name>
+    <message>
+        <source>Print Preview Options</source>
+        <translation type="unfinished">Drukas priekšskatījuma opcijas</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Drukāšanas mērogs ir fiksēts uz pašreizējo vērtību&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>fixed</source>
+        <translation type="unfinished">fiksēts</translation>
+    </message>
+    <message>
+        <source>Toggle Black / White mode</source>
+        <translation type="unfinished">Pārslēgt režīmu “melns / balts”</translation>
+    </message>
+    <message>
+        <source>Center to page</source>
+        <translation type="unfinished">Centrēt lappusē</translation>
+    </message>
+    <message>
+        <source>Fit to page</source>
+        <translation type="unfinished">Ietilpināt lappusē</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_RoundOptions</name>
+    <message>
+        <source>Round Options</source>
+        <translation type="unfinished">Apaļošanas opcijas</translation>
+    </message>
+    <message>
+        <source>Check to trim both edges to the rounding</source>
+        <translation type="unfinished">Atzīmējiet, lai īsinātu abas malas uz apaļošanu</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished">Īsināt</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Rādiuss:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapDistOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished">Pievilkšanas attāluma opcijas</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Attālums:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished">Pievilkšanas attāluma opcijas</translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation type="unfinished">Viduspunkti:</translation>
+    </message>
+    <message>
+        <source>Number of equidistant division points</source>
+        <translation type="unfinished">Vienāda attāluma dalījuma punktu skaits</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SplineOptions</name>
+    <message>
+        <source>Spline Options</source>
+        <translation type="unfinished">Splainu opcijas</translation>
+    </message>
+    <message>
+        <source>Degree:</source>
+        <translation type="unfinished">Pakāpe:</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Atsaukt</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Teksta opcijas</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Teksts:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Leņķis:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TrimAmountOptions</name>
+    <message>
+        <source>Trim Amount Options</source>
+        <translation type="unfinished">Īsināšanas apjoma opcijas</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending.</source>
+        <translation type="unfinished">Attālums. Negatīvas vērtības īsināšanai, pozitīvas vērtības pagarināšanai.</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Garums:</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation type="unfinished">Attālums. Negatīvas vērtības īsināšanai, pozitīvas vērtības pagarināšanai. Mīnusa zīme tiek ignorēta, kad īsina uz beigu kopējo garumu.</translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation type="unfinished">Ievades garums tiek izmantots kā kopējais garums pēc īsināšanas, nevis garuma pieaugums</translation>
     </message>
 </context>
 </TS>

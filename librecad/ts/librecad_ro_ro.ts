@@ -2,6 +2,37 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ro_RO">
 <context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Strat:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometrie</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Inchisa</translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>radius=%1 is too small for points selected
@@ -504,15 +535,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>set to bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>lower after entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>lower over entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -521,10 +544,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>set to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -613,11 +632,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Open IDE</source>
-        <translation type="unfinished">Deschidere IDE</translation>
+        <translation type="obsolete">Deschidere IDE</translation>
     </message>
     <message>
         <source>Run Script..</source>
-        <translation type="unfinished">Rulare script ..</translation>
+        <translation type="obsolete">Rulare script ..</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
@@ -757,6 +776,34 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Focus on &amp;Command Line</source>
         <translation type="unfinished">Cursorul in linia de &amp;Comanda</translation>
     </message>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">Stanga</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Dreapta</translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished">Sus</translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Floating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -784,6 +831,33 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_WidgetOptionsDialog</name>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LG_DimzerosBox</name>
     <message>
         <source>select:</source>
@@ -807,6 +881,25 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Spatiere:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished">Distanta de la polilinia originala</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished">Copii:</translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -821,7 +914,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Specify a point</source>
-        <translation>Specificati un punct</translation>
+        <translation type="obsolete">Specificati un punct</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -923,7 +1016,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Scripts</source>
-        <translation>&amp;Script</translation>
+        <translation type="obsolete">&amp;Script</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -955,7 +1048,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="obsolete">Deschiderea unui fisier recent...</translation>
+        <translation type="unfinished">Deschiderea unui fisier recent...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -1145,11 +1238,11 @@ Acum puteti sa va salvati lucrul.</translation>
     </message>
     <message>
         <source>Running script &apos;%1&apos;</source>
-        <translation>Rulare script &apos;%1&apos;</translation>
+        <translation type="obsolete">Rulare script &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Inserting block &apos;%1&apos;</source>
-        <translation>Inserare bloc &apos;%1&apos;</translation>
+        <translation type="obsolete">Inserare bloc &apos;%1&apos;</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -1412,11 +1505,11 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>DockWidgets</source>
+        <source>&amp;Dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Dockwidgets</source>
+        <source>Dock Areas</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1762,11 +1855,11 @@ p, li { white-space: pre-wrap; }
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation>Optiuni pentru Arc</translation>
+        <translation type="obsolete">Optiuni pentru Arc</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>Sens orar</translation>
+        <translation type="obsolete">Sens orar</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
@@ -1774,14 +1867,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Counterclockwise</source>
-        <translation>Sens trigonometric</translation>
+        <translation type="obsolete">Sens trigonometric</translation>
     </message>
 </context>
 <context>
     <name>QG_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation>Optiuni pentru arcul tangential</translation>
+        <translation type="obsolete">Optiuni pentru arcul tangential</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -1789,44 +1882,44 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation>Raza arcului tangential</translation>
+        <translation type="obsolete">Raza arcului tangential</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>Unghiul total de subintindere pentru arcul tangenţial</translation>
+        <translation type="obsolete">Unghiul total de subintindere pentru arcul tangenţial</translation>
     </message>
     <message>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Raza</translation>
+        <translation type="obsolete">Raza</translation>
     </message>
     <message>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Unghiul</translation>
+        <translation type="obsolete">Unghiul</translation>
     </message>
 </context>
 <context>
     <name>QG_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation>Optiuni tesire</translation>
+        <translation type="obsolete">Optiuni tesire</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Taiere</translation>
+        <translation type="obsolete">Taiere</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Verificati ajustarea ambelor entitati la tesire</translation>
+        <translation type="obsolete">Verificati ajustarea ambelor entitati la tesire</translation>
     </message>
     <message>
         <source>Length 1:</source>
-        <translation>Lungime 1:</translation>
+        <translation type="obsolete">Lungime 1:</translation>
     </message>
     <message>
         <source>Length 2:</source>
-        <translation>Lungime 2:</translation>
+        <translation type="obsolete">Lungime 2:</translation>
     </message>
 </context>
 <context>
@@ -2674,30 +2767,18 @@ p, li { white-space: pre-wrap; }
     <name>QG_CircleOptions</name>
     <message>
         <source>Circle Options</source>
-        <translation>Optiuni pentru cerc</translation>
+        <translation type="obsolete">Optiuni pentru cerc</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Raza:</translation>
+        <translation type="obsolete">Raza:</translation>
     </message>
 </context>
 <context>
     <name>QG_CircleTan2Options</name>
     <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Radius:</source>
-        <translation type="unfinished">Raza:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Raza:</translation>
     </message>
 </context>
 <context>
@@ -2748,7 +2829,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Others..</source>
-        <translation>Altele..</translation>
+        <translation type="obsolete">Altele..</translation>
     </message>
     <message>
         <source>Unchanged</source>
@@ -2781,6 +2862,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Dark Gray</source>
         <translation>Gri inchis</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2848,22 +2933,22 @@ p, li { white-space: pre-wrap; }
     <name>QG_DimLinearOptions</name>
     <message>
         <source>Linear Dimension Options</source>
-        <translation>Optiuni pentru cotare liniara</translation>
+        <translation type="obsolete">Optiuni pentru cotare liniara</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Unghi:</translation>
+        <translation type="obsolete">Unghi:</translation>
     </message>
 </context>
 <context>
     <name>QG_DimOptions</name>
     <message>
         <source>Dimension Options</source>
-        <translation>Optiuni cotare</translation>
+        <translation type="obsolete">Optiuni cotare</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation>Eticheta:</translation>
+        <translation type="obsolete">Eticheta:</translation>
     </message>
     <message utf8="true">
         <source>ø</source>
@@ -2871,11 +2956,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>°</source>
-        <translation>°</translation>
+        <translation type="obsolete">°</translation>
     </message>
     <message utf8="true">
         <source>±</source>
-        <translation>±</translation>
+        <translation type="obsolete">±</translation>
     </message>
     <message utf8="true">
         <source>¶</source>
@@ -2883,23 +2968,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>×</source>
-        <translation>×</translation>
+        <translation type="obsolete">×</translation>
     </message>
     <message utf8="true">
         <source>÷</source>
-        <translation>÷</translation>
+        <translation type="obsolete">÷</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
-    </message>
-    <message utf8="true">
-        <source>⌀</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <source>π</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">...</translation>
     </message>
 </context>
 <context>
@@ -5080,10 +5157,6 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Snap indicator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Crosshair</source>
         <translation type="unfinished">Cursor fir de par</translation>
     </message>
@@ -5097,14 +5170,6 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>Layer/ Block Selection:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5137,6 +5202,46 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scrollbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">Cerc</translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished">Punct</translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide cursor when snapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start in tab mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5501,19 +5606,19 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Renuntare</translation>
+        <translation type="obsolete">Renuntare</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Escape</translation>
+        <translation type="obsolete">Escape</translation>
     </message>
 </context>
 <context>
@@ -6311,31 +6416,23 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     <name>QG_ImageOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Optiuni de inserare</translation>
+        <translation type="obsolete">Optiuni de inserare</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Unghi:</translation>
+        <translation type="obsolete">Unghi:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Unghi de rotire</translation>
+        <translation type="obsolete">Unghi de rotire</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Factor:</translation>
+        <translation type="obsolete">Factor:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Factor de marire</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Factor de marire</translation>
     </message>
 </context>
 <context>
@@ -6497,47 +6594,47 @@ Puteti modifica ulterior acesti parametri din fereastra de dialog Optiuni QCad.<
     <name>QG_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Optiuni de inserare</translation>
+        <translation type="obsolete">Optiuni de inserare</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Unghi:</translation>
+        <translation type="obsolete">Unghi:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Unghi de rotire</translation>
+        <translation type="obsolete">Unghi de rotire</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Factor:</translation>
+        <translation type="obsolete">Factor:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Factor de marire</translation>
+        <translation type="obsolete">Factor de marire</translation>
     </message>
     <message>
         <source>Array:</source>
-        <translation>Matrice:</translation>
+        <translation type="obsolete">Matrice:</translation>
     </message>
     <message>
         <source>Number of Columns</source>
-        <translation>Numarul coloanelor</translation>
+        <translation type="obsolete">Numarul coloanelor</translation>
     </message>
     <message>
         <source>Number of Rows</source>
-        <translation>Numarul liniilor</translation>
+        <translation type="obsolete">Numarul liniilor</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Spatiere:</translation>
+        <translation type="obsolete">Spatiere:</translation>
     </message>
     <message>
         <source>Column Spacing</source>
-        <translation>Spatierea coloanelor</translation>
+        <translation type="obsolete">Spatierea coloanelor</translation>
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation>Spatierea liniilor</translation>
+        <translation type="obsolete">Spatierea liniilor</translation>
     </message>
 </context>
 <context>
@@ -6672,23 +6769,23 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LibraryInsertOptions</name>
     <message>
         <source>Library Insert Options</source>
-        <translation>Optiuni inserare Biblioteca</translation>
+        <translation type="obsolete">Optiuni inserare Biblioteca</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Unghi:</translation>
+        <translation type="obsolete">Unghi:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Unghi de rotire</translation>
+        <translation type="obsolete">Unghi de rotire</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Factor:</translation>
+        <translation type="obsolete">Factor:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Factor de marire</translation>
+        <translation type="obsolete">Factor de marire</translation>
     </message>
 </context>
 <context>
@@ -6710,184 +6807,184 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LineAngleOptions</name>
     <message>
         <source>Line Angle Options</source>
-        <translation>Optiuni de linie cu unghi</translation>
+        <translation type="obsolete">Optiuni de linie cu unghi</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Unghi:</translation>
+        <translation type="obsolete">Unghi:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Unghi de linie</translation>
+        <translation type="obsolete">Unghi de linie</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Lungime:</translation>
+        <translation type="obsolete">Lungime:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Lungimea liniei</translation>
+        <translation type="obsolete">Lungimea liniei</translation>
     </message>
     <message>
         <source>Snap Point:</source>
-        <translation>Punct de agatare:</translation>
+        <translation type="obsolete">Punct de agatare:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation type="obsolete">Start</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Mijloc</translation>
+        <translation type="obsolete">Mijloc</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Final</translation>
+        <translation type="obsolete">Final</translation>
     </message>
 </context>
 <context>
     <name>QG_LineBisectorOptions</name>
     <message>
         <source>Line Bisector Options</source>
-        <translation>Optiuni pentru bisectoare</translation>
+        <translation type="obsolete">Optiuni pentru bisectoare</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Lungime:</translation>
+        <translation type="obsolete">Lungime:</translation>
     </message>
     <message>
         <source>Length of bisector</source>
-        <translation>Lungimea bisectoarei</translation>
+        <translation type="obsolete">Lungimea bisectoarei</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Numar:</translation>
+        <translation type="obsolete">Numar:</translation>
     </message>
     <message>
         <source>Number of bisectors to create</source>
-        <translation>Numar de bisectoare care vor fi create</translation>
+        <translation type="obsolete">Numar de bisectoare care vor fi create</translation>
     </message>
 </context>
 <context>
     <name>QG_LineOptions</name>
     <message>
         <source>Line Options</source>
-        <translation>Optiuni linie</translation>
+        <translation type="obsolete">Optiuni linie</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Inchidere</translation>
+        <translation type="obsolete">Inchidere</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Anulare</translation>
+        <translation type="obsolete">Anulare</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
-        <translation>Realizarea unui contur inchis din liniile desenate</translation>
+        <translation type="obsolete">Realizarea unui contur inchis din liniile desenate</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
-        <translation>Anularea ultimei linii desenate</translation>
+        <translation type="obsolete">Anularea ultimei linii desenate</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
-        <translation>Refecerea ultimei linii desenate</translation>
+        <translation type="obsolete">Refecerea ultimei linii desenate</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Refacere</translation>
+        <translation type="obsolete">Refacere</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
-        <translation>Optiuni linii paralele</translation>
+        <translation type="obsolete">Optiuni linii paralele</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Distanta:</translation>
+        <translation type="obsolete">Distanta:</translation>
     </message>
     <message>
         <source>Distance to original entity</source>
-        <translation>Distanta de la entitatea originala</translation>
+        <translation type="obsolete">Distanta de la entitatea originala</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Numar:</translation>
+        <translation type="obsolete">Numar:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Numarul paralelelor care vor fi create</translation>
+        <translation type="obsolete">Numarul paralelelor care vor fi create</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation>Optiuni linii paralele</translation>
+        <translation type="obsolete">Optiuni linii paralele</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Numar:</translation>
+        <translation type="obsolete">Numar:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Numarul de paralele care va fi creat</translation>
+        <translation type="obsolete">Numarul de paralele care va fi creat</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygon2Options</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Optiuni poligon</translation>
+        <translation type="obsolete">Optiuni poligon</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Numar:</translation>
+        <translation type="obsolete">Numar:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Numar laturi</translation>
+        <translation type="obsolete">Numar laturi</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygonOptions</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Optiuni poligon</translation>
+        <translation type="obsolete">Optiuni poligon</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Numar:</translation>
+        <translation type="obsolete">Numar:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Numar laturi</translation>
+        <translation type="obsolete">Numar laturi</translation>
     </message>
 </context>
 <context>
     <name>QG_LineRelAngleOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Optiuni linie cu unghi relativ</translation>
+        <translation type="obsolete">Optiuni linie cu unghi relativ</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Unghi:</translation>
+        <translation type="obsolete">Unghi:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Unghi linie</translation>
+        <translation type="obsolete">Unghi linie</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Lungime:</translation>
+        <translation type="obsolete">Lungime:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Lungimea liniei</translation>
+        <translation type="obsolete">Lungimea liniei</translation>
     </message>
 </context>
 <context>
@@ -7013,30 +7110,26 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_MTextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation type="unfinished">Optiuni pentru text</translation>
+        <translation type="obsolete">Optiuni pentru text</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation type="unfinished">Text:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Text:</translation>
     </message>
 </context>
 <context>
     <name>QG_ModifyOffsetOptions</name>
     <message>
         <source>Modify Offset Options</source>
-        <translation>Modificare optiuni distanta</translation>
+        <translation type="obsolete">Modificare optiuni distanta</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Distanta:</translation>
+        <translation type="obsolete">Distanta:</translation>
     </message>
     <message>
         <source>Offset from original entity</source>
-        <translation>Distanta fata de entitatea originala</translation>
+        <translation type="obsolete">Distanta fata de entitatea originala</translation>
     </message>
 </context>
 <context>
@@ -7070,111 +7163,115 @@ p, li { white-space: pre-wrap; }
     <name>QG_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
-        <translation>Optiuni deplasare si rotire</translation>
+        <translation type="obsolete">Optiuni deplasare si rotire</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Unghi:</translation>
+        <translation type="obsolete">Unghi:</translation>
     </message>
 </context>
 <context>
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation>Culoare linie</translation>
+        <translation type="obsolete">Culoare linie</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation>Grosime linie</translation>
+        <translation type="obsolete">Grosime linie</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation>Tip linie</translation>
+        <translation type="obsolete">Tip linie</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Optiuni pentru linie cu unghi relativ</translation>
+        <translation type="obsolete">Optiuni pentru linie cu unghi relativ</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Spatiere:</translation>
+        <translation type="obsolete">Spatiere:</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation>Distanta de la polilinia originala</translation>
+        <translation type="obsolete">Distanta de la polilinia originala</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation>Copii:</translation>
+        <translation type="obsolete">Copii:</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation>Optiuni polilinie</translation>
+        <translation type="obsolete">Optiuni polilinie</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Inchidere</translation>
+        <translation type="obsolete">Inchidere</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Anulare</translation>
+        <translation type="obsolete">Anulare</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Linie</translation>
+        <translation type="obsolete">Linie</translation>
     </message>
     <message>
         <source>Tangential</source>
-        <translation>Tangential</translation>
+        <translation type="obsolete">Tangential</translation>
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation>Raza tangentiala</translation>
+        <translation type="obsolete">Raza tangentiala</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Unghi</translation>
+        <translation type="obsolete">Unghi</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Raza:</translation>
+        <translation type="obsolete">Raza:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Unghi:</translation>
+        <translation type="obsolete">Unghi:</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>Sens orar</translation>
+        <translation type="obsolete">Sens orar</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation>Sens trigonometric</translation>
+        <translation type="obsolete">Sens trigonometric</translation>
+    </message>
+    <message>
+        <source>wrong action type</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_PrintPreviewOptions</name>
     <message>
         <source>Print Preview Options</source>
-        <translation>Optiuni previzualizare ianintea listarii</translation>
+        <translation type="obsolete">Optiuni previzualizare ianintea listarii</translation>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation>Comutare Negru/Alb</translation>
+        <translation type="obsolete">Comutare Negru/Alb</translation>
     </message>
     <message>
         <source>Center to page</source>
-        <translation>Centrat pe pagina</translation>
+        <translation type="obsolete">Centrat pe pagina</translation>
     </message>
     <message>
         <source>Fit to page</source>
-        <translation>Ajustare la marimea paginii</translation>
+        <translation type="obsolete">Ajustare la marimea paginii</translation>
     </message>
     <message>
         <source>Paper scale factor larger than 1.0e6</source>
@@ -7183,14 +7280,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Paper scale factor smaller than 1.0e-6</source>
         <translation type="obsolete">Factor de marire a paginii mai mic decat 1.0e6</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7201,26 +7290,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="unfinished">Deschiderea unui fisier recent...</translation>
+        <translation type="obsolete">Deschiderea unui fisier recent...</translation>
     </message>
 </context>
 <context>
     <name>QG_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation>Optiuni rotunjire</translation>
+        <translation type="obsolete">Optiuni rotunjire</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Ajustare</translation>
+        <translation type="obsolete">Ajustare</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Ajustarea rotunjirii capetelor</translation>
+        <translation type="obsolete">Ajustarea rotunjirii capetelor</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Raza:</translation>
+        <translation type="obsolete">Raza:</translation>
     </message>
 </context>
 <context>
@@ -7274,26 +7363,26 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Optiuni pentru distanta de snap</translation>
+        <translation type="obsolete">Optiuni pentru distanta de snap</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Distanta:</translation>
+        <translation type="obsolete">Distanta:</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Optiuni distanta snap</translation>
+        <translation type="obsolete">Optiuni distanta snap</translation>
     </message>
     <message>
         <source>Middle Points:</source>
-        <translation>Punctele de mijloc:</translation>
+        <translation type="obsolete">Punctele de mijloc:</translation>
     </message>
     <message>
         <source>Number of equidistant division points</source>
-        <translation>NUmarul punctelor aflate la distante egale</translation>
+        <translation type="obsolete">NUmarul punctelor aflate la distante egale</translation>
     </message>
 </context>
 <context>
@@ -7411,11 +7500,11 @@ p, li { white-space: pre-wrap; }
     <name>QG_SplineOptions</name>
     <message>
         <source>Spline Options</source>
-        <translation>Optiuni pentru curba</translation>
+        <translation type="obsolete">Optiuni pentru curba</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation>Grade:</translation>
+        <translation type="obsolete">Grade:</translation>
     </message>
     <message>
         <source>1</source>
@@ -7431,37 +7520,37 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Closed</source>
-        <translation>Inchisa</translation>
+        <translation type="obsolete">Inchisa</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Anulare</translation>
+        <translation type="obsolete">Anulare</translation>
     </message>
 </context>
 <context>
     <name>QG_TextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation>Optiuni pentru text</translation>
+        <translation type="obsolete">Optiuni pentru text</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>Text:</translation>
+        <translation type="obsolete">Text:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Unghi:</translation>
+        <translation type="obsolete">Unghi:</translation>
     </message>
 </context>
 <context>
     <name>QG_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation>Optiuni ajustare</translation>
+        <translation type="obsolete">Optiuni ajustare</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Distanta. valori negative pentru taiere, pozitive pentru extindere.</translation>
+        <translation type="obsolete">Distanta. valori negative pentru taiere, pozitive pentru extindere.</translation>
     </message>
     <message>
         <source>Amount:</source>
@@ -7469,15 +7558,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Length:</source>
-        <translation>Lungime:</translation>
+        <translation type="obsolete">Lungime:</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>Distanta. Valori negative pentru taiere, pozitive pentru extindere. Semnul negativ este ignorat pentru taierea la lungimea finala totala.</translation>
+        <translation type="obsolete">Distanta. Valori negative pentru taiere, pozitive pentru extindere. Semnul negativ este ignorat pentru taierea la lungimea finala totala.</translation>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>Lungimea introdusa este folosita ca lungime totala dupa taiere, in locul cresterii lungimii</translation>
+        <translation type="obsolete">Lungimea introdusa este folosita ca lungime totala dupa taiere, in locul cresterii lungimii</translation>
     </message>
 </context>
 <context>
@@ -9179,6 +9268,18 @@ Continue?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12653,11 +12754,15 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a line, arc or polyline.</source>
-        <translation>Entitatea trebuie sa fie un obiect de tip linie, arc sau polilinie.</translation>
+        <translation type="obsolete">Entitatea trebuie sa fie un obiect de tip linie, arc sau polilinie.</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
         <translation>Entitatea nu poate fi o polilinie inchisa.</translation>
+    </message>
+    <message>
+        <source>Polyline created</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12755,6 +12860,14 @@ Continue?</source>
     </message>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in Black/White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -14107,6 +14220,651 @@ Continue?</source>
         <source>row</source>
         <comment>row</comment>
         <translation type="obsolete">rand</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation type="unfinished">Optiuni pentru Arc</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="unfinished">Sens trigonometric</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">Sens orar</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcTangentialOptions</name>
+    <message>
+        <source>Tangential Arc Options</source>
+        <translation type="unfinished">Optiuni pentru arcul tangential</translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="unfinished">Raza arcului tangential</translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation type="unfinished">Unghiul total de subintindere pentru arcul tangenţial</translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished">Raza</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_BevelOptions</name>
+    <message>
+        <source>Bevel Options</source>
+        <translation type="unfinished">Optiuni tesire</translation>
+    </message>
+    <message>
+        <source>Check to trim both entities to the bevel</source>
+        <translation type="unfinished">Verificati ajustarea ambelor entitati la tesire</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length 1:</source>
+        <translation type="unfinished">Lungime 1:</translation>
+    </message>
+    <message>
+        <source>Length 2:</source>
+        <translation type="unfinished">Lungime 2:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="unfinished">Optiuni pentru cerc</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Raza:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleTan2Options</name>
+    <message>
+        <source>Circle Tangential2 Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Raza:</translation>
+    </message>
+    <message>
+        <source>Radius of tangential circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimLinearOptions</name>
+    <message>
+        <source>Linear Dimension Options</source>
+        <translation type="unfinished">Optiuni pentru cotare liniara</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimOptions</name>
+    <message>
+        <source>Dimension Options</source>
+        <translation type="unfinished">Optiuni cotare</translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="unfinished">Eticheta:</translation>
+    </message>
+    <message utf8="true">
+        <source>⌀</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>°</source>
+        <translation type="unfinished">°</translation>
+    </message>
+    <message utf8="true">
+        <source>±</source>
+        <translation type="unfinished">±</translation>
+    </message>
+    <message utf8="true">
+        <source>π</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>×</source>
+        <translation type="unfinished">×</translation>
+    </message>
+    <message utf8="true">
+        <source>÷</source>
+        <translation type="unfinished">÷</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ImageOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished">Optiuni de inserare</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Unghi de rotire</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Factor:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Factor de marire</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_InsertOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished">Optiuni de inserare</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Unghi de rotire</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Factor:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Factor de marire</translation>
+    </message>
+    <message>
+        <source>Array:</source>
+        <translation type="unfinished">Matrice:</translation>
+    </message>
+    <message>
+        <source>Number of Columns</source>
+        <translation type="unfinished">Numarul coloanelor</translation>
+    </message>
+    <message>
+        <source>Number of Rows</source>
+        <translation type="unfinished">Numarul liniilor</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Spatiere:</translation>
+    </message>
+    <message>
+        <source>Column Spacing</source>
+        <translation type="unfinished">Spatierea coloanelor</translation>
+    </message>
+    <message>
+        <source>Row Spacing</source>
+        <translation type="unfinished">Spatierea liniilor</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LibraryInsertOptions</name>
+    <message>
+        <source>Library Insert Options</source>
+        <translation type="unfinished">Optiuni inserare Biblioteca</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Unghi de rotire</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Factor:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Factor de marire</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineAngleOptions</name>
+    <message>
+        <source>Line Angle Options</source>
+        <translation type="unfinished">Optiuni de linie cu unghi</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Lungime:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Lungimea liniei</translation>
+    </message>
+    <message>
+        <source>Snap Point:</source>
+        <translation type="unfinished">Punct de agatare:</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished">Start</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">Mijloc</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="unfinished">Final</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineBisectorOptions</name>
+    <message>
+        <source>Line Bisector Options</source>
+        <translation type="unfinished">Optiuni pentru bisectoare</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Lungime:</translation>
+    </message>
+    <message>
+        <source>Length of bisector</source>
+        <translation type="unfinished">Lungimea bisectoarei</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Numar:</translation>
+    </message>
+    <message>
+        <source>Number of bisectors to create</source>
+        <translation type="unfinished">Numar de bisectoare care vor fi create</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineOptions</name>
+    <message>
+        <source>Line Options</source>
+        <translation type="unfinished">Optiuni linie</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation type="unfinished">Realizarea unui contur inchis din liniile desenate</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Inchidere</translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="unfinished">Anularea ultimei linii desenate</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Anulare</translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation type="unfinished">Refecerea ultimei linii desenate</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Refacere</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelOptions</name>
+    <message>
+        <source>Line Parallel Options</source>
+        <translation type="unfinished">Optiuni linii paralele</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Distanta:</translation>
+    </message>
+    <message>
+        <source>Distance to original entity</source>
+        <translation type="unfinished">Distanta de la entitatea originala</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Numar:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelThroughOptions</name>
+    <message>
+        <source>Line Parallel Through Options</source>
+        <translation type="unfinished">Optiuni linii paralele</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Numar:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygon2Options</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished">Optiuni poligon</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Numar:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished">Numar laturi</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygonOptions</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished">Optiuni poligon</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Numar:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished">Numar laturi</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineRelAngleOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Lungime:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Lungimea liniei</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Optiuni pentru text</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Text:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ModifyOffsetOptions</name>
+    <message>
+        <source>Modify Offset Options</source>
+        <translation type="unfinished">Modificare optiuni distanta</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Distanta:</translation>
+    </message>
+    <message>
+        <source>Offset from original entity</source>
+        <translation type="unfinished">Distanta fata de entitatea originala</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MoveRotateOptions</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation type="unfinished">Optiuni deplasare si rotire</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PolylineOptions</name>
+    <message>
+        <source>Polyline Options</source>
+        <translation type="unfinished">Optiuni polilinie</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Inchidere</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Anulare</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Linie</translation>
+    </message>
+    <message>
+        <source>Tangential</source>
+        <translation type="unfinished">Tangential</translation>
+    </message>
+    <message>
+        <source>Tan Radius</source>
+        <translation type="unfinished">Raza tangentiala</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Raza:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Counter Clockwise</source>
+        <translation type="unfinished">Sens trigonometric</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">Sens orar</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PrintPreviewOptions</name>
+    <message>
+        <source>Print Preview Options</source>
+        <translation type="unfinished">Optiuni previzualizare ianintea listarii</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fixed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Black / White mode</source>
+        <translation type="unfinished">Comutare Negru/Alb</translation>
+    </message>
+    <message>
+        <source>Center to page</source>
+        <translation type="unfinished">Centrat pe pagina</translation>
+    </message>
+    <message>
+        <source>Fit to page</source>
+        <translation type="unfinished">Ajustare la marimea paginii</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_RoundOptions</name>
+    <message>
+        <source>Round Options</source>
+        <translation type="unfinished">Optiuni rotunjire</translation>
+    </message>
+    <message>
+        <source>Check to trim both edges to the rounding</source>
+        <translation type="unfinished">Ajustarea rotunjirii capetelor</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Raza:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapDistOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Distanta:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation type="unfinished">Punctele de mijloc:</translation>
+    </message>
+    <message>
+        <source>Number of equidistant division points</source>
+        <translation type="unfinished">NUmarul punctelor aflate la distante egale</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SplineOptions</name>
+    <message>
+        <source>Spline Options</source>
+        <translation type="unfinished">Optiuni pentru curba</translation>
+    </message>
+    <message>
+        <source>Degree:</source>
+        <translation type="unfinished">Grade:</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Inchisa</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Anulare</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Optiuni pentru text</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Text:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TrimAmountOptions</name>
+    <message>
+        <source>Trim Amount Options</source>
+        <translation type="unfinished">Optiuni ajustare</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending.</source>
+        <translation type="unfinished">Distanta. valori negative pentru taiere, pozitive pentru extindere.</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Lungime:</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation type="unfinished">Distanta. Valori negative pentru taiere, pozitive pentru extindere. Semnul negativ este ignorat pentru taierea la lungimea finala totala.</translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation type="unfinished">Lungimea introdusa este folosita ca lungime totala dupa taiere, in locul cresterii lungimii</translation>
     </message>
 </context>
 </TS>

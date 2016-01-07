@@ -32,6 +32,37 @@
     </message>
 </context>
 <context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Kile:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Geomeetria</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Suletud</translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>radius=%1 is too small for points selected
@@ -534,15 +565,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>set to bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>lower after entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>lower over entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -551,10 +574,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>set to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -643,11 +662,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Open IDE</source>
-        <translation type="unfinished">Ava IDE</translation>
+        <translation type="obsolete">Ava IDE</translation>
     </message>
     <message>
         <source>Run Script..</source>
-        <translation type="unfinished">Käivita skript..</translation>
+        <translation type="obsolete">Käivita skript..</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
@@ -787,6 +806,34 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Focus on &amp;Command Line</source>
         <translation type="unfinished">Fookus &amp;käsureal</translation>
     </message>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">Vasak</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Parem</translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Floating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -814,6 +861,33 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_WidgetOptionsDialog</name>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LG_DimzerosBox</name>
     <message>
         <source>select:</source>
@@ -837,6 +911,25 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Suhtelise nurga all joonte sätted</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Vahe:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -849,10 +942,6 @@ distance between points=%2 is larger than diameter=%3</source>
 </context>
 <context>
     <name>QC_ActionGetPoint</name>
-    <message>
-        <source>Specify a point</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">Loobu</translation>
@@ -957,7 +1046,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Scripts</source>
-        <translation>&amp;Skriptid</translation>
+        <translation type="obsolete">&amp;Skriptid</translation>
     </message>
     <message>
         <source>&amp;Windows</source>
@@ -993,7 +1082,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="obsolete">Hiljutise faili avamine...</translation>
+        <translation type="unfinished">Hiljutise faili avamine...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -1194,14 +1283,6 @@ Salvesta nüüd oma töö.</translation>
     <message>
         <source>&amp;Spline</source>
         <translation type="obsolete">&amp;Kõver</translation>
-    </message>
-    <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inserting block &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -1433,11 +1514,11 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>DockWidgets</source>
+        <source>&amp;Dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Dockwidgets</source>
+        <source>Dock Areas</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2019,71 +2100,50 @@ p, li { white-space: pre-wrap; }
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation>Kaare sätted</translation>
+        <translation type="obsolete">Kaare sätted</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>Päripäeva</translation>
+        <translation type="obsolete">Päripäeva</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
         <translation type="obsolete">Vastupäeva</translation>
     </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QG_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Radius:</source>
         <translation type="obsolete">Raadius:</translation>
     </message>
     <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished">Nurk</translation>
+        <translation type="obsolete">Nurk</translation>
     </message>
 </context>
 <context>
     <name>QG_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation>Faasimise sätted</translation>
+        <translation type="obsolete">Faasimise sätted</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Trimmimine</translation>
+        <translation type="obsolete">Trimmimine</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Märkimise korral trimmitakse mõlema elemendi otsad</translation>
+        <translation type="obsolete">Märkimise korral trimmitakse mõlema elemendi otsad</translation>
     </message>
     <message>
         <source>Length 1:</source>
-        <translation>Pikkus 1:</translation>
+        <translation type="obsolete">Pikkus 1:</translation>
     </message>
     <message>
         <source>Length 2:</source>
-        <translation>Pikkus 2:</translation>
+        <translation type="obsolete">Pikkus 2:</translation>
     </message>
 </context>
 <context>
@@ -2767,30 +2827,18 @@ in a separate window</source>
     <name>QG_CircleOptions</name>
     <message>
         <source>Circle Options</source>
-        <translation>Ringjoone sätted</translation>
+        <translation type="obsolete">Ringjoone sätted</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Raadius:</translation>
+        <translation type="obsolete">Raadius:</translation>
     </message>
 </context>
 <context>
     <name>QG_CircleTan2Options</name>
     <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Radius:</source>
-        <translation type="unfinished">Raadius:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Raadius:</translation>
     </message>
 </context>
 <context>
@@ -2841,7 +2889,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Others..</source>
-        <translation>Muud..</translation>
+        <translation type="obsolete">Muud..</translation>
     </message>
     <message>
         <source>Unchanged</source>
@@ -2873,6 +2921,10 @@ in a separate window</source>
     </message>
     <message>
         <source>Dark Gray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2941,22 +2993,22 @@ in a separate window</source>
     <name>QG_DimLinearOptions</name>
     <message>
         <source>Linear Dimension Options</source>
-        <translation>Tavaliste mõõtude sätted</translation>
+        <translation type="obsolete">Tavaliste mõõtude sätted</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Nurk:</translation>
+        <translation type="obsolete">Nurk:</translation>
     </message>
 </context>
 <context>
     <name>QG_DimOptions</name>
     <message>
         <source>Dimension Options</source>
-        <translation>Mõõtude sätted</translation>
+        <translation type="obsolete">Mõõtude sätted</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation>Tekst:</translation>
+        <translation type="obsolete">Tekst:</translation>
     </message>
     <message utf8="true">
         <source>ø</source>
@@ -2964,11 +3016,11 @@ in a separate window</source>
     </message>
     <message utf8="true">
         <source>°</source>
-        <translation>°</translation>
+        <translation type="obsolete">°</translation>
     </message>
     <message utf8="true">
         <source>±</source>
-        <translation>±</translation>
+        <translation type="obsolete">±</translation>
     </message>
     <message utf8="true">
         <source>¶</source>
@@ -2976,23 +3028,11 @@ in a separate window</source>
     </message>
     <message utf8="true">
         <source>×</source>
-        <translation>×</translation>
+        <translation type="obsolete">×</translation>
     </message>
     <message utf8="true">
         <source>÷</source>
-        <translation>÷</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <source>⌀</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <source>π</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">÷</translation>
     </message>
 </context>
 <context>
@@ -5181,10 +5221,6 @@ Neid sätteid saab hiljem muuta QCad-i dialoogis Sätted.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Snap indicator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Crosshair</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5198,14 +5234,6 @@ Neid sätteid saab hiljem muuta QCad-i dialoogis Sätted.</translation>
     </message>
     <message>
         <source>Layer/ Block Selection:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5238,6 +5266,46 @@ Neid sätteid saab hiljem muuta QCad-i dialoogis Sätted.</translation>
     </message>
     <message>
         <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scrollbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">Ringjoon</translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished">Punkt</translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide cursor when snapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start in tab mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5586,19 +5654,19 @@ Neid sätteid saab hiljem muuta QCad-i dialoogis Sätted.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>S&amp;obib</translation>
+        <translation type="obsolete">S&amp;obib</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Loobu</translation>
+        <translation type="obsolete">Loobu</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -6400,31 +6468,23 @@ Neid sätteid saab hiljem muuta QCad-i dialoogis Sätted.</translation>
     <name>QG_ImageOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Paigutuse sätted</translation>
+        <translation type="obsolete">Paigutuse sätted</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Nurk:</translation>
+        <translation type="obsolete">Nurk:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Pööramise sätted</translation>
+        <translation type="obsolete">Pööramise sätted</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Tegur:</translation>
+        <translation type="obsolete">Tegur:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Skaleerimistegur</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Skaleerimistegur</translation>
     </message>
 </context>
 <context>
@@ -6586,47 +6646,47 @@ Neid sätteid saab hiljem muuta QCad-i dialoogis Sätted.</translation>
     <name>QG_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Asetamise sätted</translation>
+        <translation type="obsolete">Asetamise sätted</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Nurk:</translation>
+        <translation type="obsolete">Nurk:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Pööramise sätted</translation>
+        <translation type="obsolete">Pööramise sätted</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Tegur:</translation>
+        <translation type="obsolete">Tegur:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Skaleerimistegur</translation>
+        <translation type="obsolete">Skaleerimistegur</translation>
     </message>
     <message>
         <source>Array:</source>
-        <translation>Massiiv:</translation>
+        <translation type="obsolete">Massiiv:</translation>
     </message>
     <message>
         <source>Number of Columns</source>
-        <translation>Veergude arv</translation>
+        <translation type="obsolete">Veergude arv</translation>
     </message>
     <message>
         <source>Number of Rows</source>
-        <translation>Ridade arv</translation>
+        <translation type="obsolete">Ridade arv</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Vahe:</translation>
+        <translation type="obsolete">Vahe:</translation>
     </message>
     <message>
         <source>Column Spacing</source>
-        <translation>Veeruvahe</translation>
+        <translation type="obsolete">Veeruvahe</translation>
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation>Reavahe</translation>
+        <translation type="obsolete">Reavahe</translation>
     </message>
 </context>
 <context>
@@ -6751,23 +6811,23 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LibraryInsertOptions</name>
     <message>
         <source>Library Insert Options</source>
-        <translation>Teegist lisamise sätted</translation>
+        <translation type="obsolete">Teegist lisamise sätted</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Nurk:</translation>
+        <translation type="obsolete">Nurk:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Pöördenurk</translation>
+        <translation type="obsolete">Pöördenurk</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Tegur:</translation>
+        <translation type="obsolete">Tegur:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Skaleerimistegur</translation>
+        <translation type="obsolete">Skaleerimistegur</translation>
     </message>
 </context>
 <context>
@@ -6789,184 +6849,172 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LineAngleOptions</name>
     <message>
         <source>Line Angle Options</source>
-        <translation>Joone nurga sätted</translation>
+        <translation type="obsolete">Joone nurga sätted</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Nurk:</translation>
+        <translation type="obsolete">Nurk:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Joone nurk</translation>
+        <translation type="obsolete">Joone nurk</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Pikkus:</translation>
+        <translation type="obsolete">Pikkus:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Joone pikkus</translation>
+        <translation type="obsolete">Joone pikkus</translation>
     </message>
     <message>
         <source>Snap Point:</source>
-        <translation>Haardepunkt:</translation>
+        <translation type="obsolete">Haardepunkt:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Algus</translation>
+        <translation type="obsolete">Algus</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Keskkoht</translation>
+        <translation type="obsolete">Keskkoht</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Lõpp</translation>
+        <translation type="obsolete">Lõpp</translation>
     </message>
 </context>
 <context>
     <name>QG_LineBisectorOptions</name>
     <message>
         <source>Line Bisector Options</source>
-        <translation>Nurgapoolitaja sätted</translation>
+        <translation type="obsolete">Nurgapoolitaja sätted</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Pikkus:</translation>
+        <translation type="obsolete">Pikkus:</translation>
     </message>
     <message>
         <source>Length of bisector</source>
-        <translation>Nurgapoolitaja pikkus</translation>
+        <translation type="obsolete">Nurgapoolitaja pikkus</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Arv:</translation>
+        <translation type="obsolete">Arv:</translation>
     </message>
     <message>
         <source>Number of bisectors to create</source>
-        <translation>Loodavate nurgapoolitajate arv</translation>
+        <translation type="obsolete">Loodavate nurgapoolitajate arv</translation>
     </message>
 </context>
 <context>
     <name>QG_LineOptions</name>
     <message>
         <source>Line Options</source>
-        <translation>Joone sätted</translation>
+        <translation type="obsolete">Joone sätted</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Sulge</translation>
+        <translation type="obsolete">Sulge</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Tühista</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Tühista</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Ennista</translation>
+        <translation type="obsolete">Ennista</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
-        <translation>Paralleeljoone sätted</translation>
+        <translation type="obsolete">Paralleeljoone sätted</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Kaugus:</translation>
+        <translation type="obsolete">Kaugus:</translation>
     </message>
     <message>
         <source>Distance to original entity</source>
-        <translation>kaugus algelemendini</translation>
+        <translation type="obsolete">kaugus algelemendini</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Arv:</translation>
+        <translation type="obsolete">Arv:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Loodavate paralleelide arv</translation>
+        <translation type="obsolete">Loodavate paralleelide arv</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation>Punkti läbiva paralleeli sätted</translation>
+        <translation type="obsolete">Punkti läbiva paralleeli sätted</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Arv:</translation>
+        <translation type="obsolete">Arv:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Loodavate paralleelide arv</translation>
+        <translation type="obsolete">Loodavate paralleelide arv</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygon2Options</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Hulknurga sätted</translation>
+        <translation type="obsolete">Hulknurga sätted</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Arv:</translation>
+        <translation type="obsolete">Arv:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Külgede arv</translation>
+        <translation type="obsolete">Külgede arv</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygonOptions</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Hulknurga sätted</translation>
+        <translation type="obsolete">Hulknurga sätted</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Arv:</translation>
+        <translation type="obsolete">Arv:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Külgede arv</translation>
+        <translation type="obsolete">Külgede arv</translation>
     </message>
 </context>
 <context>
     <name>QG_LineRelAngleOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Suhtelise nurga all joonte sätted</translation>
+        <translation type="obsolete">Suhtelise nurga all joonte sätted</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Nurk:</translation>
+        <translation type="obsolete">Nurk:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Joone nurk</translation>
+        <translation type="obsolete">Joone nurk</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Pikkus:</translation>
+        <translation type="obsolete">Pikkus:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Joone pikkus</translation>
+        <translation type="obsolete">Joone pikkus</translation>
     </message>
 </context>
 <context>
@@ -7092,30 +7140,22 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_MTextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation type="unfinished">Teksti sätted</translation>
+        <translation type="obsolete">Teksti sätted</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation type="unfinished">Tekst:</translation>
+        <translation type="obsolete">Tekst:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Nurk:</translation>
+        <translation type="obsolete">Nurk:</translation>
     </message>
 </context>
 <context>
     <name>QG_ModifyOffsetOptions</name>
     <message>
-        <source>Modify Offset Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Distance:</source>
-        <translation type="unfinished">Kaugus:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Kaugus:</translation>
     </message>
 </context>
 <context>
@@ -7145,60 +7185,37 @@ p, li { white-space: pre-wrap; }
     <name>QG_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
-        <translation>Pööra / Liiguta sätted</translation>
+        <translation type="obsolete">Pööra / Liiguta sätted</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Nurk:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PenToolBar</name>
-    <message>
-        <source>Line color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Nurk:</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Suhtelise nurga all joonte sätted</translation>
+        <translation type="obsolete">Suhtelise nurga all joonte sätted</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation type="unfinished">Vahe:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Vahe:</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation type="unfinished">Kompleksjoone sätted</translation>
+        <translation type="obsolete">Kompleksjoone sätted</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Sulge</translation>
+        <translation type="obsolete">Sulge</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Tühista</translation>
+        <translation type="obsolete">Tühista</translation>
     </message>
     <message>
         <source>Arc</source>
@@ -7206,62 +7223,50 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Raadius:</translation>
+        <translation type="obsolete">Raadius:</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished">Joon</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Joon</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished">Nurk</translation>
+        <translation type="obsolete">Nurk</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Nurk:</translation>
+        <translation type="obsolete">Nurk:</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation type="unfinished">Päripäeva</translation>
+        <translation type="obsolete">Päripäeva</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation type="unfinished">Vastupäeva</translation>
+        <translation type="obsolete">Vastupäeva</translation>
+    </message>
+    <message>
+        <source>wrong action type</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_PrintPreviewOptions</name>
     <message>
         <source>Print Preview Options</source>
-        <translation>Prindi eelvaate sätted</translation>
+        <translation type="obsolete">Prindi eelvaate sätted</translation>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation>Lülita musta /valge režiim</translation>
+        <translation type="obsolete">Lülita musta /valge režiim</translation>
     </message>
     <message>
         <source>Center to page</source>
-        <translation>Tsentreeri lehele</translation>
+        <translation type="obsolete">Tsentreeri lehele</translation>
     </message>
     <message>
         <source>Fit to page</source>
-        <translation>Mahuta lehele</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Mahuta lehele</translation>
     </message>
 </context>
 <context>
@@ -7272,26 +7277,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="unfinished">Hiljutise faili avamine...</translation>
+        <translation type="obsolete">Hiljutise faili avamine...</translation>
     </message>
 </context>
 <context>
     <name>QG_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation>Ümardamise sätted</translation>
+        <translation type="obsolete">Ümardamise sätted</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Trimmimine</translation>
+        <translation type="obsolete">Trimmimine</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Olemasolevate ringjoonte suhtes kontsentriliste ringjoonte joonestamine</translation>
+        <translation type="obsolete">Olemasolevate ringjoonte suhtes kontsentriliste ringjoonte joonestamine</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Raadius:</translation>
+        <translation type="obsolete">Raadius:</translation>
     </message>
 </context>
 <context>
@@ -7337,26 +7342,18 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Haardekauguse sätted</translation>
+        <translation type="obsolete">Haardekauguse sätted</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Kaugus:</translation>
+        <translation type="obsolete">Kaugus:</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="unfinished">Haardekauguse sätted</translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of equidistant division points</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Haardekauguse sätted</translation>
     </message>
 </context>
 <context>
@@ -7474,11 +7471,11 @@ p, li { white-space: pre-wrap; }
     <name>QG_SplineOptions</name>
     <message>
         <source>Spline Options</source>
-        <translation>Kõvera sätted</translation>
+        <translation type="obsolete">Kõvera sätted</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation>Aste:</translation>
+        <translation type="obsolete">Aste:</translation>
     </message>
     <message>
         <source>1</source>
@@ -7494,37 +7491,37 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Closed</source>
-        <translation>Suletud</translation>
+        <translation type="obsolete">Suletud</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Tühista</translation>
+        <translation type="obsolete">Tühista</translation>
     </message>
 </context>
 <context>
     <name>QG_TextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation>Teksti sätted</translation>
+        <translation type="obsolete">Teksti sätted</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>Tekst:</translation>
+        <translation type="obsolete">Tekst:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Nurk:</translation>
+        <translation type="obsolete">Nurk:</translation>
     </message>
 </context>
 <context>
     <name>QG_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation>Trimmimispikkuse sätted</translation>
+        <translation type="obsolete">Trimmimispikkuse sätted</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Pikkus. Negatiivse väärtuse korral trimmitakse, positiivse korral pikendatakse.</translation>
+        <translation type="obsolete">Pikkus. Negatiivse väärtuse korral trimmitakse, positiivse korral pikendatakse.</translation>
     </message>
     <message>
         <source>Amount:</source>
@@ -7532,15 +7529,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Pikkus:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Pikkus:</translation>
     </message>
 </context>
 <context>
@@ -9230,6 +9219,18 @@ Continue?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12537,11 +12538,11 @@ Määra alguspunkt või [keskpunkt]</translation>
         <translation type="unfinished">Loobu</translation>
     </message>
     <message>
-        <source>Entity must be a line, arc or polyline.</source>
+        <source>Entity can not be a closed polyline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Entity can not be a closed polyline.</source>
+        <source>Polyline created</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12628,6 +12629,14 @@ Määra alguspunkt või [keskpunkt]</translation>
     </message>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in Black/White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -13910,6 +13919,651 @@ Määra alguspunkt või [keskpunkt]</translation>
         <source>re</source>
         <comment>modify - revert direction</comment>
         <translation type="obsolete">ri</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation type="unfinished">Kaare sätted</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">Päripäeva</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcTangentialOptions</name>
+    <message>
+        <source>Tangential Arc Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished">Nurk</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_BevelOptions</name>
+    <message>
+        <source>Bevel Options</source>
+        <translation type="unfinished">Faasimise sätted</translation>
+    </message>
+    <message>
+        <source>Check to trim both entities to the bevel</source>
+        <translation type="unfinished">Märkimise korral trimmitakse mõlema elemendi otsad</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length 1:</source>
+        <translation type="unfinished">Pikkus 1:</translation>
+    </message>
+    <message>
+        <source>Length 2:</source>
+        <translation type="unfinished">Pikkus 2:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="unfinished">Ringjoone sätted</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Raadius:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleTan2Options</name>
+    <message>
+        <source>Circle Tangential2 Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Raadius:</translation>
+    </message>
+    <message>
+        <source>Radius of tangential circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimLinearOptions</name>
+    <message>
+        <source>Linear Dimension Options</source>
+        <translation type="unfinished">Tavaliste mõõtude sätted</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Nurk:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimOptions</name>
+    <message>
+        <source>Dimension Options</source>
+        <translation type="unfinished">Mõõtude sätted</translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="unfinished">Tekst:</translation>
+    </message>
+    <message utf8="true">
+        <source>⌀</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>°</source>
+        <translation type="unfinished">°</translation>
+    </message>
+    <message utf8="true">
+        <source>±</source>
+        <translation type="unfinished">±</translation>
+    </message>
+    <message utf8="true">
+        <source>π</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>×</source>
+        <translation type="unfinished">×</translation>
+    </message>
+    <message utf8="true">
+        <source>÷</source>
+        <translation type="unfinished">÷</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ImageOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Nurk:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Tegur:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Skaleerimistegur</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_InsertOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Nurk:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Tegur:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Skaleerimistegur</translation>
+    </message>
+    <message>
+        <source>Array:</source>
+        <translation type="unfinished">Massiiv:</translation>
+    </message>
+    <message>
+        <source>Number of Columns</source>
+        <translation type="unfinished">Veergude arv</translation>
+    </message>
+    <message>
+        <source>Number of Rows</source>
+        <translation type="unfinished">Ridade arv</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Vahe:</translation>
+    </message>
+    <message>
+        <source>Column Spacing</source>
+        <translation type="unfinished">Veeruvahe</translation>
+    </message>
+    <message>
+        <source>Row Spacing</source>
+        <translation type="unfinished">Reavahe</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LibraryInsertOptions</name>
+    <message>
+        <source>Library Insert Options</source>
+        <translation type="unfinished">Teegist lisamise sätted</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Nurk:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Tegur:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Skaleerimistegur</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineAngleOptions</name>
+    <message>
+        <source>Line Angle Options</source>
+        <translation type="unfinished">Joone nurga sätted</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Nurk:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished">Joone nurk</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Pikkus:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Joone pikkus</translation>
+    </message>
+    <message>
+        <source>Snap Point:</source>
+        <translation type="unfinished">Haardepunkt:</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished">Algus</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">Keskkoht</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="unfinished">Lõpp</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineBisectorOptions</name>
+    <message>
+        <source>Line Bisector Options</source>
+        <translation type="unfinished">Nurgapoolitaja sätted</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Pikkus:</translation>
+    </message>
+    <message>
+        <source>Length of bisector</source>
+        <translation type="unfinished">Nurgapoolitaja pikkus</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Arv:</translation>
+    </message>
+    <message>
+        <source>Number of bisectors to create</source>
+        <translation type="unfinished">Loodavate nurgapoolitajate arv</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineOptions</name>
+    <message>
+        <source>Line Options</source>
+        <translation type="unfinished">Joone sätted</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Sulge</translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Tühista</translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Ennista</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelOptions</name>
+    <message>
+        <source>Line Parallel Options</source>
+        <translation type="unfinished">Paralleeljoone sätted</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Kaugus:</translation>
+    </message>
+    <message>
+        <source>Distance to original entity</source>
+        <translation type="unfinished">kaugus algelemendini</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Arv:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished">Loodavate paralleelide arv</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelThroughOptions</name>
+    <message>
+        <source>Line Parallel Through Options</source>
+        <translation type="unfinished">Punkti läbiva paralleeli sätted</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Arv:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished">Loodavate paralleelide arv</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygon2Options</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished">Hulknurga sätted</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Arv:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished">Külgede arv</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygonOptions</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished">Hulknurga sätted</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Arv:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished">Külgede arv</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineRelAngleOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Suhtelise nurga all joonte sätted</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Nurk:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished">Joone nurk</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Pikkus:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Joone pikkus</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Teksti sätted</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Tekst:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Nurk:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ModifyOffsetOptions</name>
+    <message>
+        <source>Modify Offset Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Kaugus:</translation>
+    </message>
+    <message>
+        <source>Offset from original entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MoveRotateOptions</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation type="unfinished">Pööra / Liiguta sätted</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Nurk:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PolylineOptions</name>
+    <message>
+        <source>Polyline Options</source>
+        <translation type="unfinished">Kompleksjoone sätted</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Sulge</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Tühista</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Joon</translation>
+    </message>
+    <message>
+        <source>Tangential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tan Radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished">Nurk</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Raadius:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Nurk:</translation>
+    </message>
+    <message>
+        <source>Counter Clockwise</source>
+        <translation type="unfinished">Vastupäeva</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">Päripäeva</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PrintPreviewOptions</name>
+    <message>
+        <source>Print Preview Options</source>
+        <translation type="unfinished">Prindi eelvaate sätted</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fixed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Black / White mode</source>
+        <translation type="unfinished">Lülita musta /valge režiim</translation>
+    </message>
+    <message>
+        <source>Center to page</source>
+        <translation type="unfinished">Tsentreeri lehele</translation>
+    </message>
+    <message>
+        <source>Fit to page</source>
+        <translation type="unfinished">Mahuta lehele</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_RoundOptions</name>
+    <message>
+        <source>Round Options</source>
+        <translation type="unfinished">Ümardamise sätted</translation>
+    </message>
+    <message>
+        <source>Check to trim both edges to the rounding</source>
+        <translation type="unfinished">Olemasolevate ringjoonte suhtes kontsentriliste ringjoonte joonestamine</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Raadius:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapDistOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished">Haardekauguse sätted</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Kaugus:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished">Haardekauguse sätted</translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of equidistant division points</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SplineOptions</name>
+    <message>
+        <source>Spline Options</source>
+        <translation type="unfinished">Kõvera sätted</translation>
+    </message>
+    <message>
+        <source>Degree:</source>
+        <translation type="unfinished">Aste:</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Suletud</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Tühista</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Teksti sätted</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Tekst:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Nurk:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TrimAmountOptions</name>
+    <message>
+        <source>Trim Amount Options</source>
+        <translation type="unfinished">Trimmimispikkuse sätted</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending.</source>
+        <translation type="unfinished">Pikkus. Negatiivse väärtuse korral trimmitakse, positiivse korral pikendatakse.</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Pikkus:</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

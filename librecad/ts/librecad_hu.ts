@@ -32,6 +32,37 @@
     </message>
 </context>
 <context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Fólia:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Zárt</translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>radius=%1 is too small for points selected
@@ -534,15 +565,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>set to bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>lower after entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>lower over entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -551,10 +574,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>set to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -643,11 +662,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Open IDE</source>
-        <translation type="unfinished">IDE megnyitása</translation>
+        <translation type="obsolete">IDE megnyitása</translation>
     </message>
     <message>
         <source>Run Script..</source>
-        <translation type="unfinished">Parancsfájl futtatása...</translation>
+        <translation type="obsolete">Parancsfájl futtatása...</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
@@ -787,6 +806,34 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Focus on &amp;Command Line</source>
         <translation type="unfinished">Fókusz a &amp;parancssorra</translation>
     </message>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">Bal</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Jobb</translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished">Felső</translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Floating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -814,6 +861,33 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_WidgetOptionsDialog</name>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished">Általános</translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LG_DimzerosBox</name>
     <message>
         <source>select:</source>
@@ -837,6 +911,25 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished">Eredeti töröttvonaltól vett távolság</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished">Másolatok:</translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -851,7 +944,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Specify a point</source>
-        <translation>Adjon meg egy pontot</translation>
+        <translation type="obsolete">Adjon meg egy pontot</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -989,7 +1082,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Scripts</source>
-        <translation>&amp;Parancsfájlok</translation>
+        <translation type="obsolete">&amp;Parancsfájlok</translation>
     </message>
     <message>
         <source>&amp;Windows</source>
@@ -1045,7 +1138,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="obsolete">Utóbbiak megnyitása...</translation>
+        <translation type="unfinished">Utóbbiak megnyitása...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -1200,11 +1293,11 @@ Most elmentheti a munkáját.</translation>
     </message>
     <message>
         <source>Running script &apos;%1&apos;</source>
-        <translation>&apos;%1&apos; script futtatása</translation>
+        <translation type="obsolete">&apos;%1&apos; script futtatása</translation>
     </message>
     <message>
         <source>Inserting block &apos;%1&apos;</source>
-        <translation>&apos;%1&apos; blokk beszúrása</translation>
+        <translation type="obsolete">&apos;%1&apos; blokk beszúrása</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -1450,11 +1543,11 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>DockWidgets</source>
+        <source>&amp;Dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Dockwidgets</source>
+        <source>Dock Areas</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3053,11 +3146,11 @@ p, li { white-space: pre-wrap; }
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation>Ív beállítások</translation>
+        <translation type="obsolete">Ív beállítások</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>Óramutató járásával egyezően</translation>
+        <translation type="obsolete">Óramutató járásával egyezően</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
@@ -3065,14 +3158,14 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Counterclockwise</source>
-        <translation>Óramutató járásával ellentétesen</translation>
+        <translation type="obsolete">Óramutató járásával ellentétesen</translation>
     </message>
 </context>
 <context>
     <name>QG_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation>Érintő ív beállításai</translation>
+        <translation type="obsolete">Érintő ív beállításai</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -3080,44 +3173,44 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation>Érintői körív sugara </translation>
+        <translation type="obsolete">Érintői körív sugara </translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>Érintői körív teljes látható szöge</translation>
+        <translation type="obsolete">Érintői körív teljes látható szöge</translation>
     </message>
     <message>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Sugár</translation>
+        <translation type="obsolete">Sugár</translation>
     </message>
     <message>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Szög</translation>
+        <translation type="obsolete">Szög</translation>
     </message>
 </context>
 <context>
     <name>QG_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation>Letörés beállítása</translation>
+        <translation type="obsolete">Letörés beállítása</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Levágás</translation>
+        <translation type="obsolete">Levágás</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Mindkét elem levágása</translation>
+        <translation type="obsolete">Mindkét elem levágása</translation>
     </message>
     <message>
         <source>Length 1:</source>
-        <translation>Hossz 1:</translation>
+        <translation type="obsolete">Hossz 1:</translation>
     </message>
     <message>
         <source>Length 2:</source>
-        <translation>Hossz 2:</translation>
+        <translation type="obsolete">Hossz 2:</translation>
     </message>
 </context>
 <context>
@@ -3970,30 +4063,18 @@ p, li { white-space: pre-wrap; }
     <name>QG_CircleOptions</name>
     <message>
         <source>Circle Options</source>
-        <translation>Kör beállítása</translation>
+        <translation type="obsolete">Kör beállítása</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Sugár:</translation>
+        <translation type="obsolete">Sugár:</translation>
     </message>
 </context>
 <context>
     <name>QG_CircleTan2Options</name>
     <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Radius:</source>
-        <translation type="unfinished">Sugár:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Sugár:</translation>
     </message>
 </context>
 <context>
@@ -4048,7 +4129,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Others..</source>
-        <translation>Egyéb..</translation>
+        <translation type="obsolete">Egyéb..</translation>
     </message>
     <message>
         <source>Dark Red</source>
@@ -4077,6 +4158,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Dark Gray</source>
         <translation>Sötétszürke</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4144,22 +4229,22 @@ p, li { white-space: pre-wrap; }
     <name>QG_DimLinearOptions</name>
     <message>
         <source>Linear Dimension Options</source>
-        <translation>Hossz méret beállítása</translation>
+        <translation type="obsolete">Hossz méret beállítása</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Szög:</translation>
+        <translation type="obsolete">Szög:</translation>
     </message>
 </context>
 <context>
     <name>QG_DimOptions</name>
     <message>
         <source>Dimension Options</source>
-        <translation>Méret beállítása</translation>
+        <translation type="obsolete">Méret beállítása</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation>Cimke:</translation>
+        <translation type="obsolete">Cimke:</translation>
     </message>
     <message utf8="true">
         <source>ø</source>
@@ -4167,11 +4252,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>°</source>
-        <translation>°</translation>
+        <translation type="obsolete">°</translation>
     </message>
     <message utf8="true">
         <source>±</source>
-        <translation>±</translation>
+        <translation type="obsolete">±</translation>
     </message>
     <message utf8="true">
         <source>¶</source>
@@ -4179,23 +4264,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>×</source>
-        <translation>×</translation>
+        <translation type="obsolete">×</translation>
     </message>
     <message utf8="true">
         <source>÷</source>
-        <translation>÷</translation>
+        <translation type="obsolete">÷</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
-    </message>
-    <message utf8="true">
-        <source>⌀</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <source>π</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">...</translation>
     </message>
 </context>
 <context>
@@ -6582,10 +6659,6 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Snap indicator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Crosshair</source>
         <translation type="unfinished">Célkereszt</translation>
     </message>
@@ -6599,14 +6672,6 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>Layer/ Block Selection:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6639,6 +6704,46 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scrollbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">Kör</translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished">Pont</translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide cursor when snapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start in tab mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7087,19 +7192,19 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Mégsem</translation>
+        <translation type="obsolete">Mégsem</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -7937,31 +8042,23 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     <name>QG_ImageOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Beszúrás beállítása</translation>
+        <translation type="obsolete">Beszúrás beállítása</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Szög:</translation>
+        <translation type="obsolete">Szög:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Forgatás szöge</translation>
+        <translation type="obsolete">Forgatás szöge</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Faktor:</translation>
+        <translation type="obsolete">Faktor:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Átméretezés</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Átméretezés</translation>
     </message>
 </context>
 <context>
@@ -8127,47 +8224,47 @@ Ezeken később is változtathat a beállítások ablakban.</translation>
     <name>QG_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Beillesztés beállítása</translation>
+        <translation type="obsolete">Beillesztés beállítása</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Szög:</translation>
+        <translation type="obsolete">Szög:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Forgatás szöge</translation>
+        <translation type="obsolete">Forgatás szöge</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Méret:</translation>
+        <translation type="obsolete">Méret:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Átméretezés</translation>
+        <translation type="obsolete">Átméretezés</translation>
     </message>
     <message>
         <source>Array:</source>
-        <translation>Tömb:</translation>
+        <translation type="obsolete">Tömb:</translation>
     </message>
     <message>
         <source>Number of Columns</source>
-        <translation>Oszlopok száma</translation>
+        <translation type="obsolete">Oszlopok száma</translation>
     </message>
     <message>
         <source>Number of Rows</source>
-        <translation>Sorok száma</translation>
+        <translation type="obsolete">Sorok száma</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Távolság:</translation>
+        <translation type="obsolete">Távolság:</translation>
     </message>
     <message>
         <source>Column Spacing</source>
-        <translation>Oszlopok távolsága</translation>
+        <translation type="obsolete">Oszlopok távolsága</translation>
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation>Sorok távolsága</translation>
+        <translation type="obsolete">Sorok távolsága</translation>
     </message>
 </context>
 <context>
@@ -8296,23 +8393,23 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LibraryInsertOptions</name>
     <message>
         <source>Library Insert Options</source>
-        <translation>Beszúrás elemkönyvtárból</translation>
+        <translation type="obsolete">Beszúrás elemkönyvtárból</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Szög:</translation>
+        <translation type="obsolete">Szög:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Forgatás szöge</translation>
+        <translation type="obsolete">Forgatás szöge</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Faktor:</translation>
+        <translation type="obsolete">Faktor:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Átméretezés</translation>
+        <translation type="obsolete">Átméretezés</translation>
     </message>
 </context>
 <context>
@@ -8334,184 +8431,180 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LineAngleOptions</name>
     <message>
         <source>Line Angle Options</source>
-        <translation>Vonalhúzás beállítása</translation>
+        <translation type="obsolete">Vonalhúzás beállítása</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Szög:</translation>
+        <translation type="obsolete">Szög:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Vonal szöge</translation>
+        <translation type="obsolete">Vonal szöge</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Hossz:</translation>
+        <translation type="obsolete">Hossz:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Vonal hossza</translation>
+        <translation type="obsolete">Vonal hossza</translation>
     </message>
     <message>
         <source>Snap Point:</source>
-        <translation>Pont igazítása:</translation>
+        <translation type="obsolete">Pont igazítása:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Kezdet</translation>
+        <translation type="obsolete">Kezdet</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Felező</translation>
+        <translation type="obsolete">Felező</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Vég</translation>
+        <translation type="obsolete">Vég</translation>
     </message>
 </context>
 <context>
     <name>QG_LineBisectorOptions</name>
     <message>
         <source>Line Bisector Options</source>
-        <translation>Szögfelező beállítása</translation>
+        <translation type="obsolete">Szögfelező beállítása</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Hossz:</translation>
+        <translation type="obsolete">Hossz:</translation>
     </message>
     <message>
         <source>Length of bisector</source>
-        <translation>Szögfelező hossza</translation>
+        <translation type="obsolete">Szögfelező hossza</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Darab:</translation>
+        <translation type="obsolete">Darab:</translation>
     </message>
     <message>
         <source>Number of bisectors to create</source>
-        <translation>Felosztások száma</translation>
+        <translation type="obsolete">Felosztások száma</translation>
     </message>
 </context>
 <context>
     <name>QG_LineOptions</name>
     <message>
         <source>Line Options</source>
-        <translation>Vonal beállítása</translation>
+        <translation type="obsolete">Vonal beállítása</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Bezár</translation>
+        <translation type="obsolete">Bezár</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Vissza</translation>
+        <translation type="obsolete">Vissza</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
-        <translation>Készítsen egy zárt kontúrvonalat vonalak rajzolásával</translation>
+        <translation type="obsolete">Készítsen egy zárt kontúrvonalat vonalak rajzolásával</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
-        <translation>Utolsó vonal visszavonása</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Utolsó vonal visszavonása</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Mégis</translation>
+        <translation type="obsolete">Mégis</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
-        <translation>Párhuzamos húzása</translation>
+        <translation type="obsolete">Párhuzamos húzása</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Távolság:</translation>
+        <translation type="obsolete">Távolság:</translation>
     </message>
     <message>
         <source>Distance to original entity</source>
-        <translation>Távolság a kiidulási elemtől</translation>
+        <translation type="obsolete">Távolság a kiidulási elemtől</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Darab:</translation>
+        <translation type="obsolete">Darab:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Párhuzamos vonalak száma</translation>
+        <translation type="obsolete">Párhuzamos vonalak száma</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation>Ponton keresztül húzott párhuzamos</translation>
+        <translation type="obsolete">Ponton keresztül húzott párhuzamos</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Darab:</translation>
+        <translation type="obsolete">Darab:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Párhuzamos vonalak száma</translation>
+        <translation type="obsolete">Párhuzamos vonalak száma</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygon2Options</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Poligon beállítása</translation>
+        <translation type="obsolete">Poligon beállítása</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Darab:</translation>
+        <translation type="obsolete">Darab:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Élek száma</translation>
+        <translation type="obsolete">Élek száma</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygonOptions</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Poligon beállítása</translation>
+        <translation type="obsolete">Poligon beállítása</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Darab:</translation>
+        <translation type="obsolete">Darab:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Élek száma</translation>
+        <translation type="obsolete">Élek száma</translation>
     </message>
 </context>
 <context>
     <name>QG_LineRelAngleOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Szögben álló vonalak</translation>
+        <translation type="obsolete">Szögben álló vonalak</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Szög:</translation>
+        <translation type="obsolete">Szög:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Vonal szöge</translation>
+        <translation type="obsolete">Vonal szöge</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Hossz:</translation>
+        <translation type="obsolete">Hossz:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Vonal hossza</translation>
+        <translation type="obsolete">Vonal hossza</translation>
     </message>
 </context>
 <context>
@@ -8637,30 +8730,22 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_MTextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation type="unfinished">Szöveg beállítása</translation>
+        <translation type="obsolete">Szöveg beállítása</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation type="unfinished">Szöveg:</translation>
+        <translation type="obsolete">Szöveg:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Szög:</translation>
+        <translation type="obsolete">Szög:</translation>
     </message>
 </context>
 <context>
     <name>QG_ModifyOffsetOptions</name>
     <message>
-        <source>Modify Offset Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Distance:</source>
-        <translation type="unfinished">Távolság:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Távolság:</translation>
     </message>
 </context>
 <context>
@@ -8694,119 +8779,115 @@ p, li { white-space: pre-wrap; }
     <name>QG_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
-        <translation>Mozgatás és forgatás</translation>
+        <translation type="obsolete">Mozgatás és forgatás</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Szög:</translation>
+        <translation type="obsolete">Szög:</translation>
     </message>
 </context>
 <context>
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation>Vonal színe</translation>
+        <translation type="obsolete">Vonal színe</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation>Vonal vastagsága</translation>
+        <translation type="obsolete">Vonal vastagsága</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation>Vonal típusa</translation>
+        <translation type="obsolete">Vonal típusa</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Vonalhoz képesti szög beállítások</translation>
+        <translation type="obsolete">Vonalhoz képesti szög beállítások</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Térköz:</translation>
+        <translation type="obsolete">Térköz:</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation>Eredeti töröttvonaltól vett távolság</translation>
+        <translation type="obsolete">Eredeti töröttvonaltól vett távolság</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation>Másolatok:</translation>
+        <translation type="obsolete">Másolatok:</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation>Töröttvonal beállítások</translation>
+        <translation type="obsolete">Töröttvonal beállítások</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Bezárás</translation>
+        <translation type="obsolete">Bezárás</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Visszavonás</translation>
+        <translation type="obsolete">Visszavonás</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Vonal</translation>
+        <translation type="obsolete">Vonal</translation>
     </message>
     <message>
         <source>Tangential</source>
-        <translation>Érintő</translation>
+        <translation type="obsolete">Érintő</translation>
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation type="unfinished">Érintő sugár</translation>
+        <translation type="obsolete">Érintő sugár</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Szög</translation>
+        <translation type="obsolete">Szög</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Sugár:</translation>
+        <translation type="obsolete">Sugár:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Szög:</translation>
+        <translation type="obsolete">Szög:</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>Óramutató járása szerint</translation>
+        <translation type="obsolete">Óramutató járása szerint</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation>Óramutató járásával ellentétesen</translation>
+        <translation type="obsolete">Óramutató járásával ellentétesen</translation>
+    </message>
+    <message>
+        <source>wrong action type</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_PrintPreviewOptions</name>
     <message>
         <source>Print Preview Options</source>
-        <translation>Nyomtatási kép</translation>
+        <translation type="obsolete">Nyomtatási kép</translation>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation>Fekete / Fehér váltás</translation>
+        <translation type="obsolete">Fekete / Fehér váltás</translation>
     </message>
     <message>
         <source>Center to page</source>
-        <translation>Lap közepére</translation>
+        <translation type="obsolete">Lap közepére</translation>
     </message>
     <message>
         <source>Fit to page</source>
-        <translation>Laphoz igazítás</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Laphoz igazítás</translation>
     </message>
 </context>
 <context>
@@ -8817,26 +8898,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="unfinished">Utóbbiak megnyitása...</translation>
+        <translation type="obsolete">Utóbbiak megnyitása...</translation>
     </message>
 </context>
 <context>
     <name>QG_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation>Lekerekítés</translation>
+        <translation type="obsolete">Lekerekítés</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Metszés</translation>
+        <translation type="obsolete">Metszés</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Elemek levágása a lekerekítésig</translation>
+        <translation type="obsolete">Elemek levágása a lekerekítésig</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Sugár:</translation>
+        <translation type="obsolete">Sugár:</translation>
     </message>
 </context>
 <context>
@@ -8890,26 +8971,26 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Igazítás távolsága</translation>
+        <translation type="obsolete">Igazítás távolsága</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Távolság:</translation>
+        <translation type="obsolete">Távolság:</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Igazítási pontok távolsága</translation>
+        <translation type="obsolete">Igazítási pontok távolsága</translation>
     </message>
     <message>
         <source>Middle Points:</source>
-        <translation>Középpontok:</translation>
+        <translation type="obsolete">Középpontok:</translation>
     </message>
     <message>
         <source>Number of equidistant division points</source>
-        <translation>Egyenlő távolságra lévő osztópontok száma</translation>
+        <translation type="obsolete">Egyenlő távolságra lévő osztópontok száma</translation>
     </message>
 </context>
 <context>
@@ -9027,11 +9108,11 @@ p, li { white-space: pre-wrap; }
     <name>QG_SplineOptions</name>
     <message>
         <source>Spline Options</source>
-        <translation>Görbék beállítása</translation>
+        <translation type="obsolete">Görbék beállítása</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation>Fok:</translation>
+        <translation type="obsolete">Fok:</translation>
     </message>
     <message>
         <source>1</source>
@@ -9047,37 +9128,37 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Closed</source>
-        <translation>Zárt</translation>
+        <translation type="obsolete">Zárt</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Vissza</translation>
+        <translation type="obsolete">Vissza</translation>
     </message>
 </context>
 <context>
     <name>QG_TextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation>Szöveg beállítása</translation>
+        <translation type="obsolete">Szöveg beállítása</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>Szöveg:</translation>
+        <translation type="obsolete">Szöveg:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Szög:</translation>
+        <translation type="obsolete">Szög:</translation>
     </message>
 </context>
 <context>
     <name>QG_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation>Levágás mértéke</translation>
+        <translation type="obsolete">Levágás mértéke</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Távolság. Negatív a vágáshoz, pozitív a kiterjesztéshez.</translation>
+        <translation type="obsolete">Távolság. Negatív a vágáshoz, pozitív a kiterjesztéshez.</translation>
     </message>
     <message>
         <source>Amount:</source>
@@ -9085,15 +9166,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Length:</source>
-        <translation>Hossz:</translation>
+        <translation type="obsolete">Hossz:</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>Távolság. Negatív értékek levágáshoz, pozitív értékek növeléshez. A mínusz előjel nem számít adott hoszra vágásnál.</translation>
+        <translation type="obsolete">Távolság. Negatív értékek levágáshoz, pozitív értékek növeléshez. A mínusz előjel nem számít adott hoszra vágásnál.</translation>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>A megadott hosszúság a végső hosszt határozza meg, nem a hosszúság növekedését.</translation>
+        <translation type="obsolete">A megadott hosszúság a végső hosszt határozza meg, nem a hosszúság növekedését.</translation>
     </message>
 </context>
 <context>
@@ -10795,6 +10876,18 @@ Continue?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -14237,11 +14330,11 @@ Continue?</source>
         <translation type="unfinished">Mégsem</translation>
     </message>
     <message>
-        <source>Entity must be a line, arc or polyline.</source>
+        <source>Entity can not be a closed polyline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Entity can not be a closed polyline.</source>
+        <source>Polyline created</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -14328,6 +14421,14 @@ Continue?</source>
     </message>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in Black/White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -15623,6 +15724,651 @@ Continue?</source>
         <source>re</source>
         <comment>modify - revert direction</comment>
         <translation type="obsolete">te</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation type="unfinished">Ív beállítások</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="unfinished">Óramutató járásával ellentétesen</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcTangentialOptions</name>
+    <message>
+        <source>Tangential Arc Options</source>
+        <translation type="unfinished">Érintő ív beállításai</translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="unfinished">Érintői körív sugara </translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation type="unfinished">Érintői körív teljes látható szöge</translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished">Sugár</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished">Szög</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_BevelOptions</name>
+    <message>
+        <source>Bevel Options</source>
+        <translation type="unfinished">Letörés beállítása</translation>
+    </message>
+    <message>
+        <source>Check to trim both entities to the bevel</source>
+        <translation type="unfinished">Mindkét elem levágása</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length 1:</source>
+        <translation type="unfinished">Hossz 1:</translation>
+    </message>
+    <message>
+        <source>Length 2:</source>
+        <translation type="unfinished">Hossz 2:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="unfinished">Kör beállítása</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Sugár:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleTan2Options</name>
+    <message>
+        <source>Circle Tangential2 Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Sugár:</translation>
+    </message>
+    <message>
+        <source>Radius of tangential circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimLinearOptions</name>
+    <message>
+        <source>Linear Dimension Options</source>
+        <translation type="unfinished">Hossz méret beállítása</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Szög:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimOptions</name>
+    <message>
+        <source>Dimension Options</source>
+        <translation type="unfinished">Méret beállítása</translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="unfinished">Cimke:</translation>
+    </message>
+    <message utf8="true">
+        <source>⌀</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>°</source>
+        <translation type="unfinished">°</translation>
+    </message>
+    <message utf8="true">
+        <source>±</source>
+        <translation type="unfinished">±</translation>
+    </message>
+    <message utf8="true">
+        <source>π</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>×</source>
+        <translation type="unfinished">×</translation>
+    </message>
+    <message utf8="true">
+        <source>÷</source>
+        <translation type="unfinished">÷</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ImageOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Szög:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Forgatás szöge</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Átméretezés</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_InsertOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Szög:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Forgatás szöge</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Átméretezés</translation>
+    </message>
+    <message>
+        <source>Array:</source>
+        <translation type="unfinished">Tömb:</translation>
+    </message>
+    <message>
+        <source>Number of Columns</source>
+        <translation type="unfinished">Oszlopok száma</translation>
+    </message>
+    <message>
+        <source>Number of Rows</source>
+        <translation type="unfinished">Sorok száma</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Column Spacing</source>
+        <translation type="unfinished">Oszlopok távolsága</translation>
+    </message>
+    <message>
+        <source>Row Spacing</source>
+        <translation type="unfinished">Sorok távolsága</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LibraryInsertOptions</name>
+    <message>
+        <source>Library Insert Options</source>
+        <translation type="unfinished">Beszúrás elemkönyvtárból</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Szög:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Forgatás szöge</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Átméretezés</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineAngleOptions</name>
+    <message>
+        <source>Line Angle Options</source>
+        <translation type="unfinished">Vonalhúzás beállítása</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Szög:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished">Vonal szöge</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Hossz:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Vonal hossza</translation>
+    </message>
+    <message>
+        <source>Snap Point:</source>
+        <translation type="unfinished">Pont igazítása:</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished">Kezdet</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">Felező</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="unfinished">Vég</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineBisectorOptions</name>
+    <message>
+        <source>Line Bisector Options</source>
+        <translation type="unfinished">Szögfelező beállítása</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Hossz:</translation>
+    </message>
+    <message>
+        <source>Length of bisector</source>
+        <translation type="unfinished">Szögfelező hossza</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of bisectors to create</source>
+        <translation type="unfinished">Felosztások száma</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineOptions</name>
+    <message>
+        <source>Line Options</source>
+        <translation type="unfinished">Vonal beállítása</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation type="unfinished">Készítsen egy zárt kontúrvonalat vonalak rajzolásával</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="unfinished">Utolsó vonal visszavonása</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Mégis</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelOptions</name>
+    <message>
+        <source>Line Parallel Options</source>
+        <translation type="unfinished">Párhuzamos húzása</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Távolság:</translation>
+    </message>
+    <message>
+        <source>Distance to original entity</source>
+        <translation type="unfinished">Távolság a kiidulási elemtől</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished">Párhuzamos vonalak száma</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelThroughOptions</name>
+    <message>
+        <source>Line Parallel Through Options</source>
+        <translation type="unfinished">Ponton keresztül húzott párhuzamos</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished">Párhuzamos vonalak száma</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygon2Options</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished">Poligon beállítása</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished">Élek száma</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygonOptions</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished">Poligon beállítása</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished">Élek száma</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineRelAngleOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Szög:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished">Vonal szöge</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Hossz:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Vonal hossza</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Szöveg beállítása</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Szöveg:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Szög:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ModifyOffsetOptions</name>
+    <message>
+        <source>Modify Offset Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Távolság:</translation>
+    </message>
+    <message>
+        <source>Offset from original entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MoveRotateOptions</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation type="unfinished">Mozgatás és forgatás</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Szög:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PolylineOptions</name>
+    <message>
+        <source>Polyline Options</source>
+        <translation type="unfinished">Töröttvonal beállítások</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Vonal</translation>
+    </message>
+    <message>
+        <source>Tangential</source>
+        <translation type="unfinished">Érintő</translation>
+    </message>
+    <message>
+        <source>Tan Radius</source>
+        <translation type="unfinished">Érintő sugár</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished">Szög</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Sugár:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Szög:</translation>
+    </message>
+    <message>
+        <source>Counter Clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PrintPreviewOptions</name>
+    <message>
+        <source>Print Preview Options</source>
+        <translation type="unfinished">Nyomtatási kép</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fixed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Black / White mode</source>
+        <translation type="unfinished">Fekete / Fehér váltás</translation>
+    </message>
+    <message>
+        <source>Center to page</source>
+        <translation type="unfinished">Lap közepére</translation>
+    </message>
+    <message>
+        <source>Fit to page</source>
+        <translation type="unfinished">Laphoz igazítás</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_RoundOptions</name>
+    <message>
+        <source>Round Options</source>
+        <translation type="unfinished">Lekerekítés</translation>
+    </message>
+    <message>
+        <source>Check to trim both edges to the rounding</source>
+        <translation type="unfinished">Elemek levágása a lekerekítésig</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Sugár:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapDistOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Távolság:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation type="unfinished">Középpontok:</translation>
+    </message>
+    <message>
+        <source>Number of equidistant division points</source>
+        <translation type="unfinished">Egyenlő távolságra lévő osztópontok száma</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SplineOptions</name>
+    <message>
+        <source>Spline Options</source>
+        <translation type="unfinished">Görbék beállítása</translation>
+    </message>
+    <message>
+        <source>Degree:</source>
+        <translation type="unfinished">Fok:</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Zárt</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Szöveg beállítása</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Szöveg:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Szög:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TrimAmountOptions</name>
+    <message>
+        <source>Trim Amount Options</source>
+        <translation type="unfinished">Levágás mértéke</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending.</source>
+        <translation type="unfinished">Távolság. Negatív a vágáshoz, pozitív a kiterjesztéshez.</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Hossz:</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation type="unfinished">Távolság. Negatív értékek levágáshoz, pozitív értékek növeléshez. A mínusz előjel nem számít adott hoszra vágásnál.</translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation type="unfinished">A megadott hosszúság a végső hosszt határozza meg, nem a hosszúság növekedését.</translation>
     </message>
 </context>
 </TS>

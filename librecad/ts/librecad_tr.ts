@@ -17,6 +17,37 @@
     </message>
 </context>
 <context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Katman:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometri</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>radius=%1 is too small for points selected
@@ -519,15 +550,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>set to bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>lower after entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>lower over entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -536,10 +559,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>set to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -628,11 +647,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Open IDE</source>
-        <translation type="unfinished">IDE Aç</translation>
+        <translation type="obsolete">IDE Aç</translation>
     </message>
     <message>
         <source>Run Script..</source>
-        <translation type="unfinished">Betik Çalıştır..</translation>
+        <translation type="obsolete">Betik Çalıştır..</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
@@ -772,6 +791,34 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Focus on &amp;Command Line</source>
         <translation type="unfinished">&amp;Komut Satırına Geç</translation>
     </message>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">Sol</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Sağ</translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Floating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -799,6 +846,33 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_WidgetOptionsDialog</name>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LG_DimzerosBox</name>
     <message>
         <source>select:</source>
@@ -822,6 +896,25 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Çizgilerin Göreli Açı Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Boşluk:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -834,10 +927,6 @@ distance between points=%2 is larger than diameter=%3</source>
 </context>
 <context>
     <name>QC_ActionGetPoint</name>
-    <message>
-        <source>Specify a point</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">İptal</translation>
@@ -966,7 +1055,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Scripts</source>
-        <translation>&amp;Betikler</translation>
+        <translation type="obsolete">&amp;Betikler</translation>
     </message>
     <message>
         <source>&amp;Windows</source>
@@ -1026,7 +1115,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="obsolete">Son kullanılan dosya açılıyor...</translation>
+        <translation type="unfinished">Son kullanılan dosya açılıyor...</translation>
     </message>
     <message>
         <source>Cannot open the file
@@ -1159,14 +1248,6 @@ adresinden temin edin. Şimdi çalışmanızı kaydedin.</translation>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inserting block &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1399,11 +1480,11 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>DockWidgets</source>
+        <source>&amp;Dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Dockwidgets</source>
+        <source>Dock Areas</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1725,71 +1806,50 @@ p, li { white-space: pre-wrap; }
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation>Yay Seçenekleri</translation>
+        <translation type="obsolete">Yay Seçenekleri</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>Akrep Yönü</translation>
+        <translation type="obsolete">Akrep Yönü</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
         <translation type="obsolete">Akrep Yönünün Tersi</translation>
     </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QG_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Radius:</source>
         <translation type="obsolete">Yarıçap:</translation>
     </message>
     <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished">Açı</translation>
+        <translation type="obsolete">Açı</translation>
     </message>
 </context>
 <context>
     <name>QG_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation>Yuvarlatma Seçenekleri</translation>
+        <translation type="obsolete">Yuvarlatma Seçenekleri</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Kırp</translation>
+        <translation type="obsolete">Kırp</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Yuvarlama uygulanacak öğelerin kırpılmasını denetler</translation>
+        <translation type="obsolete">Yuvarlama uygulanacak öğelerin kırpılmasını denetler</translation>
     </message>
     <message>
         <source>Length 1:</source>
-        <translation>1. Uzunluk:</translation>
+        <translation type="obsolete">1. Uzunluk:</translation>
     </message>
     <message>
         <source>Length 2:</source>
-        <translation>2. Uzunluk:</translation>
+        <translation type="obsolete">2. Uzunluk:</translation>
     </message>
 </context>
 <context>
@@ -2475,30 +2535,18 @@ için açar</translation>
     <name>QG_CircleOptions</name>
     <message>
         <source>Circle Options</source>
-        <translation>Çember Seçenekleri</translation>
+        <translation type="obsolete">Çember Seçenekleri</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Yarıçap:</translation>
+        <translation type="obsolete">Yarıçap:</translation>
     </message>
 </context>
 <context>
     <name>QG_CircleTan2Options</name>
     <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Radius:</source>
-        <translation type="unfinished">Yarıçap:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Yarıçap:</translation>
     </message>
 </context>
 <context>
@@ -2553,7 +2601,7 @@ için açar</translation>
     </message>
     <message>
         <source>Others..</source>
-        <translation>Diğerleri..</translation>
+        <translation type="obsolete">Diğerleri..</translation>
     </message>
     <message>
         <source>Dark Red</source>
@@ -2581,6 +2629,10 @@ için açar</translation>
     </message>
     <message>
         <source>Dark Gray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2649,22 +2701,22 @@ için açar</translation>
     <name>QG_DimLinearOptions</name>
     <message>
         <source>Linear Dimension Options</source>
-        <translation>Doğrusal Ölçülendirme Seçenekleri</translation>
+        <translation type="obsolete">Doğrusal Ölçülendirme Seçenekleri</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Açı:</translation>
+        <translation type="obsolete">Açı:</translation>
     </message>
 </context>
 <context>
     <name>QG_DimOptions</name>
     <message>
         <source>Dimension Options</source>
-        <translation>Ölçülendirme Seçenekleri</translation>
+        <translation type="obsolete">Ölçülendirme Seçenekleri</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation>Etiket:</translation>
+        <translation type="obsolete">Etiket:</translation>
     </message>
     <message utf8="true">
         <source>ø</source>
@@ -2672,11 +2724,11 @@ için açar</translation>
     </message>
     <message utf8="true">
         <source>°</source>
-        <translation>°</translation>
+        <translation type="obsolete">°</translation>
     </message>
     <message utf8="true">
         <source>±</source>
-        <translation>±</translation>
+        <translation type="obsolete">±</translation>
     </message>
     <message utf8="true">
         <source>¶</source>
@@ -2684,23 +2736,11 @@ için açar</translation>
     </message>
     <message utf8="true">
         <source>×</source>
-        <translation>×</translation>
+        <translation type="obsolete">×</translation>
     </message>
     <message utf8="true">
         <source>÷</source>
-        <translation>÷</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <source>⌀</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <source>π</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">÷</translation>
     </message>
 </context>
 <context>
@@ -4881,10 +4921,6 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Snap indicator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Crosshair</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4898,14 +4934,6 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
     <message>
         <source>Layer/ Block Selection:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4938,6 +4966,46 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
     <message>
         <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scrollbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">Çember</translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished">Nokta</translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide cursor when snapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start in tab mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5286,19 +5354,19 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;Tamam</translation>
+        <translation type="obsolete">&amp;Tamam</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation type="unfinished">Alt+T</translation>
+        <translation type="obsolete">Alt+T</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">İptal</translation>
+        <translation type="obsolete">İptal</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -6092,31 +6160,23 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     <name>QG_ImageOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Yerleştirme Seçenekleri</translation>
+        <translation type="obsolete">Yerleştirme Seçenekleri</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Açı:</translation>
+        <translation type="obsolete">Açı:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Döndürme Açısı</translation>
+        <translation type="obsolete">Döndürme Açısı</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Çarpan:</translation>
+        <translation type="obsolete">Çarpan:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Oranlama Çarpanı</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Oranlama Çarpanı</translation>
     </message>
 </context>
 <context>
@@ -6278,47 +6338,47 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     <name>QG_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Yerleştirme Seçenekleri</translation>
+        <translation type="obsolete">Yerleştirme Seçenekleri</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Açı:</translation>
+        <translation type="obsolete">Açı:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Döndürme Açısı</translation>
+        <translation type="obsolete">Döndürme Açısı</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Çarpan:</translation>
+        <translation type="obsolete">Çarpan:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Oranlama Çarpanı</translation>
+        <translation type="obsolete">Oranlama Çarpanı</translation>
     </message>
     <message>
         <source>Array:</source>
-        <translation>Dizi:</translation>
+        <translation type="obsolete">Dizi:</translation>
     </message>
     <message>
         <source>Number of Columns</source>
-        <translation>Sütun Sayısı</translation>
+        <translation type="obsolete">Sütun Sayısı</translation>
     </message>
     <message>
         <source>Number of Rows</source>
-        <translation>Satır Sayısı</translation>
+        <translation type="obsolete">Satır Sayısı</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Boşluk:</translation>
+        <translation type="obsolete">Boşluk:</translation>
     </message>
     <message>
         <source>Column Spacing</source>
-        <translation>Sütun Boşluğu</translation>
+        <translation type="obsolete">Sütun Boşluğu</translation>
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation>Satır Boşluğu</translation>
+        <translation type="obsolete">Satır Boşluğu</translation>
     </message>
 </context>
 <context>
@@ -6443,23 +6503,23 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LibraryInsertOptions</name>
     <message>
         <source>Library Insert Options</source>
-        <translation>Kütüphane Yerleştirme Seçenekleri</translation>
+        <translation type="obsolete">Kütüphane Yerleştirme Seçenekleri</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Açı:</translation>
+        <translation type="obsolete">Açı:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Döndürme Açısı</translation>
+        <translation type="obsolete">Döndürme Açısı</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Çarpan:</translation>
+        <translation type="obsolete">Çarpan:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Oranlama Çarpanı</translation>
+        <translation type="obsolete">Oranlama Çarpanı</translation>
     </message>
 </context>
 <context>
@@ -6481,184 +6541,172 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LineAngleOptions</name>
     <message>
         <source>Line Angle Options</source>
-        <translation>Çizgi Açısı Seçenekleri</translation>
+        <translation type="obsolete">Çizgi Açısı Seçenekleri</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Açı:</translation>
+        <translation type="obsolete">Açı:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Çizgi açısı</translation>
+        <translation type="obsolete">Çizgi açısı</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Uzunluk:</translation>
+        <translation type="obsolete">Uzunluk:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Çizgi uzunluğu</translation>
+        <translation type="obsolete">Çizgi uzunluğu</translation>
     </message>
     <message>
         <source>Snap Point:</source>
-        <translation>Yakalama Noktası:</translation>
+        <translation type="obsolete">Yakalama Noktası:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Başlangıç</translation>
+        <translation type="obsolete">Başlangıç</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Orta</translation>
+        <translation type="obsolete">Orta</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Bitiş</translation>
+        <translation type="obsolete">Bitiş</translation>
     </message>
 </context>
 <context>
     <name>QG_LineBisectorOptions</name>
     <message>
         <source>Line Bisector Options</source>
-        <translation>Açıortay Seçenekleri</translation>
+        <translation type="obsolete">Açıortay Seçenekleri</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Uzunluk:</translation>
+        <translation type="obsolete">Uzunluk:</translation>
     </message>
     <message>
         <source>Length of bisector</source>
-        <translation>Açıortay uzunluğu</translation>
+        <translation type="obsolete">Açıortay uzunluğu</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Sayısı:</translation>
+        <translation type="obsolete">Sayısı:</translation>
     </message>
     <message>
         <source>Number of bisectors to create</source>
-        <translation>Oluşturulacak açıortayların sayısı</translation>
+        <translation type="obsolete">Oluşturulacak açıortayların sayısı</translation>
     </message>
 </context>
 <context>
     <name>QG_LineOptions</name>
     <message>
         <source>Line Options</source>
-        <translation>Çizgi Seçenekleri</translation>
+        <translation type="obsolete">Çizgi Seçenekleri</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Kapat</translation>
+        <translation type="obsolete">Kapat</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Geri al</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Geri al</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Yinele</translation>
+        <translation type="obsolete">Yinele</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
-        <translation>Paralel Çizgi Seçenekleri</translation>
+        <translation type="obsolete">Paralel Çizgi Seçenekleri</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Mesafe:</translation>
+        <translation type="obsolete">Mesafe:</translation>
     </message>
     <message>
         <source>Distance to original entity</source>
-        <translation>Özgün öğeye uzaklık</translation>
+        <translation type="obsolete">Özgün öğeye uzaklık</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Sayısı:</translation>
+        <translation type="obsolete">Sayısı:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Oluşturulacak paralellerin sayısı</translation>
+        <translation type="obsolete">Oluşturulacak paralellerin sayısı</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation>Paralel Çizgiler Arası Seçenekler</translation>
+        <translation type="obsolete">Paralel Çizgiler Arası Seçenekler</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Sayısı:</translation>
+        <translation type="obsolete">Sayısı:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Oluşturulacak paralellerin sayısı</translation>
+        <translation type="obsolete">Oluşturulacak paralellerin sayısı</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygon2Options</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Yamuk Seçenekleri</translation>
+        <translation type="obsolete">Yamuk Seçenekleri</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Sayısı:</translation>
+        <translation type="obsolete">Sayısı:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Kenar sayısı</translation>
+        <translation type="obsolete">Kenar sayısı</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygonOptions</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Çokgen Seçenekleri</translation>
+        <translation type="obsolete">Çokgen Seçenekleri</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Sayısı:</translation>
+        <translation type="obsolete">Sayısı:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Köşe sayısı</translation>
+        <translation type="obsolete">Köşe sayısı</translation>
     </message>
 </context>
 <context>
     <name>QG_LineRelAngleOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Çizgilerin Göreli Açı Seçenekleri</translation>
+        <translation type="obsolete">Çizgilerin Göreli Açı Seçenekleri</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Açı:</translation>
+        <translation type="obsolete">Açı:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Çizgi açısı</translation>
+        <translation type="obsolete">Çizgi açısı</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Uzunluk:</translation>
+        <translation type="obsolete">Uzunluk:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Çizgi uzunluğu</translation>
+        <translation type="obsolete">Çizgi uzunluğu</translation>
     </message>
 </context>
 <context>
@@ -6784,30 +6832,22 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_MTextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation type="unfinished">Metin Seçenekleri</translation>
+        <translation type="obsolete">Metin Seçenekleri</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation type="unfinished">Metin:</translation>
+        <translation type="obsolete">Metin:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Açı:</translation>
+        <translation type="obsolete">Açı:</translation>
     </message>
 </context>
 <context>
     <name>QG_ModifyOffsetOptions</name>
     <message>
-        <source>Modify Offset Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Distance:</source>
-        <translation type="unfinished">Mesafe:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Mesafe:</translation>
     </message>
 </context>
 <context>
@@ -6837,60 +6877,37 @@ p, li { white-space: pre-wrap; }
     <name>QG_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
-        <translation>Döndürerek Taşıma Seçenekleri</translation>
+        <translation type="obsolete">Döndürerek Taşıma Seçenekleri</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Açı:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PenToolBar</name>
-    <message>
-        <source>Line color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Açı:</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Çizgilerin Göreli Açı Seçenekleri</translation>
+        <translation type="obsolete">Çizgilerin Göreli Açı Seçenekleri</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation type="unfinished">Boşluk:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Boşluk:</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation type="unfinished">Yamuk Seçenekleri</translation>
+        <translation type="obsolete">Yamuk Seçenekleri</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Kapat</translation>
+        <translation type="obsolete">Kapat</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Geri al</translation>
+        <translation type="obsolete">Geri al</translation>
     </message>
     <message>
         <source>Arc</source>
@@ -6898,62 +6915,38 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Yarıçap:</translation>
+        <translation type="obsolete">Yarıçap:</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished">Çizgi</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Çizgi</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished">Açı</translation>
+        <translation type="obsolete">Açı</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Açı:</translation>
+        <translation type="obsolete">Açı:</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation type="unfinished">Akrep Yönü</translation>
+        <translation type="obsolete">Akrep Yönü</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation type="unfinished">Akrep Yönünün Tersi</translation>
+        <translation type="obsolete">Akrep Yönünün Tersi</translation>
+    </message>
+    <message>
+        <source>wrong action type</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_PrintPreviewOptions</name>
     <message>
         <source>Print Preview Options</source>
-        <translation>Yazdırma Önzileme Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Center to page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fit to page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Yazdırma Önzileme Seçenekleri</translation>
     </message>
 </context>
 <context>
@@ -6964,26 +6957,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="unfinished">Son kullanılan dosya açılıyor...</translation>
+        <translation type="obsolete">Son kullanılan dosya açılıyor...</translation>
     </message>
 </context>
 <context>
     <name>QG_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation>Yuvarlatma Seçenekleri</translation>
+        <translation type="obsolete">Yuvarlatma Seçenekleri</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Kırp</translation>
+        <translation type="obsolete">Kırp</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Yuvarlatılacak köşenin kenarlarının kırpılmasını denetler</translation>
+        <translation type="obsolete">Yuvarlatılacak köşenin kenarlarının kırpılmasını denetler</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Yarıçap:</translation>
+        <translation type="obsolete">Yarıçap:</translation>
     </message>
 </context>
 <context>
@@ -7029,26 +7022,18 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Yakalama Mesafesi Seçenekleri</translation>
+        <translation type="obsolete">Yakalama Mesafesi Seçenekleri</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Mesafe:</translation>
+        <translation type="obsolete">Mesafe:</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="unfinished">Yakalama Mesafesi Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of equidistant division points</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Yakalama Mesafesi Seçenekleri</translation>
     </message>
 </context>
 <context>
@@ -7165,14 +7150,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_SplineOptions</name>
     <message>
-        <source>Spline Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>1</source>
         <translation type="obsolete">1</translation>
     </message>
@@ -7185,38 +7162,34 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">3</translation>
     </message>
     <message>
-        <source>Closed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Undo</source>
-        <translation type="unfinished">Geri al</translation>
+        <translation type="obsolete">Geri al</translation>
     </message>
 </context>
 <context>
     <name>QG_TextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation>Metin Seçenekleri</translation>
+        <translation type="obsolete">Metin Seçenekleri</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>Metin:</translation>
+        <translation type="obsolete">Metin:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Açı:</translation>
+        <translation type="obsolete">Açı:</translation>
     </message>
 </context>
 <context>
     <name>QG_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation>Kırpma Uzunluğu Seçenekleri</translation>
+        <translation type="obsolete">Kırpma Uzunluğu Seçenekleri</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Mesafe. Negatif değerler kısaltır, pozitif değerler uzatır.</translation>
+        <translation type="obsolete">Mesafe. Negatif değerler kısaltır, pozitif değerler uzatır.</translation>
     </message>
     <message>
         <source>Amount:</source>
@@ -7224,15 +7197,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Uzunluk:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Uzunluk:</translation>
     </message>
 </context>
 <context>
@@ -8921,6 +8886,18 @@ Continue?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12171,11 +12148,11 @@ Continue?</source>
         <translation type="unfinished">İptal</translation>
     </message>
     <message>
-        <source>Entity must be a line, arc or polyline.</source>
+        <source>Entity can not be a closed polyline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Entity can not be a closed polyline.</source>
+        <source>Polyline created</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12262,6 +12239,14 @@ Continue?</source>
     </message>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in Black/White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -13513,6 +13498,651 @@ Continue?</source>
         <source>re</source>
         <comment>modify - revert direction</comment>
         <translation type="obsolete">4</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation type="unfinished">Yay Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">Akrep Yönü</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcTangentialOptions</name>
+    <message>
+        <source>Tangential Arc Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished">Açı</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_BevelOptions</name>
+    <message>
+        <source>Bevel Options</source>
+        <translation type="unfinished">Yuvarlatma Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Check to trim both entities to the bevel</source>
+        <translation type="unfinished">Yuvarlama uygulanacak öğelerin kırpılmasını denetler</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished">Kırp</translation>
+    </message>
+    <message>
+        <source>Length 1:</source>
+        <translation type="unfinished">1. Uzunluk:</translation>
+    </message>
+    <message>
+        <source>Length 2:</source>
+        <translation type="unfinished">2. Uzunluk:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="unfinished">Çember Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Yarıçap:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleTan2Options</name>
+    <message>
+        <source>Circle Tangential2 Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Yarıçap:</translation>
+    </message>
+    <message>
+        <source>Radius of tangential circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimLinearOptions</name>
+    <message>
+        <source>Linear Dimension Options</source>
+        <translation type="unfinished">Doğrusal Ölçülendirme Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Açı:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimOptions</name>
+    <message>
+        <source>Dimension Options</source>
+        <translation type="unfinished">Ölçülendirme Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="unfinished">Etiket:</translation>
+    </message>
+    <message utf8="true">
+        <source>⌀</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>°</source>
+        <translation type="unfinished">°</translation>
+    </message>
+    <message utf8="true">
+        <source>±</source>
+        <translation type="unfinished">±</translation>
+    </message>
+    <message utf8="true">
+        <source>π</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>×</source>
+        <translation type="unfinished">×</translation>
+    </message>
+    <message utf8="true">
+        <source>÷</source>
+        <translation type="unfinished">÷</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ImageOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished">Yerleştirme Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Açı:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Döndürme Açısı</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Çarpan:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Oranlama Çarpanı</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_InsertOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished">Yerleştirme Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Açı:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Döndürme Açısı</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Çarpan:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Oranlama Çarpanı</translation>
+    </message>
+    <message>
+        <source>Array:</source>
+        <translation type="unfinished">Dizi:</translation>
+    </message>
+    <message>
+        <source>Number of Columns</source>
+        <translation type="unfinished">Sütun Sayısı</translation>
+    </message>
+    <message>
+        <source>Number of Rows</source>
+        <translation type="unfinished">Satır Sayısı</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Boşluk:</translation>
+    </message>
+    <message>
+        <source>Column Spacing</source>
+        <translation type="unfinished">Sütun Boşluğu</translation>
+    </message>
+    <message>
+        <source>Row Spacing</source>
+        <translation type="unfinished">Satır Boşluğu</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LibraryInsertOptions</name>
+    <message>
+        <source>Library Insert Options</source>
+        <translation type="unfinished">Kütüphane Yerleştirme Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Açı:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Döndürme Açısı</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Çarpan:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Oranlama Çarpanı</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineAngleOptions</name>
+    <message>
+        <source>Line Angle Options</source>
+        <translation type="unfinished">Çizgi Açısı Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Açı:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished">Çizgi açısı</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Uzunluk:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Çizgi uzunluğu</translation>
+    </message>
+    <message>
+        <source>Snap Point:</source>
+        <translation type="unfinished">Yakalama Noktası:</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished">Başlangıç</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">Orta</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="unfinished">Bitiş</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineBisectorOptions</name>
+    <message>
+        <source>Line Bisector Options</source>
+        <translation type="unfinished">Açıortay Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Uzunluk:</translation>
+    </message>
+    <message>
+        <source>Length of bisector</source>
+        <translation type="unfinished">Açıortay uzunluğu</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of bisectors to create</source>
+        <translation type="unfinished">Oluşturulacak açıortayların sayısı</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineOptions</name>
+    <message>
+        <source>Line Options</source>
+        <translation type="unfinished">Çizgi Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Kapat</translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Yinele</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelOptions</name>
+    <message>
+        <source>Line Parallel Options</source>
+        <translation type="unfinished">Paralel Çizgi Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Mesafe:</translation>
+    </message>
+    <message>
+        <source>Distance to original entity</source>
+        <translation type="unfinished">Özgün öğeye uzaklık</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished">Oluşturulacak paralellerin sayısı</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelThroughOptions</name>
+    <message>
+        <source>Line Parallel Through Options</source>
+        <translation type="unfinished">Paralel Çizgiler Arası Seçenekler</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished">Oluşturulacak paralellerin sayısı</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygon2Options</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygonOptions</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineRelAngleOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Çizgilerin Göreli Açı Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Açı:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished">Çizgi açısı</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Uzunluk:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Çizgi uzunluğu</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Metin Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Metin:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Açı:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ModifyOffsetOptions</name>
+    <message>
+        <source>Modify Offset Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Mesafe:</translation>
+    </message>
+    <message>
+        <source>Offset from original entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MoveRotateOptions</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation type="unfinished">Döndürerek Taşıma Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Açı:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PolylineOptions</name>
+    <message>
+        <source>Polyline Options</source>
+        <translation type="unfinished">Yamuk Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Kapat</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Çizgi</translation>
+    </message>
+    <message>
+        <source>Tangential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tan Radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished">Açı</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Yarıçap:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Açı:</translation>
+    </message>
+    <message>
+        <source>Counter Clockwise</source>
+        <translation type="unfinished">Akrep Yönünün Tersi</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">Akrep Yönü</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PrintPreviewOptions</name>
+    <message>
+        <source>Print Preview Options</source>
+        <translation type="unfinished">Yazdırma Önzileme Seçenekleri</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fixed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Black / White mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center to page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit to page</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_RoundOptions</name>
+    <message>
+        <source>Round Options</source>
+        <translation type="unfinished">Yuvarlatma Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Check to trim both edges to the rounding</source>
+        <translation type="unfinished">Yuvarlatılacak köşenin kenarlarının kırpılmasını denetler</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished">Kırp</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Yarıçap:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapDistOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished">Yakalama Mesafesi Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Mesafe:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished">Yakalama Mesafesi Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of equidistant division points</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SplineOptions</name>
+    <message>
+        <source>Spline Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Degree:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Metin Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Metin:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Açı:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TrimAmountOptions</name>
+    <message>
+        <source>Trim Amount Options</source>
+        <translation type="unfinished">Kırpma Uzunluğu Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending.</source>
+        <translation type="unfinished">Mesafe. Negatif değerler kısaltır, pozitif değerler uzatır.</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Uzunluk:</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -2,6 +2,37 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ca" sourcelanguage="en">
 <context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Capa:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Geometria</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Tancat</translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>2 Points, Radius</source>
@@ -514,7 +545,7 @@ La distància entre els punts=%2 és més gran que el diàmetre=%3</translation>
     </message>
     <message>
         <source>set to bottom</source>
-        <translation type="unfinished">Mou al capdavall</translation>
+        <translation type="obsolete">Mou al capdavall</translation>
     </message>
     <message>
         <source>lower after entity</source>
@@ -522,7 +553,7 @@ La distància entre els punts=%2 és més gran que el diàmetre=%3</translation>
     </message>
     <message>
         <source>lower over entity</source>
-        <translation type="unfinished">Abaixa sota l&apos;entitat</translation>
+        <translation type="obsolete">Abaixa sota l&apos;entitat</translation>
     </message>
     <message>
         <source>raise over entity</source>
@@ -534,7 +565,7 @@ La distància entre els punts=%2 és més gran que el diàmetre=%3</translation>
     </message>
     <message>
         <source>set to top</source>
-        <translation type="unfinished">Mou al capdamunt</translation>
+        <translation type="obsolete">Mou al capdamunt</translation>
     </message>
     <message>
         <source>&amp;Show all</source>
@@ -622,11 +653,11 @@ La distància entre els punts=%2 és més gran que el diàmetre=%3</translation>
     </message>
     <message>
         <source>Open IDE</source>
-        <translation type="unfinished">Obre IDE</translation>
+        <translation type="obsolete">Obre IDE</translation>
     </message>
     <message>
         <source>Run Script..</source>
-        <translation type="unfinished">Executa un script..</translation>
+        <translation type="obsolete">Executa un script..</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
@@ -766,6 +797,34 @@ La distància entre els punts=%2 és més gran que el diàmetre=%3</translation>
         <source>Focus on &amp;Command Line</source>
         <translation type="unfinished">Cursor a la línia d&apos;&amp;ordres</translation>
     </message>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">Esquerra</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Dreta</translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished">Dalt</translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Floating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -793,6 +852,33 @@ La distància entre els punts=%2 és més gran que el diàmetre=%3</translation>
     </message>
 </context>
 <context>
+    <name>LC_WidgetOptionsDialog</name>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LG_DimzerosBox</name>
     <message>
         <source>select:</source>
@@ -816,6 +902,25 @@ La distància entre els punts=%2 és més gran que el diàmetre=%3</translation>
     </message>
 </context>
 <context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Espaiat:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished">Distància des de la polilínia original</translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished">Còpies:</translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -832,7 +937,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Specify a point</source>
-        <translation>Especifiqueu un punt</translation>
+        <translation type="obsolete">Especifiqueu un punt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -922,7 +1027,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     </message>
     <message>
         <source>&amp;Scripts</source>
-        <translation>&amp;Scripts</translation>
+        <translation type="obsolete">&amp;Scripts</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -954,7 +1059,7 @@ http://forum.librecad.org/LibreCAD-dev-f4361976.html</translatorcomment>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="obsolete">S&apos;està obrint un fitxer recent...</translation>
+        <translation type="unfinished">S&apos;està obrint un fitxer recent...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -1074,11 +1179,11 @@ Comproveu els permisos.</translation>
     </message>
     <message>
         <source>Running script &apos;%1&apos;</source>
-        <translation>S&apos;està executant l&apos;script &apos;%1&apos;</translation>
+        <translation type="obsolete">S&apos;està executant l&apos;script &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Inserting block &apos;%1&apos;</source>
-        <translation>S&apos;està inserint el bloc &apos;%1&apos;</translation>
+        <translation type="obsolete">S&apos;està inserint el bloc &apos;%1&apos;</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -1358,11 +1463,11 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>DockWidgets</source>
+        <source>&amp;Dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Dockwidgets</source>
+        <source>Dock Areas</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1529,64 +1634,64 @@ p, li { white-space: pre-wrap; }
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation>Opcions d&apos;arc</translation>
+        <translation type="obsolete">Opcions d&apos;arc</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>En sentit horari</translation>
+        <translation type="obsolete">En sentit horari</translation>
     </message>
     <message>
         <source>Counterclockwise</source>
-        <translation>En sentit anti-horari</translation>
+        <translation type="obsolete">En sentit anti-horari</translation>
     </message>
 </context>
 <context>
     <name>QG_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation>Opcions d&apos;arc tangent</translation>
+        <translation type="obsolete">Opcions d&apos;arc tangent</translation>
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation>Radi de l&apos;arc tangent</translation>
+        <translation type="obsolete">Radi de l&apos;arc tangent</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>Angle complementari de l&apos;arc tangent</translation>
+        <translation type="obsolete">Angle complementari de l&apos;arc tangent</translation>
     </message>
     <message>
         <source>Radius</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
         <translatorcomment>Dibuixa un arc tangent donat el radi</translatorcomment>
-        <translation>Radi</translation>
+        <translation type="obsolete">Radi</translation>
     </message>
     <message>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation>Angle</translation>
+        <translation type="obsolete">Angle</translation>
     </message>
 </context>
 <context>
     <name>QG_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation>Opcions de bisella</translation>
+        <translation type="obsolete">Opcions de bisella</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Redueix</translation>
+        <translation type="obsolete">Redueix</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Comprova si es pot construir el bisell</translation>
+        <translation type="obsolete">Comprova si es pot construir el bisell</translation>
     </message>
     <message>
         <source>Length 1:</source>
-        <translation>Longitud 1:</translation>
+        <translation type="obsolete">Longitud 1:</translation>
     </message>
     <message>
         <source>Length 2:</source>
-        <translation>Longitud 2:</translation>
+        <translation type="obsolete">Longitud 2:</translation>
     </message>
 </context>
 <context>
@@ -2376,30 +2481,30 @@ p, li { white-space: pre-wrap; }
     <name>QG_CircleOptions</name>
     <message>
         <source>Circle Options</source>
-        <translation>Opcions de circumferència</translation>
+        <translation type="obsolete">Opcions de circumferència</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Radi:</translation>
+        <translation type="obsolete">Radi:</translation>
     </message>
 </context>
 <context>
     <name>QG_CircleTan2Options</name>
     <message>
         <source>Circle Tangential2 Options</source>
-        <translation>Opcions de circumferència tangent 2</translation>
+        <translation type="obsolete">Opcions de circumferència tangent 2</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radi de la circumferència tangent que s&apos;ha de traçar&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radi de la circumferència tangent que s&apos;ha de traçar&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Radi:</translation>
+        <translation type="obsolete">Radi:</translation>
     </message>
     <message>
         <source>Radius of tangential circle</source>
-        <translation>Radi de la circumferència tangent</translation>
+        <translation type="obsolete">Radi de la circumferència tangent</translation>
     </message>
 </context>
 <context>
@@ -2450,7 +2555,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Others..</source>
-        <translation>Altres..</translation>
+        <translation type="obsolete">Altres..</translation>
     </message>
     <message>
         <source>Unchanged</source>
@@ -2483,6 +2588,10 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Dark Gray</source>
         <translation>Gris fosc</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2558,22 +2667,22 @@ p, li { white-space: pre-wrap; }
     <name>QG_DimLinearOptions</name>
     <message>
         <source>Linear Dimension Options</source>
-        <translation>Opcions de cotes lineals</translation>
+        <translation type="obsolete">Opcions de cotes lineals</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation type="obsolete">Angle:</translation>
     </message>
 </context>
 <context>
     <name>QG_DimOptions</name>
     <message>
         <source>Dimension Options</source>
-        <translation>Opcions de cotes</translation>
+        <translation type="obsolete">Opcions de cotes</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation>Etiqueta:</translation>
+        <translation type="obsolete">Etiqueta:</translation>
     </message>
     <message utf8="true">
         <source>ø</source>
@@ -2581,11 +2690,11 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>°</source>
-        <translation>°</translation>
+        <translation type="obsolete">°</translation>
     </message>
     <message utf8="true">
         <source>±</source>
-        <translation>±</translation>
+        <translation type="obsolete">±</translation>
     </message>
     <message utf8="true">
         <source>¶</source>
@@ -2593,23 +2702,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message utf8="true">
         <source>×</source>
-        <translation>×</translation>
+        <translation type="obsolete">×</translation>
     </message>
     <message utf8="true">
         <source>÷</source>
-        <translation>÷</translation>
+        <translation type="obsolete">÷</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>...</translation>
+        <translation type="obsolete">...</translation>
     </message>
     <message utf8="true">
         <source>⌀</source>
-        <translation>⌀</translation>
+        <translation type="obsolete">⌀</translation>
     </message>
     <message utf8="true">
         <source>π</source>
-        <translation>π</translation>
+        <translation type="obsolete">π</translation>
     </message>
 </context>
 <context>
@@ -4806,10 +4915,6 @@ Podreu canviar aquests paràmetres més endavant des del menú Edita/Preferènci
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Snap indicator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Crosshair</source>
         <translation type="unfinished">Punt de mira</translation>
     </message>
@@ -4823,14 +4928,6 @@ Podreu canviar aquests paràmetres més endavant des del menú Edita/Preferènci
     </message>
     <message>
         <source>Layer/ Block Selection:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4863,6 +4960,46 @@ Podreu canviar aquests paràmetres més endavant des del menú Edita/Preferènci
     </message>
     <message>
         <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scrollbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">Circumferència</translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished">Punt</translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide cursor when snapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start in tab mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5188,19 +5325,19 @@ Podreu canviar aquests paràmetres més endavant des del menú Edita/Preferènci
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>&amp;D&apos;acord</translation>
+        <translation type="obsolete">&amp;D&apos;acord</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancel·la</translation>
+        <translation type="obsolete">Cancel·la</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -5979,31 +6116,31 @@ Podreu canviar aquests paràmetres més endavant des del menú Edita/Preferènci
     <name>QG_ImageOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Opcions de Insereix</translation>
+        <translation type="obsolete">Opcions de Insereix</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation type="obsolete">Angle:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Angle de rotació</translation>
+        <translation type="obsolete">Angle de rotació</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Factor:</translation>
+        <translation type="obsolete">Factor:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Factor d&apos;escala</translation>
+        <translation type="obsolete">Factor d&apos;escala</translation>
     </message>
     <message>
         <source>DPI</source>
-        <translation>PPP</translation>
+        <translation type="obsolete">PPP</translation>
     </message>
     <message>
         <source>DPI of Image</source>
-        <translation>PPP de la imatge</translation>
+        <translation type="obsolete">PPP de la imatge</translation>
     </message>
 </context>
 <context>
@@ -6165,47 +6302,47 @@ Podreu canviar aquests paràmetres més endavant des del menú Edita/Preferènci
     <name>QG_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Opcions de Insereix</translation>
+        <translation type="obsolete">Opcions de Insereix</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation type="obsolete">Angle:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Angle de rotació</translation>
+        <translation type="obsolete">Angle de rotació</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Factor:</translation>
+        <translation type="obsolete">Factor:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Factor d&apos;escala</translation>
+        <translation type="obsolete">Factor d&apos;escala</translation>
     </message>
     <message>
         <source>Array:</source>
-        <translation>Matriu:</translation>
+        <translation type="obsolete">Matriu:</translation>
     </message>
     <message>
         <source>Number of Columns</source>
-        <translation>Nombre de columnes</translation>
+        <translation type="obsolete">Nombre de columnes</translation>
     </message>
     <message>
         <source>Number of Rows</source>
-        <translation>Nombre de files</translation>
+        <translation type="obsolete">Nombre de files</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Espaiat:</translation>
+        <translation type="obsolete">Espaiat:</translation>
     </message>
     <message>
         <source>Column Spacing</source>
-        <translation>Espai entre columnes</translation>
+        <translation type="obsolete">Espai entre columnes</translation>
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation>Espaiat entre files</translation>
+        <translation type="obsolete">Espaiat entre files</translation>
     </message>
 </context>
 <context>
@@ -6341,23 +6478,23 @@ El contingut d&apos;una capa de construcció no hauria d&apos;aparèixer en la s
     <name>QG_LibraryInsertOptions</name>
     <message>
         <source>Library Insert Options</source>
-        <translation>Opcions de &apos;Inserció de la biblioteca&apos;</translation>
+        <translation type="obsolete">Opcions de &apos;Inserció de la biblioteca&apos;</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation type="obsolete">Angle:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Angle de rotació</translation>
+        <translation type="obsolete">Angle de rotació</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Factor:</translation>
+        <translation type="obsolete">Factor:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Factor d&apos;escala</translation>
+        <translation type="obsolete">Factor d&apos;escala</translation>
     </message>
 </context>
 <context>
@@ -6375,184 +6512,184 @@ El contingut d&apos;una capa de construcció no hauria d&apos;aparèixer en la s
     <name>QG_LineAngleOptions</name>
     <message>
         <source>Line Angle Options</source>
-        <translation>Opcions de Línia amb angle</translation>
+        <translation type="obsolete">Opcions de Línia amb angle</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation type="obsolete">Angle:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Línia amb angle</translation>
+        <translation type="obsolete">Línia amb angle</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Longitud:</translation>
+        <translation type="obsolete">Longitud:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Longitud de la línia</translation>
+        <translation type="obsolete">Longitud de la línia</translation>
     </message>
     <message>
         <source>Snap Point:</source>
-        <translation>Força al punt:</translation>
+        <translation type="obsolete">Força al punt:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Inici</translation>
+        <translation type="obsolete">Inici</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Mig</translation>
+        <translation type="obsolete">Mig</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Final</translation>
+        <translation type="obsolete">Final</translation>
     </message>
 </context>
 <context>
     <name>QG_LineBisectorOptions</name>
     <message>
         <source>Line Bisector Options</source>
-        <translation>Opcions de Línia bisectriu</translation>
+        <translation type="obsolete">Opcions de Línia bisectriu</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Longitud:</translation>
+        <translation type="obsolete">Longitud:</translation>
     </message>
     <message>
         <source>Length of bisector</source>
-        <translation>Longitud de la bisectriu</translation>
+        <translation type="obsolete">Longitud de la bisectriu</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Nombre:</translation>
+        <translation type="obsolete">Nombre:</translation>
     </message>
     <message>
         <source>Number of bisectors to create</source>
-        <translation>Nombre de bisectrius a crear</translation>
+        <translation type="obsolete">Nombre de bisectrius a crear</translation>
     </message>
 </context>
 <context>
     <name>QG_LineOptions</name>
     <message>
         <source>Line Options</source>
-        <translation>Opcions de línia</translation>
+        <translation type="obsolete">Opcions de línia</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Tanca</translation>
+        <translation type="obsolete">Tanca</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Desfés</translation>
+        <translation type="obsolete">Desfés</translation>
     </message>
     <message>
         <source>Form a closed contour from lines drawn</source>
-        <translation>Forma un contorn tancat a partir de les línies dibuixades</translation>
+        <translation type="obsolete">Forma un contorn tancat a partir de les línies dibuixades</translation>
     </message>
     <message>
         <source>Undo the last line drawing</source>
-        <translation>Desfés l&apos;última línia dibuixada</translation>
+        <translation type="obsolete">Desfés l&apos;última línia dibuixada</translation>
     </message>
     <message>
         <source>Redo the last line drawing</source>
-        <translation>Refés l&apos;última línia dibuixada</translation>
+        <translation type="obsolete">Refés l&apos;última línia dibuixada</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Refés</translation>
+        <translation type="obsolete">Refés</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
-        <translation>Opcions de Línia paral·lela</translation>
+        <translation type="obsolete">Opcions de Línia paral·lela</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Distància:</translation>
+        <translation type="obsolete">Distància:</translation>
     </message>
     <message>
         <source>Distance to original entity</source>
-        <translation>Distància a l&apos;entitat original</translation>
+        <translation type="obsolete">Distància a l&apos;entitat original</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Nombre:</translation>
+        <translation type="obsolete">Nombre:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Nombre de paral·leles a crear</translation>
+        <translation type="obsolete">Nombre de paral·leles a crear</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation>Opcions de Llínia paral·lela per un punt</translation>
+        <translation type="obsolete">Opcions de Llínia paral·lela per un punt</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Nombre:</translation>
+        <translation type="obsolete">Nombre:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Nombre de paral·leles a crear</translation>
+        <translation type="obsolete">Nombre de paral·leles a crear</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygon2Options</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Opcions de Polígon</translation>
+        <translation type="obsolete">Opcions de Polígon</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Nombre:</translation>
+        <translation type="obsolete">Nombre:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Nombre d&apos;arestes</translation>
+        <translation type="obsolete">Nombre d&apos;arestes</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygonOptions</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Opcions de Polígon</translation>
+        <translation type="obsolete">Opcions de Polígon</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Nombre:</translation>
+        <translation type="obsolete">Nombre:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Nombre d&apos;arestes</translation>
+        <translation type="obsolete">Nombre d&apos;arestes</translation>
     </message>
 </context>
 <context>
     <name>QG_LineRelAngleOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Opcions de Línia amb angles relatius</translation>
+        <translation type="obsolete">Opcions de Línia amb angles relatius</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation type="obsolete">Angle:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Línia amb angle</translation>
+        <translation type="obsolete">Línia amb angle</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Longitud:</translation>
+        <translation type="obsolete">Longitud:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Longitud de la línia</translation>
+        <translation type="obsolete">Longitud de la línia</translation>
     </message>
 </context>
 <context>
@@ -6678,30 +6815,30 @@ El contingut d&apos;una capa de construcció no hauria d&apos;aparèixer en la s
     <name>QG_MTextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation>Opcions de Text</translation>
+        <translation type="obsolete">Opcions de Text</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>Text:</translation>
+        <translation type="obsolete">Text:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation type="obsolete">Angle:</translation>
     </message>
 </context>
 <context>
     <name>QG_ModifyOffsetOptions</name>
     <message>
         <source>Modify Offset Options</source>
-        <translation>Opcions de modificació de desfasament</translation>
+        <translation type="obsolete">Opcions de modificació de desfasament</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Distància:</translation>
+        <translation type="obsolete">Distància:</translation>
     </message>
     <message>
         <source>Offset from original entity</source>
-        <translation>Desfasament a partir de l&apos;entitat original</translation>
+        <translation type="obsolete">Desfasament a partir de l&apos;entitat original</translation>
     </message>
 </context>
 <context>
@@ -6735,119 +6872,123 @@ p, li { white-space: pre-wrap; }
     <name>QG_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
-        <translation>Opcions de Mou i gira</translation>
+        <translation type="obsolete">Opcions de Mou i gira</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation type="obsolete">Angle:</translation>
     </message>
 </context>
 <context>
     <name>QG_PenToolBar</name>
     <message>
         <source>Line color</source>
-        <translation>Color de línia</translation>
+        <translation type="obsolete">Color de línia</translation>
     </message>
     <message>
         <source>Line width</source>
-        <translation>Gruix de línia</translation>
+        <translation type="obsolete">Gruix de línia</translation>
     </message>
     <message>
         <source>Line type</source>
-        <translation>Tipus de línia</translation>
+        <translation type="obsolete">Tipus de línia</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Opcions de Línia amb angle relatiu</translation>
+        <translation type="obsolete">Opcions de Línia amb angle relatiu</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Espaiat:</translation>
+        <translation type="obsolete">Espaiat:</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation>Distància des de la polilínia original</translation>
+        <translation type="obsolete">Distància des de la polilínia original</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation>Còpies:</translation>
+        <translation type="obsolete">Còpies:</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation>Opcions de Polilínia</translation>
+        <translation type="obsolete">Opcions de Polilínia</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Tanca</translation>
+        <translation type="obsolete">Tanca</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Desfés</translation>
+        <translation type="obsolete">Desfés</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Línia</translation>
+        <translation type="obsolete">Línia</translation>
     </message>
     <message>
         <source>Tangential</source>
-        <translation>Tangent</translation>
+        <translation type="obsolete">Tangent</translation>
     </message>
     <message>
         <source>Tan Radius</source>
-        <translation>Radi tangent</translation>
+        <translation type="obsolete">Radi tangent</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation>Angle</translation>
+        <translation type="obsolete">Angle</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Radi:</translation>
+        <translation type="obsolete">Radi:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation type="obsolete">Angle:</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>En sentit horari</translation>
+        <translation type="obsolete">En sentit horari</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation>En sentit anti-horari</translation>
+        <translation type="obsolete">En sentit anti-horari</translation>
+    </message>
+    <message>
+        <source>wrong action type</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_PrintPreviewOptions</name>
     <message>
         <source>Print Preview Options</source>
-        <translation>Opcions de Previsualitza la impressió</translation>
+        <translation type="obsolete">Opcions de Previsualitza la impressió</translation>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation>Commuta el mode Blanc i negre/Color</translation>
+        <translation type="obsolete">Commuta el mode Blanc i negre/Color</translation>
     </message>
     <message>
         <source>Center to page</source>
-        <translation>Centra en la pàgina</translation>
+        <translation type="obsolete">Centra en la pàgina</translation>
     </message>
     <message>
         <source>Fit to page</source>
-        <translation>Ajusta a la pàgina</translation>
+        <translation type="obsolete">Ajusta a la pàgina</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;L&apos;escalat d&apos;impressió està bloquejat en el valor actual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;L&apos;escalat d&apos;impressió està bloquejat en el valor actual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>fixed</source>
-        <translation>Fixat</translation>
+        <translation type="obsolete">Fixat</translation>
     </message>
 </context>
 <context>
@@ -6858,26 +6999,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="unfinished">S&apos;està obrint un fitxer recent...</translation>
+        <translation type="obsolete">S&apos;està obrint un fitxer recent...</translation>
     </message>
 </context>
 <context>
     <name>QG_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation>Opcions d&apos;Arrodoneix</translation>
+        <translation type="obsolete">Opcions d&apos;Arrodoneix</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Redueix</translation>
+        <translation type="obsolete">Redueix</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Comprova si es poden reduir les arestes per arrodonir</translation>
+        <translation type="obsolete">Comprova si es poden reduir les arestes per arrodonir</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Radi:</translation>
+        <translation type="obsolete">Radi:</translation>
     </message>
 </context>
 <context>
@@ -6927,26 +7068,26 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Opcions de Força distància</translation>
+        <translation type="obsolete">Opcions de Força distància</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Distància:</translation>
+        <translation type="obsolete">Distància:</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Opcions de Força distància</translation>
+        <translation type="obsolete">Opcions de Força distància</translation>
     </message>
     <message>
         <source>Middle Points:</source>
-        <translation>Punts mitjans:</translation>
+        <translation type="obsolete">Punts mitjans:</translation>
     </message>
     <message>
         <source>Number of equidistant division points</source>
-        <translation>Nombre de punts de divisió equidistants</translation>
+        <translation type="obsolete">Nombre de punts de divisió equidistants</translation>
     </message>
 </context>
 <context>
@@ -7064,11 +7205,11 @@ p, li { white-space: pre-wrap; }
     <name>QG_SplineOptions</name>
     <message>
         <source>Spline Options</source>
-        <translation>Opcions de Spline</translation>
+        <translation type="obsolete">Opcions de Spline</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation>Grau:</translation>
+        <translation type="obsolete">Grau:</translation>
     </message>
     <message>
         <source>1</source>
@@ -7084,49 +7225,49 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Closed</source>
-        <translation>Tancat</translation>
+        <translation type="obsolete">Tancat</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Desfés</translation>
+        <translation type="obsolete">Desfés</translation>
     </message>
 </context>
 <context>
     <name>QG_TextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation>Opcions de Text</translation>
+        <translation type="obsolete">Opcions de Text</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>Text:</translation>
+        <translation type="obsolete">Text:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Angle:</translation>
+        <translation type="obsolete">Angle:</translation>
     </message>
 </context>
 <context>
     <name>QG_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation>Opcions de Redueix o estén una quantitat</translation>
+        <translation type="obsolete">Opcions de Redueix o estén una quantitat</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Distància. Valors negatius redueixen, valors positius estenen.</translation>
+        <translation type="obsolete">Distància. Valors negatius redueixen, valors positius estenen.</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Longitud:</translation>
+        <translation type="obsolete">Longitud:</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation>Distància. Valors negatius redueixen, valors positius estenen. No cal posar el signe negatiu per a reduir a la longitud total final.</translation>
+        <translation type="obsolete">Distància. Valors negatius redueixen, valors positius estenen. No cal posar el signe negatiu per a reduir a la longitud total final.</translation>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation>La longitud introduïda s&apos;usa com a longitud total després de la reducció o extensió, en lloc de l&apos;increment de longitud</translation>
+        <translation type="obsolete">La longitud introduïda s&apos;usa com a longitud total després de la reducció o extensió, en lloc de l&apos;increment de longitud</translation>
     </message>
 </context>
 <context>
@@ -8804,6 +8945,18 @@ Continue?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11499,11 +11652,15 @@ Continue?</source>
     </message>
     <message>
         <source>Entity must be a line, arc or polyline.</source>
-        <translation>L&apos;entitat ha de ser una línia, arc o polilínia.</translation>
+        <translation type="obsolete">L&apos;entitat ha de ser una línia, arc o polilínia.</translation>
     </message>
     <message>
         <source>Entity can not be a closed polyline.</source>
         <translation>L&apos;entitat no pot ser una polilínia tancada.</translation>
+    </message>
+    <message>
+        <source>Polyline created</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11590,6 +11747,14 @@ Continue?</source>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
         <translation>El desplaçament de la impressió ignora el zero relatiu. S&apos;ignora &apos;@&apos;</translation>
+    </message>
+    <message>
+        <source>Printout in Black/White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in color</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12839,6 +13004,651 @@ Continue?</source>
         <source>calculate</source>
         <comment>command to trigger cli calculator</comment>
         <translation type="obsolete">calcula</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation type="unfinished">Opcions d&apos;arc</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="unfinished">En sentit anti-horari</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">En sentit horari</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcTangentialOptions</name>
+    <message>
+        <source>Tangential Arc Options</source>
+        <translation type="unfinished">Opcions d&apos;arc tangent</translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="unfinished">Radi de l&apos;arc tangent</translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation type="unfinished">Angle complementari de l&apos;arc tangent</translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished">Radi</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished">Angle</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_BevelOptions</name>
+    <message>
+        <source>Bevel Options</source>
+        <translation type="unfinished">Opcions de bisella</translation>
+    </message>
+    <message>
+        <source>Check to trim both entities to the bevel</source>
+        <translation type="unfinished">Comprova si es pot construir el bisell</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished">Redueix</translation>
+    </message>
+    <message>
+        <source>Length 1:</source>
+        <translation type="unfinished">Longitud 1:</translation>
+    </message>
+    <message>
+        <source>Length 2:</source>
+        <translation type="unfinished">Longitud 2:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="unfinished">Opcions de circumferència</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Radi:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleTan2Options</name>
+    <message>
+        <source>Circle Tangential2 Options</source>
+        <translation type="unfinished">Opcions de circumferència tangent 2</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radi de la circumferència tangent que s&apos;ha de traçar&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Radi:</translation>
+    </message>
+    <message>
+        <source>Radius of tangential circle</source>
+        <translation type="unfinished">Radi de la circumferència tangent</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimLinearOptions</name>
+    <message>
+        <source>Linear Dimension Options</source>
+        <translation type="unfinished">Opcions de cotes lineals</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Angle:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimOptions</name>
+    <message>
+        <source>Dimension Options</source>
+        <translation type="unfinished">Opcions de cotes</translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="unfinished">Etiqueta:</translation>
+    </message>
+    <message utf8="true">
+        <source>⌀</source>
+        <translation type="unfinished">⌀</translation>
+    </message>
+    <message utf8="true">
+        <source>°</source>
+        <translation type="unfinished">°</translation>
+    </message>
+    <message utf8="true">
+        <source>±</source>
+        <translation type="unfinished">±</translation>
+    </message>
+    <message utf8="true">
+        <source>π</source>
+        <translation type="unfinished">π</translation>
+    </message>
+    <message utf8="true">
+        <source>×</source>
+        <translation type="unfinished">×</translation>
+    </message>
+    <message utf8="true">
+        <source>÷</source>
+        <translation type="unfinished">÷</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished">...</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ImageOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished">Opcions de Insereix</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Angle:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Angle de rotació</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Factor:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Factor d&apos;escala</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished">PPP</translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="unfinished">PPP de la imatge</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_InsertOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished">Opcions de Insereix</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Angle:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Angle de rotació</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Factor:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Factor d&apos;escala</translation>
+    </message>
+    <message>
+        <source>Array:</source>
+        <translation type="unfinished">Matriu:</translation>
+    </message>
+    <message>
+        <source>Number of Columns</source>
+        <translation type="unfinished">Nombre de columnes</translation>
+    </message>
+    <message>
+        <source>Number of Rows</source>
+        <translation type="unfinished">Nombre de files</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Espaiat:</translation>
+    </message>
+    <message>
+        <source>Column Spacing</source>
+        <translation type="unfinished">Espai entre columnes</translation>
+    </message>
+    <message>
+        <source>Row Spacing</source>
+        <translation type="unfinished">Espaiat entre files</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LibraryInsertOptions</name>
+    <message>
+        <source>Library Insert Options</source>
+        <translation type="unfinished">Opcions de &apos;Inserció de la biblioteca&apos;</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Angle:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Angle de rotació</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Factor:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Factor d&apos;escala</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineAngleOptions</name>
+    <message>
+        <source>Line Angle Options</source>
+        <translation type="unfinished">Opcions de Línia amb angle</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Angle:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished">Línia amb angle</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Longitud:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Longitud de la línia</translation>
+    </message>
+    <message>
+        <source>Snap Point:</source>
+        <translation type="unfinished">Força al punt:</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished">Inici</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="unfinished">Final</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineBisectorOptions</name>
+    <message>
+        <source>Line Bisector Options</source>
+        <translation type="unfinished">Opcions de Línia bisectriu</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Longitud:</translation>
+    </message>
+    <message>
+        <source>Length of bisector</source>
+        <translation type="unfinished">Longitud de la bisectriu</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Nombre:</translation>
+    </message>
+    <message>
+        <source>Number of bisectors to create</source>
+        <translation type="unfinished">Nombre de bisectrius a crear</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineOptions</name>
+    <message>
+        <source>Line Options</source>
+        <translation type="unfinished">Opcions de línia</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation type="unfinished">Forma un contorn tancat a partir de les línies dibuixades</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Tanca</translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="unfinished">Desfés l&apos;última línia dibuixada</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Desfés</translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation type="unfinished">Refés l&apos;última línia dibuixada</translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Refés</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelOptions</name>
+    <message>
+        <source>Line Parallel Options</source>
+        <translation type="unfinished">Opcions de Línia paral·lela</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Distància:</translation>
+    </message>
+    <message>
+        <source>Distance to original entity</source>
+        <translation type="unfinished">Distància a l&apos;entitat original</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Nombre:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished">Nombre de paral·leles a crear</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelThroughOptions</name>
+    <message>
+        <source>Line Parallel Through Options</source>
+        <translation type="unfinished">Opcions de Llínia paral·lela per un punt</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Nombre:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished">Nombre de paral·leles a crear</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygon2Options</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished">Opcions de Polígon</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Nombre:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished">Nombre d&apos;arestes</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygonOptions</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished">Opcions de Polígon</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Nombre:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished">Nombre d&apos;arestes</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineRelAngleOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Angle:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished">Línia amb angle</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Longitud:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Longitud de la línia</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Opcions de Text</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Text:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Angle:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ModifyOffsetOptions</name>
+    <message>
+        <source>Modify Offset Options</source>
+        <translation type="unfinished">Opcions de modificació de desfasament</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Distància:</translation>
+    </message>
+    <message>
+        <source>Offset from original entity</source>
+        <translation type="unfinished">Desfasament a partir de l&apos;entitat original</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MoveRotateOptions</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation type="unfinished">Opcions de Mou i gira</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Angle:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PolylineOptions</name>
+    <message>
+        <source>Polyline Options</source>
+        <translation type="unfinished">Opcions de Polilínia</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Tanca</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Desfés</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Línia</translation>
+    </message>
+    <message>
+        <source>Tangential</source>
+        <translation type="unfinished">Tangent</translation>
+    </message>
+    <message>
+        <source>Tan Radius</source>
+        <translation type="unfinished">Radi tangent</translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished">Angle</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Radi:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Angle:</translation>
+    </message>
+    <message>
+        <source>Counter Clockwise</source>
+        <translation type="unfinished">En sentit anti-horari</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">En sentit horari</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PrintPreviewOptions</name>
+    <message>
+        <source>Print Preview Options</source>
+        <translation type="unfinished">Opcions de Previsualitza la impressió</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;L&apos;escalat d&apos;impressió està bloquejat en el valor actual&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>fixed</source>
+        <translation type="unfinished">Fixat</translation>
+    </message>
+    <message>
+        <source>Toggle Black / White mode</source>
+        <translation type="unfinished">Commuta el mode Blanc i negre/Color</translation>
+    </message>
+    <message>
+        <source>Center to page</source>
+        <translation type="unfinished">Centra en la pàgina</translation>
+    </message>
+    <message>
+        <source>Fit to page</source>
+        <translation type="unfinished">Ajusta a la pàgina</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_RoundOptions</name>
+    <message>
+        <source>Round Options</source>
+        <translation type="unfinished">Opcions d&apos;Arrodoneix</translation>
+    </message>
+    <message>
+        <source>Check to trim both edges to the rounding</source>
+        <translation type="unfinished">Comprova si es poden reduir les arestes per arrodonir</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished">Redueix</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Radi:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapDistOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished">Opcions de Força distància</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Distància:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished">Opcions de Força distància</translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation type="unfinished">Punts mitjans:</translation>
+    </message>
+    <message>
+        <source>Number of equidistant division points</source>
+        <translation type="unfinished">Nombre de punts de divisió equidistants</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SplineOptions</name>
+    <message>
+        <source>Spline Options</source>
+        <translation type="unfinished">Opcions de Spline</translation>
+    </message>
+    <message>
+        <source>Degree:</source>
+        <translation type="unfinished">Grau:</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Tancat</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished">Desfés</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Opcions de Text</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Text:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Angle:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TrimAmountOptions</name>
+    <message>
+        <source>Trim Amount Options</source>
+        <translation type="unfinished">Opcions de Redueix o estén una quantitat</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending.</source>
+        <translation type="unfinished">Distància. Valors negatius redueixen, valors positius estenen.</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Longitud:</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation type="unfinished">Distància. Valors negatius redueixen, valors positius estenen. No cal posar el signe negatiu per a reduir a la longitud total final.</translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation type="unfinished">La longitud introduïda s&apos;usa com a longitud total després de la reducció o extensió, en lloc de l&apos;increment de longitud</translation>
     </message>
 </context>
 </TS>

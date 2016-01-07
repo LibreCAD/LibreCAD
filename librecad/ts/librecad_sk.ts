@@ -32,6 +32,37 @@
     </message>
 </context>
 <context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">Hladina:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">Rozmery</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>radius=%1 is too small for points selected
@@ -534,15 +565,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>set to bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>lower after entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>lower over entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -551,10 +574,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>set to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -643,11 +662,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Open IDE</source>
-        <translation type="unfinished">Otvor IDE</translation>
+        <translation type="obsolete">Otvor IDE</translation>
     </message>
     <message>
         <source>Run Script..</source>
-        <translation type="unfinished">Spusť skript..</translation>
+        <translation type="obsolete">Spusť skript..</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
@@ -787,6 +806,34 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Focus on &amp;Command Line</source>
         <translation type="unfinished">Focus na &amp;príkazový riadok </translation>
     </message>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">Ľavé</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Pravé</translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Floating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -814,6 +861,33 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_WidgetOptionsDialog</name>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LG_DimzerosBox</name>
     <message>
         <source>select:</source>
@@ -837,6 +911,25 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Nastavenie čiar pod relatívnym uhlom</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Vzdialenosť:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -849,10 +942,6 @@ distance between points=%2 is larger than diameter=%3</source>
 </context>
 <context>
     <name>QC_ActionGetPoint</name>
-    <message>
-        <source>Specify a point</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">Zrušiť</translation>
@@ -957,7 +1046,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Scripts</source>
-        <translation>&amp;Skripty</translation>
+        <translation type="obsolete">&amp;Skripty</translation>
     </message>
     <message>
         <source>&amp;Windows</source>
@@ -993,7 +1082,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="obsolete">Otváram nedávno použitý súbor...</translation>
+        <translation type="unfinished">Otváram nedávno použitý súbor...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -1189,14 +1278,6 @@ Teraz môžete uložiť svoju prácu.</translation>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Running script &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inserting block &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1429,11 +1510,11 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>DockWidgets</source>
+        <source>&amp;Dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Dockwidgets</source>
+        <source>Dock Areas</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2020,71 +2101,50 @@ p, li { white-space: pre-wrap; }
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation>Vlastnosti oblúku</translation>
+        <translation type="obsolete">Vlastnosti oblúku</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>Pravotočivý</translation>
+        <translation type="obsolete">Pravotočivý</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
         <translation type="obsolete">Ľavotočivý</translation>
     </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>QG_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Radius:</source>
         <translation type="obsolete">Polomer:</translation>
     </message>
     <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished">Uhol</translation>
+        <translation type="obsolete">Uhol</translation>
     </message>
 </context>
 <context>
     <name>QG_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation>Vlastnosti skosenia</translation>
+        <translation type="obsolete">Vlastnosti skosenia</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Orezanie</translation>
+        <translation type="obsolete">Orezanie</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation>Pokús sa orezať obidva objekty</translation>
+        <translation type="obsolete">Pokús sa orezať obidva objekty</translation>
     </message>
     <message>
         <source>Length 1:</source>
-        <translation>Vzdialenosť 1:</translation>
+        <translation type="obsolete">Vzdialenosť 1:</translation>
     </message>
     <message>
         <source>Length 2:</source>
-        <translation>Vzdialenosť 2:</translation>
+        <translation type="obsolete">Vzdialenosť 2:</translation>
     </message>
 </context>
 <context>
@@ -2753,30 +2813,18 @@ v inom okne</translation>
     <name>QG_CircleOptions</name>
     <message>
         <source>Circle Options</source>
-        <translation>Nastavenia kružníc</translation>
+        <translation type="obsolete">Nastavenia kružníc</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Polomer:</translation>
+        <translation type="obsolete">Polomer:</translation>
     </message>
 </context>
 <context>
     <name>QG_CircleTan2Options</name>
     <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Radius:</source>
-        <translation type="unfinished">Polomer:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Polomer:</translation>
     </message>
 </context>
 <context>
@@ -2827,7 +2875,7 @@ v inom okne</translation>
     </message>
     <message>
         <source>Others..</source>
-        <translation>Iná..</translation>
+        <translation type="obsolete">Iná..</translation>
     </message>
     <message>
         <source>Unchanged</source>
@@ -2859,6 +2907,10 @@ v inom okne</translation>
     </message>
     <message>
         <source>Dark Gray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2927,22 +2979,22 @@ v inom okne</translation>
     <name>QG_DimLinearOptions</name>
     <message>
         <source>Linear Dimension Options</source>
-        <translation>Nastavenia lineárnych rozmerov</translation>
+        <translation type="obsolete">Nastavenia lineárnych rozmerov</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Uhol:</translation>
+        <translation type="obsolete">Uhol:</translation>
     </message>
 </context>
 <context>
     <name>QG_DimOptions</name>
     <message>
         <source>Dimension Options</source>
-        <translation>Nastavenia rozmerov</translation>
+        <translation type="obsolete">Nastavenia rozmerov</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation>Menovka:</translation>
+        <translation type="obsolete">Menovka:</translation>
     </message>
     <message utf8="true">
         <source>ø</source>
@@ -2950,11 +3002,11 @@ v inom okne</translation>
     </message>
     <message utf8="true">
         <source>°</source>
-        <translation>°</translation>
+        <translation type="obsolete">°</translation>
     </message>
     <message utf8="true">
         <source>±</source>
-        <translation>±</translation>
+        <translation type="obsolete">±</translation>
     </message>
     <message utf8="true">
         <source>¶</source>
@@ -2962,23 +3014,11 @@ v inom okne</translation>
     </message>
     <message utf8="true">
         <source>×</source>
-        <translation>×</translation>
+        <translation type="obsolete">×</translation>
     </message>
     <message utf8="true">
         <source>÷</source>
-        <translation>÷</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <source>⌀</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <source>π</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">÷</translation>
     </message>
 </context>
 <context>
@@ -5167,10 +5207,6 @@ Tieto nastavenia môžete neskôr zmeniť v dialógovom okne Nastavenia.</transl
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Snap indicator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Crosshair</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5184,14 +5220,6 @@ Tieto nastavenia môžete neskôr zmeniť v dialógovom okne Nastavenia.</transl
     </message>
     <message>
         <source>Layer/ Block Selection:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5224,6 +5252,46 @@ Tieto nastavenia môžete neskôr zmeniť v dialógovom okne Nastavenia.</transl
     </message>
     <message>
         <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scrollbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">Kružnica</translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished">Bod</translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide cursor when snapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start in tab mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5572,19 +5640,19 @@ Tieto nastavenia môžete neskôr zmeniť v dialógovom okne Nastavenia.</transl
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation type="unfinished">&amp;OK</translation>
+        <translation type="obsolete">&amp;OK</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation type="unfinished">Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Zrušiť</translation>
+        <translation type="obsolete">Zrušiť</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation type="unfinished">Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -6374,31 +6442,23 @@ Tieto nastavenia môžete neskôr zmeniť v dialógovom okne Nastavenia.</transl
     <name>QG_ImageOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Nastavenie vloženia</translation>
+        <translation type="obsolete">Nastavenie vloženia</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Uhol:</translation>
+        <translation type="obsolete">Uhol:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Uhol rotácie</translation>
+        <translation type="obsolete">Uhol rotácie</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Faktor:</translation>
+        <translation type="obsolete">Faktor:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Faktor mierky</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Faktor mierky</translation>
     </message>
 </context>
 <context>
@@ -6560,47 +6620,47 @@ Tieto nastavenia môžete neskôr zmeniť v dialógovom okne Nastavenia.</transl
     <name>QG_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>Nastavenie vloženia</translation>
+        <translation type="obsolete">Nastavenie vloženia</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Uhol:</translation>
+        <translation type="obsolete">Uhol:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Uhol rotácie</translation>
+        <translation type="obsolete">Uhol rotácie</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Faktor:</translation>
+        <translation type="obsolete">Faktor:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Faktor mierky</translation>
+        <translation type="obsolete">Faktor mierky</translation>
     </message>
     <message>
         <source>Array:</source>
-        <translation>Pole:</translation>
+        <translation type="obsolete">Pole:</translation>
     </message>
     <message>
         <source>Number of Columns</source>
-        <translation>Počet stĺpcov</translation>
+        <translation type="obsolete">Počet stĺpcov</translation>
     </message>
     <message>
         <source>Number of Rows</source>
-        <translation>Počet riadkov</translation>
+        <translation type="obsolete">Počet riadkov</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>Vzdialenosť:</translation>
+        <translation type="obsolete">Vzdialenosť:</translation>
     </message>
     <message>
         <source>Column Spacing</source>
-        <translation>Vzdialenosť stĺpcov</translation>
+        <translation type="obsolete">Vzdialenosť stĺpcov</translation>
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation>Vzdialenosť riadkov</translation>
+        <translation type="obsolete">Vzdialenosť riadkov</translation>
     </message>
 </context>
 <context>
@@ -6725,23 +6785,23 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LibraryInsertOptions</name>
     <message>
         <source>Library Insert Options</source>
-        <translation>Nastavenie vkladania knižníc</translation>
+        <translation type="obsolete">Nastavenie vkladania knižníc</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Uhol:</translation>
+        <translation type="obsolete">Uhol:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>Uhol rotácie</translation>
+        <translation type="obsolete">Uhol rotácie</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>Faktor:</translation>
+        <translation type="obsolete">Faktor:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>Faktor mierky</translation>
+        <translation type="obsolete">Faktor mierky</translation>
     </message>
 </context>
 <context>
@@ -6763,184 +6823,172 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LineAngleOptions</name>
     <message>
         <source>Line Angle Options</source>
-        <translation>Nastavenie šikmej čiary</translation>
+        <translation type="obsolete">Nastavenie šikmej čiary</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Uhol:</translation>
+        <translation type="obsolete">Uhol:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Šikmá čiara</translation>
+        <translation type="obsolete">Šikmá čiara</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Dĺžka:</translation>
+        <translation type="obsolete">Dĺžka:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Dĺžka čiary</translation>
+        <translation type="obsolete">Dĺžka čiary</translation>
     </message>
     <message>
         <source>Snap Point:</source>
-        <translation>Bod prichitenia:</translation>
+        <translation type="obsolete">Bod prichitenia:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Začiatočný</translation>
+        <translation type="obsolete">Začiatočný</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>Stredný</translation>
+        <translation type="obsolete">Stredný</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>Koncový</translation>
+        <translation type="obsolete">Koncový</translation>
     </message>
 </context>
 <context>
     <name>QG_LineBisectorOptions</name>
     <message>
         <source>Line Bisector Options</source>
-        <translation>Nastavenie osových čiar</translation>
+        <translation type="obsolete">Nastavenie osových čiar</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Dĺžka:</translation>
+        <translation type="obsolete">Dĺžka:</translation>
     </message>
     <message>
         <source>Length of bisector</source>
-        <translation>Dĺžka osi</translation>
+        <translation type="obsolete">Dĺžka osi</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Počet:</translation>
+        <translation type="obsolete">Počet:</translation>
     </message>
     <message>
         <source>Number of bisectors to create</source>
-        <translation>Počet vytvorených osí</translation>
+        <translation type="obsolete">Počet vytvorených osí</translation>
     </message>
 </context>
 <context>
     <name>QG_LineOptions</name>
     <message>
         <source>Line Options</source>
-        <translation>Nastavenie čiar</translation>
+        <translation type="obsolete">Nastavenie čiar</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Zatvoriť</translation>
+        <translation type="obsolete">Zatvoriť</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Späť</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Späť</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Zopakuj</translation>
+        <translation type="obsolete">Zopakuj</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
-        <translation>Nastavenie rovnobežiek</translation>
+        <translation type="obsolete">Nastavenie rovnobežiek</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Vzdialenosť:</translation>
+        <translation type="obsolete">Vzdialenosť:</translation>
     </message>
     <message>
         <source>Distance to original entity</source>
-        <translation>Vzdialenosť od pôvodného objektu</translation>
+        <translation type="obsolete">Vzdialenosť od pôvodného objektu</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Počet:</translation>
+        <translation type="obsolete">Počet:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Počet vytvorených rovnobežiek</translation>
+        <translation type="obsolete">Počet vytvorených rovnobežiek</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation>Nastavenie rovnobežiek cez bod</translation>
+        <translation type="obsolete">Nastavenie rovnobežiek cez bod</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Počet:</translation>
+        <translation type="obsolete">Počet:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>Počet vytvorených rovnobežiek</translation>
+        <translation type="obsolete">Počet vytvorených rovnobežiek</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygon2Options</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Nastavenie mnohouholníku</translation>
+        <translation type="obsolete">Nastavenie mnohouholníku</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Počet:</translation>
+        <translation type="obsolete">Počet:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Počet hrán</translation>
+        <translation type="obsolete">Počet hrán</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygonOptions</name>
     <message>
         <source>Polygon Options</source>
-        <translation>Nastavenie mnohouholníku</translation>
+        <translation type="obsolete">Nastavenie mnohouholníku</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Počet:</translation>
+        <translation type="obsolete">Počet:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Počet hrán</translation>
+        <translation type="obsolete">Počet hrán</translation>
     </message>
 </context>
 <context>
     <name>QG_LineRelAngleOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Nastavenie čiar pod relatívnym uhlom</translation>
+        <translation type="obsolete">Nastavenie čiar pod relatívnym uhlom</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Uhol:</translation>
+        <translation type="obsolete">Uhol:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>Šikmá čiara</translation>
+        <translation type="obsolete">Šikmá čiara</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Dĺžka:</translation>
+        <translation type="obsolete">Dĺžka:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>Dĺžka čiary</translation>
+        <translation type="obsolete">Dĺžka čiary</translation>
     </message>
 </context>
 <context>
@@ -7066,30 +7114,22 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_MTextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation type="unfinished">Nastavenie textu</translation>
+        <translation type="obsolete">Nastavenie textu</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation type="unfinished">Text:</translation>
+        <translation type="obsolete">Text:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Uhol:</translation>
+        <translation type="obsolete">Uhol:</translation>
     </message>
 </context>
 <context>
     <name>QG_ModifyOffsetOptions</name>
     <message>
-        <source>Modify Offset Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Distance:</source>
-        <translation type="unfinished">Vzdialenosť:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Vzdialenosť:</translation>
     </message>
 </context>
 <context>
@@ -7119,60 +7159,37 @@ p, li { white-space: pre-wrap; }
     <name>QG_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
-        <translation>Nastavenia rotácie/posunu</translation>
+        <translation type="obsolete">Nastavenia rotácie/posunu</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Uhol:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PenToolBar</name>
-    <message>
-        <source>Line color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Uhol:</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Nastavenie čiar pod relatívnym uhlom</translation>
+        <translation type="obsolete">Nastavenie čiar pod relatívnym uhlom</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation type="unfinished">Vzdialenosť:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Vzdialenosť:</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation type="unfinished">Nastavenie lomených čiar</translation>
+        <translation type="obsolete">Nastavenie lomených čiar</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Zatvoriť</translation>
+        <translation type="obsolete">Zatvoriť</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished">Nastavenie lomených čiar</translation>
+        <translation type="obsolete">Nastavenie lomených čiar</translation>
     </message>
     <message>
         <source>Arc</source>
@@ -7180,62 +7197,38 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">Polomer:</translation>
+        <translation type="obsolete">Polomer:</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished">Čiara</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Čiara</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished">Uhol</translation>
+        <translation type="obsolete">Uhol</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">Uhol:</translation>
+        <translation type="obsolete">Uhol:</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation type="unfinished">Pravotočivý</translation>
+        <translation type="obsolete">Pravotočivý</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation type="unfinished">Ľavotočivý</translation>
+        <translation type="obsolete">Ľavotočivý</translation>
+    </message>
+    <message>
+        <source>wrong action type</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_PrintPreviewOptions</name>
     <message>
         <source>Print Preview Options</source>
-        <translation>Nastavenie náhľadu pred tlačou</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Center to page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fit to page</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Nastavenie náhľadu pred tlačou</translation>
     </message>
 </context>
 <context>
@@ -7246,26 +7239,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="unfinished">Otváram nedávno použitý súbor...</translation>
+        <translation type="obsolete">Otváram nedávno použitý súbor...</translation>
     </message>
 </context>
 <context>
     <name>QG_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation>Nastavenie zaoblenia</translation>
+        <translation type="obsolete">Nastavenie zaoblenia</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>Orezanie</translation>
+        <translation type="obsolete">Orezanie</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Pokús sa orezať obidva objekty</translation>
+        <translation type="obsolete">Pokús sa orezať obidva objekty</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>Polomer:</translation>
+        <translation type="obsolete">Polomer:</translation>
     </message>
 </context>
 <context>
@@ -7311,26 +7304,18 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>Nastavenie vzdialenosti prichitávania</translation>
+        <translation type="obsolete">Nastavenie vzdialenosti prichitávania</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>Vzdialenosť:</translation>
+        <translation type="obsolete">Vzdialenosť:</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="unfinished">Nastavenie vzdialenosti prichitávania</translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of equidistant division points</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Nastavenie vzdialenosti prichitávania</translation>
     </message>
 </context>
 <context>
@@ -7447,14 +7432,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>QG_SplineOptions</name>
     <message>
-        <source>Spline Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>1</source>
         <translation type="obsolete">1</translation>
     </message>
@@ -7467,38 +7444,34 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">3</translation>
     </message>
     <message>
-        <source>Closed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Undo</source>
-        <translation type="unfinished">Späť</translation>
+        <translation type="obsolete">Späť</translation>
     </message>
 </context>
 <context>
     <name>QG_TextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation>Nastavenie textu</translation>
+        <translation type="obsolete">Nastavenie textu</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>Text:</translation>
+        <translation type="obsolete">Text:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>Uhol:</translation>
+        <translation type="obsolete">Uhol:</translation>
     </message>
 </context>
 <context>
     <name>QG_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation>Nastavenie orezania o hodnotu</translation>
+        <translation type="obsolete">Nastavenie orezania o hodnotu</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>Vzdialenosť. Záporné hodnoty pre orezanie, kladné hodnoty pre predĺženie.</translation>
+        <translation type="obsolete">Vzdialenosť. Záporné hodnoty pre orezanie, kladné hodnoty pre predĺženie.</translation>
     </message>
     <message>
         <source>Amount:</source>
@@ -7506,15 +7479,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Dĺžka:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Dĺžka:</translation>
     </message>
 </context>
 <context>
@@ -9204,6 +9169,18 @@ Continue?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12482,11 +12459,11 @@ Continue?</source>
         <translation type="unfinished">Zrušiť</translation>
     </message>
     <message>
-        <source>Entity must be a line, arc or polyline.</source>
+        <source>Entity can not be a closed polyline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Entity can not be a closed polyline.</source>
+        <source>Polyline created</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12573,6 +12550,14 @@ Continue?</source>
     </message>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in Black/White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -13850,6 +13835,651 @@ Continue?</source>
         <source>re</source>
         <comment>modify - revert direction</comment>
         <translation type="obsolete">obdlznik</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation type="unfinished">Vlastnosti oblúku</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">Pravotočivý</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcTangentialOptions</name>
+    <message>
+        <source>Tangential Arc Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished">Uhol</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_BevelOptions</name>
+    <message>
+        <source>Bevel Options</source>
+        <translation type="unfinished">Vlastnosti skosenia</translation>
+    </message>
+    <message>
+        <source>Check to trim both entities to the bevel</source>
+        <translation type="unfinished">Pokús sa orezať obidva objekty</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length 1:</source>
+        <translation type="unfinished">Vzdialenosť 1:</translation>
+    </message>
+    <message>
+        <source>Length 2:</source>
+        <translation type="unfinished">Vzdialenosť 2:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="unfinished">Nastavenia kružníc</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Polomer:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleTan2Options</name>
+    <message>
+        <source>Circle Tangential2 Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Polomer:</translation>
+    </message>
+    <message>
+        <source>Radius of tangential circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimLinearOptions</name>
+    <message>
+        <source>Linear Dimension Options</source>
+        <translation type="unfinished">Nastavenia lineárnych rozmerov</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Uhol:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimOptions</name>
+    <message>
+        <source>Dimension Options</source>
+        <translation type="unfinished">Nastavenia rozmerov</translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="unfinished">Menovka:</translation>
+    </message>
+    <message utf8="true">
+        <source>⌀</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>°</source>
+        <translation type="unfinished">°</translation>
+    </message>
+    <message utf8="true">
+        <source>±</source>
+        <translation type="unfinished">±</translation>
+    </message>
+    <message utf8="true">
+        <source>π</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>×</source>
+        <translation type="unfinished">×</translation>
+    </message>
+    <message utf8="true">
+        <source>÷</source>
+        <translation type="unfinished">÷</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ImageOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished">Nastavenie vloženia</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Uhol:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Uhol rotácie</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Faktor:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Faktor mierky</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_InsertOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished">Nastavenie vloženia</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Uhol:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Uhol rotácie</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Faktor:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Faktor mierky</translation>
+    </message>
+    <message>
+        <source>Array:</source>
+        <translation type="unfinished">Pole:</translation>
+    </message>
+    <message>
+        <source>Number of Columns</source>
+        <translation type="unfinished">Počet stĺpcov</translation>
+    </message>
+    <message>
+        <source>Number of Rows</source>
+        <translation type="unfinished">Počet riadkov</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">Vzdialenosť:</translation>
+    </message>
+    <message>
+        <source>Column Spacing</source>
+        <translation type="unfinished">Vzdialenosť stĺpcov</translation>
+    </message>
+    <message>
+        <source>Row Spacing</source>
+        <translation type="unfinished">Vzdialenosť riadkov</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LibraryInsertOptions</name>
+    <message>
+        <source>Library Insert Options</source>
+        <translation type="unfinished">Nastavenie vkladania knižníc</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Uhol:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">Uhol rotácie</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">Faktor:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">Faktor mierky</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineAngleOptions</name>
+    <message>
+        <source>Line Angle Options</source>
+        <translation type="unfinished">Nastavenie šikmej čiary</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Uhol:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished">Šikmá čiara</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Dĺžka:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Dĺžka čiary</translation>
+    </message>
+    <message>
+        <source>Snap Point:</source>
+        <translation type="unfinished">Bod prichitenia:</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished">Začiatočný</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="unfinished">Koncový</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineBisectorOptions</name>
+    <message>
+        <source>Line Bisector Options</source>
+        <translation type="unfinished">Nastavenie osových čiar</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Dĺžka:</translation>
+    </message>
+    <message>
+        <source>Length of bisector</source>
+        <translation type="unfinished">Dĺžka osi</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Počet:</translation>
+    </message>
+    <message>
+        <source>Number of bisectors to create</source>
+        <translation type="unfinished">Počet vytvorených osí</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineOptions</name>
+    <message>
+        <source>Line Options</source>
+        <translation type="unfinished">Nastavenie čiar</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Zatvoriť</translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">Zopakuj</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelOptions</name>
+    <message>
+        <source>Line Parallel Options</source>
+        <translation type="unfinished">Nastavenie rovnobežiek</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Vzdialenosť:</translation>
+    </message>
+    <message>
+        <source>Distance to original entity</source>
+        <translation type="unfinished">Vzdialenosť od pôvodného objektu</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Počet:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished">Počet vytvorených rovnobežiek</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelThroughOptions</name>
+    <message>
+        <source>Line Parallel Through Options</source>
+        <translation type="unfinished">Nastavenie rovnobežiek cez bod</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Počet:</translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished">Počet vytvorených rovnobežiek</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygon2Options</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished">Nastavenie mnohouholníku</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Počet:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished">Počet hrán</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygonOptions</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished">Nastavenie mnohouholníku</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished">Počet:</translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished">Počet hrán</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineRelAngleOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">Nastavenie čiar pod relatívnym uhlom</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Uhol:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished">Šikmá čiara</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Dĺžka:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">Dĺžka čiary</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Nastavenie textu</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Text:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Uhol:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ModifyOffsetOptions</name>
+    <message>
+        <source>Modify Offset Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Vzdialenosť:</translation>
+    </message>
+    <message>
+        <source>Offset from original entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MoveRotateOptions</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation type="unfinished">Nastavenia rotácie/posunu</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Uhol:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PolylineOptions</name>
+    <message>
+        <source>Polyline Options</source>
+        <translation type="unfinished">Nastavenie lomených čiar</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Zatvoriť</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">Čiara</translation>
+    </message>
+    <message>
+        <source>Tangential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tan Radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished">Uhol</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Polomer:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Uhol:</translation>
+    </message>
+    <message>
+        <source>Counter Clockwise</source>
+        <translation type="unfinished">Ľavotočivý</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">Pravotočivý</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PrintPreviewOptions</name>
+    <message>
+        <source>Print Preview Options</source>
+        <translation type="unfinished">Nastavenie náhľadu pred tlačou</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fixed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Black / White mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Center to page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit to page</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_RoundOptions</name>
+    <message>
+        <source>Round Options</source>
+        <translation type="unfinished">Nastavenie zaoblenia</translation>
+    </message>
+    <message>
+        <source>Check to trim both edges to the rounding</source>
+        <translation type="unfinished">Pokús sa orezať obidva objekty</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">Polomer:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapDistOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished">Nastavenie vzdialenosti prichitávania</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">Vzdialenosť:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished">Nastavenie vzdialenosti prichitávania</translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of equidistant division points</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SplineOptions</name>
+    <message>
+        <source>Spline Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Degree:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">Nastavenie textu</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">Text:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">Uhol:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TrimAmountOptions</name>
+    <message>
+        <source>Trim Amount Options</source>
+        <translation type="unfinished">Nastavenie orezania o hodnotu</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending.</source>
+        <translation type="unfinished">Vzdialenosť. Záporné hodnoty pre orezanie, kladné hodnoty pre predĺženie.</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">Dĺžka:</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

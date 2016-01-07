@@ -2,6 +2,37 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="pa">
 <context>
+    <name>DlgSplinePoints</name>
+    <message>
+        <source>SplinePoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer:</source>
+        <translation type="unfinished">ਪਰਤ:</translation>
+    </message>
+    <message>
+        <source>Geometry</source>
+        <translation type="unfinished">ਜੁਮੈਟਰੀ</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">ਬੰਦ ਕੀਤਾ</translation>
+    </message>
+    <message>
+        <source>Spline Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Control Points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Points on Spline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>radius=%1 is too small for points selected
@@ -504,15 +535,7 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>set to bottom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>lower after entity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>lower over entity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -521,10 +544,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>set to top</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -613,11 +632,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Open IDE</source>
-        <translation type="unfinished">IDE ਖੋਲੋ</translation>
+        <translation type="obsolete">IDE ਖੋਲੋ</translation>
     </message>
     <message>
         <source>Run Script..</source>
-        <translation type="unfinished">ਸਕ੍ਰਿਪਟ ਖੋਲੋ...</translation>
+        <translation type="obsolete">ਸਕ੍ਰਿਪਟ ਖੋਲੋ...</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
@@ -757,6 +776,34 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Focus on &amp;Command Line</source>
         <translation type="unfinished">ਕਮਾਂਡ ਰੇਖਾ ਉੱਤੇ ਫੋਕਸ(&amp;C)</translation>
     </message>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <translation type="unfinished">ਖੱਬਾ</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">ਸੱਜਾ</translation>
+    </message>
+    <message>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Floating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reload Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
@@ -784,6 +831,33 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>LC_WidgetOptionsDialog</name>
+    <message>
+        <source>Widget Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LG_DimzerosBox</name>
     <message>
         <source>select:</source>
@@ -807,6 +881,25 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
+    <name>PolylineEquidistantOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">ਰੇਖਾ ਅਨੁਸਾਰੀ ਕੋਣ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">ਖਾਲੀ ਥਾਂ:</translation>
+    </message>
+    <message>
+        <source>Distance from original polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
@@ -819,10 +912,6 @@ distance between points=%2 is larger than diameter=%3</source>
 </context>
 <context>
     <name>QC_ActionGetPoint</name>
-    <message>
-        <source>Specify a point</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Cancel</source>
         <translation type="unfinished">ਰੱਦ ਕਰੋ</translation>
@@ -923,7 +1012,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Scripts</source>
-        <translation>ਸਕ੍ਰਿਪਟਾਂ(&amp;S)</translation>
+        <translation type="obsolete">ਸਕ੍ਰਿਪਟਾਂ(&amp;S)</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -955,7 +1044,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="obsolete">ਤਾਜ਼ਾ ਫਾਇਲ ਖੋਲੀ ਜਾ ਰਹੀ ਹੈ...</translation>
+        <translation type="unfinished">ਤਾਜ਼ਾ ਫਾਇਲ ਖੋਲੀ ਜਾ ਰਹੀ ਹੈ...</translation>
     </message>
     <message>
         <source>Loaded document: </source>
@@ -1145,11 +1234,11 @@ You can save your work now.</source>
     </message>
     <message>
         <source>Running script &apos;%1&apos;</source>
-        <translation>&apos;%1&apos; ਸਕ੍ਰਿਪਟ ਚਲਾਈ ਜਾ ਰਹੀ ਹੈ</translation>
+        <translation type="obsolete">&apos;%1&apos; ਸਕ੍ਰਿਪਟ ਚਲਾਈ ਜਾ ਰਹੀ ਹੈ</translation>
     </message>
     <message>
         <source>Inserting block &apos;%1&apos;</source>
-        <translation>ਬਲਾਕ &apos;%1&apos; ਸ਼ਾਮਿਲ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</translation>
+        <translation type="obsolete">ਬਲਾਕ &apos;%1&apos; ਸ਼ਾਮਿਲ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -1381,11 +1470,11 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>DockWidgets</source>
+        <source>&amp;Dockwidgets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Dockwidgets</source>
+        <source>Dock Areas</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1708,71 +1797,54 @@ p, li { white-space: pre-wrap; }
     <name>QG_ArcOptions</name>
     <message>
         <source>Arc Options</source>
-        <translation>ਚਾਪ ਚੋਣ</translation>
+        <translation type="obsolete">ਚਾਪ ਚੋਣ</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation>ਸੱਜਾ ਦਾਅ</translation>
+        <translation type="obsolete">ਸੱਜਾ ਦਾਅ</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
         <translation type="obsolete">ਖੱਬੇ ਦਾਅ</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation>ਸਪਰਸ਼ ਚਾਪ ਚੋਣ</translation>
+        <translation type="obsolete">ਸਪਰਸ਼ ਚਾਪ ਚੋਣ</translation>
     </message>
     <message>
         <source>Radius:</source>
         <translation type="obsolete">ਅਰਧ-ਵਿਆਸ:</translation>
     </message>
     <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Angle</source>
         <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="unfinished">ਕੋਣ</translation>
+        <translation type="obsolete">ਕੋਣ</translation>
     </message>
 </context>
 <context>
     <name>QG_BevelOptions</name>
     <message>
         <source>Bevel Options</source>
-        <translation>ਬੀਵੀਲ ਚੋਣ</translation>
+        <translation type="obsolete">ਬੀਵੀਲ ਚੋਣ</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>ਛਾਂਟੋ</translation>
+        <translation type="obsolete">ਛਾਂਟੋ</translation>
     </message>
     <message>
         <source>Check to trim both entities to the bevel</source>
-        <translation>ਦੋਵੇਂ ਇਕਾਈਆਂ ਨੂੰ ਬੀਵੀਲ ਲਈ ਛਾਂਟਣ ਲਈ ਜਾਂਚੋ</translation>
+        <translation type="obsolete">ਦੋਵੇਂ ਇਕਾਈਆਂ ਨੂੰ ਬੀਵੀਲ ਲਈ ਛਾਂਟਣ ਲਈ ਜਾਂਚੋ</translation>
     </message>
     <message>
         <source>Length 1:</source>
-        <translation>ਲੰਬਾਈ 1:</translation>
+        <translation type="obsolete">ਲੰਬਾਈ 1:</translation>
     </message>
     <message>
         <source>Length 2:</source>
-        <translation>ਲੰਬਾਈ 2:</translation>
+        <translation type="obsolete">ਲੰਬਾਈ 2:</translation>
     </message>
 </context>
 <context>
@@ -2489,30 +2561,18 @@ in a separate window</source>
     <name>QG_CircleOptions</name>
     <message>
         <source>Circle Options</source>
-        <translation>ਚੱਕਰ ਚੋਣ</translation>
+        <translation type="obsolete">ਚੱਕਰ ਚੋਣ</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>ਅਰਧ-ਵਿਆਸ:</translation>
+        <translation type="obsolete">ਅਰਧ-ਵਿਆਸ:</translation>
     </message>
 </context>
 <context>
     <name>QG_CircleTan2Options</name>
     <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Radius:</source>
-        <translation type="unfinished">ਅਰਧ-ਵਿਆਸ:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">ਅਰਧ-ਵਿਆਸ:</translation>
     </message>
 </context>
 <context>
@@ -2563,7 +2623,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Others..</source>
-        <translation>ਹੋਰ...</translation>
+        <translation type="obsolete">ਹੋਰ...</translation>
     </message>
     <message>
         <source>Unchanged</source>
@@ -2595,6 +2655,10 @@ in a separate window</source>
     </message>
     <message>
         <source>Dark Gray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2663,22 +2727,22 @@ in a separate window</source>
     <name>QG_DimLinearOptions</name>
     <message>
         <source>Linear Dimension Options</source>
-        <translation>ਰੇਖਿਕ ਮਾਪ ਚੋਣ</translation>
+        <translation type="obsolete">ਰੇਖਿਕ ਮਾਪ ਚੋਣ</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>ਕੋਣ:</translation>
+        <translation type="obsolete">ਕੋਣ:</translation>
     </message>
 </context>
 <context>
     <name>QG_DimOptions</name>
     <message>
         <source>Dimension Options</source>
-        <translation>ਮਾਪ ਚੋਣ</translation>
+        <translation type="obsolete">ਮਾਪ ਚੋਣ</translation>
     </message>
     <message>
         <source>Label:</source>
-        <translation>ਨਾਂ:</translation>
+        <translation type="obsolete">ਨਾਂ:</translation>
     </message>
     <message utf8="true">
         <source>ø</source>
@@ -2686,11 +2750,11 @@ in a separate window</source>
     </message>
     <message utf8="true">
         <source>°</source>
-        <translation>°</translation>
+        <translation type="obsolete">°</translation>
     </message>
     <message utf8="true">
         <source>±</source>
-        <translation>±</translation>
+        <translation type="obsolete">±</translation>
     </message>
     <message utf8="true">
         <source>¶</source>
@@ -2698,23 +2762,11 @@ in a separate window</source>
     </message>
     <message utf8="true">
         <source>×</source>
-        <translation>×</translation>
+        <translation type="obsolete">×</translation>
     </message>
     <message utf8="true">
         <source>÷</source>
-        <translation>÷</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <source>⌀</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
-        <source>π</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">÷</translation>
     </message>
 </context>
 <context>
@@ -4887,10 +4939,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Snap indicator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Crosshair</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4904,14 +4952,6 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>Layer/ Block Selection:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4944,6 +4984,46 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scrollbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crosshair2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Isometric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Snap indicator shape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished">ਚੱਕਰ</translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished">ਬਿੰਦੂ</translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide cursor when snapping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start in tab mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5292,19 +5372,19 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     </message>
     <message>
         <source>&amp;OK</source>
-        <translation>ਠੀਕ ਹੈ(&amp;O)</translation>
+        <translation type="obsolete">ਠੀਕ ਹੈ(&amp;O)</translation>
     </message>
     <message>
         <source>Alt+O</source>
-        <translation>Alt+O</translation>
+        <translation type="obsolete">Alt+O</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ਰੱਦ ਕਰੋ</translation>
+        <translation type="obsolete">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
         <source>Esc</source>
-        <translation>Esc</translation>
+        <translation type="obsolete">Esc</translation>
     </message>
 </context>
 <context>
@@ -6090,31 +6170,23 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <name>QG_ImageOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>ਚੋਣ ਦਿਓ</translation>
+        <translation type="obsolete">ਚੋਣ ਦਿਓ</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>ਕੋਣ:</translation>
+        <translation type="obsolete">ਕੋਣ:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>ਘੁੰਮਾਓ ਕੋਣ</translation>
+        <translation type="obsolete">ਘੁੰਮਾਓ ਕੋਣ</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>ਫੈਕਟਰ:</translation>
+        <translation type="obsolete">ਫੈਕਟਰ:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>ਪੈਮਾਨਾ ਫੈਕਟਰ</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">ਪੈਮਾਨਾ ਫੈਕਟਰ</translation>
     </message>
 </context>
 <context>
@@ -6276,47 +6348,47 @@ You can changes these settings later in the Options Dialog of QCad.</source>
     <name>QG_InsertOptions</name>
     <message>
         <source>Insert Options</source>
-        <translation>ਚੋਣ ਸ਼ਾਮਿਲ</translation>
+        <translation type="obsolete">ਚੋਣ ਸ਼ਾਮਿਲ</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>ਕੋਣ:</translation>
+        <translation type="obsolete">ਕੋਣ:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>ਘੁੰਮਾਓ ਕੋਣ</translation>
+        <translation type="obsolete">ਘੁੰਮਾਓ ਕੋਣ</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>ਫੈਕਟਰ:</translation>
+        <translation type="obsolete">ਫੈਕਟਰ:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>ਪੈਮਾਨਾ ਫੈਕਟਰ</translation>
+        <translation type="obsolete">ਪੈਮਾਨਾ ਫੈਕਟਰ</translation>
     </message>
     <message>
         <source>Array:</source>
-        <translation>ਲੜੀ:</translation>
+        <translation type="obsolete">ਲੜੀ:</translation>
     </message>
     <message>
         <source>Number of Columns</source>
-        <translation>ਕਾਲਮਾਂ ਦੀ ਗਿਣਤੀ</translation>
+        <translation type="obsolete">ਕਾਲਮਾਂ ਦੀ ਗਿਣਤੀ</translation>
     </message>
     <message>
         <source>Number of Rows</source>
-        <translation>ਕਤਾਰਾਂ ਦੀ ਗਿਣਤੀ</translation>
+        <translation type="obsolete">ਕਤਾਰਾਂ ਦੀ ਗਿਣਤੀ</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation>ਖਾਲੀ ਥਾਂ:</translation>
+        <translation type="obsolete">ਖਾਲੀ ਥਾਂ:</translation>
     </message>
     <message>
         <source>Column Spacing</source>
-        <translation>ਕਾਲਮ ਖਾਲੀ ਥਾਂ</translation>
+        <translation type="obsolete">ਕਾਲਮ ਖਾਲੀ ਥਾਂ</translation>
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation>ਕਤਾਰ ਖਾਲੀ ਥਾਂ</translation>
+        <translation type="obsolete">ਕਤਾਰ ਖਾਲੀ ਥਾਂ</translation>
     </message>
 </context>
 <context>
@@ -6441,23 +6513,23 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LibraryInsertOptions</name>
     <message>
         <source>Library Insert Options</source>
-        <translation>ਲਾਇਬ੍ਰੇਰੀ ਸ਼ਾਮਿਲ ਚੋਣ</translation>
+        <translation type="obsolete">ਲਾਇਬ੍ਰੇਰੀ ਸ਼ਾਮਿਲ ਚੋਣ</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>ਕੋਣ:</translation>
+        <translation type="obsolete">ਕੋਣ:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
-        <translation>ਘੁੰਮਾਓ ਕੋਣ</translation>
+        <translation type="obsolete">ਘੁੰਮਾਓ ਕੋਣ</translation>
     </message>
     <message>
         <source>Factor:</source>
-        <translation>ਫੈਕਟਰ:</translation>
+        <translation type="obsolete">ਫੈਕਟਰ:</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation>ਪੈਮਾਨਾ ਫੈਕਟਰ</translation>
+        <translation type="obsolete">ਪੈਮਾਨਾ ਫੈਕਟਰ</translation>
     </message>
 </context>
 <context>
@@ -6479,184 +6551,172 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LineAngleOptions</name>
     <message>
         <source>Line Angle Options</source>
-        <translation>ਰੇਖਾ ਕੋਣ ਚੋਣ</translation>
+        <translation type="obsolete">ਰੇਖਾ ਕੋਣ ਚੋਣ</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>ਕੋਣ:</translation>
+        <translation type="obsolete">ਕੋਣ:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>ਰੇਖਾ ਕੋਣ</translation>
+        <translation type="obsolete">ਰੇਖਾ ਕੋਣ</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>ਲੰਬਾਈ:</translation>
+        <translation type="obsolete">ਲੰਬਾਈ:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>ਰੇਖਾ ਦੀ ਲੰਬਾਈ</translation>
+        <translation type="obsolete">ਰੇਖਾ ਦੀ ਲੰਬਾਈ</translation>
     </message>
     <message>
         <source>Snap Point:</source>
-        <translation>ਸਨੈਪ ਬਿੰਦੂ:</translation>
+        <translation type="obsolete">ਸਨੈਪ ਬਿੰਦੂ:</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>ਸ਼ੁਰੂ</translation>
+        <translation type="obsolete">ਸ਼ੁਰੂ</translation>
     </message>
     <message>
         <source>Middle</source>
-        <translation>ਮੱਧ</translation>
+        <translation type="obsolete">ਮੱਧ</translation>
     </message>
     <message>
         <source>End</source>
-        <translation>ਅੰਤ</translation>
+        <translation type="obsolete">ਅੰਤ</translation>
     </message>
 </context>
 <context>
     <name>QG_LineBisectorOptions</name>
     <message>
         <source>Line Bisector Options</source>
-        <translation>ਰੇਖਾ ਦੁਭਾਜਕ ਚੋਣ</translation>
+        <translation type="obsolete">ਰੇਖਾ ਦੁਭਾਜਕ ਚੋਣ</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>ਲੰਬਾਈ:</translation>
+        <translation type="obsolete">ਲੰਬਾਈ:</translation>
     </message>
     <message>
         <source>Length of bisector</source>
-        <translation>ਦੋ-ਭੁਜਾਕ ਦੀ ਲੰਬਾਈ</translation>
+        <translation type="obsolete">ਦੋ-ਭੁਜਾਕ ਦੀ ਲੰਬਾਈ</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>ਗਿਣਤੀ:</translation>
+        <translation type="obsolete">ਗਿਣਤੀ:</translation>
     </message>
     <message>
         <source>Number of bisectors to create</source>
-        <translation>ਬਣਾਉਣ ਲਈ ਦੋ-ਭਾਜਕਾਂ ਦੀ ਗਿਣਤੀ</translation>
+        <translation type="obsolete">ਬਣਾਉਣ ਲਈ ਦੋ-ਭਾਜਕਾਂ ਦੀ ਗਿਣਤੀ</translation>
     </message>
 </context>
 <context>
     <name>QG_LineOptions</name>
     <message>
         <source>Line Options</source>
-        <translation>ਰੇਖਾ ਚੋਣ</translation>
+        <translation type="obsolete">ਰੇਖਾ ਚੋਣ</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>ਬੰਦ</translation>
+        <translation type="obsolete">ਬੰਦ</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>ਵਾਪਿਸ</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">ਵਾਪਿਸ</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">ਮੁੜ ਪਹਿਲਾਂ</translation>
+        <translation type="obsolete">ਮੁੜ ਪਹਿਲਾਂ</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
-        <translation>ਰੇਖਾ ਸਮਾਂਤਰ ਚੋਣ</translation>
+        <translation type="obsolete">ਰੇਖਾ ਸਮਾਂਤਰ ਚੋਣ</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>ਦੂਰੀ:</translation>
+        <translation type="obsolete">ਦੂਰੀ:</translation>
     </message>
     <message>
         <source>Distance to original entity</source>
-        <translation>ਅਸਲੀ ਇਕਾਈ ਤੋਂ ਦੂਰੀ</translation>
+        <translation type="obsolete">ਅਸਲੀ ਇਕਾਈ ਤੋਂ ਦੂਰੀ</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>ਗਿਣਤੀ:</translation>
+        <translation type="obsolete">ਗਿਣਤੀ:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>ਬਣਾਉਣ ਲਈ ਸਮਾਂਤਰਾਂ ਦੀ ਗਿਣਤੀ</translation>
+        <translation type="obsolete">ਬਣਾਉਣ ਲਈ ਸਮਾਂਤਰਾਂ ਦੀ ਗਿਣਤੀ</translation>
     </message>
 </context>
 <context>
     <name>QG_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation>ਰੇਖਾ ਸਮਾਂਤਰ ਰਾਹੀਂ ਚੋਣ</translation>
+        <translation type="obsolete">ਰੇਖਾ ਸਮਾਂਤਰ ਰਾਹੀਂ ਚੋਣ</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>ਗਿਣਤੀ:</translation>
+        <translation type="obsolete">ਗਿਣਤੀ:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
-        <translation>ਬਣਾਉਣ ਲਈ ਸਮਾਂਤਰਾਂ ਦੀ ਗਿਣਤੀ</translation>
+        <translation type="obsolete">ਬਣਾਉਣ ਲਈ ਸਮਾਂਤਰਾਂ ਦੀ ਗਿਣਤੀ</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygon2Options</name>
     <message>
         <source>Polygon Options</source>
-        <translation>ਬਹੁਭੁਜ ਚੋਣ</translation>
+        <translation type="obsolete">ਬਹੁਭੁਜ ਚੋਣ</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>ਗਿਣਤੀ:</translation>
+        <translation type="obsolete">ਗਿਣਤੀ:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>ਭੁਜਾਵਾਂ ਦੀ ਗਿਣਤੀ</translation>
+        <translation type="obsolete">ਭੁਜਾਵਾਂ ਦੀ ਗਿਣਤੀ</translation>
     </message>
 </context>
 <context>
     <name>QG_LinePolygonOptions</name>
     <message>
         <source>Polygon Options</source>
-        <translation>ਬਹੁਭੁਜ ਚੋਣ</translation>
+        <translation type="obsolete">ਬਹੁਭੁਜ ਚੋਣ</translation>
     </message>
     <message>
         <source>Number:</source>
-        <translation>ਗਿਣਤੀ:</translation>
+        <translation type="obsolete">ਗਿਣਤੀ:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>ਭੁਜਾਵਾਂ ਦੀ ਗਿਣਤੀ</translation>
+        <translation type="obsolete">ਭੁਜਾਵਾਂ ਦੀ ਗਿਣਤੀ</translation>
     </message>
 </context>
 <context>
     <name>QG_LineRelAngleOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>ਰੇਖਾ ਅਨੁਸਾਰੀ ਕੋਣ ਚੋਣ</translation>
+        <translation type="obsolete">ਰੇਖਾ ਅਨੁਸਾਰੀ ਕੋਣ ਚੋਣ</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>ਕੋਣ:</translation>
+        <translation type="obsolete">ਕੋਣ:</translation>
     </message>
     <message>
         <source>Line angle</source>
-        <translation>ਰੇਖਾ ਕੋਣ</translation>
+        <translation type="obsolete">ਰੇਖਾ ਕੋਣ</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>ਲੰਬਾਈ:</translation>
+        <translation type="obsolete">ਲੰਬਾਈ:</translation>
     </message>
     <message>
         <source>Length of line</source>
-        <translation>ਰੇਖਾ ਦੀ ਲੰਬਾਈ</translation>
+        <translation type="obsolete">ਰੇਖਾ ਦੀ ਲੰਬਾਈ</translation>
     </message>
 </context>
 <context>
@@ -6782,30 +6842,22 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_MTextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation type="unfinished">ਪਾਠ ਚੋਣ</translation>
+        <translation type="obsolete">ਪਾਠ ਚੋਣ</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation type="unfinished">ਪਾਠ:</translation>
+        <translation type="obsolete">ਪਾਠ:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">ਕੋਣ:</translation>
+        <translation type="obsolete">ਕੋਣ:</translation>
     </message>
 </context>
 <context>
     <name>QG_ModifyOffsetOptions</name>
     <message>
-        <source>Modify Offset Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Distance:</source>
-        <translation type="unfinished">ਦੂਰੀ:</translation>
-    </message>
-    <message>
-        <source>Offset from original entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">ਦੂਰੀ:</translation>
     </message>
 </context>
 <context>
@@ -6835,119 +6887,76 @@ p, li { white-space: pre-wrap; }
     <name>QG_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
-        <translation>ਭੇਜਣ ਘੁੰਮਾਉਣ ਚੋਣ</translation>
+        <translation type="obsolete">ਭੇਜਣ ਘੁੰਮਾਉਣ ਚੋਣ</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>ਕੋਣ:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PenToolBar</name>
-    <message>
-        <source>Line color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line type</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">ਕੋਣ:</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">ਰੇਖਾ ਅਨੁਸਾਰੀ ਕੋਣ ਚੋਣ</translation>
+        <translation type="obsolete">ਰੇਖਾ ਅਨੁਸਾਰੀ ਕੋਣ ਚੋਣ</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation type="unfinished">ਖਾਲੀ ਥਾਂ:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">ਖਾਲੀ ਥਾਂ:</translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineOptions</name>
     <message>
-        <source>Polyline Options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Close</source>
-        <translation type="unfinished">ਬੰਦ</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">ਬੰਦ</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished">ਰੇਖਾ</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">ਰੇਖਾ</translation>
     </message>
     <message>
         <source>Angle</source>
-        <translation type="unfinished">ਕੋਣ</translation>
+        <translation type="obsolete">ਕੋਣ</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished">ਅਰਧ-ਵਿਆਸ:</translation>
+        <translation type="obsolete">ਅਰਧ-ਵਿਆਸ:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished">ਕੋਣ:</translation>
+        <translation type="obsolete">ਕੋਣ:</translation>
     </message>
     <message>
         <source>Clockwise</source>
-        <translation type="unfinished">ਸੱਜਾ ਦਾਅ</translation>
+        <translation type="obsolete">ਸੱਜਾ ਦਾਅ</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
-        <translation type="unfinished">ਖੱਬੇ ਦਾਅ</translation>
+        <translation type="obsolete">ਖੱਬੇ ਦਾਅ</translation>
+    </message>
+    <message>
+        <source>wrong action type</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_PrintPreviewOptions</name>
     <message>
         <source>Print Preview Options</source>
-        <translation>ਛਪਾਈ ਝਲਕ ਚੋਣ</translation>
+        <translation type="obsolete">ਛਪਾਈ ਝਲਕ ਚੋਣ</translation>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation>ਕਾਲਾ / ਚਿੱਟਾ ਢੰਗ ਤਬਦੀਲ</translation>
+        <translation type="obsolete">ਕਾਲਾ / ਚਿੱਟਾ ਢੰਗ ਤਬਦੀਲ</translation>
     </message>
     <message>
         <source>Center to page</source>
-        <translation>ਕੇਂਦਰ ਤੋਂ ਸਫ਼ਾ</translation>
+        <translation type="obsolete">ਕੇਂਦਰ ਤੋਂ ਸਫ਼ਾ</translation>
     </message>
     <message>
         <source>Fit to page</source>
-        <translation>ਸਫ਼ੇ ਤੇ ਫਿੱਟ</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">ਸਫ਼ੇ ਤੇ ਫਿੱਟ</translation>
     </message>
 </context>
 <context>
@@ -6958,26 +6967,26 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Opening recent file...</source>
-        <translation type="unfinished">ਤਾਜ਼ਾ ਫਾਇਲ ਖੋਲੀ ਜਾ ਰਹੀ ਹੈ...</translation>
+        <translation type="obsolete">ਤਾਜ਼ਾ ਫਾਇਲ ਖੋਲੀ ਜਾ ਰਹੀ ਹੈ...</translation>
     </message>
 </context>
 <context>
     <name>QG_RoundOptions</name>
     <message>
         <source>Round Options</source>
-        <translation>ਗੋਲ ਚੋਣ</translation>
+        <translation type="obsolete">ਗੋਲ ਚੋਣ</translation>
     </message>
     <message>
         <source>Trim</source>
-        <translation>ਛਾਂਟੋ</translation>
+        <translation type="obsolete">ਛਾਂਟੋ</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation>ਗੋਲ ਕਰਨ ਲਈ ਦੋਵੇ ਭੁਜਾਵਾਂ ਦੀ ਛਾਂਟੀ ਕਰਨ ਦੀ ਪੜਤਾਲ ਕਰੋ</translation>
+        <translation type="obsolete">ਗੋਲ ਕਰਨ ਲਈ ਦੋਵੇ ਭੁਜਾਵਾਂ ਦੀ ਛਾਂਟੀ ਕਰਨ ਦੀ ਪੜਤਾਲ ਕਰੋ</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation>ਅਰਧ-ਵਿਆਸ:</translation>
+        <translation type="obsolete">ਅਰਧ-ਵਿਆਸ:</translation>
     </message>
 </context>
 <context>
@@ -7023,26 +7032,18 @@ p, li { white-space: pre-wrap; }
     <name>QG_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation>ਸਨੈਪ ਦੂਰੀ ਚੋਣ</translation>
+        <translation type="obsolete">ਸਨੈਪ ਦੂਰੀ ਚੋਣ</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation>ਦੂਰੀ:</translation>
+        <translation type="obsolete">ਦੂਰੀ:</translation>
     </message>
 </context>
 <context>
     <name>QG_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="unfinished">ਸਨੈਪ ਦੂਰੀ ਚੋਣ</translation>
-    </message>
-    <message>
-        <source>Middle Points:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Number of equidistant division points</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">ਸਨੈਪ ਦੂਰੀ ਚੋਣ</translation>
     </message>
 </context>
 <context>
@@ -7160,11 +7161,11 @@ p, li { white-space: pre-wrap; }
     <name>QG_SplineOptions</name>
     <message>
         <source>Spline Options</source>
-        <translation>ਸਪਾਈਨ ਚੋਣ</translation>
+        <translation type="obsolete">ਸਪਾਈਨ ਚੋਣ</translation>
     </message>
     <message>
         <source>Degree:</source>
-        <translation>ਡਿਗਰੀ:</translation>
+        <translation type="obsolete">ਡਿਗਰੀ:</translation>
     </message>
     <message>
         <source>1</source>
@@ -7180,37 +7181,37 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Closed</source>
-        <translation>ਬੰਦ ਕੀਤਾ</translation>
+        <translation type="obsolete">ਬੰਦ ਕੀਤਾ</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation>ਵਾਪਿਸ</translation>
+        <translation type="obsolete">ਵਾਪਿਸ</translation>
     </message>
 </context>
 <context>
     <name>QG_TextOptions</name>
     <message>
         <source>Text Options</source>
-        <translation>ਪਾਠ ਚੋਣ</translation>
+        <translation type="obsolete">ਪਾਠ ਚੋਣ</translation>
     </message>
     <message>
         <source>Text:</source>
-        <translation>ਪਾਠ:</translation>
+        <translation type="obsolete">ਪਾਠ:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation>ਕੋਣ:</translation>
+        <translation type="obsolete">ਕੋਣ:</translation>
     </message>
 </context>
 <context>
     <name>QG_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation>ਛਾਂਟ ਮੁੱਲ ਚੋਣ</translation>
+        <translation type="obsolete">ਛਾਂਟ ਮੁੱਲ ਚੋਣ</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation>ਦੂਰੀ ਹੈ। ਰਿਣਾਤਮਕ ਮੁੱਲਾਂ ਨੂੰ ਹਟਾਇਆ ਜਾ ਰਿਹਾ ਹੈ, ਧਨਾਤਮਕ ਮੁੱਲਾਂ ਨੂੰ ਫੈਲਾਇਆ ਜਾ ਰਿਹਾ ਹੈ।</translation>
+        <translation type="obsolete">ਦੂਰੀ ਹੈ। ਰਿਣਾਤਮਕ ਮੁੱਲਾਂ ਨੂੰ ਹਟਾਇਆ ਜਾ ਰਿਹਾ ਹੈ, ਧਨਾਤਮਕ ਮੁੱਲਾਂ ਨੂੰ ਫੈਲਾਇਆ ਜਾ ਰਿਹਾ ਹੈ।</translation>
     </message>
     <message>
         <source>Amount:</source>
@@ -7218,15 +7219,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">ਲੰਬਾਈ:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">ਲੰਬਾਈ:</translation>
     </message>
 </context>
 <context>
@@ -9030,6 +9023,18 @@ parallel</translation>
     </message>
     <message>
         <source>Calculator error for input: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>blackwhite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12309,11 +12314,11 @@ parallel</translation>
         <translation type="unfinished">ਰੱਦ ਕਰੋ</translation>
     </message>
     <message>
-        <source>Entity must be a line, arc or polyline.</source>
+        <source>Entity can not be a closed polyline.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Entity can not be a closed polyline.</source>
+        <source>Polyline created</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12400,6 +12405,14 @@ parallel</translation>
     </message>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in Black/White</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Printout in color</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -13896,6 +13909,651 @@ parallel</translation>
         <translation type="obsolete">re
 
 ਚਤੁਰਭੁਜ</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcOptions</name>
+    <message>
+        <source>Arc Options</source>
+        <translation type="unfinished">ਚਾਪ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Counterclockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">ਸੱਜਾ ਦਾਅ</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ArcTangentialOptions</name>
+    <message>
+        <source>Tangential Arc Options</source>
+        <translation type="unfinished">ਸਪਰਸ਼ ਚਾਪ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Radius of the tangential arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total subtending angle of the tangential arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <extracomment>Draw Tangential Arc by the given radius</extracomment>
+        <translation type="unfinished">ਕੋਣ</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_BevelOptions</name>
+    <message>
+        <source>Bevel Options</source>
+        <translation type="unfinished">ਬੀਵੀਲ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Check to trim both entities to the bevel</source>
+        <translation type="unfinished">ਦੋਵੇਂ ਇਕਾਈਆਂ ਨੂੰ ਬੀਵੀਲ ਲਈ ਛਾਂਟਣ ਲਈ ਜਾਂਚੋ</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished">ਛਾਂਟੋ</translation>
+    </message>
+    <message>
+        <source>Length 1:</source>
+        <translation type="unfinished">ਲੰਬਾਈ 1:</translation>
+    </message>
+    <message>
+        <source>Length 2:</source>
+        <translation type="unfinished">ਲੰਬਾਈ 2:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleOptions</name>
+    <message>
+        <source>Circle Options</source>
+        <translation type="unfinished">ਚੱਕਰ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">ਅਰਧ-ਵਿਆਸ:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_CircleTan2Options</name>
+    <message>
+        <source>Circle Tangential2 Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">ਅਰਧ-ਵਿਆਸ:</translation>
+    </message>
+    <message>
+        <source>Radius of tangential circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimLinearOptions</name>
+    <message>
+        <source>Linear Dimension Options</source>
+        <translation type="unfinished">ਰੇਖਿਕ ਮਾਪ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">ਕੋਣ:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_DimOptions</name>
+    <message>
+        <source>Dimension Options</source>
+        <translation type="unfinished">ਮਾਪ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Label:</source>
+        <translation type="unfinished">ਨਾਂ:</translation>
+    </message>
+    <message utf8="true">
+        <source>⌀</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>°</source>
+        <translation type="unfinished">°</translation>
+    </message>
+    <message utf8="true">
+        <source>±</source>
+        <translation type="unfinished">±</translation>
+    </message>
+    <message utf8="true">
+        <source>π</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <source>×</source>
+        <translation type="unfinished">×</translation>
+    </message>
+    <message utf8="true">
+        <source>÷</source>
+        <translation type="unfinished">÷</translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ImageOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">ਕੋਣ:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">ਘੁੰਮਾਓ ਕੋਣ</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">ਫੈਕਟਰ:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">ਪੈਮਾਨਾ ਫੈਕਟਰ</translation>
+    </message>
+    <message>
+        <source>DPI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DPI of Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_InsertOptions</name>
+    <message>
+        <source>Insert Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">ਕੋਣ:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">ਘੁੰਮਾਓ ਕੋਣ</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">ਫੈਕਟਰ:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">ਪੈਮਾਨਾ ਫੈਕਟਰ</translation>
+    </message>
+    <message>
+        <source>Array:</source>
+        <translation type="unfinished">ਲੜੀ:</translation>
+    </message>
+    <message>
+        <source>Number of Columns</source>
+        <translation type="unfinished">ਕਾਲਮਾਂ ਦੀ ਗਿਣਤੀ</translation>
+    </message>
+    <message>
+        <source>Number of Rows</source>
+        <translation type="unfinished">ਕਤਾਰਾਂ ਦੀ ਗਿਣਤੀ</translation>
+    </message>
+    <message>
+        <source>Spacing:</source>
+        <translation type="unfinished">ਖਾਲੀ ਥਾਂ:</translation>
+    </message>
+    <message>
+        <source>Column Spacing</source>
+        <translation type="unfinished">ਕਾਲਮ ਖਾਲੀ ਥਾਂ</translation>
+    </message>
+    <message>
+        <source>Row Spacing</source>
+        <translation type="unfinished">ਕਤਾਰ ਖਾਲੀ ਥਾਂ</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LibraryInsertOptions</name>
+    <message>
+        <source>Library Insert Options</source>
+        <translation type="unfinished">ਲਾਇਬ੍ਰੇਰੀ ਸ਼ਾਮਿਲ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">ਕੋਣ:</translation>
+    </message>
+    <message>
+        <source>Rotation Angle</source>
+        <translation type="unfinished">ਘੁੰਮਾਓ ਕੋਣ</translation>
+    </message>
+    <message>
+        <source>Factor:</source>
+        <translation type="unfinished">ਫੈਕਟਰ:</translation>
+    </message>
+    <message>
+        <source>Scale Factor</source>
+        <translation type="unfinished">ਪੈਮਾਨਾ ਫੈਕਟਰ</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineAngleOptions</name>
+    <message>
+        <source>Line Angle Options</source>
+        <translation type="unfinished">ਰੇਖਾ ਕੋਣ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">ਕੋਣ:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished">ਰੇਖਾ ਕੋਣ</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">ਲੰਬਾਈ:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">ਰੇਖਾ ਦੀ ਲੰਬਾਈ</translation>
+    </message>
+    <message>
+        <source>Snap Point:</source>
+        <translation type="unfinished">ਸਨੈਪ ਬਿੰਦੂ:</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished">ਸ਼ੁਰੂ</translation>
+    </message>
+    <message>
+        <source>Middle</source>
+        <translation type="unfinished">ਮੱਧ</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation type="unfinished">ਅੰਤ</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineBisectorOptions</name>
+    <message>
+        <source>Line Bisector Options</source>
+        <translation type="unfinished">ਰੇਖਾ ਦੁਭਾਜਕ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">ਲੰਬਾਈ:</translation>
+    </message>
+    <message>
+        <source>Length of bisector</source>
+        <translation type="unfinished">ਦੋ-ਭੁਜਾਕ ਦੀ ਲੰਬਾਈ</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of bisectors to create</source>
+        <translation type="unfinished">ਬਣਾਉਣ ਲਈ ਦੋ-ਭਾਜਕਾਂ ਦੀ ਗਿਣਤੀ</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineOptions</name>
+    <message>
+        <source>Line Options</source>
+        <translation type="unfinished">ਰੇਖਾ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Form a closed contour from lines drawn</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">ਬੰਦ</translation>
+    </message>
+    <message>
+        <source>Undo the last line drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo the last line drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished">ਮੁੜ ਪਹਿਲਾਂ</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelOptions</name>
+    <message>
+        <source>Line Parallel Options</source>
+        <translation type="unfinished">ਰੇਖਾ ਸਮਾਂਤਰ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">ਦੂਰੀ:</translation>
+    </message>
+    <message>
+        <source>Distance to original entity</source>
+        <translation type="unfinished">ਅਸਲੀ ਇਕਾਈ ਤੋਂ ਦੂਰੀ</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished">ਬਣਾਉਣ ਲਈ ਸਮਾਂਤਰਾਂ ਦੀ ਗਿਣਤੀ</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineParallelThroughOptions</name>
+    <message>
+        <source>Line Parallel Through Options</source>
+        <translation type="unfinished">ਰੇਖਾ ਸਮਾਂਤਰ ਰਾਹੀਂ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of parallels to create</source>
+        <translation type="unfinished">ਬਣਾਉਣ ਲਈ ਸਮਾਂਤਰਾਂ ਦੀ ਗਿਣਤੀ</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygon2Options</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished">ਬਹੁਭੁਜ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished">ਭੁਜਾਵਾਂ ਦੀ ਗਿਣਤੀ</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LinePolygonOptions</name>
+    <message>
+        <source>Polygon Options</source>
+        <translation type="unfinished">ਬਹੁਭੁਜ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of edges</source>
+        <translation type="unfinished">ਭੁਜਾਵਾਂ ਦੀ ਗਿਣਤੀ</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_LineRelAngleOptions</name>
+    <message>
+        <source>Line Relative Angle Options</source>
+        <translation type="unfinished">ਰੇਖਾ ਅਨੁਸਾਰੀ ਕੋਣ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">ਕੋਣ:</translation>
+    </message>
+    <message>
+        <source>Line angle</source>
+        <translation type="unfinished">ਰੇਖਾ ਕੋਣ</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">ਲੰਬਾਈ:</translation>
+    </message>
+    <message>
+        <source>Length of line</source>
+        <translation type="unfinished">ਰੇਖਾ ਦੀ ਲੰਬਾਈ</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MTextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">ਪਾਠ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">ਪਾਠ:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">ਕੋਣ:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_ModifyOffsetOptions</name>
+    <message>
+        <source>Modify Offset Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">ਦੂਰੀ:</translation>
+    </message>
+    <message>
+        <source>Offset from original entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_MoveRotateOptions</name>
+    <message>
+        <source>Move Rotate Options</source>
+        <translation type="unfinished">ਭੇਜਣ ਘੁੰਮਾਉਣ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">ਕੋਣ:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PolylineOptions</name>
+    <message>
+        <source>Polyline Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">ਬੰਦ</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished">ਰੇਖਾ</translation>
+    </message>
+    <message>
+        <source>Tangential</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tan Radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Angle</source>
+        <translation type="unfinished">ਕੋਣ</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">ਅਰਧ-ਵਿਆਸ:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">ਕੋਣ:</translation>
+    </message>
+    <message>
+        <source>Counter Clockwise</source>
+        <translation type="unfinished">ਖੱਬੇ ਦਾਅ</translation>
+    </message>
+    <message>
+        <source>Clockwise</source>
+        <translation type="unfinished">ਸੱਜਾ ਦਾਅ</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_PrintPreviewOptions</name>
+    <message>
+        <source>Print Preview Options</source>
+        <translation type="unfinished">ਛਪਾਈ ਝਲਕ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fixed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Black / White mode</source>
+        <translation type="unfinished">ਕਾਲਾ / ਚਿੱਟਾ ਢੰਗ ਤਬਦੀਲ</translation>
+    </message>
+    <message>
+        <source>Center to page</source>
+        <translation type="unfinished">ਕੇਂਦਰ ਤੋਂ ਸਫ਼ਾ</translation>
+    </message>
+    <message>
+        <source>Fit to page</source>
+        <translation type="unfinished">ਸਫ਼ੇ ਤੇ ਫਿੱਟ</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_RoundOptions</name>
+    <message>
+        <source>Round Options</source>
+        <translation type="unfinished">ਗੋਲ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Check to trim both edges to the rounding</source>
+        <translation type="unfinished">ਗੋਲ ਕਰਨ ਲਈ ਦੋਵੇ ਭੁਜਾਵਾਂ ਦੀ ਛਾਂਟੀ ਕਰਨ ਦੀ ਪੜਤਾਲ ਕਰੋ</translation>
+    </message>
+    <message>
+        <source>Trim</source>
+        <translation type="unfinished">ਛਾਂਟੋ</translation>
+    </message>
+    <message>
+        <source>Radius:</source>
+        <translation type="unfinished">ਅਰਧ-ਵਿਆਸ:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapDistOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished">ਸਨੈਪ ਦੂਰੀ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished">ਦੂਰੀ:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SnapMiddleOptions</name>
+    <message>
+        <source>Snap Distance Options</source>
+        <translation type="unfinished">ਸਨੈਪ ਦੂਰੀ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Middle Points:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of equidistant division points</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_SplineOptions</name>
+    <message>
+        <source>Spline Options</source>
+        <translation type="unfinished">ਸਪਾਈਨ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Degree:</source>
+        <translation type="unfinished">ਡਿਗਰੀ:</translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">ਬੰਦ ਕੀਤਾ</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TextOptions</name>
+    <message>
+        <source>Text Options</source>
+        <translation type="unfinished">ਪਾਠ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Text:</source>
+        <translation type="unfinished">ਪਾਠ:</translation>
+    </message>
+    <message>
+        <source>Angle:</source>
+        <translation type="unfinished">ਕੋਣ:</translation>
+    </message>
+</context>
+<context>
+    <name>Ui_TrimAmountOptions</name>
+    <message>
+        <source>Trim Amount Options</source>
+        <translation type="unfinished">ਛਾਂਟ ਮੁੱਲ ਚੋਣ</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending.</source>
+        <translation type="unfinished">ਦੂਰੀ ਹੈ। ਰਿਣਾਤਮਕ ਮੁੱਲਾਂ ਨੂੰ ਹਟਾਇਆ ਜਾ ਰਿਹਾ ਹੈ, ਧਨਾਤਮਕ ਮੁੱਲਾਂ ਨੂੰ ਫੈਲਾਇਆ ਜਾ ਰਿਹਾ ਹੈ।</translation>
+    </message>
+    <message>
+        <source>Length:</source>
+        <translation type="unfinished">ਲੰਬਾਈ:</translation>
+    </message>
+    <message>
+        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The input length is used as total length after trimming, instead of length increase</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
