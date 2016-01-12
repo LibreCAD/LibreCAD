@@ -53,10 +53,10 @@ public:
         return RS2::UndoableUnknown;
     }
 
-    virtual void setUndoCycle(RS_UndoCycle* cycle);
-    virtual void changeUndoState();
-    virtual void setUndoState(bool undone);
-    virtual bool isUndone() const;
+	void setUndoCycle(RS_UndoCycle* cycle);
+	void changeUndoState();
+	void setUndoState(bool undone);
+	bool isUndone() const;
 
 	/**
 	 * Can be overwriten by the implementing class to be notified

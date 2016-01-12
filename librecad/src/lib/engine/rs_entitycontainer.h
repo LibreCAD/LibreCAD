@@ -74,7 +74,7 @@ public:
 
 	virtual double getLength() const;
 
-    virtual void undoStateChanged(bool undone);
+//	void undoStateChanged(bool undone) override;
     virtual void setVisible(bool v);
 
     virtual bool setSelected(bool select=true);
