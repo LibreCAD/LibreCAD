@@ -31,14 +31,6 @@
 #include "rs_debug.h"
 
 /**
- * Default constructor.
- */
-RS_Undo::RS_Undo():
-	undoPointer(-1)
-{
-}
-
-/**
  * @return Number of Cycles that can be undone.
  */
 int RS_Undo::countUndoCycles() {
