@@ -42,12 +42,7 @@ class RS_UndoCycle;
  */
 class RS_Undoable : public RS_Flags {
 public:
-	RS_Undoable() = default;
     virtual ~RS_Undoable();
-	RS_Undoable(RS_Undoable const&);
-	RS_Undoable& operator = (RS_Undoable const&);
-	RS_Undoable(RS_Undoable &&);
-	RS_Undoable& operator = (RS_Undoable &&);
 
 	/**
      * Runtime type identification for undoables.
@@ -67,7 +62,7 @@ public:
 	 * Can be overwriten by the implementing class to be notified
 	 * when the undo state changes (the undoable becomes visible / invisible).
 	 */
-	virtual void undoStateChanged(bool /*undone*/) {}
+	virtual void undoStateChanged(bool /*undone*/) = 0;
 
     //friend std::ostream& operator << (std::ostream& os, RS_Undoable& a);
 
