@@ -157,10 +157,10 @@ void RS_EntityContainer::reparent(RS_EntityContainer* parent) {
  * @param undone true: entity has become invisible.
  *               false: entity has become visible.
  */
-void RS_EntityContainer::undoStateChanged(bool undone) {
+//void RS_EntityContainer::undoStateChanged(bool undone) {
 
-    RS_Entity::undoStateChanged(undone);
-}
+//    RS_Entity::undoStateChanged(undone);
+//}
 
 
 
