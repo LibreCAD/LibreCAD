@@ -43,7 +43,6 @@ class RS_Undoable;
  */
 class RS_Undo {
 public:
-    RS_Undo();
 	virtual ~RS_Undo() = default;
 
     virtual bool undo();
@@ -88,7 +87,7 @@ private:
      * The item after will be redone (if there is an item) when redo
      * is called.
      */
-    int undoPointer;
+	int undoPointer = -1;
 
     /**
      * Current undo cycle.
