@@ -43,7 +43,9 @@
 #include "emu_c99.h"
 #endif
 
-const double m_piX2 = M_PI*2; //2*PI
+namespace {
+constexpr double m_piX2 = M_PI*2; //2*PI
+}
 
 /**
  * Rounds the given double to the closest int.
