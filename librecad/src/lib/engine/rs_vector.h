@@ -183,11 +183,11 @@ public:
 void set(size_t i, const RS_Vector& v);
     void push_back(const RS_Vector& v);
 	void removeAt(const size_t i);
-    RS_VectorSolutions appendTo(const RS_VectorSolutions& v);
+	RS_VectorSolutions& push_back(const RS_VectorSolutions& v);
     void setTangent(bool t);
     bool isTangent() const;
     RS_Vector getClosest(const RS_Vector& coord,
-						 double* dist=NULL, size_t* index=NULL) const;
+						 double* dist=nullptr, size_t* index=nullptr) const;
     double getClosestDistance(const RS_Vector& coord,
                               int counts = -1); //default to search all
 	const std::vector<RS_Vector>& getVector() const;
