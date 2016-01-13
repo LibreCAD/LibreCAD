@@ -153,7 +153,7 @@ RS_VectorSolutions LC_Hyperbola::getFoci() const {
 
 RS_VectorSolutions LC_Hyperbola::getRefPoints() const{
 	RS_VectorSolutions ret({data.center});
-    ret.appendTo(getFoci());
+    ret.push_back(getFoci());
     return ret;
 }
 

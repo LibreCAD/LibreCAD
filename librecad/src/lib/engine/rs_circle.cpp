@@ -305,7 +305,7 @@ RS_VectorSolutions RS_Circle::createTan2(const std::vector<RS_AtomicEntity*>& ci
 	if(e0.size() && e1.size()) {
         for(auto it0=e0.begin();it0!=e0.end();it0++){
             for(auto it1=e1.begin();it1!=e1.end();it1++){
-                centers.appendTo(RS_Information::getIntersection(*it0,*it1));
+                centers.push_back(RS_Information::getIntersection(*it0,*it1));
             }
         }
     }

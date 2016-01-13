@@ -192,7 +192,7 @@ RS_VectorSolutions RS_Ellipse::getRefPoints() const
         ret.push_back(getEndpoint());
     }
     ret.push_back(data.center);
-    ret.appendTo(getFoci());
+    ret.push_back(getFoci());
     ret.push_back(getMajorPoint());
     ret.push_back(getMinorPoint());
     return ret;
