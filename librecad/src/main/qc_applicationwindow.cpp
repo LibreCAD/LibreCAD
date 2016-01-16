@@ -2290,56 +2290,39 @@ void QC_ApplicationWindow::slotViewGrid(bool toggle) {
     RS_DEBUG->print("QC_ApplicationWindow::slotViewGrid() OK");
 }
 
-
 /**
  * Enables / disables the draft mode.
  *
  * @param toggle true: enable, false: disable.
  */
-void QC_ApplicationWindow::slotViewDraft(bool toggle) {
+void QC_ApplicationWindow::slotViewDraft(bool toggle)
+{
     RS_DEBUG->print("QC_ApplicationWindow::slotViewDraft()");
 
     RS_SETTINGS->beginGroup("/Appearance");
     RS_SETTINGS->writeEntry("/DraftMode", (int)toggle);
     RS_SETTINGS->endGroup();
 
-    for (auto const& win : window_list)
+    //handle "Draft Mode" in window titles
+    QString draft_string = " ["+tr("Draft Mode")+"]";
+
+    foreach (QC_MDIWindow* win, window_list)
     {
         win->getGraphicView()->setDraftMode(toggle);
-    }
+        QString title = win->windowTitle();
 
-    QList<QWidget *> windows;
-    if(mdiAreaCAD)
-        for(QMdiSubWindow* w: mdiAreaCAD->subWindowList())
-            windows<<w;
-    windows.append(this);
-
-
-
-    //handle "Draft Mode" in window titles
-
-    QString draft_mode = " ["+tr("Draft Mode")+"]";
-    if(toggle){
-        for(QWidget* w: windows){
-            QString title=w->windowTitle();
-            //avoid duplicated "Draft Mode" string in window title
-            if(title.size()>draft_mode.size() && title.size()-1 != title.lastIndexOf(draft_mode)+draft_mode.size())
-                w->setWindowTitle(title+draft_mode);
+        if (toggle && !title.contains(draft_string))
+        {
+            win->setWindowTitle(title + draft_string);
         }
-    } else {
-        for(QWidget* w: windows){
-            QString title=w->windowTitle();
-            if(title.size()>draft_mode.size() && title.count(draft_mode)==1){
-                title.remove(title.lastIndexOf(draft_mode),draft_mode.size());
-                w->setWindowTitle(title);
-            }
+        else if (!toggle && title.contains(draft_string))
+        {
+            title.remove(draft_string);
+            win->setWindowTitle(title);
         }
     }
-
     redrawAll();
 }
-
-
 
 /**
  * Redraws all mdi windows.
@@ -2776,17 +2759,17 @@ void QC_ApplicationWindow::createNewDocument(
 
 void QC_ApplicationWindow::updateWindowTitle(QWidget *w)
 {
-    //check for draft mode
     RS_DEBUG->print("QC_ApplicationWindow::slotViewDraft()");
 
     RS_SETTINGS->beginGroup("/Appearance");
-    bool draftMode=RS_SETTINGS->readNumEntry("/DraftMode", 0);
+    bool draftMode = RS_SETTINGS->readNumEntry("/DraftMode", 0);
     RS_SETTINGS->endGroup();
 
-    QString draft_mode = " ["+tr("Draft Mode")+"]";
-    if(draftMode){
-        if(w->windowTitle().lastIndexOf(draft_mode))
-        w->setWindowTitle(w->windowTitle()+draft_mode);
+    if (draftMode)
+    {
+        QString draft_string = " ["+tr("Draft Mode")+"]";
+        if (!w->windowTitle().contains(draft_string))
+            w->setWindowTitle(w->windowTitle() + draft_string);
     }
 }
 
