@@ -220,7 +220,7 @@ RS_Block* RS_BlockList::find(const QString& name) {
 	searched.insert(nullptr);
 	nodes.push_back(this);
 	while (nodes.size()) {
-		auto const& list = nodes.back();
+		auto list = nodes.back();
 		nodes.pop_back();
 		for (RS_Block* b: *list) {
 			if (b->getName() == name)
@@ -242,25 +242,26 @@ RS_Block* RS_BlockList::find(const QString& name) {
  * @param suggestion Suggested name the new name will be based on.
  */
 QString RS_BlockList::newName(const QString& suggestion) {
-//	qDebug()<<"suggestion: "<<suggestion;
+//	qDebug()<<"begin: suggestion: "<<suggestion;
 	if(!find(suggestion))
 		return suggestion;
+
 	QString name=suggestion;
-	QRegExp const rx(R"(\b(-?\d+)\b$)");
+	QRegExp const rx(R"(-\d+$)");
 	int index=name.lastIndexOf(rx);
 	int i=-1;
 	if(index>0){
 		i=name.mid(index+1).toInt();
-		name=name.mid(0, index-1);
+		name=name.mid(0, index);
 	}
 	QString ret = QString("%1-%2").arg(name).arg(i+1);
 	RS_Block* b;
 	while((b = find(ret))){
 		index=b->getName().lastIndexOf(rx);
-		if(b->getName().mid(0, index-1) != name) continue;
-		index=b->getName().lastIndexOf(rx);
 		if(index<0) continue;
-		i=std::max(b->getName().mid(index).toInt(),i);
+		QString const part1= b->getName().mid(0, index);
+		if(part1 != name) continue;
+		i=std::max(b->getName().mid(index+1).toInt(),i);
 		ret = QString("%1-%2").arg(name).arg(i+1);
 	}
 	return ret;
