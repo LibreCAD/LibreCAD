@@ -279,7 +279,7 @@ void QG_LibraryWidget::updatePreview(QModelIndex idx) {
     // Fill items into icon view:
     QStandardItem* newItem;
     for (int i = 0; i < itemPathList.size(); ++i) {
-        QString label = QFileInfo(itemPathList.at(i)).baseName();
+		QString label = QFileInfo(itemPathList.at(i)).completeBaseName();
         QIcon icon = getIcon(directory, QFileInfo(itemPathList.at(i)).fileName(), itemPathList.at(i));
         newItem = new QStandardItem(icon, label);
         iconModel->setItem(i, newItem);
