@@ -341,7 +341,7 @@ void RS_ActionModifyRound::updateMouseButtonHints() {
 
 
 void RS_ActionModifyRound::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF
