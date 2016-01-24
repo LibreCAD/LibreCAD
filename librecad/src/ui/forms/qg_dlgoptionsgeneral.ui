@@ -1765,7 +1765,7 @@
        <item row="0" column="0">
         <widget class="QGroupBox" name="buttonGroup5">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -1887,7 +1887,7 @@
          </property>
         </spacer>
        </item>
-       <item row="0" column="1">
+       <item row="1" column="1">
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
           <string>Load</string>
@@ -1907,10 +1907,17 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QCheckBox" name="maximize_checkbox">
+            <property name="text">
+             <string>Start with main window maximized</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="0" column="1">
         <widget class="QGroupBox" name="groupBox_3">
          <property name="title">
           <string>Clear Settings</string>

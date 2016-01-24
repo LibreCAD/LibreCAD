@@ -28,6 +28,7 @@
 
 #include <QApplication>
 #include <QDebug>
+#include <QScreen>
 
 #include <QSplashScreen>
 
@@ -56,11 +57,10 @@ int main(int argc, char** argv)
 {
     RS_DEBUG->setLevel(RS_Debug::D_WARNING);
 
+    QApplication app(argc, argv);
     QCoreApplication::setOrganizationName("LibreCAD");
     QCoreApplication::setApplicationName("/LibreCAD");
     QCoreApplication::setApplicationVersion("master");
-
-    QApplication app(argc, argv);
 
     #if defined(Q_OS_MAC) && QT_VERSION > 0x050000
         //need stylesheet for Qt5 on mac
@@ -300,8 +300,42 @@ int main(int argc, char** argv)
     QC_ApplicationWindow appWin;
     RS_DEBUG->print("main: setting caption");
     appWin.setWindowTitle(XSTR(QC_APPNAME));
+
     RS_DEBUG->print("main: show main window");
-    appWin.show();
+
+    RS_SETTINGS->beginGroup("/Geometry");
+    int windowWidth = RS_SETTINGS->readNumEntry("/WindowWidth", 0);
+    int windowHeight = RS_SETTINGS->readNumEntry("/WindowHeight", 0);
+    int windowX = RS_SETTINGS->readNumEntry("/WindowX", 0);
+    int windowY = RS_SETTINGS->readNumEntry("/WindowY", 0);
+    RS_SETTINGS->endGroup();
+
+    #ifdef __APPLE1__
+        if (windowY < 30) windowY = 30;
+    #endif
+
+    if (windowWidth != 0)
+    {
+        appWin.resize(windowWidth, windowHeight);
+        appWin.move(windowX, windowY);
+    }
+    else
+    {
+        const QRect screen_rect = QGuiApplication::primaryScreen()->availableGeometry();
+        QRect window_rect(QPoint(0, 0), QSize(screen_rect.width() * 0.8,
+                                              screen_rect.height() * 0.8));
+        window_rect.moveCenter(screen_rect.center());
+        appWin.setGeometry(window_rect);
+    }
+
+    RS_SETTINGS->beginGroup("Defaults");
+    bool maximize = RS_SETTINGS->readNumEntry("/Maximize", 0);
+    RS_SETTINGS->endGroup();
+    if (maximize)
+        appWin.showMaximized();
+    else
+        appWin.show();
+
     RS_DEBUG->print("main: set focus");
     appWin.setFocus();
     RS_DEBUG->print("main: creating main window: OK");

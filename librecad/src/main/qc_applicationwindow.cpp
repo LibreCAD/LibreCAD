@@ -602,22 +602,6 @@ void QC_ApplicationWindow::initSettings() {
     recentFiles->addFiles(file_menu);
 
     RS_SETTINGS->beginGroup("/Geometry");
-    int windowWidth = RS_SETTINGS->readNumEntry("/WindowWidth", 950);
-    int windowHeight = RS_SETTINGS->readNumEntry("/WindowHeight", 700);
-    int windowX = RS_SETTINGS->readNumEntry("/WindowX", 0);
-    int windowY = RS_SETTINGS->readNumEntry("/WindowY", 30);
-    RS_SETTINGS->endGroup();
-
-#ifdef __APPLE1__
-    if (windowY<30) {
-        windowY=30;
-    }
-#endif
-
-    resize(windowWidth, windowHeight);
-    move(windowX, windowY);
-
-    RS_SETTINGS->beginGroup("/Geometry");
     restoreState(RS_SETTINGS->readByteArrayEntry("/DockWindows", ""));
     dock_areas.left->setChecked(RS_SETTINGS->readNumEntry("/LeftDockArea", 0));
     dock_areas.right->setChecked(RS_SETTINGS->readNumEntry("/RightDockArea", 1));
