@@ -91,8 +91,6 @@ public:
 
 public slots:
     void relayAction(QAction* q_action);
-    virtual void show();
-    void finishSplashScreen();
     void slotFocus();
     void slotBack();
     void slotKillAllActions();

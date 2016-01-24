@@ -53,7 +53,6 @@
 # include <QPrinter>
 # include <QPrintDialog>
 #endif
-#include <QSplashScreen>
 
 #include "rs_actionprintpreview.h"
 #include "rs_settings.h"
@@ -108,8 +107,6 @@ QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
 #ifndef QC_ABOUT_ICON
 # define QC_ABOUT_ICON ":/main/intro_librecad.png"
 #endif
-
-    extern QSplashScreen *splash;
 
 
 /*	- Window Title Bar Extra (character) Size.
@@ -495,47 +492,6 @@ QC_ApplicationWindow::~QC_ApplicationWindow() {
     RS_DEBUG->print("QC_ApplicationWindow::~QC_ApplicationWindow: "
                     "deleting dialog factory: OK");
 }
-
-/**
- * Shows the main application window and a splash screen.
- */
-void QC_ApplicationWindow::show() {
-#ifdef QSPLASHSCREEN_H
-    if (splash) {
-        splash->raise();
-        }
-#endif
-
-    QMainWindow::show();
-#ifdef QSPLASHSCREEN_H
-    if (splash) {
-        splash->raise();
-        qApp->processEvents();
-        splash->clearMessage();
-# ifdef QC_DELAYED_SPLASH_SCREEN
-        QTimer::singleShot(1000*2, this, SLOT(finishSplashScreen()));
-# else
-        finishSplashScreen();
-# endif
-    }
-#endif
-}
-
-
-
-/**
- * Called when the splash screen has to terminate.
- */
-void QC_ApplicationWindow::finishSplashScreen() {
-#ifdef QSPLASHSCREEN_H
-    if (splash) {
-        splash->finish(this);
-        delete splash;
-        splash = 0;
-    }
-#endif
-}
-
 
 
 /**

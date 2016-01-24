@@ -31,8 +31,6 @@
 
 #include <QSplashScreen>
 
-QSplashScreen *splash=nullptr;
-
 #include "rs_fontlist.h"
 #include "rs_patternlist.h"
 #include "rs_scriptlist.h"
@@ -250,10 +248,6 @@ int main(int argc, char** argv)
         RS_DEBUG->print("main: show initial config dialog: OK");
     }
 
-    #ifdef QSPLASHSCREEN_H
-        QPixmap* pixmap = new QPixmap(":/main/splash_librecad.png");
-    #endif
-
     RS_DEBUG->print("main: init fontlist..");
     RS_FONTLIST->init();
     RS_DEBUG->print("main: init fontlist: OK");
@@ -290,21 +284,22 @@ int main(int argc, char** argv)
     RS_SYSTEM->loadTranslation(lang, langCmd);
     RS_DEBUG->print("main: loading translation: OK");
 
-    #ifdef QSPLASHSCREEN_H
-        RS_SETTINGS->beginGroup("Appearance");
-        {
-            bool showSplash=RS_SETTINGS->readNumEntry("/ShowSplash",1)==1;
-            if(showSplash)
-            {
-                splash = new QSplashScreen(*pixmap);
-                splash->show();
-                splash->showMessage(QObject::tr("Loading.."),
-                                    Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
-                RS_DEBUG->print("main: splashscreen: OK");
-            }
-        }
-        RS_SETTINGS->endGroup();
-    #endif
+    QSplashScreen* splash = new QSplashScreen;
+
+    RS_SETTINGS->beginGroup("Appearance");
+    bool show_splash = RS_SETTINGS->readNumEntry("/ShowSplash", 1);
+    RS_SETTINGS->endGroup();
+
+    if (show_splash)
+    {
+        QPixmap pixmap(":/main/splash_librecad.png");
+        splash->setAttribute(Qt::WA_DeleteOnClose);
+        splash->setPixmap(pixmap);
+        splash->show();
+        splash->showMessage(QObject::tr("Loading.."),
+                            Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
+        RS_DEBUG->print("main: splashscreen: OK");
+    }
 
     #ifdef QC_BUILTIN_STYLE //js:
         RS_DEBUG->print("main: applying built in style..");
@@ -322,17 +317,16 @@ int main(int argc, char** argv)
     appWin.setFocus();
     RS_DEBUG->print("main: creating main window: OK");
 
-    #ifdef QSPLASHSCREEN_H
-        if (splash)
-        {
-            RS_DEBUG->print("main: updating splash..");
-            splash->showMessage(QObject::tr("Loading..."),
-                    Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
-            RS_DEBUG->print("main: processing events");
-            qApp->processEvents();
-            RS_DEBUG->print("main: updating splash: OK");
-        }
-    #endif
+    if (show_splash)
+    {
+        RS_DEBUG->print("main: updating splash");
+        splash->raise();
+        splash->showMessage(QObject::tr("Loading..."),
+                Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
+        RS_DEBUG->print("main: processing events");
+        qApp->processEvents();
+        RS_DEBUG->print("main: updating splash: OK");
+    }
 
     // Set LC_NUMERIC so that enetring numeric values uses . as teh decimal seperator
     setlocale(LC_NUMERIC, "C");
@@ -341,31 +335,17 @@ int main(int argc, char** argv)
     bool files_loaded = false;
     for (QStringList::Iterator it = fileList.begin(); it != fileList.end(); ++it )
     {
-        #ifdef QSPLASHSCREEN_H
-            if (splash)
-            {
-                splash->showMessage(QObject::tr("Loading File %1..")
-                        .arg(QDir::toNativeSeparators(*it)),
-                Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
-                qApp->processEvents();
-            }
-        #endif
+        if (show_splash)
+        {
+            splash->showMessage(QObject::tr("Loading File %1..")
+                    .arg(QDir::toNativeSeparators(*it)),
+            Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
+            qApp->processEvents();
+        }
         appWin.slotFileOpen(*it, RS2::FormatUnknown);
         files_loaded = true;
     }
     RS_DEBUG->print("main: loading files: OK");
-
-    #ifdef QSPLASHSCREEN_H
-        #ifndef QC_DELAYED_SPLASH_SCREEN
-            if (splash)
-            {
-                splash->finish(appWin);
-                delete splash;
-                splash = nullptr;
-            }
-        #endif
-        delete pixmap;
-    #endif
 
     RS_DEBUG->print("main: app.exec()");
 
@@ -373,6 +353,11 @@ int main(int argc, char** argv)
     {
         appWin.slotFileNewNew();
     }
+
+    if (show_splash)
+        splash->finish(&appWin);
+    else
+        delete splash;
 
     int return_code = app.exec();
 
