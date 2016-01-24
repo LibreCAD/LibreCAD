@@ -49,11 +49,6 @@
 // for image mime resources from png files
 extern void QINITIMAGES_LIBRECAD();
 
-#ifdef QC_BUILTIN_STYLE
-    extern void applyBuiltinStyle();
-#endif
-
-
 /**
  * Main. Creates Application window.
  */
@@ -301,13 +296,7 @@ int main(int argc, char** argv)
         RS_DEBUG->print("main: splashscreen: OK");
     }
 
-    #ifdef QC_BUILTIN_STYLE //js:
-        RS_DEBUG->print("main: applying built in style..");
-        applyBuiltinStyle();
-    #endif
-
     RS_DEBUG->print("main: creating main window..");
-    //QC_ApplicationWindow * appWin = new QC_ApplicationWindow();
     QC_ApplicationWindow appWin;
     RS_DEBUG->print("main: setting caption");
     appWin.setWindowTitle(XSTR(QC_APPNAME));
