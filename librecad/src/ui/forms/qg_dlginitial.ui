@@ -61,11 +61,11 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
+          <string>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
 &lt;/font&gt;
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
-You can changes these settings later in the Options Dialog of QCad.</string>
+(You can changes these settings later.)</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignVCenter</set>
@@ -77,7 +77,16 @@ You can changes these settings later in the Options Dialog of QCad.</string>
        </item>
        <item>
         <layout class="QGridLayout">
-         <property name="margin">
+         <property name="leftMargin">
+          <number>14</number>
+         </property>
+         <property name="topMargin">
+          <number>14</number>
+         </property>
+         <property name="rightMargin">
+          <number>14</number>
+         </property>
+         <property name="bottomMargin">
           <number>14</number>
          </property>
          <item row="2" column="1">

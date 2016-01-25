@@ -243,13 +243,7 @@ int main(int argc, char** argv)
     if (unit=="Invalid")
     {
         RS_DEBUG->print("main: show initial config dialog..");
-        QG_DlgInitial di(NULL);
-        di.setText("<font size=\"+1\"><b>Welcome to " XSTR(QC_APPNAME) "</b></font>"
-        "<br>"
-        "Please choose the unit you want to use for new drawings and your "
-        "preferred language.<br>"
-        "You can changes these settings later in the "
-        "Options Dialog of " XSTR(QC_APPNAME) ".");
+        QG_DlgInitial di(nullptr);
         QPixmap pxm(":/main/intro_librecad.png");
         di.setPixmap(pxm);
         if (di.exec())
