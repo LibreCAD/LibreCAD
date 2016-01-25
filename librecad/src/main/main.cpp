@@ -62,6 +62,24 @@ int main(int argc, char** argv)
     QCoreApplication::setApplicationName("/LibreCAD");
     QCoreApplication::setApplicationVersion("master");
 
+    QSplashScreen* splash = new QSplashScreen;
+
+    RS_SETTINGS->beginGroup("Appearance");
+    bool show_splash = RS_SETTINGS->readNumEntry("/ShowSplash", 1);
+    RS_SETTINGS->endGroup();
+
+    if (show_splash)
+    {
+        QPixmap pixmap(":/main/splash_librecad.png");
+        splash->setPixmap(pixmap);
+        splash->setAttribute(Qt::WA_DeleteOnClose);
+        splash->show();
+        splash->showMessage(QObject::tr("Loading.."),
+                            Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
+        app.processEvents();
+        RS_DEBUG->print("main: splashscreen: OK");
+    }
+
     #if defined(Q_OS_MAC) && QT_VERSION > 0x050000
         //need stylesheet for Qt5 on mac
         app.setStyleSheet(
@@ -278,23 +296,6 @@ int main(int argc, char** argv)
 
     RS_SYSTEM->loadTranslation(lang, langCmd);
     RS_DEBUG->print("main: loading translation: OK");
-
-    QSplashScreen* splash = new QSplashScreen;
-
-    RS_SETTINGS->beginGroup("Appearance");
-    bool show_splash = RS_SETTINGS->readNumEntry("/ShowSplash", 1);
-    RS_SETTINGS->endGroup();
-
-    if (show_splash)
-    {
-        QPixmap pixmap(":/main/splash_librecad.png");
-        splash->setAttribute(Qt::WA_DeleteOnClose);
-        splash->setPixmap(pixmap);
-        splash->show();
-        splash->showMessage(QObject::tr("Loading.."),
-                            Qt::AlignRight|Qt::AlignBottom, QC_SPLASH_TXTCOL);
-        RS_DEBUG->print("main: splashscreen: OK");
-    }
 
     RS_DEBUG->print("main: creating main window..");
     QC_ApplicationWindow appWin;
