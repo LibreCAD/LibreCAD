@@ -305,10 +305,6 @@ int main(int argc, char** argv)
     int windowY = RS_SETTINGS->readNumEntry("/WindowY", 0);
     RS_SETTINGS->endGroup();
 
-    #ifdef __APPLE1__
-        if (windowY < 30) windowY = 30;
-    #endif
-
     if (windowWidth != 0)
     {
         appWin.resize(windowWidth, windowHeight);
