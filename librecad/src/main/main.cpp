@@ -23,13 +23,11 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<clocale>
+#include <clocale>
 #include "main.h"
 
-#include <QApplication>
 #include <QDebug>
-#include <QScreen>
-
+#include <QApplication>
 #include <QSplashScreen>
 
 #include "rs_fontlist.h"
@@ -301,28 +299,19 @@ int main(int argc, char** argv)
     RS_SETTINGS->beginGroup("/Geometry");
     int windowWidth = RS_SETTINGS->readNumEntry("/WindowWidth", 0);
     int windowHeight = RS_SETTINGS->readNumEntry("/WindowHeight", 0);
-    int windowX = RS_SETTINGS->readNumEntry("/WindowX", 0);
-    int windowY = RS_SETTINGS->readNumEntry("/WindowY", 0);
+    int windowX = RS_SETTINGS->readNumEntry("/WindowX", 30);
+    int windowY = RS_SETTINGS->readNumEntry("/WindowY", 30);
     RS_SETTINGS->endGroup();
 
     if (windowWidth != 0)
-    {
         appWin.resize(windowWidth, windowHeight);
-        appWin.move(windowX, windowY);
-    }
-    else
-    {
-        const QRect screen_rect = QGuiApplication::primaryScreen()->availableGeometry();
-        QRect window_rect(QPoint(0, 0), QSize(screen_rect.width() * 0.8,
-                                              screen_rect.height() * 0.8));
-        window_rect.moveCenter(screen_rect.center());
-        appWin.setGeometry(window_rect);
-    }
+
+    appWin.move(windowX, windowY);
 
     RS_SETTINGS->beginGroup("Defaults");
     bool maximize = RS_SETTINGS->readNumEntry("/Maximize", 0);
     RS_SETTINGS->endGroup();
-    if (maximize)
+    if (maximize || windowWidth == 0)
         appWin.showMaximized();
     else
         appWin.show();
@@ -342,7 +331,7 @@ int main(int argc, char** argv)
         RS_DEBUG->print("main: updating splash: OK");
     }
 
-    // Set LC_NUMERIC so that enetring numeric values uses . as teh decimal seperator
+    // Set LC_NUMERIC so that entering numeric values uses . as the decimal seperator
     setlocale(LC_NUMERIC, "C");
 
     RS_DEBUG->print("main: loading files..");
