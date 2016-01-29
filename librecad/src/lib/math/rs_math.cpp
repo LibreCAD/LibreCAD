@@ -423,36 +423,44 @@ std::vector<double> RS_Math::quadraticSolver(const std::vector<double>& ce)
 	// x^2 -2 b x + c=0
 	// (x - b)^2 = b^2 - c
 	// b^2 >= fabs(c)
-	// x - b = \pm b sqrt(1. - c/(b^2))
-	//
-	// x - b = \pm sqrt(-c) sqrt(b^2/(-c) + 1)
-	auto const b2=b*b;
+	// x = b \pm b sqrt(1. - c/(b^2))
+	auto const b2= b * b;
 	auto const discriminant= b2 - c;
 	long double const fc = fabs(c);
+
+	//TODO, fine tune to tolerance level
 	static long double const TOL = 1e-24L;
-	if (discriminant >= -TOL*std::max(b, fc) ){
-		long double r;
-		if (b2 >= fc) {
-			r = b * sqrt(1.L - c/b2);
-		} else {
-			r = sqrt(fc) * sqrt(1.L + b2/fc);
-		}
-		if (r >= TOL*fabs(b)) {
-			if(b>=0.L){
-				ans.push_back(b + r);
-				//since b is non-negative, r is positive
-				//avoid losing of precision in b - r, use c = product of roots
-				ans.push_back(c/ans.front());
-            }else{
-				ans.push_back(b - r);
-				//since b is negative, r is positive
-				//avoid losing of precision in b + r, use c = product of roots
-				ans.push_back(c/ans.front());
-            }
-        }else
-			ans.push_back(b);
-    }
-    return ans;
+
+	if (discriminant < -TOL*std::max(b2, fc))
+		//negative discriminant, no real root
+		return ans;
+
+	//find the radical
+	long double r;
+
+	// given |p| >= |q|
+	// sqrt(p^2 \pm q^2) = p sqrt(1 \pm q^2/p^2)
+	if (b2 >= fc)
+		r = b * sqrt(1.L - c/b2);
+	else
+		// c is negative, because b2 - c is non-negative
+		r = sqrt(fc) * sqrt(1.L + b2/fc);
+
+	if (r >= TOL*fabs(b)) {
+		//two roots
+		if (b >= 0.L)
+			//since both (b,r)>=0, avoid (b - r) loss of significance
+			ans.push_back(b + r);
+		else
+			//since b<0, r>=0, avoid (b + r) loss of significance
+			ans.push_back(b - r);
+
+		//Vieta's formulas for the second root
+		ans.push_back(c/ans.front());
+	} else
+		//multiple roots
+		ans.push_back(b);
+	return ans;
 }
 
 std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
