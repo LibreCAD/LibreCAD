@@ -338,13 +338,17 @@ void RS_Math::test() {
 		std::vector<std::vector<double>> const eqns{
 			{-1., -1.},
 			{-101., -1.},
-			{-1., -100.}
+			{-1., -100.},
+			{2., 1.},
+			{-2., 1.}
 		};
 		//expected roots
 		std::vector<std::vector<double>> roots{
 			{-0.6180339887498948, 1.6180339887498948},
 			{-0.0099000196991084878, 101.009900019699108},
-			{-9.5124921972503929, 10.5124921972503929}
+			{-9.5124921972503929, 10.5124921972503929},
+			{-1.},
+			{1.}
 		};
 
 		for(size_t i=0; i < eqns.size(); i++) {
@@ -352,13 +356,13 @@ void RS_Math::test() {
 					<<eqns[i].front()<<") x + ("
 				   <<eqns[i].back()<<") = 0"<<std::endl;
 			auto sol = quadraticSolver(eqns[i]);
-			assert(sol.size()==2 && "Two roots expected");
+			assert(sol.size()==roots[i].size());
 			if (sol.front() > sol.back())
 				std::swap(sol[0], sol[1]);
 			auto expected=roots[i];
 			if (expected.front() > expected.back())
 				std::swap(expected[0], expected[1]);
-			for (int j=0; j < 2; j++) {
+			for (size_t j=0; j < sol.size(); j++) {
 				double x0 = sol[j];
 				double x1 = expected[j];
 				double const prec = (x0 - x1)/(fabs(x0 + x1) + RS_TOLERANCE2);
