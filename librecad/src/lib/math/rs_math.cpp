@@ -332,7 +332,45 @@ QString RS_Math::doubleToString(double value, int prec) {
  * Performs some testing for the math class.
  */
 void RS_Math::test() {
-    QString s;
+	{
+		std::cout<<"testing quadratic solver"<<std::endl;
+		//equations x^2 + v[0] x + v[1] = 0
+		std::vector<std::vector<double>> const eqns{
+			{-1., -1.},
+			{-101., -1.},
+			{-1., -100.}
+		};
+		//expected roots
+		std::vector<std::vector<double>> roots{
+			{-0.6180339887498948, 1.6180339887498948},
+			{-0.0099000196991084878, 101.009900019699108},
+			{-9.5124921972503929, 10.5124921972503929}
+		};
+
+		for(size_t i=0; i < eqns.size(); i++) {
+			std::cout<<"Test quadratic solver, test case: x^2 + ("
+					<<eqns[i].front()<<") x + ("
+				   <<eqns[i].back()<<") = 0"<<std::endl;
+			auto sol = quadraticSolver(eqns[i]);
+			assert(sol.size()==2 && "Two roots expected");
+			if (sol.front() > sol.back())
+				std::swap(sol[0], sol[1]);
+			auto expected=roots[i];
+			if (expected.front() > expected.back())
+				std::swap(expected[0], expected[1]);
+			for (int j=0; j < 2; j++) {
+				double x0 = sol[j];
+				double x1 = expected[j];
+				double const prec = (x0 - x1)/(fabs(x0 + x1) + RS_TOLERANCE2);
+				std::cout<<"root "<<j<<" : precision level = "<<prec<<std::endl;
+				std::cout<<std::setprecision(17)<<"found: "<<x0<<"\texpected: "<<x1<<std::endl;
+				assert(prec < RS_TOLERANCE);
+			}
+			std::cout<<std::endl;
+		}
+		return;
+	}
+	QString s;
     double v;
 
     std::cout << "RS_Math::test: doubleToString:\n";
@@ -380,21 +418,39 @@ std::vector<double> RS_Math::quadraticSolver(const std::vector<double>& ce)
 {
     std::vector<double> ans(0,0.);
 	if (ce.size() != 2) return ans;
-    double const a=-0.5*ce[0];
-    double b=a*a;
-    double const discriminant=b-ce[1];
-    if (discriminant >= - RS_TOLERANCE15*std::max(fabs(b), fabs(ce[1])) ){
-		b = sqrt(fabs(discriminant));
-		if (b >= RS_TOLERANCE*fabs(a)) {
-            if(a>0.){
-                ans.push_back(a + b);
-                ans.push_back(ce[1]/ans[0]);
+	long double const b = -0.5L * ce[0];
+	long double const c = ce[1];
+	// x^2 -2 b x + c=0
+	// (x - b)^2 = b^2 - c
+	// b^2 >= fabs(c)
+	// x - b = \pm b sqrt(1. - c/(b^2))
+	//
+	// x - b = \pm sqrt(-c) sqrt(b^2/(-c) + 1)
+	auto const b2=b*b;
+	auto const discriminant= b2 - c;
+	long double const fc = fabs(c);
+	static long double const TOL = 1e-24L;
+	if (discriminant >= -TOL*std::max(b, fc) ){
+		long double r;
+		if (b2 >= fc) {
+			r = b * sqrt(1.L - c/b2);
+		} else {
+			r = sqrt(fc) * sqrt(1.L + b2/fc);
+		}
+		if (r >= TOL*fabs(b)) {
+			if(b>=0.L){
+				ans.push_back(b + r);
+				//since b is non-negative, r is positive
+				//avoid losing of precision in b - r, use c = product of roots
+				ans.push_back(c/ans.front());
             }else{
-                ans.push_back(a - b);
-                ans.push_back(ce[1]/ans[0]);
+				ans.push_back(b - r);
+				//since b is negative, r is positive
+				//avoid losing of precision in b + r, use c = product of roots
+				ans.push_back(c/ans.front());
             }
         }else
-            ans.push_back(a);
+			ans.push_back(b);
     }
     return ans;
 }
