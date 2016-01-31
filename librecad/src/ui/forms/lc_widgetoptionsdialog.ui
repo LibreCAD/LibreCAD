@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>317</width>
-    <height>278</height>
+    <width>318</width>
+    <height>319</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -152,6 +152,16 @@
          </item>
          <item row="0" column="1">
           <widget class="QSpinBox" name="statusbar_height_spinbox"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QCheckBox" name="statusbar_fontsize_checkbox">
+           <property name="text">
+            <string>Font Size</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSpinBox" name="statusbar_fontsize_spinbox"/>
          </item>
         </layout>
        </widget>

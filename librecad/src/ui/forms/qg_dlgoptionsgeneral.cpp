@@ -141,9 +141,6 @@ void QG_DlgOptionsGeneral::init() {
     // preview:
 	initComboBox(cbMaxPreview, RS_SETTINGS->readEntry("/MaxPreview", "100"));
 
-    // font size:
-    QString sizeStatus = RS_SETTINGS->readEntry("/StatusBarFontSize", "9");
-    cbSizeStatus->setCurrentIndex( cbSizeStatus->findText(sizeStatus) );
     cbSplash->setChecked(RS_SETTINGS->readNumEntry("/ShowSplash",1)==1);
 
     RS_SETTINGS->endGroup();
@@ -243,7 +240,6 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/indicator_shape_state", indicator_shape_checkbox->isChecked());      
         RS_SETTINGS->writeEntry("/indicator_shape_type", indicator_shape_combobox->currentText());
         RS_SETTINGS->writeEntry("/cursor_hiding", cursor_hiding_checkbox->isChecked());
-        RS_SETTINGS->writeEntry("/StatusBarFontSize", cbSizeStatus->currentText());
         RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/ScrollBars", scrollbars_check_box->isChecked()?1:0);

@@ -32,7 +32,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -1277,8 +1277,8 @@
          </layout>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QGroupBox" name="buttonGroup5_2">
+       <item row="3" column="0" colspan="2">
+        <widget class="QGroupBox" name="bgLanguage">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
            <horstretch>0</horstretch>
@@ -1286,70 +1286,45 @@
           </sizepolicy>
          </property>
          <property name="title">
-          <string>Fontsize</string>
+          <string>Language</string>
          </property>
-         <layout class="QGridLayout" name="font_size_layout">
-          <item row="0" column="1">
-           <widget class="QComboBox" name="cbSizeStatus">
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">5</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">6</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">7</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">8</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">9</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">10</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">11</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">12</string>
-             </property>
-            </item>
-           </widget>
-          </item>
+         <layout class="QGridLayout" name="language_layout">
           <item row="0" column="0">
-           <widget class="QLabel" name="lSizeStatus">
+           <widget class="QLabel" name="lLanguage">
             <property name="text">
-             <string>Statusbar:</string>
+             <string>&amp;GUI Language:</string>
             </property>
             <property name="wordWrap">
              <bool>false</bool>
             </property>
+            <property name="buddy">
+             <cstring>cbLanguage</cstring>
+            </property>
            </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="cbLanguageCmd"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="lLanguageCmd">
+            <property name="text">
+             <string>&amp;Command Language:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbLanguageCmd</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="cbLanguage"/>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="0" column="0" rowspan="2">
+       <item row="0" column="0" rowspan="3">
         <widget class="QGroupBox" name="bgGraphicView">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -1561,53 +1536,6 @@
              </property>
             </item>
            </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="3" column="0" colspan="2">
-        <widget class="QGroupBox" name="bgLanguage">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="title">
-          <string>Language</string>
-         </property>
-         <layout class="QGridLayout" name="language_layout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="lLanguage">
-            <property name="text">
-             <string>&amp;GUI Language:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbLanguage</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="cbLanguageCmd"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="lLanguageCmd">
-            <property name="text">
-             <string>&amp;Command Language:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbLanguageCmd</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="cbLanguage"/>
           </item>
          </layout>
         </widget>
@@ -1986,7 +1914,6 @@
   <tabstop>cbStartHandleColor</tabstop>
   <tabstop>cbHandleColor</tabstop>
   <tabstop>cbEndHandleColor</tabstop>
-  <tabstop>cbSizeStatus</tabstop>
   <tabstop>buttonBox</tabstop>
   <tabstop>lePathLibrary</tabstop>
   <tabstop>cbUnit</tabstop>
@@ -2028,22 +1955,6 @@
     <hint type="sourcelabel">
      <x>344</x>
      <y>615</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbSizeStatus</sender>
-   <signal>activated(int)</signal>
-   <receiver>QG_DlgOptionsGeneral</receiver>
-   <slot>setRestartNeeded()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>339</x>
-     <y>475</y>
     </hint>
     <hint type="destinationlabel">
      <x>20</x>

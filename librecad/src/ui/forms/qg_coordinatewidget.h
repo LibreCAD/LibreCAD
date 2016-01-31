@@ -40,7 +40,6 @@ public:
     ~QG_CoordinateWidget();
 
 public slots:
-    virtual void init();
     virtual void setGraphic( RS_Graphic * graphic );
     virtual void setCoordinates( const RS_Vector & abs, const RS_Vector & rel, bool updateFormat );
     virtual void setCoordinates( double x, double y, double rx, double ry, bool updateFormat );

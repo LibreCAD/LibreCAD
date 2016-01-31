@@ -235,6 +235,18 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     grid_status->setTopLabel(tr("Grid Status"));
     status_bar->addWidget(grid_status);
 
+    QSettings settings;
+    settings.beginGroup("Widgets");
+    int allow_statusbar_fontsize = settings.value("AllowStatusbarFontSize", 0).toInt();
+
+    if (allow_statusbar_fontsize)
+    {
+        int fontsize = settings.value("StatusbarFontSize", 12).toInt();
+        QFont font;
+        font.setPointSize(fontsize);
+        status_bar->setFont(font);
+    }
+    settings.endGroup();
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating LC_CentralWidget");
 
@@ -2814,6 +2826,11 @@ void QC_ApplicationWindow::widgetOptionsDialog()
     int statusbar_height = settings.value("StatusbarHeight", 32).toInt();
     dlg.statusbar_height_spinbox->setValue(statusbar_height);
 
+    int allow_statusbar_fontsize = settings.value("AllowStatusbarFontSize", 0).toInt();
+    dlg.statusbar_fontsize_checkbox->setChecked(allow_statusbar_fontsize);
+    int statusbar_fontsize = settings.value("StatusbarFontSize", 12).toInt();
+    dlg.statusbar_fontsize_spinbox->setValue(statusbar_fontsize);
+
     if (dlg.exec())
     {
         int allow_style = dlg.style_checkbox->isChecked();
@@ -2837,6 +2854,17 @@ void QC_ApplicationWindow::widgetOptionsDialog()
             int toolbar_icon_size = dlg.toolbar_icon_size_spinbox->value();
             settings.setValue("ToolbarIconSize", toolbar_icon_size);
             setIconSize(QSize(toolbar_icon_size, toolbar_icon_size));
+        }
+
+        int allow_statusbar_fontsize = dlg.statusbar_fontsize_checkbox->isChecked();
+        settings.setValue("AllowStatusbarFontSize", allow_statusbar_fontsize);
+        if (allow_statusbar_fontsize)
+        {
+            int statusbar_fontsize = dlg.statusbar_fontsize_spinbox->value();
+            settings.setValue("StatusbarFontSize", statusbar_fontsize);
+            QFont font;
+            font.setPointSize(statusbar_fontsize);
+            statusBar()->setFont(font);
         }
 
         int allow_statusbar_height = dlg.statusbar_height_checkbox->isChecked();
