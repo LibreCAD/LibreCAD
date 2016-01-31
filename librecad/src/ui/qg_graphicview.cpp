@@ -229,7 +229,7 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType c) {
  */
 void QG_GraphicView::updateGridStatusWidget(const QString& text)
 {
-   if (scrollbars) gridStatus->setText(text);
+   emit gridStatusChanged(text);
 }
 
 
@@ -923,7 +923,6 @@ void QG_GraphicView::addScrollbars()
 
     hScrollBar = new QG_ScrollBar(Qt::Horizontal, this);
     vScrollBar = new QG_ScrollBar(Qt::Vertical, this);
-    gridStatus = new QLabel("-", this);
     layout = new QGridLayout(this);
 
     setOffset(50, 50);
@@ -939,20 +938,14 @@ void QG_GraphicView::addScrollbars()
     hScrollBar->setSingleStep(50);
     hScrollBar->setCursor(Qt::ArrowCursor);
     layout->addWidget(hScrollBar, 1, 0);
-    layout->addItem(new QSpacerItem(0, hScrollBar->sizeHint().height()), 1, 0);
     connect(hScrollBar, SIGNAL(valueChanged(int)),
             this, SLOT(slotHScrolled(int)));
 
     vScrollBar->setSingleStep(50);
     vScrollBar->setCursor(Qt::ArrowCursor);
-    layout->addWidget(vScrollBar, 0, 2);
-    layout->addItem(new QSpacerItem(vScrollBar->sizeHint().width(), 0), 0, 2);
+    layout->addWidget(vScrollBar, 0, 1);
     connect(vScrollBar, SIGNAL(valueChanged(int)),
             this, SLOT(slotVScrolled(int)));
-
-    gridStatus->setAlignment(Qt::AlignRight);
-    layout->addWidget(gridStatus, 1, 1, 1, 2);
-    layout->addItem(new QSpacerItem(50, 0), 0, 1);
 }
 
 bool QG_GraphicView::hasScrollbars()

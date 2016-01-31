@@ -55,6 +55,7 @@ class LC_CustomToolbar;
 class QG_ActionHandler;
 class RS_GraphicView;
 class RS_Document;
+class TwoStackedLabels;
 
 struct DockAreas
 {
@@ -181,6 +182,8 @@ public slots:
 
     void modifyCommandTitleBar(Qt::DockWidgetArea area);
     void reloadStyleSheet();
+
+    void updateGridStatus(const QString&);
 
 signals:
     void gridChanged(bool on);
@@ -319,6 +322,7 @@ private:
     /** Selection Status */
     QG_SelectionWidget* selectionWidget;
     QG_ActiveLayerName* m_pActiveLayerName;
+    TwoStackedLabels* grid_status;
 
     // --- Menus ---
     QMenu* windowsMenu;

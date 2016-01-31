@@ -82,6 +82,7 @@
 #include "qg_selectionwidget.h"
 #include "qg_activelayername.h"
 #include "qg_mousewidget.h"
+#include "twostackedlabels.h"
 
 #include "qg_recentfiles.h"
 #include "qg_dlgimageoptions.h"
@@ -230,6 +231,10 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     status_bar->addWidget(selectionWidget);
     m_pActiveLayerName = new QG_ActiveLayerName(this);
     status_bar->addWidget(m_pActiveLayerName);
+    grid_status = new TwoStackedLabels(status_bar);
+    grid_status->setTopLabel(tr("Grid Status"));
+    status_bar->addWidget(grid_status);
+
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating LC_CentralWidget");
 
@@ -1151,6 +1156,9 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     view->setAntialiasing(aa);
     view->setCursorHiding(cursor_hiding);
     if (scrollbars) view->addScrollbars();
+
+    connect(view, SIGNAL(gridStatusChanged(const QString&)),
+            this, SLOT(updateGridStatus(const QString&)));
 
     actionHandler->set_view(view);
     actionHandler->set_document(w->getDocument());
@@ -2885,4 +2893,9 @@ bool QC_ApplicationWindow::loadStyleSheet(QString path)
 void QC_ApplicationWindow::reloadStyleSheet()
 {
     loadStyleSheet(style_sheet_path);
+}
+
+void QC_ApplicationWindow::updateGridStatus(const QString & status)
+{
+    grid_status->setBottomLabel(status);
 }
