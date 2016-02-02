@@ -2127,6 +2127,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
         {
             RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): close");
             mdiAreaCAD->closeActiveSubWindow();
+            getMDIWindow()->showMaximized();
             emit(printPreviewChanged(false));
             return;
         }
