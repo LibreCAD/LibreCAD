@@ -156,8 +156,18 @@ void RS_ActionModifyCut::updateMouseButtonHints() {
 
 
 
-void RS_ActionModifyCut::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+void RS_ActionModifyCut::updateMouseCursor()
+{
+    switch (getStatus()) {
+    case ChooseCutEntity:
+        graphicView->setMouseCursor(RS2::SelectCursor);
+        break;
+    case SetCutCoord:
+        graphicView->setMouseCursor(RS2::CadCursor);
+        break;
+    default:
+        break;
+    }
 }
 
 // EOF
