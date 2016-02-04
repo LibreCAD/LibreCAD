@@ -1,6 +1,9 @@
 
 # Necessary Boost libraries, e. g. BOOST_LIBS = iostreams math_c99 regex
 # XXX: this will not play nice with the win case as-is
+
+exists( custom.pro ):include( custom.pro )
+
 BOOST_LIBS =
 
 unix {
@@ -128,7 +131,6 @@ unix {
 }
 
 win32 {
-
     exists( "$$(BOOST_DIR)" ) {			# Is it set in the environment?
         BOOST_DIR = "$$(BOOST_DIR)"		# Yes, use
     } else:isEmpty( BOOST_DIR ) {		# Is it set in custom.pro?
