@@ -1244,8 +1244,10 @@ bool Doc_plugin_interface::getPoint(QPointF *point, const QString& mesage,
         gView->setCurrentAction(a);
         if (base) a->setBasepoint(base);
         QEventLoop ev;
-        while ( !a->isCompleted()) {
+        while (!a->isCompleted()) {
             ev.processEvents ();
+            if (!gView->getEventHandler()->hasAction())
+                break;
         }
         if (a->isCompleted() ){
         a->getPoint(point);
@@ -1267,6 +1269,8 @@ Plug_Entity *Doc_plugin_interface::getEnt(const QString& mesage){
         while (!a->isCompleted())
         {
             ev.processEvents ();
+            if (!gView->getEventHandler()->hasAction())
+                break;
         }
         // qDebug() << "getEnt: passed event loop";
     }
@@ -1290,7 +1294,6 @@ bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& m
             ev.processEvents ();
             if (!gView->getEventHandler()->hasAction())
                 break;
-
         }
         // qDebug() << "getSelect: passed event loop";
     }

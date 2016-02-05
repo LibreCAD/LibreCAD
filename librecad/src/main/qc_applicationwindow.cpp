@@ -2541,6 +2541,7 @@ bool QC_ApplicationWindow::queryExit(bool force) {
     while (!list.isEmpty())
     {
         QC_MDIWindow* tmp = qobject_cast<QC_MDIWindow*>(list.takeFirst());
+        tmp->getGraphicView()->killAllActions();
         if (tmp)
         {
             slotFilePrintPreview(false);
