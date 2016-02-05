@@ -52,6 +52,7 @@
 #include "intern/qc_actiongetent.h"
 #include "rs_math.h"
 #include "rs_debug.h"
+// #include <QDebug>
 
 #if QT_VERSION < 0x040500
 #include "emu_qt45.h"
@@ -1263,12 +1264,14 @@ Plug_Entity *Doc_plugin_interface::getEnt(const QString& mesage){
         gView->killAllActions();
         gView->setCurrentAction(a);
         QEventLoop ev;
-        while ( !a->isCompleted())
+        while (!a->isCompleted())
         {
             ev.processEvents ();
         }
+        // qDebug() << "getEnt: passed event loop";
     }
     Plug_Entity *e = reinterpret_cast<Plug_Entity*>(a->getSelected(this));
+    // qDebug() << e;
     gView->killAllActions();
     return e;
 }
@@ -1285,7 +1288,11 @@ bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& m
         while (!a->isCompleted())
         {
             ev.processEvents ();
+            if (!gView->getEventHandler()->hasAction())
+                break;
+
         }
+        // qDebug() << "getSelect: passed event loop";
     }
 //    check if a are cancelled by the user issue #349
     RS_EventHandler* eh = gView->getEventHandler();

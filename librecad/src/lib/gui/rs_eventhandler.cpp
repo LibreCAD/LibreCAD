@@ -554,14 +554,12 @@ bool RS_EventHandler::isValid(RS_ActionInterface* action) const{
 /**
  * @return true if there is at least one action in the action stack.
  */
-bool RS_EventHandler::hasAction(){
-
-    while(currentActions.size()>0 ) {
-        if(! currentActions.last()->isFinished()){
+bool RS_EventHandler::hasAction()
+{
+    foreach (RS_ActionInterface* a, currentActions)
+    {
+        if(!a->isFinished())
             return true;
-        }
-        delete currentActions.last();
-        currentActions.pop_back();
     }
     return false;
 }

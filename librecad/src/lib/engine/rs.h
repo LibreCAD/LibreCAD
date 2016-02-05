@@ -226,6 +226,7 @@ public:
         ActionSelectInvert,
         ActionSelectLayer,
         ActionSelectDouble,
+        ActionGetSelect,
 
         ActionDrawArc,
         ActionDrawArc3P,
