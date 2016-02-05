@@ -23,12 +23,10 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#ifdef HAS_BOOST
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/lu.hpp>
 #include <boost/math/special_functions/ellint_2.hpp>
-#endif
 
 #include <cmath>
 #include <muParser.h>
@@ -775,7 +773,6 @@ bool RS_Math::linearSolver(const std::vector<std::vector<double> >& mt, std::vec
 }))
 		return false;
     sn.resize(mSize);//to hold the solution
-    //#ifdef	HAS_BOOST
 #if false
     boost::numeric::ublas::matrix<double> bm (mSize, mSize);
     boost::numeric::ublas::vector<double> bs(mSize);
