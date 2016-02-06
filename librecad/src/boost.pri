@@ -3,6 +3,7 @@
 # XXX: this will not play nice with the win case as-is
 
 exists( custom.pro ):include( custom.pro )
+exists( custom.pri ):include( custom.pri )
 
 BOOST_LIBS =
 
