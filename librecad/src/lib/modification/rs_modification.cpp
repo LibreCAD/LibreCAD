@@ -2925,7 +2925,7 @@ bool RS_Modification::round(const RS_Vector& coord,
             document->addUndoable(entity2);
         }
 
-		if (!isPolyline) {
+		if (!isPolyline && arc) {
             document->addUndoable(arc);
         }
 
