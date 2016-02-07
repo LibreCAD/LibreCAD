@@ -144,6 +144,31 @@ bool RS_Information::isTrimmable(RS_Entity* e1, RS_Entity* e2) {
     return false;
 }
 
+RS_Entity* RS_Information::getRadiusArc(RS_Entity* e1, RS_Entity* e2) {
+	if (!e1 || !e2)
+		return nullptr;
+	if (!e1->getParent() || !e2->getParent())
+		return nullptr;
+	if (e1->getParent()->rtti()==RS2::EntityPolyline &&
+		e2->getParent()->rtti()==RS2::EntityPolyline &&
+		e1->getParent()==e2->getParent()) {
+		RS_Polyline* poly = (RS_Polyline*)e1->getParent();
+		int idx1 = poly->findEntity(e1);
+		int idx2 = poly->findEntity(e2);
+		unsigned dist = abs(idx1 - idx2);
+		int mid = -1;
+		if (dist == 2)
+			mid = idx1 + (idx2 - idx1) / 2;
+		else if (poly->isClosed() && dist == poly->count() - 2U)
+			mid = (std::max(idx1, idx2) + 1) % poly->count();
+		if (mid == -1)
+			return nullptr;
+		RS_Entity *mide = poly->entityAt(mid);
+		if (mide->rtti()==RS2::EntityArc)
+			return mide;
+	}
+	return nullptr;
+}
 
 /**
  * Gets the nearest end point to the given coordinate.

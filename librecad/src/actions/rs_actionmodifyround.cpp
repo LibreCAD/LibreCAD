@@ -66,6 +66,7 @@ void RS_ActionModifyRound::init(int status) {
 
     snapMode.clear();
     snapMode.restriction = RS2::RestrictNothing;
+	changeRadius = false;
 }
 
 
@@ -80,11 +81,16 @@ void RS_ActionModifyRound::trigger() {
         deletePreview();
 
         RS_Modification m(*container, graphicView);
+		RS_Entity* radius = nullptr;
+		if (changeRadius) {
+			radius = RS_Information::getRadiusArc(entity1, entity2);
+		}
 		m.round(pPoints->coord2,
 				pPoints->coord1,
-                (RS_AtomicEntity*)entity1,
+				(RS_AtomicEntity*)entity1,
 				pPoints->coord2,
-                (RS_AtomicEntity*)entity2,
+				(RS_AtomicEntity*)entity2,
+				changeRadius ? (RS_AtomicEntity*)radius : nullptr,
 				pPoints->data);
 
         //coord = RS_Vector(false);
@@ -118,33 +124,35 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent* e) {
         entity2 = se;
 		pPoints->coord2 = mouse;
 
-        if (entity1 && entity2 && entity2->isAtomic() &&
-                        RS_Information::isTrimmable(entity1, entity2)) {
-
-            deletePreview();
-            //preview->addSelectionFrom(*container);
-            //preview->move(targetPoint-referencePoint);
-            RS_Entity* tmp1 = entity1->clone();
-            RS_Entity* tmp2 = entity2->clone();
+        if (!entity1 || !entity2 || !entity2->isAtomic())
+			break;
+		else if (RS_Information::isTrimmable(entity1, entity2) ||
+				 RS_Information::getRadiusArc(entity1, entity2)) {
+			deletePreview();
+			//preview->addSelectionFrom(*container);
+			//preview->move(targetPoint-referencePoint);
+			RS_Entity* tmp1 = entity1->clone();
+			RS_Entity* tmp2 = entity2->clone();
 			tmp1->reparent(preview.get());
 			tmp2->reparent(preview.get());
-            preview->addEntity(tmp1);
-            preview->addEntity(tmp2);
+			preview->addEntity(tmp1);
+			preview->addEntity(tmp2);
 
 			bool trim = pPoints->data.trim;
 			pPoints->data.trim = false;
 			RS_Modification m(*preview, nullptr, false);
 			m.round(pPoints->coord2,
 					pPoints->coord1,
-                    (RS_AtomicEntity*)tmp1,
+					(RS_AtomicEntity*)tmp1,
 					pPoints->coord2,
-                    (RS_AtomicEntity*)tmp2,
+					(RS_AtomicEntity*)tmp2,
+					nullptr,
 					pPoints->data);
 			pPoints->data.trim = trim;
 
-            preview->removeEntity(tmp1);
-            preview->removeEntity(tmp2);
-            drawPreview();
+			preview->removeEntity(tmp1);
+			preview->removeEntity(tmp2);
+			drawPreview();
         }
         break;
 
@@ -178,6 +186,13 @@ void RS_ActionModifyRound::mouseReleaseEvent(QMouseEvent* e) {
             if (entity2 && entity2->isAtomic() &&
                             RS_Information::isTrimmable(entity1, entity2)) {
                 //setStatus(ChooseRounding);
+                changeRadius = false;
+				trigger();
+            }
+            if (entity2 && entity2->isAtomic() &&
+                            RS_Information::getRadiusArc(entity1, entity2)) {
+                //setStatus(ChooseRounding);
+				changeRadius = true;
                 trigger();
             }
             break;
