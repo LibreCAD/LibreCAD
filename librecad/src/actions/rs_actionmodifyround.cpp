@@ -209,10 +209,12 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
     case SetEntity1:
     case SetEntity2:
         if (checkCommand("radius", c)) {
+            e->accept();
             deletePreview();
             lastStatus = (Status)getStatus();
             setStatus(SetRadius);
         } else if (checkCommand("trim", c)) {
+            e->accept();
             deletePreview();
             lastStatus = (Status)getStatus();
             setStatus(SetTrim);
