@@ -260,10 +260,11 @@ public:
                           RS_BevelData& data);
     bool round(const RS_Vector& coord,
                const RS_Vector& coord1,
-                   RS_AtomicEntity* entity1,
+               RS_AtomicEntity* entity1,
                const RS_Vector& coord2,
                RS_AtomicEntity* entity2,
-                           RS_RoundData& data);
+               RS_AtomicEntity* entityMid,
+			   RS_RoundData& data);
 
         bool explode();
 		bool explodeTextIntoLetters();

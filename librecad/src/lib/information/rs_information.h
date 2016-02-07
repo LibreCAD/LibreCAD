@@ -54,6 +54,7 @@ public:
 	static bool isDimension(RS2::EntityType type);
 	static bool isTrimmable(RS_Entity* e);
 	static bool isTrimmable(RS_Entity* e1, RS_Entity* e2);
+	static RS_Entity* getRadiusArc(RS_Entity* e1, RS_Entity* e2);
 
     RS_Vector getNearestEndpoint(const RS_Vector& point,
 								 double* dist = nullptr) const;

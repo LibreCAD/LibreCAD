@@ -2707,6 +2707,7 @@ bool RS_Modification::round(const RS_Vector& coord,
                             RS_AtomicEntity* entity1,
                             const RS_Vector& coord2,
                             RS_AtomicEntity* entity2,
+                            RS_AtomicEntity* entityMid,
                             RS_RoundData& data) {
 
 	if (!(entity1 && entity2)) {
@@ -2754,6 +2755,8 @@ bool RS_Modification::round(const RS_Vector& coord,
 
         entity1 = (RS_AtomicEntity*)baseContainer->entityAt(entity1->getParent()->findEntity(entity1));
         entity2 = (RS_AtomicEntity*)baseContainer->entityAt(entity2->getParent()->findEntity(entity2));
+		if (entityMid)
+			entityMid = (RS_AtomicEntity*)baseContainer->entityAt(entityMid->getParent()->findEntity(entityMid));
 
         isPolyline = true;
 //        isClosedPolyline = ((RS_Polyline*)entity1->getParent())->isClosed();
@@ -2776,6 +2779,9 @@ bool RS_Modification::round(const RS_Vector& coord,
         }
         return false;
     }
+
+	if (entityMid)
+		baseContainer->removeEntity(entityMid);
 
     // there might be two intersections: choose the closest:
     RS_Vector is = sol.getClosest(coord);
