@@ -2791,7 +2791,9 @@ bool RS_Modification::round(const RS_Vector& coord,
     double ang2 = is.angleTo(p2);
     bool reversed = (RS_Math::getAngleDifference(ang1, ang2)>M_PI);
 
-    RS_Arc* arc = new RS_Arc(baseContainer,
+    RS_Arc* arc = nullptr;
+	if (data.radius)
+		arc = new RS_Arc(baseContainer,
                              RS_ArcData(is,
                                         data.radius,
                                         ang1, ang2,
@@ -2861,7 +2863,9 @@ bool RS_Modification::round(const RS_Vector& coord,
     }
 
     // add rounding:
-	if (!isPolyline) {
+	if (!arc) {
+		// zero radius, do nothing
+	} else if (!isPolyline) {
         baseContainer->addEntity(arc);
     } else {
         // find out which base entity is before the rounding:
@@ -2903,7 +2907,7 @@ bool RS_Modification::round(const RS_Vector& coord,
     }
 
     if (graphicView) {
-        if (isPolyline) {
+        if (isPolyline || !arc) {
             graphicView->drawEntity(baseContainer);
         } else {
             graphicView->drawEntity(arc);
