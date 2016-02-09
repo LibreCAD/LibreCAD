@@ -99,7 +99,6 @@
 
 #include "lc_widgetoptionsdialog.h"
 
-
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
 
 #ifndef QC_APP_ICON
@@ -2562,8 +2561,18 @@ bool QC_ApplicationWindow::queryExit(bool force) {
  * it will consume them also if a text field is active
  * which means it's impossible to enter a command.
  */
-void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e) {
+void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e)
+{
 
+    if (e->modifiers() & Qt::ControlModifier)
+    {
+        if (e->key() == Qt::Key_M)
+        {
+            slotFocusCommandLine();
+            e->accept();
+            return;
+        }
+    }
     // multi key codes:
     static QTime ts = QTime();
     static QList<int> doubleCharacters;
