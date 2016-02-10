@@ -44,6 +44,7 @@
 #include <QMenuBar>
 #include <QActionGroup>
 
+
 LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
                                    const QMap<QString, QAction*>& action_map)
     : QObject(nullptr)
@@ -319,7 +320,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_command);
 }
 
-void LC_WidgetFactory::createToolbars(QG_ActionHandler* action_handler)
+void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
 {
     QSizePolicy toolBarPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -370,6 +371,58 @@ void LC_WidgetFactory::createToolbars(QG_ActionHandler* action_handler)
     view_toolbar->addAction(a_map["ZoomWindow"]);
     view_toolbar->addAction(a_map["ZoomPan"]);
 
+    snap_toolbar = new QG_SnapToolBar(main_window, action_handler);
+    snap_toolbar->setWindowTitle(QC_ApplicationWindow::tr("Snap Selection"));
+    snap_toolbar->setSizePolicy(toolBarPolicy);
+    snap_toolbar->setObjectName("snap_toolbar" );
+    action_handler->set_snap_toolbar(snap_toolbar);
+
+    pen_toolbar = new QG_PenToolBar(QC_ApplicationWindow::tr("Pen"), main_window);
+    pen_toolbar->setSizePolicy(toolBarPolicy);
+    pen_toolbar->setObjectName("pen_toolbar");
+
+    options_toolbar = new QToolBar(QC_ApplicationWindow::tr("Tool Options"), main_window);
+    options_toolbar->setSizePolicy(toolBarPolicy);
+    options_toolbar->setObjectName("options_toolbar");
+
+    QToolBar* misc_toolbar = new QToolBar(QC_ApplicationWindow::tr("Misc"), main_window);
+    misc_toolbar->setSizePolicy(toolBarPolicy);
+    misc_toolbar->setObjectName("misc_toolbar");
+    misc_toolbar->addActions(misc_actions);
+
+    // <[~ Dock Areas Toolbar ~]>
+
+    QToolBar* dockareas_toolbar = new QToolBar(main_window);
+    dockareas_toolbar->setWindowTitle(QC_ApplicationWindow::tr("Dock Areas"));
+    dockareas_toolbar->setSizePolicy(toolBarPolicy);
+    dockareas_toolbar->setObjectName("dockareas_toolbar");
+    dockareas_toolbar->addAction(a_map["LeftDockAreaToggle"]);
+    dockareas_toolbar->addAction(a_map["RightDockAreaToggle"]);
+    dockareas_toolbar->addAction(a_map["TopDockAreaToggle"]);
+    dockareas_toolbar->addAction(a_map["BottomDockAreaToggle"]);
+    dockareas_toolbar->addAction(a_map["FloatingDockwidgetsToggle"]);
+
+    // <[~ Toolbars Layout~]>
+
+    main_window->addToolBar(Qt::TopToolBarArea, file_toolbar);
+    main_window->addToolBar(Qt::TopToolBarArea, edit_toolbar);
+    main_window->addToolBar(Qt::TopToolBarArea, view_toolbar);
+    main_window->addToolBar(Qt::TopToolBarArea, settings_toolbar);
+    main_window->addToolBarBreak();
+    main_window->addToolBar(Qt::TopToolBarArea, pen_toolbar);
+    main_window->addToolBar(Qt::TopToolBarArea, options_toolbar);
+
+    main_window->addToolBar(Qt::LeftToolBarArea, order_toolbar);
+    main_window->addToolBar(Qt::LeftToolBarArea, misc_toolbar);
+
+    main_window->addToolBar(Qt::BottomToolBarArea, snap_toolbar);
+    main_window->addToolBar(Qt::BottomToolBarArea, dockareas_toolbar);
+}
+
+void LC_WidgetFactory::createCADToolbars()
+{
+    QSizePolicy toolBarPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
     QToolBar* line_toolbar = new QToolBar(QC_ApplicationWindow::tr("Line"), main_window);
     line_toolbar->setSizePolicy(toolBarPolicy);
     line_toolbar->setObjectName("line_toolbar");
@@ -400,11 +453,6 @@ void LC_WidgetFactory::createToolbars(QG_ActionHandler* action_handler)
     polyline_toolbar->addActions(polyline_actions);
     polyline_toolbar->hide();
 
-    QToolBar* misc_toolbar = new QToolBar(QC_ApplicationWindow::tr("Misc"), main_window);
-    misc_toolbar->setSizePolicy(toolBarPolicy);
-    misc_toolbar->setObjectName("misc_toolbar");
-    misc_toolbar->addActions(misc_actions);
-
     QToolBar* select_toolbar = new QToolBar(QC_ApplicationWindow::tr("Select"), main_window);
     select_toolbar->setSizePolicy(toolBarPolicy);
     select_toolbar->setObjectName("select_toolbar");
@@ -429,45 +477,6 @@ void LC_WidgetFactory::createToolbars(QG_ActionHandler* action_handler)
     info_toolbar->addActions(info_actions);
     info_toolbar->hide();
 
-    snap_toolbar = new QG_SnapToolBar(main_window, action_handler);
-    snap_toolbar->setWindowTitle(QC_ApplicationWindow::tr("Snap Selection"));
-    snap_toolbar->setSizePolicy(toolBarPolicy);
-    snap_toolbar->setObjectName("snap_toolbar" );
-    action_handler->set_snap_toolbar(snap_toolbar);
-
-    pen_toolbar = new QG_PenToolBar(QC_ApplicationWindow::tr("Pen"), main_window);
-    pen_toolbar->setSizePolicy(toolBarPolicy);
-    pen_toolbar->setObjectName("pen_toolbar");
-
-    options_toolbar = new QToolBar(QC_ApplicationWindow::tr("Tool Options"), main_window);
-    options_toolbar->setSizePolicy(toolBarPolicy);
-    options_toolbar->setObjectName("options_toolbar");
-
-    // <[~ Dock Areas Toolbar ~]>
-
-    QToolBar* dockareas_toolbar = new QToolBar(main_window);
-    dockareas_toolbar->setWindowTitle(QC_ApplicationWindow::tr("Dock Areas"));
-    dockareas_toolbar->setSizePolicy(toolBarPolicy);
-    dockareas_toolbar->setObjectName("dockareas_toolbar");
-    dockareas_toolbar->addAction(a_map["LeftDockAreaToggle"]);
-    dockareas_toolbar->addAction(a_map["RightDockAreaToggle"]);
-    dockareas_toolbar->addAction(a_map["TopDockAreaToggle"]);
-    dockareas_toolbar->addAction(a_map["BottomDockAreaToggle"]);
-    dockareas_toolbar->addAction(a_map["FloatingDockwidgetsToggle"]);
-
-    // <[~ Toolbars Layout~]>
-
-    main_window->addToolBar(Qt::TopToolBarArea, file_toolbar);
-    main_window->addToolBar(Qt::TopToolBarArea, edit_toolbar);
-    main_window->addToolBar(Qt::TopToolBarArea, view_toolbar);
-    main_window->addToolBar(Qt::TopToolBarArea, settings_toolbar);
-    main_window->addToolBarBreak();
-    main_window->addToolBar(Qt::TopToolBarArea, pen_toolbar);
-    main_window->addToolBar(Qt::TopToolBarArea, options_toolbar);
-
-    main_window->addToolBar(Qt::LeftToolBarArea, order_toolbar);
-    main_window->addToolBar(Qt::LeftToolBarArea, misc_toolbar);
-
     main_window->addToolBar(Qt::BottomToolBarArea, line_toolbar);
     main_window->addToolBar(Qt::BottomToolBarArea, circle_toolbar);
     main_window->addToolBar(Qt::BottomToolBarArea, curve_toolbar);
@@ -475,9 +484,7 @@ void LC_WidgetFactory::createToolbars(QG_ActionHandler* action_handler)
     main_window->addToolBar(Qt::BottomToolBarArea, polyline_toolbar);
     main_window->addToolBar(Qt::BottomToolBarArea, dimension_toolbar);
     main_window->addToolBar(Qt::BottomToolBarArea, modify_toolbar);
-    main_window->addToolBar(Qt::BottomToolBarArea, snap_toolbar);
     main_window->addToolBar(Qt::BottomToolBarArea, info_toolbar);
-    main_window->addToolBar(Qt::BottomToolBarArea, dockareas_toolbar);
     main_window->addToolBar(Qt::BottomToolBarArea, select_toolbar);
 }
 

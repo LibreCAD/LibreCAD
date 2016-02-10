@@ -190,6 +190,7 @@ void QG_DlgOptionsGeneral::init() {
     tab_mode_check_box->setChecked(RS_SETTINGS->readNumEntry("/TabMode", 0));
     maximize_checkbox->setChecked(RS_SETTINGS->readNumEntry("/Maximize", 0));
     left_sidebar_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableLeftSidebar", 1));
+    cad_toolbars_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableCADToolbars", 1));
     RS_SETTINGS->endGroup();
 
 	//update entities to selected entities to the current active layer
@@ -277,6 +278,7 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/TabMode", tab_mode_check_box->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/Maximize", maximize_checkbox->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/EnableLeftSidebar", left_sidebar_checkbox->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/EnableCADToolbars", cad_toolbars_checkbox->isChecked()?1:0);
         RS_SETTINGS->endGroup();
 
         //update entities to selected entities to the current active layer

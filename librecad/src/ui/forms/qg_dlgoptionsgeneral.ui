@@ -1727,7 +1727,14 @@
           <item>
            <widget class="QCheckBox" name="left_sidebar_checkbox">
             <property name="text">
-             <string>Enable left sidebar</string>
+             <string>Enable CAD dockwidgets</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cad_toolbars_checkbox">
+            <property name="text">
+             <string>Enable CAD toolbars</string>
             </property>
            </widget>
           </item>

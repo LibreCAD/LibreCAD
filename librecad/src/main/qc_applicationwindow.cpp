@@ -259,6 +259,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     if (RS_SETTINGS->readNumEntry("/TabMode", 0))
         mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
     bool enable_left_sidebar = RS_SETTINGS->readNumEntry("/EnableLeftSidebar", 1);
+    bool enable_cad_toolbars = RS_SETTINGS->readNumEntry("/EnableCADToolbars", 1);
     RS_SETTINGS->endGroup();
 
     connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
@@ -281,9 +282,11 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     LC_WidgetFactory widget_factory(this, a_map);
     if (enable_left_sidebar)
         widget_factory.createLeftSidebar(5, icon_size);
+    if (enable_cad_toolbars)
+        widget_factory.createCADToolbars();
     widget_factory.createRightSidebar(actionHandler);
     widget_factory.createCategoriesToolbar();
-    widget_factory.createToolbars(actionHandler);
+    widget_factory.createStandardToolbars(actionHandler);
 
     QString path = RS_SETTINGS->readEntry("/Paths/CustomToolbar");
 

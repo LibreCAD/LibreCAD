@@ -33,7 +33,8 @@ public:
     LC_WidgetFactory(QC_ApplicationWindow* main_win,
                      const QMap<QString, QAction*>& action_map);
 
-    void createToolbars(QG_ActionHandler* action_handler);
+    void createStandardToolbars(QG_ActionHandler* action_handler);
+    void createCADToolbars();
     void createMenus(QMenuBar* menu_bar);
     void createLeftSidebar(int columns, int icon_size);
     void createRightSidebar(QG_ActionHandler* action_handler);
