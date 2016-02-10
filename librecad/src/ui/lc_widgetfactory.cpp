@@ -666,14 +666,14 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
 
     // <[~ Lines ~]>
 
-    sub_menu= draw_menu->addMenu(QC_ApplicationWindow::tr("&Line"));
+    sub_menu = draw_menu->addMenu(QC_ApplicationWindow::tr("&Line"));
     sub_menu->setIcon(QIcon(":/extui/menuline.png"));
     sub_menu->setObjectName("Line");
     sub_menu->addActions(line_actions);
 
     // <[~ Circles ~]>
 
-    sub_menu= draw_menu->addMenu(QC_ApplicationWindow::tr("&Circle"));
+    sub_menu = draw_menu->addMenu(QC_ApplicationWindow::tr("&Circle"));
     sub_menu->setIcon(QIcon(":/extui/menucircle.png"));
     sub_menu->setObjectName("Circle");
     sub_menu->addActions(circle_actions);
@@ -687,24 +687,22 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
 
     // <[~ Ellipses ~]>
 
-    sub_menu= draw_menu->addMenu(QC_ApplicationWindow::tr("&Ellipse"));
+    sub_menu = draw_menu->addMenu(QC_ApplicationWindow::tr("&Ellipse"));
     sub_menu->setIcon(QIcon(":/extui/menuellipse.png"));
     sub_menu->setObjectName("Ellipse");
     sub_menu->addActions(ellipse_actions);
 
     // <[~ Polylines ~]>
 
-    sub_menu= draw_menu->addMenu(QC_ApplicationWindow::tr("&Polyline"));
+    sub_menu = draw_menu->addMenu(QC_ApplicationWindow::tr("&Polyline"));
     sub_menu->setIcon(QIcon(":/extui/menupolyline.png"));
     sub_menu->setObjectName("Polyline");
     sub_menu->addActions(polyline_actions);
 
-    // <[~ Misc ~]>
-
-    QMenu* misc_menu = new QMenu(QC_ApplicationWindow::tr("&Misc"), menu_bar);
-    misc_menu->setObjectName("misc_menu");
-    misc_menu->setTearOffEnabled(true);
-    misc_menu->addActions(misc_actions);
+    draw_menu->addAction(a_map["DrawMText"]);
+    draw_menu->addAction(a_map["DrawText"]);
+    draw_menu->addAction(a_map["DrawHatch"]);
+    draw_menu->addAction(a_map["DrawPoint"]);
 
     // <[~ Select ~]>
 
@@ -841,7 +839,6 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     menu_bar->addMenu(order_menu);
     menu_bar->addMenu(select_menu);
     menu_bar->addMenu(draw_menu);
-    menu_bar->addMenu(misc_menu);
     menu_bar->addMenu(dimension_menu);
     menu_bar->addMenu(modify_menu);
     menu_bar->addMenu(snap_menu);
