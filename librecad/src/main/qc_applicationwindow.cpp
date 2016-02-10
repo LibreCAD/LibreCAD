@@ -258,6 +258,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     RS_SETTINGS->beginGroup("/Defaults");
     if (RS_SETTINGS->readNumEntry("/TabMode", 0))
         mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
+    bool enable_left_sidebar = RS_SETTINGS->readNumEntry("/EnableLeftSidebar", 1);
     RS_SETTINGS->endGroup();
 
     connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
@@ -278,7 +279,8 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     a_map = a_factory.action_map(actionHandler);
 
     LC_WidgetFactory widget_factory(this, a_map);
-    widget_factory.createLeftSidebar(5, icon_size);
+    if (enable_left_sidebar)
+        widget_factory.createLeftSidebar(5, icon_size);
     widget_factory.createRightSidebar(actionHandler);
     widget_factory.createCategoriesToolbar();
     widget_factory.createToolbars(actionHandler);
