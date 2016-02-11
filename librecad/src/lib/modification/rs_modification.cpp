@@ -2707,6 +2707,7 @@ bool RS_Modification::round(const RS_Vector& coord,
                             RS_AtomicEntity* entity1,
                             const RS_Vector& coord2,
                             RS_AtomicEntity* entity2,
+                            RS_AtomicEntity* entityMid,
                             RS_RoundData& data) {
 
 	if (!(entity1 && entity2)) {
@@ -2754,6 +2755,8 @@ bool RS_Modification::round(const RS_Vector& coord,
 
         entity1 = (RS_AtomicEntity*)baseContainer->entityAt(entity1->getParent()->findEntity(entity1));
         entity2 = (RS_AtomicEntity*)baseContainer->entityAt(entity2->getParent()->findEntity(entity2));
+		if (entityMid)
+			entityMid = (RS_AtomicEntity*)baseContainer->entityAt(entityMid->getParent()->findEntity(entityMid));
 
         isPolyline = true;
 //        isClosedPolyline = ((RS_Polyline*)entity1->getParent())->isClosed();
@@ -2777,6 +2780,9 @@ bool RS_Modification::round(const RS_Vector& coord,
         return false;
     }
 
+	if (entityMid)
+		baseContainer->removeEntity(entityMid);
+
     // there might be two intersections: choose the closest:
     RS_Vector is = sol.getClosest(coord);
     RS_Vector p1 = entity1->getNearestPointOnEntity(is, false);
@@ -2785,7 +2791,9 @@ bool RS_Modification::round(const RS_Vector& coord,
     double ang2 = is.angleTo(p2);
     bool reversed = (RS_Math::getAngleDifference(ang1, ang2)>M_PI);
 
-    RS_Arc* arc = new RS_Arc(baseContainer,
+    RS_Arc* arc = nullptr;
+	if (data.radius)
+		arc = new RS_Arc(baseContainer,
                              RS_ArcData(is,
                                         data.radius,
                                         ang1, ang2,
@@ -2855,7 +2863,9 @@ bool RS_Modification::round(const RS_Vector& coord,
     }
 
     // add rounding:
-	if (!isPolyline) {
+	if (!arc) {
+		// zero radius, do nothing
+	} else if (!isPolyline) {
         baseContainer->addEntity(arc);
     } else {
         // find out which base entity is before the rounding:
@@ -2897,7 +2907,7 @@ bool RS_Modification::round(const RS_Vector& coord,
     }
 
     if (graphicView) {
-        if (isPolyline) {
+        if (isPolyline || !arc) {
             graphicView->drawEntity(baseContainer);
         } else {
             graphicView->drawEntity(arc);
@@ -2905,7 +2915,7 @@ bool RS_Modification::round(const RS_Vector& coord,
     }
 
     if (document && handleUndo) {
-		if (!isPolyline && !data.trim) {
+		if (!isPolyline && data.trim) {
             document->addUndoable(trimmed1);
             entity1->setUndoState(true);
             document->addUndoable(entity1);
@@ -2915,7 +2925,7 @@ bool RS_Modification::round(const RS_Vector& coord,
             document->addUndoable(entity2);
         }
 
-		if (!isPolyline) {
+		if (!isPolyline && arc) {
             document->addUndoable(arc);
         }
 
