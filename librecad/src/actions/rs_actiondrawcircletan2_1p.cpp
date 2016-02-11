@@ -31,6 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_circle.h"
 #include "lc_quadratic.h"
 #include "rs_coordinateevent.h"
+#include "rs_point.h"
 #include "rs_preview.h"
 #include "rs_debug.h"
 
@@ -166,6 +167,8 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent* e) {
     deletePreview();
     if(preparePreview()){
 		RS_Circle* e=new RS_Circle(preview.get(), pPoints->cData);
+		for (auto const& vp: pPoints->centers)
+			preview->addEntity(new RS_Point(preview.get(), vp));
         preview->addEntity(e);
         drawPreview();
     }
