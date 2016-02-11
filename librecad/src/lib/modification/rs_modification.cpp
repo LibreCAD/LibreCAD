@@ -2905,7 +2905,7 @@ bool RS_Modification::round(const RS_Vector& coord,
     }
 
     if (document && handleUndo) {
-		if (!isPolyline && !data.trim) {
+		if (!isPolyline && data.trim) {
             document->addUndoable(trimmed1);
             entity1->setUndoState(true);
             document->addUndoable(entity1);
