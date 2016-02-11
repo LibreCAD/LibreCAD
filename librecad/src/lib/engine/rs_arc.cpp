@@ -863,6 +863,8 @@ void RS_Arc::moveRef(const RS_Vector& ref, const RS_Vector& offset)
 	double dMin;
 	size_t index;
 	RS_Vector const vp = refs.getClosest(ref, &dMin, &index);
+	if (dMin >= 1.0e-4)
+		return;
 
 	//reference points must be by the order: start, end, center
 	switch (index) {
