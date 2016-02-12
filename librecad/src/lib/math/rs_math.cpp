@@ -41,6 +41,7 @@
 #include "emu_c99.h"
 #endif
 
+
 namespace {
 constexpr double m_piX2 = M_PI*2; //2*PI
 }
@@ -428,7 +429,7 @@ std::vector<double> RS_Math::quadraticSolver(const std::vector<double>& ce)
 	// x = b \pm b sqrt(1. - c/(b^2))
 	auto const b2= b * b;
 	auto const discriminant= b2 - c;
-	long double const fc = fabs(c);
+    long double const fc = std::abs(c);
 
 	//TODO, fine tune to tolerance level
 	static long double const TOL = 1e-24L;
@@ -448,7 +449,7 @@ std::vector<double> RS_Math::quadraticSolver(const std::vector<double>& ce)
 		// c is negative, because b2 - c is non-negative
 		r = sqrt(fc) * sqrt(1.L + b2/fc);
 
-	if (r >= TOL*fabs(b)) {
+    if (r >= TOL*std::abs(b)) {
 		//two roots
 		if (b >= 0.L)
 			//since both (b,r)>=0, avoid (b - r) loss of significance
