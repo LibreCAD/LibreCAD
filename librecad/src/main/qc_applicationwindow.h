@@ -349,8 +349,6 @@ private:
     QAction* helpAboutApp;
     QAction* helpManual;
 
-    QAction* statusbar_view_action;
-
     // --- Flags ---
     bool previousZoomEnable{false};
     bool undoEnable{false};

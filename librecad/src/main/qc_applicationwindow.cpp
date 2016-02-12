@@ -305,7 +305,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     undoButton = a_map["EditUndo"];
     redoButton = a_map["EditRedo"];
     previousZoom = a_map["ZoomPrevious"];
-    statusbar_view_action = a_map["ViewStatusBar"];
 
     dock_areas.left = a_map["LeftDockAreaToggle"];
     dock_areas.right = a_map["RightDockAreaToggle"];
@@ -2768,12 +2767,16 @@ QMenu* QC_ApplicationWindow::createPopupMenu()
     context_menu->setAttribute(Qt::WA_DeleteOnClose);
 
     QMenu* tb_menu = menuBar()->findChild<QMenu*>("toolbars_menu");
-    context_menu->addMenu(tb_menu);
+    QMenu* temp_tb_menu = new QMenu(tr("Toolbars"), context_menu);
+    temp_tb_menu->addActions(tb_menu->actions());
+    context_menu->addMenu(temp_tb_menu);
 
     QMenu* dw_menu = menuBar()->findChild<QMenu*>("dockwidgets_menu");
-    context_menu->addMenu(dw_menu);
+    QMenu* temp_dw_menu = new QMenu(tr("Dockwidgets"), context_menu);
+    temp_dw_menu->addActions(dw_menu->actions());
+    context_menu->addMenu(temp_dw_menu);
 
-    context_menu->addAction(statusbar_view_action);
+    context_menu->addAction(a_map["ViewStatusBar"]);
 
     return context_menu;
 }
