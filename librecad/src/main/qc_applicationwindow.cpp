@@ -260,6 +260,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         mdiAreaCAD->setViewMode(QMdiArea::TabbedView);
     bool enable_left_sidebar = RS_SETTINGS->readNumEntry("/EnableLeftSidebar", 1);
     bool enable_cad_toolbars = RS_SETTINGS->readNumEntry("/EnableCADToolbars", 1);
+    bool keycode_mode = RS_SETTINGS->readNumEntry("/KeycodeMode", 0);
     RS_SETTINGS->endGroup();
 
     connect(mdiAreaCAD, SIGNAL(subWindowActivated(QMdiSubWindow*)),
@@ -334,7 +335,8 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     // Since this nice feature causes a bug of lost key events when the command widget is on
     // a screen different from the main window, disabled for the time being
     // send key events for mdiAreaCAD to command widget by default
-    mdiAreaCAD->installEventFilter(commandWidget);
+    if (!keycode_mode)
+        mdiAreaCAD->installEventFilter(commandWidget);
 
     RS_SETTINGS->beginGroup("/Appearance");
     QString layer_select_color(RS_SETTINGS->readEntry("/LayerSelectColor", "#CCFFCC"));

@@ -1738,6 +1738,13 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QCheckBox" name="keycode_checkbox">
+            <property name="text">
+             <string>Keycode mode</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
