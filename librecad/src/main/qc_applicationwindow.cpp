@@ -274,11 +274,8 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         setIconSize(QSize(icon_size, icon_size));
 
     actionHandler = new QG_ActionHandler(this);
-
-    LC_ActionFactory a_factory(this);
-    QMap<QString, QAction*> a_map;
-    a_map = a_factory.action_map(actionHandler);
-
+    LC_ActionFactory a_factory(this, actionHandler);
+    a_factory.fillActionContainer(a_map);
     LC_WidgetFactory widget_factory(this, a_map);
     if (enable_left_sidebar)
         widget_factory.createLeftSidebar(5, icon_size);

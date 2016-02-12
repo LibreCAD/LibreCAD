@@ -32,8 +32,10 @@
 #include <QAction>
 #include <QActionGroup>
 
-LC_ActionFactory::LC_ActionFactory(QObject* parent)
+LC_ActionFactory::LC_ActionFactory(QObject* parent, QObject* a_handler)
     : QObject(parent)
+    , action_handler(a_handler)
+    , main_window(parent)
     , tool_group(new QActionGroup(parent))
     , disable_group(new QActionGroup(parent))
 {
@@ -48,10 +50,8 @@ LC_ActionFactory::LC_ActionFactory(QObject* parent)
             parent, SLOT(relayAction(QAction*)));
 }
 
-QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler)
+void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
 {
-    QObject* main_window = parent();
-    QMap<QString, QAction*> a_map;
     QAction* action;
 
     // <[~ Zoom ~]>
@@ -1364,6 +1364,4 @@ QMap<QString, QAction*> LC_ActionFactory::action_map(QObject* action_handler)
             main_window, SLOT(reloadStyleSheet()));
     action->setObjectName("ReloadStyleSheet");
     a_map["ReloadStyleSheet"] = action;
-
-    return a_map;
 }

@@ -31,6 +31,7 @@
 
 #include "rs_pen.h"
 #include "rs_snapper.h"
+#include <QMap>
 
 class QMdiArea;
 class QMdiSubWindow;
@@ -89,6 +90,8 @@ public:
     void setRedoEnable(bool enable);
     void setUndoEnable(bool enable);
     bool loadStyleSheet(QString path);
+
+    QMap<QString, QAction*> a_map;
 
 public slots:
     void relayAction(QAction* q_action);

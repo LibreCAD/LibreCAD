@@ -2,6 +2,7 @@
 #define LC_CUSTOMTOOLBAR_H
 
 #include <QToolBar>
+#include <QMap>
 
 class LC_CustomToolbar : public QToolBar
 {
