@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -30,7 +30,7 @@
 #include "rs_actioninterface.h"
 
 /**
- * This action class can handle user events for copying or cutting entities 
+ * This action class can handle user events for copying or cutting entities
  * to the clipboard.
  *
  * @author Andrew Mustun
@@ -38,33 +38,34 @@
 class RS_ActionEditCopy : public RS_ActionInterface {
 	Q_OBJECT
 public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetReferencePoint    /**< Setting the reference point. */
-    };
-	
+	/**
+	 * Action States.
+	 */
+	enum Status {
+		SetReferencePoint    /**< Setting the reference point. */
+	};
+
 public:
-    RS_ActionEditCopy(bool copy,
+	RS_ActionEditCopy(bool copy,
                       RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-    ~RS_ActionEditCopy();
+	~RS_ActionEditCopy();
 
 	virtual void init(int status);
 
-    virtual void trigger();
-	
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-	
+	virtual void trigger();
+
+	virtual void mouseMoveEvent(QMouseEvent* e);
+	virtual void mouseReleaseEvent(QMouseEvent* e);
+
 	virtual void coordinateEvent(RS_CoordinateEvent* e);
-	
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+
+	virtual void updateMouseButtonHints();
+	virtual void updateMouseCursor();
 
 protected:
     /** Copy (true) or cut (false) */
-    bool copy;
+	bool copy;
 
 	std::unique_ptr<RS_Vector> referencePoint;
 };
