@@ -1470,10 +1470,6 @@ void QC_ApplicationWindow::
         QMdiSubWindow* old=activedMdiSubWindow;
         QRect geo;
         bool maximized=false;
-        if(old) {//save old geometry
-            geo=activedMdiSubWindow->geometry();
-            maximized=activedMdiSubWindow->isMaximized();
-        }
 
         QC_MDIWindow* w = slotFileNew();
         // RVT_PORT qApp->processEvents(1000);
@@ -1490,6 +1486,11 @@ void QC_ApplicationWindow::
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: open file");
 
         qApp->processEvents(QEventLoop::AllEvents, 1000);
+
+        if(old) {//save old geometry
+            geo=activedMdiSubWindow->geometry();
+            maximized=activedMdiSubWindow->isMaximized();
+        }
 
         // open the file in the new view:
         bool success=false;
