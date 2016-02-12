@@ -412,7 +412,6 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     // <[~ Polyline ~]>
 
     action = new QAction(QIcon(":/extui/polyline.png"), tr("&Polyline"), tool_group);
-    action->setStatusTip(tr("Draw polylines"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawPolyline()));
     action->setObjectName("DrawPolyline");
@@ -421,7 +420,6 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     action = new QAction(tr("&Add node"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylineadd.png"));
-    action->setStatusTip(tr("Add polyline's node"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineAdd()));
     action->setObjectName("PolylineAdd");
@@ -430,7 +428,6 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     action = new QAction(tr("A&ppend node"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylineappend.png"));
-    action->setStatusTip(tr("Append polyline's node"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineAppend()));
     action->setObjectName("PolylineAppend");
@@ -439,7 +436,6 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     action = new QAction(tr("&Delete node"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylinedel.png"));
-    action->setStatusTip(tr("Delete polyline's node"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineDel()));
     action->setObjectName("PolylineDel");
@@ -448,7 +444,6 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     action = new QAction(tr("Delete &between two nodes"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylinedelbetween.png"));
-    action->setStatusTip(tr("Delete between two nodes"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineDelBetween()));
     action->setObjectName("PolylineDelBetween");
@@ -457,14 +452,12 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     action = new QAction(tr("&Trim segments"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylinetrim.png"));
-    action->setStatusTip(tr("Trim polyline's segments"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineTrim()));
     action->setObjectName("PolylineTrim");
     a_map["PolylineTrim"] = action;
 
     action = new QAction(QIcon(":/extui/polylineequidstant.png"), tr("Create &Equidistant Polylines"), tool_group);
-    action->setStatusTip(tr("Create Equidistant Polylines"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineEquidistant()));
     action->setObjectName("PolylineEquidistant");
@@ -473,7 +466,6 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     action = new QAction(tr("Create Polyline from Existing &Segments"), tool_group);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/extui/polylinesegment.png"));
-    action->setStatusTip(tr("Create Polyline from Existing Segments"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotPolylineSegment()));
     action->setObjectName("PolylineSegment");
@@ -569,7 +561,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyAttributes()));
     action->setObjectName("ModifyAttributes");
-    action->setStatusTip("modifyattr, attr, ma");
+    action->setData("modifyattr, attr, ma");
     a_map["ModifyAttributes"] = action;
 
     action = new QAction(QIcon(":/extui/modifydelete.png"), tr("&Delete"), tool_group);
@@ -588,7 +580,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyMove()));
     action->setObjectName("ModifyMove");
-    action->setStatusTip("move, mv");
+    action->setData("move, mv");
     a_map["ModifyMove"] = action;
 
     action = new QAction(tr("Re&vert direction"), tool_group);
@@ -596,28 +588,28 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     action->setShortcut(QKeySequence(tr("Ctrl+R")));
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotModifyRevertDirection()));
     action->setObjectName("ModifyRevertDirection");
-    action->setStatusTip("revert, rev");
+    action->setData("revert, rev");
     a_map["ModifyRevertDirection"] = action;
 
     action = new QAction(QIcon(":/extui/modifyrotate.png"), tr("&Rotate"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyRotate()));
     action->setObjectName("ModifyRotate");
-    action->setStatusTip("rotate, ro");
+    action->setData("rotate, ro");
     a_map["ModifyRotate"] = action;
 
     action = new QAction(QIcon(":/extui/modifyscale.png"), tr("&Scale"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyScale()));
     action->setObjectName("ModifyScale");
-    action->setStatusTip("scale, sz");
+    action->setData("scale, sz");
     a_map["ModifyScale"] = action;
 
     action = new QAction(QIcon(":/extui/modifymirror.png"), tr("&Mirror"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyMirror()));
     action->setObjectName("ModifyMirror");
-    action->setStatusTip("mirror, mi");
+    action->setData("mirror, mi");
     a_map["ModifyMirror"] = action;
 
     action = new QAction(QIcon(":/extui/modifymoverotate.png"), tr("M&ove and Rotate"), tool_group);
@@ -637,7 +629,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyEntity()));
     action->setObjectName("ModifyEntity");
-    action->setStatusTip("properties, prop");
+    action->setData("properties, prop");
     a_map["ModifyEntity"] = action;
 
     action = new QAction(tr("&Trim"), tool_group);
@@ -645,7 +637,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyTrim()));
     action->setObjectName("ModifyTrim");
-    action->setStatusTip("trim, tm");
+    action->setData("trim, tm");
     a_map["ModifyTrim"] = action;
 
     action = new QAction(tr("&Trim Two"), tool_group);
@@ -653,7 +645,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyTrim2()));
     action->setObjectName("ModifyTrim2");
-    action->setStatusTip("trim2, tm2");
+    action->setData("trim2, tm2");
     a_map["ModifyTrim2"] = action;
 
     action = new QAction(tr("&Lengthen"), tool_group);
@@ -661,14 +653,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyTrimAmount()));
     action->setObjectName("ModifyTrimAmount");
-    action->setStatusTip("lengthen, le");
+    action->setData("lengthen, le");
     a_map["ModifyTrimAmount"] = action;
 
     action = new QAction(QIcon(":/extui/arcspara.png"), tr("&Offset"),tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyOffset()));
     action->setObjectName("ModifyOffset");
-    action->setStatusTip("offset, o");
+    action->setData("offset, o");
     a_map["ModifyOffset"] = action;
 
     action = new QAction(tr("&Divide"), tool_group);
@@ -676,14 +668,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyCut()));
     action->setObjectName("ModifyCut");
-    action->setStatusTip("divide, cut, div");
+    action->setData("divide, cut, div");
     a_map["ModifyCut"] = action;
 
     action = new QAction(QIcon(":/extui/modifystretch.png"), tr("&Stretch"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyStretch()));
     action->setObjectName("ModifyStretch");
-    action->setStatusTip("stretch, ss");
+    action->setData("stretch, ss");
     a_map["ModifyStretch"] = action;
 
     action = new QAction(tr("&Bevel"), tool_group);
@@ -691,14 +683,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyBevel()));
     action->setObjectName("ModifyBevel");
-    action->setStatusTip("bevel, bev, ch");
+    action->setData("bevel, bev, ch");
     a_map["ModifyBevel"] = action;
 
     action = new QAction(QIcon(":/extui/modifyround.png"), tr("&Fillet"), tool_group);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyRound()));
     action->setObjectName("ModifyRound");
-    action->setStatusTip("fillet, fi");
+    action->setData("fillet, fi");
     a_map["ModifyRound"] = action;
 
     action = new QAction(tr("&Explode Text into Letters"), tool_group);

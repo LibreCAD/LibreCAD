@@ -2750,6 +2750,13 @@ void QC_ApplicationWindow::relayAction(QAction* q_action)
     // SIGNAL = http://doc.qt.io/qt-5/qactiongroup.html#triggered
 
     getGraphicView()->set_action(q_action);
+
+    const QString commands(q_action->data().toString());
+    if (!commands.isEmpty())
+    {
+        const QString title(q_action->text().remove("&"));
+        commandWidget->appendHistory(title + " : " + commands);
+    }
 }
 
 void QC_ApplicationWindow::gotoWiki()
