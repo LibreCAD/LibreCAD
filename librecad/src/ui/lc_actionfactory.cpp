@@ -1035,7 +1035,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
 
     action = new QAction(tr("&Delete selected"), disable_group);
     action->setIcon(QIcon(":/extui/modifydelete.png"));
-    action->setShortcut(QKeySequence::Delete);
+    action->setShortcuts(QList<QKeySequence>() << QKeySequence::Delete << QKeySequence(Qt::Key_Backspace));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyDeleteQuick()));
     action->setObjectName("ModifyDeleteQuick");
