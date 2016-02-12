@@ -46,7 +46,7 @@
 
 
 LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
-                                   const QMap<QString, QAction*>& action_map)
+                                   QMap<QString, QAction*>& action_map)
     : QObject(nullptr)
     , main_window(main_win)
     , a_map(action_map)
