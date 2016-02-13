@@ -431,6 +431,11 @@ void QC_ApplicationWindow::loadPlugins() {
         for(const QString& fileName: pluginsDir.entryList(QDir::Files)) {
             // Skip loading a plugin if a plugin with the same
             // filename has already been loaded.
+            #ifdef Q_OS_MAC
+            if (!fileName.contains(".dylib"))
+                continue;
+            #endif
+
             if (loadedPluginFileNames.contains(fileName)) {
                 continue;
             }
