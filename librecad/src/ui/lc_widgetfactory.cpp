@@ -631,16 +631,6 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     plugins_menu->setObjectName("plugins_menu");
     plugins_menu->setTearOffEnabled(true);
 
-    // <[~ Order ~]>
-
-    QMenu* order_menu = new QMenu(QC_ApplicationWindow::tr("&Order"), menu_bar);
-    order_menu->setObjectName("order_menu");
-    order_menu->setTearOffEnabled(true);
-    order_menu->addAction(a_map["OrderTop"]);
-    order_menu->addAction(a_map["OrderBottom"]);
-    order_menu->addAction(a_map["OrderRaise"]);
-    order_menu->addAction(a_map["OrderLower"]);
-
     // <[~ View ~]>
 
     QMenu* view_menu = new QMenu(QC_ApplicationWindow::tr("&View"), menu_bar);
@@ -719,11 +709,22 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     dimension_menu->setTearOffEnabled(true);
     dimension_menu->addActions(dimension_actions);
 
+    // <[~ Order ~]>
+
+    QMenu* order_menu = new QMenu(QC_ApplicationWindow::tr("&Order"), menu_bar);
+    order_menu->setObjectName("order_menu");
+    order_menu->setTearOffEnabled(true);
+    order_menu->addAction(a_map["OrderTop"]);
+    order_menu->addAction(a_map["OrderBottom"]);
+    order_menu->addAction(a_map["OrderRaise"]);
+    order_menu->addAction(a_map["OrderLower"]);
+
     // <[~ Modify ~]>
 
     QMenu* modify_menu = new QMenu(QC_ApplicationWindow::tr("&Modify"), menu_bar);
     modify_menu->setObjectName("Modify");
     modify_menu->setTearOffEnabled(true);
+    modify_menu->addMenu(order_menu);
     modify_menu->addActions(modify_actions);
 
     // <[~ Snapping ~]>
@@ -838,7 +839,6 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     menu_bar->addMenu(edit_menu);
     menu_bar->addMenu(view_menu);
     menu_bar->addMenu(plugins_menu);
-    menu_bar->addMenu(order_menu);
     menu_bar->addMenu(select_menu);
     menu_bar->addMenu(draw_menu);
     menu_bar->addMenu(dimension_menu);
