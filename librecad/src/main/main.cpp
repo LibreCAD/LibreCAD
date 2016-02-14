@@ -78,28 +78,6 @@ int main(int argc, char** argv)
         RS_DEBUG->print("main: splashscreen: OK");
     }
 
-    #if defined(Q_OS_MAC) && QT_VERSION > 0x050000
-        //need stylesheet for Qt5 on mac
-        app.setStyleSheet(
-"QToolButton:checked"
-"{"
-"    background-color: rgb(160,160,160);"
-"    border-style: inset;"
-"}"
-""
-"QToolButton"
-"{"
-"    background-color: transparent;"
-"}"
-""
-"QToolButton:hover"
-"{"
-"    background-color: rgb(255,255,255);"
-"    border-style: outset;"
-"}"
-        );
-    #endif
-
     const QString lpDebugSwitch0("-d"),lpDebugSwitch1("--debug") ;
     const QString help0("-h"), help1("--help");
     bool allowOptions=true;
