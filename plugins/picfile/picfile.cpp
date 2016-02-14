@@ -35,7 +35,7 @@ PluginCapabilities PicFile::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints
-            << PluginMenuLocation("File/Import", tr("Read PIC file"));
+            << PluginMenuLocation("plugins_menu", tr("Read PIC file"));
     return pluginCapabilities;
 }
 
@@ -58,7 +58,7 @@ void PicFile::execComm(Document_Interface *doc,
 
 picPunto::picPunto(QWidget *parent) :  QDialog(parent)
 {
-    cnt = 0;    
+    cnt = 0;
     QStringList txtformats;
 
     QGridLayout *mainLayout = new QGridLayout;
@@ -118,7 +118,7 @@ bool picPunto::failGUI(QString *msg)
 {
     double val = scaleedit->text().toDouble();
     if ( val == 0 ) {
-        msg->insert(0, tr("Scale Factor is empty or invalid")); 
+        msg->insert(0, tr("Scale Factor is empty or invalid"));
         return true;
     }
     return false;
@@ -189,21 +189,21 @@ void picPunto::drawCircle(QString x, QString y, QString radius)
 {
     QPointF center;
     qreal rad;
-    
+
     center.setX(getPValue(x));
     center.setY(getPValue(y));
     rad = getPValue(radius);
     currDoc->addCircle(&center, rad);
     cnt++;
-}    
+}
 
-void picPunto::drawText(QString x, QString y, QString txt, QString align) 
+void picPunto::drawText(QString x, QString y, QString txt, QString align)
 {
     DPI::VAlign va = DPI::VAlignBottom;
     DPI::HAlign ha;
     QString sty = "txt";
     double height = 0.05 * scale;
-    
+
     ha = (align == "ljust") ? DPI::HAlignLeft : (align == "rjust") ? DPI::HAlignRight : DPI::HAlignCenter;
     QPointF pt(getPValue(x), getPValue(y));
     currDoc->addText(txt, sty, &pt, height, 0.0, ha, va);
@@ -213,7 +213,7 @@ void picPunto::drawText(QString x, QString y, QString txt, QString align)
 void picPunto::drawBox(QString posx, QString posy, QString width, QString height)
 {
     QPointF prevP, nextP;
-    
+
     prevP.setX(getPValue(posx));
     prevP.setY(getPValue(posy));
     nextP.setX(getPValue(posx)+getPValue(width));
@@ -230,7 +230,7 @@ void picPunto::drawBox(QString posx, QString posy, QString width, QString height
     currDoc->addLine(&prevP, &nextP);
     cnt++;
 }
-    
+
 void picPunto::processFilePic(QFile* file)
 {
     //    QString outname, sep;
@@ -280,7 +280,7 @@ void picPunto::processFilePic(QFile* file)
                     QString posy = data.at(7).split(',').at(1);
                     drawBox(posx.remove(0,1), posy.remove(posy.size()-1,1), data.at(9), data.at(11));
                 } else {
-                    if ( cmd.startsWith("\"\\s") and data.size() > 3 ) { // "\s5\fRAbstell fläche\fP" at 8.132,7.456 ljust
+                    if ( cmd.startsWith("\"\\s") and data.size() > 3 ) { // "\s5\fRAbstell fl?che\fP" at 8.132,7.456 ljust
                         QString txt = line.split("\"", skip).at(1);
                         QStringList rline = line.split("\"", skip).at(2).split(" ",skip);
                         txt.remove ( txt.size()-3, 3);
@@ -290,7 +290,7 @@ void picPunto::processFilePic(QFile* file)
                     }
                 }
             }
-        } 
+        }
     }
 }
 
@@ -310,7 +310,7 @@ void picPunto::readSettings()
     fileedit->setText(str);
     str = settings.value("lastscale","1.0").toString();
     scaleedit->setText(str);
-    
+
     resize(size);
     move(pos);
  }

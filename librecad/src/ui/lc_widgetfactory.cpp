@@ -630,6 +630,12 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     edit_menu->addAction(a_map["EditPaste"]);
     edit_menu->addAction(a_map["ModifyDeleteQuick"]);
 
+    // <[~ Plugins ~]>
+
+    QMenu* plugins_menu = new QMenu(QC_ApplicationWindow::tr("Plugins"), menu_bar);
+    plugins_menu->setObjectName("plugins_menu");
+    plugins_menu->setTearOffEnabled(true);
+
     // <[~ Order ~]>
 
     QMenu* order_menu = new QMenu(QC_ApplicationWindow::tr("&Order"), menu_bar);
@@ -836,6 +842,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     menu_bar->addMenu(settings_menu);
     menu_bar->addMenu(edit_menu);
     menu_bar->addMenu(view_menu);
+    menu_bar->addMenu(plugins_menu);
     menu_bar->addMenu(order_menu);
     menu_bar->addMenu(select_menu);
     menu_bar->addMenu(draw_menu);

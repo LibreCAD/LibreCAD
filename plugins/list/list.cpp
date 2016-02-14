@@ -27,7 +27,7 @@ PluginCapabilities LC_List::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints
-            << PluginMenuLocation("Info", tr("List entities"));
+            << PluginMenuLocation("plugins_menu", tr("List entities"));
     return pluginCapabilities;
 }
 

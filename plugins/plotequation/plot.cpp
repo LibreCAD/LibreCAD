@@ -25,7 +25,7 @@ PluginCapabilities plot::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints
-            << PluginMenuLocation(tr("Draw"), tr("Plot plugin"));
+            << PluginMenuLocation(tr("plugins_menu"), tr("Plot plugin"));
     return pluginCapabilities;
 }
 
