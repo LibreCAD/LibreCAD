@@ -330,12 +330,8 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     file_toolbar->addActions(file_actions);
     file_toolbar->addAction(a_map["FilePrint"]);
     file_toolbar->addAction(a_map["FilePrintPreview"]);
-
-    QToolBar* settings_toolbar = new QToolBar(QC_ApplicationWindow::tr("Settings"), main_window);
-    settings_toolbar->setSizePolicy(toolBarPolicy);
-    settings_toolbar->setObjectName("settings_toolbar");
-    settings_toolbar->addAction(a_map["OptionsGeneral"]);
-    settings_toolbar->addAction(a_map["OptionsDrawing"]);
+    file_toolbar->addAction(a_map["OptionsGeneral"]);
+    file_toolbar->addAction(a_map["OptionsDrawing"]);
 
     QToolBar* edit_toolbar = new QToolBar(QC_ApplicationWindow::tr("Edit"), main_window);
     edit_toolbar->setSizePolicy(toolBarPolicy);
@@ -407,7 +403,6 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     main_window->addToolBar(Qt::TopToolBarArea, file_toolbar);
     main_window->addToolBar(Qt::TopToolBarArea, edit_toolbar);
     main_window->addToolBar(Qt::TopToolBarArea, view_toolbar);
-    main_window->addToolBar(Qt::TopToolBarArea, settings_toolbar);
     main_window->addToolBarBreak();
     main_window->addToolBar(Qt::TopToolBarArea, pen_toolbar);
     main_window->addToolBar(Qt::TopToolBarArea, options_toolbar);

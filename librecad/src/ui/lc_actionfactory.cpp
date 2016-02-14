@@ -1002,20 +1002,16 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
 
     // <[~ Options ~]>
 
-    action = new QAction(QIcon(":/actions/configure.png"),
-    #ifdef __APPLE__
-     tr("&Preferences"),
-    #else
-     tr("&Application Preferences"),
-    #endif
-     main_window);
-
+    action = new QAction(tr("&Application Preferences"), main_window);
+    action->setIcon(QIcon(":/actions/configure.png"));
     connect(action, SIGNAL(triggered()),
     main_window, SLOT(slotOptionsGeneral()));
+    action->setMenuRole(QAction::NoRole);
     action->setObjectName("OptionsGeneral");
     a_map["OptionsGeneral"] = action;
 
-    action = new QAction( QIcon(":/actions/drawingprefs.png"), tr("Current &Drawing Preferences"), disable_group);
+    action = new QAction(tr("Current &Drawing Preferences"), disable_group);
+    action->setIcon(QIcon(":/actions/drawingprefs.png"));
     // Preferences shortcut was itroduced on 4.6
     #if QT_VERSION >= 0x040600
     action->setShortcut(QKeySequence::Preferences);
