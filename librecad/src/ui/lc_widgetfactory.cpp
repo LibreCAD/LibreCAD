@@ -600,10 +600,10 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     file_menu->addAction(a_map["FileQuit"]);
     file_menu->addSeparator();
 
-    // <[~ Settings ~]>
+    // <[~ Options ~]>
 
-    QMenu* settings_menu = new QMenu(QC_ApplicationWindow::tr("Settings"), menu_bar);
-    settings_menu->setObjectName("settings_menu");
+    QMenu* settings_menu = new QMenu(QC_ApplicationWindow::tr("&Options"), menu_bar);
+    settings_menu->setObjectName("options_menu");
     settings_menu->setTearOffEnabled(true);
     settings_menu->addAction(a_map["OptionsGeneral"]);
     settings_menu->addAction(a_map["OptionsDrawing"]);
