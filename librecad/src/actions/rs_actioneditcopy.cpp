@@ -44,6 +44,7 @@ RS_ActionEditCopy::RS_ActionEditCopy(bool copy,
         :RS_ActionInterface("Edit Copy",
 					container, graphicView)
 		, copy{copy}
+		, referencePoint{new RS_Vector{}}
 {
 }
 
@@ -88,13 +89,20 @@ void RS_ActionEditCopy::init(int status) {
 void RS_ActionEditCopy::trigger() {
 
     RS_Modification m(*container, graphicView);
-    m.copy(referencePoint, !copy);
+	m.copy(*referencePoint, !copy);
 
     //graphicView->redraw();
     finish(false);
     graphicView->killSelectActions();
     //init(getStatus()-1);
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+}
+
+void RS_ActionEditCopy::mouseMoveEvent(QMouseEvent* e) {
+	if (getStatus()==SetReferencePoint)
+		(void) snapPoint(e);
+	else
+		deleteSnapper();
 }
 
 void RS_ActionEditCopy::mouseReleaseEvent(QMouseEvent* e) {
@@ -109,11 +117,10 @@ void RS_ActionEditCopy::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionEditCopy::coordinateEvent(RS_CoordinateEvent* e) {
-    if (!e){
+	if (!e)
         return;
-    }
 
-    referencePoint = e->getCoordinate();
+	*referencePoint = e->getCoordinate();
     trigger();
 }
 
