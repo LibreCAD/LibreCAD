@@ -50,7 +50,7 @@ class QBrush;
  */
 class RS_Painter {
 public:
-    RS_Painter(): offset(RS_Vector(0.0,0.0)) {
+    RS_Painter(): offset{0.0,0.0} {
         drawingMode = RS2::ModeFull;
         drawSelectedEntities=false;
     }
