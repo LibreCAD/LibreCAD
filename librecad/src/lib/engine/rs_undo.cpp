@@ -78,7 +78,6 @@ void RS_Undo::startUndoCycle() {
 	//   that cannot be redone now:
 	while (int(undoList.size()) > undoPointer+1) {
 		auto& l = undoList.back();
-		undoList.pop_back();
 		//remove the undoable in the current cyle
 		for(auto u: l->undoables){
 			// Remove the pointer from _all_ other cycles:
@@ -86,10 +85,12 @@ void RS_Undo::startUndoCycle() {
 				cycle->removeUndoable(u);
 
 			// Delete the Undoable for good:
-			if (u->isUndone()) {
+			// TODO, why u could be nullptr, issue #
+			if (u && u->isUndone()) {
 				removeUndoable(u);
 			}
 		}
+		undoList.pop_back();
 	}
 
 	currentCycle = std::make_shared<RS_UndoCycle>();
