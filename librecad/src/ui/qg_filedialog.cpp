@@ -132,6 +132,7 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
     RS_SETTINGS->beginGroup("/Paths");
     QString defDir = RS_SETTINGS->readEntry("/Open",
                                               RS_SYSTEM->getHomeDir());
+    QString open_filter = RS_SETTINGS->readEntry("/OpenFilter", fDxfrw);
     RS_SETTINGS->endGroup();
 
     RS_DEBUG->print("defDir: %s", defDir.toLatin1().data());
@@ -147,7 +148,7 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
     setNameFilters(filters);
     setDirectory(defDir);
     setFileMode(QFileDialog::ExistingFile);
-    selectNameFilter(fDxfrw);
+    selectNameFilter(open_filter);
     ftype= RS2::FormatDXFRW;
     RS_DEBUG->print("defFilter: %s", fDxfrw.toLatin1().data());
 
