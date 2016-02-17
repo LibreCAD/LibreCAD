@@ -40,11 +40,8 @@ public:
      */
 	RS_OverlayBoxData() = default;
 
-    RS_OverlayBoxData(const RS_Vector& corner1, const RS_Vector& corner2) {
-
-        this->corner1 = corner1;
-        this->corner2 = corner2;
-    }
+    RS_OverlayBoxData(const RS_Vector& corner1, const RS_Vector& corner2)
+                     : corner1(corner1), corner2(corner2) {}
 
     friend class RS_OverlayBox;
 

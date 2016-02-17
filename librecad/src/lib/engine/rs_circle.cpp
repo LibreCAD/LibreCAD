@@ -289,7 +289,7 @@ std::vector<RS_Entity* > RS_Circle::offsetTwoSides(const double& distance) const
     return ret;
 }
 
-RS_VectorSolutions RS_Circle::createTan1_2P(const RS_AtomicEntity* circle, const std::vector<RS_Vector> points)
+RS_VectorSolutions RS_Circle::createTan1_2P(const RS_AtomicEntity* circle, const std::vector<RS_Vector>& points)
 {
     RS_VectorSolutions ret;
 	if (!circle||points.size()<2) return ret;
