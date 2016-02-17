@@ -79,7 +79,7 @@ void RS_Undo::startUndoCycle() {
 	while (int(undoList.size()) > undoPointer+1) {
 		auto& l = undoList.back();
 		//remove the undoable in the current cyle
-		for(auto u: l->undoables){
+        for(auto u: l->getUndoables()){
 			// Remove the pointer from _all_ other cycles:
 			for(auto& cycle: undoList)
 				cycle->removeUndoable(u);
@@ -93,7 +93,7 @@ void RS_Undo::startUndoCycle() {
 		undoList.pop_back();
 	}
 
-	currentCycle = std::make_shared<RS_UndoCycle>();
+    currentCycle = std::make_shared<RS_UndoCycle>();
 }
 
 
