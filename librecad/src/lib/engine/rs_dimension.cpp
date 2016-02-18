@@ -444,9 +444,9 @@ bool RS_Dimension::getAlignText() {
  * @return Dimension fixed length for extension lines true= fixed, false= not fixed.
  */
 bool RS_Dimension::getFixedLengthOn() {
-    int v = getGraphicVariableInt("$DIMFXLON", 2);
-    if (v>1) {
-        addGraphicVariable("$DIMFXLON", 0, 70);
+    int v = getGraphicVariableInt("$DIMFXLON", 0);
+    if (v == 1) {
+        addGraphicVariable("$DIMFXLON", 1, 70);
         getGraphicVariableInt("$DIMFXLON", 0);
 		return true;
     }
