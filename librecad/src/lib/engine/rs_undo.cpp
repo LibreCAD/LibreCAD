@@ -82,7 +82,8 @@ void RS_Undo::startUndoCycle() {
         for(auto u: l->getUndoables()){
 			// Remove the pointer from _all_ other cycles:
 			for(auto& cycle: undoList)
-				cycle->removeUndoable(u);
+				if (&cycle != &l)
+					cycle->removeUndoable(u);
 
 			// Delete the Undoable for good:
 			// TODO, why u could be nullptr, issue #
