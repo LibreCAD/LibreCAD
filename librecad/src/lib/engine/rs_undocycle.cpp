@@ -22,7 +22,7 @@ void RS_UndoCycle::changeUndoState()
 		u->changeUndoState();
 }
 
-std::set<RS_Undoable*> RS_UndoCycle::getUndoables()
+std::set<RS_Undoable*> const& RS_UndoCycle::getUndoables() const
 {
     return undoables;
 }
