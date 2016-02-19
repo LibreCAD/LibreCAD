@@ -94,6 +94,8 @@ public:
     void addScrollbars();
     bool hasScrollbars();
 
+    QString device;
+
 protected:
     virtual void mousePressEvent(QMouseEvent* e);
     virtual void mouseDoubleClickEvent(QMouseEvent* e);

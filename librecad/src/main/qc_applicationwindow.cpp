@@ -98,6 +98,7 @@
 #include "rs_debug.h"
 
 #include "lc_widgetoptionsdialog.h"
+#include "lc_deviceoptions.h"
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
 
@@ -1170,10 +1171,13 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     int cursor_hiding = RS_SETTINGS->readNumEntry("/cursor_hiding", 0);
     RS_SETTINGS->endGroup();
 
+    QSettings settings;
+
     QG_GraphicView* view = w->getGraphicView();
 
     view->setAntialiasing(aa);
     view->setCursorHiding(cursor_hiding);
+    view->device = settings.value("Hardware/Device", 0).toString();
     if (scrollbars) view->addScrollbars();
 
     connect(view, SIGNAL(gridStatusChanged(const QString&)),
@@ -2957,4 +2961,14 @@ void QC_ApplicationWindow::reloadStyleSheet()
 void QC_ApplicationWindow::updateGridStatus(const QString & status)
 {
     grid_status->setBottomLabel(status);
+}
+
+void QC_ApplicationWindow::showDeviceOptions()
+{
+    QDialog dlg;
+    dlg.setWindowTitle(tr("Device Options"));
+    QVBoxLayout* layout = new QVBoxLayout;
+    layout->addWidget(new LC_DeviceOptions(&dlg));
+    dlg.setLayout(layout);
+    dlg.exec();
 }

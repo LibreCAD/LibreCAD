@@ -456,47 +456,51 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
     RS_Vector mouse = toGraph(e->x(), e->y());
 
-#if QT_VERSION >= 0x050200
-    QPoint numPixels = e->pixelDelta();
+    #if QT_VERSION >= 0x050200
 
-    // high-resolution scrolling triggers Pan instead of Zoom logic
-    isSmoothScrolling |= !numPixels.isNull();
-
-    if (isSmoothScrolling && e->source() == Qt::MouseEventSynthesizedBySystem)
-    {
-        if (e->phase() == Qt::ScrollEnd) isSmoothScrolling = false;
-
-        if (!numPixels.isNull())
+        if (device == "Trackpad")
         {
-            if (e->modifiers()==Qt::ControlModifier)
-            {
-                // Hold ctrl to zoom. 1 % per pixel
-                double v = -numPixels.y() / 100.;
-                RS2::ZoomDirection direction;
-                double factor;
+            QPoint numPixels = e->pixelDelta();
 
-                if (v < 0) {
-                    direction = RS2::Out; factor = 1-v;
-                } else {
-                    direction = RS2::In;  factor = 1+v;
+            // high-resolution scrolling triggers Pan instead of Zoom logic
+            isSmoothScrolling |= !numPixels.isNull();
+
+            if (isSmoothScrolling)
+            {
+                if (e->phase() == Qt::ScrollEnd) isSmoothScrolling = false;
+
+                if (!numPixels.isNull())
+                {
+                    if (e->modifiers()==Qt::ControlModifier)
+                    {
+                        // Hold ctrl to zoom. 1 % per pixel
+                        double v = -numPixels.y() / 100.;
+                        RS2::ZoomDirection direction;
+                        double factor;
+
+                        if (v < 0) {
+                            direction = RS2::Out; factor = 1-v;
+                        } else {
+                            direction = RS2::In;  factor = 1+v;
+                        }
+
+                        setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
+                                                             RS2::Both, &mouse, factor));
+                    }
+                    else if (scrollbars)
+                    {
+                        // otherwise, scroll
+                        //scroll by scrollbars: issue #479
+                        hScrollBar->setValue(hScrollBar->value() - numPixels.x());
+                        vScrollBar->setValue(vScrollBar->value() - numPixels.y());
+                    }
+                    redraw();
                 }
-
-                setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
-													 RS2::Both, &mouse, factor));
+                e->accept();
+                return;
             }
-            else if (scrollbars)
-            {
-                // otherwise, scroll
-				//scroll by scrollbars: issue #479
-				hScrollBar->setValue(hScrollBar->value() - numPixels.x());
-				vScrollBar->setValue(vScrollBar->value() - numPixels.y());
-            }
-            redraw();
         }
-        e->accept();
-        return;
-    }
-#endif
+    #endif
 
     if (e->delta() == 0) {
         // A zero delta event occurs when smooth scrolling is ended. Ignore this

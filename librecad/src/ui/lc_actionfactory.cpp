@@ -1027,6 +1027,12 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map)
     connect(action, SIGNAL(triggered()),
             main_window, SLOT(widgetOptionsDialog()));
 
+    action = new QAction(tr("Device Options"), disable_group);
+    action->setObjectName("DeviceOptions");
+    a_map["DeviceOptions"] = action;
+    connect(action, SIGNAL(triggered()),
+            main_window, SLOT(showDeviceOptions()));
+
     // <[~ Modify ~]>
 
     action = new QAction(tr("&Delete selected"), disable_group);

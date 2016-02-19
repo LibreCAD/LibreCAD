@@ -188,6 +188,8 @@ public slots:
 
     void updateGridStatus(const QString&);
 
+    void showDeviceOptions();
+
 signals:
     void gridChanged(bool on);
     void draftChanged(bool on);

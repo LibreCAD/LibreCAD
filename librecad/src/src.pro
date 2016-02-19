@@ -218,20 +218,13 @@ HEADERS += \
     lib/scripting/rs_python_wrappers.h \
     lib/scripting/rs_script.h \
     lib/scripting/rs_scriptlist.h \
-    ui/forms/qg_snaptoolbar.h \
     actions/lc_actiondrawcircle2pr.h \
-    ui/forms/qg_activelayername.h \
     test/lc_simpletests.h \
     lib/generators/lc_makercamsvg.h \
     lib/generators/lc_xmlwriterinterface.h \
     lib/generators/lc_xmlwriterqxmlstreamwriter.h \
     actions/lc_actionfileexportmakercam.h \
-    ui/qg_commandhistory.h \
-    ui/lc_customtoolbar.h \
-    ui/lc_dockwidget.h \
-    lib/engine/lc_rect.h \
-    ui/forms/lc_dlgsplinepoints.h \
-    ui/forms/lc_widgetoptionsdialog.h
+    lib/engine/lc_rect.h
 
 SOURCES += \
     lib/actions/rs_actioninterface.cpp \
@@ -312,25 +305,18 @@ SOURCES += \
     lib/scripting/rs_python_wrappers.cpp \
     lib/scripting/rs_script.cpp \
     lib/scripting/rs_scriptlist.cpp \
-    ui/forms/qg_snaptoolbar.cpp \
     lib/engine/rs_color.cpp \
     lib/engine/rs_pen.cpp \
     actions/lc_actiondrawcircle2pr.cpp \
-    ui/forms/qg_activelayername.cpp \
     test/lc_simpletests.cpp \
     lib/generators/lc_xmlwriterqxmlstreamwriter.cpp \
     lib/generators/lc_makercamsvg.cpp \
     actions/lc_actionfileexportmakercam.cpp \
     lib/engine/rs_atomicentity.cpp \
     lib/engine/rs_undocycle.cpp \
-    ui/qg_commandhistory.cpp \
-    ui/lc_customtoolbar.cpp \
-    ui/lc_dockwidget.cpp \
-    lib/engine/lc_rect.cpp \
-    lib/engine/rs.cpp \
-    ui/forms/lc_dlgsplinepoints.cpp \
     lib/engine/rs_flags.cpp \
-    ui/forms/lc_widgetoptionsdialog.cpp
+    lib/engine/lc_rect.cpp \
+    lib/engine/rs.cpp
 
 # ################################################################################
 # Command
@@ -701,7 +687,15 @@ HEADERS += ui/lc_actionfactory.h \
     ui/forms/qg_widgetpen.h \
     ui/lc_centralwidget.h \
     ui/lc_widgetfactory.h \
-    ui/twostackedlabels.h
+    ui/twostackedlabels.h \
+    ui/qg_commandhistory.h \
+    ui/lc_customtoolbar.h \
+    ui/lc_dockwidget.h \
+    ui/forms/lc_dlgsplinepoints.h \
+    ui/forms/lc_widgetoptionsdialog.h \
+    ui/forms/qg_snaptoolbar.h \
+    ui/forms/qg_activelayername.h \
+    ui/lc_deviceoptions.h
 
 SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
@@ -788,7 +782,15 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/forms/qg_widgetpen.cpp \
     ui/lc_centralwidget.cpp \
     ui/lc_widgetfactory.cpp \
-    ui/twostackedlabels.cpp
+    ui/twostackedlabels.cpp \
+    ui/qg_commandhistory.cpp \
+    ui/lc_customtoolbar.cpp \
+    ui/lc_dockwidget.cpp \
+    ui/forms/lc_dlgsplinepoints.cpp \
+    ui/forms/lc_widgetoptionsdialog.cpp \
+    ui/forms/qg_snaptoolbar.cpp \
+    ui/forms/qg_activelayername.cpp \
+    ui/lc_deviceoptions.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_arcoptions.ui \
@@ -858,7 +860,8 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_snaptoolbar.ui \
     ui/forms/qg_activelayername.ui \
     ui/forms/lc_dlgsplinepoints.ui \
-    ui/forms/lc_widgetoptionsdialog.ui
+    ui/forms/lc_widgetoptionsdialog.ui \
+    ui/lc_deviceoptions.ui
 
 RESOURCES += ../res/ui/ui.qrc
 
